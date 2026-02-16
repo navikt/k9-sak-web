@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
-
 import { DDMMYYYY_DATE_FORMAT } from '@navikt/ft-utils';
+import dayjs from 'dayjs';
 import type { ArbeidsgiverOpplysninger } from '../../types/ArbeidsgiverOpplysninger';
 
 const getEndCharFromId = (id?: string): string => (id ? `...${id.substring(id.length - 4, id.length)}` : '');

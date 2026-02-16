@@ -1,5 +1,5 @@
-import OpptjeningAktivitet from './opptjeningAktivitet';
-import FastsattOpptjening from './fastsattOpptjening';
+import type FastsattOpptjening from './fastsattOpptjening';
+import type OpptjeningAktivitet from './opptjeningAktivitet';
 
 export type Opptjening = Readonly<{
   fastsattOpptjening: FastsattOpptjening;

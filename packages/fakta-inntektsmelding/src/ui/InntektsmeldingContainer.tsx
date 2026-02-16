@@ -1,10 +1,10 @@
-import { Period, get } from '@fpsak-frontend/utils';
+import { get, Period } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import ContainerContext from '../context/ContainerContext';
-import ContainerContract from '../types/ContainerContract';
-import { Kompletthet as KompletthetData } from '../types/KompletthetData';
-import { Kompletthet as KompletthetResponse } from '../types/KompletthetResponse';
+import type ContainerContract from '../types/ContainerContract';
+import type { Kompletthet as KompletthetData } from '../types/KompletthetData';
+import type { Kompletthet as KompletthetResponse } from '../types/KompletthetResponse';
 import ActionType from './actionTypes';
 import Kompletthetsoversikt from './components/kompletthetsoversikt/Kompletthetsoversikt';
 import mainComponentReducer from './reducer';

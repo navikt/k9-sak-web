@@ -1,7 +1,6 @@
-import React, { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { Label } from '@navikt/ds-react';
+import React, { type ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
 import BorderBox from './BorderBox';
 import VerticalSpacer from './VerticalSpacer';
 

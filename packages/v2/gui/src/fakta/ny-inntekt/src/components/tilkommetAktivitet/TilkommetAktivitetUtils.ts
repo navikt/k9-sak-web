@@ -1,14 +1,12 @@
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { calcDays } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-
-import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-
-import { calcDays } from '@navikt/ft-utils';
 
 import type { ArbeidsgiverOpplysninger, ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Beregningsgrunnlag, ForlengelsePeriodeProp } from '../../types/Beregningsgrunnlag';
 import type { Inntektsforhold, VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
-import { type TilkommetInntektsforholdFieldValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
+import type { TilkommetInntektsforholdFieldValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { erPeriodeTilVurdering } from '../util/ForlengelseUtils';
 import { createVisningsnavnForAktivitetFordeling } from '../util/visningsnavnHelper';
 
@@ -177,7 +175,7 @@ export const getAktivitetNavnFraInnteksforhold = (
   inntektsforhold: Inntektsforhold,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
-  let agOpplysning: ArbeidsgiverOpplysninger | undefined = undefined;
+  let agOpplysning: ArbeidsgiverOpplysninger | undefined;
   if (inntektsforhold.arbeidsgiverId !== null && inntektsforhold.arbeidsgiverId !== undefined) {
     agOpplysning = arbeidsgiverOpplysningerPerId[inntektsforhold.arbeidsgiverId];
   }
@@ -208,7 +206,7 @@ export const getAktivitetNavnFraField = (
   field: TilkommetInntektsforholdFieldValues,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
-  let agOpplysning: ArbeidsgiverOpplysninger | undefined = undefined;
+  let agOpplysning: ArbeidsgiverOpplysninger | undefined;
   if (field.arbeidsgiverIdent) {
     agOpplysning = arbeidsgiverOpplysningerPerId[field.arbeidsgiverIdent];
   }

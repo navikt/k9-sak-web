@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, ResponseType } from 'axios';
+import axios, { type AxiosInstance, type AxiosRequestConfig, type ResponseType } from 'axios';
 
 const cancellable = (axiosInstance: AxiosInstance, config: AxiosRequestConfig): Promise<any> => {
   let cancel;

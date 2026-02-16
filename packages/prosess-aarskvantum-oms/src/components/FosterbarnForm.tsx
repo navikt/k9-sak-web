@@ -6,7 +6,7 @@ import { Delete } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { fosterbarnDto } from '../dto/FosterbarnDto';
+import type { fosterbarnDto } from '../dto/FosterbarnDto';
 import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 

@@ -3,16 +3,22 @@ import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';
-import Aktivitet from '../dto/Aktivitet';
-import { fosterbarnDto } from '../dto/FosterbarnDto';
-import FosterbarnForm from './FosterbarnForm';
+import {
+  type ConfigProps,
+  FieldArray,
+  formValueSelector,
+  type InjectedFormProps,
+  type SubmitHandler,
+} from 'redux-form';
+import type Aktivitet from '../dto/Aktivitet';
+import type { fosterbarnDto } from '../dto/FosterbarnDto';
 import styles from './aksjonspunktForm.module.css';
+import FosterbarnForm from './FosterbarnForm';
 import { valgValues } from './utils';
 
 interface AksjonspunktFormImplProps {

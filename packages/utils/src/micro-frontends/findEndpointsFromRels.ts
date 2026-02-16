@@ -1,4 +1,4 @@
-import { SimpleLink } from '@k9-sak-web/types';
+import type { SimpleLink } from '@k9-sak-web/types';
 
 export function findEndpointsFromRels<T>(links: SimpleLink[], desiredRels: { rel: string; desiredName: string }[]): T {
   const endpoints = {};

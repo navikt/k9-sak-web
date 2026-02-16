@@ -7,8 +7,8 @@ import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
+import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { FormkravKlageFormKa } from './components/FormkravKlageFormKa';
 import { FormkravKlageFormNfp } from './components/FormkravKlageFormNfp';
 

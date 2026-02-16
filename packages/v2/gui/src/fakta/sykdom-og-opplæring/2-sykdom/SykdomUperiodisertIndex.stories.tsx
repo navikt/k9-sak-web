@@ -1,16 +1,16 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import {
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
+import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));

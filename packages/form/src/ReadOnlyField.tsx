@@ -1,10 +1,9 @@
 import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import { BodyShort } from '@navikt/ds-react';
-import Label from './Label';
-import LabelType from './LabelType';
-import styles from './readOnlyField.module.css';
-
 import type { JSX } from 'react';
+import Label from './Label';
+import type LabelType from './LabelType';
+import styles from './readOnlyField.module.css';
 
 export interface ReadOnlyFieldProps {
   label?: LabelType;

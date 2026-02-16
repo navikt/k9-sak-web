@@ -1,16 +1,14 @@
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { RadioGroupField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import type { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import { FormattedMessage, useIntl } from 'react-intl';
-
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-
 import dayjs from 'dayjs';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './VilkarFields.module.css';
 
 export const opptjeningMidlertidigInaktivKoder = {

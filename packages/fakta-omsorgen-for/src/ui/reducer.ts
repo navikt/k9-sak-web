@@ -1,4 +1,4 @@
-import Omsorgsperiodeoversikt from '../types/Omsorgsperiodeoversikt';
+import type Omsorgsperiodeoversikt from '../types/Omsorgsperiodeoversikt';
 import ActionType from './actionTypes';
 
 interface MainComponentState {

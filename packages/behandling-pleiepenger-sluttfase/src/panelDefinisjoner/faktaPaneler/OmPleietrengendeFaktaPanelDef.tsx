@@ -1,9 +1,8 @@
-import React from 'react';
-
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import React from 'react';
 import OmPleietrengende from '../../components/OmPleietrengende';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 

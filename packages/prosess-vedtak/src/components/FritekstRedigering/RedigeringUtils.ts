@@ -1,9 +1,8 @@
-import { parse as cssParse, generate as cssGenerate, walk as cssWalk } from 'css-tree';
-import * as Yup from 'yup';
-
-import { Brevmottaker, VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { safeJSONParse } from '@fpsak-frontend/utils';
+import type { Brevmottaker, VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
+import type { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { generate as cssGenerate, parse as cssParse, walk as cssWalk } from 'css-tree';
+import * as Yup from 'yup';
 
 export const utledStiler = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'text/html');

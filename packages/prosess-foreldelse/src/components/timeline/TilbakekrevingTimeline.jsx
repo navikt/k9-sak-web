@@ -1,16 +1,14 @@
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { Image } from '@fpsak-frontend/shared-components';
+import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Image } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
-
-import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 
 import styles from './tilbakekrevingTimeline.module.css';
 

@@ -1,7 +1,7 @@
 import { getHumanReadablePeriodString } from '@fpsak-frontend/utils';
 import { Alert, Box } from '@navikt/ds-react';
-import { type JSX } from 'react';
-import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
+import type { JSX } from 'react';
+import type Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';
 
 interface VurderingsoversiktLangvarigSykdomMessagesProps {

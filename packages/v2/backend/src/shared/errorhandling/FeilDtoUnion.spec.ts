@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import { isFeilDtoUnion, type FeilDtoUnion } from './FeilDtoUnion.js';
+import { type FeilDtoUnion, isFeilDtoUnion } from './FeilDtoUnion.js';
 
 describe('isFeilDtoUnion', () => {
   it('should identify instance of FeilDtoUnion', () => {

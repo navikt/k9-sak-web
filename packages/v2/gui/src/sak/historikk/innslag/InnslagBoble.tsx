@@ -1,17 +1,17 @@
+import { HistorikkAktør } from '@k9-sak-web/backend/combined/kodeverk/historikk/HistorikkAktør.js';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, Chat, VStack } from '@navikt/ds-react';
+import type { AkselColor } from '@navikt/ds-react/types/theme';
+import { dateFormat, timeFormat } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
 import type { BeriketHistorikkInnslag } from '../api/HistorikkBackendApi.js';
 import { Avatar } from './Avatar.jsx';
 import { DokumentLenke } from './DokumentLenke.js';
-import { Tittel } from './Tittel.js';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
-import { Skjermlenke } from './Skjermlenke.js';
-import { HistorikkAktør } from '@k9-sak-web/backend/combined/kodeverk/historikk/HistorikkAktør.js';
 import styles from './innslagboble.module.css';
-import { dateFormat, timeFormat } from '@navikt/ft-utils';
-import type { AkselColor } from '@navikt/ds-react/types/theme';
+import { Skjermlenke } from './Skjermlenke.js';
+import { Tittel } from './Tittel.js';
 
 export interface InnslagBobleProps {
   readonly innslag: BeriketHistorikkInnslag;

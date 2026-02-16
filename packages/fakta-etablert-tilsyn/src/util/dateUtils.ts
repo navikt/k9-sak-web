@@ -45,7 +45,7 @@ function getDaySequencesAsListOfPeriods(daySequences: string[][]): Period[] {
 export function getPeriodDifference(basePeriod: Period, periods: Period[]) {
   const baseListOfDays = getPeriodAsListOfDays(basePeriod);
 
-  const listOfDaysToExclude = periods.map(period => getPeriodAsListOfDays(period)).flat();
+  const listOfDaysToExclude = periods.flatMap(period => getPeriodAsListOfDays(period));
 
   const daysToInclude: string[][] = [];
   let index = 0;

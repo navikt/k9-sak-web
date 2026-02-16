@@ -1,4 +1,4 @@
-import { Dokument } from './Dokument';
+import type { Dokument } from './Dokument';
 
 interface StrukturerDokumentFormProps {
   dokument: Dokument;

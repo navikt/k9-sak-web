@@ -1,9 +1,9 @@
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling } from '@k9-sak-web/types';
 import FaktaSykdomOgOpplæringIndex from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/FaktaSykdomOgOpplæringIndex.js';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import type { Behandling, Fagsak } from '@k9-sak-web/types';
 
 class SykdomOgOpplæringPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.SYKDOM_OG_OPPLAERING;

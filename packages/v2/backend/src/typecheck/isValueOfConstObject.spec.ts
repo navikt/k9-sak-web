@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { safeConstCombine } from './safeConstCombine.js';
+import { describe, expect, it } from 'vitest';
 import { isValueOfConstObject } from './isValueOfConstObject.js';
+import { safeConstCombine } from './safeConstCombine.js';
 
 const one = {
   a: 'a',

@@ -1,7 +1,7 @@
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
-  GetUngdomsprogramInformasjonResponse,
+  type GetUngdomsprogramInformasjonResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -10,9 +10,9 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import type BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
-import {
+import type {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
   FagsakPerson,
@@ -28,7 +28,7 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
-import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
+import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';

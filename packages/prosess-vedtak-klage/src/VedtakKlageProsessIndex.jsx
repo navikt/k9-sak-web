@@ -1,12 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import VedtakKlageForm from './components/VedtakKlageForm';
-import vedtakKlageVurderingPropType from './propTypes/vedtakKlageVurderingPropType';
-import vedtakKlageBehandlingPropType from './propTypes/vedtakKlageBehandlingPropType';
-import vedtakKlageAksjonspunkterPropType from './propTypes/vedtakKlageAksjonspunkterPropType';
 import messages from '../i18n/nb_NO.json';
+import VedtakKlageForm from './components/VedtakKlageForm';
+import vedtakKlageAksjonspunkterPropType from './propTypes/vedtakKlageAksjonspunkterPropType';
+import vedtakKlageBehandlingPropType from './propTypes/vedtakKlageBehandlingPropType';
+import vedtakKlageVurderingPropType from './propTypes/vedtakKlageVurderingPropType';
 
 const cache = createIntlCache();
 

@@ -1,13 +1,13 @@
-import type {
-  ForhåndsvisInformasjonsbrevResponse,
-  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
-  InformasjonsbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import {
   formidling_bestillInformasjonsbrev,
   formidling_forhåndsvisInformasjonsbrev,
   formidling_informasjonsbrevValg,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+import type {
+  ForhåndsvisInformasjonsbrevResponse,
+  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
+  InformasjonsbrevValgResponse,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 export default class UngMeldingerBackendClient {
   async hentMaler(behandlingId: number): Promise<InformasjonsbrevValgResponse> {

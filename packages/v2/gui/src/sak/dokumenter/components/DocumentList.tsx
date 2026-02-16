@@ -10,7 +10,7 @@ import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
 import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
-import { type Kompletthet } from '../types/Kompletthetsperioder';
+import type { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 import arrowLeftPurpleImageUrl from './icons/arrow_left_purple.svg';
 import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';

@@ -1,4 +1,4 @@
-import RequestAdditionalConfig from './RequestAdditionalConfigTsType';
+import type RequestAdditionalConfig from './RequestAdditionalConfigTsType';
 import RequestConfig from './RequestConfig';
 
 /**

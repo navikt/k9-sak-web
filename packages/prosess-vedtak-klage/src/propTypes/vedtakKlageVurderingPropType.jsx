@@ -16,14 +16,18 @@ const vedtakKlageVurderingPropType = PropTypes.shape({
     godkjentAvMedunderskriver: PropTypes.bool.isRequired,
   }),
   klageFormkravResultatKA: PropTypes.shape({
-    avvistArsaker: PropTypes.arrayOf(PropTypes.shape({
-      navn: PropTypes.string,
-    })),
+    avvistArsaker: PropTypes.arrayOf(
+      PropTypes.shape({
+        navn: PropTypes.string,
+      }),
+    ),
   }),
   klageFormkravResultatNFP: PropTypes.shape({
-    avvistArsaker: PropTypes.arrayOf(PropTypes.shape({
-      navn: PropTypes.string,
-    })),
+    avvistArsaker: PropTypes.arrayOf(
+      PropTypes.shape({
+        navn: PropTypes.string,
+      }),
+    ),
   }),
 });
 

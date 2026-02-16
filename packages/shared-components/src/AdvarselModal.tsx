@@ -1,8 +1,8 @@
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { BodyShort, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, HGrid, Modal } from '@navikt/ds-react';
 import getPackageIntl from '../i18n/getPackageIntl';
-import Image from './Image';
 import styles from './advarselModal.module.css';
+import Image from './Image';
 
 interface OwnProps {
   headerText?: string;

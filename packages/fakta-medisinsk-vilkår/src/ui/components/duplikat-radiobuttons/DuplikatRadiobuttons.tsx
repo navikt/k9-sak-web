@@ -1,16 +1,16 @@
 import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { Box, Link } from '@navikt/ds-react';
+import type { JSX } from 'react';
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
-import Dokument, { dokumentLabel } from '../../../types/Dokument';
+import type Dokument from '../../../types/Dokument';
+import { dokumentLabel } from '../../../types/Dokument';
 import { StrukturerDokumentFormFieldName as FieldName } from '../../../types/StrukturerDokumentFormState';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators';
-
-import type { JSX } from 'react';
 
 export const ikkeDuplikatValue = 'ikkeDuplikat';
 

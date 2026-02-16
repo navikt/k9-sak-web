@@ -1,5 +1,5 @@
 import ErrorMessage from './ErrorMessage';
-import Formatter from './Formatter';
+import type Formatter from './Formatter';
 
 export type ErrorData = {
   feilmelding?: string;

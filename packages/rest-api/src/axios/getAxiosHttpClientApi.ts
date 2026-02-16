@@ -1,8 +1,7 @@
-import axios, { AxiosHeaders, AxiosResponse } from 'axios';
-
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerOption.js';
 import { konverterKodeverkTilKodeSelektivt } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKodeSelektivt.js';
+import axios, { AxiosHeaders, type AxiosResponse } from 'axios';
 import { xJsonSerializerOptions } from '../xJsonSerializerOptions';
 import initRestMethods from './initRestMethods';
 

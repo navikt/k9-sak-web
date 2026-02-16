@@ -1,7 +1,7 @@
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React from 'react';
+import type React from 'react';
 
 interface DataFetcherProps<T> {
   url: string;

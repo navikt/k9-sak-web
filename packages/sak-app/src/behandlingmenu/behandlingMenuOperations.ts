@@ -1,4 +1,4 @@
-import { Location } from 'history';
+import type { Location } from 'history';
 
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import behandlingEventHandler from '../behandling/BehandlingEventHandler';

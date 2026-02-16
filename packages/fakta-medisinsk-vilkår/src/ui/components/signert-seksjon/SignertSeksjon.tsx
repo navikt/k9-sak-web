@@ -1,5 +1,5 @@
 import { Alert, Box, Heading, HStack } from '@navikt/ds-react';
-import { type JSX } from 'react';
+import type { JSX } from 'react';
 
 interface SignertSeksjonProps {
   harGyldigSignatur: boolean;

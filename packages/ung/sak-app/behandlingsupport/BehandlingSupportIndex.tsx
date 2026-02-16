@@ -1,8 +1,21 @@
-import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
+import { UngHistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/UngHistorikkBackendClient.js';
+import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
+import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
+import { UngTilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/UngTilbakeMeldingerBackendClient.js';
+import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
+import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
+import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngSakTotrinnskontrollBackendClient.js';
+import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngTilbakeTotrinnskontrollBackendClient.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
+import type BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import type { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
@@ -23,23 +36,10 @@ import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { UngHistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/UngHistorikkBackendClient.js';
-import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
-import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
-import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
-import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
-import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngSakTotrinnskontrollBackendClient.js';
-import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngTilbakeTotrinnskontrollBackendClient.js';
-import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
-import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
-import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
-import { UngTilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/UngTilbakeMeldingerBackendClient.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {

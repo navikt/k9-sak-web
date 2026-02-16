@@ -1,9 +1,9 @@
-import { K9TilbakeApiError } from './errorhandling/K9TilbakeApiError.js';
-import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
 import { client } from '@navikt/k9-tilbake-typescript-client/client';
 import type { AuthFixApi } from '../shared/auth/AuthFixApi.js';
 import { ClientConfigHelper } from '../shared/config/ClientConfigHelper.js';
 import { defaultQuerySerializer } from '../shared/config/querySerializer.js';
+import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
+import { K9TilbakeApiError } from './errorhandling/K9TilbakeApiError.js';
 
 const baseUrl = '/k9/tilbake';
 

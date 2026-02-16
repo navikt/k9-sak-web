@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
-import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
-
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
-import Rettigheter from '../../types/rettigheterTsType';
-import { ProsessStegDef } from './ProsessStegDef';
-import { ProsessStegUtledet } from './ProsessStegUtledet';
+import type { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
+import type Rettigheter from '../../types/rettigheterTsType';
+import type { ProsessStegDef } from './ProsessStegDef';
+import type { ProsessStegUtledet } from './ProsessStegUtledet';
 import {
   finnValgtPanel,
   formaterPanelerForProsessmeny,

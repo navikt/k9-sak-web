@@ -1,15 +1,13 @@
-import { screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import type { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import type PersonopplysningerTsType from '@k9-sak-web/types/src/personopplysningerTsType.js';
+import { screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
-import type PersonopplysningerTsType from '@k9-sak-web/types/src/personopplysningerTsType.js';
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {

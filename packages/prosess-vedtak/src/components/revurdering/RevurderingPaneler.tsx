@@ -1,19 +1,18 @@
-import { type JSX } from 'react';
-import { useIntl } from 'react-intl';
-
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type {
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { HGrid } from '@navikt/ds-react';
-import {
-  type k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  type folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { FormikState } from 'formik';
-import { BeregningResultat } from '../../types/BeregningResultat';
-import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
-import { VedtakVarsel } from '../../types/VedtakVarsel';
+import type { FormikState } from 'formik';
+import type { JSX } from 'react';
+import { useIntl } from 'react-intl';
+import type { BeregningResultat } from '../../types/BeregningResultat';
+import type VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
+import type { VedtakVarsel } from '../../types/VedtakVarsel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';

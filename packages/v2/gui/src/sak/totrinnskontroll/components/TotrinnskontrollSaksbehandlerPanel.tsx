@@ -4,12 +4,12 @@ import { BodyShort, Link } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import React, { useContext } from 'react';
 import { NavLink, useLocation } from 'react-router';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
+import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
 import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
-import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
-import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
-import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 
 interface OwnProps {
   totrinnskontrollData: TotrinnskontrollData;

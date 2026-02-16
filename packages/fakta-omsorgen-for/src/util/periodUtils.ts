@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import type { Period } from '@fpsak-frontend/utils';
 
 export const getStringMedPerioder = (perioder: Period[]): string => {
   if (perioder.length === 1) {

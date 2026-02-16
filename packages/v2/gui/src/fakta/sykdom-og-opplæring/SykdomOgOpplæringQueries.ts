@@ -1,14 +1,14 @@
-import { useMutation, useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import {
-  type GetBrevMottakerinfoEregData,
-  type GetBrevMottakerinfoEregResponse,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringDto,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto,
-  type OpprettLangvarigSykdomsVurderingData,
-  type OpprettLangvarigSykdomsVurderingResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
 import type { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
+import type {
+  GetBrevMottakerinfoEregData,
+  GetBrevMottakerinfoEregResponse,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringDto,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto,
+  OpprettLangvarigSykdomsVurderingData,
+  OpprettLangvarigSykdomsVurderingResponse,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type UseQueryOptions, useMutation, useQuery } from '@tanstack/react-query';
+import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
 
 export const useSykdomBackendClient = () => {
   return new SykdomOgOpplæringBackendClient();

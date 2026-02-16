@@ -1,8 +1,8 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Button, HStack, RadioGroup } from '@navikt/ds-react';
-import React from 'react';
+import type React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { OmsorgProps } from '../../../types/OmsorgProps';
+import type { OmsorgProps } from '../../../types/OmsorgProps';
 import { booleanTilTekst, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';

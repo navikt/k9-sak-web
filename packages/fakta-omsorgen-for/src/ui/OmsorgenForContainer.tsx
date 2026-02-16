@@ -4,9 +4,9 @@ import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContaine
 import { Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { IntlProvider } from 'react-intl';
-import { ContainerContract } from '../types/ContainerContract';
+import type { ContainerContract } from '../types/ContainerContract';
 import OmsorgsperiodeoversiktType from '../types/Omsorgsperiodeoversikt';
-import OmsorgsperioderResponse from '../types/OmsorgsperioderResponse';
+import type OmsorgsperioderResponse from '../types/OmsorgsperioderResponse';
 import { teksterForSakstype } from '../util/utils';
 import ActionType from './actionTypes';
 import Omsorgsperiodeoversikt from './components/omsorgsperiodeoversikt/Omsorgsperiodeoversikt';

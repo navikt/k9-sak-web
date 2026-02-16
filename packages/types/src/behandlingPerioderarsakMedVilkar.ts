@@ -41,8 +41,8 @@ export interface SøktePerioder {
 }
 
 export interface Arbeidsgiver {
-  arbeidsgiverOrgnr: string; 
-  arbeidsgiverAktørId: any; 
+  arbeidsgiverOrgnr: string;
+  arbeidsgiverAktørId: any;
 }
 
 export interface PerioderMedÅrsakElement {

@@ -1,5 +1,9 @@
-import { Behandling } from '@k9-sak-web/types';
-import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import type { Behandling } from '@k9-sak-web/types';
+import {
+  type Rammevedtak,
+  RammevedtakEnum,
+  type RammevedtakType,
+} from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import React from 'react';
 import FaktaRammevedtakIndex from './FaktaRammevedtakIndex';
 

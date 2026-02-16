@@ -1,14 +1,14 @@
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { InformasjonsbehovVedtaksbrev } from '@fpsak-frontend/prosess-vedtak/src/components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
+import type { InformasjonsbehovVedtaksbrev } from '@fpsak-frontend/prosess-vedtak/src/components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import { isBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
 import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { bestemAvsenderApp as v2BestemAvsenderApp } from '@k9-sak-web/gui/utils/formidling.js';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import { Behandling } from '@k9-sak-web/types';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
+import type { Behandling } from '@k9-sak-web/types';
+import type { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import type ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;

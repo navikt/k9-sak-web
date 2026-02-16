@@ -1,15 +1,15 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import type { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { type Aksjonspunkt, type Behandling, UtfallEnum, type Uttaksperiode } from '@k9-sak-web/types';
 import { isAfter, parse } from 'date-fns';
-import Aktivitet from '../../dto/Aktivitet';
+import type Aktivitet from '../../dto/Aktivitet';
 import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
 import Soknadsårsak from '../../dto/Soknadsårsak';
 import { antallDager } from '../AktivitetTabell';
-import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
+import type { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 
 interface LosAksjonspunktSaerligSmittevern {
   kode: string;

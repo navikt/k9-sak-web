@@ -3,7 +3,7 @@ import { Tooltip } from '@navikt/ds-react';
 import styles from './dagsatsOgUtbetaling.module.css';
 
 export const formatSats = (satstype: UngdomsytelseSatsPeriodeDtoSatsType) => {
-  let icon: React.ReactElement | undefined = undefined;
+  let icon: React.ReactElement | undefined;
   let tooltipTekst = '';
   if (satstype === UngdomsytelseSatsPeriodeDtoSatsType.LAV) {
     icon = (

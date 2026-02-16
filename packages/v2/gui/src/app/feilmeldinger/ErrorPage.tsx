@@ -1,5 +1,5 @@
-import { BigError, DefaultErrorMsg } from './BigError.js';
 import { CopyButton } from '@navikt/ds-react';
+import { BigError, DefaultErrorMsg } from './BigError.js';
 
 export interface ErrorPageProps {
   readonly sentryId?: string;

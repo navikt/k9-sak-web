@@ -1,6 +1,6 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Checkbox, CheckboxGroup as DSCheckboxGroup } from '@navikt/ds-react';
-import React from 'react';
+import type React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { getError } from './formUtils';
 

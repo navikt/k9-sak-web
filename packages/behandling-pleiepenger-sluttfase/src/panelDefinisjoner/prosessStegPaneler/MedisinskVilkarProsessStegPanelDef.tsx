@@ -3,8 +3,8 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
+import type { Vilkar } from '@k9-sak-web/types';
 import React from 'react';
-import { Vilkar } from '@k9-sak-web/types';
 
 interface Props {
   vilkar: Vilkar[];

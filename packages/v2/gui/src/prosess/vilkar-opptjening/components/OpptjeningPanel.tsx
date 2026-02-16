@@ -1,7 +1,7 @@
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Detail, Heading, HStack, Label, VStack } from '@navikt/ds-react';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
 import type { VilkårFieldFormValues } from '../types/VilkårFieldFormValues';

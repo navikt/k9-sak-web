@@ -54,7 +54,7 @@
 }
 
 .hiddenpast {
-  content: '';
+  content: "";
   visibility: hidden;
 }
 

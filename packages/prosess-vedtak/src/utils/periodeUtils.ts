@@ -1,8 +1,7 @@
+import type Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
+import type TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import { isBefore, parse } from 'date-fns';
-
-import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
-import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
-import { Periodeinfo } from '../types/Periodeinfo';
+import type { Periodeinfo } from '../types/Periodeinfo';
 
 /**
  * Hjelperfunksjon for å sortere periodene i radene til tidslinjen, ref. sorterOverlappendeRader

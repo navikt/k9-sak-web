@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 import { foreldrepenger_tilbakekreving_behandlingslager_behandling_BehandlingType as BehandlingType } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeTilbakeMeldingerApi } from '@k9-sak-web/gui/storybook/mocks/FakeTilbakeMeldingerApi.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { TilbakeMessages } from './TilbakeMessages.js';

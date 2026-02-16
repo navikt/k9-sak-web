@@ -1,15 +1,15 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { RhfForm } from '@navikt/ft-form-hooks';
-import {
+import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { useForm } from 'react-hook-form';
-import { TilkjentYtelseFormState } from './FormState';
+import type { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';
 
 interface OwnProps {

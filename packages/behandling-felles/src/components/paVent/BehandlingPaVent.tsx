@@ -4,9 +4,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
+import type { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import SettPaVentParams from '../../types/settPaVentParamsTsType';
+import type SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;

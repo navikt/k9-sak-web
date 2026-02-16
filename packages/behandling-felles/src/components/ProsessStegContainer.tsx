@@ -1,8 +1,8 @@
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
-import React, { ReactNode, useMemo, useState } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import React, { type ReactNode, useMemo, useState } from 'react';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
 
-import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
+import type ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
 import styles from './prosessStegContainer.module.css';
 

@@ -1,7 +1,6 @@
-import styles from './vilkårslisteItem.module.css';
-
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
+import styles from './vilkårslisteItem.module.css';
 
 interface VilkårslisteItemProps {
   vilkår: string;

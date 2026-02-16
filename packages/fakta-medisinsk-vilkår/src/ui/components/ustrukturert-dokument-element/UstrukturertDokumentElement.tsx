@@ -1,8 +1,8 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon, PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
 import { Tooltip } from '@navikt/ds-react';
-import { type JSX } from 'react';
-import { Dokument, dokumentLabel } from '../../../types/Dokument';
+import type { JSX } from 'react';
+import { type Dokument, dokumentLabel } from '../../../types/Dokument';
 import styles from './ustrukturertDokumentElement.module.css';
 
 interface UstrukturertDokumentElementProps {

@@ -1,7 +1,7 @@
 import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
   type k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   checkForOverlap,
@@ -13,20 +13,20 @@ import {
 } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { PlusCircleIcon, ScissorsFillIcon, TrashIcon } from '@navikt/aksel-icons';
 import { Alert, Button, DatePicker, Label, Modal, Radio, RadioGroup } from '@navikt/ds-react';
-import { Period } from '@navikt/ft-utils';
+import type { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Controller,
-  useFieldArray,
-  useFormContext,
   type FieldArrayWithId,
   type UseFieldArrayRemove,
   type UseFieldArrayReplace,
+  useFieldArray,
+  useFormContext,
 } from 'react-hook-form';
+import Periodevelger from '../../../../shared/periodevelger/Periodevelger';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import { Avslagsårsak } from './Avslagsårsak';
-import Periodevelger from '../../../../shared/periodevelger/Periodevelger';
 
 type NødvendigOpplæringFormFields = {
   begrunnelse: string;

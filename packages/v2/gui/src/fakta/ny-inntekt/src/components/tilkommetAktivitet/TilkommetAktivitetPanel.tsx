@@ -1,22 +1,18 @@
-import { useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { ScissorsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
-import dayjs from 'dayjs';
-
-import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
-
-import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
-import { type Periode } from './PeriodesplittDatoValg';
-import { PeriodesplittModal } from './PeriodesplittModal';
-import { TilkommetAktivitetAccordion } from './TilkommetAktivitetAccordion';
-
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
-import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
+import type { TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
+import type { Periode } from './PeriodesplittDatoValg';
+import { PeriodesplittModal } from './PeriodesplittModal';
+import { TilkommetAktivitetAccordion } from './TilkommetAktivitetAccordion';
 import styles from './tilkommetAktivitet.module.css';
 
 const finnAktivitetStatus = (

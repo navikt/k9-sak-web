@@ -2,8 +2,8 @@ import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Box } from '@navikt/ds-react';
-import { type JSX } from 'react';
-import Vurdering from '../../../types/Vurdering';
+import type { JSX } from 'react';
+import type Vurdering from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
@@ -40,9 +40,7 @@ const VurderingsoppsummeringForSluttfase = ({
                 <BasicList
                   elements={dokumenter
                     .filter(({ benyttet }) => benyttet)
-                    .map(dokument => (
-                      <DokumentLink dokument={dokument} visDokumentIkon />
-                    ))}
+                    .map(dokument => <DokumentLink dokument={dokument} visDokumentIkon />)}
                 />
               </Box.New>
             }

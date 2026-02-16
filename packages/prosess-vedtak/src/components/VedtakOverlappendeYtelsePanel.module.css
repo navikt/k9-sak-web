@@ -30,7 +30,7 @@
   box-shadow: none;
 }
 
-.accordion :global(.aksel-accordion__header[aria-expanded='true']) {
+.accordion :global(.aksel-accordion__header[aria-expanded="true"]) {
   background-color: transparent;
 }
 

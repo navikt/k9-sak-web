@@ -1,10 +1,10 @@
 import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import type { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Detail, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, type IntlShape, injectIntl, type WrappedComponentProps } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';

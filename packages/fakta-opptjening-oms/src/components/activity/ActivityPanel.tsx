@@ -1,10 +1,10 @@
 import {
+  behandlingForm,
+  behandlingFormValueSelector,
   PeriodpickerField,
   RadioGroupField,
   SelectField,
   TextAreaField,
-  behandlingForm,
-  behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
@@ -24,16 +24,16 @@ import {
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
 import { findDifferenceInMonthsAndDays } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import type { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import type OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label, Tag } from '@navikt/ds-react';
 import moment from 'moment';
-import { KeyboardEvent, MouseEvent } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import type { KeyboardEvent, MouseEvent } from 'react';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
+import type { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 import styles from './activityPanel.module.css';
 

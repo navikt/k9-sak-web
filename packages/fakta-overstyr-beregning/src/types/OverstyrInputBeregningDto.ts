@@ -1,8 +1,8 @@
-import { OverstyrInputBeregningAktivitet } from "./OverstyrInputBeregningAktivitet";
+import type { OverstyrInputBeregningAktivitet } from './OverstyrInputBeregningAktivitet';
 
 export type OverstyrInputBeregningDto = {
-    skjaeringstidspunkt: string;
-    harKategoriNæring?: boolean;
-    harKategoriFrilans?: boolean;
-    aktivitetliste: OverstyrInputBeregningAktivitet[];
+  skjaeringstidspunkt: string;
+  harKategoriNæring?: boolean;
+  harKategoriFrilans?: boolean;
+  aktivitetliste: OverstyrInputBeregningAktivitet[];
 };

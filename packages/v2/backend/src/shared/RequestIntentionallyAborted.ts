@@ -3,6 +3,6 @@
  *
  * The caller will then typically ignore this response and not do anything.
  */
-export const requestIntentionallyAborted = Symbol("RequestIntentionallyAborted")
+export const requestIntentionallyAborted = Symbol('RequestIntentionallyAborted');
 
-export type RequestIntentionallyAborted = typeof requestIntentionallyAborted
+export type RequestIntentionallyAborted = typeof requestIntentionallyAborted;

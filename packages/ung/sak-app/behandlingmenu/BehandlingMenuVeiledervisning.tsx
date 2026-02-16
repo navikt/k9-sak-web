@@ -1,6 +1,7 @@
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import { Button } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 
 interface VeiledervisningProps {
   behandlingUuid: string;

@@ -1,9 +1,9 @@
-import { AleneOmOmsorgenProps } from './AleneOmOmsorgenProps';
-import Komponenter from './Komponenter';
-import { KorrigerePerioderProps } from './KorrigerePerioderProps';
-import { OmsorgProps } from './OmsorgProps';
-import { VilkarKroniskSyktBarnProps } from './VilkarKroniskSyktBarnProps';
-import { VilkarMidlertidigAleneProps } from './VilkarMidlertidigAleneProps';
+import type { AleneOmOmsorgenProps } from './AleneOmOmsorgenProps';
+import type Komponenter from './Komponenter';
+import type { KorrigerePerioderProps } from './KorrigerePerioderProps';
+import type { OmsorgProps } from './OmsorgProps';
+import type { VilkarKroniskSyktBarnProps } from './VilkarKroniskSyktBarnProps';
+import type { VilkarMidlertidigAleneProps } from './VilkarMidlertidigAleneProps';
 
 interface KorrigerePerioderContract {
   visKomponent: Komponenter.KORRIGERE_PERIODER;

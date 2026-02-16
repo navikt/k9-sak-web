@@ -1,12 +1,10 @@
+import type { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import TilbakekrevingForm from './components/TilbakekrevingForm';
-import DetaljerteFeilutbetalingsperioder from './types/detaljerteFeilutbetalingsperioderTsType';
-import FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
-import VilkarsVurdertePerioderWrapper from './types/vilkarsVurdertePerioderTsType';
-
 import messages from '../i18n/nb_NO.json';
+import TilbakekrevingForm from './components/TilbakekrevingForm';
+import type DetaljerteFeilutbetalingsperioder from './types/detaljerteFeilutbetalingsperioderTsType';
+import type FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
+import type VilkarsVurdertePerioderWrapper from './types/vilkarsVurdertePerioderTsType';
 
 const cache = createIntlCache();
 

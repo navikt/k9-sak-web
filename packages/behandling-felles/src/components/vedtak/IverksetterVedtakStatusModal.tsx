@@ -1,9 +1,9 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Kodeverk } from '@k9-sak-web/types';
+import type { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 import styles from './iverksetterVedtakStatusModal.module.css';
 
 interface OwnProps {

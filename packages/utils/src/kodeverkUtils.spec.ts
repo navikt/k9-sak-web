@@ -1,7 +1,7 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import { getKodeverknavnFn, getKodeverknavnFraKode } from './kodeverkUtils';
 

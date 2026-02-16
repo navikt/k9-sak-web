@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { dagOverstyrt, toPerioderSammeUke, toSmøringer, treEnkeltdager } from '../mock/etablertTilsynMock';
 import EtablertTilsynMedSmoring from '../ui/components/etablertTilsyn/EtablertTilsynMedSmoring';
-import { toPerioderSammeUke, toSmøringer, treEnkeltdager, dagOverstyrt } from '../mock/etablertTilsynMock';
 
 describe('Etablert tilsyn med smøring', () => {
   test('Kan vise etablert tilsyn med to smøringer', () => {

@@ -1,5 +1,6 @@
-import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import {
+import { BehandlingPaVent, type Rettigheter, type SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
   Fagsak,
@@ -7,10 +8,9 @@ import {
   Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
-import FetchedData from '../types/fetchedDataTsType';
+import type { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
+import type FetchedData from '../types/fetchedDataTsType';
 import KlageProsess from './KlageProsess';
 
 interface OwnProps {

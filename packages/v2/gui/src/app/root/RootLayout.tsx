@@ -1,7 +1,7 @@
-import ErrorBoundary from '../feilmeldinger/ErrorBoundary.js';
 import { Theme } from '@navikt/ds-react';
-import { Outlet } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Outlet } from 'react-router';
+import ErrorBoundary from '../feilmeldinger/ErrorBoundary.js';
 import { RootSuspense } from './suspense/RootSuspense.js';
 
 export const RootLayout = () => {

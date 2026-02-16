@@ -1,6 +1,6 @@
-import { LoadingPanel } from './LoadingPanel.jsx';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import { LoadingPanel } from './LoadingPanel.jsx';
 
 const meta = {
   title: 'gui/shared/loading-panel/LoadingPanel',

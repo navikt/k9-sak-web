@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react';
+import type { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
+import React, { type ReactNode } from 'react';
 import { Field } from 'redux-form';
 import CustomNavSelect from './CustomNavSelect';
-import LabelType from './LabelType';
+import type LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
-import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 interface SelectFieldProps {
   name: string;

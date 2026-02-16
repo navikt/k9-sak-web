@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
-import Vurderingselement from '../../../types/Vurderingselement';
-import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
+import type Vurderingselement from '../../../types/Vurderingselement';
+import type Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 // eslint-disable-next-line max-len
 import VurderingsdetaljvisningForEksisterendeVurdering from '../vurderingsdetaljvisning-for-eksisterende-vurdering/VurderingsdetaljvisningForEksisterendeVurdering';
 import VurderingsdetaljvisningForNyVurdering from '../vurderingsdetaljvisning-for-ny-vurdering/VurderingsdetaljvisningForNyVurdering';

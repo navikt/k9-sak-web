@@ -1,8 +1,7 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-
-import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
-import ApplicationContextPath from './ApplicationContextPath';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
+import ApplicationContextPath from './ApplicationContextPath';
+import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 
 const NO_PARAMS = {};
 

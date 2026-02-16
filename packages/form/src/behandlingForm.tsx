@@ -1,19 +1,19 @@
+import requireProps from '@fpsak-frontend/shared-components/src/requireProps';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import React, { ComponentType } from 'react';
+import React, { type ComponentType } from 'react';
 import { connect } from 'react-redux';
 import {
+  type ConfigProps,
   formValueSelector,
   getFormInitialValues,
   getFormSyncErrors,
   getFormValues,
-  InjectedFormProps,
+  type InjectedFormProps,
   isDirty,
   isSubmitting,
   reduxForm,
-  ConfigProps,
 } from 'redux-form';
 import { createSelector } from 'reselect';
-import requireProps from '@fpsak-frontend/shared-components/src/requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId: number, behandlingVersjon: number) =>
   `behandling_${behandlingId}_v${behandlingVersjon}`;

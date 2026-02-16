@@ -1,5 +1,5 @@
 import AbstractRequestApi from './AbstractRequestApi';
-import RequestRunner from './RequestRunner';
+import type RequestRunner from './RequestRunner';
 
 /**
  * RequestApi

@@ -1,8 +1,8 @@
 import type { Decorator } from '@storybook/react';
-import { FakeHistorikkBackend } from '../mocks/FakeHistorikkBackend.js';
-import { HistorikkBackendApiContext } from '../../sak/historikk/api/HistorikkBackendApiContext.js';
 import { useContext } from 'react';
 import { K9KodeverkoppslagContext } from '../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { HistorikkBackendApiContext } from '../../sak/historikk/api/HistorikkBackendApiContext.js';
+import { FakeHistorikkBackend } from '../mocks/FakeHistorikkBackend.js';
 
 export const withFakeHistorikkBackend = (): Decorator => Story => {
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);

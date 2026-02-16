@@ -1,7 +1,7 @@
 import {
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { Box, Button, HStack, Radio } from '@navikt/ds-react';

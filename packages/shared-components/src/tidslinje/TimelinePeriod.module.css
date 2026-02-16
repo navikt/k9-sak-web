@@ -30,7 +30,7 @@ button.periode:focus {
 }
 
 .infoPin:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   width: 10px;

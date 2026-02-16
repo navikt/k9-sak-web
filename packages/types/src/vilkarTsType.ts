@@ -1,5 +1,5 @@
-import Kodeverk from './kodeverkTsType';
-import Vilkarperiode from './vilkarperiode';
+import type Kodeverk from './kodeverkTsType';
+import type Vilkarperiode from './vilkarperiode';
 
 export type InnvilgetMerknad = Readonly<{
   merknad: Kodeverk;

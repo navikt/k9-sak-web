@@ -1,15 +1,13 @@
-import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import { FloatRight, Image } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
-import { Button, HGrid, Label } from '@navikt/ds-react';
-import DataForPeriode from '../../types/dataForPeriodeTsType';
-import DelOppPeriodeModal from './DelOppPeriodeModal';
-
 import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
+import { Button, HGrid, Label } from '@navikt/ds-react';
+import { useState } from 'react';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import type DataForPeriode from '../../types/dataForPeriodeTsType';
+import DelOppPeriodeModal from './DelOppPeriodeModal';
 import styles from './periodeController.module.css';
 
 const isEdited = false;

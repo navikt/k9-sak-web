@@ -1,11 +1,8 @@
-import { useState } from 'react';
-
 import { DatePicker, HStack, Label, useDatepicker } from '@navikt/ds-react';
-import dayjs from 'dayjs';
-
-import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
-
 import { PeriodLabel } from '@navikt/ft-ui-komponenter';
+import { ISO_DATE_FORMAT, sortPeriodsByFom } from '@navikt/ft-utils';
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import styles from './periodesplittModal.module.css';
 
 export type Periode = {

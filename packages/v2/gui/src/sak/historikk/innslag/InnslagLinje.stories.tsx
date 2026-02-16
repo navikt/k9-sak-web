@@ -1,6 +1,6 @@
-import { InnslagLinje } from './InnslagLinje.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import { InnslagLinje } from './InnslagLinje.js';
 
 const meta = {
   title: 'gui/sak/historikk/innslag/InnslagLinje',

@@ -1,16 +1,16 @@
-import {
-  behandlingType as behandlingTypeK9Klage,
-  type BehandlingType as BehandlingTypeK9Klage,
-} from '../../../k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  behandlingType as behandlingTypeK9Sak,
-  type BehandlingType as BehandlingTypeK9Sak,
-} from '../../../k9sak/kodeverk/behandling/BehandlingType.js';
 import { foreldrepenger_tilbakekreving_behandlingslager_behandling_BehandlingType as behandlingTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
-import type { Kodeverk } from '../../../shared/Kodeverk.js';
-import { safeConstCombine } from '../../../typecheck/safeConstCombine.js';
 import { ung_kodeverk_behandling_BehandlingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { sif_tilbakekreving_behandlingslager_behandling_BehandlingType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import {
+  type BehandlingType as BehandlingTypeK9Klage,
+  behandlingType as behandlingTypeK9Klage,
+} from '../../../k9klage/kodeverk/behandling/BehandlingType.js';
+import {
+  type BehandlingType as BehandlingTypeK9Sak,
+  behandlingType as behandlingTypeK9Sak,
+} from '../../../k9sak/kodeverk/behandling/BehandlingType.js';
+import type { Kodeverk } from '../../../shared/Kodeverk.js';
+import { safeConstCombine } from '../../../typecheck/safeConstCombine.js';
 
 export type BehandlingType =
   | BehandlingTypeK9Sak

@@ -1,8 +1,8 @@
 import { Timeline } from '@fpsak-frontend/tidslinje';
 import { isEqual } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import type OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import type OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import moment from 'moment';
 import hash from 'object-hash';
 import React, { Component } from 'react';

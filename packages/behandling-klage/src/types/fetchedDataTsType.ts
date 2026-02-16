@@ -1,6 +1,6 @@
-import { Aksjonspunkt, KlageVurdering } from '@k9-sak-web/types';
+import type { Aksjonspunkt, KlageVurdering } from '@k9-sak-web/types';
 
-import KlagePart from './klagePartTsType';
+import type KlagePart from './klagePartTsType';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

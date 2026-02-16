@@ -1,17 +1,17 @@
-import { Fragment, useState, type FC } from 'react';
-import dayjs from 'dayjs';
-import { Alert, BodyShort, Button, Label, Table, Loader, HStack } from '@navikt/ds-react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
   type k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
   k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import UttakRad from './UttakRad';
-import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
-import styles from './uttaksperiodeListe.module.css';
+import { Alert, BodyShort, Button, HStack, Label, Loader, Table } from '@navikt/ds-react';
+import dayjs from 'dayjs';
+import { type FC, Fragment, useState } from 'react';
 import { useUttakContext } from '../context/UttakContext';
 import { prettifyPeriod } from '../utils/periodUtils';
 import splitUttakByDate from '../utils/splitUttakByDate';
+import UttakRad from './UttakRad';
+import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
+import styles from './uttaksperiodeListe.module.css';
 
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;

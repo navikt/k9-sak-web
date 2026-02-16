@@ -1,7 +1,6 @@
-import styles from './deleteButton.module.css';
-
 import { TrashIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
+import styles from './deleteButton.module.css';
 
 interface DeleteButtonProps {
   onClick: () => void;

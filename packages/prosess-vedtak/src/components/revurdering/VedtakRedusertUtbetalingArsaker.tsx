@@ -1,6 +1,6 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import { CheckboxGroup } from '@navikt/ds-react';
-import { IntlShape } from 'react-intl';
+import type { IntlShape } from 'react-intl';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import styles from './vedtakRedusertUtbetalingArsaker.module.css';
 

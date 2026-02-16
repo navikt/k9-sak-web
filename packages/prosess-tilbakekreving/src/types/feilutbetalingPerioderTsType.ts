@@ -1,4 +1,4 @@
-import { Kodeverk } from '@k9-sak-web/types';
+import type { Kodeverk } from '@k9-sak-web/types';
 
 export type FeilutbetalingPeriode = Readonly<{
   fom: string;

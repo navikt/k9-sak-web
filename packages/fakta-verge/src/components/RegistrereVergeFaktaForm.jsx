@@ -1,10 +1,9 @@
-import { HGrid } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
-
 import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, hasValidFodselsnummer, hasValidName, required } from '@fpsak-frontend/utils';
+import { HGrid } from '@navikt/ds-react';
+import PropTypes from 'prop-types';
 
 import vergeType from '../kodeverk/vergeType';
 

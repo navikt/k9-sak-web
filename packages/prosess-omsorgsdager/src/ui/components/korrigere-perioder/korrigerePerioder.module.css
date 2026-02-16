@@ -7,7 +7,7 @@
   margin-bottom: 1rem;
 }
 
-.korrigerePerioder input[type='radio'] + label:before {
+.korrigerePerioder input[type="radio"] + label:before {
   box-sizing: border-box;
 }
 

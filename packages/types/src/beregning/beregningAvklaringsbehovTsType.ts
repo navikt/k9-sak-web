@@ -1,4 +1,4 @@
-import Kodeverk from '../kodeverkTsType';
+import type Kodeverk from '../kodeverkTsType';
 
 type BeregningAvklaringsbehov = Readonly<{
   definisjon: Kodeverk;

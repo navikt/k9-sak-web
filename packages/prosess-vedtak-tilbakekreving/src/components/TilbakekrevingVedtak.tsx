@@ -1,11 +1,11 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import { FormattedMessage } from 'react-intl';
-import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
-import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
+import type { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import type VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 

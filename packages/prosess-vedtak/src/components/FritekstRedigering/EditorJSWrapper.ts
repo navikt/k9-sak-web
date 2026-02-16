@@ -1,7 +1,7 @@
-import EditorJS, { API, type EditorConfig } from '@editorjs/editorjs';
+import EditorJS, { type API, type EditorConfig } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
-import Paragraph from '@editorjs/paragraph';
 import List from '@editorjs/list';
+import Paragraph from '@editorjs/paragraph';
 import edjsHTML from 'editorjs-html';
 
 export default class EditorJSWrapper {

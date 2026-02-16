@@ -1,8 +1,8 @@
 .container {
   display: grid;
   grid-template-areas:
-    'orgnr name'
-    'error error';
+    "orgnr name"
+    "error error";
   grid-template-columns: 15ex 1fr;
   grid-template-rows: auto;
   gap: var(--ax-space-8, 0.5rem);

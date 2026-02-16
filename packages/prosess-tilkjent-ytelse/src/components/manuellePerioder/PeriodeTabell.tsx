@@ -3,7 +3,7 @@ import { ariaCheck } from '@fpsak-frontend/utils';
 import { Button } from '@navikt/ds-react';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { BeriketBeregningsresultatPeriode, NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
+import type { BeriketBeregningsresultatPeriode, NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
 import NyPeriode from './NyPeriode';
 import PeriodeRad from './PeriodeRad';
 import SlettPeriodeModal from './SlettPeriodeModal';

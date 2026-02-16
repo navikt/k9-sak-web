@@ -1,4 +1,4 @@
-import Omsorgsperiode from './Omsorgsperiode';
+import type Omsorgsperiode from './Omsorgsperiode';
 
 interface OmsorgsperioderResponse {
   omsorgsperioder: Omsorgsperiode[];

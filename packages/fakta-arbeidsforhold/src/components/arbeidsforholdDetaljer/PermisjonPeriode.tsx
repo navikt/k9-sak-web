@@ -1,9 +1,8 @@
+import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import type ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 
 const utledPermisjonLabelID = arbeidsforhold => {
   if (arbeidsforhold.permisjoner.length > 1) {

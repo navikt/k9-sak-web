@@ -1,10 +1,10 @@
-import React from 'react';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling } from '@k9-sak-web/types';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import React from 'react';
 import OmsorgenFor from '../../components/OmsorgenFor';
 
 class OmsorgenForFaktaPanelDef extends FaktaPanelDef {

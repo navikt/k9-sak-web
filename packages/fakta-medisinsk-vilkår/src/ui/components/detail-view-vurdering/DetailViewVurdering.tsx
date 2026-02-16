@@ -1,6 +1,6 @@
-import { Period } from '@fpsak-frontend/utils';
+import type { Period } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { DetailView, DetailViewProps } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { DetailView, type DetailViewProps } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Button } from '@navikt/ds-react';
 import React, { type JSX } from 'react';

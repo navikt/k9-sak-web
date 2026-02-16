@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import dayjs from 'dayjs';
-import classNames from 'classnames';
-import { FormProvider, useForm } from 'react-hook-form';
-import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
+import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
+import classNames from 'classnames';
+import dayjs from 'dayjs';
+import type React from 'react';
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import type { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
 import { booleanTilTekst, tekstTilBoolean, utledTilgjengeligeÅr } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';

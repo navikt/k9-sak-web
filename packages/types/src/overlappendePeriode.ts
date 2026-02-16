@@ -1,5 +1,5 @@
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Kodeverk } from './kodeverkTsType';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { Kodeverk } from './kodeverkTsType';
 
 export interface OverlappendePeriode {
   ytelseType: FagsakYtelsesType;

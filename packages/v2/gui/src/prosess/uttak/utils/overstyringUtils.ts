@@ -1,17 +1,17 @@
-import dayjs from 'dayjs';
-import * as Yup from 'yup';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { yupValiderProsent } from '@k9-sak-web/lib/validationUtils/yupSchemas.js';
 import {
-  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType,
   type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakArbeidsforholdDto as OverstyrUttakArbeidsforholdDto,
   type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
   type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakUtbetalingsgradDto as OverstyrUttakUtbetalingsgradDto,
+  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { yupValiderProsent } from '@k9-sak-web/lib/validationUtils/yupSchemas.js';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import * as Yup from 'yup';
+import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(weekOfYear);

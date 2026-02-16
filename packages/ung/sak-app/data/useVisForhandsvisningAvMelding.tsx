@@ -1,9 +1,8 @@
-import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
-import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
-
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import lagForhåndsvisRequest, { forhandsvis } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { UngSakApiKeys, restApiHooks } from './ungsakApi';
+import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
+import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { restApiHooks, UngSakApiKeys } from './ungsakApi';
 
 type ForhandsvisFunksjon = (erHenleggelse: boolean, data: any) => void;
 

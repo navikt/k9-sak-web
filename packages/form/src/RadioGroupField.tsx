@@ -1,17 +1,15 @@
+import type { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 import { HStack, Radio, RadioGroup } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import React, { Fragment, ReactElement, ReactNode } from 'react';
-import { Field, WrappedFieldInputProps } from 'redux-form';
-import { RadioOptionProps } from './RadioOption';
+import React, { Fragment, type ReactElement, type ReactNode } from 'react';
+import { Field, type WrappedFieldInputProps } from 'redux-form';
+import type { RadioOptionProps } from './RadioOption';
 import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
-import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 type Direction = 'horizontal' | 'vertical';
 
-interface RenderProp<TChildrenProps, TElement = any> {
-  (props: TChildrenProps): React.ReactElement<TElement>;
-}
+type RenderProp<TChildrenProps, TElement = any> = (props: TChildrenProps) => React.ReactElement<TElement>;
 
 interface RadioProps {
   value: string | boolean;

@@ -1,18 +1,18 @@
-import { useState, type FC } from 'react';
-import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
-import AktivitetRad from './AktivitetRad';
-import OverstyringUttakForm from './OverstyringUttakForm';
-import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
-import { useUttakContext } from '../context/UttakContext';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { type FC, useState } from 'react';
+import { useUttakContext } from '../context/UttakContext';
+import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
+import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
+import AktivitetRad from './AktivitetRad';
+import OverstyringUttakForm from './OverstyringUttakForm';
 import styles from './overstyrUttakForm.module.css';
 
 export enum OverstyrUttakHandling {

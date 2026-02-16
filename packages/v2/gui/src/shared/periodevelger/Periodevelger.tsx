@@ -1,8 +1,8 @@
-import { useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
-import Datovelger from '../datovelger/Datovelger';
 import { ErrorMessage, HStack, VStack } from '@navikt/ds-react';
+import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
+import Datovelger from '../datovelger/Datovelger';
 
 interface PeriodevelgerProps {
   minDate?: Date;

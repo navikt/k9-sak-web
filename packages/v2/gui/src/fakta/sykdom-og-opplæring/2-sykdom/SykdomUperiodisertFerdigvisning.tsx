@@ -1,12 +1,12 @@
-import { BodyLong, BodyShort, Button, Tag } from '@navikt/ds-react';
-import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
-import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
-import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { ICD10 } from '@navikt/diagnosekoder';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { BodyLong, BodyShort, Button, Tag } from '@navikt/ds-react';
 import { useContext } from 'react';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
+import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 
 const SykdomUperiodisertFerdigvisning = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { behandlingUuid, løsAksjonspunkt9301 } = useContext(SykdomOgOpplæringContext);

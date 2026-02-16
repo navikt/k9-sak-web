@@ -1,5 +1,5 @@
+import type Dokument from '../../src/types/Dokument';
 import mockedDokumentoversikt from './mockedDokumentoversikt';
-import Dokument from '../../src/types/Dokument';
 
 const createStrukturertDokument = (dokument: Dokument) => {
   const index = mockedDokumentoversikt.dokumenter.findIndex(({ id }) => dokument.id === id);

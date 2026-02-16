@@ -1,12 +1,12 @@
 import {
   type AuthResult,
   authAbortedResult,
-  authSuccessResult,
   authSuccessExceptPopupResult,
+  authSuccessResult,
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
 import { resolveLoginURL, withRedirectTo } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
-import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
 import * as Sentry from '@sentry/react';
+import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
 
 const intentionalAbortReason = 'promise cleanup';
 

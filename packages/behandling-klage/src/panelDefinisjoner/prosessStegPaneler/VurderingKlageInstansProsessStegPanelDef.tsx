@@ -4,7 +4,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { KlagevurderingProsessIndex } from '@k9-sak-web/gui/prosess/klagevurdering/KlagevurderingProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { Fagsak } from '@k9-sak-web/types';
+import type { Fagsak } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {

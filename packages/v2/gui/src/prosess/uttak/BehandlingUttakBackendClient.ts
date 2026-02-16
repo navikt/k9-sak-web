@@ -1,13 +1,3 @@
-import type {
-  k9_sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
-  k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest as OverstyrbareAktiviteterForUttakRequest,
-  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-  k9_sak_kontrakt_uttak_overstyring_OverstyrtUttakDto as OverstyrtUttakDto,
-  k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingDto as InntektgraderingDto,
-  k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_overstyr,
@@ -18,6 +8,16 @@ import {
   behandlingUttak_hentEgneOverlappendeSaker,
   behandlingUttak_hentOverstyrbareAktiviterForUttak,
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import type {
+  k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+  k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingDto as InntektgraderingDto,
+  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
+  k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest as OverstyrbareAktiviteterForUttakRequest,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
+  k9_sak_kontrakt_uttak_overstyring_OverstyrtUttakDto as OverstyrtUttakDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export default class BehandlingUttakBackendClient {
   constructor() {}

@@ -2,9 +2,9 @@ import { Datepicker } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
-import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
+import type React from 'react';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import type { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import styles from './OverstyrBeregningFaktaForm.module.css';
 
 interface Props {

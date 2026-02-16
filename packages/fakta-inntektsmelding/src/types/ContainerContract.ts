@@ -1,5 +1,5 @@
-import Aksjonspunkt from './Aksjonspunkt';
-import AksjonspunktRequestPayload from './AksjonspunktRequestPayload';
+import type Aksjonspunkt from './Aksjonspunkt';
+import type AksjonspunktRequestPayload from './AksjonspunktRequestPayload';
 
 export type ArbeidsgiverOpplysninger = Readonly<{
   navn: string;

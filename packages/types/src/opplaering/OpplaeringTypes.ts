@@ -1,6 +1,6 @@
-import { Period } from '@fpsak-frontend/utils';
+import type { Period } from '@fpsak-frontend/utils';
 
-import Vurderingsresultat from '../Vurderingsresultat';
+import type Vurderingsresultat from '../Vurderingsresultat';
 
 export interface GjennomgaaOpplaeringPeriode {
   opplæring: Period;

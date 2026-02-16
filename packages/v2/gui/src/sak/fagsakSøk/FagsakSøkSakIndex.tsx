@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import FagsakSearch from './components/FagsakSearch';
 import type { Fagsak } from './types/Fagsak';
 

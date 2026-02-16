@@ -2,10 +2,10 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
 import { getAddresses } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import type { KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 
-import { Adresse, BostedSokerPersonopplysninger } from '../types';
+import type { Adresse, BostedSokerPersonopplysninger } from '../types';
 import styles from './bostedSokerView.module.css';
 
 interface OwnProps {

@@ -1,4 +1,4 @@
-import VedtaksbrevAvsnitt from './vedtaksbrevAvsnittTsType';
+import type VedtaksbrevAvsnitt from './vedtaksbrevAvsnittTsType';
 
 type Vedtaksbrev = {
   avsnittsliste: VedtaksbrevAvsnitt[];

@@ -1,4 +1,4 @@
-import { type BeregningsgrunnlagTilBekreftelse } from './BeregningsgrunnlagTilBekreftelse.js';
+import type { BeregningsgrunnlagTilBekreftelse } from './BeregningsgrunnlagTilBekreftelse.js';
 
 export type BeregningAvklaringsbehovTilBekreftelse<T, V> = {
   kode: T;

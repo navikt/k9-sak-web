@@ -57,12 +57,12 @@
   border-bottom-right-radius: 0;
 }
 
-.dokumentnavigasjon :global(.aksel-accordion__header[aria-expanded='false']) {
+.dokumentnavigasjon :global(.aksel-accordion__header[aria-expanded="false"]) {
   box-shadow: none;
   border-bottom: 1px solid #6a6a6a;
   border-radius: 4px;
 }
 
-.dokumentnavigasjon :global(.aksel-accordion__header[aria-expanded='true']) {
+.dokumentnavigasjon :global(.aksel-accordion__header[aria-expanded="true"]) {
   box-shadow: none;
 }

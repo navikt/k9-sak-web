@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-
-import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween';
-
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { ErrorBoundary } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@navikt/ft-utils';
-
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import { useEffect } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
+import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov.js';
+import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
+import type { Inntektsforhold, VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
+import type { BeregningsgrunnlagTilBekreftelse } from '../../types/BeregningsgrunnlagTilBekreftelse.js';
 import type {
   TilkommetAktivitetFieldValues,
   TilkommetAktivitetFormValues,
@@ -20,17 +22,10 @@ import type {
   VurderNyttInntektsforholdAP,
   VurderNyttInntektsforholTransformedValues,
 } from '../../types/interface/VurderNyttInntektsforholdAP.js';
-import { type Vilkårperiode } from '../../types/Vilkår.js';
+import type { Vilkårperiode } from '../../types/Vilkår.js';
 import { finnVilkårsperiode, vurderesIBehandlingen } from '../felles/vilkårsperiodeUtils.js';
 import { TilkommetAktivitetPanel } from './TilkommetAktivitetPanel.js';
 import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils.js';
-
-import { RhfForm } from '@navikt/ft-form-hooks';
-import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
-import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov.js';
-import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
-import type { Inntektsforhold, VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
-import type { BeregningsgrunnlagTilBekreftelse } from '../../types/BeregningsgrunnlagTilBekreftelse.js';
 import styles from './tilkommetAktivitet.module.css';
 
 dayjs.extend(isBetween);

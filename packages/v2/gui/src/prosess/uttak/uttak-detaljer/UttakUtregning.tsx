@@ -1,6 +1,6 @@
-import type { JSX, ReactNode } from 'react';
-import { Label } from '@navikt/ds-react';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
+import { Label } from '@navikt/ds-react';
+import type { JSX, ReactNode } from 'react';
 import styles from './uttakUtregning.module.css';
 
 interface UttakUtregningProps {

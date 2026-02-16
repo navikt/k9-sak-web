@@ -1,5 +1,5 @@
+import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import { Select } from '@navikt/ds-react';
-import { type FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 
 type FritekstForslagSelectProps = {
   readonly fritekstForslag: FritekstbrevDokumentdata[];

@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
 import { type AuthFixApi, type AuthResult, authSuccessResult } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
+import { describe, expect, it, vi } from 'vitest';
 import { ignoreUnusedDeclared } from '../../storybook/mocks/ignoreUnusedDeclared.js';
-import { sequentialAuthFixerSetup } from './WaitsForOthersAuthFixer.js';
 import { delay } from '../../utils/delay.js';
+import { sequentialAuthFixerSetup } from './WaitsForOthersAuthFixer.js';
 
 class FakeAuthFixer implements AuthFixApi {
   #fakeAuthProcess: PromiseWithResolvers<AuthResult> | null = null;

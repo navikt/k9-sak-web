@@ -1,9 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-
 import MedlemskapFaktaIndex from '@k9-sak-web/gui/fakta/medlemskap/MedlemskapFaktaIndex.js';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 

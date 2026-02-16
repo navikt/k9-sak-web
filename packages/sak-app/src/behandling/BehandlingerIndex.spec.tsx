@@ -1,7 +1,6 @@
+import type { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { BehandlingerIndex } from './BehandlingerIndex';
 

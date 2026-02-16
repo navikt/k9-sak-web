@@ -1,21 +1,21 @@
-import {
-  k9_sak_kontrakt_FeilType,
-  type k9_sak_kontrakt_FeilDto,
-  type k9_sak_kontrakt_FeltFeilDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
+import type {
+  k9_klage_kontrakt_FeilDto,
   k9_klage_kontrakt_FeilType,
-  type k9_klage_kontrakt_FeilDto,
-  type k9_klage_kontrakt_FeltFeilDto,
+  k9_klage_kontrakt_FeltFeilDto,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
+  type k9_sak_kontrakt_FeilDto,
+  k9_sak_kontrakt_FeilType,
+  type k9_sak_kontrakt_FeltFeilDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type {
+  ung_sak_kontrakt_FeilDto,
   ung_sak_kontrakt_FeilType,
-  type ung_sak_kontrakt_FeilDto,
-  type ung_sak_kontrakt_FeltFeilDto,
+  ung_sak_kontrakt_FeltFeilDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { isArray } from '../../typecheck/isArray.js';
 import { isObject } from '../../typecheck/isObject.js';
 import { isString } from '../../typecheck/isString.js';
-import { isArray } from '../../typecheck/isArray.js';
 
 export type FeilTypeValuesUnion = k9_sak_kontrakt_FeilType | k9_klage_kontrakt_FeilType | ung_sak_kontrakt_FeilType;
 // Type som representerer enum objekt med det som er felles FeilType enum for alle backends som genererer typer.

@@ -1,4 +1,4 @@
-import { FormState } from './FormState';
+import type { FormState } from './FormState';
 
 export interface KorrigerePerioderProps {
   behandlingsID: string;

@@ -1,5 +1,5 @@
 import { PureDatepicker } from '@fpsak-frontend/form';
-import React from 'react';
+import type React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface OwnProps {

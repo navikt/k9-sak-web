@@ -1,9 +1,9 @@
 import { TextField } from '@navikt/ds-react';
-import { connect, Field as FormikField, FormikState, getIn } from 'formik';
+import { connect, Field as FormikField, type FormikState, getIn } from 'formik';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { validateAll } from './formikUtils';
-import LabelType from './LabelType';
+import type LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 
 interface TextFieldFormikProps {

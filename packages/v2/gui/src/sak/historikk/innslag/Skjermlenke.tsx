@@ -1,8 +1,8 @@
-import type { FC } from 'react';
-import type { Location } from 'history';
-import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
-import { NavLink } from 'react-router';
 import { Link } from '@navikt/ds-react';
+import type { Location } from 'history';
+import type { FC } from 'react';
+import { NavLink } from 'react-router';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import type { SkjermlenkeMedNavn } from '../api/HistorikkBackendApi.js';
 
 type SkjermlenkeProps = Readonly<{

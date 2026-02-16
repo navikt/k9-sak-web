@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 
 import styleLesemodus from './AldersvilkarLese.module.css';
 

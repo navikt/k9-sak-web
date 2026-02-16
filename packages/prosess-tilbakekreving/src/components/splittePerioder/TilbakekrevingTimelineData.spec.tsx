@@ -2,7 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
-import DataForPeriode from '../../types/dataForPeriodeTsType';
+import type DataForPeriode from '../../types/dataForPeriodeTsType';
 import TilbakekrevingTimelineData from './TilbakekrevingTimelineData';
 
 describe('<TilbakekrevingTimelineData>', () => {

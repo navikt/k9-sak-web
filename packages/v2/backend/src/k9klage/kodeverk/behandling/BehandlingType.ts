@@ -1,7 +1,7 @@
 import type { Kodeverk } from '../../../shared/Kodeverk.js';
 import {
-  type k9_klage_kodeverk_behandling_BehandlingType as uniontype,
   k9_klage_kodeverk_behandling_BehandlingType,
+  type k9_klage_kodeverk_behandling_BehandlingType as uniontype,
 } from '../../generated/types.js';
 
 export type BehandlingType = uniontype;

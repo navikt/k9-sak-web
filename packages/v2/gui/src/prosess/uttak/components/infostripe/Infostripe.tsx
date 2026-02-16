@@ -1,8 +1,8 @@
-import { Alert } from '@navikt/ds-react';
-import { type FC } from 'react';
-import styles from './infostripe.module.css';
-import { useUttakContext } from '../../context/UttakContext';
 import { k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Alert } from '@navikt/ds-react';
+import type { FC } from 'react';
+import { useUttakContext } from '../../context/UttakContext';
+import styles from './infostripe.module.css';
 
 const Infostripe: FC = () => {
   const { erSakstype } = useUttakContext();

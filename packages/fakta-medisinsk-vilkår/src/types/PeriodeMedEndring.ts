@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import type { Period } from '@fpsak-frontend/utils';
 
 export interface PerioderMedEndringResponse {
   perioderMedEndringer: PeriodeMedEndring[];

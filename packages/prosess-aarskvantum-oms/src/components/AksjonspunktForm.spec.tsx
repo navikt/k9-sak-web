@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FormValues, begrunnelseUavklartePerioder, transformValues } from './AksjonspunktForm9014';
+import { begrunnelseUavklartePerioder, type FormValues, transformValues } from './AksjonspunktForm9014';
 
 describe('<AksjonspunktForm>', () => {
   describe('transformValues', () => {

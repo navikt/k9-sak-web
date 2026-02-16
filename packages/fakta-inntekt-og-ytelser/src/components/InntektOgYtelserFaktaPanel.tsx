@@ -3,9 +3,9 @@ import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import moment from 'moment';
-import React from 'react';
+import type React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Inntekt } from '../InntektType';
+import type { Inntekt } from '../InntektType';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Employer',

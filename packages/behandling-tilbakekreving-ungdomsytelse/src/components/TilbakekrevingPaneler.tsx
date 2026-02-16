@@ -1,9 +1,9 @@
-import { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import FetchedData from '../types/fetchedDataTsType';
+import type { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import type { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import type FetchedData from '../types/fetchedDataTsType';
+import BehandlingPåVent from './behandlingPåVent/BehandlingPåVent';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
-import BehandlingPåVent from './behandlingPåVent/BehandlingPåVent';
 
 interface OwnProps {
   fetchedData: FetchedData;

@@ -1,10 +1,10 @@
+import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
+import type React from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-
-import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
-import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
+import type { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
   formatereDato,

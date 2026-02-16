@@ -1,5 +1,5 @@
 import LinkRel from '../../src/constants/LinkRel';
-import Link from '../../src/types/Link';
+import type Link from '../../src/types/Link';
 import { mockUrlPrepend } from '../constants';
 
 const createMockedDokumentelementLinks = (id: string): Link[] => [

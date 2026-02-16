@@ -1,5 +1,5 @@
-import type { JSX } from 'react';
-import { Collapse } from 'react-collapse';
+import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import {
   CheckmarkCircleFillIcon,
   ChevronDownIcon,
@@ -7,15 +7,15 @@ import {
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { BodyShort, Button, HelpText, Table } from '@navikt/ds-react';
-import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
+import type { JSX } from 'react';
+import { Collapse } from 'react-collapse';
 import Endringsstatus from '../components/icons/Endringsstatus';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
-import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import { useUttakContext } from '../context/UttakContext';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';
 

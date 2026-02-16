@@ -1,4 +1,4 @@
-import Kodeverk from './Kodeverk';
+import type Kodeverk from './Kodeverk';
 
 export type Aksjonspunkt = Readonly<{
   definisjon: Kodeverk;

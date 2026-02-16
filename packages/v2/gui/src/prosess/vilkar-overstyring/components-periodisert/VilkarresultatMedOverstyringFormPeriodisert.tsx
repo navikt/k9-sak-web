@@ -13,10 +13,10 @@ import { RhfForm } from '@navikt/ft-form-hooks';
 import { type FunctionComponent, type SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { EditedIcon } from '../../../shared/EditedIcon';
-import { type VilkarresultatMedOverstyringFormState } from './FormState';
+import type { VilkarresultatMedOverstyringFormState } from './FormState';
+import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
-import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
 
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: AksjonspunktDto[];

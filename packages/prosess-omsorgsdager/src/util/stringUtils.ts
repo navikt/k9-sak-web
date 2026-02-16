@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import TilgjengeligÅrOption from '../types/TilgjengeligeÅrOptions';
+import type TilgjengeligÅrOption from '../types/TilgjengeligeÅrOptions';
 
 export const tekstTilBoolean = (string: string) => {
   if (string !== undefined && string !== null && string.length > 0) {

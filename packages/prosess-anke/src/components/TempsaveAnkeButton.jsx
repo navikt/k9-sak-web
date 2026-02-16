@@ -1,9 +1,8 @@
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { Button } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 // TODO Her er det brukt kodeverk fra klage. Det er vel ikkje rett?
 const transformValues = (values, aksjonspunktCode) => ({

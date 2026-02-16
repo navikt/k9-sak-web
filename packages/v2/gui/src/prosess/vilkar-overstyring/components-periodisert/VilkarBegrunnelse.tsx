@@ -1,9 +1,9 @@
 import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { type FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { type VilkarBegrunnelseFormState } from './FormState';
+import type { VilkarBegrunnelseFormState } from './FormState';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

@@ -1,6 +1,5 @@
-import { type JSX } from 'react';
-
 import { Accordion, Alert, BodyLong, Box, Heading } from '@navikt/ds-react';
+import type { JSX } from 'react';
 
 import styles from './kompletthetsoversikt.module.css';
 

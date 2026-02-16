@@ -1,4 +1,4 @@
-import { ExpandedPeriode as Periode } from '@k9-sak-web/types/src/tidslinje';
+import type { ExpandedPeriode as Periode } from '@k9-sak-web/types/src/tidslinje';
 
 interface Rad {
   radLabel: string;

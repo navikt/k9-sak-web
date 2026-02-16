@@ -1,4 +1,4 @@
-import Link from './Link';
+import type Link from './Link';
 
 export interface DiagnosekodeResponse {
   diagnosekoder: string[];

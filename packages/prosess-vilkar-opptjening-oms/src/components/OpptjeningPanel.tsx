@@ -6,7 +6,7 @@ import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/Aksjonspunkt
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opptjeningPanel.module.css';
 

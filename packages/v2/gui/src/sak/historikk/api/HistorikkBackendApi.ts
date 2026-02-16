@@ -1,9 +1,9 @@
+import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
+import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import type {
   HistorikkinnslagDto,
   HistorikkinnslagDtoLinje,
 } from '@k9-sak-web/backend/combined/kontrakt/historikk/HistorikkinnslagDto.js';
-import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
-import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
 
 // Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend (unngår masse kodeverk oppslag der).
 // Lager "berikede" type der skjermlenke og aktør fra server får lagt til navn fra kodeverkoppslag.

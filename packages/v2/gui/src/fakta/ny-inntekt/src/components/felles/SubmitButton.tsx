@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { Button } from '@navikt/ds-react';
+import type React from 'react';
 
 const isDisabled = (isDirty: boolean, isSubmitting: boolean, isSubmittable: boolean): boolean => {
   if (!isSubmittable || isSubmitting) {

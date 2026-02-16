@@ -1,11 +1,11 @@
 import { ReadOnlyField } from '@fpsak-frontend/form';
 import { haystack } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import { DatePicker, HStack, Label, VStack, useDatepicker } from '@navikt/ds-react';
+import { DatePicker, HStack, Label, useDatepicker, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import { FunctionComponent, ReactNode, type JSX } from 'react';
+import type { FunctionComponent, JSX, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
-import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
+import type { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 
 interface FieldComponentProps {
   input: WrappedFieldInputProps;

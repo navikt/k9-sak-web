@@ -1,8 +1,8 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { useField } from 'formik';
 import React from 'react';
-import Label from './Label';
 import { validateAll } from './formikUtils';
+import Label from './Label';
 
 interface Checkbox {
   value: string;

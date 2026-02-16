@@ -1,26 +1,26 @@
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversikt,
+  k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
+  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
+  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import {
   createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
   type Dispatch,
   type ReactElement,
   type ReactNode,
   type SetStateAction,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
 } from 'react';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
-import type {
-  k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversikt,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import lagUttaksperiodeliste from '../utils/uttaksperioder';
 import hentPerioderFraUttak from '../utils/hentPerioderFraUttak';
+import lagUttaksperiodeliste from '../utils/uttaksperioder';
 
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;

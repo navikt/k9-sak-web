@@ -1,8 +1,8 @@
-import { K9KlageApiError } from './errorhandling/K9KlageApiError.js';
-import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
 import { client } from '@navikt/k9-klage-typescript-client/client';
 import type { AuthFixApi } from '../shared/auth/AuthFixApi.js';
 import { ClientConfigHelper } from '../shared/config/ClientConfigHelper.js';
+import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
+import { K9KlageApiError } from './errorhandling/K9KlageApiError.js';
 
 const baseUrl = '/k9/klage';
 

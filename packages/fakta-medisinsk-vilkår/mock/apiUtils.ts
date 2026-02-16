@@ -1,12 +1,12 @@
+import type NyVurderingsversjon from '../src/types/NyVurderingsversjon';
+import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
+import mockedDokumentliste from './mocked-data/mockedDokumentliste';
+import livetsSluttfaseVurderingerMock from './mocked-data/mockedLivetsSluttfaseVurderinger';
+import livetsSluttfaseVurderingsoversiktMock from './mocked-data/mockedLivetsSluttfaseVurderingsoversikt';
 import tilsynsbehovVurderingerMock from './mocked-data/mockedTilsynsbehovVurderinger';
 import tilsynsbehovVurderingsoversiktMock from './mocked-data/mockedTilsynsbehovVurderingsoversikt';
-import mockedToOmsorgspersonerVurderingsoversikt from './mocked-data/mockedToOmsorgspersonerVurderingsoversikt';
 import toOmsorgspersonerVurderingerMock from './mocked-data/mockedToOmsorgspersonerVurderinger';
-import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
-import NyVurderingsversjon from '../src/types/NyVurderingsversjon';
-import mockedDokumentliste from './mocked-data/mockedDokumentliste';
-import livetsSluttfaseVurderingsoversiktMock from './mocked-data/mockedLivetsSluttfaseVurderingsoversikt';
-import livetsSluttfaseVurderingerMock from './mocked-data/mockedLivetsSluttfaseVurderinger';
+import mockedToOmsorgspersonerVurderingsoversikt from './mocked-data/mockedToOmsorgspersonerVurderingsoversikt';
 
 export const createKontinuerligTilsynVurdering = (requestBody: NyVurderingsversjon) => {
   const nyVurderingId = tilsynsbehovVurderingsoversiktMock.vurderingselementer.length + 1;

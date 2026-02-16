@@ -1,6 +1,6 @@
 import { Alert, Box } from '@navikt/ds-react';
-import { type JSX } from 'react';
-import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
+import type { JSX } from 'react';
+import type InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
 import Vurderingstype from '../../../types/Vurderingstype';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 

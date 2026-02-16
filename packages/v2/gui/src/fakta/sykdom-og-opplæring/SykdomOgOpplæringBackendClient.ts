@@ -1,4 +1,3 @@
-import { type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   brev_getBrevMottakerinfoEreg,
   opplæringsinstitusjonSaksbehandling_hentAlleV2,
@@ -10,6 +9,7 @@ import {
   opplæringspenger_opprettLangvarigSykdomsVurdering,
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import type { OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export default class SykdomOgOpplæringBackendClient {
   async getVilkår(behandlingUuid: string) {

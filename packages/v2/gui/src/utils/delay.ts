@@ -1,6 +1,7 @@
 // This is used in fake api implementations during test/dev, to simulate waiting for a real api response.
 // Might also be used for debounce
-export const delay = (millis: number, abortSignal: AbortSignal = new AbortController().signal) => new Promise<void>((resolve, reject) => {
+export const delay = (millis: number, abortSignal: AbortSignal = new AbortController().signal) =>
+  new Promise<void>((resolve, reject) => {
     if (abortSignal.aborted) {
       // Abort signal already triggered, stop early.
       reject(abortSignal.reason);

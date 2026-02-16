@@ -1,4 +1,4 @@
-import Vurderingstype from './Vurderingstype';
+import type Vurderingstype from './Vurderingstype';
 
 interface VurderingContextType {
   vurderingstype?: Vurderingstype;

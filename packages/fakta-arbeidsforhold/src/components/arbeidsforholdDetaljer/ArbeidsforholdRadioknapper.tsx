@@ -2,7 +2,7 @@ import { Label, RadioGroupField } from '@fpsak-frontend/form';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { required } from '@fpsak-frontend/utils';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 

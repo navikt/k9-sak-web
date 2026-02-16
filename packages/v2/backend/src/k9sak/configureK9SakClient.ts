@@ -1,8 +1,8 @@
-import { K9SakApiError } from './errorhandling/K9SakApiError.js';
-import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
 import { client } from '@navikt/k9-sak-typescript-client/client';
 import type { AuthFixApi } from '../shared/auth/AuthFixApi.js';
 import { ClientConfigHelper } from '../shared/config/ClientConfigHelper.js';
+import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
+import { K9SakApiError } from './errorhandling/K9SakApiError.js';
 
 const baseUrl = '/k9/sak';
 

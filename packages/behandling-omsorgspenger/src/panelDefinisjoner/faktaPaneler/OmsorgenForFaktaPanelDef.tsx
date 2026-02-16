@@ -1,8 +1,7 @@
-import React from 'react';
-
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import React from 'react';
 import OmsorgenFor from '../../components/OmsorgenFor';
 
 class OmsorgenForFaktaPanelDef extends FaktaPanelDef {

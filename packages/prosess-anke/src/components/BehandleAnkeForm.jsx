@@ -1,13 +1,13 @@
 import {
-  CheckboxField,
-  RadioGroupField,
-  SelectField,
-  TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
+  CheckboxField,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
+  RadioGroupField,
+  SelectField,
+  TextAreaField,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
@@ -16,22 +16,20 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';
+import styles from './behandleAnkeForm.module.css';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
 import PreviewAnkeLink from './PreviewAnkeLink';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
-
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
-import styles from './behandleAnkeForm.module.css';
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },

@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { mockUrlPrepend } from './constants';
 import mockedSykdom from './mocked-data/mockedSykdom';
 import mockedTilsyn from './mocked-data/mockedTilsyn';

@@ -8,7 +8,7 @@ import {
   createPrivatarbeidsgiverVisningsnavnForAndel,
   getInntektskategori,
 } from '../TilkjentYteleseUtils';
-import { type TilkjentYtelseFormState } from './FormState';
+import type { TilkjentYtelseFormState } from './FormState';
 
 interface OwnProps {
   name: string;

@@ -1,16 +1,16 @@
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
-  requestIntentionallyAborted,
   type RequestIntentionallyAborted,
+  requestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { action } from 'storybook/actions';
+import type { LagForhåndsvisningRequest, MessagesApi } from '../../sak/meldinger/api/MessagesApi.js';
 import { delay } from '../../utils/delay.js';
 import { fakePdf } from './fakePdf.js';
-import type { LagForhåndsvisningRequest, MessagesApi } from '../../sak/meldinger/api/MessagesApi.js';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
 export class FakeMessagesBackendApi implements MessagesApi {

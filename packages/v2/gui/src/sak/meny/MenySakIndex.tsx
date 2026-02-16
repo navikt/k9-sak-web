@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { ActionMenu, Button } from '@navikt/ds-react';
 import { useState } from 'react';
-import MenyData from './MenyData';
+import type MenyData from './MenyData';
 
 interface OwnProps {
   data: MenyData[];

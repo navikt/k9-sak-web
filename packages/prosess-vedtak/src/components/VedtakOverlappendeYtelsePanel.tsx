@@ -1,17 +1,17 @@
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
-import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
-import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
+import type Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
+import type TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
+import type { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
-import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
+import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
-import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { Periodeinfo } from '../types/Periodeinfo';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import type { Periodeinfo } from '../types/Periodeinfo';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
 import styles from './VedtakOverlappendeYtelsePanel.module.css';
 

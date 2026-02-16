@@ -4,18 +4,18 @@ import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   FatterVedtakStatusModal,
   ProsessStegContainer,
-  prosessStegHooks,
   ProsessStegPanel,
-  Rettigheter,
+  prosessStegHooks,
+  type Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
+import type FetchedData from '../types/fetchedDataTsType';
 
 const forhandsvis = data => {
   if (URL.createObjectURL) {

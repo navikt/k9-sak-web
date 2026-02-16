@@ -1,6 +1,6 @@
 import type { ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import { Box, Button, Modal } from '@navikt/ds-react';
-import React, { useEffect, type JSX } from 'react';
+import React, { type JSX, useEffect } from 'react';
 import DiagnosekodeSelector from '../../form/pure/PureDiagnosekodeSelector';
 import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.module.css';
 

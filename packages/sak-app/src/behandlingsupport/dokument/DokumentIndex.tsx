@@ -1,13 +1,13 @@
 import { requireProps, usePrevious } from '@fpsak-frontend/shared-components';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIndex.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import {
-  type k9_sak_kontrakt_dokument_DokumentDto as DokumentDto,
-  type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+import type {
+  k9_sak_kontrakt_dokument_DokumentDto as DokumentDto,
+  k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIndex.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';

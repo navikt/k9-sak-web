@@ -1,18 +1,18 @@
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import React, { use, useMemo, useState } from 'react';
-import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
-import { useQuery } from '@tanstack/react-query';
-import { BehandlingStatus } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingStatus.js';
-import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
-import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 import {
   BehandlingResultatType,
   isBehandlingResultatType,
 } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
-import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingStatus.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
+import { BeslutterModalIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/BeslutterModalIndex.js';
+import { TotrinnskontrollSakIndex } from '@k9-sak-web/gui/sak/totrinnskontroll/TotrinnskontrollSakIndex.js';
+import type { TotrinnskontrollBehandling } from '@k9-sak-web/gui/sak/totrinnskontroll/types/TotrinnskontrollBehandling.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { ensureKodeVerdiString } from '@k9-sak-web/gui/utils/typehelp/ensureKodeverdiString.js';
+import type { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { useQuery } from '@tanstack/react-query';
+import React, { use, useMemo, useState } from 'react';
 
 interface OwnProps {
   fagsak: Fagsak;

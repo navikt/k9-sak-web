@@ -1,6 +1,6 @@
-import { Period } from '@fpsak-frontend/utils';
-import Kilde from './Kilde';
-import Vurderingsresultat from './Vurderingsresultat';
+import type { Period } from '@fpsak-frontend/utils';
+import type Kilde from './Kilde';
+import type Vurderingsresultat from './Vurderingsresultat';
 
 export interface TilsynResponse {
   etablertTilsynPerioder: EtablertTilsynPeriode[];

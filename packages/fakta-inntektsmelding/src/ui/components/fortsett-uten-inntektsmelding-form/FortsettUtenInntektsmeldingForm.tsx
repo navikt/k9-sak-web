@@ -1,17 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import React, { type JSX } from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import type { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
-import Aksjonspunkt from '../../../types/Aksjonspunkt';
-import AksjonspunktRequestPayload, { Perioder } from '../../../types/AksjonspunktRequestPayload';
-import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
+import type Aksjonspunkt from '../../../types/Aksjonspunkt';
+import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import type { Perioder } from '../../../types/AksjonspunktRequestPayload';
+import { Kode, type TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
 import styles from './fortsettUtenInntektsMeldingForm.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;
@@ -157,8 +158,9 @@ const FortsettUtenInntektsmeldingForm = ({
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
             <li>
-              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får
-              tilstrekkelige opplysninger hverken i A-inntekt eller fra inntektsmelding.
+              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
+              <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får tilstrekkelige opplysninger hverken i A-inntekt
+              eller fra inntektsmelding.
             </li>
             <li>
               Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å

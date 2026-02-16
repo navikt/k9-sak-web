@@ -1,11 +1,10 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { useMemo } from 'react';
-
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
+import type SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
+import { useMemo } from 'react';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
-import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
+import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 
 const useHentFagsakRettigheter = (
   saksnummer: string,

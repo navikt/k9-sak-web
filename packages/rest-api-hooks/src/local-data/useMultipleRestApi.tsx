@@ -1,6 +1,5 @@
-import { useState, useEffect, DependencyList, useRef } from 'react';
-
-import { AbstractRequestApi } from '@k9-sak-web/rest-api';
+import type { AbstractRequestApi } from '@k9-sak-web/rest-api';
+import { type DependencyList, useEffect, useRef, useState } from 'react';
 
 import RestApiState from '../RestApiState';
 

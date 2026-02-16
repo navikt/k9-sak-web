@@ -1,16 +1,15 @@
-import { useState, useMemo, useContext } from 'react';
-import { Period } from '@navikt/ft-utils';
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
-
-import InstitusjonDetails from './components/InstitusjonDetails.js';
+import { Period } from '@navikt/ft-utils';
+import { useContext, useMemo, useState } from 'react';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView.js';
-import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
-import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
-import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
 import VurderingsperiodeNavigasjon from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon.js';
 import { CenteredLoader } from '../CenteredLoader.js';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex.js';
+import { useInstitusjonInfo } from '../SykdomOgOpplæringQueries.js';
 import InstitusjonAlerts from './components/InstitusjonAlerts.js';
+import InstitusjonDetails from './components/InstitusjonDetails.js';
+import type { InstitusjonPerioderDtoMedResultat } from './types/InstitusjonPerioderDtoMedResultat.js';
+import type { InstitusjonVurderingDtoMedPerioder } from './types/InstitusjonVurderingDtoMedPerioder.js';
 
 const FaktaInstitusjonIndex = () => {
   const { behandlingUuid, readOnly } = useContext(SykdomOgOpplæringContext);

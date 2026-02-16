@@ -1,4 +1,4 @@
-import Link from './LinkTsType';
+import type Link from './LinkTsType';
 
 /**
  * AbstractRequestApi

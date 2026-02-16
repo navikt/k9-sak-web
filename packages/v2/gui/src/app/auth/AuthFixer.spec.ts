@@ -1,14 +1,14 @@
-import { afterAll, describe, expect, it, vi } from 'vitest';
-import { AuthFixer } from './AuthFixer.js';
 import {
+  type AuthResult,
   authAbortedResult,
   authDeniedResult,
-  type AuthResult,
   authSuccessResult,
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
+import { afterAll, describe, expect, it, vi } from 'vitest';
 import { ignoreUnusedDeclared } from '../../storybook/mocks/ignoreUnusedDeclared.js';
-import { WaitsForOthersAuthFixer } from './WaitsForOthersAuthFixer.js';
 import { delay } from '../../utils/delay.js';
+import { AuthFixer } from './AuthFixer.js';
+import { WaitsForOthersAuthFixer } from './WaitsForOthersAuthFixer.js';
 
 class FakeAuthFixer extends AuthFixer {
   #fakeAuthProcess: PromiseWithResolvers<AuthResult> | null = null;

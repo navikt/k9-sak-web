@@ -1,10 +1,9 @@
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { RettVedDød } from '../../../types/RettVedDød';
-import RettVedDødUtfallType from '../../../types/RettVedDødType';
-
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { CheckmarkIcon } from '@navikt/aksel-icons';
 import type { JSX } from 'react';
+import type { RettVedDød } from '../../../types/RettVedDød';
+import RettVedDødUtfallType from '../../../types/RettVedDødType';
 
 interface RettVedDødVurderingsdetaljerProps {
   rettVedDød: RettVedDød;

@@ -1,5 +1,5 @@
 import { Box } from '@navikt/ds-react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import styles from './fadingPanel.module.css';
 
 interface OwnProps {

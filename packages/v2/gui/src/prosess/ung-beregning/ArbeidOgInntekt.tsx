@@ -1,8 +1,8 @@
 import {
-  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
-  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
   type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
+  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
   type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
+  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
   type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';

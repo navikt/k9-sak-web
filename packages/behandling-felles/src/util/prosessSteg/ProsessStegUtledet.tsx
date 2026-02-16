@@ -1,10 +1,9 @@
-import { SetStateAction } from 'react';
-
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, UtfallEnum, Uttaksperiode, Vilkar } from '@k9-sak-web/types';
+import { type Aksjonspunkt, UtfallEnum, type Uttaksperiode, type Vilkar } from '@k9-sak-web/types';
+import type { SetStateAction } from 'react';
 
-import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
+import type { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 
 const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   if (vilkar.length > 0) {

@@ -2,16 +2,17 @@ import { ReadMore } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import Overføring, {
-  Overføringsretning,
+import type Overføring from '../types/Overføring';
+import {
+  type Overføringsretning,
   OverføringsretningEnum,
-  Overføringstype,
+  type Overføringstype,
   OverføringstypeEnum,
 } from '../types/Overføring';
 import FastBreddeAligner from './FastBreddeAligner';
 import OverføringsraderForm from './OverføringsraderForm';
-import Pil from './Pil';
 import styles from './overføringsdagerPanel.module.css';
+import Pil from './Pil';
 
 const classNames = classnames.bind(styles);
 

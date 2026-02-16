@@ -1,6 +1,6 @@
+import type { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import formaterDato from '../utils/formaterDato';
 
 interface MidlertidigAleneProps {

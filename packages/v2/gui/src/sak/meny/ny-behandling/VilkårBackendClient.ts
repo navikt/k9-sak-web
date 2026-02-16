@@ -1,8 +1,8 @@
-import { type GetVilkårV3Response as K9GetVilkårV3Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { type GetVilkårV3Response as UngGetVilkårV3Response } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { vilkår_getVilkårV3 as k9sak_vilkår_getVilkårV3 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import type { GetVilkårV3Response as K9GetVilkårV3Response } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkår_getVilkårV3 as ungsak_vilkår_getVilkårV3 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import { k9SakOrUngSak, type K9SakOrUngSak } from '../../../utils/multibackend.js';
+import type { GetVilkårV3Response as UngGetVilkårV3Response } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { type K9SakOrUngSak, k9SakOrUngSak } from '../../../utils/multibackend.js';
 
 export default class VilkårBackendClient {
   #backendChoice: K9SakOrUngSak;

@@ -1,16 +1,15 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import type { KodeverkMedNavn } from '@k9-sak-web/types';
+import type KodeverkMedNavnTsType from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
 import { Detail } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
 
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import KodeverkMedNavnTsType from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
-
 import Aktsomhet from '../../../kodeverk/aktsomhet';
-import { AktsomhetInfo } from '../../../types/vilkarsVurdertePerioderTsType';
+import type { AktsomhetInfo } from '../../../types/vilkarsVurdertePerioderTsType';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 import { ANDELER, EGENDEFINERT } from './AktsomhetReduksjonAvBelopFormPanel';
 

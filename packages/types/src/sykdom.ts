@@ -1,6 +1,6 @@
-import {
-  Periode,
+import type {
   Legeerklæring,
+  Periode,
   PeriodeMedTilsynOgPleieResponse,
   PeriodeMedUtvidetTilsynOgPleieResponse,
 } from './medisinsk-vilkår/MedisinskVilkår';

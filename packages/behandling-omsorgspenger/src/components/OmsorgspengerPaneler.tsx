@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
-
-import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import {
-  KodeverkMedNavn,
+import { BehandlingPaVent, type Rettigheter, type SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type {
+  ArbeidsgiverOpplysningerPerId,
   Behandling,
+  Dokument,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
-  Dokument,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-
-import OmsorgspengerProsess from './OmsorgspengerProsess';
+import React, { useState } from 'react';
+import type FetchedData from '../types/fetchedDataTsType';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
-import FetchedData from '../types/fetchedDataTsType';
+import OmsorgspengerProsess from './OmsorgspengerProsess';
 
 interface OwnProps {
   fetchedData: FetchedData;

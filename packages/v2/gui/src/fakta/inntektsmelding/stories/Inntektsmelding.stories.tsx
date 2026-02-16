@@ -1,3 +1,4 @@
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
@@ -14,7 +15,6 @@ import ferdigvisning, {
 } from '../mock/mockedKompletthetsdata.js';
 import { withFakeInntektsmeldingApi } from '../mock/withFakeInntektsmeldingApi.js';
 import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 
 const createProps = (
   behandlingUuid: string,

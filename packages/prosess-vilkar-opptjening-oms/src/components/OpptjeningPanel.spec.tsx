@@ -1,7 +1,7 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import messages from '@k9-sak-web/prosess-felles/i18n/nb_NO.json';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import messages from '@k9-sak-web/prosess-felles/i18n/nb_NO.json';
 import OpptjeningPanel from './OpptjeningPanel';
 
 describe('<OpptjeningPanel>', () => {

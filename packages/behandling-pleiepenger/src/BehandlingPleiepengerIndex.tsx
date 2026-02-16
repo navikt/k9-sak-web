@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-
 import { usePrevious } from '@fpsak-frontend/shared-components';
+import { ReduxFormStateCleaner, type Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import {
+import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import type {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
   Dokument,
@@ -12,18 +14,14 @@ import {
   FagsakPerson,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-
-import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { useCallback, useEffect, useState } from 'react';
 import PleiepengerPaneler from './components/PleiepengerPaneler';
 import {
   PleiepengerBehandlingApiKeys,
   requestPleiepengerApi,
   restApiPleiepengerHooks,
 } from './data/pleiepengerBehandlingApi';
-import { FetchedData } from './types';
-import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import type { FetchedData } from './types';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },

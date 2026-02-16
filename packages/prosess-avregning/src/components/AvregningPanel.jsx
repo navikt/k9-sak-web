@@ -1,20 +1,21 @@
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import {
-  RadioGroupField,
-  TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
+  RadioGroupField,
+  TextAreaField,
 } from '@fpsak-frontend/form';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
-import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, Heading, HGrid, Label, Link, VStack } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -25,8 +26,6 @@ import { createSelector } from 'reselect';
 import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
-
-import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor

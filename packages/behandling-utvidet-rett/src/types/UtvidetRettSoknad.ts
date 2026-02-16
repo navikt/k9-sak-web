@@ -1,4 +1,4 @@
-import { ManglendeVedleggSoknad } from '@k9-sak-web/types';
+import type { ManglendeVedleggSoknad } from '@k9-sak-web/types';
 
 export interface UtvidetRettSoknad {
   begrunnelseForSenInnsending: string;

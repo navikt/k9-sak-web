@@ -1,16 +1,15 @@
 import { get } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import axios from 'axios';
-import React, { useMemo, type JSX } from 'react';
-
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import Dokument from '../../../types/Dokument';
+import axios from 'axios';
+import React, { type JSX, useMemo } from 'react';
+import type Dokument from '../../../types/Dokument';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
-import { DokumentoversiktResponse } from '../../../types/DokumentoversiktResponse';
+import type { DokumentoversiktResponse } from '../../../types/DokumentoversiktResponse';
 import { StepId } from '../../../types/Step';
-import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
+import type SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
 import {
   nesteStegErLivetssluttfase,
   nesteStegErOpplæringspenger,

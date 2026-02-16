@@ -1,11 +1,11 @@
-import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
+import { type Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Tag, Tooltip } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React, { useEffect, type JSX } from 'react';
-import ManuellVurdering from '../../../types/ManuellVurdering';
-import Vurderingselement from '../../../types/Vurderingselement';
+import React, { type JSX, useEffect } from 'react';
+import type ManuellVurdering from '../../../types/ManuellVurdering';
+import type Vurderingselement from '../../../types/Vurderingselement';
 import usePrevious from '../../../util/hooks';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';

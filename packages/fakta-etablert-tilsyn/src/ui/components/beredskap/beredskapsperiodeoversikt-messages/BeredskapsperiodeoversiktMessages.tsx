@@ -1,7 +1,7 @@
 import { Alert, Box, Button, HStack } from '@navikt/ds-react';
-import BeredskapType from '../../../../types/BeredskapType';
-import { getStringMedPerioder } from '../../../../util/periodUtils';
 import React from 'react';
+import type BeredskapType from '../../../../types/BeredskapType';
+import { getStringMedPerioder } from '../../../../util/periodUtils';
 
 interface BeredskapsperiodeoversiktMessagesProps {
   beredskapData: BeredskapType;

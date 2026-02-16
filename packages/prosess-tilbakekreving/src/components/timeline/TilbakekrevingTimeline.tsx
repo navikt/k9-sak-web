@@ -1,17 +1,14 @@
-import moment from 'moment';
-import React, { Component, MouseEvent, RefObject } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
+import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-
-import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
-
 import { HGrid } from '@navikt/ds-react';
-import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
+import moment from 'moment';
+import React, { Component, type MouseEvent, type RefObject } from 'react';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import type TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
 import styles from './tilbakekrevingTimeline.module.css';
 
 export const GODKJENT_CLASSNAME = 'godkjentPeriode';

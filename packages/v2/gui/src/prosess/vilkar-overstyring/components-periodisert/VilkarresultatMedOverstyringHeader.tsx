@@ -7,7 +7,7 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Button, Detail, Heading, HStack, Label, VStack } from '@navikt/ds-react';
-import { type SetStateAction } from 'react';
+import type { SetStateAction } from 'react';
 import styles from '../components-periodisert/vilkarresultatMedOverstyringFormPeriodisert.module.css';
 
 const opptjeningMidlertidigInaktivKoder = {

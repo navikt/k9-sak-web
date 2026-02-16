@@ -2,7 +2,8 @@
 import { Delete } from '@navikt/ds-icons';
 import { Box, Button, Heading, Table, TextField } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
-import React, { useContext, useEffect } from 'react';
+import type React from 'react';
+import { useContext, useEffect } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import ContainerContext from '../../context/ContainerContext';
 

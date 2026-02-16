@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
-import { useUttakContext } from '../context/UttakContext';
-import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
-import styles from './VurderDato.module.css';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
+import { useEffect } from 'react';
+import { useUttakContext } from '../context/UttakContext';
+import styles from './VurderDato.module.css';
+import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
 
 const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');

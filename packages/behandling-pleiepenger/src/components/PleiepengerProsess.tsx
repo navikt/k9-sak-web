@@ -1,24 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
+  lagDokumentdata,
   ProsessStegContainer,
   ProsessStegPanel,
-  Rettigheter,
-  lagDokumentdata,
   prosessStegHooks,
+  type Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
-import FetchedData from '../types/FetchedData';
+import type FetchedData from '../types/FetchedData';
 
 interface OwnProps {
   data: FetchedData;

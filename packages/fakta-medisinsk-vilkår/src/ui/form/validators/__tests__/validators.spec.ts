@@ -1,8 +1,8 @@
 import { dateConstants, Period } from '@fpsak-frontend/utils';
 import {
   dateIsNotInTheFuture,
-  datoenInngårISøknadsperioden,
   datoErIkkeIEtHull,
+  datoenInngårISøknadsperioden,
   detErIngenInnleggelsePåDato,
   detErTilsynsbehovPåDatoen,
   required,

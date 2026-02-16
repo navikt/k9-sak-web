@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { Detail, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
+import type React from 'react';
 
 export interface LabelledContentProps {
   label: string | React.ReactNode;

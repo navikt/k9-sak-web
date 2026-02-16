@@ -1,9 +1,15 @@
-import { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import type { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import FetchedData from '../types/FetchedData';
-import UngdomsytelseProsess from './UngdomsytelseProsess';
+import type {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
+import type FetchedData from '../types/FetchedData';
 import { BehandlingPåVent } from './behandlingPåVent/BehandlingPåVent';
+import UngdomsytelseProsess from './UngdomsytelseProsess';
 
 interface OwnProps {
   fetchedData: FetchedData;

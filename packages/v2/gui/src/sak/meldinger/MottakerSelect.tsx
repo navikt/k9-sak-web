@@ -1,11 +1,11 @@
-import { Select } from '@navikt/ds-react';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
-import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import { Select } from '@navikt/ds-react';
+import type { ArbeidsgiverOpplysningerPerId, Personopplysninger } from '../../utils/formidling.js';
 
 type MottakerSelectProps = {
   readonly valgtMal: Template | undefined;

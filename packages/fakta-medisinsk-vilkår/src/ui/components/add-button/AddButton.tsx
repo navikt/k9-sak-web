@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import { forwardRef, Ref, type JSX } from 'react';
+import { forwardRef, type JSX, type Ref } from 'react';
 
 interface AddButtonProps {
   onClick: () => void;

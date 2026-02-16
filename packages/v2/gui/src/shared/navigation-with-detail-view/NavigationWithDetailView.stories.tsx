@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DetailView } from '../detailView/DetailView';
 import { NavigationWithDetailView } from './NavigationWithDetailView';

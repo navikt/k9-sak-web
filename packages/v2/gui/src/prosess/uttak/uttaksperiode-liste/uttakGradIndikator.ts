@@ -1,5 +1,5 @@
-import classNames from 'classnames/bind';
 import { pleiepengerbarn_uttak_kontrakter_Årsak as Årsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import classNames from 'classnames/bind';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import styles from './uttak.module.css';
 
@@ -40,4 +40,3 @@ export const finnUttakGradIndikatorCls = (
     uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt, // Vertikalt skravert indikator (grønn/hvit) |🟩|
     uttakIndikatorInnvilgetDelvis: erGradertMotTilsyn, // Diagonalt skravert indikator (grønn/hvit) /🟩/
   });
-

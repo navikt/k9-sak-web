@@ -1,10 +1,10 @@
-import { TextField, TextFieldProps } from '@navikt/ds-react';
+import type { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
+import { TextField, type TextFieldProps } from '@navikt/ds-react';
 import React from 'react';
 import { Field } from 'redux-form';
-import LabelType from './LabelType';
-import ReadOnlyField, { ReadOnlyFieldProps } from './ReadOnlyField';
+import type LabelType from './LabelType';
+import ReadOnlyField, { type ReadOnlyFieldProps } from './ReadOnlyField';
 import renderNavField from './renderNavField';
-import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 const renderNavInput = renderNavField(TextField);
 

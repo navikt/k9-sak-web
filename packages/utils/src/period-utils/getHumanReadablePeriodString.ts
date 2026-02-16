@@ -1,4 +1,4 @@
-import Period from './Period';
+import type Period from './Period';
 
 const getHumanReadablePeriodString = (periods: Period[]): string => {
   if (periods.length === 1) {

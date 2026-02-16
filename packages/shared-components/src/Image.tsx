@@ -1,5 +1,5 @@
 import { Tooltip } from '@navikt/ds-react';
-import { KeyboardEvent, MouseEvent, useCallback, useState } from 'react';
+import { type KeyboardEvent, type MouseEvent, useCallback, useState } from 'react';
 
 interface OwnProps {
   className?: string;

@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
-
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { ReduxFormStateCleaner, type Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import {
+import type {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
   Fagsak,
@@ -11,12 +10,11 @@ import {
   Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
+import type { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
+import { useCallback, useEffect, useState } from 'react';
 import KlagePaneler from './components/KlagePaneler';
 import { KlageBehandlingApiKeys, requestKlageApi, restApiKlageHooks } from './data/klageBehandlingApi';
-import FetchedData from './types/fetchedDataTsType';
+import type FetchedData from './types/fetchedDataTsType';
 
 const klageData = [
   { key: KlageBehandlingApiKeys.AKSJONSPUNKTER },

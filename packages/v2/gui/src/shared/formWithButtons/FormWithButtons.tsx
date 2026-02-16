@@ -1,5 +1,5 @@
 import { Box, Button, HStack } from '@navikt/ds-react';
-import React from 'react';
+import type React from 'react';
 
 export interface FormProps {
   children: React.ReactNode;

@@ -1,8 +1,8 @@
 import { post } from '@fpsak-frontend/utils';
 import { Alert, BodyShort, Box, Button, Modal } from '@navikt/ds-react';
-import React, { useMemo, useState, type JSX } from 'react';
+import React, { type JSX, useMemo, useState } from 'react';
 import LinkRel from '../../../constants/LinkRel';
-import Dokument from '../../../types/Dokument';
+import type Dokument from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';

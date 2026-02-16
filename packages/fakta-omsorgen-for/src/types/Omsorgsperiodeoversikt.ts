@@ -1,5 +1,5 @@
 import Omsorgsperiode from './Omsorgsperiode';
-import OmsorgsperioderResponse from './OmsorgsperioderResponse';
+import type OmsorgsperioderResponse from './OmsorgsperioderResponse';
 
 class Omsorgsperiodeoversikt {
   perioder: Omsorgsperiode[];

@@ -1,11 +1,11 @@
-import { Alert, Box } from '@navikt/ds-react';
-import { type JSX } from 'react';
-import { FormattedMessage } from 'react-intl';
-import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
-import { getStringMedPerioder } from '../../../util/periodUtils';
-import styles from './omsorgsperiodeoversiktMessages.module.css';
-import { useOmsorgenForContext } from '../../context/ContainerContext';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { Alert, Box } from '@navikt/ds-react';
+import type { JSX } from 'react';
+import { FormattedMessage } from 'react-intl';
+import type Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
+import { getStringMedPerioder } from '../../../util/periodUtils';
+import { useOmsorgenForContext } from '../../context/ContainerContext';
+import styles from './omsorgsperiodeoversiktMessages.module.css';
 
 interface OmsorgsperiodeoversiktMessagesProps {
   omsorgsperiodeoversikt: Omsorgsperiodeoversikt;

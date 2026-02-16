@@ -11,8 +11,8 @@ import Vurderingsnavigasjon, {
 import { CenteredLoader } from '../CenteredLoader';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { useVurdertReisetid } from '../SykdomOgOpplæringQueries';
-import ReisetidContainer from './ReisetidContainer';
 import ReisetidAlerts from './ReisetidAlerts';
+import ReisetidContainer from './ReisetidContainer';
 
 interface ReisetidVurderingselement extends Omit<Vurderingselement, 'resultat'>, ReisetidVurderingDto {
   perioder: Period[];

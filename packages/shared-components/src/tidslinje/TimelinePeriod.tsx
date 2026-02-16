@@ -1,7 +1,7 @@
-import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import type { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import { Tooltip as DSTooltip } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { type CSSProperties, type RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './TimelinePeriod.module.css';
 import Tooltip from './Tooltip';
 

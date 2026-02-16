@@ -4,6 +4,6 @@ type TidslinjePeriode = Readonly<{
   tom: string;
   isAksjonspunktOpen: boolean;
   isGodkjent: boolean;
-}>
+}>;
 
 export default TidslinjePeriode;

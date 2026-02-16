@@ -1,5 +1,5 @@
-import Arbeidsgiver from './arbeidsgiverTsType';
-import Kodeverk from './kodeverkTsType';
+import type Arbeidsgiver from './arbeidsgiverTsType';
+import type Kodeverk from './kodeverkTsType';
 
 export type ManglendeVedleggSoknad = Readonly<{
   dokumentType: Kodeverk;

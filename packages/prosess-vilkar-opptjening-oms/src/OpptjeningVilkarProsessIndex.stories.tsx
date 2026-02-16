@@ -1,12 +1,11 @@
-import { action } from 'storybook/actions';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
-import OpptjeningVilkarProsessIndex from './OpptjeningVilkarProsessIndex';
+import type { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
+import { action } from 'storybook/actions';
 import opptjeningAktivitetKlassifisering from './kodeverk/opptjeningAktivitetKlassifisering';
+import OpptjeningVilkarProsessIndex from './OpptjeningVilkarProsessIndex';
 
 const opptjening = {
   fastsattOpptjening: {

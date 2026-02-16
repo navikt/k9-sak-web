@@ -1,10 +1,13 @@
-import { Fragment, useEffect, useState, type FC } from 'react';
-import { format } from 'date-fns';
-import type { ObjectSchema } from 'yup';
-import * as yup from 'yup';
-import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useQuery } from '@tanstack/react-query';
+import {
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   Alert,
   BodyShort,
@@ -19,16 +22,13 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
-  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { type FC, Fragment, useEffect, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
 import { useUttakContext } from '../context/UttakContext';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';

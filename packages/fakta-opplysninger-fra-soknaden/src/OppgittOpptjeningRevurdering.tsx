@@ -1,7 +1,7 @@
-import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
+import type { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
+import type OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import messages from '../i18n/nb_NO.json';
 import OppgittOpptjeningRevurderingForm from './OppgittOpptjeningRevurderingForm';
 

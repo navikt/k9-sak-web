@@ -1,5 +1,8 @@
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
-import type { TilbakeBestillBrevDto, TilbakeMeldingerApi } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/TilbakeMeldingerApi.js';
+import type {
+  TilbakeBestillBrevDto,
+  TilbakeMeldingerApi,
+} from '@k9-sak-web/gui/sak/meldinger/tilbake/api/TilbakeMeldingerApi.js';
 import { action } from 'storybook/actions';
 import { delay } from '../../utils/delay.js';
 import { fakePdf } from './fakePdf.js';

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 

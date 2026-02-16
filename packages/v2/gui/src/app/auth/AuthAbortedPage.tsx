@@ -1,5 +1,5 @@
-import { Alert, BodyShort, Heading, HStack, Link, VStack } from '@navikt/ds-react';
 import { XMarkOctagonIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Heading, HStack, Link, VStack } from '@navikt/ds-react';
 
 interface AuthAbortedPageProps {
   readonly retryURL: URL | null;

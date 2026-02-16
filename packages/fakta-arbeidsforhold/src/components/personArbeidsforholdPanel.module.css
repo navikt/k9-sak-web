@@ -1,5 +1,5 @@
 .leggTilArbeidsforholdButton {
-  background: var(--ax-bg-default) url('@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
+  background: var(--ax-bg-default) url("@fpsak-frontend/assets/images/add-circle.svg") no-repeat;
   background-size: contain;
   border: 0;
   cursor: pointer;

@@ -1,4 +1,4 @@
-import type { KodeverkV2, KodeverkMedUndertype } from './types';
+import type { KodeverkMedUndertype, KodeverkV2 } from './types';
 
 export const utledKodeverkNavnFraKode = (
   kode: string,

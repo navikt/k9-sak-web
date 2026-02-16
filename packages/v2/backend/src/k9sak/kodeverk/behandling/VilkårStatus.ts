@@ -1,7 +1,7 @@
 import type { Kodeverk } from '../../../shared/Kodeverk.js';
 import {
-  type k9_kodeverk_vilkår_Utfall as typeUnion,
   k9_kodeverk_vilkår_Utfall as enumObj,
+  type k9_kodeverk_vilkår_Utfall as typeUnion,
 } from '../../generated/types.js';
 
 export type VilkårStatus = typeUnion;

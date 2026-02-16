@@ -1,8 +1,8 @@
+import { los_deleteMerknad, los_getMerknad, los_postMerknad } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import type {
   k9_kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadType,
   GetMerknadResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { los_deleteMerknad, los_getMerknad, los_postMerknad } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export default class MarkerBehandlingBackendClient {
   async getMerknader(behandlingUuid: string): Promise<GetMerknadResponse> {

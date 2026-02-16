@@ -1,10 +1,10 @@
-import type { Decorator } from '@storybook/react';
-import { type KodeverkContextValuesType, KodeverkProvider } from '../../kodeverk/index.js';
-import { kodeverkK9Sak } from '../../../../../storybook/stories/mocks/kodeverK9Sak.js';
-import { kodeverkK9Tilbake } from '../../../../../storybook/stories/mocks/kodeverkK9Tilbake.js';
-import { kodeverkK9Klage } from '../../../../../storybook/stories/mocks/kodeverkK9Klage.js';
 import type { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types/AlleKodeverk.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
+import type { Decorator } from '@storybook/react';
+import { kodeverkK9Sak } from '../../../../../storybook/stories/mocks/kodeverK9Sak.js';
+import { kodeverkK9Klage } from '../../../../../storybook/stories/mocks/kodeverkK9Klage.js';
+import { kodeverkK9Tilbake } from '../../../../../storybook/stories/mocks/kodeverkK9Tilbake.js';
+import { type KodeverkContextValuesType, KodeverkProvider } from '../../kodeverk/index.js';
 
 // Det viser seg at nokre kodeverk oppslagsobjekt frå k9-tilbake og k9-klage har null-verdi for navn.
 // Fikser disse her for å unngå nullpointer feil.

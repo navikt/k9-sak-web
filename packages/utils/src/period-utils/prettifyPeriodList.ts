@@ -1,4 +1,4 @@
-import Period from './Period';
+import type Period from './Period';
 
 const prettifyPeriodList = (periods: Period[]) => periods.map(period => period.prettifyPeriod()).join(', ');
 
