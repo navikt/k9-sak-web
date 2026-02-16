@@ -8,7 +8,7 @@ import { AvregningFormProvider } from '../../context/AvregningContext';
 const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
 const meta = {
-  title: 'prosess/prosess-avregning-v2',
+  title: 'gui/prosess/avregning/prosess-avregning',
   decorators: [
     Story => (
       <AvregningFormProvider behandlingId={1}>
