@@ -1,13 +1,13 @@
+import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
+import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { EyeWithPupilIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import { useContext } from 'react';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
-import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
+import type { TilstandMedUiState } from '../../types';
 import InntektsmeldingStatus from './InntektsmeldingStatus';
 import { NyInntektsmeldingDialog } from './NyInntektsmeldingDialog/NyInntektsmeldingDialog';
-import type { TilstandMedUiState } from '../../types';
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeidsforholdId }) => {
   const { arbeidsforhold } = useInntektsmeldingContext();

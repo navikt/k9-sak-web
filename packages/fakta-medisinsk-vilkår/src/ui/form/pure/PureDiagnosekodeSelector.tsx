@@ -1,13 +1,12 @@
+import type { ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import { BodyShort, ErrorMessage, Label } from '@navikt/ds-react';
 import { Autocomplete } from '@navikt/ft-plattform-komponenter';
+import type { JSX } from 'react';
 import * as React from 'react';
-import Diagnosekode from '../../../types/Diagnosekode';
+import type Diagnosekode from '../../../types/Diagnosekode';
+import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
 import DeleteButton from '../../components/delete-button/DeleteButton';
 import styles from './diagnosekodeSelector.module.css';
-import { type ICD10DiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
-import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
-
-import type { JSX } from 'react';
 
 interface Suggestion {
   key: string;

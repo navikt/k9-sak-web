@@ -2,7 +2,7 @@ import { k9_kodeverk_behandling_FagsakStatus as fagsakStatus } from '@k9-sak-web
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Table } from '@navikt/ds-react';
-import React from 'react';
+import type React from 'react';
 import type { Fagsak } from '../types/Fagsak';
 import styles from './fagsakList.module.css';
 

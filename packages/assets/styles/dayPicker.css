@@ -71,7 +71,7 @@
 }
 
 .DayPicker-NavButton {
-  background: transparent url('../images/pil-videre.svg') no-repeat center !important;
+  background: transparent url("../images/pil-videre.svg") no-repeat center !important;
   background-size: 1.25em 1.25em;
   border: 0;
   cursor: pointer;
@@ -121,7 +121,7 @@
 
 .DayPicker-Weekday {
   display: table-cell;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-family: "Source Sans Pro", Arial, sans-serif;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.375rem;

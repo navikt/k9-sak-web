@@ -1,7 +1,7 @@
 import type { TilkjentYtelseApi } from '../../prosess/tilkjent-ytelse/api/TilkjentYtelseApi.js';
 import type { FeriepengerPrÅr } from '../../prosess/tilkjent-ytelse/components/feriepenger/FeriepengerPanel.js';
-import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../prosess/tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
+import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
 export class FakeTilkjentYtelseBackendApi implements TilkjentYtelseApi {
   #feriepengerPrÅr: FeriepengerPrÅr;

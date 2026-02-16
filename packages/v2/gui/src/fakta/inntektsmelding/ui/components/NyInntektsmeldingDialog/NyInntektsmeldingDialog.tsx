@@ -1,9 +1,9 @@
+import { ForespørselStatus } from '@k9-sak-web/backend/k9sak/kodeverk/inntektsmelding/ForespørselStatus.js';
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, Dialog } from '@navikt/ds-react';
-import { SendForespørselContent } from './SendForespørsel';
 import { KanIkkeOppretteNyOppgave } from './KanIkkeOppretteOppgave';
-import { ForespørselStatus } from '@k9-sak-web/backend/k9sak/kodeverk/inntektsmelding/ForespørselStatus.js';
+import { SendForespørselContent } from './SendForespørsel';
 
 interface NyInntektsmeldingDialogProps {
   førsteFraværsdag: string;

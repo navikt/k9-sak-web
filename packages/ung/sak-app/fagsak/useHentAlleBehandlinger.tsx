@@ -1,11 +1,10 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { BehandlingAppKontekst } from '@k9-sak-web/types';
-import { useMemo } from 'react';
-
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import type { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { useMemo } from 'react';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
-import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
+import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 
 const useHentAlleBehandlinger = (
   saksnummer: string,

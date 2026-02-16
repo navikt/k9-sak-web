@@ -1,4 +1,4 @@
-import { FormikHelpers, FormikState, FormikValues } from 'formik';
+import type { FormikHelpers, FormikState, FormikValues } from 'formik';
 
 export type CustomFormikProps = {
   validateForm: FormikHelpers<FormikValues>['validateForm'];

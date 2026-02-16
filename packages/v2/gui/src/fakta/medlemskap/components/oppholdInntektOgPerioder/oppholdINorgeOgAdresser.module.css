@@ -4,7 +4,7 @@
 }
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-  .ieFlex [class^='flexRow'] {
+  .ieFlex [class^="flexRow"] {
     min-width: 300px;
   }
 }

@@ -1,4 +1,4 @@
-import { type ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import {
   GeneriskKodeverkoppslag,
   type Kilde,
@@ -75,7 +75,10 @@ export class UngSakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implement
     return this.finnObjektFraKilde('oppgaveÅrsaker', kode, undefinedIfNotFound);
   }
 
-  overordnetInntektYtelseType<U extends OrUndefined = undefined>(kode: Kilde<EO, 'overordnetInntektYtelseType'>, undefinedIfNotFound?: U) {
+  overordnetInntektYtelseType<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'overordnetInntektYtelseType'>,
+    undefinedIfNotFound?: U,
+  ) {
     return this.finnObjektFraKilde('overordnetInntektYtelseType', kode, undefinedIfNotFound);
   }
 

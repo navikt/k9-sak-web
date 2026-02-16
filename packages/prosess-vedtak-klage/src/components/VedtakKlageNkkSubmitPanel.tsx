@@ -1,6 +1,5 @@
-import { WrappedComponentProps, injectIntl } from 'react-intl';
-
 import { Button, HGrid } from '@navikt/ds-react';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
 import styles from './vedtakKlageSubmitPanel.module.css';
 
 interface Props {

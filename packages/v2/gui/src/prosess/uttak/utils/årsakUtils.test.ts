@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { harÅrsak } from './årsakUtils';
 import { pleiepengerbarn_uttak_kontrakter_Årsak as Årsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { describe, expect, it } from 'vitest';
+import { harÅrsak } from './årsakUtils';
 
 describe('årsakUtils', () => {
   it('returnerer true når årsak finnes i listen', async () => {

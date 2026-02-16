@@ -1,4 +1,4 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import type { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 
 export interface SaerligSmittevernhensynProps {
   behandlingsID: string;

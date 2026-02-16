@@ -1,4 +1,4 @@
-import ErrorMessage from './ErrorMessage';
+import type ErrorMessage from './ErrorMessage';
 
 interface Formatter<T> {
   isOfType(type: string): boolean;

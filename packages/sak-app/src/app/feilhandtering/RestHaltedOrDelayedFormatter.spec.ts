@@ -1,6 +1,6 @@
-import RestHaltedOrDelayedFormatter from './RestHaltedOrDelayedFormatter';
 import ErrorMessage from './ErrorMessage';
 import ErrorEventType from './errorEventType';
+import RestHaltedOrDelayedFormatter from './RestHaltedOrDelayedFormatter';
 
 describe('RestHaltedOrDelayedFormatter', () => {
   it('skal håndtere feil når feildata er av korrekt type', () => {

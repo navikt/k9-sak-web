@@ -1,9 +1,9 @@
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { FagsakStatusKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Fagsak as V2Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import type { Implements } from '@k9-sak-web/gui/utils/typehelp/Implements.js';
-import Kodeverk from './kodeverkTsType';
-import Periode from './periodeTsType';
+import type Kodeverk from './kodeverkTsType';
+import type Periode from './periodeTsType';
 
 export type Fagsak = Implements<
   V2Fagsak,

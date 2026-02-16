@@ -1,7 +1,7 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Rammevedtak } from '@k9-sak-web/types';
+import type { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { PersonopplysningerBasic } from '@k9-sak-web/types/src/personopplysningerTsType';
+import type { PersonopplysningerBasic } from '@k9-sak-web/types/src/personopplysningerTsType';
 
 export const erFagytelseTypeUtvidetRett = (fagytelseType: string) => {
   switch (fagytelseType) {

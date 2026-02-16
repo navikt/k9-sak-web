@@ -1,19 +1,20 @@
 import type {
-  k9_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
-  //k9_sak_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type {
   k9_klage_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
   //k9_klage_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type {
+  k9_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
+  //k9_sak_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
-  type foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollSkjermlenkeContextDto,
   foreldrepenger_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType,
+  type foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollSkjermlenkeContextDto,
 } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type {
   ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
   //ung_sak_kontrakt_vedtak_TotrinnskontrollSkjermlenkeContextDto
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { sif_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import {
   type K9KlageTotrinnskontrollAksjonspunktDtoAdjusted,
   type K9SakTotrinnskontrollAksjonspunkterDtoAdjusted,
@@ -22,7 +23,6 @@ import {
   type UngSakTotrinnskontrollAksjonspunkterDtoAdjusted,
   type UngTilbakeTotrinnskontrollAksjonspunkterDtoAdjusted,
 } from './TotrinnskontrollAksjonspunkterDto.js';
-import type { sif_tilbakekreving_behandlingslager_behandling_skjermlenke_SkjermlenkeType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 
 // Midlertidig workaround for enum typer AksjonspunktDefinisjon og SkjermlenkeType frå k9-sak, k9-klage og ung-sak:
 // Endre dei til å vere faktiske enum typer i frontend før backend, slik at ein kan rulle ut frontend før backend blir endra.

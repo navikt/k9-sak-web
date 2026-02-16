@@ -1,7 +1,7 @@
-import { type AvsenderApplikasjon } from '../models/AvsenderApplikasjon.js';
-import { isTemplate, type Template } from '../models/Template.js';
-import { type FritekstbrevDokumentdata, isFritekstbrevDokumentdataArray } from '../models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelseType } from '../../combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { AvsenderApplikasjon } from '../models/AvsenderApplikasjon.js';
+import { type FritekstbrevDokumentdata, isFritekstbrevDokumentdataArray } from '../models/FritekstbrevDokumentdata.js';
+import { isTemplate, type Template } from '../models/Template.js';
 
 export class MalControllerClient {
   constructor(private baseUrl: URL) {

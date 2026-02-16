@@ -17,7 +17,7 @@
 }
 
 .tooltip:before {
-  content: '';
+  content: "";
   position: absolute;
   width: 10px;
   height: 10px;
@@ -31,7 +31,7 @@
 }
 
 .tooltip:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 12px;

@@ -1,9 +1,7 @@
 import { messages } from '@fpsak-frontend/utils-test/intl-test-helper';
-
-import React from 'react';
-
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
+import React from 'react';
 import PeriodpickerField from './PeriodpickerField';
 
 describe('<PeriodpickerField>', () => {

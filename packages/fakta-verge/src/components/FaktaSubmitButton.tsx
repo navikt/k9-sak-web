@@ -1,10 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
-
 import { Button } from '@navikt/ds-react';
+import type React from 'react';
+import { connect } from 'react-redux';
 
 const isDisabled = (
   isDirty: boolean,

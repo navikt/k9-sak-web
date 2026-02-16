@@ -1,9 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {

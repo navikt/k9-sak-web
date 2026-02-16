@@ -1,14 +1,14 @@
-import { useContext, useMemo, type JSX } from 'react';
-import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
-import { UttakProvider } from './context/UttakContext';
 import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-  type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus,
+  type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
+  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { type JSX, useContext, useMemo } from 'react';
+import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
+import { UttakProvider } from './context/UttakContext';
 import UttakInnhold from './UttakInnhold';
 
 interface UttakProps {

@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { describe, expect, it } from 'vitest';
 import {
   erOverstyringInnenforPerioderTilVurdering,
-  finnTidligsteStartDatoFraPerioderTilVurdering,
   finnSisteSluttDatoFraPerioderTilVurdering,
+  finnTidligsteStartDatoFraPerioderTilVurdering,
   formaterOverstyringAktiviteter,
 } from './overstyringUtils';
-import { k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 describe('overstyringUtils - periodeintervall', () => {
   const perioder = ['2024-01-01/2024-01-10', '2024-02-01/2024-02-05'];

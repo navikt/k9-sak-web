@@ -4,8 +4,6 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
-  TilgjengeligeVedtaksbrev,
-  TilgjengeligeVedtaksbrevMedMaler,
   filterInformasjonsbehov,
   harMellomLagretMedIngenBrev,
   harMellomlagretFritekstbrev,
@@ -17,48 +15,51 @@ import {
   kanHaManueltFritekstbrev,
   kanHindreUtsending,
   kanKunVelge,
+  type TilgjengeligeVedtaksbrev,
+  type TilgjengeligeVedtaksbrevMedMaler,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import { Checkbox, Label } from '@navikt/ds-react';
-import {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
+import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
-  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
   k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Formik, FormikProps } from 'formik';
-import React, { useContext, useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { Checkbox, Label } from '@navikt/ds-react';
+import { Formik, type FormikProps } from 'formik';
+import type React from 'react';
+import { useContext, useState } from 'react';
+import { type IntlShape, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
-import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
-import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
-import { VedtakVarsel } from '../types/VedtakVarsel';
+import type { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
+import type VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
+import type { VedtakVarsel } from '../types/VedtakVarsel';
+import BrevPanel, { manuellBrevPreview } from './brev/BrevPanel';
+import type { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
 import LagreVedtakFormIContext, {
   filtrerVerdierSomSkalNullstilles,
   settMalerVedtakContext,
 } from './LagreVedtakFormIContext';
+import RevurderingPaneler from './revurdering/RevurderingPaneler';
+import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import SakGårIkkeTilBeslutterModal from './SakGårIkkeTilBeslutterModal';
 import UstrukturerteDokumenter from './UstrukturerteDokumenter';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
-import BrevPanel, { manuellBrevPreview } from './brev/BrevPanel';
-import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
-import RevurderingPaneler from './revurdering/RevurderingPaneler';
-import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import styles from './vedtakForm.module.css';
 
 const isVedtakSubmission = true;

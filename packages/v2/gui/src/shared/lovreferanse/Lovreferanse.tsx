@@ -1,5 +1,6 @@
 import { Link } from '@navikt/ds-react';
 import { Fragment } from 'react';
+
 type LovreferanseProps = {
   /**
    * Lovreferanseteksten.

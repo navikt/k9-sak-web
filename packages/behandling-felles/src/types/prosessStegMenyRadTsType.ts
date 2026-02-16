@@ -1,4 +1,4 @@
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import type { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
 interface ProsessStegMenyRad {
   labelId: string;

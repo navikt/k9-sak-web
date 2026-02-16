@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import type Beskrivelse from '../../../../types/Beskrivelse';
+import type Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import BeredskapsperiodeVurderingsdetaljer from '../beredskapsperiode-vurderingsdetaljer/BeredskapsperiodeVurderingsdetaljer';
 import VurderingAvBeredskapsperioderForm from '../vurdering-av-beredskapsperioder-form/VurderingAvBeredskapsperioderForm';
-import Beskrivelse from '../../../../types/Beskrivelse';
-import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 
 interface BeredskapsperiodeoversiktControllerProps {
   valgtPeriode: Vurderingsperiode;

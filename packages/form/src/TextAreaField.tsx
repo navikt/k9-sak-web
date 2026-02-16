@@ -1,12 +1,12 @@
-import { Tag, Textarea, TextareaProps } from '@navikt/ds-react';
+import type { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
+import { Tag, Textarea, type TextareaProps } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 import { Field } from 'redux-form';
-import LabelType from './LabelType';
+import type LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
 import styles from './textAreaField.module.css';
-import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 type BadgesType = 'success' | 'info' | 'warning' | 'error';
 

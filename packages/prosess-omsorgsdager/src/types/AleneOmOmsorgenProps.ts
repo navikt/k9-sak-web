@@ -1,5 +1,5 @@
-import { FormState } from './FormState';
-import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import type { FormState } from './FormState';
+import type { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface AleneOmOmsorgenProps {
   behandlingsID: string;

@@ -1,16 +1,17 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { safeJSONParse } from '@fpsak-frontend/utils';
-import {
+import type {
   Brevmottaker,
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import type { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Edit } from '@navikt/ds-icons';
 import { Button, Modal } from '@navikt/ds-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
 import {

@@ -1,5 +1,7 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import {
+import type {
   Aksjonspunkt,
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
@@ -7,17 +9,14 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import React from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
-import Uttaksplan from './components/Uttaksplan';
 import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
-import Aktivitet from './dto/Aktivitet';
-import { fosterbarnDto } from './dto/FosterbarnDto';
-import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
+import Uttaksplan from './components/Uttaksplan';
+import type Aktivitet from './dto/Aktivitet';
+import type { fosterbarnDto } from './dto/FosterbarnDto';
+import type ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 
 const cache = createIntlCache();
 

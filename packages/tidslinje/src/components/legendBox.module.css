@@ -40,7 +40,7 @@
   border-color: transparent transparent lightgrey;
   border-style: solid;
   border-width: 0 19px 9px;
-  content: '';
+  content: "";
   left: 37px;
   position: absolute;
   top: -9px;
@@ -53,7 +53,7 @@
   border-color: transparent transparent var(--ax-bg-default);
   border-style: solid;
   border-width: 0 19px 9px;
-  content: '';
+  content: "";
   left: 37px;
   position: absolute;
   top: -8px;

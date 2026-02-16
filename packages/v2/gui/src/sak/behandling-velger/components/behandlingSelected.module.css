@@ -119,7 +119,7 @@
   align-items: center;
   background-color: var(--ax-accent-600);
   border-radius: 50%;
-  content: '';
+  content: "";
   display: flex;
   height: 0.75rem;
   justify-content: center;

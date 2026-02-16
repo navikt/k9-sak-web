@@ -1,9 +1,9 @@
 import { Field } from 'formik';
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import CustomNavSelect from './CustomNavSelect';
-import LabelType from './LabelType';
-import ReadOnlyField from './ReadOnlyField';
 import { validateAll } from './formikUtils';
+import type LabelType from './LabelType';
+import ReadOnlyField from './ReadOnlyField';
 
 interface SelectFieldProps {
   name: string;

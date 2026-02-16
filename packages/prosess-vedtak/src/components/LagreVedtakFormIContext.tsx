@@ -1,7 +1,6 @@
-import { FormikValues, useFormikContext } from 'formik';
-import { useEffect, useContext } from 'react';
-
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import { type FormikValues, useFormikContext } from 'formik';
+import { useContext, useEffect } from 'react';
 import { fieldnames } from '../konstanter';
 
 const verdierSomSkalNullstilles = [

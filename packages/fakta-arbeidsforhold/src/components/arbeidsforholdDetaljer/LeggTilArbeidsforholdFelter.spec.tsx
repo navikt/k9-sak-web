@@ -2,7 +2,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
-import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
+import type CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 describe('<LeggTilArbeidsforholdFelter>', () => {

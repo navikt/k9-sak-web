@@ -1,9 +1,8 @@
-import React, { Component, ReactNode } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { Field as reduxFormField } from 'redux-form';
-
 import { TextField } from '@navikt/ds-react';
-import LabelType from './LabelType';
+import React, { Component, type ReactNode } from 'react';
+import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import { Field as reduxFormField } from 'redux-form';
+import type LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
 
@@ -44,10 +43,7 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
           input={{
             ...input,
             onBlur: event => {
-              const value =
-                event && event.target && Object.prototype.hasOwnProperty.call(event.target, 'value')
-                  ? event.target.value
-                  : event;
+              const value = event && event.target && Object.hasOwn(event.target, 'value') ? event.target.value : event;
               const newValue = normalizeOnBlur ? normalizeOnBlur(value) : value;
               onBlur(newValue);
             },

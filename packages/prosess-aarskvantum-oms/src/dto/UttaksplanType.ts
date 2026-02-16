@@ -1,4 +1,4 @@
-import Aktivitet from './Aktivitet';
+import type Aktivitet from './Aktivitet';
 
 interface UttaksplanType {
   saksnummer: string;

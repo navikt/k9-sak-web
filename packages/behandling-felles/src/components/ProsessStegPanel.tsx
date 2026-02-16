@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
-
 import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-
-import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import type { Behandling, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useEffect, useState } from 'react';
+import type { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
-import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import MargMarkering from './MargMarkering';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface OwnProps {
   fagsak: Fagsak;

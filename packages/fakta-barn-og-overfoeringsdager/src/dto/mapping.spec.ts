@@ -1,4 +1,8 @@
-import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import {
+  type Rammevedtak,
+  RammevedtakEnum,
+  type RammevedtakType,
+} from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from './mapping';
 
 const avsender = '02028920544';
@@ -33,14 +37,8 @@ it('mapping fra DTO til formValues', () => {
     overføringGirRammevedtak(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P6D'),
   ];
 
-  const {
-    overføringFår,
-    fordelingFår,
-    koronaoverføringFår,
-    overføringGir,
-    fordelingGir,
-    koronaoverføringGir,
-  } = mapDtoTilFormValues(rammevedtak);
+  const { overføringFår, fordelingFår, koronaoverføringFår, overføringGir, fordelingGir, koronaoverføringGir } =
+    mapDtoTilFormValues(rammevedtak);
 
   const assertOverføring = (overføring, expectedDager, expectedMottakerAvsender, expectedFom, expectedTom) => {
     expect(overføring).toEqual([

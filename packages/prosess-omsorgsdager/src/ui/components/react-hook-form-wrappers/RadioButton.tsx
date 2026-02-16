@@ -1,5 +1,5 @@
 import { Radio } from '@navikt/ds-react';
-import React from 'react';
+import type React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface OwnProps {

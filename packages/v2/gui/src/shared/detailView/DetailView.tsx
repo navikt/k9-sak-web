@@ -1,8 +1,8 @@
-import React from 'react';
+import { CalendarIcon } from '@navikt/aksel-icons';
 
 import { BodyShort, Heading } from '@navikt/ds-react';
-import { CalendarIcon } from '@navikt/aksel-icons';
 import type { Period } from '@navikt/ft-utils';
+import type React from 'react';
 
 export interface DetailViewProps {
   title: string;

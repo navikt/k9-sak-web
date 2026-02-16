@@ -2,12 +2,12 @@ import type { k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto 
 import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import type { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Timeline, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
+import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 import styles from './tilkjentYtelse.module.css';

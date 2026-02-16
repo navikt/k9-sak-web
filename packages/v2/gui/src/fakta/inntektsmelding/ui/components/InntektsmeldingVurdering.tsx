@@ -3,8 +3,8 @@ import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { skalVurderes } from '../../util/utils';
-import InntektsmeldingFerdigvisning from './InntektsmeldingFerdigvisning';
 import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
+import InntektsmeldingFerdigvisning from './InntektsmeldingFerdigvisning';
 
 interface InntektsmeldingVurderingProps {
   tilstand: TilstandMedUiState;
@@ -40,7 +40,7 @@ const InntektsmeldingVurdering = ({
       />
     );
   }
-  
+
   if (skalViseFerdigvisning) {
     return (
       <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />

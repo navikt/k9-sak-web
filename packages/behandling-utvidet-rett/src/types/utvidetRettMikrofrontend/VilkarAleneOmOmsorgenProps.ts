@@ -1,5 +1,5 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import type { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import type { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface AleneOmOmsorgenProps {
   behandlingsID: string;

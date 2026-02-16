@@ -1,10 +1,9 @@
-import React, { Component, ReactElement, ReactNode } from 'react';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import { change as reduxChange } from 'redux-form';
-
 import { getBehandlingFormName } from '@fpsak-frontend/form';
+import React, { Component, type ReactElement, type ReactNode } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, type Dispatch } from 'redux';
+import { change as reduxChange } from 'redux-form';
+import { createSelector } from 'reselect';
 
 const findAllNames = children =>
   children

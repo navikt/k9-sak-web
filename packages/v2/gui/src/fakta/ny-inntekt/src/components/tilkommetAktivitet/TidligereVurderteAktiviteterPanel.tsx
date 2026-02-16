@@ -1,13 +1,10 @@
-import { type JSX } from 'react';
-
 import { BodyShort, Table, Tag } from '@navikt/ds-react';
 import { BeløpLabel, EditedIcon } from '@navikt/ft-ui-komponenter';
-
-import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
-import { getInntektsforholdIdentifikator } from './TilkommetInntektsforholdField';
-
+import type { JSX } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
+import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
+import { getInntektsforholdIdentifikator } from './TilkommetInntektsforholdField';
 import styles from './tilkommetAktivitet.module.css';
 
 type Props = {

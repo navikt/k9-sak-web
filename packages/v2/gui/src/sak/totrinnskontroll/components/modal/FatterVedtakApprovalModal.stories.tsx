@@ -1,13 +1,13 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
-import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
 import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
-import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
 
 const meta: Meta<typeof FatterVedtakApprovalModal> = {
   title: 'gui/sak/totrinnskontroll/modal',

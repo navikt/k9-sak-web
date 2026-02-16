@@ -1,13 +1,18 @@
-import React from 'react';
-import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
+import {
+  faktaHooks,
+  type Rettigheter,
+  SideMenuWrapper,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import type { Behandling, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import React from 'react';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
+import type FetchedData from '../types/fetchedDataTsType';
 
 const overstyringApCodes = [];
 

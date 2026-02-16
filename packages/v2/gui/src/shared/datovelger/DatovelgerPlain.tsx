@@ -1,7 +1,7 @@
-import React from 'react';
-import { type DateInputProps, type DatePickerProps, DatePicker, useDatepicker } from '@navikt/ds-react';
-import dayjs from 'dayjs';
+import { type DateInputProps, DatePicker, type DatePickerProps, useDatepicker } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import dayjs from 'dayjs';
+import type React from 'react';
 
 export type DatovelgerProps = Pick<DatePickerProps, 'defaultMonth' | 'fromDate' | 'toDate' | 'className'> &
   Pick<DateInputProps, 'hideLabel' | 'size' | 'label' | 'description' | 'id'> & {

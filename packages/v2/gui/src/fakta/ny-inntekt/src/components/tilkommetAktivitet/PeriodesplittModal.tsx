@@ -1,9 +1,8 @@
-import { useMemo, useState } from 'react';
-
 import { Button, Modal, Select, VStack } from '@navikt/ds-react';
 import { calcDays, periodFormat, TIDENES_ENDE } from '@navikt/ft-utils';
+import { useMemo, useState } from 'react';
 
-import { type TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
+import type { TilkommetAktivitetValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { type Periode, PeriodesplittDatoValg } from './PeriodesplittDatoValg';
 
 import styles from './periodesplittModal.module.css';

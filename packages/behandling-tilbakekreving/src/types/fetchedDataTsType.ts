@@ -1,8 +1,8 @@
-import {
+import type {
   Aksjonspunkt,
+  BeregningsresultatTilbakekreving,
   FeilutbetalingFakta,
   FeilutbetalingPerioderWrapper,
-  BeregningsresultatTilbakekreving,
 } from '@k9-sak-web/types';
 
 interface FetchedData {

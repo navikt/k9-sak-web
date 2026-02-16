@@ -1,9 +1,9 @@
-import { use, useEffect, useState } from 'react';
-import { TopplinjeAlerts } from './alerts/TopplinjeAlerts.js';
-import { type ErrorWithAlertInfo, isErrorWithAlertInfo } from './alerts/AlertInfo.js';
 import { SharedFeilDtoError } from '@k9-sak-web/backend/shared/errorhandling/SharedFeilDtoError.js';
-import GeneralAsyncError from './alerts/GeneralAsyncError.js';
+import { use, useEffect, useState } from 'react';
 import FeatureTogglesContext from '../featuretoggles/FeatureTogglesContext.js';
+import { type ErrorWithAlertInfo, isErrorWithAlertInfo } from './alerts/AlertInfo.js';
+import GeneralAsyncError from './alerts/GeneralAsyncError.js';
+import { TopplinjeAlerts } from './alerts/TopplinjeAlerts.js';
 
 /**
  * Fanger opp uhandterte promise rejections. Kan deretter avgjere om feil skal analyserast og vise feilmelding, eller

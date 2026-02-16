@@ -1,9 +1,9 @@
 import type { sif_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import {
   GeneriskKodeverkoppslag,
+  type Kilde,
   type Kodeverkoppslag,
   type OrUndefined,
-  type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
 type EO = sif_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse;

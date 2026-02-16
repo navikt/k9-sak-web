@@ -14,13 +14,13 @@ import {
 import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
-import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
+import type { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
 import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { formValueSelector, type InjectedFormProps, reduxForm } from 'redux-form';
 import styles from './settPaVentModal.module.css';
 
 const initFrist = (): string => {

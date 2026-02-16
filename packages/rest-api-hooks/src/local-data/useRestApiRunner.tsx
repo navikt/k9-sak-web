@@ -1,6 +1,5 @@
-import { useState, useCallback } from 'react';
-
-import { REQUEST_POLLING_CANCELLED, ErrorType, AbstractRequestApi } from '@k9-sak-web/rest-api';
+import { type AbstractRequestApi, type ErrorType, REQUEST_POLLING_CANCELLED } from '@k9-sak-web/rest-api';
+import { useCallback, useState } from 'react';
 
 import RestApiState from '../RestApiState';
 

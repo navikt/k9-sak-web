@@ -2,12 +2,12 @@ import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kon
 import { BodyShort, Button, Dialog, HStack, Label, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { minLength, required } from '@navikt/ft-form-validators';
-import { useForm } from 'react-hook-form';
-import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
-import { useEtterspørInntektsmelding } from '../../../api/inntektsmeldingQueries';
-import { visnDato } from '../../../../../utils/formatters';
-import { ForespørselSendtSettPåVent } from './ForespørselSendtSettPåVent';
 import dayjs from 'dayjs';
+import { useForm } from 'react-hook-form';
+import { visnDato } from '../../../../../utils/formatters';
+import { useEtterspørInntektsmelding } from '../../../api/inntektsmeldingQueries';
+import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
+import { ForespørselSendtSettPåVent } from './ForespørselSendtSettPåVent';
 
 interface SendForespørselContentProps {
   førsteFraværsdag: string;

@@ -1,8 +1,8 @@
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { ArbeidsforholdV2, Behandling } from '@k9-sak-web/types';
+import type { ArbeidsforholdV2, Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import messages from '../i18n/nb_NO.json';
-import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
+import type ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 
 const årskvantum: ÅrskvantumForbrukteDager = {

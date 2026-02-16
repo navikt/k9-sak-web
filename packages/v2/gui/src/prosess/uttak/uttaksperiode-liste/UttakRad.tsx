@@ -1,5 +1,8 @@
-import type { JSX } from 'react';
-import { Collapse } from 'react-collapse';
+import {
+  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
+  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
+  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   CheckmarkCircleFillIcon,
   ChevronDownIcon,
@@ -9,19 +12,16 @@ import {
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import {
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
-  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
-import { harÅrsak } from '../utils/årsakUtils';
-import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
+import type { JSX } from 'react';
+import { Collapse } from 'react-collapse';
 import Endringsstatus from '../components/icons/Endringsstatus';
-import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
+import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import { useUttakContext } from '../context/UttakContext';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import { harÅrsak } from '../utils/årsakUtils';
+import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';
 

@@ -1,4 +1,4 @@
-enum AvslagskoderAleneOmOmsorgen{
+enum AvslagskoderAleneOmOmsorgen {
   IKKE_GRUNNLAG_ALENE_OMSORG = '1077',
 }
 

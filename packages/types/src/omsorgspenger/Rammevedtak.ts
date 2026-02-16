@@ -17,7 +17,7 @@ export const RammevedtakEnum = stringEnum({
   DELT_BOSTED: 'DeltBosted',
 });
 
-export type RammevedtakType = typeof RammevedtakEnum[keyof typeof RammevedtakEnum];
+export type RammevedtakType = (typeof RammevedtakEnum)[keyof typeof RammevedtakEnum];
 
 export type Rammevedtak = {
   type: RammevedtakType;

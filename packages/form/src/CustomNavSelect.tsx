@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-class-component-methods */
 import { Select } from '@navikt/ds-react';
-import React, { Component } from 'react';
+import type React from 'react';
+import { Component } from 'react';
 
 interface CustomNavSelectProps {
   selectValues: React.ReactElement<any>[];

@@ -10,16 +10,16 @@ import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/Ak
 import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { BoxNew, Button, Detail, HGrid, HStack, Heading, Radio, VStack } from '@navikt/ds-react';
+import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BoxNew, Button, Detail, Heading, HGrid, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
 import { formaterVisningsnavn } from '../../../utils/formaterVisningsnavn';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
-import styles from './formkravKlageForm.module.css';
 import type { FormValuesNfp } from './FormValuesNfp';
+import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 

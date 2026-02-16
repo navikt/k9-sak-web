@@ -1,10 +1,8 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-
-import BostedSokerView from './components/BostedSokerView';
-import { BostedSokerPersonopplysninger } from './types';
-
+import type { KodeverkMedNavn } from '@k9-sak-web/types';
 import type { JSX } from 'react';
+import BostedSokerView from './components/BostedSokerView';
+import type { BostedSokerPersonopplysninger } from './types';
 
 interface OwnProps {
   personopplysninger: BostedSokerPersonopplysninger;

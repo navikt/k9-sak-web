@@ -1,4 +1,4 @@
-import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
+import type KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { BodyShort, Label } from '@navikt/ds-react';
 import { FormattedMessage } from 'react-intl';
 import formaterDato from '../utils/formaterDato';

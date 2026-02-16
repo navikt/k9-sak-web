@@ -1,6 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Textarea } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
+import type React from 'react';
+import type { JSX } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { getError } from './formUtils';
 

@@ -1,6 +1,6 @@
-import { Period, dateConstants } from '@fpsak-frontend/utils';
+import { dateConstants, Period } from '@fpsak-frontend/utils';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import dayjs from 'dayjs';
+import type dayjs from 'dayjs';
 import { finnHullIPerioder } from '../../../util/periodUtils';
 
 type InputValue = string | number;

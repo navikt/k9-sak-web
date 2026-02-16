@@ -1,18 +1,18 @@
-import type { LagForhåndsvisningRequest, MessagesApi } from './MessagesApi.js';
-import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.js';
-import type { BestillBrevDto } from '@k9-sak-web/backend/combined/kontrakt/dokument/BestillBrevDto.js';
-import { brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { BestillBrevDto } from '@k9-sak-web/backend/combined/kontrakt/dokument/BestillBrevDto.js';
+import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.js';
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
-import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
-import type { EregOrganizationLookupResponse } from '../EregOrganizationLookupResponse.js';
-import {
-  requestIntentionallyAborted,
-  type RequestIntentionallyAborted,
-} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import { isAbortedFetchError } from '@k9-sak-web/backend/shared/isAbortedFetchError.js';
+import { brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { isAbortedFetchError } from '@k9-sak-web/backend/shared/isAbortedFetchError.js';
+import {
+  type RequestIntentionallyAborted,
+  requestIntentionallyAborted,
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
+import type { EregOrganizationLookupResponse } from '../EregOrganizationLookupResponse.js';
+import type { LagForhåndsvisningRequest, MessagesApi } from './MessagesApi.js';
 
 /**
  * Inneholder funksjonalitet for MessagesApi som er delt mellom de backend spesifikke implementasjonene for k9-sak og k9-klage.

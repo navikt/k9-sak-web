@@ -45,7 +45,7 @@
   margin: 0 1rem;
 }
 
-.tablist[role='tablist'] {
+.tablist[role="tablist"] {
   width: 100%;
   justify-content: space-around;
 }

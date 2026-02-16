@@ -1,11 +1,10 @@
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
-
-import Rettigheter from '../../types/rettigheterTsType';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import type Rettigheter from '../../types/rettigheterTsType';
 import getAlleMerknaderFraBeslutter from '../getAlleMerknaderFraBeslutter';
 import readOnlyUtils from '../readOnlyUtils';
-import FaktaPanelDef from './FaktaPanelDef';
-import { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type FaktaPanelDef from './FaktaPanelDef';
 
 class FaktaPanelUtledet {
   faktaPanelDef: FaktaPanelDef;

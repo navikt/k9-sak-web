@@ -1,9 +1,8 @@
+import { ICD10 } from '@navikt/diagnosekoder';
 import { BodyShort, Label, Skeleton } from '@navikt/ds-react';
-
-import { useContext } from 'react';
 import type { Period as PeriodType } from '@navikt/ft-utils';
 import { Period } from '@navikt/ft-utils';
-import { ICD10 } from '@navikt/diagnosekoder';
+import { useContext } from 'react';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import {
   useInstitusjonInfo,

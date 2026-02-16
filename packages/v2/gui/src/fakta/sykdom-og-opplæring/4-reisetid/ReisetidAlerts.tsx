@@ -1,10 +1,10 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto as ReisetidDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useContext } from 'react';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { Alert, Button } from '@navikt/ds-react';
-import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { Alert, Button } from '@navikt/ds-react';
+import { useContext } from 'react';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 
 interface ReisetidAlertProps {
   vurdertReisetid: ReisetidDto | undefined;

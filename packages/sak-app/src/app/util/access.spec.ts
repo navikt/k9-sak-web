@@ -1,7 +1,7 @@
-import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { NavAnsatt } from '@k9-sak-web/types';
+import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import type { NavAnsatt } from '@k9-sak-web/types';
 
 import { kanOverstyreAccess, writeAccess } from './access';
 

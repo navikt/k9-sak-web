@@ -1,5 +1,5 @@
-import { BodyShort } from '@navikt/ds-react';
 import { CheckmarkIcon, PersonGroupFillIcon } from '@navikt/aksel-icons';
+import { BodyShort } from '@navikt/ds-react';
 import { RadStatus } from '../../../shared/vurderingsperiode-navigasjon/PeriodeRad';
 import styles from '../../../shared/vurderingsperiode-navigasjon/periodeRad.module.css';
 import type { Vurderingselement } from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon';

@@ -1,5 +1,5 @@
-import { Periode } from '@k9-sak-web/types';
-import PerioderMedAarsak from './PerioderMedAarsak';
+import type { Periode } from '@k9-sak-web/types';
+import type PerioderMedAarsak from './PerioderMedAarsak';
 
 interface PerioderMedBehandlingsId {
   id: number;

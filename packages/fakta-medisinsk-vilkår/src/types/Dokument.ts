@@ -1,4 +1,4 @@
-import Link from './Link';
+import type Link from './Link';
 
 export enum Dokumenttype {
   LEGEERKLÆRING = 'LEGEERKLÆRING_SYKEHUS',

@@ -1,7 +1,7 @@
-import type { K9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
-import type { HistorikkinnslagDto as K9SakHistorikkinnslagDto } from '@k9-sak-web/backend/k9sak/kontrakt/historikk/HistorikkinnslagDto.js';
 import type { HistorikkinnslagDto as K9KlageHistorikkinnslagDto } from '@k9-sak-web/backend/k9klage/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { HistorikkinnslagDto as K9SakHistorikkinnslagDto } from '@k9-sak-web/backend/k9sak/kontrakt/historikk/HistorikkinnslagDto.js';
 import type { HistorikkinnslagDto as K9TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { K9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import {
   type AktørMedNavn,
   type BeriketHistorikkInnslag,

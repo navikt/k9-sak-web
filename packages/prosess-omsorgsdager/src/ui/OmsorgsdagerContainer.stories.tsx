@@ -1,6 +1,6 @@
 import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
-import { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import Komponenter from '../types/Komponenter';
 import OmsorgsdagerContainer from './OmsorgsdagerContainer';

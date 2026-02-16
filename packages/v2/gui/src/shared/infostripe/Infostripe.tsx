@@ -1,5 +1,6 @@
 import { BodyShort, HStack } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
+import type React from 'react';
+import type { JSX } from 'react';
 import styles from './infostripe.module.css';
 
 interface InfostripeProps {

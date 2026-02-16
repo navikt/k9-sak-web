@@ -1,4 +1,4 @@
-import RettVedDødUtfallType from './RettVedDødType';
+import type RettVedDødUtfallType from './RettVedDødType';
 
 export interface RettVedDød {
   vurdering: string;

@@ -1,9 +1,7 @@
+import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
-
-import { Button } from '@navikt/ds-react';
 import getPackageIntl from '../i18n/getPackageIntl';
 
 const isDisabled = (

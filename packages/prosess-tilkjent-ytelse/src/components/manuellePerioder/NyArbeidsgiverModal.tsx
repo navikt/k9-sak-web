@@ -3,7 +3,7 @@ import { Button, Modal } from '@navikt/ds-react';
 import { RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
-import { NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
+import type { NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
 import styles from './periode.module.css';
 
 interface OwnProps {

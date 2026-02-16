@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
-import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import type { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import { useEffect, useState } from 'react';
 import AldersvilkarForm from './AldersvilkarForm';
 import AldersvilkarLese from './AldersvilkarLese';
 

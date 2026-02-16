@@ -1,4 +1,4 @@
-.vilkarKroniskSyktBarn input[type='radio'] + label:before {
+.vilkarKroniskSyktBarn input[type="radio"] + label:before {
   box-sizing: border-box;
 }
 

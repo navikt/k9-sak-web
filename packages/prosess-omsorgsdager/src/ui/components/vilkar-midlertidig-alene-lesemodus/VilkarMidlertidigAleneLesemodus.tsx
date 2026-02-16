@@ -1,14 +1,14 @@
-import React from 'react';
-import { formatereDatoTilLesemodus } from '../../../util/stringUtils';
-import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
-import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
-import {
+import type React from 'react';
+import type {
   VilkarMidlertidigInformasjonTilLesemodus,
   VilkarMidlertidigSoknadsopplysninger,
 } from '../../../types/VilkarMidlertidigAleneProps';
+import { formatereDatoTilLesemodus } from '../../../util/stringUtils';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
+import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
+import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
+import { AvslagskoderMidlertidigAlene } from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import tekst from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
-import {AvslagskoderMidlertidigAlene} from "../vilkar-midlertidig-alene/VilkarMidlertidigAlene";
 
 interface OwnProps {
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
@@ -43,9 +43,11 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
       )} - ${formatereDatoTilLesemodus(informasjonTilLesemodus.dato.til)}`}
       textVilkarIkkeOppfylt={tekst.arsak}
       årsakVilkarIkkeOppfylt={
-        informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN ? tekst.arsakPeriodeIkkeOverSeksMån
-        : informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG ? tekst.arsakIkkeAleneOmsorg
-        : tekst.arsakIkkeAleneOmsorgAnnet
+        informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
+          ? tekst.arsakPeriodeIkkeOverSeksMån
+          : informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG
+            ? tekst.arsakIkkeAleneOmsorg
+            : tekst.arsakIkkeAleneOmsorgAnnet
       }
     />
   </>

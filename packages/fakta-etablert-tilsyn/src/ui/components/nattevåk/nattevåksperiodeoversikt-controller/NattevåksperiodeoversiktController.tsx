@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import type Beskrivelse from '../../../../types/Beskrivelse';
+import type Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import NattevåksperiodeVurderingsdetaljer from '../nattevåksperiode-vurderingsdetaljer/NattevåksperiodeVurderingsdetaljer';
 import VurderingAvNattevåksperioderForm from '../vurdering-av-nattevåksperioder-form/VurderingAvNattevåksperioderForm';
-import Beskrivelse from '../../../../types/Beskrivelse';
-import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 
 interface NattevåksperiodeoversiktControllerProps {
   valgtPeriode: Vurderingsperiode;

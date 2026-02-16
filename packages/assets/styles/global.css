@@ -1,8 +1,8 @@
-@import url('tailwindcss/base');
-@import url('tailwindcss/components');
-@import url('tailwindcss/utilities');
-@import url('dayPicker.css');
-@import url('@k9-sak-web/gui/tokens/tokens.css');
+@import url("tailwindcss/base");
+@import url("tailwindcss/components");
+@import url("tailwindcss/utilities");
+@import url("dayPicker.css");
+@import url("@k9-sak-web/gui/tokens/tokens.css");
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
 html {
@@ -59,8 +59,8 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .soknad:after {
-  background: transparent url('../../assets/images/soknad.svg') no-repeat;
-  content: '';
+  background: transparent url("../../assets/images/soknad.svg") no-repeat;
+  content: "";
   height: 20px;
   left: -8px;
   position: absolute;
@@ -75,8 +75,8 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .fodsel:after {
-  background: transparent url('../../assets/images/fodsel.svg') no-repeat;
-  content: '';
+  background: transparent url("../../assets/images/fodsel.svg") no-repeat;
+  content: "";
   height: 20px;
   left: -8px;
   position: absolute;
@@ -91,8 +91,8 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 .revurdering:after {
-  background: transparent url('../../assets/images/endringstidspunkt.svg') no-repeat;
-  content: '';
+  background: transparent url("../../assets/images/endringstidspunkt.svg") no-repeat;
+  content: "";
   height: 20px;
   left: -8px;
   position: absolute;
@@ -475,7 +475,7 @@ div .vis-tooltip {
   background-color: var(--ax-warning-200) !important;
 }
 
-input[type='number'] {
+input[type="number"] {
   appearance: textfield;
 }
 
@@ -484,7 +484,7 @@ input::-webkit-inner-spin-button {
   appearance: none;
 }
 
-div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
+div[class^="SjekkFodselDokForm"] [class^="periodFieldArray_buttonRemove"] {
   margin-top: 42px;
 }
 
@@ -498,7 +498,7 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 .dodSoker:after {
   background-color: black;
   color: white;
-  content: 'Søker død';
+  content: "Søker død";
   height: 20px;
   left: -40px;
   position: absolute;
@@ -507,17 +507,17 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   width: 80px;
 }
 
-[class^='vis-custom-time barndod'] {
+[class^="vis-custom-time barndod"] {
   background-color: black;
   color: white;
   pointer-events: none;
   z-index: 0;
 }
 
-[class^='vis-custom-time barndod']:after {
+[class^="vis-custom-time barndod"]:after {
   background-color: black;
   color: white;
-  content: 'Barn død';
+  content: "Barn død";
   left: -40px;
   position: absolute;
   text-align: center;

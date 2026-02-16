@@ -1,4 +1,4 @@
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 export type DetaljertFeilutbetalingPeriode = {
   fom: string;

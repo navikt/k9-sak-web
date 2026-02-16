@@ -1,5 +1,18 @@
+import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
+import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
+import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
+import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
+import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
+import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
+import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { resolveK9FeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/resolveK9FeatureToggles.js';
+import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
+import { AxiosError } from 'axios';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -12,25 +25,10 @@ import {
   useLocation,
   useNavigationType,
 } from 'react-router';
-
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import configureStore from './configureStore';
-import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
-import { isQ } from '@k9-sak-web/lib/paths/paths.js';
-
-import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
-import { AxiosError } from 'axios';
-import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
-import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
-import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
-import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
-import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
 import AppIndex from './app/AppIndex';
 import { RestApiProviderLayout } from './app/RestApiProviderLayout.js';
-import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
-import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
-import { resolveK9FeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/resolveK9FeatureToggles.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import configureStore from './configureStore';
+import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
 const environment = window.location.hostname;
 

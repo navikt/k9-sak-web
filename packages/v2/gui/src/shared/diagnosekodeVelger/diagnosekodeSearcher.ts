@@ -4,7 +4,7 @@
 //
 // This import is a 1.3MB package, so it is set as a separate "manualOutputChunk" in vite.config.js
 // Should then not impact loading time too much since it will be cached and only reloaded on first load, or once a year.
-import { ICD10, DiagnosekodeSearcher, type ICD10Diagnosekode } from '@navikt/diagnosekoder';
+import { DiagnosekodeSearcher, ICD10, type ICD10Diagnosekode } from '@navikt/diagnosekoder';
 
 export type ICD10DiagnosekodeSearcher = DiagnosekodeSearcher<ICD10Diagnosekode>;
 

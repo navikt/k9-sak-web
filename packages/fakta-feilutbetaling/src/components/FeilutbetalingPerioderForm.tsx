@@ -1,11 +1,11 @@
-import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { FeilutbetalingAarsak } from './feilutbetalingAarsak';
-import { BehandlingFaktaPeriode } from './feilutbetalingFakta';
+import type { FeilutbetalingAarsak } from './feilutbetalingAarsak';
+import type { BehandlingFaktaPeriode } from './feilutbetalingFakta';
 import styles from './feilutbetalingPerioderTable.module.css';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {

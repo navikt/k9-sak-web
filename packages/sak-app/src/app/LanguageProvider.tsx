@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';

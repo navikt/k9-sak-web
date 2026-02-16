@@ -1,12 +1,11 @@
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { k9_kodeverk_behandling_BehandlingStatus } from '@navikt/k9-sak-typescript-client/types';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import TilbakekrevingVedtak from './components/TilbakekrevingVedtak';
-import BeregningsresultatTilbakekreving from './types/beregningsresultatTilbakekrevingTsType';
-import Vedtaksbrev from './types/vedtaksbrevTsType';
+import type BeregningsresultatTilbakekreving from './types/beregningsresultatTilbakekrevingTsType';
+import type Vedtaksbrev from './types/vedtaksbrevTsType';
 
 const cache = createIntlCache();
 

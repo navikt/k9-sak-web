@@ -1,31 +1,31 @@
 import {
-  k9_kodeverk_notat_NotatGjelderType,
+  notat_endre as k9sak_notat_endre,
+  notat_hent as k9sak_notat_hent,
+  notat_opprett as k9sak_notat_opprett,
+  notat_skjul as k9sak_notat_skjul,
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import {
   type EndreResponse as K9EndreResponse,
   type HentResponse as K9HentResponse,
   type OpprettResponse as K9OpprettResponse,
   type SkjulResponse as K9SkjulResponse,
+  k9_kodeverk_notat_NotatGjelderType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
-  ung_kodeverk_notat_NotatGjelderType,
+  notat_endre as ungsak_notat_endre,
+  notat_hent as ungsak_notat_hent,
+  notat_opprett as ungsak_notat_opprett,
+  notat_skjul as ungsak_notat_skjul,
+} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+import {
   type EndreResponse as UngEndreResponse,
   type HentResponse as UngHentResponse,
   type OpprettResponse as UngOpprettResponse,
   type SkjulResponse as UngSkjulResponse,
+  ung_kodeverk_notat_NotatGjelderType,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { type K9SakOrUngSak, k9SakOrUngSak } from '../../utils/multibackend.js';
 import type { FormState } from './types/FormState';
-import {
-  notat_hent as k9sak_notat_hent,
-  notat_opprett as k9sak_notat_opprett,
-  notat_endre as k9sak_notat_endre,
-  notat_skjul as k9sak_notat_skjul,
-} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import {
-  notat_hent as ungsak_notat_hent,
-  notat_opprett as ungsak_notat_opprett,
-  notat_endre as ungsak_notat_endre,
-  notat_skjul as ungsak_notat_skjul,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import { k9SakOrUngSak, type K9SakOrUngSak } from '../../utils/multibackend.js';
 
 type HentResponse = K9HentResponse | UngHentResponse;
 type OpprettResponse = K9OpprettResponse | UngOpprettResponse;

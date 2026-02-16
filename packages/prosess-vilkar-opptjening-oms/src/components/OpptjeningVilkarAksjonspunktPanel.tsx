@@ -1,21 +1,20 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import type { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
+import type { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-
-import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween';
-import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
-import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder, VilkårFieldType } from './VilkarField';
 import OpptjeningPanel from './OpptjeningPanel';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
+import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder, type VilkårFieldType } from './VilkarField';
 
 dayjs.extend(isBetween);
 

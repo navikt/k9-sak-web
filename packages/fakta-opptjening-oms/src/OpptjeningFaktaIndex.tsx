@@ -1,4 +1,4 @@
-import {
+import type {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   Opptjening,
@@ -6,9 +6,9 @@ import {
   SubmitCallback,
   UtlandDokStatus,
 } from '@k9-sak-web/types';
-import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import type AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import React from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
 

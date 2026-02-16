@@ -1,25 +1,24 @@
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { harÅpentAksjonspunkt, harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
-import { type InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
-import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
-import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
-import { Alert, Tabs } from '@navikt/ds-react';
-import { createContext, useContext, useEffect, useState } from 'react';
-import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
-import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
-
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import tabCodes from './tabCodes';
-import { useVilkår } from './SykdomOgOpplæringQueries.js';
 import {
+  type k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type OpprettLangvarigSykdomsVurderingData,
   k9_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
-  type OpprettLangvarigSykdomsVurderingData,
-  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { InstitusjonIcon, SykdomIcon, OpplæringIcon, ReisetidIcon } from './TabIcons.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { Alert, Tabs } from '@navikt/ds-react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
+import { harAksjonspunkt, harÅpentAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
+import type { InstitusjonAksjonspunktPayload } from './1-institusjon/components/InstitusjonForm.js';
+import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
+import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
+import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
+import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
+import { useVilkår } from './SykdomOgOpplæringQueries.js';
+import { InstitusjonIcon, OpplæringIcon, ReisetidIcon, SykdomIcon } from './TabIcons.js';
+import tabCodes from './tabCodes';
 
 export type nødvendigOpplæringPayload = {
   perioder: {

@@ -1,19 +1,18 @@
-import React from 'react';
-
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
-import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
-import users from '@fpsak-frontend/assets/images/users.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
-import { Rammevedtak } from '@k9-sak-web/types';
+import users from '@fpsak-frontend/assets/images/users.svg';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
+import type BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import type { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import MidlertidigAlene from './components/MidlertidigAlene';
+import React from 'react';
+import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import BarnSeksjon from './components/BarnSeksjon';
-import BarnMedRammevedtak from './dto/BarnMedRammevedtak';
-import KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
+import MidlertidigAlene from './components/MidlertidigAlene';
 import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
+import type BarnMedRammevedtak from './dto/BarnMedRammevedtak';
+import type KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
 
 const cache = createIntlCache();
 

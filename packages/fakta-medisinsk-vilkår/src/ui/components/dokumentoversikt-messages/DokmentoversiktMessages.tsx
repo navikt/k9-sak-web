@@ -1,7 +1,7 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Box, Button } from '@navikt/ds-react';
-import React, { JSX } from 'react';
-import Dokumentoversikt from '../../../types/Dokumentoversikt';
+import React, { type JSX } from 'react';
+import type Dokumentoversikt from '../../../types/Dokumentoversikt';
 import ContainerContext from '../../context/ContainerContext';
 import FristForDokumentasjonUtløptPanel from '../frist-for-dokumentasjon-utløpt-panel/FristForDokumentasjonUtløptPanel';
 

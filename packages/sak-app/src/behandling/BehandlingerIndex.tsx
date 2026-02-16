@@ -1,7 +1,6 @@
-import { Route, Routes } from 'react-router';
-
 import IngenBehandlingValgtPanel from '@k9-sak-web/gui/app/feilmeldinger/IngenBehandlingValgtPanel.js';
-import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import type { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { Route, Routes } from 'react-router';
 
 import BehandlingIndex from './BehandlingIndex';
 

@@ -1,5 +1,5 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import dayjs from 'dayjs';
+import type dayjs from 'dayjs';
 
 const prettyDateFormat = 'DD.MM.YYYY';
 

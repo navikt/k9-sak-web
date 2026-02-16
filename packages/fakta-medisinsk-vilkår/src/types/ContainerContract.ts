@@ -1,7 +1,7 @@
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Personopplysninger } from '@k9-sak-web/types';
-import BehandlingType from '../constants/BehandlingType';
-import { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type { Personopplysninger } from '@k9-sak-web/types';
+import type BehandlingType from '../constants/BehandlingType';
 
 interface ContainerContract {
   endpoints: {

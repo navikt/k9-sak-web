@@ -1,5 +1,5 @@
-import { splitUttakByDate } from './splitUttakByDate';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { splitUttakByDate } from './splitUttakByDate';
 
 const p = (fom: string, tom: string): UttaksperiodeBeriket => ({
   periode: { fom, tom },

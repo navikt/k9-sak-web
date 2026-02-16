@@ -4,9 +4,9 @@ import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsa
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { Box, Button, HStack, Heading, VStack } from '@navikt/ds-react';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, required } from '@navikt/ft-form-validators';
 import { useState } from 'react';
@@ -14,8 +14,8 @@ import { useForm } from 'react-hook-form';
 import type { SaveKlageParams } from '../felles/SaveKlageParams';
 import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
-import styles from './behandleKlageFormKa.module.css';
 import type { BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
+import styles from './behandleKlageFormKa.module.css';
 import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 
 interface BehandleKlageFormKaProps {

@@ -4,35 +4,35 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse } from '@fpsak-frontend/utils';
 import {
-  Brevmottaker,
-  TilgjengeligeVedtaksbrev,
+  type Brevmottaker,
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrevV1,
   kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
+  type TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { lagVisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { Alert, ErrorMessage } from '@navikt/ds-react';
-
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
-import {
+import type {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { FormikValues, setNestedObjectValues, useField } from 'formik';
-import React, { useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { lagVisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
+import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import type { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { Alert, ErrorMessage } from '@navikt/ds-react';
+import { type FormikValues, setNestedObjectValues, useField } from 'formik';
+import type React from 'react';
+import { useState } from 'react';
+import { type IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import styles from './BrevPanel.module.css';
-import { CustomFormikProps } from './CustomFormikProps';
+import type { CustomFormikProps } from './CustomFormikProps';
 import InformasjonsbehovAutomatiskVedtaksbrev, {
-  InformasjonsbehovVedtaksbrev,
+  type InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';
 
 const kanResultatForhåndsvises = (behandlingResultat: BehandlingsresultatDto) => {

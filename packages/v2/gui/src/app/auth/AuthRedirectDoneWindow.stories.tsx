@@ -1,7 +1,7 @@
-import { AuthRedirectDoneWindow } from './AuthRedirectDoneWindow.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
+import { AuthRedirectDoneWindow } from './AuthRedirectDoneWindow.js';
 
 const meta = {
   title: 'gui/app/auth/AuthRedirectDoneWindow',

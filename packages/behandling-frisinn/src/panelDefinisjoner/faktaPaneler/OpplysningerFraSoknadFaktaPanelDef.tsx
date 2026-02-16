@@ -1,10 +1,9 @@
-import React from 'react';
-
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import React from 'react';
 
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 

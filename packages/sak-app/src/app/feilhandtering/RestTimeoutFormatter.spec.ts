@@ -1,6 +1,6 @@
-import RestTimeoutFormatter from './RestTimeoutFormatter';
 import ErrorMessage from './ErrorMessage';
 import ErrorEventType from './errorEventType';
+import RestTimeoutFormatter from './RestTimeoutFormatter';
 
 describe('RestTimeoutFormatter', () => {
   it('skal håndtere feil når feildata er av korrekt type', () => {

@@ -1,22 +1,18 @@
-import React from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-
-import { BodyShort, Box, Table, Tag, VStack } from '@navikt/ds-react';
-
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { BodyShort, Box, Table, Tag, VStack } from '@navikt/ds-react';
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { BeløpLabel, EditedIcon, PeriodLabel } from '@navikt/ft-ui-komponenter';
-
-import { type TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
-import { SubmitButton } from '../felles/SubmitButton';
-import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
-import { TilkommetInntektsforholdField } from './TilkommetInntektsforholdField';
-
-import { RhfTextarea } from '@navikt/ft-form-hooks';
+import type React from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
 import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov';
 import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
 import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling';
+import type { TilkommetAktivitetFormValues } from '../../types/FordelBeregningsgrunnlagPanelValues';
+import { SubmitButton } from '../felles/SubmitButton';
+import { getAktivitetNavnFraInnteksforhold } from './TilkommetAktivitetUtils';
+import { TilkommetInntektsforholdField } from './TilkommetInntektsforholdField';
 import styles from './tilkommetAktivitet.module.css';
 
 type Props = {

@@ -1,7 +1,7 @@
-import React from 'react';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import React from 'react';
 
 class BarnFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.BARN;

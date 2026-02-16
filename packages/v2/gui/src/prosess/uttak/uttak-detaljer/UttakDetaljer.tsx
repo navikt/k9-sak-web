@@ -1,27 +1,27 @@
-import { type JSX } from 'react';
 import {
   k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
   type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
+  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
   type pleiepengerbarn_uttak_kontrakter_Utfall as UttaksperiodeInfoUtfallType,
   type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
+  pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BriefcaseClockIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
+import type { JSX } from 'react';
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
+import { useUttakContext } from '../context/UttakContext';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { FremhevingTag } from './FremhevingTag';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
 import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
 import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
-import { useUttakContext } from '../context/UttakContext';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import styles from './uttakDetaljer.module.css';
 
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {

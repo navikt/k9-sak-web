@@ -1,9 +1,15 @@
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import {
+  faktaHooks,
+  type Rettigheter,
+  SideMenuWrapper,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import type {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
   Dokument,
@@ -11,15 +17,13 @@ import {
   FagsakPerson,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { useEffect, useState } from 'react';
-
 import { isBefore, parse } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omsorgspengerBehandlingApi';
 import faktaPanelDefinisjoner, {
   faktaPanelDefinisjonerUtenOmsorgenFor,
 } from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
+import type FetchedData from '../types/fetchedDataTsType';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 

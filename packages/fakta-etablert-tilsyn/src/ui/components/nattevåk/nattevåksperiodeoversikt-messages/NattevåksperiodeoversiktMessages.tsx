@@ -1,7 +1,7 @@
 import { Alert, Box, Button, HStack } from '@navikt/ds-react';
-import NattevåkType from '../../../../types/NattevåkType';
-import { getStringMedPerioder } from '../../../../util/periodUtils';
 import React from 'react';
+import type NattevåkType from '../../../../types/NattevåkType';
+import { getStringMedPerioder } from '../../../../util/periodUtils';
 
 interface NattevåksperiodeoversiktMessagesProps {
   nattevåkData: NattevåkType;

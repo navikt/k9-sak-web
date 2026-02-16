@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Link } from '@navikt/ds-react';
-import { useState, type FC, type ReactNode } from 'react';
+import { type FC, type ReactNode, useState } from 'react';
 
 import styles from './uttakDetaljer.module.css';
 

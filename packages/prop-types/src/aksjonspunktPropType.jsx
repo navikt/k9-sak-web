@@ -13,9 +13,11 @@ const aksjonspunktPropType = PropTypes.shape({
   }),
   toTrinnsBehandling: PropTypes.bool,
   toTrinnsBehandlingGodkjent: PropTypes.bool,
-  vurderPaNyttArsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-  })),
+  vurderPaNyttArsaker: PropTypes.arrayOf(
+    PropTypes.shape({
+      kode: PropTypes.string,
+    }),
+  ),
   besluttersBegrunnelse: PropTypes.string,
   aksjonspunktType: PropTypes.shape({
     kode: PropTypes.string.isRequired,

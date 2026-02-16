@@ -1,20 +1,20 @@
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
-  Aksjonspunkt,
-  ArbeidsforholdV2,
-  Behandling,
+  type Aksjonspunkt,
+  type ArbeidsforholdV2,
+  type Behandling,
   UtfallEnum,
-  Uttaksperiode,
-  Vilkår,
+  type Uttaksperiode,
+  type Vilkår,
   VilkårEnum,
-  VurderteVilkår,
+  type VurderteVilkår,
 } from '@k9-sak-web/types';
-import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { type Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { action } from 'storybook/actions';
-import Aktivitet from './dto/Aktivitet';
-import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
+import type Aktivitet from './dto/Aktivitet';
+import type ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 
 export default {

@@ -1,11 +1,11 @@
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Loader } from '@navikt/ds-react';
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';
-import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
 import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
+import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;

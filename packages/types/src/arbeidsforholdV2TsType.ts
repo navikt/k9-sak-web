@@ -1,8 +1,8 @@
-import Kodeverk from './kodeverkTsType';
-import ArbeidsforholdId from './arbeidsforholdIdTsType';
-import Arbeidsgiver from './arbeidsgiverTsType';
-import Periode from './periodeTsType';
-import Inntektsmelding from './inntektsmeldingTsType';
+import type ArbeidsforholdId from './arbeidsforholdIdTsType';
+import type Arbeidsgiver from './arbeidsgiverTsType';
+import type Inntektsmelding from './inntektsmeldingTsType';
+import type Kodeverk from './kodeverkTsType';
+import type Periode from './periodeTsType';
 
 export type ArbeidsforholdV2 = Readonly<{
   id?: string;

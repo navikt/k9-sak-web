@@ -1,7 +1,3 @@
-import { Location } from 'history';
-import { lazy, Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-router';
-
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
@@ -13,7 +9,7 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
-import {
+import type {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
@@ -21,6 +17,9 @@ import {
   KodeverkMedNavn,
   NavAnsatt,
 } from '@k9-sak-web/types';
+import type { Location } from 'history';
+import { lazy, Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import { type NavigateFunction, useLocation, useNavigate, useParams } from 'react-router';
 import { getFaktaLocation, getLocationWithDefaultProsessStegAndFakta, getProsessStegLocation } from '../app/paths';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import behandlingEventHandler from './BehandlingEventHandler';

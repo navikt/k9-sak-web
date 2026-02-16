@@ -1,4 +1,4 @@
-import { Aksjonspunkt, Personopplysninger, SimuleringResultat, Soknad, Vilkar } from '@k9-sak-web/types';
+import type { Aksjonspunkt, Personopplysninger, SimuleringResultat, Soknad, Vilkar } from '@k9-sak-web/types';
 
 export interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

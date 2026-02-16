@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import type { K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import { K9TilbakeTotrinnskontrollData } from './K9TilbakeTotrinnskontrollBackendClient.js';
-import { K9TilbakeKodeverkoppslag } from '../../../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
+import { describe, expect, it } from 'vitest';
 import { oppslagKodeverkSomObjektK9Tilbake } from '../../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Tilbake.js';
+import { K9TilbakeKodeverkoppslag } from '../../../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
+import { K9TilbakeTotrinnskontrollData } from './K9TilbakeTotrinnskontrollBackendClient.js';
 
 describe('K9TilbakeTotrinnskontrollData', () => {
   it('should sort and filter input dtos', () => {

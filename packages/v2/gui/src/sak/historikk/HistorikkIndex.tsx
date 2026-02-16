@@ -1,16 +1,15 @@
-import { useCallback, useContext } from 'react';
-import { useLocation } from 'react-router';
+import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApi.js';
+import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-
-import dayjs from 'dayjs';
 import { Alert } from '@navikt/ds-react';
-import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
-import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
-import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
-import { pathToBehandling } from '../../utils/paths.js';
+import dayjs from 'dayjs';
+import { useCallback, useContext } from 'react';
+import { useLocation } from 'react-router';
 import { queryKeys } from '../../shared/query-keys/queryKeys.js';
+import { pathToBehandling } from '../../utils/paths.js';
+import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
 
 interface OwnProps {
   saksnummer: string;

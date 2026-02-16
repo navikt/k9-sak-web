@@ -1,27 +1,27 @@
-import React, { type JSX } from 'react';
 import { addYearsToDate } from '@fpsak-frontend/utils';
-import Vurderingselement from '../../../types/Vurderingselement';
-// eslint-disable-next-line max-len
-import VurderingsoppsummeringForKontinuerligTilsynOgPleie from '../vurderingsoppsummering-for-kontinuerlig-tilsyn-og-pleie/VurderingsoppsummeringForKontinuerligTilsynOgPleie';
-import VurderingsdetaljerFetcher from '../vurderingsdetaljer-fetcher/VurderingsdetaljerFetcher';
+import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
+import type InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
+import type ManuellVurdering from '../../../types/ManuellVurdering';
+import type Vurderingselement from '../../../types/Vurderingselement';
+import type Vurderingsoversikt from '../../../types/Vurderingsoversikt';
+import Vurderingstype from '../../../types/Vurderingstype';
 import { findHrefByRel, findLinkByRel } from '../../../util/linkUtils';
-import ManuellVurdering from '../../../types/ManuellVurdering';
-import buildInitialFormStateForEdit from '../vilkårsvurdering-av-tilsyn-og-pleie/initialFormStateUtil';
-import VurderingAvTilsynsbehovForm from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
-import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
-import EndreVurderingController from '../endre-vurdering-controller/EndreVurderingController';
 import ContainerContext from '../../context/ContainerContext';
 import VurderingContext from '../../context/VurderingContext';
-import Vurderingstype from '../../../types/Vurderingstype';
-import VurderingAvToOmsorgspersonerForm from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
-import VurderingsoppsummeringForToOmsorgspersoner from '../vurderingsoppsummering-for-to-omsorgspersoner/VurderingsoppsummeringForToOmsorgspersoner';
-import VurderingsoppsummeringForInnleggelsesperiode from '../vurderingsoppsummering-for-innleggelsesperiode/VurderingsoppsummeringForInnleggelsesperiode';
-import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
-import VurderingAvLivetsSluttfaseForm from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
-import VurderingsoppsummeringForSluttfase from '../vurderingsoppsummering-for-livets-sluttfase/VurderingsoppsummeringForSluttfase';
-import VurderingsoppsummeringLangvarigSykdom from '../vurderingsoppsummering-for-langvarig-sykdom/VurderingsoppsummeringLangvarigSykdom';
+import EndreVurderingController from '../endre-vurdering-controller/EndreVurderingController';
+import buildInitialFormStateForEdit from '../vilkårsvurdering-av-tilsyn-og-pleie/initialFormStateUtil';
 import VurderingLangvarigSykdomForm from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
+import VurderingAvLivetsSluttfaseForm from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
+import VurderingAvTilsynsbehovForm from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
+import VurderingAvToOmsorgspersonerForm from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
+import VurderingsdetaljerFetcher from '../vurderingsdetaljer-fetcher/VurderingsdetaljerFetcher';
+import VurderingsoppsummeringForInnleggelsesperiode from '../vurderingsoppsummering-for-innleggelsesperiode/VurderingsoppsummeringForInnleggelsesperiode';
+// eslint-disable-next-line max-len
+import VurderingsoppsummeringForKontinuerligTilsynOgPleie from '../vurderingsoppsummering-for-kontinuerlig-tilsyn-og-pleie/VurderingsoppsummeringForKontinuerligTilsynOgPleie';
+import VurderingsoppsummeringLangvarigSykdom from '../vurderingsoppsummering-for-langvarig-sykdom/VurderingsoppsummeringLangvarigSykdom';
+import VurderingsoppsummeringForSluttfase from '../vurderingsoppsummering-for-livets-sluttfase/VurderingsoppsummeringForSluttfase';
+import VurderingsoppsummeringForToOmsorgspersoner from '../vurderingsoppsummering-for-to-omsorgspersoner/VurderingsoppsummeringForToOmsorgspersoner';
 
 interface VurderingsdetaljvisningForEksisterendeProps {
   vurderingsoversikt: Vurderingsoversikt;

@@ -1,12 +1,12 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import React, { useMemo, type JSX } from 'react';
+import React, { type JSX, useMemo } from 'react';
 import { postNyVurdering, postNyVurderingDryRun } from '../../../api/api';
-import Dokument from '../../../types/Dokument';
-import Link from '../../../types/Link';
-import { PeriodeMedEndring, PerioderMedEndringResponse } from '../../../types/PeriodeMedEndring';
-import { Vurderingsversjon } from '../../../types/Vurdering';
+import type Dokument from '../../../types/Dokument';
+import type Link from '../../../types/Link';
+import type { PeriodeMedEndring, PerioderMedEndringResponse } from '../../../types/PeriodeMedEndring';
+import type { Vurderingsversjon } from '../../../types/Vurdering';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';
 import VurderingContext from '../../context/VurderingContext';

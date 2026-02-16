@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { UNSAFE_Combobox, type ComboboxProps } from '@navikt/ds-react';
-import { type ICD10Diagnosekode } from '@navikt/diagnosekoder';
+import type { ICD10Diagnosekode } from '@navikt/diagnosekoder';
+import { type ComboboxProps, UNSAFE_Combobox } from '@navikt/ds-react';
+import type React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { initDiagnosekodeSearcher } from './diagnosekodeSearcher.js';
 

@@ -1,5 +1,5 @@
-import KodeverkMedNavn from '../kodeverkMedNavnTsType';
-import Kodeverk from '../kodeverkTsType';
+import type KodeverkMedNavn from '../kodeverkMedNavnTsType';
+import type Kodeverk from '../kodeverkTsType';
 
 export type UtenlandsoppholdType = {
   region: Kodeverk;

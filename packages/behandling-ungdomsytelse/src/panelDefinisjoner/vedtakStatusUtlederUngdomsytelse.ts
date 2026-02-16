@@ -1,7 +1,7 @@
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Behandlingsresultat, Vilkar } from '@k9-sak-web/types';
+import type { Aksjonspunkt, Behandlingsresultat, Vilkar } from '@k9-sak-web/types';
 
 const hasOnlyClosedAps = (aksjonspunkter: Aksjonspunkt[], vedtakAksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter

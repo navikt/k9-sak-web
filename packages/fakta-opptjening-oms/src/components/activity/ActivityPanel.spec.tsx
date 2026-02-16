@@ -2,9 +2,9 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
 import messages from '../../../i18n/nb_NO.json';
 import { ActivityPanel } from './ActivityPanel';
 

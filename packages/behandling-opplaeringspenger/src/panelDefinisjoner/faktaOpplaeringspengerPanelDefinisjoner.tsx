@@ -13,8 +13,8 @@ import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/Opptjeningsvilkaret
 import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFaktaPanelDef';
 import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
 import SykdomOgOpplæringPanelDef from './faktaPaneler/SykdomOgOpplæringPanelDef';
-import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
+import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),

@@ -1,5 +1,6 @@
 import React from 'react';
-import Overføring, { Overføringsretning, OverføringstypeEnum } from '../types/Overføring';
+import type Overføring from '../types/Overføring';
+import { type Overføringsretning, OverføringstypeEnum } from '../types/Overføring';
 import OverføringsdagerPanel from './OverføringsdagerPanel';
 import styles from './overføringsdagerPanelgruppe.module.css';
 

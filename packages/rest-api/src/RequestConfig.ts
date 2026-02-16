@@ -1,4 +1,4 @@
-import RequestAdditionalConfig from './RequestAdditionalConfigTsType';
+import type RequestAdditionalConfig from './RequestAdditionalConfigTsType';
 
 export enum RequestType {
   GET = 'GET',

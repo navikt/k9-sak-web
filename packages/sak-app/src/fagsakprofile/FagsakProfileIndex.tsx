@@ -5,22 +5,22 @@ import FagsakProfilSakIndex from '@k9-sak-web/gui/sak/fagsak-profil/FagsakProfil
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { k9SakOrUngSak } from '@k9-sak-web/gui/utils/multibackend.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import {
+import type {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { Location } from 'history';
+import type { Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
-import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
+import type BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+import BehandlingMenuIndex, { type BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import { useFpSakKodeverkMedNavn } from '../data/useKodeverk';
-import SakRettigheter from '../fagsak/sakRettigheterTsType';
+import type SakRettigheter from '../fagsak/sakRettigheterTsType';
 import styles from './fagsakProfileIndex.module.css';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {

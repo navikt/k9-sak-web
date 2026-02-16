@@ -1,9 +1,9 @@
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
 import { useIntl } from 'react-intl';
-import { FeilutbetalingAarsak } from './feilutbetalingAarsak';
-import { BehandlingFaktaPeriode } from './feilutbetalingFakta';
 import FeilutbetalingPerioderForm from './FeilutbetalingPerioderForm';
+import type { FeilutbetalingAarsak } from './feilutbetalingAarsak';
+import type { BehandlingFaktaPeriode } from './feilutbetalingFakta';
 import styles from './feilutbetalingPerioderTable.module.css';
 
 const headerTextCodes = [

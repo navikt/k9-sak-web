@@ -1,10 +1,3 @@
-import { Heading, HGrid } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -17,6 +10,12 @@ import {
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Heading, HGrid } from '@navikt/ds-react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 

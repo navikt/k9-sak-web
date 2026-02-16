@@ -1,10 +1,8 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Box, Button } from '@navikt/ds-react';
-
+import type { JSX } from 'react';
 import * as React from 'react';
 import ContainerContext from '../../context/ContainerContext';
-
-import type { JSX } from 'react';
 
 const AksjonspunktFerdigStripe = (): JSX.Element => {
   const { onFinished } = React.useContext(ContainerContext);

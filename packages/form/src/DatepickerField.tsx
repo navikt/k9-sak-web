@@ -1,4 +1,5 @@
 import { Datepicker } from '@fpsak-frontend/shared-components';
+import type { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 import {
   ACCEPTED_DATE_INPUT_FORMATS,
   DDMMYYYY_DATE_FORMAT,
@@ -6,10 +7,9 @@ import {
 } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment from 'moment';
 import { Field } from 'redux-form';
-import LabelType from './LabelType';
+import type LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
-import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/validators';
 
 interface DatepickerFieldProps {
   name: string;

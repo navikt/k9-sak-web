@@ -19,7 +19,7 @@
   border-bottom-color: #fff;
   border-width: 12px;
   bottom: 100%;
-  content: ' ';
+  content: " ";
   height: 0;
   left: 50%;
   margin-left: -12px;
@@ -34,7 +34,7 @@
   border-bottom-color: var(--ax-neutral-400);
   border-width: 13px;
   bottom: 100%;
-  content: ' ';
+  content: " ";
   height: 0;
   left: 50%;
   margin-left: -13px;

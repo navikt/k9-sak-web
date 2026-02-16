@@ -1,9 +1,9 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { HGrid, Heading } from '@navikt/ds-react';
-import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import React from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import type { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Heading, HGrid } from '@navikt/ds-react';
+import type React from 'react';
+import { type IntlShape, injectIntl } from 'react-intl';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import VedtakOverlappendeYtelsePanel from './VedtakOverlappendeYtelsePanel';
 

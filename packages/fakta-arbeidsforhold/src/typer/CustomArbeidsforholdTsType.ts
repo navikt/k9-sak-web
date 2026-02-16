@@ -1,4 +1,4 @@
-import { ArbeidsforholdV2 } from '@k9-sak-web/types';
+import type { ArbeidsforholdV2 } from '@k9-sak-web/types';
 
 type CustomArbeidsforhold = ArbeidsforholdV2 & {
   replaceOptions?: ArbeidsforholdV2[];

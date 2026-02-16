@@ -1,5 +1,5 @@
 /* eslint vitest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectNoRedirect"] }] */
-import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
+import { beregnDagerTimer, type DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 
 const sjekkKonvertering = ({ dager, timer }: DagerTimer, expectedDager, expectedTimer) => {
   expect(dager).toBe(expectedDager);

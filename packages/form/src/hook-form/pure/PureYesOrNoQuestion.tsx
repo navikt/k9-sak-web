@@ -1,5 +1,5 @@
-import React from 'react';
 import { Radio, RadioGroup } from '@navikt/ds-react';
+import React from 'react';
 
 interface YesOrNoQuestionProps {
   question: string;

@@ -1,18 +1,18 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import type { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling } from '@k9-sak-web/types';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import {
+import type { Behandling } from '@k9-sak-web/types';
+import type { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
+import type {
   AksjonspunktInformasjon,
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
-import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
-import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
+import type { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface PropTypes {
   isReadOnly: boolean;

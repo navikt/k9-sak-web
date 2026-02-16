@@ -1,3 +1,3 @@
 export { default as aksjonspunktPropType } from './src/aksjonspunktPropType';
 
-export { kodeverkPropType, kodeverkObjektPropType } from './src/kodeverkPropType';
+export { kodeverkObjektPropType, kodeverkPropType } from './src/kodeverkPropType';

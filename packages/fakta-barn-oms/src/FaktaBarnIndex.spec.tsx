@@ -1,10 +1,10 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../i18n/nb_NO.json';
 import FaktaBarnIndex from './FaktaBarnIndex';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 describe('<FaktaBarnIndex>', () => {
   it('hvis ingen barn, rendres info om dette', () => {

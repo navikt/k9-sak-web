@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 import dayjs from 'dayjs';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
+import type KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnVisning from './BarnVisning';
 
 it('<BarnVisning>', () => {

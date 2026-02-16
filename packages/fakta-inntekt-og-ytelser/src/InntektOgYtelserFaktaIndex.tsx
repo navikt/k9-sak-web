@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import InntektOgYtelserPanel from './components/InntektOgYtelserFaktaPanel';
-import { Inntekt } from './InntektType';
+import type { Inntekt } from './InntektType';
 
 const cache = createIntlCache();
 

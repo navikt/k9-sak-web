@@ -1,10 +1,10 @@
-import { BeregningReferanse } from '@k9-sak-web/types';
 import {
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  k9_kodeverk_vilkår_VilkårType as VilkårType,
   k9_kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
+  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_kodeverk_vilkår_VilkårType as VilkårType,
   k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BeregningReferanse } from '@k9-sak-web/types';
 import { describe, expect, it } from 'vitest';
 import mapVilkar from '../VilkarMapper';
 

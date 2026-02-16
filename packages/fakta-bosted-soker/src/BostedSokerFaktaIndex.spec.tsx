@@ -1,9 +1,9 @@
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import type { KodeverkMedNavn } from '@k9-sak-web/types';
 import { render, screen } from '@testing-library/react';
 import BostedSokerFaktaIndex from './BostedSokerFaktaIndex';
-import { BostedSokerPersonopplysninger } from './types';
+import type { BostedSokerPersonopplysninger } from './types';
 
 describe('<BostedSokerFaktaIndex>', () => {
   const personstatusTypes = [

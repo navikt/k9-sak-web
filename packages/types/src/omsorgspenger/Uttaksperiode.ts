@@ -12,7 +12,7 @@ export const VilkårEnum = stringEnum({
   ANDRE_SKAL_DEKKE_DAGENE: 'ANDRE_SKAL_DEKKE_DAGENE',
 });
 
-export type Vilkår = typeof VilkårEnum[keyof typeof VilkårEnum];
+export type Vilkår = (typeof VilkårEnum)[keyof typeof VilkårEnum];
 
 export const UtfallEnum = stringEnum({
   INNVILGET: 'INNVILGET',
@@ -20,7 +20,7 @@ export const UtfallEnum = stringEnum({
   UAVKLART: 'UAVKLART',
 });
 
-export type Utfalltype = typeof UtfallEnum[keyof typeof UtfallEnum];
+export type Utfalltype = (typeof UtfallEnum)[keyof typeof UtfallEnum];
 
 export type Map<Key extends string | number, Value> = {
   [key in Key]?: Value;

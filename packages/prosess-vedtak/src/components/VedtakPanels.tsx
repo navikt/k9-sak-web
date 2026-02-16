@@ -1,14 +1,7 @@
-import { useState } from 'react';
-
-import { Alert, Button } from '@navikt/ds-react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
-import {
+import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
@@ -18,15 +11,19 @@ import {
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
-import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
-import { VedtakSimuleringResultat } from '../types/VedtakSimuleringResultat';
-import { VedtakVarsel } from '../types/VedtakVarsel';
-import { Vedtaksbrev } from '../types/Vedtaksbrev';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import { Alert, Button } from '@navikt/ds-react';
+import { useState } from 'react';
+import type { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
+import type { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
+import type { VedtakSimuleringResultat } from '../types/VedtakSimuleringResultat';
+import type { Vedtaksbrev } from '../types/Vedtaksbrev';
+import type { VedtakVarsel } from '../types/VedtakVarsel';
+import type { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import VedtakForm from './VedtakForm';
 import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
-import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 interface VedtakPanelsProps {
   aksjonspunkter: AksjonspunktDto[];

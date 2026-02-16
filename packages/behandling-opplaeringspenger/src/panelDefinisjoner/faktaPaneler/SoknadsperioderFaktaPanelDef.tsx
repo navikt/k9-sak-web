@@ -2,7 +2,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import SoknadsperioderIndex from '@k9-sak-web/fakta-soknadsperioder';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { Fagsak } from '@k9-sak-web/types';
+import type { Fagsak } from '@k9-sak-web/types';
 import React from 'react';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 

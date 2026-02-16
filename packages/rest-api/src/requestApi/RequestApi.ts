@@ -1,7 +1,8 @@
-import HttpClientApi from '../HttpClientApiTsType';
-import RequestConfig, { RequestType } from '../RequestConfig';
+import type HttpClientApi from '../HttpClientApiTsType';
+import type RequestConfig from '../RequestConfig';
+import { RequestType } from '../RequestConfig';
 import AbstractRequestApi from './AbstractRequestApi';
-import Link from './LinkTsType';
+import type Link from './LinkTsType';
 import NotificationMapper from './NotificationMapper';
 import RequestRunner from './RequestRunner';
 import ResponseCache from './ResponseCache';

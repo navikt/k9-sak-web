@@ -1,6 +1,6 @@
-import Dokument from '../../../types/Dokument';
+import type Dokument from '../../../types/Dokument';
+import type Dokumentoversikt from '../../../types/Dokumentoversikt';
 import ActionType from './actionTypes';
-import Dokumentoversikt from '../../../types/Dokumentoversikt';
 
 interface State {
   visDokumentDetails: boolean;

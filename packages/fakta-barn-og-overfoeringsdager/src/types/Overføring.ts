@@ -5,13 +5,13 @@ export const OverføringstypeEnum = stringEnum({
   FORDELING: 'fordeling',
   KORONAOVERFØRING: 'koronaoverføring',
 });
-export type Overføringstype = typeof OverføringstypeEnum[keyof typeof OverføringstypeEnum];
+export type Overføringstype = (typeof OverføringstypeEnum)[keyof typeof OverføringstypeEnum];
 
 export const OverføringsretningEnum = stringEnum({
   INN: 'inn',
   UT: 'ut',
 });
-export type Overføringsretning = typeof OverføringsretningEnum[keyof typeof OverføringsretningEnum];
+export type Overføringsretning = (typeof OverføringsretningEnum)[keyof typeof OverføringsretningEnum];
 
 interface Overføring {
   antallDager?: number;

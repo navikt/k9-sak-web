@@ -1,12 +1,3 @@
-import { Heading } from '@navikt/ds-react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import { Component } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -26,14 +17,20 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-
+import { Heading } from '@navikt/ds-react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { Component } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
-import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
-
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './foreldelseForm.module.css';
+import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 
 const FORELDELSE_FORM_NAME = 'ForeldelseForm';
 

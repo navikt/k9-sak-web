@@ -1,7 +1,7 @@
+import type { Behandling } from '@k9-sak-web/types';
+import type { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Behandling } from '@k9-sak-web/types';
-import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import messages from '../i18n/nb_NO.json';
 import OverforingerFaktaForm from './components/OverforingerFaktaForm';
 

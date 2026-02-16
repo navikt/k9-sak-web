@@ -1,5 +1,5 @@
-import { buildPath, pathWithQueryParams, resolveParam } from './urlUtils.js';
 import type { Path } from 'react-router';
+import { buildPath, pathWithQueryParams, resolveParam } from './urlUtils.js';
 
 describe('pathWithQueryParams', () => {
   it('should add given queryParams to given path', () => {

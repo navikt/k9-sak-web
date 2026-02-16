@@ -1,6 +1,6 @@
-import { type AuthResult } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
-import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
+import type { AuthResult } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
 import { delay } from '../../utils/delay.js';
+import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
 
 /**
  * Når fleire backends har ugyldig autentisering samtidig skal kun ein av dei ha aktiv autentiseringsflyt samtidig.

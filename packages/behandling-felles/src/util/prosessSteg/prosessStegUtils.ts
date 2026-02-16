@@ -1,14 +1,13 @@
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { SetStateAction } from 'react';
-
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
+import type { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import type { SetStateAction } from 'react';
 
-import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
-import Rettigheter from '../../types/rettigheterTsType';
+import type ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
+import type Rettigheter from '../../types/rettigheterTsType';
 import readOnlyUtils from '../readOnlyUtils';
-import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
+import type { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';

@@ -1,9 +1,9 @@
-import type { K9Kodeverkoppslag } from '../oppslag/useK9Kodeverkoppslag.js';
-import { K9SakKodeverkoppslag } from '../oppslag/K9SakKodeverkoppslag.js';
-import { oppslagKodeverkSomObjektK9Sak } from './oppslagKodeverkSomObjektK9Sak.js';
 import { K9KlageKodeverkoppslag } from '../oppslag/K9KlageKodeverkoppslag.js';
-import { oppslagKodeverkSomObjektK9Klage } from './oppslagKodeverkSomObjektK9Klage.js';
+import { K9SakKodeverkoppslag } from '../oppslag/K9SakKodeverkoppslag.js';
 import { K9TilbakeKodeverkoppslag } from '../oppslag/K9TilbakeKodeverkoppslag.js';
+import type { K9Kodeverkoppslag } from '../oppslag/useK9Kodeverkoppslag.js';
+import { oppslagKodeverkSomObjektK9Klage } from './oppslagKodeverkSomObjektK9Klage.js';
+import { oppslagKodeverkSomObjektK9Sak } from './oppslagKodeverkSomObjektK9Sak.js';
 import { oppslagKodeverkSomObjektK9Tilbake } from './oppslagKodeverkSomObjektK9Tilbake.js';
 
 /** Kun for bruk i testing */

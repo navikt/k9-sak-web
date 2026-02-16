@@ -2,13 +2,13 @@ import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
+import type { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import { JSX } from 'react';
+import type { JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
-import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
+import CollapseButton from './CollapseButton';
 
 const classNames = classnames.bind(styles);
 

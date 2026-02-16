@@ -1,5 +1,5 @@
-import React, { type JSX } from 'react';
 import { Alert } from '@navikt/ds-react';
+import React, { type JSX } from 'react';
 
 const IngenPerioderÅVurdereMelding = (): JSX.Element => (
   <Alert size="small" variant="info">

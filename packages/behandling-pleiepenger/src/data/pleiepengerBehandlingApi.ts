@@ -1,4 +1,4 @@
-import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { createRequestApi, RestApiConfigBuilder } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN

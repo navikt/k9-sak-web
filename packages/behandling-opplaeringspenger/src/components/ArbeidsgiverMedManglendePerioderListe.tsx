@@ -1,5 +1,5 @@
 import React from 'react';
-import { arbeidstypeTilVisning, Arbeidstype } from '../types/Arbeidstype';
+import { Arbeidstype, arbeidstypeTilVisning } from '../types/Arbeidstype';
 
 interface ArbeidsgiverMedPerioder {
   arbeidsgiverNavn: string;

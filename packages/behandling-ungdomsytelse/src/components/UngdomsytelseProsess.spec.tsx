@@ -10,13 +10,13 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ung_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
+import type { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UngdomsytelseBehandlingApiKeys, requestUngdomsytelseApi } from '../data/ungdomsytelseBehandlingApi';
-import FetchedData from '../types/FetchedData';
+import { requestUngdomsytelseApi, UngdomsytelseBehandlingApiKeys } from '../data/ungdomsytelseBehandlingApi';
+import type FetchedData from '../types/FetchedData';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 
 describe('<UngdomsytelseProsess>', () => {
   const fagsak = {

@@ -1,6 +1,6 @@
 import {
-  ung_kodeverk_formidling_IdType as InformasjonsbrevMottakerValgResponseIdType,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_kodeverk_formidling_IdType as InformasjonsbrevMottakerValgResponseIdType,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';

@@ -1,4 +1,4 @@
-import { Overføringsretning, Overføringstype } from '../types/Overføring';
+import type { Overføringsretning, Overføringstype } from '../types/Overføring';
 
 export const rammevedtakFormName = 'rammevedtakFormName';
 

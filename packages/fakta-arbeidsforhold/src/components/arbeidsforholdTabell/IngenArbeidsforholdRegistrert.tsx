@@ -1,5 +1,5 @@
 import { BodyShort, Table } from '@navikt/ds-react';
-import React from 'react';
+import type React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface OwnProps {

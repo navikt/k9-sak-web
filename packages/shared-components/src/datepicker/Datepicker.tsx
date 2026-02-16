@@ -2,7 +2,8 @@ import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React, { ChangeEvent, ReactNode } from 'react';
+import type React from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 
 dayjs.extend(customParseFormat);
 

@@ -1,6 +1,6 @@
 import { Alert, BodyShort, Box, Heading } from '@navikt/ds-react';
-import { type JSX } from 'react';
-import { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
+import type { JSX } from 'react';
+import type { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
 import ConfirmationModal from '../confirmation-modal/ConfirmationModal';
 
 interface OverlappendePeriodeModalProps {

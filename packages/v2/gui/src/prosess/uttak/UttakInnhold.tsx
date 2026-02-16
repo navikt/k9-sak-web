@@ -1,15 +1,15 @@
-import { useEffect, useState, type JSX } from 'react';
-import { useUttakContext } from './context/UttakContext';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
-import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
-import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
-import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
-import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
+import { type JSX, useEffect, useState } from 'react';
+import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 import Infostripe from './components/infostripe/Infostripe';
+import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
+import { useUttakContext } from './context/UttakContext';
+import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
+import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
 import VurderDato from './vurder-dato/VurderDato';
+import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
 
 const UttakInnhold = (): JSX.Element => {
   const {
@@ -32,7 +32,8 @@ const UttakInnhold = (): JSX.Element => {
   const toggleOverstyring = () => setOverstyringAktiv(prev => !prev);
 
   const harOpprettetAksjonspunktVurderDato =
-    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET || aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.UTFØRT;
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET ||
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.UTFØRT;
 
   return (
     <VStack gap="4">

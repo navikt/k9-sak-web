@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { destroy } from 'redux-form';
-import { useDispatch } from 'react-redux';
-import { Action } from 'redux';
-
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import type { Action } from 'redux';
+import { destroy } from 'redux-form';
 
 interface OwnProps {
   behandlingId: number;

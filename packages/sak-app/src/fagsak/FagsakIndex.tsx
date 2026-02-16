@@ -1,8 +1,21 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import type {
+  k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
+  k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import {
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
+import AndreSakerPåSøkerStripe from '@k9-sak-web/gui/shared/statusstriper/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe.js';
+import K9StatusBackendClient from '@k9-sak-web/gui/shared/statusstriper/K9StatusBackendClient.js';
+import Punsjstripe from '@k9-sak-web/gui/shared/statusstriper/punsjstripe/Punsjstripe.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import type {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
   FagsakPerson,
@@ -12,22 +25,9 @@ import {
   Personopplysninger,
   SaksbehandlereInfo,
 } from '@k9-sak-web/types';
-import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
+import type RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
-import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
-import AndreSakerPåSøkerStripe from '@k9-sak-web/gui/shared/statusstriper/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe.js';
-import K9StatusBackendClient from '@k9-sak-web/gui/shared/statusstriper/K9StatusBackendClient.js';
-import Punsjstripe from '@k9-sak-web/gui/shared/statusstriper/punsjstripe/Punsjstripe.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import {
-  k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
-  k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -37,7 +37,7 @@ import {
 } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
-import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+import type BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';

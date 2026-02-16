@@ -1,6 +1,6 @@
 import type { MatchFagsakerResponse } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { type Meta, type StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { delay } from '../../../utils/delay';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';

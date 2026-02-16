@@ -1,6 +1,5 @@
-import { DependencyList, useEffect, useState } from 'react';
-
-import { AbstractRequestApi, REQUEST_POLLING_CANCELLED } from '@k9-sak-web/rest-api';
+import { type AbstractRequestApi, REQUEST_POLLING_CANCELLED } from '@k9-sak-web/rest-api';
+import { type DependencyList, useEffect, useState } from 'react';
 
 import RestApiState from '../RestApiState';
 

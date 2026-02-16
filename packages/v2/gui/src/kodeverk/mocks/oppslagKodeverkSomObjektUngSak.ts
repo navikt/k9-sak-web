@@ -2444,7 +2444,7 @@ export const oppslagKodeverkSomObjektUngSak = {
       kodeverk: 'KLAGEVURDERING',
       navn: 'Trukket',
       kilde: 'TRUKKET_KLAGE',
-    }
+    },
   ],
   overordnetInntektYtelseType: [
     {
@@ -2506,6 +2506,6 @@ export const oppslagKodeverkSomObjektUngSak = {
       kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
       navn: 'Svangerskapspenger',
       kilde: 'SVANGERSKAPSPENGER',
-    }
-  ]
+    },
+  ],
 } satisfies AlleKodeverdierSomObjektResponse;

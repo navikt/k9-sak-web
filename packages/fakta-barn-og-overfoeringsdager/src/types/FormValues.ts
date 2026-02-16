@@ -1,4 +1,4 @@
-import Overføring from './Overføring';
+import type Overføring from './Overføring';
 
 interface FormValues {
   overføringFår: Overføring[];

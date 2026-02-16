@@ -6,7 +6,7 @@ import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import React, { type JSX } from 'react';
-import { DatepickerLimitations } from './DatepickerLimitations';
+import type { DatepickerLimitations } from './DatepickerLimitations';
 import styles from './datepicker.module.css';
 
 dayjs.extend(customParseFormat);

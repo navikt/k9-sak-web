@@ -1,6 +1,6 @@
-import { BigError } from './BigError.js';
 import { Link } from '@navikt/ds-react';
 import type { FC } from 'react';
+import { BigError } from './BigError.js';
 
 interface UnauthorizedPageProps {
   readonly loginUrl: string;

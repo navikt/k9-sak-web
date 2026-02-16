@@ -1,14 +1,25 @@
-import React from 'react';
-import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {
+  faktaHooks,
+  type Rettigheter,
+  SideMenuWrapper,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import type {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
+import React from 'react';
 
 import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
+import type FetchedData from '../types/fetchedDataTsType';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
 

@@ -41,7 +41,7 @@
 }
 
 .simuleringTable tr:after {
-  content: '';
+  content: "";
   flex-grow: 1;
 }
 

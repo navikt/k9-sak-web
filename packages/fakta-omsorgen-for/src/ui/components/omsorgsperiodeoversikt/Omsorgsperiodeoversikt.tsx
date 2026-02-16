@@ -1,9 +1,9 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import hash from 'object-hash';
-import React, { useEffect, type JSX } from 'react';
-import Omsorgsperiode from '../../../types/Omsorgsperiode';
-import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
+import React, { type JSX, useEffect } from 'react';
+import type Omsorgsperiode from '../../../types/Omsorgsperiode';
+import type OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
 import Fosterbarn from '../fosterbarn/Fosterbarn';
 import OmsorgsperiodeVurderingsdetaljer from '../omsorgsperiode-vurderingsdetaljer/OmsorgsperiodeVurderingsdetaljer';

@@ -1,7 +1,7 @@
+import { CheckmarkIcon } from '@navikt/aksel-icons';
 import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { type FC, useEffect, useState } from 'react';
 import { delay } from '../../utils/delay.js';
-import { CheckmarkIcon } from '@navikt/aksel-icons';
 
 type HasPostMessage = Pick<WindowProxy, 'postMessage'>;
 

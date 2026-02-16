@@ -1,7 +1,7 @@
 import { TextAreaField } from '@fpsak-frontend/form';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
 import styles from './faktaBegrunnelseTextField.module.css';
 
 const minLength3 = minLength(3);

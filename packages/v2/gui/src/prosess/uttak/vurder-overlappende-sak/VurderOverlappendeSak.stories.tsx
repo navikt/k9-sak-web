@@ -13,32 +13,33 @@
  * - Skjemavalidering
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, userEvent, within, expect, waitFor, fireEvent } from 'storybook/test';
-import { action } from 'storybook/actions';
-import dayjs from 'dayjs';
+
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import Uttak from '../Uttak';
 import {
-  lagUtredBehandling,
-  lagAvsluttetBehandling,
-  lagUttak,
-  lagOppfyltPeriode,
-  lagOverlappendeSakerAksjonspunkt,
-  lagOverlappendePeriode,
+  createOverlappendeSakerHandler,
+  standardUttakHandlers,
+} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import {
   AksjonspunktStatus,
+  lagAvsluttetBehandling,
+  lagOppfyltPeriode,
+  lagOverlappendePeriode,
+  lagOverlappendeSakerAksjonspunkt,
+  lagUtredBehandling,
+  lagUttak,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import {
-  lagRelativePerioder,
   beregnSplittDatoer,
+  lagRelativePerioder,
   tilIsoDato,
   tilVisningsDato,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakTestHelpers.js';
-import {
-  standardUttakHandlers,
-  createOverlappendeSakerHandler,
-} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import dayjs from 'dayjs';
+import { action } from 'storybook/actions';
+import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from '../Uttak';
 
 dayjs.locale('nb');
 

@@ -1,7 +1,7 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
-import { InformasjonTilLesemodus } from './informasjonTilLesemodus';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import type { InformasjonTilLesemodus } from './informasjonTilLesemodus';
 
 export interface OmsorgenForProps {
   behandlingsID: string;

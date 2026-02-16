@@ -1,15 +1,12 @@
+import NotFoundPage from '@k9-sak-web/gui/app/feilmeldinger/NotFoundPage.js';
+import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
 import * as Sentry from '@sentry/react';
 import { Route, Routes } from 'react-router';
-
-import NotFoundPage from '@k9-sak-web/gui/app/feilmeldinger/NotFoundPage.js';
-
 import AktoerIndex from '../../aktoer/AktoerIndex';
 import FagsakIndex from '../../fagsak/FagsakIndex';
-import { aktoerRoutePath, fagsakRoutePath } from '../paths';
-
-import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
-import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
+import { aktoerRoutePath, fagsakRoutePath } from '../paths';
+import styles from './home.module.css';
 
 interface OwnProps {
   headerHeight: number;

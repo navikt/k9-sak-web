@@ -1,7 +1,8 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { CheckmarkCircleFillIcon, FilesFillIcon, PersonFillIcon, PersonIcon } from '@navikt/aksel-icons';
-import { type JSX } from 'react';
-import Dokument, { dokumentLabel } from '../../../types/Dokument';
+import type { JSX } from 'react';
+import type Dokument from '../../../types/Dokument';
+import { dokumentLabel } from '../../../types/Dokument';
 import styles from './strukturertDokumentElement.module.css';
 
 interface StrukturertDokumentElementProps {

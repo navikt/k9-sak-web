@@ -1,7 +1,7 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
-import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import type { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 import TilbakekrevingVedtak from './TilbakekrevingVedtak';
 
 describe('<TilbakekrevingVedtak>', () => {

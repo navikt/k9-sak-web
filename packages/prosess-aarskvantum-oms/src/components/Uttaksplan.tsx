@@ -1,11 +1,11 @@
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
-import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading, Tabs } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import Aktivitet from '../dto/Aktivitet';
+import type Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 import styles from './uttaksplan.module.css';
 

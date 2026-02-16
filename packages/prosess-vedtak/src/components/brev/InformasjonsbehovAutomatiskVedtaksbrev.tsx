@@ -1,8 +1,8 @@
 import { CheckboxGroupFormik } from '@fpsak-frontend/form';
 import { Alert, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
-import React from 'react';
-import { IntlShape } from 'react-intl';
+import type React from 'react';
+import type { IntlShape } from 'react-intl';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import InformasjonsbehovKode from './InformasjonsbehovKode';
 import styles from './informasjonsbehovAutomatiskVedtaksbrev.module.css';

@@ -1,7 +1,7 @@
-import { Period } from '@fpsak-frontend/utils';
-import Periode from '../periodeTsType';
+import type { Period } from '@fpsak-frontend/utils';
+import type Periode from '../periodeTsType';
 
-import Vurderingsresultat from '../Vurderingsresultat';
+import type Vurderingsresultat from '../Vurderingsresultat';
 
 export interface InstitusjonPeriode {
   institusjon: string;

@@ -1,6 +1,5 @@
+import type { KodeverkMedNavn } from '@k9-sak-web/types';
 import React from 'react';
-
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetGradForsettFormPanel from './AktsomhetGradForsettFormPanel';

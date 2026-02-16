@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { ExternalLink } from '@navikt/ds-icons';
-import { Button, ButtonProps } from '@navikt/ds-react';
+import { Button, type ButtonProps } from '@navikt/ds-react';
+import type React from 'react';
 
 import { useHref, useLocation } from 'react-router';
 

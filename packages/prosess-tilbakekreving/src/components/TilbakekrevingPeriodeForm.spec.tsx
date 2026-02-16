@@ -7,8 +7,8 @@ import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
 import vilkarResultat from '../kodeverk/vilkarResultat';
-import DataForPeriode from '../types/dataForPeriodeTsType';
-import { CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
+import type DataForPeriode from '../types/dataForPeriodeTsType';
+import { type CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
 
 describe('<TilbakekrevingPeriodeForm>', () => {
   const sarligGrunnTyper = [

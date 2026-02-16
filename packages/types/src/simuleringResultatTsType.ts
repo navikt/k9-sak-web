@@ -1,5 +1,5 @@
-import Kodeverk from './kodeverkTsType';
-import Periode from './periodeTsType';
+import type Kodeverk from './kodeverkTsType';
+import type Periode from './periodeTsType';
 
 export type SimuleringResultatRad = Readonly<{
   feltnavn: string;

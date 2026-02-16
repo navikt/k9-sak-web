@@ -1,9 +1,9 @@
-import type { BackendApi as TredjepartsmottakerBackendApi } from '../TredjepartsmottakerInput.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
-import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/combined/kontrakt/dokument/BestillBrevDto.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
+import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import type { BackendApi as TredjepartsmottakerBackendApi } from '../TredjepartsmottakerInput.js';
 
 export type LagForhåndsvisningRequest = Omit<ForhåndsvisDto, 'avsenderApplikasjon'>;
 

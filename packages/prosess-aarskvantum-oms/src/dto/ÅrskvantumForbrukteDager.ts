@@ -1,6 +1,6 @@
-import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import UttaksplanType from './UttaksplanType';
-import BarnDto from './BarnDto';
+import type { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import type BarnDto from './BarnDto';
+import type UttaksplanType from './UttaksplanType';
 
 type Duration = string;
 

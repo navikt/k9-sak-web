@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
-import ContainerContract from '../types/ContainerContract';
+import type ContainerContract from '../types/ContainerContract';
 import Komponenter from '../types/Komponenter';
 import AleneOmOmsorgen from './components/alene-om-omsorgen/AleneOmOmsorgen';
 import KorrigerePerioder from './components/korrigere-perioder/KorrigerePerioder';

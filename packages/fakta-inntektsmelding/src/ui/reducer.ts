@@ -1,5 +1,5 @@
+import type { Kompletthet } from '../types/KompletthetResponse';
 import ActionType from './actionTypes';
-import { Kompletthet } from '../types/KompletthetResponse';
 
 interface MainComponentState {
   kompletthetsoversiktResponse: Kompletthet | null;

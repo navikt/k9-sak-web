@@ -1,5 +1,5 @@
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Tag, Tooltip, type TagProps, type TooltipProps } from '@navikt/ds-react';
+import { Tag, type TagProps, Tooltip, type TooltipProps } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import diskresjonskodeType from './types/diskresjonskodeType';

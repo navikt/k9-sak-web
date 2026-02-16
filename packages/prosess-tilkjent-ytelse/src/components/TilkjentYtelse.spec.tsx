@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { screen } from '@testing-library/react';
-import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
+import { type PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
   const kodeverkNavnFraKode = (kodeverk: string) => {

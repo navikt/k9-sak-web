@@ -1,12 +1,12 @@
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
 import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import Andeler from './Andeler';
-import { TilkjentYtelseFormState } from './FormState';
+import type { TilkjentYtelseFormState } from './FormState';
 import styles from './periode.module.css';
 
 interface OwnProps {

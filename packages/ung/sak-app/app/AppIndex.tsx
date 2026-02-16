@@ -1,16 +1,15 @@
-import { useCallback, useState } from 'react';
-import { useLocation } from 'react-router';
-
 import { parseQueryString } from '@fpsak-frontend/utils';
 import ForbiddenPage from '@k9-sak-web/gui/app/feilmeldinger/ForbiddenPage.js';
 import UnauthorizedPage, { ungLoginResourcePath } from '@k9-sak-web/gui/app/feilmeldinger/UnauthorizedPage.js';
-import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
+import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { useCallback, useState } from 'react';
+import { useLocation } from 'react-router';
 
 import AppConfigResolver from './AppConfigResolver';
-import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
+import LanguageProvider from './LanguageProvider';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
@@ -18,11 +17,11 @@ import '@navikt/ds-css/darkside';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import { usePrefetchQuery } from '@tanstack/react-query';
-import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
-import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
+import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import { usePrefetchQuery } from '@tanstack/react-query';
 
 const EMPTY_ARRAY = [];
 
