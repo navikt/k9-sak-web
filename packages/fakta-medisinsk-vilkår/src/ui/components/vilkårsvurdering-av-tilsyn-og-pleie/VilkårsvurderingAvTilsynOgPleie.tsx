@@ -134,7 +134,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
 
   const setMargin = () => {
     if ((vurderingsoversikt && vurderingsoversikt.harPerioderSomSkalVurderes()) || !harGyldigSignatur) {
-      return '4 0';
+      return 'space-16 space-0';
     }
     return undefined;
   };

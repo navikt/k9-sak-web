@@ -126,7 +126,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
 
   const setMargin = () => {
     if ((vurderingsoversikt?.harPerioderSomSkalVurderes?.() ?? false) || !harGyldigSignatur) {
-      return '4 0';
+      return 'space-16 space-0';
     }
     return undefined;
   };

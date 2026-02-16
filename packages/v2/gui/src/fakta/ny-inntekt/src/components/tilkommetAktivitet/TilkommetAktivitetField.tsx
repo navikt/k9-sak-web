@@ -137,7 +137,11 @@ export const TilkommetAktivitetField = ({
       <div className={erAksjonspunktÅpent ? styles.aksjonspunktContainer : ''}>
         {fields.map((field, index) => (
           <div key={field.id}>
-            <Box marginBlock={index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? '0 10' : '0'}>
+            <Box
+              marginBlock={
+                index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? 'space-0 space-40' : 'space-0'
+              }
+            >
               <TilkommetInntektsforholdField
                 key={field.id}
                 formName={formName}

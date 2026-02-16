@@ -152,7 +152,7 @@ export const UngVedtak = ({
                 <div key={field.id}>
                   <Box
                     borderWidth={index === 0 ? '0 0 1 0' : '0'}
-                    paddingBlock={readOnly ? '0' : '0 space-20'}
+                    paddingBlock={readOnly ? 'space-0' : 'space-0 space-20'}
                     width="450px"
                   >
                     {vedtaksbrevValgResponse?.harBrev && (
