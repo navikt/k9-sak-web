@@ -7,11 +7,11 @@ import {
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import { useSuspenseQueries } from '@tanstack/react-query';
-import { useContext } from 'react';
+import { ComponentProps, useContext, useMemo, use } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
   aksjonspunkterQueryOptions,
@@ -22,6 +22,7 @@ import {
 } from './api/k9SakQueryOptions';
 import { mapArbeidsgiverOpplysningerPerIdTilFP } from '@k9-sak-web/gui/ft-adapt/mapArbeidsgiverOpplysninger.js';
 import { mapBeregningsgrunnlagTilFP } from '@k9-sak-web/gui/ft-adapt/mapBeregningsgrunnlag.js';
+import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -32,16 +33,19 @@ const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_FOR_SN_NY_I_ARBEIDSLIVET,
 ];
 
+// Hent ut prop typer BeregningsgrunnlagProsessIndex forventer
+type BeregningFormData = ComponentProps<typeof BeregningsgrunnlagProsessIndex>['formData'];
+type KodeverkSamling = ComponentProps<typeof BeregningsgrunnlagProsessIndex>['kodeverkSamling'];
+
 // Definer panel-identitet som konstanter
 const PANEL_ID = prosessStegCodes.BEREGNINGSGRUNNLAG;
 
-interface Props {
+export interface BeregningsgrunnlagProsessStegInitPanelProps {
   api: K9SakProsessApi;
   behandling: Behandling;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
-  formData: unknown;
+  formData: BeregningFormData;
   setFormData: (data: unknown) => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isReadOnly: boolean;
 }
 
@@ -53,8 +57,16 @@ interface Props {
  * - Datahenting via RequestApi
  * - Rendering av legacy panelkomponent
  */
-export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
+export function BeregningsgrunnlagProsessStegInitPanel(props: BeregningsgrunnlagProsessStegInitPanelProps) {
   const prosessPanelContext = useContext(ProsessPanelContext);
+  // Lag kodeverkSamling slik BeregningsgrunnlagProsessIndex forventer å få det
+  const { k9sak } = use(K9KodeverkoppslagContext);
+  const kodeverkSamling: KodeverkSamling = useMemo(() => {
+    return {
+      AktivitetStatus: k9sak.alleKodeverdierForKodeverk('aktivitetStatuser'),
+      OpptjeningAktivitetType: k9sak.alleKodeverdierForKodeverk('opptjeningAktivitetTyper'),
+    };
+  }, [k9sak]);
 
   const [
     { data: aksjonspunkter },
@@ -96,7 +108,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
       arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId.arbeidsgivere)}
       submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
-      kodeverkSamling={props.alleKodeverk}
+      kodeverkSamling={kodeverkSamling}
       setFormData={props.setFormData}
       readOnlySubmitButton={false}
       isReadOnly={props.isReadOnly}
