@@ -1,4 +1,3 @@
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
@@ -14,6 +13,7 @@ import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backen
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { VurderFeilutbetaling } from '../vurder-feilutbetaling/VurderFeilutbetaling';
+import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 
 interface AvregningPanelProps {
   simuleringResultat: SimuleringDto;
@@ -28,7 +28,7 @@ export function AvregningPanel(props: AvregningPanelProps) {
   const { simuleringResultat, readOnly, aksjonspunkter, behandling, fagsak, tilbakekrevingvalg } = props;
   const hasOpenTilbakekrevingsbehandling =
     tilbakekrevingvalg !== undefined &&
-    tilbakekrevingvalg.videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
+    tilbakekrevingvalg.videreBehandling === TilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
   const harVurderFeilutbetalingAP = aksjonspunkter.some(
     ap => ap.definisjon === AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
   );
