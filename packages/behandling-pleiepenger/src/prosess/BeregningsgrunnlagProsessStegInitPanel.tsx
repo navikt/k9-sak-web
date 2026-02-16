@@ -20,7 +20,7 @@ import {
   beregningsgrunnlagQueryOptions,
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
-import type { ArbeidsgiverOpplysningerPerId } from '@navikt/ft-types';
+import { mapArbeidsgiverOpplysningerPerIdTilFP } from '@k9-sak-web/gui/ft-adapt/mapArbeidsgiverOpplysninger.js';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -88,13 +88,11 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeVurdert />;
   }
 
-  const arbGivPrId: ArbeidsgiverOpplysningerPerId = arbeidsgiverOpplysningerPerId.arbeidsgivere ?? {};
-
   return (
     <BeregningsgrunnlagProsessIndex
       beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
       beregningsgrunnlagListe={beregningsgrunnlag}
-      arbeidsgiverOpplysningerPerId={arbGivPrId}
+      arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId.arbeidsgivere)}
       submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
       kodeverkSamling={props.alleKodeverk}
