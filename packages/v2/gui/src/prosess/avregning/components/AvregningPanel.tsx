@@ -44,15 +44,17 @@ export function AvregningPanel(props: AvregningPanelProps) {
         id,
         show: !showDetails?.[tableIndex]?.show,
       };
-      setShowDetails(showDetails.map((table, index) => (index === tableIndex ? updatedTable : table)));
+      setShowDetails(prevShowDetails =>
+        prevShowDetails.map((table, index) => (index === tableIndex ? updatedTable : table)),
+      );
     } else {
-      setShowDetails([...showDetails, { id, show: true }]);
+      setShowDetails(prevShowDetails => [...prevShowDetails, { id, show: true }]);
     }
   };
 
   const getSimuleringResult = () => {
     if (!simuleringResultat) {
-      return simuleringResultat;
+      return undefined;
     }
     return simuleringResultat.simuleringResultatUtenInntrekk || simuleringResultat.simuleringResultat;
   };
