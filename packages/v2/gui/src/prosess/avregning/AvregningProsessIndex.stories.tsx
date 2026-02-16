@@ -37,6 +37,9 @@ export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
     const fritekst = canvas.getByRole('textbox', { name: 'Fritekst i varselet' });
     await userEvent.click(fritekst);
     await userEvent.type(fritekst, 'vi skal ha tilbake penga våre!!{enter}{enter}hilsen nav');
+
+    //TODO: Når bruken av window.location.reload() er fjernet kan vi teste at bekreftAksjonspunktVurderFeilutbetaling blir kalt
+
     // await userEvent.click(canvas.getByText('Bekreft og fortsett'));
     // await expect(fakeAvregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling).toHaveBeenCalledOnce();
   },
@@ -55,6 +58,9 @@ export const FyllAksjonspunktHøyEtterbetaling8086: Story = {
     });
     await userEvent.click(begrunnelse);
     await userEvent.type(begrunnelse, 'Nye inntektsopplysninger tilsier at søker har krav på etterbetalingen');
+
+    //TODO: Når bruken av window.location.reload() er fjernet kan vi teste at bekreftAksjonspunktSjekkHøyEtterbetaling blir kalt
+
     // await userEvent.click(canvas.getByText('Bekreft og fortsett'));
     // await expect(fakeAvregningBackendClient.bekreftAksjonspunktSjekkHøyEtterbetaling).toHaveBeenCalledOnce();
   },
