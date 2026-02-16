@@ -1,5 +1,5 @@
 import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
-import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import type { TilbakekrevingVidereBehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import type { BehandlingAvregningBackendApiType } from '../../prosess/avregning/AvregningBackendApiType';
 import { fakePdf } from './fakePdf';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
@@ -20,7 +20,7 @@ export class FakeBehandlingAvregningBackendApi implements BehandlingAvregningBac
       behandlingId: number,
       behandlingVersjon: number,
       begrunnelse: string,
-      videreBehandling: TilbakekrevingVidereBehandling,
+      videreBehandling: TilbakekrevingVidereBehandlingType,
       varseltekst?: string,
     ): Promise<void> => {
       ignoreUnusedDeclared(behandlingId);
