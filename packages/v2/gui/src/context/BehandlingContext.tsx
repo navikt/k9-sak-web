@@ -11,7 +11,7 @@ export interface BehandlingContextType {
   behandling?: Pick<BehandlingDto, 'id' | 'versjon' | 'uuid'>;
   // refetchBehandling kan vi fjerne når alle avhengigheter til den er fjernet.
   refetchBehandling: () => Promise<any>;
-  /** Enktelte endepunkter setter i gang tasks i backend som tar tid å fullføre.
+  /** Enkelte endepunkter setter i gang tasks i backend som tar tid å fullføre.
    * De inkluderer en location-header med URL man kan polle for å vite når behandlingen er klar igjen
    * Når behandlingen er klar returneres en BehandlingDto av polling-endepunktet som kan brukes, og det er ikke nødvendig å refetche manuelt */
   setBehandling?: (behandling: BehandlingDto) => void;
