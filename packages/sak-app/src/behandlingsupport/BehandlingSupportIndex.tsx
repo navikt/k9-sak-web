@@ -288,10 +288,7 @@ const BehandlingSupportIndex = ({
       <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>
         {isPanelDisabled() && <BodyShort>Dette panelet er ikke tilgjengelig</BodyShort>}
         <div hidden={isPanelDisabled()}>
-          {/* lazy skal vere false når behandling er valgt. Slik at state i TotrinnskontrollIndex blir bevart viss bruker
-              bytter tabs. True når behandling ikkje er lasta, sidan TotrinnskontrollIndex feiler ved forsøk på å rendre
-              uten behandling */}
-          <Tabs.Panel value={SupportTabs.TIL_BESLUTTER} lazy={behandling == null}>
+          <Tabs.Panel value={SupportTabs.TIL_BESLUTTER}>
             <TotrinnskontrollIndex
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
@@ -300,7 +297,7 @@ const BehandlingSupportIndex = ({
               urlEtterpå={getPathToK9Los() ?? '/'}
             />
           </Tabs.Panel>
-          <Tabs.Panel value={SupportTabs.FRA_BESLUTTER} lazy={behandling == null}>
+          <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
             <TotrinnskontrollIndex
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
