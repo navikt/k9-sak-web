@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { k9SakAksjonspunktClient } from '@k9-sak-web/backend/k9sak/aksjonspunktClient.js';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -122,7 +123,7 @@ const BehandlingAnkeIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling} aksjonspunktClient={k9SakAksjonspunktClient}>
       <AnkePaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}

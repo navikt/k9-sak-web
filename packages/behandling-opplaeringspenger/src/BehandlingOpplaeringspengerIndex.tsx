@@ -17,6 +17,7 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { k9SakAksjonspunktClient } from '@k9-sak-web/backend/k9sak/aksjonspunktClient.js';
 import OpplaeringspengerPaneler from './components/OpplaeringspengerPaneler';
 import {
   OpplaeringspengerBehandlingApiKeys,
@@ -172,7 +173,7 @@ const BehandlingOpplaeringspengerIndex = ({
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling?.versjon : behandling.versjon}
       />
 
-      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling} aksjonspunktClient={k9SakAksjonspunktClient}>
         <OpplaeringspengerPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}

@@ -16,6 +16,7 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
  * eller `undefined` dersom polling ble avbrutt eller kansellert.
  *
  * @param location - URL å polle mot (typisk fra Location-header)
+ * @param poll - Funksjon som utfører GET-request mot gitt URL (typisk fra klienten)
  * @param onPollingMessage - Callback som kalles med fremdriftsmeldinger fra backend, eller `undefined` når polling er ferdig
  * @param signal - AbortSignal for å kunne avbryte polling
  *
@@ -25,13 +26,14 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
  * if (response.status === 202) {
  *   const location = response.headers.get('Location');
  *   if (location) {
- *     const behandling = await pollLocation(location);
+ *     const behandling = await pollLocation(location, (url, sig) => client.poll(url, sig));
  *   }
  * }
  * ```
  */
 export const pollLocation = async <T = unknown>(
   location: string,
+  poll: (url: string, signal?: AbortSignal) => Promise<{ data: unknown; response: Response }>,
   onPollingMessage?: (melding: string | undefined) => void,
   signal?: AbortSignal,
 ): Promise<T | undefined> => {
@@ -49,15 +51,7 @@ export const pollLocation = async <T = unknown>(
       return;
     }
 
-    const response = await fetch(location, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
-      signal,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Polling mot ${location} feilet med HTTP ${response.status}`);
-    }
+    const { data: body, response } = await poll(location, signal);
 
     const contentType = response.headers.get('Content-Type');
     if (!contentType?.includes('application/json')) {
@@ -65,10 +59,8 @@ export const pollLocation = async <T = unknown>(
       return undefined;
     }
 
-    const body = await response.json();
-
     // Sjekk om responsen er en polling-status (AsyncPollingStatus) eller den endelige ressursen
-    const status = body?.status as AsyncPollingStatusStatus | undefined;
+    const status = (body as Record<string, unknown> | null)?.['status'] as AsyncPollingStatusStatus | undefined;
     if (status != null && Object.values(AsyncPollingStatusStatus).includes(status)) {
       const pollingBody = body as AsyncPollingStatus;
 
