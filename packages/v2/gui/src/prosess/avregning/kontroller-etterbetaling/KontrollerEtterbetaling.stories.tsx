@@ -6,6 +6,7 @@ import {
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { BekreftAksjonspunktClient } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 
 import { HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
@@ -13,6 +14,15 @@ import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 
 const refetchBehandling = fn();
+const bekreftFn = fn();
+
+const mockAksjonspunktClient: BekreftAksjonspunktClient<unknown> = {
+  bekreft: async (...args) => {
+    bekreftFn(...args);
+    return { response: new Response(null, { status: 200 }) };
+  },
+  poll: async () => ({ data: undefined, response: new Response(null, { status: 200 }) }),
+};
 const meta = {
   title: 'gui/prosess/Simulering/Høy-Etterbetaling',
   component: KontrollerEtterbetaling,
@@ -81,7 +91,11 @@ export const LøsAksjonspunkt: Story = {
     });
   },
   render: props => (
-    <BehandlingProvider behandling={props.behandling} refetchBehandling={refetchBehandling}>
+    <BehandlingProvider
+      behandling={props.behandling}
+      refetchBehandling={refetchBehandling}
+      aksjonspunktClient={mockAksjonspunktClient}
+    >
       <HStack>
         <KontrollerEtterbetaling {...props} />
       </HStack>
