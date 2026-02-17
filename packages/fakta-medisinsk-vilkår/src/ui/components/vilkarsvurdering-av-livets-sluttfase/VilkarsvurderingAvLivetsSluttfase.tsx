@@ -133,7 +133,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
 
   const setMargin = () => {
     if ((vurderingsoversikt && vurderingsoversikt.harPerioderSomSkalVurderes()) || !harGyldigSignatur) {
-      return '4 0';
+      return 'space-16 space-0';
     }
     return undefined;
   };
@@ -162,7 +162,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
         harGyldigSignatur={harGyldigSignatur}
       />
       {vurderingsoversikt?.harPerioderÅVise() && (
-        <Box.New marginBlock={setMargin()}>
+        <Box marginBlock={setMargin()}>
           <NavigationWithDetailView
             navigationSection={() => (
               <Vurderingsnavigasjon
@@ -187,7 +187,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
               />
             )}
           />
-        </Box.New>
+        </Box>
       )}
     </PageContainer>
   );

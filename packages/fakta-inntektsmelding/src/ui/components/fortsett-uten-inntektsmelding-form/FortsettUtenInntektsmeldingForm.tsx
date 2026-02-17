@@ -157,8 +157,9 @@ const FortsettUtenInntektsmeldingForm = ({
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
             <li>
-              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får
-              tilstrekkelige opplysninger hverken i A-inntekt eller fra inntektsmelding.
+              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
+              <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får tilstrekkelige opplysninger hverken i A-inntekt
+              eller fra inntektsmelding.
             </li>
             <li>
               Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å
@@ -212,7 +213,7 @@ const FortsettUtenInntektsmeldingForm = ({
               validate={[v => (!v ? 'Du må fylle inn en verdi' : null)]}
             />
           )}
-          <Box.New marginBlock="6 0">
+          <Box marginBlock="space-24 space-0">
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
               {!harFlereTilstanderTilVurdering && !!beslutning && (
                 <Button variant="primary" size="small">
@@ -225,7 +226,7 @@ const FortsettUtenInntektsmeldingForm = ({
                 </Button>
               )}
             </div>
-          </Box.New>
+          </Box>
         </>
       </AksjonspunktBox>
     </RhfForm>

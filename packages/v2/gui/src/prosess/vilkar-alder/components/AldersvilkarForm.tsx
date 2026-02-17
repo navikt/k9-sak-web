@@ -62,8 +62,7 @@ const AldersvilkarForm = ({
             'På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.',
         ].filter(Boolean)}
       </AksjonspunktHelpText>
-
-      <Box.New marginBlock={'4 0'}>
+      <Box marginBlock={'space-16 space-0'}>
         <div className={style.opplysninger}>
           <p className="label">Opplysninger fra søknaden:</p>
           <b>Søkers barn:</b>
@@ -83,8 +82,8 @@ const AldersvilkarForm = ({
             maxLength={2000}
           />
         </div>
-      </Box.New>
-      <Box.New marginBlock={'4 0'}>
+      </Box>
+      <Box marginBlock={'space-16 space-0'}>
         <RhfRadioGroup
           control={formMethods.control}
           legend="Er aldersvilkåret oppfylt?"
@@ -96,12 +95,12 @@ const AldersvilkarForm = ({
             <Radio value={false}>Nei</Radio>
           </HStack>
         </RhfRadioGroup>
-      </Box.New>
-      <Box.New marginBlock={'4 0'}>
+      </Box>
+      <Box marginBlock={'space-16 space-0'}>
         <Button size="small" variant="primary" type="submit">
           Bekreft og fortsett
         </Button>
-      </Box.New>
+      </Box>
     </RhfForm>
   );
 };

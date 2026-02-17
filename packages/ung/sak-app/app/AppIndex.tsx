@@ -14,15 +14,15 @@ import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import '@navikt/ds-css/darkside';
+import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
+import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
+import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
-import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
-import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
-import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
-import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 
 const EMPTY_ARRAY = [];
 

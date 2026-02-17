@@ -34,7 +34,7 @@ export const UngVedtakIndex = ({
     },
   });
   return (
-    <Box.New paddingInline="4 8" paddingBlock="2">
+    <Box paddingInline="space-16 space-32" paddingBlock="space-8">
       <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
@@ -50,6 +50,6 @@ export const UngVedtakIndex = ({
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
         />
       )}
-    </Box.New>
+    </Box>
   );
 };

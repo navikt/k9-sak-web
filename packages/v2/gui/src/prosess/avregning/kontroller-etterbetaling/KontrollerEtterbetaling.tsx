@@ -111,7 +111,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
             {...register('begrunnelse')}
             error={errors.begrunnelse?.message}
           />
-          <HStack gap={'2'}>
+          <HStack gap={'space-8'}>
             {rediger && (
               <Button loading={loading} size="small">
                 Bekreft og fortsett

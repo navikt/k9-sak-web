@@ -139,7 +139,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box.New marginBlock="4 0">
+        <Box marginBlock="space-16 space-0">
           {diagnosekoder.length === 0 && (
             <Alert inline variant="warning">
               Ingen diagnosekode registrert.
@@ -148,7 +148,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
           {diagnosekoder.length >= 1 && !diagnosekodeObjekterLaster && (
             <Diagnosekodeliste diagnosekoder={diagnosekodeObjekter} onDeleteClick={slettDiagnosekodeMutation.mutate} />
           )}
-        </Box.New>
+        </Box>
       )}
       <DiagnosekodeModal
         isOpen={modalIsOpen}

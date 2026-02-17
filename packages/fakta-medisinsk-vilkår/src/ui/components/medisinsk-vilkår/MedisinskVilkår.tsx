@@ -264,9 +264,8 @@ const MedisinskVilkår = (): JSX.Element => {
         }
         iconRenderer={() => <ChildEyesFillIcon fontSize="1.5rem" />}
       />
-
       <div className={styles.medisinskVilkår}>
-        <VStack paddingBlock="2">
+        <VStack paddingBlock="space-8">
           <h1 style={{ fontSize: 22 }}>{sykdomTittel(fagsakYtelseType)}</h1>
           {ikkeSammenMedBarnet === true && (
             <Alert variant="warning">
@@ -277,12 +276,12 @@ const MedisinskVilkår = (): JSX.Element => {
         </VStack>
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <Box.New marginBlock="0 4">
+            <Box marginBlock="space-0 space-16">
               <NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController
                 dokumenter={nyeDokumenterSomIkkeErVurdert}
                 afterEndringerRegistrert={afterEndringerUtifraNyeDokumenterRegistrert}
               />
-            </Box.New>
+            </Box>
           )}
           otherRequirementsAreMet={
             !!(

@@ -27,7 +27,7 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
       {badges && (
         <div className={styles.etikettWrapper}>
           {badges.map(({ text, title }) => (
-            <Tag variant="warning" key={text} title={title}>
+            <Tag data-color="warning" variant="outline" key={text} title={title}>
               <span>{text}</span>
             </Tag>
           ))}

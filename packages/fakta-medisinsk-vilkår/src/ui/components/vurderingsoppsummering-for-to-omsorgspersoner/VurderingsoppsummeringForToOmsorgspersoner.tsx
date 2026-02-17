@@ -30,9 +30,9 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
       perioder={perioder}
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
-        <Box.New marginBlock="4 0">
+        <Box marginBlock="space-16 space-0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen av behov for to omsorgspersoner samtidig?"
             content={
@@ -45,22 +45,22 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
               />
             }
           />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Gjør en vurdering av om det er behov for to omsorgspersoner samtidig etter § 9-10, andre ledd."
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Er det behov for to omsorgspersoner samtidig?"
             content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
           />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Perioder vurdert"
             content={
@@ -72,8 +72,8 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
               </ul>
             }
           />
-        </Box.New>
-      </Box.New>
+        </Box>
+      </Box>
     </DetailViewVurdering>
   );
 };

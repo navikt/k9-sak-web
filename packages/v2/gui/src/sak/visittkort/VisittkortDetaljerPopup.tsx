@@ -40,32 +40,32 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
         <HStack gap="space-16">
           {personopplysninger.region && (
             <Tooltip content="Statsborgerskap" placement="bottom">
-              <Tag variant="info" className={styles.etikett} size="small">
+              <Tag data-color="info" variant="outline" className={styles.etikett} size="small">
                 {kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION)}
               </Tag>
             </Tooltip>
           )}
           <Tooltip content="Personstatus" placement="bottom">
-            <Tag variant="info" className={styles.etikett} size="small">
+            <Tag data-color="info" variant="outline" className={styles.etikett} size="small">
               {kodeverkNavnFraKode(findPersonStatus(personopplysninger), KodeverkType.PERSONSTATUS_TYPE)}
             </Tag>
           </Tooltip>
           {personopplysninger.sivilstand && (
             <Tooltip content="Sivilstand" placement="bottom">
-              <Tag variant="info" className={styles.etikett} size="small">
+              <Tag data-color="info" variant="outline" className={styles.etikett} size="small">
                 {kodeverkNavnFraKode(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE)}
               </Tag>
             </Tooltip>
           )}
           {borMedBarnet && (
             <Tooltip content="Bor med barnet" placement="bottom">
-              <Tag variant="info" className={styles.etikett} size="small">
+              <Tag data-color="info" variant="outline" className={styles.etikett} size="small">
                 Bor med barnet
               </Tag>
             </Tooltip>
           )}
           <Tooltip content="Foretrukket språk" placement="bottom">
-            <Tag variant="info" className={styles.etikett} size="small">
+            <Tag data-color="info" variant="outline" className={styles.etikett} size="small">
               {getLanguageFromspråkkode(språkkode)}
             </Tag>
           </Tooltip>

@@ -45,13 +45,13 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
 
   return (
     <PageContainer hasError={httpErrorHasOccured}>
-      <Box.New marginBlock="6 6">
+      <Box marginBlock="space-24 space-24">
         <NyeDokumenterSomKanPåvirkeEksisterendeVurderinger
           dokumenter={dokumenter}
           onEndringerRegistrertClick={onEndringerRegistrertClick}
           isSubmitting={isSubmitting}
         />
-      </Box.New>
+      </Box>
     </PageContainer>
   );
 };

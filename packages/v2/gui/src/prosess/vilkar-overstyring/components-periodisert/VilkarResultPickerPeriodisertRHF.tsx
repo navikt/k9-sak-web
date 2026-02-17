@@ -123,7 +123,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   ];
 
   return (
-    <Box.New paddingBlock={'4 0'} paddingInline={'4 0'}>
+    <Box paddingBlock={'space-16 space-0'} paddingInline={'space-16 space-0'}>
       {readOnly && erVilkarOk !== undefined && (
         <Alert variant={erVilkarOk === vilkårStatusPeriodisert.OPPFYLT ? 'success' : 'error'} inline>
           {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && (
@@ -134,7 +134,6 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           )}
         </Alert>
       )}
-
       {(!readOnly || erVilkarOk === undefined) && (
         <RhfRadioGroup
           control={control}
@@ -151,7 +150,6 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           ))}
         </RhfRadioGroup>
       )}
-
       {erVilkarOk !== undefined && (
         <>
           {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && harAvslagsårsakerForVilkår && (
@@ -172,7 +170,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           )}
           {(erVilkarOk === vilkårStatusPeriodisert.DELVIS_OPPFYLT ||
             erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT) && (
-            <Box.New marginBlock={'2 0'}>
+            <Box marginBlock={'space-8 space-0'}>
               <VStack gap="space-16">
                 <RhfDatepicker
                   control={control}
@@ -191,10 +189,10 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                   validate={[required, hasValidDate]}
                 />
               </VStack>
-            </Box.New>
+            </Box>
           )}
           {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && harInnvilgetMerknaderForVilkår && (
-            <Box.New marginBlock={'2 0'}>
+            <Box marginBlock={'space-8 space-0'}>
               <RhfSelect
                 control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}innvilgelseMerknadKode`}
@@ -207,11 +205,11 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 readOnly={readOnly}
                 validate={[required]}
               />
-            </Box.New>
+            </Box>
           )}
 
           {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && harAvslagsårsakerForVilkår && (
-            <Box.New marginBlock={'2 0'}>
+            <Box marginBlock={'space-8 space-0'}>
               <RhfSelect
                 control={control}
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
@@ -235,11 +233,11 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                   validate={[required, hasValidDate]}
                 />
               )}
-            </Box.New>
+            </Box>
           )}
         </>
       )}
-    </Box.New>
+    </Box>
   );
 };
 

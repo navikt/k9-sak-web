@@ -54,10 +54,10 @@ const StrukturerDokumentSluttfaseForm = ({
           shouldShowSubmitButton={!readOnly}
           smallButtons
         >
-          <Box.New marginBlock="8 0">
+          <Box marginBlock="space-32 space-0">
             <DokumentKnapp href={dokumentLink.href} />
-          </Box.New>
-          <Box.New marginBlock="8 0">
+          </Box>
+          <Box marginBlock="space-32 space-0">
             <RadioGroupPanelRHF
               name={FieldName.INNEHOLDER_MEDISINSKE_OPPLYSNINGER}
               disabled={readOnly}
@@ -74,8 +74,8 @@ const StrukturerDokumentSluttfaseForm = ({
               ]}
               validators={{ required }}
             />
-          </Box.New>
-          <Box.New marginBlock="8 0">
+          </Box>
+          <Box marginBlock="space-32 space-0">
             <DatepickerRHF
               name={FieldName.DATERT}
               disabled={readOnly}
@@ -85,7 +85,7 @@ const StrukturerDokumentSluttfaseForm = ({
               toDate={dateConstants.today.toDate()}
               inputId="datertField"
             />
-          </Box.New>
+          </Box>
           <DuplikatRadiobuttons dokument={dokument} strukturerteDokumenter={strukturerteDokumenter} />
         </FormWithButtons>
       </FormProvider>

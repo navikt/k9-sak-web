@@ -299,11 +299,11 @@ export const SettPåVentModal = ({
               {!hasManualPaVent && showFristenTekst && (
                 <BodyShort size="small">
                   OBS! Fristen på denne behandlingen er utløpt!
-                  <Box.New marginBlock={'2 0'}>
+                  <Box marginBlock={'space-8 space-0'}>
                     {`Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.
                     Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.
                     For mer informasjon, se rutine under tilbakekreving.`}
-                  </Box.New>
+                  </Box>
                 </BodyShort>
               )}
             </div>

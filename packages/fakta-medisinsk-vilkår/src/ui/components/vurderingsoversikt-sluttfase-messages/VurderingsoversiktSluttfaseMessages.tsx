@@ -16,32 +16,32 @@ const VurderingsoversiktSluttfaseMessages = ({
 }: VurderingsoversiktSluttfaseMessagesProps): JSX.Element => {
   if (!harGyldigSignatur) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <ManglerGyldigSignaturMelding>
           Du kan ikke vurdere behov for om pleietrengende er i livets sluttfase før søker har sendt inn legeerklæring
           fra lege eller helseinstitusjon.
         </ManglerGyldigSignaturMelding>
-      </Box.New>
+      </Box>
     );
   }
 
   if (vurderingsoversikt && vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <IngenPerioderÅVurdereMelding />
-      </Box.New>
+      </Box>
     );
   }
 
   if (vurderingsoversikt?.harPerioderSomSkalVurderes() === true) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <Alert size="small" variant="warning">
           {`Vurder om pleietrengende er i livets sluttfase i søknadsperioden ${getHumanReadablePeriodString(
             vurderingsoversikt.resterendeVurderingsperioder,
           )}.`}
         </Alert>
-      </Box.New>
+      </Box>
     );
   }
   return <></>;

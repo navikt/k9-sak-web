@@ -35,15 +35,15 @@ const DokumentoversiktMessages = ({
   return (
     <>
       {harRegistrertDiagnosekode === false && (
-        <Box.New marginBlock="0 6">
+        <Box marginBlock="space-0 space-24">
           <Alert size="small" variant="warning">
             Diagnosekode mangler. Du må legge til en diagnosekode for å vurdere tilsyn og pleie.
           </Alert>
-        </Box.New>
+        </Box>
       )}
       {visFristForDokumentasjonUtløptMelding && !readOnly && (
         <>
-          <Box.New marginBlock="0 6">
+          <Box marginBlock="space-0 space-24">
             <Alert size="small" variant="warning">
               {erPleiepengerSluttfaseFagsak ? (
                 <>Dokumentasjon signert av lege eller helseinstitusjon mangler. </>
@@ -52,21 +52,21 @@ const DokumentoversiktMessages = ({
               )}
               Sett saken på vent mens du innhenter mer dokumentasjon.
             </Alert>
-          </Box.New>
-          <Box.New marginBlock="0 6">
+          </Box>
+          <Box marginBlock="space-0 space-24">
             <FristForDokumentasjonUtløptPanel
               onProceedClick={() => onFinished({ ikkeVentPåGodkjentLegeerklæring: true })}
             />
-          </Box.New>
+          </Box>
         </>
       )}
       {visHåndterNyeDokumenterMelding && fagsakYtelseType !== fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && (
-        <Box.New marginBlock="0 6">
+        <Box marginBlock="space-0 space-24">
           <Alert size="small" variant="warning">
             Dokumentasjon signert av sykehuslege/spesialisthelsetjenesten mangler. Håndter eventuelle nye dokumenter,
             eller sett saken på vent mens du innhenter mer dokumentasjon.
           </Alert>
-        </Box.New>
+        </Box>
       )}
       {dokumentoversikt.harDokumenter() === false && (
         <Alert size="small" variant="info">
@@ -74,7 +74,7 @@ const DokumentoversiktMessages = ({
         </Alert>
       )}
       {kanNavigereVidere && !readOnly && (
-        <Box.New marginBlock="0 6">
+        <Box marginBlock="space-0 space-24">
           <Alert size="small" data-testid="dokumentasjon-ferdig" variant="info">
             <div style={{ display: 'flex' }}>
               {erPleiepengerSluttfaseFagsak ? (
@@ -92,7 +92,7 @@ const DokumentoversiktMessages = ({
               </Button>
             </div>
           </Alert>
-        </Box.New>
+        </Box>
       )}
     </>
   );

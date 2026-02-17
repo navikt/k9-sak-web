@@ -50,18 +50,18 @@ export const AksjonspunktArbeidOgInntekt = ({
     { value: KontrollerInntektPeriodeDtoValg.MANUELT_FASTSATT, label: 'Fastsett beløp' },
   ];
   return (
-    <Bleed marginBlock="4 0">
-      <Box.New
-        marginInline="2 0"
-        padding="6"
+    <Bleed marginBlock="space-16 space-0">
+      <Box
+        marginInline="space-8 space-0"
+        padding="space-24"
         borderWidth={isReadOnly ? undefined : '0 0 0 4'}
-        borderRadius="0 medium medium 0"
+        borderRadius="0 4 4 0"
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="space-32">
           <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} arbeidsgivere={arbeidsgivere} />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
-          <Box.New borderRadius="medium" padding="4" style={{ background: '#D7E6F0' }}>
+          <Box borderRadius="4" padding="space-16" style={{ background: '#D7E6F0' }}>
             <HStack gap="space-8" wrap={false}>
               <PersonFillIcon title="Deltaker" fontSize="1.5rem" className={styles.personIcon} />
 
@@ -72,14 +72,14 @@ export const AksjonspunktArbeidOgInntekt = ({
                     <PeriodLabel dateStringFom={periode?.fom} dateStringTom={periode?.tom} />
                   )}
                 </Heading>
-                <Box.New maxWidth="75ch">
+                <Box maxWidth="75ch">
                   <BodyLong size="small">{inntektKontrollPeriode?.uttalelseFraBruker}</BodyLong>
-                </Box.New>
+                </Box>
               </VStack>
             </HStack>
-          </Box.New>
+          </Box>
           <VStack gap="space-24">
-            <Box.New maxWidth="70ch">
+            <Box maxWidth="70ch">
               <RhfTextarea
                 control={formMethods.control}
                 name={`perioder.${fieldIndex}.begrunnelse`}
@@ -88,7 +88,7 @@ export const AksjonspunktArbeidOgInntekt = ({
                 maxLength={1500}
                 readOnly={isReadOnly}
               />
-            </Box.New>
+            </Box>
             <VStack gap="space-8">
               <RhfRadioGroup
                 control={formMethods.control}
@@ -131,7 +131,7 @@ export const AksjonspunktArbeidOgInntekt = ({
             )}
           </VStack>
         </VStack>
-      </Box.New>
+      </Box>
     </Bleed>
   );
 };

@@ -28,7 +28,7 @@ export const LabelledContent = ({
   return (
     <div>
       {!hideLabel && (
-        <Label className="font-bold" size={size}>
+        <Label className="font-ax-bold" size={size}>
           {label}
         </Label>
       )}

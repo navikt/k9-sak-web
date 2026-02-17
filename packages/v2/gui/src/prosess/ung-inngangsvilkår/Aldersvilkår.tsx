@@ -40,11 +40,11 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
               Alder
             </Heading>
             {vilkår?.lovReferanse && (
-              <Box.New>
+              <Box>
                 <Detail className={styles.lovreferanse}>
                   <Lovreferanse isUng>{vilkår.lovReferanse}</Lovreferanse>
                 </Detail>
-              </Box.New>
+              </Box>
             )}
           </HStack>
           {fomDatoAldersvilkår && tomDatoAldersvilkår && (

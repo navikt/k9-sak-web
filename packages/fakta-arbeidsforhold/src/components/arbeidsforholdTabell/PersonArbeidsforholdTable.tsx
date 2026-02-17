@@ -75,7 +75,7 @@ const PersonArbeidsforholdTable = ({
   }
 
   return (
-    <Box.New maxWidth="75%">
+    <Box maxWidth="75%">
       <Table>
         <Table.Header>
           <Table.Row>
@@ -198,7 +198,7 @@ const PersonArbeidsforholdTable = ({
             })}
         </Table.Body>
       </Table>
-    </Box.New>
+    </Box>
   );
 };
 
