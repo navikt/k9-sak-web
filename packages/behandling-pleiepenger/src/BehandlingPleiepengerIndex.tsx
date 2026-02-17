@@ -171,7 +171,10 @@ const BehandlingPleiepengerIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        setBehandling={setBehandling}
+      >
         <PleiepengerPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}

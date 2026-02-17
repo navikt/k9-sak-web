@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -133,6 +134,7 @@ const BehandlingUnntakIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <UnntakPaneler
         behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
         fetchedData={data}
@@ -151,6 +153,7 @@ const BehandlingUnntakIndex = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
       />
+      </BehandlingProvider>
     </>
   );
 };

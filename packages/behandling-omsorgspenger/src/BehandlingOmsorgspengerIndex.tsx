@@ -171,7 +171,7 @@ const BehandlingOmsorgspengerIndex = ({
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling?.versjon : behandling.versjon}
       />
 
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
         <OmsorgspengerPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}

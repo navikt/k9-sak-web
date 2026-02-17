@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useState, type FC, type ReactNo
 import PendingModal from './PendingModal.js';
 
 interface PendingModalContextValue {
-  /** Sett melding som vises i modalen. Kall med `undefined` for å skjule. */
+  /** Sett melding som vises i modalen */
   visPendingModal: (melding?: string) => void;
   /** Skjul modalen */
   skjulPendingModal: () => void;
@@ -14,7 +14,7 @@ const PendingModalContext = createContext<PendingModalContextValue>({
 });
 
 /**
- * Provider som rendrer en app-bred PendingModal.
+ * Provider som rendrer en app-wide PendingModal.
  *
  * Legg denne høyt i komponent-treet (f.eks. i RootLayout).
  * Hooks som `useBekreftAksjonspunkt` bruker `usePendingModal()` for å

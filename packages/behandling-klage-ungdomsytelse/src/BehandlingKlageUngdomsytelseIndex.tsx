@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -139,6 +140,7 @@ const BehandlingKlageUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <KlagePaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
@@ -156,6 +158,7 @@ const BehandlingKlageUngdomsytelseIndex = ({
         setBehandling={setBehandling}
         featureToggles={featureToggles}
       />
+      </BehandlingProvider>
     </>
   );
 };

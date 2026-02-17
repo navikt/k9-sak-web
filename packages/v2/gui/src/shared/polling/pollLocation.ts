@@ -25,6 +25,9 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
  * Backend bruker "long-polling"-mønsteret der location-URLen returnerer JSON med en
  * `AsyncPollingStatus` som indikerer om prosesseringen er ferdig, pågår, forsinket, etc.
  *
+ * Returnerer response-body fra den endelige 200-responsen (typisk `BehandlingDto`),
+ * eller `undefined` dersom polling ble avbrutt eller kansellert.
+ *
  * @param location - URL å polle mot (typisk fra Location-header)
  * @param onPollingMessage - Callback som kalles med fremdriftsmeldinger fra backend, eller `undefined` når polling er ferdig
  * @param signal - AbortSignal for å kunne avbryte polling
@@ -35,16 +38,16 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
  * if (response.status === 202) {
  *   const location = response.headers.get('Location');
  *   if (location) {
- *     await pollLocation(location);
+ *     const behandling = await pollLocation(location);
  *   }
  * }
  * ```
  */
-export const pollLocation = async (
+export const pollLocation = async <T = unknown>(
   location: string,
   onPollingMessage?: (melding: string | undefined) => void,
   signal?: AbortSignal,
-): Promise<void> => {
+): Promise<T | undefined> => {
   let forsøk = 0;
   let intervall = 0;
 
@@ -66,9 +69,13 @@ export const pollLocation = async (
     });
 
     if (response.ok && response.status !== HTTP_ACCEPTED) {
-      // Polling ferdig — ressurs er klar
+      // Polling ferdig — ressurs er klar. Returner response-body.
       onPollingMessage?.(undefined);
-      return;
+      const responseContentType = response.headers.get('Content-Type');
+      if (responseContentType?.includes('application/json')) {
+        return (await response.json()) as T;
+      }
+      return undefined;
     }
 
     // Sjekk om body inneholder polling-status
@@ -85,7 +92,7 @@ export const pollLocation = async (
 
       if (body.status === AsyncPollingStatus.COMPLETE) {
         onPollingMessage?.(undefined);
-        return;
+        return undefined;
       }
 
       if (body.status === AsyncPollingStatus.DELAYED || body.status === AsyncPollingStatus.HALTED) {
@@ -96,21 +103,16 @@ export const pollLocation = async (
           continue;
         }
         onPollingMessage?.(undefined);
-        return;
+        return undefined;
       }
 
       if (body.status === AsyncPollingStatus.CANCELLED) {
         onPollingMessage?.(undefined);
-        return;
+        return undefined;
       }
     }
 
-    // Hvis response er 200 uten kjent polling-status, anta ferdig
-    if (response.ok) {
-      onPollingMessage?.(undefined);
-      return;
-    }
-
+    // kast feil hvis ukjent polling-status
     throw new Error(`Polling mot ${location} feilet med status ${response.status}`);
   }
 

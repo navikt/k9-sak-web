@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -184,6 +185,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <RawIntlProvider value={intl}>
         <PleiepengerSluttfasePaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
@@ -205,6 +207,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
           dokumenter={alleDokumenter}
         />
       </RawIntlProvider>
+      </BehandlingProvider>
     </>
   );
 };

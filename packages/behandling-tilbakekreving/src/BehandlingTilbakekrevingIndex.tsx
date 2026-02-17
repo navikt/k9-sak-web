@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
@@ -147,6 +148,7 @@ const BehandlingTilbakekrevingIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <TilbakekrevingPaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
@@ -165,6 +167,7 @@ const BehandlingTilbakekrevingIndex = ({
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
       />
+      </BehandlingProvider>
     </>
   );
 };
