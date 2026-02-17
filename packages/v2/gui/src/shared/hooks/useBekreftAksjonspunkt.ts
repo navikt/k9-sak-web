@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { useMutation } from '@tanstack/react-query';
 import { BehandlingContext } from '../../context/BehandlingContext.js';
@@ -62,6 +62,12 @@ export const useBekreftAksjonspunkt = <T>(): UseBekreftAksjonspunktResult<T> => 
   const { behandling, refetchBehandling, setBehandling, aksjonspunktClient } = useContext(BehandlingContext);
   const { visPendingModal, skjulPendingModal } = usePendingModal();
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (aksjonspunkter: T[]): Promise<BehandlingDto | undefined> => {
