@@ -81,7 +81,7 @@ export const LøsAksjonspunkt: Story = {
     });
   },
   render: props => (
-    <BehandlingProvider refetchBehandling={refetchBehandling}>
+    <BehandlingProvider behandling={props.behandling} refetchBehandling={refetchBehandling}>
       <HStack>
         <KontrollerEtterbetaling {...props} />
       </HStack>

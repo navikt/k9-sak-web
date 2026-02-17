@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
-import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { useMutation } from '@tanstack/react-query';
 import { BehandlingContext } from '../../context/BehandlingContext.js';
@@ -14,14 +14,17 @@ const erBehandlingDto = (data: unknown): data is BehandlingDto =>
   data != null && typeof data === 'object' && 'id' in data && 'versjon' in data;
 
 interface UseBekreftAksjonspunktResult {
-  /** Bekreft aksjonspunkt og vent på at backend er ferdig med å prosessere. Oppdaterer behandling automatisk. */
-  bekreft: (body: BekreftedeAksjonspunkterDto) => Promise<void>;
+  /** Bekreft ett eller flere aksjonspunkter. Bygger opp request-body automatisk med behandlingId og versjon fra kontekst. */
+  bekreft: (aksjonspunkter: BekreftetAksjonspunktDto | BekreftetAksjonspunktDto[]) => Promise<void>;
   /** `true` mens request og eventuell polling pågår */
   loading: boolean;
 }
 
 /**
  * Hook for å bekrefte aksjonspunkt via den genererte typescript-klienten (`aksjonspunkt_bekreft`).
+ *
+ * Henter `behandlingId` og `behandlingVersjon` fra `BehandlingContext`, så kallstedet
+ * bare trenger å oppgi selve aksjonspunktdataene.
  *
  * Håndterer 202 + Location-header fra backend ved å polle location-URL-en
  * til prosesseringen er ferdig. Setter behandling direkte fra polling-responsen
@@ -35,29 +38,37 @@ interface UseBekreftAksjonspunktResult {
  * const { bekreft, loading } = useBekreftAksjonspunkt();
  *
  * const onSubmit = async (data) => {
- *   await bekreft({
- *     behandlingId: `${behandling.id}`,
- *     behandlingVersjon: behandling.versjon,
- *     bekreftedeAksjonspunktDtoer: [{ '@type': '5084', begrunnelse: data.begrunnelse }],
- *   });
+ *   await bekreft({ '@type': '5084', begrunnelse: data.begrunnelse });
  * };
  * ```
  */
 export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
-  const { refetchBehandling, setBehandling } = useContext(BehandlingContext);
+  const { behandling, refetchBehandling, setBehandling } = useContext(BehandlingContext);
   const { visPendingModal, skjulPendingModal } = usePendingModal();
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (
-      body: BekreftedeAksjonspunkterDto,
+      aksjonspunkter: BekreftetAksjonspunktDto | BekreftetAksjonspunktDto[],
     ): Promise<BehandlingDto | undefined> => {
+      if (behandling?.id == null || behandling?.versjon == null) {
+        throw new Error('useBekreftAksjonspunkt krever at BehandlingProvider har fått behandling med id og versjon.');
+      }
+
       // Avbryt eventuell pågående polling fra forrige kall
       abortControllerRef.current?.abort();
       const abortController = new AbortController();
       abortControllerRef.current = abortController;
 
-      const result = await aksjonspunkt_bekreft({ body });
+      const bekreftedeAksjonspunktDtoer = Array.isArray(aksjonspunkter) ? aksjonspunkter : [aksjonspunkter];
+
+      const result = await aksjonspunkt_bekreft({
+        body: {
+          behandlingId: `${behandling.id}`,
+          behandlingVersjon: behandling.versjon,
+          bekreftedeAksjonspunktDtoer,
+        },
+      });
 
       const response = result.response as Response | undefined;
 
@@ -89,8 +100,8 @@ export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
   });
 
   return {
-    bekreft: async (body: BekreftedeAksjonspunkterDto) => {
-      await mutateAsync(body);
+    bekreft: async (aksjonspunkter: BekreftetAksjonspunktDto | BekreftetAksjonspunktDto[]) => {
+      await mutateAsync(aksjonspunkter);
     },
     loading: isPending,
   };

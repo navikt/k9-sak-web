@@ -140,7 +140,7 @@ const BehandlingKlageUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <KlagePaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}

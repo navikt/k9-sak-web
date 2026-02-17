@@ -54,18 +54,9 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
         `Forventet aksjonspunkt kode ${AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING}, fikk ${aksjonspunkt.definisjon}.`,
       );
     }
-    if (behandling.id == null) {
-      throw new Error(`behandling.id null. Kan ikke bekrefte aksjonspunkt`);
-    }
     await bekreft({
-      behandlingId: `${behandling.id}`,
-      behandlingVersjon: behandling.versjon,
-      bekreftedeAksjonspunktDtoer: [
-        {
-          '@type': AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
-          begrunnelse: data.begrunnelse,
-        },
-      ],
+      '@type': AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+      begrunnelse: data.begrunnelse,
     });
   };
 

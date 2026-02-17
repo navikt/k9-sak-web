@@ -3,7 +3,6 @@ import { AsyncPollingStatusStatus } from '@k9-sak-web/backend/k9sak/kontrakt/Asy
 
 const MAX_POLLING_FORSØK = 150;
 const DEFAULT_POLLING_INTERVALL_MS = 1000;
-const HTTP_ACCEPTED = 202;
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -56,52 +55,55 @@ export const pollLocation = async <T = unknown>(
       signal,
     });
 
-    if (response.ok && response.status !== HTTP_ACCEPTED) {
-      // Polling ferdig — ressurs er klar. Returner response-body.
+    if (!response.ok) {
+      throw new Error(`Polling mot ${location} feilet med HTTP ${response.status}`);
+    }
+
+    const contentType = response.headers.get('Content-Type');
+    if (!contentType?.includes('application/json')) {
       onPollingMessage?.(undefined);
-      const responseContentType = response.headers.get('Content-Type');
-      if (responseContentType?.includes('application/json')) {
-        return (await response.json()) as T;
-      }
       return undefined;
     }
 
-    // Sjekk om body inneholder polling-status
-    const contentType = response.headers.get('Content-Type');
-    if (contentType?.includes('application/json')) {
-      const body = (await response.json()) as AsyncPollingStatus;
+    const body = await response.json();
 
-      if (body.status === AsyncPollingStatusStatus.PENDING) {
-        intervall = body.pollIntervalMillis ?? DEFAULT_POLLING_INTERVALL_MS;
-        onPollingMessage?.(body.message);
+    // Sjekk om responsen er en polling-status (AsyncPollingStatus) eller den endelige ressursen
+    const status = body?.status as AsyncPollingStatusStatus | undefined;
+    if (status != null && Object.values(AsyncPollingStatusStatus).includes(status)) {
+      const pollingBody = body as AsyncPollingStatus;
+
+      if (status === AsyncPollingStatusStatus.PENDING) {
+        intervall = pollingBody.pollIntervalMillis ?? DEFAULT_POLLING_INTERVALL_MS;
+        onPollingMessage?.(pollingBody.message);
         forsøk++;
         continue;
       }
 
-      if (body.status === AsyncPollingStatusStatus.COMPLETE) {
-        onPollingMessage?.(undefined);
+      if (status === AsyncPollingStatusStatus.COMPLETE) {
+        onPollingMessage?.(pollingBody.message);
         return undefined;
       }
 
-      if (body.status === AsyncPollingStatusStatus.DELAYED || body.status === AsyncPollingStatusStatus.HALTED) {
+      if (status === AsyncPollingStatusStatus.DELAYED || status === AsyncPollingStatusStatus.HALTED) {
         // Serveren har forsinket eller stoppet prosesseringen, men oppgir ny location
-        if (body.location) {
-          location = body.location;
+        if (pollingBody.location) {
+          location = pollingBody.location;
           forsøk++;
           continue;
         }
-        onPollingMessage?.(undefined);
+        onPollingMessage?.(pollingBody.message);
         return undefined;
       }
 
-      if (body.status === AsyncPollingStatusStatus.CANCELLED) {
-        onPollingMessage?.(undefined);
+      if (status === AsyncPollingStatusStatus.CANCELLED) {
+        onPollingMessage?.(pollingBody.message);
         return undefined;
       }
     }
 
-    // kast feil hvis ukjent polling-status
-    throw new Error(`Polling mot ${location} feilet med status ${response.status}`);
+    // Ingen kjent polling-status — dette er den endelige ressursen
+    onPollingMessage?.(undefined);
+    return body as T;
   }
 
   throw new Error(`Polling mot ${location} nådde maks antall forsøk (${MAX_POLLING_FORSØK})`);

@@ -134,7 +134,7 @@ const BehandlingUnntakIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <UnntakPaneler
         behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
         fetchedData={data}

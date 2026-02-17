@@ -148,7 +148,7 @@ const BehandlingTilbakekrevingIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
       <TilbakekrevingPaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
