@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
-import type { k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { useMutation } from '@tanstack/react-query';
 import { BehandlingContext } from '../../context/BehandlingContext.js';
@@ -15,7 +15,7 @@ const erBehandlingDto = (data: unknown): data is BehandlingDto =>
 
 interface UseBekreftAksjonspunktResult {
   /** Bekreft aksjonspunkt og vent på at backend er ferdig med å prosessere. Oppdaterer behandling automatisk. */
-  bekreft: (body: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => Promise<void>;
+  bekreft: (body: BekreftedeAksjonspunkterDto) => Promise<void>;
   /** `true` mens request og eventuell polling pågår */
   loading: boolean;
 }
@@ -50,7 +50,7 @@ export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (
-      body: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+      body: BekreftedeAksjonspunkterDto,
     ): Promise<BehandlingDto | undefined> => {
       // Avbryt eventuell pågående polling fra forrige kall
       abortControllerRef.current?.abort();
@@ -89,7 +89,7 @@ export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
   });
 
   return {
-    bekreft: async (body: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => {
+    bekreft: async (body: BekreftedeAksjonspunkterDto) => {
       await mutateAsync(body);
     },
     loading: isPending,

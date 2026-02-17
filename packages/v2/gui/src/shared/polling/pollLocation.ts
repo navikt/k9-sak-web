@@ -1,21 +1,9 @@
+import type { AsyncPollingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/AsyncPollingStatus.js';
+import { AsyncPollingStatusStatus } from '@k9-sak-web/backend/k9sak/kontrakt/AsyncPollingStatus.js';
+
 const MAX_POLLING_FORSØK = 150;
 const DEFAULT_POLLING_INTERVALL_MS = 1000;
 const HTTP_ACCEPTED = 202;
-
-enum AsyncPollingStatus {
-  PENDING = 'PENDING',
-  COMPLETE = 'COMPLETE',
-  DELAYED = 'DELAYED',
-  CANCELLED = 'CANCELLED',
-  HALTED = 'HALTED',
-}
-
-interface PollingResponse {
-  status: AsyncPollingStatus;
-  pollIntervalMillis?: number;
-  message?: string;
-  location?: string;
-}
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -81,21 +69,21 @@ export const pollLocation = async <T = unknown>(
     // Sjekk om body inneholder polling-status
     const contentType = response.headers.get('Content-Type');
     if (contentType?.includes('application/json')) {
-      const body = (await response.json()) as PollingResponse;
+      const body = (await response.json()) as AsyncPollingStatus;
 
-      if (body.status === AsyncPollingStatus.PENDING) {
+      if (body.status === AsyncPollingStatusStatus.PENDING) {
         intervall = body.pollIntervalMillis ?? DEFAULT_POLLING_INTERVALL_MS;
         onPollingMessage?.(body.message);
         forsøk++;
         continue;
       }
 
-      if (body.status === AsyncPollingStatus.COMPLETE) {
+      if (body.status === AsyncPollingStatusStatus.COMPLETE) {
         onPollingMessage?.(undefined);
         return undefined;
       }
 
-      if (body.status === AsyncPollingStatus.DELAYED || body.status === AsyncPollingStatus.HALTED) {
+      if (body.status === AsyncPollingStatusStatus.DELAYED || body.status === AsyncPollingStatusStatus.HALTED) {
         // Serveren har forsinket eller stoppet prosesseringen, men oppgir ny location
         if (body.location) {
           location = body.location;
@@ -106,7 +94,7 @@ export const pollLocation = async <T = unknown>(
         return undefined;
       }
 
-      if (body.status === AsyncPollingStatus.CANCELLED) {
+      if (body.status === AsyncPollingStatusStatus.CANCELLED) {
         onPollingMessage?.(undefined);
         return undefined;
       }
