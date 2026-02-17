@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import type { ReactNode } from 'react';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
+import type { PollingClient } from '@k9-sak-web/backend/shared/polling/createPollingClient.js';
 
 // Med tiden bør fetching av behandling gjøres av tanstack query
 // Da bør vi kunne invalidere query etter behov for å trigge refetch av behandling
@@ -14,6 +15,8 @@ export interface BehandlingContextType {
    * De inkluderer en location-header med URL man kan polle for å vite når behandlingen er klar igjen
    * Når behandlingen er klar returneres en BehandlingDto av polling-endepunktet som kan brukes, og det er ikke nødvendig å refetche manuelt */
   setBehandling?: (behandling: BehandlingDto) => void;
+  /** Klient for polling-kall som bruker riktig backend-klient med interceptorer (auth, headers). */
+  pollingClient?: PollingClient;
 }
 
 export const BehandlingContext = createContext<BehandlingContextType>({
@@ -25,14 +28,16 @@ export const BehandlingProvider = ({
   behandling,
   refetchBehandling,
   setBehandling,
+  pollingClient,
 }: {
   children: ReactNode;
   behandling?: BehandlingContextType['behandling'];
   refetchBehandling: BehandlingContextType['refetchBehandling'];
   setBehandling?: BehandlingContextType['setBehandling'];
+  pollingClient?: BehandlingContextType['pollingClient'];
 }) => {
   return (
-    <BehandlingContext.Provider value={{ behandling, refetchBehandling, setBehandling }}>
+    <BehandlingContext.Provider value={{ behandling, refetchBehandling, setBehandling, pollingClient }}>
       {children}
     </BehandlingContext.Provider>
   );

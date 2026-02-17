@@ -43,7 +43,7 @@ interface UseBekreftAksjonspunktResult {
  * ```
  */
 export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
-  const { behandling, refetchBehandling, setBehandling } = useContext(BehandlingContext);
+  const { behandling, refetchBehandling, setBehandling, pollingClient } = useContext(BehandlingContext);
   const { visPendingModal, skjulPendingModal } = usePendingModal();
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -53,6 +53,9 @@ export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
     ): Promise<BehandlingDto | undefined> => {
       if (behandling?.id == null || behandling?.versjon == null) {
         throw new Error('useBekreftAksjonspunkt krever at BehandlingProvider har fått behandling med id og versjon.');
+      }
+      if (pollingClient == null) {
+        throw new Error('useBekreftAksjonspunkt krever at BehandlingProvider har fått en pollingClient.');
       }
 
       // Avbryt eventuell pågående polling fra forrige kall
@@ -78,6 +81,7 @@ export const useBekreftAksjonspunkt = (): UseBekreftAksjonspunktResult => {
           visPendingModal();
           return await pollLocation<BehandlingDto>(
             location,
+            pollingClient,
             melding => visPendingModal(melding ?? undefined),
             abortController.signal,
           );
