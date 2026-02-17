@@ -186,28 +186,33 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
-      <RawIntlProvider value={intl}>
-        <PleiepengerSluttfasePaneler
-          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-          fetchedData={data}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          opneSokeside={opneSokeside}
-          hasFetchError={behandlingState === RestApiState.ERROR}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-          featureToggles={featureToggles}
-          dokumenter={alleDokumenter}
-        />
-      </RawIntlProvider>
+      <BehandlingProvider
+        behandling={behandling}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        setBehandling={setBehandling}
+        aksjonspunktClient={k9SakAksjonspunktClient}
+      >
+        <RawIntlProvider value={intl}>
+          <PleiepengerSluttfasePaneler
+            behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+            fetchedData={data}
+            fagsak={fagsak}
+            fagsakPerson={fagsakPerson}
+            alleKodeverk={kodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            opneSokeside={opneSokeside}
+            hasFetchError={behandlingState === RestApiState.ERROR}
+            setBehandling={setBehandling}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+            featureToggles={featureToggles}
+            dokumenter={alleDokumenter}
+          />
+        </RawIntlProvider>
       </BehandlingProvider>
     </>
   );
