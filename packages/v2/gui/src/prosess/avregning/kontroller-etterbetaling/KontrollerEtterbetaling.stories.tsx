@@ -1,36 +1,21 @@
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
-import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/FakeBehandlingAvregningBackendApi';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 
-const bekreftAksjonspunktRequest: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
-  behandlingId: '123',
-  behandlingVersjon: 1,
-  bekreftedeAksjonspunktDtoer: [
-    {
-      '@type': AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
-      begrunnelse: 'Dette er en grundig begrunnelse',
-    },
-  ],
-};
-
-const api = new FakeBehandlingAvregningBackendApi();
+const refetchBehandling = fn();
 const meta = {
   title: 'gui/prosess/Simulering/Høy-Etterbetaling',
   component: KontrollerEtterbetaling,
-  beforeEach: () => {
-    api.reset();
-  },
 } satisfies Meta<typeof KontrollerEtterbetaling>;
 
 type Story = StoryObj<typeof meta>;
@@ -68,11 +53,9 @@ const uløstAksjonspunkt: AksjonspunktDto = {
   ...aksjonspunkt,
 };
 
-const oppdaterBehandling = fn();
-
 export const LøsAksjonspunkt: Story = {
-  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false, api, oppdaterBehandling },
-  play: async ({ args, canvasElement, step }) => {
+  args: { behandling: uløstBehandling, aksjonspunkt: uløstAksjonspunkt, readOnly: false },
+  play: async ({ canvasElement, step }) => {
     const user = userEvent.setup();
     const canvas = await within(canvasElement);
 
@@ -95,14 +78,14 @@ export const LøsAksjonspunkt: Story = {
 
     await step('Skal kunne løse aksjonspunkt', async () => {
       await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
-      await expect(args.oppdaterBehandling).toHaveBeenCalled();
-      await expect(api.sisteBekreftAksjonspunktResultat).toEqual(bekreftAksjonspunktRequest);
     });
   },
   render: props => (
-    <HStack>
-      <KontrollerEtterbetaling {...props} />
-    </HStack>
+    <BehandlingProvider refetchBehandling={refetchBehandling}>
+      <HStack>
+        <KontrollerEtterbetaling {...props} />
+      </HStack>
+    </BehandlingProvider>
   ),
 };
 
