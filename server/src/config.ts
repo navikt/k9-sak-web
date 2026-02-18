@@ -2,6 +2,8 @@ export interface ProxyApi {
   path: string;
   url: string;
   stripPrefix?: boolean;
+  /** Login URL to return in Location header on 401 responses. */
+  loginPath?: string;
   /** OBO scope — populate when token exchange is enabled. */
   scopes?: string;
 }
@@ -22,13 +24,13 @@ const appVariant = env('APP_VARIANT', 'k9');
 const proxyApis: (Omit<ProxyApi, 'url'> & { url: string | undefined })[] =
   appVariant === 'ung'
     ? [
-        { path: '/ung/sak', url: env('APP_URL') },
+        { path: '/ung/sak', url: env('APP_URL'), loginPath: '/ung/sak/resource/login' },
         { path: '/ung/tilbake', url: process.env.APP_URL_UNG_TILBAKE },
       ]
     : [
         { path: '/k9/formidling/dokumentdata', url: process.env.APP_URL_K9FORMIDLING_DD },
         { path: '/k9/formidling', url: process.env.APP_URL_K9FORMIDLING },
-        { path: '/k9/sak', url: env('APP_URL') },
+        { path: '/k9/sak', url: env('APP_URL'), loginPath: '/k9/sak/resource/login' },
         { path: '/k9/oppdrag', url: process.env.APP_URL_K9OPPDRAG },
         { path: '/k9/klage', url: process.env.APP_URL_KLAGE },
         { path: '/k9/tilbake', url: process.env.APP_URL_K9TILBAKE },

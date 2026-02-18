@@ -38,6 +38,13 @@ function makeOptions(api: ProxyApi): ProxyOptions {
       return resolved + (search ?? '');
     },
 
+    userResDecorator: (_proxyRes, proxyResData, _userReq, userRes) => {
+      if (userRes.statusCode === 401 && api.loginPath) {
+        userRes.setHeader('Location', api.loginPath);
+      }
+      return proxyResData;
+    },
+
     proxyErrorHandler: (
       err: NodeJS.ErrnoException,
       res: Response,
