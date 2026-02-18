@@ -15,6 +15,7 @@ import Home from './components/Home';
 import '@fpsak-frontend/assets/styles/global.css';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 import { IntlProvider } from 'react-intl';
+import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
@@ -69,7 +70,7 @@ const AppIndex = () => {
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
         <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-          <IntlProvider locale="nb-NO" messages={{}}>
+          <IntlProvider locale="nb-NO" messages={globalMessages}>
             <Dekorator
               hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
               queryStrings={queryStrings}

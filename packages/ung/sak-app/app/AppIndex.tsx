@@ -15,6 +15,7 @@ import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 import { IntlProvider } from 'react-intl';
+import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
@@ -66,7 +67,7 @@ const AppIndex = () => {
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
         <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-          <IntlProvider locale="nb-NO" messages={{}}>
+          <IntlProvider locale="nb-NO" messages={globalMessages}>
             <Dekorator
               hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
               queryStrings={queryStrings}
