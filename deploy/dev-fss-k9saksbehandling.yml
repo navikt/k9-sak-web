@@ -5,10 +5,6 @@ metadata:
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   image: {{ image }}
   port: 9000
