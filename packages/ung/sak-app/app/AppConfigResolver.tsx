@@ -41,21 +41,18 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.NAV_ANSATT, NO_PARAMS, options);
 
-  const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.LANGUAGE_FILE, NO_PARAMS);
-
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
   const ungKodeverkOppslag = useUngKodeverkoppslag(tilbakeAktivert);
 
-  const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
+  const harFeilet = harK9sakInitKallFeilet;
 
   const erFerdig =
     harHentetFerdigInitLenker &&
     harHentetFerdigKodeverk &&
-    navAnsattState === RestApiState.SUCCESS &&
-    sprakFilState === RestApiState.SUCCESS;
+    navAnsattState === RestApiState.SUCCESS;
 
   return (
     <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
