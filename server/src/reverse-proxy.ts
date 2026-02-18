@@ -24,9 +24,11 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     timeout: 40_000,
 
     proxyReqOptDecorator: async (options, req) => {
+      // When OBO token exchange is enabled, uncomment the following
+      // and remove cookie forwarding:
       // const oboToken = await exchangeToken(req, api);
       // if (oboToken) options.headers!.Authorization = `Bearer ${oboToken}`;
-      delete (options.headers as Record<string, unknown>).cookie;
+      // delete (options.headers as Record<string, unknown>).cookie;
       return options;
     },
 

@@ -19,4 +19,4 @@ COPY dist/ ./dist/
 
 EXPOSE $port
 
-CMD ["node", "server.js"]
+CMD ["server.js"]
