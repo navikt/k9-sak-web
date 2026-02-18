@@ -1,0 +1,23 @@
+{
+  "name": "@k9-sak-web/server",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/server.js"
+  },
+  "dependencies": {
+    "express": "4.22.1",
+    "express-http-proxy": "2.1.2",
+    "express-rate-limit": "8.2.1",
+    "helmet": "8.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.2",
+    "@types/express-http-proxy": "1.6.6",
+    "@types/node": "22.15.33",
+    "typescript": "5.9.3"
+  }
+}
