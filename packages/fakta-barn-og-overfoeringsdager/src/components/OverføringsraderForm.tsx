@@ -1,9 +1,8 @@
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import React from 'react';
 import { connect } from 'react-redux';
-import { type ConfigProps, FieldArray, type InjectedFormProps } from 'redux-form';
-import type Overføring from '../types/Overføring';
-import type { Overføringsretning, Overføringstype } from '../types/Overføring';
+import { FieldArray, InjectedFormProps, ConfigProps } from 'redux-form';
+import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import Overføring, { Overføringsretning, Overføringstype } from '../types/Overføring';
 import { overføringerFormName } from './formNames';
 import Overføringsrader from './Overføringsrader';
 

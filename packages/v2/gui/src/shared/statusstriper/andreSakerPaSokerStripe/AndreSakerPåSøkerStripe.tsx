@@ -1,10 +1,9 @@
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import type React from 'react';
+import React from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import styles from './andreSakerPåSøkerStripe.module.css';
-
 interface Props {
   saksnummer: string;
   api: K9StatusBackendApi;

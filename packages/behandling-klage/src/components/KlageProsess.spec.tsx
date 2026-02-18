@@ -4,13 +4,14 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
+
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
-import type { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import KlageProsess from './KlageProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<KlageProsess>', () => {
   const fagsak = {

@@ -1,22 +1,22 @@
-import { k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useEffect, useState, type FC } from 'react';
+import { useFormContext, type FieldArrayWithId, type UseFieldArrayReplace } from 'react-hook-form';
+import dayjs from 'dayjs';
 import { ScissorsIcon, TrashIcon } from '@navikt/aksel-icons';
 import {
-  BodyShort,
   Button,
-  DatePicker,
-  HelpText,
-  HStack,
-  Modal,
-  Radio,
   RadioGroup,
+  Radio,
+  HStack,
   TextField,
+  BodyShort,
+  HelpText,
+  Modal,
+  DatePicker,
   VStack,
 } from '@navikt/ds-react';
-import dayjs from 'dayjs';
-import { type FC, useEffect, useState } from 'react';
-import { type FieldArrayWithId, type UseFieldArrayReplace, useFormContext } from 'react-hook-form';
+import { k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
 import { useOverlappendeSakUtils } from './utils/useOverlappendeSakUtils';
-import type { VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
 import styles from './VurderOverlappendeSak.module.css';
 
 interface Props {

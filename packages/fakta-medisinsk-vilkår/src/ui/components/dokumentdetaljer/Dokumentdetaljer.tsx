@@ -1,7 +1,6 @@
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
-import type Dokument from '../../../types/Dokument';
-import { Dokumenttype } from '../../../types/Dokument';
+import Dokument, { Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import StrukturerDokumentController from '../strukturer-dokument-controller/StrukturerDokumentController';
 import StrukturertDokumentDetaljer from '../strukturert-dokument-detaljer/StrukturertDokumentDetaljer';

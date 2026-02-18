@@ -1,4 +1,4 @@
-import type { Venteaarsak } from '@k9-sak-web/types';
+import { Venteaarsak } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import SettPaVentModal from './components/SettPaVentModal';

@@ -1,8 +1,8 @@
-import type { Kodeverk } from '../../../shared/Kodeverk.js';
 import {
-  k9_kodeverk_behandling_BehandlingType as enumObj,
   type k9_kodeverk_behandling_BehandlingType as typeUnion,
+  k9_kodeverk_behandling_BehandlingType as enumObj,
 } from '../../generated/types.js';
+import type { Kodeverk } from '../../../shared/Kodeverk.js';
 
 export type BehandlingType = typeUnion;
 

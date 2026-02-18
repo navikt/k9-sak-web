@@ -1,6 +1,6 @@
 import {
-  k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseType,
   type k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseTypeEnumUnion,
+  k9_kodeverk_behandling_FagsakYtelseType as generatedFagsakYtelseType,
 } from '../generated/types.js';
 
 export type FagsakYtelsesType = generatedFagsakYtelseTypeEnumUnion;

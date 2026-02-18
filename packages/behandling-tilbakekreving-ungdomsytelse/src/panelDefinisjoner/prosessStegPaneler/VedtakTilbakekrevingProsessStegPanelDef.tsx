@@ -1,12 +1,13 @@
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import React from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import React from 'react';
-import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
+import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakTilbakekrevingProsessIndex {...props} />;

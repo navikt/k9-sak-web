@@ -1,10 +1,10 @@
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import type { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
-import type UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import type { VilkarMidlertidigAleneProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { VilkarMidlertidigAleneProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
+import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 
 interface OwnProps {
   behandlingsID: string;

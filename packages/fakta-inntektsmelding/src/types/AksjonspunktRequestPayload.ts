@@ -1,4 +1,4 @@
-import type { Kode } from './KompletthetData';
+import { Kode } from './KompletthetData';
 
 export interface Perioder {
   periode: string;

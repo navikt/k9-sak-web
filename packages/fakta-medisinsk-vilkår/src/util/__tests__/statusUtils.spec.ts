@@ -1,6 +1,6 @@
-import { StepId } from '../../types/Step';
-import type StatusResponse from '../../types/SykdomsstegStatusResponse';
 import { finnNesteStegForPleiepenger } from '../statusUtils';
+import StatusResponse from '../../types/SykdomsstegStatusResponse';
+import { StepId } from '../../types/Step';
 
 describe('statusUtils', () => {
   describe('finnNesteSteg', () => {

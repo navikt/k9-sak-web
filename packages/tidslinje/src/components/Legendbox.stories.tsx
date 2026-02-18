@@ -1,3 +1,5 @@
+import React from 'react';
+
 import revurderingUrl from '@fpsak-frontend/assets/images/endringstidspunkt.svg';
 import fodselUrl from '@fpsak-frontend/assets/images/fodsel.svg';
 import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
@@ -6,7 +8,6 @@ import gradertImage from '@fpsak-frontend/assets/images/periode_gradert.svg';
 import manueltAvklart from '@fpsak-frontend/assets/images/periode_manuelt_avklart.svg';
 import soknadUrl from '@fpsak-frontend/assets/images/soknad.svg';
 import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
-import React from 'react';
 import LegendBox from './LegendBox';
 
 export default {

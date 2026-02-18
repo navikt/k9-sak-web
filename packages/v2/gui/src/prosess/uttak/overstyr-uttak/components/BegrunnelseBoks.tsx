@@ -1,12 +1,12 @@
+import { type FC } from 'react';
+import { Heading, BodyShort } from '@navikt/ds-react';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
+import { utledAktivitetNavn } from '../../utils/overstyringUtils';
 import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useSaksbehandlerOppslag } from '@k9-sak-web/gui/shared/hooks/useSaksbehandlerOppslag.js';
-import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import type { FC } from 'react';
-import { utledAktivitetNavn } from '../../utils/overstyringUtils';
 import styles from './begrunnelseBoks.module.css';
 
 interface BegrunnelseBoksProps {

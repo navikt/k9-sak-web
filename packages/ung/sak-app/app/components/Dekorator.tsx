@@ -1,12 +1,12 @@
-import type { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
+import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
 import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
-import type ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
+import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
-import { type IntlShape, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 type QueryStrings = {
   errorcode?: string;

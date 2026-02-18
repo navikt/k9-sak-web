@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   decodeHtmlEntity,
@@ -6,8 +8,7 @@ import {
   maxLength as validateMaxLength,
   minLength as validateMinLength,
 } from '@fpsak-frontend/utils';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
-import React from 'react';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import getPackageIntl from '../i18n/getPackageIntl';
 

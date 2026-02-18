@@ -1,5 +1,5 @@
-import type Periode from './Periode';
-import type TidslinjeIkon from './TidslinjeIkon';
+import Periode from './Periode';
+import TidslinjeIkon from './TidslinjeIkon';
 
 interface TidslinjeRad<Periodeinfo> {
   ikon?: TidslinjeIkon;

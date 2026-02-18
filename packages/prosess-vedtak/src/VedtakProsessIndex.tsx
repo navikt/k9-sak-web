@@ -1,4 +1,5 @@
-import type {
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
@@ -8,16 +9,15 @@ import type {
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
-import type { InformasjonsbehovVedtaksbrev } from './components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import VedtakPanels from './components/VedtakPanels';
-import type { Beregningsgrunnlag } from './types/Beregningsgrunnlag';
-import type { DokumentDataType, LagreDokumentdataType } from './types/Dokumentdata';
-import type { VedtakSimuleringResultat } from './types/VedtakSimuleringResultat';
-import type { Vedtaksbrev } from './types/Vedtaksbrev';
-import type { VedtakVarsel } from './types/VedtakVarsel';
+import { InformasjonsbehovVedtaksbrev } from './components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
+import { Beregningsgrunnlag } from './types/Beregningsgrunnlag';
+import { DokumentDataType, LagreDokumentdataType } from './types/Dokumentdata';
+import { VedtakSimuleringResultat } from './types/VedtakSimuleringResultat';
+import { VedtakVarsel } from './types/VedtakVarsel';
+import { Vedtaksbrev } from './types/Vedtaksbrev';
 
 const cache = createIntlCache();
 

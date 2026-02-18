@@ -1,6 +1,7 @@
+import { FormattedMessage } from 'react-intl';
+
 import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import { HGrid } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 
 const ForeldetFormPanel = () => (
   <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>

@@ -1,6 +1,9 @@
+import { ReactElement, useContext, useEffect } from 'react';
+
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
-import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import K9KlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/K9KlageVurderingBackendClient.js';
@@ -11,14 +14,13 @@ import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klag
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { type ReactElement, useContext, useEffect } from 'react';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
 import ApplicationContextPath from './ApplicationContextPath';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
+import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;

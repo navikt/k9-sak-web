@@ -1,5 +1,5 @@
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { ReactNode } from 'react';
+import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { type ReactNode } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import FagsakProfile from './components/FagsakProfile';
 

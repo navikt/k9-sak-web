@@ -1,10 +1,10 @@
-import type ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
 import DagerSokerHarRettPa from './DagerSokerHarRettPa';
-import { beregnDagerTimer, type DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
+import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 import ForbrukteDager from './ForbrukteDager';
 import styles from './nokkeltall.module.css';
 import Restdager from './Restdager';

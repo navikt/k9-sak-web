@@ -1,9 +1,9 @@
-import type { Pin } from '@k9-sak-web/types/src/tidslinje';
+import { Pin } from '@k9-sak-web/types/src/tidslinje';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { position } from './calc';
 import styles from './Pins.module.css';
 import Tooltip from './Tooltip';
+import { position } from './calc';
 
 const PinView = ({ render, classname }: Partial<Pin>) => {
   const [showRender, setShowRender] = useState(false);

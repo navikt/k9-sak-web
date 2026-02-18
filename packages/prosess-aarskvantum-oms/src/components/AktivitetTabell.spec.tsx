@@ -1,11 +1,11 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { type ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
+import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, { act } from 'react';
 import messages from '../../i18n/nb_NO.json';
-import type Aktivitet from '../dto/Aktivitet';
+import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
 
 describe('<AktivitetTabell />', () => {

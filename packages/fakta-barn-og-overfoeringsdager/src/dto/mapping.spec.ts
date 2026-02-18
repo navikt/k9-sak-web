@@ -1,8 +1,4 @@
-import {
-  type Rammevedtak,
-  RammevedtakEnum,
-  type RammevedtakType,
-} from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from './mapping';
 
 const avsender = '02028920544';

@@ -1,12 +1,12 @@
-import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
-import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import { behandlingType as behandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.ts';
 import styles from './fatterVedtakApprovalModal.module.css';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.ts';
 
 const getInfoTextCode = (
   behandlingtypeKode: string,

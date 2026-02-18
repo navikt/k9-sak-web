@@ -1,13 +1,15 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
-import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
-import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import type { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { requestApi, UngSakApiKeys } from '../data/ungsakApi';
+
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {

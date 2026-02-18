@@ -1,4 +1,4 @@
-import type { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk } from '@k9-sak-web/types';
 import getPackageIntl from '../i18n/getPackageIntl';
 
 const intl = getPackageIntl();

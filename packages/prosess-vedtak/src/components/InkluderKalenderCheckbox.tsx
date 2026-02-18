@@ -1,7 +1,8 @@
-import { Checkbox } from '@navikt/ds-react';
+import React, { useEffect, type JSX } from 'react';
 import { Field } from 'formik';
-import React, { type JSX, useEffect } from 'react';
-import type { IntlShape } from 'react-intl';
+import { IntlShape } from 'react-intl';
+
+import { Checkbox } from '@navikt/ds-react';
 
 import { fieldnames } from '../konstanter';
 

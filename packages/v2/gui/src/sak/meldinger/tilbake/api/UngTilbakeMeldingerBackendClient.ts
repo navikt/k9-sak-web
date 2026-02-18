@@ -1,10 +1,10 @@
-import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 import {
   brev_bestillBrev,
   brev_forhåndsvisBrev,
   brev_hentMaler,
 } from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
 import type { TilbakeBestillBrevDto, TilbakeMeldingerApi } from './TilbakeMeldingerApi.js';
+import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 
 export class UngTilbakeMeldingerBackendClient implements TilbakeMeldingerApi {
   readonly backend = 'ungtilbake';

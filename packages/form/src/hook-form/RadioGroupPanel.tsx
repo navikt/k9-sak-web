@@ -1,6 +1,6 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Radio, RadioGroup } from '@navikt/ds-react';
-import React, { type ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { getError } from './formUtils';
 

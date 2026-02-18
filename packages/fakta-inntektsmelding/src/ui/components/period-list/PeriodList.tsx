@@ -1,12 +1,11 @@
-import type { Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, VStack } from '@navikt/ds-react';
-import type React from 'react';
-import type { JSX } from 'react';
-import type { UseFormReturn } from 'react-hook-form';
-import type Aksjonspunkt from '../../../types/Aksjonspunkt';
-import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
-import type { TilstandBeriket } from '../../../types/KompletthetData';
+import React, { type JSX } from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import Aksjonspunkt from '../../../types/Aksjonspunkt';
+import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import { TilstandBeriket } from '../../../types/KompletthetData';
 import { sorterSkjæringstidspunkt } from '../../../util/utils';
 import FortsettUtenInntektsmeldingForm from '../fortsett-uten-inntektsmelding-form/FortsettUtenInntektsmeldingForm';
 import FortsettUtenInntektsmeldingAvslag from './FortsettUtenInntektsmeldingAvslag';

@@ -1,7 +1,7 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import type { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { restApiHooks, UngSakApiKeys } from './ungsakApi';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { UngSakApiKeys, restApiHooks } from './ungsakApi';
 
 /**
  * Hook som henter kodeverk knyttet til behandlingstype

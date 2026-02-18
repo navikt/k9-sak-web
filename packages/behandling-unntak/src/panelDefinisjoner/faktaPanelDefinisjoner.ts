@@ -1,10 +1,10 @@
 import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanelDef';
-import BarnFaktaPanelDef from './faktaPaneler/BarnFaktaPanelDef';
-import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
+import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
 import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
 import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
-import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
+import BarnFaktaPanelDef from './faktaPaneler/BarnFaktaPanelDef';
+import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new ArbeidsforholdFaktaPanelDef(),

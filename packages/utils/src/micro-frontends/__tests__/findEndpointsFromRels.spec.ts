@@ -1,4 +1,4 @@
-import type { SimpleLink } from '@k9-sak-web/types';
+import { SimpleLink } from '@k9-sak-web/types';
 import { describe, expect, it } from 'vitest';
 import { findEndpointsFromRels } from '../findEndpointsFromRels';
 

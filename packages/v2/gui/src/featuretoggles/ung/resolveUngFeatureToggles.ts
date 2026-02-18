@@ -1,5 +1,6 @@
+import { qFeatureToggles } from './featureToggles.js';
+import { prodFeatureToggles } from './featureToggles.js';
 import type { FeatureToggles } from '../FeatureToggles.js';
-import { prodFeatureToggles, qFeatureToggles } from './featureToggles.js';
 
 type ResolveUngFeatureTogglesParams = Readonly<{ useQVersion: boolean }>;
 

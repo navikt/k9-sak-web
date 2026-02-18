@@ -6,16 +6,17 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
-import { RhfForm } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import type dayjs from 'dayjs';
 import hash from 'object-hash';
-import { type SetStateAction, useState } from 'react';
+import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
+
+import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
+import { RhfForm } from '@navikt/ft-form-hooks';
+import type dayjs from 'dayjs';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';

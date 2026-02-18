@@ -1,6 +1,6 @@
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { kodeverk_alleKodeverdierSomObjekt as ungsak_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 import { kodeverk_alleKodeverdierSomObjekt as ungtilbake_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { UngSakKodeverkoppslag } from './UngSakKodeverkoppslag.js';
 import { FailingUngTilbakeKodeverkoppslag, UngTilbakeKodeverkoppslag } from './UngTilbakeKodeverkoppslag.js';
 

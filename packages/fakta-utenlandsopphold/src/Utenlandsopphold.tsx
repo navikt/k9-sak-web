@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { PeriodList } from '@k9-sak-web/gui/shared/periodList/PeriodList.js';
+import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { ytelseVisningsnavn } from '@k9-sak-web/gui/utils/ytelseVisningsnavn.js';
-import type { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { Alert, Heading, ReadMore } from '@navikt/ds-react';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';

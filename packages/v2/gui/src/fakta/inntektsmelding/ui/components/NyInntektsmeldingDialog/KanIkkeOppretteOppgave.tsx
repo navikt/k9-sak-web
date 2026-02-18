@@ -1,7 +1,7 @@
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { Alert, BodyShort, Button, Dialog, Label, VStack } from '@navikt/ds-react';
-import { visnDato } from '../../../../../utils/formatters';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
+import { visnDato } from '../../../../../utils/formatters';
 
 interface KanIkkeOppretteNyOppgaveContentProps {
   førsteFraværsdag: string;

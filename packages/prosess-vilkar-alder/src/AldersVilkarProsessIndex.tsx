@@ -1,10 +1,11 @@
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatereLukketPeriode } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
 import AldersVilkarAP from './components/AldersvilkarAP';
 import AldersVilkarStatus from './components/AldersvilkarStatus';

@@ -1,17 +1,20 @@
+import { Button, ErrorMessage } from '@navikt/ds-react';
+import { type JSX } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type {
+
+import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+
+import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Button, ErrorMessage } from '@navikt/ds-react';
-import type { FormikState } from 'formik';
-import type { JSX } from 'react';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import { FormikState } from 'formik';
 import styles from '../vedtakForm.module.css';
 
 interface OwnProps {

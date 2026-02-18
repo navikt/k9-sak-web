@@ -1,8 +1,9 @@
+import { action } from 'storybook/actions';
+
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
-import type { Behandling, BeregningsresultatTilbakekreving } from '@k9-sak-web/types';
-import { action } from 'storybook/actions';
+import { Behandling, BeregningsresultatTilbakekreving } from '@k9-sak-web/types';
 import VedtakTilbakekrevingProsessIndex from './VedtakTilbakekrevingProsessIndex';
 import vedtakResultatType from './vedtakResultatType';
 

@@ -1,13 +1,13 @@
-import { ReduxFormStateCleaner, type Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import type { Behandling, Fagsak, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import React, { useCallback, useEffect, useState } from 'react';
 
 import AnkePaneler from './components/AnkePaneler';
-import { AnkeBehandlingApiKeys, requestAnkeApi, restApiAnkeHooks } from './data/ankeBehandlingApi';
-import type FetchedData from './types/fetchedDataTsType';
+import FetchedData from './types/fetchedDataTsType';
+import { restApiAnkeHooks, requestAnkeApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 
 const ankeData = [
   { key: AnkeBehandlingApiKeys.AKSJONSPUNKTER },

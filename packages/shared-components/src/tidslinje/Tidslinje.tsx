@@ -1,4 +1,4 @@
-import type {
+import {
   AxisLabel,
   Etikett,
   InternalSimpleTimeline,
@@ -10,10 +10,10 @@ import type {
 import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import { type ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { AxisLabels } from './AxisLabels';
 import Pins from './Pins';
-import type Rad from './Rad';
+import Rad from './Rad';
 import styles from './Tidslinje.module.css';
 import { EmptyTimelineRow, TimelineRow } from './TimelineRow';
 import { useTidligsteDato, useTidslinjerader } from './useTidslinjerader';

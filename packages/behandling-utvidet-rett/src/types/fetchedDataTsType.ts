@@ -1,5 +1,5 @@
-import type { Aksjonspunkt, Personopplysninger, Rammevedtak, Vilkar } from '@k9-sak-web/types';
-import type UtvidetRettSoknad from './UtvidetRettSoknad';
+import { Aksjonspunkt, Personopplysninger, Rammevedtak, Vilkar } from '@k9-sak-web/types';
+import UtvidetRettSoknad from './UtvidetRettSoknad';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

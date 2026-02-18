@@ -1,7 +1,6 @@
-import type React from 'react';
-import { Component, type MouseEvent } from 'react';
+import React, { Component, MouseEvent } from 'react';
 
-import type TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
+import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 
 interface OwnProps {

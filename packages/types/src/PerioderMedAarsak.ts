@@ -1,4 +1,4 @@
-import type { Periode } from '@k9-sak-web/types';
+import { Periode } from '@k9-sak-web/types';
 
 interface PerioderMedAarsak {
   periode: Periode;

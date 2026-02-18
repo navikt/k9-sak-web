@@ -1,5 +1,5 @@
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
 import {
@@ -7,7 +7,7 @@ import {
   createPrivatarbeidsgiverVisningsnavnForAndel,
   getInntektskategori,
 } from '../TilkjentYteleseUtils';
-import type { TilkjentYtelseFormState } from './FormState';
+import { TilkjentYtelseFormState } from './FormState';
 
 interface OwnProps {
   name: string;

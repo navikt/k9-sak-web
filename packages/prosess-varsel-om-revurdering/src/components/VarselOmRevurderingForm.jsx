@@ -1,4 +1,4 @@
-import { behandlingForm, behandlingFormValueSelector, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

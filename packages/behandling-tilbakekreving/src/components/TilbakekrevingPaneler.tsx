@@ -1,9 +1,11 @@
-import { BehandlingPaVent, type Rettigheter, type SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import type { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import React from 'react';
-import type FetchedData from '../types/fetchedDataTsType';
-import TilbakekrevingFakta from './TilbakekrevingFakta';
+
+import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+
 import TilbakekrevingProsess from './TilbakekrevingProsess';
+import TilbakekrevingFakta from './TilbakekrevingFakta';
+import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fetchedData: FetchedData;

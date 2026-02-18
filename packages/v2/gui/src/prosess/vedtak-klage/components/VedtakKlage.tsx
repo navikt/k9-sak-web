@@ -7,8 +7,8 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types.js';
+import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { BodyShort, BoxNew, Detail, Heading } from '@navikt/ds-react';
 import { useState } from 'react';
 import { VedtakKlageKaSubmitPanel, VedtakKlageNkkSubmitPanel, VedtakKlageSubmitPanel } from './VedtakKlageSubmitPanel';

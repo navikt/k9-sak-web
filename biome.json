@@ -36,7 +36,8 @@
 			"style": {
 				"noNonNullAssertion": "off",
 				"useTemplate": "off",
-				"noParameterAssign": "off"
+				"noParameterAssign": "off",
+				"useImportType": "off"
 			},
 			"a11y": {
 				"noAutofocus": "off",
@@ -72,7 +73,7 @@
 		"enabled": true,
 		"actions": {
 			"source": {
-				"organizeImports": "on"
+				"organizeImports": "off"
 			}
 		}
 	},

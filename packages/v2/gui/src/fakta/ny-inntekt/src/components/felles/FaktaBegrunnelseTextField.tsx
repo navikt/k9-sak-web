@@ -1,9 +1,11 @@
-import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
+
+import styles from './faktaBegrunnelseTextField.module.css';
+
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import { useFormContext } from 'react-hook-form';
 import type { BeregningAvklaringsbehov } from '../../types/BeregningAvklaringsbehov';
-import styles from './faktaBegrunnelseTextField.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

@@ -1,4 +1,4 @@
-import type { DatepickerDateRange } from './PureDatepicker';
+import { DatepickerDateRange } from './PureDatepicker';
 
 export interface DatepickerLimitations {
   minDate?: string;

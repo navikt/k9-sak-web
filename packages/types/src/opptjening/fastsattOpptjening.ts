@@ -1,5 +1,5 @@
-import type FastsattOpptjeningAktivitet from './fastsattOpptjeningAktivitet';
-import type Opptjeningperiode from './opptjeningperiode';
+import FastsattOpptjeningAktivitet from './fastsattOpptjeningAktivitet';
+import Opptjeningperiode from './opptjeningperiode';
 
 export type FastsattOpptjening = Readonly<{
   opptjeningFom: string;

@@ -10,13 +10,13 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
-import type { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
-import type FetchedData from '../types/FetchedData';
+import FetchedData from '../types/FetchedData';
 import PleiepengerProsess from './PleiepengerProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<PleiepengerProsess>', () => {
   const fagsak = {

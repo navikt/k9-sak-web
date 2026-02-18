@@ -1,4 +1,4 @@
-import type {
+import {
   Aksjonspunkt,
   BeregningsresultatTilbakekreving,
   FeilutbetalingFakta,

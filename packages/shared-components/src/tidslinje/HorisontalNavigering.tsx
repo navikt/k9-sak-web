@@ -1,9 +1,9 @@
 import { BodyShort } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import type React from 'react';
+import React from 'react';
+import Rad from './Rad';
 import styles from './horisontalNavigering.module.css';
 import NavigateArrowIcon from './icons/NavigateArrowIcon';
-import type Rad from './Rad';
 import { useSenesteDato } from './useTidslinjerader';
 
 interface HorisontalNavigeringProps {

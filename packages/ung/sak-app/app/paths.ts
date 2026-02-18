@@ -1,3 +1,5 @@
+import { Location } from 'history';
+
 import { isSkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import {
   pathToBehandling as v2PathToBehandling,
@@ -6,7 +8,6 @@ import {
 } from '@k9-sak-web/gui/utils/paths.js';
 import { createPathForSkjermlenke } from '@k9-sak-web/gui/utils/skjermlenke/createPathForSkjermlenke.js';
 import { pathWithQueryParams } from '@k9-sak-web/gui/utils/urlUtils.js';
-import type { Location } from 'history';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';

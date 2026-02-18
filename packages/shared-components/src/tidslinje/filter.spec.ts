@@ -1,4 +1,4 @@
-import type { Positioned } from '@k9-sak-web/types/src/tidslinje';
+import { Positioned } from '@k9-sak-web/types/src/tidslinje';
 import dayjs from 'dayjs';
 import { erSynlig, innenEtDøgn } from './filter';
 

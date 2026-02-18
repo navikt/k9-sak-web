@@ -1,6 +1,5 @@
-import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type Step from '../types/Step';
-import {
+import StatusResponse from '../types/SykdomsstegStatusResponse';
+import Step, {
   dokumentSteg,
   langvarigSykdomSteg,
   livetsSluttfaseSteg,
@@ -9,7 +8,7 @@ import {
   tilsynOgPleieSteg,
   toOmsorgspersonerSteg,
 } from '../types/Step';
-import type StatusResponse from '../types/SykdomsstegStatusResponse';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 type Steg = typeof dokumentSteg | typeof tilsynOgPleieSteg | typeof toOmsorgspersonerSteg;
 

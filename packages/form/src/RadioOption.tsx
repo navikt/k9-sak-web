@@ -1,8 +1,8 @@
 /* eslint-disable react/forbid-prop-types */
 import { Radio } from '@navikt/ds-react';
-import React, { type ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import Label from './Label';
-import type LabelType from './LabelType';
+import LabelType from './LabelType';
 
 export interface RadioOptionProps {
   name?: string;

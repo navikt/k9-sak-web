@@ -1,20 +1,20 @@
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { UngSakTotrinnskontrollAksjonspunkterDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
-import type { UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import {
-  aksjonspunkt_bekreft,
-  noNavK9Klage_getKlageVurdering,
-  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
-  totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
-import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
-import type { UngSakKodeverkoppslag } from '../../../../kodeverk/oppslag/UngSakKodeverkoppslag.js';
 import type {
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
 } from '../TotrinnskontrollApi.js';
+import type { UngSakKodeverkoppslag } from '../../../../kodeverk/oppslag/UngSakKodeverkoppslag.js';
+import type { UngSakTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { UngSakTotrinnskontrollAksjonspunkterDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import {
+  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
+  totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
+  aksjonspunkt_bekreft,
+  noNavK9Klage_getKlageVurdering,
+} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
 
 export class UngSakTotrinnskontrollData implements TotrinnskontrollData {
   #kodeverkoppslag: UngSakKodeverkoppslag;

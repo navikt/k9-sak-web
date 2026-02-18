@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { axe } from 'vitest-axe';
-import type { KorrigerePerioderProps } from '../../../../types/KorrigerePerioderProps';
+import { KorrigerePerioderProps } from '../../../../types/KorrigerePerioderProps';
 import KorrigerePerioder from '../../korrigere-perioder/KorrigerePerioder';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 

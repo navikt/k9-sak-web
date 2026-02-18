@@ -1,8 +1,9 @@
-import type { Period } from '@fpsak-frontend/utils';
-import { CalendarIcon } from '@navikt/aksel-icons';
+import { Period } from '@fpsak-frontend/utils';
 import classnames from 'classnames';
-import type { JSX } from 'react';
 import styles from './periodList.module.css';
+
+import { CalendarIcon } from '@navikt/aksel-icons';
+import type { JSX } from 'react';
 
 interface PeriodListProps {
   periods: Period[];

@@ -1,8 +1,8 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import type { KodeverkMedNavn } from '@k9-sak-web/types';
-import type ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

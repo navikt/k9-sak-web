@@ -1,8 +1,8 @@
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import type { FC, ReactNode } from 'react';
 import type { InnloggetAnsattApi } from './InnloggetAnsattApi.js';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { InnloggetAnsattContext } from './InnloggetAnsattContext.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 
 export const innloggetAnsattQueryOptions = (api: InnloggetAnsattApi) =>
   queryOptions({

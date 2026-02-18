@@ -1,9 +1,9 @@
-import { BehandlingPaVent } from '@k9-sak-web/behandling-felles';
 import React, { useState } from 'react';
-import type { FaktaPanelInfoProps } from '../types/FaktaPanelInfoProps';
-import type { PanelerProps } from '../types/PanelerProps';
-import UtvidetRettFakta from './UtvidetRettFakta';
+import { BehandlingPaVent } from '@k9-sak-web/behandling-felles';
 import UtvidetRettProsess from './UtvidetRettProsess';
+import UtvidetRettFakta from './UtvidetRettFakta';
+import { PanelerProps } from '../types/PanelerProps';
+import { FaktaPanelInfoProps } from '../types/FaktaPanelInfoProps';
 
 const UtvidetRettPaneler = ({
   fetchedData,

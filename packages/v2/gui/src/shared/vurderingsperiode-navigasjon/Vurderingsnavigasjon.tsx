@@ -1,19 +1,18 @@
 import {
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
   type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
   type k9_kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
   k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
 import type { Period } from '@navikt/ft-utils';
-import isEqual from 'lodash/isEqual';
-import type React from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
+import isEqual from 'lodash/isEqual';
 
 export type ResultatType =
   | InstitusjonVurderingDtoResultat

@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import type { Behandling, Fagsak, Personopplysninger } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Personopplysninger } from '@k9-sak-web/types';
 
 import MedisinskVilkår from '../../components/MedisinskVilkår';
 

@@ -1,19 +1,19 @@
-import type { Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 import { Box, Button } from '@navikt/ds-react';
-import React, { type JSX, useState } from 'react';
+import React, { useState, type JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
-import type AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import FieldName from '../../../types/FieldName';
-import { Kode, type Kompletthet, type Tilstand, type TilstandBeriket } from '../../../types/KompletthetData';
+import { Kode, Kompletthet, Tilstand, TilstandBeriket } from '../../../types/KompletthetData';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
 } from '../../../util/utils';
-import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
 import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
+import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
 import PeriodList from '../period-list/PeriodList';
 import InntektsmeldingManglerInfo from './InntektsmeldingManglerInfo';
 import styles from './kompletthetsoversikt.module.css';

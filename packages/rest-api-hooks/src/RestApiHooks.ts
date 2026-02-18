@@ -1,9 +1,10 @@
-import type { AbstractRequestApi } from '@k9-sak-web/rest-api';
+import { AbstractRequestApi } from '@k9-sak-web/rest-api';
+
+import getUseRestApi, { getUseRestApiMock } from './local-data/useRestApi';
+import getUseMultipleRestApi, { getUseMultipleRestApiMock } from './local-data/useMultipleRestApi';
+import getUseRestApiRunner, { getUseRestApiRunnerMock } from './local-data/useRestApiRunner';
 import getUseGlobalStateRestApi, { getUseGlobalStateRestApiMock } from './global-data/useGlobalStateRestApi';
 import useGlobalStateRestApiData, { useGlobalStateRestApiDataMock } from './global-data/useGlobalStateRestApiData';
-import getUseMultipleRestApi, { getUseMultipleRestApiMock } from './local-data/useMultipleRestApi';
-import getUseRestApi, { getUseRestApiMock } from './local-data/useRestApi';
-import getUseRestApiRunner, { getUseRestApiRunnerMock } from './local-data/useRestApiRunner';
 
 const initHooks = (requestApi: AbstractRequestApi) => {
   if (requestApi.isMock()) {

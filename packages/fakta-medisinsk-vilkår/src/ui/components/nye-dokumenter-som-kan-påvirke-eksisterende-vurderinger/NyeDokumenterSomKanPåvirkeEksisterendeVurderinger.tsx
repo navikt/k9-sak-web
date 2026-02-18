@@ -1,10 +1,9 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { FileIcon } from '@navikt/aksel-icons';
 import { Box, Button, Label, Link } from '@navikt/ds-react';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
-import type Dokument from '../../../types/Dokument';
-import { Dokumenttype } from '../../../types/Dokument';
+import Dokument, { Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import styles from './nyeDokumenterSomKanPåvirkeEksisterendeVurderinger.module.css';
 

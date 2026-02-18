@@ -1,15 +1,15 @@
-import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
-import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { Alert, BodyShort, Button, Dialog, HStack, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqualToToday, hasValidDate, required } from '@navikt/ft-form-validators';
-import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import Datovelger from '../../../../../shared/datovelger/Datovelger';
-import { queryKeys } from '../../../../../shared/query-keys/queryKeys.js';
-import { useSettPåVent } from '../../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../../context/InntektsmeldingContext';
+import { useSettPåVent } from '../../../api/inntektsmeldingQueries';
+import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
+import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '../../../../../shared/query-keys/queryKeys.js';
 
 interface FormData {
   frist: string;

@@ -1,5 +1,5 @@
 import React, { type JSX } from 'react';
-import type ContainerContract from '../types/ContainerContract';
+import ContainerContract from '../types/ContainerContract';
 import ContainerContext from './context/ContainerContext';
 import OmPleietrengende from './om-pleietrengende/OmPleietrengende';
 import RettVedDødController from './rett-ved-død/rett-ved-død-controller/RettVedDødController';

@@ -1,5 +1,5 @@
-import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
 import type { Decorator } from '@storybook/react';
+import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
 import type { InntektsmeldingApi } from '../api/InntektsmeldingApi.js';
 import { InntektsmeldingApiContext } from '../api/InntektsmeldingApiContext.js';
 

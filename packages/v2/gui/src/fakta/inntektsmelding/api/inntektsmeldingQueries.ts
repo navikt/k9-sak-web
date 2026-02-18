@@ -1,11 +1,11 @@
-import type { SettBehandlingPaVentDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/SettBehandlingPaVentDto.js';
-import type { EtterspørInntektsmeldingRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/inntektsmelding/EtterspørInntektsmeldingRequest.js';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { useContext } from 'react';
-import { queryKeys } from '../../../shared/query-keys/queryKeys.js';
-import { assertDefined } from '../../../utils/validation/assertDefined.js';
 import { useInntektsmeldingContext } from '../context/InntektsmeldingContext';
+import { assertDefined } from '../../../utils/validation/assertDefined.js';
+import { useContext } from 'react';
 import { InntektsmeldingApiContext } from './InntektsmeldingApiContext.js';
+import type { EtterspørInntektsmeldingRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/inntektsmelding/EtterspørInntektsmeldingRequest.js';
+import type { SettBehandlingPaVentDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/SettBehandlingPaVentDto.js';
+import { queryKeys } from '../../../shared/query-keys/queryKeys.js';
 
 export const useKompletthetsoversikt = () => {
   const api = assertDefined(useContext(InntektsmeldingApiContext));

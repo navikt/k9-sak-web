@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
 import { describe, expect, it } from 'vitest';
-import type EtablertTilsynType from '../../../types/EtablertTilsynType';
+import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import Kilde from '../../../types/Kilde';
 import {
   byggDagerSomOverstyrerTilsyn,

@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 
 interface OwnProps {

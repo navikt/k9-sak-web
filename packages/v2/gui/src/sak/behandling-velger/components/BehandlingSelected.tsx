@@ -8,7 +8,6 @@ import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
 import { NavLink, useLocation } from 'react-router';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
-import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
 import {
@@ -17,6 +16,7 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 interface BehandlingSelectedProps {
   opprettetDato: string;

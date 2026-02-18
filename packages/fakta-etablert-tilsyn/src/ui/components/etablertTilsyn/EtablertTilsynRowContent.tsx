@@ -1,10 +1,10 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
-import type EtablertTilsynType from '../../../types/EtablertTilsynType';
+import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import Kilde from '../../../types/Kilde';
 import EtablertTilsynDag from './EtablertTilsynDag';
-import styles from './etablertTilsynRowContent.module.css';
 import PartIkon from './PartIkon';
+import styles from './etablertTilsynRowContent.module.css';
 
 interface TilsynMappet {
   date: string;

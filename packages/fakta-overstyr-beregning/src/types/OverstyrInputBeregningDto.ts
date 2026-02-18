@@ -1,4 +1,4 @@
-import type { OverstyrInputBeregningAktivitet } from './OverstyrInputBeregningAktivitet';
+import { OverstyrInputBeregningAktivitet } from './OverstyrInputBeregningAktivitet';
 
 export type OverstyrInputBeregningDto = {
   skjaeringstidspunkt: string;

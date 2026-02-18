@@ -8,7 +8,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { renderHook } from '@testing-library/react';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';

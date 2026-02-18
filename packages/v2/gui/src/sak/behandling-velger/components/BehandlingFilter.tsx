@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { ActionMenu, Button } from '@navikt/ds-react';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 
 interface FilterType {
   value: string;

@@ -1,10 +1,10 @@
-import { Vurdering as InntektsmeldingVurderingResponseKode } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { PencilIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button } from '@navikt/ds-react';
 import type { TilstandMedUiState } from '../../types';
 import { InntektsmeldingVurderingRequestKode } from '../../types';
+import { Vurdering as InntektsmeldingVurderingResponseKode } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
 
 const vurderingConfig: Record<string, { variant: 'info' | 'error'; melding: string }> = {
   [InntektsmeldingVurderingResponseKode.KAN_FORTSETTE]: {

@@ -2,11 +2,11 @@ import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type {
+import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { BeregningsresultatFp } from '@k9-sak-web/types';
+import { BeregningsresultatFp } from '@k9-sak-web/types';
 import { Button, HGrid, HStack, Label, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';

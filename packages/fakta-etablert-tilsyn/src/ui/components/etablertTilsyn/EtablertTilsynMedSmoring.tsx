@@ -2,10 +2,10 @@ import { isDayAfter, Period } from '@fpsak-frontend/utils';
 import { Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { type JSX, useMemo } from 'react';
-import type EtablertTilsynType from '../../../types/EtablertTilsynType';
+import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
-import styles from './etablertTilsynMedSmoring.module.css';
 import PartIkon from './PartIkon';
+import styles from './etablertTilsynMedSmoring.module.css';
 
 interface EtablertTilsynProps {
   etablertTilsynData: EtablertTilsynType[];

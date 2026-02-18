@@ -1,12 +1,13 @@
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { HStack } from '@navikt/ds-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+
+import { HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/FakeBehandlingAvregningBackendApi';

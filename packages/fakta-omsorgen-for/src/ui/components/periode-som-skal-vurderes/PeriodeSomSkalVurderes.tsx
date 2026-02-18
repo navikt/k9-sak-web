@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import styles from './periodeSomSkalVurderes.module.css';
 
 interface PeriodeSomSkalVurderesProps {

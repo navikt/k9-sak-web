@@ -1,7 +1,9 @@
-import type { AbstractRequestApi } from '@k9-sak-web/rest-api';
-import { type DependencyList, useContext, useEffect, useState } from 'react';
-import RestApiState from '../RestApiState';
+import { useState, useEffect, useContext, DependencyList } from 'react';
+
+import { AbstractRequestApi } from '@k9-sak-web/rest-api';
+
 import { RestApiDispatchContext } from './RestApiContext';
+import RestApiState from '../RestApiState';
 
 interface RestApiData<T> {
   state: RestApiState;

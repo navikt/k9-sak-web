@@ -1,6 +1,6 @@
 import { Label } from '@navikt/ds-react';
 import { FormattedMessage } from 'react-intl';
-import type KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
+import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnVisning from './BarnVisning';
 
 interface BarnSeksjonProps {

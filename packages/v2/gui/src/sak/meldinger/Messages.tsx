@@ -9,10 +9,9 @@ import type {
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import type { ArbeidsgiverOpplysningerPerId, Personopplysninger } from '../../utils/formidling.js';
+import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
 import type { Fagsak } from '../Fagsak.js';
-import type { LagForhåndsvisningRequest, MessagesApi } from './api/MessagesApi.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
@@ -27,6 +26,7 @@ import TredjepartsmottakerInput, {
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
+import type { LagForhåndsvisningRequest, MessagesApi } from './api/MessagesApi.js';
 
 export type MessagesState = Readonly<{
   valgtMalkode: string | undefined;

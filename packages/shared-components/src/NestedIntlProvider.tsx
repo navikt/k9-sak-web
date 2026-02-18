@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { IntlProvider, useIntl } from 'react-intl';
 
 const NestedIntlProvider = ({ messages, children }): React.ReactElement<any> => {

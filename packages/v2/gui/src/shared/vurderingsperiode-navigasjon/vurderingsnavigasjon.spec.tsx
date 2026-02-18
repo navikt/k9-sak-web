@@ -1,7 +1,7 @@
-import { Period } from '@navikt/ft-utils';
 import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import Vurderingsnavigasjon, { Resultat, type Vurderingselement } from './Vurderingsnavigasjon';
+import { Period } from '@navikt/ft-utils';
 
 const makePeriod = (fom: string, tom?: string) => new Period(fom, tom ?? fom);
 

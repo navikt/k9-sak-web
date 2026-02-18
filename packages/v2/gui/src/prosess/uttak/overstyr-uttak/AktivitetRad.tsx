@@ -1,13 +1,14 @@
+import { type FC } from 'react';
+import dayjs from 'dayjs';
+import { Delete, Edit } from '@navikt/ds-icons';
+import { Button, Table } from '@navikt/ds-react';
 import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Delete, Edit } from '@navikt/ds-icons';
-import { Button, Table } from '@navikt/ds-react';
-import dayjs from 'dayjs';
-import type { FC } from 'react';
-import styles from './aktivitetRad.module.css';
 import BegrunnelseBoks from './components/BegrunnelseBoks';
+
+import styles from './aktivitetRad.module.css';
 
 interface ownProps {
   index: number;

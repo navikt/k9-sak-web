@@ -8,12 +8,12 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
-import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type FetchedData from '../types/fetchedDataTsType';
+import FetchedData from '../types/fetchedDataTsType';
 import FrisinnProsess from './FrisinnProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<FrisinnProsess>', () => {
   const fagsak = {

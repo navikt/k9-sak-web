@@ -6,8 +6,8 @@ import { PersonIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import type Dokument from '../../../types/Dokument';
-import type { Vurderingsversjon } from '../../../types/Vurdering';
+import Dokument from '../../../types/Dokument';
+import { Vurderingsversjon } from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 import {

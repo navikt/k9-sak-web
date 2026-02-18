@@ -1,12 +1,11 @@
-import { get, type Period } from '@fpsak-frontend/utils';
+import { get, Period } from '@fpsak-frontend/utils';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
-import React, { type JSX, useMemo } from 'react';
-import type Step from '../../../types/Step';
-import { StepId, tilsynOgPleieSteg, toOmsorgspersonerSteg } from '../../../types/Step';
-import type SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
-import type Vurderingselement from '../../../types/Vurderingselement';
+import React, { useMemo, type JSX } from 'react';
+import Step, { StepId, tilsynOgPleieSteg, toOmsorgspersonerSteg } from '../../../types/Step';
+import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
+import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForPleiepenger } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';

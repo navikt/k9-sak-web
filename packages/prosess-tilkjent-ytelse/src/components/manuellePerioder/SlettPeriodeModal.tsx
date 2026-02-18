@@ -1,7 +1,7 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import type { BeriketBeregningsresultatPeriode } from './FormState';
+import { BeriketBeregningsresultatPeriode } from './FormState';
 import styles from './periode.module.css';
 
 interface OwnProps {

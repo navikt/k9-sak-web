@@ -1,10 +1,12 @@
+import moment from 'moment';
+
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, hasValidInteger, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import moment from 'moment';
-import type CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
+
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import styles from './leggTilArbeidsforholdFelter.module.css';
 
 // ----------------------------------------------------------------------------------

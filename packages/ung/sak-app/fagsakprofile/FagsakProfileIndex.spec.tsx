@@ -1,18 +1,20 @@
+import { screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
+import { MemoryRouter } from 'react-router';
+
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
-import { MemoryRouter } from 'react-router';
-import { requestApi, UngSakApiKeys } from '../data/ungsakApi';
+import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 vi.mock('react-router', async () => {

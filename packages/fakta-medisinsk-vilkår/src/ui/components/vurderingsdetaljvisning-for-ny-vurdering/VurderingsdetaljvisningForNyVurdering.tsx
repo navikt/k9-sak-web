@@ -1,29 +1,29 @@
-import { addYearsToDate, Period } from '@fpsak-frontend/utils';
 import React, { type JSX } from 'react';
-import LinkRel from '../../../constants/LinkRel';
-import type Vurderingsoversikt from '../../../types/Vurderingsoversikt';
-import Vurderingstype from '../../../types/Vurderingstype';
+import { addYearsToDate, Period } from '@fpsak-frontend/utils';
+import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { findLinkByRel } from '../../../util/linkUtils';
-import { finnMaksavgrensningerForPerioder } from '../../../util/periodUtils';
+import LinkRel from '../../../constants/LinkRel';
 import ContainerContext from '../../context/ContainerContext';
-import VurderingContext from '../../context/VurderingContext';
-import NyVurderingController from '../ny-vurdering-controller/NyVurderingController';
-import VurderingLangvarigSykdomForm, {
-  FieldName as LangvarigSykdomFieldName,
-  type VurderingLangvarigSykdomFormState,
-} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
-import VurderingAvLivetsSluttfaseForm, {
-  FieldName as LivetsSluttfaseFieldName,
-  type VurderingAvLivetsSluttfaseFormState,
-} from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
+import Vurderingstype from '../../../types/Vurderingstype';
 import VurderingAvTilsynsbehovForm, {
   FieldName as KTPFieldName,
-  type VurderingAvTilsynsbehovFormState,
+  VurderingAvTilsynsbehovFormState,
 } from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
 import VurderingAvToOmsorgspersonerForm, {
   FieldName as TOFieldName,
-  type VurderingAvToOmsorgspersonerFormState,
+  VurderingAvToOmsorgspersonerFormState,
 } from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
+import VurderingAvLivetsSluttfaseForm, {
+  FieldName as LivetsSluttfaseFieldName,
+  VurderingAvLivetsSluttfaseFormState,
+} from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
+import NyVurderingController from '../ny-vurdering-controller/NyVurderingController';
+import VurderingContext from '../../context/VurderingContext';
+import { finnMaksavgrensningerForPerioder } from '../../../util/periodUtils';
+import VurderingLangvarigSykdomForm, {
+  FieldName as LangvarigSykdomFieldName,
+  VurderingLangvarigSykdomFormState,
+} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
 
 interface VurderingsdetaljvisningForNyVurderingProps {
   vurderingsoversikt: Vurderingsoversikt;

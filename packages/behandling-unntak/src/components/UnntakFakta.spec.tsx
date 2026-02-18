@@ -8,11 +8,11 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
-import type FetchedData from '../types/fetchedDataTsType';
+import FetchedData from '../types/fetchedDataTsType';
 import UnntakFakta from './UnntakFakta';
 
 describe('<UnntakFakta>', () => {

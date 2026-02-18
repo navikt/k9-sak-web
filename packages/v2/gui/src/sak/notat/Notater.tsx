@@ -4,9 +4,8 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
-import type React from 'react';
-import { useMemo, useState } from 'react';
-import type { UseFormReturn } from 'react-hook-form';
+import React, { useMemo, useState } from 'react';
+import { type UseFormReturn } from 'react-hook-form';
 import ChatComponent, { type EndreNotatPayload, type SkjulNotatPayload } from './components/ChatComponent';
 import styles from './notater.module.css';
 import type { FormState } from './types/FormState';

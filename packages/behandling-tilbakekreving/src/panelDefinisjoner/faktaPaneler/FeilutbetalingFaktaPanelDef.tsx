@@ -1,10 +1,10 @@
-import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
+import React from 'react';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import type { Fagsak, FeilutbetalingFakta } from '@k9-sak-web/types';
-import React from 'react';
+import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { Fagsak, FeilutbetalingFakta } from '@k9-sak-web/types';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 

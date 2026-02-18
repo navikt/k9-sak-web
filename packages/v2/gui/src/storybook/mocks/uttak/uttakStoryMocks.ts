@@ -1,18 +1,18 @@
+import dayjs from 'dayjs';
 import {
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-  pleiepengerbarn_uttak_kontrakter_Endringsstatus as Endringsstatus,
   k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
+  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
   pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
-  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
   pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
+  pleiepengerbarn_uttak_kontrakter_Endringsstatus as Endringsstatus,
+  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import dayjs from 'dayjs';
 
 /**
  * Oppretter en mock behandling (sak) med alle påkrevde felt.

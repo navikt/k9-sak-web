@@ -7,10 +7,10 @@ import React, { type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
 import { Dokumenttype } from '../../../types/Dokument';
-import type StrukturerDokumentFormProps from '../../../types/StrukturerDokumentFormProps';
+import StrukturerDokumentFormProps from '../../../types/StrukturerDokumentFormProps';
 import {
   StrukturerDokumentFormFieldName as FieldName,
-  type StrukturerDokumentFormState,
+  StrukturerDokumentFormState,
 } from '../../../types/StrukturerDokumentFormState';
 import { lagStrukturertDokument } from '../../../util/dokumentUtils';
 import { findLinkByRel } from '../../../util/linkUtils';

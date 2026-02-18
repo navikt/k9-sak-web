@@ -1,15 +1,11 @@
-import type {
-  InternalSimpleTimeline,
-  ExpandedPeriode as Periode,
-  PositionedPeriod,
-} from '@k9-sak-web/types/src/tidslinje';
+import { InternalSimpleTimeline, ExpandedPeriode as Periode, PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { horizontalPositionAndWidth } from './calc';
 import { innenEtDøgn, invisiblePeriods } from './filter';
-import type Rad from './Rad';
+import Rad from './Rad';
 import { sistePeriode } from './sort';
-import type { TidslinjeProps } from './Tidslinje';
+import { TidslinjeProps } from './Tidslinje';
 
 const spatialPeriod = (
   period: Periode,

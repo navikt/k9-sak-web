@@ -5,20 +5,20 @@ import {
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import type { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { HelpText, Label } from '@navikt/ds-react';
 import isEmpty from 'just-is-empty';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import type { InjectedFormProps } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import mapDtoTilFormValues from '../dto/mapping';
-import type FormValues from '../types/FormValues';
+import FormValues from '../types/FormValues';
 import { OverføringsretningEnum } from '../types/Overføring';
 import FastBreddeAligner from './FastBreddeAligner';
-import { rammevedtakFormName } from './formNames';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
+import { rammevedtakFormName } from './formNames';
 
 interface OverforingerFaktaFormProps {
   rammevedtak: Rammevedtak[];

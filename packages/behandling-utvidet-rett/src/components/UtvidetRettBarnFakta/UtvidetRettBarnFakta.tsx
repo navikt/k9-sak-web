@@ -1,9 +1,8 @@
-import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
-import type BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import type { Rammevedtak } from '@k9-sak-web/types';
 import React from 'react';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Rammevedtak } from '@k9-sak-web/types';
+import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
+import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 
 interface OwnProps {
   personopplysninger: {

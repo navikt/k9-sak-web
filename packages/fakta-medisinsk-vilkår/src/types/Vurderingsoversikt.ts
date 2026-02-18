@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
-import type Link from './Link';
-import type Vurderingselement from './Vurderingselement';
+import Link from './Link';
+import Vurderingselement from './Vurderingselement';
 
 export class Vurderingsoversikt {
   vurderingselementer: Vurderingselement[];

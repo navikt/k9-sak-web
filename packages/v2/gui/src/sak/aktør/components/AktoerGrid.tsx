@@ -1,12 +1,11 @@
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { LinkPanel } from '@navikt/ds-react';
 import type { Aktørinfo } from '../Aktørinfo';
 import styles from './aktoerGrid.module.css';
-
 interface OwnProps {
   aktorInfo: Aktørinfo;
 }

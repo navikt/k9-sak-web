@@ -1,9 +1,9 @@
 import { k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
-import diskresjonskodeType from './types/diskresjonskodeType';
-import type { Personopplysninger } from './types/Personopplysninger';
 import VisittkortPanel from './VisittkortPanel';
+import type { Personopplysninger } from './types/Personopplysninger';
+import diskresjonskodeType from './types/diskresjonskodeType';
 
 const fagsakPerson = {
   erDod: false,

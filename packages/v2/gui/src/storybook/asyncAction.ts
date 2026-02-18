@@ -1,4 +1,4 @@
-import { type ActionOptions, action, type HandlerFunction } from 'storybook/actions';
+import { action, type ActionOptions, type HandlerFunction } from 'storybook/actions';
 
 export type AsyncHandlerFunction = (...args: Parameters<HandlerFunction>) => Promise<ReturnType<HandlerFunction>>;
 

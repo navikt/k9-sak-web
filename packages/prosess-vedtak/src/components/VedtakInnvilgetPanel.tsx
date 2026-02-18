@@ -1,14 +1,14 @@
 import { isDelvisInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type {
+import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BodyShort, Label } from '@navikt/ds-react';
+import {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Label } from '@navikt/ds-react';
-import type { IntlShape } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import type VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
+import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import { findDelvisInnvilgetResultatText, findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
 
 interface VedtakInnvilgetPanelProps {

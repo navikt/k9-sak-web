@@ -18,19 +18,19 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import type { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
+import { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { FormattedMessage, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import { bindActionCreators, type Dispatch } from 'redux';
-import { change, clearFields, getFormValues, type InjectedFormProps } from 'redux-form';
+import { bindActionCreators, Dispatch } from 'redux';
+import { change, clearFields, getFormValues, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
-import type { FeilutbetalingAarsak } from './feilutbetalingAarsak';
-import type { FeilutbetalingFakta } from './feilutbetalingFakta';
+import { FeilutbetalingAarsak } from './feilutbetalingAarsak';
+import { FeilutbetalingFakta } from './feilutbetalingFakta';
 import styles from './feilutbetalingInfoPanel.module.css';
+import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
 const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);

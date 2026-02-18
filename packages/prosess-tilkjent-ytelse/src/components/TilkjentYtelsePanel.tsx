@@ -1,16 +1,17 @@
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import type {
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { Heading } from '@navikt/ds-react';
+import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Heading } from '@navikt/ds-react';
+import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
-import TilkjentYtelse, { type PeriodeMedId } from './TilkjentYtelse';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 
 const perioderMedClassName = [];

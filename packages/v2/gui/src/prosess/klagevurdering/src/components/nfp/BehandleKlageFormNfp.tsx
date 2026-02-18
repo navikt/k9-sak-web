@@ -10,8 +10,8 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -20,8 +20,8 @@ import { useForm } from 'react-hook-form';
 import type { SaveKlageParams } from '../felles/SaveKlageParams';
 import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
-import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 import styles from './behandleKlageFormNfp.module.css';
+import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 import { KlageVurderingRadioOptionsNfp, TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
 
 interface BehandleKlageFormNfpProps {

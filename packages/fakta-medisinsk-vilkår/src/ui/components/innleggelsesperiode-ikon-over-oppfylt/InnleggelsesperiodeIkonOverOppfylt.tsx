@@ -1,6 +1,6 @@
 import { OverlayedIcons } from '@k9-sak-web/gui/shared/indicatorWithOverlay/IndicatorWithOverlay.js';
 import { Buildings3Icon, CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 
 const InnleggelsesperiodeIkonOverOppfylt = (): JSX.Element => (
   <OverlayedIcons

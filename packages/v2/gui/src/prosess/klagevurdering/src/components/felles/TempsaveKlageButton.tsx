@@ -1,7 +1,7 @@
 import { Button } from '@navikt/ds-react';
 import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues.js';
-import { formValuesToSaveValues } from './formValuesToSaveValues.js';
 import type { SaveKlageParams } from './SaveKlageParams.js';
+import { formValuesToSaveValues } from './formValuesToSaveValues.js';
 
 interface TempsaveKlageButtonProps {
   formValues: BehandleKlageFormKaFormValues;

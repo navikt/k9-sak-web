@@ -1,24 +1,26 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import {
+  Button,
+  DatePicker,
+  Heading,
+  Loader,
+  TextField,
+  Textarea,
+  useRangeDatepicker,
+  type DatePickerProps,
+} from '@navikt/ds-react';
+import dayjs from 'dayjs';
+import { useEffect, useState, type FC } from 'react';
+import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
+import OverstyrAktivitetListe from './OverstyrAktivitetListe';
+
 import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  Button,
-  DatePicker,
-  type DatePickerProps,
-  Heading,
-  Loader,
-  Textarea,
-  TextField,
-  useRangeDatepicker,
-} from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import { type FC, useEffect, useState } from 'react';
-import { type Resolver, useFieldArray, useForm } from 'react-hook-form';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
 import {
@@ -27,9 +29,8 @@ import {
   formaterOverstyringAktiviteter,
   overstyrUttakFormValidationSchema,
 } from '../utils/overstyringUtils';
-import OverstyrAktivitetListe from './OverstyrAktivitetListe';
-import { OverstyrUttakHandling } from './OverstyrUttak';
 import styles from './overstyringUttakForm.module.css';
+import { OverstyrUttakHandling } from './OverstyrUttak';
 
 type OwnProps = {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;

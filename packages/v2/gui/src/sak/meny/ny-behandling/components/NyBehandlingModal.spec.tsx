@@ -4,10 +4,10 @@ import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import {
-  type BehandlingOppretting,
   getBehandlingAarsaker,
   getBehandlingTyper,
   getEnabledBehandlingstyper,
+  type BehandlingOppretting,
 } from './NyBehandlingModal';
 
 describe('<NyBehandlingModal>', () => {

@@ -1,9 +1,11 @@
-import { Checkbox as NavCheckbox } from '@navikt/ds-react';
 import { Field } from 'formik';
 import React from 'react';
-import { validateAll } from './formikUtils';
+
+import { Checkbox as NavCheckbox } from '@navikt/ds-react';
+
 import Label from './Label';
-import type LabelType from './LabelType';
+import LabelType from './LabelType';
+import { validateAll } from './formikUtils';
 
 interface CheckboxFieldProps {
   name: string;

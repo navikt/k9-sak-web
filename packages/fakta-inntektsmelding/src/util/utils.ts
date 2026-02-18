@@ -1,6 +1,6 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type Aksjonspunkt from '../types/Aksjonspunkt';
-import { Kode, type TilstandBeriket } from '../types/KompletthetData';
+import Aksjonspunkt from '../types/Aksjonspunkt';
+import { Kode, TilstandBeriket } from '../types/KompletthetData';
 import Status from '../types/TilstandStatus';
 
 export const finnAktivtAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]): Aksjonspunkt =>

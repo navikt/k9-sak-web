@@ -1,14 +1,16 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import OpptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
-import type { Vilkår } from './src/types/Vilkår';
+import { type Vilkår } from './src/types/Vilkår';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from './testdata/TilkommetAktivitetMedForlengelseLukketAP';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from './testdata/TilkommetAktivitetRevurderingLøstTidligere';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplitt } from './testdata/TilkommetAktivitetRevurderingLøstTidligere1MaiKryss';
 import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from './testdata/TilkommetAktivitetTrePerioderHelgMellom';
+
+import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';

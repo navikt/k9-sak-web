@@ -1,6 +1,6 @@
 import { Detail, Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
-import type Kilde from '../../../types/Kilde';
+import Kilde from '../../../types/Kilde';
 
 import styles from './etablertTilsynRowContent.module.css';
 import PartIkon from './PartIkon';

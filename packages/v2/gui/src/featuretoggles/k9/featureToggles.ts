@@ -1,4 +1,4 @@
-import { initProdFeatureToggles, initQFeatureToggles } from '../FeatureToggles.js';
+import { initQFeatureToggles, initProdFeatureToggles } from '../FeatureToggles.js';
 
 /**
  * Toggles satt her bli gjeldande kun for k9, men både i Q og prod.

@@ -2,7 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import type { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 
 describe('<TilbakekrevingVedtakPeriodeTabell>', () => {

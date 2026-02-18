@@ -1,10 +1,10 @@
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import React from 'react';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
-import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import React from 'react';
+import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 

@@ -1,8 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
-import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+
+import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();

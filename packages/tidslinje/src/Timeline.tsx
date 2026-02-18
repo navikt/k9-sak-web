@@ -1,4 +1,4 @@
-import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { DataSet } from 'vis-data';
 import type {
   DateType,

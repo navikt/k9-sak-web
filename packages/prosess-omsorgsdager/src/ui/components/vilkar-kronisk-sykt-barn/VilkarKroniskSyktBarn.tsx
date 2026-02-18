@@ -1,9 +1,9 @@
 import { Alert, Button, Checkbox, Fieldset, HelpText, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import type React from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import type { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
+import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';

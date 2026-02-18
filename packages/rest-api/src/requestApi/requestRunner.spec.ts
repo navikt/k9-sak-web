@@ -1,6 +1,6 @@
-import AsyncPollingStatus from './asyncPollingStatus';
 import NotificationMapper from './NotificationMapper';
 import RequestRunner, { REQUEST_POLLING_CANCELLED } from './RequestRunner';
+import AsyncPollingStatus from './asyncPollingStatus';
 
 class NotificationHelper {
   mapper: NotificationMapper;

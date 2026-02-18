@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+
 import BehandleResultatForm from './components/BehandleResultatForm';
-import ankeResultatAksjonspunkterPropType from './propTypes/ankeResultatAksjonspunkterPropType';
+import messages from '../i18n/nb_NO.json';
 import ankeResultatBehandlingPropType from './propTypes/ankeResultatBehandlingPropType';
+import ankeResultatAksjonspunkterPropType from './propTypes/ankeResultatAksjonspunkterPropType';
 import ankeVurderingPropType from './propTypes/ankeVurderingPropType';
 
 const cache = createIntlCache();

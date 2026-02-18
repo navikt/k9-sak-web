@@ -1,8 +1,9 @@
+import { action } from 'storybook/actions';
+
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { action } from 'storybook/actions';
 import ForeldelseProsessIndex from './ForeldelseProsessIndex';
 
 const perioderForeldelse = {

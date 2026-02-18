@@ -10,10 +10,10 @@ import { NavLink, useLocation } from 'react-router';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
-import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
+import { type TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
-import type { FormState } from './FormState';
+import { type FormState } from './FormState';
 
 export type AksjonspunktGodkjenningData = {
   aksjonspunktKode: AksjonspunktDefinisjon;

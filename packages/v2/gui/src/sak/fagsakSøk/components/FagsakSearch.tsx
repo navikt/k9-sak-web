@@ -1,5 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
-import type React from 'react';
+import React from 'react';
 import type { Fagsak } from '../types/Fagsak';
 import FagsakList from './FagsakList';
 import styles from './fagsakSearch.module.css';

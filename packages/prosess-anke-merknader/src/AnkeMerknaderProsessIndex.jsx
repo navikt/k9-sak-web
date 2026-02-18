@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+
 import BehandleMerknaderForm from './components/BehandleMerknaderForm';
-import ankeMerknaderAksjonspunkterPropType from './propTypes/ankeMerknaderAksjonspunkterPropType';
+import messages from '../i18n/nb_NO.json';
 import ankeMerknaderBehandlingPropType from './propTypes/ankeMerknaderBehandlingPropType';
+import ankeMerknaderAksjonspunkterPropType from './propTypes/ankeMerknaderAksjonspunkterPropType';
 import ankeVurderingPropType from './propTypes/ankeVurderingPropType';
 
 const cache = createIntlCache();

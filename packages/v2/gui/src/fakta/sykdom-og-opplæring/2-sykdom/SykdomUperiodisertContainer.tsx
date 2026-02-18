@@ -1,13 +1,13 @@
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import { useContext, useEffect, useState } from 'react';
-import { DetailView } from '../../../shared/detailView/DetailView';
-import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
 import SykdomUperiodisertForm, { type UperiodisertSykdom } from './SykdomUperiodisertForm';
+import { CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
+import { useContext, useEffect, useState } from 'react';
+import { BodyShort, Button } from '@navikt/ds-react';
+import SykdomUperiodisertFerdigvisning from './SykdomUperiodisertFerdigvisning';
+import { DetailView } from '../../../shared/detailView/DetailView';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 const SykdomUperiodisertContainer = ({ vurdering }: { vurdering: UperiodisertSykdom }) => {
   const { readOnly, aksjonspunkter } = useContext(SykdomOgOpplæringContext);

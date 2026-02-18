@@ -1,7 +1,6 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -12,6 +11,8 @@ import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';

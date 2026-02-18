@@ -9,7 +9,7 @@ import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/g
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
-import { type FC, useState } from 'react';
+import { useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';

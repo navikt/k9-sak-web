@@ -1,10 +1,10 @@
 import {
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { useContext } from 'react';
-import { Controller, type ControllerProps, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, type ControllerProps } from 'react-hook-form';
 import { K9KodeverkoppslagContext } from '../../../../kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 

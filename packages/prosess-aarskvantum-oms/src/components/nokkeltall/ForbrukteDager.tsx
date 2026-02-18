@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import AntallTimer from './AntallTimer';
-import type { DagerTimer } from './durationUtils';
-import Nokkeltall, { type Nokkeltalldetalj } from './Nokkeltall';
+import Nokkeltall, { Nokkeltalldetalj } from './Nokkeltall';
+import { DagerTimer } from './durationUtils';
 import styles from './nokkeltall.module.css';
 
 interface ForbrukteDagerProps {

@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 

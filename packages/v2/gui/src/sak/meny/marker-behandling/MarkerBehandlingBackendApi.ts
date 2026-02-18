@@ -1,7 +1,7 @@
-import type {
+import {
   k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
-  GetMerknadResponse,
   k9_kodeverk_produksjonsstyring_BehandlingMerknadType as SlettMerknadRequestMerknadKode,
+  type GetMerknadResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export type MarkerBehandlingBackendApi = {

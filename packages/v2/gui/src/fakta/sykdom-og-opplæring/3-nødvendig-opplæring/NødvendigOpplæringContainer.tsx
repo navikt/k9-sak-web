@@ -1,14 +1,14 @@
-import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { PencilIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
-import type { Period } from '@navikt/ft-utils';
-import { useContext, useEffect, useState } from 'react';
-import DetailView from '../../../shared/detailView/DetailView';
-import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import NødvendigOpplæringFerdigvisning from './NødvendigOpplæringFerdigvisning';
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Period } from '@navikt/ft-utils';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
+import DetailView from '../../../shared/detailView/DetailView';
+import { PencilIcon } from '@navikt/aksel-icons';
+import { useContext, useEffect, useState } from 'react';
+import { Button } from '@navikt/ds-react';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 const NødvendigOpplæringContainer = ({
   vurdering,

@@ -5,7 +5,7 @@ import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Box, Detail, HStack, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import type { FunctionComponent } from 'react';
+import { type FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { Aksjonspunkt } from '../../types/Aksjonspunkt';
 import type { OppholdInntektOgPerioderFormState } from '../../types/FormState';

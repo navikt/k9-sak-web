@@ -1,15 +1,14 @@
+import { Location } from 'history';
+import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-router';
+
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
-import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import type {
+import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
@@ -17,9 +16,11 @@ import type {
   KodeverkMedNavn,
   NavAnsatt,
 } from '@k9-sak-web/types';
-import type { Location } from 'history';
-import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
-import { type NavigateFunction, useLocation, useNavigate, useParams } from 'react-router';
+
+import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import {
   getFaktaLocation,
   getLocationWithDefaultProsessStegAndFakta,
@@ -29,6 +30,7 @@ import {
 import getAccessRights from '../app/util/access';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
+import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));

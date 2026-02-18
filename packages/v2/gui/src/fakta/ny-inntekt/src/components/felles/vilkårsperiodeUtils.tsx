@@ -1,4 +1,4 @@
-import type { Vilkårperiode } from '../../types/Vilkår';
+import { type Vilkårperiode } from '../../types/Vilkår';
 
 export function finnVilkårsperiode(vilkårsperioder: Vilkårperiode[], vilkårsperiodeFom?: string): Vilkårperiode {
   const periode = vilkårsperioder.find(p => p.periode.fom === vilkårsperiodeFom);

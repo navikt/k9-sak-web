@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import type React from 'react';
+import React from 'react';
 import Feilikon from '../../icons/Feilikon';
 import SjekkIkon from '../../icons/SjekkIkon';
 import Suksessikon from '../../icons/Suksessikon';

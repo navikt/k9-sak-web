@@ -2,23 +2,23 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import type KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
+import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
 import MenyEndreFristBackendClient from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristBackendClient.js';
 import { MenyEndreFristIndex } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
-import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
-import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/MenyNyBehandlingIndex.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
-import type BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import type SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
-import type {
+import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
+import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
@@ -34,16 +34,16 @@ import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
-import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
+import MenyKodeverk from './MenyKodeverk';
 import {
   nyBehandlendeEnhet,
   resumeBehandling,
   setBehandlingOnHold,
   shelveBehandling,
 } from './behandlingMenuOperations';
-import MenyKodeverk from './MenyKodeverk';
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,

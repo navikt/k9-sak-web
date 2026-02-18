@@ -1,8 +1,9 @@
-import type { Aksjonspunkt } from '@k9-sak-web/types';
 import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+
 import ManglerSøknadForm from './components/ManglerSøknadForm';
+import messages from '../i18n/nb_NO.json';
 
 const intlCache = createIntlCache();
 const intl = createIntl({ locale: 'nb-NO', messages }, intlCache);

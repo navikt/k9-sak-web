@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RootFallback } from './RootFallback.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
   title: 'gui/app/suspense/RootFallback',

@@ -1,11 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import type { Fagsak } from '@k9-sak-web/types';
-import React from 'react';
-import { harBarnSoktForRammevedtakOmKroniskSyk } from '../../../utils/utvidetRettHjelpfunksjoner';
 import OmsorgenForMikrofrontend from './omsorgenForMikrofrontend/OmsorgenForMikrofrontend';
+import { harBarnSoktForRammevedtakOmKroniskSyk } from '../../../utils/utvidetRettHjelpfunksjoner';
+import { Fagsak } from '@k9-sak-web/types';
 
 class OmsorgenForPanelDef extends ProsessStegPanelDef {
   getKomponent = props => <OmsorgenForMikrofrontend {...props} />;

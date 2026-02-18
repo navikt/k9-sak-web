@@ -4,7 +4,7 @@ import findStatusForVedtak from '@fpsak-frontend/utils/src/findStatusForVedtak';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import type { Fagsak } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 import { UtvidetRettBehandlingApiKeys } from '../../data/utvidetRettBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {

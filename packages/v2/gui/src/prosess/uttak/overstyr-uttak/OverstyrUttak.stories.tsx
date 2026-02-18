@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
+import { action } from 'storybook/actions';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import Uttak from '../Uttak';
 import {
-  createOverstyrbareAktiviteterHandler,
-  standardUttakHandlers,
-} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
-import {
-  AksjonspunktStatus,
-  defaultArbeidsgivere,
-  lagOppfyltPeriode,
-  lagOverstyringUttakAksjonspunkt,
   lagUtredBehandling,
   lagUttak,
+  lagOppfyltPeriode,
+  lagOverstyringUttakAksjonspunkt,
+  defaultArbeidsgivere,
+  AksjonspunktStatus,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import {
+  standardUttakHandlers,
+  createOverstyrbareAktiviteterHandler,
+} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
 
 /**
  * OverstyrUttak-komponenten lar saksbehandlere med overstyrerrolle manuelt overstyre

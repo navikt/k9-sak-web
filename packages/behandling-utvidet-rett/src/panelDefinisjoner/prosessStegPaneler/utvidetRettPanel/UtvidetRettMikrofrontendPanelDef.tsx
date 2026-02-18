@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import type { Fagsak, Personopplysninger, Soknad } from '@k9-sak-web/types';
+import { Fagsak, Personopplysninger, Soknad } from '@k9-sak-web/types';
 import { UtvidetRettBehandlingApiKeys } from '../../../data/utvidetRettBehandlingApi';
 import { UtvidetRettMikrofrontend } from './utvidetRettMikrofrontend/UtvidetRettMikrofrontend';
 

@@ -1,10 +1,10 @@
-import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
-import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
 import { BeslutterModalIndex } from './BeslutterModalIndex.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import { expect } from 'storybook/test';
 
 const meta = {
   title: 'gui/sak/totrinnskontroll/BeslutterModalIndex',

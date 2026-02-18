@@ -1,3 +1,5 @@
+import { action } from 'storybook/actions';
+
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
@@ -5,7 +7,6 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { action } from 'storybook/actions';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {

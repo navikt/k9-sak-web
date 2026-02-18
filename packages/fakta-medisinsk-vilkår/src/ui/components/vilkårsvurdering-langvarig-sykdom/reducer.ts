@@ -1,7 +1,7 @@
-import type { Period } from '@fpsak-frontend/utils';
-import type Vurderingselement from '../../../types/Vurderingselement';
-import type Vurderingsoversikt from '../../../types/Vurderingsoversikt';
+import { Period } from '@fpsak-frontend/utils';
+import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import ActionType from './actionTypes';
+import Vurderingselement from '../../../types/Vurderingselement';
 
 interface State {
   visVurderingDetails: boolean;

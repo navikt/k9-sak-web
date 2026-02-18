@@ -1,5 +1,5 @@
-import type { Period } from '@fpsak-frontend/utils';
-import type Kilde from './Kilde';
+import { Period } from '@fpsak-frontend/utils';
+import Kilde from './Kilde';
 
 interface Beskrivelse {
   periode: Period;

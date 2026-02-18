@@ -1,12 +1,12 @@
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import type { Personopplysninger } from '@k9-sak-web/types';
+import { Personopplysninger } from '@k9-sak-web/types';
 import { Alert, Box, Button, Label, Modal } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import React, { type JSX, useRef } from 'react';
+import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import type { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
+import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './innleggelsesperiodeFormModal.module.css';

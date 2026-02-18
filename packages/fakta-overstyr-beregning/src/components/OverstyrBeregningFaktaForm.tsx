@@ -1,13 +1,13 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
 import { Field, FieldArray, Form, Formik } from 'formik';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
-import type { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
-import type { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
+import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
+import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
 import styles from './OverstyrBeregningFaktaForm.module.css';
 import { formaterDatoString } from './utils';

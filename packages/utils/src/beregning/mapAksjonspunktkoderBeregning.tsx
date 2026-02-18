@@ -1,5 +1,5 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import beregningAvklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 const mapTilAksjonspunktkode = (avklaringsbehovkode: string): string | null => {
   switch (avklaringsbehovkode) {

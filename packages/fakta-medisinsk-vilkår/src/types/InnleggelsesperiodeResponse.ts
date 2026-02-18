@@ -1,5 +1,5 @@
-import type { Period } from '@fpsak-frontend/utils';
-import type Link from './Link';
+import { Period } from '@fpsak-frontend/utils';
+import Link from './Link';
 
 export interface InnleggelsesperiodeResponse {
   behandlingUuid: string;

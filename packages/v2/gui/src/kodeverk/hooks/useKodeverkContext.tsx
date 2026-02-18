@@ -1,13 +1,13 @@
-import { behandlingType as klageBehandlingstyper } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { useContext } from 'react';
 import { utledKodeverkNavnFraKode, utledKodeverkNavnFraUndertypeKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
 import type { AlleKodeverk, KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types/AlleKodeverk.js';
-import type {
-  GetKodeverkNavnFraKodeFnType,
-  HentKodeverkForKodeType,
-  KodeverkNavnFraKodeType,
-  KodeverkNavnFraUndertypeKodeType,
+import {
+  type GetKodeverkNavnFraKodeFnType,
+  type HentKodeverkForKodeType,
+  type KodeverkNavnFraKodeType,
+  type KodeverkNavnFraUndertypeKodeType,
 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { useContext } from 'react';
+import { behandlingType as klageBehandlingstyper } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { KodeverkContext } from '../context/KodeverkContext';
 
 export const useKodeverkContext = () => {

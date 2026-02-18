@@ -1,19 +1,19 @@
 import type {
-  k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  k9_klage_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   k9_sak_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  foreldrepenger_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  type foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollAksjonspunkterDto,
-} from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type {
   ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   ung_sak_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type {
+  k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+  k9_klage_kontrakt_vedtak_TotrinnskontrollAksjonspunkterDto,
+} from '@k9-sak-web/backend/k9klage/generated/types.js';
+import {
+  type foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollAksjonspunkterDto,
+  foreldrepenger_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+} from '@k9-sak-web/backend/k9tilbake/generated/types.js';
 import type {
   sif_tilbakekreving_behandlingslager_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   sif_tilbakekreving_web_app_tjenester_behandling_dto_totrinn_TotrinnskontrollAksjonspunkterDto,

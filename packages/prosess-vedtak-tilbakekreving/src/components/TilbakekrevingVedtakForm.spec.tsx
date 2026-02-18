@@ -1,11 +1,15 @@
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 import userEvent from '@testing-library/user-event';
-import messages from '../../i18n/nb_NO.json';
+
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+
+import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
+
 // import { FlexColumn } from '@fpsak-frontend/shared-components';
 // import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 import underavsnittType from '../kodeverk/avsnittType';
 import { TilbakekrevingVedtakFormImplWithIntl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
+
+import messages from '../../i18n/nb_NO.json';
 
 test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
   renderWithIntlAndReduxForm(

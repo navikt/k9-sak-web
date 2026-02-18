@@ -1,22 +1,22 @@
-import type { Vurderingsversjon } from '../../../types/Vurdering';
+import { Vurderingsversjon } from '../../../types/Vurdering';
+import {
+  FieldName as KTPFieldName,
+  VurderingAvTilsynsbehovFormState,
+} from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import Vurderingstype from '../../../types/Vurderingstype';
 import {
-  FieldName as LangvarigSykdomFieldName,
-  type VurderingLangvarigSykdomFormState,
-} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
+  FieldName as TOFieldName,
+  VurderingAvToOmsorgspersonerFormState,
+} from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
 import {
   FieldName as LivetsSluttfaseFieldName,
-  type VurderingAvLivetsSluttfaseFormState,
+  VurderingAvLivetsSluttfaseFormState,
 } from '../vurdering-av-livets-sluttfase-form/VurderingAvLivetsSluttfaseForm';
 import {
-  FieldName as KTPFieldName,
-  type VurderingAvTilsynsbehovFormState,
-} from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
-import {
-  FieldName as TOFieldName,
-  type VurderingAvToOmsorgspersonerFormState,
-} from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
+  FieldName as LangvarigSykdomFieldName,
+  VurderingLangvarigSykdomFormState,
+} from '../vurdering-av-langvarig-sykdom-form/VurderingLangvarigSykdomForm';
 
 function buildInitialFormStateForEdit(
   { tekst, resultat, perioder, dokumenter, manglerLegeerklæring }: Vurderingsversjon,

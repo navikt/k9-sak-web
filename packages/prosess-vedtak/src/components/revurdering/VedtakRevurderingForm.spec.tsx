@@ -2,12 +2,13 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+
 import {
   k9_kodeverk_behandling_BehandlingType as BehandlingType,
   k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import VedtakForm from '../VedtakForm';
 
 const createBehandling = behandlingResultatType => ({

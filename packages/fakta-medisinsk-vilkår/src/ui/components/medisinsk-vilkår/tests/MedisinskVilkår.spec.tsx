@@ -3,7 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, it, vi } from 'vitest';
-import type ContainerContract from '../../../../types/ContainerContract';
+import ContainerContract from '../../../../types/ContainerContract';
 import ContainerContext from '../../../context/ContainerContext';
 import queryClient from '../../../context/queryClient';
 import MedisinskVilkår from '../MedisinskVilkår';

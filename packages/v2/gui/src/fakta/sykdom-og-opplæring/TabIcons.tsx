@@ -1,21 +1,22 @@
-import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidVurderingDtoResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { type AksjonspunktCodes, aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { CheckmarkIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { useContext } from 'react';
+import { CheckmarkIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { type AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { harÅpentAksjonspunkt, aksjonspunktErUtført } from '../../utils/aksjonspunktUtils.js';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
-import { aksjonspunktErUtført, harÅpentAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { SykdomOgOpplæringContext } from './FaktaSykdomOgOpplæringIndex.js';
 import {
   useInstitusjonInfo,
-  useVurdertLangvarigSykdom,
-  useVurdertOpplæring,
   useVurdertReisetid,
+  useVurdertOpplæring,
+  useVurdertLangvarigSykdom,
 } from './SykdomOgOpplæringQueries.js';
+import {
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidVurderingDtoResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomVurderingDtoResultat,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export const InstitusjonIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);

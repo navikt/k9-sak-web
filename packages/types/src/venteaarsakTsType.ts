@@ -1,4 +1,4 @@
-import type KodeverkMedNavn from './kodeverkMedNavnTsType';
+import KodeverkMedNavn from './kodeverkMedNavnTsType';
 
 interface Venteaarsak extends KodeverkMedNavn {
   kanVelges?: string;

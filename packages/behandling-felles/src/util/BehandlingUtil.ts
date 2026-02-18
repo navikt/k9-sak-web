@@ -1,4 +1,4 @@
-import type { Behandling } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 
 class BehandlingUtil {
   behandling: Behandling;

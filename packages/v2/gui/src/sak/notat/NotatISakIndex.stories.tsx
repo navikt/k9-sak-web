@@ -8,7 +8,7 @@ import {
   k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
   k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { delay, HttpResponse, http, type PathParams } from 'msw';
+import { HttpResponse, delay, http, type PathParams } from 'msw';
 import NotatISakIndex from './NotaterIndex';
 
 export default {

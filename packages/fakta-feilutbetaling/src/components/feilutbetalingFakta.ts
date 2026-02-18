@@ -1,5 +1,5 @@
-import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { Kodeverk } from '@k9-sak-web/types';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Kodeverk } from '@k9-sak-web/types';
 
 export interface BehandlingFaktaPeriode {
   fom: string;

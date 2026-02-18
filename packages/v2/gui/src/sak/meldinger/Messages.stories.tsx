@@ -1,17 +1,18 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+
 import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
-import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
-import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
+import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';

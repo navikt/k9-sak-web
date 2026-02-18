@@ -1,11 +1,13 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+
 import { Button, HStack, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { useForm } from 'react-hook-form';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
 import style from './AldersvilkarForm.module.css';
 
 type Inputs = {

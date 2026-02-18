@@ -1,10 +1,10 @@
-import type { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import FeilutbetalingInfoPanel from './components/FeilutbetalingInfoPanel';
-import type { FeilutbetalingAarsak } from './components/feilutbetalingAarsak';
-import type { FeilutbetalingFakta } from './components/feilutbetalingFakta';
+import { FeilutbetalingAarsak } from './components/feilutbetalingAarsak';
+import { FeilutbetalingFakta } from './components/feilutbetalingFakta';
 
 const cache = createIntlCache();
 

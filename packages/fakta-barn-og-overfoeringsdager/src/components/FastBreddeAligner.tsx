@@ -1,4 +1,4 @@
-import React, { type CSSProperties, type ReactNode } from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 
 interface FastBreddeAlignerProps {
   kolonner: {

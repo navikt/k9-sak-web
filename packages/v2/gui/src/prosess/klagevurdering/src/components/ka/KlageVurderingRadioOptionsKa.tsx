@@ -1,3 +1,5 @@
+import { Box, HGrid, Radio } from '@navikt/ds-react';
+
 import {
   ung_kodeverk_klage_KlageVurderingOmgjør,
   ung_kodeverk_klage_KlageVurderingType,
@@ -5,11 +7,10 @@ import {
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Box, HGrid, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
-import type { BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
+import { type BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
 
 interface KlageVurderingRadioOptionsKaProps {
   readOnly: boolean;

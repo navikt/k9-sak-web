@@ -1,8 +1,9 @@
-import { Alert, Button, HelpText, HStack, RadioGroup } from '@navikt/ds-react';
-import type React from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import type { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
+import { Alert, Button, HStack, HelpText, RadioGroup } from '@navikt/ds-react';
+
+import { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
 import { booleanTilTekst } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';

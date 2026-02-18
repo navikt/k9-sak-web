@@ -1,6 +1,6 @@
 import { Alert, Button } from '@navikt/ds-react';
-import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import type { ErrorFallbackProps } from '../../app/feilmeldinger/ErrorBoundary.js';
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 export const MessagesErrorAlert = ({ sentryId, reset }: ErrorFallbackProps) => {
   const { reset: queryReset } = useQueryErrorResetBoundary();

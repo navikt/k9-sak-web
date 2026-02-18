@@ -1,6 +1,6 @@
-import type { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import type { Personopplysninger } from '@k9-sak-web/types';
-import type { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import { Personopplysninger } from '@k9-sak-web/types';
+import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarKroniskSyktBarnProps {
   behandlingsID: string;

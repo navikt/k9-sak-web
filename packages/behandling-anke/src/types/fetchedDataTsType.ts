@@ -1,4 +1,4 @@
-import type { Aksjonspunkt, AnkeVurdering, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, AnkeVurdering, Vilkar } from '@k9-sak-web/types';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

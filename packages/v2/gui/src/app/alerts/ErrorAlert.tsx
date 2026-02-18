@@ -1,11 +1,11 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import { SharedFeilDtoError } from '@k9-sak-web/backend/shared/errorhandling/SharedFeilDtoError.js';
 import { Alert, BodyLong, Heading, Link } from '@navikt/ds-react';
-import type { PropsWithChildren } from 'react';
+import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import { ErrorIdEncouragementMsg } from './ErrorIdEncouragementMsg.js';
 import GeneralAsyncError from './GeneralAsyncError.js';
-import { NavCallIdEncouragementMsg } from './NavCallIdEncouragementMsg.js';
+import type { PropsWithChildren } from 'react';
+import { SharedFeilDtoError } from '@k9-sak-web/backend/shared/errorhandling/SharedFeilDtoError.js';
 
 export interface ErrorAlertProps {
   readonly error: ErrorWithAlertInfo;

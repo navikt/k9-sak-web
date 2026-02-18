@@ -1,7 +1,7 @@
+import { describe, it, expect } from 'vitest';
+import lagUttaksperiodeliste from './uttaksperioder';
 import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import dayjs from 'dayjs';
-import { describe, expect, it } from 'vitest';
-import lagUttaksperiodeliste from './uttaksperioder';
 
 const key = (fom: string, tom: string) => `${fom}/${tom}`;
 

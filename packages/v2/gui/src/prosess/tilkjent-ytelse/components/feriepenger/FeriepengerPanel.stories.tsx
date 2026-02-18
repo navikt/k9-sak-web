@@ -1,8 +1,8 @@
-import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import withK9Kodeverkoppslag from '../../../../storybook/decorators/withK9Kodeverkoppslag.js';
-import { mockArbeidsgiverOpplysninger } from '../../../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
 import { FeriepengerPanel, type FeriepengerPrÅr } from './FeriepengerPanel.js';
+import withK9Kodeverkoppslag from '../../../../storybook/decorators/withK9Kodeverkoppslag.js';
+import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { mockArbeidsgiverOpplysninger } from '../../../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
 
 const mockFeriepengegrunnlag2023: FeriepengegrunnlagAndel[] = [
   {

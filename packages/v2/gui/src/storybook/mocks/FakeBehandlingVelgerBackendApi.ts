@@ -1,4 +1,4 @@
-import type { PerioderMedBehandlingsId } from '../../sak/behandling-velger/types/PerioderMedBehandlingsId';
+import { type PerioderMedBehandlingsId } from '../../sak/behandling-velger/types/PerioderMedBehandlingsId';
 
 export class FakeBehandlingVelgerBackendApi {
   async getBehandlingPerioderÅrsaker(): Promise<PerioderMedBehandlingsId> {

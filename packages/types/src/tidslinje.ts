@@ -1,5 +1,5 @@
-import type dayjs from 'dayjs';
-import type { ReactNode } from 'react';
+import dayjs from 'dayjs';
+import { ReactNode } from 'react';
 
 export interface EnkelPeriode {
   /**

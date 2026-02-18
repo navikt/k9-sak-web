@@ -2,8 +2,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Behandling } from '@k9-sak-web/types';
-import type {
+import { Behandling } from '@k9-sak-web/types';
+import {
   AksjonspunktInformasjon,
   SaksinformasjonUtvidetRett,
   VilkarInformasjon,

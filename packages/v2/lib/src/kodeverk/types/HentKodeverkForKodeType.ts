@@ -1,10 +1,10 @@
-import type {
+import {
   KodeverkKlageType,
-  KodeverkMedUndertype,
+  type KodeverkMedUndertype,
   KodeverkTilbakeType,
   KodeverkType,
   KodeverkTypeV2,
-  KodeverkV2,
+  type KodeverkV2,
 } from '../types';
 
 export type HentKodeverkForKodeType = (

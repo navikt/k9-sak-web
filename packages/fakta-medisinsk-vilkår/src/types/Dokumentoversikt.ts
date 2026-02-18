@@ -1,6 +1,5 @@
 import { dokumentSorter } from '../util/dokumentUtils';
-import type Dokument from './Dokument';
-import { Dokumenttype } from './Dokument';
+import Dokument, { Dokumenttype } from './Dokument';
 
 class Dokumentoversikt {
   alleDokumenter: Dokument[];

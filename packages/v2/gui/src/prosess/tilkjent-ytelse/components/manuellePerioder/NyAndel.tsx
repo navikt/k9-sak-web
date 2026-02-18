@@ -1,6 +1,6 @@
-import { type Inntektskategori, inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
+import { inntektskategorier, type Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { PlusCircleIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Fieldset, HGrid, HStack, VStack } from '@navikt/ds-react';
 import { RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';

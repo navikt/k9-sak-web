@@ -2,7 +2,7 @@
 import { composeStories } from '@storybook/react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { HttpResponse, http } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
 import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';

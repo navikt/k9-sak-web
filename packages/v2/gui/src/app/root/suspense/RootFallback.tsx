@@ -1,4 +1,4 @@
-import { BodyLong, Heading, HStack, ProgressBar, VStack } from '@navikt/ds-react';
+import { Heading, HStack, VStack, ProgressBar, BodyLong } from '@navikt/ds-react';
 
 export interface RootFallbackProps {
   readonly heading?: string;

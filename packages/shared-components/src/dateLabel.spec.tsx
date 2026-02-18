@@ -1,6 +1,6 @@
+import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { format } from 'date-fns';
-import React from 'react';
 
 import DateLabel from './DateLabel';
 

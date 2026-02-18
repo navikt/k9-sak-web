@@ -1,5 +1,5 @@
-import { NavCallIdEncouragementMsg } from '../alerts/NavCallIdEncouragementMsg.js';
 import { BigError, DefaultErrorMsg } from './BigError.js';
+import { NavCallIdEncouragementMsg } from '../alerts/NavCallIdEncouragementMsg.js';
 
 export interface NetworkErrorPageProps {
   readonly navCallId?: string;

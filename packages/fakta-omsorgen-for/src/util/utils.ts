@@ -1,4 +1,4 @@
-import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import * as messages from '../nb_NO';
 
 export const teksterForSakstype = (sakstype: FagsakYtelsesType) => {

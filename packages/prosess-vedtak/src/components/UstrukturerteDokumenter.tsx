@@ -1,6 +1,6 @@
-import type { k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Heading, Link } from '@navikt/ds-react';
+import { k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
 import styles from './ustrukturerteDokumenter.module.css';
 

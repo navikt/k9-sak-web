@@ -1,4 +1,4 @@
-import type { RettVedDød } from '../../../types/RettVedDød';
+import { RettVedDød } from '../../../types/RettVedDød';
 import ActionType from './actionTypes';
 
 interface MainComponentState {

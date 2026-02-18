@@ -1,16 +1,16 @@
 import {
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
   k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
-import type { Period } from '@navikt/ft-utils';
-import { useContext } from 'react';
-import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
-import { Periodevisning } from '../../../shared/detailView/DetailView';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
+import { useContext } from 'react';
+import { Periodevisning } from '../../../shared/detailView/DetailView';
+import { Period } from '@navikt/ft-utils';
 import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo';
 
 const NødvendigOpplæringFerdigvisning = ({

@@ -1,10 +1,10 @@
 import {
-  behandlingForm,
-  behandlingFormValueSelector,
   Label,
   RadioGroupField,
   SelectField,
   TextAreaField,
+  behandlingForm,
+  behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -17,34 +17,34 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import type { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Button, Detail, Label as DSLabel, HGrid } from '@navikt/ds-react';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
 import {
   sif_tilbakekreving_behandlingslager_feilutbetalingårsak_kodeverk_HendelseType as HendelseType,
   sif_tilbakekreving_behandlingslager_vilkår_kodeverk_VilkårResultat as VilkårResultat,
 } from '@navikt/ung-tilbake-typescript-client/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { change, clearFields, FormSection, type InjectedFormProps } from 'redux-form';
+import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
 import Aktsomhet, { AKTSOMHET_REKKEFØLGE } from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
 import VilkarResultat from '../kodeverk/vilkarResultat';
-import type DataForPeriode from '../types/dataForPeriodeTsType';
-import type { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
-import type ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
+import DataForPeriode from '../types/dataForPeriodeTsType';
+import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
+import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 import styles from './tilbakekrevingPeriodeForm.module.css';
-import AktsomhetFormPanel, {
-  type InitialValuesAktsomhetForm,
-} from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
-import BelopetMottattIGodTroFormPanel, {
-  type InitialValuesGodTroForm,
-} from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
+import AktsomhetFormPanel, {
+  InitialValuesAktsomhetForm,
+} from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
+import BelopetMottattIGodTroFormPanel, {
+  InitialValuesGodTroForm,
+} from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

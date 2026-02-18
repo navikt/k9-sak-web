@@ -1,15 +1,17 @@
-import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { getPeriodDifference, Period } from '@fpsak-frontend/utils';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
-import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { Alert, BodyShort, Box, HStack, Label, Tag } from '@navikt/ds-react';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useIntl } from 'react-intl';
-import type Omsorgsperiode from '../../../types/Omsorgsperiode';
+
+import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
+import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
+import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Alert, BodyShort, Box, HStack, Label, Tag } from '@navikt/ds-react';
+
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import { useOmsorgenForContext } from '../../context/ContainerContext';

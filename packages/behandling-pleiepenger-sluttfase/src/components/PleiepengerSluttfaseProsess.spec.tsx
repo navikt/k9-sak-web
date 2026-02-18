@@ -10,8 +10,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
-import type { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messages from '../../i18n/nb_NO.json';
@@ -19,8 +18,9 @@ import {
   PleiepengerSluttfaseBehandlingApiKeys,
   requestPleiepengerSluttfaseApi,
 } from '../data/pleiepengerSluttfaseBehandlingApi';
-import type FetchedData from '../types/fetchedDataTsType';
+import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('< PleiepengerSluttfaseProsess>', () => {
   const fagsak = {

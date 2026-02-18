@@ -1,10 +1,10 @@
 import { Tag, Textarea } from '@navikt/ds-react';
-import { connect, Field as FormikField, type FormikState, getIn } from 'formik';
+import { Field as FormikField, FormikState, connect, getIn } from 'formik';
 import { useIntl } from 'react-intl';
-import { validateAll } from './formikUtils';
-import type LabelType from './LabelType';
+import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './TextAreaFormik.module.css';
+import { validateAll } from './formikUtils';
 
 interface TextAreaFieldProps {
   name: string;

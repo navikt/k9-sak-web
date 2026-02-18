@@ -1,7 +1,7 @@
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { FormState } from './FormState';
-import type { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
-import type { InformasjonTilLesemodus } from './informasjonTilLesemodus';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { FormState } from './FormState';
+import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { InformasjonTilLesemodus } from './informasjonTilLesemodus';
 
 export interface OmsorgProps {
   behandlingsID: string;

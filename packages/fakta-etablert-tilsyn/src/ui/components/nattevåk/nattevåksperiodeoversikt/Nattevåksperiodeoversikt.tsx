@@ -1,12 +1,12 @@
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import * as React from 'react';
 import { useEffect } from 'react';
-import type NattevåkType from '../../../../types/NattevåkType';
-import type Vurderingsperiode from '../../../../types/Vurderingsperiode';
-import ContainerContext from '../../../context/ContainerContext';
+import NattevåkType from '../../../../types/NattevåkType';
+import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
 import NattevåksperiodeoversiktController from '../nattevåksperiodeoversikt-controller/NattevåksperiodeoversiktController';
 import NattevåksperiodeoversiktMessages from '../nattevåksperiodeoversikt-messages/NattevåksperiodeoversiktMessages';
+import ContainerContext from '../../../context/ContainerContext';
 
 interface NattevåksperiodeoversiktProps {
   nattevåkData: NattevåkType;

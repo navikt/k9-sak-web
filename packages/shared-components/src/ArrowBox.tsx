@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 const navGra40 = '#B7B1A9';
 const borderRadius = 4;

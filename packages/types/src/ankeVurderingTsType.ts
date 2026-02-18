@@ -1,4 +1,4 @@
-import type Kodeverk from './kodeverkTsType';
+import Kodeverk from './kodeverkTsType';
 
 export type AnkeVurdering = Readonly<{
   ankeVurderingResultat?: {

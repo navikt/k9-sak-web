@@ -1,7 +1,7 @@
 import { addYearsToDate, getHumanReadablePeriodString } from '@fpsak-frontend/utils';
 import { Alert, Box } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
-import type Vurderingsoversikt from '../../../types/Vurderingsoversikt';
+import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import Vurderingstype from '../../../types/Vurderingstype';
 import VurderingContext from '../../context/VurderingContext';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';

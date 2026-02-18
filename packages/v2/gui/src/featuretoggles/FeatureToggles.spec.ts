@@ -1,5 +1,4 @@
-import { describe, expect, it } from 'vitest';
-import { initQFeatureToggles } from './FeatureToggles.js';
+import { describe, it, expect } from 'vitest';
 import {
   prodFeatureToggles as k9ProdFeatureToggles,
   qFeatureToggles as k9QFeatureToggles,
@@ -8,6 +7,7 @@ import {
   prodFeatureToggles as ungProdFeatureToggles,
   qFeatureToggles as ungQFeatureToggles,
 } from './ung/featureToggles.js';
+import { initQFeatureToggles } from './FeatureToggles.js';
 
 describe('FeatureToggles som rapporteres med feil her har samme verdi i alle varianter og skal ryddes vekk', () => {
   const rootKeys = Object.keys(initQFeatureToggles({})({})).filter(k => k != 'isFor') as (keyof Omit<

@@ -1,8 +1,10 @@
+import React from 'react';
+
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 
 describe('<IverksetterVedtakStatusModal>', () => {

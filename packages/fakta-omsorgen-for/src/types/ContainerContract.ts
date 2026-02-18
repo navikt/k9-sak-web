@@ -1,5 +1,5 @@
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 export interface ContainerContract {
   omsorgenForAksjonspunkt?: Aksjonspunkt;

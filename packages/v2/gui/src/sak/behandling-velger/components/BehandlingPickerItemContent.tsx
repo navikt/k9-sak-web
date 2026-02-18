@@ -5,7 +5,7 @@ import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandl
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CalendarIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Heading, HStack } from '@navikt/ds-react';
-import type React from 'react';
+import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import type { Behandling } from '../types/Behandling';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';

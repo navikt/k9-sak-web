@@ -1,12 +1,11 @@
-import type { Behandling } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import {
   ForeldelseProsessIndex,
-  type ForeldelsesresultatActivity,
+  ForeldelsesresultatActivity,
   RelasjonsRolleType,
-  type VurderForeldelseAp,
+  VurderForeldelseAp,
 } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
 interface ForeldelseProsessIndexWrapperProps {

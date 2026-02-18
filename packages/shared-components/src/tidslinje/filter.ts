@@ -1,5 +1,5 @@
-import type { Positioned, Spatial } from '@k9-sak-web/types/src/tidslinje';
-import type dayjs from 'dayjs';
+import { Positioned, Spatial } from '@k9-sak-web/types/src/tidslinje';
+import dayjs from 'dayjs';
 
 export const erSynlig = ({ horizontalPosition }: Positioned): boolean =>
   horizontalPosition <= 100 && horizontalPosition >= 0;

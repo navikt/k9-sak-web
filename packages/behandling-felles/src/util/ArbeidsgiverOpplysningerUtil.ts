@@ -1,4 +1,4 @@
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 class ArbeidsgiverOpplysningerUtil {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;

@@ -3,7 +3,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import type { Behandling } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

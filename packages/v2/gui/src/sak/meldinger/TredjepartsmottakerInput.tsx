@@ -1,12 +1,12 @@
-import type { k9_sak_web_app_tjenester_brev_UtilgjengeligÅrsak as utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  type RequestIntentionallyAborted,
-  requestIntentionallyAborted,
-} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import { ErrorMessage, TextField } from '@navikt/ds-react';
 import { useRef, useState } from 'react';
-import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
+import { ErrorMessage, TextField } from '@navikt/ds-react';
+import {
+  requestIntentionallyAborted,
+  type RequestIntentionallyAborted,
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
+import type { k9_sak_web_app_tjenester_brev_UtilgjengeligÅrsak as utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import styles from './TredjepartsmottakerInput.module.css';
+import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export interface BackendApi {
   getBrevMottakerinfoEreg(

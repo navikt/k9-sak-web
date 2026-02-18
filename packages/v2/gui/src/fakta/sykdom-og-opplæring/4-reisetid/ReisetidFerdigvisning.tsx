@@ -1,9 +1,9 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { BodyLong, Link } from '@navikt/ds-react';
+import ReisedagerIVurdering from './ReisedagerIVurdering';
 import type { Period } from '@navikt/ft-utils';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
+import { BodyLong, Link } from '@navikt/ds-react';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
-import ReisedagerIVurdering from './ReisedagerIVurdering';
 import { resultatTilJaNei } from './utils';
 
 const ReisetidFerdigvisning = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {

@@ -1,5 +1,5 @@
-import RequestConfig from '../RequestConfig';
 import RequestApi from './RequestApi';
+import RequestConfig from '../RequestConfig';
 
 describe('RequestApi', () => {
   const httpClientGeneralMock = {

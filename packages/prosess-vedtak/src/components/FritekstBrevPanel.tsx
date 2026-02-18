@@ -1,20 +1,19 @@
+import { Alert, Heading } from '@navikt/ds-react';
+import React, { useCallback } from 'react';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import {
-  type Brevmottaker,
+  Brevmottaker,
+  TilgjengeligeVedtaksbrev,
   kanHaManueltFritekstbrev,
-  type TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import type { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { Alert, Heading } from '@navikt/ds-react';
-import type React from 'react';
-import { useCallback } from 'react';
-import { FormattedMessage, type IntlShape, injectIntl } from 'react-intl';
-import { fieldnames } from '../konstanter';
-import type { CustomFormikProps } from './brev/CustomFormikProps';
-import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
+import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
+import { fieldnames } from '../konstanter';
+import { CustomFormikProps } from './brev/CustomFormikProps';
 
 import styles from './vedtakForm.module.css';
 

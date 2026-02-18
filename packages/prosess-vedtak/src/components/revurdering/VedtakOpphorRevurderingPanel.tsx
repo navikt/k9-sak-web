@@ -1,12 +1,12 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import type { VedtakVarsel } from '../../types/VedtakVarsel';
+import { VedtakVarsel } from '../../types/VedtakVarsel';
 
 const ytelseNavnMap = kode => {
   switch (kode) {

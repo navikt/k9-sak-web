@@ -1,8 +1,8 @@
-import { httpUtils, type Period } from '@fpsak-frontend/utils';
-import type { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
-import type { RequestPayload } from '../types/RequestPayload';
-import type { Vurderingsversjon } from '../types/Vurdering';
-import type Vurderingstype from '../types/Vurderingstype';
+import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { Vurderingsversjon } from '../types/Vurdering';
+import Vurderingstype from '../types/Vurderingstype';
+import { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
+import { RequestPayload } from '../types/RequestPayload';
 
 type HttpErrorHandler = (statusCode: number, locationHeader?: string) => void;
 

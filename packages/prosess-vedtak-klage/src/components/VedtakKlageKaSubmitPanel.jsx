@@ -1,9 +1,10 @@
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { Button, HGrid, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
+
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import styles from './vedtakKlageSubmitPanel.module.css';
 

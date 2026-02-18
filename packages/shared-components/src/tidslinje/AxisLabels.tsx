@@ -1,8 +1,8 @@
-import type { AxisLabel } from '@k9-sak-web/types/src/tidslinje';
+import { AxisLabel } from '@k9-sak-web/types/src/tidslinje';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './AxisLabels.module.css';
 import { horizontalPositionAndWidth } from './calc';
 import { erSynlig } from './filter';

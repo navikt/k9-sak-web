@@ -1,4 +1,4 @@
-import type { Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 
 interface InnleggelsesperiodeVurdering {
   id: string;

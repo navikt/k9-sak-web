@@ -5,10 +5,10 @@ import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Label, Link, Tooltip } from '@navikt/ds-react';
-import React, { type JSX, useState } from 'react';
+import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import type Dokument from '../../../types/Dokument';
-import type { Vurderingsversjon } from '../../../types/Vurdering';
+import Dokument from '../../../types/Dokument';
+import { Vurderingsversjon } from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 import {

@@ -1,14 +1,14 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type {
+import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BodyShort, Label } from '@navikt/ds-react';
+import {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, Label } from '@navikt/ds-react';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import type VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
+import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from './VedtakHelper';
 

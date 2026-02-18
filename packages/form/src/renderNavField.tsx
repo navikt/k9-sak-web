@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import type { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
+import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 import Label from './Label';
-import type LabelType from './LabelType';
+import LabelType from './LabelType';
 
 interface FieldComponentProps {
   input: WrappedFieldInputProps;

@@ -1,15 +1,11 @@
+import { useEffect, useState } from 'react';
+
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  faktaHooks,
-  type Rettigheter,
-  SideMenuWrapper,
-  useSetBehandlingVedEndring,
-} from '@k9-sak-web/behandling-felles';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import type {
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
   Dokument,
@@ -17,11 +13,11 @@ import type {
   FagsakPerson,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { useEffect, useState } from 'react';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
-import type FetchedData from '../types/FetchedData';
+import FetchedData from '../types/FetchedData';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 

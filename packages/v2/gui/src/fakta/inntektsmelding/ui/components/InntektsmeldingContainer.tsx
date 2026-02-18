@@ -1,11 +1,11 @@
 import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Accordion, Alert, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
 import { useMemo, useState } from 'react';
-import { type FieldValues, useForm } from 'react-hook-form';
+import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { Tilstand, TilstandMedUiState } from '../../types';
 import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
+import type { Tilstand, TilstandMedUiState } from '../../types';
 import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,

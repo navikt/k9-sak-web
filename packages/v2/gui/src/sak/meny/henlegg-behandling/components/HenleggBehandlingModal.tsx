@@ -1,9 +1,9 @@
 import { k9_klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Sak,
   k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';
@@ -15,8 +15,8 @@ import type { Klagepart } from '../types/Klagepart';
 import type { Personopplysninger } from '../types/Personopplysninger';
 import Brevmottakere from './Brevmottakere';
 import dokumentMalType from './dokumentMalType';
-import type { HenleggBehandlingFormvalues } from './formValues';
 import styles from './henleggBehandlingModal.module.css';
+import type { HenleggBehandlingFormvalues } from './formValues';
 
 const maxLength1500 = maxLength(1500);
 

@@ -1,3 +1,3 @@
-import type Dokument from './Dokument';
+import Dokument from './Dokument';
 
 export type NyeDokumenterResponse = Dokument[];

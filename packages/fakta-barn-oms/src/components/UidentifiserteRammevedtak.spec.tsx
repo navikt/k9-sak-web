@@ -1,5 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { type Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';

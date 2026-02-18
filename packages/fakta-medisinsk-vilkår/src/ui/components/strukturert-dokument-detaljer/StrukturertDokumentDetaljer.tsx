@@ -1,13 +1,13 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
-import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
-import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Button, Link } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
+
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import LinkRel from '../../../constants/LinkRel';
-import type Dokument from '../../../types/Dokument';
-import { Dokumenttype, dokumentLabel } from '../../../types/Dokument';
+import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import DokumentKnapp from '../dokument-knapp/DokumentKnapp';

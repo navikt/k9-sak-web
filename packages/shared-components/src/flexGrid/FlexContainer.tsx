@@ -1,5 +1,5 @@
 import classnames from 'classnames/bind';
-import React, { type ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import styles from './flexContainer.module.css';
 

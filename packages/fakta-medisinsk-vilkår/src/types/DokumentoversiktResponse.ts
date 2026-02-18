@@ -1,4 +1,4 @@
-import type Dokument from './Dokument';
+import Dokument from './Dokument';
 
 export interface DokumentoversiktResponse {
   dokumenter: Dokument[];

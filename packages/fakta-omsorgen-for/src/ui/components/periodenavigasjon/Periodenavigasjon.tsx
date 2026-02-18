@@ -1,8 +1,8 @@
 import { Period } from '@fpsak-frontend/utils';
 import { Box, Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX, useEffect } from 'react';
-import type Omsorgsperiode from '../../../types/Omsorgsperiode';
+import React, { useEffect, type JSX } from 'react';
+import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import { usePrevious } from '../../../util/hooks';
 import { sortPeriodsByFomDate } from '../../../util/periodUtils';
 import PeriodeSomSkalVurderes from '../periode-som-skal-vurderes/PeriodeSomSkalVurderes';

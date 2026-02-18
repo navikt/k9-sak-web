@@ -1,8 +1,9 @@
-import { TextField } from '@navikt/ds-react';
-import React, { Component, type ReactNode } from 'react';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import React, { Component, ReactNode } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field as reduxFormField } from 'redux-form';
-import type LabelType from './LabelType';
+
+import { TextField } from '@navikt/ds-react';
+import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
 

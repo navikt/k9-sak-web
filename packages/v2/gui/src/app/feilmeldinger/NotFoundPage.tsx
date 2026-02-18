@@ -1,5 +1,5 @@
-import { Link } from 'react-router';
 import { BigError } from './BigError.js';
+import { Link } from 'react-router';
 
 /**
  * NotFoundPage

@@ -1,14 +1,11 @@
-import {
-  isKlageMedholdÅrsak,
-  type KlageMedholdÅrsak,
-} from '@k9-sak-web/backend/ungsak/kodeverk/klage/KlageMedholdÅrsak.js';
+import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues.js';
+import type { SaveKlageParams } from './SaveKlageParams.js';
+import { isKlageMedholdÅrsak, KlageMedholdÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/klage/KlageMedholdÅrsak.js';
 import { isKlageVurdering, KlageVurdering } from '@k9-sak-web/backend/ungsak/kodeverk/klage/KlageVurdering.js';
 import {
   isKlageVurderingOmgjør,
-  type KlageVurderingOmgjør,
+  KlageVurderingOmgjør,
 } from '@k9-sak-web/backend/ungsak/kodeverk/klage/KlageVurderingOmgjør.js';
-import type { BehandleKlageFormKaFormValues } from '../ka/BehandleKlageFormKaFormValues.js';
-import type { SaveKlageParams } from './SaveKlageParams.js';
 
 export const formValuesToSaveValues = (
   values: BehandleKlageFormKaFormValues,

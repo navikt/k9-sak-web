@@ -1,7 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import type React from 'react';
-import type { JSX } from 'react';
+import React, { type JSX } from 'react';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import styles from './vurderingsperiodeElement.module.css';
 

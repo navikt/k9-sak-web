@@ -1,10 +1,10 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components/index';
-import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
+import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';

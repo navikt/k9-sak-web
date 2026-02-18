@@ -5,7 +5,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import FormkravProsessIndex from '@k9-sak-web/gui/prosess/formkrav/FormkravProsessIndex.js';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import type { Fagsak } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <FormkravProsessIndex {...props} />;

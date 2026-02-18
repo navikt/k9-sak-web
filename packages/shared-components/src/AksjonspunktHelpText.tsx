@@ -1,6 +1,6 @@
 import { Alert, BodyShort } from '@navikt/ds-react';
-import React, { type ReactNode } from 'react';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
+import React, { ReactNode } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './aksjonspunktHelpText.module.css';
 
 interface OwnProps {

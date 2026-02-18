@@ -1,6 +1,6 @@
 import { prettifyDate } from '@fpsak-frontend/utils';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type PleietrengendeResponse from './PleietrengendeResponse';
+import PleietrengendeResponse from './PleietrengendeResponse';
 
 class Pleietrengende {
   fnr: string;

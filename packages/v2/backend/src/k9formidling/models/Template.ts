@@ -1,8 +1,8 @@
+import type { Linker } from './Linker.js';
+import { isString } from '../../typecheck/isString.js';
 import { isArray } from '../../typecheck/isArray.js';
 import { isBoolean } from '../../typecheck/isBoolean.js';
 import { isObject } from '../../typecheck/isObject.js';
-import { isString } from '../../typecheck/isString.js';
-import type { Linker } from './Linker.js';
 import type { Mottaker } from './Mottaker.js';
 
 /**

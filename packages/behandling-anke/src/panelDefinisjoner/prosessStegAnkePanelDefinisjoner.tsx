@@ -1,6 +1,6 @@
 import AnkeBehandlingProsessStegPanelDef from './prosessStegPaneler/AnkeBehandlingProsessStegPanelDef';
-import AnkeMerknaderProsessStegPanelDef from './prosessStegPaneler/AnkeMerknaderProsessStegPanelDef';
 import AnkeResultatProsessStegPanelDef from './prosessStegPaneler/AnkeResultatProsessStegPanelDef';
+import AnkeMerknaderProsessStegPanelDef from './prosessStegPaneler/AnkeMerknaderProsessStegPanelDef';
 
 const prosessStegPanelDefinisjoner = [
   new AnkeBehandlingProsessStegPanelDef(),

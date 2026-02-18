@@ -1,11 +1,7 @@
-import {
-  type Rammevedtak,
-  RammevedtakEnum,
-  type RammevedtakType,
-} from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import moment from 'moment';
-import type FormValues from '../types/FormValues';
-import type Overføring from '../types/Overføring';
+import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import FormValues from '../types/FormValues';
+import Overføring from '../types/Overføring';
 
 const mapOverføring = (type: RammevedtakType, rammevedtak: Rammevedtak[]): Overføring[] =>
   rammevedtak

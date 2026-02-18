@@ -1,8 +1,7 @@
-import type { Period } from '@fpsak-frontend/utils';
-import { HttpResponse, http } from 'msw';
-import type Dokument from '../src/types/Dokument';
-import { Dokumenttype } from '../src/types/Dokument';
-import type NyVurderingsversjon from '../src/types/NyVurderingsversjon';
+import { Period } from '@fpsak-frontend/utils';
+import { http, HttpResponse } from 'msw';
+import Dokument, { Dokumenttype } from '../src/types/Dokument';
+import NyVurderingsversjon from '../src/types/NyVurderingsversjon';
 import Vurderingstype from '../src/types/Vurderingstype';
 import { createKontinuerligTilsynVurdering, createToOmsorgspersonerVurdering } from './apiUtils';
 import { mockUrlPrepend } from './constants';

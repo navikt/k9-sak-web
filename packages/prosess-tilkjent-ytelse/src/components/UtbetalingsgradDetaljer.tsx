@@ -1,6 +1,6 @@
-import { CheckmarkIcon } from '@navikt/aksel-icons';
-import { BodyShort, ReadMore } from '@navikt/ds-react';
 import React from 'react';
+import { BodyShort, ReadMore } from '@navikt/ds-react';
+import { CheckmarkIcon } from '@navikt/aksel-icons';
 
 interface OwnProps {
   utbetalingsgradVedTilkommetInntektErMinst: boolean;

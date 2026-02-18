@@ -1,7 +1,7 @@
 import {
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-  type k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
+  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   Alert,
@@ -20,7 +20,7 @@ import {
 } from '@navikt/ds-react';
 import { ListItem } from '@navikt/ds-react/List';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import type { Period } from '@navikt/ft-utils';
+import { Period } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import { useContext, useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';

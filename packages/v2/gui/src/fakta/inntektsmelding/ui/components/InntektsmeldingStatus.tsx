@@ -1,10 +1,10 @@
-import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import {
-  ArrowsCirclepathIcon,
   CheckmarkCircleFillIcon,
   ExclamationmarkTriangleFillIcon,
   InformationSquareFillIcon,
+  ArrowsCirclepathIcon,
 } from '@navikt/aksel-icons';
+import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 
 const statusTekster = {
   [Status.IKKE_PÅKREVD]: 'Ikke påkrevd',

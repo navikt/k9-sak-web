@@ -1,3 +1,6 @@
+import { useMemo, useState } from 'react';
+import { action } from 'storybook/actions';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
@@ -11,8 +14,6 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { useMemo, useState } from 'react';
-import { action } from 'storybook/actions';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';

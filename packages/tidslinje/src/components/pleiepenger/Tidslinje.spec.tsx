@@ -1,8 +1,8 @@
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment from 'moment';
 import { createGroups, createItems } from './Tidslinje';
-import type Periode from './types/Periode';
-import type TidslinjeRad from './types/TidslinjeRad';
+import Periode from './types/Periode';
+import TidslinjeRad from './types/TidslinjeRad';
 
 describe('<Tidslinje>', () => {
   it('konverterer props til Timeline config', () => {

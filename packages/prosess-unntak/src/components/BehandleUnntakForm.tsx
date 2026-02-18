@@ -1,10 +1,10 @@
 import {
+  RadioGroupField,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-  RadioGroupField,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -17,12 +17,12 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import type { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import type { InjectedFormProps } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import FritekstTextField from './FritekstTextField';
 

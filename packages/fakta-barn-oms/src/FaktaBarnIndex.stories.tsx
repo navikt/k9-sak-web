@@ -1,6 +1,5 @@
-import type BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import type { Rammevedtak } from '@k9-sak-web/types';
+import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import React from 'react';
 import FaktaBarnIndex from './FaktaBarnIndex';

@@ -1,9 +1,9 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { axe } from 'vitest-axe';
 import Omsorg from '../../omsorg/Omsorg';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt for midlertidig alene som forventet', () => {

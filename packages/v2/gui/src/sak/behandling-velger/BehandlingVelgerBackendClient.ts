@@ -1,8 +1,8 @@
-import { perioder_hentPerioderMedVilkårForBehandling as k9sak_perioder_hentPerioderMedVilkårForBehandling } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import { perioder_hentPerioderMedVilkårForBehandling as ungsak_perioder_hentPerioderMedVilkårForBehandling } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import { type K9SakOrUngSak, k9SakOrUngSak } from '../../utils/multibackend.js';
 import type { Behandling } from './types/Behandling';
 import type { PerioderMedBehandlingsId } from './types/PerioderMedBehandlingsId';
+import { perioder_hentPerioderMedVilkårForBehandling as k9sak_perioder_hentPerioderMedVilkårForBehandling } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import { perioder_hentPerioderMedVilkårForBehandling as ungsak_perioder_hentPerioderMedVilkårForBehandling } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+import { k9SakOrUngSak, type K9SakOrUngSak } from '../../utils/multibackend.js';
 
 export default class BehandlingVelgerBackendClient {
   #backendChoice: K9SakOrUngSak;

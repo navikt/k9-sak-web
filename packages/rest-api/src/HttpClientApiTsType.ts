@@ -1,4 +1,4 @@
-import type { Response } from './requestApi/ResponseTsType';
+import { Response } from './requestApi/ResponseTsType';
 
 interface HttpClientApi {
   get: (url: string, params?: any, responseType?: string) => Promise<Response>;

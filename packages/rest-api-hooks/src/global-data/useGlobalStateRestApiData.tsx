@@ -1,5 +1,6 @@
-import type { AbstractRequestApi } from '@k9-sak-web/rest-api';
 import { useContext } from 'react';
+
+import { AbstractRequestApi } from '@k9-sak-web/rest-api';
 
 import { RestApiStateContext } from './RestApiContext';
 

@@ -2,8 +2,8 @@ import type {
   k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
   k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
 } from '../../k9sak/generated/types.js';
-import type { FagsakYtelsesType } from '../../k9sak/kodeverk/FagsakYtelsesType.js';
 import type { AvsenderApplikasjon } from './AvsenderApplikasjon.js';
+import type { FagsakYtelsesType } from '../../k9sak/kodeverk/FagsakYtelsesType.js';
 
 /**
  * Denne typen finnast ikkje i k9-formidling koden, der er det berre generell JsonNode type. Men ut frå inspeksjon av

@@ -1,10 +1,10 @@
-import type HttpClientApi from '../HttpClientApiTsType';
-import type RequestAdditionalConfig from '../RequestAdditionalConfigTsType';
+import HttpClientApi from '../HttpClientApiTsType';
+import RequestAdditionalConfig from '../RequestAdditionalConfigTsType';
 import AsyncPollingStatus from './asyncPollingStatus';
 import RequestErrorEventHandler from './error/RequestErrorEventHandler';
 import TimeoutError from './error/TimeoutError';
 import EventType from './eventType';
-import type { Response } from './ResponseTsType';
+import { Response } from './ResponseTsType';
 
 const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;

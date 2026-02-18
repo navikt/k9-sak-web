@@ -1,16 +1,16 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
-import { Alert, Button, Heading, HGrid, Modal } from '@navikt/ds-react';
-import type React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 import PreviewLink from '../PreviewLink';
 import EditorJSWrapper from './EditorJSWrapper';
 import FritekstFeilmeldinger from './FritekstFeilmeldinger';
-import styles from './RedigerFritekstbrev.module.css';
 import { validerRedigertHtml } from './RedigeringUtils';
+
+import styles from './RedigerFritekstbrev.module.css';
 
 interface ownProps {
   handleSubmit: (value: string) => void;

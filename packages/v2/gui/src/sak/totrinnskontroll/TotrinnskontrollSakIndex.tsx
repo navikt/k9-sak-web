@@ -1,12 +1,12 @@
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import { type KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { TotrinnskontrollApi, TotrinnskontrollData } from './api/TotrinnskontrollApi.js';
 import {
   TotrinnskontrollBeslutterForm,
   type TotrinnskontrollBeslutterFormProps,
 } from './components/TotrinnskontrollBeslutterForm.js';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel.js';
-import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import { type TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import type { TotrinnskontrollApi, TotrinnskontrollData } from './api/TotrinnskontrollApi.js';
 
 interface TotrinnskontrollSakIndexProps {
   behandling: TotrinnskontrollBehandling;

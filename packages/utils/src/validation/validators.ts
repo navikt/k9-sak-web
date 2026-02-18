@@ -1,12 +1,11 @@
 import { validateTextCharacters } from '@k9-sak-web/gui/utils/validation/validateTextCharacters.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import moment, { type Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
 import {
   dateNotAfterOrEqualMessage,
   dateNotBeforeOrEqualMessage,
   dateRangesOverlappingMessage,
-  type ErrorMessage,
   invalidDateMessage,
   invalidDatesInPeriodMessage,
   invalidDecimalMessage,
@@ -24,6 +23,7 @@ import {
   maxValueMessage,
   minLengthMessage,
   minValueMessage,
+  ErrorMessage,
 } from './messages';
 import {
   dateRangesAreSequential,

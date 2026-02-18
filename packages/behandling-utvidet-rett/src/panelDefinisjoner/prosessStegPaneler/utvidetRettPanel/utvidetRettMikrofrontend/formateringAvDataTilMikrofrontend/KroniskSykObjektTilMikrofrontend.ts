@@ -3,13 +3,13 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
-import type { Aksjonspunkt, Personopplysninger, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Personopplysninger, Vilkar } from '@k9-sak-web/types';
 import { k9_kodeverk_vilkår_VilkårUtfallMerknad } from '@navikt/k9-sak-typescript-client/types';
-import type UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import type {
+import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
+import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface OwnProps {

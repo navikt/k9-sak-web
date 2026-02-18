@@ -1,9 +1,9 @@
 import { Label } from '@navikt/ds-react';
-import { Autocomplete as NAPAutocomplete } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { Field, type WrappedFieldInputProps } from 'redux-form';
-import styles from './autocompleteField.module.css';
+import { Field, WrappedFieldInputProps } from 'redux-form';
+import { Autocomplete as NAPAutocomplete } from '@navikt/ft-plattform-komponenter';
 import ReadOnlyField from './ReadOnlyField';
+import styles from './autocompleteField.module.css';
 
 interface AutocompleteFieldProps {
   onChange: () => void;

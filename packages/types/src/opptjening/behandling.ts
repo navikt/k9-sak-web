@@ -1,4 +1,4 @@
-import type Behandlingsresultat from './behandlingsresultat';
+import Behandlingsresultat from './behandlingsresultat';
 
 export type Behandling = Readonly<{
   id: number;

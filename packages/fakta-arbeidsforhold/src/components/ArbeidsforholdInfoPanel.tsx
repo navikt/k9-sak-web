@@ -2,16 +2,16 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-import type { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import type ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Box } from '@navikt/ds-react';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import type { InjectedFormProps } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import styles from './arbeidsforholdInfoPanel.module.css';
 import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
 import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+import styles from './arbeidsforholdInfoPanel.module.css';
 
 // ----------------------------------------------------------------------------
 // VARIABLES

@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import { FormattedMessage } from 'react-intl';
-import { requestApi, UngSakApiKeys } from '../data/ungsakApi';
+import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import LanguageProvider from './LanguageProvider';
 
 describe('<LanguageProvider>', () => {

@@ -1,6 +1,6 @@
-import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
-import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorExternally, httpErrorShouldBeHandledExternally } from './responseHelpers';
+import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 
 export async function get<T>(
   url: string,

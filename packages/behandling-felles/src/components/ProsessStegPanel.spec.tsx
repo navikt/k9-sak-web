@@ -1,17 +1,17 @@
 /* eslint-disable class-methods-use-this */
+import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import ProsessStegPanel from './ProsessStegPanel';

@@ -1,14 +1,14 @@
-import type ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
-import type {
+import {
   Aksjonspunkt,
-  BehandlingPerioderårsakMedVilkår,
   Beregningsgrunnlag,
-  BeregningsresultatUtbetalt,
   Personopplysninger,
   SimuleringResultat,
   Soknad,
   Vilkar,
+  BeregningsresultatUtbetalt,
+  BehandlingPerioderårsakMedVilkår,
 } from '@k9-sak-web/types';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];

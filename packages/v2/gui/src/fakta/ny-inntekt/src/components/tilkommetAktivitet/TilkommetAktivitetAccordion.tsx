@@ -1,14 +1,11 @@
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { Accordion, Label, VStack } from '@navikt/ds-react';
-import { RhfTextarea } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
-import { PeriodLabel } from '@navikt/ft-ui-komponenter';
-import dayjs from 'dayjs';
 import { type ReactElement, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
-import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
-import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
+
+import { Accordion, Label, VStack } from '@navikt/ds-react';
+import dayjs from 'dayjs';
+
+import { required } from '@navikt/ft-form-validators';
+
 import type {
   TilkommetAktivitetFormValues,
   TilkommetAktivitetValues,
@@ -19,6 +16,13 @@ import { VurdertIForrigeBehandlingIcon } from '../felles/VurdertIForrigeBehandli
 import { TidligereVurderteAktiviteterPanel } from './TidligereVurderteAktiviteterPanel.js';
 import { TilkommetAktivitetField } from './TilkommetAktivitetField.js';
 import { erVurdertTidligere, slaaSammenPerioder } from './TilkommetAktivitetUtils.js';
+
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { RhfTextarea } from '@navikt/ft-form-hooks';
+import { PeriodLabel } from '@navikt/ft-ui-komponenter';
+import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger.js';
+import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
+import type { VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
 import styles from './tilkommetAktivitetAccordion.module.css';
 
 const renderDateHeading = (fom: string, tom: string | undefined): ReactElement => {

@@ -20,7 +20,6 @@ import RadioGroupPanel from '../../../shared/hook-form/RadioGroupPanel';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import { formatDate } from '../utils';
 import styles from './SoknadsfristVilkarDokument.module.css';
-
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 interface SoknadsfristVilkarDokumentProps {

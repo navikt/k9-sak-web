@@ -2,8 +2,8 @@ import {
   formidling_forhåndsvisKlageVedtaksbrev,
   noNavK9Klage_getKlageVurdering,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VedtakKlageApi } from './VedtakKlageApi.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 
 export default class UngVedtakKlageBackendClient implements VedtakKlageApi {
   readonly backend = 'ung';

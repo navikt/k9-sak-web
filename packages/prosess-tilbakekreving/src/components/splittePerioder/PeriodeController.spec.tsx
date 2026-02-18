@@ -3,7 +3,7 @@ import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messages from '../../../i18n/nb_NO.json';
-import type DataForPeriode from '../../types/dataForPeriodeTsType';
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 import { PeriodeController } from './PeriodeController';
 
 describe('<PeriodeController>', () => {

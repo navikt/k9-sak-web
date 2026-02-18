@@ -1,10 +1,10 @@
-import type React from 'react';
-import type { AleneOmOmsorgenAksjonspunktObjekt } from '../../../types/AleneOmOmsorgenProps';
+import React from 'react';
+import { AleneOmOmsorgenAksjonspunktObjekt } from '../../../types/AleneOmOmsorgenProps';
 import { formatereDatoTilLesemodus } from '../../../util/stringUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import tekst from '../alene-om-omsorgen/alene-om-omsorgen-tekst';
-import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
+import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
+import tekst from '../alene-om-omsorgen/alene-om-omsorgen-tekst';
 
 interface OwnProps {
   fraDatoFraSoknad: string;

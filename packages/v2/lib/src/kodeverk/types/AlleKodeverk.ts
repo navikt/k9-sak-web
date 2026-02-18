@@ -1,4 +1,4 @@
-import type { KodeverkKlageType, KodeverkTilbakeType, KodeverkType, KodeverkV2 } from '../types';
+import { KodeverkType, type KodeverkV2, KodeverkKlageType, KodeverkTilbakeType } from '../types';
 
 export type KodeverkMedUndertype = {
   [key: string]: KodeverkV2[];

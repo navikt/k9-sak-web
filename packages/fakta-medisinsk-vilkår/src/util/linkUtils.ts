@@ -1,5 +1,5 @@
-import type LinkRel from '../constants/LinkRel';
-import type Link from '../types/Link';
+import LinkRel from '../constants/LinkRel';
+import Link from '../types/Link';
 
 export const findLinkByRel = (linkRel: LinkRel, links: Link[]): Link => links.find(({ rel }) => rel === linkRel);
 

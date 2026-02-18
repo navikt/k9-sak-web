@@ -1,5 +1,5 @@
-import type KodeverkMedNavnTsType from './kodeverkMedNavnTsType';
-import type Kodeverk from './kodeverkTsType';
+import Kodeverk from './kodeverkTsType';
+import KodeverkMedNavnTsType from './kodeverkMedNavnTsType';
 
 export type PersonopplysningAdresse = Readonly<{
   adresseType?: Kodeverk;

@@ -1,4 +1,4 @@
-import type { DetaljertFeilutbetalingPeriode } from './detaljerteFeilutbetalingsperioderTsType';
+import { DetaljertFeilutbetalingPeriode } from './detaljerteFeilutbetalingsperioderTsType';
 
 export type DataForPeriode = {
   erTotalBelopUnder4Rettsgebyr: boolean;

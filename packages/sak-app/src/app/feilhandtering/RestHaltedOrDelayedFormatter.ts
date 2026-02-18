@@ -1,7 +1,7 @@
 import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import ErrorMessage from './ErrorMessage';
 import ErrorEventType from './errorEventType';
-import type Formatter from './Formatter';
+import ErrorMessage from './ErrorMessage';
+import Formatter from './Formatter';
 
 const HALTED_PROCESS_TASK_MESSAGE_CODE = 'Rest.ErrorMessage.General';
 const DELAYED_PROCESS_TASK_MESSAGE_CODE = 'Rest.ErrorMessage.DownTime';

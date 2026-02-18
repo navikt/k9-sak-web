@@ -1,8 +1,8 @@
 import { get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
-import { type JSX, useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState, type JSX } from 'react';
 import Pleietrengende from '../../types/Pleietrengende';
-import type PleietrengendeResponse from '../../types/PleietrengendeResponse';
+import PleietrengendeResponse from '../../types/PleietrengendeResponse';
 import ContainerContext from '../context/ContainerContext';
 
 const OmPleietrengende = (): JSX.Element => {

@@ -4,12 +4,11 @@ import {
   BehandlingPaVent,
   BehandlingUtil,
   harOpprettetAksjonspunkt,
-  type Rettigheter,
-  type SettPaVentParams,
+  Rettigheter,
+  SettPaVentParams,
 } from '@k9-sak-web/behandling-felles';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import DataFetcher from '@k9-sak-web/gui/shared/datafetcher/DataFetcher.js';
-import type {
+import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
   Dokument,
@@ -17,10 +16,11 @@ import type {
   FagsakPerson,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import moment from 'moment';
 import { useState } from 'react';
-import type { Arbeidstype } from '../types';
-import type FetchedData from '../types/FetchedData';
+import { Arbeidstype } from '../types';
+import FetchedData from '../types/FetchedData';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';

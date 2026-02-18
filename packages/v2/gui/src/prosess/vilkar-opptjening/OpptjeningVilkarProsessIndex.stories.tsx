@@ -3,7 +3,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
   k9_kodeverk_opptjening_OpptjeningAktivitetKlassifisering as FastsattOpptjeningAktivitetDtoKlasse,
   k9_kodeverk_opptjening_OpptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType,
-  type k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';

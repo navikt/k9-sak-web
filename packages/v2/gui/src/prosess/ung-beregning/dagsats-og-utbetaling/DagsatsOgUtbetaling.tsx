@@ -1,6 +1,6 @@
 import {
-  type GetSatsOgUtbetalingPerioderResponse,
   ung_sak_kontrakt_ungdomsytelse_ytelse_UtbetalingStatus as UngdomsytelseUtbetaltMånedDtoStatus,
+  type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
@@ -8,10 +8,10 @@ import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } fro
 import { useQuery } from '@tanstack/react-query';
 import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
 import { BeregningsDetaljer } from './BeregningsDetaljer';
-import { DataCellWithValue } from './DataCellWithValue';
-import { DataSection } from './DataSection';
 import styles from './dagsatsOgUtbetaling.module.css';
 import { formatMonthYear, formatSats } from './dagsatsUtils';
+import { DataCellWithValue } from './DataCellWithValue';
+import { DataSection } from './DataSection';
 
 const satsTableHeaders = [
   'Periode',

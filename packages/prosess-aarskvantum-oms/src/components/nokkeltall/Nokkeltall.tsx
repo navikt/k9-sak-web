@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
-import type React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './nokkeltall.module.css';
 

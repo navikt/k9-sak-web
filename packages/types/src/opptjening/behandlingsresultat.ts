@@ -1,4 +1,4 @@
-import type Vilkårresultat from './vilkårresultat';
+import Vilkårresultat from './vilkårresultat';
 
 export type Behandlingsresultat = Readonly<{
   vilkårResultat: {

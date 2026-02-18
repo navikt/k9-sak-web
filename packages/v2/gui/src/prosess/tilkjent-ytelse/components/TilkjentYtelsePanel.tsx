@@ -1,21 +1,21 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Heading } from '@navikt/ds-react';
-import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
-import { FeriepengerPanel, type FeriepengerPrÅr } from './feriepenger/FeriepengerPanel.js';
-import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
+import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import TilkjentYtelse, { type PeriodeMedId } from './TilkjentYtelse';
+import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import { FeriepengerPanel, type FeriepengerPrÅr } from './feriepenger/FeriepengerPanel.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 const perioderMedClassName: PeriodeMedId[] = [];
 

@@ -1,4 +1,4 @@
-import type BehandlingAppKontekst from './behandlingAppKontekstTsType';
+import BehandlingAppKontekst from './behandlingAppKontekstTsType';
 
 export type OpptjeningBehandling = BehandlingAppKontekst & {
   taskStatus?: {

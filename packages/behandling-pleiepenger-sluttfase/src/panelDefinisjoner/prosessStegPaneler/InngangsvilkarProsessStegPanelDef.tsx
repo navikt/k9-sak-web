@@ -1,7 +1,8 @@
-import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import AlderPanelDef from './inngangsvilkarPaneler/AlderPanelDef';
+import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
+
 import SoknadsfristPanelDef from './inngangsvilkarPaneler/SoknadsfristPanelDef';
+import AlderPanelDef from './inngangsvilkarPaneler/AlderPanelDef';
 
 class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR;

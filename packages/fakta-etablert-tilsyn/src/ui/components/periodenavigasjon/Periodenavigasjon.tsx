@@ -1,7 +1,7 @@
 import { Box, Heading, Label } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX, useEffect } from 'react';
-import type Vurderingsperiode from '../../../types/Vurderingsperiode';
+import React, { useEffect, type JSX } from 'react';
+import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';
 import PeriodeSomSkalVurderes from '../periode-som-skal-vurderes/PeriodeSomSkalVurderes';
 import VurderingsperiodeElement from '../vurderingsperiode/VurderingsperiodeElement';

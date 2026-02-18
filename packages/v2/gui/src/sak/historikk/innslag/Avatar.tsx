@@ -1,4 +1,5 @@
 import { HistorikkAktørType } from '@k9-sak-web/backend/combined/behandling/historikk/HistorikkAktørType.js';
+import type { FC } from 'react';
 import {
   PersonFillIcon,
   PersonGavelFillIcon,
@@ -7,7 +8,6 @@ import {
   QuestionmarkCircleFillIcon,
   RobotSmileIcon,
 } from '@navikt/aksel-icons';
-import type { FC } from 'react';
 
 export interface AvatarProps {
   readonly aktørType: HistorikkAktørType;

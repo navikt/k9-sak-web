@@ -1,11 +1,12 @@
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
+
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';

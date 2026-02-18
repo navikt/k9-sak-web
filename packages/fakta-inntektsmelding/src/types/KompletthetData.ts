@@ -1,5 +1,5 @@
-import type { Period } from '@fpsak-frontend/utils';
-import type TilstandStatus from './TilstandStatus';
+import { Period } from '@fpsak-frontend/utils';
+import TilstandStatus from './TilstandStatus';
 
 export interface Kompletthet {
   tilstand: Tilstand[];

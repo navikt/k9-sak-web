@@ -1,8 +1,8 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { Dokument } from '../types/Dokument';
+import { Dokument } from '../types/Dokument';
 import {
   StrukturerDokumentFormFieldName as FieldName,
-  type StrukturerDokumentFormState,
+  StrukturerDokumentFormState,
 } from '../types/StrukturerDokumentFormState';
 
 export const finnBenyttedeDokumenter = (benyttedeDokumentIder: string[], alleDokumenter: Dokument[]): Dokument[] =>

@@ -10,8 +10,7 @@ import { Bleed, BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack 
 import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useQuery } from '@tanstack/react-query';
-import type React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
 import type { FeatureToggles } from '../../../../featuretoggles/FeatureToggles.js';
 import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';

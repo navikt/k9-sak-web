@@ -1,8 +1,9 @@
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { screen } from '@testing-library/react';
+
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';

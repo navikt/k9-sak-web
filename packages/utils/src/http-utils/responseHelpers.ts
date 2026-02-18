@@ -1,4 +1,4 @@
-import type { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 export const isUnauthorized = statusCode => statusCode === 401;
 export const isForbidden = statusCode => statusCode === 403;

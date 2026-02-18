@@ -1,11 +1,11 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import type {
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { BodyShort } from '@navikt/ds-react';
+import {
+  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
+  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormattedMessage } from 'react-intl';
 
 const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[]) => {

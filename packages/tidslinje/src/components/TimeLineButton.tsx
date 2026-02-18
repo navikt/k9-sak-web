@@ -11,7 +11,7 @@ import zoomInImageFilledUrl from '@fpsak-frontend/assets/images/zoom_in_filled.s
 import zoomOutImageUrl from '@fpsak-frontend/assets/images/zoom_out.svg';
 import zoomOutImageFilledUrl from '@fpsak-frontend/assets/images/zoom_out_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import React, { type KeyboardEvent, type MouseEvent } from 'react';
+import React, { KeyboardEvent, MouseEvent } from 'react';
 import styles from './timeLineButton.module.css';
 
 interface ButtonType {

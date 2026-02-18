@@ -1,28 +1,28 @@
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
-import type {
-  K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted,
-  K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted,
-} from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
 import { expect, fn, userEvent } from 'storybook/test';
-import { oppslagKodeverkSomObjektK9Klage } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Klage.js';
-import { oppslagKodeverkSomObjektK9Tilbake } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Tilbake.js';
-import { K9KlageKodeverkoppslag } from '../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
-import { K9TilbakeKodeverkoppslag } from '../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
-import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.jsx';
-import { K9KlageTotrinnskontrollData } from './api/k9/K9KlageTotrinnskontrollBackendClient.js';
-import { K9TilbakeTotrinnskontrollData } from './api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { TotrinnskontrollSakIndex } from './TotrinnskontrollSakIndex.js';
+import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
 import type {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
   TotrinnskontrollData,
 } from './api/TotrinnskontrollApi.js';
-import { TotrinnskontrollSakIndex } from './TotrinnskontrollSakIndex.js';
-import type { TotrinnskontrollBehandling } from './types/TotrinnskontrollBehandling.js';
+import { K9KlageTotrinnskontrollData } from './api/k9/K9KlageTotrinnskontrollBackendClient.js';
+import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.jsx';
+import { K9KlageKodeverkoppslag } from '../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
+import { oppslagKodeverkSomObjektK9Klage } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Klage.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type {
+  K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted,
+  K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted,
+} from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import { K9TilbakeKodeverkoppslag } from '../../kodeverk/oppslag/K9TilbakeKodeverkoppslag.js';
+import { oppslagKodeverkSomObjektK9Tilbake } from '../../kodeverk/mocks/oppslagKodeverkSomObjektK9Tilbake.js';
+import { K9TilbakeTotrinnskontrollData } from './api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { action } from 'storybook/actions';
 
 const klageTotrinnskontrollData = (): TotrinnskontrollData => {
   const klageKodeverkoppslag = new K9KlageKodeverkoppslag(oppslagKodeverkSomObjektK9Klage);

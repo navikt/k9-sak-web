@@ -1,8 +1,9 @@
-import DirekteOvergangFaktaIndex from '@fpsak-frontend/fakta-direkte-overgang';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
+
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import DirekteOvergangFaktaIndex from '@fpsak-frontend/fakta-direkte-overgang';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 class DirekteOvergangFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INFOTRYGDMIGRERING;

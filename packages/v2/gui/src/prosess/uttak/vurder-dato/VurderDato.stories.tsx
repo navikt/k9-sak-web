@@ -1,17 +1,17 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn, within, userEvent, expect, waitFor } from 'storybook/test';
+import { action } from 'storybook/actions';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import Uttak from '../Uttak';
 import {
-  AksjonspunktStatus,
-  lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
+  lagOppfyltPeriode,
   lagVurderDatoNyRegelAksjonspunkt,
+  AksjonspunktStatus,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
 
 /**
  * VurderDato-komponenten håndterer vurdering av virkningsdato for nye uttaksregler.

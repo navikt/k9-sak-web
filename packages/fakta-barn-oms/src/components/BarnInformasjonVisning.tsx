@@ -1,5 +1,5 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import type KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
+import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { formatDate, formatereLukketPeriode } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { BodyShort } from '@navikt/ds-react';

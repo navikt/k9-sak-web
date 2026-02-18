@@ -1,13 +1,13 @@
 import {
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
-  type ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
   type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Alert, BodyShort, Box, Button, Label, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { type QueryObserverResult, type RefetchOptions, useMutation } from '@tanstack/react-query';
+import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';

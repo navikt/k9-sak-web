@@ -1,16 +1,12 @@
-import { BehandlingPaVent, type Rettigheter, type SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import type {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
 import React, { useState } from 'react';
-import type FetchedData from '../types/fetchedDataTsType';
-import FrisinnFakta from './FrisinnFakta';
+
+import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { Fagsak, KodeverkMedNavn, Behandling, ArbeidsgiverOpplysningerPerId, FagsakPerson } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+
 import FrisinnProsess from './FrisinnProsess';
+import FrisinnFakta from './FrisinnFakta';
+import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fetchedData: FetchedData;

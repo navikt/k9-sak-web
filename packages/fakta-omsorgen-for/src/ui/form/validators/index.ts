@@ -1,5 +1,5 @@
 import { Period } from '@fpsak-frontend/utils';
-import type dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { tomorrow } from '../../../constants/dateConstants';
 import { dateFromString } from '../../../util/dateUtils';
 

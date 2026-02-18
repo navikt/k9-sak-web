@@ -1,8 +1,7 @@
-import type Dokument from '../../../types/Dokument';
-import type Step from '../../../types/Step';
-import { dokumentSteg } from '../../../types/Step';
-import type SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
 import ActionType from './actionTypes';
+import Step, { dokumentSteg } from '../../../types/Step';
+import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
+import Dokument from '../../../types/Dokument';
 
 interface State {
   isLoading: boolean;

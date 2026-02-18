@@ -1,10 +1,11 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './avregningSummary.module.css';
 
 /**

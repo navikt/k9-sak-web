@@ -1,19 +1,21 @@
+import React, { useCallback, useMemo, useState } from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
   ProsessStegPanel,
+  Rettigheter,
   prosessStegHooks,
-  type Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import type { Behandling, Fagsak, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import React, { useCallback, useMemo, useState } from 'react';
+import { Behandling, Fagsak, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { AnkeBehandlingApiKeys, restApiAnkeHooks } from '../data/ankeBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePanelDefinisjoner';
-import type FetchedData from '../types/fetchedDataTsType';
+import FetchedData from '../types/fetchedDataTsType';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 
 const forhandsvis = data => {

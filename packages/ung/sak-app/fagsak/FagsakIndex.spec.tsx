@@ -9,7 +9,7 @@ import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 import type useTrackRouteParam from '../app/useTrackRouteParam.js';
-import { requestApi, UngSakApiKeys } from '../data/ungsakApi.js';
+import { UngSakApiKeys, requestApi } from '../data/ungsakApi.js';
 import FagsakIndex from './FagsakIndex';
 
 vi.mock('react-router', async () => {

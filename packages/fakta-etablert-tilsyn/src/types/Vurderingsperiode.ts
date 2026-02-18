@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
-import type Kilde from './Kilde';
-import type { Vurdering } from './TilsynResponse';
+import Kilde from './Kilde';
+import { Vurdering } from './TilsynResponse';
 import Vurderingsresultat from './Vurderingsresultat';
 
 class Vurderingsperiode {

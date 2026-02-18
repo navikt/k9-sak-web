@@ -1,10 +1,10 @@
-import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { render, screen } from '@testing-library/react';
-import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = vi.fn();

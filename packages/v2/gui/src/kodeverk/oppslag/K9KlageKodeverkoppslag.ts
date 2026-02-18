@@ -1,9 +1,9 @@
 import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import {
   GeneriskKodeverkoppslag,
-  type Kilde,
   type Kodeverkoppslag,
   type OrUndefined,
+  type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
 type EnumKodeverdierOppslag = Omit<

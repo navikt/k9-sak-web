@@ -1,4 +1,4 @@
-import type { Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon, PersonFillIcon } from '@navikt/aksel-icons';
 import styles from './periodeSomSkalVurderes.module.css';
 

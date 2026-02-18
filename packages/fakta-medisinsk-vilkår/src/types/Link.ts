@@ -1,4 +1,4 @@
-import type LinkRel from '../constants/LinkRel';
+import LinkRel from '../constants/LinkRel';
 
 interface Link {
   versjon: string;

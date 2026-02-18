@@ -1,5 +1,6 @@
-import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import dayjs from 'dayjs';
+
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import type { ForlengelsePeriodeProp } from '../../types/Beregningsgrunnlag';
 import type { FordelBeregningsgrunnlagPeriode } from '../../types/BeregningsgrunnlagFordeling';
 

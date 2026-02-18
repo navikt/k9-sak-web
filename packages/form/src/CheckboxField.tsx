@@ -1,9 +1,9 @@
 import { Checkbox } from '@navikt/ds-react';
 
-import type React from 'react';
+import React from 'react';
 import { Field } from 'redux-form';
 import Label from './Label';
-import type LabelType from './LabelType';
+import LabelType from './LabelType';
 import renderNavField from './renderNavField';
 
 interface CheckboxFieldProps {

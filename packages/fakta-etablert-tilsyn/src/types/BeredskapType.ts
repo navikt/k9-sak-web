@@ -1,7 +1,7 @@
 import { Period } from '@fpsak-frontend/utils';
-import type Beskrivelse from './Beskrivelse';
-import type { Beredskap } from './TilsynResponse';
+import Beskrivelse from './Beskrivelse';
 import Vurderingsperiode from './Vurderingsperiode';
+import { Beredskap } from './TilsynResponse';
 
 class BeredskapType {
   beskrivelser: Beskrivelse[];

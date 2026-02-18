@@ -1,25 +1,26 @@
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
-import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import {
   isKlagevurderingOmgjørType,
   KlagevurderingOmgjør,
   type KlagevurderingOmgjørType,
 } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { Label } from '@navikt/ds-react';
+
+import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import {
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   folketrygdloven_kalkulus_kodeverk_ArbeidsforholdHandlingType as HandlingType,
+  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   type k9_sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
   type k9_sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Label } from '@navikt/ds-react';
 import hash from 'object-hash';
 import React, { type JSX, type ReactNode } from 'react';
-import type { K9Kodeverkoppslag } from '../../../../kodeverk/oppslag/useK9Kodeverkoppslag.tsx';
-import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes.js';
-import type { TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText.js';
+import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes.js';
+import { type TotrinnskontrollBehandling } from '../../types/TotrinnskontrollBehandling.js';
+import { type TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import type { K9Kodeverkoppslag } from '../../../../kodeverk/oppslag/useK9Kodeverkoppslag.tsx';
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnsBeregningDto) =>
   beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring

@@ -1,9 +1,12 @@
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import type { ReactNode } from 'react';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
-import type FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
+import { ReactNode } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
+
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+
+import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
+
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import styles from './sideMenuWrapper.module.css';
 
 interface OwnProps {

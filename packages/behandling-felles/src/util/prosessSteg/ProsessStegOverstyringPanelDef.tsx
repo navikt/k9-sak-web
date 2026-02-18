@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
+
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VilkarresultatMedOverstyringProsessIndex as VilkarresultatMedOverstyringProsessIndexV2 } from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import type { ReactNode } from 'react';
 import { ProsessStegPanelDef } from './ProsessStegDef';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {

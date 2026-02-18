@@ -1,7 +1,8 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Button } from '@navikt/ds-react';
 
 interface PureOwnProps {
   readOnly: boolean;

@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
-import VarselOmRevurderingForm from './components/VarselOmRevurderingForm';
-import revurderingAksjonspunkterPropType from './propTypes/revurderingAksjonspunkterPropType';
+
 import revurderingBehandlingPropType from './propTypes/revurderingBehandlingPropType';
+import revurderingAksjonspunkterPropType from './propTypes/revurderingAksjonspunkterPropType';
 import revurderingFamilieHendelsePropType from './propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from './propTypes/revurderingSoknadPropType';
+import VarselOmRevurderingForm from './components/VarselOmRevurderingForm';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

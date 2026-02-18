@@ -1,7 +1,8 @@
 import { FileIcon } from '@navikt/aksel-icons';
 import { Button, Link } from '@navikt/ds-react';
-import type { JSX } from 'react';
 import * as React from 'react';
+
+import type { JSX } from 'react';
 
 interface DokumentKnappProps {
   href: string;

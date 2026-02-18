@@ -1,9 +1,9 @@
-import type { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { action } from 'storybook/actions';
 import { messages } from '../i18n';
 import OverstyrBeregningFaktaIndex from './OverstyrBeregningFaktaIndex';
-import type { OverstyrInputBeregningDto } from './types/OverstyrInputBeregningDto';
+import { OverstyrInputBeregningDto } from './types/OverstyrInputBeregningDto';
 
 const intl = createIntl(
   {

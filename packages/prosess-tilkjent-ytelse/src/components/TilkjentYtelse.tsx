@@ -1,13 +1,13 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
-import type { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import moment from 'moment';
-import React, { Component, type RefObject } from 'react';
+import React, { Component, RefObject } from 'react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 import styles from './tilkjentYtelse.module.css';

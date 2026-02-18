@@ -1,4 +1,4 @@
-import type { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import classNames from 'classnames';
 import React from 'react';
 import styles from './Tidslinjerad.module.css';

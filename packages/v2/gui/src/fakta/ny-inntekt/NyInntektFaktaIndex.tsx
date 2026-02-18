@@ -1,15 +1,17 @@
 import { Tabs, VStack } from '@navikt/ds-react';
-import { DateLabel, PeriodLabel } from '@navikt/ft-ui-komponenter';
+
 import { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel.js';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
-import type { ArbeidsgiverOpplysningerPerId } from './src/types/ArbeidsgiverOpplysninger.js';
-import type { Beregningsgrunnlag } from './src/types/Beregningsgrunnlag.js';
+import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel.js';
 import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues.js';
 import { FaktaFordelBeregningAvklaringsbehovCode } from './src/types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
-import type { VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP.js';
+import { type VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP.js';
 import type { Vilkår, Vilkårperiode } from './src/types/Vilkår.js';
+
+import { DateLabel, PeriodLabel } from '@navikt/ft-ui-komponenter';
+import type { ArbeidsgiverOpplysningerPerId } from './src/types/ArbeidsgiverOpplysninger.js';
+import type { Beregningsgrunnlag } from './src/types/Beregningsgrunnlag.js';
 
 const cache = createIntlCache();
 

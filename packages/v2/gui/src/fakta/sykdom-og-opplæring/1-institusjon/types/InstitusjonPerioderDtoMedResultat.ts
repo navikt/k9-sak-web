@@ -1,6 +1,6 @@
-import type {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat,
+import {
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Period } from '@navikt/ft-utils';
 

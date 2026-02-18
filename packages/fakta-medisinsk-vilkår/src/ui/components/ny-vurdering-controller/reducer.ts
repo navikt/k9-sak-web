@@ -1,8 +1,8 @@
-import type Dokument from '../../../types/Dokument';
-import type { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
-import type { Vurderingsversjon } from '../../../types/Vurdering';
-import { dokumentSorter } from '../../../util/dokumentUtils';
 import ActionType from './actionTypes';
+import Dokument from '../../../types/Dokument';
+import { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
+import { Vurderingsversjon } from '../../../types/Vurdering';
+import { dokumentSorter } from '../../../util/dokumentUtils';
 
 interface State {
   sjekkForEksisterendeVurderingerPågår: boolean;

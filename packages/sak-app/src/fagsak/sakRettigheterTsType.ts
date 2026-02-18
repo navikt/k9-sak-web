@@ -1,4 +1,4 @@
-import type { Kodeverk, Periode } from '@k9-sak-web/types';
+import { Kodeverk, Periode } from '@k9-sak-web/types';
 
 export type ÅrsakOgPerioder = Readonly<{
   årsak: Kodeverk;

@@ -5,23 +5,23 @@ import { Image } from '@fpsak-frontend/shared-components/index';
 import { utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import { calcDays, convertHoursToDays, formatereLukketPeriode } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
-  type ArbeidsforholdV2,
-  type ArbeidsgiverOpplysningerPerId,
-  type KodeverkMedNavn,
-  type Utfalltype,
-  type Uttaksperiode,
-  type Vilkår,
+  ArbeidsforholdV2,
+  ArbeidsgiverOpplysningerPerId,
+  KodeverkMedNavn,
+  Utfalltype,
+  Uttaksperiode,
+  Vilkår,
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HelpText, Label, Table, Tabs } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { type ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import Utfall from './Utfall';
 import styles from './aktivitetTabell.module.css';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
-import Utfall from './Utfall';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
 
 interface AktivitetTabellProps {

@@ -1,8 +1,8 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import type { KodeverkMedNavn } from '@k9-sak-web/types';
-import type BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { Loader } from '@navikt/ds-react';
-import type React from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import SoknadsperioderComponent from './SoknadsperioderComponent';

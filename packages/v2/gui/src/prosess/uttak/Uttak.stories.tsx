@@ -1,21 +1,21 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import Uttak from './Uttak';
 import {
-  arbeidsgivereWithTilkommet,
-  inntektsgraderingFlereArbeidsgivere,
+  lagUtredBehandling,
   lagAvsluttetBehandling,
+  lagUttak,
+  lagOppfyltPeriode,
   lagIkkeOppfyltPeriode,
   lagInntektsgraderingPeriode,
-  lagOppfyltPeriode,
   lagTilsynsgraderingPeriode,
-  lagUtredBehandling,
-  lagUttak,
   relevanteAksjonspunkterAlle,
+  arbeidsgivereWithTilkommet,
+  inntektsgraderingFlereArbeidsgivere,
   Årsak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from './Uttak';
+import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
 
 const meta = {
   title: 'gui/prosess/Uttak',

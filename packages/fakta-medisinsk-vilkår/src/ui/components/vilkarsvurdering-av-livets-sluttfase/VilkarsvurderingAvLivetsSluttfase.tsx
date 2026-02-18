@@ -1,22 +1,22 @@
-import { get, type Period } from '@fpsak-frontend/utils';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
-import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
-import { Box } from '@navikt/ds-react';
-import React, { type JSX, useMemo } from 'react';
-import BehandlingType from '../../../constants/BehandlingType';
-import type Step from '../../../types/Step';
-import { livetsSluttfaseSteg, StepId } from '../../../types/Step';
-import type SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
-import type Vurderingselement from '../../../types/Vurderingselement';
+import { get, Period } from '@fpsak-frontend/utils';
+import React, { useMemo, type JSX } from 'react';
+import Step, { livetsSluttfaseSteg, StepId } from '../../../types/Step';
+import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
+import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForLivetsSluttfase } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
 import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
-import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
+
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
+import BehandlingType from '../../../constants/BehandlingType';
+import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
 
 interface VilkårsvurderingAvLivetsSluttfaseProps {
   navigerTilNesteSteg: (steg: Step, ikkeMarkerSteg?: boolean) => void;

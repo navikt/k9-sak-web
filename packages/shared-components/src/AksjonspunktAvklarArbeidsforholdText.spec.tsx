@@ -1,6 +1,6 @@
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import type ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import AksjonspunktAvklarArbeidsforholdText from './AksjonspunktAvklarArbeidsforholdText';

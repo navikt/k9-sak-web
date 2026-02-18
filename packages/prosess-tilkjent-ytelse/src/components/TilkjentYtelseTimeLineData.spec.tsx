@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
-import type { PeriodeMedId } from './TilkjentYtelse';
+import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 
 const selectedItemDataFL = {

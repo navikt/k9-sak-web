@@ -1,23 +1,18 @@
-import { ReduxFormStateCleaner, type Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import type {
-  ArbeidsgiverOpplysningerWrapper,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
 import { useCallback, useEffect, useState } from 'react';
+
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
 import {
+  UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
-  UngdomsytelseBehandlingApiKeys,
 } from './data/ungdomsytelseBehandlingApi';
-import type { FetchedData } from './types';
+import { FetchedData } from './types';
 
 const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER },

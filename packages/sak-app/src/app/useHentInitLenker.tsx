@@ -1,6 +1,6 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
-import type InitLinks from './initLinks';
+import InitLinks from './initLinks';
 
 const LINKS_TEMPLATE = {
   links: [],

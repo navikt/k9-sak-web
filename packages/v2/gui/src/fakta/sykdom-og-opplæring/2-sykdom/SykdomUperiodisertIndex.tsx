@@ -1,22 +1,23 @@
-import type { k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { PlusIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
-import { Period } from '@navikt/ft-utils';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
 import Vurderingsnavigasjon, {
   type Vurderingselement,
 } from '../../../shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon.js';
-import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
-import { CenteredLoader } from '../CenteredLoader';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { Button } from '@navikt/ds-react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { PlusIcon } from '@navikt/aksel-icons';
 import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../SykdomOgOpplæringQueries';
-import NavigasjonsmenyRad from './NavigasjonsmenyRad';
-import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import SykdomUperiodisertContainer from './SykdomUperiodisertContainer';
+import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
+import { Period } from '@navikt/ft-utils';
+import NavigasjonsmenyRad from './NavigasjonsmenyRad';
+import { utledResultat } from './utils';
+import { utledGodkjent } from './utils';
+import { type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
-import { utledGodkjent, utledResultat } from './utils';
+import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 
 export const SykdomUperiodisertContext = createContext<{
   setNyVurdering: (nyVurdering: boolean) => void;

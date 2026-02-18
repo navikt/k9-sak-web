@@ -4,14 +4,14 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import type { Behandling } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 const featureToggles = { ...qFeatureToggles, BRUK_V2_VILKAR_OPPTJENING: true };
 

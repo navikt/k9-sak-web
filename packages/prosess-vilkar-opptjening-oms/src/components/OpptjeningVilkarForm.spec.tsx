@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import type { Aksjonspunkt } from '@k9-sak-web/types';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';

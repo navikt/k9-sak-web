@@ -1,4 +1,4 @@
-import type ErrorType from './errorTsType';
+import ErrorType from './errorTsType';
 
 /**
  * Feiltyper til differensiering av framvisning i GUI

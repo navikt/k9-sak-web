@@ -1,13 +1,16 @@
-import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
-import { FloatRight, Image } from '@fpsak-frontend/shared-components';
-import { TimeLineButton } from '@fpsak-frontend/tidslinje';
-import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import { HGrid, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+
+import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
+import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
+import { FloatRight, Image } from '@fpsak-frontend/shared-components';
+import { TimeLineButton } from '@fpsak-frontend/tidslinje';
+
 import DelOppPeriodeModal from './DelOppPeriodeModal';
+
+import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import styles from './periodeController.module.css';
 
 const isEdited = false;

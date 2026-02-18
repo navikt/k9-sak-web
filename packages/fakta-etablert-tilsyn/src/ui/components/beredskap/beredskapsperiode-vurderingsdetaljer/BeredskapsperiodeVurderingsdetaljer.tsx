@@ -3,9 +3,9 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Box, Button } from '@navikt/ds-react';
-import { type JSX, useContext } from 'react';
-import type Beskrivelse from '../../../../types/Beskrivelse';
-import type Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import { useContext, type JSX } from 'react';
+import Beskrivelse from '../../../../types/Beskrivelse';
+import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import ContainerContext from '../../../context/ContainerContext';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';

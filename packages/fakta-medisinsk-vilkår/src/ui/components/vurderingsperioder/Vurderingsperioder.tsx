@@ -1,7 +1,6 @@
-import type { Period } from '@fpsak-frontend/utils';
+import { Period } from '@fpsak-frontend/utils';
 import { PersonFillIcon } from '@navikt/aksel-icons';
-import type React from 'react';
-import type { JSX } from 'react';
+import React, { type JSX } from 'react';
 import styles from './vurderingsperioder.module.css';
 
 interface VurderingsperioderProps {

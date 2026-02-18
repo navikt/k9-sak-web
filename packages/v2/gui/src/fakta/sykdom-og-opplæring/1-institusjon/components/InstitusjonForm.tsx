@@ -1,10 +1,11 @@
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Controller, useForm } from 'react-hook-form';
 
 import { BodyLong, Box, Button, Checkbox, Radio } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { useContext, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex.js';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 import type { InstitusjonVurderingDtoMedPerioder } from '../types/InstitusjonVurderingDtoMedPerioder.js';

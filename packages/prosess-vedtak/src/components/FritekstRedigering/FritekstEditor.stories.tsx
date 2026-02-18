@@ -1,7 +1,7 @@
 import { Button, Modal } from '@navikt/ds-react';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { createIntl, type IntlShape, RawIntlProvider } from 'react-intl';
+import { createIntl, IntlShape, RawIntlProvider } from 'react-intl';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import messages from '../../../i18n/nb_NO.json';
 import FritekstEditor from './FritekstEditor.js';

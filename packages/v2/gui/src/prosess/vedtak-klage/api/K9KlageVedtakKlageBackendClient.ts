@@ -4,10 +4,10 @@ import {
   noNavK9Klage_getKlageVurdering,
   parter_hentValgtKlagendePart,
 } from '@k9-sak-web/backend/k9klage/generated/sdk.js';
-import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
-import { k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { FagsakDto as K9FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import type { VedtakKlageApi } from './VedtakKlageApi.js';
+import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
+import type { FagsakDto as K9FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
+import { k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export default class K9KlageVedtakKlageBackendClient implements VedtakKlageApi {
   readonly backend = 'k9klage';

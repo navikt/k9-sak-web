@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 /**
  * Definerer en mal for fakta-paneler. Alle fakta-paneler må ha en url-kode, en tekst-kode og en komponent.

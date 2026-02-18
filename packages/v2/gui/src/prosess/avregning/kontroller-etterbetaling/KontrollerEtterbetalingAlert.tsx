@@ -1,6 +1,6 @@
-import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import { Alert } from '@navikt/ds-react';
 import type { FC } from 'react';
+import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 
 const KontrollerEtterbetalingAlert: FC = () => {
   return (

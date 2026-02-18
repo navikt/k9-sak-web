@@ -1,8 +1,8 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
-import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
-import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Period } from '@navikt/ft-utils';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
+import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
 import { InntektsmeldingVurderingRequestKode, type Tilstand, type TilstandMedUiState } from '../types';
 
 /** Transforms backend response to domain model with Period objects */

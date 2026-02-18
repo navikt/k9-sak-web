@@ -1,5 +1,5 @@
 import React from 'react';
-import type ContainerContract from '../types/ContainerContract';
+import ContainerContract from '../types/ContainerContract';
 
 const ContainerContext = React.createContext<ContainerContract | null>(null);
 export default ContainerContext;

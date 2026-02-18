@@ -1,8 +1,9 @@
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import type { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { useMemo } from 'react';
-import ApplicationContextPath from '../app/ApplicationContextPath';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
+
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
+import ApplicationContextPath from '../app/ApplicationContextPath';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 

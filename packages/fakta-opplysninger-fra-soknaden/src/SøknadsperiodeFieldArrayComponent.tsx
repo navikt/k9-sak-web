@@ -2,21 +2,21 @@ import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } f
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import type { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
-import type { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
+import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { Label as DSLabel } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import type { FormAction, WrappedFieldArrayProps } from 'redux-form';
-import FrilanserForm from './FrilanserForm';
+import { FormAction, WrappedFieldArrayProps } from 'redux-form';
 import oppgittOpptjeningRevurderingFormName from './formName';
+import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.module.css';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
-import type OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
+import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
 import SøknadFormValue from './types/SøknadFormValue';
-import type SøknadsperiodeFormValues from './types/SøknadsperiodeFormValues';
+import SøknadsperiodeFormValues from './types/SøknadsperiodeFormValues';
 
 const classNames = classnames.bind(styles);
 const formName = oppgittOpptjeningRevurderingFormName;

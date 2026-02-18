@@ -1,12 +1,12 @@
+import { Fragment, type FC } from 'react';
+import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import {
-  type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
   k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
+  type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
-import { type FC, Fragment } from 'react';
-import { useUttakContext } from '../context/UttakContext';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
+import { useUttakContext } from '../context/UttakContext';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {

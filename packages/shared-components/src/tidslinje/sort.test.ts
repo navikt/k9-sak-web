@@ -1,4 +1,4 @@
-import type { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import dayjs from 'dayjs';
 import { sisteDato, sistePeriode } from './sort';
 

@@ -1,5 +1,5 @@
 import { Fieldset } from '@navikt/ds-react';
-import React, { type ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Field } from 'redux-form';
 import renderNavField from './renderNavField';
 

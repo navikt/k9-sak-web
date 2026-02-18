@@ -1,10 +1,10 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Box } from '@navikt/ds-react';
-import React, { type JSX, useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 
-import type Dokument from '../../../types/Dokument';
-import type Link from '../../../types/Link';
+import Dokument from '../../../types/Dokument';
+import Link from '../../../types/Link';
 import { erFagsakOLPEllerPLS } from '../../../util/utils';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';

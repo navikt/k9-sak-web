@@ -1,15 +1,15 @@
+import { useEffect, useState, type JSX } from 'react';
+import { useUttakContext } from './context/UttakContext';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
-import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import { type JSX, useEffect, useState } from 'react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
-import Infostripe from './components/infostripe/Infostripe';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
-import { useUttakContext } from './context/UttakContext';
 import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
-import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
-import VurderDato from './vurder-dato/VurderDato';
+import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
+import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
+import Infostripe from './components/infostripe/Infostripe';
+import VurderDato from './vurder-dato/VurderDato';
 
 const UttakInnhold = (): JSX.Element => {
   const {

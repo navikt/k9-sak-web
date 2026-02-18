@@ -3,8 +3,8 @@ import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { skalVurderes } from '../../util/utils';
-import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
 import InntektsmeldingFerdigvisning from './InntektsmeldingFerdigvisning';
+import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
 
 interface InntektsmeldingVurderingProps {
   tilstand: TilstandMedUiState;

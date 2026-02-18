@@ -1,20 +1,23 @@
-import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { useFormContext } from 'react-hook-form';
 
 import { Alert, Box, Label, Radio, ReadMore } from '@navikt/ds-react';
-import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
+
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
-import type { ReactElement } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
-import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
-import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
-import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
+
 import type {
   TilkommetAktivitetFormValues,
   TilkommetInntektsforholdFieldValues,
 } from '../../types/FordelBeregningsgrunnlagPanelValues';
 import { getAktivitetNavnFraField } from './TilkommetAktivitetUtils';
+
+import { RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks';
+import type { ReactElement } from 'react';
+import { ytelseVisningsnavn } from '../../../../../utils/ytelseVisningsnavn';
+import type { ArbeidsgiverOpplysningerPerId } from '../../types/ArbeidsgiverOpplysninger';
+import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag';
+import type { Inntektsforhold } from '../../types/BeregningsgrunnlagFordeling';
 import styles from './tilkommetAktivitet.module.css';
 
 type Props = {

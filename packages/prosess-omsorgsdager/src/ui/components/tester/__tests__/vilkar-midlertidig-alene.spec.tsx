@@ -1,11 +1,11 @@
-import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { render, screen } from '@testing-library/react';
-import dayjs from 'dayjs';
-import React from 'react';
 import { axe } from 'vitest-axe';
-import type { VilkarMidlertidigAleneProps } from '../../../../types/VilkarMidlertidigAleneProps';
+import React from 'react';
+import dayjs from 'dayjs';
+import { VilkarMidlertidigAleneProps } from '../../../../types/VilkarMidlertidigAleneProps';
 import VilkarMidlertidigAlene from '../../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
 const relativTilDato = initializeDate(dayjs()).endOf('year');
 const relativFraDato = relativTilDato.subtract(14, 'week');

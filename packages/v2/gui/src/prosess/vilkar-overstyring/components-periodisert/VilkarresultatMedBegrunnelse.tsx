@@ -5,9 +5,8 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { Box } from '@navikt/ds-react';
-import type React from 'react';
-import type { FunctionComponent } from 'react';
-import type { VilkarresultatMedBegrunnelseState } from './FormState';
+import React, { type FunctionComponent } from 'react';
+import { type VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
 

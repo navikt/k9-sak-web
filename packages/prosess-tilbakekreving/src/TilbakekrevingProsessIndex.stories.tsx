@@ -1,15 +1,16 @@
+import { action } from 'storybook/actions';
+
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import type { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
-import { action } from 'storybook/actions';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import TilbakekrevingProsessIndex from './TilbakekrevingProsessIndex';
 import aktsomhet from './kodeverk/aktsomhet';
 import sarligGrunn from './kodeverk/sarligGrunn';
 import vilkarResultat from './kodeverk/vilkarResultat';
-import TilbakekrevingProsessIndex from './TilbakekrevingProsessIndex';
-import type DetaljerteFeilutbetalingsperioder from './types/detaljerteFeilutbetalingsperioderTsType';
-import type FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
+import DetaljerteFeilutbetalingsperioder from './types/detaljerteFeilutbetalingsperioderTsType';
+import FeilutbetalingPerioderWrapper from './types/feilutbetalingPerioderTsType';
 
 const perioderForeldelse = {
   perioder: [

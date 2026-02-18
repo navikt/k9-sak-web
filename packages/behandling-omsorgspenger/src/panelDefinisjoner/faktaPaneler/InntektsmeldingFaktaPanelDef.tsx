@@ -1,12 +1,14 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/ui/InntektsmeldingIndex.js';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import React from 'react';
 
-import Inntektsmelding from '../../components/Inntektsmelding';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
+
+import Inntektsmelding from '../../components/Inntektsmelding';
+import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/ui/InntektsmeldingIndex.js';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;

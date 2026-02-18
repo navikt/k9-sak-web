@@ -1,4 +1,4 @@
-import React, { Component, type ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
 
 /*
  * requireProps

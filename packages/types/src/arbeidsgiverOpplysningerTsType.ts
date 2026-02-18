@@ -1,4 +1,4 @@
-import type ArbeidsforholdId from './arbeidsforholdIdTsType';
+import ArbeidsforholdId from './arbeidsforholdIdTsType';
 
 export type ArbeidsgiverOpplysninger = Readonly<{
   erPrivatPerson: boolean;

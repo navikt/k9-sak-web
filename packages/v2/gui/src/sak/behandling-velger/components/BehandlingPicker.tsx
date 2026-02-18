@@ -12,7 +12,7 @@ import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { type UseQueryResult, useQueries } from '@tanstack/react-query';
-import type { Location } from 'history';
+import { type Location } from 'history';
 import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router';
 import type { BehandlingVelgerBackendApiType } from '../BehandlingVelgerBackendApiType';

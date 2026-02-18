@@ -1,8 +1,8 @@
 import { RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import React, { type JSX, useContext } from 'react';
+import React, { useContext, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import type { RettVedDød } from '../../../types/RettVedDød';
+import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
 import required from '../../../validators/required';
 import ContainerContext from '../../context/ContainerContext';

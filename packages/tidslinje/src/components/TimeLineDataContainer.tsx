@@ -1,5 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './timelineDataContainer.module.css';
 
 const TimeLineDataContainer = ({ children }: { children: ReactNode }) => (

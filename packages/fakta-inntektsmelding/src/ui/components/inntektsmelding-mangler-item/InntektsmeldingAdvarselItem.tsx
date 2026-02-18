@@ -1,6 +1,6 @@
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import type { JSX } from 'react';
-import type { Status } from '../../../types/KompletthetData';
+import { type JSX } from 'react';
+import { Status } from '../../../types/KompletthetData';
 import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
 import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.module.css';
 import ListItem from '../list-item/ListItem';

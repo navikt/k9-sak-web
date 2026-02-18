@@ -1,10 +1,10 @@
-import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Select, Spacer, VStack } from '@navikt/ds-react';
 import { useReducer, useRef, useState } from 'react';
 import type { BehandlingInfo } from '../../BehandlingInfo.js';
 import FritekstInput, { type FritekstInputMethods, type FritekstModus } from '../FritekstInput.js';
-import type { TilbakeBestillBrevDto as BestillBrevDto, TilbakeMeldingerApi } from './api/TilbakeMeldingerApi.ts';
+import type { TilbakeMeldingerApi, TilbakeBestillBrevDto as BestillBrevDto } from './api/TilbakeMeldingerApi.ts';
+import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 
 export type TilbakeMessagesProps = {
   readonly maler: BrevmalDto[];

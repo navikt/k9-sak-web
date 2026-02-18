@@ -1,7 +1,7 @@
-import type { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import type { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 
 export const getAktivitet = (
   aktivitetStatus: BeregningsresultatPeriodeAndelDto['aktivitetStatus'],

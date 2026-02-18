@@ -1,3 +1,5 @@
+import { Period } from '@navikt/ft-utils';
+
 import {
   AirplaneIcon,
   CheckmarkCircleFillIcon,
@@ -6,11 +8,9 @@ import {
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 import { Tooltip } from '@navikt/ds-react';
-import type { Period } from '@navikt/ft-utils';
 import styles from './periodeRad.module.css';
 import type { ResultatType } from './Vurderingsnavigasjon';
 import { Resultat } from './Vurderingsnavigasjon';
-
 interface OwnProps {
   perioder: Period[];
   resultat?: ResultatType;

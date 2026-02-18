@@ -1,4 +1,4 @@
-import type KodeverkMedNavn from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
+import KodeverkMedNavn from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
 
 export interface Adresse {
   adresseType: KodeverkMedNavn;

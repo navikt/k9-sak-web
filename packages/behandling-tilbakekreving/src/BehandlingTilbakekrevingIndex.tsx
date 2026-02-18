@@ -1,17 +1,19 @@
-import { ReduxFormStateCleaner, type Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import NetworkErrorPage from '@k9-sak-web/gui/app/feilmeldinger/NetworkErrorPage.js';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import type { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import React, { useCallback, useEffect, useState } from 'react';
-import { extractErrorInfo } from '../../rest-api-hooks/src/error/extractErrorInfo.js';
+
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
+import FetchedData from './types/fetchedDataTsType';
 import {
   requestTilbakekrevingApi,
   restApiTilbakekrevingHooks,
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
-import type FetchedData from './types/fetchedDataTsType';
+import NetworkErrorPage from '@k9-sak-web/gui/app/feilmeldinger/NetworkErrorPage.js';
+import { extractErrorInfo } from '../../rest-api-hooks/src/error/extractErrorInfo.js';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },

@@ -1,5 +1,5 @@
 import type { Decorator } from '@storybook/react';
-import { type FieldValues, FormProvider, type UseFormProps, useForm } from 'react-hook-form';
+import { FormProvider, useForm, type FieldValues, type UseFormProps } from 'react-hook-form';
 import { action } from 'storybook/actions';
 
 export const withFormProvider =

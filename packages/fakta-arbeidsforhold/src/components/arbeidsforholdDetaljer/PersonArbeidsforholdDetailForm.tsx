@@ -1,14 +1,14 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
-import type ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import type { InjectedFormProps } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
-import type CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
+import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';

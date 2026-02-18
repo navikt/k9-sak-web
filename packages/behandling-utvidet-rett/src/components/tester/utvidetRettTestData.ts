@@ -1,13 +1,13 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Rammevedtak, Vilkar } from '@k9-sak-web/types';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Rammevedtak, Vilkar } from '@k9-sak-web/types';
-import type UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
+import UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
 
 const utvidetRettTestData = {
   aksjonspunkter: [

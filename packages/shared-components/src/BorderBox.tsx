@@ -1,6 +1,6 @@
 import { Box } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './borderBox.module.css';
 
 const classNames = classnames.bind(styles);

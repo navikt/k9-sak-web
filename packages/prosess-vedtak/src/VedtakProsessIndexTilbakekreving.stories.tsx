@@ -2,13 +2,13 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
   k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 import VedtakProsessIndex from './VedtakProsessIndex';
 

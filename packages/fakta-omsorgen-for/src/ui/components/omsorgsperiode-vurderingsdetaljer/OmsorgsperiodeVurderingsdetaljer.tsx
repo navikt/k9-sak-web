@@ -4,14 +4,14 @@ import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/Labelle
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
-import { CogIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HStack, Label, Tag } from '@navikt/ds-react';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
-import type Omsorgsperiode from '../../../types/Omsorgsperiode';
+import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
+import { CogIcon } from '@navikt/aksel-icons';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;

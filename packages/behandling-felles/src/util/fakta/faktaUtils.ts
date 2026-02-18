@@ -1,9 +1,10 @@
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import type { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
-import type FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
-import type Rettigheter from '../../types/rettigheterTsType';
-import type FaktaPanelDef from './FaktaPanelDef';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
+
+import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
+import Rettigheter from '../../types/rettigheterTsType';
+import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 export const DEFAULT_FAKTA_KODE = 'default';
 export const DEFAULT_PROSESS_STEG_KODE = 'default';

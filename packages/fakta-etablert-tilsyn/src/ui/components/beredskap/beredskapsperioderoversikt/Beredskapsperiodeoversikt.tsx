@@ -2,8 +2,8 @@ import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with
 import { VStack } from '@navikt/ds-react';
 import * as React from 'react';
 import { useEffect } from 'react';
-import type BeredskapType from '../../../../types/BeredskapType';
-import type Vurderingsperiode from '../../../../types/Vurderingsperiode';
+import BeredskapType from '../../../../types/BeredskapType';
+import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import ContainerContext from '../../../context/ContainerContext';
 import Periodenavigasjon from '../../periodenavigasjon/Periodenavigasjon';
 import BeredskapsperiodeoversiktController from '../beredskapsperiodeoversikt-controller/BeredskapsperiodeoversiktController';

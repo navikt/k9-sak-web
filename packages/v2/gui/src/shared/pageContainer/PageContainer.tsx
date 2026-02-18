@@ -1,6 +1,5 @@
 import { Alert, Loader } from '@navikt/ds-react';
-import type React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import styles from './pageContainer.module.css';
 
 interface PageContainerProps {

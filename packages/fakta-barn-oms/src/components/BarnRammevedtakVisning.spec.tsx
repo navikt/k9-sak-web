@@ -2,7 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import type KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
+import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnRammevedtakVisning from './BarnRammevedtakVisning';
 
 it('rendrer panel om barnet med rett info', () => {

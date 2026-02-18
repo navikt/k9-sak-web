@@ -1,4 +1,4 @@
-import type KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/KvoteInfo';
+import KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/KvoteInfo';
 import React from 'react';
 import AntallDagerLivetsSluttfaseIndex from './AntallDagerLivetsSluttfaseIndex';
 

@@ -1,10 +1,10 @@
 import { aktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import {
-  type KodeverkKlageType,
-  type KodeverkTilbakeType,
+  KodeverkKlageType,
+  KodeverkTilbakeType,
   KodeverkType,
-  type KodeverkTypeV2,
+  KodeverkTypeV2,
 } from '@k9-sak-web/lib/kodeverk/types.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import type { NyPeriodeFormAndeler } from './manuellePerioder/FormState';

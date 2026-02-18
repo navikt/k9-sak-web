@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
+import { Arbeidsgiver } from '../../../types/KompletthetData';
 import ContainerContext from '../../../context/ContainerContext';
-import type { Arbeidsgiver } from '../../../types/KompletthetData';
 
 interface ArbeidsgiverTekstProps {
   arbeidsgiver: Arbeidsgiver;

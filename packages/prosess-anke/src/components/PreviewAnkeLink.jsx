@@ -1,9 +1,11 @@
-import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+
+import { Link } from '@navikt/ds-react';
 import styles from './previewAnkeLink.module.css';
 
 const getBrevKode = ankeVurdering => {

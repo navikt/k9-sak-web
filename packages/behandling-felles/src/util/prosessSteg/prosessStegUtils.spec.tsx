@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -8,10 +9,10 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import type { Behandling, Fagsak } from '@k9-sak-web/types';
-import React from 'react';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 import {

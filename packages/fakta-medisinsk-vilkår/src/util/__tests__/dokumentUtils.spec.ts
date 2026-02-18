@@ -1,4 +1,4 @@
-import type Dokument from '../../types/Dokument';
+import Dokument from '../../types/Dokument';
 import { finnBenyttedeDokumenter } from '../dokumentUtils';
 
 describe('dokumentUtils', () => {

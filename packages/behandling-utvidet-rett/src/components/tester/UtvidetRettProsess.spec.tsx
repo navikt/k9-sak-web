@@ -1,10 +1,10 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type FetchedData from '../../types/fetchedDataTsType';
+import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettProsess from '../UtvidetRettProsess';
 import utvidetRettTestData from './utvidetRettTestData';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 const { aksjonspunkter, arbeidsgiverOpplysningerPerId, behandling, fagsak, fagsakPerson, rettigheter, vilkar, soknad } =
   utvidetRettTestData;

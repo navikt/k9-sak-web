@@ -1,4 +1,4 @@
-import type { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '../types';
+import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '../types';
 
 export type KodeverkNavnFraUndertypeKodeType = (
   kode: string,

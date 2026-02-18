@@ -1,13 +1,13 @@
-import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
-import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { Component, type ReactNode, type ErrorInfo, type FC } from 'react';
 import { captureException, withScope } from '@sentry/browser';
-import { Component, type ErrorInfo, type FC, type ReactNode } from 'react';
-import { AuthAbortedPage } from '../auth/AuthAbortedPage.js';
 import ErrorPage from './ErrorPage.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import UnauthorizedPage from './UnauthorizedPage.js';
 import ForbiddenPage from './ForbiddenPage.js';
 import NotFoundPage from './NotFoundPage.js';
-import UnauthorizedPage from './UnauthorizedPage.js';
+import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
+import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
+import { AuthAbortedPage } from '../auth/AuthAbortedPage.js';
 
 export interface ErrorFallbackProps {
   readonly error: Error;

@@ -1,15 +1,14 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { CalendarIcon, PencilIcon, PersonFillIcon } from '@navikt/aksel-icons';
-import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
-import { Period } from '@navikt/ft-utils';
-import { useContext, useEffect, useState } from 'react';
-import DetailView from '../../../shared/detailView/DetailView';
-import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import ReisetidFerdigvisning from './ReisetidFerdigvisning';
 import ReisetidForm from './ReisetidForm';
-
+import { Period } from '@navikt/ft-utils';
+import ReisetidFerdigvisning from './ReisetidFerdigvisning';
+import DetailView from '../../../shared/detailView/DetailView';
+import { BodyLong, BodyShort, Button, Label } from '@navikt/ds-react';
+import { PersonFillIcon, CalendarIcon, PencilIcon } from '@navikt/aksel-icons';
+import { useState, useContext, useEffect } from 'react';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { harAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 const ReisetidContainer = ({ vurdering }: { vurdering: ReisetidVurderingDto & { perioder: Period[] } }) => {
   const [redigerer, setRedigerer] = useState(false);
 

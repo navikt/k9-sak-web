@@ -5,10 +5,10 @@ import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import VilkarResultat from '../kodeverk/vilkarResultat';
-import type DataForPeriode from '../types/dataForPeriodeTsType';
-import type { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
+import DataForPeriode from '../types/dataForPeriodeTsType';
+import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
 import { slaSammenOriginaleOgLagredePeriode, TilbakekrevingFormImpl } from './TilbakekrevingForm';
-import type { CustomVilkarsVurdertePeriode } from './TilbakekrevingPeriodeForm';
+import { CustomVilkarsVurdertePeriode } from './TilbakekrevingPeriodeForm';
 
 const alleKodeverk = {
   Aktsomhet: [

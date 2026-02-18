@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
-import type Dokument from './Dokument';
-import type Vurderingsresultat from './Vurderingsresultat';
+import Dokument from './Dokument';
+import Vurderingsresultat from './Vurderingsresultat';
 
 export interface AnnenInformasjon {
   resterendeVurderingsperioder: Period[];

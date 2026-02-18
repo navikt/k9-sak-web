@@ -1,5 +1,5 @@
 import * as periodUtils from '@fpsak-frontend/utils';
-import { finnHullIPerioder, finnMaksavgrensningerForPerioder, slåSammenSammenhengendePerioder } from '../periodUtils';
+import { finnMaksavgrensningerForPerioder, finnHullIPerioder, slåSammenSammenhengendePerioder } from '../periodUtils';
 
 const { Period } = periodUtils;
 

@@ -1,10 +1,10 @@
 import { PeriodLabel } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import type { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import type { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
 import styles from './tilbakekrevingVedtakPeriodeTabell.module.css';
 

@@ -4,7 +4,7 @@ import { BodyShort, ExpansionCard, Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import underavsnittType from '../../kodeverk/avsnittType';
-import type VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
+import VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
 import styles from './tilbakekrevingEditerVedtaksbrevPanel.module.css';

@@ -3,10 +3,10 @@ import { Timeline } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { HGrid } from '@navikt/ds-react';
 import moment from 'moment';
-import { type ReactNode, useEffect, useMemo, useRef } from 'react';
+import { ReactNode, useEffect, useMemo, useRef } from 'react';
 import styles from './tidslinje.module.css';
-import type Periode from './types/Periode';
-import type TidslinjeRad from './types/TidslinjeRad';
+import Periode from './types/Periode';
+import TidslinjeRad from './types/TidslinjeRad';
 
 const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
 

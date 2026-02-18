@@ -1,16 +1,18 @@
-import { BehandlingPaVent, type Rettigheter, type SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import type {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
+import React from 'react';
+
+import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import {
   Fagsak,
-  FagsakPerson,
+  Behandling,
   Kodeverk,
   KodeverkMedNavn,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import React from 'react';
-import type FetchedData from '../types/fetchedDataTsType';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+
 import KlageProsess from './KlageProsess';
+import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fagsak: Fagsak;

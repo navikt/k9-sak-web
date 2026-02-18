@@ -5,9 +5,9 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
-import type { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import React, { type ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
 

@@ -1,4 +1,4 @@
-import type { Dokumenttype } from './Dokument';
+import { Dokumenttype } from './Dokument';
 
 export enum StrukturerDokumentFormFieldName {
   INNEHOLDER_MEDISINSKE_OPPLYSNINGER = 'inneholderMedisinskeOpplysninger',

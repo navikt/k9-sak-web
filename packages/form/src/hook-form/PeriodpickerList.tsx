@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Period } from '@fpsak-frontend/utils';
 import { Box, ErrorMessage, Fieldset } from '@navikt/ds-react';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import type { DatepickerLimitations } from '../DatepickerLimitations';
+import { DatepickerLimitations } from '../DatepickerLimitations';
 import PureDatepicker from '../PureDatepicker';
 import styles from './periodpickerList.module.css';
 

@@ -1,6 +1,6 @@
 import { K9MaxTextWidth } from '@k9-sak-web/gui/tokens/tokens.js';
 import { Box } from '@navikt/ds-react';
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import styles from './aksjonspunktBox.module.css';
 

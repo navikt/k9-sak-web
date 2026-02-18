@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
-import { getAvvisningsAarsaker, getIsAvvist, getKlageresultat, VedtakKlageFormImpl } from './VedtakKlageForm';
+import { VedtakKlageFormImpl, getAvvisningsAarsaker, getIsAvvist, getKlageresultat } from './VedtakKlageForm';
 
 const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
 

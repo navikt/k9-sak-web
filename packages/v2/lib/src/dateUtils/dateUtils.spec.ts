@@ -1,23 +1,23 @@
 import dayjs from 'dayjs';
 import { describe, expect, it } from 'vitest';
 import {
+  TIDENES_ENDE,
   addDaysToDate,
   calcDays,
   calcDaysAndWeeks,
   calcDaysAndWeeksWithWeekends,
   checkDays,
-  checkForOverlap,
-  combineConsecutivePeriods,
   convertHoursToDays,
-  type DateOrPeriod,
   findDifferenceInMonthsAndDays,
   formatDate,
   formatereLukketPeriode,
   getRangeOfMonths,
   isValidDate,
   splitWeeksAndDays,
-  TIDENES_ENDE,
   timeFormat,
+  combineConsecutivePeriods,
+  checkForOverlap,
+  type DateOrPeriod,
 } from './dateUtils';
 
 describe('dateUtils', () => {

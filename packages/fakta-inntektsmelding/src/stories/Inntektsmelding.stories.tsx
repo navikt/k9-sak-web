@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
@@ -11,7 +11,7 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
-import InntektsmeldingContainer, { type InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
+import InntektsmeldingContainer, { InntektsmeldingApi } from '../ui/InntektsmeldingContainer';
 
 const fakeApi = (response: any): InntektsmeldingApi => ({
   getKompletthetsoversikt: () => Promise.resolve(response),

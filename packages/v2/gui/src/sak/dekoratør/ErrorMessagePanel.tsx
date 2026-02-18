@@ -1,11 +1,12 @@
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Detail, HStack } from '@navikt/ds-react';
-import type React from 'react';
-import { useMemo, useState } from 'react';
-import { generateUUID } from '../../utils/uuidGenerator';
+import React, { useMemo, useState } from 'react';
+
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
-import styles from './errorMessagePanel.module.css';
 import type { Feilmelding } from './feilmeldingTsType';
+
+import { generateUUID } from '../../utils/uuidGenerator';
+import styles from './errorMessagePanel.module.css';
 
 interface OwnProps {
   errorMessages: Feilmelding[];

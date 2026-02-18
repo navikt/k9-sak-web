@@ -1,5 +1,5 @@
-import getHumanReadablePeriodString from '../getHumanReadablePeriodString';
 import Period from '../Period';
+import getHumanReadablePeriodString from '../getHumanReadablePeriodString';
 
 describe('getHumanReadablePeriodString', () => {
   it('should return a string of periods', () => {

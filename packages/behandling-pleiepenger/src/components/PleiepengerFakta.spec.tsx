@@ -7,16 +7,16 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
-import type { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
-import type FetchedData from '../types/FetchedData';
+import FetchedData from '../types/FetchedData';
 import ForeldrepengerFakta from './PleiepengerFakta';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {

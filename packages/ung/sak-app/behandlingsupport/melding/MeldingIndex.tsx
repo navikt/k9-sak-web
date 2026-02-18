@@ -1,7 +1,7 @@
 import UngMeldingerBackendClient from '@k9-sak-web/gui/sak/ung-meldinger/UngMeldingerBackendClient.js';
-import type { UngMessagesFormState } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesFormState.js';
+import { UngMessagesFormState } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesFormState.js';
 import { UngMessagesIndex } from '@k9-sak-web/gui/sak/ung-meldinger/UngMessagesIndex.js';
-import type { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { useState } from 'react';
 
 interface OwnProps {

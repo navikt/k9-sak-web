@@ -1,7 +1,7 @@
+import React from 'react';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import type { Fagsak } from '@k9-sak-web/types';
-import React from 'react';
+import { Fagsak } from '@k9-sak-web/types';
 import UtvidetRettBarnFakta from '../../components/UtvidetRettBarnFakta/UtvidetRettBarnFakta';
 
 class BarnFaktaPanelDef extends FaktaPanelDef {

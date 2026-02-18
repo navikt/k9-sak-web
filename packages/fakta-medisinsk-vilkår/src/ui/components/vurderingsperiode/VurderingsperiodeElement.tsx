@@ -7,10 +7,9 @@ import {
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 import { Tooltip } from '@navikt/ds-react';
-import type React from 'react';
-import type { JSX } from 'react';
-import type ManuellVurdering from '../../../types/ManuellVurdering';
-import type Vurderingselement from '../../../types/Vurderingselement';
+import React, { type JSX } from 'react';
+import ManuellVurdering from '../../../types/ManuellVurdering';
+import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
 import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';

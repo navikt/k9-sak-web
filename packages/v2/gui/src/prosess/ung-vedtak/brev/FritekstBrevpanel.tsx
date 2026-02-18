@@ -1,14 +1,14 @@
 import type {
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg,
   ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse as VedtaksbrevEditorResponse,
+  ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Button, Heading, Modal, VStack } from '@navikt/ds-react';
-import { type UseMutateFunction, useQuery } from '@tanstack/react-query';
+import { useQuery, type UseMutateFunction } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import type { FormData } from '../FormData';
+import { type FormData } from '../FormData';
 import type { UngVedtakBackendApiType } from '../UngVedtakBackendApiType';
 import FritekstEditor from './FritekstEditor';
 

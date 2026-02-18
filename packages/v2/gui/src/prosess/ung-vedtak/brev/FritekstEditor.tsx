@@ -1,14 +1,14 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
-
-import {
-  type ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon,
-  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjonType as VedtaksbrevSeksjonType,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Cancel } from '@navikt/ds-icons';
-import { Alert, Box, Button, Heading, HGrid, Modal } from '@navikt/ds-react';
+import { Alert, Box, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJSWrapper from './EditorJSWrapper';
+
+import {
+  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjonType as VedtaksbrevSeksjonType,
+  type ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { FileSearchIcon } from '@navikt/aksel-icons';
 import styles from './RedigerFritekstbrev.module.css';
 import { utledStiler, validerRedigertHtml } from './RedigeringUtils';
 

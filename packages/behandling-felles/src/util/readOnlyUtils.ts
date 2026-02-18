@@ -1,6 +1,6 @@
-import type { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 
-import type Rettigheter from '../types/rettigheterTsType';
+import Rettigheter from '../types/rettigheterTsType';
 
 const harBehandlingReadOnlyStatus = (behandling: Behandling) =>
   behandling.taskStatus && behandling.taskStatus.readOnly ? behandling.taskStatus.readOnly : false;

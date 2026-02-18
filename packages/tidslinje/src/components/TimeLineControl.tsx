@@ -1,5 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
-import type { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import TimeLineButton from './TimeLineButton';
 import styles from './timeLineControl.module.css';
 

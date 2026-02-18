@@ -1,7 +1,7 @@
-import type { HistorikkinnslagDto as UngSakHistorikkinnslagDto } from '@k9-sak-web/backend/ungsak/kontrakt/historikk/HistorikkinnslagDto.js';
-import type { HistorikkinnslagDto as UngTilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/historikk/HistorikkinnslagDto.js';
 import type { UngKodeverkoppslag } from '../../../kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { type BeriketHistorikkInnslag, dokumentMedServerUrl } from './HistorikkBackendApi.js';
+import type { HistorikkinnslagDto as UngSakHistorikkinnslagDto } from '@k9-sak-web/backend/ungsak/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { HistorikkinnslagDto as UngTilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/historikk/HistorikkinnslagDto.js';
 
 export class UngHistorikkInnslagBeriker {
   #kodeverkoppslag: UngKodeverkoppslag;

@@ -2,7 +2,7 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { omit } from '@fpsak-frontend/utils';
 import { addDaysToDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type {
+import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   FastsattOpptjening,
@@ -11,10 +11,10 @@ import type {
   SubmitCallback,
   UtlandDokStatus,
 } from '@k9-sak-web/types';
-import type OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import type { InjectedFormProps } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 

@@ -1,7 +1,9 @@
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { FormattedMessage, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+
 import Feilikon from '../icons/Feilikon';
 import Suksessikon from '../icons/Suksessikon';
+
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import styles from './AldersvilkarStatus.module.css';
 
 interface AldersVilkarAPProps {

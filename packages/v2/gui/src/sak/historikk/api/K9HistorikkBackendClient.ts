@@ -1,13 +1,9 @@
+import { fangFeilVedHenting, type HentetHistorikk, type HistorikkBackendApi } from './HistorikkBackendApi.js';
 import { historikk_hentAlleInnslagV2 as klage_historikk_hentAlleInnslagV2 } from '@k9-sak-web/backend/k9klage/generated/sdk.js';
 import { historikk_hentAlleInnslagV2 as k9sak_historikk_hentAlleInnslagV2 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { historikk_hentAlleInnslagV2 as k9tilbake_historikk_hentAlleInnslagV2 } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
+import { type BeriketHistorikkInnslag } from './HistorikkBackendApi.js';
 import type { K9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
-import {
-  type BeriketHistorikkInnslag,
-  fangFeilVedHenting,
-  type HentetHistorikk,
-  type HistorikkBackendApi,
-} from './HistorikkBackendApi.js';
 import { K9HistorikkInnslagBeriker } from './K9HistorikkInnslagBeriker.js';
 
 export class K9HistorikkBackendClient implements HistorikkBackendApi {

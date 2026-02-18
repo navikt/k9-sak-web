@@ -1,5 +1,5 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { TilbakeMessages, type TilbakeMessagesProps } from './TilbakeMessages.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 // Velg dei properties frå TilbakeMessages som må sendast inn til TilbakeMessagesIndex
 // behandling må vere potensielt undefined inn her pr no, bør gjerne skrive om slik at den alltid er satt frå BehandlingSupportIndex.

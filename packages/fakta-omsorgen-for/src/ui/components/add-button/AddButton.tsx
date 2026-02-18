@@ -1,5 +1,5 @@
 import { PlusCircleIcon } from '@navikt/aksel-icons';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
 import styles from './addButton.module.css';
 
 interface AddButtonProps {

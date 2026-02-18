@@ -1,8 +1,8 @@
+import { UngTilbakeApiError } from './errorhandling/UngTilbakeApiError.js';
+import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
 import { client } from '@navikt/ung-tilbake-typescript-client/client';
 import type { AuthFixApi } from '../shared/auth/AuthFixApi.js';
 import { ClientConfigHelper } from '../shared/config/ClientConfigHelper.js';
-import { getNavCallidFromHeader } from '../shared/instrumentation/navCallid.js';
-import { UngTilbakeApiError } from './errorhandling/UngTilbakeApiError.js';
 
 const baseUrl = '/ung/tilbake';
 

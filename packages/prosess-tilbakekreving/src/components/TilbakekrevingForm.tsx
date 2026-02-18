@@ -19,26 +19,26 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import type { KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { type InjectedFormProps, change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import { InjectedFormProps, change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { createSelector } from 'reselect';
-import type DataForPeriode from '../types/dataForPeriodeTsType';
-import type DetaljerteFeilutbetalingsperioder from '../types/detaljerteFeilutbetalingsperioderTsType';
-import type { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
-import type FeilutbetalingPerioderWrapper from '../types/feilutbetalingPerioderTsType';
-import type TidslinjePeriode from '../types/tidslinjePeriodeTsType';
-import type VilkarsVurdertePerioderWrapper from '../types/vilkarsVurdertePerioderTsType';
-import type { VilkarsVurdertPeriode } from '../types/vilkarsVurdertePerioderTsType';
+import DataForPeriode from '../types/dataForPeriodeTsType';
+import DetaljerteFeilutbetalingsperioder, {
+  DetaljertFeilutbetalingPeriode,
+} from '../types/detaljerteFeilutbetalingsperioderTsType';
+import FeilutbetalingPerioderWrapper from '../types/feilutbetalingPerioderTsType';
+import TidslinjePeriode from '../types/tidslinjePeriodeTsType';
+import VilkarsVurdertePerioderWrapper, { VilkarsVurdertPeriode } from '../types/vilkarsVurdertePerioderTsType';
 import TilbakekrevingPeriodeForm, {
-  type CustomPeriode,
-  type CustomPerioder,
-  type CustomVilkarsVurdertePeriode,
+  CustomPeriode,
+  CustomPerioder,
+  CustomVilkarsVurdertePeriode,
   periodeFormBuildInitialValues,
   periodeFormTransformValues,
   TILBAKEKREVING_PERIODE_FORM_NAME,

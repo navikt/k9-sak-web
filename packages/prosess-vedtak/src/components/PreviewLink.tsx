@@ -1,10 +1,10 @@
+import classNames from 'classnames';
+import React, { ReactNode, useState } from 'react';
+import { FormattedMessage, IntlShape } from 'react-intl';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Alert, Button } from '@navikt/ds-react';
-import classNames from 'classnames';
-import type React from 'react';
-import { type ReactNode, useState } from 'react';
-import { FormattedMessage, type IntlShape } from 'react-intl';
 import { validerRedigertHtml } from './FritekstRedigering/RedigeringUtils';
 
 import styles from './vedtakForm.module.css';

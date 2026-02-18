@@ -1,14 +1,14 @@
-import type React from 'react';
-import type {
+import React from 'react';
+import { formatereDatoTilLesemodus } from '../../../util/stringUtils';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
+import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
+import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
+import {
   VilkarMidlertidigInformasjonTilLesemodus,
   VilkarMidlertidigSoknadsopplysninger,
 } from '../../../types/VilkarMidlertidigAleneProps';
-import { formatereDatoTilLesemodus } from '../../../util/stringUtils';
-import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
-import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
-import { AvslagskoderMidlertidigAlene } from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import tekst from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
+import { AvslagskoderMidlertidigAlene } from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 interface OwnProps {
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;

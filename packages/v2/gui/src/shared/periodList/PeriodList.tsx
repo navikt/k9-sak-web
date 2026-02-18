@@ -1,7 +1,8 @@
-import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label, VStack } from '@navikt/ds-react';
 import { Period, sortPeriodsByFomDate } from '@navikt/ft-utils';
-import type { JSX } from 'react';
+import { type JSX } from 'react';
+
+import { CalendarIcon } from '@navikt/aksel-icons';
 import styles from './periodList.module.css';
 
 type Item = {

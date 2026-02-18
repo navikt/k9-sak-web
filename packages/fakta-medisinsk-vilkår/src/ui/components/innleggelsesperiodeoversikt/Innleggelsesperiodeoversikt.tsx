@@ -1,10 +1,10 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
-import React, { type JSX, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import LinkRel from '../../../constants/LinkRel';
-import type { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
+import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';

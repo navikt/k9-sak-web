@@ -1,11 +1,12 @@
 import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
-import { dateStringSorter, Period } from '@fpsak-frontend/utils';
-import type { KodeverkMedNavn } from '@k9-sak-web/types';
-import type BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
-import type { DokumenterTilBehandling } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
-import type { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
+import { Period, dateStringSorter } from '@fpsak-frontend/utils';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import BehandlingPerioderårsakMedVilkår, {
+  DokumenterTilBehandling,
+} from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
+import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { BodyShort } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -14,7 +15,7 @@ import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
 import styles from './soknadsperioderComponent.module.css';
-import type Periode from './types/Periode';
+import Periode from './types/Periode';
 
 const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) => {
   const årsakMedPerioder = behandlingPerioderårsakMedVilkår.perioderMedÅrsak.årsakMedPerioder.find(

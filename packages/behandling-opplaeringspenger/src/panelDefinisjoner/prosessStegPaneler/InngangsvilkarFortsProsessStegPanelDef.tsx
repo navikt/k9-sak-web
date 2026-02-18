@@ -1,7 +1,8 @@
-import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import MedlemskapPanelDef from './inngangsvilkarFortsPaneler/MedlemskapPanelDef';
+import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
+
 import OpptjeningPanelDef from './inngangsvilkarFortsPaneler/OpptjeningPanelDef';
+import MedlemskapPanelDef from './inngangsvilkarFortsPaneler/MedlemskapPanelDef';
 
 class InngangsvilkarFortsProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.OPPTJENING;

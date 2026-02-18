@@ -1,4 +1,4 @@
-import type DataForPeriode from '../../types/dataForPeriodeTsType';
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
 

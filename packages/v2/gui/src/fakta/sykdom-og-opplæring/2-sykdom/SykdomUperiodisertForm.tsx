@@ -1,6 +1,6 @@
 import {
-  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
   type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
+  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';

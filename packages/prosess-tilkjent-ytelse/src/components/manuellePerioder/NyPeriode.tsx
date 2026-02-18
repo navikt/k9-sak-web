@@ -2,12 +2,12 @@ import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-front
 import { guid } from '@fpsak-frontend/utils';
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
-import type {
+import {
   BeriketBeregningsresultatPeriode,
   NyArbeidsgiverFormState,
   NyPeriodeFormState,

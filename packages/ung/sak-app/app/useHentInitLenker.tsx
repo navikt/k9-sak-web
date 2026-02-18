@@ -1,5 +1,5 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import type InitLinks from '@k9-sak-web/sak-app/src/app/initLinks';
+import InitLinks from '@k9-sak-web/sak-app/src/app/initLinks';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 
 const LINKS_TEMPLATE = {

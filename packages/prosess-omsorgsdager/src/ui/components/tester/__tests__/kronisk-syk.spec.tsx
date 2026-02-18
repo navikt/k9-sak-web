@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { axe } from 'vitest-axe';
-import type { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
+import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 

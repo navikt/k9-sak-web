@@ -1,13 +1,13 @@
-import {
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { Alert, Button } from '@navikt/ds-react';
-import type { Period } from '@navikt/ft-utils';
 import { useContext } from 'react';
-import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import {
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
+  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
+import { Period } from '@navikt/ft-utils';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface OpplæringVurderingselement extends Omit<{ resultat: string }, 'resultat'>, OpplæringVurderingDto {
   perioder: Period[];

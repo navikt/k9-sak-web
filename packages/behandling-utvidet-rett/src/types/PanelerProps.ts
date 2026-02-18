@@ -1,13 +1,7 @@
-import type { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import type {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
-import type FetchedData from './fetchedDataTsType';
+import { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import FetchedData from './fetchedDataTsType';
 
 export interface PanelerProps {
   fetchedData: FetchedData;

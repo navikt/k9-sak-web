@@ -1,26 +1,26 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { alleAksjonspunktDefinisjonVerdier } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { VurderÅrsak } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
-import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import { k9_kodeverk_behandling_aksjonspunkt_VurderÅrsak as TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { Button } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
-import { useMutation } from '@tanstack/react-query';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
-import type { ObjectSchema } from 'yup';
-import * as yup from 'yup';
+import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
+import type { FormState } from './FormState';
+import styles from './totrinnskontrollBeslutterForm.module.css';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
+import { AksjonspunktGodkjenningFieldArray } from './AksjonspunktGodkjenningFieldArray.js';
 import type {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
   TotrinnskontrollData,
 } from '../api/TotrinnskontrollApi.js';
-import type { TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
-import { AksjonspunktGodkjenningFieldArray } from './AksjonspunktGodkjenningFieldArray.js';
-import type { FormState } from './FormState';
-import styles from './totrinnskontrollBeslutterForm.module.css';
+import { useMutation } from '@tanstack/react-query';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { alleAksjonspunktDefinisjonVerdier } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { VurderÅrsak } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 
 const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
   aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);

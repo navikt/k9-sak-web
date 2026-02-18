@@ -1,6 +1,6 @@
-import type { Period } from '@fpsak-frontend/utils';
-import type Link from './Link';
-import type Vurderingsresultat from './Vurderingsresultat';
+import { Period } from '@fpsak-frontend/utils';
+import Vurderingsresultat from './Vurderingsresultat';
+import Link from './Link';
 
 interface ManuellVurdering {
   id: string;

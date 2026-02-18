@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useContext, useCallback } from 'react';
 
 import { RestApiErrorDispatchContext } from './RestApiErrorContext';
 

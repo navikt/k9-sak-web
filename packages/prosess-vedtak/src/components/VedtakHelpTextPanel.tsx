@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { FormattedMessage, type IntlShape, injectIntl, type WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import styles from './vedtakForm.module.css';
 

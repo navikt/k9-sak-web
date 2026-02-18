@@ -1,4 +1,4 @@
-import type { Status, Vurdering } from './KompletthetData';
+import { Status, Vurdering } from './KompletthetData';
 
 export interface Kompletthet {
   tilstand: Tilstand[];
