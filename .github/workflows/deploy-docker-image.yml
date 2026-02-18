@@ -36,7 +36,7 @@ jobs:
         run: yarn build
 
       - name: Bygg server
-        run: cd server && yarn install && yarn build
+        uses: ./.github/actions/build-server
 
       - name: Opprett release med Sentry
         run: yarn sentry-release
