@@ -5,8 +5,7 @@ import {
   type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
   type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { useContext, useMemo, type JSX } from 'react';
+import { useMemo, type JSX } from 'react';
 import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
 import { UttakProvider } from './context/UttakContext';
 import UttakInnhold from './UttakInnhold';
@@ -31,7 +30,6 @@ const Uttak = ({
   readOnly,
 }: UttakProps): JSX.Element => {
   const uttakApi = useMemo(() => new BehandlingUttakBackendClient(), []);
-  const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
 
   const harEtUløstAksjonspunktIUttak = useMemo(
@@ -54,7 +52,7 @@ const Uttak = ({
     erOverstyrer,
     harEtUløstAksjonspunktIUttak,
     readOnly,
-    oppdaterBehandling,
+    oppdaterBehandling: () => hentBehandling?.({ behandlingId: behandling.uuid }, false),
     virkningsdatoUttakNyeRegler,
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     aksjonspunkter,
