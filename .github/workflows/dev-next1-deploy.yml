@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - dev-next1
+      - express
 
 jobs:
   build-deploy:
