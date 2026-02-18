@@ -261,7 +261,7 @@ const PleiepengerProsess = ({
   );
 
   // Form data state for Redux forms (matcher legacy ProsessStegPanel oppførsel)
-  const [formData, setFormData] = useState<BeregningsgrunnlagProsessStegInitPanelProps['formData']>({});
+  const [formData, setFormData] = useState<BeregningsgrunnlagProsessStegInitPanelProps['formData']>(undefined);
   useEffect(() => {
     // Nullstill form data når behandlingsversjon endres
     setFormData({});
