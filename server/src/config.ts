@@ -2,8 +2,6 @@ export interface ProxyApi {
   path: string;
   url: string;
   stripPrefix?: boolean;
-  /** Login URL to return in Location header on 401 responses. */
-  loginPath?: string;
   /** OBO scope — populate when token exchange is enabled. */
   scopes?: string;
 }
@@ -21,16 +19,19 @@ const appVariant = env('APP_VARIANT', 'k9');
 
 // Proxy backend entries. Order matters — more specific paths first.
 // Add `scopes` per entry when OBO token exchange is needed.
+// Login path used for Location header on intercepted 401 responses (matches nginx error_page 401 behaviour).
+const loginPath = appVariant === 'ung' ? '/ung/sak/resource/login' : '/k9/sak/resource/login';
+
 const proxyApis: (Omit<ProxyApi, 'url'> & { url: string | undefined })[] =
   appVariant === 'ung'
     ? [
-        { path: '/ung/sak', url: env('APP_URL'), loginPath: '/ung/sak/resource/login' },
+        { path: '/ung/sak', url: env('APP_URL') },
         { path: '/ung/tilbake', url: process.env.APP_URL_UNG_TILBAKE },
       ]
     : [
         { path: '/k9/formidling/dokumentdata', url: process.env.APP_URL_K9FORMIDLING_DD },
         { path: '/k9/formidling', url: process.env.APP_URL_K9FORMIDLING },
-        { path: '/k9/sak', url: env('APP_URL'), loginPath: '/k9/sak/resource/login' },
+        { path: '/k9/sak', url: env('APP_URL') },
         { path: '/k9/oppdrag', url: process.env.APP_URL_K9OPPDRAG },
         { path: '/k9/klage', url: process.env.APP_URL_KLAGE },
         { path: '/k9/tilbake', url: process.env.APP_URL_K9TILBAKE },
@@ -40,6 +41,7 @@ const proxyApis: (Omit<ProxyApi, 'url'> & { url: string | undefined })[] =
 
 export default {
   appVariant,
+  loginPath,
   port: Number(env('PORT', '9000')),
   staticDir: `./dist/${appVariant}/web`,
   basePath: `/${appVariant}/web`,
