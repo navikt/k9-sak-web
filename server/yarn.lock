@@ -14,6 +14,7 @@ __metadata:
     "@types/node": "npm:22.15.33"
     express: "npm:4.22.1"
     express-http-proxy: "npm:2.1.2"
+    express-rate-limit: "npm:8.2.1"
     helmet: "npm:8.1.0"
     typescript: "npm:5.9.3"
   languageName: unknown
@@ -359,6 +360,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express-rate-limit@npm:8.2.1":
+  version: 8.2.1
+  resolution: "express-rate-limit@npm:8.2.1"
+  dependencies:
+    ip-address: "npm:10.0.1"
+  peerDependencies:
+    express: ">= 4.11"
+  checksum: 10/7cbf70df2e88e590e463d2d8f93380775b2ea181d97f2c50c2ff9f2c666c247f83109a852b21d9c99ccc5762119101f281f54a27252a2f1a0a918be6d71f955b
+  languageName: node
+  linkType: hard
+
 "express@npm:4.22.1":
   version: 4.22.1
   resolution: "express@npm:4.22.1"
@@ -528,6 +540,13 @@ __metadata:
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 10/cd45e923bee15186c07fa4c89db0aace24824c482fb887b528304694b2aa6ff8a898da8657046a5dcf3e46cd6db6c61629551f9215f208d7c3f157cf9b290521
+  languageName: node
+  linkType: hard
+
+"ip-address@npm:10.0.1":
+  version: 10.0.1
+  resolution: "ip-address@npm:10.0.1"
+  checksum: 10/09731acda32cd8e14c46830c137e7e5940f47b36d63ffb87c737331270287d631cf25aa95570907a67d3f919fdb25f4470c404eda21e62f22e0a55927f4dd0fb
   languageName: node
   linkType: hard
 
