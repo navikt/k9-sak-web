@@ -31,7 +31,7 @@ app.use(
   }),
 );
 
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 1000 }));
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 10000 }));
 app.set('trust proxy', 1);
 
 // --- Health checks ---
