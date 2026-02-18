@@ -1,5 +1,10 @@
 # GitHub Copilot Instructions for K9 Sak Web
 
+## Git Policy
+
+- **NEVER** run `git commit` or `git push` unless the user explicitly asks you to.
+- You may check status (`git status`, `git diff`) freely.
+
 ## Project Context
 
 You're working on **k9-sak-web**, a monorepo containing React/TypeScript applications for NAV's K9 case handling system. This system processes various benefit types including Pleiepenger, Omsorgspenger, Opplæringspenger, and Ungdomsytelse.
