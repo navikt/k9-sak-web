@@ -49,8 +49,9 @@ New scripts in `package.json`:
 
 ### 6. Code Formatting
 - Ran `biome format --write` on entire codebase: 211 files formatted
-- Ran `biome check --write` on entire codebase: 1502 files fixed
 - Fixed CSS syntax errors (e.g., `#var()` → `var()`)
+- **Import sorting disabled**: Original import order preserved (no reorganization)
+- **Import type conversions disabled**: No automatic `import type` conversions
 
 ## Biome Configuration Details
 
@@ -66,6 +67,10 @@ Some rules were disabled to match the previous ESLint/Prettier setup:
 - `noAutofocus`: Accessibility rule (disabled to match ESLint)
 - `useValidAnchor`: Accessibility rule (disabled to match ESLint)
 - `noUnknownMediaFeatureName`: Allows old browser hacks (e.g., `-ms-high-contrast`)
+- `useImportType`: Disabled to preserve original import style (no auto-conversion to `import type`)
+
+### Import Organization
+- `organizeImports`: **off** - Import sorting disabled to preserve original code style
 
 ### Rules as Warnings
 - `useExhaustiveDependencies`: React hooks exhaustive deps (warn)
@@ -88,7 +93,7 @@ Some rules were disabled to match the previous ESLint/Prettier setup:
 2. **Unified Tool**: One tool for linting and formatting
 3. **Better DX**: Clearer error messages and better CLI output
 4. **Less Dependencies**: Removed 83 packages, saving ~8 MB
-5. **Import Sorting**: Built-in import organization
+5. **Preserved Code Style**: Import order maintained, no automatic restructuring
 6. **CSS Support**: Biome can also lint and format CSS files
 
 ## Current Status
