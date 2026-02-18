@@ -26,7 +26,10 @@ import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
 import { useProsessmotor } from '../prosess/api/Prosessmotor';
-import { BeregningsgrunnlagProsessStegInitPanel } from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
+import {
+  BeregningsgrunnlagProsessStegInitPanel,
+  type BeregningsgrunnlagProsessStegInitPanelProps,
+} from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/inngangsvilkårFortsetterPaneler/InngangsvilkarFortsProsessStegInitPanel';
 import { InngangsvilkarProsessStegInitPanel } from '../prosess/inngangsvilkårPaneler/InngangsvilkarProsessStegInitPanel';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
@@ -258,7 +261,7 @@ const PleiepengerProsess = ({
   );
 
   // Form data state for Redux forms (matcher legacy ProsessStegPanel oppførsel)
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<BeregningsgrunnlagProsessStegInitPanelProps['formData']>();
   useEffect(() => {
     // Nullstill form data når behandlingsversjon endres
     setFormData(undefined);
@@ -426,7 +429,6 @@ const PleiepengerProsess = ({
                       submitCallback={bekreftAksjonspunktCallback}
                       formData={formData}
                       setFormData={setFormData}
-                      alleKodeverk={alleKodeverk}
                       isReadOnly={isReadOnly}
                     />
                   );
