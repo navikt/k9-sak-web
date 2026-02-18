@@ -1,5 +1,4 @@
 import express from 'express';
-import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import config from './config.js';
 import log from './log.js';
@@ -21,7 +20,6 @@ app.use(
         'connect-src': ["'self'", 'https://sentry.gc.nav.no'],
       },
     },
-    hsts: { maxAge: 31_536_000 },
     referrerPolicy: { policy: 'origin' },
     // Ikke send Cross-Origin-Opener-Policy-header (nettleserstandard = unsafe-none).
     // Login-popupen navigerer cross-origin til login.microsoftonline.com og tilbake.
@@ -32,7 +30,6 @@ app.use(
   }),
 );
 
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 1000 }));
 app.set('trust proxy', 1);
 
 // --- Health checks ---
