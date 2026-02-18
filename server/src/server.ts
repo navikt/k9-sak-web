@@ -21,7 +21,6 @@ app.use(
         'connect-src': ["'self'", 'https://sentry.gc.nav.no'],
       },
     },
-    hsts: { maxAge: 31_536_000 },
     referrerPolicy: { policy: 'origin' },
     // Ikke send Cross-Origin-Opener-Policy-header (nettleserstandard = unsafe-none).
     // Login-popupen navigerer cross-origin til login.microsoftonline.com og tilbake.
