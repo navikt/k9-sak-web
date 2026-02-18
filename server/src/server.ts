@@ -23,10 +23,12 @@ app.use(
     },
     hsts: { maxAge: 31_536_000 },
     referrerPolicy: { policy: 'origin' },
-    // same-origin-allow-popups lets the login popup (which navigates cross-origin
-    // to login.microsoftonline.com) keep its window.opener reference so it can
-    // postMessage back to the parent after auth completes.
-    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+    // Ikke send Cross-Origin-Opener-Policy-header (nettleserstandard = unsafe-none).
+    // Login-popupen navigerer cross-origin til login.microsoftonline.com og tilbake.
+    // Alle COOP-verdier utenom unsafe-none fører til browsing context group switch
+    // ved retur, som permanent nullifiserer window.opener og bryter postMessage-basert
+    // auth-flyt.
+    crossOriginOpenerPolicy: false,
   }),
 );
 
