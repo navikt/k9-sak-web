@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './klageVurderingModal.module.css';
 
 interface OwnProps {
@@ -16,11 +15,11 @@ interface OwnProps {
  * i aksjonspunkt '' velger at ytelsesvedtaket skal stadfestes. Ved å trykke på knapp blir saksbehandler
  * tatt tilbake til sokesiden.
  */
-const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & WrappedComponentProps) => (
+const KlageVurderingModal = ({ visModal = false, lukkModal }: OwnProps) => (
   <Modal
     className={styles.modal}
     open={visModal}
-    aria-label={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
+    aria-label="Vedtaket er stadfestet. Du kommer nå til forsiden"
     onClose={lukkModal}
   >
     <Modal.Body>
@@ -30,16 +29,12 @@ const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & W
           <div className={styles.divider} />
         </div>
         <div>
-          <BodyShort size="small">
-            <FormattedMessage id="KlageVurderingModal.VedtakOversendt" />
-          </BodyShort>
-          <BodyShort size="small">
-            <FormattedMessage id="KlageVurderingModal.GoToSearchPage" />
-          </BodyShort>
+          <BodyShort size="small">Innstilling er sendt til NAV Klageinstans.</BodyShort>
+          <BodyShort size="small">Du kommer nå til forsiden.</BodyShort>
         </div>
         <div>
           <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
-            {intl.formatMessage({ id: 'KlageVurderingModal.Ok' })}
+            OK
           </Button>
         </div>
       </HGrid>
@@ -47,4 +42,4 @@ const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & W
   </Modal>
 );
 
-export default injectIntl(KlageVurderingModal);
+export default KlageVurderingModal;

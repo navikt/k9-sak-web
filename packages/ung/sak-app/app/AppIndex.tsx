@@ -8,13 +8,13 @@ import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
 import AppConfigResolver from './AppConfigResolver';
-import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
+import { IntlProvider } from 'react-intl';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
@@ -66,7 +66,7 @@ const AppIndex = () => {
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
         <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-          <LanguageProvider>
+          <IntlProvider locale="nb-NO" messages={{}}>
             <Dekorator
               hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
               queryStrings={queryStrings}
@@ -76,7 +76,7 @@ const AppIndex = () => {
             {shouldRenderHome && <Home headerHeight={headerHeight} />}
             {forbiddenErrors.length > 0 && <ForbiddenPage />}
             {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
-          </LanguageProvider>
+          </IntlProvider>
         </ErrorBoundary>
       </AppConfigResolver>
     </RootSuspense>
