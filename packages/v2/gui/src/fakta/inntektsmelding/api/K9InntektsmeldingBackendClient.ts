@@ -21,13 +21,14 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
     orgnr,
     skjæringstidspunkt,
     behandlingUuid,
+    begrunnelse,
   }: EtterspørInntektsmeldingRequest): Promise<void> {
     await inntektsmelding_etterspørInntektsmelding({
       body: {
         orgnr,
         skjæringstidspunkt,
         behandlingUuid,
-        // TODO: Add begrunnelse
+        begrunnelse,
       },
     });
   }
