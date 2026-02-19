@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './ankeBehandlingModal.module.css';
 
 interface OwnProps {
@@ -21,12 +20,11 @@ const AnkeVurderingModal = ({
   visModal = false,
   lukkModal,
   erFerdigbehandlet,
-  intl,
-}: OwnProps & WrappedComponentProps) => (
+}: OwnProps) => (
   <Modal
     className={styles.modal}
     open={visModal}
-    aria-label={intl.formatMessage({ id: 'AnkeVurderingModal.ModalDescription' })}
+    aria-label="Vedtaket er stadfestet. Du kommer nå til forsiden"
     onClose={lukkModal}
   >
     <Modal.Body>
@@ -37,17 +35,13 @@ const AnkeVurderingModal = ({
         </div>
         <div>
           <BodyShort size="small">
-            <FormattedMessage
-              id={erFerdigbehandlet ? 'AnkeVurderingModal.Ferdigbehandlet' : 'AnkeVurderingModal.VedtakOversendt'}
-            />
+            {erFerdigbehandlet ? 'Anken er ferdigbehandlet.' : 'Behandlingen er sendt.'}
           </BodyShort>
-          <BodyShort size="small">
-            <FormattedMessage id="AnkeVurderingModal.GoToSearchPage" />
-          </BodyShort>
+          <BodyShort size="small">Du kommer nå til forsiden.</BodyShort>
         </div>
         <div>
           <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
-            {intl.formatMessage({ id: 'AnkeVurderingModal.Ok' })}
+            OK
           </Button>
         </div>
       </HGrid>
@@ -55,4 +49,4 @@ const AnkeVurderingModal = ({
   </Modal>
 );
 
-export default injectIntl(AnkeVurderingModal);
+export default AnkeVurderingModal;
