@@ -21,6 +21,8 @@ import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
+import { IntlProvider } from 'react-intl';
+import { globalMessages } from '@k9-sak-web/behandling-felles';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -55,27 +57,26 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const harFeilet = harK9sakInitKallFeilet;
 
-  const erFerdig =
-    harHentetFerdigInitLenker &&
-    harHentetFerdigKodeverk &&
-    navAnsattState === RestApiState.SUCCESS;
+  const erFerdig = harHentetFerdigInitLenker && harHentetFerdigKodeverk && navAnsattState === RestApiState.SUCCESS;
 
   const formidlingClient = useContext(FormidlingClientContext);
 
   return (
-    <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
-      <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
-        <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
-          <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
-            <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
-              <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
-                {harFeilet || erFerdig ? children : <LoadingPanel />}
-              </InntektsmeldingApiContext>
-            </VedtakKlageApiContext>
-          </KlageVurderingApiContext>
-        </TilkjentYtelseApiContext>
-      </InnloggetAnsattProvider>
-    </K9KodeverkoppslagContext>
+    <IntlProvider locale="nb" messages={globalMessages}>
+      <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
+        <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
+          <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
+            <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
+              <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
+                <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
+                  {harFeilet || erFerdig ? children : <LoadingPanel />}
+                </InntektsmeldingApiContext>
+              </VedtakKlageApiContext>
+            </KlageVurderingApiContext>
+          </TilkjentYtelseApiContext>
+        </InnloggetAnsattProvider>
+      </K9KodeverkoppslagContext>
+    </IntlProvider>
   );
 };
 

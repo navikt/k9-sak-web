@@ -16,6 +16,8 @@ import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { IntlProvider } from 'react-intl';
+import { globalMessages } from '@k9-sak-web/behandling-felles';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -49,21 +51,20 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const harFeilet = harK9sakInitKallFeilet;
 
-  const erFerdig =
-    harHentetFerdigInitLenker &&
-    harHentetFerdigKodeverk &&
-    navAnsattState === RestApiState.SUCCESS;
+  const erFerdig = harHentetFerdigInitLenker && harHentetFerdigKodeverk && navAnsattState === RestApiState.SUCCESS;
 
   return (
-    <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-      <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-        <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
-          <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
-            {harFeilet || erFerdig ? children : <LoadingPanel />}
-          </InnloggetAnsattProvider>
-        </VedtakKlageApiContext>
-      </KlageVurderingApiContext>
-    </UngKodeverkoppslagContext>
+    <IntlProvider locale="nb" messages={globalMessages}>
+      <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
+        <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+            <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+              {harFeilet || erFerdig ? children : <LoadingPanel />}
+            </InnloggetAnsattProvider>
+          </VedtakKlageApiContext>
+        </KlageVurderingApiContext>
+      </UngKodeverkoppslagContext>
+    </IntlProvider>
   );
 };
 

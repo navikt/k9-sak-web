@@ -67,17 +67,15 @@ const AppIndex = () => {
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
         <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-          <IntlProvider locale="nb-NO" messages={globalMessages}>
-            <Dekorator
-              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-              queryStrings={queryStrings}
-              setSiteHeight={setSiteHeight}
-              pathname={location.pathname}
-            />
-            {shouldRenderHome && <Home headerHeight={headerHeight} />}
-            {forbiddenErrors.length > 0 && <ForbiddenPage />}
-            {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
-          </IntlProvider>
+          <Dekorator
+            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+            queryStrings={queryStrings}
+            setSiteHeight={setSiteHeight}
+            pathname={location.pathname}
+          />
+          {shouldRenderHome && <Home headerHeight={headerHeight} />}
+          {forbiddenErrors.length > 0 && <ForbiddenPage />}
+          {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
         </ErrorBoundary>
       </AppConfigResolver>
     </RootSuspense>
