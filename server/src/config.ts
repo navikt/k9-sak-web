@@ -26,17 +26,17 @@ const proxyApis: ProxyApi[] =
   appVariant === 'ung'
     ? [
         { path: '/ung/sak', url: env('APP_URL') },
-        { path: '/ung/tilbake', url: env('APP_URL_UNG_TILBAKE', '') },
+        { path: '/ung/tilbake', url: env('APP_URL_UNG_TILBAKE') },
       ]
     : [
-        { path: '/k9/formidling/dokumentdata', url: env('APP_URL_K9FORMIDLING_DD', '') },
-        { path: '/k9/formidling', url: env('APP_URL_K9FORMIDLING', '') },
+        { path: '/k9/formidling/dokumentdata', url: env('APP_URL_K9FORMIDLING_DD') },
+        { path: '/k9/formidling', url: env('APP_URL_K9FORMIDLING') },
         { path: '/k9/sak', url: env('APP_URL') },
-        { path: '/k9/oppdrag', url: env('APP_URL_K9OPPDRAG', '') },
-        { path: '/k9/klage', url: env('APP_URL_KLAGE', '') },
-        { path: '/k9/tilbake', url: env('APP_URL_K9TILBAKE', '') },
-        { path: '/k9/fordel', url: env('APP_URL_K9FORDEL', '') },
-        { path: '/k9/endringslogg', url: env('ENDRINGSLOGG_URL', ''), stripPrefix: true },
+        { path: '/k9/oppdrag', url: env('APP_URL_K9OPPDRAG') },
+        { path: '/k9/klage', url: env('APP_URL_KLAGE') },
+        { path: '/k9/tilbake', url: env('APP_URL_K9TILBAKE') },
+        { path: '/k9/fordel', url: env('APP_URL_K9FORDEL') },
+        { path: '/k9/endringslogg', url: env('ENDRINGSLOGG_URL'), stripPrefix: true },
       ];
 
 export default {
