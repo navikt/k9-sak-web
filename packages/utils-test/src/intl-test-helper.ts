@@ -8,8 +8,8 @@
 
 import { createIntl, createIntlCache } from 'react-intl';
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
-import defaultMessages from '../../../public/sprak/nb_NO.json';
-export { default as messages } from '../../../public/sprak/nb_NO.json';
+import defaultMessages from '@k9-sak-web/behandling-felles/src/i18n/globalMessages.json';
+export { default as messages } from '@k9-sak-web/behandling-felles/src/i18n/globalMessages.json';
 
 // Create the IntlProvider to retrieve context for wrapping around.
 const cache = createIntlCache();

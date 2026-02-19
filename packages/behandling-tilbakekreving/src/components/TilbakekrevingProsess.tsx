@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
@@ -89,8 +88,7 @@ const TilbakekrevingProsess = ({
   opneSokeside,
   harApenRevurdering,
   setBehandling,
-  intl,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,
@@ -160,8 +158,8 @@ const TilbakekrevingProsess = ({
     <>
       {visApenRevurderingModal && (
         <AdvarselModal
-          headerText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurderingHeader' })}
-          bodyText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurdering' })}
+          headerText="Åpen revurdering"
+          bodyText="Det finnes en åpen revurdering som kan påvirke denne tilbakekrevingsbehandlingen. Vurder konsekvens ved behandling."
           showModal
           submit={lukkApenRevurderingModal}
         />
@@ -193,4 +191,4 @@ const TilbakekrevingProsess = ({
   );
 };
 
-export default injectIntl(TilbakekrevingProsess);
+export default TilbakekrevingProsess;
