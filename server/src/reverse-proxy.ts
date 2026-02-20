@@ -22,7 +22,9 @@ import log from './log.js';
 
 function makeOptions(api: ProxyApi): ProxyOptions {
   return {
-    timeout: 40_000,
+    // Venter 60 sekunder på svar fra backend før timeout. 
+    // Default i express-http-proxy er ingen timeout.
+    timeout: 60_000,
 
     proxyReqOptDecorator: async (options /*, req */) => {
       // When OBO token exchange is enabled, uncomment the following
@@ -47,11 +49,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
       return _proxyResData;
     },
 
-    proxyErrorHandler: (
-      err: NodeJS.ErrnoException,
-      res: Response,
-      next: (err?: unknown) => void,
-    ): void => {
+    proxyErrorHandler: (err: NodeJS.ErrnoException, res: Response, next: (err?: unknown) => void): void => {
       log.error(`Proxy error: ${err.code} ${err.message}`);
       const statusMap: Record<string, number> = { ENOTFOUND: 404, ECONNRESET: 504, ECONNREFUSED: 502 };
       const status = err.code ? statusMap[err.code] : undefined;
