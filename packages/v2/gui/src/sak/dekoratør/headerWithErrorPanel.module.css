@@ -1,6 +1,4 @@
 .endringsloggContainer {
-  display: grid;
-
   /* @navikt/familie-endringslogg bruker Aksel v7-tokens (--a-*). Kan fjernes når endringslogg er migrert og oppdatert til v8 (--ax-*). */
   --a-surface-inverted: #262626;
   --a-bg-default: #fff;
@@ -10,6 +8,8 @@
   --a-surface-action: #0067c5;
   --a-red-400: #c30000;
   --a-text-action: #0067c5;
+
+  display: grid;
 }
 
 .endringsloggContainer :global(.endringslogg) {
