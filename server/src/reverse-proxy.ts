@@ -65,6 +65,6 @@ function makeOptions(api: ProxyApi): ProxyOptions {
 export default function setupProxy(app: Express, apis: ProxyApi[]): void {
   for (const api of apis) {
     app.use(`${api.path}/*`, proxy(api.url, makeOptions(api)));
-    log.info(`Proxy: ${api.path}/* -> ${api.url}`);
+    log.info("proxy setup",  {fromPath: `${api.path}/*`, toPath: api.url}));
   }
 }
