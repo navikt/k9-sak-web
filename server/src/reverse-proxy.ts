@@ -25,6 +25,8 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     // Venter 60 sekunder på svar fra backend før timeout. 
     // Default i express-http-proxy er ingen timeout.
     timeout: 60_000,
+    // Øker body size limit fra default 1mb for å takle enkelte dokument queries.
+    limit: '20mb',
 
     proxyReqOptDecorator: async (options /*, req */) => {
       // When OBO token exchange is enabled, uncomment the following
@@ -50,7 +52,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     },
 
     proxyErrorHandler: (err: NodeJS.ErrnoException, res: Response, next: (err?: unknown) => void): void => {
-      log.error("proxy request returned error", err);
+      log.error("proxy request returned error", { code: err.code, message: err.message });
       const statusMap: Record<string, number> = { ENOTFOUND: 404, ECONNRESET: 504, ECONNREFUSED: 502 };
       const status = err.code ? statusMap[err.code] : undefined;
       if (status) {
@@ -64,7 +66,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
 
 export default function setupProxy(app: Express, apis: ProxyApi[]): void {
   for (const api of apis) {
-    app.use(`${api.path}/*`, proxy(api.url, makeOptions(api)));
-    log.info("proxy setup",  {fromPath: `${api.path}/*`, toPath: api.url}));
+    app.use(api.path + '/{*path}', proxy(api.url, makeOptions(api)));
+    log.info("proxy setup",  {fromPath: `${api.path}/*`, toPath: api.url});
   }
 }

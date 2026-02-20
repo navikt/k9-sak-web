@@ -56,7 +56,7 @@ app.use(
 );
 
 // SPA fallback — any non-API, non-static request serves index.html
-app.get('*', (_req, res) => {
+app.get('{*path}', (_req, res) => {
   res.sendFile('index.html', { root: config.staticDir });
 });
 
