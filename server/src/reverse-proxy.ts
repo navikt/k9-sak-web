@@ -22,7 +22,7 @@ import log from './log.js';
 
 function makeOptions(api: ProxyApi): ProxyOptions {
   return {
-    // Venter 60 sekunder på svar fra backend før timeout. 
+    // Venter 60 sekunder på svar fra backend før timeout.
     // Default i express-http-proxy er ingen timeout.
     timeout: 60_000,
     // Øker body size limit fra default 1mb for å takle enkelte dokument queries.
@@ -52,8 +52,8 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     },
 
     proxyErrorHandler: (err: NodeJS.ErrnoException, res: Response, next: (err?: unknown) => void): void => {
-      log.error("proxy request returned error", { code: err.code, message: err.message });
-      const statusMap: Record<string, number> = { ENOTFOUND: 404, ECONNRESET: 504, ECONNREFUSED: 502 };
+      log.error('proxy request returned error', { code: err.code, message: err.message });
+      const statusMap: Record<string, number> = { ENOTFOUND: 502, ECONNREFUSED: 502, ECONNRESET: 502, ETIMEDOUT: 504 };
       const status = err.code ? statusMap[err.code] : undefined;
       if (status) {
         res.status(status).send();
@@ -67,6 +67,6 @@ function makeOptions(api: ProxyApi): ProxyOptions {
 export default function setupProxy(app: Express, apis: ProxyApi[]): void {
   for (const api of apis) {
     app.use(api.path + '/{*path}', proxy(api.url, makeOptions(api)));
-    log.info("proxy setup",  {fromPath: `${api.path}/*`, toPath: api.url});
+    log.info('proxy setup', { fromPath: `${api.path}/*`, toPath: api.url });
   }
 }
