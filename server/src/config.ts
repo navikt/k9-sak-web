@@ -6,6 +6,11 @@ export interface ProxyApi {
   scopes?: string;
 }
 
+const APP_VARIANTS = {
+  K9: 'k9',
+  UNG: 'ung',
+} as const;
+
 function env(name: string, fallback?: string): string {
   const value = process.env[name];
   if (value) return value;
@@ -15,15 +20,21 @@ function env(name: string, fallback?: string): string {
 }
 
 // APP_VARIANT is set via Dockerfile ARG (k9 or ung).
-const appVariant = env('APP_VARIANT', 'k9');
+const appVariant = env('APP_VARIANT');
+const erEntenK9EllerUng = appVariant === APP_VARIANTS.K9 || appVariant === APP_VARIANTS.UNG;
+
+if (!erEntenK9EllerUng) {
+  console.error(`APP_VARIANT: ${appVariant}. Kan kun være '${APP_VARIANTS.K9}' eller '${APP_VARIANTS.UNG}'.`);
+  process.exit(1);
+}
 
 // Proxy backend entries. Order matters — more specific paths first.
 // Add `scopes` per entry when OBO token exchange is needed.
 // Login path used for Location header on intercepted 401 responses (matches nginx error_page 401 behaviour).
-const loginPath = appVariant === 'ung' ? '/ung/sak/resource/login' : '/k9/sak/resource/login';
+const loginPath = appVariant === APP_VARIANTS.UNG ? '/ung/sak/resource/login' : '/k9/sak/resource/login';
 
 const proxyApis: ProxyApi[] =
-  appVariant === 'ung'
+  appVariant === APP_VARIANTS.UNG
     ? [
         { path: '/ung/sak', url: env('APP_URL') },
         { path: '/ung/tilbake', url: env('APP_URL_UNG_TILBAKE') },
