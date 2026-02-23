@@ -1,17 +1,20 @@
-import { useEffect, useMemo } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { FagsakYtelseType } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { pathToFagsak } from '../app/paths';
 import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import { UngSakBackendClient } from '../data/UngSakBackendClient';
 
-const EMPTY_ARRAY = [];
+const api = new UngSakBackendClient();
 
 /**
  * FagsakSearchIndex
@@ -32,24 +35,25 @@ const FagsakSearchIndex = () => {
   };
 
   const {
-    startRequest: searchFagsaker,
-    data: fagsaker = EMPTY_ARRAY,
-    state: sokeStatus,
+    mutate: searchFagsaker,
+    data: fagsaker = [],
+    isPending,
+    isSuccess,
     error,
-  } = restApiHooks.useRestApiRunner<Fagsak[]>(UngSakApiKeys.SEARCH_FAGSAK);
+  } = useMutation({
+    mutationFn: ({ searchString }: { searchString?: string }) =>
+      api.fagsakSøk(searchString ?? '', FagsakYtelseType.AKTIVITETSPENGER),
+    onSuccess: results => {
+      if (results.length === 1) {
+        void goToFagsak(results[0].saksnummer);
+      }
+    },
+  });
 
   const searchResultAccessDenied = useMemo(
     () => (error && errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
     [error],
   );
-
-  const sokFerdig = sokeStatus === RestApiState.SUCCESS;
-
-  useEffect(() => {
-    if (sokFerdig && fagsaker.length === 1) {
-      void goToFagsak(fagsaker[0].saksnummer);
-    }
-  }, [sokFerdig, fagsaker]);
 
   const fagsakerV2 = JSON.parse(JSON.stringify(fagsaker));
   konverterKodeverkTilKode(fagsakerV2, false);
@@ -59,9 +63,9 @@ const FagsakSearchIndex = () => {
       <FagsakSøkSakIndexV2
         fagsaker={fagsakerV2}
         searchFagsakCallback={searchFagsaker}
-        searchResultReceived={sokFerdig}
+        searchResultReceived={isSuccess}
         selectFagsakCallback={(e, saksnummer: string) => goToFagsak(saksnummer)}
-        searchStarted={sokeStatus === RestApiState.LOADING}
+        searchStarted={isPending}
         searchResultAccessDenied={searchResultAccessDenied}
       />
     </KodeverkProvider>

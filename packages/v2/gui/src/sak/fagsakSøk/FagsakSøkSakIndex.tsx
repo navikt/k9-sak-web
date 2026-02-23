@@ -4,7 +4,7 @@ import type { Fagsak } from './types/Fagsak';
 
 interface OwnProps {
   fagsaker?: Fagsak[];
-  searchFagsakCallback: () => void;
+  searchFagsakCallback: (formValues: { searchString?: string }) => void;
   searchResultReceived: boolean;
   selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: string) => void;
   searchStarted?: boolean;
