@@ -1,7 +1,7 @@
 import { RETTSKILDE_URL, SHAREPOINT_URL } from '@k9-sak-web/konstanter';
 import { ExternalLinkIcon, MenuGridIcon } from '@navikt/aksel-icons';
-import { Dropdown, InternalHeader, Spacer } from '@navikt/ds-react';
-import Endringslogg from '@navikt/familie-endringslogg';
+import { Dropdown, InternalHeader, Spacer, Theme } from '@navikt/ds-react';
+import Endringslogg from '@navikt/endringslogg';
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { isUngWeb } from '../../utils/urlUtils';
@@ -79,22 +79,19 @@ const HeaderWithErrorPanel = ({
           {ytelse}
         </InternalHeader.Title>
         <Spacer />
-        {/*
-            Går mot en backend som BAKS styrer.
-            https://github.com/navikt/familie-endringslogg
-            For å nå backend lokalt må man være tilkoblet naisdevice og kjøre opp k9-sak-web på port 8000 pga CORS
-            */}
         {skalViseEndringslogg && (
           <div className={styles['endringsloggContainer']}>
-            <Endringslogg
-              userId={navBrukernavn}
-              appId="K9_SAK"
-              appName="K9 Sak"
-              backendUrl="/k9/endringslogg"
-              stil="lys"
-              alignLeft
-              maxEntries={150}
-            />
+            <Theme theme="light">
+              <Endringslogg
+                userId={navBrukernavn}
+                appId="K9_SAK"
+                appName="K9 Sak"
+                backendUrl="/k9/endringslogg"
+                stil="lys"
+                alignLeft
+                maxEntries={150}
+              />
+            </Theme>
           </div>
         )}
         <Dropdown>

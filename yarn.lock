@@ -3898,18 +3898,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/familie-endringslogg@npm:14.0.5":
-  version: 14.0.5
-  resolution: "@navikt/familie-endringslogg@npm:14.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F14.0.5%2Fdf2b325da238afc302f13081649e8cfdc9638295"
+"@navikt/endringslogg@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@navikt/endringslogg@npm:2.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fendringslogg%2F2.0.0%2F8faa85ca844d5e3eab4e8d029f516a323f5f3759"
   dependencies:
-    "@portabletext/react": "npm:^6.0.0"
-    classnames: "npm:^2.5.1"
+    "@portabletext/react": "npm:6.0.2"
+    classnames: "npm:2.5.1"
   peerDependencies:
-    "@navikt/aksel-icons": 7.x
-    "@navikt/ds-react": 7.x
+    "@navikt/aksel-icons": 8.x
+    "@navikt/ds-react": 8.x
     "@types/react": 18.x || 19.x
     react: 18.x || 19.x
-  checksum: 10/9fd95dbfa838d130e82786b2dd8dce5b0895a9f6ac4d067bdbf227531464cb325f6625ebdc07296f15973e225dccac49637b24be1786cd8bbf625c5f5e6b8a8f
+  checksum: 10/585b2ed09c8e95f6852813d035f0de759ead82426dcbc9a5fab53deab156be5617c255f454e3c7b334cec577bc3c16bd6dbb623ef6b85fe1e9c88e02f5622999
   languageName: node
   linkType: hard
 
@@ -4457,7 +4457,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@portabletext/react@npm:^6.0.0":
+"@portabletext/react@npm:6.0.2":
   version: 6.0.2
   resolution: "@portabletext/react@npm:6.0.2"
   dependencies:
@@ -7129,7 +7129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.5.1, classnames@npm:^2.5.1":
+"classnames@npm:2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10/58eb394e8817021b153bb6e7d782cfb667e4ab390cb2e9dac2fc7c6b979d1cc2b2a733093955fc5c94aa79ef5c8c89f11ab77780894509be6afbb91dddd79d15
@@ -11410,7 +11410,7 @@ __metadata:
     "@navikt/ds-css": "npm:8.2.0"
     "@navikt/ds-react": "npm:8.2.0"
     "@navikt/ds-tailwind": "npm:8.2.0"
-    "@navikt/familie-endringslogg": "npm:14.0.5"
+    "@navikt/endringslogg": "npm:2.0.0"
     "@navikt/ft-plattform-komponenter": "npm:10.5.9"
     "@playwright/test": "npm:1.58.1"
     "@popperjs/core": "npm:2.11.8"
