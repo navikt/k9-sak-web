@@ -1,4 +1,4 @@
-FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:22-slim
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:24-slim
 
 # These must be set when building for ung-sak-web. Defaults are for k9-sak-web.
 ARG appVariant=k9
