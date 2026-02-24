@@ -26,7 +26,6 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
   PROSESS_MENY_V2: true,
-  PROSESS_MENY_V2_VELGER: true,
 });
 
 /**
