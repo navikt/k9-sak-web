@@ -2,12 +2,17 @@ name: Valider pull request
 permissions:
   contents: read
   packages: read
+  id-token: write
   pull-requests: write
 on:
   pull_request:
 jobs:
   test:
     uses: ./.github/workflows/test.yml
+    secrets: inherit
+
+  verdikjede:
+    uses: ./.github/workflows/verdikjede.yml
     secrets: inherit
 
   storybook-test:
