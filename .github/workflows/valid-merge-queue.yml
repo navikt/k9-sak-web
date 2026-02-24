@@ -3,6 +3,7 @@ name: Valider merge queue
 permissions:
   contents: read
   packages: read
+  id-token: write
 
 on:
   merge_group:
