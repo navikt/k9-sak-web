@@ -45,7 +45,6 @@ jobs:
         with:
           build-version: ${{ steps.build-version.outputs.tag }}
           without_navikt_prefix: true
-          docker_platforms: linux/amd64
           push-image: false
           upload-image: true
 
