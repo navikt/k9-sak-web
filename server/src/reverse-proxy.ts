@@ -20,8 +20,6 @@ import log from './log.js';
 //   return obo.ok ? obo.token : null;
 // }
 
-const isLocal = process.env['NODE_ENV'] !== 'production';
-
 function makeOptions(api: ProxyApi): ProxyOptions {
   return {
     // Venter 60 sekunder på svar fra backend før timeout.
@@ -31,7 +29,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     limit: '20mb',
     // Bevar original Host-header fra nettleseren i stedet for å erstatte den med
     // backend-hosten. Kun nødvendig lokalt (docker-compose)
-    preserveHostHdr: isLocal,
+    preserveHostHdr: true,
 
     proxyReqOptDecorator: async (options /*, req */) => {
       // When OBO token exchange is enabled, uncomment the following
