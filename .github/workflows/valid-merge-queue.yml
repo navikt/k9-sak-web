@@ -11,19 +11,23 @@ on:
       - checks_requested
 
 jobs:
-  test:
+  mq-test:
+    name: MQ test
     uses: ./.github/workflows/test.yml
     secrets: inherit
 
-  verdikjede:
+  mq-verdikjede:
+    name: MQ verdikjede
     uses: ./.github/workflows/verdikjede.yml
     secrets: inherit
 
-  storybook-test:
+  mq-storybook-test:
+    name: MQ storybook-test
     uses: ./.github/workflows/storybook-tests.yml
     secrets: inherit
 
-  lint-tscheck-build:
+  mq-lint-tscheck-build:
+    name: MQ lint-tscheck-build
     uses: ./.github/workflows/lint-tscheck-build.yml
     secrets: inherit
     with:
