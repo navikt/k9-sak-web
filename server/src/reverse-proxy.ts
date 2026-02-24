@@ -27,6 +27,9 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     timeout: 60_000,
     // Øker body size limit fra default 1mb for å takle enkelte dokument queries.
     limit: '20mb',
+    // Bevar original Host-header fra nettleseren i stedet for å erstatte den med
+    // backend-hosten. Kun nødvendig lokalt (docker-compose)
+    preserveHostHdr: true,
 
     proxyReqOptDecorator: async (options /*, req */) => {
       // When OBO token exchange is enabled, uncomment the following
