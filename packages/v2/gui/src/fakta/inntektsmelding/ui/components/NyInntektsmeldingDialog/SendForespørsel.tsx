@@ -44,13 +44,12 @@ export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: Se
     mode: 'onBlur',
   });
 
-  // TODO: Add begrunnelse
-  const handleSubmit = () => {
+  const handleSubmit = (data: FormData) => {
     etterspørInntektsmeldingMutation.mutate({
       behandlingUuid: behandling.uuid,
       skjæringstidspunkt,
       orgnr: arbeidsgiver.arbeidsgiver,
-      // TODO: Add begrunnelse
+      begrunnelse: data.begrunnelse,
     });
   };
 
