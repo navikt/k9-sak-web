@@ -1,0 +1,12 @@
+version: '3'
+services:
+  frontend:
+    image: k9-sak-web:1.2.0
+    # build: .
+    ports:
+      - 9000:9000
+    environment:
+      - APP_HOSTNAME=localhost
+      - APP_URL=http://host.docker.internal:8080
+      - APP_PORT=9000
+      - APP_PATH_PREFIX=sak
