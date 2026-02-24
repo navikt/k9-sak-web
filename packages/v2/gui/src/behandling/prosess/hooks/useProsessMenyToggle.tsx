@@ -49,7 +49,7 @@ export function useProsessMenyToggle(): UseProsessMenyToggleResult {
     v2Enabled && velgerEnabled ? (
       <HStack
         align="center"
-        gap="2"
+        gap="space-8"
         justify="center"
         style={{
           borderRadius: '8px',

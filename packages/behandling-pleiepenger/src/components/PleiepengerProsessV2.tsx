@@ -1,4 +1,4 @@
-import { type Dispatch, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -86,14 +86,12 @@ export const PleiepengerProsessV2 = ({
   lagreDokumentdata,
   hentFritekstbrevHtmlCallback,
 }: PleiepengerProsessV2Props) => {
-  const previewCallback = useCallback(
-    () => getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling),
-    [forhandsvisMelding, fagsak, fagsakPerson, behandling],
-  );
+  const previewCallback = getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling);
 
-  const previewFptilbakeCallback = useCallback(
-    () => getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
-    [forhandsvisTilbakekrevingMelding, fagsak, behandling],
+  const previewFptilbakeCallback = getForhandsvisFptilbakeCallback(
+    forhandsvisTilbakekrevingMelding,
+    fagsak,
+    behandling,
   );
 
   const [formData, setFormData] = useState<BeregningsgrunnlagProsessStegInitPanelProps['formData']>();

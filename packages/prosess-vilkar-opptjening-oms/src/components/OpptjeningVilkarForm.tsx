@@ -1,6 +1,5 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { Aksjonspunkt, Opptjening, SubmitCallback } from '@k9-sak-web/types';
-import { k9_sak_kontrakt_vilkår_VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client/types';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { useContext } from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
@@ -21,7 +20,7 @@ interface OpptjeningVilkarFormProps {
   readOnlySubmitButton: boolean;
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
-  vilkårPerioder: k9_sak_kontrakt_vilkår_VilkårPeriodeDto[] | undefined;
+  vilkårPerioder: Vilkarperiode[] | undefined;
   periodeIndex: number;
   opptjeninger: Opptjening[];
 }

@@ -142,7 +142,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
   const alleStegMedVurdering = prosessmotorSteg.filter(s => s.type !== ProcessMenuStepType.default);
 
   return (
-    <Box.New paddingInline="6">
+    <Box paddingInline="space-24">
       <ProcessMenu steps={steg} onClick={handleStegKlikk} stepArrowContainerStyle={styles.stepArrowContainer} />
       <LoadingPanelSuspense>
         <ProsessPanelContext.Provider
@@ -154,6 +154,6 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
           {children}
         </ProsessPanelContext.Provider>
       </LoadingPanelSuspense>
-    </Box.New>
+    </Box>
   );
 };
