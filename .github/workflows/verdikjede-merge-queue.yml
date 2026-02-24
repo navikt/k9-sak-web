@@ -1,11 +1,13 @@
-name: Reusable verdikjedetester
+name: Verdikjedetester merge queue
 
 permissions:
   contents: read
   packages: read
 
 on:
-  workflow_call:
+  merge_group:
+    types:
+      - checks_requested
 
 jobs:
   build-docker-image-verdikjede:
