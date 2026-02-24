@@ -3,9 +3,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Aksjonspunkt, Behandling, Fagsak, Opptjening, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, Opptjening, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import { k9_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client/types';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
 import { useEffect, useState } from 'react';
@@ -31,7 +30,7 @@ interface OpptjeningVilkarProsessIndexProps {
   behandling: Pick<Behandling, 'id' | 'versjon' | 'behandlingsresultat'>;
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
-  vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
+  vilkar: Vilkar[];
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
@@ -80,7 +79,7 @@ const OpptjeningVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               iconSrc:
-                isAksjonspunktOpen && vilkarStatus === vilkarUtfallType.IKKE_VURDERT ? (
+                isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? (
                   <Image
                     src={advarselIcon}
                     className={styles.warningIcon}
@@ -96,7 +95,7 @@ const OpptjeningVilkarProsessIndex = ({
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            status={activePeriode.vilkarStatus}
+            status={activePeriode.vilkarStatus.kode}
             lovReferanse={lovReferanse}
             fagsakType={fagsak.sakstype}
             aksjonspunkter={aksjonspunkter}
