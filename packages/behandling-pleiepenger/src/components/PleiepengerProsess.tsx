@@ -14,41 +14,12 @@ import {
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
-import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-
-import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { Bleed, BoxNew } from '@navikt/ds-react';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
-import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
-import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
-import { useProsessmotor } from '../prosess/api/Prosessmotor';
-import {
-  BeregningsgrunnlagProsessStegInitPanel,
-  type BeregningsgrunnlagProsessStegInitPanelProps,
-} from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
-import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/inngangsvilkårFortsetterPaneler/InngangsvilkarFortsProsessStegInitPanel';
-import { InngangsvilkarProsessStegInitPanel } from '../prosess/inngangsvilkårPaneler/InngangsvilkarProsessStegInitPanel';
-import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
-import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
-import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
-import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
-import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
-
-const PROSESS_STEG_KODER = {
-  INNGANGSVILKAR: 'inngangsvilkar',
-  MEDISINSK_VILKAR: 'medisinsk_vilkar',
-  OPPTJENING: 'opptjening',
-  UTTAK: 'uttak',
-  TILKJENT_YTELSE: 'tilkjent_ytelse',
-  SIMULERING: 'simulering',
-  BEREGNINGSGRUNNLAG: 'beregningsgrunnlag',
-  VEDTAK: 'vedtak',
-} as const;
+import { PleiepengerProsessV2 } from './PleiepengerProsessV2';
 
 interface OwnProps {
   data: FetchedData;
@@ -71,7 +42,7 @@ interface OwnProps {
   hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
-const getForhandsvisFptilbakeCallback =
+export const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
   (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
     const data = {
@@ -249,209 +220,29 @@ const PleiepengerProsess = ({
   // Toggle for å bytte mellom gammel og ny meny (for sammenligning under migrering)
   const { useV2Menu, ToggleComponent } = useProsessMenyToggle();
 
-  // previewCallback til context
-  const previewCallback = useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
-    behandling.versjon,
-  ]);
-
-  // previewFptilbakeCallback til context (for simulering/avregning)
-  const previewFptilbakeCallback = useCallback(
-    getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
-    [behandling.versjon],
-  );
-
-  const [formData, setFormData] = useState<BeregningsgrunnlagProsessStegInitPanelProps['formData']>();
-  useEffect(() => {
-    // Nullstill form data når behandlingsversjon endres
-    setFormData(undefined);
-  }, [behandling.versjon]);
-
-  const [vedtakFormState, setVedtakFormState] = useState<any>(null);
-  const vedtakFormValue = useMemo(
-    () => ({ vedtakFormState, setVedtakFormState }),
-    [vedtakFormState, setVedtakFormState],
-  );
-
-  const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
-
-  // Generer prosessteg fra prosessmotor
-  const prosessteg = useProsessmotor({ api: k9SakProsessApi, behandling });
-
-  // Modernisert versjon uten nestede callbacks (kan brukes i v2 meny)
-  const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
-    fagsak,
-    behandling,
-    lagreAksjonspunkter,
-    lagreOverstyrteAksjonspunkter,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-  });
-
-  const handleVedtakSubmit = async (
-    aksjonspunktModels: { isVedtakSubmission: boolean; kode: string }[],
-    aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  ) => {
-    const fatterVedtakAksjonspunktkoder = [
-      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-      aksjonspunktCodes.FATTER_VEDTAK,
-      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-    ];
-    const visIverksetterVedtakModal = aksjonspunktModels.some(
-      ap => ap.isVedtakSubmission && fatterVedtakAksjonspunktkoder.includes(ap.kode),
-    );
-    const visFatterVedtakModal =
-      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-    if (aksjonspunktModels[0].isVedtakSubmission) {
-      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-      if (dokumentdata) {
-        await lagreDokumentdata(dokumentdata);
-      }
-    }
-    await bekreftAksjonspunktCallback(
-      aksjonspunktModels,
-      aksjonspunkt,
-      visIverksetterVedtakModal || visFatterVedtakModal,
-    );
-
-    if (visFatterVedtakModal) {
-      toggleFatterVedtakModal(true);
-    } else if (visIverksetterVedtakModal) {
-      toggleIverksetterVedtakModal(true);
-    }
-  };
-
   if (useV2Menu) {
-    // - v2 ProsessMeny
-    // - Legacy ProsessStegPanel for innholdsrendering (unngår Redux-form problemer)
-    // - LegacyPanelAdapter registrerer paneler med v2 meny, men rendrer ikke innhold
-    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
-    const isReadOnly = !rettigheter.writeAccess.isEnabled;
     return (
-      <VedtakFormContext.Provider value={vedtakFormValue}>
-        {ToggleComponent}
-        <IverksetterVedtakStatusModal
-          visModal={visIverksetterVedtakModal}
-          lukkModal={lukkModalOgGåTilSøk}
-          behandlingsresultat={behandling.behandlingsresultat}
-        />
-        <FatterVedtakStatusModal
-          visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
-          lukkModal={lukkModalOgGåTilSøk}
-          tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
-        />
-
-        {/* v2 meny for navigasjon */}
-        <ProsessMeny steg={prosessteg}>
-          <Bleed marginInline="space-24">
-            <BoxNew borderColor="neutral-subtle" borderWidth="1" padding="space-16">
-              {prosessStegPanelDefinisjoner.map(panelDef => {
-                // Finn tilsvarende formatert panel basert på urlKode (ikke indeks!)
-                const urlKode = panelDef.getUrlKode();
-
-                // Bruk migrerte InitPanel-komponenter der de finnes
-                if (urlKode === PROSESS_STEG_KODER.INNGANGSVILKAR) {
-                  return (
-                    <InngangsvilkarProsessStegInitPanel
-                      key={urlKode}
-                      submitCallback={bekreftAksjonspunktCallback}
-                      overrideReadOnly={isReadOnly}
-                      kanOverstyreAccess={rettigheter.kanOverstyreAccess}
-                      kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
-                      behandling={behandling}
-                      api={k9SakProsessApi}
-                    />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.MEDISINSK_VILKAR) {
-                  return (
-                    <MedisinskVilkarProsessStegInitPanel key={urlKode} behandling={behandling} api={k9SakProsessApi} />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.OPPTJENING) {
-                  return (
-                    <InngangsvilkarFortsProsessStegInitPanel
-                      key={urlKode}
-                      submitCallback={bekreftAksjonspunktCallback}
-                      overrideReadOnly={isReadOnly}
-                      kanOverstyreAccess={rettigheter.kanOverstyreAccess}
-                      kanEndrePåSøknadsopplysninger={rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet}
-                      behandling={behandling}
-                      api={k9SakProsessApi}
-                      isReadOnly={isReadOnly}
-                      fagsak={fagsak}
-                    />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.UTTAK) {
-                  return (
-                    <UttakProsessStegInitPanel
-                      key={urlKode}
-                      behandling={behandling}
-                      api={k9SakProsessApi}
-                      hentBehandling={hentBehandling}
-                      erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-                      isReadOnly={isReadOnly}
-                    />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.TILKJENT_YTELSE) {
-                  return (
-                    <TilkjentYtelseProsessStegInitPanel
-                      key={urlKode}
-                      api={k9SakProsessApi}
-                      behandling={behandling}
-                      fagsak={fagsak}
-                      isReadOnly={isReadOnly}
-                      submitCallback={bekreftAksjonspunktCallback}
-                    />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.SIMULERING) {
-                  return (
-                    <SimuleringProsessStegInitPanel
-                      api={k9SakProsessApi}
-                      key={urlKode}
-                      behandling={behandling}
-                      aksjonspunkterMedKodeverk={data.aksjonspunkter}
-                      fagsak={fagsak}
-                      isReadOnly={isReadOnly}
-                      submitCallback={bekreftAksjonspunktCallback}
-                      previewFptilbakeCallback={previewFptilbakeCallback}
-                    />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.BEREGNINGSGRUNNLAG) {
-                  return (
-                    <BeregningsgrunnlagProsessStegInitPanel
-                      key={urlKode}
-                      api={k9SakProsessApi}
-                      behandling={behandling}
-                      submitCallback={bekreftAksjonspunktCallback}
-                      formData={formData}
-                      setFormData={setFormData}
-                      isReadOnly={isReadOnly}
-                    />
-                  );
-                }
-                if (urlKode === PROSESS_STEG_KODER.VEDTAK) {
-                  return (
-                    <VedtakProsessStegInitPanel
-                      key={urlKode}
-                      api={k9SakProsessApi}
-                      behandling={behandling}
-                      hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
-                      isReadOnly={isReadOnly}
-                      submitCallback={handleVedtakSubmit}
-                      previewCallback={previewCallback}
-                      lagreDokumentdata={lagreDokumentdata}
-                    />
-                  );
-                }
-                return null;
-              })}
-            </BoxNew>
-          </Bleed>
-        </ProsessMeny>
-      </VedtakFormContext.Provider>
+      <PleiepengerProsessV2
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling}
+        rettigheter={rettigheter}
+        data={data}
+        hentBehandling={hentBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        visIverksetterVedtakModal={visIverksetterVedtakModal}
+        toggleIverksetterVedtakModal={toggleIverksetterVedtakModal}
+        visFatterVedtakModal={visFatterVedtakModal}
+        toggleFatterVedtakModal={toggleFatterVedtakModal}
+        lukkModalOgGåTilSøk={lukkModalOgGåTilSøk}
+        ToggleComponent={ToggleComponent}
+        lagreAksjonspunkter={lagreAksjonspunkter}
+        lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
+        forhandsvisMelding={forhandsvisMelding}
+        forhandsvisTilbakekrevingMelding={forhandsvisTilbakekrevingMelding}
+        lagreDokumentdata={lagreDokumentdata}
+        hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
+      />
     );
   }
 
