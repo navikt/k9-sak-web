@@ -1,13 +1,21 @@
-name: Valider pull request
+name: Valider merge queue
+
 permissions:
   contents: read
   packages: read
-  pull-requests: write
+
 on:
-  pull_request:
+  merge_group:
+    types:
+      - checks_requested
+
 jobs:
   test:
     uses: ./.github/workflows/test.yml
+    secrets: inherit
+
+  verdikjede:
+    uses: ./.github/workflows/verdikjede.yml
     secrets: inherit
 
   storybook-test:
@@ -19,7 +27,3 @@ jobs:
     secrets: inherit
     with:
       run-build: true
-
-  knip:
-    uses: ./.github/workflows/knip.yml
-    secrets: inherit
