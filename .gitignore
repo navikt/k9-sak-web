@@ -35,5 +35,6 @@ public/client/src
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+server/.yarn
 !/packages/v2/lib*
 /.run/
