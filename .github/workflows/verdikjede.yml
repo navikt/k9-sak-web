@@ -6,9 +6,15 @@ permissions:
 
 on:
   workflow_call:
+    inputs:
+      is-merge-queue:
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   build-docker-image-verdikjede:
+    if: ${{ inputs.is-merge-queue }}
     name: Build Docker image for verdikjede
     runs-on: ubuntu-latest
     permissions:
@@ -48,6 +54,7 @@ jobs:
           upload-image: true
 
   verdikjede-tester:
+    if: ${{ inputs.is-merge-queue }}
     name: Verdikjedetester
     secrets: inherit
     permissions:

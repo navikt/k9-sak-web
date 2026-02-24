@@ -19,6 +19,8 @@ jobs:
   mq-verdikjede:
     name: MQ verdikjede
     uses: ./.github/workflows/verdikjede.yml
+    with:
+      is-merge-queue: true
     secrets: inherit
 
   mq-storybook-test:
