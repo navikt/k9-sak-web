@@ -30,15 +30,15 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
   }, [fosterbarnFormValues]);
 
   return (
-    <Box.New marginBlock="0 6">
-      <Box.New padding="4" borderWidth="1" borderRadius="medium">
-        <Box.New marginBlock="0 4">
+    <Box marginBlock="space-0 space-24">
+      <Box padding="space-16" borderWidth="1" borderRadius="4">
+        <Box marginBlock="space-0 space-16">
           <Heading level="2" size="medium">
             Fosterbarn
           </Heading>
-        </Box.New>
+        </Box>
         {fields.length > 0 && (
-          <Box.New marginBlock="0 4">
+          <Box marginBlock="space-0 space-16">
             <Table>
               <Table.Header>
                 <Table.Row>
@@ -92,14 +92,14 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
                 ))}
               </Table.Body>
             </Table>
-          </Box.New>
+          </Box>
         )}
 
         <Button variant="secondary" onClick={() => append({ fødselsnummer: '' })} size="small">
           Legg til fosterbarn
         </Button>
-      </Box.New>
-    </Box.New>
+      </Box>
+    </Box>
   );
 };
 

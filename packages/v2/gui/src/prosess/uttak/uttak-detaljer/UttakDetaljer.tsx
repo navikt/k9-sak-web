@@ -27,7 +27,7 @@ import styles from './uttakDetaljer.module.css';
 const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
   return funnedeÅrsaker.map(årsak => (
-    <Tag variant="error" key={årsak.årsak} className={styles.uttakDetaljer}>
+    <Tag data-color="danger" variant="outline" key={årsak.årsak} className={styles.uttakDetaljer}>
       {årsak.tekst}
     </Tag>
   ));
@@ -66,7 +66,7 @@ const utenlandsoppholdInfo = (
   }
 
   return (
-    <Tag variant="success" className={styles.uttakDetaljer}>
+    <Tag data-color="success" variant="outline" className={styles.uttakDetaljer}>
       {utenlandsoppholdTekst(utenlandsopphold, kodeverkNavnFraKode)}
     </Tag>
   );
@@ -141,7 +141,6 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
       {getÅrsaksetiketter(årsaker || [])}
       {getTekstVedBarnetsDødsfall(årsaker || [])}
       {utenlandsoppholdInfo(utfall, utenlandsopphold, kodeverkNavnFraKode)}
-
       {manueltOverstyrt && (
         <Alert variant="info" size="small" className="mx-4">
           Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
@@ -149,14 +148,14 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
       )}
       <HGrid gap="space-32" columns={3} align="start" className={styles['uttakDetaljer']}>
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
-          <Box.New
+          <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
-              <Box.New className={styles.uttakDetaljerTag}>
+              <Box className={styles.uttakDetaljerTag}>
                 <FremhevingTag text={`Gir lavest ${graderingBenevnelse(fagsakYtelseType)}`} />
-              </Box.New>
+              </Box>
             )}
             <HStack>
               <HandHeartIcon className="!ml-[-4px]" />
@@ -168,17 +167,17 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
               )}
             </HStack>
             <GraderingMotTilsynDetaljer graderingMotTilsyn={graderingMotTilsyn} pleiebehov={pleiebehov || 0} />
-          </Box.New>
+          </Box>
         )}
 
-        <Box.New
+        <Box
           className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightArbeidstid ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
           title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
-            <Box.New className={styles.uttakDetaljerTag}>
+            <Box className={styles.uttakDetaljerTag}>
               <FremhevingTag text={`Gir lavest ${graderingBenevnelse(fagsakYtelseType)}`} />
-            </Box.New>
+            </Box>
           )}
           <HStack>
             <BriefcaseClockIcon className="!ml-[-4px]" />
@@ -188,17 +187,17 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
             utbetalingsgrader={utbetalingsgrader || []}
             søkersTapteArbeidstid={søkersTapteArbeidstid}
           />
-        </Box.New>
+        </Box>
 
         {inntektgradering && (
-          <Box.New
+          <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightInntekt ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}
             title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (
-              <Box.New className={styles.uttakDetaljerTag}>
+              <Box className={styles.uttakDetaljerTag}>
                 <FremhevingTag text={`Gir lavest ${graderingBenevnelse(fagsakYtelseType)}`} />
-              </Box.New>
+              </Box>
             )}
             <HStack>
               <SackKronerIcon className="!ml-[-4px]" />
@@ -209,7 +208,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
                 <GraderingMotInntektDetaljer inntektsgradering={inntektgradering} />
               </>
             )}
-          </Box.New>
+          </Box>
         )}
       </HGrid>
     </>

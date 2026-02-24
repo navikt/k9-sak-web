@@ -115,7 +115,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
         <Table.HeaderCell scope="col">Fra og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">Til og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">
-          <HStack gap="2">
+          <HStack gap="space-8">
             Ny uttaksgrad
             <HelpText title="Uttaksgrad">
               Uttaksgraden viser til hvor mye av den totale pleiepengekvoten som tas ut. Eksempel: Settes uttaksgraden
@@ -181,7 +181,6 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
             )}
           </>
         )}
-
         {erOverstyrer && overstyringAktiv && (
           <>
             {bekreftSlettId && (
@@ -202,7 +201,13 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
                 )}
                 {!loading && (
                   <Modal.Footer>
-                    <Button size="small" variant="danger" onClick={() => handleSlett(bekreftSlettId)} loading={loading}>
+                    <Button
+                      data-color="danger"
+                      size="small"
+                      variant="primary"
+                      onClick={() => handleSlett(bekreftSlettId)}
+                      loading={loading}
+                    >
                       Slett
                     </Button>
                     <Button size="small" variant="primary" onClick={() => setBekreftSlettId(false)} loading={loading}>

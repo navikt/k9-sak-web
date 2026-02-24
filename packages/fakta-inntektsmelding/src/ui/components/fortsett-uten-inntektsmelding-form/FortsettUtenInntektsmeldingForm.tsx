@@ -213,7 +213,7 @@ const FortsettUtenInntektsmeldingForm = ({
               validate={[v => (!v ? 'Du må fylle inn en verdi' : null)]}
             />
           )}
-          <Box.New marginBlock="6 0">
+          <Box marginBlock="space-24 space-0">
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
               {!harFlereTilstanderTilVurdering && !!beslutning && (
                 <Button variant="primary" size="small">
@@ -226,7 +226,7 @@ const FortsettUtenInntektsmeldingForm = ({
                 </Button>
               )}
             </div>
-          </Box.New>
+          </Box>
         </>
       </AksjonspunktBox>
     </RhfForm>

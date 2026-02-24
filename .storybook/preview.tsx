@@ -4,7 +4,7 @@ import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakCl
 import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
-import '@navikt/ds-css/darkside';
+import '@navikt/ds-css';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react-vite';

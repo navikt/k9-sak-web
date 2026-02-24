@@ -3,7 +3,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { Image } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './iverksetterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -20,16 +19,9 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter en vilkarsvurdering der behandlingsstatusen
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
-const IverksetterVedtakStatusModal = ({
-  intl,
-  lukkModal,
-  visModal,
-  behandlingsresultat,
-}: OwnProps & WrappedComponentProps) => {
+const IverksetterVedtakStatusModal = ({ lukkModal, visModal, behandlingsresultat }: OwnProps) => {
   const erVedtakAvslatt = behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
-  const imageAltText = intl.formatMessage({
-    id: erVedtakAvslatt ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget',
-  });
+  const imageAltText = erVedtakAvslatt ? 'Avslått' : 'Innvilget';
 
   return (
     <Modal className={styles.modal} open={visModal} aria-label={imageAltText} onClose={lukkModal}>
@@ -41,21 +33,13 @@ const IverksetterVedtakStatusModal = ({
           </div>
           <div>
             <BodyShort size="small">
-              <FormattedMessage
-                id={
-                  erVedtakAvslatt
-                    ? 'IverksetterVedtakStatusModal.VedtakAvslatt'
-                    : 'IverksetterVedtakStatusModal.VedtakInnvilet'
-                }
-              />
+              {erVedtakAvslatt ? 'Vedtak er avslått.' : 'Vedtaket ble fattet og blir nå iverksatt'}
             </BodyShort>
-            <BodyShort size="small">
-              <FormattedMessage id="IverksetterVedtakStatusModal.GoToSearchPage" />
-            </BodyShort>
+            <BodyShort size="small">Du kommer nå til forsiden</BodyShort>
           </div>
           <div>
             <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
-              {intl.formatMessage({ id: 'IverksetterVedtakStatusModal.Ok' })}
+              OK
             </Button>
           </div>
         </HGrid>
@@ -64,4 +48,4 @@ const IverksetterVedtakStatusModal = ({
   );
 };
 
-export default injectIntl(IverksetterVedtakStatusModal);
+export default IverksetterVedtakStatusModal;

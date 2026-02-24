@@ -120,7 +120,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
           <Label data-testid="overstyringform" size="small" as="p">
             Manuell overstyring av automatisk vurdering
           </Label>
-          <Box.New marginBlock={'2 0'}>
+          <Box marginBlock={'space-8 space-0'}>
             <VilkarresultatMedBegrunnelse
               skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
               readOnly={isReadOnly || !erOverstyrt}
@@ -138,15 +138,15 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
               vilkarType={vilkarType}
               relevanteInnvilgetMerknader={relevanteInnvilgetMerknader}
             />
-          </Box.New>
-          <Box.New marginBlock={'4 0'}>
+          </Box>
+          <Box marginBlock={'space-16 space-0'}>
             {!erOverstyrt && erVilkarOk !== undefined && (
-              <Box.New marginBlock={'1 0'}>
+              <Box marginBlock={'space-4 space-0'}>
                 <HStack gap="space-16" align="center">
                   <EditedIcon />
                   <BodyShort size="small">Endret av saksbehandler</BodyShort>
                 </HStack>
-              </Box.New>
+              </Box>
             )}
             {erOverstyrt && (
               <VStack gap="space-16">
@@ -172,7 +172,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
                 </HStack>
               </VStack>
             )}
-          </Box.New>
+          </Box>
         </div>
       )}
     </RhfForm>

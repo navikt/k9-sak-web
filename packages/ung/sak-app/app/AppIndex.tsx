@@ -8,21 +8,20 @@ import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
 import AppConfigResolver from './AppConfigResolver';
-import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import '@navikt/ds-css/darkside';
+import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
+import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
+import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
+import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
+import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
-import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
-import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
-import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
-import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 
 const EMPTY_ARRAY = [];
 
@@ -66,17 +65,15 @@ const AppIndex = () => {
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
         <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-          <LanguageProvider>
-            <Dekorator
-              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-              queryStrings={queryStrings}
-              setSiteHeight={setSiteHeight}
-              pathname={location.pathname}
-            />
-            {shouldRenderHome && <Home headerHeight={headerHeight} />}
-            {forbiddenErrors.length > 0 && <ForbiddenPage />}
-            {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
-          </LanguageProvider>
+          <Dekorator
+            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+            queryStrings={queryStrings}
+            setSiteHeight={setSiteHeight}
+            pathname={location.pathname}
+          />
+          {shouldRenderHome && <Home headerHeight={headerHeight} />}
+          {forbiddenErrors.length > 0 && <ForbiddenPage />}
+          {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
         </ErrorBoundary>
       </AppConfigResolver>
     </RootSuspense>

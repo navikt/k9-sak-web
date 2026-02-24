@@ -162,22 +162,22 @@ export const TilkommetInntektsforholdField = ({
           const ytelsetype = beregningsgrunnlag.ytelsesspesifiktGrunnlag?.ytelsetype;
           const ytelseTekst = ytelseVisningsnavn(ytelsetype);
           return (
-            <Box.New marginBlock="4 0">
+            <Box marginBlock="space-16 space-0">
               <Alert size="small" variant="info">
                 Utgangspunktet er at alle nye inntektskilder som kommer etter skjæringstidspunktet skal kunne medføre
                 gradering mot inntekt. Du skal derfor vanligvis velge "ja", som betyr at K9 vurderer om{' '}
                 {ytelseTekst.ytelseNavnBestemt} skal graderes mot denne inntekten. Hvis du velger "nei", vil ikke K9
                 bruke denne aktiviteten for å vurdere søkers inntektstap.
               </Alert>
-            </Box.New>
+            </Box>
           );
         })()}
       {skalRedusereValg && (
         <>
-          <Box.New marginBlock="4 2">
+          <Box marginBlock="space-16 space-8">
             <Label size="small">Fastsett årsinntekt</Label>
             <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
-          </Box.New>
+          </Box>
           <div className={styles.bruttoInntektContainer}>
             <RhfTextField
               control={formMethods.control}

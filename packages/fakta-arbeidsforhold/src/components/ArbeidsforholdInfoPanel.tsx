@@ -73,7 +73,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   return (
     <>
       {aksjonspunkter.length > 0 && (
-        <Box.New padding="4" className={styles.begrunnelseSaksbehandler}>
+        <Box padding="space-16" className={styles.begrunnelseSaksbehandler}>
           <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
             {[
               <FormattedMessage
@@ -82,7 +82,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
               />,
             ]}
           </AksjonspunktHelpText>
-        </Box.New>
+        </Box>
       )}
       <h3>
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />

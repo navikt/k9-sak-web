@@ -176,9 +176,8 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
           />
         )}
       </div>
-
       {!readOnly && (
-        <Box.New className="flex mt-8">
+        <Box className="flex mt-8">
           <Button size="small">Bekreft og fortsett</Button>
 
           {erRedigering && (
@@ -188,7 +187,7 @@ const InstitusjonForm = ({ vurdering, readOnly, erRedigering, avbrytRedigering }
               </Button>
             </div>
           )}
-        </Box.New>
+        </Box>
       )}
     </RhfForm>
   );

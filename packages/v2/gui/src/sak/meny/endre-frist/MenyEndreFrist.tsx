@@ -1,6 +1,6 @@
 import type { ung_sak_kontrakt_etterlysning_Etterlysning } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { Alert, BoxNew, Button, Heading, Modal, Select, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, Heading, Modal, Select, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import dayjs from 'dayjs';
@@ -149,11 +149,11 @@ export const MenyEndreFrist = ({
               description="Begrunnelsen er kun synlig i historikken, og vil ikke sendes til deltaker."
             />
           </VStack>
-          <BoxNew marginBlock="space-16 0">
+          <Box marginBlock="space-16 space-0">
             <Alert size="small" variant="info">
               Behandlingen blir satt på vent til ny frist utløper.
             </Alert>
-          </BoxNew>
+          </Box>
         </Modal.Body>
         <Modal.Footer>
           <Button size="small" type="submit">

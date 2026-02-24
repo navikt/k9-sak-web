@@ -16,8 +16,9 @@ const EtablertTilsynDag = ({ tittel, timer, kilde, disabled, visIkon = true }: O
   <div>
     <Detail>{tittel}</Detail>
     <Tag
+      data-color="info"
       className={classNames(styles.etablertTilsyn__tag, disabled && styles.etablertTilsyn__tag__disabled)}
-      variant="info"
+      variant="outline"
     >
       {visIkon && kilde && <PartIkon parter={[kilde]} fontSize="18px" />}
       {timer}

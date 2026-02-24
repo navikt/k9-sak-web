@@ -37,7 +37,7 @@ const Inntekt = ({
           </BodyShort>
         </HStack>
       ))}
-      <Box.New borderWidth="0 0 1 0" />
+      <Box borderWidth="0 0 1 0" />
       <HStack justify="space-between" align="center">
         <BodyShort size="small" className={styles.sumLabel} weight="semibold">
           {sumLabel}
@@ -91,7 +91,7 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode, arbeidsgivere }: Det
 
   return (
     <VStack gap="space-32">
-      <Bleed marginBlock="0 2" asChild>
+      <Bleed marginBlock="space-0 space-8" asChild>
         <HStack justify="space-between" align="baseline">
           <Heading size="small" level="2">
             Kontroll av inntekt

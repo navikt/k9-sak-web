@@ -17,6 +17,7 @@ import {
   RadioGroup,
   ReadMore,
   Textarea,
+  Box,
 } from '@navikt/ds-react';
 import { ListItem } from '@navikt/ds-react/List';
 import { RhfForm } from '@navikt/ft-form-hooks';
@@ -292,16 +293,20 @@ const NødvendigOpplæringForm = ({
                   <div className="mt-6">
                     Vurderingen skal beskrive:
                     {/* overrider margin-block i List sitt child element ul med important*/}
-                    <List size="small" className="[&>ul]:!m-0">
-                      {/* !mb-0 overrider marign-block-end med important*/}
-                      <ListItem className="!mb-0">Om kursinnholdet tilsier at det er opplæring</ListItem>
-                      <ListItem className="!mb-0">
-                        Om det er årsakssammenheng mellom opplæringen og sykdom til barnet
-                      </ListItem>
-                      <ListItem className="!mb-0">
-                        Om opplæringen er nødvendig på grunn av barnets sykdom og behov for pleie og omsorg
-                      </ListItem>
-                    </List>
+                    <div className="[&>ul]:!m-0">
+                      <Box marginBlock="space-12" asChild>
+                        <List data-aksel-migrated-v8 size="small">
+                          {/* !mb-0 overrider marign-block-end med important*/}
+                          <ListItem className="!mb-0">Om kursinnholdet tilsier at det er opplæring</ListItem>
+                          <ListItem className="!mb-0">
+                            Om det er årsakssammenheng mellom opplæringen og sykdom til barnet
+                          </ListItem>
+                          <ListItem className="!mb-0">
+                            Om opplæringen er nødvendig på grunn av barnets sykdom og behov for pleie og omsorg
+                          </ListItem>
+                        </List>
+                      </Box>
+                    </div>
                   </div>
                 </ReadMore>
               }

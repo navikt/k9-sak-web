@@ -206,16 +206,16 @@ export const TilkommetAktivitetPanel = ({
           const ytelsetype = beregningsgrunnlag.ytelsesspesifiktGrunnlag?.ytelsetype;
           const ytelseTekst = ytelseVisningsnavn(ytelsetype);
           return (
-            <Box.New marginBlock="2 0">
+            <Box marginBlock="space-8 space-0">
               <Alert size="small" variant="info" title="">
                 Inntekter som kommer til underveis i en løpende {ytelseTekst.ytelsePeriode} er ikke en del av søkers
                 beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om{' '}
                 {ytelseTekst.ytelseNavnBestemt} skal graderes mot den nye inntekten.
               </Alert>
-            </Box.New>
+            </Box>
           );
         })()}
-      <Box.New marginBlock="10 0">
+      <Box marginBlock="space-40 space-0">
         <HStack gap="space-16" justify="space-between">
           <Heading size="small" level="3">
             Perioder med ny aktivitet
@@ -234,7 +234,7 @@ export const TilkommetAktivitetPanel = ({
             </Button>
           </div>
         </HStack>
-      </Box.New>
+      </Box>
       {modalErÅpen && (
         <PeriodesplittModal
           fields={sortedFields}

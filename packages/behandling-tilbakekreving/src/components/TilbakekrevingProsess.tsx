@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
@@ -40,40 +39,40 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
 }
 
-const getHentFritekstbrevHtmlCallback = (
-  hentFriteksbrevHtml: (data: any) => Promise<any>,
-  behandling: Behandling,
-  fagsak: Fagsak,
-  fagsakPerson: FagsakPerson,
-) => (parameters: any) =>
-  hentFriteksbrevHtml({
-    ...parameters,
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.sakstype,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsakPerson.aktørId,
-    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-  });
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
-const getLagringSideeffekter = (
-  toggleFatterVedtakModal,
-  toggleOppdatereFagsakContext,
-  oppdaterProsessStegOgFaktaPanelIUrl,
-) => async aksjonspunktModels => {
-  const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
-  if (isFatterVedtakAp) {
-    toggleOppdatereFagsakContext(false);
-  }
-
-  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-  return () => {
+const getLagringSideeffekter =
+  (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
+  async aksjonspunktModels => {
+    const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
     if (isFatterVedtakAp) {
-      toggleFatterVedtakModal(true);
-    } else {
-      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      toggleOppdatereFagsakContext(false);
     }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (isFatterVedtakAp) {
+        toggleFatterVedtakModal(true);
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      }
+    };
   };
-};
 
 const TilbakekrevingProsess = ({
   data,
@@ -89,16 +88,14 @@ const TilbakekrevingProsess = ({
   opneSokeside,
   harApenRevurdering,
   setBehandling,
-  intl,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,
   );
 
-  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiTilbakekrevingHooks.useRestApiRunner<
-    Behandling
-  >(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
+    restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const { startRequest: beregnBelop } = restApiTilbakekrevingHooks.useRestApiRunner(
@@ -160,8 +157,8 @@ const TilbakekrevingProsess = ({
     <>
       {visApenRevurderingModal && (
         <AdvarselModal
-          headerText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurderingHeader' })}
-          bodyText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurdering' })}
+          headerText="Åpen revurdering"
+          bodyText="Det finnes en åpen revurdering som kan påvirke denne tilbakekrevingsbehandlingen. Vurder konsekvens ved behandling."
           showModal
           submit={lukkApenRevurderingModal}
         />
@@ -193,4 +190,4 @@ const TilbakekrevingProsess = ({
   );
 };
 
-export default injectIntl(TilbakekrevingProsess);
+export default TilbakekrevingProsess;

@@ -93,7 +93,7 @@ const InstitusjonFraSøknadForm = ({
       <div className="flex gap-2 items-center">
         <BodyShort size="small">Annen: {gjeldendeInstitusjon}</BodyShort>
         {institusjonFraSøknad === gjeldendeInstitusjon ? (
-          <Tag size="small" variant="info">
+          <Tag data-color="info" size="small" variant="outline">
             Fra søknad
           </Tag>
         ) : (

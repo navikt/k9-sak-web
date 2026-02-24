@@ -1,4 +1,6 @@
+import { k9_kodeverk_behandling_aksjonspunkt_Venteårsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { VenteÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/VenteÅrsakType.js';
+import { ung_kodeverk_behandling_aksjonspunkt_Venteårsak } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -24,13 +26,19 @@ const initFrist = (): string => {
 };
 
 const venterårsakerMedKommentarmulighet = [
-  'ANNET',
-  'VENTER_SVAR_PORTEN',
-  'VENTER_SVAR_TEAMS',
-  'VENT_MANGL_FUNKSJ_SAKSBEHANDLER',
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.ANNET,
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_SVAR_PORTEN,
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_SVAR_TEAMS,
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
 ];
 
-const venterEtterlysInntektsmeldingKode = 'VENTER_ETTERLYS_IM';
+const venteårsakerSomIkkeKanEndreFrist = [
+  ung_kodeverk_behandling_aksjonspunkt_Venteårsak.VENT_INNTEKT_RAPPORTERINGSFRIST,
+  ung_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_PÅ_ETTERLYST_INNTEKT_UTTALELSE,
+];
+
+const venterEtterlysInntektsmeldingKode =
+  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_PÅ_ETTERLYST_INNTEKTSMELDINGER;
 
 const isButtonDisabled = (
   frist: string | undefined,
@@ -158,7 +166,7 @@ export const SettPåVentModal = ({
   const erVenterPaKravgrunnlag = ventearsak === VenteÅrsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
-  const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
+  const showKommentarInput = venterårsakerMedKommentarmulighet.some(va => va === ventearsak);
 
   const venteArsakerSomKanVelges = [...ventearsaker.filter(va => va.kanVelges === 'true').map(va => va.kode)];
 
@@ -188,6 +196,8 @@ export const SettPåVentModal = ({
     submitCallback(data);
   };
 
+  const disableEndreFrist = venteårsakerSomIkkeKanEndreFrist.some(va => va === ventearsak);
+
   return (
     <Modal
       className={`${styles.modal} ${styles.settPaVentModal}`}
@@ -215,6 +225,7 @@ export const SettPåVentModal = ({
                     validate={[required, hasValidDate, dateAfterOrEqualToToday]}
                     data-testid="datofelt"
                     label={getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
+                    disabled={disableEndreFrist}
                   />
                 </div>
               )}
@@ -288,11 +299,11 @@ export const SettPåVentModal = ({
               {!hasManualPaVent && showFristenTekst && (
                 <BodyShort size="small">
                   OBS! Fristen på denne behandlingen er utløpt!
-                  <Box.New marginBlock={'2 0'}>
+                  <Box marginBlock={'space-8 space-0'}>
                     {`Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.
                     Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.
                     For mer informasjon, se rutine under tilbakekreving.`}
-                  </Box.New>
+                  </Box>
                 </BodyShort>
               )}
             </div>

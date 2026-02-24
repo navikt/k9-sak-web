@@ -6,7 +6,7 @@ const config: KnipConfig = {
     'index.html',
     'ung.html',
   ],
-  ignore: ['packages/assets/styles/dayPicker.css'],
+  ignore: ['packages/assets/styles/dayPicker.css', '.yarn/**', 'server/**'],
   workspaces: {
     '.': {
       entry: [

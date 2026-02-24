@@ -8,7 +8,7 @@ const Institusjonsnavn = ({ institusjon }: { institusjon: string }) => {
       content={
         <HStack align="center" gap="space-8">
           {institusjon}
-          <Tag variant="info" size="small">
+          <Tag data-color="info" variant="outline" size="small">
             Fra søknad
           </Tag>
         </HStack>
