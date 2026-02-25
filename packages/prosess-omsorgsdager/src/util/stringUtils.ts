@@ -40,7 +40,12 @@ export const utledTilgjengeligeÅr = (
   const årFraDato = dayjs(fraDato).year();
   let tidligsteMuligeÅr = årFraDato > nåværendeÅr ? årFraDato : nåværendeÅr - 1;
   if (tidligsteMuligeÅrFørNårværendeÅr) {
-    tidligsteMuligeÅr = nåværendeÅr - tidligsteMuligeÅrFørNårværendeÅr;
+    const årstallForTidligsteMuligeÅr = nåværendeÅr - tidligsteMuligeÅrFørNårværendeÅr;
+    if (årFraDato > årstallForTidligsteMuligeÅr) {
+      tidligsteMuligeÅr = årFraDato;
+    } else {
+      tidligsteMuligeÅr = årstallForTidligsteMuligeÅr;
+    }
   } else if (relativtFraÅr !== undefined) {
     tidligsteMuligeÅr = årFraDato - relativtFraÅr;
   }
