@@ -17,15 +17,15 @@ interface UseProsessMenyToggleResult {
  *
  * Logikk:
  * - Hvis PROSESS_MENY_V2 er false: Bruk alltid legacy (useV2Menu = false, ingen toggle)
- * - Hvis PROSESS_MENY_V2 er true og PROSESS_MENY_V2_VELGER er false: Bruk alltid v2 (useV2Menu = true, ingen toggle)
- * - Hvis begge er true: Vis toggle og la bruker velge (default v2)
+ * - Hvis PROSESS_MENY_V2 er true og SKJUL_PROSESS_MENY_V2_VELGER er false: Vis toggle og la bruker velge (default v2)
+ * - Hvis PROSESS_MENY_V2 er true og SKJUL_PROSESS_MENY_V2_VELGER er true: Bruk alltid v2 (useV2Menu = true, ingen toggle)
  *
  * @returns {Object} - Objekt med useV2Menu state, toggleMenu funksjon og ToggleComponent
  */
 export function useProsessMenyToggle(): UseProsessMenyToggleResult {
-  const { PROSESS_MENY_V2, PROSESS_MENY_V2_VELGER } = use(FeatureTogglesContext);
-  const v2Enabled = PROSESS_MENY_V2 ?? false;
-  const velgerEnabled = PROSESS_MENY_V2_VELGER ?? false;
+  const { PROSESS_MENY_V2, SKJUL_PROSESS_MENY_V2_VELGER } = use(FeatureTogglesContext);
+  const v2Enabled = PROSESS_MENY_V2;
+  const velgerEnabled = !SKJUL_PROSESS_MENY_V2_VELGER;
 
   const [useV2Menu, setUseV2Menu] = useState<boolean>(() => {
     // Ikke bruk v2 meny om ikke feature toggle er true

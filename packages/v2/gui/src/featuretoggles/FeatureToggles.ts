@@ -22,7 +22,7 @@ const rootFeatureToggles = {
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
   PROSESS_MENY_V2: false,
-  PROSESS_MENY_V2_VELGER: false,
+  SKJUL_PROSESS_MENY_V2_VELGER: false,
   ENDRE_FRIST: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 

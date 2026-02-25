@@ -8,6 +8,7 @@ import { initProdFeatureToggles, initQFeatureToggles } from '../FeatureToggles.j
 const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
+  SKJUL_PROSESS_MENY_V2_VELGER: true,
 } as const;
 
 /**
