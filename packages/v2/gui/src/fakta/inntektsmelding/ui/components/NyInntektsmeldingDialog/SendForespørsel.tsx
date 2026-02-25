@@ -7,7 +7,6 @@ import { useInntektsmeldingContext } from '../../../context/InntektsmeldingConte
 import { useEtterspørInntektsmelding } from '../../../api/inntektsmeldingQueries';
 import { visnDato } from '../../../../../utils/formatters';
 import { ForespørselSendtSettPåVent } from './ForespørselSendtSettPåVent';
-import dayjs from 'dayjs';
 
 interface SendForespørselContentProps {
   førsteFraværsdag: string;
@@ -18,25 +17,12 @@ interface FormData {
   begrunnelse: string;
 }
 
-// Vi skal flytte første fraværsdag til mandag hvis den faller på søndag eller lørdag
-const hvisHelgedagFlyttFørsteFraværsdagTilMandag = (førsteFraværsdag: string) => {
-  // Søndag -> Mandag
-  if (dayjs(førsteFraværsdag).day() === 0) {
-    return dayjs(førsteFraværsdag).add(1, 'day').format('YYYY-MM-DD');
-  }
-  // Lørdag -> Mandag
-  if (dayjs(førsteFraværsdag).day() === 6) {
-    return dayjs(førsteFraværsdag).add(2, 'day').format('YYYY-MM-DD');
-  }
-  return førsteFraværsdag;
-};
 export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: SendForespørselContentProps) => {
   const { arbeidsforhold, behandling } = useInntektsmeldingContext();
   const etterspørInntektsmeldingMutation = useEtterspørInntektsmelding();
   const arbeidsgiverInfo = arbeidsforhold[arbeidsgiver.arbeidsgiver];
   const arbeidsgiverNavn = arbeidsgiverInfo?.navn ?? arbeidsgiverInfo?.fødselsdato ?? arbeidsgiver.arbeidsgiver;
-  const skjæringstidspunkt = hvisHelgedagFlyttFørsteFraværsdagTilMandag(førsteFraværsdag);
-  const formatertDato = visnDato(skjæringstidspunkt);
+  const formatertDato = visnDato(førsteFraværsdag);
   const formMethods = useForm<FormData>({
     defaultValues: {
       begrunnelse: '',
@@ -47,7 +33,7 @@ export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: Se
   const handleSubmit = (data: FormData) => {
     etterspørInntektsmeldingMutation.mutate({
       behandlingUuid: behandling.uuid,
-      skjæringstidspunkt,
+      skjæringstidspunkt: førsteFraværsdag,
       orgnr: arbeidsgiver.arbeidsgiver,
       begrunnelse: data.begrunnelse,
     });
