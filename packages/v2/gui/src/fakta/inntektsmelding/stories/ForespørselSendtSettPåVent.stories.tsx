@@ -3,7 +3,7 @@ import { Dialog } from '@navikt/ds-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { InntektsmeldingApiContext } from '../api/InntektsmeldingApiContext.js';
 import InntektsmeldingContext from '../context/InntektsmeldingContext.js';
 import type { InntektsmeldingContextType } from '../types.js';
@@ -54,16 +54,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ViserFeilVedFristOver14Dager: Story = {
-  play: async ({ canvas }) => {
+  play: async ({ canvasElement }) => {
+    const root = within(canvasElement.ownerDocument.body);
     const user = userEvent.setup();
-    const fristInput = await canvas.findByRole('textbox', { name: 'Frist' });
+    const fristInput = await root.findByRole('textbox', { name: 'Frist' });
     const forSenDato = dayjs().add(15, 'day').format('DD.MM.YYYY');
 
     await user.clear(fristInput);
     await user.type(fristInput, forSenDato);
     await user.tab();
-    await user.click(await canvas.findByRole('button', { name: 'Sett på vent' }));
+    await user.click(await root.findByRole('button', { name: 'Sett på vent' }));
 
-    await expect(canvas.getByText(/Maks frist er/i)).toBeInTheDocument();
+    await expect(root.getByText(/Maks frist er/i)).toBeInTheDocument();
   },
 };
