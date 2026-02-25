@@ -1,6 +1,10 @@
 import type { Path } from 'react-router';
 
 export const isUngWeb = () => window.location.pathname.includes('/ung/web');
+export const isAktivitetspenger = () => {
+  const url = window.location.href;
+  return url.includes(':9010') || url.includes('aktivitetspenger');
+};
 
 type QueryParams = {
   punkt?: string;

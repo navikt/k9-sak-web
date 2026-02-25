@@ -1,6 +1,7 @@
 import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
 import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
@@ -17,6 +18,9 @@ const ytelseTypeMapping: Record<string, string> = {
 
 const getYtelseNavn = (sakstype: string | undefined): string => {
   if (!sakstype) {
+    if (isAktivitetspenger()) {
+      return 'Aktivitetspenger';
+    }
     return 'Ungdomsprogramytelse';
   }
 

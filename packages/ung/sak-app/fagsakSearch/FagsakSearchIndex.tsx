@@ -9,6 +9,7 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { FagsakYtelseType } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { pathToFagsak } from '../app/paths';
 import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
@@ -42,7 +43,10 @@ const FagsakSearchIndex = () => {
     error,
   } = useMutation({
     mutationFn: ({ searchString }: { searchString?: string }) =>
-      api.fagsakSøk(searchString ?? '', FagsakYtelseType.AKTIVITETSPENGER),
+      api.fagsakSøk(
+        searchString ?? '',
+        isAktivitetspenger() ? FagsakYtelseType.AKTIVITETSPENGER : FagsakYtelseType.UNGDOMSYTELSE,
+      ),
     onSuccess: results => {
       if (results.length === 1) {
         void goToFagsak(results[0].saksnummer);
