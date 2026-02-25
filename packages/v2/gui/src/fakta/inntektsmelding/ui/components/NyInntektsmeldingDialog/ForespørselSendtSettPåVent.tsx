@@ -18,6 +18,7 @@ interface FormData {
 export const ForespørselSendtSettPåVent = () => {
   const { behandling } = useInntektsmeldingContext();
   const iDag = dayjs().startOf('day').toDate();
+  const maksFristDato = dayjs(iDag).add(2, 'week').toDate();
   const settPåVentMutation = useSettPåVent();
   const formMethods = useForm<FormData>({
     defaultValues: {
@@ -25,6 +26,20 @@ export const ForespørselSendtSettPåVent = () => {
     },
     mode: 'onChange',
   });
+
+  const validateFristInRange = (value: string) => {
+    if (!value) {
+      return undefined;
+    }
+
+    const valgtDato = dayjs(value, 'YYYY-MM-DD');
+
+    if (valgtDato.isAfter(maksFristDato, 'day')) {
+      return `Maks frist er ${dayjs(maksFristDato).format('DD.MM.YYYY')}.`;
+    }
+
+    return undefined;
+  };
 
   const handleSettPåVent = (data: FormData) => {
     if (!behandling.id || !behandling.versjon) {
@@ -69,7 +84,8 @@ export const ForespørselSendtSettPåVent = () => {
                 hideLabel
                 size="small"
                 fromDate={iDag}
-                validate={[hasValidDate, required, dateAfterOrEqualToToday]}
+                toDate={maksFristDato}
+                validate={[hasValidDate, required, dateAfterOrEqualToToday, validateFristInRange]}
               />
             </HStack>
           </div>
