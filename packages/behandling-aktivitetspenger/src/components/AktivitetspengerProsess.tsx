@@ -1,20 +1,21 @@
-import { use, useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { bestemAvsenderApp, forhandsvis } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
-  ProsessStegContainer,
-  ProsessStegPanel,
   Rettigheter,
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { Box } from '@navikt/ds-react';
 import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
@@ -22,8 +23,11 @@ import {
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@navikt/ung-sak-typescript-client/types';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
-import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegUngdomsytelsePanelDefinisjoner';
+import { UngSakProsessBackendClient } from '../data/UngSakProsessBackendClient';
+import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import FetchedData from '../types/FetchedData';
+import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
+import { useProsessmotor } from './Prossesmotor';
 
 interface OwnProps {
   data: FetchedData;
@@ -131,7 +135,6 @@ export const AktivitetspengerProsess = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const featureToggles = use(FeatureTogglesContext);
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
@@ -153,64 +156,65 @@ export const AktivitetspengerProsess = ({
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
-  const dataTilUtledingAvUngdomsytelsePaneler = {
-    fagsakPerson,
-    previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
-      behandling.versjon,
-    ]),
-    previewFptilbakeCallback: useCallback(
-      getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
-      [behandling.versjon],
-    ),
-    hentFritekstbrevHtmlCallback: useCallback(
-      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
-      [behandling.versjon],
-    ),
-    alleKodeverk,
-    featureToggles,
-    arbeidsgiverOpplysningerPerId,
-    ...data,
-  };
-
-  const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
-    prosessStegPanelDefinisjoner,
-    dataTilUtledingAvUngdomsytelsePaneler,
-    fagsak,
-    rettigheter,
-    behandling,
-    data.aksjonspunkter,
-    data.vilkar,
-    hasFetchError,
-    valgtProsessSteg,
-  );
-
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
-  const lagringSideeffekterCallback = getLagringSideeffekter(
-    toggleIverksetterVedtakModal,
-    toggleFatterVedtakModal,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
+
+  const [vedtakFormState, setVedtakFormState] = useState<any>(null);
+  const vedtakFormValue = useMemo(
+    () => ({ vedtakFormState, setVedtakFormState }),
+    [vedtakFormState, setVedtakFormState],
   );
 
-  const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
-    prosessStegPaneler,
-    valgtFaktaSteg,
+  const ungSakProsessApi = useMemo(() => new UngSakProsessBackendClient(), []);
+
+  const prosessteg = useProsessmotor({ api: ungSakProsessApi, behandling });
+  const isReadOnly = !rettigheter.writeAccess.isEnabled;
+
+  const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
+    fagsak,
     behandling,
+    lagreAksjonspunkter,
+    lagreOverstyrteAksjonspunkter,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    valgtProsessSteg,
-    valgtPanel,
-  );
+  });
+
+  const handleVedtakSubmit = async (
+    aksjonspunktModels: { isVedtakSubmission: boolean; kode: string }[],
+    aksjonspunkt: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  ) => {
+    const fatterVedtakAksjonspunktkoder = [
+      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      aksjonspunktCodes.FATTER_VEDTAK,
+      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+    ];
+    const visIverksetterVedtakModal = aksjonspunktModels.some(
+      ap => ap.isVedtakSubmission && fatterVedtakAksjonspunktkoder.includes(ap.kode),
+    );
+    const visFatterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+
+    await bekreftAksjonspunktCallback(
+      aksjonspunktModels,
+      aksjonspunkt,
+      visIverksetterVedtakModal || visFatterVedtakModal,
+    );
+
+    if (visFatterVedtakModal) {
+      toggleFatterVedtakModal(true);
+    } else if (visIverksetterVedtakModal) {
+      toggleIverksetterVedtakModal(true);
+    }
+  };
 
   return (
-    <>
+    <VedtakFormContext.Provider value={vedtakFormValue}>
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
         lukkModal={useCallback(() => {
           toggleIverksetterVedtakModal(false);
           opneSokeside();
         }, [])}
-        behandlingsresultat={behandling.behandlingsresultat}
+        behandlingsresultat={{ type: { kode: behandling.behandlingsresultat?.type ?? '', kodeverk: '' } }}
       />
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
@@ -220,25 +224,25 @@ export const AktivitetspengerProsess = ({
         }, [])}
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
-      <ProsessStegContainer
-        formaterteProsessStegPaneler={formaterteProsessStegPaneler}
-        velgProsessStegPanelCallback={velgProsessStegPanelCallback}
-        noBorder
-      >
-        <ProsessStegPanel
-          valgtProsessSteg={valgtPanel}
-          fagsak={fagsak}
-          behandling={behandling}
-          alleKodeverk={alleKodeverk}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          lagringSideeffekterCallback={lagringSideeffekterCallback}
-          lagreAksjonspunkter={lagreAksjonspunkter}
-          lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
-          useMultipleRestApi={restApiUngdomsytelseHooks.useMultipleRestApi}
-          featureToggles={featureToggles}
-          erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
-        />
-      </ProsessStegContainer>
-    </>
+      <ProsessMeny steg={prosessteg}>
+        <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16">
+          {prosessteg.map(steg => {
+            const urlKode = steg.urlKode;
+            if (urlKode === prosessStegCodes.VEDTAK) {
+              return (
+                <VedtakProsessStegInitPanel
+                  api={ungSakProsessApi}
+                  behandling={behandling}
+                  hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
+                  isReadOnly={isReadOnly}
+                  submitCallback={handleVedtakSubmit}
+                />
+              );
+            }
+            return null;
+          })}
+        </Box>
+      </ProsessMeny>
+    </VedtakFormContext.Provider>
   );
 };

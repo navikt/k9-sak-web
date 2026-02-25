@@ -1,7 +1,7 @@
+import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
 import styles from './prosessStegContainer.module.css';
@@ -13,7 +13,18 @@ interface OwnProps {
   noBorder?: boolean;
 }
 
-export const VedtakFormContext = React.createContext(null);
+interface VedtakFormState {
+  brødtekst: string;
+  overskrift: string;
+  maler: VedtaksbrevMal[];
+}
+
+interface VedtakFormContextType {
+  vedtakFormState: VedtakFormState | null;
+  setVedtakFormState: React.Dispatch<React.SetStateAction<VedtakFormState | null>>;
+}
+
+export const VedtakFormContext = React.createContext<VedtakFormContextType | null>(null);
 
 const ProsessStegContainer = ({
   intl,
