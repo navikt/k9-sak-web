@@ -2,7 +2,6 @@
 *Dockerfile*
 *docker-compose*
 **/node_modules
-!server/node_modules
 coverage
 .nyc_output
 packages

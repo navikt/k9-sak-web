@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - express
+      - dev-next1
 
 jobs:
   build-deploy:
@@ -29,9 +29,6 @@ jobs:
 
       - name: Bygge dist
         run: yarn build
-
-      - name: Bygg server
-        uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
