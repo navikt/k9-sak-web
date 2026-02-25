@@ -11,7 +11,8 @@ const queryClient = new QueryClient({
     onError: error => {
       // Lager en unhandled rejection, slik at feilene som fanges av @tanstack/react-query
       // kan propageres videre opp og fanges av UnhandledRejectionCatcher, og vises i TopplinjeAlerts.tsx
-      // Hvis feilen ikke skal dyttes videre opp, så må man bruke
+
+      // Hvis feilen IKKE skal dyttes videre opp, så må man bruke
       // const mutation = useMutation({
       //    mutationFn: ...,
       //    meta: { suppressGlobalError: true }
