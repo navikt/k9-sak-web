@@ -2,12 +2,24 @@ import { EyeWithPupilIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import { useContext } from 'react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import {
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
 import { Status } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import InntektsmeldingStatus from './InntektsmeldingStatus';
 import { NyInntektsmeldingDialog } from './NyInntektsmeldingDialog/NyInntektsmeldingDialog';
 import type { TilstandMedUiState } from '../../types';
+
+const tillatteSakstyperForNyInntektsmelding = [
+  fagsakYtelseType.OPPLÆRINGSPENGER,
+  fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
+  fagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE,
+];
+
+const erTillattSakstypeForNyInntektsmelding = (sakstype: string) =>
+  tillatteSakstyperForNyInntektsmelding.some(tillattSakstype => tillattSakstype === sakstype);
 
 const ArbeidsgiverTekst = ({ arbeidsgiver }: { arbeidsgiver: ArbeidsgiverArbeidsforholdId }) => {
   const { arbeidsforhold } = useInntektsmeldingContext();
@@ -27,13 +39,15 @@ interface InntektsmeldingRadProps {
 }
 
 const InntektsmeldingRad = ({ tilstand }: InntektsmeldingRadProps) => {
-  const { dokumenter } = useInntektsmeldingContext();
+  const { dokumenter, behandling } = useInntektsmeldingContext();
   const featureToggles = useContext(FeatureTogglesContext);
 
   const finnDokumentLink = (journalpostId: string) =>
     dokumenter?.find(d => d.journalpostId === journalpostId)?.href ?? '#';
 
-  const visSendNyOppgave = featureToggles.SAKSBEHANDLERINITIERT_INNTEKTSMELDING;
+  const visSendNyOppgave =
+    featureToggles.SAKSBEHANDLERINITIERT_INNTEKTSMELDING &&
+    erTillattSakstypeForNyInntektsmelding(behandling.sakstype);
 
   return (
     <div>
