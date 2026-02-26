@@ -11,6 +11,8 @@ import {
 } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { k9KlageAksjonspunktClient } from '@k9-sak-web/backend/k9klage/aksjonspunktClient.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import FetchedData from './types/fetchedDataTsType';
@@ -137,6 +139,7 @@ const BehandlingKlageIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling} aksjonspunktClient={k9KlageAksjonspunktClient}>
       <KlagePaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
@@ -154,6 +157,7 @@ const BehandlingKlageIndex = ({
         setBehandling={setBehandling}
         featureToggles={featureToggles}
       />
+      </BehandlingProvider>
     </>
   );
 };
