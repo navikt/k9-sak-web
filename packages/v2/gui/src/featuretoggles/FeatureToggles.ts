@@ -5,7 +5,6 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
  * varianter ein ønsker å ha true på.
  */
 const rootFeatureToggles = {
-  BRUK_V2_FAKTA_INSTITUSJON: false,
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
@@ -89,3 +88,5 @@ type YtelseSpesifikkeFeatureToggles = Readonly<
 >;
 
 export type FeatureToggles = Readonly<RootFeatureToggles & FeatureTogglesFor>;
+
+export type { YtelseSpesifikkeFeatureToggles };
