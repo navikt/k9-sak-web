@@ -27,7 +27,7 @@ export const formatereDatoTilLesemodus = (dato: string): string => dayjs(dato).f
  * @param {string} fraDato: Datoen som angir startpunktet for tilgjengelige år.
  * @param {number | undefined} relativtFraÅr: Antall år før fraDato som skal inkluderes (valgfritt).
  * @param {number | undefined} relativtTilÅr: Antall år etter fraDato som skal inkluderes (valgfritt).
- * @param {number | undefined} tidligsteMuligeÅrFørNårværendeÅr: Antall år før nåværende år som skal inkluderes (valgfritt).
+ * @param {number | undefined} tidligsteMuligeÅrFørNårværendeÅr: Antall år før nåværende år som skal inkluderes (valgfritt). Dersom fraDato er senere benyttes årstallet for fraDato.
  * @returns En liste av objekter med tilgjengelige år.
  */
 export const utledTilgjengeligeÅr = (
@@ -41,6 +41,7 @@ export const utledTilgjengeligeÅr = (
   let tidligsteMuligeÅr = årFraDato > nåværendeÅr ? årFraDato : nåværendeÅr - 1;
   if (tidligsteMuligeÅrFørNårværendeÅr) {
     const årstallForTidligsteMuligeÅr = nåværendeÅr - tidligsteMuligeÅrFørNårværendeÅr;
+    // Dersom fraDato er senere enn årstallet for tidligste mulige år, benyttes årstallet for fraDato. Ellers benyttes årstallet for tidligste mulige år.
     if (årFraDato > årstallForTidligsteMuligeÅr) {
       tidligsteMuligeÅr = årFraDato;
     } else {
