@@ -1,4 +1,4 @@
-import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 import Formatter from './Formatter';

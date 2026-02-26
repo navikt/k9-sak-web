@@ -12,7 +12,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';

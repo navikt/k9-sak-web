@@ -15,7 +15,8 @@ import type { SoknadsfristAksjonspunktType } from './types/SoknadsfristAksjonspu
 import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
 import type { SubmitData } from './types/submitCallback';
 import type { SøknadsfristTilstand } from './types/SøknadsfristTilstand';
-import { formatDate, utledInnsendtSoknadsfrist } from './utils';
+import { utledInnsendtSoknadsfrist } from './utils';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 
 const lovReferanse = '§ 22-13';
 

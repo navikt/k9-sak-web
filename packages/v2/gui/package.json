@@ -17,7 +17,8 @@
     "./prosess/*": "./src/prosess/*",
     "./fakta/*": "./src/fakta/*",
     "./tokens/*": "./src/tokens/*",
-    "./context/*": "./src/context/*"
+    "./context/*": "./src/context/*",
+    "./stores/*": "./src/stores/*"
   },
   "dependencies": {
     "@editorjs/editorjs": "2.31.1",

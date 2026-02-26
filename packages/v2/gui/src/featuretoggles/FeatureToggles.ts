@@ -21,6 +21,7 @@ const rootFeatureToggles = {
   UTVIDET_VARSELFELT: false, // Brukt i jsx
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
+  BRUK_V2_AVREGNING: false,
   ENDRE_FRIST: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 

@@ -8,6 +8,7 @@ import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/ut
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/context/AvregningContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
@@ -159,15 +160,45 @@ const BehandlingIndex = ({
     return <LoadingPanel />;
   }
 
-  if (erTilbakekreving(behandlingTypeKode)) {
+  const renderContent = () => {
+    if (erTilbakekreving(behandlingTypeKode)) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            <BehandlingTilbakekrevingUngdomsytelseIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              harApenRevurdering={fagsakBehandlingerInfo.some(
+                b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
+              )}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (behandlingTypeKode === BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            <BehandlingKlageUngdomsytelseIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              alleBehandlinger={fagsakBehandlingerInfo}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingTilbakekrevingUngdomsytelseIndex
+          <BehandlingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            harApenRevurdering={fagsakBehandlingerInfo.some(
-              b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
-            )}
             valgtFaktaSteg={query.fakta}
             key={behandling.id}
             {...defaultProps}
@@ -175,35 +206,9 @@ const BehandlingIndex = ({
         </ErrorBoundary>
       </Suspense>
     );
-  }
+  };
 
-  if (behandlingTypeKode === BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingKlageUngdomsytelseIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            alleBehandlinger={fagsakBehandlingerInfo}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  return (
-    <Suspense fallback={<LoadingPanel />}>
-      <ErrorBoundary errorMessageCallback={addErrorMessage}>
-        <BehandlingUngdomsytelseIndex
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          valgtFaktaSteg={query.fakta}
-          key={behandling.id}
-          {...defaultProps}
-        />
-      </ErrorBoundary>
-    </Suspense>
-  );
+  return <AvregningFormProvider behandlingId={behandling.id}>{renderContent()}</AvregningFormProvider>;
 };
 
 export default BehandlingIndex;

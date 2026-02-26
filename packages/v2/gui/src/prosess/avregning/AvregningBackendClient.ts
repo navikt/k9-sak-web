@@ -1,8 +1,12 @@
 import type { k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { TilbakekrevingVidereBehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
+import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
+import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 
-export default class BehandlingAvregningBackendClient {
+export default class BehandlingAvregningBackendClient implements BehandlingAvregningBackendApiType {
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
     behandlingId: number,
     behandlingVersjon: number,
@@ -19,5 +23,36 @@ export default class BehandlingAvregningBackendClient {
       ],
     };
     await aksjonspunkt_bekreft({ body });
+  }
+
+  async bekreftAksjonspunktVurderFeilutbetaling(
+    behandlingId: number,
+    behandlingVersjon: number,
+    begrunnelse: string,
+    videreBehandling: TilbakekrevingVidereBehandlingType,
+    varseltekst?: string,
+  ): Promise<void> {
+    const body: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+      behandlingId: `${behandlingId}`,
+      behandlingVersjon,
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+          begrunnelse,
+          videreBehandling,
+          varseltekst,
+        },
+      ],
+    };
+    await aksjonspunkt_bekreft({ body });
+  }
+
+  async hentForhåndsvisningVarselbrev(
+    behandlingUuid: string,
+    fagsakYtelseType: FagsakYtelseTypeK9Tilbake,
+    varseltekst?: string,
+  ): Promise<Blob> {
+    return (await dokument_hentForhåndsvisningVarselbrev({ body: { behandlingUuid, fagsakYtelseType, varseltekst } }))
+      .data as Blob;
   }
 }

@@ -3,9 +3,9 @@ import KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/Kv
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import styles from './antallDagerLivetsSluttfaseIndex.module.css';
 import Fremdriftslinje from './Fremdriftslinje';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 
 const cache = createIntlCache();
 

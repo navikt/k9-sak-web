@@ -28,7 +28,7 @@ import {
 import { RhfForm } from '@navikt/ft-form-hooks';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
 import { useUttakContext } from '../context/UttakContext';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';

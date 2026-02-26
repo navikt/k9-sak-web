@@ -8,6 +8,7 @@ import {
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
+import { AvregningFormProvider } from '@k9-sak-web/gui/context/AvregningContext.js';
 
 const fagsak = {
   saksnummer: 123,
@@ -168,6 +169,13 @@ const toggles = {
 export default {
   title: 'prosess/prosess-avregning',
   component: AvregningProsessIndex,
+  decorators: [
+    Story => (
+      <AvregningFormProvider behandlingId={1}>
+        <Story />
+      </AvregningFormProvider>
+    ),
+  ],
 };
 
 export const visAksjonspunktVurderFeilutbetaling = args => (

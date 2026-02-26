@@ -7,6 +7,7 @@ import {
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
+
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -28,6 +29,7 @@ import AvregningTable from './AvregningTable';
 
 import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
+import KontrollerEtterbetalingV1Wrapper from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingV1Wrapper.js';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 
@@ -123,9 +125,11 @@ export class AvregningPanelImpl extends Component {
       fagsak,
       ...formProps
     } = this.props;
+
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
     const fagsakSakstype = typeof fagsak?.sakstype === 'string' ? fagsak?.sakstype : fagsak?.sakstype?.kode;
     const isUngFagsak = fagsakSakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
+
     return (
       <>
         <VStack gap="space-32">
@@ -278,13 +282,15 @@ export class AvregningPanelImpl extends Component {
             </VStack>
           )}
           {harSjekkHøyEtterbetalingAP && (
-            <KontrollerEtterbetalingIndex
-              aksjonspunkt={aksjonspunkter.find(
-                ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
-              )}
-              behandling={behandling}
-              readOnly={readOnly}
-            />
+            <KontrollerEtterbetalingV1Wrapper>
+              <KontrollerEtterbetalingIndex
+                aksjonspunkt={aksjonspunkter.find(
+                  ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+                )}
+                behandling={behandling}
+                readOnly={readOnly}
+              />
+            </KontrollerEtterbetalingV1Wrapper>
           )}
         </VStack>
       </>

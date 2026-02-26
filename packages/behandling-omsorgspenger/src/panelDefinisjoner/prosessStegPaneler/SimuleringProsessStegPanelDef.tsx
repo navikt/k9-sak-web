@@ -7,9 +7,18 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { AvregningProsessIndex as AvregningProsessIndexV2 } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <AvregningProsessIndex {...props} />;
+  getKomponent = props => {
+    if (props.featureToggles?.BRUK_V2_AVREGNING) {
+      const deepCopyProps = JSON.parse(JSON.stringify(props));
+      konverterKodeverkTilKode(deepCopyProps, false);
+      return <AvregningProsessIndexV2 {...props} {...deepCopyProps} />;
+    }
+    return <AvregningProsessIndex {...props} />;
+  };
 
   getAksjonspunktKoder = () => [
     AksjonspunktDefinisjon.VURDER_FEILUTBETALING,

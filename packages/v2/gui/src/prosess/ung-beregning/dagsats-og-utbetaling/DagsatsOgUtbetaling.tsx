@@ -3,7 +3,7 @@ import {
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
-import { formatDate, formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
