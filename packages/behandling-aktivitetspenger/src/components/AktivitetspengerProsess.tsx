@@ -3,17 +3,13 @@ import { useCallback, useMemo, useState } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { bestemAvsenderApp, forhandsvis } from '@fpsak-frontend/utils/src/formidlingUtils';
-import {
-  FatterVedtakStatusModal,
-  IverksetterVedtakStatusModal,
-  Rettigheter,
-  prosessStegHooks,
-  useSetBehandlingVedEndring,
-} from '@k9-sak-web/behandling-felles';
+import { Rettigheter, prosessStegHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
+import { FatterVedtakStatusModal } from '@k9-sak-web/gui/shared/fatterVedtakStatusModal/FatterVedtakStatusModal.js';
+import { IverksetterVedtakStatusModal } from '@k9-sak-web/gui/shared/iverksetterVedtakStatusModal/IverksetterVedtakStatusModal.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Box } from '@navikt/ds-react';
 import {
@@ -120,20 +116,13 @@ const getHentFritekstbrevHtmlCallback =
     });
 
 export const AktivitetspengerProsess = ({
-  data,
   fagsak,
-  fagsakPerson,
   behandling,
-  alleKodeverk,
   rettigheter,
-  valgtProsessSteg,
-  valgtFaktaSteg,
-  hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   setBehandling,
-  arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
@@ -206,23 +195,23 @@ export const AktivitetspengerProsess = ({
     }
   };
 
+  const lukkModalOgGåTilSøk = useCallback(() => {
+    toggleIverksetterVedtakModal(false);
+    toggleFatterVedtakModal(false);
+    opneSokeside();
+  }, [opneSokeside]);
+
   return (
     <VedtakFormContext.Provider value={vedtakFormValue}>
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
-        lukkModal={useCallback(() => {
-          toggleIverksetterVedtakModal(false);
-          opneSokeside();
-        }, [])}
-        behandlingsresultat={{ type: { kode: behandling.behandlingsresultat?.type ?? '', kodeverk: '' } }}
+        lukkModal={lukkModalOgGåTilSøk}
+        behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
-        lukkModal={useCallback(() => {
-          toggleFatterVedtakModal(false);
-          opneSokeside();
-        }, [])}
-        tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
+        lukkModal={lukkModalOgGåTilSøk}
+        tekst="Behandlingen er sendt til godkjenning."
       />
       <ProsessMeny steg={prosessteg}>
         <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16">
@@ -231,6 +220,7 @@ export const AktivitetspengerProsess = ({
             if (urlKode === prosessStegCodes.VEDTAK) {
               return (
                 <VedtakProsessStegInitPanel
+                  key={steg.urlKode}
                   api={ungSakProsessApi}
                   behandling={behandling}
                   hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
