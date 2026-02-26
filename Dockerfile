@@ -1,22 +1,22 @@
-FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:24-slim
-
-# These must be set when building for ung-sak-web. Defaults are for k9-sak-web.
+FROM nginxinc/nginx-unprivileged:stable-alpine-slim
+# These must be set when building for ung-sak-web. Defaults are for k9-sak-web
+ARG proxyConfig=proxy.nginx
 ARG appVariant=k9
 ARG port=9000
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak-web
 
-ENV NODE_ENV=production \
-    APP_VARIANT=$appVariant \
-    PORT=$port
+ADD $proxyConfig /etc/nginx/conf.d/app.conf.template
+ADD start-server.sh /start-server.sh
 
-WORKDIR /app
+ENV APP_DIR="/app" \
+  APP_PATH_PREFIX="/$appVariant/sak" \
+  APP_CALLBACK_PATH="/$appVariant/sak/cb" \
+  APP_URL_SAK="http://$appVariant-sak"
 
-# Copy compiled server, production dependencies, and frontend build from CI.
-COPY server/dist/ ./
-COPY server/node_modules/ ./node_modules/
-COPY dist/ ./dist/
+COPY dist /usr/share/nginx/html
 
 EXPOSE $port
 
-CMD ["server.js"]
+# using bash over sh for better signal-handling
+CMD sh /start-server.sh
