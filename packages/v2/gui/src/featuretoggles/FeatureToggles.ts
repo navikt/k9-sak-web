@@ -80,12 +80,10 @@ type FeatureTogglesOverride = Partial<{ [K in keyof RootFeatureToggles]: true }>
 // Denne typen blir brukt til å unngå at definering av felles feature toggle for Q og prod på ung eller k9 nivå
 // kan overskrive feature toggle verdi definert i baseQFeatureToggles eller baseProdFeatureToggles, sidan dette
 // sannsynlegvis kan vere utilsikta/forvirrande viss det skjer.
-type YtelseSpesifikkeFeatureToggles = Readonly<
+export type YtelseSpesifikkeFeatureToggles = Readonly<
   {
     [K in keyof typeof baseQFeatureToggles]?: never;
   } & FeatureTogglesOverride
 >;
 
 export type FeatureToggles = Readonly<RootFeatureToggles & FeatureTogglesFor>;
-
-export type { YtelseSpesifikkeFeatureToggles };
