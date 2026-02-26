@@ -8,7 +8,6 @@ const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
-  FIX_SOKNADSFRIST_KALENDER_OG_READONLY: false,
   FLYTT_ALDERSVILKAR: false,
   LOS_MARKER_BEHANDLING_SUBMIT: false,
   MARKERING_UTENLANDSTILSNITT: false,
@@ -76,7 +75,7 @@ type RootFeatureToggles = {
 };
 
 // Ønsker at alle andre spesifikasjoner skal ha true som verdi.
-type FeatureTogglesOverride = Partial<{ [K in keyof RootFeatureToggles]: true }>;
+export type FeatureTogglesOverride = Partial<{ [K in keyof RootFeatureToggles]: true }>;
 
 // Denne typen blir brukt til å unngå at definering av felles feature toggle for Q og prod på ung eller k9 nivå
 // kan overskrive feature toggle verdi definert i baseQFeatureToggles eller baseProdFeatureToggles, sidan dette

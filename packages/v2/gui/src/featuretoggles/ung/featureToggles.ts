@@ -7,7 +7,6 @@ import { initProdFeatureToggles, initQFeatureToggles } from '../FeatureToggles.j
  */
 const ungSpecificFeatureToggles = {
   BRUK_V2_VILKAR_OPPTJENING: true,
-  FIX_SOKNADSFRIST_KALENDER_OG_READONLY: true,
   NYE_NOKKELTALL: true,
   UNG_KLAGE: true,
 } as const;
