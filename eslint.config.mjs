@@ -22,9 +22,6 @@ const WARN = 1;
 const ERROR = 2;
 
 const config = tseslint.config(
-  {
-    ignores: ["server/**"],
-  },
   ...pluginQuery.configs['flat/recommended'],
   eslint.configs.recommended,
   ...tseslint.configs.recommended,

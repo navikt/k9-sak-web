@@ -39,25 +39,6 @@ updates:
         patterns:
           - '@navikt/ft-*'
 
-  - package-ecosystem: npm
-    directory: '/server'
-    schedule:
-      interval: daily
-    cooldown:
-      default-days: 7
-    groups:
-      server-patch-and-minor:
-        patterns:
-          - '*'
-        update-types:
-          - 'patch'
-          - 'minor'
-      server-major:
-        patterns:
-          - '*'
-        update-types:
-          - 'major'
-
   - package-ecosystem: github-actions
     directory: '/'
     schedule:

@@ -33,9 +33,6 @@ jobs:
       - name: Bygge dist
         run: yarn build:ung
 
-      - name: Bygg server
-        uses: ./.github/actions/build-server
-
       - name: Opprett release med Sentry
         run: yarn sentry-release-ung
         env:
@@ -49,6 +46,8 @@ jobs:
           without_navikt_prefix: true
           #Konfigurerer for bygging av ung docker image:
           build-args: |
+            featureToggles=ung.feature-toggles.json
+            proxyConfig=ung.proxy.nginx
             appVariant=ung
             port=9005
           labels: |
