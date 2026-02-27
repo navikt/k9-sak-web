@@ -36,6 +36,7 @@ export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: Se
       skjæringstidspunkt: førsteFraværsdag,
       orgnr: arbeidsgiver.arbeidsgiver,
       begrunnelse: data.begrunnelse,
+      behandlingVersjon: behandling.versjon,
     });
   };
 
