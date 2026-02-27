@@ -1,0 +1,36 @@
+.stepArrowContainer {
+  bottom: -19px !important;
+  filter: drop-shadow(0 -3px 2px rgb(0 0 0 / 10%));
+  position: relative;
+  z-index: 1;
+}
+
+.stepArrowContainer:after {
+  border: solid transparent;
+  border-color: rgb(255 255 255 / 0%);
+  border-bottom-color: #fff;
+  border-width: 12px;
+  bottom: 100%;
+  content: ' ';
+  height: 0;
+  left: 50%;
+  margin-left: -12px;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}
+
+.stepArrowContainer:before {
+  border: solid transparent;
+  border-color: rgb(0 0 0 / 0%);
+  border-bottom-color: var(--ax-neutral-400);
+  border-width: 13px;
+  bottom: 100%;
+  content: ' ';
+  height: 0;
+  left: 50%;
+  margin-left: -13px;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -13,12 +13,13 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
+import { PleiepengerProsessV2 } from './PleiepengerProsessV2';
 
 interface OwnProps {
   data: FetchedData;
@@ -41,7 +42,7 @@ interface OwnProps {
   hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
-const getForhandsvisFptilbakeCallback =
+export const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
   (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
     const data = {
@@ -56,21 +57,8 @@ const getForhandsvisFptilbakeCallback =
   };
 
 const getLagringSideeffekter =
-  (
-    toggleIverksetterVedtakModal,
-    toggleFatterVedtakModal,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
-    lagreDokumentdata,
-  ) =>
+  (toggleIverksetterVedtakModal, toggleFatterVedtakModal, oppdaterProsessStegOgFaktaPanelIUrl, lagreDokumentdata) =>
   async aksjonspunktModels => {
-    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-      apModel =>
-        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-        apModel.sendVarsel,
-    );
-
     const visIverksetterVedtakModal = aksjonspunktModels.some(
       aksjonspunkt =>
         aksjonspunkt.isVedtakSubmission &&
@@ -95,8 +83,6 @@ const getLagringSideeffekter =
         toggleFatterVedtakModal(true);
       } else if (visIverksetterVedtakModal) {
         toggleIverksetterVedtakModal(true);
-      } else if (erRevurderingsaksjonspunkt) {
-        opneSokeside();
       } else {
         oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
@@ -197,49 +183,84 @@ const PleiepengerProsess = ({
     apentFaktaPanelInfo,
   );
 
+  const beregningErBehandlet = useMemo(() => {
+    const beregningPanel = prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning');
+    return beregningPanel?.getErStegBehandlet() ?? false;
+  }, [prosessStegPaneler]);
+
   useEffect(() => {
-    setBeregningErBehandlet(
-      prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning').getErStegBehandlet(),
-    );
-  }, [setBeregningErBehandlet, prosessStegPaneler]);
+    setBeregningErBehandlet(beregningErBehandlet);
+  }, [beregningErBehandlet, setBeregningErBehandlet]);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
+
+  const lukkModalOgGåTilSøk = useCallback(() => {
+    toggleIverksetterVedtakModal(false);
+    toggleFatterVedtakModal(false);
+    opneSokeside();
+  }, [opneSokeside]);
+
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
     lagreDokumentdata,
   );
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(
     prosessStegPaneler,
-    valgtFaktaSteg,
+    valgtFaktaSteg ?? '',
     behandling,
     oppdaterProsessStegOgFaktaPanelIUrl,
-    valgtProsessSteg,
+    valgtProsessSteg ?? '',
     valgtPanel,
   );
 
+  // Toggle for å bytte mellom gammel og ny meny (for sammenligning under migrering)
+  const { useV2Menu, ToggleComponent } = useProsessMenyToggle();
+
+  if (useV2Menu) {
+    return (
+      <PleiepengerProsessV2
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling}
+        rettigheter={rettigheter}
+        data={data}
+        hentBehandling={hentBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        visIverksetterVedtakModal={visIverksetterVedtakModal}
+        toggleIverksetterVedtakModal={toggleIverksetterVedtakModal}
+        visFatterVedtakModal={visFatterVedtakModal}
+        toggleFatterVedtakModal={toggleFatterVedtakModal}
+        lukkModalOgGåTilSøk={lukkModalOgGåTilSøk}
+        ToggleComponent={ToggleComponent}
+        lagreAksjonspunkter={lagreAksjonspunkter}
+        lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
+        forhandsvisMelding={forhandsvisMelding}
+        forhandsvisTilbakekrevingMelding={forhandsvisTilbakekrevingMelding}
+        lagreDokumentdata={lagreDokumentdata}
+        hentFritekstbrevHtmlCallback={dataTilUtledingAvPleiepengerPaneler.hentFritekstbrevHtmlCallback}
+      />
+    );
+  }
+
+  // Legacy rendering (standard oppførsel)
   return (
     <>
+      {ToggleComponent}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
-        lukkModal={useCallback(() => {
-          toggleIverksetterVedtakModal(false);
-          opneSokeside();
-        }, [])}
+        lukkModal={lukkModalOgGåTilSøk}
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
-        lukkModal={useCallback(() => {
-          toggleFatterVedtakModal(false);
-          opneSokeside();
-        }, [])}
+        lukkModal={lukkModalOgGåTilSøk}
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
+
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}
         velgProsessStegPanelCallback={velgProsessStegPanelCallback}

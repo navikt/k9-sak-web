@@ -19,11 +19,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter en vilkarsvurdering der behandlingsstatusen
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
-const IverksetterVedtakStatusModal = ({
-  lukkModal,
-  visModal,
-  behandlingsresultat,
-}: OwnProps) => {
+const IverksetterVedtakStatusModal = ({ lukkModal, visModal, behandlingsresultat }: OwnProps) => {
   const erVedtakAvslatt = behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
   const imageAltText = erVedtakAvslatt ? 'Avslått' : 'Innvilget';
 

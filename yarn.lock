@@ -2375,6 +2375,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:^11.4.14"
     moment: "npm:2.30.1"
     react: "npm:19.2.4"
     react-intl: "npm:8.1.1"
@@ -3139,6 +3140,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": "npm:12.6.10"
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:14.4.10"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:11.7.10"
+    "@navikt/ft-types": "npm:^5.3.21"
     axios: "npm:1.13.5"
     react: "npm:19.2.4"
     react-intl: "npm:8.1.1"
@@ -3436,6 +3438,7 @@ __metadata:
     "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ft-form-hooks": "npm:10.6.10"
     "@navikt/ft-form-validators": "npm:4.4.22"
+    "@navikt/ft-types": "npm:^5.3.21"
     "@navikt/ft-utils": "npm:3.11.9"
     "@tanstack/react-query": "npm:5.90.21"
     "@types/css-tree": "npm:2.3.11"
@@ -4049,7 +4052,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:11.7.10":
+"@navikt/ft-prosess-beregningsgrunnlag@npm:11.7.10, @navikt/ft-prosess-beregningsgrunnlag@npm:^11.4.14":
   version: 11.7.10
   resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:11.7.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F11.7.10%2Fc2e93433108badaf7903d2f0672dc87ad39e69ad"
   dependencies:
@@ -4117,6 +4120,13 @@ __metadata:
     react-hook-form: 7.x
     react-intl: 8.x
   checksum: 10/f29b26d6503200e6db36ced7331e6db89947c8288049d45157661f59c38d9550ea4a60e691489aa4afb9539e2dda9a696ff8a53ecde06e52835a2d55b7b00ce6
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-types@npm:^5.3.21":
+  version: 5.3.21
+  resolution: "@navikt/ft-types@npm:5.3.21::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F5.3.21%2Fea0ef5432e5f6835e472f056c045162f6a85a896"
+  checksum: 10/d8ff9a1275c5a61c040f952f1277e430a387504b776479e0134abdb7b7929cbf009e8c9d6368bc6eb408eceb2c7a0bb86c6da73ad179fff3c38a6b6429fa68e7
   languageName: node
   linkType: hard
 

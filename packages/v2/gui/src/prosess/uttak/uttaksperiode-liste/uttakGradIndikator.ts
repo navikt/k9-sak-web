@@ -40,4 +40,3 @@ export const finnUttakGradIndikatorCls = (
     uttakIndikatorInnvilgetDelvisInntekt: erGradertMotInntekt, // Vertikalt skravert indikator (grønn/hvit) |🟩|
     uttakIndikatorInnvilgetDelvis: erGradertMotTilsyn, // Diagonalt skravert indikator (grønn/hvit) /🟩/
   });
-
