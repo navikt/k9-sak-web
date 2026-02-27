@@ -6,7 +6,7 @@ import {
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
-export interface UngSakProsessApi {
+export interface UngSakApi {
   getAksjonspunkter(behandlingId: string): Promise<ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]>;
   getVilkår(behandlingUuid: string): Promise<ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[]>;
   getFagsak(saksnummer: string): Promise<ung_sak_kontrakt_fagsak_FagsakDto>;

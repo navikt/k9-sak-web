@@ -9,7 +9,7 @@ import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakInde
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
-import { UngSakProsessApi } from '../../data/UngSakProsessApi';
+import { UngSakApi } from '../../data/UngSakApi';
 import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../../data/ungSakQueryOptions';
 
 const vedtakAksjonspunktKoder = [
@@ -25,7 +25,7 @@ const vedtakAksjonspunktKoder = [
 const PANEL_ID = prosessStegCodes.VEDTAK;
 
 interface Props {
-  api: UngSakProsessApi;
+  api: UngSakApi;
   behandling: ung_sak_kontrakt_behandling_BehandlingDto;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
   isReadOnly: boolean;

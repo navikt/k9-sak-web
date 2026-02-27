@@ -5,9 +5,9 @@ import {
   fagsak_hentFagsak,
   vilkår_getVilkårV3,
 } from '@navikt/ung-sak-typescript-client/sdk';
-import { UngSakProsessApi } from './UngSakProsessApi';
+import { UngSakApi } from './UngSakApi';
 
-export class UngSakProsessBackendClient implements UngSakProsessApi {
+export class UngSakBackendClient implements UngSakApi {
   async getAksjonspunkter(behandlingId: string) {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;
   }

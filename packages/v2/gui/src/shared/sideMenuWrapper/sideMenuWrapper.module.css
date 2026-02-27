@@ -1,0 +1,22 @@
+.container {
+  background-color: var(--ax-bg-default);
+  border-top: 1px solid #6a6a6a;
+  margin-top: 1rem;
+}
+
+@media screen and (width >= 1350px) {
+  .container {
+    height: 1290px;
+  }
+}
+
+.content {
+  overflow: hidden;
+  flex: 1 1 auto;
+  padding: 40px 40px 40px 24px;
+}
+
+.sideMenu {
+  flex: 0 0 auto;
+  padding-right: 0;
+}

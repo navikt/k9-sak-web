@@ -11,11 +11,12 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { UngSakProsessApi } from '../data/UngSakProsessApi';
+import { UngSakApi } from '../data/UngSakApi';
 import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../data/ungSakQueryOptions';
 
 const PROSESS_STEG_KODER = {
   VEDTAK: 'vedtak',
+  BEREGNING: 'beregning',
 } as const;
 
 const PANEL_KONFIG = {
@@ -31,6 +32,11 @@ const PANEL_KONFIG = {
     ],
     id: PROSESS_STEG_KODER.VEDTAK,
     label: 'Vedtak',
+  },
+  beregning: {
+    aksjonspunkter: [],
+    id: PROSESS_STEG_KODER.BEREGNING,
+    label: 'Beregning',
   },
 } as const;
 
@@ -65,7 +71,7 @@ export const beregnVedtakType = (
 };
 
 interface ProsessmotorProps {
-  api: UngSakProsessApi;
+  api: UngSakApi;
   behandling: Pick<ung_sak_kontrakt_behandling_BehandlingDto, 'uuid' | 'versjon'>;
 }
 
@@ -73,6 +79,13 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
   return useMemo(() => {
+    const beregningPanel = {
+      id: PANEL_KONFIG.beregning.id,
+      label: PANEL_KONFIG.beregning.label,
+      type: ProcessMenuStepType.default,
+      usePartialStatus: false,
+      urlKode: prosessStegCodes.BEREGNING,
+    };
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {
       id: PANEL_KONFIG.vedtak.id,
@@ -82,6 +95,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       urlKode: prosessStegCodes.VEDTAK,
     };
 
-    return [vedtakPanel];
+    return [beregningPanel, vedtakPanel];
   }, [vilkår, aksjonspunkter, behandling]);
 };

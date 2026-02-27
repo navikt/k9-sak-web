@@ -1,23 +1,19 @@
 import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { queryOptions } from '@tanstack/react-query';
-import { UngSakProsessApi } from './UngSakProsessApi';
+import { UngSakApi } from './UngSakApi';
 
 interface Behandling {
   uuid: string;
   versjon: number;
 }
 
-export const vilkårQueryOptions = (api: UngSakProsessApi, behandling: Behandling) =>
+export const vilkårQueryOptions = (api: UngSakApi, behandling: Behandling) =>
   queryOptions({
     queryKey: ['vilkar', behandling.uuid, behandling.versjon],
     queryFn: () => api.getVilkår(behandling.uuid),
   });
 
-export const aksjonspunkterQueryOptions = (
-  api: UngSakProsessApi,
-  behandling: Behandling,
-  aksjonspunktKoder?: string[],
-) =>
+export const aksjonspunkterQueryOptions = (api: UngSakApi, behandling: Behandling, aksjonspunktKoder?: string[]) =>
   queryOptions({
     queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
@@ -27,19 +23,19 @@ export const aksjonspunkterQueryOptions = (
       : undefined,
   });
 
-export const behandlingQueryOptions = (api: UngSakProsessApi, behandling: Behandling) =>
+export const behandlingQueryOptions = (api: UngSakApi, behandling: Behandling) =>
   queryOptions({
     queryKey: ['behandling', behandling.uuid, behandling.versjon],
     queryFn: () => api.getBehandling(behandling.uuid),
   });
 
-export const fagsakQueryOptions = (api: UngSakProsessApi, saksnummer: string, behandling: Behandling) =>
+export const fagsakQueryOptions = (api: UngSakApi, saksnummer: string, behandling: Behandling) =>
   queryOptions({
     queryKey: ['fagsak', saksnummer, behandling.versjon],
     queryFn: () => api.getFagsak(saksnummer),
   });
 
-export const personopplysningerQueryOptions = (api: UngSakProsessApi, behandling: Behandling) =>
+export const personopplysningerQueryOptions = (api: UngSakApi, behandling: Behandling) =>
   queryOptions({
     queryKey: ['personopplysninger', behandling.uuid, behandling.versjon],
     queryFn: () => api.getPersonopplysninger(behandling.uuid),

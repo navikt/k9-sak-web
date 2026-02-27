@@ -4,6 +4,7 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
+import { AktivitetspengerFakta } from './components/AktivitetspengerFakta';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
 import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
 import {
@@ -11,7 +12,7 @@ import {
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
-import { UngSakProsessBackendClient } from './data/UngSakProsessBackendClient';
+import { UngSakBackendClient } from './data/UngSakBackendClient';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -40,7 +41,7 @@ const BehandlingAktivitetspengerIndex = ({
   behandlingVersjon,
   behandlingUuid,
 }: OwnProps) => {
-  const ungSakProsessApi = new UngSakProsessBackendClient();
+  const ungSakProsessApi = new UngSakBackendClient();
 
   const setBehandling = useCallback(nyBehandling => {
     requestUngdomsytelseApi.resetCache();
@@ -117,6 +118,12 @@ const BehandlingAktivitetspengerIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
+        setBehandling={setBehandling}
+      />
+      <AktivitetspengerFakta
+        behandling={behandling}
+        fagsak={fagsak}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         setBehandling={setBehandling}
       />
     </>

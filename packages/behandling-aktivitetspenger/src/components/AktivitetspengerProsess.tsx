@@ -14,8 +14,9 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { Box } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
-import { UngSakProsessBackendClient } from '../data/UngSakProsessBackendClient';
+import { UngSakBackendClient } from '../data/UngSakBackendClient';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
+import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -68,9 +69,9 @@ export const AktivitetspengerProsess = ({
     [vedtakFormState, setVedtakFormState],
   );
 
-  const ungSakProsessApi = useMemo(() => new UngSakProsessBackendClient(), []);
+  const ungSakApi = useMemo(() => new UngSakBackendClient(), []);
 
-  const prosessteg = useProsessmotor({ api: ungSakProsessApi, behandling });
+  const prosessteg = useProsessmotor({ api: ungSakApi, behandling });
   const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
@@ -135,13 +136,16 @@ export const AktivitetspengerProsess = ({
               return (
                 <VedtakProsessStegInitPanel
                   key={steg.urlKode}
-                  api={ungSakProsessApi}
+                  api={ungSakApi}
                   behandling={behandling}
                   hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
                   isReadOnly={isReadOnly}
                   submitCallback={handleVedtakSubmit}
                 />
               );
+            }
+            if (urlKode === prosessStegCodes.BEREGNING) {
+              return <BeregningProsessStegInitPanel key={steg.urlKode} />;
             }
             return null;
           })}
