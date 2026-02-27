@@ -1,5 +1,5 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
@@ -24,7 +24,7 @@ const ytelseNavnMap = kode => {
 interface VedtakOpphorRevurderingPanelProps {
   ytelseTypeKode: string;
   medlemskapFom: string;
-  vedtakVarsel: VedtakVarsel;
+  vedtakVarsel?: VedtakVarsel;
 }
 
 interface OwnState {

@@ -27,7 +27,7 @@ const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
 
   return (
     <ForeldelseProsessIndex
-      behandling={behandling}
+      behandlingUuid={behandling.uuid}
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitForeldelse}
       isReadOnly={isReadOnly}

@@ -40,7 +40,7 @@ const InntektsmeldingVurdering = ({
       />
     );
   }
-  
+
   if (skalViseFerdigvisning) {
     return (
       <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />

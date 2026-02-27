@@ -62,12 +62,7 @@ interface OwnProps {
   pathname: string;
 }
 
-const Dekorator = ({
-  queryStrings,
-  setSiteHeight,
-  pathname,
-  hideErrorMessages = false,
-}: OwnProps) => {
+const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = false }: OwnProps) => {
   const navAnsatt = use(InnloggetAnsattContext);
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);

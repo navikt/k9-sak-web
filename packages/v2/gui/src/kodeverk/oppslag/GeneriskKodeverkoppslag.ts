@@ -1,15 +1,15 @@
 // Generisk representasjon av kodeverk objekt der kilde (kode) er enum type. Spesifikk variant av dette er returnert i oppslags array med alle kodeverdier for gitt kodeverk.
-type KodeverkObjektMedEnumKilde<Kilde extends string = string> = Readonly<{
+type KodeverkObjektMedEnumKilde<Kilde extends string> = Readonly<{
   kilde: Kilde;
-  kode: string;
+  kode: Kilde;
   navn?: string;
   kodeverk: string;
 }>;
 
 // Generisk representasjon av respons objektet med oppslagsverdier. Ein property for kvart kodeverk som skal kunne slåast opp.
 // AlleKodeverdierSomObjektResponse frå k9-sak passer inn i denne. Tilsvarande for andre backends skal og passe inn.
-type KodeverdierMedEnumKilde = {
-  [prop: string]: Array<KodeverkObjektMedEnumKilde>;
+type KodeverdierMedEnumKilde<Kilde extends string> = {
+  [prop: string]: ReadonlyArray<KodeverkObjektMedEnumKilde<Kilde>>;
 };
 
 // Flagg for å indikere at vi skal returnere undefined viss kodeverdi ikkje blir funne i gitt kodeverk.
@@ -19,12 +19,12 @@ export type OrUndefined = typeof OrUndefined | undefined;
 type PerhapsUndefined<OU extends OrUndefined> = OU extends 'or undefined' ? undefined : never;
 
 // Kodeverdi type blir objekt typen for gitt kodeverk på gitt oppslagsobjekt type.
-type Kodeverdi<O extends KodeverdierMedEnumKilde, P extends keyof O> = O[P][number];
+type Kodeverdi<O extends KodeverdierMedEnumKilde<string>, P extends keyof O> = O[P][number];
 // Kilde type blir enum typen for gitt kodeverk på gitt oppslagsobjekt type.
-export type Kilde<O extends KodeverdierMedEnumKilde, P extends keyof O> = Kodeverdi<O, P>['kilde'];
+export type Kilde<O extends KodeverdierMedEnumKilde<string>, P extends keyof O> = Kodeverdi<O, P>['kilde'];
 
 // Denne brukast til å sikre at konkrete implementasjoner av GeneriskKodeverkoppslag har korrekte oppslagsmetoder for alle kodeverdier i gitt oppslagsobjekt type.
-export type Kodeverkoppslag<O extends KodeverdierMedEnumKilde> = {
+export type Kodeverkoppslag<O extends KodeverdierMedEnumKilde<string>> = {
   readonly [Property in keyof O]: <U extends OrUndefined = undefined>(
     kode: Kilde<O, Property>,
     undefinedIfNotFound?: U,
@@ -33,7 +33,7 @@ export type Kodeverkoppslag<O extends KodeverdierMedEnumKilde> = {
 
 // Konkrete oppslagsklasse for kvar oppslagsobjekt type (for ulike backends) bygger på denne.
 // Alle implementasjoner skal og deklarerast til å implementere GeneriskNormaleKodeverdierKildeoppslag<O>
-export abstract class GeneriskKodeverkoppslag<O extends KodeverdierMedEnumKilde> {
+export abstract class GeneriskKodeverkoppslag<O extends KodeverdierMedEnumKilde<string>> {
   #alleKodeverdier: O;
 
   constructor(alleKodeverdier: O) {
@@ -66,5 +66,24 @@ export abstract class GeneriskKodeverkoppslag<O extends KodeverdierMedEnumKilde>
         `Fant ikke kodeverk ${kodeverk}. ${Object.keys(this.#alleKodeverdier).length} ulike kodeverkoppslag tilgjengelig.`,
       );
     }
+  }
+
+  /**
+   * Denne brukast for kompatibilitet med gammal kode som forventer å få inn array for å slå opp kodeverdi objekt sjølv.
+   * Brukast blant anna i ft-frontend komponenter. For å vere kompatibel returnerer denne også ikkje undefined for navn
+   * viss det mangler.
+   */
+  public alleKodeverdierForKodeverk<P extends keyof O>(
+    kodeverk: P,
+  ): Array<Required<KodeverkObjektMedEnumKilde<O[P][number]['kilde']>>> {
+    const alleKodeverdier = this.#alleKodeverdier[kodeverk];
+    if (alleKodeverdier != null) {
+      return alleKodeverdier.map(kv => ({
+        ...kv,
+        kode: kv.kilde,
+        navn: kv.navn ?? `FEIL: Mangler navn for (${kv.kilde})`,
+      }));
+    }
+    throw new Error(`Kodeverdioppslag for ${kodeverk.toString()} ikke funnet`);
   }
 }
