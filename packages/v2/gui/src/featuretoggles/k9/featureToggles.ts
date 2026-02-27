@@ -1,4 +1,4 @@
-import { initQFeatureToggles, initProdFeatureToggles, type YtelseSpesifikkeFeatureToggles } from '../FeatureToggles.js';
+import { initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatureToggles } from '../FeatureToggles.js';
 
 /**
  * Toggles satt her bli gjeldande kun for k9, men både i Q og prod.
@@ -10,6 +10,7 @@ const k9SpecificFeatureToggles = {
   UTVIDET_VARSELFELT: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_INNTEKTSMELDING: true,
+  SKJUL_PROSESS_MENY_V2_VELGER: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
@@ -24,6 +25,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
+  PROSESS_MENY_V2: true,
 });
 
 /**

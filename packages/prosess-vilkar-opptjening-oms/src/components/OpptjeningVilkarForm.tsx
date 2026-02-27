@@ -20,7 +20,7 @@ interface OpptjeningVilkarFormProps {
   readOnlySubmitButton: boolean;
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
-  vilkårPerioder: Vilkarperiode[];
+  vilkårPerioder: Vilkarperiode[] | undefined;
   periodeIndex: number;
   opptjeninger: Opptjening[];
 }
