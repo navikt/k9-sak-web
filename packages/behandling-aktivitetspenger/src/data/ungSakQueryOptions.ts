@@ -1,4 +1,4 @@
-import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/ung-sak-typescript-client/types';
+import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { queryOptions } from '@tanstack/react-query';
 import { UngSakProsessApi } from './UngSakProsessApi';
 

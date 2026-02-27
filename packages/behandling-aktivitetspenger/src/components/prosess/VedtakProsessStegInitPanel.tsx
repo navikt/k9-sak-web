@@ -1,12 +1,12 @@
+import {
+  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  ung_sak_kontrakt_behandling_BehandlingDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import {
-  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
-} from '@navikt/ung-sak-typescript-client/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { UngSakProsessApi } from '../../data/UngSakProsessApi';
@@ -32,13 +32,11 @@ interface Props {
   submitCallback: (data: any, aksjonspunkt?: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
 }
 
-export function VedtakProsessStegInitPanel(props: Props) {
+export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submitCallback }: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
-
   const [{ data: aksjonspunkter = [] }, { data: vilkår }] = useSuspenseQueries({
-    queries: [aksjonspunkterQueryOptions(props.api, props.behandling), vilkårQueryOptions(props.api, props.behandling)],
+    queries: [aksjonspunkterQueryOptions(api, behandling), vilkårQueryOptions(api, behandling)],
   });
-
   const vedtakAksjonspunkter = useMemo(() => {
     return (
       aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.some(kode => kode === ap.definisjon)) || []
@@ -57,11 +55,11 @@ export function VedtakProsessStegInitPanel(props: Props) {
 
   return (
     <UngVedtakIndex
-      behandling={props.behandling}
+      behandling={behandling}
       aksjonspunkter={vedtakAksjonspunkter}
       vilkar={vilkår}
-      isReadOnly={props.isReadOnly}
-      submitCallback={props.submitCallback}
+      isReadOnly={isReadOnly}
+      submitCallback={submitCallback}
     />
   );
 }

@@ -1,35 +1,22 @@
-import { useCallback, useEffect } from 'react';
-
 import { Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { AktivitetspengerPaneler } from './components/AktivitetspengerPaneler';
+import { useCallback, useEffect } from 'react';
+import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
+import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
 import {
   UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
 import { UngSakProsessBackendClient } from './data/UngSakProsessBackendClient';
-import { FetchedData } from './types';
-
-const ungdomsytelseData = [
-  { key: UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER },
-  { key: UngdomsytelseBehandlingApiKeys.VILKAR },
-  { key: UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER },
-  { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
-  { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
-  { key: UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT },
-];
 
 interface OwnProps {
-  behandlingId: number;
   fagsak: Fagsak;
-  fagsakPerson: FagsakPerson;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -37,8 +24,6 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
-  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
   behandlingVersjon: number;
   behandlingUuid: string;
@@ -46,17 +31,11 @@ interface OwnProps {
 
 const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,
-  behandlingId,
   oppdaterBehandlingVersjon,
-  kodeverk,
   fagsak,
-  fagsakPerson,
   rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  valgtProsessSteg,
   opneSokeside,
-  valgtFaktaSteg,
-  arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   behandlingVersjon,
   behandlingUuid,
@@ -68,7 +47,7 @@ const BehandlingAktivitetspengerIndex = ({
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
   }, []);
 
-  const { data: behandling } = useSuspenseQuery({
+  const { data: behandling, refetch: refetchBehandling } = useSuspenseQuery({
     queryKey: ['behandling', behandlingVersjon, behandlingUuid],
     queryFn: () => ungSakProsessApi.getBehandling(behandlingUuid),
   });
@@ -87,12 +66,7 @@ const BehandlingAktivitetspengerIndex = ({
     queryFn: () => ungSakProsessApi.getPersonopplysninger(behandlingUuid),
   });
 
-  const {
-    startRequest: hentBehandling,
-    data: behandlingRes,
-    state: behandlingState,
-  } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.BEHANDLING_UU);
-  useSetBehandlingVedEndring(behandlingRes, setBehandling);
+  useSetBehandlingVedEndring(behandling, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -114,8 +88,8 @@ const BehandlingAktivitetspengerIndex = ({
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
-      endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, true)),
-      settBehandlingPaVent: params => settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, true)),
+      endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => refetchBehandling()),
+      settBehandlingPaVent: params => settBehandlingPaVent(params).then(() => refetchBehandling()),
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
@@ -129,42 +103,21 @@ const BehandlingAktivitetspengerIndex = ({
     };
   }, []);
 
-  const { data, state } = restApiUngdomsytelseHooks.useMultipleRestApi<FetchedData>(ungdomsytelseData, {
-    keepData: true,
-    updateTriggers: [behandling?.versjon],
-    suspendRequest: !behandling,
-  });
-
-  const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
-  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
+  if (!behandling) {
     return <LoadingPanel />;
   }
 
   return (
     <>
-      {/* <ReduxFormStateCleaner
-        behandlingId={behandling.id}
-        behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
-      /> */}
-      <AktivitetspengerPaneler
-        behandling={behandling}
-        fetchedData={data}
+      <BehandlingPåVent behandling={behandling} aksjonspunkter={aksjonspunkter ?? []} settPaVent={settPaVent} />
+      <AktivitetspengerProsess
         fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
+        behandling={behandling}
         rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
         opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        aksjonspunkter={aksjonspunkter}
-        vilkår={vilkår}
-        personopplysninger={personopplysninger}
       />
     </>
   );

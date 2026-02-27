@@ -1,9 +1,11 @@
+import {
+  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  ung_sak_kontrakt_behandling_BehandlingDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungtilbake/kodeverk/AksjonspunktCodes.js';
 import SettPåVentModal from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { goToSearch } from '@k9-sak-web/lib/paths/paths.js';
-import { Aksjonspunkt } from '@k9-sak-web/types';
-import { ung_sak_kontrakt_behandling_BehandlingDto } from '@navikt/ung-sak-typescript-client/types';
 import { useCallback, useMemo, useState } from 'react';
 interface SettPaVentParams {
   formData: {
@@ -19,7 +21,7 @@ interface BehandlingPaVentProps {
     ung_sak_kontrakt_behandling_BehandlingDto,
     'id' | 'versjon' | 'uuid' | 'fristBehandlingPåVent' | 'venteÅrsakKode' | 'behandlingPåVent'
   >;
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   settPaVent: (params: SettPaVentParams) => Promise<any>;
 }
 
@@ -41,8 +43,7 @@ export const BehandlingPåVent = ({ behandling, aksjonspunkter, settPaVent }: Be
   const erManueltSattPaVent = useMemo(
     () =>
       aksjonspunkter?.some(
-        ap =>
-          isAksjonspunktOpen(`${ap.status}`) && ap.definisjon.kode === aksjonspunktCodes.VENT_PÅ_BRUKERTILBAKEMELDING,
+        ap => isAksjonspunktOpen(`${ap.status}`) && ap.definisjon === aksjonspunktCodes.VENT_PÅ_BRUKERTILBAKEMELDING,
       ) ?? false,
     [aksjonspunkter],
   );

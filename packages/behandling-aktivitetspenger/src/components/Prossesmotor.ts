@@ -1,14 +1,14 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import {
   ung_kodeverk_vilkår_Utfall,
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@navikt/ung-sak-typescript-client/types';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { UngSakProsessApi } from '../data/UngSakProsessApi';

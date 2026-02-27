@@ -1,9 +1,9 @@
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { Fagsak } from '@k9-sak-web/types';
 import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
-} from '@navikt/ung-sak-typescript-client/types';
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { Fagsak } from '@k9-sak-web/types';
 import { useCallback } from 'react';
 
 interface UseBekreftAksjonspunktParams {
