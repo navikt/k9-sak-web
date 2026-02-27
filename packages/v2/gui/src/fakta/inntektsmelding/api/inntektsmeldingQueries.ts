@@ -22,7 +22,7 @@ export const useEtterspørInntektsmelding = () => {
 
   return useMutation<void, Error, EtterspørInntektsmeldingRequest>({
     mutationFn: requestBody => api.etterspørInntektsmelding(requestBody),
-    throwOnError: true,
+    throwOnError: false,
   });
 };
 
