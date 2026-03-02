@@ -24,6 +24,11 @@ const vedtakAksjonspunktKoder = [
 
 const PANEL_ID = prosessStegCodes.VEDTAK;
 
+const vedtakPanelTekster = {
+  innvilget: 'Aktivitetspenger er innvilget',
+  avslått: 'Aktivitetspenger er avslått',
+};
+
 interface Props {
   api: UngSakApi;
   behandling: ung_sak_kontrakt_behandling_BehandlingDto;
@@ -60,6 +65,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submit
       vilkar={vilkår}
       isReadOnly={isReadOnly}
       submitCallback={submitCallback}
+      tekster={vedtakPanelTekster}
     />
   );
 }

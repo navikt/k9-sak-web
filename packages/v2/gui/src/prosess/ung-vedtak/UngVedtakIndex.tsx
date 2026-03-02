@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 interface UngVedtakIndexProps {
@@ -12,6 +13,7 @@ interface UngVedtakIndexProps {
   submitCallback: (data: any) => Promise<any>;
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
+  tekster: UngVedtakTekster;
 }
 
 export const UngVedtakIndex = ({
@@ -20,6 +22,7 @@ export const UngVedtakIndex = ({
   submitCallback,
   vilkar,
   isReadOnly,
+  tekster,
 }: UngVedtakIndexProps) => {
   const ungVedtakBackendClient = new UngVedtakBackendClient();
   const {
@@ -48,6 +51,7 @@ export const UngVedtakIndex = ({
           readOnly={isReadOnly}
           vedtaksbrevValgResponse={vedtaksbrevValgResponse}
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
+          tekster={tekster}
         />
       )}
     </Box>
