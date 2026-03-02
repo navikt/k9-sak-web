@@ -64,7 +64,7 @@ const InntektsmeldingRad = ({ tilstand }: InntektsmeldingRadProps) => {
       {/* Rader */}
       <div className="space-y-3">
         {tilstand.status.map((s, index) => {
-          const erMottatt = s.status === Status.MOTTATT;
+          const harInntektsmelding = s.status === Status.MOTTATT || s.status === Status.GJENBRUKT;
 
           return (
             <HGrid key={index} gap="space-4" columns={{ xs: '2fr 2fr 3fr' }} align="center">
@@ -81,7 +81,7 @@ const InntektsmeldingRad = ({ tilstand }: InntektsmeldingRadProps) => {
                   icon={<EyeWithPupilIcon aria-hidden />}
                   href={finnDokumentLink(s.journalpostId ?? '')}
                   target="_blank"
-                  disabled={!s.journalpostId || !erMottatt}
+                  disabled={!s.journalpostId || !harInntektsmelding}
                   as="a"
                 >
                   Åpne
