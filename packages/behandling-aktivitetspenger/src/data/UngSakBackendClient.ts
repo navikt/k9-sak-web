@@ -3,6 +3,7 @@ import {
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
   behandlinger_hentBehandlingData1,
+  behandlinger_hentBehandlingMidlertidigStatus1,
   behandlingPerson_getPersonopplysninger,
   fagsak_hentFagsak,
   vilkår_getVilkårV3,
@@ -69,27 +70,7 @@ export class UngSakBackendClient implements UngSakApi {
     return (await behandlinger_hentBehandlingData1({ query: { behandlingUuid } })).data;
   }
 
-  // async getSimuleringResultat(behandlingUuid: string) {
-  //   return (await simulering_hentSimuleringResultat({ query: { behandlingUuid } })).data;
-  // }
-
-  // async getTilbakekrevingValg(behandlingUuid: string) {
-  //   return (await tilbakekrevingsvalg_hentTilbakekrevingValg({ query: { behandlingUuid } })).data;
-  // }
-
-  // async getMedlemskap(behandlingUuid: string) {
-  //   return (await behandlingPerson_hentMedlemskap({ query: { behandlingUuid } })).data;
-  // }
-
-  // async getOverlappendeYtelser(behandlingUuid: string) {
-  //   return (await ytelser_hentOverlappendeYtelser({ query: { behandlingUuid } })).data;
-  // }
-
-  // async getOpptjening(behandlingUuid: string) {
-  //   return (await opptjening_getOpptjeninger({ query: { behandlingUuid } })).data;
-  // }
-
-  // async getSøknadsfristStatus(behandlingUuid: string) {
-  //   return (await søknadsfrist_utledStatus({ query: { behandlingUuid } })).data;
-  // }
+  async hentBehandlingMidlertidigStatus(behandlingUuid: string) {
+    return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid } })).data;
+  }
 }

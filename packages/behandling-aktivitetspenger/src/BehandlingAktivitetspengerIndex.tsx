@@ -31,6 +31,8 @@ interface OwnProps {
   behandlingUuid: string;
 }
 
+const ungSakProsessApi = new UngSakBackendClient();
+
 const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,
   oppdaterBehandlingVersjon,
@@ -42,8 +44,6 @@ const BehandlingAktivitetspengerIndex = ({
   behandlingVersjon,
   behandlingUuid,
 }: OwnProps) => {
-  const ungSakProsessApi = new UngSakBackendClient();
-
   const setBehandling = useCallback(nyBehandling => {
     requestUngdomsytelseApi.resetCache();
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
@@ -99,6 +99,7 @@ const BehandlingAktivitetspengerIndex = ({
     <>
       <BehandlingPåVent behandling={behandling} aksjonspunkter={aksjonspunkter ?? []} settPaVent={settPaVent} />
       <AktivitetspengerProsess
+        api={ungSakProsessApi}
         fagsak={fagsak}
         behandling={behandling}
         rettigheter={rettigheter}
@@ -108,6 +109,7 @@ const BehandlingAktivitetspengerIndex = ({
         setBehandling={setBehandling}
       />
       <AktivitetspengerFakta
+        api={ungSakProsessApi}
         behandling={behandling}
         fagsak={fagsak}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}

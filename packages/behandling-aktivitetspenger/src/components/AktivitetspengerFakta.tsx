@@ -1,17 +1,21 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 
-import { ung_sak_kontrakt_behandling_BehandlingDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import {
+  ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+  ung_sak_kontrakt_behandling_BehandlingDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { FaktaMeny } from '@k9-sak-web/gui/behandling/fakta/FaktaMeny.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { restApiUngdomsytelseHooks, UngdomsytelseBehandlingApiKeys } from '../data/ungdomsytelseBehandlingApi';
+import { useMutation } from '@tanstack/react-query';
 import { UngSakBackendClient } from '../data/UngSakBackendClient';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
+import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { TestFaktaPanel } from './fakta/TestFaktaPanel';
 import { TestFaktaPanel2 } from './fakta/TestFaktaPanel2';
 import { useFaktamotor } from './Faktamotor';
@@ -19,52 +23,42 @@ import { useFaktamotor } from './Faktamotor';
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 interface OwnProps {
-  // data: FetchedData;
   fagsak: Fagsak;
-  // fagsakPerson: FagsakPerson;
   behandling: ung_sak_kontrakt_behandling_BehandlingDto;
-  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  // rettigheter: Rettigheter;
-  // hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
-  // valgtFaktaSteg?: string;
-  // valgtProsessSteg?: string;
-  // setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
-  setBehandling: (behandling: Behandling) => void;
-  // arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  // dokumenter: Dokument[];
-  // featureToggles: FeatureToggles;
-  // beregningErBehandlet?: boolean;
+  setBehandling: (behandling: ung_sak_kontrakt_behandling_BehandlingDto) => void;
+  api: UngSakBackendClient;
 }
 
 export const AktivitetspengerFakta = ({
-  data,
+  api,
   behandling,
   fagsak,
-  // fagsakPerson,
-  // rettigheter,
-  // alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  // valgtFaktaSteg,
-  // valgtProsessSteg,
-  // hasFetchError,
-  // setApentFaktaPanel,
   setBehandling,
-  // arbeidsgiverOpplysningerPerId,
-  // dokumenter,
-  // featureToggles,
-  // beregningErBehandlet,
 }: OwnProps) => {
-  // const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { pollTilBehandlingErKlar } = usePollBehandlingStatus(api, behandling, setBehandling);
+  const { mutateAsync: lagreAksjonspunktMutation } = useMutation({
+    mutationFn: (aksjonspunktData: ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) =>
+      api.lagreAksjonspunkt({
+        behandlingId: `${behandling.id}`,
+        behandlingVersjon: behandling.versjon,
+        bekreftedeAksjonspunktDtoer: aksjonspunktData.bekreftedeAksjonspunktDtoer,
+      }),
+    onSuccess: () => pollTilBehandlingErKlar(),
+  });
 
-  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
-  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
-
-  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
-  useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
+  const { mutateAsync: lagreOverstyrteAksjonspunktMutation } = useMutation({
+    mutationFn: (aksjonspunktData: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) =>
+      api.lagreAksjonspunktOverstyr({
+        behandlingId: `${behandling.id}`,
+        behandlingVersjon: behandling.versjon,
+        bekreftedeAksjonspunktDtoer: [],
+        overstyrteAksjonspunktDtoer: aksjonspunktData.overstyrteAksjonspunktDtoer,
+      }),
+    onSuccess: () => pollTilBehandlingErKlar(),
+  });
 
   // const dataTilUtledingAvPleiepengerPaneler = {
   //   fagsak,
@@ -126,14 +120,13 @@ export const AktivitetspengerFakta = ({
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
     behandling,
-    lagreAksjonspunkter,
-    lagreOverstyrteAksjonspunkter,
+    lagreAksjonspunkter: lagreAksjonspunktMutation,
+    lagreOverstyrteAksjonspunkter: lagreOverstyrteAksjonspunktMutation,
     oppdaterProsessStegOgFaktaPanelIUrl,
   });
 
   const [formData, setFormData] = useState({});
-  const ungSakApi = useMemo(() => new UngSakBackendClient(), []);
-  const faktapaneler = useFaktamotor({ api: ungSakApi, behandling });
+  const faktapaneler = useFaktamotor({ api, behandling });
   useEffect(() => {
     if (formData) {
       setFormData(undefined);
@@ -173,10 +166,10 @@ export const AktivitetspengerFakta = ({
         {faktapaneler.map(panel => {
           const urlKode = panel.urlKode;
           if (urlKode === faktaPanelCodes.MEDLEMSKAPSVILKARET) {
-            return <TestFaktaPanel key={urlKode} api={ungSakApi} behandling={behandling} />;
+            return <TestFaktaPanel key={urlKode} api={api} behandling={behandling} />;
           }
           if (urlKode === faktaPanelCodes.BEREGNING) {
-            return <TestFaktaPanel2 key={urlKode} api={ungSakApi} behandling={behandling} />;
+            return <TestFaktaPanel2 key={urlKode} api={api} behandling={behandling} />;
           }
           return null;
         })}

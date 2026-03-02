@@ -2,9 +2,11 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { Rettigheter, prosessStegHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { Rettigheter, prosessStegHooks } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { FatterVedtakStatusModal } from '@k9-sak-web/gui/shared/fatterVedtakStatusModal/FatterVedtakStatusModal.js';
@@ -12,25 +14,29 @@ import { IverksetterVedtakStatusModal } from '@k9-sak-web/gui/shared/iverksetter
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { Box } from '@navikt/ds-react';
+import { useMutation } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
-import { UngSakBackendClient } from '../data/UngSakBackendClient';
+import { UngSakApi } from '../data/UngSakApi';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
+import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
 interface OwnProps {
+  api: UngSakApi;
   fagsak: Fagsak;
   behandling: ung_sak_kontrakt_behandling_BehandlingDto;
   rettigheter: Rettigheter;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
-  setBehandling: (behandling: Behandling) => void;
+  setBehandling: (behandling: ung_sak_kontrakt_behandling_BehandlingDto) => void;
 }
 
 export const AktivitetspengerProsess = ({
+  api,
   fagsak,
   behandling,
   rettigheter,
@@ -40,12 +46,27 @@ export const AktivitetspengerProsess = ({
   setBehandling,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
+  const { pollTilBehandlingErKlar } = usePollBehandlingStatus(api, behandling, setBehandling);
+  const { mutateAsync: lagreAksjonspunktMutation } = useMutation({
+    mutationFn: (aksjonspunktData: ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) =>
+      api.lagreAksjonspunkt({
+        behandlingId: `${behandling.id}`,
+        behandlingVersjon: behandling.versjon,
+        bekreftedeAksjonspunktDtoer: aksjonspunktData.bekreftedeAksjonspunktDtoer,
+      }),
+    onSuccess: () => pollTilBehandlingErKlar(),
+  });
 
-  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
-
-  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { mutateAsync: lagreOverstyrteAksjonspunktMutation } = useMutation({
+    mutationFn: (aksjonspunktData: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) =>
+      api.lagreAksjonspunktOverstyr({
+        behandlingId: `${behandling.id}`,
+        behandlingVersjon: behandling.versjon,
+        bekreftedeAksjonspunktDtoer: [],
+        overstyrteAksjonspunktDtoer: aksjonspunktData.overstyrteAksjonspunktDtoer,
+      }),
+    onSuccess: () => pollTilBehandlingErKlar(),
+  });
 
   const { startRequest: forhandsvisMelding } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.PREVIEW_MESSAGE,
@@ -57,9 +78,6 @@ export const AktivitetspengerProsess = ({
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
 
-  useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
-  useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
-
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
 
@@ -69,16 +87,14 @@ export const AktivitetspengerProsess = ({
     [vedtakFormState, setVedtakFormState],
   );
 
-  const ungSakApi = useMemo(() => new UngSakBackendClient(), []);
-
-  const prosessteg = useProsessmotor({ api: ungSakApi, behandling });
+  const prosessteg = useProsessmotor({ api, behandling });
   const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
     behandling,
-    lagreAksjonspunkter,
-    lagreOverstyrteAksjonspunkter,
+    lagreAksjonspunkter: lagreAksjonspunktMutation,
+    lagreOverstyrteAksjonspunkter: lagreOverstyrteAksjonspunktMutation,
     oppdaterProsessStegOgFaktaPanelIUrl,
   });
 
@@ -136,7 +152,7 @@ export const AktivitetspengerProsess = ({
               return (
                 <VedtakProsessStegInitPanel
                   key={steg.urlKode}
-                  api={ungSakApi}
+                  api={api}
                   behandling={behandling}
                   hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
                   isReadOnly={isReadOnly}

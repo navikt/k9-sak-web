@@ -1,16 +1,29 @@
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Fagsak } from '@k9-sak-web/types';
+import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 interface UseBekreftAksjonspunktParams {
   fagsak: Fagsak;
   behandling: Pick<ung_sak_kontrakt_behandling_BehandlingDto, 'id' | 'versjon' | 'uuid'>;
-  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>;
-  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>;
+  lagreAksjonspunkter: UseMutateAsyncFunction<
+    unknown,
+    Error,
+    ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+    unknown
+  >;
+  lagreOverstyrteAksjonspunkter?: UseMutateAsyncFunction<
+    unknown,
+    Error,
+    ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+    unknown
+  >;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
@@ -66,21 +79,18 @@ export const useBekreftAksjonspunkt = ({
       );
 
       if (lagreOverstyrteAksjonspunkter && (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter)) {
-        await lagreOverstyrteAksjonspunkter(
-          {
-            ...params,
-            overstyrteAksjonspunktDtoer: models,
-          },
-          true,
-        );
+        await lagreOverstyrteAksjonspunkter({
+          behandlingId: `${params.behandlingId}`,
+          behandlingVersjon: params.behandlingVersjon,
+          bekreftedeAksjonspunktDtoer: [],
+          overstyrteAksjonspunktDtoer: models,
+        });
       } else {
-        await lagreAksjonspunkter(
-          {
-            ...params,
-            bekreftedeAksjonspunktDtoer: models,
-          },
-          true,
-        );
+        await lagreAksjonspunkter({
+          behandlingId: `${params.behandlingId}`,
+          behandlingVersjon: params.behandlingVersjon,
+          bekreftedeAksjonspunktDtoer: models,
+        });
       }
       if (!skaForhindreOppdaterUrl) {
         oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
