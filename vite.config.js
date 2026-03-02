@@ -75,7 +75,7 @@ export default ({ mode }) => {
         '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
         '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
         'k9/endringslogg': createProxy(
-          process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
+          process.env.ENDRINGSLOGG_URL || 'https://endringslogg.intern.dev.nav.no',
           {
             '^/k9/endringslogg': '',
           },
