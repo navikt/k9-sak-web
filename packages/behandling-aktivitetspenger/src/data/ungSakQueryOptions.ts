@@ -23,7 +23,7 @@ export const aksjonspunkterQueryOptions = (api: UngSakApi, behandling: Behandlin
       : undefined,
   });
 
-export const behandlingQueryOptions = (api: UngSakApi, behandling: Behandling) =>
+export const behandlingQueryOptions = (api: UngSakApi, behandling: Pick<Behandling, 'uuid' | 'versjon'>) =>
   queryOptions({
     queryKey: ['behandling', behandling.uuid, behandling.versjon],
     queryFn: () => api.getBehandling(behandling.uuid),

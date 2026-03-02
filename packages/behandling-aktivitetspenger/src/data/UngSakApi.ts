@@ -1,5 +1,7 @@
 import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
   ung_sak_kontrakt_fagsak_FagsakDto,
   ung_sak_kontrakt_person_PersonopplysningDto,
@@ -8,6 +10,10 @@ import {
 
 export interface UngSakApi {
   getAksjonspunkter(behandlingId: string): Promise<ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]>;
+  lagreAksjonspunkt(props: ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto): Promise<unknown>;
+  lagreAksjonspunktOverstyr(
+    props: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+  ): Promise<unknown>;
   getVilkår(behandlingUuid: string): Promise<ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[]>;
   getFagsak(saksnummer: string): Promise<ung_sak_kontrakt_fagsak_FagsakDto>;
   //   getUttaksplan(

@@ -13,6 +13,7 @@ import {
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
 import { UngSakBackendClient } from './data/UngSakBackendClient';
+import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './data/ungSakQueryOptions';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -48,24 +49,10 @@ const BehandlingAktivitetspengerIndex = ({
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
   }, []);
 
-  const { data: behandling, refetch: refetchBehandling } = useSuspenseQuery({
-    queryKey: ['behandling', behandlingVersjon, behandlingUuid],
-    queryFn: () => ungSakProsessApi.getBehandling(behandlingUuid),
-  });
-  const { data: aksjonspunkter } = useSuspenseQuery({
-    queryKey: ['aksjonspunkter', behandlingUuid],
-    queryFn: () => ungSakProsessApi.getAksjonspunkter(behandlingUuid),
-  });
-
-  const { data: vilkår } = useSuspenseQuery({
-    queryKey: ['vilkår', behandlingUuid],
-    queryFn: () => ungSakProsessApi.getVilkår(behandlingUuid),
-  });
-
-  const { data: personopplysninger } = useSuspenseQuery({
-    queryKey: ['personopplysninger', behandlingUuid],
-    queryFn: () => ungSakProsessApi.getPersonopplysninger(behandlingUuid),
-  });
+  const { data: behandling, refetch: refetchBehandling } = useSuspenseQuery(
+    behandlingQueryOptions(ungSakProsessApi, { uuid: behandlingUuid, versjon: behandlingVersjon }),
+  );
+  const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(ungSakProsessApi, behandling));
 
   useSetBehandlingVedEndring(behandling, setBehandling);
 
