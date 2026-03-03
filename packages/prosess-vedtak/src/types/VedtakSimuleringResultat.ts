@@ -1,5 +1,3 @@
-import { k9_oppdrag_kontrakt_simulering_v1_SimuleringForMottakerDto } from '@navikt/k9-sak-typescript-client/types';
-
 export type SimuleringResultatRad = Readonly<{
   feltnavn: string;
   resultaterPerMåned: {
@@ -18,14 +16,13 @@ export type SimuleringResultatPerFagområde = Readonly<{
 
 export type Mottaker = Readonly<{
   mottakerType: string;
-  mottakerNummer?: string | undefined;
-  mottakerNavn?: string | undefined;
-  nesteUtbPeriode?:
-    | {
-        fom?: string | undefined;
-        tom?: string | undefined;
-      }
-    | undefined;
+  mottakerNummer: string;
+  mottakerNavn: string;
+  mottakerIdentifikator: string;
+  nesteUtbPeriode: {
+    fom?: string;
+    tom?: string;
+  };
   resultatPerFagområde: SimuleringResultatPerFagområde[];
   resultatOgMotregningRader: SimuleringResultatRad[];
 }>;
@@ -37,7 +34,7 @@ export type DetaljertSimuleringResultat = Readonly<{
   sumFeilutbetaling?: number;
   sumInntrekk?: number;
   ingenPerioderMedAvvik?: boolean;
-  perioderPerMottaker?: k9_oppdrag_kontrakt_simulering_v1_SimuleringForMottakerDto[];
+  perioderPerMottaker?: Mottaker[];
 }>;
 
 export type VedtakSimuleringResultat = Readonly<{

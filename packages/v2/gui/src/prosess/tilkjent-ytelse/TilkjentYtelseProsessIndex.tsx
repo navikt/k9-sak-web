@@ -3,7 +3,7 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { use } from 'react';
 import { assertDefined } from '../../utils/validation/assertDefined.js';
@@ -14,13 +14,14 @@ import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysni
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
 interface OwnProps {
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
-  behandling: Pick<BehandlingDto, 'uuid'>;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  behandling: BehandlingDto;
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
+  featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
   showAndelDetails?: boolean;
 }
@@ -37,12 +38,12 @@ export const TilkjentYtelseProsessIndex = ({
   submitCallback,
   readOnlySubmitButton,
   arbeidsgiverOpplysningerPerId,
+  featureToggles,
   personopplysninger,
   showAndelDetails,
   behandling,
 }: OwnProps) => {
   const tilkjentYtelseBackendClient = assertDefined(use(TilkjentYtelseApiContext));
-  const featureToggles = use(FeatureTogglesContext);
 
   const { data: feriepengerPrÅr } = useSuspenseQuery({
     queryKey: ['feriepengegrunnlag', behandling?.uuid],
@@ -53,10 +54,6 @@ export const TilkjentYtelseProsessIndex = ({
     },
     select: data => (data != null ? data : emptyResult),
   });
-
-  if (!arbeidsgiverOpplysningerPerId) {
-    return null;
-  }
 
   return (
     <TilkjentYtelsePanel

@@ -16,7 +16,11 @@ interface OwnProps {
  * i aksjonspunkt '' velger at ytelsesvedtaket skal stadfestes. Ved å trykke på knapp blir saksbehandler
  * tatt tilbake til sokesiden.
  */
-const AnkeVurderingModal = ({ visModal = false, lukkModal, erFerdigbehandlet }: OwnProps) => (
+const AnkeVurderingModal = ({
+  visModal = false,
+  lukkModal,
+  erFerdigbehandlet,
+}: OwnProps) => (
   <Modal
     className={styles.modal}
     open={visModal}

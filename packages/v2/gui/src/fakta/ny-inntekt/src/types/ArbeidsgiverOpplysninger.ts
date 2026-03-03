@@ -7,3 +7,7 @@ export type ArbeidsgiverOpplysninger = Readonly<{
 }>;
 
 export type ArbeidsgiverOpplysningerPerId = Record<string, ArbeidsgiverOpplysninger>;
+
+export type ArbeidsgiverOpplysningerWrapper = {
+  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
+};

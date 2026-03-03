@@ -1,8 +1,9 @@
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
+  k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
   k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
@@ -30,29 +31,33 @@ const intl = createIntl(
 
 interface VedtakProsessIndexProps {
   aksjonspunkter: AksjonspunktDto[];
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
-  behandling: Pick<
-    k9_sak_kontrakt_behandling_BehandlingDto,
-    'type' | 'status' | 'behandlingsresultat' | 'behandlingPåVent' | 'behandlingÅrsaker'
-  > & { språkkode: string };
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  behandling: {
+    type: string;
+    status: string;
+    språkkode: string;
+    behandlingsresultat?: BehandlingsresultatDto;
+    behandlingPåVent: boolean;
+    behandlingÅrsaker?: Array<BehandlingÅrsakDto>;
+  };
   beregningsgrunnlag: Beregningsgrunnlag[];
   dokumentdataHente: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
-  hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
+  hentFritekstbrevHtmlCallback: () => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   isReadOnly: boolean;
   lagreDokumentdata: LagreDokumentdataType;
-  medlemskap?: {
+  medlemskap: {
     fom: string;
   };
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
-  previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
+  previewCallback: () => Promise<any>;
   simuleringResultat: VedtakSimuleringResultat;
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
-  vedtakVarsel?: VedtakVarsel;
+  vedtakVarsel: VedtakVarsel;
   vilkar: VilkårMedPerioderDto[];
   ytelseTypeKode: string;
 }

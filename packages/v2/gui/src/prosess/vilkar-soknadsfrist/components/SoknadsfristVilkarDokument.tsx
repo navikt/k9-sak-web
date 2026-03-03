@@ -65,16 +65,16 @@ export const SoknadsfristVilkarDokument = ({
       dokument.status?.reduce(
         (acc, curr) => (!acc || initializeDate(curr.periode.fom) < initializeDate(acc) ? curr.periode.fom : acc),
         '',
-      ) ?? '',
-    [dokument],
+      ),
+    [dokument.journalpostId],
   );
   const maxDate = useMemo(
     () =>
       dokument.status?.reduce(
         (acc, curr) => (!acc || initializeDate(curr.periode.tom) > initializeDate(acc) ? curr.periode.tom : acc),
         '',
-      ) ?? '',
-    [dokument],
+      ),
+    [dokument.innsendingstidspunkt, dokument.journalpostId],
   );
 
   const isAtleastDate = useCallback((v: string | Dayjs | undefined) => dateAfterOrEqual(minDate)(v), [minDate]);
@@ -85,7 +85,7 @@ export const SoknadsfristVilkarDokument = ({
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
-        {dokument.type} innsendt {dokument.innsendingstidspunkt ? formatDate(dokument.innsendingstidspunkt) : ''}{' '}
+        {dokument.type} innsendt {formatDate(dokument.innsendingstidspunkt)}{' '}
         <small>(journalpostId: {dokument.journalpostId})</small>
       </p>
       {skalViseBegrunnelse && (
