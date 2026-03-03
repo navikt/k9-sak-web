@@ -1,13 +1,14 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-  type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
-  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useMemo, type JSX } from 'react';
+import { useContext, useMemo, type JSX } from 'react';
 import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
 import { UttakProvider } from './context/UttakContext';
+import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
+  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
+  type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import UttakInnhold from './UttakInnhold';
 
 interface UttakProps {
@@ -15,7 +16,7 @@ interface UttakProps {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
+  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
   readOnly: boolean;
   relevanteAksjonspunkter: AksjonspunktDefinisjon[];
 }
@@ -30,6 +31,7 @@ const Uttak = ({
   readOnly,
 }: UttakProps): JSX.Element => {
   const uttakApi = useMemo(() => new BehandlingUttakBackendClient(), []);
+  const { refetchBehandling: oppdaterBehandling } = useContext(BehandlingContext);
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
 
   const harEtUløstAksjonspunktIUttak = useMemo(
@@ -39,7 +41,7 @@ const Uttak = ({
           ap.status === aksjonspunktStatus.OPPRETTET &&
           ap.definisjon !== undefined &&
           ap.definisjon !== AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK &&
-          relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon),
+          relevanteAksjonspunkter.includes(ap.definisjon),
       ),
     [aksjonspunkter, relevanteAksjonspunkter],
   );
@@ -52,7 +54,7 @@ const Uttak = ({
     erOverstyrer,
     harEtUløstAksjonspunktIUttak,
     readOnly,
-    oppdaterBehandling: () => hentBehandling?.({ behandlingId: behandling.uuid }, false),
+    oppdaterBehandling,
     virkningsdatoUttakNyeRegler,
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     aksjonspunkter,

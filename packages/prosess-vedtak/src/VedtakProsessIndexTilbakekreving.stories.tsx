@@ -1,13 +1,12 @@
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
+  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
-  k9_kodeverk_behandling_BehandlingStatus,
-  k9_kodeverk_behandling_BehandlingType,
-  k9_kodeverk_behandling_FagsakYtelseType,
   k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
+  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
@@ -16,8 +15,8 @@ import VedtakProsessIndex from './VedtakProsessIndex';
 const behandling = {
   id: 1,
   versjon: 1,
-  type: k9_kodeverk_behandling_BehandlingType.FØRSTEGANGSSØKNAD,
-  status: k9_kodeverk_behandling_BehandlingStatus.UTREDES,
+  type: behandlingType.SOKNAD,
+  status: behandlingStatus.BEHANDLING_UTREDES,
   språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
@@ -30,9 +29,6 @@ const behandling = {
       behandlingArsakType: klageBehandlingArsakType.ETTER_KLAGE,
     },
   ],
-  opprettet: '2024-01-01',
-  sakstype: k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
-  uuid: '12345',
 };
 
 const meta: Meta<typeof VedtakProsessIndex> = {

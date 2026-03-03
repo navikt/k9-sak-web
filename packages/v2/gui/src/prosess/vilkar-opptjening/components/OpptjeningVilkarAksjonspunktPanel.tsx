@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';
 import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import OpptjeningPanel from './OpptjeningPanel';
@@ -56,7 +57,7 @@ export const buildInitialValues = (
 };
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
-  aksjonspunkter: AksjonspunktDto[];
+  aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
   isApOpen: boolean;

@@ -1,11 +1,13 @@
-import type { ReactNode } from 'react';
 import { createContext } from 'react';
+import type { ReactNode } from 'react';
 
 export interface BehandlingContextType {
   refetchBehandling: () => Promise<any>;
 }
 
-export const BehandlingContext = createContext<BehandlingContextType | undefined>(undefined);
+export const BehandlingContext = createContext<BehandlingContextType>({
+  refetchBehandling: () => Promise.resolve(null),
+});
 
 export const BehandlingProvider = ({
   children,
