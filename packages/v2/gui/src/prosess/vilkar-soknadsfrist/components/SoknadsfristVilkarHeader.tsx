@@ -1,9 +1,9 @@
+import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import type { SetStateAction } from 'react';
-import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 
 const isOverridden = (aksjonspunktCode: string, aksjonspunktCodes?: string[]) =>
   aksjonspunktCodes?.some(code => code === aksjonspunktCode);
@@ -26,7 +26,7 @@ const VilkarOkMessage = ({ originalErVilkarOk }: { originalErVilkarOk: boolean }
 };
 
 interface SoknadsfristVilkarHeaderProps {
-  aksjonspunkter: SoknadsfristAksjonspunktType[];
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   erOverstyrt?: boolean;
   kanOverstyreAccess?: {
     employeeHasAccess: boolean;
