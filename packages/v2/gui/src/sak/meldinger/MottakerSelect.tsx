@@ -1,11 +1,11 @@
-import { Select } from '@navikt/ds-react';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
-import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import { Select } from '@navikt/ds-react';
+import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 
 type MottakerSelectProps = {
   readonly valgtMal: Template | undefined;
@@ -36,11 +36,15 @@ const unavailableCauseTxt = (cause: UtilgjengeligÅrsak | undefined): string | u
 export const lagVisningsnavnForMottaker = (
   mottaker: Mottaker,
   personopplysninger: Personopplysninger,
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string => {
   const utilgjengeligÅrsakTxt =
     mottaker.utilgjengelig !== undefined ? ` - ${unavailableCauseTxt(mottaker.utilgjengelig)}` : '';
-  if (arbeidsgiverOpplysningerPerId[mottaker.id] && arbeidsgiverOpplysningerPerId[mottaker.id]?.navn) {
+  if (
+    arbeidsgiverOpplysningerPerId &&
+    arbeidsgiverOpplysningerPerId[mottaker.id] &&
+    arbeidsgiverOpplysningerPerId[mottaker.id]?.navn
+  ) {
     return `${arbeidsgiverOpplysningerPerId[mottaker.id]?.navn} (${mottaker.id})${utilgjengeligÅrsakTxt}`;
   }
 

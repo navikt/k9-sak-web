@@ -1,27 +1,27 @@
 import {
   k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
-  type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
+  type k9_sak_kontrakt_opptjening_OpptjeningerDto,
+  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState } from 'react';
+import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
 import OpptjeningVilkarAksjonspunktPanel from './components/OpptjeningVilkarAksjonspunktPanel';
 import styles from './opptjeningVilkarProsessIndex.module.css';
-import type { Aksjonspunkt } from './types/Aksjonspunkt';
 import type { Behandling } from './types/Behandling';
 import type { Fagsak } from './types/Fagsak';
 import type { SubmitCallback } from './types/SubmitCallback';
-import type { Vilkår } from './types/Vilkår';
-import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  opptjening: { opptjeninger: OpptjeningDto[] };
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkår[];
+  opptjening: k9_sak_kontrakt_opptjening_OpptjeningerDto;
+  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
@@ -98,7 +98,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår?.perioder ?? []}
             activePeriode={activePeriode}
-            opptjeninger={opptjening?.opptjeninger}
+            opptjeninger={opptjening?.opptjeninger ?? []}
             isApOpen={isAksjonspunktOpen}
           />
         </div>

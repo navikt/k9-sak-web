@@ -11,10 +11,10 @@ type AvklarteOpplysninger = {
 
 export type KravDokument = {
   avklarteOpplysninger?: AvklarteOpplysninger;
-  innsendingstidspunkt: string;
+  innsendingstidspunkt?: string;
   journalpostId: string;
   overstyrteOpplysninger?: AvklarteOpplysninger;
-  status: Array<SøknadsfristPeriode>;
+  status?: Array<SøknadsfristPeriode>;
   type?: KravDokumentType;
   id?: string;
 };

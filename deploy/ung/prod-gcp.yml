@@ -1,12 +1,16 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
   name: ung-sak-web
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
   annotations:
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+    nais.io/run-as-user: '101' #nginx
+    nais.io/read-only-file-system: 'false' #nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: '32k'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '600'
 spec:
   image: {{ image }}
   port: 9005
@@ -27,16 +31,18 @@ spec:
     limits:
       memory: 64Mi
   ingresses:
-    - "https://ung.intern.nav.no"
+    - 'https://ung.intern.nav.no'
   accessPolicy:
     outbound:
       rules:
         - application: ung-sak
         - application: ung-tilbake
   env:
+    - name: APP_NAME
+      value: ung-sak-web
     - name: APP_URL
-      value: "http://ung-sak"
-    - name: PORT
-      value: "9005"
+      value: 'http://ung-sak'
+    - name: APP_PORT
+      value: '9005'
     - name: APP_URL_UNG_TILBAKE
       value: "http://ung-tilbake"

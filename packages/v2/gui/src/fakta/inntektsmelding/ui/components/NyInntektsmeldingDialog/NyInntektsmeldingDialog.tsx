@@ -17,8 +17,18 @@ export const NyInntektsmeldingDialog = ({
   forespørselStatus,
 }: NyInntektsmeldingDialogProps) => {
   const renderContent = () => {
-    if (forespørselStatus === ForespørselStatus.UNDER_BEHANDLING || forespørselStatus === ForespørselStatus.FERDIG) {
-      return <KanIkkeOppretteNyOppgave førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
+    if (
+      forespørselStatus === ForespørselStatus.UNDER_BEHANDLING ||
+      forespørselStatus === ForespørselStatus.FERDIG ||
+      forespørselStatus === ForespørselStatus.STP_MER_ENN_4_UKER
+    ) {
+      return (
+        <KanIkkeOppretteNyOppgave
+          førsteFraværsdag={førsteFraværsdag}
+          arbeidsgiver={arbeidsgiver}
+          forespørselStatus={forespørselStatus}
+        />
+      );
     }
 
     return <SendForespørselContent førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;

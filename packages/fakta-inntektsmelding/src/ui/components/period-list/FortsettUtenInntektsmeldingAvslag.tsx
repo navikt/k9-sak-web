@@ -26,7 +26,7 @@ const FortsettUtenInntektsmeldingAvslag = ({
       <>
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
           {kode === Kode.MANGLENDE_GRUNNLAG && (
-              <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
+            <span>Søknaden avslås på grunn av manglende opplysninger om inntekt</span>
           )}
           {kode === Kode.IKKE_INNTEKTSTAP && (
             <span>Søknaden avslås fordi søker ikke har dokumentert tapt arbeidsinntekt</span>

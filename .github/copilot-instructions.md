@@ -1,16 +1,5 @@
 # GitHub Copilot Instructions for K9 Sak Web
 
-## Git Policy
-
-- **NEVER** run `git commit` or `git push` unless the user explicitly asks you to.
-- You may check status (`git status`, `git diff`) freely.
-
-## Språk
-
-- Copilot may respond in **English**, but **code comments** must be written in Norwegian.
-- If Copilot generates comments, they should be written in Norwegian bokmål.
-- Tekniske termer (variabelnavn, funksjonsnavn, biblioteknavn osv.) skal fortsatt være på engelsk i kode.
-
 ## Project Context
 
 You're working on **k9-sak-web**, a monorepo containing React/TypeScript applications for NAV's K9 case handling system. This system processes various benefit types including Pleiepenger, Omsorgspenger, Opplæringspenger, and Ungdomsytelse.

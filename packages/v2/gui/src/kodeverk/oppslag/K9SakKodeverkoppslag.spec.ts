@@ -58,4 +58,12 @@ describe('Kodeverkoppslag', () => {
     // Denne har ulikt navn i forhold til k9-klage
     expect(oppslag.fagsakYtelseTyper('OMP_KS').navn).toEqual('Ekstra omsorgsdager kronisk syk');
   });
+
+  it('alleKodeverdierForKodeverk skal returnerere array av kodeverdier med korrekt type og data', () => {
+    const aktivitetsStatuser = oppslag.alleKodeverdierForKodeverk('aktivitetStatuser');
+    const aapOppsl = oppslag.aktivitetStatuser('AAP');
+    const aapElem = aktivitetsStatuser.find(v => v.kode == aapOppsl.kode);
+    expect(aapElem?.kode).toEqual(aapOppsl.kode);
+    expect(aapElem?.navn).toEqual(aapOppsl.navn);
+  });
 });
