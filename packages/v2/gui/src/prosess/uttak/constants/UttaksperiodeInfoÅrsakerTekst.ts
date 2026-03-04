@@ -33,7 +33,7 @@ export const BarnetsDødsfallÅrsakerMedTekst = [
 export const IkkeOppfylteÅrsakerMedTekst: UttaksperiodeInfoÅrsakerTekstType[] = [
   {
     årsak: UttaksperiodeInfoÅrsaker.INGEN_TAPT_INNTEKT_PGA_FP,
-    tekst: 'Årsak for avslag: Søker har fullt uttak av foreldepenger',
+    tekst: 'Årsak for avslag: Søker har fullt uttak av foreldrepenger',
   },
   {
     årsak: UttaksperiodeInfoÅrsaker.LOVBESTEMT_FERIE,
