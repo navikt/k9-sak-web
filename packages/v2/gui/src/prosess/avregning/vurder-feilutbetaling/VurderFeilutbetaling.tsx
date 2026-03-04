@@ -14,7 +14,7 @@ import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrak
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
-import { foreldrepenger_tilbakekreving_behandlingslager_fagsak_FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
 import { useAvregningFormState } from '../../../context/AvregningContext.js';
