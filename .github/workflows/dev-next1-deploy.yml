@@ -17,7 +17,7 @@ jobs:
       id-token: write
       packages: read
     env:
-      CLUSTER: dev-fss
+      CLUSTER: dev-gcp
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
@@ -41,6 +41,6 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
-          RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
+          RESOURCE: deploy/ung/dev-gcp.yml
           VARS: deploy/dev-next1.yaml
           VAR: image=${{ steps.docker-push.outputs.image }}
