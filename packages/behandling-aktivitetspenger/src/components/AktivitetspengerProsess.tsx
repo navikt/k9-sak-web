@@ -6,11 +6,14 @@ import {
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
   ung_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { Rettigheter, prosessStegHooks } from '@k9-sak-web/behandling-felles';
+import {
+  FatterVedtakStatusModal,
+  IverksetterVedtakStatusModal,
+  Rettigheter,
+  prosessStegHooks,
+} from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
-import { FatterVedtakStatusModal } from '@k9-sak-web/gui/shared/fatterVedtakStatusModal/FatterVedtakStatusModal.js';
-import { IverksetterVedtakStatusModal } from '@k9-sak-web/gui/shared/iverksetterVedtakStatusModal/IverksetterVedtakStatusModal.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Fagsak } from '@k9-sak-web/types';
 import { Box } from '@navikt/ds-react';
@@ -136,7 +139,7 @@ export const AktivitetspengerProsess = ({
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
         lukkModal={lukkModalOgGåTilSøk}
-        tekst="Behandlingen er sendt til godkjenning."
+        tekstkode="Behandlingen er sendt til godkjenning."
       />
       <ProsessMeny steg={prosessteg}>
         <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16">
