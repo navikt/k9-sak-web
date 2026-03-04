@@ -220,6 +220,9 @@ export const UttakMedUlikeStatuser: Story = {
       ]),
       lagInntektsgraderingPeriode('2024-03-01/2024-03-15', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
       lagTilsynsgraderingPeriode('2024-03-16/2024-03-31', 30, 0),
+      lagIkkeOppfyltPeriode('2024-04-01/2024-04-14', [
+        Årsak.INGEN_TAPT_INNTEKT_PGA_FP
+      ]),
     ]),
     erOverstyrer: false,
     aksjonspunkter: [],
