@@ -1,0 +1,3 @@
+import type { k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_arbeidsforhold_AktivitetStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type AktivitetStatus = k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_arbeidsforhold_AktivitetStatus;

@@ -1,0 +1,3 @@
+import type { ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevMottakerValgResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
+
+export type InformasjonsbrevMottakerValgResponse = ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevMottakerValgResponse;

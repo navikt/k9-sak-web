@@ -1,7 +1,5 @@
-import {
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakDtoSakstype,
-  type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType as FagsakDtoSakstype } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import { type Location } from 'history';
 import type { BehandlingVelgerBackendApiType } from './BehandlingVelgerBackendApiType';
 import BehandlingPicker from './components/BehandlingPicker';

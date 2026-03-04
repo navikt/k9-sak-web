@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn,
-  k9_kodeverk_person_PersonstatusType as personstatus,
-  type k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
-  type k9_sak_kontrakt_fagsak_RelatertSakDto as RelatertSakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { kjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
+import { personstatus } from '@k9-sak-web/backend/k9sak/kodeverk/person/personstatus.js';
+import type { DirekteOvergangDto } from '@k9-sak-web/backend/k9sak/kontrakt/infotrygd/DirekteOvergangDto.js';
+import type { RelatertSakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/RelatertSakDto.js';
 import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';

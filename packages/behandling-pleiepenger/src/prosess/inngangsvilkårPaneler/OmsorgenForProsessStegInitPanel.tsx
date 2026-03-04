@@ -1,26 +1,24 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_behandling_BehandlingType,
-  k9_kodeverk_vilkår_VilkårType,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useMemo, type SetStateAction } from 'react';
 
-const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.OMSORGEN_FOR];
+const RELEVANTE_VILKAR_KODER = [vilkarType.OMSORGEN_FOR];
 
 interface Props {
   behandling: Behandling;
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  aksjonspunkter: AksjonspunktDto[];
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
+  vilkår: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
   overstyrteAksjonspunktKoder: string[];
 }
@@ -51,7 +49,7 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
   return (
     <VilkarresultatMedOverstyringProsessIndex
       aksjonspunkter={relevanteAksjonspunkter}
-      behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+      behandling={{ type: props.behandling.type.kode as BehandlingType }}
       vilkar={vilkårForSteg}
       erOverstyrt={erOverstyrt}
       overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR}

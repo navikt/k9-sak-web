@@ -1,7 +1,5 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';

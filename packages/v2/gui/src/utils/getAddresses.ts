@@ -1,7 +1,5 @@
-import {
-  k9_kodeverk_geografisk_AdresseType as OpplysningAdresseType,
-  type k9_sak_kontrakt_person_PersonadresseDto as PersonadresseDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { adresseType as OpplysningAdresseType } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/adresseType.js';
+import type { PersonadresseDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonadresseDto.js';
 
 const landkoder = {
   NORGE: 'NOR',

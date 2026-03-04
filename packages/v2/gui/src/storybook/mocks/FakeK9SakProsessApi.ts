@@ -1,39 +1,37 @@
-import type {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto,
-  k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto,
-  k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto,
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
-  k9_sak_kontrakt_fagsak_FagsakDto,
-  k9_sak_kontrakt_medlem_MedlemV2Dto,
-  k9_sak_kontrakt_opptjening_OpptjeningerDto,
-  k9_sak_kontrakt_person_PersonopplysningDto,
-  k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-  k9_sak_kontrakt_ytelser_OverlappendeYtelseDto,
-  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/BeregningsgrunnlagDto.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/k9sak/kontrakt/oppdrag/simulering/v1/SimuleringDto.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { BeregningsgrunnlagKoblingDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagKoblingDto.js';
+import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatMedUtbetaltePeriodeDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
+import type { MedlemV2Dto } from '@k9-sak-web/backend/k9sak/kontrakt/medlem/MedlemV2Dto.js';
+import type { OpptjeningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/opptjening/OpptjeningerDto.js';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import type { SøknadsfristTilstandDto } from '@k9-sak-web/backend/k9sak/kontrakt/søknadsfrist/SøknadsfristTilstandDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 
 interface FakeK9SakProsessApiOptions {
-  vilkår?: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
-  aksjonspunkter?: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  uttak?: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
-  beregningsresultatUtbetaling?: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto;
-  simuleringResultat?: k9_oppdrag_kontrakt_simulering_v1_SimuleringDto | null;
-  fagsak?: k9_sak_kontrakt_fagsak_FagsakDto;
-  personopplysninger?: k9_sak_kontrakt_person_PersonopplysningDto;
-  arbeidsgiverOpplysninger?: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto;
-  beregningreferanser?: k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto[];
-  beregningsgrunnlag?: folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto[];
-  behandling?: k9_sak_kontrakt_behandling_BehandlingDto;
-  tilbakekrevingValg?: k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto;
-  medlemskap?: k9_sak_kontrakt_medlem_MedlemV2Dto;
-  overlappendeYtelser?: k9_sak_kontrakt_ytelser_OverlappendeYtelseDto[];
-  opptjening?: k9_sak_kontrakt_opptjening_OpptjeningerDto;
-  søknadsfristStatus?: k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto;
+  vilkår?: VilkårMedPerioderDto[];
+  aksjonspunkter?: AksjonspunktDto[];
+  uttak?: UttaksplanMedUtsattePerioder;
+  beregningsresultatUtbetaling?: BeregningsresultatMedUtbetaltePeriodeDto;
+  simuleringResultat?: SimuleringDto | null;
+  fagsak?: FagsakDto;
+  personopplysninger?: PersonopplysningDto;
+  arbeidsgiverOpplysninger?: ArbeidsgiverOversiktDto;
+  beregningreferanser?: BeregningsgrunnlagKoblingDto[];
+  beregningsgrunnlag?: BeregningsgrunnlagDto[];
+  behandling?: BehandlingDto;
+  tilbakekrevingValg?: TilbakekrevingValgDto;
+  medlemskap?: MedlemV2Dto;
+  overlappendeYtelser?: OverlappendeYtelseDto[];
+  opptjening?: OpptjeningerDto;
+  søknadsfristStatus?: SøknadsfristTilstandDto;
 }
 
 export class FakeK9SakProsessApi {
@@ -43,71 +41,71 @@ export class FakeK9SakProsessApi {
     this.options = options;
   }
 
-  async getVilkår(): Promise<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[]> {
+  async getVilkår(): Promise<VilkårMedPerioderDto[]> {
     return this.options.vilkår ?? [];
   }
 
-  async getAksjonspunkter(): Promise<k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]> {
+  async getAksjonspunkter(): Promise<AksjonspunktDto[]> {
     return this.options.aksjonspunkter ?? [];
   }
 
-  async getUttaksplan(): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder> {
+  async getUttaksplan(): Promise<UttaksplanMedUtsattePerioder> {
     return this.options.uttak ?? { uttaksplan: { perioder: {} }, simulertUttaksplan: { perioder: {} } };
   }
 
-  async getBeregningsresultatMedUtbetaling(): Promise<k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto> {
+  async getBeregningsresultatMedUtbetaling(): Promise<BeregningsresultatMedUtbetaltePeriodeDto> {
     return this.options.beregningsresultatUtbetaling ?? { perioder: [] };
   }
 
-  async getSimuleringResultat(): Promise<k9_oppdrag_kontrakt_simulering_v1_SimuleringDto> {
-    return this.options.simuleringResultat ?? ({} as k9_oppdrag_kontrakt_simulering_v1_SimuleringDto);
+  async getSimuleringResultat(): Promise<SimuleringDto> {
+    return this.options.simuleringResultat ?? ({} as SimuleringDto);
   }
 
-  async getFagsak(): Promise<k9_sak_kontrakt_fagsak_FagsakDto> {
-    return this.options.fagsak ?? ({} as k9_sak_kontrakt_fagsak_FagsakDto);
+  async getFagsak(): Promise<FagsakDto> {
+    return this.options.fagsak ?? ({} as FagsakDto);
   }
 
-  async getPersonopplysninger(): Promise<k9_sak_kontrakt_person_PersonopplysningDto> {
-    return this.options.personopplysninger ?? ({} as k9_sak_kontrakt_person_PersonopplysningDto);
+  async getPersonopplysninger(): Promise<PersonopplysningDto> {
+    return this.options.personopplysninger ?? ({} as PersonopplysningDto);
   }
 
-  async getArbeidsgiverOpplysninger(): Promise<k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto> {
-    return this.options.arbeidsgiverOpplysninger ?? ({} as k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto);
+  async getArbeidsgiverOpplysninger(): Promise<ArbeidsgiverOversiktDto> {
+    return this.options.arbeidsgiverOpplysninger ?? ({} as ArbeidsgiverOversiktDto);
   }
 
   async getBeregningreferanserTilVurdering(): Promise<
-    k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto[]
+    BeregningsgrunnlagKoblingDto[]
   > {
     return this.options.beregningreferanser ?? [];
   }
 
   async getAlleBeregningsgrunnlag(): Promise<
-    folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto[]
+    BeregningsgrunnlagDto[]
   > {
     return this.options.beregningsgrunnlag ?? [];
   }
 
-  async getBehandling(): Promise<k9_sak_kontrakt_behandling_BehandlingDto> {
-    return this.options.behandling ?? ({} as k9_sak_kontrakt_behandling_BehandlingDto);
+  async getBehandling(): Promise<BehandlingDto> {
+    return this.options.behandling ?? ({} as BehandlingDto);
   }
 
-  async getTilbakekrevingValg(): Promise<k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto> {
-    return this.options.tilbakekrevingValg ?? ({} as k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto);
+  async getTilbakekrevingValg(): Promise<TilbakekrevingValgDto> {
+    return this.options.tilbakekrevingValg ?? ({} as TilbakekrevingValgDto);
   }
 
-  async getMedlemskap(): Promise<k9_sak_kontrakt_medlem_MedlemV2Dto> {
-    return this.options.medlemskap ?? ({} as k9_sak_kontrakt_medlem_MedlemV2Dto);
+  async getMedlemskap(): Promise<MedlemV2Dto> {
+    return this.options.medlemskap ?? ({} as MedlemV2Dto);
   }
 
-  async getOverlappendeYtelser(): Promise<k9_sak_kontrakt_ytelser_OverlappendeYtelseDto[]> {
+  async getOverlappendeYtelser(): Promise<OverlappendeYtelseDto[]> {
     return this.options.overlappendeYtelser ?? [];
   }
 
-  async getOpptjening(): Promise<k9_sak_kontrakt_opptjening_OpptjeningerDto> {
-    return this.options.opptjening ?? ({} as k9_sak_kontrakt_opptjening_OpptjeningerDto);
+  async getOpptjening(): Promise<OpptjeningerDto> {
+    return this.options.opptjening ?? ({} as OpptjeningerDto);
   }
 
-  async getSøknadsfristStatus(): Promise<k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto> {
-    return this.options.søknadsfristStatus ?? ({} as k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto);
+  async getSøknadsfristStatus(): Promise<SøknadsfristTilstandDto> {
+    return this.options.søknadsfristStatus ?? ({} as SøknadsfristTilstandDto);
   }
 }

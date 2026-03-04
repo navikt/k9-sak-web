@@ -1,4 +1,4 @@
-import type { foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import type { k9tilbakeKodeverkResponse } from '@k9-sak-web/backend/k9tilbake/tjenester/kodeverk/k9tilbakeKodeverkResponse.js';
 import {
   GeneriskKodeverkoppslag,
   type Kodeverkoppslag,
@@ -6,7 +6,7 @@ import {
   type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
-type EO = foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse;
+type EO = k9tilbakeKodeverkResponse;
 
 export class K9TilbakeKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
   constructor(alleKodeverdier: EO) {

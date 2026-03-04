@@ -1,11 +1,8 @@
-import {
-  type ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  ung_kodeverk_behandling_BehandlingStatus,
-  ung_kodeverk_behandling_BehandlingType,
-  ung_kodeverk_behandling_FagsakYtelseType,
-  ung_kodeverk_klage_KlageVurderingType,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
+import { AksjonspunktDefinisjon as aksjonspunktCodes } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
@@ -18,7 +15,7 @@ const meta = {
   args: {
     fagsak: {
       saksnummer: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
+      sakstype: FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     },
     submitCallback: asyncAction('submitCallback'),
     isReadOnly: false,
@@ -34,14 +31,14 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
   args: {
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktCodes.BEHANDLE_KLAGE_NK as ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+        definisjon: aksjonspunktCodes.MANUELL_VURDERING_AV_KLAGE_NK,
       },
     ],
     behandling: {
       opprettet: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
-      status: ung_kodeverk_behandling_BehandlingStatus.OPPRETTET,
-      type: ung_kodeverk_behandling_BehandlingType.KLAGE,
+      sakstype: FagsakYtelseType.UNGDOMSYTELSE,
+      status: BehandlingStatus.OPPRETTET,
+      type: BehandlingType.KLAGE,
       uuid: '123',
       versjon: 1,
     },
@@ -50,7 +47,7 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
     withFakeKlageVurderingApi({
       klageVurderingResultatNK: {
         klageVurdertAv: 'NK',
-        klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
+        klageVurdering: KlageVurdering.STADFESTE_YTELSESVEDTAK,
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
@@ -75,14 +72,14 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
   args: {
     aksjonspunkter: [
       {
-        definisjon: AksjonspunktCodes.BEHANDLE_KLAGE_NFP as ung_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
+        definisjon: aksjonspunktCodes.MANUELL_VURDERING_AV_KLAGE_NFP,
       },
     ],
     behandling: {
       opprettet: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
-      status: ung_kodeverk_behandling_BehandlingStatus.OPPRETTET,
-      type: ung_kodeverk_behandling_BehandlingType.KLAGE,
+      sakstype: FagsakYtelseType.UNGDOMSYTELSE,
+      status: BehandlingStatus.OPPRETTET,
+      type: BehandlingType.KLAGE,
       uuid: '123',
       versjon: 1,
     },
@@ -91,7 +88,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
     withFakeKlageVurderingApi({
       klageVurderingResultatNFP: {
         klageVurdertAv: 'NK',
-        klageVurdering: ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK,
+        klageVurdering: KlageVurdering.STADFESTE_YTELSESVEDTAK,
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
@@ -120,9 +117,9 @@ export const KlagevurderingMedAksjonspunktNfpKlageMedhold: Story = {
     ...KlagevurderingMedAksjonspunktNfpKlageOpprettholdt.args,
     behandling: {
       opprettet: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
-      status: ung_kodeverk_behandling_BehandlingStatus.OPPRETTET,
-      type: ung_kodeverk_behandling_BehandlingType.KLAGE,
+      sakstype: FagsakYtelseType.UNGDOMSYTELSE,
+      status: BehandlingStatus.OPPRETTET,
+      type: BehandlingType.KLAGE,
       uuid: '123',
       versjon: 1,
     },
@@ -134,7 +131,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageMedhold: Story = {
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
-        klageVurdering: ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE,
+        klageVurdering: KlageVurdering.MEDHOLD_I_KLAGE,
       },
     }),
   ],

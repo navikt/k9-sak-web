@@ -1,8 +1,6 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_BekreftetAksjonspunktDto as BekreftetAksjonspunktDto,
-  k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto as BekreftetOgOverstyrteAksjonspunkterDto,
-  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
+import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakPeriodeDto.js';
 
 export type OverstyringUttakRequest = BekreftetOgOverstyrteAksjonspunkterDto & {
   overstyrteAksjonspunktDtoer: BekreftetAksjonspunktDto &

@@ -1,8 +1,6 @@
-import {
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { Box, Button, HStack, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';

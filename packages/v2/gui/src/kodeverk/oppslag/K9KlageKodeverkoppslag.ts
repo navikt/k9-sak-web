@@ -1,4 +1,4 @@
-import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9klage/tjenester/kodeverk/AlleKodeverdierSomObjektResponse.js';
 import {
   GeneriskKodeverkoppslag,
   type Kodeverkoppslag,

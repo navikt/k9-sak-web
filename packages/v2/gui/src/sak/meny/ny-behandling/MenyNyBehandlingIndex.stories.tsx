@@ -1,11 +1,9 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { fagsakYtelsesType as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, userEvent } from 'storybook/test';
@@ -54,7 +52,7 @@ const behandlingOppretting = [
     kanOppretteBehandling: true,
     gyldigePerioderPerÅrsak: [
       {
-        årsak: ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
+        årsak: BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
         perioder: [
           { fom: '2025-01-01', tom: '2025-01-31' },
           { fom: '2025-02-01', tom: '2025-02-28' },
@@ -197,7 +195,7 @@ export const modalForUngdomsprogramytelse: StoryObj<typeof MenyNyBehandlingIndex
     ytelseType: fagsakYtelseType.UNGDOMSYTELSE,
     revurderingArsaker: [
       {
-        kode: ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
+        kode: BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Kontroll register inntekt',
       },

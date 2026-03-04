@@ -1,11 +1,9 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversikt,
-  k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { ArbeidsgiverOversiktDto as ArbeidsgiverOversikt } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import type { BehandlingDto as Behandling } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { FagsakYtelsesType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
+import { type AksjonspunktCodes as AksjonspunktDefinisjonType, aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import {
   createContext,
@@ -39,10 +37,10 @@ export type UttakContextType = {
   arbeidsgivere: ArbeidsgiverOversikt['arbeidsgivere'] | undefined;
   uttaksperiodeListe: Readonly<ReturnType<typeof lagUttaksperiodeliste>>;
   lasterUttak?: boolean;
-  aksjonspunkterMap: Map<AksjonspunktDefinisjon, Aksjonspunkt>;
-  harAksjonspunkt: (kode: AksjonspunktDefinisjon) => boolean;
-  harNoenAksjonspunkter: (koder: AksjonspunktDefinisjon[]) => boolean;
-  harAlleAksjonspunkter: (koder: AksjonspunktDefinisjon[]) => boolean;
+  aksjonspunkterMap: Map<AksjonspunktDefinisjonType, Aksjonspunkt>;
+  harAksjonspunkt: (kode: AksjonspunktDefinisjonType) => boolean;
+  harNoenAksjonspunkter: (koder: AksjonspunktDefinisjonType[]) => boolean;
+  harAlleAksjonspunkter: (koder: AksjonspunktDefinisjonType[]) => boolean;
   aksjonspunktForOverstyringAvUttak: Aksjonspunkt | undefined;
   aksjonspunktVurderOverlappendeSaker: Aksjonspunkt | undefined;
   aksjonspunktVentAnnenPSBSak: Aksjonspunkt | undefined;
@@ -83,7 +81,7 @@ export const UttakProvider = ({
   const alleAksjonspunkter: Aksjonspunkt[] = useMemo(() => aksjonspunkter ?? [], [aksjonspunkter]);
 
   const aksjonspunkterMap = useMemo(() => {
-    const apMap = new Map<AksjonspunktDefinisjon, Aksjonspunkt>();
+    const apMap = new Map<AksjonspunktDefinisjonType, Aksjonspunkt>();
     for (const ap of alleAksjonspunkter) {
       if (ap.definisjon) {
         apMap.set(ap.definisjon, ap);
@@ -93,15 +91,15 @@ export const UttakProvider = ({
   }, [alleAksjonspunkter]);
 
   const harAksjonspunkt = useCallback(
-    (kode: AksjonspunktDefinisjon) => aksjonspunkterMap.has(kode),
+    (kode: AksjonspunktDefinisjonType) => aksjonspunkterMap.has(kode),
     [aksjonspunkterMap],
   );
   const harNoenAksjonspunkter = useCallback(
-    (koder: AksjonspunktDefinisjon[]) => koder.some(k => aksjonspunkterMap.has(k)),
+    (koder: AksjonspunktDefinisjonType[]) => koder.some(k => aksjonspunkterMap.has(k)),
     [aksjonspunkterMap],
   );
   const harAlleAksjonspunkter = useCallback(
-    (koder: AksjonspunktDefinisjon[]) => koder.every(k => aksjonspunkterMap.has(k)),
+    (koder: AksjonspunktDefinisjonType[]) => koder.every(k => aksjonspunkterMap.has(k)),
     [aksjonspunkterMap],
   );
 

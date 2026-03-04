@@ -4,10 +4,8 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Heading } from '@navikt/ds-react';
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';

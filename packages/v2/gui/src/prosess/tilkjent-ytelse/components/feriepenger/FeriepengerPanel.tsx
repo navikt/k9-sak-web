@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Accordion, Heading, VStack } from '@navikt/ds-react';
 
-import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/FeriepengegrunnlagAndel.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
 import { FeriepengerPrÅr } from './FeriepengerPrÅr.js';
 

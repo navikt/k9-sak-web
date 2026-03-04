@@ -12,7 +12,7 @@ import { Period } from '@navikt/ft-utils';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';
-import { type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/opplæringspenger/langvarigsykdom/LangvarigSykdomVurderingDto.js';
 import { CenteredLoader } from '../CenteredLoader';
 import type { UperiodisertSykdom } from './SykdomUperiodisertForm';
 import SykdomUperiodisertAlert from './SykdomUperiodisertAlert';
@@ -26,7 +26,7 @@ export const SykdomUperiodisertContext = createContext<{
 });
 
 interface SykdomVurderingselement
-  extends Vurderingselement, k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
+  extends Vurderingselement, LangvarigSykdomVurderingDto {
   id: string;
 }
 

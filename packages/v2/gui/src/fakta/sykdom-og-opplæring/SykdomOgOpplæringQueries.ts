@@ -1,12 +1,10 @@
 import { useMutation, useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import {
-  type GetBrevMottakerinfoEregData,
-  type GetBrevMottakerinfoEregResponse,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringDto,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto,
-  type OpprettLangvarigSykdomsVurderingData,
-  type OpprettLangvarigSykdomsVurderingResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { GetBrevMottakerinfoEregData } from '@k9-sak-web/backend/k9sak/tjenester/GetBrevMottakerinfoEregData.js';
+import type { GetBrevMottakerinfoEregResponse } from '@k9-sak-web/backend/k9sak/tjenester/GetBrevMottakerinfoEregResponse.js';
+import type { OpplæringDto } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringDto.js';
+import type { ReisetidDto } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/reisetid/ReisetidDto.js';
+import type { OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/tjenester/opplæringspenger/OpprettLangvarigSykdomsVurderingData.js';
+import type { OpprettLangvarigSykdomsVurderingResponse } from '@k9-sak-web/backend/k9sak/tjenester/OpprettLangvarigSykdomsVurderingResponse.js';
 import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
 import type { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 
@@ -90,7 +88,7 @@ export const useHentOrganisasjonsnummer = (organisasjonsnummer: string) => {
 export const useVurdertOpplæring = (
   behandlingUuid: string,
   options: Partial<
-    UseQueryOptions<k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringDto>
+    UseQueryOptions<OpplæringDto>
   > = {},
 ) => {
   const backendClient = useSykdomBackendClient();
@@ -106,7 +104,7 @@ export const useVurdertOpplæring = (
 export const useVurdertReisetid = (
   behandlingUuid: string,
   options: Partial<
-    UseQueryOptions<k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidDto>
+    UseQueryOptions<ReisetidDto>
   > = {},
 ) => {
   const backendClient = useSykdomBackendClient();

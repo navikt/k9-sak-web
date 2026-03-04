@@ -1,9 +1,9 @@
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
-import type { k9_klage_kontrakt_klage_KlageFormkravResultatDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { KlageFormkravResultatDto as K9KlageFormkravResultatDto } from '@k9-sak-web/backend/k9klage/kontrakt/klage/KlageFormkravResultatDto.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
-import type { ung_sak_kontrakt_klage_KlageFormkravResultatDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { KlageFormkravResultatDto as UngSakKlageFormkravResultatDto } from '@k9-sak-web/backend/ungsak/kontrakt/klage/KlageFormkravResultatDto.js';
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
@@ -25,8 +25,8 @@ export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
 export const getPaklagdVedtak = (
   klageFormkravResultat:
-    | k9_klage_kontrakt_klage_KlageFormkravResultatDto
-    | ung_sak_kontrakt_klage_KlageFormkravResultatDto,
+    | K9KlageFormkravResultatDto
+    | UngSakKlageFormkravResultatDto,
   avsluttedeBehandlinger: K9KlageBehandlingDto[] | UngSakBehandlingDto[],
 ) => {
   const behandlingid =

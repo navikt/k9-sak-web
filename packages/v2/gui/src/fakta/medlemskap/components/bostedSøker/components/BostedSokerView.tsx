@@ -1,9 +1,7 @@
-import {
-  type k9_sak_kontrakt_person_PersonadresseDto as PersonadresseDto,
-  k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
-  k9_kodeverk_person_PersonstatusType as PersonopplysningDtoPersonstatus,
-  k9_kodeverk_geografisk_Region as PersonopplysningDtoRegion,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { PersonadresseDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonadresseDto.js';
+import { adresseType as PersonadresseDtoAdresseType } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/adresseType.js';
+import { personstatus as PersonopplysningDtoPersonstatus } from '@k9-sak-web/backend/k9sak/kodeverk/person/personstatus.js';
+import { PersonopplysningDtoRegion } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/PersonopplysningDtoRegion.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import getAddresses from '@k9-sak-web/gui/utils/getAddresses.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';

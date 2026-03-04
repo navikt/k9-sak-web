@@ -1,9 +1,7 @@
-import { k9_klage_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { BehandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatTypeK9Sak,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingResultatType as behandlingResultatTypeK9Sak } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { fagsakYtelsesType as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { getHenleggArsaker } from './HenleggBehandlingModal';
 

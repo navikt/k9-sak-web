@@ -1,8 +1,6 @@
-import {
-  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Avslagsårsak as OpplæringVurderingDtoAvslagsårsak } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/Avslagsårsak.js';
+import { OpplæringVurderingResultat as OpplæringVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingResultat.js';
+import type { OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingDto.js';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';

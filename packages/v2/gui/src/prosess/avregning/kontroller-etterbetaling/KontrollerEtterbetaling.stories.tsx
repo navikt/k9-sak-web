@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
@@ -13,7 +11,7 @@ import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import { FakeBehandlingAvregningBackendApi } from '../../../storybook/mocks/FakeBehandlingAvregningBackendApi';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 
-const bekreftAksjonspunktRequest: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+const bekreftAksjonspunktRequest: BekreftedeAksjonspunkterDto = {
   behandlingId: '123',
   behandlingVersjon: 1,
   bekreftedeAksjonspunktDtoer: [

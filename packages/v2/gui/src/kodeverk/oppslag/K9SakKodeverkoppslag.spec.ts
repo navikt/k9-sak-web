@@ -1,9 +1,7 @@
 import { oppslagKodeverkSomObjektK9Sak } from '../mocks/oppslagKodeverkSomObjektK9Sak.js';
-import {
-  folketrygdloven_kalkulus_kodeverk_AktivitetStatus as AndelForFaktaOmBeregningDtoAktivitetStatus,
-  type k9_sak_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_kodeverk_arbeidsforhold_AktivitetStatus as AktivitetStatus,
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AndelForFaktaOmBeregningDtoAktivitetStatus } from '@k9-sak-web/backend/k9sak/kodeverk/beregning/AndelForFaktaOmBeregningDtoAktivitetStatus.js';
+import type { AktivitetStatus } from '@k9-sak-web/backend/k9sak/tjenester/kodeverk/dto/AktivitetStatus.js';
+import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
 import { K9SakKodeverkoppslag } from './K9SakKodeverkoppslag.js';
 import { OrUndefined } from './GeneriskKodeverkoppslag.js';
 

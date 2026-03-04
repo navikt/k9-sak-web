@@ -1,15 +1,13 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
-  k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
-  k9_kodeverk_vilkår_Utfall as Utfall,
-  k9_kodeverk_vilkår_VilkårType as VilkårType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/k9sak/kontrakt/oppdrag/simulering/v1/SimuleringDto.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatMedUtbetaltePeriodeDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
+import { vilkårStatus as Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { vilkarType as VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { Behandling } from '@k9-sak-web/types';
@@ -141,9 +139,9 @@ interface ProcessMenuStep {
  */
 export const byggVilkårPanel = (
   skalVisePanel: boolean | undefined,
-  vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
+  vilkår: VilkårMedPerioderDto[],
   panelKonfig: { vilkår: readonly string[]; aksjonspunkter: readonly string[]; label: string; id: string },
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  aksjonspunkter: AksjonspunktDto[],
 ): ProcessMenuStep => {
   const relevanteVilkår = vilkår.filter(v => panelKonfig.vilkår.includes(v.vilkarType));
   const type = finnPanelStatus(!!skalVisePanel, relevanteVilkår, aksjonspunkter, panelKonfig.aksjonspunkter);
@@ -159,15 +157,15 @@ export const byggVilkårPanel = (
 
 // Hjelpefunksjon for å beregne uttak-status
 export const beregnUttakType = (
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
+  aksjonspunkter: AksjonspunktDto[],
+  uttak: UttaksplanMedUtsattePerioder,
   uttakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   const harApenAksjonspunkt = aksjonspunkter?.some(
     ap =>
       ap.definisjon &&
       uttakAksjonspunkter.includes(ap.definisjon) &&
-      ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+      ap.status === aksjonspunktStatus.OPPRETTET,
   );
 
   if (harApenAksjonspunkt) {
@@ -187,9 +185,9 @@ export const beregnUttakType = (
 
 // Hjelpefunksjon for å beregne tilkjent ytelse-status
 export const beregnTilkjentYtelseType = (
-  beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+  beregningsresultatUtbetaling: BeregningsresultatMedUtbetaltePeriodeDto,
   panelKonfig: { aksjonspunkter: readonly string[] },
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  aksjonspunkter: AksjonspunktDto[],
 ): ProcessMenuStepType => {
   if (!beregningsresultatUtbetaling.perioder || beregningsresultatUtbetaling.perioder.length === 0) {
     return ProcessMenuStepType.default;
@@ -203,13 +201,13 @@ export const beregnTilkjentYtelseType = (
 
 // Hjelpefunksjon for å beregne simulering-status
 export const beregnSimuleringType = (
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  simuleringResultat: k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
+  aksjonspunkter: AksjonspunktDto[],
+  simuleringResultat: SimuleringDto,
   simuleringAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   const harApentAksjonspunkt = aksjonspunkter.some(
     ap =>
-      ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET &&
+      ap.status === aksjonspunktStatus.OPPRETTET &&
       ap.definisjon &&
       simuleringAksjonspunkter.includes(ap.definisjon),
   );
@@ -235,8 +233,8 @@ const byggPanelUtenVilkår = (
 
 // Hjelpefunksjon for å beregne vedtak-status
 export const beregnVedtakType = (
-  vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
+  aksjonspunkter: AksjonspunktDto[],
   behandling: Pick<Behandling, 'uuid' | 'versjon' | 'behandlingsresultat'>,
   vedtakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
@@ -269,7 +267,7 @@ export const beregnVedtakType = (
 
 const skalViseDelvisVedtakStatus = (
   vedtakType: ProcessMenuStepType,
-  vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
+  vilkår: VilkårMedPerioderDto[],
 ): boolean => {
   if (vedtakType === ProcessMenuStepType.default) {
     return false;

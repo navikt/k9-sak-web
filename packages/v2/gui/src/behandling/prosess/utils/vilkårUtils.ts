@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
-  k9_kodeverk_vilkår_Utfall,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { type VilkårStatus, vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
 /**
@@ -13,7 +11,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 interface VilkårMedPerioder {
   perioder?: Array<{
     vurderesIBehandlingen?: boolean;
-    vilkarStatus: k9_kodeverk_vilkår_Utfall;
+    vilkarStatus: VilkårStatus;
   }>;
 }
 
@@ -47,7 +45,7 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioder[]): 
   }
 
   // Samle alle vilkårstatuser fra perioder som vurderes i behandlingen
-  const vilkarStatusCodes: k9_kodeverk_vilkår_Utfall[] = [];
+  const vilkarStatusCodes: VilkårStatus[] = [];
   vilkårForSteg.forEach(vilkår =>
     vilkår.perioder
       ?.filter(periode => periode.vurderesIBehandlingen)
@@ -55,9 +53,9 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioder[]): 
   );
 
   // Sjekk om alle vilkår har samme status
-  const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT);
-  const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT);
-  const alleVilkårErOppfylt = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT);
+  const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === vilkårStatus.IKKE_VURDERT);
+  const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkårStatus.IKKE_OPPFYLT);
+  const alleVilkårErOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkårStatus.OPPFYLT);
 
   // Kun sjekk delvis status hvis det er flere vilkår
   const harFlereVilkår = vilkarStatusCodes.length > 1;
@@ -65,13 +63,13 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioder[]): 
   if (harFlereVilkår) {
     // Sjekk om noen (men ikke alle) vilkår har en bestemt status
     const erDelvisIkkeVurdert =
-      vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
+      vilkarStatusCodes.some(vsc => vsc === vilkårStatus.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
 
     const erDelvisIkkeOppfylt =
-      vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
+      vilkarStatusCodes.some(vsc => vsc === vilkårStatus.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
 
     const erDelvisOppfylt =
-      vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT) && !alleVilkårErOppfylt;
+      vilkarStatusCodes.some(vsc => vsc === vilkårStatus.OPPFYLT) && !alleVilkårErOppfylt;
     return erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt;
   }
 
@@ -80,8 +78,8 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioder[]): 
 
 export const finnPanelStatus = (
   skalVisePanel: boolean,
-  vilkårForSteg: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  vilkårForSteg: VilkårMedPerioderDto[],
+  aksjonspunkter: AksjonspunktDto[],
   relevanteAksjonspunktkoder: readonly string[],
 ) => {
   // Hvis panelet ikke skal vises, bruk default
@@ -92,7 +90,7 @@ export const finnPanelStatus = (
     const kode = ap.definisjon;
     return (
       relevanteAksjonspunktkoder.some(relevantAksjonspunkt => relevantAksjonspunkt === kode) &&
-      ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET
+      ap.status === aksjonspunktStatus.OPPRETTET
     );
   });
   if (harApenAksjonspunkt) {
@@ -107,11 +105,11 @@ export const finnPanelStatus = (
         .forEach(periode => vilkårStatusCodes.push(periode.vilkarStatus));
     });
 
-    if (vilkårStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)) {
+    if (vilkårStatusCodes.every(vsc => vsc === vilkårStatus.IKKE_VURDERT)) {
       return ProcessMenuStepType.default;
     }
 
-    return vilkårStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT)
+    return vilkårStatusCodes.some(vsc => vsc === vilkårStatus.OPPFYLT)
       ? ProcessMenuStepType.success
       : ProcessMenuStepType.danger;
   }

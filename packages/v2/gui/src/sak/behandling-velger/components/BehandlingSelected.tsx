@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
-  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingVisningsnavn.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
 import { NavLink, useLocation } from 'react-router';
@@ -28,7 +26,7 @@ interface BehandlingSelectedProps {
   søknadsperioder: K9UngPeriode[];
   behandlingTypeKode: string;
   sakstypeKode: string;
-  behandlingVisningsnavn?: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined;
+  behandlingVisningsnavn?: BehandlingVisningsnavn | undefined;
 }
 
 const BehandlingSelected = ({
@@ -87,7 +85,7 @@ const BehandlingSelected = ({
 
   const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.some(ytelse => ytelse === sakstypeKode);
   const erEndringAvBarnetillegg =
-    behandlingVisningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
+    behandlingVisningsnavn === BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>

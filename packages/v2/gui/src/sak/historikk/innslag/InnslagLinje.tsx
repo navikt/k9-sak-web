@@ -1,4 +1,4 @@
-import { k9_sak_web_app_tjenester_behandling_historikk_v2_HistorikkinnslagDtoV2_Linje_Type as LinjeType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { LinjeType } from '@k9-sak-web/backend/k9sak/tjenester/behandling/historikk/v2/LinjeType.js';
 import { BodyLong } from '@navikt/ds-react';
 import type { Location } from 'history';
 import type { BeriketHistorikkInnslagLinje } from '../api/HistorikkBackendApi.js';

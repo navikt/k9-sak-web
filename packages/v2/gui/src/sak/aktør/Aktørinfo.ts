@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_person_AktørInfoDto as AktørInfoDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AktørInfoDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/AktørInfoDto.js';
 
 export type Aktørinfo = {
   fagsaker: AktørInfoDto['fagsaker'];

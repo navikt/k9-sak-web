@@ -1,7 +1,5 @@
-import {
-  k9_kodeverk_behandling_FagsakStatus as fagsakStatus,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/fagsakStatus.js';
+import { fagsakYtelsesType as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { sortFagsaker } from './FagsakList';
 
 describe('<FagsakList>', () => {

@@ -1,6 +1,6 @@
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 
-import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/FeriepengegrunnlagAndel.js';
 import { use } from 'react';
 import { K9KodeverkoppslagContext } from '../../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import type { K9Kodeverkoppslag } from '../../../../kodeverk/oppslag/useK9Kodeverkoppslag.tsx';

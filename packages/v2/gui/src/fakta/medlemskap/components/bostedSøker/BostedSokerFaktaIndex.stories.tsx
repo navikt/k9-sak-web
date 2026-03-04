@@ -1,8 +1,6 @@
-import {
-  k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
-  k9_kodeverk_person_PersonstatusType as PersonDtoPersonstatusType,
-  k9_kodeverk_person_SivilstandType as PersonopplysningDtoSivilstand,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { adresseType as PersonadresseDtoAdresseType } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/adresseType.js';
+import { personstatus as PersonDtoPersonstatusType } from '@k9-sak-web/backend/k9sak/kodeverk/person/personstatus.js';
+import { PersonopplysningDtoSivilstand } from '@k9-sak-web/backend/k9sak/kodeverk/person/PersonopplysningDtoSivilstand.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';

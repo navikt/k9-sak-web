@@ -1,0 +1,3 @@
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidInfoFraSøker } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type ReisetidInfoFraSøker = k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidInfoFraSøker;

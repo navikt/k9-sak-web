@@ -1,9 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_vilkår_VilkårType,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -11,15 +9,15 @@ import { Dispatch, SetStateAction, useMemo } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
 import { søknadsfristStatusQueryOptions } from '../api/k9SakQueryOptions';
 
-const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST];
+const RELEVANTE_VILKAR_KODER = [vilkarType.SØKNADSFRIST];
 const RELEVANTE_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET,
   AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
 ];
 
 interface Props {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  aksjonspunkter: AksjonspunktDto[];
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -27,7 +25,7 @@ interface Props {
   };
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
   overstyrteAksjonspunktKoder: string[];
-  vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
+  vilkår: Array<VilkårMedPerioderDto>;
   visAllePerioder: boolean;
   kanEndrePåSøknadsopplysninger: boolean;
   behandling: Behandling;

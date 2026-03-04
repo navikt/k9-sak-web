@@ -1,17 +1,15 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-  pleiepengerbarn_uttak_kontrakter_Endringsstatus as Endringsstatus,
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type AksjonspunktCodes as AksjonspunktDefinisjonType, aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { type AksjonspunktStatus as AksjonspunktStatusType, aksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { AnnenPart } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/AnnenPart.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { Endringsstatus } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Endringsstatus.js';
+import { fagsakYtelsesType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Utfall } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utfall.js';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Årsak.js';
+import type { AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import dayjs from 'dayjs';
 
 /**
@@ -306,8 +304,8 @@ export const lagTilsynsgraderingPeriode = (
  * @returns Et komplett Aksjonspunkt-objekt
  */
 export const lagAksjonspunkt = (
-  definisjon: AksjonspunktDefinisjon,
-  status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
+  definisjon: AksjonspunktDefinisjonType,
+  status: AksjonspunktStatusType = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
 ): Aksjonspunkt => ({
   definisjon,
@@ -332,7 +330,7 @@ export const lagAksjonspunkt = (
  * Dette representerer et aksjonspunkt som må løses av saksbehandler.
  */
 export const lagUløstAksjonspunkt = (
-  definisjon: AksjonspunktDefinisjon,
+  definisjon: AksjonspunktDefinisjonType,
   overrides: Partial<Aksjonspunkt> = {},
 ): Aksjonspunkt =>
   lagAksjonspunkt(definisjon, AksjonspunktStatus.OPPRETTET, {
@@ -347,7 +345,7 @@ export const lagUløstAksjonspunkt = (
  * Dette representerer et aksjonspunkt som har blitt løst.
  */
 export const lagLøstAksjonspunkt = (
-  definisjon: AksjonspunktDefinisjon,
+  definisjon: AksjonspunktDefinisjonType,
   begrunnelse: string,
   overrides: Partial<Aksjonspunkt> = {},
 ): Aksjonspunkt =>
@@ -362,7 +360,7 @@ export const lagLøstAksjonspunkt = (
  * Oppretter et aksjonspunkt for overstyring av uttak.
  */
 export const lagOverstyringUttakAksjonspunkt = (
-  status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
+  status: AksjonspunktStatusType = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
 ): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK, status, overrides);
 
@@ -370,7 +368,7 @@ export const lagOverstyringUttakAksjonspunkt = (
  * Oppretter et aksjonspunkt for vurdering av overlappende søskensaker.
  */
 export const lagOverlappendeSakerAksjonspunkt = (
-  status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
+  status: AksjonspunktStatusType = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
 ): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER, status, overrides);
 
@@ -378,14 +376,14 @@ export const lagOverlappendeSakerAksjonspunkt = (
  * Oppretter et aksjonspunkt for vurdering av dato for nye uttaksregler.
  */
 export const lagVurderDatoNyRegelAksjonspunkt = (
-  status: AksjonspunktStatus = AksjonspunktStatus.OPPRETTET,
+  status: AksjonspunktStatusType = AksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
 ): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK, status, overrides);
 
 /**
  * Alle relevante aksjonspunktdefinisjoner for uttak.
  */
-export const relevanteAksjonspunkterAlle: AksjonspunktDefinisjon[] = [
+export const relevanteAksjonspunkterAlle: AksjonspunktDefinisjonType[] = [
   AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
   AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
   AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,

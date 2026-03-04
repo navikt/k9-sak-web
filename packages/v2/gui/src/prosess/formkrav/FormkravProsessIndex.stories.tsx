@@ -1,13 +1,11 @@
-import {
-  k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  k9_klage_kodeverk_behandling_BehandlingStatus,
-  k9_klage_kodeverk_behandling_BehandlingType,
-  k9_klage_kodeverk_vedtak_KlageAvvistÅrsak,
-  k9_klage_kodeverk_vedtak_KlageVurdering,
-  k9_klage_typer_IdType,
-  k9_klage_typer_RolleType,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { KlageAvvistÅrsak } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageAvvistÅrsak.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
+import { k9_klage_typer_IdType } from '@k9-sak-web/backend/k9klage/kontrakt/k9_klage_typer_IdType.js';
+import { k9_klage_typer_RolleType } from '@k9-sak-web/backend/k9klage/kontrakt/k9_klage_typer_RolleType.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 import { FormkravProsessIndex } from './FormkravProsessIndex';
@@ -16,8 +14,8 @@ const behandling = {
   id: 1,
   versjon: 1,
   uuid: '123',
-  type: k9_klage_kodeverk_behandling_BehandlingType.KLAGE,
-  status: k9_klage_kodeverk_behandling_BehandlingStatus.OPPRETTET,
+  type: behandlingType.KLAGE,
+  status: BehandlingStatus.OPPRETTET,
   opprettet: '2025-10-13',
 };
 
@@ -26,8 +24,8 @@ const avsluttedeBehandlinger = [
     id: 1,
     versjon: 1,
     uuid: '456',
-    type: k9_klage_kodeverk_behandling_BehandlingType.KLAGE,
-    status: k9_klage_kodeverk_behandling_BehandlingStatus.AVSLUTTET,
+    type: behandlingType.KLAGE,
+    status: BehandlingStatus.AVSLUTTET,
     opprettet: '2017-08-01T00:54:25.455',
     avsluttet: '2017-08-02T00:54:25.455',
   },
@@ -47,19 +45,19 @@ export const VisFormkravPanelForAksjonspunktNfp: Story = {
     behandling: behandling,
     aksjonspunkter: [
       {
-        definisjon: k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+        definisjon: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_NFP,
       },
     ],
     klageVurdering: {
       klageVurderingResultatNK: {
         klageVurdertAv: 'NK',
-        klageVurdering: k9_klage_kodeverk_vedtak_KlageVurdering.AVVIS_KLAGE,
+        klageVurdering: KlageVurdering.AVVIS_KLAGE,
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [k9_klage_kodeverk_vedtak_KlageAvvistÅrsak.KLAGET_FOR_SENT],
+        avvistArsaker: [KlageAvvistÅrsak.KLAGET_FOR_SENT],
       },
     },
     isReadOnly: false,
@@ -68,7 +66,7 @@ export const VisFormkravPanelForAksjonspunktNfp: Story = {
       opprettet: '123',
       person: {},
       saksnummer: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+      sakstype: FagsakYtelseType.UNGDOMSYTELSE,
     },
     arbeidsgiverOpplysningerPerId: {},
     avsluttedeBehandlinger: avsluttedeBehandlinger,
@@ -131,19 +129,19 @@ export const VisFormkravPanelForAksjonspunktKa: Story = {
     behandling: behandling,
     aksjonspunkter: [
       {
-        definisjon: k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_KA,
+        definisjon: AksjonspunktDefinisjon.VURDERING_AV_FORMKRAV_KLAGE_KA,
       },
     ],
     klageVurdering: {
       klageVurderingResultatNK: {
         klageVurdertAv: 'NK',
-        klageVurdering: k9_klage_kodeverk_vedtak_KlageVurdering.AVVIS_KLAGE,
+        klageVurdering: KlageVurdering.AVVIS_KLAGE,
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [k9_klage_kodeverk_vedtak_KlageAvvistÅrsak.KLAGET_FOR_SENT],
+        avvistArsaker: [KlageAvvistÅrsak.KLAGET_FOR_SENT],
       },
     },
     isReadOnly: false,
@@ -152,7 +150,7 @@ export const VisFormkravPanelForAksjonspunktKa: Story = {
       opprettet: '123',
       person: {},
       saksnummer: '123',
-      sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+      sakstype: FagsakYtelseType.UNGDOMSYTELSE,
     },
     arbeidsgiverOpplysningerPerId: {},
     avsluttedeBehandlinger: avsluttedeBehandlinger,

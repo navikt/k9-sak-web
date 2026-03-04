@@ -1,10 +1,8 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-  type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
-  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type AksjonspunktCodes as AksjonspunktDefinisjonType, aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto as Behandling } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import { useMemo, type JSX } from 'react';
 import BehandlingUttakBackendClient from './BehandlingUttakBackendClient';
 import { UttakProvider } from './context/UttakContext';
@@ -17,7 +15,7 @@ interface UttakProps {
   aksjonspunkter: Aksjonspunkt[];
   hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   readOnly: boolean;
-  relevanteAksjonspunkter: AksjonspunktDefinisjon[];
+  relevanteAksjonspunkter: AksjonspunktDefinisjonType[];
 }
 
 const Uttak = ({

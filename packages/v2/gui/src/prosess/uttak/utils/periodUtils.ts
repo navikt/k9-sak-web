@@ -1,4 +1,4 @@
-import type { k9_sak_typer_Periode as Periode } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { K9Periode as Periode } from '@k9-sak-web/backend/k9sak/typer/K9Periode.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 

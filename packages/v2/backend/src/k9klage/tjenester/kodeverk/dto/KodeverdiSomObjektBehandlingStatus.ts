@@ -1,0 +1,3 @@
+import type { k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_behandling_BehandlingStatus } from '@k9-sak-web/backend/k9klage/generated/types.js';
+
+export type KodeverdiSomObjektBehandlingStatus = k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_behandling_BehandlingStatus;

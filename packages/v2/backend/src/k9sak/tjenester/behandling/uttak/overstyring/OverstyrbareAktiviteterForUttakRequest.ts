@@ -1,0 +1,3 @@
+import type { k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type OverstyrbareAktiviteterForUttakRequest = k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest;

@@ -1,9 +1,7 @@
-import type {
-  ForhåndsvisVedtaksbrevResponse,
-  LagreVedtaksbrevValgResponses,
-  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse,
-  VedtaksbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ForhåndsvisVedtaksbrevResponse } from '@k9-sak-web/backend/ungsak/tjenester/ForhåndsvisVedtaksbrevResponse.js';
+import type { LagreVedtaksbrevValgResponses } from '@k9-sak-web/backend/ungsak/kontrakt/LagreVedtaksbrevValgResponses.js';
+import type { VedtaksbrevEditorResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/editor/VedtaksbrevEditorResponse.js';
+import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/tjenester/VedtaksbrevValgResponse.js';
 
 import { fakePdf } from './fakePdf.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
@@ -22,7 +20,7 @@ export class FakeUngVedtakBackendApi {
     return { 200: {} };
   }
 
-  async formidling_editor(): Promise<ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse> {
+  async formidling_editor(): Promise<VedtaksbrevEditorResponse> {
     return {};
   }
 }

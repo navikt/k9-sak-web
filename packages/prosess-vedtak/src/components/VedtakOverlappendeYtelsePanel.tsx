@@ -7,7 +7,7 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
-import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';

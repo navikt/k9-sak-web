@@ -1,8 +1,8 @@
-import type { k9_klage_kontrakt_behandling_BehandlingDto as KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as TilbakeBehandlingDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
-import type { ung_sak_kontrakt_behandling_BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import type { sif_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingDto as UngTilbakeBehandlingDto } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import type { KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/KlageBehandlingDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { TilbakeBehandlingDto } from '@k9-sak-web/backend/k9tilbake/tjenester/behandling/TilbakeBehandlingDto.js';
+import type { UngBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/UngBehandlingDto.js';
+import type { UngTilbakeBehandlingDto } from '@k9-sak-web/backend/ungtilbake/tjenester/behandling/UngTilbakeBehandlingDto.js';
 
 // Overstyrer generert type til å ha not null på nokre properties. For å sleppe å gjere endringer i fptilbake kodebase.
 type AdjustedTilbakeBehandlingDto = TilbakeBehandlingDto &

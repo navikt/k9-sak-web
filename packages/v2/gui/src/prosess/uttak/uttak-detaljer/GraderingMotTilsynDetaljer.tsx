@@ -1,9 +1,6 @@
 import type { FC } from 'react';
-import {
-  pleiepengerbarn_uttak_kontrakter_OverseEtablertTilsynÅrsak as GraderingMotTilsynOverseEtablertTilsynÅrsak,
-  type pleiepengerbarn_uttak_kontrakter_OverseEtablertTilsynÅrsak as GraderingMotTilsynOverseEtablertTilsynÅrsakType,
-  type pleiepengerbarn_uttak_kontrakter_GraderingMotTilsyn as GraderingMotTilsyn,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type GraderingMotTilsynOverseEtablertTilsynÅrsak as GraderingMotTilsynOverseEtablertTilsynÅrsakType, GraderingMotTilsynOverseEtablertTilsynÅrsak } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/GraderingMotTilsynOverseEtablertTilsynÅrsak.js';
+import type { GraderingMotTilsyn } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/GraderingMotTilsyn.js';
 import { BodyShort, HelpText, HStack } from '@navikt/ds-react';
 
 import styles from './uttakDetaljer.module.css';

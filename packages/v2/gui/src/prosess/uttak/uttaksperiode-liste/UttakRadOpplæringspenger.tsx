@@ -9,7 +9,7 @@ import {
 } from '@navikt/aksel-icons';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { BodyShort, Button, HelpText, Table } from '@navikt/ds-react';
-import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { vilkårStatus as VilkårUtfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';

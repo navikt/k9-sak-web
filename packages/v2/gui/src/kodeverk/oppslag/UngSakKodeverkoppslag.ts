@@ -1,4 +1,4 @@
-import { type ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungsak/tjenester/kodeverk/dto/AlleKodeverdierSomObjektResponse.js';
 import {
   GeneriskKodeverkoppslag,
   type Kilde,
@@ -11,14 +11,14 @@ import {
 // Utelater landkoder og språkkoder sidan dei ikkje er definert som enums i backend. Passer derfor ikkje inn i dette systemet.
 // Får lage separate mekanismer for disse viss nødvendig.
 type EnumKodeverdierOppslag = Omit<
-  ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse,
+  AlleKodeverdierSomObjektResponse,
   'avslagårsakerPrVilkårTypeKode'
 >;
 
 type EO = EnumKodeverdierOppslag; // For å slippe å ha så lange typedefinisjoner i metodesignaturer under her
 
 export class UngSakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
-  constructor(alleKodeverdier: ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse) {
+  constructor(alleKodeverdier: AlleKodeverdierSomObjektResponse) {
     super(alleKodeverdier);
   }
 
@@ -156,7 +156,7 @@ export class UngSakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implement
  */
 export class FailingUngSakKodeverkoppslag extends UngSakKodeverkoppslag {
   constructor() {
-    super({} as ung_sak_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse);
+    super({} as AlleKodeverdierSomObjektResponse);
   }
 
   override finnObjektFraKilde(kodeverk: keyof EO, kode: string): never {

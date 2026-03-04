@@ -2,11 +2,9 @@ import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
 
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import {
-  type folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
-  type k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AvslagsårsakPrPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/AvslagsårsakPrPeriodeDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { HGrid } from '@navikt/ds-react';

@@ -1,8 +1,6 @@
-import {
-  ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { AksjonspunktDtoStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDtoStatus.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';

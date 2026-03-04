@@ -1,5 +1,5 @@
 import Kodeverk from './kodeverkTsType';
-import type { foreldrepenger_tilbakekreving_historikk_HistorikkInnslagDokumentLinkDto as HistorikkInnslagDokumentLink } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import type { DokumentLink as HistorikkInnslagDokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
 
 export type HistorikkinnslagEndretFelt = {
   endretFeltNavn: Kodeverk;

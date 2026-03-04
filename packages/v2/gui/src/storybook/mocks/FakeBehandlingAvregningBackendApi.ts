@@ -1,11 +1,9 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
 import type { BehandlingAvregningBackendApiType } from '../../prosess/avregning/AvregningBackendApiType';
 
 export class FakeBehandlingAvregningBackendApi implements BehandlingAvregningBackendApiType {
-  #bekreftAksjonspunktSjekkHøyEtterbetaling: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto | undefined;
+  #bekreftAksjonspunktSjekkHøyEtterbetaling: BekreftedeAksjonspunkterDto | undefined;
 
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
     behandlingId: number,

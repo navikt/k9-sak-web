@@ -1,4 +1,4 @@
-import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';

@@ -1,8 +1,6 @@
-import type {
-  ForhåndsvisInformasjonsbrevResponse,
-  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
-  InformasjonsbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ForhåndsvisInformasjonsbrevResponse } from '@k9-sak-web/backend/ungsak/tjenester/ForhåndsvisInformasjonsbrevResponse.js';
+import type { InformasjonsbrevBestillingRequest } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/informasjonsbrev/InformasjonsbrevBestillingRequest.js';
+import type { InformasjonsbrevValgResponse } from '@k9-sak-web/backend/ungsak/tjenester/InformasjonsbrevValgResponse.js';
 
 export interface UngMeldingerBackendApi {
   bestillBrev(data: InformasjonsbrevBestillingRequest): Promise<void>;

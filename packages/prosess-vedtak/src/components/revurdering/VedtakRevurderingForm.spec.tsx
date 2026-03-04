@@ -5,10 +5,8 @@ import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/t
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
-import {
-  k9_kodeverk_behandling_BehandlingType as BehandlingType,
-  k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import VedtakForm from '../VedtakForm';
 
 const createBehandling = behandlingResultatType => ({

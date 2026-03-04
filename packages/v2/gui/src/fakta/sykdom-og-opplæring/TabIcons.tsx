@@ -11,12 +11,10 @@ import {
   useVurdertOpplæring,
   useVurdertLangvarigSykdom,
 } from './SykdomOgOpplæringQueries.js';
-import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomVurderingDtoResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { OpplæringVurderingResultat as OpplæringVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingResultat.js';
+import { InstitusjonVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/institusjon/InstitusjonVurderingDtoResultat.js';
+import { ReisetidResultatType as ReisetidVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/reisetid/ReisetidResultatType.js';
+import { LangvarigSykdomResultat as LangvarigSykdomVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/sykdom/LangvarigSykdomResultat.js';
 
 export const InstitusjonIcon = ({ aksjonspunktKode }: { aksjonspunktKode: AksjonspunktCodes }) => {
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);

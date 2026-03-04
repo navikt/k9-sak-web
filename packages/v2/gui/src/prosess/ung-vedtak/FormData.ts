@@ -1,9 +1,9 @@
-import type { ung_kodeverk_dokument_DokumentMalType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
 
 export interface FormData {
   vedtaksbrevValg: {
     redigertHtml: string;
     originalHtml: string;
-    dokumentMalType?: ung_kodeverk_dokument_DokumentMalType | undefined;
+    dokumentMalType?: DokumentMalType | undefined;
   }[];
 }

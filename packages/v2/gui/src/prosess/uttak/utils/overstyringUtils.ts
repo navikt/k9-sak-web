@@ -3,13 +3,11 @@ import * as Yup from 'yup';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { yupValiderProsent } from '@k9-sak-web/lib/validationUtils/yupSchemas.js';
-import {
-  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType,
-  type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakArbeidsforholdDto as OverstyrUttakArbeidsforholdDto,
-  type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
-  type k9_sak_kontrakt_uttak_overstyring_OverstyrUttakUtbetalingsgradDto as OverstyrUttakUtbetalingsgradDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { UttakArbeidType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import type { OverstyrUttakArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakArbeidsforholdDto.js';
+import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakPeriodeDto.js';
+import type { OverstyrUttakUtbetalingsgradDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakUtbetalingsgradDto.js';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 

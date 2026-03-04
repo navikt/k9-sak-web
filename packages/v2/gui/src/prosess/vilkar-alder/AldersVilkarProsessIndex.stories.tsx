@@ -1,4 +1,4 @@
-import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
@@ -35,7 +35,7 @@ export const MedUløstAksjonspunkt: Story = {
     ],
     status: '',
     fagsak: {
-      sakstype: k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO,
+      sakstype: fagsakYtelsesType.OMSORGSPENGER_AO,
       saksnummer: '123456789',
     },
   },
@@ -68,7 +68,7 @@ export const Lesevisning: Story = {
     ],
     status: vilkårStatus.OPPFYLT,
     fagsak: {
-      sakstype: k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO,
+      sakstype: fagsakYtelsesType.OMSORGSPENGER_AO,
       saksnummer: '123456789',
     },
   },

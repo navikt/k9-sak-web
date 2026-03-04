@@ -1,13 +1,11 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
-  k9_kodeverk_behandling_FagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { ungTilbakeBehandlingÅrsakType } from '@k9-sak-web/backend/ungtilbake/kodeverk/behandling/ungTilbakeBehandlingÅrsakType.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -155,7 +153,7 @@ export const NyBehandlingModal = ({
     kanTilbakekrevingOpprettes,
   );
   const erFørstegangsbehandling = valgtBehandlingTypeKode === BehandlingTypeK9Klage.FØRSTEGANGSSØKNAD;
-  const erUngdomsprogramytelse = ytelseType === k9_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
+  const erUngdomsprogramytelse = ytelseType === fagsakYtelsesType.UNGDOMSYTELSE;
   const erRevurdering = valgtBehandlingTypeKode === BehandlingTypeK9Klage.REVURDERING;
   const BehandlingÅrsakDtoBehandlingArsakTyper = getBehandlingAarsaker(
     revurderingArsaker,
@@ -182,7 +180,7 @@ export const NyBehandlingModal = ({
         ? {
             aktørId: aktorId,
             behandlendeEnhetId: gjeldendeVedtakBehandlendeEnhetId,
-            behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
+            behandlingArsakType: BehandlingÅrsakType.UDEFINERT,
           }
         : {};
     submitCallback({
@@ -274,7 +272,7 @@ export const NyBehandlingModal = ({
               </Fieldset>
             )}
             {erRevurdering &&
-              behandlingArsakType === ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT &&
+              behandlingArsakType === BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT &&
               !!getUngPerioderTilRevurdering() && (
                 <RhfSelect
                   control={formMethods.control}
@@ -335,7 +333,7 @@ const manuelleRevurderingsArsaker = [
 ];
 
 const ungdomsprogramytelseRevurderingsårsaker = [
-  ung_kodeverk_behandling_BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
+  BehandlingÅrsakType.RE_KONTROLL_REGISTER_INNTEKT,
 ];
 
 const unntakVurderingsArsaker = [

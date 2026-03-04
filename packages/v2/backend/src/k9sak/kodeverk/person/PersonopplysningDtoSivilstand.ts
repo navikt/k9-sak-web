@@ -1,0 +1,8 @@
+import {
+  type k9_kodeverk_person_SivilstandType as typeUnion,
+  k9_kodeverk_person_SivilstandType as enumObj,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type PersonopplysningDtoSivilstand = typeUnion;
+
+export const PersonopplysningDtoSivilstand = enumObj;

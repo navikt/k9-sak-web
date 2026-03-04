@@ -1,9 +1,7 @@
 import { Alert, Button } from '@navikt/ds-react';
 import { useContext } from 'react';
-import {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonVurderingDto as InstitusjonVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { InstitusjonVurderingDtoResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/institusjon/InstitusjonVurderingDtoResultat.js';
+import type { InstitusjonVurderingDto } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/institusjon/InstitusjonVurderingDto.js';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import { harÅpentAksjonspunkt } from '../../../../utils/aksjonspunktUtils';
 import { utledGodkjentInstitusjon } from '../utils';

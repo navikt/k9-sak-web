@@ -1,4 +1,4 @@
-import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungsak/tjenester/kodeverk/AlleKodeverdierSomObjektResponse.js';
 
 export const oppslagKodeverkSomObjektUngSak = {
   fagsakStatuser: [

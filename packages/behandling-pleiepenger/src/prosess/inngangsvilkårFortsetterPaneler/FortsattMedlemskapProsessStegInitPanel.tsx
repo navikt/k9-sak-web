@@ -1,24 +1,22 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_behandling_BehandlingType,
-  k9_kodeverk_vilkår_VilkårType,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 
 interface Props {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  aksjonspunkter: AksjonspunktDto[];
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
     employeeHasAccess: boolean;
   };
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
-  vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
+  vilkår: Array<VilkårMedPerioderDto>;
   behandling: Behandling;
   visAllePerioder: boolean;
 }
@@ -39,7 +37,7 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     if (!props.vilkår) {
       return [];
     }
-    return props.vilkår.filter(vilkår => vilkår.vilkarType === k9_kodeverk_vilkår_VilkårType.MEDLEMSKAPSVILKÅRET);
+    return props.vilkår.filter(vilkår => vilkår.vilkarType === vilkarType.MEDLEMSKAPSVILKÅRET);
   }, [props.vilkår]);
 
   const skalVisePanel = vilkårForSteg.length > 0;
@@ -63,7 +61,7 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
       kanOverstyreAccess={props.kanOverstyreAccess}
       toggleOverstyring={props.toggleOverstyring}
       aksjonspunkter={relevanteAksjonspunkter}
-      behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+      behandling={{ type: props.behandling.type.kode as BehandlingType }}
       vilkar={vilkårForSteg}
       erOverstyrt={false}
       overstyringApKode=""

@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  k9_kodeverk_vilkår_VilkårType as VilkårType,
-  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Merknad } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/Merknad.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { vilkarType as VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { vilkårStatus as VilkårUtfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { BeregningReferanse } from '@k9-sak-web/types';
 import { describe, expect, it } from 'vitest';
 import mapVilkar from '../VilkarMapper';

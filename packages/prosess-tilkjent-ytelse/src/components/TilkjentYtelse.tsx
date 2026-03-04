@@ -1,9 +1,7 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
-import {
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BeregningsresultatPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatPeriodeDto.js';
+import { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
@@ -42,7 +40,7 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
 const createTooltipContent = (
   item: PeriodeMedId,
   getKodeverknavn: (kode: string, kodeverkType: KodeverkType) => string,
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'],
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ) => {
   const periodeDato = `${initializeDate(item.fom).format(DDMMYY_DATE_FORMAT)} - ${initializeDate(item.tom).format(DDMMYY_DATE_FORMAT)}`;
   const getArbeidsgiverAndeler = () => {
@@ -85,7 +83,7 @@ const prepareTimelineData = (
   periode: PeriodeMedId,
   index: number,
   getKodeverknavn,
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'],
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ) => ({
   ...periode,
   className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
@@ -104,7 +102,7 @@ interface OwnProps {
     content: string;
   }[];
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'];
   isUngdomsytelseFagsak: boolean;
 }
 

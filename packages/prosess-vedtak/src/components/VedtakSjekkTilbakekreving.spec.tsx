@@ -7,14 +7,12 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
-  k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktType.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
 
 const behandling = {
   id: 1,

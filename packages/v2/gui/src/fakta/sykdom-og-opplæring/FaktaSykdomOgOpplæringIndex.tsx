@@ -8,16 +8,14 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import tabCodes from './tabCodes';
 import { useVilkår } from './SykdomOgOpplæringQueries.js';
-import {
-  k9_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
-  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
-  type OpprettLangvarigSykdomsVurderingData,
-  k9_kodeverk_vilkår_Avslagsårsak as OpplæringVurderingDtoAvslagsårsak,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { vilkarType as VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { vilkårStatus as VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import type { OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/tjenester/opplæringspenger/OpprettLangvarigSykdomsVurderingData.js';
+import { Avslagsårsak as OpplæringVurderingDtoAvslagsårsak } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/Avslagsårsak.js';
+import { OpplæringVurderingResultat as OpplæringVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingResultat.js';
 import { InstitusjonIcon, SykdomIcon, OpplæringIcon, ReisetidIcon } from './TabIcons.js';
 import { useSearchParams } from 'react-router';
 

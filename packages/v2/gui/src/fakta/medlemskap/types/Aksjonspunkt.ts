@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 export interface Aksjonspunkt {
   definisjon: NonNullable<AksjonspunktDto['definisjon']>;

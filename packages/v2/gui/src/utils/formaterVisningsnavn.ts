@@ -1,24 +1,24 @@
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingVisningsnavn.js';
 
 export const formaterVisningsnavn = (
-  visningsnavn: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined,
+  visningsnavn: BehandlingVisningsnavn | undefined,
 ): string => {
   if (!visningsnavn) {
     return '';
   }
 
   switch (visningsnavn) {
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.INGEN_RELEVANT_BEHANDLINGÅRSAK:
+    case BehandlingVisningsnavn.INGEN_RELEVANT_BEHANDLINGÅRSAK:
       return '';
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT:
+    case BehandlingVisningsnavn.KONTROLL_AV_INNTEKT:
       return 'Kontroll av inntekt';
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.BEREGNING_AV_HØY_SATS:
+    case BehandlingVisningsnavn.BEREGNING_AV_HØY_SATS:
       return 'Beregning av høy sats';
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG:
+    case BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG:
       return 'Endring av barnetillegg';
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.BRUKERS_DØDSFALL:
+    case BehandlingVisningsnavn.BRUKERS_DØDSFALL:
       return 'Brukers dødsfall';
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAMENDRING:
+    case BehandlingVisningsnavn.UNGDOMSPROGRAMENDRING:
       return 'Ungdomsprogramendring';
     default: {
       console.warn('Ukjent behandlingsvisningsnavn:', visningsnavn);

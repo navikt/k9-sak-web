@@ -1,14 +1,12 @@
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktType as AksjonspunktType,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
-  k9_kodeverk_behandling_BehandlingStatus,
-  k9_kodeverk_behandling_BehandlingType,
-  k9_kodeverk_behandling_FagsakYtelseType,
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak as Venteårsak,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { AksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktType.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 import VedtakProsessIndex from './VedtakProsessIndex';
@@ -16,8 +14,8 @@ import VedtakProsessIndex from './VedtakProsessIndex';
 const behandling = {
   id: 1,
   versjon: 1,
-  type: k9_kodeverk_behandling_BehandlingType.FØRSTEGANGSSØKNAD,
-  status: k9_kodeverk_behandling_BehandlingStatus.UTREDES,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
+  status: BehandlingStatus.UTREDES,
   språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
@@ -31,7 +29,7 @@ const behandling = {
     },
   ],
   opprettet: '2024-01-01',
-  sakstype: k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN,
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   uuid: '12345',
 };
 

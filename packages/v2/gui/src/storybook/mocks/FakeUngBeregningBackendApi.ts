@@ -1,8 +1,6 @@
-import {
-  type GetSatsOgUtbetalingPerioderResponse,
-  type GetUngdomsprogramInformasjonResponse,
-  type ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { GetSatsOgUtbetalingPerioderResponse } from '@k9-sak-web/backend/ungsak/tjenester/GetSatsOgUtbetalingPerioderResponse.js';
+import type { GetUngdomsprogramInformasjonResponse } from '@k9-sak-web/backend/ungsak/tjenester/GetUngdomsprogramInformasjonResponse.js';
+import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 
 export class FakeUngBeregningBackendApi {
   async getSatsOgUtbetalingPerioder(): Promise<GetSatsOgUtbetalingPerioderResponse> {

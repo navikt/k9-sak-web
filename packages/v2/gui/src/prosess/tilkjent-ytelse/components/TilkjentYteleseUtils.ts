@@ -1,10 +1,10 @@
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import type { k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import type { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 
 export const getAktivitet = (
-  aktivitetStatus: BeregningsresultatPeriodeAndelDto['aktivitetStatus'],
+  aktivitetStatus: AktivitetStatusType | null | undefined,
   kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ) =>
   // hvis valgtAndel ikke satt ennå return tom string.

@@ -4,10 +4,8 @@ import { Alert, Box, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJSWrapper from './EditorJSWrapper';
 
-import {
-  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjonType as VedtaksbrevSeksjonType,
-  type ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { VedtaksbrevSeksjonType } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/editor/VedtaksbrevSeksjonType.js';
+import type { VedtaksbrevSeksjon } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/editor/VedtaksbrevSeksjon.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import styles from './RedigerFritekstbrev.module.css';
 import { utledStiler, validerRedigertHtml } from './RedigeringUtils';
@@ -20,7 +18,7 @@ interface OwnProps {
   redigerbartInnhold: string;
   originalHtml: string;
   handleForhåndsvis: () => void;
-  htmlSeksjoner: ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon[];
+  htmlSeksjoner: VedtaksbrevSeksjon[];
 }
 
 interface DebouncedFunction<T extends (...args: any[]) => any> {

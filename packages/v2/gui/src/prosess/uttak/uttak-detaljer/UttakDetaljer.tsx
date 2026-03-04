@@ -1,12 +1,8 @@
 import { type JSX } from 'react';
-import {
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
-  type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
-  type pleiepengerbarn_uttak_kontrakter_Utfall as UttaksperiodeInfoUtfallType,
-  type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { type Utfall as UttaksperiodeInfoUtfallType, Utfall } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utfall.js';
+import { type Årsak as UttaksperiodeInfoÅrsakerType, Årsak as Årsaker } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Årsak.js';
+import type { Utenlandsopphold } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utenlandsopphold.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';

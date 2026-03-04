@@ -1,8 +1,6 @@
-import type {
-  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
-  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevValgDto as InformasjonsbrevValgDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { InformasjonsbrevBestillingRequest } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/informasjonsbrev/InformasjonsbrevBestillingRequest.js';
+import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
+import type { InformasjonsbrevValgDto } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/informasjonsbrev/InformasjonsbrevValgDto.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';

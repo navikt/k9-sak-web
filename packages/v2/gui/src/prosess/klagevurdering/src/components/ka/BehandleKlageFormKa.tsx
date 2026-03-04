@@ -1,6 +1,6 @@
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
-import { ung_kodeverk_klage_KlageVurderingType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
@@ -142,12 +142,12 @@ interface TransformedValues {
 
 export const transformValues = (values: BehandleKlageFormKaFormValues): TransformedValues => ({
   klageMedholdArsak:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE ||
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK
+    values.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE ||
+    values.klageVurdering === KlageVurdering.OPPHEVE_YTELSESVEDTAK
       ? values.klageMedholdArsak
       : null,
   klageVurderingOmgjoer:
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
+    values.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE
       ? values.klageVurderingOmgjoer
       : null,
   klageVurdering: values.klageVurdering,

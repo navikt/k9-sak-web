@@ -1,7 +1,5 @@
-import type {
-  ung_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  ung_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { UngBehandlingDto as BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/UngBehandlingDto.js';
+import type { BehandlingsresultatDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingsresultatDto.js';
 
 type Behandlingsresultat = {
   type: BehandlingsresultatDto['type'];

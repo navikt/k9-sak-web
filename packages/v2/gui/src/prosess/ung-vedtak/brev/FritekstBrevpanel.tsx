@@ -1,8 +1,6 @@
-import type {
-  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse as VedtaksbrevEditorResponse,
-  ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
+import type { VedtaksbrevEditorResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/editor/VedtaksbrevEditorResponse.js';
+import type { VedtaksbrevValg } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/VedtaksbrevValg.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Button, Heading, Modal, VStack } from '@navikt/ds-react';
 import { useQuery, type UseMutateFunction } from '@tanstack/react-query';
@@ -37,7 +35,7 @@ interface FritekstBrevpanelProps {
   >;
   handleForhåndsvis: () => void;
   fieldIndex: number;
-  vedtaksbrevValg?: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg | undefined;
+  vedtaksbrevValg?: VedtaksbrevValg | undefined;
   forhåndsvisningIsLoading: boolean;
   behandlingId: number;
   api: UngVedtakBackendApiType;

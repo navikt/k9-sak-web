@@ -1,7 +1,5 @@
-import {
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeAndelDto as BeregningsresultatPeriodeAndelDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BeregningsresultatPeriodeAndelDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatPeriodeAndelDto.js';
+import { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
@@ -25,7 +23,7 @@ const getEndCharFromId = (id: string) => (id ? `...${id.substring(id.length - 4,
 export const createArbeidsgiverVisningsnavnForAndel = (
   andel,
   kodeverkNavnFraKode,
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'],
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ) => {
   if (!andel) return '';
 

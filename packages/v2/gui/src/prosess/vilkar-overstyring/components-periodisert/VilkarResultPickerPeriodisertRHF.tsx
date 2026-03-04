@@ -1,9 +1,7 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_InnvilgetMerknad as InnvilgetMerknad,
-  k9_sak_kontrakt_opptjening_OverstyringOpptjeningsvilkåretDto,
-  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { InnvilgetMerknad } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/InnvilgetMerknad.js';
+import type { OverstyringOpptjeningsvilkåretDto } from '@k9-sak-web/backend/k9sak/kontrakt/opptjening/OverstyringOpptjeningsvilkåretDto.js';
+import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårPeriodeDto.js';
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { type KodeverkMedUndertype, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -47,7 +45,7 @@ interface StaticFunctions {
     values: VilkarResultPickerFormState,
     periodeFom?: string,
     periodeTom?: string,
-  ) => k9_sak_kontrakt_opptjening_OverstyringOpptjeningsvilkåretDto;
+  ) => OverstyringOpptjeningsvilkåretDto;
   buildInitialValues: (
     aksjonspunkter: AksjonspunktDto[],
     status: string,
@@ -271,7 +269,7 @@ VilkarResultPickerPeriodisertRHF.transformValues = (
   values: VilkarResultPickerFormState,
   periodeFom?: string,
   periodeTom?: string,
-): k9_sak_kontrakt_opptjening_OverstyringOpptjeningsvilkåretDto => {
+): OverstyringOpptjeningsvilkåretDto => {
   switch (values.erVilkarOk) {
     case vilkårStatusPeriodisert.OPPFYLT:
       return {

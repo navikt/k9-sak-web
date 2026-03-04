@@ -1,22 +1,20 @@
-import type {
-  ForhåndsvisVedtaksbrevResponse,
-  ung_kodeverk_dokument_DokumentMalType,
-  ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse,
-  ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest,
-  VedtaksbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ForhåndsvisVedtaksbrevResponse } from '@k9-sak-web/backend/ungsak/tjenester/ForhåndsvisVedtaksbrevResponse.js';
+import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
+import type { VedtaksbrevEditorResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/editor/VedtaksbrevEditorResponse.js';
+import type { VedtaksbrevValgRequest } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/VedtaksbrevValgRequest.js';
+import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/tjenester/VedtaksbrevValgResponse.js';
 
 export type UngVedtakBackendApiType = {
   forhåndsvisVedtaksbrev(
     behandlingId: number,
-    dokumentMalType: ung_kodeverk_dokument_DokumentMalType,
+    dokumentMalType: DokumentMalType,
     htmlVersjon?: boolean,
     redigertVersjon?: boolean,
   ): Promise<ForhåndsvisVedtaksbrevResponse>;
   vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse>;
-  lagreVedtaksbrev(data: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest): Promise<unknown>;
+  lagreVedtaksbrev(data: VedtaksbrevValgRequest): Promise<unknown>;
   formidling_editor(
     behandlingId: string,
-    dokumentMalType: ung_kodeverk_dokument_DokumentMalType,
-  ): Promise<ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse>;
+    dokumentMalType: DokumentMalType,
+  ): Promise<VedtaksbrevEditorResponse>;
 };

@@ -2,10 +2,8 @@ import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/Fag
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import {
-  ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_klage_KlageHjemmelDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
+import type { KlageHjemmelDto } from '@k9-sak-web/backend/ungsak/kontrakt/klage/KlageHjemmelDto.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
@@ -32,7 +30,7 @@ interface BehandleKlageFormNfpProps {
   isReadOnly: boolean;
   previewCallback: (dokumentdata?: Dokumentdata) => Promise<void>;
   readOnlySubmitButton: boolean;
-  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
+  ungHjemler: KlageHjemmelDto[];
 }
 
 /**
@@ -183,7 +181,7 @@ export const transformValues = (
 
   if (
     fagsak.sakstype !== fagsakYtelsesType.FRISINN &&
-    values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK
+    values.klageVurdering === KlageVurdering.STADFESTE_YTELSESVEDTAK
   ) {
     klageHjemmel =
       erPåklagdBehandlingTilbakekreving && fagsak.sakstype !== fagsakYtelsesType.UNGDOMSYTELSE
@@ -193,12 +191,12 @@ export const transformValues = (
 
   return {
     klageMedholdArsak:
-      values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE ||
-      values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK
+      values.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE ||
+      values.klageVurdering === KlageVurdering.OPPHEVE_YTELSESVEDTAK
         ? values.klageMedholdArsak
         : null,
     klageVurderingOmgjoer:
-      values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
+      values.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE
         ? values.klageVurderingOmgjoer
         : null,
     klageHjemmel,

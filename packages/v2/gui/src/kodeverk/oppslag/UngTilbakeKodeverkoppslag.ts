@@ -1,4 +1,4 @@
-import type { sif_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungtilbake/tjenester/kodeverk/AlleKodeverdierSomObjektResponse.js';
 import {
   GeneriskKodeverkoppslag,
   type Kodeverkoppslag,
@@ -6,7 +6,7 @@ import {
   type Kilde,
 } from './GeneriskKodeverkoppslag.js';
 
-type EO = sif_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse;
+type EO = AlleKodeverdierSomObjektResponse;
 
 export class UngTilbakeKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements Kodeverkoppslag<EO> {
   constructor(alleKodeverdier: EO) {

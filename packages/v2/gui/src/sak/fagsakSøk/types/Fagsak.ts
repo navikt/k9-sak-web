@@ -1,4 +1,4 @@
-import { type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 
 export type Fagsak = {
   endret: FagsakDto['endret'];

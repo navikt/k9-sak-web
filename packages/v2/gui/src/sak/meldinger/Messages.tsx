@@ -1,11 +1,9 @@
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
-import type {
-  k9_sak_kontrakt_dokument_BestillBrevDto as BestillBrevDto,
-  k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as FritekstbrevinnholdDto,
-  k9_sak_kontrakt_dokument_MottakerDto as MottakerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/BestillBrevDto.js';
+import type { FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/FritekstbrevinnholdDto.js';
+import type { MottakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/MottakerDto.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import { useEffect, useReducer, useRef, useState } from 'react';

@@ -1,0 +1,3 @@
+import type { foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+
+export type k9tilbakeKodeverkResponse = foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse;

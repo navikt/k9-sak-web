@@ -1,11 +1,8 @@
-import { k9_klage_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as KlageAksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { Klagevurdering } from '@k9-sak-web/backend/k9klage/kodeverk/Klagevurdering.js';
 import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
-import {
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-  folketrygdloven_kalkulus_kodeverk_FaktaOmBeregningTilfelle as FaktaOmBeregningTilfeller,
-  k9_kodeverk_arbeidsforhold_ArbeidsforholdHandlingType as ArbeidsforholdHandlingType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { FaktaOmBeregningTilfelle as FaktaOmBeregningTilfeller } from '@k9-sak-web/backend/k9sak/kodeverk/beregning/FaktaOmBeregningTilfelle.js';
+import { ArbeidsforholdHandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/arbeidsforhold/ArbeidsforholdHandlingType.js';
 import { render, screen } from '@testing-library/react';
 import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
@@ -190,7 +187,7 @@ describe('aksjonspunktTekstUtleder', () => {
   // Klage medhold
   it('skal vise korrekt tekst for aksjonspunkt 5035 medhold', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: medholdIKlage,
@@ -201,7 +198,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: medholdIKlage,
@@ -217,7 +214,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: oppheveYtelsesVedtak,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NFP,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
@@ -228,7 +225,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: oppheveYtelsesVedtak,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
@@ -251,7 +248,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: avvistKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
@@ -263,7 +260,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: stadfesteKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);
@@ -274,7 +271,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: stadfesteKlage,
     };
     const aksjonspunkt = fakeAksjonspunkt({
-      aksjonspunktKode: KlageAksjonspunktDtoDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
+      aksjonspunktKode: AksjonspunktDefinisjon.MANUELL_VURDERING_AV_KLAGE_NK,
     });
     const message = getAksjonspunkttekst(behandlingStatusFVED, aksjonspunkt, klagebehandlingVurdering, kodeverkoppslag);
     render(<div>{message}</div>);

@@ -19,12 +19,10 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
-  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/PeriodeMedOverlappValg.js';
+import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/EgneOverlappendeSakerDto.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import type { VurderSøskensakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/VurderSøskensakerDto.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
@@ -152,7 +150,7 @@ const VurderOverlappendeSak: FC = () => {
     if (aksjonspunkt?.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
       setLoading(true);
       const bekreftetAksjonspunkt: DTOWithDiscriminatorType<
-        k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+        VurderSøskensakerDto,
         typeof gyldigAksjonspunktType
       > = {
         '@type': aksjonspunkt.definisjon,
@@ -168,7 +166,7 @@ const VurderOverlappendeSak: FC = () => {
             periode.valg === PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN ? 0 : periode.søkersUttaksgrad,
         })),
       };
-      const requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+      const requestBody: BekreftedeAksjonspunkterDto = {
         behandlingId: `${id}`,
         behandlingVersjon: versjon,
         bekreftedeAksjonspunktDtoer: [bekreftetAksjonspunkt],

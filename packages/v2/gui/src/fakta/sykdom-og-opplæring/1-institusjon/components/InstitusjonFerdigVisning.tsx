@@ -1,4 +1,4 @@
-import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { InstitusjonVurderingDtoResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/institusjon/InstitusjonVurderingDtoResultat.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyLong, BodyShort, Box, Label, Skeleton, Tag } from '@navikt/ds-react';

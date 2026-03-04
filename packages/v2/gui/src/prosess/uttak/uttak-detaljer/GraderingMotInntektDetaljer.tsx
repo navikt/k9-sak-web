@@ -1,9 +1,7 @@
 import { Fragment, type FC } from 'react';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
-  type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { UttakArbeidType as InntektsforholdDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
+import type { InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/inntektgradering/InntektgraderingPeriodeDto.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { useUttakContext } from '../context/UttakContext';

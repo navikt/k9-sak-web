@@ -1,7 +1,5 @@
-import {
-  type sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto,
-  type k9_sak_kontrakt_notat_NotatDto as NotatDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { InnloggetAnsattDto } from '@k9-sak-web/backend/combined/sif/abac/kontrakt/abac/InnloggetAnsattDto.js';
+import type { NotatDto } from '@k9-sak-web/backend/k9sak/kontrakt/notat/NotatDto.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';

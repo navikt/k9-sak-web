@@ -1,11 +1,9 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
-  k9_kodeverk_behandling_BehandlingType,
-  k9_kodeverk_vilkår_VilkårType,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import OpptjeningVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndexV2.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
@@ -14,11 +12,11 @@ import { Dispatch, SetStateAction, useMemo } from 'react';
 import { K9SakProsessApi } from '../api/K9SakProsessApi';
 import { fagsakQueryOptions, opptjeningQueryOptions } from '../api/k9SakQueryOptions';
 
-const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET];
+const RELEVANTE_VILKAR_KODER = [vilkarType.OPPTJENINGSVILKÅRET];
 
 interface Props {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  aksjonspunkter: AksjonspunktDto[];
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -26,7 +24,7 @@ interface Props {
   };
   toggleOverstyring: Dispatch<SetStateAction<string[]>>;
   overstyrteAksjonspunktKoder: string[];
-  vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
+  vilkår: Array<VilkårMedPerioderDto>;
   visAllePerioder: boolean;
   behandling: Behandling;
   isReadOnly: boolean;
@@ -56,7 +54,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   );
 
   const isAksjonspunktOpen = relevanteAksjonspunkter.some(
-    ap => ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+    ap => ap.status === aksjonspunktStatus.OPPRETTET,
   );
 
   const handleSubmit = async (data: any) => {
@@ -76,7 +74,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
     return (
       <VilkarresultatMedOverstyringProsessIndex
         aksjonspunkter={[]}
-        behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+        behandling={{ type: props.behandling.type.kode as BehandlingType }}
         panelTittelKode="Opptjening"
         vilkar={vilkårForSteg}
         erOverstyrt={erOverstyrt}

@@ -1,5 +1,5 @@
 import { type KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
-import { k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
   TotrinnskontrollBeslutterForm,
   type TotrinnskontrollBeslutterFormProps,

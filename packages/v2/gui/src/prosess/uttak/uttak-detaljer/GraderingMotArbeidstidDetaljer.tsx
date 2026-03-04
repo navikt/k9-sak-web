@@ -1,10 +1,8 @@
 import type { FC } from 'react';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidsforholdType,
-  type pleiepengerbarn_uttak_kontrakter_Utbetalingsgrader as Utbetalingsgrader,
-  type pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { UttakArbeidType as UttakArbeidsforholdType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
+import type { Utbetalingsgrader } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utbetalingsgrader.js';
+import type { UttaksperiodeInfo } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UttaksperiodeInfo.js';
 import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 import { useUttakContext } from '../context/UttakContext';

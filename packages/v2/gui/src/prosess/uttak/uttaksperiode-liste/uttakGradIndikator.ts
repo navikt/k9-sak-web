@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { pleiepengerbarn_uttak_kontrakter_Årsak as Årsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Årsak.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import styles from './uttak.module.css';
 

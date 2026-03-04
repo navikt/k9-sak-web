@@ -2,7 +2,7 @@ import { Tooltip } from '@navikt/ds-react';
 import { type JSX } from 'react';
 // import type { UttaksperiodeInfoEndringsstatus } from '@k9-sak-web/backend/k9sak/generated';
 import PillIcon from './PillIcon';
-import type { pleiepengerbarn_uttak_kontrakter_Endringsstatus as EndringsStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { Endringsstatus as EndringsStatus } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Endringsstatus.js';
 
 const Endringsstatus = ({ status }: { status?: EndringsStatus }): JSX.Element | null => {
   if (status === 'NY') {

@@ -18,18 +18,16 @@ import {
   kanHindreUtsending,
   kanKunVelge,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
-  k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
-  k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
-  k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
-  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { AvslagsårsakPrPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/AvslagsårsakPrPeriodeDto.js';
+import type { BehandlingÅrsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingÅrsakDto.js';
+import type { DokumentMedUstrukturerteDataDto } from '@k9-sak-web/backend/k9sak/kontrakt/vedtak/DokumentMedUstrukturerteDataDto.js';
+import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -70,9 +68,9 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
-  behandlingPåVent: k9_sak_kontrakt_behandling_BehandlingDto['behandlingPåVent'];
-  behandlingresultat: k9_sak_kontrakt_behandling_BehandlingDto['behandlingsresultat'];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'];
+  behandlingPåVent: BehandlingDto['behandlingPåVent'];
+  behandlingresultat: BehandlingDto['behandlingsresultat'];
   behandlingStatus: string;
   behandlingÅrsaker?: BehandlingÅrsakDto[];
   bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;

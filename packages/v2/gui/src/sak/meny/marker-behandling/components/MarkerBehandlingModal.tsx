@@ -1,8 +1,6 @@
 // import { MerknadEndretDtoMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
-import {
-  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
-  type k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingMerknadKode as EndreMerknadRequestMerknadKode } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/BehandlingMerknadKode.js';
+import type { MerknadResponse } from '@k9-sak-web/backend/k9sak/tjenester/los/dto/MerknadResponse.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';

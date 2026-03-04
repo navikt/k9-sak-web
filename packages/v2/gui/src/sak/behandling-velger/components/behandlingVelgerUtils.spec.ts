@@ -1,4 +1,4 @@
-import { ung_sak_kontrakt_krav_ÅrsakTilVurdering as UngÅrsakTilVurdering } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { UngÅrsakTilVurdering } from '@k9-sak-web/backend/ungsak/kontrakt/krav/UngÅrsakTilVurdering.js';
 import type { Behandling } from '../types/Behandling';
 import { filterPerioderForKontrollAvInntekt, sortBehandlinger } from './behandlingVelgerUtils';
 

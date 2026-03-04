@@ -1,12 +1,7 @@
-import {
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonVurderingDtoResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
-  type k9_kodeverk_sykdom_Resultat as SykdomVurderingOversiktElementResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as instEnumObject,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as reisetidEnumObject,
-  k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type InstitusjonVurderingDtoResultat, InstitusjonVurderingDtoResultat as instEnumObject } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/institusjon/InstitusjonVurderingDtoResultat.js';
+import { OpplæringVurderingResultat as OpplæringVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingResultat.js';
+import { type ReisetidResultatType as ReisetidResultat, ReisetidResultatType as reisetidEnumObject } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/reisetid/ReisetidResultatType.js';
+import { type SykdomVurderingOversiktElementResultat, SykdomVurderingOversiktElementResultat as sykdomEnumObject } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/SykdomVurderingOversiktElementResultat.js';
 import { Box, Heading } from '@navikt/ds-react';
 import type { Period } from '@navikt/ft-utils';
 import React, { useEffect, useMemo, useRef, useState } from 'react';

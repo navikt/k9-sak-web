@@ -1,10 +1,8 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import type { KlageVurderingResultatDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlageVurderingResultatDto.js';
-import {
-  ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
-  ung_kodeverk_klage_KlageVurderingType,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { AksjonspunktDtoStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDtoStatus.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -45,19 +43,19 @@ const getOmgjortAarsak = (klageVurdering: KlagebehandlingDto) => {
 
 const getResultatText = (klageresultat: KlageVurderingResultatDto | undefined) => {
   switch (klageresultat?.klageVurdering) {
-    case ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE:
+    case KlageVurdering.AVVIS_KLAGE:
       return 'Avvist fordi klagen ikke oppfyller formkravene';
-    case ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK:
+    case KlageVurdering.STADFESTE_YTELSESVEDTAK:
       return 'Vedtaket er stadfestet';
-    case ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK:
+    case KlageVurdering.OPPHEVE_YTELSESVEDTAK:
       return 'Vedtak er opphevet og hjemsendt';
-    case ung_kodeverk_klage_KlageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
+    case KlageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE:
       return 'Vedtaket er hjemsendt';
-    case ung_kodeverk_klage_KlageVurderingType.TRUKKET:
+    case KlageVurdering.TRUKKET:
       return 'Klagen er trukket';
-    case ung_kodeverk_klage_KlageVurderingType.FEILREGISTRERT:
+    case KlageVurdering.FEILREGISTRERT:
       return klageresultat.begrunnelse;
-    case ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE:
+    case KlageVurdering.MEDHOLD_I_KLAGE:
       return klageresultat.klageVurderingOmgjoer
         ? omgjoerTekstMap[klageresultat.klageVurderingOmgjoer as keyof typeof omgjoerTekstMap]
         : null;
@@ -85,15 +83,15 @@ export const VedtakKlage = ({
 }: OwnProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const klageresultat = klageVurdering.klageVurderingResultatNK || klageVurdering.klageVurderingResultatNFP;
-  const isAvvist = klageresultat?.klageVurdering === ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE;
+  const isAvvist = klageresultat?.klageVurdering === KlageVurdering.AVVIS_KLAGE;
   const avvistArsaker = getAvvisningsAarsaker(klageVurdering);
   const isOpphevOgHjemsend =
-    klageresultat?.klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK;
-  const isOmgjort = klageresultat?.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE;
+    klageresultat?.klageVurdering === KlageVurdering.OPPHEVE_YTELSESVEDTAK;
+  const isOmgjort = klageresultat?.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE;
   const omgjortAarsak = getOmgjortAarsak(klageVurdering);
   const behandlingsResultatTekst = getResultatText(klageresultat);
   const åpneAksjonspunktKoder = aksjonspunkter
-    .filter(ap => ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET && ap.kanLoses)
+    .filter(ap => ap.status === AksjonspunktDtoStatus.OPPRETTET && ap.kanLoses)
     .map(ap => ap.definisjon);
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const submitHandler = async () => {

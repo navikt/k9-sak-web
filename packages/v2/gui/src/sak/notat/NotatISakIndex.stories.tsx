@@ -1,13 +1,9 @@
-import type {
-  EndreResponse,
-  k9_sak_kontrakt_notat_NotatDto as NotatDto,
-  OpprettResponse,
-  SkjulResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
-  k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { K9EndreResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9EndreResponse.js';
+import type { NotatDto } from '@k9-sak-web/backend/k9sak/kontrakt/notat/NotatDto.js';
+import type { K9OpprettResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9OpprettResponse.js';
+import type { K9SkjulResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9SkjulResponse.js';
+import { fagsakYtelsesType as BehandlingDtoSakstype } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/kodeverk/notat/OpprettNotatDtoNotatGjelderType.js';
 import { HttpResponse, delay, http, type PathParams } from 'msw';
 import NotatISakIndex from './NotaterIndex';
 
@@ -92,7 +88,7 @@ VisNotatISakPanel.parameters = {
         await delay(250);
         return HttpResponse.json(notater, { status: 200 });
       }),
-      http.post<PathParams<string>, LeggTilNotatRequestBody, OpprettResponse>(
+      http.post<PathParams<string>, LeggTilNotatRequestBody, K9OpprettResponse>(
         '/k9/sak/api/notat',
         async ({ request }) => {
           const nyttNotatRequest = await request.json();
@@ -113,7 +109,7 @@ VisNotatISakPanel.parameters = {
           return HttpResponse.json(nyttNotat, { status: 201 });
         },
       ),
-      http.post<PathParams<string>, EndreNotatRequestBody, EndreResponse>(
+      http.post<PathParams<string>, EndreNotatRequestBody, K9EndreResponse>(
         '/k9/sak/api/notat/endre',
         async ({ request }) => {
           const endretNotatRequest = await request.json();
@@ -132,7 +128,7 @@ VisNotatISakPanel.parameters = {
           return HttpResponse.json(endretNotat, { status: 201 });
         },
       ),
-      http.post<PathParams<string>, SkjulNotatRequestBody, SkjulResponse>(
+      http.post<PathParams<string>, SkjulNotatRequestBody, K9SkjulResponse>(
         '/k9/sak/api/notat/skjul',
         async ({ request }) => {
           const skjulNotatRequest = await request.json();

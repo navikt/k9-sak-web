@@ -1,4 +1,4 @@
-import { folketrygdloven_kalkulus_kodeverk_FaktaOmBeregningTilfelle as FaktaOmBeregningTilfelle } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { FaktaOmBeregningTilfelle } from '@k9-sak-web/backend/k9sak/kodeverk/beregning/FaktaOmBeregningTilfelle.js';
 
 const vurderFaktaOmBeregningTotrinnText: Record<string, string> = {
   [FaktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD]: 'Det er vurdert om arbeidsforhold er tidsbegrenset.',

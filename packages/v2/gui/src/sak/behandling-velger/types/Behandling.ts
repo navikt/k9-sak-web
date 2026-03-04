@@ -1,5 +1,5 @@
-import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { ung_sak_kontrakt_behandling_BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { UngBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/UngBehandlingDto.js';
 
 export type Behandling = {
   ansvarligSaksbehandler: BehandlingDto['ansvarligSaksbehandler'];

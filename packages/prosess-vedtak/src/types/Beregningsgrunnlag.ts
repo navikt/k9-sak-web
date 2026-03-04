@@ -1,8 +1,6 @@
-import {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto as BeregningsgrunnlagDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_YtelsespesifiktGrunnlagDto as YtelsespesifiktGrunnlagDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AvslagsårsakPrPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/AvslagsårsakPrPeriodeDto.js';
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/BeregningsgrunnlagDto.js';
+import type { YtelsespesifiktGrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/YtelsespesifiktGrunnlagDto.js';
 
 export type Beregningsgrunnlag = BeregningsgrunnlagDto & {
   ytelsesspesifiktGrunnlag?: YtelsespesifiktGrunnlagDto & {

@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverDto as ArbeidsgiverDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { ArbeidsgiverDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverDto.js';
 import type { Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import type { AktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
 import type { BeregningsresultatPeriodeDto } from '../../types/BeregningsresultatPeriodeDto';

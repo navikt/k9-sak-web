@@ -5,7 +5,7 @@ import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverko
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import ReisetidIndex from './ReisetidIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { ReisetidResultatType as ReisetidResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/reisetid/ReisetidResultatType.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 

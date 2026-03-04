@@ -2,10 +2,7 @@ import { Fragment, useState, type FC } from 'react';
 import dayjs from 'dayjs';
 import { Alert, BodyShort, Button, Label, Table, Loader, HStack } from '@navikt/ds-react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import {
-  type k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type FagsakYtelsesType as FagsakYtelseType, fagsakYtelsesType as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import UttakRad from './UttakRad';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';

@@ -1,8 +1,6 @@
 import { Period } from '@navikt/ft-utils';
-import {
-  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/Avslagsårsak.js';
+import { OpplæringVurderingResultat as OpplæringVurderingDtoResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingResultat.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within, waitFor } from 'storybook/test';

@@ -1,7 +1,5 @@
-import type {
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingResultat,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { OpplæringVurderingResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/opplæring/OpplæringVurderingResultat.js';
+import type { ReisetidResultatType as ReisetidResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/reisetid/ReisetidResultatType.js';
 
 export const resultatTilJaNei = (resultat: ReisetidResultat | OpplæringVurderingResultat) => {
   if (resultat === 'GODKJENT') {

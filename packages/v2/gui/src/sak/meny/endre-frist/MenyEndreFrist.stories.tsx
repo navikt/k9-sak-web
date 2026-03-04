@@ -1,7 +1,5 @@
-import {
-  ung_kodeverk_varsel_EtterlysningStatus,
-  ung_kodeverk_varsel_EtterlysningType,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { EtterlysningStatus } from '@k9-sak-web/backend/ungsak/kodeverk/varsel/EtterlysningStatus.js';
+import { EtterlysningType } from '@k9-sak-web/backend/ungsak/kodeverk/varsel/EtterlysningType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { MenyEndreFrist } from './MenyEndreFrist.js';
@@ -17,14 +15,14 @@ type Story = StoryObj<typeof meta>;
 
 const mockEtterlysninger = [
   {
-    status: ung_kodeverk_varsel_EtterlysningStatus.VENTER,
-    type: ung_kodeverk_varsel_EtterlysningType.UTTALELSE_KONTROLL_INNTEKT,
+    status: EtterlysningStatus.VENTER,
+    type: EtterlysningType.UTTALELSE_KONTROLL_INNTEKT,
     periode: { fom: '2025-11-01', tom: '2025-11-30' },
     eksternReferanse: 'bf210a62-d9a9-4d49-93dc-ecb10a1a91ab',
   },
   {
-    status: ung_kodeverk_varsel_EtterlysningStatus.VENTER,
-    type: ung_kodeverk_varsel_EtterlysningType.UTTALELSE_KONTROLL_INNTEKT,
+    status: EtterlysningStatus.VENTER,
+    type: EtterlysningType.UTTALELSE_KONTROLL_INNTEKT,
     periode: { fom: '2025-12-01', tom: '2025-12-31' },
     eksternReferanse: 'ca884eaf-4610-46a8-859c-1c9c7fef8961',
   },

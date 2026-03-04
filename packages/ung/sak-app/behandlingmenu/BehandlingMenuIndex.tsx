@@ -1,7 +1,7 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { EtterlysningStatus } from '@k9-sak-web/backend/ungsak/kodeverk/varsel/EtterlysningStatus.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
@@ -169,7 +169,7 @@ export const BehandlingMenuIndex = ({
     queryFn: () => menyEndreFristClient.hentEtterlysninger(behandling?.uuid ?? ''),
     enabled: !!behandling?.uuid,
     select: etterlysninger =>
-      etterlysninger.filter(etterlysning => etterlysning.status === ung_kodeverk_varsel_EtterlysningStatus.VENTER),
+      etterlysninger.filter(etterlysning => etterlysning.status === EtterlysningStatus.VENTER),
   });
   const harEtterlysningerMedFrist = etterlysninger.length > 0;
 

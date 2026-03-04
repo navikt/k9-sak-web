@@ -1,0 +1,3 @@
+import type { folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type BeregningsgrunnlagArbeidsforholdDto = folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagArbeidsforholdDto;

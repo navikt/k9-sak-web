@@ -1,12 +1,10 @@
-import { folketrygdloven_kalkulus_kodeverk_VirksomhetType as VirksomhetType } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_EgenNæringDto as EgenNæringDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_PgiDto as PgiDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagArbeidsforholdDto as BeregningsgrunnlagArbeidsforholdDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPrStatusOgAndelDto as BeregningsgrunnlagPrStatusOgAndelDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto as BeregningsgrunnlagDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { VirksomhetType } from '@k9-sak-web/backend/k9sak/kodeverk/beregning/VirksomhetType.js';
+import type { EgenNæringDto } from '@k9-sak-web/backend/k9sak/kontrakt/EgenNæringDto.js';
+import type { PgiDto } from '@k9-sak-web/backend/k9sak/kontrakt/PgiDto.js';
+import type { BeregningsgrunnlagArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/BeregningsgrunnlagArbeidsforholdDto.js';
+import type { BeregningsgrunnlagPrStatusOgAndelDto } from '@k9-sak-web/backend/k9sak/kontrakt/BeregningsgrunnlagPrStatusOgAndelDto.js';
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/BeregningsgrunnlagDto.js';
+import type { BeregningsgrunnlagPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/BeregningsgrunnlagPeriodeDto.js';
 import type {
   Beregningsgrunnlag as FPBeregningsgrunnlag,
   BeregningsgrunnlagPeriodeProp as FPBeregningsgrunnlagPeriode,

@@ -1,10 +1,8 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
-import type {
-  k9_sak_typer_Periode as Periode,
-  pleiepengerbarn_uttak_kontrakter_Uttaksplan as Uttaksplan,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { K9Periode as Periode } from '@k9-sak-web/backend/k9sak/typer/K9Periode.js';
+import type { Uttaksplan } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Uttaksplan.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 
 const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) => {

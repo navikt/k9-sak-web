@@ -1,9 +1,7 @@
 import { Box, HGrid, Radio } from '@navikt/ds-react';
 
-import {
-  ung_kodeverk_klage_KlageVurderingOmgjør,
-  ung_kodeverk_klage_KlageVurderingType,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -57,17 +55,17 @@ export const KlageVurderingRadioOptionsKa = ({
               legend=""
               hideLegend
             >
-              <Radio value={ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK}>Stadfest vedtaket</Radio>
-              <Radio value={ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
-              <Radio value={ung_kodeverk_klage_KlageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE}>Hjemsend vedtaket</Radio>
-              <Radio value={ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK}>
+              <Radio value={KlageVurdering.STADFESTE_YTELSESVEDTAK}>Stadfest vedtaket</Radio>
+              <Radio value={KlageVurdering.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
+              <Radio value={KlageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE}>Hjemsend vedtaket</Radio>
+              <Radio value={KlageVurdering.OPPHEVE_YTELSESVEDTAK}>
                 Opphev og hjemsend vedtaket
               </Radio>
             </RhfRadioGroup>
           </ContentMaxWidth>
         </HGrid>
       </Box>
-      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE && (
+      {klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect
@@ -87,9 +85,9 @@ export const KlageVurderingRadioOptionsKa = ({
                 legend=""
                 hideLegend
               >
-                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
-                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
-                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
+                <Radio value={KlagevurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
+                <Radio value={KlagevurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
+                <Radio value={KlagevurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
                   Delvis omgjør, til gunst
                 </Radio>
               </RhfRadioGroup>
@@ -97,7 +95,7 @@ export const KlageVurderingRadioOptionsKa = ({
           </ArrowBox>
         </ContentMaxWidth>
       )}
-      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.OPPHEVE_YTELSESVEDTAK && (
+      {klageVurdering === KlageVurdering.OPPHEVE_YTELSESVEDTAK && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect

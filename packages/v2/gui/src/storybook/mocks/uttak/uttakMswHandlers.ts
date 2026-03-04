@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import type { k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import { defaultArbeidsgivere } from './uttakStoryMocks.js';
 
 /**

@@ -1,4 +1,4 @@
-import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/ungtilbake/tjenester/kodeverk/AlleKodeverdierSomObjektResponse.js';
 
 export const oppslagKodeverkSomObjektUngTilbake = {
   fagsystemer: [

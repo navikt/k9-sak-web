@@ -9,11 +9,9 @@ import {
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import {
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsak,
-  pleiepengerbarn_uttak_kontrakter_AnnenPart as AnnenPart,
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Årsak.js';
+import { AnnenPart } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/AnnenPart.js';
+import { fagsakYtelsesType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BodyShort, Button, HelpText, Table, Tooltip } from '@navikt/ds-react';
 import { harÅrsak } from '../utils/årsakUtils';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';

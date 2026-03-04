@@ -1,8 +1,6 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import {
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingResultatType as BehandlingsresultatDtoType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal.js';

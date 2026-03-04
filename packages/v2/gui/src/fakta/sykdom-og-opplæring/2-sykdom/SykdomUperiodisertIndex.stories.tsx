@@ -5,10 +5,8 @@ import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverko
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import {
-  k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
-  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/Avslagsårsak.js';
+import { LangvarigSykdomResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/sykdom/LangvarigSykdomResultat.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 

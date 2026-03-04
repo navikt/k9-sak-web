@@ -1,8 +1,6 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_typer_Periode as Periode,
-  k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { K9Periode as Periode } from '@k9-sak-web/backend/k9sak/typer/K9Periode.js';
+import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårPeriodeDto.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
@@ -35,7 +33,7 @@ const minusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).subtract
 const plusEnDag = (dato: string | dayjs.Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
 
 const buildInitialValues = (
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  aksjonspunkter: AksjonspunktDto[],
   alleDokumenter: KravDokument[],
   status: string,
 ): FormState => {
@@ -119,7 +117,7 @@ const transformValues = (
 });
 
 interface SoknadsfristVilkarFormProps {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  aksjonspunkter: AksjonspunktDto[];
   submitCallback: (props: SubmitData[]) => void;
   periode: VilkårPeriodeDto;
   erOverstyrt?: boolean;

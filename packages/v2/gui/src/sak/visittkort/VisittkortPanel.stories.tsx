@@ -1,4 +1,4 @@
-import { k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { kjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import VisittkortPanel from './VisittkortPanel';

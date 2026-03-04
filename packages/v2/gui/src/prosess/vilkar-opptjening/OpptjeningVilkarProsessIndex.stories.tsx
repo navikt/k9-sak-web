@@ -1,12 +1,10 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
-  k9_kodeverk_opptjening_OpptjeningAktivitetKlassifisering as FastsattOpptjeningAktivitetDtoKlasse,
-  k9_kodeverk_opptjening_OpptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType,
-  k9_kodeverk_vilkår_VilkårType,
-  k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
-  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus as AksjonspunktDtoStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { FastsattOpptjeningAktivitetDtoKlasse } from '@k9-sak-web/backend/k9sak/kodeverk/opptjening/FastsattOpptjeningAktivitetDtoKlasse.js';
+import { opptjeningAktivitetType as FastsattOpptjeningAktivitetDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/OpptjeningAktivitetType.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { Merknad as VilkårPeriodeDtoMerknad } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/Merknad.js';
+import { vilkårStatus as VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
@@ -169,7 +167,7 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
             merknad: '7847B' as VilkårPeriodeDtoMerknad,
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET,
+        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         relevanteInnvilgetMerknader: [],
       },
     ],
@@ -253,7 +251,7 @@ export const VisPanelForPSBÅpentAksjonspunktUten847B: Story = {
             vurderesIBehandlingen: true,
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET,
+        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         relevanteInnvilgetMerknader: [],
       },
     ],
@@ -296,7 +294,7 @@ export const VisPanelForPSBÅpentAksjonspunktMed847B: Story = {
             vurderesIBehandlingen: true,
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET,
+        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         relevanteInnvilgetMerknader: [],
       },
     ],
@@ -340,7 +338,7 @@ export const VisPanelForNårEnIkkeHarAksjonspunkt: Story = {
             merknad: '-' as VilkårPeriodeDtoMerknad,
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET,
+        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         relevanteInnvilgetMerknader: [],
       },
     ],

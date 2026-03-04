@@ -1,6 +1,6 @@
-import { k9_kodeverk_behandling_aksjonspunkt_Venteårsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
+import { Venteårsak as UngVenteårsak } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
 import { VenteÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/VenteÅrsakType.js';
-import { ung_kodeverk_behandling_aksjonspunkt_Venteårsak } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -26,19 +26,19 @@ const initFrist = (): string => {
 };
 
 const venterårsakerMedKommentarmulighet = [
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.ANNET,
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_SVAR_PORTEN,
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_SVAR_TEAMS,
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
+  Venteårsak.ANNET,
+  Venteårsak.VENTER_SVAR_PORTEN,
+  Venteårsak.VENTER_SVAR_TEAMS,
+  Venteårsak.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
 ];
 
 const venteårsakerSomIkkeKanEndreFrist = [
-  ung_kodeverk_behandling_aksjonspunkt_Venteårsak.VENT_INNTEKT_RAPPORTERINGSFRIST,
-  ung_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_PÅ_ETTERLYST_INNTEKT_UTTALELSE,
+  Venteårsak.VENT_INNTEKT_RAPPORTERINGSFRIST,
+  UngVenteårsak.VENTER_PÅ_ETTERLYST_INNTEKT_UTTALELSE,
 ];
 
 const venterEtterlysInntektsmeldingKode =
-  k9_kodeverk_behandling_aksjonspunkt_Venteårsak.VENTER_PÅ_ETTERLYST_INNTEKTSMELDINGER;
+  Venteårsak.VENTER_PÅ_ETTERLYST_INNTEKTSMELDINGER;
 
 const isButtonDisabled = (
   frist: string | undefined,

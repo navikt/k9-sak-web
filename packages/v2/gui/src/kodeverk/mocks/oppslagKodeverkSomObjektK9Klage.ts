@@ -1,4 +1,4 @@
-import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9klage/tjenester/kodeverk/AlleKodeverdierSomObjektResponse.js';
 
 // Data i denne konstant er ein direkte kopi av response body frå /k9/klage/api/kodeverk/alle/objekt, med X-Json-Serializer-Option: openapi-compat.
 // Brukast for å kunne gjere kodeverk oppslag i test/stories.

@@ -8,10 +8,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
 import { useUttakContext } from '../context/UttakContext';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import type { OverstyringAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/OverstyringAksjonspunktDto.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import styles from './overstyrUttakForm.module.css';
 
@@ -42,7 +40,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   const { mutate: handleOverstyring } = useMutation({
     mutationFn: async ({ action, values }: OverstyringUttakHandling) => {
       const overstyrteAksjonspunktDto: DTOWithDiscriminatorType<
-        k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+        OverstyringAksjonspunktDto,
         typeof aksjonspunktCodes.OVERSTYRING_AV_UTTAK
       > = {
         '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK,

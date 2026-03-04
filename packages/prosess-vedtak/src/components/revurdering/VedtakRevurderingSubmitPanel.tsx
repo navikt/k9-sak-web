@@ -10,10 +10,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
-import {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingÅrsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingÅrsakDto.js';
 import { FormikState } from 'formik';
 import styles from '../vedtakForm.module.css';
 

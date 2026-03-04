@@ -1,10 +1,8 @@
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatMedUtbetaltePeriodeDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -27,7 +25,7 @@ const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
  * Sjekker om beregningsresultatet kun inneholder avslåtte uttak
  */
 export const harKunAvslåtteUttak = (
-  beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+  beregningsresultatUtbetaling: BeregningsresultatMedUtbetaltePeriodeDto,
 ): boolean => {
   if (!beregningsresultatUtbetaling?.perioder) {
     return false;
@@ -44,7 +42,7 @@ interface Props {
   behandling: Behandling;
   fagsak: Fagsak;
   isReadOnly: boolean;
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
 }
 
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
@@ -61,7 +59,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
       aksjonspunkterQueryOptions(props.api, props.behandling, [
-        k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+        aksjonspunktCodes.VURDER_TILBAKETREKK,
       ]),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
     ],
@@ -82,7 +80,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   };
 
   const harApentAksjonspunkt = aksjonspunkter?.some(
-    ap => ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+    ap => ap.status === aksjonspunktStatus.OPPRETTET,
   );
   const readOnlySubmitButton = !harApentAksjonspunkt;
   if (BRUK_V2_TILKJENT_YTELSE) {

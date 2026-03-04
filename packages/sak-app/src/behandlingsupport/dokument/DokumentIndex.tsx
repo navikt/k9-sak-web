@@ -4,10 +4,8 @@ import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIn
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import {
-  type k9_sak_kontrakt_dokument_DokumentDto as DokumentDto,
-  type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';

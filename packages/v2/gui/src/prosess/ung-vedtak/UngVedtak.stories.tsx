@@ -1,8 +1,6 @@
-import {
-  ung_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  ung_kodeverk_dokument_DokumentMalType,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingType as BehandlingDtoType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
@@ -144,7 +142,7 @@ export const MedBrev: Story = {
       vedtaksbrevValg: [
         {
           dokumentMalType: {
-            kilde: ung_kodeverk_dokument_DokumentMalType.ENDRING_INNTEKT,
+            kilde: DokumentMalType.ENDRING_INNTEKT,
             navn: 'Endre inntekt',
             kode: 'ENDRE_INNTEKT',
             kodeverk: '',
@@ -152,7 +150,7 @@ export const MedBrev: Story = {
         },
         {
           dokumentMalType: {
-            kilde: ung_kodeverk_dokument_DokumentMalType.ENDRING_HØY_SATS,
+            kilde: DokumentMalType.ENDRING_HØY_SATS,
             navn: 'Endring høy sats',
             kode: 'ENDRE_HØY_SATS',
             kodeverk: '',

@@ -2,7 +2,7 @@ import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontr
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
 import type { PartDto } from '@k9-sak-web/backend/combined/kontrakt/klage/PartDto.js';
-import { k9_klage_kodeverk_behandling_BehandlingType } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/k9klage/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
@@ -104,8 +104,8 @@ export const erTilbakekreving = (
 ) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
   return (
-    behandling?.type === k9_klage_kodeverk_behandling_BehandlingType.TILBAKEKREVING ||
-    behandling?.type === k9_klage_kodeverk_behandling_BehandlingType.REVURDERING_TILBAKEKREVING
+    behandling?.type === behandlingType.TILBAKEKREVING ||
+    behandling?.type === behandlingType.REVURDERING_TILBAKEKREVING
   );
 };
 export const påklagdBehandlingInfo = (

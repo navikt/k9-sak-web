@@ -1,9 +1,7 @@
 import { Alert, Button } from '@navikt/ds-react';
 import { useContext } from 'react';
-import {
-  type k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto as LangvarigSykdomVurderingDto,
-  type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_ValgtLangvarigSykdomVurderingDto as ValgtLangvarigSykdomVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { LangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/opplæringspenger/langvarigsykdom/LangvarigSykdomVurderingDto.js';
+import type { ValgtLangvarigSykdomVurderingDto } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/sykdom/ValgtLangvarigSykdomVurderingDto.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';

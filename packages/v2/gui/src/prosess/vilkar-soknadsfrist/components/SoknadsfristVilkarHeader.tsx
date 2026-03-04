@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
@@ -26,7 +26,7 @@ const VilkarOkMessage = ({ originalErVilkarOk }: { originalErVilkarOk: boolean }
 };
 
 interface SoknadsfristVilkarHeaderProps {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  aksjonspunkter: AksjonspunktDto[];
   erOverstyrt?: boolean;
   kanOverstyreAccess?: {
     employeeHasAccess: boolean;

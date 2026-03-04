@@ -1,11 +1,9 @@
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
-import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  ung_kodeverk_behandling_FagsakYtelseType,
-  ung_kodeverk_klage_KlageVurderingOmgjør,
-  ung_kodeverk_klage_KlageVurderingType,
-  type ung_sak_kontrakt_klage_KlageHjemmelDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import { KlagevurderingOmgjør } from '@k9-sak-web/backend/k9klage/kodeverk/KlagevurderingOmgjør.js';
+import { KlageVurdering } from '@k9-sak-web/backend/k9klage/kodeverk/vedtak/KlageVurdering.js';
+import type { KlageHjemmelDto } from '@k9-sak-web/backend/ungsak/kontrakt/klage/KlageHjemmelDto.js';
 import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -19,13 +17,13 @@ export const TILBAKEKREVING_HJEMMEL = '22-15';
 
 const utledHjemler = (
   fagsak: FagsakDto,
-  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[],
+  ungHjemler: KlageHjemmelDto[],
 ): {
   kode: string;
   navn: string;
 }[] => {
   switch (fagsak.sakstype) {
-    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_SYKT_BARN:
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -36,10 +34,10 @@ const utledHjemler = (
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER:
-    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_KS:
-    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_MA:
-    case k9_kodeverk_behandling_FagsakYtelseType.OMSORGSPENGER_AO:
+    case fagsakYtelsesType.OMSORGSPENGER:
+    case fagsakYtelsesType.OMSORGSPENGER_KS:
+    case fagsakYtelsesType.OMSORGSPENGER_MA:
+    case fagsakYtelsesType.OMSORGSPENGER_AO:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -50,21 +48,21 @@ const utledHjemler = (
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case k9_kodeverk_behandling_FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
         { kode: '9-13', navn: '§ 9-13' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
-    case k9_kodeverk_behandling_FagsakYtelseType.OPPLÆRINGSPENGER:
+    case fagsakYtelsesType.OPPLÆRINGSPENGER:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
         { kode: '9-14', navn: '§ 9-14' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
-    case ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE:
+    case FagsakYtelseType.UNGDOMSYTELSE:
       return ungHjemler
         .filter(hjemmel => hjemmel.kode !== undefined && hjemmel.navn !== undefined)
         .map(hjemmel => ({ kode: hjemmel.kode!, navn: hjemmel.navn! }));
@@ -80,7 +78,7 @@ interface KlageVurderingRadioOptionsNfpProps {
   medholdReasons: KodeverkV2[] | KodeverkMedUndertype;
   klageVurdering: string | null;
   erPåklagdBehandlingTilbakekreving: boolean;
-  ungHjemler: ung_sak_kontrakt_klage_KlageHjemmelDto[];
+  ungHjemler: KlageHjemmelDto[];
 }
 
 export const KlageVurderingRadioOptionsNfp = ({
@@ -98,8 +96,8 @@ export const KlageVurderingRadioOptionsNfp = ({
   const hjemler = utledHjemler(fagsak, ungHjemler);
 
   const skalViseHjemler =
-    fagsak.sakstype !== ung_kodeverk_behandling_FagsakYtelseType.FRISINN &&
-    klageVurdering === ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK &&
+    fagsak.sakstype !== FagsakYtelseType.FRISINN &&
+    klageVurdering === KlageVurdering.STADFESTE_YTELSESVEDTAK &&
     hjemler.length > 0;
 
   const medholdOptions = Array.isArray(medholdReasons)
@@ -115,7 +113,7 @@ export const KlageVurderingRadioOptionsNfp = ({
   const skalViseValgAvHjemmel = () => {
     if (skalViseHjemler) {
       if (
-        fagsak.sakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE ||
+        fagsak.sakstype === FagsakYtelseType.UNGDOMSYTELSE ||
         !erPåklagdBehandlingTilbakekreving
       ) {
         return true;
@@ -135,11 +133,11 @@ export const KlageVurderingRadioOptionsNfp = ({
           legend=""
           hideLegend
         >
-          <Radio value={ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
-          <Radio value={ung_kodeverk_klage_KlageVurderingType.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
+          <Radio value={KlageVurdering.MEDHOLD_I_KLAGE}>Omgjør vedtaket</Radio>
+          <Radio value={KlageVurdering.STADFESTE_YTELSESVEDTAK}>Oppretthold vedtaket</Radio>
         </RhfRadioGroup>
       </ContentMaxWidth>
-      {klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE && (
+      {klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE && (
         <ContentMaxWidth>
           <ArrowBox>
             <RhfSelect
@@ -159,9 +157,9 @@ export const KlageVurderingRadioOptionsNfp = ({
                 hideLegend
                 legend=""
               >
-                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
-                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
-                <Radio value={ung_kodeverk_klage_KlageVurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
+                <Radio value={KlagevurderingOmgjør.GUNST_MEDHOLD_I_KLAGE}>Til gunst</Radio>
+                <Radio value={KlagevurderingOmgjør.UGUNST_MEDHOLD_I_KLAGE}>Til ugunst</Radio>
+                <Radio value={KlagevurderingOmgjør.DELVIS_MEDHOLD_I_KLAGE}>
                   Delvis omgjør, til gunst
                 </Radio>
               </RhfRadioGroup>

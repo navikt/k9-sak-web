@@ -1,11 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-import {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatMedUtbetaltePeriodeDto.js';
+import { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useForm } from 'react-hook-form';
@@ -16,7 +14,7 @@ interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   aksjonspunkter: AksjonspunktDto[];
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'];
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   submitCallback: (...args: any[]) => any;
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;

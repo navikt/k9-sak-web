@@ -1,8 +1,6 @@
-import {
-  ung_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
-  ung_kodeverk_vilkår_Avslagsårsak as VilkårResultatDtoAvslagsårsak,
-  type ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårPeriodeDtoVilkarStatus.js';
+import { VilkårResultatDtoAvslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårResultatDtoAvslagsårsak.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Detail, Heading, HStack, VStack } from '@navikt/ds-react';

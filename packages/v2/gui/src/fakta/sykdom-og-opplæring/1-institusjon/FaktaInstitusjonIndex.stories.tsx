@@ -5,7 +5,7 @@ import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverko
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { InstitusjonVurderingDtoResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/tjenester/behandling/opplæringspenger/visning/institusjon/InstitusjonVurderingDtoResultat.js';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));

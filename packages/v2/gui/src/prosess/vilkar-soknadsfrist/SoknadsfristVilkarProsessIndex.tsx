@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
@@ -33,7 +33,7 @@ const getIconForPeriode = (vilkarStatus: string, erOverstyrt: boolean, harÅpent
 };
 
 interface SoknadsfristVilkarProsessIndexProps {
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
+  aksjonspunkter: AksjonspunktDto[];
   submitCallback: (props: SubmitData[]) => void;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {

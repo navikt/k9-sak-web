@@ -1,0 +1,3 @@
+import type { folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type AvslagsårsakPrPeriodeDto = folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto;

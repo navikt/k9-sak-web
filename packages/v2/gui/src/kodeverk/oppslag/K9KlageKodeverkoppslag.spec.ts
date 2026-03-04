@@ -1,7 +1,5 @@
-import {
-  k9_klage_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-  type k9_klage_web_app_tjenester_kodeverk_dto_KodeverdiSomObjektK9_klage_kodeverk_behandling_BehandlingStatus as KodeverdiSomObjektBehandlingStatus,
-} from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingStatus.js';
+import type { KodeverdiSomObjektBehandlingStatus } from '@k9-sak-web/backend/k9klage/tjenester/kodeverk/dto/KodeverdiSomObjektBehandlingStatus.js';
 import { OrUndefined } from './GeneriskKodeverkoppslag.js';
 import { fakeK9Kodeverkoppslag } from '../mocks/fakeK9Kodeverkoppslag.js';
 

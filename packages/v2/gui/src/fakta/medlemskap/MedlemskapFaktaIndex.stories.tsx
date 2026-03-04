@@ -1,14 +1,12 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
-  k9_kodeverk_person_PersonstatusType as AvklartPersonstatusOrginalPersonstatus,
-  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  k9_kodeverk_medlem_MedlemskapDekningType as MedlemskapPerioderDtoDekningType,
-  k9_kodeverk_medlem_MedlemskapKildeType as MedlemskapPerioderDtoKildeType,
-  k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
-  k9_kodeverk_geografisk_Region as PersonopplysningDtoRegion,
-  k9_kodeverk_person_SivilstandType as PersonopplysningDtoSivilstand,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus as AksjonspunktDtoStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { personstatus as AvklartPersonstatusOrginalPersonstatus } from '@k9-sak-web/backend/k9sak/kodeverk/person/personstatus.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { MedlemskapPerioderDtoDekningType } from '@k9-sak-web/backend/k9sak/kodeverk/medlem/MedlemskapPerioderDtoDekningType.js';
+import { MedlemskapPerioderDtoKildeType } from '@k9-sak-web/backend/k9sak/kodeverk/medlem/MedlemskapPerioderDtoKildeType.js';
+import { adresseType as PersonadresseDtoAdresseType } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/adresseType.js';
+import { PersonopplysningDtoRegion } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/PersonopplysningDtoRegion.js';
+import { PersonopplysningDtoSivilstand } from '@k9-sak-web/backend/k9sak/kodeverk/person/PersonopplysningDtoSivilstand.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';

@@ -1,10 +1,8 @@
-import {
-  ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
-  ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
-  type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { KodeverdiSomObjektUngkodeverkdokumentDokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/KodeverdiSomObjektUngkodeverkdokumentDokumentMalType.js';
+import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/vedtaksbrev/VedtaksbrevValgResponse.js';
 import { Alert, BodyShort, Box, Button, Label, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
@@ -61,7 +59,7 @@ export const UngVedtak = ({
     isError: forhåndsvisningHasError,
     error: forhåndsvisningError,
   } = useMutation({
-    mutationFn: async (dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType) => {
+    mutationFn: async (dokumentMalType: KodeverdiSomObjektUngkodeverkdokumentDokumentMalType) => {
       const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);

@@ -1,7 +1,5 @@
-import {
-  ung_kodeverk_vilkår_VilkårType as VilkårMedPerioderDtoVilkarType,
-  type ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { VilkårType as VilkårMedPerioderDtoVilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Box, Heading, VStack } from '@navikt/ds-react';
 import { Aldersvilkår } from './Aldersvilkår';
 import { Ungdomsvilkår } from './Ungdomsvilkår';

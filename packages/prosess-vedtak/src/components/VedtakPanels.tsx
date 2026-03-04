@@ -7,17 +7,15 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-import {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
-  k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto,
-  k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
-  k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
-  k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingÅrsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingÅrsakDto.js';
+import type { DokumentMedUstrukturerteDataDto } from '@k9-sak-web/backend/k9sak/kontrakt/vedtak/DokumentMedUstrukturerteDataDto.js';
+import { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
+import { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
 import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
 import { VedtakSimuleringResultat } from '../types/VedtakSimuleringResultat';
@@ -30,9 +28,9 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 
 interface VedtakPanelsProps {
   aksjonspunkter: AksjonspunktDto[];
-  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
-  behandlingPåVent: k9_sak_kontrakt_behandling_BehandlingDto['behandlingPåVent'];
-  behandlingresultat: k9_sak_kontrakt_behandling_BehandlingDto['behandlingsresultat'];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOversiktDto['arbeidsgivere'];
+  behandlingPåVent: BehandlingDto['behandlingPåVent'];
+  behandlingresultat: BehandlingDto['behandlingsresultat'];
   behandlingStatus: string;
   behandlingTypeKode: string;
   behandlingÅrsaker?: BehandlingÅrsakDto[];

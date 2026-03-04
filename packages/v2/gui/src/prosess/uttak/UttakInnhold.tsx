@@ -1,6 +1,6 @@
 import { useEffect, useState, type JSX } from 'react';
 import { useUttakContext } from './context/UttakContext';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';

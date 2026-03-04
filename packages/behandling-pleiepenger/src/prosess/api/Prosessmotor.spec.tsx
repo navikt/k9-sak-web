@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
-  k9_kodeverk_vilkår_Utfall,
-  k9_kodeverk_vilkår_VilkårType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { FakeK9SakProsessApi } from '@k9-sak-web/gui/storybook/mocks/FakeK9SakProsessApi.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -62,10 +60,10 @@ describe('Prosessmotor', () => {
       const api = new FakeK9SakProsessApi({
         vilkår: [
           {
-            vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+            vilkarType: vilkarType.SØKNADSFRIST,
             perioder: [
               {
-                vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT,
+                vilkarStatus: vilkårStatus.OPPFYLT,
                 periode: { fom: '', tom: '' },
                 vurderesIBehandlingen: true,
               },
@@ -73,10 +71,10 @@ describe('Prosessmotor', () => {
             relevanteInnvilgetMerknader: [],
           },
           {
-            vilkarType: k9_kodeverk_vilkår_VilkårType.ALDERSVILKÅR,
+            vilkarType: vilkarType.ALDERSVILKÅR,
             perioder: [
               {
-                vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT,
+                vilkarStatus: vilkårStatus.OPPFYLT,
                 periode: { fom: '', tom: '' },
                 vurderesIBehandlingen: true,
               },
@@ -84,10 +82,10 @@ describe('Prosessmotor', () => {
             relevanteInnvilgetMerknader: [],
           },
           {
-            vilkarType: k9_kodeverk_vilkår_VilkårType.OMSORGEN_FOR,
+            vilkarType: vilkarType.OMSORGEN_FOR,
             perioder: [
               {
-                vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT,
+                vilkarStatus: vilkårStatus.OPPFYLT,
                 periode: { fom: '', tom: '' },
                 vurderesIBehandlingen: true,
               },
@@ -115,16 +113,16 @@ describe('Prosessmotor', () => {
       const api = new FakeK9SakProsessApi({
         vilkår: [
           {
-            vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
-            perioder: [{ vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: { fom: '', tom: '' } }],
+            vilkarType: vilkarType.SØKNADSFRIST,
+            perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
             relevanteInnvilgetMerknader: [],
           },
         ],
         aksjonspunkter: [
           {
             definisjon:
-              k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+              aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+            status: aksjonspunktStatus.OPPRETTET,
           },
         ],
       });
@@ -148,8 +146,8 @@ describe('Prosessmotor', () => {
         {
           uttaksplan: {
             perioder: {
-              '2024-01-01/2024-01-31': { utfall: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT },
-              '2024-02-01/2024-02-28': { utfall: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT },
+              '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
+              '2024-02-01/2024-02-28': { utfall: vilkårStatus.IKKE_OPPFYLT },
             },
           },
           simulertUttaksplan: {},
@@ -166,8 +164,8 @@ describe('Prosessmotor', () => {
         {
           uttaksplan: {
             perioder: {
-              '2024-01-01/2024-01-31': { utfall: k9_kodeverk_vilkår_Utfall.OPPFYLT },
-              '2024-02-01/2024-02-28': { utfall: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT },
+              '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT },
+              '2024-02-01/2024-02-28': { utfall: vilkårStatus.IKKE_OPPFYLT },
             },
           },
           simulertUttaksplan: {},
@@ -182,19 +180,19 @@ describe('Prosessmotor', () => {
       const result = beregnUttakType(
         [
           {
-            definisjon: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+            definisjon: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+            status: aksjonspunktStatus.OPPRETTET,
           },
         ],
         {
           uttaksplan: {
             perioder: {
-              '2024-01-01/2024-01-31': { utfall: k9_kodeverk_vilkår_Utfall.OPPFYLT },
+              '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT },
             },
           },
           simulertUttaksplan: {},
         },
-        [k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK],
+        [aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK],
       );
 
       expect(result).toBe(ProcessMenuStepType.warning);
@@ -225,19 +223,19 @@ describe('Prosessmotor', () => {
       const result = beregnUttakType(
         [
           {
-            definisjon: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT,
+            definisjon: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+            status: aksjonspunktStatus.UTFØRT,
           },
         ],
         {
           uttaksplan: {
             perioder: {
-              '2024-01-01/2024-01-31': { utfall: k9_kodeverk_vilkår_Utfall.OPPFYLT },
+              '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT },
             },
           },
           simulertUttaksplan: {},
         },
-        [k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK],
+        [aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK],
       );
 
       expect(result).toBe(ProcessMenuStepType.success);
@@ -263,8 +261,8 @@ describe('Prosessmotor', () => {
       const result = beregnSimuleringType(
         [
           {
-            definisjon: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
-            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+            definisjon: aksjonspunktCodes.VURDER_FEILUTBETALING,
+            status: aksjonspunktStatus.OPPRETTET,
           },
         ],
         {
@@ -272,7 +270,7 @@ describe('Prosessmotor', () => {
           simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
           slåttAvInntrekk: false,
         },
-        [k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_FEILUTBETALING],
+        [aksjonspunktCodes.VURDER_FEILUTBETALING],
       );
 
       expect(result).toBe(ProcessMenuStepType.warning);
@@ -294,8 +292,8 @@ describe('Prosessmotor', () => {
       const result = beregnSimuleringType(
         [
           {
-            definisjon: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
-            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+            definisjon: aksjonspunktCodes.SJEKK_HØY_ETTERBETALING,
+            status: aksjonspunktStatus.OPPRETTET,
           },
         ],
         {
@@ -303,7 +301,7 @@ describe('Prosessmotor', () => {
           simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
           slåttAvInntrekk: false,
         },
-        [k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING],
+        [aksjonspunktCodes.SJEKK_HØY_ETTERBETALING],
       );
 
       expect(result).toBe(ProcessMenuStepType.warning);
@@ -313,8 +311,8 @@ describe('Prosessmotor', () => {
       const result = beregnSimuleringType(
         [
           {
-            definisjon: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
-            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT,
+            definisjon: aksjonspunktCodes.VURDER_FEILUTBETALING,
+            status: aksjonspunktStatus.UTFØRT,
           },
         ],
         {
@@ -322,7 +320,7 @@ describe('Prosessmotor', () => {
           simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
           slåttAvInntrekk: false,
         },
-        [k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_FEILUTBETALING],
+        [aksjonspunktCodes.VURDER_FEILUTBETALING],
       );
 
       expect(result).toBe(ProcessMenuStepType.success);
@@ -510,13 +508,13 @@ describe('Prosessmotor', () => {
     test('beregnVedtakType returnerer success når alle vilkår er oppfylt', () => {
       const vilkår = [
         {
-          vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
-          perioder: [{ vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: { fom: '', tom: '' } }],
+          vilkarType: vilkarType.SØKNADSFRIST,
+          perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: k9_kodeverk_vilkår_VilkårType.ALDERSVILKÅR,
-          perioder: [{ vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: { fom: '', tom: '' } }],
+          vilkarType: vilkarType.ALDERSVILKÅR,
+          perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
       ];
@@ -530,8 +528,8 @@ describe('Prosessmotor', () => {
     test('beregnVedtakType returnerer danger når behandlingsresultat er avslag', () => {
       const vilkår = [
         {
-          vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
-          perioder: [{ vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT, periode: { fom: '', tom: '' } }],
+          vilkarType: vilkarType.SØKNADSFRIST,
+          perioder: [{ vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
       ];
@@ -545,8 +543,8 @@ describe('Prosessmotor', () => {
     test('beregnVedtakType returnerer default når behandlingsresultat mangler type', () => {
       const vilkår = [
         {
-          vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
-          perioder: [{ vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: { fom: '', tom: '' } }],
+          vilkarType: vilkarType.SØKNADSFRIST,
+          perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
       ];

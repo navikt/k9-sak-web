@@ -1,4 +1,4 @@
-import type { k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { VilkårStatus as VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 
 export type VilkårFieldType = {
   periode: {

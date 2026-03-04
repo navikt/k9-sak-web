@@ -1,7 +1,5 @@
-import type {
-  ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
-  ung_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårPeriodeDto.js';
 
 export type UngVedtakVilkårPeriodeDto = {
   avslagKode: VilkårPeriodeDto['avslagKode'];

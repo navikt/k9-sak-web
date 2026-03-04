@@ -1,9 +1,7 @@
-import {
-  k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type k9_sak_kontrakt_opptjening_OpptjeningerDto,
-  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type VilkårStatus as VilkårPeriodeDtoVilkarStatusType, vilkårStatus as VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { OpptjeningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/opptjening/OpptjeningerDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -19,9 +17,9 @@ import type { SubmitCallback } from './types/SubmitCallback';
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  opptjening: k9_sak_kontrakt_opptjening_OpptjeningerDto;
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
+  opptjening: OpptjeningerDto;
+  aksjonspunkter: AksjonspunktDto[];
+  vilkar: VilkårMedPerioderDto[];
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
@@ -30,7 +28,7 @@ interface OpptjeningVilkarProsessIndexProps {
   visAllePerioder: boolean;
 }
 
-const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus, isAksjonspunktOpen: boolean) => {
+const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatusType, isAksjonspunktOpen: boolean) => {
   if (isAksjonspunktOpen) {
     return <AksjonspunktIkon size="small" />;
   }

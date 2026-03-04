@@ -1,0 +1,3 @@
+import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+export type InstitusjonPeriodeDto = k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonPeriodeDto;

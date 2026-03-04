@@ -1,4 +1,4 @@
-import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { EtterlysningStatus } from '@k9-sak-web/backend/ungsak/kodeverk/varsel/EtterlysningStatus.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { MenyEndreFrist } from './MenyEndreFrist';
@@ -24,7 +24,7 @@ export const MenyEndreFristIndex = ({
     queryKey: ['etterlysninger', behandlingUuid],
     queryFn: () => api.hentEtterlysninger(behandlingUuid),
     select: etterlysninger =>
-      etterlysninger.filter(etterlysning => etterlysning.status === ung_kodeverk_varsel_EtterlysningStatus.VENTER),
+      etterlysninger.filter(etterlysning => etterlysning.status === EtterlysningStatus.VENTER),
   });
 
   const mutation = useMutation({

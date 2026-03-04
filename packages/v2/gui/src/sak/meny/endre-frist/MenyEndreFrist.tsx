@@ -1,4 +1,4 @@
-import type { ung_sak_kontrakt_etterlysning_Etterlysning } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { Etterlysning } from '@k9-sak-web/backend/ungsak/kontrakt/etterlysning/Etterlysning.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Alert, Box, Button, Heading, Modal, Select, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 
 interface MenyEndreFristProps {
-  etterlysninger: ung_sak_kontrakt_etterlysning_Etterlysning[];
+  etterlysninger: Etterlysning[];
   lukkModal: () => void;
   showSuccess?: boolean;
   endreFrister: (data: FormValues) => Promise<void>;

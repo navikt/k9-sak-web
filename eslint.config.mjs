@@ -94,7 +94,7 @@ const config = tseslint.config(
     ignores: ['packages/v2/backend/**'],
     rules: {
       'no-restricted-imports': [
-        'warn',
+        'error',
         {
           patterns: [
             {

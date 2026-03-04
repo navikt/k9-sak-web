@@ -8,12 +8,10 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { Label } from '@navikt/ds-react';
 
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
-import {
-  folketrygdloven_kalkulus_kodeverk_ArbeidsforholdHandlingType as HandlingType,
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-  type k9_sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
-  type k9_sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { HandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/beregning/HandlingType.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import type { TotrinnsArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/vedtak/TotrinnsArbeidsforholdDto.js';
+import type { TotrinnsBeregningDto } from '@k9-sak-web/backend/k9sak/kontrakt/vedtak/TotrinnsBeregningDto.js';
 import hash from 'object-hash';
 import React, { type JSX, type ReactNode } from 'react';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText.js';
