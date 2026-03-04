@@ -1,7 +1,7 @@
 import {
-  formidling_forhåndsvisKlageVedtaksbrev,
-  noNavK9Klage_getKlageVurdering,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+  forhåndsvisKlageVedtaksbrev,
+  getKlageVurdering,
+} from '@k9-sak-web/backend/ungsak/sdk.js';
 import type { VedtakKlageApi } from './VedtakKlageApi.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 
@@ -11,10 +11,10 @@ export default class UngVedtakKlageBackendClient implements VedtakKlageApi {
     if (behandling.id == null) {
       throw new Error(`Kan ikke forhåndsvise brev for behandling uten id.`);
     }
-    return (await formidling_forhåndsvisKlageVedtaksbrev({ body: { behandlingId: behandling.id } })).data;
+    return (await forhåndsvisKlageVedtaksbrev({ body: { behandlingId: behandling.id } })).data;
   }
 
   async getKlageVurdering(behandlingUuid: string) {
-    return (await noNavK9Klage_getKlageVurdering({ query: { behandlingUuid } })).data;
+    return (await getKlageVurdering({ query: { behandlingUuid } })).data;
   }
 }

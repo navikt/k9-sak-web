@@ -1,24 +1,22 @@
-import type {
-  ForhåndsvisInformasjonsbrevResponse,
-  ung_sak_kontrakt_formidling_informasjonsbrev_InformasjonsbrevBestillingRequest as InformasjonsbrevBestillingRequest,
-  InformasjonsbrevValgResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ForhåndsvisInformasjonsbrevResponse } from '@k9-sak-web/backend/ungsak/tjenester/ForhåndsvisInformasjonsbrevResponse.js';
+import type { InformasjonsbrevBestillingRequest } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/informasjonsbrev/InformasjonsbrevBestillingRequest.js';
+import type { InformasjonsbrevValgResponse } from '@k9-sak-web/backend/ungsak/tjenester/InformasjonsbrevValgResponse.js';
 import {
-  formidling_bestillInformasjonsbrev,
-  formidling_forhåndsvisInformasjonsbrev,
-  formidling_informasjonsbrevValg,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+  bestillInformasjonsbrev,
+  forhåndsvisInformasjonsbrev,
+  hentInformasjonsbrevValg,
+} from '@k9-sak-web/backend/ungsak/sdk.js';
 
 export default class UngMeldingerBackendClient {
   async hentMaler(behandlingId: number): Promise<InformasjonsbrevValgResponse> {
-    return (await formidling_informasjonsbrevValg({ query: { behandlingId: `${behandlingId}` } })).data;
+    return (await hentInformasjonsbrevValg({ query: { behandlingId: `${behandlingId}` } })).data;
   }
 
   async bestillBrev(data: InformasjonsbrevBestillingRequest): Promise<void> {
-    await formidling_bestillInformasjonsbrev({ body: data });
+    await bestillInformasjonsbrev({ body: data });
   }
 
   async forhåndsvisBrev(data: InformasjonsbrevBestillingRequest): Promise<ForhåndsvisInformasjonsbrevResponse> {
-    return (await formidling_forhåndsvisInformasjonsbrev({ body: data })).data;
+    return (await forhåndsvisInformasjonsbrev({ body: data })).data;
   }
 }

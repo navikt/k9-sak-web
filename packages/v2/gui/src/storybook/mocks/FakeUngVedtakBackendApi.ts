@@ -20,7 +20,7 @@ export class FakeUngVedtakBackendApi {
     return { 200: {} };
   }
 
-  async formidling_editor(): Promise<VedtaksbrevEditorResponse> {
+  async hentBrevEditor(): Promise<VedtaksbrevEditorResponse> {
     return {};
   }
 }

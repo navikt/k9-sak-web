@@ -9,10 +9,10 @@ import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeve
 import { AksjonspunktDefinisjon as UngTilbakeAksjonspunktDefinisjon } from '@k9-sak-web/backend/ungtilbake/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { UngTilbakeTotrinnskontrollAksjonspunkterDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import {
-  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
-  totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
-  aksjonspunkt_beslutt,
-} from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
+  hentTotrinnskontroll,
+  hentTotrinnskontrollvurdering,
+  besluttAksjonspunkt,
+} from '@k9-sak-web/backend/ungtilbake/sdk.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
 
@@ -73,7 +73,7 @@ export class UngTilbakeTotrinnskontrollBackendClient implements Totrinnskontroll
   }
 
   async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string) {
-    const data = (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({ query: { behandlingUuid } })).data;
+    const data = (await hentTotrinnskontroll({ query: { behandlingUuid } })).data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
     return new UngTilbakeTotrinnskontrollData(
       data as UngTilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
@@ -82,7 +82,7 @@ export class UngTilbakeTotrinnskontrollBackendClient implements Totrinnskontroll
   }
 
   async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string) {
-    const data = (await totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext({ query: { behandlingUuid } }))
+    const data = (await hentTotrinnskontrollvurdering({ query: { behandlingUuid } }))
       .data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
     return new UngTilbakeTotrinnskontrollData(
@@ -100,7 +100,7 @@ export class UngTilbakeTotrinnskontrollBackendClient implements Totrinnskontroll
       '@type': UngTilbakeAksjonspunktDefinisjon.FATTE_VEDTAK,
       aksjonspunktGodkjenningDtos,
     };
-    await aksjonspunkt_beslutt({
+    await besluttAksjonspunkt({
       body: {
         behandlingUuid,
         behandlingVersjon,

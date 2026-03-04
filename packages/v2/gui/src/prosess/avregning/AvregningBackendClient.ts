@@ -1,6 +1,6 @@
-import type { k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import { bekreftAksjonspunkt } from '@k9-sak-web/backend/k9sak/sdk.js';
+import { aksjonspunktCodes as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 export default class BehandlingAvregningBackendClient {
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
@@ -8,7 +8,7 @@ export default class BehandlingAvregningBackendClient {
     behandlingVersjon: number,
     begrunnelse: string,
   ): Promise<void> {
-    const body: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+    const body: BekreftedeAksjonspunkterDto = {
       behandlingId: `${behandlingId}`,
       behandlingVersjon,
       bekreftedeAksjonspunktDtoer: [
@@ -18,6 +18,6 @@ export default class BehandlingAvregningBackendClient {
         },
       ],
     };
-    await aksjonspunkt_bekreft({ body });
+    await bekreftAksjonspunkt({ body });
   }
 }

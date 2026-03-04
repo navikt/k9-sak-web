@@ -1,5 +1,5 @@
 import { type BestillBrevDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/dokument/BestillBrevDto.js';
-import { brev_bestillBrev, brev_forhåndsvisBrev, brev_hentMaler } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
+import { bestillBrev, forhåndsvisBrev, hentBrevmaler } from '@k9-sak-web/backend/k9tilbake/sdk.js';
 import type { TilbakeBestillBrevDto, TilbakeMeldingerApi } from './TilbakeMeldingerApi.js';
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
 
@@ -16,14 +16,14 @@ export class K9TilbakeMeldingerBackendClient implements TilbakeMeldingerApi {
   }
 
   async bestillDokument(bestilling: TilbakeBestillBrevDto): Promise<void> {
-    await brev_bestillBrev({ body: this.#adaptBestillBrevDto(bestilling) });
+    await bestillBrev({ body: this.#adaptBestillBrevDto(bestilling) });
   }
 
   async lagForhåndsvisningPdf(data: TilbakeBestillBrevDto): Promise<Blob> {
-    return (await brev_forhåndsvisBrev({ body: this.#adaptBestillBrevDto(data) })).data;
+    return (await forhåndsvisBrev({ body: this.#adaptBestillBrevDto(data) })).data;
   }
 
   async hentMaler(behandlingUuid: string): Promise<BrevmalDto[]> {
-    return (await brev_hentMaler({ query: { uuid: { behandlingUuid, behandlingId: '' } } })).data;
+    return (await hentBrevmaler({ query: { uuid: { behandlingUuid, behandlingId: '' } } })).data;
   }
 }

@@ -4,10 +4,10 @@ import type {
   TotrinnskontrollDataForAksjonspunkt,
 } from '../TotrinnskontrollApi.js';
 import {
-  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
-  totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
-  aksjonspunkt_bekreft,
-} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+  hentTotrinnskontroll,
+  hentTotrinnskontrollvurdering,
+  bekreftAksjonspunkt,
+} from '@k9-sak-web/backend/k9sak/sdk.js';
 import type { K9SakKodeverkoppslag } from '../../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
 import type { K9SakTotrinnskontrollAksjonspunkterDtoAdjusted as K9TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
@@ -69,7 +69,7 @@ export class K9SakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
   }
 
   async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
-    const data = (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({ query: { behandlingUuid } })).data;
+    const data = (await hentTotrinnskontroll({ query: { behandlingUuid } })).data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
     return new K9SakTotrinnskontrollData(
       data as K9SakTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
@@ -78,7 +78,7 @@ export class K9SakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
   }
 
   async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
-    const data = (await totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext({ query: { behandlingUuid } }))
+    const data = (await hentTotrinnskontrollvurdering({ query: { behandlingUuid } }))
       .data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
     return new K9SakTotrinnskontrollData(
@@ -96,7 +96,7 @@ export class K9SakTotrinnskontrollBackendClient implements TotrinnskontrollApi {
       '@type': AksjonspunktDefinisjon.FATTER_VEDTAK,
       aksjonspunktGodkjenningDtos,
     };
-    await aksjonspunkt_bekreft({
+    await bekreftAksjonspunkt({
       body: {
         behandlingId: behandlingUuid,
         behandlingVersjon,

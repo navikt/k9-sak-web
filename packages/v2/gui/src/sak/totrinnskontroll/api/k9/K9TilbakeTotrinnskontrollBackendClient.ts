@@ -4,10 +4,10 @@ import type {
   TotrinnskontrollDataForAksjonspunkt,
 } from '../TotrinnskontrollApi.ts';
 import {
-  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
-  totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext,
-  aksjonspunkt_beslutt,
-} from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
+  hentTotrinnskontroll,
+  hentTotrinnskontrollvurdering,
+  besluttAksjonspunkt,
+} from '@k9-sak-web/backend/k9tilbake/sdk.js';
 import {
   type K9TilbakeTotrinnskontrollSkjermlenkeContextDtoAdjusted,
   mapToK9TilbakeTotrinnskontrollSkjermlenkeContextDtoAjusted,
@@ -102,7 +102,7 @@ export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollA
   }
 
   async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
-    const resp = await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({
+    const resp = await hentTotrinnskontroll({
       query: {
         uuid: {
           behandlingUuid,
@@ -117,7 +117,7 @@ export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollA
   }
 
   async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
-    const resp = await totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext({
+    const resp = await hentTotrinnskontrollvurdering({
       query: {
         uuid: {
           behandlingUuid,
@@ -140,7 +140,7 @@ export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollA
       '@type': K9TilbakeAksjonspunktDefinisjon.FATTE_VEDTAK,
       aksjonspunktGodkjenningDtos,
     };
-    await aksjonspunkt_beslutt({
+    await besluttAksjonspunkt({
       body: {
         behandlingUuid: { behandlingId: behandlingUuid, behandlingUuid },
         behandlingVersjon,

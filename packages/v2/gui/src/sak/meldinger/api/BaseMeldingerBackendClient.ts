@@ -1,7 +1,7 @@
 import type { LagForhåndsvisningRequest, MessagesApi } from './MessagesApi.js';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/combined/kontrakt/dokument/BestillBrevDto.js';
-import { brev_getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import { getBrevMottakerinfoEreg } from '@k9-sak-web/backend/k9sak/sdk.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
@@ -43,7 +43,7 @@ export abstract class BaseMeldingerBackendClient implements MessagesApi {
     }
     try {
       const resp = (
-        await brev_getBrevMottakerinfoEreg({
+        await getBrevMottakerinfoEreg({
           body: { organisasjonsnr: organisasjonsnr.trim() },
           signal: abort,
         })

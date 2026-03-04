@@ -1,12 +1,10 @@
-import type {
-  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadType,
-  GetMerknadResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { los_deleteMerknad, los_getMerknad, los_postMerknad } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import type { BehandlingMerknadKode as BehandlingMerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/BehandlingMerknadKode.js';
+import type { GetMerknadResponse } from '@k9-sak-web/backend/k9sak/tjenester/GetMerknadResponse.js';
+import { slettMerknad, getMerknad, opprettMerknad } from '@k9-sak-web/backend/k9sak/sdk.js';
 
 export default class MarkerBehandlingBackendClient {
   async getMerknader(behandlingUuid: string): Promise<GetMerknadResponse> {
-    return (await los_getMerknad({ query: { behandlingUuid } })).data;
+    return (await getMerknad({ query: { behandlingUuid } })).data;
   }
 
   async markerBehandling({
@@ -18,7 +16,7 @@ export default class MarkerBehandlingBackendClient {
     fritekst: string;
     merknadKode: BehandlingMerknadType;
   }): Promise<void> {
-    await los_postMerknad({
+    await opprettMerknad({
       body: {
         behandlingUuid,
         fritekst,
@@ -34,7 +32,7 @@ export default class MarkerBehandlingBackendClient {
     behandlingUuid: string;
     merknadKode: BehandlingMerknadType;
   }): Promise<void> {
-    await los_deleteMerknad({
+    await slettMerknad({
       body: {
         behandlingUuid,
         merknadKode,

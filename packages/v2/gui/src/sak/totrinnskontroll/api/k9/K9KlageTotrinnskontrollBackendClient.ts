@@ -4,11 +4,11 @@ import type {
   TotrinnskontrollDataForAksjonspunkt,
 } from '../TotrinnskontrollApi.js';
 import {
-  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext1,
-  totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext1,
-  noNavK9Klage_getKlageVurdering,
-  aksjonspunkt_bekreft,
-} from '@k9-sak-web/backend/k9klage/generated/sdk.js';
+  hentTotrinnskontroll,
+  hentTotrinnskontrollvurdering,
+  getKlageVurdering,
+  bekreftAksjonspunkt,
+} from '@k9-sak-web/backend/k9klage/sdk.js';
 import type { K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { K9KlageKodeverkoppslag } from '../../../../kodeverk/oppslag/K9KlageKodeverkoppslag.js';
@@ -72,7 +72,7 @@ export class K9KlageTotrinnskontrollBackendClient implements TotrinnskontrollApi
   }
 
   async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
-    const data = (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext1({ query: { behandlingUuid } })).data;
+    const data = (await hentTotrinnskontroll({ query: { behandlingUuid } })).data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
     return new K9KlageTotrinnskontrollData(
       data as K9KlageTotrinnskontrollSkjermlenkeContextDtoAdjusted[],
@@ -82,7 +82,7 @@ export class K9KlageTotrinnskontrollBackendClient implements TotrinnskontrollApi
 
   async hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
     const data = (
-      await totrinnskontroll_hentTotrinnskontrollvurderingSkjermlenkeContext1({ query: { behandlingUuid } })
+      await hentTotrinnskontrollvurdering({ query: { behandlingUuid } })
     ).data;
     // TODO Fjern cast når backend er oppdatert slik at generert type stemmer med forventa
     return new K9KlageTotrinnskontrollData(
@@ -92,7 +92,7 @@ export class K9KlageTotrinnskontrollBackendClient implements TotrinnskontrollApi
   }
 
   async hentTotrinnsKlageVurdering(behandlingUuid: string) {
-    return (await noNavK9Klage_getKlageVurdering({ query: { behandlingUuid } })).data;
+    return (await getKlageVurdering({ query: { behandlingUuid } })).data;
   }
 
   async bekreft(
@@ -104,7 +104,7 @@ export class K9KlageTotrinnskontrollBackendClient implements TotrinnskontrollApi
       '@type': AksjonspunktDefinisjon.FATTER_VEDTAK,
       aksjonspunktGodkjenningDtos,
     };
-    await aksjonspunkt_bekreft({
+    await bekreftAksjonspunkt({
       body: {
         behandlingId: { behandlingId: behandlingUuid },
         behandlingVersjon,

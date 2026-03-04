@@ -1,30 +1,26 @@
-import {
-  k9_kodeverk_notat_NotatGjelderType,
-  type EndreResponse as K9EndreResponse,
-  type HentResponse as K9HentResponse,
-  type OpprettResponse as K9OpprettResponse,
-  type SkjulResponse as K9SkjulResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  ung_kodeverk_notat_NotatGjelderType,
-  type EndreResponse as UngEndreResponse,
-  type HentResponse as UngHentResponse,
-  type OpprettResponse as UngOpprettResponse,
-  type SkjulResponse as UngSkjulResponse,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/kodeverk/notat/OpprettNotatDtoNotatGjelderType.js';
+import type { K9EndreResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9EndreResponse.js';
+import type { K9HentResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9HentResponse.js';
+import type { K9OpprettResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9OpprettResponse.js';
+import type { K9SkjulResponse } from '@k9-sak-web/backend/k9sak/tjenester/K9SkjulResponse.js';
+import { NotatGjelderType } from '@k9-sak-web/backend/ungsak/kodeverk/notat/NotatGjelderType.js';
+import type { UngEndreResponse } from '@k9-sak-web/backend/ungsak/tjenester/UngEndreResponse.js';
+import type { UngHentResponse } from '@k9-sak-web/backend/ungsak/tjenester/UngHentResponse.js';
+import type { UngOpprettResponse } from '@k9-sak-web/backend/ungsak/tjenester/UngOpprettResponse.js';
+import type { UngSkjulResponse } from '@k9-sak-web/backend/ungsak/tjenester/UngSkjulResponse.js';
 import type { FormState } from './types/FormState';
 import {
-  notat_hent as k9sak_notat_hent,
-  notat_opprett as k9sak_notat_opprett,
-  notat_endre as k9sak_notat_endre,
-  notat_skjul as k9sak_notat_skjul,
-} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+  hentNotater as k9sak_notat_hent,
+  opprettNotat as k9sak_notat_opprett,
+  endreNotat as k9sak_notat_endre,
+  skjulNotat as k9sak_notat_skjul,
+} from '@k9-sak-web/backend/k9sak/sdk.js';
 import {
-  notat_hent as ungsak_notat_hent,
-  notat_opprett as ungsak_notat_opprett,
-  notat_endre as ungsak_notat_endre,
-  notat_skjul as ungsak_notat_skjul,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+  hentNotater as ungsak_notat_hent,
+  opprettNotat as ungsak_notat_opprett,
+  endreNotat as ungsak_notat_endre,
+  skjulNotat as ungsak_notat_skjul,
+} from '@k9-sak-web/backend/ungsak/sdk.js';
 import { k9SakOrUngSak, type K9SakOrUngSak } from '../../utils/multibackend.js';
 
 type HentResponse = K9HentResponse | UngHentResponse;
@@ -50,7 +46,7 @@ export default class NotatBackendClient {
       return (
         await ungsak_notat_opprett({
           body: {
-            notatGjelderType: ung_kodeverk_notat_NotatGjelderType.FAGSAK,
+            notatGjelderType: NotatGjelderType.FAGSAK,
             notatTekst: data.notatTekst,
             saksnummer: fagsakId,
           },
@@ -59,8 +55,8 @@ export default class NotatBackendClient {
     }
 
     const notatGjelderType = data.visNotatIAlleSaker
-      ? k9_kodeverk_notat_NotatGjelderType.PLEIETRENGENDE
-      : k9_kodeverk_notat_NotatGjelderType.FAGSAK;
+      ? OpprettNotatDtoNotatGjelderType.PLEIETRENGENDE
+      : OpprettNotatDtoNotatGjelderType.FAGSAK;
     return (
       await k9sak_notat_opprett({ body: { notatGjelderType, notatTekst: data.notatTekst, saksnummer: fagsakId } })
     ).data;

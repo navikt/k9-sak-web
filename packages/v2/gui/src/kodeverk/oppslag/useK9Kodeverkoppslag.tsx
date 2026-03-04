@@ -1,11 +1,11 @@
 import { K9SakKodeverkoppslag } from './K9SakKodeverkoppslag.js';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { FailingK9KlageKodeverkoppslag, K9KlageKodeverkoppslag } from './K9KlageKodeverkoppslag.js';
-import { kodeverk_alleKodeverdierSomObjekt as k9klage_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9klage/generated/sdk.js';
-import { kodeverk_alleKodeverdierSomObjekt as k9sak_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import { kodeverk_alleKodeverdierSomObjekt as k9tilbake_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
-import type { foreldrepenger_tilbakekreving_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse as k9tilbakeKodeverkResponse } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
-import type { k9_klage_web_app_tjenester_kodeverk_dto_AlleKodeverdierSomObjektResponse as k9klageKodeverkResponse } from '@k9-sak-web/backend/k9klage/generated/types.js';
+import { hentKodeverk as k9klage_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9klage/sdk.js';
+import { hentKodeverk as k9sak_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9sak/sdk.js';
+import { hentKodeverk as k9tilbake_kodeverk_alleKodeverdierSomObjekt } from '@k9-sak-web/backend/k9tilbake/sdk.js';
+import type { k9tilbakeKodeverkResponse } from '@k9-sak-web/backend/k9tilbake/tjenester/kodeverk/k9tilbakeKodeverkResponse.js';
+import type { k9klageKodeverkResponse } from '@k9-sak-web/backend/k9klage/tjenester/kodeverk/dto/k9klageKodeverkResponse.js';
 import { FailingK9TilbakeKodeverkoppslag, K9TilbakeKodeverkoppslag } from './K9TilbakeKodeverkoppslag.js';
 
 export interface K9Kodeverkoppslag {

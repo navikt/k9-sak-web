@@ -1,7 +1,7 @@
 import { type BestillBrevDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/BestillBrevDto.js';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import { avsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
-import { brev_bestillDokument } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import { bestillDokument } from '@k9-sak-web/backend/k9sak/sdk.js';
 import type { MessagesApi } from './MessagesApi.js';
 import { BaseMeldingerBackendClient } from './BaseMeldingerBackendClient.js';
 
@@ -13,6 +13,6 @@ export default class K9SakMeldingerBackendClient extends BaseMeldingerBackendCli
   }
 
   async bestillDokument(bestilling: BestillBrevDto): Promise<void> {
-    await brev_bestillDokument({ body: bestilling });
+    await bestillDokument({ body: bestilling });
   }
 }

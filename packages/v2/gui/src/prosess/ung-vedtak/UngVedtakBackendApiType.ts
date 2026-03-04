@@ -13,7 +13,7 @@ export type UngVedtakBackendApiType = {
   ): Promise<ForhåndsvisVedtaksbrevResponse>;
   vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse>;
   lagreVedtaksbrev(data: VedtaksbrevValgRequest): Promise<unknown>;
-  formidling_editor(
+  hentBrevEditor(
     behandlingId: string,
     dokumentMalType: DokumentMalType,
   ): Promise<VedtaksbrevEditorResponse>;

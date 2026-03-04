@@ -1,11 +1,11 @@
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import {
-  formidling_forhåndsvisKlageVedtaksbrev,
-  noNavK9Klage_getKlageVurdering,
-  noNavK9Klage_hentValgbareKlagehjemler,
-  noNavK9Klage_mellomlagreKlage,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import type { ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+  forhåndsvisKlageVedtaksbrev,
+  getKlageVurdering,
+  hentValgbareKlagehjemler,
+  mellomlagreKlage,
+} from '@k9-sak-web/backend/ungsak/sdk.js';
+import type { MellomlagringDto as MellomlagringDataDto } from '@k9-sak-web/backend/ungsak/kontrakt/mellomlagring/MellomlagringDto.js';
 import type { KlageVurderingApi } from './KlageVurderingApi.js';
 
 export default class UngKlageVurderingBackendClient implements KlageVurderingApi {
@@ -15,20 +15,20 @@ export default class UngKlageVurderingBackendClient implements KlageVurderingApi
     if (behandling.id == null) {
       throw new Error(`Kan ikke forhåndsvise brev for behandling uten id.`);
     }
-    return (await formidling_forhåndsvisKlageVedtaksbrev({ body: { behandlingId: behandling.id } })).data;
+    return (await forhåndsvisKlageVedtaksbrev({ body: { behandlingId: behandling.id } })).data;
   }
 
   async getKlageVurdering(behandlingUuid: string) {
-    return (await noNavK9Klage_getKlageVurdering({ query: { behandlingUuid } })).data;
+    return (await getKlageVurdering({ query: { behandlingUuid } })).data;
   }
 
   async mellomlagreKlage(data: MellomlagringDataDto) {
-    await noNavK9Klage_mellomlagreKlage({
+    await mellomlagreKlage({
       body: data,
     });
   }
 
   async hentValgbareKlagehjemlerForUng() {
-    return (await noNavK9Klage_hentValgbareKlagehjemler()).data;
+    return (await hentValgbareKlagehjemler()).data;
   }
 }

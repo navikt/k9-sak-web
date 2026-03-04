@@ -66,7 +66,7 @@ export const FritekstBrevpanel = ({
     queryKey: ['fritekstEditorData', behandlingId, vedtaksbrevValg?.dokumentMalType],
     queryFn: async () => {
       if (vedtaksbrevValg?.dokumentMalType) {
-        const response = await api.formidling_editor(`${behandlingId}`, vedtaksbrevValg.dokumentMalType.kilde);
+        const response = await api.hentBrevEditor(`${behandlingId}`, vedtaksbrevValg.dokumentMalType.kilde);
         return response;
       }
       return {};
