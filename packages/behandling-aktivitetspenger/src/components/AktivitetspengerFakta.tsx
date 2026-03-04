@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak } from '@k9-sak-web/types';
@@ -19,8 +18,6 @@ import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { TestFaktaPanel } from './fakta/TestFaktaPanel';
 import { TestFaktaPanel2 } from './fakta/TestFaktaPanel2';
 import { useFaktamotor } from './Faktamotor';
-
-const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -60,63 +57,6 @@ export const AktivitetspengerFakta = ({
     onSuccess: () => pollTilBehandlingErKlar(),
   });
 
-  // const dataTilUtledingAvPleiepengerPaneler = {
-  //   fagsak,
-  //   fagsakPerson,
-  //   behandling,
-  //   hasFetchError,
-  //   arbeidsgiverOpplysningerPerId,
-  //   ...rest,
-  // };
-
-  // const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
-  //   faktaPanelDefinisjoner,
-  //   dataTilUtledingAvPleiepengerPaneler,
-  //   behandling,
-  //   rettigheter,
-  //   aksjonspunkter,
-  //   valgtFaktaSteg,
-  //   featureToggles,
-  // );
-
-  // faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon, featureToggles);
-
-  // const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
-  //   faktaPaneler,
-  //   fagsak,
-  //   behandling,
-  //   oppdaterProsessStegOgFaktaPanelIUrl,
-  //   valgtProsessSteg,
-  //   overstyringApCodes,
-  //   lagreAksjonspunkter,
-  //   lagreOverstyrteAksjonspunkter,
-  // );
-
-  // const endepunkter = valgtPanel
-  //   ? valgtPanel
-  //       .getPanelDef()
-  //       .getEndepunkter()
-  //       .map(e => ({ key: e }))
-  //   : [];
-  // const endepunkterUtenCaching = valgtPanel
-  //   ? valgtPanel
-  //       .getPanelDef()
-  //       .getEndepunkterUtenCaching()
-  //       .map(e => ({ key: e }))
-  //   : [];
-  // TODO FetchedData er feil type her
-  // const { data: faktaData, state } = restApiPleiepengerHooks.useMultipleRestApi<FetchedData>(endepunkter, {
-  //   updateTriggers: [behandling.versjon, valgtPanel],
-  //   suspendRequest: !valgtPanel,
-  //   isCachingOn: true,
-  // });
-
-  // const { data: faktaDataUtenCaching, state: stateForEndepunkterUtenCaching } =
-  //   restApiPleiepengerHooks.useMultipleRestApi<FetchedData>(endepunkterUtenCaching, {
-  //     updateTriggers: [behandling.versjon, valgtPanel],
-  //     suspendRequest: !valgtPanel,
-  //   });
-
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
     behandling,
@@ -133,36 +73,9 @@ export const AktivitetspengerFakta = ({
     }
   }, [behandling.versjon, formData]);
 
-  // if (sidemenyPaneler.length > 0) {
-  //   const isLoading =
-  //     state === RestApiState.NOT_STARTED ||
-  //     state === RestApiState.LOADING ||
-  //     stateForEndepunkterUtenCaching === RestApiState.NOT_STARTED ||
-  //     stateForEndepunkterUtenCaching === RestApiState.LOADING;
   return (
     <FaktaMeny paneler={faktapaneler}>
       <ErrorBoundary errorMessageCallback={addErrorMessage}>
-        {/* {valgtPanel && isLoading && <LoadingPanel />} */}
-        {/* {valgtPanel && !isLoading && (
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              behandling,
-              alleKodeverk,
-              featureToggles,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(
-                rettigheter,
-                dataTilUtledingAvPleiepengerPaneler,
-                hasFetchError,
-                featureToggles,
-              ),
-              dokumenter,
-              beregningErBehandlet,
-              formData,
-              setFormData,
-            })}
-          )} */}
         {faktapaneler.map(panel => {
           const urlKode = panel.urlKode;
           if (urlKode === faktaPanelCodes.MEDLEMSKAPSVILKARET) {
@@ -176,5 +89,4 @@ export const AktivitetspengerFakta = ({
       </ErrorBoundary>
     </FaktaMeny>
   );
-  // }
 };

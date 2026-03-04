@@ -19,7 +19,6 @@ interface OwnProps {
   fagsak: Fagsak;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: { [key: string]: (params: any) => Promise<any> }) => void;

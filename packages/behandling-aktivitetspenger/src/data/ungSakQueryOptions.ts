@@ -28,15 +28,3 @@ export const behandlingQueryOptions = (api: UngSakApi, behandling: Pick<Behandli
     queryKey: ['behandling', behandling.uuid, behandling.versjon],
     queryFn: () => api.getBehandling(behandling.uuid),
   });
-
-export const fagsakQueryOptions = (api: UngSakApi, saksnummer: string, behandling: Behandling) =>
-  queryOptions({
-    queryKey: ['fagsak', saksnummer, behandling.versjon],
-    queryFn: () => api.getFagsak(saksnummer),
-  });
-
-export const personopplysningerQueryOptions = (api: UngSakApi, behandling: Behandling) =>
-  queryOptions({
-    queryKey: ['personopplysninger', behandling.uuid, behandling.versjon],
-    queryFn: () => api.getPersonopplysninger(behandling.uuid),
-  });

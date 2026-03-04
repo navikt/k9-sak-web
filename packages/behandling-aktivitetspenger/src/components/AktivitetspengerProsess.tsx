@@ -12,7 +12,7 @@ import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { FatterVedtakStatusModal } from '@k9-sak-web/gui/shared/fatterVedtakStatusModal/FatterVedtakStatusModal.js';
 import { IverksetterVedtakStatusModal } from '@k9-sak-web/gui/shared/iverksetterVedtakStatusModal/IverksetterVedtakStatusModal.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 import { Box } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
@@ -68,12 +68,6 @@ export const AktivitetspengerProsess = ({
     onSuccess: () => pollTilBehandlingErKlar(),
   });
 
-  const { startRequest: forhandsvisMelding } = restApiUngdomsytelseHooks.useRestApiRunner(
-    UngdomsytelseBehandlingApiKeys.PREVIEW_MESSAGE,
-  );
-  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
-    UngdomsytelseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-  );
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
