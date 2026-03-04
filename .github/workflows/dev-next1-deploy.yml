@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - dev-next1
+      - aktivitetspenger
 
 jobs:
   build-deploy:
@@ -28,7 +28,7 @@ jobs:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
-        run: yarn build
+        run: yarn build:ung
 
       - name: Build and push to docker registry
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
