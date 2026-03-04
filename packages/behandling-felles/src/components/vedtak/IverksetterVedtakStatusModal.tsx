@@ -9,7 +9,7 @@ interface OwnProps {
   lukkModal: () => void;
   visModal: boolean;
   behandlingsresultat?: {
-    type: Kodeverk;
+    type: Kodeverk | string;
   };
 }
 
@@ -20,7 +20,9 @@ interface OwnProps {
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
 const IverksetterVedtakStatusModal = ({ lukkModal, visModal, behandlingsresultat }: OwnProps) => {
-  const erVedtakAvslatt = behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
+  const behandlingResultatTypeKode =
+    typeof behandlingsresultat?.type === 'string' ? behandlingsresultat.type : behandlingsresultat?.type.kode;
+  const erVedtakAvslatt = behandlingResultatTypeKode === behandlingResultatType.AVSLATT;
   const imageAltText = erVedtakAvslatt ? 'Avslått' : 'Innvilget';
 
   return (
