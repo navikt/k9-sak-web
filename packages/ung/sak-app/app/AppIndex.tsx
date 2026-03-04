@@ -8,7 +8,6 @@ import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
 import AppConfigResolver from './AppConfigResolver';
-import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
@@ -66,17 +65,15 @@ const AppIndex = () => {
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
         <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-          <LanguageProvider>
-            <Dekorator
-              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-              queryStrings={queryStrings}
-              setSiteHeight={setSiteHeight}
-              pathname={location.pathname}
-            />
-            {shouldRenderHome && <Home headerHeight={headerHeight} />}
-            {forbiddenErrors.length > 0 && <ForbiddenPage />}
-            {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
-          </LanguageProvider>
+          <Dekorator
+            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+            queryStrings={queryStrings}
+            setSiteHeight={setSiteHeight}
+            pathname={location.pathname}
+          />
+          {shouldRenderHome && <Home headerHeight={headerHeight} />}
+          {forbiddenErrors.length > 0 && <ForbiddenPage />}
+          {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
         </ErrorBoundary>
       </AppConfigResolver>
     </RootSuspense>

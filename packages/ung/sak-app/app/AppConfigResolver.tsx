@@ -16,6 +16,8 @@ import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { IntlProvider } from 'react-intl';
+import { globalMessages } from '@k9-sak-web/behandling-felles';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -41,32 +43,28 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.NAV_ANSATT, NO_PARAMS, options);
 
-  const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.LANGUAGE_FILE, NO_PARAMS);
-
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
   const ungKodeverkOppslag = useUngKodeverkoppslag(tilbakeAktivert);
 
-  const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
+  const harFeilet = harK9sakInitKallFeilet;
 
-  const erFerdig =
-    harHentetFerdigInitLenker &&
-    harHentetFerdigKodeverk &&
-    navAnsattState === RestApiState.SUCCESS &&
-    sprakFilState === RestApiState.SUCCESS;
+  const erFerdig = harHentetFerdigInitLenker && harHentetFerdigKodeverk && navAnsattState === RestApiState.SUCCESS;
 
   return (
-    <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-      <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-        <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
-          <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
-            {harFeilet || erFerdig ? children : <LoadingPanel />}
-          </InnloggetAnsattProvider>
-        </VedtakKlageApiContext>
-      </KlageVurderingApiContext>
-    </UngKodeverkoppslagContext>
+    <IntlProvider locale="nb" messages={globalMessages}>
+      <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
+        <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+            <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
+              {harFeilet || erFerdig ? children : <LoadingPanel />}
+            </InnloggetAnsattProvider>
+          </VedtakKlageApiContext>
+        </KlageVurderingApiContext>
+      </UngKodeverkoppslagContext>
+    </IntlProvider>
   );
 };
 

@@ -181,8 +181,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   /**
    * Genererer en liste med årssluttdatoer for tidsbegrensede perioder basert på barnets alder.
    *
-   * Dersom barnets fødselsdato ikke er tilgjengelig, returneres en standard liste med 17 årssluttdatoer
-   * som starter fra neste år.
+   * Dersom barnets fødselsdato ikke er tilgjengelig, returneres en standard liste med 18 årssluttdatoer
+   * som starter fra inneværende år.
    *
    * Dersom barnet fyller 17 år i inneværende år, returneres kun 31.12 dette året.
    * Ellers beregnes datoer frem til året før barnet fyller 18 år.
@@ -191,15 +191,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
    * 31. desember for hvert år i den tidsbegrensede perioden.
    */
   const hentTidsbegrensetÅrstallListe = (): string[] => {
-    const nesteÅr = dayjs().year() + 1;
+    const inneværendeÅr = dayjs().year();
     const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
 
     if (!fødselsdato) {
-      return Array.from({ length: 17 }, (_, index) => `${nesteÅr + index}-12-31`);
+      return Array.from({ length: 18 }, (_, index) => `${inneværendeÅr + index}-12-31`);
     }
 
     const født = dayjs(fødselsdato);
-    const inneværendeÅr = dayjs().year();
     const åretBarnetFyller17 = født.year() + 17;
     const åretBarnetFyller18 = født.year() + 18;
 
@@ -208,9 +207,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       return [`${inneværendeÅr}-12-31`];
     }
 
-    // Ellers beregn fra neste år til året før barnet fyller 18
-    const antallÅr = Math.max(1, åretBarnetFyller18 - nesteÅr);
-    return Array.from({ length: antallÅr }, (_, index) => `${nesteÅr + index}-12-31`);
+    // Beregn fra inneværende år til året før barnet fyller 18
+    const antallÅr = Math.max(1, åretBarnetFyller18 - inneværendeÅr);
+    return Array.from({ length: antallÅr }, (_, index) => `${inneværendeÅr + index}-12-31`);
   };
 
   return (

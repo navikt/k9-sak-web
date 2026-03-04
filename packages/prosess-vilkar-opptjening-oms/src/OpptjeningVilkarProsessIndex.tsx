@@ -2,8 +2,8 @@ import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+
+import { Aksjonspunkt, Behandling, Fagsak, Opptjening, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
@@ -12,6 +12,7 @@ import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 import styles from './opptjeningVilkarProsessIndex.module.css';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 
 const cx = classNames.bind(styles);
 
@@ -26,8 +27,8 @@ const intl = createIntl(
 );
 
 interface OpptjeningVilkarProsessIndexProps {
-  fagsak: Fagsak;
-  behandling: OpptjeningBehandling;
+  fagsak: Pick<Fagsak, 'sakstype'>;
+  behandling: Pick<Behandling, 'id' | 'versjon' | 'behandlingsresultat'>;
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
@@ -68,7 +69,7 @@ const OpptjeningVilkarProsessIndex = ({
   }
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
   const getIndexBlantAllePerioder = () =>
-    activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
+    activeVilkår.perioder?.findIndex(({ periode }) => isEqual(periode, activePeriode.periode)) ?? 0;
 
   return (
     <RawIntlProvider value={intl}>

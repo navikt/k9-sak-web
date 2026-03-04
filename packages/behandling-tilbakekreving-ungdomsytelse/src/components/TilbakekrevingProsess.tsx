@@ -11,7 +11,6 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
@@ -88,8 +87,7 @@ const TilbakekrevingProsess = ({
   opneSokeside,
   harApenRevurdering,
   setBehandling,
-  intl,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,
@@ -158,8 +156,8 @@ const TilbakekrevingProsess = ({
     <>
       {visApenRevurderingModal && (
         <AdvarselModal
-          headerText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurderingHeader' })}
-          bodyText={intl.formatMessage({ id: 'BehandlingTilbakekrevingIndex.ApenRevurdering' })}
+          headerText="Åpen revurdering"
+          bodyText="Det finnes en åpen revurdering som kan påvirke denne tilbakekrevingsbehandlingen. Vurder konsekvens ved behandling."
           showModal
           submit={lukkApenRevurderingModal}
         />
@@ -191,4 +189,4 @@ const TilbakekrevingProsess = ({
   );
 };
 
-export default injectIntl(TilbakekrevingProsess);
+export default TilbakekrevingProsess;

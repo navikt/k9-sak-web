@@ -26,8 +26,7 @@ export const SykdomUperiodisertContext = createContext<{
 });
 
 interface SykdomVurderingselement
-  extends Vurderingselement,
-    k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
+  extends Vurderingselement, k9_sak_kontrakt_opplæringspenger_langvarigsykdom_LangvarigSykdomVurderingDto {
   id: string;
 }
 

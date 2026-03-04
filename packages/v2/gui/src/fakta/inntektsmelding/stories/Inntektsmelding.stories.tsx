@@ -15,6 +15,8 @@ import ferdigvisning, {
 import { withFakeInntektsmeldingApi } from '../mock/withFakeInntektsmeldingApi.js';
 import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/InntektsmeldingIndex.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 const createProps = (
   behandlingUuid: string,
@@ -36,6 +38,13 @@ const createProps = (
 const meta: Meta<typeof InntektsmeldingIndex> = {
   title: 'gui/fakta/inntektsmelding',
   component: InntektsmeldingIndex,
+  decorators: [
+    Story => (
+      <FeatureTogglesContext value={qFeatureToggles}>
+        <Story />
+      </FeatureTogglesContext>
+    ),
+  ],
 };
 
 export default meta;
