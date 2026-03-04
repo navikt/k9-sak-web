@@ -4,7 +4,6 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
-import { AktivitetspengerFakta } from './components/AktivitetspengerFakta';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
 import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
 import {
@@ -105,13 +104,6 @@ const BehandlingAktivitetspengerIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
-        setBehandling={setBehandling}
-      />
-      <AktivitetspengerFakta
-        api={ungSakProsessApi}
-        behandling={behandling}
-        fagsak={fagsak}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         setBehandling={setBehandling}
       />
     </>

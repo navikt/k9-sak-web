@@ -196,7 +196,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER) {
+  if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
