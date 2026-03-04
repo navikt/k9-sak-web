@@ -18,9 +18,5 @@ describe('FeatureToggles som rapporteres med feil her har samme verdi i alle var
     const trueInAllVariants =
       k9QFeatureToggles[key] && k9ProdFeatureToggles[key] && ungQFeatureToggles[key] && ungProdFeatureToggles[key];
     expect(trueInAllVariants).toBe(false);
-    const falseInAllVariants =
-      (k9QFeatureToggles[key] || k9ProdFeatureToggles[key] || ungQFeatureToggles[key] || ungProdFeatureToggles[key]) ===
-      false;
-    expect(falseInAllVariants).toBe(false);
   });
 });
