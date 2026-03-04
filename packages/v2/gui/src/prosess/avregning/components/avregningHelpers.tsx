@@ -3,7 +3,7 @@ import { Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import styles from './avregningTable.module.css';
 import { formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
-import type { SimuleringResultatPerMånedDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringResultatPerMånedDto.js';
+import type { SimuleringResultatPerMånedDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringResultatPerMånedDto.js';
 
 const classNames = classnames.bind(styles);
 

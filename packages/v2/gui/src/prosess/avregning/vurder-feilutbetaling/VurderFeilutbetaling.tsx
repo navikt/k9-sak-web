@@ -1,5 +1,4 @@
-import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
-import type { TilbakekrevingVidereBehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import { BodyShort, Button, HelpText, HGrid, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -11,7 +10,7 @@ import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext
 import ArrowBox from '../../../shared/arrowBox/ArrowBox';
 import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
@@ -23,7 +22,7 @@ import { useAvregningFormState } from '../../../context/AvregningContext.js';
 const OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
   `${TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING}IKKE_SEND` as const;
 export interface VurderFeilutbetalingFormValues {
-  videreBehandling: TilbakekrevingVidereBehandlingType | typeof OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL;
+  videreBehandling: TilbakekrevingVidereBehandling | typeof OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL;
   varseltekst: string;
   begrunnelse: string;
 }
@@ -53,7 +52,7 @@ const buildInitialValues = (
     !tilbakekrevingvalg.varseltekst &&
     tilbakekrevingvalg.videreBehandling === TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING;
 
-  const videreBehandling: TilbakekrevingVidereBehandlingType | typeof OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
+  const videreBehandling: TilbakekrevingVidereBehandling | typeof OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
     harTypeIkkeSendt
       ? OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL
       : (tilbakekrevingvalg.videreBehandling ?? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING);

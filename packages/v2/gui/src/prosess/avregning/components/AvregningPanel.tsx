@@ -6,14 +6,14 @@ import { useState } from 'react';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import type { SimuleringDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/simulering/v1/SimuleringDto.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringDto.js';
 import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9oppdrag/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { VurderFeilutbetaling } from '../vurder-feilutbetaling/VurderFeilutbetaling';
-import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 
 interface AvregningPanelProps {
   simuleringResultat: SimuleringDto;
