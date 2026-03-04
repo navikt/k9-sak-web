@@ -6,11 +6,7 @@ metadata:
   labels:
     team: k9saksbehandling
   annotations:
-    nais.io/run-as-user: "101" # Fix permissions for nginx
-    nais.io/read-only-file-system: "false" # Fix permissions for nginx
     nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   image: {{ image }}
   port: 9000
@@ -41,11 +37,9 @@ spec:
   ingresses:
     - "{{ ingress }}"
   env:
-    - name: APP_NAME
-      value: k9-sak-web
     - name: APP_URL
       value: "http://k9-sak"
-    - name: APP_PORT
+    - name: PORT
       value: "9000"
     - name: APP_URL_K9FORMIDLING
       value: "http://k9-formidling"
