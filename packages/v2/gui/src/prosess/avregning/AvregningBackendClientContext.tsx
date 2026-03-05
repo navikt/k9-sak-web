@@ -3,7 +3,7 @@ import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiTyp
 
 export const AvregningBackendClientContext = createContext<BehandlingAvregningBackendApiType | null>(null);
 
-export function useAvregningBackendClient(): BehandlingAvregningBackendApiType {
+export function useAvregningBackendClient() {
   const client = useContext(AvregningBackendClientContext);
   if (client === null) {
     throw new Error('useAvregningBackendClient must be used within AvregningBackendClientContext.Provider');
