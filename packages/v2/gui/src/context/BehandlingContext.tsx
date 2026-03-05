@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
-import type { BekreftAksjonspunktClient } from '../shared/hooks/useBekreftAksjonspunkt.js';
 import { createContext } from 'react';
 
 // Med tiden bør fetching av behandling gjøres av tanstack query
@@ -15,9 +14,6 @@ export interface BehandlingContextType {
    * De inkluderer en location-header med URL man kan polle for å vite når behandlingen er klar igjen
    * Når behandlingen er klar returneres en BehandlingDto av polling-endepunktet som kan brukes, og det er ikke nødvendig å refetche manuelt */
   setBehandling?: (behandling: BehandlingDto) => void;
-  /** Klient for å bekrefte aksjonspunkter mot riktig backend. Typen er `any` internt — typesikkerhet ivaretas av `useBekreftAksjonspunkt<T>()`. */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  aksjonspunktClient?: BekreftAksjonspunktClient<any>;
 }
 
 export const BehandlingContext = createContext<BehandlingContextType | undefined>(undefined);
@@ -27,16 +23,14 @@ export const BehandlingProvider = ({
   behandling,
   refetchBehandling,
   setBehandling,
-  aksjonspunktClient,
 }: {
   children: ReactNode;
   behandling?: BehandlingContextType['behandling'];
   refetchBehandling: BehandlingContextType['refetchBehandling'];
   setBehandling?: BehandlingContextType['setBehandling'];
-  aksjonspunktClient?: BehandlingContextType['aksjonspunktClient'];
 }) => {
   return (
-    <BehandlingContext.Provider value={{ behandling, refetchBehandling, setBehandling, aksjonspunktClient }}>
+    <BehandlingContext.Provider value={{ behandling, refetchBehandling, setBehandling }}>
       {children}
     </BehandlingContext.Provider>
   );

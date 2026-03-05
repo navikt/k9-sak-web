@@ -4,6 +4,7 @@ import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
 import { k9TilbakeAksjonspunktClient } from '@k9-sak-web/backend/k9tilbake/aksjonspunktClient.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
@@ -149,7 +150,8 @@ const BehandlingTilbakekrevingIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling} aksjonspunktClient={k9TilbakeAksjonspunktClient}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <AksjonspunktContext.Provider value={k9TilbakeAksjonspunktClient}>
       <TilbakekrevingPaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
@@ -168,6 +170,7 @@ const BehandlingTilbakekrevingIndex = ({
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
       />
+      </AksjonspunktContext.Provider>
       </BehandlingProvider>
     </>
   );

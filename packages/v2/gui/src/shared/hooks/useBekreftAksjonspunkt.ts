@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { useMutation } from '@tanstack/react-query';
+import { AksjonspunktContext } from '../../context/AksjonspunktContext.js';
 import { BehandlingContext } from '../../context/BehandlingContext.js';
 import { pollLocation } from '../polling/pollLocation.js';
 import { usePendingModal } from '../pendingModal/PendingModalContext.js';
@@ -59,7 +60,12 @@ interface UseBekreftAksjonspunktResult<T> {
  * ```
  */
 export const useBekreftAksjonspunkt = <T>(): UseBekreftAksjonspunktResult<T> => {
-  const { behandling, refetchBehandling, setBehandling, aksjonspunktClient } = useContext(BehandlingContext);
+  const behandlingContext = useContext(BehandlingContext);
+  if (behandlingContext == null) {
+    throw new Error('useBekreftAksjonspunkt må brukes innenfor en BehandlingProvider.');
+  }
+  const { behandling, refetchBehandling, setBehandling } = behandlingContext;
+  const aksjonspunktClient = useContext(AksjonspunktContext);
   const { visPendingModal, skjulPendingModal } = usePendingModal();
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -72,7 +78,7 @@ export const useBekreftAksjonspunkt = <T>(): UseBekreftAksjonspunktResult<T> => 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (aksjonspunkter: T[]): Promise<BehandlingDto | undefined> => {
       if (aksjonspunktClient == null) {
-        throw new Error('useBekreftAksjonspunkt krever at BehandlingProvider har fått en aksjonspunktClient.');
+        throw new Error('useBekreftAksjonspunkt krever at AksjonspunktContext.Provider er satt opp med en aksjonspunktClient.');
       }
       if (behandling?.id == null || behandling?.versjon == null || behandling?.uuid == null) {
         throw new Error('useBekreftAksjonspunkt krever at BehandlingProvider har fått behandling med id, versjon og uuid.');

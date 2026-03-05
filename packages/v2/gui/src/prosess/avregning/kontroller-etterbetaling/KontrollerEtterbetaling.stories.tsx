@@ -5,6 +5,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { BekreftAksjonspunktClient } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 
@@ -94,11 +95,12 @@ export const LøsAksjonspunkt: Story = {
     <BehandlingProvider
       behandling={props.behandling}
       refetchBehandling={refetchBehandling}
-      aksjonspunktClient={mockAksjonspunktClient}
     >
+      <AksjonspunktContext.Provider value={mockAksjonspunktClient}>
       <HStack>
         <KontrollerEtterbetaling {...props} />
       </HStack>
+      </AksjonspunktContext.Provider>
     </BehandlingProvider>
   ),
 };
