@@ -7,7 +7,7 @@ import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/beh
 import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
-export class K9SakAvregningBackendClient implements BehandlingAvregningBackendApiType {
+export default class K9SakAvregningBackendClient implements BehandlingAvregningBackendApiType {
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
     behandlingId: number,
     behandlingVersjon: number,

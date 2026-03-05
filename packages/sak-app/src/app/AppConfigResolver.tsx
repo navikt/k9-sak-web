@@ -21,7 +21,7 @@ import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
-import { K9SakAvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/K9SakAvregningBackendClient.js';
+import K9SakAvregningBackendClient from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClient.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
 import { IntlProvider } from 'react-intl';
 import { globalMessages } from '@k9-sak-web/behandling-felles';

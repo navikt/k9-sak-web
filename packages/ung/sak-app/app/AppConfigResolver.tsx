@@ -11,7 +11,7 @@ import UngVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/ap
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
-import { UngAvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/UngAvregningBackendClient.js';
+import UngAvregningBackendClient from '@k9-sak-web/gui/prosess/avregning/UngAvregningBackendClient.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
