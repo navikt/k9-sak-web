@@ -87,8 +87,8 @@ const config = tseslint.config(
   {
     // Fiks: Finn eller opprett en re-eksport i /v2/backend under de eksisterende mappene (k9sak, k9klage, k9tilbake, ungsak, ungtilbake, combined).
     // Eksporter både type og value (const) dersom det finnes en verdi
-    // Se f.eks packages/v2/backend/src/k9sak/kodeverk/FagsakYtelsesType.ts for mønster på re-eksport av typar.
-    // Se f.eks packages/v2/backend/src/k9sak/tjenester/ for mønster på re-eksport av SDK-funksjoner.
+    // Se f.eks v2/backend/src/k9sak/kodeverk/behandling/BehandlingStatus.ts for mønster på re-eksport av typar.
+    // Se f.eks v2/backend/src/k9sak/tjenester/ for mønster på re-eksport av SDK-funksjoner.
     // For typer brukt på tvers av backends, bruk combined/-mappa.
     // Etter at re-eksport er opprettet, oppdater importstiene i filene som bruker de genererte importene.
     ignores: ['packages/v2/backend/**'],
