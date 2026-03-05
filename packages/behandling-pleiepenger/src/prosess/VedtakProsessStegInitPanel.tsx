@@ -1,7 +1,7 @@
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -45,7 +45,7 @@ interface Props {
   isReadOnly: boolean;
   lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
 }
 
 export function VedtakProsessStegInitPanel(props: Props) {
