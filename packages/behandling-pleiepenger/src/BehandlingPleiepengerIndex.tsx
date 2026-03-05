@@ -91,7 +91,7 @@ const BehandlingPleiepengerIndex = ({
     { saksnummer: fagsak.saksnummer },
     {
       updateTriggers: [behandlingId, behandling?.versjon],
-      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
+      suspendRequest: !!(forrigeSaksnummer && erBehandlingEndretFraUndefined),
       keepData: true,
     },
   );
@@ -170,7 +170,9 @@ const BehandlingPleiepengerIndex = ({
     <>
       <ReduxFormStateCleaner
         behandlingId={behandling.id}
-        behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
+        behandlingVersjon={
+          harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling.versjon : behandling.versjon
+        }
       />
       <BehandlingProvider
         behandling={behandling}
@@ -179,11 +181,11 @@ const BehandlingPleiepengerIndex = ({
         aksjonspunktClient={k9SakAksjonspunktClient}
       >
         <PleiepengerPaneler
-          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-          fetchedData={data}
+          behandling={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling : behandling}
+          fetchedData={data!}
           fagsak={fagsak}
           fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk}
+          alleKodeverk={kodeverk || {}}
           rettigheter={rettigheter}
           valgtProsessSteg={valgtProsessSteg}
           valgtFaktaSteg={valgtFaktaSteg}

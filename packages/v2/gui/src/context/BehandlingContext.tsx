@@ -1,7 +1,7 @@
-import { createContext } from 'react';
 import type { ReactNode } from 'react';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import type { BekreftAksjonspunktClient } from '../shared/hooks/useBekreftAksjonspunkt.js';
+import { createContext } from 'react';
 
 // Med tiden bør fetching av behandling gjøres av tanstack query
 // Da bør vi kunne invalidere query etter behov for å trigge refetch av behandling
@@ -20,9 +20,7 @@ export interface BehandlingContextType {
   aksjonspunktClient?: BekreftAksjonspunktClient<any>;
 }
 
-export const BehandlingContext = createContext<BehandlingContextType>({
-  refetchBehandling: () => Promise.resolve(null),
-});
+export const BehandlingContext = createContext<BehandlingContextType | undefined>(undefined);
 
 export const BehandlingProvider = ({
   children,

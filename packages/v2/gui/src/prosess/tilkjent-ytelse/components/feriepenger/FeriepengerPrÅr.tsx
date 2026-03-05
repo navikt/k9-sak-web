@@ -1,10 +1,10 @@
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 
-import { use } from 'react';
 import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
+import { use } from 'react';
 import { K9KodeverkoppslagContext } from '../../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import type { K9Kodeverkoppslag } from '../../../../kodeverk/oppslag/useK9Kodeverkoppslag.tsx';
+import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
 
 interface Props {
   åretsAndeler: FeriepengegrunnlagAndel[];
@@ -62,7 +62,7 @@ const lagVisningsnavn = (
   kodeverkoppslag: K9Kodeverkoppslag,
 ) => {
   const agOpplysning = ferieAndel.arbeidsgiverId ? arbeidsgiverOpplysningerPerId[ferieAndel.arbeidsgiverId] : undefined;
-  if (agOpplysning) {
+  if (agOpplysning?.navn) {
     return agOpplysning.navn;
   }
   return (

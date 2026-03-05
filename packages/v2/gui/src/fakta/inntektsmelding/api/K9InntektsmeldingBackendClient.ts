@@ -22,6 +22,7 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
     skjæringstidspunkt,
     behandlingUuid,
     begrunnelse,
+    behandlingVersjon,
   }: EtterspørInntektsmeldingRequest): Promise<void> {
     await inntektsmelding_etterspørInntektsmelding({
       body: {
@@ -29,6 +30,7 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
         skjæringstidspunkt,
         behandlingUuid,
         begrunnelse,
+        behandlingVersjon,
       },
     });
   }
