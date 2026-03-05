@@ -1,4 +1,3 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert.js';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex.js';
 import { Alert, BodyShort, Heading, Label, VStack } from '@navikt/ds-react';
@@ -14,6 +13,7 @@ import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backe
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { VurderFeilutbetaling } from '../vurder-feilutbetaling/VurderFeilutbetaling';
 import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 interface AvregningPanelProps {
   simuleringResultat: SimuleringDto;
@@ -30,10 +30,10 @@ export function AvregningPanel(props: AvregningPanelProps) {
     tilbakekrevingvalg !== undefined &&
     tilbakekrevingvalg.videreBehandling === TilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
   const harVurderFeilutbetalingAP = aksjonspunkter.some(
-    ap => ap.definisjon === AksjonspunktDtoDefinisjon.VURDER_FEILUTBETALING,
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
   );
   const harSjekkHøyEtterbetalingAP = aksjonspunkter.some(
-    ap => ap.definisjon === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+    ap => ap.definisjon === AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
   );
 
   const toggleDetails = (id: number) => {
@@ -110,9 +110,7 @@ export function AvregningPanel(props: AvregningPanelProps) {
         )}
         {harSjekkHøyEtterbetalingAP && (
           <KontrollerEtterbetalingIndex
-            aksjonspunkt={aksjonspunkter.find(
-              ap => ap.definisjon === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
-            )}
+            aksjonspunkt={aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING)}
             behandling={behandling}
             readOnly={readOnly}
           />
