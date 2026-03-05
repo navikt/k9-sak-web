@@ -14,22 +14,6 @@ import ResultatRader from './ResultatRader';
 
 const classNames = classnames.bind(styles);
 
-// fjern
-const MONTH_LABELS: Record<string, string> = {
-  januar: 'Jan',
-  februar: 'Feb',
-  mars: 'Mar',
-  april: 'Apr',
-  mai: 'Mai',
-  juni: 'Jun',
-  juli: 'Jul',
-  august: 'Aug',
-  september: 'Sep',
-  oktober: 'Okt',
-  november: 'Nov',
-  desember: 'Des',
-};
-
 const isNextPeriod = (month: RangeOfMonths, nextPeriod: string) =>
   `${month.month}${month.year}` === (nextPeriod ? initializeDate(nextPeriod).format('MMMMYY') : false);
 
@@ -64,7 +48,7 @@ const getHeaderCodes = (
         })}
         key={`${month.month}-${month.year}`}
       >
-        {MONTH_LABELS[month.month] ?? month.month} {month.year}
+        {month.shortMonth} {month.year}
       </span>
     )),
   ];

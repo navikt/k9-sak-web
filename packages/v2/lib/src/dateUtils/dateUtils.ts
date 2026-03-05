@@ -288,6 +288,7 @@ export const getRangeOfMonths = (fom: string, tom: string) => {
   const range = [
     {
       month: currentMonth.format('MMMM'),
+      shortMonth: currentMonth.format('MMM'),
       year: currentMonth.format('YY'),
     },
   ];
@@ -296,6 +297,7 @@ export const getRangeOfMonths = (fom: string, tom: string) => {
     currentMonth = currentMonth.add(1, 'month');
     range.push({
       month: currentMonth.format('MMMM'),
+      shortMonth: currentMonth.format('MMM'),
       year: currentMonth.format('YY'),
     });
   }

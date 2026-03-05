@@ -9,6 +9,7 @@ const classNames = classnames.bind(styles);
 
 export interface RangeOfMonths {
   month: string;
+  shortMonth: string;
   year: string;
 }
 

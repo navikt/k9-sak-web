@@ -105,9 +105,9 @@ describe('dateUtils', () => {
 
   it('skal dele opp en periode i måneder', () => {
     expect(getRangeOfMonths('2023-01', '2023-03')).toEqual([
-      { month: 'januar', year: '23' },
-      { month: 'februar', year: '23' },
-      { month: 'mars', year: '23' },
+      { month: 'januar', shortMonth: 'jan.', year: '23' },
+      { month: 'februar', shortMonth: 'feb.', year: '23' },
+      { month: 'mars', shortMonth: 'mars', year: '23' },
     ]);
   });
 
@@ -204,9 +204,9 @@ describe('dateUtils', () => {
   describe('getRangeOfMonths', () => {
     it('should get range of months correctly', () => {
       expect(getRangeOfMonths('2022-01', '2022-03')).toEqual([
-        { month: 'januar', year: '22' },
-        { month: 'februar', year: '22' },
-        { month: 'mars', year: '22' },
+        { month: 'januar', shortMonth: 'jan.', year: '22' },
+        { month: 'februar', shortMonth: 'feb.', year: '22' },
+        { month: 'mars', shortMonth: 'mars', year: '22' },
       ]);
     });
   });
