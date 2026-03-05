@@ -42,5 +42,5 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/dev-gcp.yml
-          VARS: deploy/dev-next1.yaml
+          VARS: deploy/ung/dev-aktivitetspenger.yaml
           VAR: image=${{ steps.docker-push.outputs.image }}
