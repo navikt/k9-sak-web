@@ -1,6 +1,6 @@
 import type { AvregningProsessIndexProps } from './AvregningProsessIndex';
 
-export const vurderFeilutbetalingMock: Omit<AvregningProsessIndexProps, 'client'> = {
+export const vurderFeilutbetalingMock: AvregningProsessIndexProps = {
   fagsak: {
     saksnummer: '5YC5Y',
     sakstype: 'PPN',
@@ -757,7 +757,7 @@ export const vurderFeilutbetalingMock: Omit<AvregningProsessIndexProps, 'client'
   isReadOnly: false,
 };
 
-export const sjekkHøyEtterbetalingMock: Omit<AvregningProsessIndexProps, 'client'> = {
+export const sjekkHøyEtterbetalingMock: AvregningProsessIndexProps = {
   fagsak: {
     saksnummer: '5YC4K',
     sakstype: 'PSB',

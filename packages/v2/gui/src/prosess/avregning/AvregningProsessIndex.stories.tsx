@@ -4,6 +4,7 @@ import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './Avregnin
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FakeBehandlingAvregningBackendApi } from '../../storybook/mocks/FakeBehandlingAvregningBackendApi';
 import { AvregningFormProvider } from '../../context/AvregningContext';
+import { AvregningBackendClientContext } from './AvregningBackendClientContext';
 
 const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
@@ -11,9 +12,11 @@ const meta = {
   title: 'gui/prosess/avregning/prosess-avregning',
   decorators: [
     Story => (
-      <AvregningFormProvider behandlingId={1}>
-        <Story />
-      </AvregningFormProvider>
+      <AvregningBackendClientContext value={fakeAvregningBackendClient}>
+        <AvregningFormProvider behandlingId={1}>
+          <Story />
+        </AvregningFormProvider>
+      </AvregningBackendClientContext>
     ),
   ],
   component: AvregningProsessIndex,
@@ -21,11 +24,11 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 export const AksjonspunktVurderFeilutbetaling8084 = () => (
-  <AvregningProsessIndex {...vurderFeilutbetalingMock} client={fakeAvregningBackendClient} />
+  <AvregningProsessIndex {...vurderFeilutbetalingMock} />
 );
 
 export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
-  args: { ...vurderFeilutbetalingMock, client: fakeAvregningBackendClient },
+  args: { ...vurderFeilutbetalingMock },
 
   play: async ({ canvas }) => {
     const begrunnelse = canvas.getByRole('textbox', {
@@ -46,11 +49,11 @@ export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
 };
 
 export const AksjonspunktHøyEtterbetaling8086 = () => (
-  <AvregningProsessIndex {...sjekkHøyEtterbetalingMock} client={fakeAvregningBackendClient} />
+  <AvregningProsessIndex {...sjekkHøyEtterbetalingMock} />
 );
 
 export const FyllAksjonspunktHøyEtterbetaling8086: Story = {
-  args: { ...sjekkHøyEtterbetalingMock, client: fakeAvregningBackendClient },
+  args: { ...sjekkHøyEtterbetalingMock },
 
   play: async ({ canvas }) => {
     const begrunnelse = canvas.getByRole('textbox', {

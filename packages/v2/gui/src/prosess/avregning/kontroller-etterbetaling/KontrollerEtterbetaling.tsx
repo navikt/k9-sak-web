@@ -67,6 +67,9 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
       if (behandling.id == null) {
         throw new Error(`behandling.id null. Kan ikke bekrefte aksjonspunkt`);
       }
+      if (!api.bekreftAksjonspunktSjekkHøyEtterbetaling) {
+        throw new Error('bekreftAksjonspunktSjekkHøyEtterbetaling er ikke tilgjengelig for denne backend-klienten');
+      }
       await api.bekreftAksjonspunktSjekkHøyEtterbetaling(behandling.id, behandling.versjon, data.begrunnelse);
       window.location.reload();
     } finally {

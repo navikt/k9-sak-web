@@ -29,7 +29,6 @@ import AvregningTable from './AvregningTable';
 
 import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import styles from './avregningPanel.module.css';
-import KontrollerEtterbetalingV1Wrapper from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingV1Wrapper.js';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 
@@ -282,7 +281,6 @@ export class AvregningPanelImpl extends Component {
             </VStack>
           )}
           {harSjekkHøyEtterbetalingAP && (
-            <KontrollerEtterbetalingV1Wrapper>
               <KontrollerEtterbetalingIndex
                 aksjonspunkt={aksjonspunkter.find(
                   ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
@@ -290,7 +288,6 @@ export class AvregningPanelImpl extends Component {
                 behandling={behandling}
                 readOnly={readOnly}
               />
-            </KontrollerEtterbetalingV1Wrapper>
           )}
         </VStack>
       </>

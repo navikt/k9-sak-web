@@ -1,22 +1,12 @@
-import { createContext, useContext, useMemo, type ReactNode } from 'react';
-import BehandlingAvregningBackendClient from './AvregningBackendClient.js';
+import { createContext, useContext } from 'react';
+import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 
-const AvregningBackendClientContext = createContext<BehandlingAvregningBackendClient | null>(null);
+export const AvregningBackendClientContext = createContext<BehandlingAvregningBackendApiType | null>(null);
 
-export function useAvregningBackendClient(): BehandlingAvregningBackendClient {
+export function useAvregningBackendClient(): BehandlingAvregningBackendApiType {
   const client = useContext(AvregningBackendClientContext);
   if (client === null) {
-    throw new Error('useAvregningBackendClient must be used within AvregningBackendClientProvider');
+    throw new Error('useAvregningBackendClient must be used within AvregningBackendClientContext.Provider');
   }
   return client;
-}
-
-interface AvregningBackendClientProviderProps {
-  children: ReactNode;
-  client: BehandlingAvregningBackendClient;
-}
-
-export function AvregningBackendClientProvider({ children, client }: AvregningBackendClientProviderProps) {
-  const value = useMemo(() => client, [client]);
-  return <AvregningBackendClientContext.Provider value={value}>{children}</AvregningBackendClientContext.Provider>;
 }
