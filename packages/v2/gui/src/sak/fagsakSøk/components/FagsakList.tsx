@@ -1,4 +1,4 @@
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/fagsakStatus.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Table } from '@navikt/ds-react';

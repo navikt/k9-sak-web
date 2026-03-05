@@ -1,4 +1,4 @@
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/fagsakStatus.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { fagsakYtelsesType as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { sortFagsaker } from './FagsakList';
 
