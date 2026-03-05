@@ -97,12 +97,12 @@ export const VurderFeilutbetaling = ({
     const blob = await avregningBackendClient.hentForhåndsvisningVarselbrev(
       behandling.uuid,
       fagsakYtelseType,
-      formMethods.watch('varseltekst'),
+      formMethods.getValues().varseltekst,
     );
     window.open(URL.createObjectURL(blob), '_blank');
   };
 
-  const submit = formMethods.handleSubmit(async () => {
+  const submit = formMethods.handleSubmit(async values => {
     if (!behandling.id || !behandling.versjon || !behandling.uuid) {
       throw new Error(
         'Utviklerfeil: Behandling ID, versjon og UUID er påkrevd for å løse aksjonspunkt. Meld fra i porten.',
@@ -110,20 +110,16 @@ export const VurderFeilutbetaling = ({
     }
 
     const videreBehandling =
-      formMethods.watch('videreBehandling') === OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL
+      values.videreBehandling === OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL
         ? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING
-        : formMethods.watch('videreBehandling');
-
-    if (videreBehandling === OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL) {
-      throw new Error(`Utviklerfeil: Videre behandling er ikke gyldig ${videreBehandling}`);
-    }
+        : values.videreBehandling;
 
     await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
       behandling.id,
       behandling.versjon,
-      formMethods.watch('begrunnelse') ?? null,
+      values.begrunnelse ?? null,
       videreBehandling,
-      formMethods.watch('varseltekst') ?? null,
+      values.varseltekst ?? null,
     );
     /// trenger polling
     window.location.reload();
