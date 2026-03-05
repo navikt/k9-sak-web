@@ -1,12 +1,8 @@
 import { client } from '@navikt/k9-klage-typescript-client/client';
 import { aksjonspunkt_bekreft } from './generated/sdk.js';
 import type { BekreftetAksjonspunktDto } from './kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { BekreftAksjonspunktClient } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 
-/**
- * Klient for å bekrefte aksjonspunkter mot k9-klage-backend.
- *
- * Brukes sammen med `useBekreftAksjonspunkt`-hooken via `BehandlingProvider`.
- */
 export const k9KlageAksjonspunktClient = {
   bekreft: (aksjonspunkter: BekreftetAksjonspunktDto[], behandling: { id: number; versjon: number; uuid: string }) =>
     aksjonspunkt_bekreft({
@@ -26,4 +22,4 @@ export const k9KlageAksjonspunktClient = {
     }
     return client.get({ url: path, signal, throwOnError: true });
   },
-};
+} satisfies BekreftAksjonspunktClient<BekreftetAksjonspunktDto>;

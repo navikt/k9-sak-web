@@ -16,12 +16,11 @@ const erBehandlingDto = (data: unknown): data is BehandlingDto =>
  * Klient som vet hvordan aksjonspunkter bekreftes mot en bestemt backend.
  * Hver backend (k9sak, k9klage, osv.) eksporterer sin egen klient fra backend-pakken.
  */
-export interface BekreftAksjonspunktClient {
+export interface BekreftAksjonspunktClient<T> {
   bekreft(
-    aksjonspunkter: unknown,
+    aksjonspunkter: T[],
     behandling: { id: number; versjon: number; uuid: string },
   ): Promise<{ response: Response }>;
-  /** Utfør en GET-request mot gitt URL via denne backendklienten. Brukes til polling av location-URL. */
   poll(url: string, signal?: AbortSignal): Promise<{ data: unknown; response: Response }>;
 }
 

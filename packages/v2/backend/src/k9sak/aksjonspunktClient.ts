@@ -1,12 +1,8 @@
 import { client } from '@navikt/k9-sak-typescript-client/client';
 import { aksjonspunkt_bekreft } from './generated/sdk.js';
 import type { BekreftetAksjonspunktDto } from './kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { BekreftAksjonspunktClient } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 
-/**
- * Klient for å bekrefte aksjonspunkter mot k9-sak-backend.
- *
- * Brukes sammen med `useBekreftAksjonspunkt`-hooken via `BehandlingProvider`.
- */
 export const k9SakAksjonspunktClient = {
   bekreft: (aksjonspunkter: BekreftetAksjonspunktDto[], behandling: { id: number; versjon: number; uuid: string }) =>
     aksjonspunkt_bekreft({
@@ -18,8 +14,6 @@ export const k9SakAksjonspunktClient = {
     }),
 
   poll: async (url: string, signal?: AbortSignal) => {
-    // Location-header inneholder full absolutt URL.
-    // Stripper origin og baseUrl slik at klienten bruker riktig relativ path.
     const parsed = new URL(url);
     let path = parsed.pathname + parsed.search;
     const { baseUrl } = client.getConfig();
@@ -28,4 +22,4 @@ export const k9SakAksjonspunktClient = {
     }
     return client.get({ url: path, signal, throwOnError: true });
   },
-};
+} satisfies BekreftAksjonspunktClient<BekreftetAksjonspunktDto>;
