@@ -16,35 +16,23 @@ const erBehandlingDto = (data: unknown): data is BehandlingDto =>
  * Klient som vet hvordan aksjonspunkter bekreftes mot en bestemt backend.
  * Hver backend (k9sak, k9klage, osv.) eksporterer sin egen klient fra backend-pakken.
  */
-export interface BekreftAksjonspunktClient<T> {
+export interface BekreftAksjonspunktClient {
   bekreft(
-    aksjonspunkter: T[],
+    aksjonspunkter: unknown,
     behandling: { id: number; versjon: number; uuid: string },
   ): Promise<{ response: Response }>;
   /** Utfør en GET-request mot gitt URL via denne backendklienten. Brukes til polling av location-URL. */
   poll(url: string, signal?: AbortSignal): Promise<{ data: unknown; response: Response }>;
 }
 
-interface UseBekreftAksjonspunktResult<T> {
-  /** Bekreft ett eller flere aksjonspunkter. */
-  bekreft: (aksjonspunkter: T | T[]) => Promise<void>;
-  /** `true` mens request og eventuell polling pågår */
-  loading: boolean;
-}
-
 /**
  * Hook for å bekrefte aksjonspunkter mot en backend.
  *
- * Leser aksjonspunkt-klienten fra `BehandlingContext` (satt via `BehandlingProvider`).
- * Henter `behandling` fra samme kontekst og sender `id`, `versjon` og `uuid`
- * videre til klienten.
+ * Leser aksjonspunkt-klienten fra `AksjonspunktContext` og behandling fra `BehandlingContext`.
  *
  * Håndterer 202 + Location-header fra backend ved å polle location-URL-en
- * til prosesseringen er ferdig. Setter behandling direkte fra polling-responsen
- * dersom `setBehandling` er tilgjengelig i `BehandlingContext`, ellers faller tilbake
- * til `refetchBehandling`.
- *
- * Viser automatisk PendingModal ved polling via `PendingModalContext`.
+ * til prosesseringen er ferdig, og oppdaterer behandling via `setBehandling`
+ * eller `refetchBehandling`.
  *
  * @typeParam T - Backend-spesifikk BekreftetAksjonspunktDto som styrer hva `bekreft()` aksepterer.
  *
@@ -59,7 +47,9 @@ interface UseBekreftAksjonspunktResult<T> {
  * };
  * ```
  */
-export const useBekreftAksjonspunkt = <T>(): UseBekreftAksjonspunktResult<T> => {
+
+// setter denne til never for å tvinge på caller å spesifisere type-parameter T, og dermed få type-sjekk på bekreft()-argumentet.
+export const useBekreftAksjonspunkt = <T = never>() => {
   const behandlingContext = useContext(BehandlingContext);
   if (behandlingContext == null) {
     throw new Error('useBekreftAksjonspunkt må brukes innenfor en BehandlingProvider.');
