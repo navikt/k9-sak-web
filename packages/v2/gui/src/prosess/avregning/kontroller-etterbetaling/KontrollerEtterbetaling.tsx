@@ -1,10 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto as BekreftedeAksjonspunkterDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas';
@@ -15,6 +10,9 @@ import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
 import { useAvregningFormState } from '../../../context/AvregningContext';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
@@ -25,8 +23,6 @@ interface Props {
 export interface KontrollerEtterbetalingFormData {
   begrunnelse: string;
 }
-
-export type BekreftKontrollerEtterbetalingAksjonspunktRequest = BekreftedeAksjonspunkterDto;
 
 const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly }) => {
   const api = useAvregningBackendClient();
