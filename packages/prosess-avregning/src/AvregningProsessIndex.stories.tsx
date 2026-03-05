@@ -8,7 +8,11 @@ import {
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
-import { AvregningFormProvider } from '@k9-sak-web/gui/context/AvregningContext.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
+import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
+import { FakeBehandlingAvregningBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeBehandlingAvregningBackendApi.js';
+
+const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
 const fagsak = {
   saksnummer: 123,
@@ -171,9 +175,11 @@ export default {
   component: AvregningProsessIndex,
   decorators: [
     Story => (
-      <AvregningFormProvider behandlingId={1}>
-        <Story />
-      </AvregningFormProvider>
+      <AvregningBackendClientContext value={fakeAvregningBackendClient}>
+        <AvregningFormProvider behandlingId={1}>
+          <Story />
+        </AvregningFormProvider>
+      </AvregningBackendClientContext>
     ),
   ],
 };

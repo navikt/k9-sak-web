@@ -3,7 +3,7 @@ import { AvregningProsessIndex } from './AvregningProsessIndex';
 import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './AvregningMocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FakeBehandlingAvregningBackendApi } from '../../storybook/mocks/FakeBehandlingAvregningBackendApi';
-import { AvregningFormProvider } from '../../context/AvregningContext';
+import { AvregningFormProvider } from './AvregningContext';
 import { AvregningBackendClientContext } from './AvregningBackendClientContext';
 
 const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();

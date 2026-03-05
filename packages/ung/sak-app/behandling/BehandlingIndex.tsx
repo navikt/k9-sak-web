@@ -8,7 +8,7 @@ import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/ut
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import { AvregningFormProvider } from '@k9-sak-web/gui/context/AvregningContext.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';

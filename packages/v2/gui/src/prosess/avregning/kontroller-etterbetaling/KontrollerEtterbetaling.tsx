@@ -8,7 +8,7 @@ import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
-import { useAvregningFormState } from '../../../context/AvregningContext';
+import { useAvregningFormState } from '../AvregningContext';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';

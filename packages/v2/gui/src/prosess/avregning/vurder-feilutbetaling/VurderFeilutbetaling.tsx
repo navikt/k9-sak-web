@@ -17,7 +17,7 @@ import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/beh
 import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
-import { useAvregningFormState } from '../../../context/AvregningContext.js';
+import { useAvregningFormState } from '../AvregningContext.js';
 
 const OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
   `${TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING}IKKE_SEND` as const;

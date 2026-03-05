@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
-import type { KontrollerEtterbetalingFormData } from '../prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetaling.js';
-import type { VurderFeilutbetalingFormValues } from '../prosess/avregning/vurder-feilutbetaling/VurderFeilutbetaling.js';
+import type { KontrollerEtterbetalingFormData } from './kontroller-etterbetaling/KontrollerEtterbetaling.js';
+import type { VurderFeilutbetalingFormValues } from './vurder-feilutbetaling/VurderFeilutbetaling.js';
 
 interface AvregningFormStore {
   høyEtterbetaling?: KontrollerEtterbetalingFormData;
