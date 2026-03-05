@@ -1,4 +1,4 @@
-name: Build and deploy dev-next1
+name: Build and deploy dev-aktivitetspenger
 on:
   push:
     paths-ignore:
@@ -34,8 +34,13 @@ jobs:
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push
         with:
-          additional-tag: 'dev-next1'
+          additional-tag: 'dev-aktivitetspenger'
           without_navikt_prefix: true
+          build-args: |
+            featureToggles=ung.feature-toggles.json
+            proxyConfig=ung.proxy.nginx
+            appVariant=ung
+            port=9005
           push-image: true
       - name: Deploy to nais
         uses: nais/deploy/actions/deploy@v2
