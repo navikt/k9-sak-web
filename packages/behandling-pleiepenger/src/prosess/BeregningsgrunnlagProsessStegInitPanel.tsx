@@ -1,9 +1,7 @@
 import { mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_vilkår_VilkårType,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { vilkarType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
