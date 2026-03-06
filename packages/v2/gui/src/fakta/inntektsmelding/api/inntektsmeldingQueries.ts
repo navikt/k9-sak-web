@@ -22,7 +22,6 @@ export const useEtterspørInntektsmelding = () => {
 
   return useMutation<void, Error, EtterspørInntektsmeldingRequest>({
     mutationFn: requestBody => api.etterspørInntektsmelding(requestBody),
-    throwOnError: true,
   });
 };
 
@@ -30,6 +29,5 @@ export const useSettPåVent = () => {
   const api = assertDefined(useContext(InntektsmeldingApiContext));
   return useMutation<void, Error, SettBehandlingPaVentDto>({
     mutationFn: requestBody => api.settPåVent(requestBody),
-    throwOnError: true,
   });
 };
