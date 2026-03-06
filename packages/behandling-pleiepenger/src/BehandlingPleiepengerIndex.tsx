@@ -24,6 +24,8 @@ import {
 } from './data/pleiepengerBehandlingApi';
 import { FetchedData } from './types';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
+import { k9SakAksjonspunktClient } from '@k9-sak-web/backend/k9sak/aksjonspunktClient.js';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },
@@ -173,7 +175,12 @@ const BehandlingPleiepengerIndex = ({
           harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling.versjon : behandling.versjon
         }
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        behandling={behandling}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        setBehandling={setBehandling}
+      >
+        <AksjonspunktContext.Provider value={k9SakAksjonspunktClient}>
         <PleiepengerPaneler
           behandling={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling : behandling}
           fetchedData={data!}
@@ -194,6 +201,7 @@ const BehandlingPleiepengerIndex = ({
           dokumenter={alleDokumenter}
           hentBehandling={hentBehandling}
         />
+        </AksjonspunktContext.Provider>
       </BehandlingProvider>
     </>
   );

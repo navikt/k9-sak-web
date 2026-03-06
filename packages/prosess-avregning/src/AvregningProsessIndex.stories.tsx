@@ -7,6 +7,8 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {
@@ -165,19 +167,28 @@ const toggles = {
   'k9sak.simuler-oppdrag-varseltekst': true,
 };
 
+const mockAksjonspunktClient = {
+  bekreft: async () => ({ response: new Response(null, { status: 200 }) }),
+  poll: async () => ({ data: undefined, response: new Response(null, { status: 200 }) }),
+};
+
 export default {
   title: 'prosess/prosess-avregning',
   component: AvregningProsessIndex,
 };
 
 export const visAksjonspunktVurderFeilutbetaling = args => (
-  <AvregningProsessIndex
-    behandling={behandling}
-    submitCallback={action('button-click')}
-    previewFptilbakeCallback={action('button-click')}
-    featureToggles={toggles}
-    {...args}
-  />
+  <BehandlingProvider behandling={behandling} refetchBehandling={async () => {}}>
+    <AksjonspunktContext.Provider value={mockAksjonspunktClient}>
+      <AvregningProsessIndex
+        behandling={behandling}
+        submitCallback={action('button-click')}
+        previewFptilbakeCallback={action('button-click')}
+        featureToggles={toggles}
+        {...args}
+      />
+    </AksjonspunktContext.Provider>
+  </BehandlingProvider>
 );
 
 visAksjonspunktVurderFeilutbetaling.args = {
@@ -205,13 +216,17 @@ visAksjonspunktVurderFeilutbetaling.args = {
 };
 
 export const visAksjonspunktHøyEtterbetaling = args => (
-  <AvregningProsessIndex
-    behandling={behandling}
-    submitCallback={action('button-click')}
-    previewFptilbakeCallback={action('button-click')}
-    featureToggles={toggles}
-    {...args}
-  />
+  <BehandlingProvider behandling={behandling} refetchBehandling={async () => {}}>
+    <AksjonspunktContext.Provider value={mockAksjonspunktClient}>
+      <AvregningProsessIndex
+        behandling={behandling}
+        submitCallback={action('button-click')}
+        previewFptilbakeCallback={action('button-click')}
+        featureToggles={toggles}
+        {...args}
+      />
+    </AksjonspunktContext.Provider>
+  </BehandlingProvider>
 );
 
 visAksjonspunktHøyEtterbetaling.args = {
