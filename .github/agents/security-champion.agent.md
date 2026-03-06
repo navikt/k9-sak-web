@@ -248,7 +248,6 @@ export function TrustedHtml({ html }: { html: string }) {
 
 - **Trivy**: Container image scanning
 - **Dependabot**: Dependency updates
-- **Snyk**: Vulnerability alerts
 
 ### Vulnerability Response
 
