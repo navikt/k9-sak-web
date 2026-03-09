@@ -1,7 +1,7 @@
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
   type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -67,6 +67,9 @@ export const UngVedtak = ({
     error: forhåndsvisningError,
   } = useMutation({
     mutationFn: async (dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType) => {
+      if (!behandling.id) {
+        throw new Error('Behandling ID mangler');
+      }
       const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);
@@ -93,6 +96,9 @@ export const UngVedtak = ({
       nullstill?: boolean;
       dokumentMalType: DokumentMalType;
     }) => {
+      if (!behandling.id) {
+        throw new Error('Behandling ID mangler');
+      }
       const requestData = {
         behandlingId: behandling.id,
         redigertHtml: redigertHtml || undefined,

@@ -51,7 +51,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submit
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
-  if (!erValgt) {
+  if (!erValgt || !behandling) {
     return null;
   }
   if (!erStegVurdert) {

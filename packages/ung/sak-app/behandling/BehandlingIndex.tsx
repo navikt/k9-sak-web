@@ -5,7 +5,7 @@ import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-rou
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { FagsakYtelseType } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
-import BehandlingAktivitetspengerIndex from '@k9-sak-web/behandling-aktivitetspenger/src/BehandlingAktivitetspengerIndex';
+import BehandlingAktivitetspengerIndex from '@k9-sak-web/behandling-aktivitetspenger';
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';

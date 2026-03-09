@@ -1,4 +1,4 @@
-import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { UngVedtak } from './UngVedtak';
@@ -32,9 +32,10 @@ export const UngVedtakIndex = ({
   } = useQuery({
     queryKey: ['vedtaksbrevValg', behandling.id],
     queryFn: async () => {
-      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id);
+      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id!);
       return response;
     },
+    enabled: behandling.id !== undefined,
   });
   return (
     <Box paddingInline="space-16 space-32" paddingBlock="space-8">
