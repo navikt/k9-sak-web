@@ -6,7 +6,7 @@ import {
   behandlingPerson_hentMedlemskap,
   behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder,
   beregningsgrunnlag_hentBeregningsgrunnlagene,
-  beregningsgrunnlag_hentNøkkelknippe,
+  beregningsgrunnlag_hentNøklerTilVurdering,
   beregningsresultat_hentBeregningsresultatMedUtbetaling,
   fagsak_hentFagsak,
   opptjening_getOpptjeninger,
@@ -48,7 +48,7 @@ export class K9SakProsessBackendClient implements K9SakProsessApi {
   }
 
   async getBeregningreferanserTilVurdering(behandlingUuid: string) {
-    return (await beregningsgrunnlag_hentNøkkelknippe({ query: { behandlingUuid } })).data;
+    return (await beregningsgrunnlag_hentNøklerTilVurdering({ query: { behandlingUuid } })).data;
   }
 
   async getAlleBeregningsgrunnlag(behandlingUuid: string) {
