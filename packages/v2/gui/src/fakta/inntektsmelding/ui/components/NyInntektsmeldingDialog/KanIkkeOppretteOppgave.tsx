@@ -31,9 +31,13 @@ export const KanIkkeOppretteNyOppgave = ({
     if (forespørselStatus === ForespørselStatusConst.STP_MER_ENN_4_UKER) {
       return 'Kan ikke opprette oppgave fordi det er mer enn 4 uker til skjæringstidspunktet.';
     }
-    throw new Error('Utviklerfeil: Har ikke håndtert alle mulige typer forespørselStatus');
+    if (forespørselStatus === ForespørselStatusConst.BEHANDLING_FERDIG) {
+      return 'Kan ikke opprette oppgave fordi behandlingen er avsluttet.';
+    }
+    // Kompileringssjekk for å sikre at alle cases er håndtert
+    const _exhaustiveCheck: never = forespørselStatus;
+    throw new Error(`Uventet forespørselStatus: ${_exhaustiveCheck}`);
   };
-
   return (
     <>
       <Dialog.Body>
