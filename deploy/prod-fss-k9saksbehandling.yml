@@ -26,11 +26,10 @@ spec:
     cpuThresholdPercentage: 50
   resources:
     limits:
-      cpu: 500m
-      memory: 64Mi
+      memory: 256Mi
     requests:
       cpu: 200m
-      memory: 32Mi
+      memory: 128Mi
   ingresses:
     - 'https://k9.intern.nav.no/'
   env:
