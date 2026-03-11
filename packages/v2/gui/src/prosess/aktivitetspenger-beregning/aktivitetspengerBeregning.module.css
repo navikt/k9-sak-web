@@ -12,3 +12,14 @@
 .rowWithSpacing > th:last-child {
   padding-right: var(--ax-space-16);
 }
+
+.selectedCell {
+  align-items: center;
+  background: var(--ax-bg-success-moderate-hover);
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  padding: 5px 8px 5px 5px;
+  width: fit-content;
+}

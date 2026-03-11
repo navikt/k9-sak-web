@@ -1,15 +1,22 @@
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import { Alert, Box, Heading, InlineMessage, Loader, Table, VStack } from '@navikt/ds-react';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { CheckmarkHeavyIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Box, Heading, HStack, InlineMessage, Loader, Table, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import type { AktivitetspengerBeregningBackendApiType } from './AktivitetspengerBeregningBackendApiType.js';
 import styles from './aktivitetspengerBeregning.module.css';
 
 const formatter = new Intl.NumberFormat('nb-NO', {
-  style: 'currency',
-  currency: 'NOK',
   minimumFractionDigits: 0,
   maximumFractionDigits: 2,
 });
+
+const SelectedCell = ({ children }: { children: string }) => (
+  <HStack gap="space-4" className={styles.selectedCell}>
+    <CheckmarkHeavyIcon title="Besteberegning" fontSize="1.5rem" />
+    <BodyShort>{children}</BodyShort>
+  </HStack>
+);
 
 interface Props {
   behandling: Pick<BehandlingDto, 'uuid'>;
@@ -43,7 +50,7 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
       <VStack gap="space-36">
         <Box padding="space-16" background="info-soft" width="fit-content">
           <InlineMessage size="small" status="info">
-            Skjæringstidspunkt for beregning {data?.skjæringstidspunkt}
+            Skjæringstidspunkt for beregning {formatDate(data?.skjæringstidspunkt)}
           </InlineMessage>
         </Box>
         <div>
@@ -71,7 +78,9 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
                       <Table.DataCell align="right">0 (dummy)</Table.DataCell>
                       <Table.DataCell align="right">0 (dummy)</Table.DataCell>
                       <Table.DataCell align="right">0 (dummy)</Table.DataCell>
-                      <Table.DataCell align="right">{formatter.format(pgi.avkortetOgOppjustert)}</Table.DataCell>
+                      <Table.DataCell align="right">
+                        <SelectedCell>{formatter.format(pgi.avkortetOgOppjustert)}</SelectedCell>
+                      </Table.DataCell>
                     </Table.Row>
                   ))}
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
