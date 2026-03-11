@@ -1,0 +1,14 @@
+.bottomCell > td,
+.bottomCell > th {
+  border-bottom: none;
+}
+
+.rowWithSpacing > td:first-child,
+.rowWithSpacing > th:first-child {
+  padding-left: var(--ax-space-16);
+}
+
+.rowWithSpacing > td:last-child,
+.rowWithSpacing > th:last-child {
+  padding-right: var(--ax-space-16);
+}
