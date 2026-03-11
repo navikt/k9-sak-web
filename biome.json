@@ -63,6 +63,11 @@
 			"bracketSpacing": true
 		}
 	},
+	"css": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
 	"html": {
 		"formatter": {
 			"indentScriptAndStyle": false,

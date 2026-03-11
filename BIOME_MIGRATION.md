@@ -13,11 +13,11 @@ This document describes the migration from ESLint and Prettier to Biome for the 
 - Manually configured ESLint-equivalent rules
 - Key settings:
   - Line width: 120
-  - Single quotes for JS/TS
+  - Single quotes for JS/TS and CSS
   - Double quotes for JSX
   - 2 space indentation
   - Trailing commas enabled
-  - Import organization enabled
+  - Import organization disabled
 
 ### 3. Updated Scripts
 New scripts in `package.json`:
