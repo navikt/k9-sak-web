@@ -55,7 +55,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     },
 
     proxyErrorHandler: (err: NodeJS.ErrnoException, res: Response, next: (err?: unknown) => void): void => {
-      log.error('proxy request returned error', { code: err.code, message: err.message });
+      log.error('proxy request failed', { err });
       const statusMap: Record<string, number> = { ENOTFOUND: 502, ECONNREFUSED: 502, ECONNRESET: 502, ETIMEDOUT: 504 };
       const status = err.code ? statusMap[err.code] : undefined;
       if (status) {
