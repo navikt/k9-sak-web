@@ -50,11 +50,11 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 
           return (
-            <Box.New key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
+            <Box key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
               <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (
-                  <Tag size="small" variant="info">
+                  <Tag data-color="info" size="small" variant="outline">
                     Ny
                   </Tag>
                 )}
@@ -85,11 +85,11 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
               <BodyShort className="mt-1 leading-6" size="small">
                 = {fraværsprosent} % fravær{' '}
               </BodyShort>
-            </Box.New>
+            </Box>
           );
         })}
       </VStack>
-      <Box.New>
+      <Box>
         <BodyShort size="small" className={styles.uttakDetaljerDetailSum}>
           = {søkersTapteArbeidstid}% tapt arbeidstid {harNyInntekt ? '*' : ''}
         </BodyShort>
@@ -99,7 +99,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
             blir ikke tatt med i utregningen av tapt arbeidstid.
           </Detail>
         )}
-      </Box.New>
+      </Box>
     </VStack>
   );
 };

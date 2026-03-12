@@ -22,11 +22,11 @@ const OmsorgsperiodeoversiktMessages = ({
   ) {
     const perioderTilVurdering = omsorgsperiodeoversikt.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <Alert size="small" variant="warning" className={styles.alertstripe}>
           <FormattedMessage id="vurdering.advarsel" values={{ perioder: getStringMedPerioder(perioderTilVurdering) }} />
         </Alert>
-      </Box.New>
+      </Box>
     );
   }
   return null;

@@ -18,7 +18,6 @@ export enum K9sakApiKeys {
   KODEVERK = 'KODEVERK',
   KODEVERK_TILBAKE = 'KODEVERK_TILBAKE',
   KODEVERK_KLAGE = 'KODEVERK_KLAGE',
-  LANGUAGE_FILE = 'LANGUAGE_FILE',
   NAV_ANSATT = 'NAV_ANSATT',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
@@ -126,9 +125,6 @@ const endpoints = new RestApiConfigBuilder()
 
   // Formidling
   .withPost('/k9/formidling/api/brev/forhaandsvis', K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
-
-  // Språkfil (ligg på klient - Skal fjernast - Det som ligg i denne skal flyttes til spesifikke pakker)
-  .withGet('/k9/web/sprak/nb_NO.json', K9sakApiKeys.LANGUAGE_FILE)
 
   // Kun brukt for søk på localhost
   .withPost('/k9/sak/api/fagsak/sok', K9sakApiKeys.SEARCH_FAGSAK)

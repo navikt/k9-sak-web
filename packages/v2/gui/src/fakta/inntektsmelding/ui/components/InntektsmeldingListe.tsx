@@ -26,7 +26,7 @@ const InntektsmeldingListe = ({
     {tilstander.sort(sorterSkjæringstidspunkt).map(tilstand => (
       <li key={tilstand.periode.prettifyPeriod()} className="mt-[0.625rem]">
         <hr className="border-ax-border-neutral-subtleA m-0 p-0 h-[1px]" />
-        <HStack align="center" marginBlock={'5 0'}>
+        <HStack align="center" marginBlock={'space-20 space-0'}>
           <CalendarIcon fontSize="1.5rem" />
           <BodyShort size="small">{tilstand.periode.prettifyPeriod()}</BodyShort>
         </HStack>

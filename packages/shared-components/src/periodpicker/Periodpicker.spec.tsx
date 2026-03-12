@@ -1,5 +1,4 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import React from 'react';
 import Periodpicker from './Periodpicker';
 
 describe('<Periodpicker>', () => {
@@ -13,6 +12,6 @@ describe('<Periodpicker>', () => {
       />,
     );
 
-    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
+    expect(container.getElementsByClassName('aksel-date__field-input').length).toBe(2);
   });
 });

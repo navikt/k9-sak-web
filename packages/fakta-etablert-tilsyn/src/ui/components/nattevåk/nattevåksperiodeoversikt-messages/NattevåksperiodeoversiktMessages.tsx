@@ -20,11 +20,11 @@ const NattevåksperiodeoversiktMessages = ({
   if (nattevåkData.harPerioderTilVurdering()) {
     const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box.New>
+      <Box>
         <Alert size="small" variant="warning">
           {`Vurder behov for nattevåk i ${getStringMedPerioder(perioderTilVurdering)}.`}
         </Alert>
-      </Box.New>
+      </Box>
     );
   } else if (skalViseFortsettUtenEndring) {
     return (

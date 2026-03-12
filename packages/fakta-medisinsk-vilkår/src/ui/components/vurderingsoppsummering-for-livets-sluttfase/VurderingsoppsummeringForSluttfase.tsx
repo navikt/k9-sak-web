@@ -30,13 +30,13 @@ const VurderingsoppsummeringForSluttfase = ({
       perioder={perioder}
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
-        <Box.New marginBlock="4 0">
+        <Box marginBlock="space-16 space-0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om livets sluttfase?"
             content={
-              <Box.New marginBlock="4 0">
+              <Box marginBlock="space-16 space-0">
                 <BasicList
                   elements={dokumenter
                     .filter(({ benyttet }) => benyttet)
@@ -44,25 +44,25 @@ const VurderingsoppsummeringForSluttfase = ({
                       <DokumentLink dokument={dokument} visDokumentIkon />
                     ))}
                 />
-              </Box.New>
+              </Box>
             }
           />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Er/var den pleietrengende i livets sluttfase?"
             content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
           />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Skriv begrunnelsen for at den pleietrengende er/var i livets sluttfase etter § 9-13."
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
-        </Box.New>
-      </Box.New>
+        </Box>
+      </Box>
     </DetailViewVurdering>
   );
 };

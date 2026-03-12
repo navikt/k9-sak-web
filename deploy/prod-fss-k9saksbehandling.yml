@@ -6,11 +6,7 @@ metadata:
   labels:
     team: k9saksbehandling
   annotations:
-    nais.io/run-as-user: '101' # Fix permissions for nginx
-    nais.io/read-only-file-system: 'false' # Fix permissions for nginx
     nginx.ingress.kubernetes.io/proxy-buffer-size: '32k'
-    nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
-    nginx.ingress.kubernetes.io/proxy-send-timeout: '600'
 spec:
   image: {{ image }}
   port: 9000
@@ -30,19 +26,16 @@ spec:
     cpuThresholdPercentage: 50
   resources:
     limits:
-      cpu: 500m
-      memory: 64Mi
+      memory: 256Mi
     requests:
       cpu: 200m
-      memory: 32Mi
+      memory: 128Mi
   ingresses:
     - 'https://k9.intern.nav.no/'
   env:
-    - name: APP_NAME
-      value: k9-sak-web
     - name: APP_URL
       value: 'http://k9-sak'
-    - name: APP_PORT
+    - name: PORT
       value: '9000'
     - name: APP_URL_K9FORMIDLING
       value: 'http://k9-formidling'
@@ -57,4 +50,4 @@ spec:
     - name: APP_URL_K9FORDEL
       value: 'http://k9-fordel.k9saksbehandling'
     - name: ENDRINGSLOGG_URL
-      value: 'https://familie-endringslogg.intern.nav.no/'
+      value: 'https://endringslogg.intern.nav.no/'

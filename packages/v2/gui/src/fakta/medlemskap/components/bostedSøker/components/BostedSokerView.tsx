@@ -57,7 +57,8 @@ export const BostedSokerView = ({ personopplysninger, sokerTypeText }: OwnProps)
           {personstatus && (
             <div className={styles.etikettMargin}>
               <Tag
-                variant="warning"
+                data-color="warning"
+                variant="outline"
                 size="small"
                 className={personstatus === PersonopplysningDtoPersonstatus.DØD ? styles.dodEtikett : ''}
                 title="Personstatus"
@@ -70,14 +71,14 @@ export const BostedSokerView = ({ personopplysninger, sokerTypeText }: OwnProps)
           )}
           {personopplysninger.sivilstand && (
             <div className={styles.etikettMargin}>
-              <Tag variant="warning" size="small" title="Sivilstand">
+              <Tag data-color="warning" variant="outline" size="small" title="Sivilstand">
                 {kodeverkNavnFraKode(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE)}
               </Tag>
             </div>
           )}
           {personopplysninger.region && personopplysninger.region !== PersonopplysningDtoRegion.UDEFINERT && (
             <div className={styles.etikettMargin}>
-              <Tag variant="warning" size="small" title="Region">
+              <Tag data-color="warning" variant="outline" size="small" title="Region">
                 {kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION)}
               </Tag>
             </div>

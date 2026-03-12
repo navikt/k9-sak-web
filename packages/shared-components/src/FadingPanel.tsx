@@ -13,9 +13,9 @@ interface OwnProps {
  * Wrapper rundt Panel-komponent. Animerer(fade-in) innholdet i panelet.
  */
 const FadingPanel = ({ withoutTopMargin = false, children }: OwnProps) => (
-  <Box.New padding="4" className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}>
+  <Box padding="space-16" className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}>
     {children}
-  </Box.New>
+  </Box>
 );
 
 export default FadingPanel;

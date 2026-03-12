@@ -113,8 +113,9 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
               <Endringsstatus status={endringsstatus} />
             </div>
             <Button
+              data-color="neutral"
               size="xsmall"
-              variant="tertiary-neutral"
+              variant="tertiary"
               onClick={velgPeriode}
               aria-label={erValgt ? 'Lukk' : 'Åpne'}
               aria-expanded={erValgt}

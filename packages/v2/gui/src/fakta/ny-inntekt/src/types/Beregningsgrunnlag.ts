@@ -55,7 +55,6 @@ export type PgiVerdier = Readonly<{
 
 export type BeregningsgrunnlagAndel = Readonly<{
   aktivitetStatus: string;
-  arbeidsforholdType?: string;
   arbeidsforhold?: BeregningsgrunnlagArbeidsforhold;
   avkortetPrAar?: number;
   inntektskategori?: string;

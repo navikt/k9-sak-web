@@ -13,7 +13,7 @@ const SignertSeksjon = ({ harGyldigSignatur }: SignertSeksjonProps): JSX.Element
       </Heading>
     </HStack>
     <hr style={{ color: '#B7B1A9' }} />
-    <Box.New marginBlock="4 0">
+    <Box marginBlock="space-16 space-0">
       {harGyldigSignatur && (
         <Alert inline variant="success">
           Det finnes dokumentasjon som er signert av sykehuslege eller lege fra spesialisthelsetjenesten.
@@ -24,7 +24,7 @@ const SignertSeksjon = ({ harGyldigSignatur }: SignertSeksjonProps): JSX.Element
           Ingen legeerklæring fra sykehuslege/spesialisthelsetjenesten registrert.
         </Alert>
       )}
-    </Box.New>
+    </Box>
   </div>
 );
 

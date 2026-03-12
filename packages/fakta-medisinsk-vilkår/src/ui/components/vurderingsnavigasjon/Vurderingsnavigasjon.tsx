@@ -71,7 +71,7 @@ const Vurderingsnavigasjon = ({
             )}
 
             {visOverlappetikett && (
-              <Tag variant="info" size="small">
+              <Tag data-color="info" variant="outline" size="small">
                 Overlapp
               </Tag>
             )}
@@ -114,7 +114,7 @@ const Vurderingsnavigasjon = ({
 
   if (visRadForNyVurdering) {
     allElements.unshift(
-      <Tag variant="info" size="small">
+      <Tag data-color="info" variant="outline" size="small">
         Ny vurdering
       </Tag>,
     );

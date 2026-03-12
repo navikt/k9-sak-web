@@ -59,7 +59,8 @@ export const BostedSokerView = ({
         {getPersonstatus(personopplysninger) && (
           <div className={styles.etikettMargin}>
             <Tag
-              variant="warning"
+              data-color="warning"
+              variant="outline"
               size="small"
               className={getPersonstatus(personopplysninger).kode === personstatusType.DOD ? styles.dodEtikett : ''}
               title="Personstatus"
@@ -72,14 +73,14 @@ export const BostedSokerView = ({
         )}
         {personopplysninger.sivilstand && (
           <div className={styles.etikettMargin}>
-            <Tag variant="warning" size="small" title="Sivilstand">
+            <Tag data-color="warning" variant="outline" size="small" title="Sivilstand">
               {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand.kode).navn}
             </Tag>
           </div>
         )}
         {personopplysninger.region && personopplysninger.region.kode !== Region.UDEFINERT && (
           <div className={styles.etikettMargin}>
-            <Tag variant="warning" size="small" title="Region">
+            <Tag data-color="warning" variant="outline" size="small" title="Region">
               {regionTypes.find(r => r.kode === personopplysninger.region.kode).navn}
             </Tag>
           </div>

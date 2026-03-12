@@ -90,7 +90,7 @@ export const EndreBehandlendeEnhetModal = ({
           </HGrid>
           <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
-            <Box.New marginBlock="2 0">
+            <Box marginBlock="space-8 space-0">
               <RhfTextarea
                 control={formMethods.control}
                 name="begrunnelse"
@@ -98,11 +98,11 @@ export const EndreBehandlendeEnhetModal = ({
                 validate={[required, maxLength400, hasValidText]}
                 maxLength={400}
               />
-            </Box.New>
+            </Box>
           </HGrid>
           <HGrid gap="space-4" columns={{ xs: '1fr 8fr 3fr' }}>
             <div />
-            <Box.New marginBlock="4 0">
+            <Box marginBlock="space-16 space-0">
               <div className={styles.floatButtons}>
                 <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse)} type="submit">
                   OK
@@ -111,7 +111,7 @@ export const EndreBehandlendeEnhetModal = ({
                   Avbryt
                 </Button>
               </div>
-            </Box.New>
+            </Box>
           </HGrid>
         </Modal.Body>
       </RhfForm>

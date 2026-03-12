@@ -1,4 +1,4 @@
-import { AOrange400 } from '@navikt/ds-tokens/dist/tokens';
+import { Warning500 } from '@navikt/ds-tokens/js';
 
 export const K9MaxTextWidth = '43.5rem';
-export const K9AksjonspunktBorderColor = AOrange400;
+export const K9AksjonspunktBorderColor = Warning500;

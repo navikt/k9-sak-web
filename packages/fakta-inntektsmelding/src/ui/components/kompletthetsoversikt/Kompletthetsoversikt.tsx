@@ -81,7 +81,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
       <h1 className={styles.kompletthet__mainHeading}>Inntektsmelding</h1>
       <h2 className={styles.kompletthet__subHeading}>Opplysninger til beregning</h2>
       {!!aktivtAksjonspunktKode && <InntektsmeldingManglerInfo />}
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         <PeriodList
           tilstander={tilstanderBeriket}
           listHeadingRenderer={listHeadingRenderer}
@@ -91,9 +91,9 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />
-      </Box.New>
+      </Box>
       {kanSendeInn() && (
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <form
             onSubmit={handleSubmit((data: any) => {
               const perioder = tilstanderTilVurdering.map(tilstand => {
@@ -120,7 +120,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
               Send inn
             </Button>
           </form>
-        </Box.New>
+        </Box>
       )}
     </div>
   );

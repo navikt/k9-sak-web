@@ -90,7 +90,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               <Heading size="xsmall" level="2">
                 Grunnrett
               </Heading>
-              <Box.New marginBlock="4 0" borderRadius="large" borderWidth="1" maxWidth="43.5rem">
+              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1" maxWidth="43.5rem">
                 <Table>
                   <Table.Header>
                     <Table.Row>
@@ -124,7 +124,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                     </Table.Row>
                   </Table.Body>
                 </Table>
-              </Box.New>
+              </Box>
             </div>
           )}
           <div>
@@ -132,14 +132,14 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               Beregning av dagsats og utbetaling
             </Heading>
             {satser.length === 0 && (
-              <Box.New marginBlock="3 0" maxWidth="43.5rem">
+              <Box marginBlock="space-12 space-0" maxWidth="43.5rem">
                 <Alert variant="info" size="small">
                   Ingen utbetaling enda
                 </Alert>
-              </Box.New>
+              </Box>
             )}
             {satser.length > 0 && (
-              <Box.New marginBlock="4 0" borderRadius="large" borderWidth="1">
+              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1">
                 <Table>
                   <Table.Header>
                     <Table.Row>
@@ -289,7 +289,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
                     )}
                   </Table.Body>
                 </Table>
-              </Box.New>
+              </Box>
             )}
           </div>
         </VStack>

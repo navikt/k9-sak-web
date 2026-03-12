@@ -18,7 +18,7 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
   return (
     <HStack>
       <DataBox maxHeight="185px">
-        <HStack gap="space-8" marginInline="05 0">
+        <HStack gap="space-8" marginInline="space-2 space-0">
           <InformationSquareIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Nøkkelinformasjon</Label>
         </HStack>

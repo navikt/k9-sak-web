@@ -38,26 +38,26 @@ const BeredskapsperiodeVurderingsdetaljer = ({
         />
       )}
     >
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
-      </Box.New>
-      <Box.New marginBlock="8 0">
+      </Box>
+      <Box marginBlock="space-32 space-0">
         <LabelledContent
           label="Vurdering av om det er behov for beredskap"
           content={<span className="whitespace-pre-wrap">{beredskapsperiode.begrunnelse}</span>}
           indentContent
         />
         <VurdertAv ident={opprettetAv} date={opprettetTidspunkt} />
-      </Box.New>
-      <Box.New marginBlock="8 0">
+      </Box>
+      <Box marginBlock="space-32 space-0">
         <LabelledContent
           label="Er det behov for beredskap?"
           content={beredskapsperiode.resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}
         />
-      </Box.New>
-      <Box.New marginBlock="8 0">
+      </Box>
+      <Box marginBlock="space-32 space-0">
         <LabelledContent label="Perioder vurdert" content={beredskapsperiode.periode.prettifyPeriod()} />
-      </Box.New>
+      </Box>
     </DetailView>
   );
 };

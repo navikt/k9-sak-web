@@ -32,19 +32,18 @@ const UttakInnhold = (): JSX.Element => {
   const toggleOverstyring = () => setOverstyringAktiv(prev => !prev);
 
   const harOpprettetAksjonspunktVurderDato =
-    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET || aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.UTFØRT;
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.OPPRETTET ||
+    aksjonspunktVurderDatoNyRegelUttak?.status === aksjonspunktStatus.UTFØRT;
 
   return (
-    <VStack gap="4">
+    <VStack gap="space-16">
       <HStack justify="start">
         <Heading size="small" level="1">
           Uttak
         </Heading>
         {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
       </HStack>
-
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
-
       {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
         <ContentMaxWidth>
           <Alert variant="warning" size="small">
@@ -52,15 +51,10 @@ const UttakInnhold = (): JSX.Element => {
           </Alert>
         </ContentMaxWidth>
       )}
-
       {!harEtUløstAksjonspunktIUttak && <OverstyrUttak overstyringAktiv={overstyringAktiv} />}
-
       {aksjonspunktVurderOverlappendeSaker && <VurderOverlappendeSak />}
-
       <UtsattePerioderStripe />
-
       {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && <VurderDato />}
-
       {!aksjonspunktVentAnnenPSBSak && (
         <UttaksperiodeListe
           redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}

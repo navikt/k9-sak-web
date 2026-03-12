@@ -27,7 +27,7 @@ const ReisedagerIVurdering = ({
         <Label size={size}>Reisedager:</Label>
         <div className="flex gap-2">
           <BodyLong size={size}>{reisedager}</BodyLong>
-          <Tag size="small" variant="info">
+          <Tag data-color="info" size="small" variant="outline">
             Flyttet fra nødvendig opplæring
           </Tag>
         </div>
@@ -41,7 +41,7 @@ const ReisedagerIVurdering = ({
       <Label size={size}>Reisedager:</Label>{' '}
       <div className="flex gap-2">
         <BodyLong size={size}>{reisedager}</BodyLong>
-        <Tag size="small" variant="info">
+        <Tag data-color="info" size="small" variant="outline">
           Fra søknad
         </Tag>
       </div>

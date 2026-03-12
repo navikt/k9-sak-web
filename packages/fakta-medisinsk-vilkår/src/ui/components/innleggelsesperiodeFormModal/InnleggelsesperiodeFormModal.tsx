@@ -84,7 +84,7 @@ const InnleggelsesperiodeFormModal = ({
             shouldShowSubmitButton={false}
             smallButtons
           >
-            <Box.New marginBlock="6 0">
+            <Box marginBlock="space-24 space-0">
               <PeriodpickerListRHF
                 name="innleggelsesperioder"
                 legend="Innleggelsesperioder"
@@ -155,14 +155,14 @@ const InnleggelsesperiodeFormModal = ({
                 }}
                 renderBeforeFieldArray={fieldArrayMethods => (
                   <>
-                    <Box.New marginBlock="0 4">
+                    <Box marginBlock="space-0 space-16">
                       <AddButton
                         label="Legg til innleggelsesperiode"
                         onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                         id="leggTilInnleggelsesperiodeKnapp"
                       />
-                    </Box.New>
-                    <Box.New marginBlock="4 0">
+                    </Box>
+                    <Box marginBlock="space-16 space-0">
                       <div className={styles.innleggelsesperiodeFormModal__pickerLabels}>
                         <Label size="small" className={styles.innleggelsesperiodeFormModal__firstLabel} aria-hidden>
                           Fra
@@ -171,7 +171,7 @@ const InnleggelsesperiodeFormModal = ({
                           Til
                         </Label>
                       </div>
-                    </Box.New>
+                    </Box>
                   </>
                 )}
                 renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) => (
@@ -179,15 +179,15 @@ const InnleggelsesperiodeFormModal = ({
                 )}
               />
               {showWarningMessage && (
-                <Box.New marginBlock="6 0">
+                <Box marginBlock="space-24 space-0">
                   <Alert size="small" variant="warning">
                     Endringene du har gjort på innleggelsesperiodene vil føre til en ny revurdering av en annen
                     behandling. Påvirker alle søkere.
                   </Alert>
-                </Box.New>
+                </Box>
               )}
-            </Box.New>
-            <Box.New marginBlock="8 0">
+            </Box>
+            <Box marginBlock="space-32 space-0">
               <div style={{ display: 'flex' }}>
                 <Button loading={isLoading} disabled={isLoading} size="small">
                   Bekreft
@@ -203,7 +203,7 @@ const InnleggelsesperiodeFormModal = ({
                   Avbryt
                 </Button>
               </div>
-            </Box.New>
+            </Box>
           </FormWithButtons>
         </FormProvider>
       </Modal.Body>

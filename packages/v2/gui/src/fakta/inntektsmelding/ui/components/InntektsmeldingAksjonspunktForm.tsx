@@ -57,8 +57,8 @@ const HjelpetekstAlert = () => (
   <Alert className="mt-4" variant="info" size="medium">
     <ul className="m-0 list-disc pl-6">
       <li>
-        A-inntekt benyttes <span className="font-bold underline">kun</span> for de arbeidsgiverne/arbeidsforholdene vi
-        mangler inntektsmelding fra.
+        A-inntekt benyttes <span className="font-ax-bold underline">kun</span> for de arbeidsgiverne/arbeidsforholdene
+        vi mangler inntektsmelding fra.
       </li>
       <li>
         Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
@@ -177,7 +177,7 @@ const InntektsmeldingAksjonspunktForm = ({
           />
         )}
 
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <div className="flex gap-4">
             {!harFlereTilstanderTilVurdering && beslutning && (
               <Button variant="primary" size="small">
@@ -190,7 +190,7 @@ const InntektsmeldingAksjonspunktForm = ({
               </Button>
             )}
           </div>
-        </Box.New>
+        </Box>
       </AksjonspunktBox>
     </RhfForm>
   );

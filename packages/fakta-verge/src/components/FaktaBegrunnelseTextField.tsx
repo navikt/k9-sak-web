@@ -40,7 +40,7 @@ const FaktaBegrunnelseTextField = ({
   return (
     <>
       {(isSubmittable || hasBegrunnelse) && (
-        <div className={styles.begrunnelseTextField}>
+        <div className={styles.begrunnelseTextField} data-testid="fakta-begrunnelse">
           <TextAreaField
             name={name}
             label={isReadOnly ? '' : textAreaLabel}

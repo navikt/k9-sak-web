@@ -23,12 +23,12 @@ const VurderingsoppsummeringLangvarigSykdom = ({
 
   return (
     <DetailViewVurdering title="Vurdering av langvarig sykdom" perioder={perioder} redigerVurdering={redigerVurdering}>
-      <Box.New marginBlock="6 0">
-        <Box.New marginBlock="4 0">
+      <Box marginBlock="space-24 space-0">
+        <Box marginBlock="space-16 space-0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om sykdom?"
             content={
-              <Box.New marginBlock="4 0">
+              <Box marginBlock="space-16 space-0">
                 <BasicList
                   elements={dokumenter
                     .filter(({ benyttet }) => benyttet)
@@ -36,11 +36,11 @@ const VurderingsoppsummeringLangvarigSykdom = ({
                       <DokumentLink dokument={dokument} visDokumentIkon />
                     ))}
                 />
-              </Box.New>
+              </Box>
             }
           />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             // eslint-disable-next-line max-len
             label="Gjør en vurdering av om den pleietrengende har en funksjonshemning eller en langvarig sykdom antatt å være i mer enn ett år som følge av § 9-14."
@@ -48,14 +48,14 @@ const VurderingsoppsummeringLangvarigSykdom = ({
             indentContent
           />
           <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
-        </Box.New>
-        <Box.New marginBlock="8 0">
+        </Box>
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label="Har den pleietrengende en langvarig sykdom?"
             content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
           />
-        </Box.New>
-      </Box.New>
+        </Box>
+      </Box>
     </DetailViewVurdering>
   );
 };

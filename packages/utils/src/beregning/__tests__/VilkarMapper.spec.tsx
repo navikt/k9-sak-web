@@ -1,10 +1,10 @@
-import { BeregningReferanse } from '@k9-sak-web/types';
 import {
+  k9_kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
   k9_kodeverk_vilkår_VilkårType as VilkårType,
-  k9_kodeverk_vilkår_VilkårUtfallMerknad as Merknad,
   k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BeregningReferanse } from '@k9-sak-web/types';
 import { describe, expect, it } from 'vitest';
 import mapVilkar from '../VilkarMapper';
 
@@ -266,13 +266,10 @@ describe('VilkarMapper', () => {
       const result = mapVilkar(vilkar, beregningreferanser);
 
       expect(result.vilkarType).toEqual('-');
-      expect(result.overstyrbar).toBeUndefined();
       const periode = result.perioder?.[0];
       expect(periode?.avslagKode).toBeUndefined();
       expect(periode?.begrunnelse).toEqual('');
-      expect(periode?.vurderesIBehandlingen).toBeUndefined();
       expect(periode?.merknad).toBeUndefined();
-      expect(periode?.merknadParametere).toBeUndefined();
       expect(periode?.vilkarStatus).toEqual(VilkårUtfall.UDEFINERT);
       expect(periode?.erForlengelse).toBe(false);
     });

@@ -83,12 +83,22 @@ const findApproverDeclinedText = erGodkjent => {
   if (erGodkjent === undefined || erGodkjent === null) return '';
   if (erGodkjent)
     return (
-      <Tag variant="success" icon={<CheckmarkCircleIcon title="Godkjent" fontSize="1rem" />} size="xsmall">
+      <Tag
+        data-color="success"
+        variant="outline"
+        icon={<CheckmarkCircleIcon title="Godkjent" fontSize="1rem" />}
+        size="xsmall"
+      >
         Godkjent
       </Tag>
     );
   return (
-    <Tag variant="error" icon={<XMarkOctagonIcon title="Ikke Oppfylt" fontSize="1rem" />} size="xsmall">
+    <Tag
+      data-color="danger"
+      variant="outline"
+      icon={<XMarkOctagonIcon title="Ikke Oppfylt" fontSize="1rem" />}
+      size="xsmall"
+    >
       Ikke oppfylt
     </Tag>
   );

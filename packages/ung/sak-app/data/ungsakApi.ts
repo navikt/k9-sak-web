@@ -16,7 +16,6 @@ export enum UngSakApiKeys {
   KODEVERK = 'KODEVERK',
   KODEVERK_TILBAKE = 'KODEVERK_TILBAKE',
   KODEVERK_KLAGE = 'KODEVERK_KLAGE',
-  LANGUAGE_FILE = 'LANGUAGE_FILE',
   NAV_ANSATT = 'NAV_ANSATT',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
@@ -102,9 +101,6 @@ const endpoints = new RestApiConfigBuilder()
 
   // Formidling
   .withPost('/ung/formidling/api/brev/forhaandsvis', UngSakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
-
-  // Språkfil (ligg på klient - Skal fjernast - Det som ligg i denne skal flyttes til spesifikke pakker)
-  .withGet('/ung/web/sprak/nb_NO.json', UngSakApiKeys.LANGUAGE_FILE)
 
   // Kun brukt for søk på localhost
   .withPost('/ung/sak/api/fagsak/sok', UngSakApiKeys.SEARCH_FAGSAK)

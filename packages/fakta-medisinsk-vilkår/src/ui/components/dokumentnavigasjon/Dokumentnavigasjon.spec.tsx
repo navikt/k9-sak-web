@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import mockedDokumentoversikt from '../../../../mock/mocked-data/mockedDokumentoversikt';
 import Dokumentnavigasjon from './Dokumentnavigasjon';
 
@@ -46,7 +45,7 @@ describe('Dokumentnavigasjon', () => {
         onDokumentValgt={() => null}
       />,
     );
-    expect(container.getElementsByClassName('navds-accordion__content--closed')).toHaveLength(1);
+    expect(container.getElementsByClassName('aksel-accordion__content--closed')).toHaveLength(1);
   });
 
   test('documents are filtered correctly', async () => {

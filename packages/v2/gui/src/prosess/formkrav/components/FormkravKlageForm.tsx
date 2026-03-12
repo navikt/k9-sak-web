@@ -12,7 +12,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { BoxNew, Button, Detail, HGrid, HStack, Heading, Radio, VStack } from '@navikt/ds-react';
+import { Box, Button, Detail, HGrid, HStack, Heading, Radio, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
@@ -114,10 +114,10 @@ export const FormkravKlageForm = ({
           Vurder om klagen oppfyller formkravene
         </AksjonspunktHelpText>
       </VStack>
-      <HGrid gap="space-4" columns={2} marginBlock="space-16 0">
-        <BoxNew maxWidth="70%">
+      <HGrid gap="space-4" columns={2} marginBlock="space-16 space-0">
+        <Box maxWidth="70%">
           {parterMedKlagerett?.length ? (
-            <BoxNew marginBlock="0 space-16">
+            <Box marginBlock="space-0 space-16">
               <RhfSelect
                 control={control}
                 readOnly={readOnly || !skalKunneVelgeKlagepart}
@@ -131,7 +131,7 @@ export const FormkravKlageForm = ({
                 label={skalKunneVelgeKlagepart ? 'Velg klagepart' : 'Klagepart'}
                 validate={[required]}
               />
-            </BoxNew>
+            </Box>
           ) : null}
           <RhfTextarea
             control={control}
@@ -141,7 +141,7 @@ export const FormkravKlageForm = ({
             validate={[required, maxLength(1500), minLength(3)]}
             maxLength={1500}
           />
-        </BoxNew>
+        </Box>
         <div>
           <RhfSelect
             control={control}
@@ -151,7 +151,7 @@ export const FormkravKlageForm = ({
             label="Vedtaket som er påklagd"
             selectValues={klagbareVedtakOptions}
           />
-          <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }} marginBlock="space-16 0">
+          <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }} marginBlock="space-16 space-0">
             <div>
               <RhfRadioGroup
                 control={control}
@@ -181,7 +181,7 @@ export const FormkravKlageForm = ({
               </RhfRadioGroup>
             </div>
           </HGrid>
-          <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }} marginBlock="space-16 0">
+          <HGrid gap="space-4" columns={{ xs: '4fr 8fr' }} marginBlock="space-16 space-0">
             <div>
               <RhfRadioGroup
                 legend="Er klagefristen overholdt?"
@@ -213,13 +213,13 @@ export const FormkravKlageForm = ({
           </HGrid>
         </div>
       </HGrid>
-      <BoxNew marginBlock="space-16 0" className={styles.confirmVilkarForm}>
+      <Box marginBlock="space-16 space-0" className={styles.confirmVilkarForm}>
         {!readOnly && (
           <Button variant="primary" size="small" type="submit" loading={isSubmitting}>
             Bekreft og fortsett
           </Button>
         )}
-      </BoxNew>
+      </Box>
     </div>
   );
 };

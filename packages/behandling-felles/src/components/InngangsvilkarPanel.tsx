@@ -97,7 +97,7 @@ const InngangsvilkarPanel = ({
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
                     <>
-                      <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
+                      Avventer avklaring av fakta om{' '}
                       <Link href="" onClick={oppdaterUrl}>
                         <FormattedMessage id={apentFaktaPanelInfo.textCode} />
                       </Link>

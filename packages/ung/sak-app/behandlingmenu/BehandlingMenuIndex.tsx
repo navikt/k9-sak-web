@@ -207,8 +207,9 @@ export const BehandlingMenuIndex = ({
   if (showAsDisabled) {
     return (
       <Button
+        data-color="neutral"
         size="small"
-        variant="secondary-neutral"
+        variant="secondary"
         icon={<ChevronDownIcon title="Ekspander" fontSize="1.5rem" />}
         iconPosition="right"
         disabled

@@ -48,7 +48,7 @@ export const BeregningsDetaljerUtregning = ({
           </React.Fragment>
         ))}
 
-        <Box.New borderWidth="0 0 1 0" />
+        <Box borderWidth="0 0 1 0" />
 
         {reduksjon && rapportertInntekt ? (
           <>
@@ -66,7 +66,7 @@ export const BeregningsDetaljerUtregning = ({
                 <BodyShort size="small">Inntekten er periodisert siden det er siste måned</BodyShort>
               )}
             </VStack>
-            <Box.New borderWidth="0 0 1 0" />
+            <Box borderWidth="0 0 1 0" />
           </>
         ) : null}
 

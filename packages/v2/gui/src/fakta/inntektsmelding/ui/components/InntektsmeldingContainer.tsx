@@ -17,7 +17,7 @@ import InntektsmeldingListe from './InntektsmeldingListe';
 
 const InntektsmeldingManglerInfo = () => (
   <>
-    <Box.New marginBlock="0 6">
+    <Box marginBlock="space-0 space-24">
       <Alert variant="warning" size="small">
         <Heading spacing size="xsmall" level="3">
           Vurder om du kan fortsette behandlingen uten inntektsmelding.
@@ -27,8 +27,8 @@ const InntektsmeldingManglerInfo = () => (
           arbeidsgiver.
         </BodyLong>
       </Alert>
-    </Box.New>
-    <Box.New marginBlock="0 6">
+    </Box>
+    <Box marginBlock="space-0 space-24">
       <Alert variant="info" size="small">
         <Accordion>
           <Accordion.Item>
@@ -51,7 +51,7 @@ const InntektsmeldingManglerInfo = () => (
                   lavere risiko for at arbeidsgiver vil kreve refusjon.
                 </li>
               </ul>
-              <Box.New marginBlock="6 0">
+              <Box marginBlock="space-24 space-0">
                 Du bør ikke gå videre uten inntektsmelding hvis:
                 <ul className="m-0 pl-6">
                   <li>
@@ -65,12 +65,12 @@ const InntektsmeldingManglerInfo = () => (
                     ikke utbetale til bruker, men vente på inntektsmelding.
                   </li>
                 </ul>
-              </Box.New>
+              </Box>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
       </Alert>
-    </Box.New>
+    </Box>
   </>
 );
 
@@ -158,10 +158,8 @@ const InntektsmeldingContainer = () => {
       <Heading size="xsmall" level="2" className="my-[0.625rem] mt-5">
         Opplysninger til beregning
       </Heading>
-
       {harAktivtAksjonspunkt && <InntektsmeldingManglerInfo />}
-
-      <Box.New>
+      <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
           onFormSubmit={onFinished}
@@ -169,16 +167,15 @@ const InntektsmeldingContainer = () => {
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />
-      </Box.New>
-
+      </Box>
       {kanSendeInn && (
-        <Box.New marginBlock="6 0">
+        <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Button variant="primary" size="small">
               Send inn
             </Button>
           </form>
-        </Box.New>
+        </Box>
       )}
     </div>
   );

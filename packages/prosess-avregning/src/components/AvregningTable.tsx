@@ -93,7 +93,7 @@ const createColumns = (
           'måned' in måned && måned.måned
             ? måned.måned === nextPeriodFormatted
             : 'periode' in måned && initializeDate(måned.periode.tom).format('MMMMYY') === nextPeriodFormatted,
-        'font-bold': boldText,
+        'font-ax-bold': boldText,
       })}
     >
       {formatCurrencyNoKr(måned.beløp ?? 0)}
@@ -207,7 +207,7 @@ const AvregningTable = ({
                             : fagOmråde.fagOmrådeKode.kode;
                         return (
                           <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
-                            <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
+                            <Table.DataCell className={boldText ? 'font-ax-bold' : ''} textSize="small">
                               <FormattedMessage id={`Avregning.${fagområdeKode}.${rad.feltnavn}`} />
                             </Table.DataCell>
                             {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
@@ -236,7 +236,7 @@ const AvregningTable = ({
                       const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
                       return (
                         <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
-                          <Table.DataCell className={boldText ? 'font-bold' : ''} textSize="small">
+                          <Table.DataCell className={boldText ? 'font-ax-bold' : ''} textSize="small">
                             <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
                           </Table.DataCell>
                           {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
