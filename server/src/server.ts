@@ -61,4 +61,15 @@ app.get('{*path}', (_req, res) => {
 });
 
 // --- Start ---
-app.listen(config.port, () => log.info(`Listening on port ${config.port}`));
+const server = app.listen(config.port, () => log.info(`Listening on port ${config.port}`));
+
+process.on("SIGTERM", () => {
+  log.info("SIGTERM received. Stopping server")
+  server.close(error => {
+    if(error != null) {
+      log.warn("SIGTERM received on non-open server.", {error})
+    } else {
+      log.info("SIGTERM stopped server.")
+    }
+  })
+})
