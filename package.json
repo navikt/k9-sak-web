@@ -43,6 +43,7 @@
     "knip": "knip",
     "knip:unused-files": "knip --include files --no-config-hints",
     "dev:ung": "vite -c ung.vite.config.js serve",
+    "dev:aktivitetspenger": "vite -c aktivitetspenger.vite.config.js serve",
     "build:ung": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite -c ung.vite.config.js build"
   },
   "workspaces": [

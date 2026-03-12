@@ -1,4 +1,4 @@
-name: Build and deploy dev-next1
+name: Build and deploy dev-aktivitetspenger
 on:
   push:
     paths-ignore:
@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - express
+      - aktivitetspenger
 
 jobs:
   build-deploy:
@@ -17,7 +17,7 @@ jobs:
       id-token: write
       packages: read
     env:
-      CLUSTER: dev-fss
+      CLUSTER: dev-gcp
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
@@ -28,7 +28,7 @@ jobs:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
-        run: yarn build
+        run: yarn build:ung
 
       - name: Bygg server
         uses: ./.github/actions/build-server
@@ -37,13 +37,18 @@ jobs:
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push
         with:
-          additional-tag: 'dev-next1'
+          additional-tag: 'dev-aktivitetspenger'
           without_navikt_prefix: true
+          build-args: |
+            featureToggles=ung.feature-toggles.json
+            proxyConfig=ung.proxy.nginx
+            appVariant=ung
+            port=9005
           push-image: true
       - name: Deploy to nais
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
-          RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
-          VARS: deploy/dev-next1.yaml
+          RESOURCE: deploy/ung/dev-gcp.yml
+          VARS: deploy/ung/dev-aktivitetspenger.yaml
           VAR: image=${{ steps.docker-push.outputs.image }}

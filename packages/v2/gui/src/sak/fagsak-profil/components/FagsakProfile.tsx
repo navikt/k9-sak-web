@@ -1,12 +1,12 @@
-import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Heading, HStack, VStack } from '@navikt/ds-react';
 import { type ReactNode } from 'react';
+import type { Fagsak } from '../../Fagsak';
 
 interface OwnProps {
   saksnummer: string;
-  fagsakYtelseType: FagsakYtelsesType;
+  fagsakYtelseType: Fagsak['sakstype'];
   fagsakStatus: string;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
