@@ -23,9 +23,9 @@ spec:
   resources:
     requests:
       cpu: 200m
-      memory: 32Mi
+      memory: 128Mi
     limits:
-      memory: 64Mi
+      memory: 256Mi
   ingresses:
     - '{{ ingress }}'
   accessPolicy:
