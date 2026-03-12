@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: ung-sak-web
+  name: {{ name }}
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
@@ -18,16 +18,16 @@ spec:
     initialDelay: 10
   replicas:
     disableAutoScaling: true
-    min: 2
-    max: 2
+    min: {{ replicas.min }}
+    max: {{ replicas.max }}
   resources:
     requests:
       cpu: 200m
-      memory: 32Mi
+      memory: 128Mi
     limits:
-      memory: 64Mi
+      memory: 256Mi
   ingresses:
-    - "https://ung.intern.nav.no"
+    - '{{ ingress }}'
   accessPolicy:
     outbound:
       rules:

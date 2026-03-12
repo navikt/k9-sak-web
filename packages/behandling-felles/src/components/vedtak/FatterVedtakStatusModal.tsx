@@ -21,35 +21,31 @@ const FatterVedtakStatusModal = ({
   visModal = false,
   lukkModal,
   tekstkode,
-}: OwnProps & WrappedComponentProps) => (
-  <Modal
-    className={styles.modal}
-    open={visModal}
-    aria-label={intl.formatMessage({ id: tekstkode })}
-    onClose={lukkModal}
-  >
-    <Modal.Body>
-      <HGrid gap="space-16" columns={{ xs: '1fr 9fr 2fr' }}>
-        <div className="relative">
-          <Image className={styles.image} alt={intl.formatMessage({ id: tekstkode })} src={innvilgetImageUrl} />
-          <div className={styles.divider} />
-        </div>
-        <div>
-          <BodyShort size="small">
-            <FormattedMessage id={tekstkode} />
-          </BodyShort>
-          <BodyShort size="small">
-            <FormattedMessage id="FatterVedtakStatusModal.GoToSearchPage" />
-          </BodyShort>
-        </div>
-        <div>
-          <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
-            {intl.formatMessage({ id: 'FatterVedtakStatusModal.Ok' })}
-          </Button>
-        </div>
-      </HGrid>
-    </Modal.Body>
-  </Modal>
-);
+}: OwnProps & WrappedComponentProps) => {
+  const modalLabel = intl.messages[tekstkode] ? intl.formatMessage({ id: tekstkode }) : tekstkode;
+  return (
+    <Modal className={styles.modal} open={visModal} aria-label={modalLabel} onClose={lukkModal}>
+      <Modal.Body>
+        <HGrid gap="space-16" columns={{ xs: '1fr 9fr 2fr' }}>
+          <div className="relative">
+            <Image className={styles.image} alt={modalLabel} src={innvilgetImageUrl} />
+            <div className={styles.divider} />
+          </div>
+          <div>
+            <BodyShort size="small">{modalLabel}</BodyShort>
+            <BodyShort size="small">
+              <FormattedMessage id="FatterVedtakStatusModal.GoToSearchPage" />
+            </BodyShort>
+          </div>
+          <div>
+            <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
+              {intl.formatMessage({ id: 'FatterVedtakStatusModal.Ok' })}
+            </Button>
+          </div>
+        </HGrid>
+      </Modal.Body>
+    </Modal>
+  );
+};
 
 export default injectIntl(FatterVedtakStatusModal);
