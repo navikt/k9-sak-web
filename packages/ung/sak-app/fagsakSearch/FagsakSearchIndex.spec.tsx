@@ -43,9 +43,7 @@ const fagsak2 = {
 };
 
 const renderComponent = (fakeClient = new FakeUngSakBackendClient()) => {
-  mockFagsakSøk.mockImplementation((searchString: string, ytelseType) =>
-    fakeClient.fagsakSøk(searchString, ytelseType),
-  );
+  mockFagsakSøk.mockImplementation((searchString: string) => fakeClient.fagsakSøk(searchString));
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={queryClient}>
