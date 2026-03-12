@@ -11,7 +11,7 @@ const formatter = new Intl.NumberFormat('nb-NO', {
   maximumFractionDigits: 2,
 });
 
-const SelectedCell = ({ children }: { children: string }) => (
+export const SelectedCell = ({ children }: { children: string }) => (
   <HStack gap="space-4" className={styles.selectedCell}>
     <CheckmarkHeavyIcon title="Besteberegning" fontSize="1.5rem" />
     <BodyShort>{children}</BodyShort>
@@ -32,7 +32,6 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
   if (isLoading) {
     return <Loader size="large" />;
   }
-
   if (isError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
@@ -78,9 +77,7 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
                       <Table.DataCell align="right">0 (dummy)</Table.DataCell>
                       <Table.DataCell align="right">0 (dummy)</Table.DataCell>
                       <Table.DataCell align="right">0 (dummy)</Table.DataCell>
-                      <Table.DataCell align="right">
-                        <SelectedCell>{formatter.format(pgi.avkortetOgOppjustert)}</SelectedCell>
-                      </Table.DataCell>
+                      <Table.DataCell align="right">{formatter.format(pgi.avkortetOgOppjustert)}</Table.DataCell>
                     </Table.Row>
                   ))}
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
