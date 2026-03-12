@@ -1,11 +1,31 @@
 import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
 import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
+import { Fagsak } from '@k9-sak-web/types';
+import { ung_kodeverk_behandling_FagsakYtelseType } from '@navikt/ung-sak-typescript-client/types';
 import { use, useMemo } from 'react';
+import { restApiHooks, UngSakApiKeys } from '../../data/ungsakApi';
+
+const ytelseTypeMapping: Record<string, string> = {
+  [ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE]: 'Ungdomsprogramytelse',
+  [ung_kodeverk_behandling_FagsakYtelseType.AKTIVITETSPENGER]: 'Aktivitetspenger',
+};
+
+const getYtelseNavn = (sakstype: string | undefined): string => {
+  if (!sakstype) {
+    if (isAktivitetspenger()) {
+      return 'Aktivitetspenger';
+    }
+    return 'Ungdomsprogramytelse';
+  }
+
+  return ytelseTypeMapping[sakstype] ?? 'Ungdomsprogramytelse';
+};
 
 type QueryStrings = {
   errorcode?: string;
@@ -66,6 +86,16 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
 
+  const { data: fagsak } = restApiHooks.useRestApi<Fagsak>(
+    UngSakApiKeys.FETCH_FAGSAK,
+    { saksnummer: fagsakFraUrl },
+    {
+      updateTriggers: [fagsakFraUrl],
+      suspendRequest: !isFagsakFraUrlValid,
+      keepData: true,
+    },
+  );
+
   const getAaregPath = () => {
     const aaregPath = '/ung/sak/api/register/redirect-to/aa-reg';
     if (!isFagsakFraUrlValid) {
@@ -83,6 +113,7 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
   );
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
+  const ytelse = getYtelseNavn(fagsak?.sakstype);
 
   return (
     <HeaderWithErrorPanel
@@ -92,7 +123,7 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
       aaregPath={getAaregPath()}
-      ytelse="Ungdomsprogramytelse"
+      ytelse={ytelse}
       headerTitleHref="/ung/web"
       showEndringslogg={false}
     />
