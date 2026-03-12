@@ -25,19 +25,19 @@ const defaultOptions = {
  * For mocking i unit-test
  */
 export const getUseGlobalStateRestApiMock = (requestApi: AbstractRequestApi) =>
-  function useGlobalStateRestApi<T>(key: string, params?: any): RestApiData<T> {
+  (function useGlobalStateRestApi<T>(key: string, params?: any): RestApiData<T> {
     return {
       state: RestApiState.SUCCESS,
       error: undefined,
       data: requestApi.startRequest(key, params),
     };
-  };
+  });
 
 /**
  * Hook som henter data fra backend og deretter lagrer i @see RestApiContext
  */
 const getUseGlobalStateRestApi = (requestApi: AbstractRequestApi) =>
-  function useGlobalStateRestApi<T>(key: string, params?: any, options: Options = defaultOptions): RestApiData<T> {
+  (function useGlobalStateRestApi<T>(key: string, params?: any, options: Options = defaultOptions): RestApiData<T> {
     const [data, setData] = useState({
       state: RestApiState.NOT_STARTED,
       error: undefined,
@@ -77,6 +77,6 @@ const getUseGlobalStateRestApi = (requestApi: AbstractRequestApi) =>
     }, options.updateTriggers);
 
     return data;
-  };
+  });
 
 export default getUseGlobalStateRestApi;

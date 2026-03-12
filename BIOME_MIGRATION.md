@@ -21,14 +21,14 @@ This document describes the migration from ESLint and Prettier to Biome for the 
 
 ### 3. Updated Scripts
 New scripts in `package.json`:
-- `lint`: `biome check packages` (replaces ESLint)
-- `lint:fix`: `biome check --write packages` (replaces ESLint with auto-fix)
+- `lint`: `biome lint packages` (replaces ESLint - linting only, no format checks)
+- `lint:fix`: `biome check --write packages` (applies lint fixes and formatting)
 - `format`: `biome format --write packages` (replaces Prettier)
 
 ### 4. Updated lint-staged
 - Changed from ESLint + Prettier to Biome for TS/TSX/JS/JSX files
+- lint-staged runs `biome lint --write` (linting only on pre-commit hooks)
 - Kept Stylelint for CSS files (no change)
-- CSS files no longer formatted by Prettier (Biome handles CSS formatting)
 
 ### 5. Removed Old Tools
 - Removed 83 packages:
@@ -48,10 +48,11 @@ New scripts in `package.json`:
   - .prettierignore
 
 ### 6. Code Formatting
-- Ran `biome format --write` on entire codebase: 211 files formatted
-- Fixed CSS syntax errors (e.g., `#var()` → `var()`)
+- **No bulk reformatting**: Existing files are kept with their original formatting
+- `biome format` is available for formatting individual files when needed
 - **Import sorting disabled**: Original import order preserved (no reorganization)
 - **Import type conversions disabled**: No automatic `import type` conversions
+- CSS quote style configured to use single quotes
 
 ## Biome Configuration Details
 

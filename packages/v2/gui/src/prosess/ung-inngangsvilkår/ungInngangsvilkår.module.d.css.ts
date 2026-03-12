@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly lovreferanse: string;
+  readonly "lovreferanse": string;
 };
 export = styles;
+

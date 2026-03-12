@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly chatRight: string;
+  readonly "chatRight": string;
 };
 export = styles;
+

@@ -39,7 +39,9 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
               <BasicList
                 elements={dokumenter
                   .filter(({ benyttet }) => benyttet)
-                  .map(dokument => <DokumentLink dokument={dokument} visDokumentIkon />)}
+                  .map(dokument => (
+                    <DokumentLink dokument={dokument} visDokumentIkon />
+                  ))}
               />
             }
           />

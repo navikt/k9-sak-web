@@ -33,8 +33,14 @@ it('mapping fra DTO til formValues', () => {
     overføringGirRammevedtak(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P6D'),
   ];
 
-  const { overføringFår, fordelingFår, koronaoverføringFår, overføringGir, fordelingGir, koronaoverføringGir } =
-    mapDtoTilFormValues(rammevedtak);
+  const {
+    overføringFår,
+    fordelingFår,
+    koronaoverføringFår,
+    overføringGir,
+    fordelingGir,
+    koronaoverføringGir,
+  } = mapDtoTilFormValues(rammevedtak);
 
   const assertOverføring = (overføring, expectedDager, expectedMottakerAvsender, expectedFom, expectedTom) => {
     expect(overføring).toEqual([

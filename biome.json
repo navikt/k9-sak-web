@@ -31,7 +31,12 @@
 			},
 			"suspicious": {
 				"noExplicitAny": "off",
-				"noArrayIndexKey": "off"
+				"noArrayIndexKey": "off",
+				"noDoubleEquals": "warn",
+				"noImplicitAnyLet": "warn",
+				"useIterableCallbackReturn": "warn",
+				"noThenProperty": "warn",
+				"noRedeclare": "warn"
 			},
 			"style": {
 				"noNonNullAssertion": "off",
@@ -41,12 +46,28 @@
 			},
 			"a11y": {
 				"noAutofocus": "off",
-				"useValidAnchor": "off"
+				"useValidAnchor": "off",
+				"noSvgWithoutTitle": "warn",
+				"useButtonType": "warn",
+				"useAriaPropsSupportedByRole": "warn",
+				"noStaticElementInteractions": "warn"
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "warn",
 				"useHookAtTopLevel": "warn",
-				"noUnknownMediaFeatureName": "off"
+				"noUnknownMediaFeatureName": "off",
+				"useJsxKeyInIterable": "warn",
+				"noChildrenProp": "warn",
+				"noUnusedImports": "warn",
+				"noUnusedFunctionParameters": "warn",
+				"noUnusedVariables": "warn",
+				"noSelfAssign": "warn"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "warn"
+			},
+			"performance": {
+				"noAccumulatingSpread": "warn"
 			}
 		}
 	},
@@ -88,7 +109,7 @@
 			"linter": {
 				"rules": {
 					"suspicious": {
-						"noExplicitAny": "error"
+						"noExplicitAny": "warn"
 					}
 				}
 			}

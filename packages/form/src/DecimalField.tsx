@@ -44,7 +44,10 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
           input={{
             ...input,
             onBlur: event => {
-              const value = event && event.target && Object.hasOwn(event.target, 'value') ? event.target.value : event;
+              const value =
+                event && event.target && Object.prototype.hasOwnProperty.call(event.target, 'value')
+                  ? event.target.value
+                  : event;
               const newValue = normalizeOnBlur ? normalizeOnBlur(value) : value;
               onBlur(newValue);
             },

@@ -177,7 +177,7 @@ export const getAktivitetNavnFraInnteksforhold = (
   inntektsforhold: Inntektsforhold,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
-  let agOpplysning: ArbeidsgiverOpplysninger | undefined;
+  let agOpplysning: ArbeidsgiverOpplysninger | undefined = undefined;
   if (inntektsforhold.arbeidsgiverId !== null && inntektsforhold.arbeidsgiverId !== undefined) {
     agOpplysning = arbeidsgiverOpplysningerPerId[inntektsforhold.arbeidsgiverId];
   }
@@ -208,7 +208,7 @@ export const getAktivitetNavnFraField = (
   field: TilkommetInntektsforholdFieldValues,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
-  let agOpplysning: ArbeidsgiverOpplysninger | undefined;
+  let agOpplysning: ArbeidsgiverOpplysninger | undefined = undefined;
   if (field.arbeidsgiverIdent) {
     agOpplysning = arbeidsgiverOpplysningerPerId[field.arbeidsgiverIdent];
   }

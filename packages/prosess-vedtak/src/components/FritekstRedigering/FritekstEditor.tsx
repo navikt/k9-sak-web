@@ -31,10 +31,11 @@ interface ownProps {
 const debounce = funksjon => {
   let teller;
   return function lagre(...args) {
+    const context = this;
     if (teller) clearTimeout(teller);
     teller = setTimeout(() => {
       teller = null;
-      funksjon.apply(this, args);
+      funksjon.apply(context, args);
     }, 1000);
   };
 };

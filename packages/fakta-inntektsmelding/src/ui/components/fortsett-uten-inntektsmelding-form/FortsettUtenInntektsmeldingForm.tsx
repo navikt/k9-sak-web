@@ -157,9 +157,8 @@ const FortsettUtenInntektsmeldingForm = ({
               arbeidsgiverne/arbeidsforholdene vi mangler inntektsmelding fra.
             </li>
             <li>
-              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter{' '}
-              <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får tilstrekkelige opplysninger hverken i A-inntekt
-              eller fra inntektsmelding.
+              Vi har utredningsplikt til å forsøke å la bruker dokumentere sin inntekt etter <Lovreferanse>§ 21-3</Lovreferanse>, hvis vi ikke får
+              tilstrekkelige opplysninger hverken i A-inntekt eller fra inntektsmelding.
             </li>
             <li>
               Hvis du ser at arbeidsgiver utbetaler full lønn, og mangler refusjonskrav etter gjentatte forsøk på å

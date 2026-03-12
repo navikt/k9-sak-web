@@ -22,10 +22,7 @@ export const errorOfType = (error: ErrorType, errorType: string): boolean =>
 export const isHandledError = (errorType?: string): boolean =>
   errorType && handledErrorTypes.some(het => het === errorType);
 
-const hasStatusCode =
-  (statusCode: number) =>
-  (errorStatus?: number): boolean =>
-    errorStatus === statusCode;
+const hasStatusCode = (statusCode: number) => (errorStatus?: number): boolean => errorStatus === statusCode;
 
 export const is401Error = hasStatusCode(401);
 

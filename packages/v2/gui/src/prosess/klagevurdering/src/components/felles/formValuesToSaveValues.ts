@@ -11,7 +11,7 @@ export const formValuesToSaveValues = (
   values: BehandleKlageFormKaFormValues,
   aksjonspunktCode: string,
 ): SaveKlageParams => {
-  let klageMedholdArsak: KlageMedholdÅrsak | undefined;
+  let klageMedholdArsak: KlageMedholdÅrsak | undefined = undefined;
   if (
     values.klageVurdering == KlageVurdering.MEDHOLD_I_KLAGE ||
     values.klageVurdering == KlageVurdering.OPPHEVE_YTELSESVEDTAK
@@ -22,7 +22,7 @@ export const formValuesToSaveValues = (
       throw new Error(`Ugyldig KlageMedholdÅrsak verdi: ${values.klageMedholdArsak}`);
     }
   }
-  let klageVurderingOmgjoer: KlageVurderingOmgjør | undefined;
+  let klageVurderingOmgjoer: KlageVurderingOmgjør | undefined = undefined;
   if (values.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE) {
     if (values.klageVurderingOmgjoer == null || isKlageVurderingOmgjør(values.klageVurderingOmgjoer)) {
       klageVurderingOmgjoer = values.klageVurderingOmgjoer ?? undefined;
@@ -30,7 +30,7 @@ export const formValuesToSaveValues = (
       throw new Error(`Ugyldig KlageVurderingOmgjør verdi: ${values.klageVurderingOmgjoer}`);
     }
   }
-  let klageVurdering: KlageVurdering | undefined;
+  let klageVurdering: KlageVurdering | undefined = undefined;
   if (values.klageVurdering == null || isKlageVurdering(values.klageVurdering)) {
     klageVurdering = values.klageVurdering;
   } else {

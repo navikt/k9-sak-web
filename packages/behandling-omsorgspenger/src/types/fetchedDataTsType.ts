@@ -6,7 +6,7 @@ import {
   Soknad,
   Vilkar,
   BeregningsresultatUtbetalt,
-  BehandlingPerioderårsakMedVilkår,
+  BehandlingPerioderårsakMedVilkår
 } from '@k9-sak-web/types';
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 

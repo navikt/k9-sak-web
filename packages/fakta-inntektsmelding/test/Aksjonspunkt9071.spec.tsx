@@ -26,9 +26,7 @@ describe('9071 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ASSERT
-    expect(
-      screen.getByLabelText(/Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3/i),
-    ).toBeDefined();
+    expect(screen.getByLabelText(/Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3/i),).toBeDefined();
     expect(screen.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).toBeNull();
     expect(screen.queryByRole('button', { name: /Send purring med varsel om avslag/i })).toBeNull();
   });
@@ -126,7 +124,7 @@ describe('9071 - Mangler inntektsmelding', () => {
           periode: '2022-02-01/2022-02-16',
           fortsett: true,
           kode: '9071',
-          vurdering: 'FORTSETT',
+          vurdering: 'FORTSETT'
         },
       ],
     });

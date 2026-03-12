@@ -5,7 +5,7 @@ import { dateStringSorter } from '../date-utils/sort';
 import Period from './Period';
 
 export function getPeriodsAsListOfDays(period: Period[]): string[] {
-  const days = period.flatMap(p => p.asListOfDays());
+  const days = period.map(p => p.asListOfDays()).flat();
   return makeArrayWithoutDuplicates(days);
 }
 

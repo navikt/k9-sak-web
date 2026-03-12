@@ -7,36 +7,38 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class OverstyrBeregningFaktaPanelDef extends FaktaPanelDef {
-  getUrlKode = () => faktaPanelCodes.OVERSTYRING;
+    getUrlKode = () => faktaPanelCodes.OVERSTYRING;
 
-  getTekstKode = () => 'OverstyrBeregningPanel.OverstyrBeregning';
+    getTekstKode = () => 'OverstyrBeregningPanel.OverstyrBeregning';
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT];
+    getAksjonspunktKoder = () => [
+        aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT,
+    ];
 
-  getKomponent = props => {
-    const {
-      arbeidsgiverOpplysningerPerId,
-      overstyrInputBeregning,
-      submitCallback,
-      readOnly,
-      submittable,
-      aksjonspunkter,
-    } = props;
-    return (
-      <OverstyrBeregningFaktaIndex
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        overstyrInputBeregning={overstyrInputBeregning}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        submittable={submittable}
-        aksjonspunkter={aksjonspunkter}
-      />
-    );
-  };
+    getKomponent = props => {
+        const {
+            arbeidsgiverOpplysningerPerId,
+            overstyrInputBeregning,
+            submitCallback,
+            readOnly,
+            submittable,
+            aksjonspunkter
+        } = props;
+        return (
+            <OverstyrBeregningFaktaIndex
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                overstyrInputBeregning={overstyrInputBeregning}
+                submitCallback={submitCallback}
+                readOnly={readOnly}
+                submittable={submittable}
+                aksjonspunkter={aksjonspunkter}
+            />
+        )
+    }
 
-  getEndepunkter = (): string[] => [PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING];
+    getEndepunkter = (): string[] => [PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING];
 
-  getData = ({ arbeidsgiverOpplysningerPerId }) => ({ arbeidsgiverOpplysningerPerId });
+    getData = ({ arbeidsgiverOpplysningerPerId }) => ({ arbeidsgiverOpplysningerPerId });
 }
 
 export default OverstyrBeregningFaktaPanelDef;

@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly confirmVilkarForm: string;
+  readonly "confirmVilkarForm": string;
 };
 export = styles;
+

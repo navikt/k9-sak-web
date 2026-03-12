@@ -9,7 +9,7 @@ export type AktsomhetInfo = {
   tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: boolean;
   annetBegrunnelse: string;
   sarligGrunnerBegrunnelse: string;
-};
+}
 
 export type VilkarResultatInfo = {
   begrunnelse: string;
@@ -17,7 +17,7 @@ export type VilkarResultatInfo = {
   aktsomhetInfo?: AktsomhetInfo;
   erBelopetIBehold?: boolean;
   tilbakekrevesBelop?: number;
-};
+}
 
 export type VilkarsVurdertPeriode = {
   fom: string;

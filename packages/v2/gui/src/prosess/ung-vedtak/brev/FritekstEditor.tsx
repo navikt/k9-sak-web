@@ -23,15 +23,18 @@ interface OwnProps {
   htmlSeksjoner: ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon[];
 }
 
-type DebouncedFunction<T extends (...args: any[]) => any> = (...args: Parameters<T>) => void;
+interface DebouncedFunction<T extends (...args: any[]) => any> {
+  (...args: Parameters<T>): void;
+}
 
 const debounce = <T extends (...args: any[]) => any>(funksjon: T): DebouncedFunction<T> => {
   let teller: ReturnType<typeof setTimeout> | null = null;
   return function lagre(this: ThisParameterType<T>, ...args: Parameters<T>): void {
+    const context: ThisParameterType<T> = this;
     if (teller) clearTimeout(teller);
     teller = setTimeout(() => {
       teller = null;
-      funksjon.apply(this, args);
+      funksjon.apply(context, args);
     }, 1000);
   };
 };

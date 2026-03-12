@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly fritekstTilBrevTextArea: string;
+  readonly "fritekstTilBrevTextArea": string;
 };
 export = styles;
+

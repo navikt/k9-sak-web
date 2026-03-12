@@ -1,6 +1,7 @@
 declare const styles: {
-  readonly aksjonspunktHeading: string;
-  readonly buttonContainer: string;
-  readonly errorMessage: string;
+  readonly "aksjonspunktHeading": string;
+  readonly "buttonContainer": string;
+  readonly "errorMessage": string;
 };
 export = styles;
+
