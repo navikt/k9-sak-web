@@ -16,7 +16,7 @@
     "@navikt/ds-react": "8.2.0",
     "@navikt/fnrvalidator": "2.2.1",
     "@navikt/ft-plattform-komponenter": "10.5.9",
-    "axios": "1.13.5",
+    "axios": "1.13.6",
     "classnames": "2.5.1",
     "date-fns": "4.1.0",
     "date-fns-tz": "3.2.0",
