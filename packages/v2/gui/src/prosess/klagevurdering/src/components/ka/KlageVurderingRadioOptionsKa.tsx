@@ -46,7 +46,7 @@ export const KlageVurderingRadioOptionsKa = ({
           placeholder="Begrunn vurderingen din"
         />
       </ContentMaxWidth>
-      <Box.New marginBlock="space-16 0">
+      <Box marginBlock="space-16 space-0">
         <HGrid gap="space-4" columns={{ xs: '4fr 4fr 4fr' }}>
           <ContentMaxWidth>
             <RhfRadioGroup
@@ -66,7 +66,7 @@ export const KlageVurderingRadioOptionsKa = ({
             </RhfRadioGroup>
           </ContentMaxWidth>
         </HGrid>
-      </Box.New>
+      </Box>
       {klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE && (
         <ContentMaxWidth>
           <ArrowBox>
@@ -78,7 +78,7 @@ export const KlageVurderingRadioOptionsKa = ({
               label="Årsak"
               validate={[required]}
             />
-            <Box.New marginBlock="space-6 0">
+            <Box marginBlock="space-6 space-0">
               <RhfRadioGroup
                 control={control}
                 name="klageVurderingOmgjoer"
@@ -93,7 +93,7 @@ export const KlageVurderingRadioOptionsKa = ({
                   Delvis omgjør, til gunst
                 </Radio>
               </RhfRadioGroup>
-            </Box.New>
+            </Box>
           </ArrowBox>
         </ContentMaxWidth>
       )}

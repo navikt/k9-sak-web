@@ -25,7 +25,7 @@ export const FormWithButtons = ({
   <form onSubmit={onSubmit}>
     {children}
     {shouldShowSubmitButton !== false && (
-      <Box.New marginBlock="8 0">
+      <Box marginBlock="space-32 space-0">
         <HStack gap="space-16">
           <Button
             id="submitButton"
@@ -46,7 +46,7 @@ export const FormWithButtons = ({
             </Button>
           )}
         </HStack>
-      </Box.New>
+      </Box>
     )}
   </form>
 );

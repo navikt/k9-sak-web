@@ -6,12 +6,13 @@ const config: KnipConfig = {
     'index.html',
     'ung.html',
   ],
-  ignore: ['packages/assets/styles/dayPicker.css', 'vitest.shims.d.ts'],
+  ignore: ['packages/assets/styles/dayPicker.css', '.yarn/**', 'server/**', 'vitest.shims.d.ts'],
   workspaces: {
     '.': {
       entry: [
         'packages/sak-app/src/index.ts',
         'ung.vite.config.js',
+        'aktivitetspenger.vite.config.js',
         'scripts/sentry-release.cjs',
         'scripts/sentry-release-ung.cjs',
       ],

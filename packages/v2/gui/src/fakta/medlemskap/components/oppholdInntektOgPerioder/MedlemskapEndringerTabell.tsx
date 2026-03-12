@@ -44,7 +44,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
             }
           >
             <Table.DataCell>
-              <HStack gap="2">
+              <HStack gap="space-8">
                 {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
                   <ExclamationmarkTriangleFillIcon
                     fontSize="1.5rem"

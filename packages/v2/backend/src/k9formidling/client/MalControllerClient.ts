@@ -1,7 +1,7 @@
 import { type AvsenderApplikasjon } from '../models/AvsenderApplikasjon.js';
 import { isTemplate, type Template } from '../models/Template.js';
 import { type FritekstbrevDokumentdata, isFritekstbrevDokumentdataArray } from '../models/FritekstbrevDokumentdata.js';
-import type { FagsakYtelsesType } from '../../k9sak/kodeverk/FagsakYtelsesType.ts';
+import type { FagsakYtelseType } from '../../combined/kodeverk/behandling/FagsakYtelseType.js';
 
 export class MalControllerClient {
   constructor(private baseUrl: URL) {
@@ -20,19 +20,15 @@ export class MalControllerClient {
   }
 
   async hentBrevmaler(
-    sakstype: FagsakYtelsesType,
-    behandlingUuid?: string,
-    eksternReferanse?: string,
+    sakstype: FagsakYtelseType,
+    behandlingUuid: string,
     avsenderApplikasjon?: AvsenderApplikasjon,
   ): Promise<Map<string, Template>> {
     const url = this.newUrl('brev/maler');
     url.searchParams.set('sakstype', sakstype);
-    if (behandlingUuid !== undefined) {
-      url.searchParams.set('behandlingUuid', behandlingUuid);
-    }
-    if (eksternReferanse !== undefined) {
-      url.searchParams.set('eksternReferanse', eksternReferanse);
-    }
+    // MalController.kt::hentBrevmaler forventer å få behandling uuid inn som string på parameter eksternReferanse
+    // (behandlingUuid parameter er deprecated)
+    url.searchParams.set('eksternReferanse', behandlingUuid);
     if (avsenderApplikasjon !== undefined) {
       url.searchParams.set('avsenderApplikasjon', avsenderApplikasjon);
     }
@@ -47,7 +43,7 @@ export class MalControllerClient {
         if (isTemplate(val)) {
           ret.set(key, val);
         } else {
-          throw new Error(`Invalid data format returned (not a Template): ${json}`);
+          throw new Error(`Invalid data format returned (not a Template): ${JSON.stringify(val)}`);
         }
       }
       return ret;
@@ -56,7 +52,7 @@ export class MalControllerClient {
   }
 
   async hentInnholdBrevmalType(
-    sakstype: FagsakYtelsesType,
+    sakstype: FagsakYtelseType,
     eksternReferanse: string,
     avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,

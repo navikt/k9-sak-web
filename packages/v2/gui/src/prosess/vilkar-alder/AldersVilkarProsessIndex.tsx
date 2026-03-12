@@ -1,4 +1,7 @@
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
@@ -23,6 +26,7 @@ interface AldersVilkarProsessIndexProps {
   isAksjonspunktOpen: boolean;
   vilkar: AlderVilkårType[];
   status: string;
+  fagsak: FagsakDto;
 }
 
 const AldersVilkarProsessIndex = ({
@@ -34,6 +38,7 @@ const AldersVilkarProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   status,
+  fagsak,
 }: AldersVilkarProsessIndexProps) => {
   const aldersVilkarBarn = vilkar.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR_BARN);
   const periode = aldersVilkarBarn?.perioder?.[0];
@@ -48,17 +53,20 @@ const AldersVilkarProsessIndex = ({
     begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
   }
 
+  const skalVilkårStatusVises = vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises;
+  const skalAksjonspunktVises = !vilkaretErAutomatiskInnvilget && relevantAksjonspunkt;
+
   return (
     <>
-      {(vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises) && (
+      {skalVilkårStatusVises && (
         <AldersVilkarStatus
           vilkarOppfylt={vilkarOppfylt}
           vilkarReferanse={aldersVilkarBarn?.lovReferanse}
           periode={periode ? formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`) : ''}
-          begrunnelse={begrunnelseTekst}
+          begrunnelse={skalAksjonspunktVises ? null : begrunnelseTekst}
         />
       )}
-      {!vilkaretErAutomatiskInnvilget && relevantAksjonspunkt && (
+      {skalAksjonspunktVises && (
         <AldersVilkarAP
           behandling={behandling}
           submitCallback={submitCallback}
@@ -69,6 +77,7 @@ const AldersVilkarProsessIndex = ({
           erVurdert={erVurdert}
           vilkarOppfylt={vilkarOppfylt}
           begrunnelseTekst={begrunnelseTekst}
+          fagsak={fagsak}
         />
       )}
     </>

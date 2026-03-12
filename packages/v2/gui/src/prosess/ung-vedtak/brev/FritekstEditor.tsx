@@ -150,12 +150,12 @@ const FritekstEditor = ({
           <Heading level="3" size="small">
             Rediger brev
           </Heading>
-          <Box.New marginBlock="4 0">
+          <Box marginBlock="space-16 space-0">
             <Alert variant="info" size="small">
               Gjør nødvendige endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje. Vil du
               se saken samtidig som du redigerer kan du åpne en kopi av saken i ny fane:
             </Alert>
-          </Box.New>
+          </Box>
         </Modal.Header>
       )}
       <Modal.Body>
@@ -212,13 +212,13 @@ const FritekstEditor = ({
             </div>
           </div>
           <footer className={visAdvarsel ? styles.skjulEditor : ''}>
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <div>
                 <div className={styles.knapper}>
                   {visValideringsFeil && (
-                    <Box.New marginBlock="0 4">
+                    <Box marginBlock="space-0 space-16">
                       <Alert variant="error">Brevet må redigeres før det kan forhåndsvises</Alert>
-                    </Box.New>
+                    </Box>
                   )}
                   <Button
                     variant="tertiary"
@@ -232,8 +232,8 @@ const FritekstEditor = ({
                   </Button>
                 </div>
               </div>
-              <Box.New marginBlock="8 0">
-                <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+              <Box marginBlock="space-32 space-0">
+                <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>
                   <div>
                     <Button
                       type="button"
@@ -258,8 +258,8 @@ const FritekstEditor = ({
                     </Button>
                   </div>
                 </HGrid>
-              </Box.New>
-            </Box.New>
+              </Box>
+            </Box>
           </footer>
         </div>
       </Modal.Body>

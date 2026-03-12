@@ -18,7 +18,7 @@ export interface Props {
 export const VurdertIForrigeBehandlingIcon = ({ className = '' }: Props) => {
   return (
     <span data-testid="vurdertIForrigeIcon" className={classNames('vurdertIForrigeIcon', className)}>
-      <Tag size="small" variant="neutral">
+      <Tag data-color="neutral" size="small" variant="outline">
         Vurdert i en tidligere behandling
       </Tag>
     </span>

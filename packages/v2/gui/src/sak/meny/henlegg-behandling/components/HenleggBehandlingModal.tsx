@@ -265,7 +265,7 @@ export const HenleggBehandlingModal = ({
                     {showLink && (
                       <div className={styles.forhandsvis}>
                         <Detail>Informer søker</Detail>
-                        <Bleed marginInline="3 0" asChild>
+                        <Bleed marginInline="space-12 space-0" asChild>
                           <Button
                             variant="tertiary"
                             size="small"

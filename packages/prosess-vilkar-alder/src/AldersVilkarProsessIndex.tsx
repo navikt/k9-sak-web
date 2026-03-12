@@ -54,17 +54,20 @@ const AldersVilkarProsessIndex = ({
   let begrunnelseTekst = '';
   if (!vilkaretErAutomatiskInnvilget) begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
 
+  const skalVilkårStatusVises = vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises;
+  const skalAksjonspunktVises = !vilkaretErAutomatiskInnvilget && relevantAksjonspunkt;
+
   return (
     <RawIntlProvider value={intl}>
-      {(vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises) && (
+      {skalVilkårStatusVises && (
         <AldersVilkarStatus
           vilkarOppfylt={vilkarOppfylt}
           vilkarReferanse={aldersVilkarBarn.lovReferanse}
           periode={formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`)}
-          begrunnelse={begrunnelseTekst}
+          begrunnelse={skalAksjonspunktVises ? null : begrunnelseTekst}
         />
       )}
-      {!vilkaretErAutomatiskInnvilget && relevantAksjonspunkt && (
+      {skalAksjonspunktVises && (
         <AldersVilkarAP
           behandling={behandling}
           submitCallback={submitCallback}

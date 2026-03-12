@@ -9,6 +9,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
 
@@ -71,6 +72,14 @@ vi.mock('react-router', async () => {
   };
 });
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
 describe('BehandlingMenuIndex', () => {
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
@@ -104,22 +113,24 @@ describe('BehandlingMenuIndex', () => {
 
     render(
       <MemoryRouter>
-        <BehandlingMenuIndex
-          fagsak={fagsak as Fagsak}
-          // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
-          alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-          behandlingId={1}
-          behandlingVersjon={2}
-          oppfriskBehandlinger={vi.fn()}
-          behandlingRettigheter={behandlingRettigheter}
-          sakRettigheter={sakRettigheter}
-          behandlendeEnheter={[
-            {
-              enhetId: 'TEST',
-              enhetNavn: 'TEST',
-            },
-          ]}
-        />
+        <QueryClientProvider client={queryClient}>
+          <BehandlingMenuIndex
+            fagsak={fagsak as Fagsak}
+            // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={2}
+            oppfriskBehandlinger={vi.fn()}
+            behandlingRettigheter={behandlingRettigheter}
+            sakRettigheter={sakRettigheter}
+            behandlendeEnheter={[
+              {
+                enhetId: 'TEST',
+                enhetNavn: 'TEST',
+              },
+            ]}
+          />
+        </QueryClientProvider>
       </MemoryRouter>,
     );
 

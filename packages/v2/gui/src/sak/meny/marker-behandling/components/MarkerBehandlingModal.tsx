@@ -6,7 +6,7 @@ import {
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
+import { Bleed, BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack, Box } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useQuery } from '@tanstack/react-query';
@@ -136,24 +136,26 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                 <Heading size="xsmall" level="4" spacing>
                   Gjeldende merknader
                 </Heading>
-                <List as="ul" size="small">
-                  {gjeldendeMerknader.map(merknad => (
-                    <List.Item title={merknad.tittel} key={merknad.tittel}>
-                      <HStack gap="space-48" align="center" justify="space-between">
-                        <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
-                        <Bleed marginBlock="1 0">
-                          <Button
-                            type="button"
-                            onClick={() => slettMerknad(merknad.merknadKode)}
-                            variant="tertiary"
-                            size="small"
-                            icon={<TrashIcon fontSize="1.5rem" title="Slett merknad" />}
-                          />
-                        </Bleed>
-                      </HStack>
-                    </List.Item>
-                  ))}
-                </List>
+                <Box marginBlock="space-12" asChild>
+                  <List data-aksel-migrated-v8 as="ul" size="small">
+                    {gjeldendeMerknader.map(merknad => (
+                      <List.Item title={merknad.tittel} key={merknad.tittel}>
+                        <HStack gap="space-48" align="center" justify="space-between">
+                          <BodyShort size="small">{merknad.begrunnelse}</BodyShort>
+                          <Bleed marginBlock="space-4 space-0">
+                            <Button
+                              type="button"
+                              onClick={() => slettMerknad(merknad.merknadKode)}
+                              variant="tertiary"
+                              size="small"
+                              icon={<TrashIcon fontSize="1.5rem" title="Slett merknad" />}
+                            />
+                          </Bleed>
+                        </HStack>
+                      </List.Item>
+                    ))}
+                  </List>
+                </Box>
               </div>
             )}
             <RhfForm<FormValues> formMethods={formMethods} onSubmit={handleSubmit}>

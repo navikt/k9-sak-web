@@ -130,11 +130,10 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   };
 
   return (
-    <Box.New className="min-w-[400px]">
+    <Box className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
         {title}
       </Heading>
-
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
       {allePerioder.length > 0 && (
         <>
@@ -164,7 +163,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </ul>
         </>
       )}
-    </Box.New>
+    </Box>
   );
 };
 

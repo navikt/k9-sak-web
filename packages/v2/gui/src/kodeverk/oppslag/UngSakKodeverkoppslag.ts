@@ -75,6 +75,13 @@ export class UngSakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implement
     return this.finnObjektFraKilde('oppgaveÅrsaker', kode, undefinedIfNotFound);
   }
 
+  overordnetInntektYtelseType<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'overordnetInntektYtelseType'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('overordnetInntektYtelseType', kode, undefinedIfNotFound);
+  }
+
   revurderingVarslingÅrsaker<U extends OrUndefined = undefined>(
     kode: Kilde<EO, 'revurderingVarslingÅrsaker'>,
     undefinedIfNotFound?: U,

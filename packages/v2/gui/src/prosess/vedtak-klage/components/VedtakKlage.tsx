@@ -9,7 +9,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { BodyShort, BoxNew, Detail, Heading } from '@navikt/ds-react';
+import { BodyShort, Box, Detail, Heading } from '@navikt/ds-react';
 import { useState } from 'react';
 import { VedtakKlageKaSubmitPanel, VedtakKlageNkkSubmitPanel, VedtakKlageSubmitPanel } from './VedtakKlageSubmitPanel';
 
@@ -109,13 +109,13 @@ export const VedtakKlage = ({
       <Heading size="small" level="2">
         Resultat
       </Heading>
-      <BoxNew marginBlock="space-20 0" />
+      <Box marginBlock="space-20 space-0" />
       {!readOnly && åpneAksjonspunktKoder.some(a => a === AksjonspunktCodes.VURDERE_DOKUMENT) ? (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen>
             Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen
           </AksjonspunktHelpText>
-          <BoxNew marginBlock="space-8 0" />
+          <Box marginBlock="space-8 space-0" />
         </>
       ) : null}
       <>
@@ -123,7 +123,7 @@ export const VedtakKlage = ({
           <Detail>Resultat av klage</Detail>
         </div>
         {behandlingsResultatTekst && <BodyShort size="small">{behandlingsResultatTekst}</BodyShort>}
-        <BoxNew marginBlock="space-16 0">
+        <Box marginBlock="space-16 space-0">
           {isAvvist && Array.isArray(avvistArsaker) && avvistArsaker.length > 0 && (
             <div>
               <Detail>Årsak til avvisning</Detail>
@@ -132,22 +132,22 @@ export const VedtakKlage = ({
                   {kodeverkNavnFraKode(arsak, KodeverkKlageType.KLAGE_AVVIST_AARSAK)}
                 </BodyShort>
               ))}
-              <BoxNew marginBlock="space-16 0" />
+              <Box marginBlock="space-16 space-0" />
             </div>
           )}
-        </BoxNew>
+        </Box>
         {isOmgjort && omgjortAarsak && (
           <div>
             <Detail>Årsak til omgjøring</Detail>
             <BodyShort size="small">{omgjortAarsak}</BodyShort>
-            <BoxNew marginBlock="space-16 0" />
+            <Box marginBlock="space-16 space-0" />
           </div>
         )}
         {isOpphevOgHjemsend && omgjortAarsak && (
           <div>
             <Detail>Årsak til oppheving</Detail>
             <BodyShort size="small">{omgjortAarsak}</BodyShort>
-            <BoxNew marginBlock="space-16 0" />
+            <Box marginBlock="space-16 space-0" />
           </div>
         )}
 

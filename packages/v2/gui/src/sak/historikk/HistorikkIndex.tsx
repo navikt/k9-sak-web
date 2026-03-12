@@ -5,31 +5,18 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 
 import dayjs from 'dayjs';
 import { Alert } from '@navikt/ds-react';
-import type {
-  BeriketHistorikkInnslag,
-  HistorikkBackendApi,
-} from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApi.js';
+import type { HistorikkBackendApi } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApi.js';
 import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
 import { pathToBehandling } from '../../utils/paths.js';
+import { queryKeys } from '../../shared/query-keys/queryKeys.js';
 
 interface OwnProps {
   saksnummer: string;
   behandlingId: number;
   behandlingVersjon?: number;
 }
-
-// Bør få inn behandlingUuid på historikkinnslagDto i alle backends slik at vi kan fjerne denne kode.
-const behandlingIdOrUuid = (historikkinnslag: BeriketHistorikkInnslag): string | number | undefined => {
-  if ('behandlingId' in historikkinnslag && typeof historikkinnslag.behandlingId === 'number') {
-    return historikkinnslag.behandlingId;
-  }
-  if ('behandlingUuid' in historikkinnslag && typeof historikkinnslag.behandlingUuid === 'string') {
-    return historikkinnslag.behandlingUuid;
-  }
-  return undefined;
-};
 
 /**
  * HistorikkIndex
@@ -44,7 +31,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
   }
 
   const { data: historikk, isLoading } = useQuery({
-    queryKey: ['historikk', saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
+    queryKey: [...queryKeys.HISTORIKK, saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
     queryFn: () => historikkBackendApi.hentAlleInnslag(saksnummer),
     enabled: saksnummer != null && saksnummer.length > 0,
     select: ({ innslag, feilet }) => {
@@ -81,7 +68,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
           <InnslagBoble
             key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
             innslag={innslag}
-            behandlingLocation={getBehandlingLocation(behandlingIdOrUuid(innslag) ?? behandlingId)}
+            behandlingLocation={getBehandlingLocation(innslag.behandlingUuid ?? behandlingId)}
           />
         );
       })}

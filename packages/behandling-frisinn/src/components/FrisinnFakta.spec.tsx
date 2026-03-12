@@ -16,7 +16,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnFakta from './FrisinnFakta';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/qFeatureToggles.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {

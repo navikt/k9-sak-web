@@ -72,7 +72,7 @@
 .uttakLastColumn {
   display: grid;
   grid-template-columns: 6rem 30px;
-  grid-column-gap: 1.75rem;
+  column-gap: 1.75rem;
   align-items: center;
 }
 

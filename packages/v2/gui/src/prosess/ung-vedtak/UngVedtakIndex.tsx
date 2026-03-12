@@ -1,9 +1,10 @@
-import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 interface UngVedtakIndexProps {
@@ -12,6 +13,7 @@ interface UngVedtakIndexProps {
   submitCallback: (data: any) => Promise<any>;
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
+  tekster: UngVedtakTekster;
 }
 
 export const UngVedtakIndex = ({
@@ -20,6 +22,7 @@ export const UngVedtakIndex = ({
   submitCallback,
   vilkar,
   isReadOnly,
+  tekster,
 }: UngVedtakIndexProps) => {
   const ungVedtakBackendClient = new UngVedtakBackendClient();
   const {
@@ -29,12 +32,13 @@ export const UngVedtakIndex = ({
   } = useQuery({
     queryKey: ['vedtaksbrevValg', behandling.id],
     queryFn: async () => {
-      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id);
+      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id!);
       return response;
     },
+    enabled: behandling.id !== undefined,
   });
   return (
-    <Box.New paddingInline="4 8" paddingBlock="2">
+    <Box paddingInline="space-16 space-32" paddingBlock="space-8">
       <Heading size="medium" level="1" spacing>
         Vedtak
       </Heading>
@@ -48,8 +52,9 @@ export const UngVedtakIndex = ({
           readOnly={isReadOnly}
           vedtaksbrevValgResponse={vedtaksbrevValgResponse}
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
+          tekster={tekster}
         />
       )}
-    </Box.New>
+    </Box>
   );
 };

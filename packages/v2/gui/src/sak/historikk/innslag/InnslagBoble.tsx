@@ -1,17 +1,16 @@
+import { HistorikkAktør } from '@k9-sak-web/backend/combined/kodeverk/historikk/HistorikkAktør.js';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, Chat, VStack } from '@navikt/ds-react';
+import { dateFormat, timeFormat } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag.jsx';
 import type { BeriketHistorikkInnslag } from '../api/HistorikkBackendApi.js';
 import { Avatar } from './Avatar.jsx';
 import { DokumentLenke } from './DokumentLenke.js';
-import { Tittel } from './Tittel.js';
+import styles from './innslagboble.module.css';
 import { InnslagLinje, type InnslagLinjeProps } from './InnslagLinje.jsx';
 import { Skjermlenke } from './Skjermlenke.js';
-import { HistorikkAktør } from '@k9-sak-web/backend/combined/kodeverk/historikk/HistorikkAktør.js';
-import styles from './innslagboble.module.css';
-import { dateFormat, timeFormat } from '@navikt/ft-utils';
-import type { AkselColor } from '@navikt/ds-react/types/theme';
+import { Tittel } from './Tittel.js';
 
 export interface InnslagBobleProps {
   readonly innslag: BeriketHistorikkInnslag;
@@ -29,31 +28,35 @@ const aktørIkonPlassering = (aktør: HistorikkAktør): 'right' | 'left' => {
   }
 };
 
-const aktørFarge = (aktør: HistorikkAktør): AkselColor => {
+const aktørFarge = (aktør: HistorikkAktør) => {
   switch (aktør) {
     case HistorikkAktør.SAKSBEHANDLER:
       return 'meta-purple';
     case HistorikkAktør.BESLUTTER:
-      return 'success';
+      return 'meta-lime';
     case HistorikkAktør.VEDTAKSLØSNINGEN:
       return 'neutral';
     case HistorikkAktør.ARBEIDSGIVER:
-      return 'info';
+      return 'brand-blue';
     case HistorikkAktør.SØKER:
-      return 'warning';
+      return 'brand-beige';
     default:
-      return 'warning';
+      return 'brand-beige';
   }
 };
 
 const formatDate = (date: string) => `${dateFormat(date)} - ${timeFormat(date)}`;
+
+const antallLinjerSomAlltidVises = 2;
 
 export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps) => {
   const [expanded, setExpanded] = useState(false);
   const position = aktørIkonPlassering(innslag.aktør.type);
   // NB: Denne fungerer kun for saksbehandlere frå k9-sak. Saksbehandlere som kun har gjort noko i k9-tilbake eller k9-klage blir ikkje utleda.
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-  const doCutOff = innslag.linjer.length > 2;
+  const doCutOff = innslag.linjer.length > antallLinjerSomAlltidVises;
+  const innslagHarSkjermlenke = innslag.skjermlenke != null;
+  const bådeTittelOgSkjermlenke = innslagHarSkjermlenke && innslag.tittel != null;
   return (
     <Chat
       data-testid={`snakkeboble-${innslag.opprettetTidspunkt}`}
@@ -64,15 +67,17 @@ export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps)
       toptextPosition="left"
       className={position === 'right' ? styles.chatRight : ''}
       data-color={aktørFarge(innslag.aktør.type)}
-      variant="neutral"
     >
       <Chat.Bubble>
-        {innslag.tittel != null ? <Tittel>{innslag.tittel}</Tittel> : null}
-        {'skjermlenke' in innslag && innslag.skjermlenke != null && innslag.skjermlenke.navn != null ? (
-          <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
-        ) : null}
+        <Tittel>
+          {innslagHarSkjermlenke ? (
+            <Skjermlenke skjermlenke={innslag.skjermlenke} behandlingLocation={behandlingLocation} />
+          ) : null}
+          {bådeTittelOgSkjermlenke ? `: ` : null}
+          {innslag.tittel != null ? innslag.tittel : null}
+        </Tittel>
         {innslag.linjer.map((linje, idx) => (
-          <div key={idx} hidden={doCutOff && !expanded && idx > 0}>
+          <div key={idx} hidden={doCutOff && !expanded && idx > antallLinjerSomAlltidVises - 1}>
             <InnslagLinje linje={linje} behandlingLocation={behandlingLocation} />
           </div>
         ))}
@@ -87,10 +92,11 @@ export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps)
 
         {doCutOff ? (
           <Button
+            data-color="neutral"
             type="button"
             onClick={() => setExpanded(!expanded)}
             icon={expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            variant="tertiary-neutral"
+            variant="tertiary"
             size="xsmall"
           >
             {expanded ? 'Vis mindre' : 'Vis alt'}

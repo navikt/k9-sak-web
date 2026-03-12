@@ -123,13 +123,13 @@ const OverstyrBeregningFaktaForm = ({
                     return (
                       <div key={skjaeringstidspunkt}>
                         <BorderBox>
-                          <Tag variant="info" className="skjaeringstidspunkt">
+                          <Tag data-color="info" variant="outline" className="skjaeringstidspunkt">
                             Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
                           </Tag>
                           {harKategoriNæring && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <Tag variant="warning">
+                              <Tag data-color="warning" variant="outline">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
                               </Tag>
                             </div>
@@ -137,7 +137,7 @@ const OverstyrBeregningFaktaForm = ({
                           {harKategoriFrilans && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <Tag variant="warning">
+                              <Tag data-color="warning" variant="outline">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
                               </Tag>
                             </div>

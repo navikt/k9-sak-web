@@ -1,10 +1,9 @@
-import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { Fagsak } from '@k9-sak-web/types';
-import UtvidetRettMikrofrontend from './utvidetRettMikrofrontend/UtvidetRettMikrofrontend';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { Fagsak, Personopplysninger, Soknad } from '@k9-sak-web/types';
 import { UtvidetRettBehandlingApiKeys } from '../../../data/utvidetRettBehandlingApi';
+import { UtvidetRettMikrofrontend } from './utvidetRettMikrofrontend/UtvidetRettMikrofrontend';
 
 class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UtvidetRettMikrofrontend {...props} />;
@@ -17,10 +16,19 @@ class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ fagsak, soknad }: { fagsak: Fagsak; soknad }) => ({
+  getData = ({
+    fagsak,
+    soknad,
+    personopplysninger,
+  }: {
+    fagsak: Fagsak;
+    soknad: Soknad;
+    personopplysninger: Personopplysninger;
+  }) => ({
     saksInformasjon: {
       fagsaksType: fagsak.sakstype,
       soknad,
+      personopplysninger,
     },
   });
 }

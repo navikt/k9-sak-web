@@ -2,9 +2,8 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
+import { screen } from '@testing-library/react';
 import messages from '../../../i18n/nb_NO.json';
 import { ActivityPanel } from './ActivityPanel';
 
@@ -47,7 +46,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
+    expect(container.getElementsByClassName('aksel-date__field-input').length).toBe(2);
   });
 
   it('skal vise periodevelger som aktiv når aktivitet er manuelt lagt til', () => {
@@ -75,7 +74,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
+    expect(container.getElementsByClassName('aksel-date__field-input').length).toBe(2);
   });
 
   it('skal vise periodevelger som aktiv når aktivitet er markert med erEndret', () => {
@@ -103,7 +102,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
+    expect(container.getElementsByClassName('aksel-date__field-input').length).toBe(2);
   });
 
   it('skal vise periodevelger som disablet når aktivitet er godkjent automatisk og en ikke har aksjonspunkt', () => {
@@ -131,7 +130,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(0);
+    expect(container.getElementsByClassName('aksel-date__field-input').length).toBe(0);
   });
 
   it('skal vise antall månder og dager i valgt periode', () => {

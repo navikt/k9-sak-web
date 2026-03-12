@@ -15,7 +15,7 @@
 
 .periodList .element .content {
   display: grid;
-  grid-gap: 10px;
+  gap: 10px;
   grid-template-columns: 0.15fr 0.15fr 0.62fr;
 }
 

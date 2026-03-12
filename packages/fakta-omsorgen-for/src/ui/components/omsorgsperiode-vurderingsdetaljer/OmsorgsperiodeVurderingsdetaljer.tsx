@@ -98,7 +98,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
       {omsorgsperiode.erManueltVurdert() && (
         <>
           {omsorgsperiode.relasjon && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <LabelledContent
                 size="small"
                 label="Hvilken relasjon har søker til barnet?"
@@ -107,16 +107,16 @@ const OmsorgsperiodeVurderingsdetaljer = ({
                     <BodyShort size="small" className="whitespace-pre-wrap">
                       {omsorgsperiode.relasjon}
                     </BodyShort>
-                    <Tag size="small" variant="info">
+                    <Tag data-color="info" size="small" variant="outline">
                       Fra søknad
                     </Tag>
                   </HStack>
                 }
               />
-            </Box.New>
+            </Box>
           )}
           {skalViseRelasjonsbeskrivelse && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <LabelledContent
                 size="small"
                 label="Beskrivelse fra søker"
@@ -126,18 +126,18 @@ const OmsorgsperiodeVurderingsdetaljer = ({
                   </BodyShort>
                 }
               />
-            </Box.New>
+            </Box>
           )}
         </>
       )}
-      <Box.New marginBlock="8 0">{begrunnelseRenderer()}</Box.New>
-      <Box.New marginBlock="8 0">
+      <Box marginBlock="space-32 space-0">{begrunnelseRenderer()}</Box>
+      <Box marginBlock="space-32 space-0">
         <LabelledContent
           size="small"
           label={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
           content={resultatRenderer()}
         />
-      </Box.New>
+      </Box>
     </DetailView>
   );
 };

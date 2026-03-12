@@ -8,7 +8,7 @@ import { Behandling, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
-import { ung_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';

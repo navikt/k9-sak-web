@@ -1,4 +1,5 @@
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import { Personopplysninger } from '@k9-sak-web/types';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface VilkarKroniskSyktBarnProps {
@@ -17,6 +18,7 @@ export interface VilkarKroniskSyktBarnProps {
     fraDato: string,
   ) => void;
   formState: FormStateType;
+  personopplysninger: Personopplysninger;
 }
 
 export interface InformasjonTilLesemodusKroniskSyk {

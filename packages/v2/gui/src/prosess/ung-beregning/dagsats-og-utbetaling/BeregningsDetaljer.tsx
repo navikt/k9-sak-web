@@ -7,6 +7,8 @@ interface BeregningsDetaljerProps {
   reduksjon?: number;
   utbetaling?: number;
   satsperioder?: Array<UngdomsytelseSatsPeriodeDto>;
+  reduksjonsgrunnlag?: number;
+  gjelderDelerAvMåned?: boolean;
 }
 
 export const BeregningsDetaljer = ({
@@ -14,13 +16,15 @@ export const BeregningsDetaljer = ({
   reduksjon,
   utbetaling,
   satsperioder,
+  reduksjonsgrunnlag,
+  gjelderDelerAvMåned,
 }: BeregningsDetaljerProps) => (
-  <Box.New
-    padding="6"
-    borderRadius="0 medium medium 0"
+  <Box
+    padding="space-24"
+    borderRadius="0 4 4 0"
     style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
   >
-    <Box.New maxWidth="500px">
+    <Box maxWidth="500px">
       <VStack gap="space-20">
         <Heading level="2" size="xsmall">
           Detaljer om utbetaling
@@ -30,8 +34,10 @@ export const BeregningsDetaljer = ({
           reduksjon={reduksjon}
           utbetaling={utbetaling}
           satsperioder={satsperioder}
+          reduksjonsgrunnlag={reduksjonsgrunnlag}
+          gjelderDelerAvMåned={gjelderDelerAvMåned}
         />
       </VStack>
-    </Box.New>
-  </Box.New>
+    </Box>
+  </Box>
 );

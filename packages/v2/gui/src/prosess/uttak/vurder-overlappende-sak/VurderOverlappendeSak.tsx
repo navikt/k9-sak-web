@@ -204,33 +204,39 @@ const VurderOverlappendeSak: FC = () => {
           <Heading spacing size="xsmall" level="3">
             Søker har overlappende perioder med en annen sak
           </Heading>
-          <List size="small" className={styles['vurderOverlappendeSakApListe']} as="ol">
-            <List.Item>Reserver den tilhørende saken</List.Item>
-            <List.Item>
-              Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
-              <List size="small" className={`asdf ${styles['noOverlappendeMargin']}`}>
-                <List.Item>Opplysninger fra bruker, vet vi hva han eller hun vil?</List.Item>
-                <List.Item>Skal det være tilgjengelig uttak til andre på ett av barna?</List.Item>
+          <div className={styles['vurderOverlappendeSakApListe']}>
+            <Box marginBlock="space-12" asChild>
+              <List data-aksel-migrated-v8 size="small" as="ol">
+                <List.Item>Reserver den tilhørende saken</List.Item>
                 <List.Item>
-                  Det vil ofte lønne seg å innvilge på den nyeste saken, mtp beregning og feriepenger.
+                  Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
+                  <div className={`asdf ${styles['noOverlappendeMargin']}`}>
+                    <Box marginBlock="space-12" asChild>
+                      <List data-aksel-migrated-v8 size="small">
+                        <List.Item>Opplysninger fra bruker, vet vi hva han eller hun vil?</List.Item>
+                        <List.Item>Skal det være tilgjengelig uttak til andre på ett av barna?</List.Item>
+                        <List.Item>
+                          Det vil ofte lønne seg å innvilge på den nyeste saken, mtp beregning og feriepenger.
+                        </List.Item>
+                        <List.Item>Er du usikker, må du kontakte bruker for avklaring.</List.Item>
+                        <List.Item>
+                          Vil endring i uttak medføre unødig tilbakekrevingssak, slik at endringene bør gjelde fremover
+                          i tid?
+                        </List.Item>
+                      </List>
+                    </Box>
+                  </div>
                 </List.Item>
-                <List.Item>Er du usikker, må du kontakte bruker for avklaring.</List.Item>
                 <List.Item>
-                  Vil endring i uttak medføre unødig tilbakekrevingssak, slik at endringene bør gjelde fremover i tid?
+                  Når du har vurdert uttak i denne saken, går du inn i den andre saken og vurderer uttaket for samme
+                  periode.
                 </List.Item>
               </List>
-            </List.Item>
-            <List.Item>
-              Når du har vurdert uttak i denne saken, går du inn i den andre saken og vurderer uttaket for samme
-              periode.
-            </List.Item>
-          </List>
+            </Box>
+          </div>
         </Alert>
       )}
-
-      <Box.New
-        className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}
-      >
+      <Box className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}>
         <RhfForm formMethods={formMethods} onSubmit={submit}>
           <VStack gap="space-20">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
@@ -246,24 +252,26 @@ const VurderOverlappendeSak: FC = () => {
                     } = periodeMedOverlapp;
                     return (
                       <Fragment key={`${fom}-${tom}-${saksnummer.toString()}`}>
-                        <List as="ul" size="small">
-                          <List.Item>
-                            <BodyShort as="span">
-                              {formatPeriod(fom || '', tom || '')} (
-                              {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
-                              {saksnummer.length > 0 &&
-                                saksnummer.map((sakNr, index) => (
-                                  <Fragment key={`${fom}-${tom}-${sakNr}-link`}>
-                                    {index > 0 && ', '}
-                                    <Link href={`/k9/web/fagsak/${sakNr}`} target="_blank">
-                                      {sakNr}
-                                    </Link>
-                                  </Fragment>
-                                ))}
-                              )
-                            </BodyShort>
-                          </List.Item>
-                        </List>
+                        <Box marginBlock="space-12" asChild>
+                          <List data-aksel-migrated-v8 as="ul" size="small">
+                            <List.Item>
+                              <BodyShort as="span">
+                                {formatPeriod(fom || '', tom || '')} (
+                                {saksnummer.length == 0 && <>Overlapper ikke lenger annen sak</>}
+                                {saksnummer.length > 0 &&
+                                  saksnummer.map((sakNr, index) => (
+                                    <Fragment key={`${fom}-${tom}-${sakNr}-link`}>
+                                      {index > 0 && ', '}
+                                      <Link href={`/k9/web/fagsak/${sakNr}`} target="_blank">
+                                        {sakNr}
+                                      </Link>
+                                    </Fragment>
+                                  ))}
+                                )
+                              </BodyShort>
+                            </List.Item>
+                          </List>
+                        </Box>
                       </Fragment>
                     );
                   })}
@@ -271,23 +279,25 @@ const VurderOverlappendeSak: FC = () => {
 
                 <ReadMore header="Hva betyr de ulike valgene?" size="small">
                   Her tar du valg for hvordan uttaket skal være i denne saken.
-                  <List size="small">
-                    <List.Item>
-                      Ingen uttak i perioden: Dette valget medfører at du nuller ut uttaket i den overlappende perioden.
-                      Velg dette hvis du ønsker at bruker skal få alt uttak/utbetaling i den andre saken.
-                    </List.Item>
-                    <List.Item>
-                      Vanlig uttak i perioden: Ved å velge dette, bestemmer du at denne saken skal graderes som vanlig
-                      ut fra informasjon om arbeidstid, inntekt, tilsyn osv. Du velger altså å la den gå sin gang, uten
-                      å bli påvirket av den overlappende saken.
-                    </List.Item>
-                    <List.Item>
-                      Tilpass uttaksgrad: Her kan du manuelt bestemme hvor mange prosent pleiepenger bruker skal få i
-                      saken. Dette valget brukes unntaksvis, da det vil medføre at man må overstyre hver gang det kommer
-                      en endring. Man må også være mer obs på hvilken uttaksgrad den andre saken har, spesielt hvis ikke
-                      den også settes manuelt.
-                    </List.Item>
-                  </List>
+                  <Box marginBlock="space-12" asChild>
+                    <List data-aksel-migrated-v8 size="small">
+                      <List.Item>
+                        Ingen uttak i perioden: Dette valget medfører at du nuller ut uttaket i den overlappende
+                        perioden. Velg dette hvis du ønsker at bruker skal få alt uttak/utbetaling i den andre saken.
+                      </List.Item>
+                      <List.Item>
+                        Vanlig uttak i perioden: Ved å velge dette, bestemmer du at denne saken skal graderes som vanlig
+                        ut fra informasjon om arbeidstid, inntekt, tilsyn osv. Du velger altså å la den gå sin gang,
+                        uten å bli påvirket av den overlappende saken.
+                      </List.Item>
+                      <List.Item>
+                        Tilpass uttaksgrad: Her kan du manuelt bestemme hvor mange prosent pleiepenger bruker skal få i
+                        saken. Dette valget brukes unntaksvis, da det vil medføre at man må overstyre hver gang det
+                        kommer en endring. Man må også være mer obs på hvilken uttaksgrad den andre saken har, spesielt
+                        hvis ikke den også settes manuelt.
+                      </List.Item>
+                    </List>
+                  </Box>
                 </ReadMore>
 
                 {fields.map((field, index) => {
@@ -342,7 +352,7 @@ const VurderOverlappendeSak: FC = () => {
             )}
           </VStack>
         </RhfForm>
-      </Box.New>
+      </Box>
     </VStack>
   );
 };

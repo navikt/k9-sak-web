@@ -53,7 +53,7 @@ const DuplikatRadiobuttons = ({ dokument, strukturerteDokumenter }: DuplikatRadi
   }
 
   return (
-    <Box.New marginBlock="8 0">
+    <Box marginBlock="space-32 space-0">
       <RadioGroupPanelRHF
         name={FieldName.DUPLIKAT_AV_ID}
         disabled={readOnly}
@@ -67,7 +67,7 @@ const DuplikatRadiobuttons = ({ dokument, strukturerteDokumenter }: DuplikatRadi
         radios={getDuplikatRadios()}
         validators={{ required }}
       />
-    </Box.New>
+    </Box>
   );
 };
 

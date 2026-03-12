@@ -14,6 +14,7 @@ import userEvent from '@testing-library/user-event';
 import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import UnntakProsess from './UnntakProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<UnntakProsess>', () => {
   const fagsak = {
@@ -141,7 +142,7 @@ describe('<UnntakProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
       />,
     );
 
@@ -170,7 +171,7 @@ describe('<UnntakProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
       />,
     );
 

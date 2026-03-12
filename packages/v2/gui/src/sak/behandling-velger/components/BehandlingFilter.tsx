@@ -30,8 +30,9 @@ const BehandlingFilter = ({ text, filters, aktiveFilter, onFilterChange }: Behan
   <ActionMenu>
     <ActionMenu.Trigger>
       <Button
+        data-color="neutral"
         className="-mt-[9px]"
-        variant="secondary-neutral"
+        variant="secondary"
         icon={<ChevronDownIcon aria-hidden />}
         iconPosition="right"
       >

@@ -2446,4 +2446,66 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'TRUKKET_KLAGE',
     },
   ],
+  overordnetInntektYtelseType: [
+    {
+      kode: 'UDEFINERT',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Ikke definert',
+      kilde: 'UDEFINERT',
+    },
+    {
+      kode: 'ARBEIDSAVKLARINGSPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Arbeidsavklaringspenger',
+      kilde: 'ARBEIDSAVKLARINGSPENGER',
+    },
+    {
+      kode: 'DAGPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Dagpenger',
+      kilde: 'DAGPENGER',
+    },
+    {
+      kode: 'ENSLIG_FORSØRGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Enslig forsørger',
+      kilde: 'ENSLIG_FORSØRGER',
+    },
+    {
+      kode: 'FORELDREPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Foreldrepenger',
+      kilde: 'FORELDREPENGER',
+    },
+    {
+      kode: 'OPPLÆRINGSPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Opplæringspenger',
+      kilde: 'OPPLÆRINGSPENGER',
+    },
+    {
+      kode: 'OMSORGSPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Omsorgspenger',
+      kilde: 'OMSORGSPENGER',
+    },
+    {
+      kode: 'PLEIEPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Pleiepenger',
+      kilde: 'PLEIEPENGER',
+    },
+    {
+      kode: 'SYKEPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Sykepenger',
+      kilde: 'SYKEPENGER',
+    },
+    {
+      kode: 'SVANGERSKAPSPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Svangerskapspenger',
+      kilde: 'SVANGERSKAPSPENGER',
+    },
+  ],
 } satisfies AlleKodeverdierSomObjektResponse;

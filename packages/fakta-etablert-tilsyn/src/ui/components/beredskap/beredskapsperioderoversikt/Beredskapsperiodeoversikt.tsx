@@ -38,7 +38,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   }, []);
 
   return (
-    <VStack gap="6">
+    <VStack gap="space-24">
       <BeredskapsperiodeoversiktMessages
         beredskapData={beredskapData}
         skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForBeredskap}

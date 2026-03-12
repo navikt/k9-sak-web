@@ -1,8 +1,7 @@
 import { Omsorgsdager } from '@k9-sak-web/prosess-omsorgsdager';
-import React from 'react';
 import KartleggePropertyTilUtvidetRettMikrofrontendKomponent from './KartleggePropertyTilUtvidetRettMikrofrontendKomponent';
 
-export default props => {
+export const UtvidetRettMikrofrontend = props => {
   const {
     saksInformasjon,
     isReadOnly,

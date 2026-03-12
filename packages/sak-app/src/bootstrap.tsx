@@ -36,7 +36,8 @@ const environment = window.location.hostname;
 
 init({
   environment,
-  dsn: IS_DEV ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
+  dsn: 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
+  enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,

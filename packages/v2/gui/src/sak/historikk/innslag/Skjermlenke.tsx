@@ -20,7 +20,7 @@ const scrollUp = (): void => {
 export const Skjermlenke: FC<SkjermlenkeProps> = ({ skjermlenke, behandlingLocation, inlineText = false }) => {
   const location = createPathForSkjermlenke(behandlingLocation, skjermlenke.type);
   return (
-    <Link inlineText={inlineText} as={NavLink} to={location} onClick={scrollUp}>
+    <Link inlineText={inlineText} as={NavLink} to={location} onClick={scrollUp} data-color="accent">
       {skjermlenke.navn}
     </Link>
   );

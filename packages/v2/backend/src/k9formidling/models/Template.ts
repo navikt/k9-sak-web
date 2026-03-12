@@ -40,14 +40,15 @@ const isTemplateWithUnknownValues = (v: unknown): v is TemplateWithUnknownValues
 const isMottakerKeys = (v: unknown): v is Record<keyof Omit<Mottaker, 'utilgjengelig'>, unknown> =>
   isObject(v) && Object.keys(v).includes('id') && Object.keys(v).includes('type');
 
-export const isMottaker = (v: Record<keyof Omit<Mottaker, 'utilgjengelig'>, unknown>): v is Mottaker =>
+const isMottaker = (v: Record<keyof Omit<Mottaker, 'utilgjengelig'>, unknown>): v is Mottaker =>
   isString(v.type) && isString(v.id);
+
+const isMottakere = (v: unknown): v is Mottaker[] => isArray(v) && v.every(el => isMottakerKeys(el) && isMottaker(el));
 
 export const isTemplate = (v: unknown): v is Template =>
   isTemplateWithUnknownValues(v) &&
   isString(v.navn) &&
-  isMottakerKeys(v.mottakere) &&
-  isMottaker(v.mottakere) &&
+  isMottakere(v.mottakere) &&
   isArray(v.linker) &&
   isBoolean(v.støtterFritekst) &&
   isBoolean(v.støtterTittelOgFritekst) &&

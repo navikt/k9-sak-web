@@ -2,14 +2,13 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { FlexColumn, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
 import { hasValidDecimal, maxValue, minValue, required } from '@navikt/ft-form-validators';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
@@ -18,15 +17,6 @@ import styles from './periode.module.css';
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
 const maxValue3999 = maxValue(3999);
-
-const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
-  arbeidsgivere
-    ? Object.values(arbeidsgivere).map(({ navn, identifikator }) => (
-        <option value={identifikator} key={identifikator}>
-          {navn} ({identifikator})
-        </option>
-      ))
-    : [];
 
 const mapArbeidsgivereOrg = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
   arbeidsgivere
@@ -102,8 +92,6 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
     name: 'nyPeriodeForm.andeler',
     keyName: 'fieldId',
   });
-  const featureToggles = useContext(FeatureTogglesContext);
-  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   useEffect(() => {
     if (fields.length === 0) {
@@ -134,14 +122,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
                       control={control}
                       label="Arbeidsgiver"
                       name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
-                      validate={
-                        skillUtPrivatperson
-                          ? [value => atLeastOneRequired(value, field.arbeidsgiverPersonIdent)]
-                          : [required]
-                      }
-                      selectValues={
-                        skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
-                      }
+                      validate={[value => atLeastOneRequired(value, field.arbeidsgiverPersonIdent)]}
+                      selectValues={mapArbeidsgivereOrg(arbeidsgivere)}
                     />
                     <Button
                       variant="secondary"
@@ -152,17 +134,15 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
                       type="button"
                     />
                   </div>
-                  {skillUtPrivatperson && (
-                    <div className="flex items-end">
-                      <RhfSelect
-                        control={control}
-                        label="Arbeidsgiver (privatperson)"
-                        name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
-                        validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
-                        selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
-                      />
-                    </div>
-                  )}
+                  <div className="flex items-end">
+                    <RhfSelect
+                      control={control}
+                      label="Arbeidsgiver (privatperson)"
+                      name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
+                      validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
+                      selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
+                    />
+                  </div>
                 </>
               )}
               <FlexColumn>

@@ -29,7 +29,7 @@ export const FeriepengerPanel = ({ feriepengerPrÅr, arbeidsgiverOpplysningerPer
           </Heading>
         </Accordion.Header>
         <Accordion.Content>
-          <VStack gap="4">
+          <VStack gap="space-16">
             {[...feriepengerPrÅr.keys()].map(år => (
               <FeriepengerPrÅr
                 key={`tabell_${år}`}

@@ -18,9 +18,9 @@ interface OwnProps {
  * 43.5rem er hentet fra Aksel, i Alert komponenten som hardkodet maksbredde.
  */
 const ContentMaxWidth = ({ className, children }: OwnProps) => (
-  <Box.New className={className} maxWidth={K9MaxTextWidth}>
+  <Box className={className} maxWidth={K9MaxTextWidth}>
     {children}
-  </Box.New>
+  </Box>
 );
 
 export default ContentMaxWidth;

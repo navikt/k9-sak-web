@@ -98,7 +98,7 @@ export const TilkommetAktivitetField = ({
                 {harInntektsmelding && (
                   <>
                     <BeløpLabel beløp={inntektsforhold.inntektFraInntektsmeldingPrÅr ?? 0} kr />
-                    <Tag className={styles.inntektsmeldingTag} variant="neutral" size="xsmall">
+                    <Tag data-color="neutral" className={styles.inntektsmeldingTag} variant="outline" size="xsmall">
                       IM
                     </Tag>
                   </>
@@ -137,7 +137,11 @@ export const TilkommetAktivitetField = ({
       <div className={erAksjonspunktÅpent ? styles.aksjonspunktContainer : ''}>
         {fields.map((field, index) => (
           <div key={field.id}>
-            <Box.New marginBlock={index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? '0 10' : '0'}>
+            <Box
+              marginBlock={
+                index < vurderInntektsforholdPeriode.inntektsforholdListe.length - 1 ? 'space-0 space-40' : 'space-0'
+              }
+            >
               <TilkommetInntektsforholdField
                 key={field.id}
                 formName={formName}
@@ -149,13 +153,13 @@ export const TilkommetAktivitetField = ({
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 beregningsgrunnlag={beregningsgrunnlag}
               />
-            </Box.New>
+            </Box>
           </div>
         ))}
         {skalViseBegrunnelse && (
           <>
             <VStack gap="space-16">
-              <Box.New marginBlock="10 0">
+              <Box marginBlock="space-40 space-0">
                 <RhfTextarea
                   control={control}
                   name={`${formName}.${formFieldIndex}.begrunnelse`}
@@ -163,7 +167,7 @@ export const TilkommetAktivitetField = ({
                   readOnly={readOnly}
                   validate={[required]}
                 />
-              </Box.New>
+              </Box>
               <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
               <div>
                 <SubmitButton

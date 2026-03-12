@@ -1,7 +1,6 @@
 import { InternalSimpleTimeline, ExpandedPeriode as Periode, PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { horizontalPositionAndWidth } from './calc';
 import { innenEtDøgn, invisiblePeriods } from './filter';
 import Rad from './Rad';
@@ -23,7 +22,7 @@ const spatialPeriod = (
     timelineEndInclusive,
   );
   return {
-    id: period.id || uuidv4(),
+    id: period.id || `${period.fom.toISOString()}-${period.tom.toISOString()}`,
     start,
     endInclusive,
     horizontalPosition,
@@ -92,7 +91,7 @@ export const useTidslinjerader = (
         return {
           radClassname,
           radLabel,
-          id: uuidv4(),
+          id: radLabel,
           periods: direction === 'left' ? tidslinjeperioder : [...tidslinjeperioder].reverse(),
           onClick,
           emptyRowClassname,

@@ -1,5 +1,4 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
@@ -17,7 +16,6 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   submitCallback: (...args: any[]) => any;
-  featureToggles?: FeatureToggles;
 }
 
 export const TilkjentYtelseForm = ({
@@ -27,7 +25,6 @@ export const TilkjentYtelseForm = ({
   beregningsresultat,
   arbeidsgiverOpplysningerPerId,
   submitCallback,
-  featureToggles,
 }: OwnProps) => {
   const handleSubmit = (formState: TilkjentYtelseFormState) => {
     submitCallback(transformValues(formState));
@@ -65,7 +62,7 @@ export const TilkjentYtelseForm = ({
       )}
 
       <RhfForm formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
-        <PeriodeTabell readOnly={readOnly} featureToggles={featureToggles} />
+        <PeriodeTabell readOnly={readOnly} />
       </RhfForm>
     </>
   );

@@ -16,22 +16,22 @@ export const formValuesToSaveValues = (
     values.klageVurdering == KlageVurdering.MEDHOLD_I_KLAGE ||
     values.klageVurdering == KlageVurdering.OPPHEVE_YTELSESVEDTAK
   ) {
-    if (isKlageMedholdÅrsak(values.klageMedholdArsak)) {
-      klageMedholdArsak = values.klageMedholdArsak;
+    if (values.klageMedholdArsak == null || isKlageMedholdÅrsak(values.klageMedholdArsak)) {
+      klageMedholdArsak = values.klageMedholdArsak ?? undefined;
     } else {
       throw new Error(`Ugyldig KlageMedholdÅrsak verdi: ${values.klageMedholdArsak}`);
     }
   }
   let klageVurderingOmgjoer: KlageVurderingOmgjør | undefined = undefined;
   if (values.klageVurdering === KlageVurdering.MEDHOLD_I_KLAGE) {
-    if (isKlageVurderingOmgjør(values.klageVurderingOmgjoer)) {
-      klageVurderingOmgjoer = values.klageVurderingOmgjoer;
+    if (values.klageVurderingOmgjoer == null || isKlageVurderingOmgjør(values.klageVurderingOmgjoer)) {
+      klageVurderingOmgjoer = values.klageVurderingOmgjoer ?? undefined;
     } else {
       throw new Error(`Ugyldig KlageVurderingOmgjør verdi: ${values.klageVurderingOmgjoer}`);
     }
   }
   let klageVurdering: KlageVurdering | undefined = undefined;
-  if (isKlageVurdering(values.klageVurdering)) {
+  if (values.klageVurdering == null || isKlageVurdering(values.klageVurdering)) {
     klageVurdering = values.klageVurdering;
   } else {
     throw new Error(`Ugyldig KlageVurdering verdi: ${values.klageVurdering}`);
