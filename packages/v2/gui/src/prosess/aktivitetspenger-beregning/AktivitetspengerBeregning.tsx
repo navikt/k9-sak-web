@@ -1,3 +1,4 @@
+import { BesteBeregningResultatType } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BesteBeregningResultatType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons';
@@ -11,7 +12,7 @@ const formatter = new Intl.NumberFormat('nb-NO', {
   maximumFractionDigits: 2,
 });
 
-export const SelectedCell = ({ children }: { children: string }) => (
+const SelectedCell = ({ children }: { children: string }) => (
   <HStack gap="space-4" className={styles.selectedCell}>
     <CheckmarkHeavyIcon title="Besteberegning" fontSize="1.5rem" />
     <BodyShort>{children}</BodyShort>
@@ -40,6 +41,9 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
     return <Alert variant="error">Ingen data tilgjengelig</Alert>;
   }
   const årstallForSkjæringstidspunkt = new Date(data.skjæringstidspunkt).getFullYear();
+  const isBesteberegningSnittSisteTreÅr =
+    data.besteBeregningResultatType === BesteBeregningResultatType.SNITT_SISTE_TRE_ÅR;
+  const isBesteberegningSisteÅr = data.besteBeregningResultatType === BesteBeregningResultatType.SISTE_ÅR;
 
   return (
     <VStack gap="space-8">
@@ -70,21 +74,36 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {data.pgiÅrsinntekter.map(pgi => (
-                    <Table.Row key={pgi.årstall} className={styles.rowWithSpacing}>
-                      <Table.DataCell>{pgi.årstall}</Table.DataCell>
-                      <Table.DataCell align="right">{formatter.format(pgi.pgiÅrsinntekt)}</Table.DataCell>
-                      <Table.DataCell align="right">0 (dummy)</Table.DataCell>
-                      <Table.DataCell align="right">0 (dummy)</Table.DataCell>
-                      <Table.DataCell align="right">0 (dummy)</Table.DataCell>
-                      <Table.DataCell align="right">{formatter.format(pgi.avkortetOgOppjustert)}</Table.DataCell>
-                    </Table.Row>
-                  ))}
+                  {data.pgiÅrsinntekter.map(pgi => {
+                    const isBesteberegning = isBesteberegningSisteÅr && pgi.årstall === årstallForSkjæringstidspunkt;
+                    return (
+                      <Table.Row key={pgi.årstall} className={styles.rowWithSpacing}>
+                        <Table.DataCell>{pgi.årstall}</Table.DataCell>
+                        <Table.DataCell align="right">{formatter.format(pgi.arbeidsinntekt)}</Table.DataCell>
+                        <Table.DataCell align="right">{formatter.format(pgi.næring)}</Table.DataCell>
+                        <Table.DataCell align="right">{formatter.format(pgi.sum)}</Table.DataCell>
+                        <Table.DataCell align="right">{formatter.format(pgi.sumAvkortet)}</Table.DataCell>
+                        <Table.DataCell align="right">
+                          {isBesteberegning ? (
+                            <SelectedCell>{formatter.format(pgi.sumAvkortetOgOppjustert)}</SelectedCell>
+                          ) : (
+                            formatter.format(pgi.sumAvkortetOgOppjustert)
+                          )}
+                        </Table.DataCell>
+                      </Table.Row>
+                    );
+                  })}
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
                     <Table.HeaderCell scope="row" colSpan={5}>
                       Gjennomsnittlig pensjonsgivende inntekt siste 3 år{' '}
                     </Table.HeaderCell>
-                    <Table.DataCell align="right">{formatter.format(data.årsinntektSisteTreÅr)}</Table.DataCell>
+                    <Table.DataCell align="right">
+                      {isBesteberegningSnittSisteTreÅr ? (
+                        <SelectedCell>{formatter.format(data.årsinntektSisteTreÅr)}</SelectedCell>
+                      ) : (
+                        formatter.format(data.årsinntektSisteTreÅr)
+                      )}
+                    </Table.DataCell>
                   </Table.Row>
                 </Table.Body>
               </Table>
