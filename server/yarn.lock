@@ -10,11 +10,11 @@ __metadata:
   resolution: "@k9-sak-web/server@workspace:."
   dependencies:
     "@types/express": "npm:5.0.6"
-    "@types/express-http-proxy": "npm:1.6.6"
+    "@types/express-http-proxy": "npm:1.6.7"
     "@types/node": "npm:22.15.33"
     express: "npm:5.2.1"
     express-http-proxy: "npm:2.1.2"
-    express-rate-limit: "npm:8.2.2"
+    express-rate-limit: "npm:8.3.0"
     helmet: "npm:8.1.0"
     typescript: "npm:5.9.3"
   languageName: unknown
@@ -39,12 +39,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-http-proxy@npm:1.6.6":
-  version: 1.6.6
-  resolution: "@types/express-http-proxy@npm:1.6.6"
+"@types/express-http-proxy@npm:1.6.7":
+  version: 1.6.7
+  resolution: "@types/express-http-proxy@npm:1.6.7"
   dependencies:
     "@types/express": "npm:*"
-  checksum: 10/bf8d642e2d00c6d5dc5a3bc6617a4f249d00646b1469a1c523836753c12c6574d97a44d4b1b299798ee6fb93bf0dda969a7d3cd763c5ad0dd92b4f3c6e828982
+  checksum: 10/0f2964b4bc4f5f5f8e282615aed279310b54eab07d5a6fd6b216ca4bb8a1462e428d4658e78a2c32703a7c4e5c13112ea6a0cfe6e0f164d937b0caedf654fcb0
   languageName: node
   linkType: hard
 
@@ -333,14 +333,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-rate-limit@npm:8.2.2":
-  version: 8.2.2
-  resolution: "express-rate-limit@npm:8.2.2"
+"express-rate-limit@npm:8.3.0":
+  version: 8.3.0
+  resolution: "express-rate-limit@npm:8.3.0"
   dependencies:
     ip-address: "npm:10.1.0"
   peerDependencies:
     express: ">= 4.11"
-  checksum: 10/c605c96cc69e1411cd80894f73af805e9a7188aba8b9089fa5cc76f78e520cd3173069719e572561dc3384ba87d44a42f84749bf422577d3767176e012023a7e
+  checksum: 10/e896a66fecc10639e65873186fdfb71f19d6af650220eb7ea5450725215c3eed8dc6ddcfa1e68a9db8c9facc3326fbc281512ad3ccd8f107f42a2466ce12c18c
   languageName: node
   linkType: hard
 
