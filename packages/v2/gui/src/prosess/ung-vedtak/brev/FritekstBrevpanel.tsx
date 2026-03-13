@@ -39,7 +39,7 @@ interface FritekstBrevpanelProps {
   fieldIndex: number;
   vedtaksbrevValg?: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValg | undefined;
   forhåndsvisningIsLoading: boolean;
-  behandlingId: number;
+  behandlingId: number | undefined;
   api: UngVedtakBackendApiType;
 }
 

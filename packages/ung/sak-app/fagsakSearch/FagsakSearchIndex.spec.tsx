@@ -1,103 +1,100 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { combineReducers, createStore } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
-import { Fagsak } from '@k9-sak-web/types';
 
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import {
+  ung_kodeverk_behandling_FagsakStatus,
+  ung_kodeverk_behandling_FagsakYtelseType,
+} from '@navikt/ung-sak-typescript-client/types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
+import { FakeUngSakBackendClient } from './mocks/FakeUngSakBackendClient';
 
-const mockNavigate = vi.fn();
+const { mockNavigate, mockFagsakSøk } = vi.hoisted(() => ({
+  mockNavigate: vi.fn(),
+  mockFagsakSøk: vi.fn(),
+}));
 
 vi.mock('react-router', async () => {
   const actual = await vi.importActual<typeof import('react-router')>('react-router');
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-  };
+  return { ...actual, useNavigate: () => mockNavigate };
 });
 
-describe('<FagsakSearchIndex>', () => {
-  const fagsak: Partial<Fagsak> = {
-    saksnummer: '12345',
-    sakstype: fagsakYtelsesType.ENGANGSTØNAD, // FAGSAK_YTELSE
-    status: {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-    },
-    barnFodt: '10.10.2017',
-    antallBarn: 1,
-    opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
-    dekningsgrad: 100,
-  };
-  const fagsak2: Partial<Fagsak> = {
-    ...fagsak,
-    saksnummer: '23456',
-  };
-  const fagsaker = [fagsak, fagsak2];
+vi.mock('../data/UngSakBackendClient', () => ({
+  UngSakBackendClient: class {
+    fagsakSøk = mockFagsakSøk;
+  },
+}));
 
+const fagsak1 = {
+  saksnummer: '12345',
+  sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+  status: ung_kodeverk_behandling_FagsakStatus.OPPRETTET,
+  opprettet: '2017-02-13',
+};
+const fagsak2 = {
+  saksnummer: '23456',
+  sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+  status: ung_kodeverk_behandling_FagsakStatus.OPPRETTET,
+  opprettet: '2017-02-13',
+};
+
+const renderComponent = (fakeClient = new FakeUngSakBackendClient()) => {
+  mockFagsakSøk.mockImplementation((searchString: string) => fakeClient.fagsakSøk(searchString));
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <FagsakSearchIndex />
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
+};
+
+describe('<FagsakSearchIndex>', () => {
   beforeEach(() => {
     requestApi.clearAllMockData();
+    requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverkV2);
+    mockNavigate.mockReset();
   });
 
-  it('skal søke opp fagsaker', async () => {
-    requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverkV2);
-    requestApi.mock(UngSakApiKeys.SEARCH_FAGSAK, fagsaker);
-
-    render(
-      <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MemoryRouter>
-          <FagsakSearchIndex />
-        </MemoryRouter>
-      </Provider>,
-    );
-
+  it('viser søkeskjema uten resultater ved oppstart', () => {
+    renderComponent(new FakeUngSakBackendClient());
     expect(screen.getByTestId('FagsakSearch')).toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
-
-    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
-    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
-
-    const reqData = requestApi.getRequestMockData(UngSakApiKeys.SEARCH_FAGSAK);
-    expect(reqData[0].params).toEqual({ searchString: '12345' });
-    expect(screen.queryAllByRole('table').length).toBe(1);
-    expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
-    expect(screen.queryAllByRole('cell', { name: '23456' }).length).toBe(1);
   });
 
-  it('skal gå til valgt fagsak', async () => {
-    requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverkV2);
-    requestApi.mock(UngSakApiKeys.SEARCH_FAGSAK, fagsaker);
-
-    render(
-      <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MemoryRouter>
-          <RestApiErrorProvider>
-            <FagsakSearchIndex />
-          </RestApiErrorProvider>
-        </MemoryRouter>
-      </Provider>,
-    );
-
-    expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
-    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  it('viser søkeresultater for flere treff', async () => {
+    renderComponent(new FakeUngSakBackendClient({ fagsaker: [fagsak1, fagsak2] }));
 
     await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
-    const reqData = requestApi.getRequestMockData(UngSakApiKeys.SEARCH_FAGSAK);
-    expect(reqData[0].params).toEqual({ searchString: '12345' });
-    expect(screen.queryAllByRole('table').length).toBe(1);
-    expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
+    expect(await screen.findByRole('table')).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: '12345' })).toHaveLength(1);
+    expect(screen.getAllByRole('cell', { name: '23456' })).toHaveLength(1);
+  });
 
-    await userEvent.click(screen.getByRole('row', { name: '12345 Engangsstønad Opprettet' }));
+  it('navigerer direkte til fagsak ved ett treff', async () => {
+    renderComponent(new FakeUngSakBackendClient({ fagsaker: [fagsak1] }));
 
-    expect(mockNavigate.mock.calls[0][0]).toBe('/fagsak/12345/');
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+
+    await vi.waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.stringContaining('12345'));
+    });
+  });
+
+  it('viser ingen-treff-melding ved tomt søkeresultat', async () => {
+    renderComponent(new FakeUngSakBackendClient({ fagsaker: [] }));
+
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), 'ukjent');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+
+    expect(await screen.findByText('Søket ga ingen treff')).toBeInTheDocument();
   });
 });

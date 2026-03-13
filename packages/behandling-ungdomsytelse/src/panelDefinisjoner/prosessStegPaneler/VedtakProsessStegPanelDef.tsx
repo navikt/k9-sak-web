@@ -12,7 +12,13 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <UngVedtakIndex {...props} {...deepCopyProps} />;
+    return (
+      <UngVedtakIndex
+        {...props}
+        {...deepCopyProps}
+        tekster={{ innvilget: 'Ungdomsprogramytelse er innvilget', avslått: 'Ungdomsprogramytelse er opphørt' }}
+      />
+    );
   };
 
   getAksjonspunktKoder = () => [

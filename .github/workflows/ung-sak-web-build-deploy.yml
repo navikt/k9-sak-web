@@ -81,6 +81,7 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/dev-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
 
   deploy-prod:
@@ -136,6 +137,7 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/prod-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
         uses: actions/github-script@v8
