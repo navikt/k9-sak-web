@@ -16,9 +16,6 @@ const isInDevelopmentModeOrTestEnvironment = () =>
   window.location.hostname === 'ung.intern.dev.nav.no' ||
   window.location.hostname === 'aktivitetspenger.intern.dev.nav.no';
 
-const ENDRINGSLOGG_URL = isInDevelopmentModeOrTestEnvironment()
-  ? 'https://endringslogg.intern.dev.nav.no'
-  : 'https://endringslogg.intern.nav.no';
 const getHeaderTitleHref = (getPathToLos: (() => string | null) | undefined, headerTitleHref: string) => {
   if (!isRunningOnLocalhost()) {
     return getPathToLos?.() || headerTitleHref;
@@ -91,7 +88,7 @@ const HeaderWithErrorPanel = ({
                 userId={navBrukernavn}
                 appId="K9_SAK"
                 appName="K9 Sak"
-                backendUrl={ENDRINGSLOGG_URL}
+                backendUrl="/k9/endringslogg"
                 stil="lys"
                 alignLeft
                 maxEntries={150}
