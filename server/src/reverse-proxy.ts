@@ -20,6 +20,9 @@ import log from './log.js';
 //   return obo.ok ? obo.token : null;
 // }
 
+const errorStatusMap: Record<string, number> = { ENOTFOUND: 502, ECONNREFUSED: 502, ECONNRESET: 504, ETIMEDOUT: 504 };
+
+
 function makeOptions(api: ProxyApi): ProxyOptions {
   return {
     // Venter 60 sekunder på svar fra backend før timeout.
@@ -55,16 +58,28 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     },
 
     proxyErrorHandler: (err: NodeJS.ErrnoException, res: Response, next: (err?: unknown) => void): void => {
-      log.error('proxy request failed', { err });
-      const statusMap: Record<string, number> = { ENOTFOUND: 502, ECONNREFUSED: 502, ECONNRESET: 502, ETIMEDOUT: 504 };
-      const status = err.code ? statusMap[err.code] : undefined;
-      if (status) {
+      const navCallid = res.req.header("Nav-Callid")
+      const status = err.code ? errorStatusMap[err.code] : undefined;
+      log.error('proxy request failed', {
+        error: {
+          message: err.message,
+          code: err.code,
+          errno: err.errno,
+          cause: err.cause,
+          path: err.path,
+          syscall: err.syscall,
+          url: res.req.originalUrl,
+          responseStatusCode: status,
+          navCallid,
+        }
+      });
+      if (status != null) {
         res.status(status).send();
       } else {
         next(err);
       }
     },
-  };
+  }
 }
 
 export default function setupProxy(app: Express, apis: ProxyApi[]): void {
