@@ -50,5 +50,3 @@ spec:
       value: 'http://k9-tilbake.k9saksbehandling'
     - name: APP_URL_K9FORDEL
       value: 'http://k9-fordel.k9saksbehandling'
-    - name: ENDRINGSLOGG_URL
-      value: 'https://endringslogg.intern.nav.no/'

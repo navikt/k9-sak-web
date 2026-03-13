@@ -47,7 +47,6 @@ const proxyApis: ProxyApi[] =
         { path: '/k9/klage', url: env('APP_URL_KLAGE') },
         { path: '/k9/tilbake', url: env('APP_URL_K9TILBAKE') },
         { path: '/k9/fordel', url: env('APP_URL_K9FORDEL') },
-        { path: '/k9/endringslogg', url: env('ENDRINGSLOGG_URL'), stripPrefix: true },
       ];
 
 export default {

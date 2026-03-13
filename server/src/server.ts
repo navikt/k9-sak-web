@@ -18,7 +18,7 @@ app.use(
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'"],
         'script-src': ["'self'", "'unsafe-inline'"],
-        'connect-src': ["'self'", 'https://sentry.gc.nav.no'],
+        'connect-src': ["'self'", 'https://sentry.gc.nav.no', 'https://endringslogg.intern.nav.no'],
       },
     },
     referrerPolicy: { policy: 'origin' },
