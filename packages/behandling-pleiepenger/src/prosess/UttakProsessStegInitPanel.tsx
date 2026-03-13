@@ -3,7 +3,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
@@ -27,21 +27,24 @@ interface Props {
 
 export function UttakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery(
     behandlingQueryOptions(props.api, props.behandling),
   );
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
-  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(props.api, props.behandling));
-
-  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const { data: uttak } = useQuery({ ...uttakQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert });
 
   if (!erValgt) {
     return null;
   }
   if (!erStegVurdert) {
     return <ProsessStegIkkeVurdert />;
+  }
+
+  if (!uttak) {
+    return null;
   }
 
   const relevanteAksjonspunkter = aksjonspunkter

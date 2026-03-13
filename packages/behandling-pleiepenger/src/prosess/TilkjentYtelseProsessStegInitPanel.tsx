@@ -11,7 +11,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { useSuspenseQueries } from '@tanstack/react-query';
+import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
@@ -51,30 +51,34 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
   const prosessPanelContext = useContext(ProsessPanelContext);
 
-  const [
-    { data: beregningsresultatUtbetaling },
-    { data: personopplysninger },
-    { data: aksjonspunkter },
-    { data: arbeidsgiverOpplysningerPerId },
-  ] = useSuspenseQueries({
-    queries: [
-      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
-      personopplysningerQueryOptions(props.api, props.behandling),
-      aksjonspunkterQueryOptions(props.api, props.behandling, [
-        k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
-      ]),
-      arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-    ],
-  });
-
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+
+  const [{ data: personopplysninger }, { data: aksjonspunkter }, { data: arbeidsgiverOpplysningerPerId }] =
+    useSuspenseQueries({
+      queries: [
+        personopplysningerQueryOptions(props.api, props.behandling),
+        aksjonspunkterQueryOptions(props.api, props.behandling, [
+          k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+        ]),
+        arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
+      ],
+    });
+
+  const { data: beregningsresultatUtbetaling } = useQuery({
+    ...beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
+    enabled: !!erStegVurdert,
+  });
 
   if (!erValgt) {
     return null;
   }
   if (!erStegVurdert) {
     return <ProsessStegIkkeVurdert />;
+  }
+
+  if (!beregningsresultatUtbetaling) {
+    return null;
   }
 
   const handleSubmit = async (data: any) => {

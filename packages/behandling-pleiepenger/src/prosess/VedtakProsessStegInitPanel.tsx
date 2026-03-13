@@ -6,7 +6,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
-import { useSuspenseQueries } from '@tanstack/react-query';
+import { useQueries, useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import RestApiState from '../../../rest-api-hooks/src/RestApiState';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
@@ -51,15 +51,14 @@ interface Props {
 export function VedtakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
 
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+
   const [
     { data: behandlingV2 },
     { data: aksjonspunkter = [] },
     { data: vilkår },
     { data: arbeidsgiverOpplysningerPerId },
-    { data: beregningsgrunnlag = [] },
-    { data: simuleringResultat },
-    { data: tilbakekrevingvalg },
-    { data: overlappendeYtelser },
     { data: personopplysninger },
   ] = useSuspenseQueries({
     queries: [
@@ -67,11 +66,21 @@ export function VedtakProsessStegInitPanel(props: Props) {
       aksjonspunkterQueryOptions(props.api, props.behandling),
       vilkårQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-      beregningsgrunnlagQueryOptions(props.api, props.behandling),
-      simuleringResultatQueryOptions(props.api, props.behandling),
-      tilbakekrevingvalgQueryOptions(props.api, props.behandling),
-      overlappendeYtelserQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
+    ],
+  });
+
+  const [
+    { data: beregningsgrunnlag },
+    { data: simuleringResultat },
+    { data: tilbakekrevingvalg },
+    { data: overlappendeYtelser },
+  ] = useQueries({
+    queries: [
+      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
+      { ...simuleringResultatQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
+      { ...tilbakekrevingvalgQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
+      { ...overlappendeYtelserQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
     ],
   });
 
@@ -102,9 +111,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
     );
   }, [aksjonspunkter]);
 
-  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
-
   if (
     !erValgt ||
     restApiData.state === RestApiState.NOT_STARTED ||
@@ -115,6 +121,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
   }
   if (!erStegVurdert) {
     return <ProsessStegIkkeVurdert />;
+  }
+
+  if (!beregningsgrunnlag || !simuleringResultat || !tilbakekrevingvalg || !overlappendeYtelser) {
+    return null;
   }
 
   const handleSubmit = async (data: any) => {
@@ -136,7 +146,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       aksjonspunkter={aksjonspunkter}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
       behandling={tilpassetBehandling}
-      beregningsgrunnlag={beregningsgrunnlag}
+      beregningsgrunnlag={beregningsgrunnlag ?? []}
       vilkar={vilkår}
       submitCallback={handleSubmit}
       simuleringResultat={simuleringResultat}
