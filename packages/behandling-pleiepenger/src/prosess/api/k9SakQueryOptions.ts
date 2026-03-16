@@ -33,10 +33,15 @@ export const behandlingQueryOptions = (api: K9SakProsessApi, behandling: Behandl
     queryFn: () => api.getBehandling(behandling.uuid),
   });
 
-export const beregningsgrunnlagQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const beregningsgrunnlagQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  options?: { enabled?: boolean },
+) =>
   queryOptions({
     queryKey: ['beregningsgrunnlag', behandling.uuid, behandling.versjon],
     queryFn: () => api.getAlleBeregningsgrunnlag(behandling.uuid),
+    ...options,
   });
 
 export const arbeidsgiverOpplysningerQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
@@ -51,34 +56,55 @@ export const personopplysningerQueryOptions = (api: K9SakProsessApi, behandling:
     queryFn: () => api.getPersonopplysninger(behandling.uuid),
   });
 
-export const uttakQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const uttakQueryOptions = (api: K9SakProsessApi, behandling: Behandling, options?: { enabled?: boolean }) =>
   queryOptions({
     queryKey: ['uttak', behandling.uuid, behandling.versjon],
     queryFn: () => api.getUttaksplan(behandling.uuid),
+    ...options,
   });
 
-export const beregningsresultatUtbetalingQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const beregningsresultatUtbetalingQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  options?: { enabled?: boolean },
+) =>
   queryOptions({
     queryKey: ['beregningsresultatUtbetaling', behandling.uuid, behandling.versjon],
     queryFn: () => api.getBeregningsresultatMedUtbetaling(behandling.uuid),
+    ...options,
   });
 
-export const simuleringResultatQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const simuleringResultatQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  options?: { enabled?: boolean },
+) =>
   queryOptions({
     queryKey: ['simuleringResultat', behandling.uuid, behandling.versjon],
     queryFn: () => api.getSimuleringResultat(behandling.uuid),
+    ...options,
   });
 
-export const tilbakekrevingvalgQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const tilbakekrevingvalgQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  options?: { enabled?: boolean },
+) =>
   queryOptions({
     queryKey: ['tilbakekrevingvalg', behandling.uuid, behandling.versjon],
     queryFn: () => api.getTilbakekrevingValg(behandling.uuid),
+    ...options,
   });
 
-export const overlappendeYtelserQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const overlappendeYtelserQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  options?: { enabled?: boolean },
+) =>
   queryOptions({
     queryKey: ['overlappendeYtelser', behandling.uuid, behandling.versjon],
     queryFn: () => api.getOverlappendeYtelser(behandling.uuid),
+    ...options,
   });
 
 export const medlemskapQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
@@ -87,10 +113,15 @@ export const medlemskapQueryOptions = (api: K9SakProsessApi, behandling: Behandl
     queryFn: () => api.getMedlemskap(behandling.uuid),
   });
 
-export const beregningreferanserTilVurderingQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+export const beregningreferanserTilVurderingQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  options?: { enabled?: boolean },
+) =>
   queryOptions({
     queryKey: ['beregningreferanserTilVurdering', behandling.uuid, behandling.versjon],
     queryFn: () => api.getBeregningreferanserTilVurdering(behandling.uuid),
+    ...options,
   });
 
 export const søknadsfristStatusQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>

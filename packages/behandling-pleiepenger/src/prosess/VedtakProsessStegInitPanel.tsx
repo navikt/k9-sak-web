@@ -77,10 +77,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { data: overlappendeYtelser },
   ] = useQueries({
     queries: [
-      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
-      { ...simuleringResultatQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
-      { ...tilbakekrevingvalgQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
-      { ...overlappendeYtelserQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+      simuleringResultatQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+      tilbakekrevingvalgQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+      overlappendeYtelserQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
     ],
   });
 

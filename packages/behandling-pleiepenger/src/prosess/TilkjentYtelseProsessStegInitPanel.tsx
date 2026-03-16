@@ -65,10 +65,9 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       ],
     });
 
-  const { data: beregningsresultatUtbetaling } = useQuery({
-    ...beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
-    enabled: !!stegHarUtfall,
-  });
+  const { data: beregningsresultatUtbetaling } = useQuery(
+    beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+  );
 
   if (!erValgt) {
     return null;

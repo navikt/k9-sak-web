@@ -79,8 +79,8 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
 
   const [{ data: beregningreferanserTilVurdering = [] }, { data: beregningsgrunnlag }] = useQueries({
     queries: [
-      { ...beregningreferanserTilVurderingQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
-      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
+      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
     ],
   });
 

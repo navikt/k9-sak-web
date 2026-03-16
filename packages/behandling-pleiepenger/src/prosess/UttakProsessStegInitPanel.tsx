@@ -34,7 +34,7 @@ export function UttakProsessStegInitPanel(props: Props) {
     behandlingQueryOptions(props.api, props.behandling),
   );
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
-  const { data: uttak } = useQuery({ ...uttakQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall });
+  const { data: uttak } = useQuery(uttakQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }));
 
   if (!erValgt) {
     return null;
