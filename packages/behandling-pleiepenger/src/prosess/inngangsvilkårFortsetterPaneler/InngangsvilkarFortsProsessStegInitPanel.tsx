@@ -69,14 +69,14 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
   const skalVisePanel = vilkårForSteg.length > 0;
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
   if (!skalVisePanel || !erValgt) {
     return null;
   }
 
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

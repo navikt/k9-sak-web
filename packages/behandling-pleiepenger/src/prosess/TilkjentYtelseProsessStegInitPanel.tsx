@@ -52,7 +52,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   const [{ data: personopplysninger }, { data: aksjonspunkter }, { data: arbeidsgiverOpplysningerPerId }] =
     useSuspenseQueries({
@@ -67,13 +67,13 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
 
   const { data: beregningsresultatUtbetaling } = useQuery({
     ...beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
-    enabled: !!erStegVurdert,
+    enabled: !!stegHarUtfall,
   });
 
   if (!erValgt) {
     return null;
   }
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

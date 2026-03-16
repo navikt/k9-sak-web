@@ -49,12 +49,12 @@ export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submit
   }, [aksjonspunkter]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   if (!erValgt || !behandling) {
     return null;
   }
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

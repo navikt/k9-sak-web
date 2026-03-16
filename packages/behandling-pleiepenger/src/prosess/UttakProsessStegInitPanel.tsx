@@ -28,18 +28,18 @@ interface Props {
 export function UttakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery(
     behandlingQueryOptions(props.api, props.behandling),
   );
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
-  const { data: uttak } = useQuery({ ...uttakQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert });
+  const { data: uttak } = useQuery({ ...uttakQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall });
 
   if (!erValgt) {
     return null;
   }
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

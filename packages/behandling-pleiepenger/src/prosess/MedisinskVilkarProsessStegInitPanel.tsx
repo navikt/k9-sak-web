@@ -61,13 +61,13 @@ export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) 
   const skalVisePanel = vilkårForSteg.length > 0;
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   if (!erValgt || !skalVisePanel) {
     return null;
   }
 
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

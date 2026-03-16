@@ -52,7 +52,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   const [
     { data: behandlingV2 },
@@ -77,10 +77,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { data: overlappendeYtelser },
   ] = useQueries({
     queries: [
-      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
-      { ...simuleringResultatQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
-      { ...tilbakekrevingvalgQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
-      { ...overlappendeYtelserQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
+      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
+      { ...simuleringResultatQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
+      { ...tilbakekrevingvalgQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
+      { ...overlappendeYtelserQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
     ],
   });
 
@@ -119,7 +119,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
   ) {
     return null;
   }
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

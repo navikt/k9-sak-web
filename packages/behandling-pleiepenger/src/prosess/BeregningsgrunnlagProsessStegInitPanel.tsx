@@ -67,7 +67,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
   }, [k9sak]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   const [{ data: aksjonspunkter }, { data: vilkår }, { data: arbeidsgiverOpplysningerPerId }] = useSuspenseQueries({
     queries: [
@@ -79,8 +79,8 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
 
   const [{ data: beregningreferanserTilVurdering = [] }, { data: beregningsgrunnlag }] = useQueries({
     queries: [
-      { ...beregningreferanserTilVurderingQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
-      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!erStegVurdert },
+      { ...beregningreferanserTilVurderingQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
+      { ...beregningsgrunnlagQueryOptions(props.api, props.behandling), enabled: !!stegHarUtfall },
     ],
   });
 
@@ -94,7 +94,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
     return null;
   }
 
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

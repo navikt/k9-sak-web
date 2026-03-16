@@ -50,7 +50,7 @@ export function SimuleringProsessStegInitPanel(props: Props) {
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
   const data = restApiData.data;
 
@@ -58,7 +58,7 @@ export function SimuleringProsessStegInitPanel(props: Props) {
     return null;
   }
 
-  if (!erStegVurdert) {
+  if (!stegHarUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 
