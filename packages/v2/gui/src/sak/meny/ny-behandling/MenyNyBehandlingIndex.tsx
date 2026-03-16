@@ -2,11 +2,13 @@ import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9k
 import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
+import type { RevurderingStartpunkt } from './components/NyBehandlingModal';
 import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
 import VilkårBackendClient from './VilkårBackendClient';
 
@@ -72,6 +74,24 @@ const MenyNyBehandlingIndexV2 = ({
     enabled: !!behandlingUuid && !erTilbakekreving(behandlingType),
   });
 
+  const featureToggles = useContext(FeatureTogglesContext);
+  const erStartpunktValgAktivert =
+    featureToggles.REVURDERING_VELG_STARTPUNKT && ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+
+  const { data: startpunkter } = useQuery<RevurderingStartpunkt[]>({
+    queryKey: ['revurdering-startpunkter', ytelseType],
+    queryFn: async () => {
+      const response = await fetch(
+        `/k9/sak/api/behandlinger/revurdering/startpunkter?fagsakYtelseType=${encodeURIComponent(ytelseType)}`,
+      );
+      if (!response.ok) {
+        throw new Error(`Feil ved henting av startpunkter: ${response.status}`);
+      }
+      return response.json();
+    },
+    enabled: erStartpunktValgAktivert,
+  });
+
   const sisteDagISøknadsperiode = vilkår
     ?.find(v => v.vilkarType === VilkårType.SØKNADSFRIST)
     ?.perioder?.reduce<Date | null>((senesteDatoFunnet, current) => {
@@ -117,6 +137,7 @@ const MenyNyBehandlingIndexV2 = ({
       aktorId={aktorId}
       gjeldendeVedtakBehandlendeEnhetId={gjeldendeVedtakBehandlendeEnhetId}
       sisteDagISøknadsperiode={sisteDagISøknadsperiode}
+      startpunkter={startpunkter}
     />
   );
 };

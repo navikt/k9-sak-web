@@ -36,11 +36,17 @@ export type BehandlingOppretting = Readonly<{
   gyldigePerioderPerÅrsak?: ÅrsakOgPerioder[];
 }>;
 
+export type RevurderingStartpunkt = {
+  behandlingÅrsakType: { kode: string; kodeverk: string; navn: string };
+  visningsnavn: string;
+};
+
 export type FormValues = {
   behandlingType: string;
   nyBehandlingEtterKlage?: string;
   behandlingArsakType?: string;
   steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
+  startpunktType?: string;
   fom: string;
   tom: string;
   fomForPeriodeForInntektskontroll?: string;
@@ -80,6 +86,7 @@ interface NyBehandlingModalProps {
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
   sisteDagISøknadsperiode?: Date | null;
+  startpunkter?: RevurderingStartpunkt[];
 }
 
 /**
@@ -107,6 +114,7 @@ export const NyBehandlingModal = ({
   tilbakekrevingRevurderingArsaker,
   behandlingType,
   sisteDagISøknadsperiode,
+  startpunkter,
 }: NyBehandlingModalProps) => {
   useEffect(() => {
     if (erTilbakekrevingAktivert) {
@@ -137,6 +145,7 @@ export const NyBehandlingModal = ({
       nyBehandlingEtterKlage: '',
       behandlingArsakType: '',
       steg: undefined,
+      startpunktType: '',
       fom: '',
       tom: '',
       fomForPeriodeForInntektskontroll: '',
@@ -163,8 +172,10 @@ export const NyBehandlingModal = ({
     valgtBehandlingTypeKode,
     erUngdomsprogramytelse,
   );
+  const harStartpunkter = !!startpunkter && startpunkter.length > 0;
   const visÅrsak =
     (erRevurdering && steg === 'inngangsvilkår') ||
+    (erRevurdering && harStartpunkter) ||
     (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0) ||
     (erRevurdering && erUngdomsprogramytelse);
   const getUngPerioderTilRevurdering = () => {
@@ -219,7 +230,25 @@ export const NyBehandlingModal = ({
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
             {erRevurdering &&
-              !erUngdomsprogramytelse && ( // ungdomsprogramytelsen skal alltid ha full revurdering
+              !erUngdomsprogramytelse &&
+              (harStartpunkter ? (
+                <RhfSelect
+                  control={formMethods.control}
+                  name="startpunktType"
+                  label="Hvor i prosessen vil du starte revurderingen?"
+                  validate={[required]}
+                  selectValues={[
+                    <option key="full" value="">
+                      Full revurdering (fra inngangsvilkår)
+                    </option>,
+                    ...startpunkter.map(sp => (
+                      <option key={sp.behandlingÅrsakType.kode} value={sp.behandlingÅrsakType.kode}>
+                        {sp.visningsnavn}
+                      </option>
+                    )),
+                  ]}
+                />
+              ) : (
                 <RhfSelect
                   control={formMethods.control}
                   name="steg"
@@ -234,7 +263,7 @@ export const NyBehandlingModal = ({
                     </option>,
                   ]}
                 />
-              )}
+              ))}
             {erFørstegangsbehandling && (
               <RhfCheckbox
                 control={formMethods.control}

@@ -22,6 +22,7 @@ const rootFeatureToggles = {
   PROSESS_MENY_V2: false,
   SKJUL_PROSESS_MENY_V2_VELGER: false,
   ENDRE_FRIST: false,
+  REVURDERING_VELG_STARTPUNKT: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

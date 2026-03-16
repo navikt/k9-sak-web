@@ -25,6 +25,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
+  REVURDERING_VELG_STARTPUNKT: true,
 });
 
 /**
