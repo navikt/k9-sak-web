@@ -106,7 +106,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
     <BeregningsgrunnlagProsessIndex
       beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
       beregningsgrunnlagListe={beregningsgrunnlag.map(mapBeregningsgrunnlagTilFP)}
-      arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId.arbeidsgivere)}
+      arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId)}
       submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
       kodeverkSamling={kodeverkSamling}
