@@ -34,13 +34,22 @@ describe('mapBeregningsgrunnlagTilFP', () => {
 });
 
 describe('mapBeregningsgrunnlagTilFP – sammenligningsgrunnlag', () => {
+  it('kaster feil dersom sammenligningsgrunnlagType mangler', () => {
+    expect(() =>
+      mapBeregningsgrunnlagTilFP({
+        ...minimalBg,
+        sammenligningsgrunnlagPrStatus: [{}],
+      }),
+    ).toThrow('sammenligningsgrunnlagType må være definert');
+  });
+
   it('mapper sammenligningsgrunnlag med fallbacks for alle valgfrie felt', () => {
     const result = mapBeregningsgrunnlagTilFP({
       ...minimalBg,
-      sammenligningsgrunnlagPrStatus: [{}],
+      sammenligningsgrunnlagPrStatus: [{ sammenligningsgrunnlagType: 'SAMMENLIGNING_AT' }],
     });
     const sg = result.sammenligningsgrunnlagPrStatus![0]!;
-    expect(sg.sammenligningsgrunnlagType).toBe('');
+    expect(sg.sammenligningsgrunnlagType).toBe('SAMMENLIGNING_AT');
     expect(sg.differanseBeregnet).toBe(0);
     expect(sg.avvikProsent).toBe(0);
     expect(sg.avvikPromille).toBe(0);
@@ -88,7 +97,7 @@ describe('mapBeregningsgrunnlagTilFP – faktaOmBeregning', () => {
       },
     });
     const andel = result.faktaOmBeregning!.andelerForFaktaOmBeregning[0]!;
-    expect(andel.aktivitetStatus).toBe('');
+    expect(andel.aktivitetStatus).toBe('-');
     expect(andel.lagtTilAvSaksbehandler).toBe(false);
   });
 
