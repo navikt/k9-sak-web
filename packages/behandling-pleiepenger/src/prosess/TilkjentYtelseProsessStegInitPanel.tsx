@@ -11,7 +11,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
@@ -54,20 +54,21 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
-  const [{ data: personopplysninger }, { data: aksjonspunkter }, { data: arbeidsgiverOpplysningerPerId }] =
-    useSuspenseQueries({
-      queries: [
-        personopplysningerQueryOptions(props.api, props.behandling),
-        aksjonspunkterQueryOptions(props.api, props.behandling, [
-          k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
-        ]),
-        arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-      ],
-    });
-
-  const { data: beregningsresultatUtbetaling } = useQuery(
-    beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
-  );
+  const [
+    { data: personopplysninger },
+    { data: aksjonspunkter },
+    { data: arbeidsgiverOpplysningerPerId },
+    { data: beregningsresultatUtbetaling },
+  ] = useSuspenseQueries({
+    queries: [
+      personopplysningerQueryOptions(props.api, props.behandling),
+      aksjonspunkterQueryOptions(props.api, props.behandling, [
+        k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
+      ]),
+      arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
+      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, !!stegHarUtfall),
+    ],
+  });
 
   if (!erValgt) {
     return null;

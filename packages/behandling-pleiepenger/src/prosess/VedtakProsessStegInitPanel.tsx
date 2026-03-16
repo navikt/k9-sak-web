@@ -6,7 +6,7 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
-import { useQueries, useSuspenseQueries } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import RestApiState from '../../../rest-api-hooks/src/RestApiState';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
@@ -53,6 +53,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
+  const harUtfall = !!stegHarUtfall;
 
   const [
     { data: behandlingV2 },
@@ -60,6 +61,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { data: vilkår },
     { data: arbeidsgiverOpplysningerPerId },
     { data: personopplysninger },
+    { data: beregningsgrunnlag },
+    { data: simuleringResultat },
+    { data: tilbakekrevingvalg },
+    { data: overlappendeYtelser },
   ] = useSuspenseQueries({
     queries: [
       behandlingQueryOptions(props.api, props.behandling),
@@ -67,20 +72,10 @@ export function VedtakProsessStegInitPanel(props: Props) {
       vilkårQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
-    ],
-  });
-
-  const [
-    { data: beregningsgrunnlag },
-    { data: simuleringResultat },
-    { data: tilbakekrevingvalg },
-    { data: overlappendeYtelser },
-  ] = useQueries({
-    queries: [
-      beregningsgrunnlagQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
-      simuleringResultatQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
-      tilbakekrevingvalgQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
-      overlappendeYtelserQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, harUtfall),
+      simuleringResultatQueryOptions(props.api, props.behandling, harUtfall),
+      tilbakekrevingvalgQueryOptions(props.api, props.behandling, harUtfall),
+      overlappendeYtelserQueryOptions(props.api, props.behandling, harUtfall),
     ],
   });
 
@@ -119,7 +114,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
   ) {
     return null;
   }
-  if (!stegHarUtfall) {
+  if (!harUtfall) {
     return <ProsessStegIkkeVurdert />;
   }
 

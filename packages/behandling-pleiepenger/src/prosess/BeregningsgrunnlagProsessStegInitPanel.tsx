@@ -11,7 +11,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
-import { useQueries, useSuspenseQueries } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { ComponentProps, use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
@@ -69,18 +69,19 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
 
-  const [{ data: aksjonspunkter }, { data: vilkår }, { data: arbeidsgiverOpplysningerPerId }] = useSuspenseQueries({
+  const [
+    { data: aksjonspunkter },
+    { data: vilkår },
+    { data: arbeidsgiverOpplysningerPerId },
+    { data: beregningreferanserTilVurdering },
+    { data: beregningsgrunnlag },
+  ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(props.api, props.behandling, BEREGNING_AKSJONSPUNKT_KODER),
       vilkårQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-    ],
-  });
-
-  const [{ data: beregningreferanserTilVurdering = [] }, { data: beregningsgrunnlag }] = useQueries({
-    queries: [
-      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
-      beregningsgrunnlagQueryOptions(props.api, props.behandling, { enabled: !!stegHarUtfall }),
+      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling, !!stegHarUtfall),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, !!stegHarUtfall),
     ],
   });
 
@@ -98,7 +99,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
     return <ProsessStegIkkeVurdert />;
   }
 
-  if (!beregningsgrunnlag) {
+  if (!beregningsgrunnlag || !beregningreferanserTilVurdering) {
     return null;
   }
 
