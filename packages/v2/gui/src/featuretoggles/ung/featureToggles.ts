@@ -20,6 +20,7 @@ const ungSpecificFeatureToggles = {
  */
 export const qFeatureToggles = initQFeatureToggles(ungSpecificFeatureToggles)({
   ENDRE_FRIST: true,
+  AKTIVITETSPENGER: true,
   // Legg til featuretoggles for ung Q her
 });
 
