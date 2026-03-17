@@ -40,7 +40,8 @@
     "prepare": "husky",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)",
     "sentry-release-ung": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release-ung.cjs)",
-    "knip": "knip --include files,dependencies,exports --no-config-hints",
+    "knip": "knip",
+    "knip:check": "knip --include files,dependencies,exports --no-config-hints",
     "dev:ung": "vite -c ung.vite.config.js serve",
     "dev:aktivitetspenger": "vite -c aktivitetspenger.vite.config.js serve",
     "build:ung": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite -c ung.vite.config.js build"
@@ -76,6 +77,7 @@
     "@storybook/addon-docs": "10.2.15",
     "@storybook/react-vite": "10.2.15",
     "@storybook/test-runner": "0.24.2",
+    "@tanstack/eslint-plugin-query": "5.91.4",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
