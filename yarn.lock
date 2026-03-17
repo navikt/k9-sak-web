@@ -3244,6 +3244,7 @@ __metadata:
     editorjs-html: "npm:3.4.3"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.4"
+    react-collapse: "npm:5.1.1"
     react-hook-form: "npm:7.71.1"
     react-router: "npm:7.13.0"
     yup: "npm:1.7.1"
@@ -5199,6 +5200,21 @@ __metadata:
   dependencies:
     "@swc/counter": "npm:^0.1.3"
   checksum: 10/92dbbc70cd068ea30fb6fbdc1ae8599d6c058a5d09b2923d6e4e24fab5ad7c86a19dd01f349a8e03e300a9321e06911a24df18303b40e307fbd4109372cef2ef
+  languageName: node
+  linkType: hard
+
+"@tanstack/eslint-plugin-query@npm:5.91.4":
+  version: 5.91.4
+  resolution: "@tanstack/eslint-plugin-query@npm:5.91.4"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^8.48.0"
+  peerDependencies:
+    eslint: ^8.57.0 || ^9.0.0
+    typescript: ^5.0.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/033986fd867bba36c61dca57466ec7e5fa5a9b3ce5d8898ca24faf500fa1ab78cb292e7826d5e128218e206ed9c242067de91ac93b9b99f9df75600126defb90
   languageName: node
   linkType: hard
 
@@ -11111,6 +11127,7 @@ __metadata:
     "@storybook/addon-docs": "npm:10.2.15"
     "@storybook/react-vite": "npm:10.2.15"
     "@storybook/test-runner": "npm:0.24.2"
+    "@tanstack/eslint-plugin-query": "npm:5.91.4"
     "@testing-library/dom": "npm:10.4.1"
     "@testing-library/jest-dom": "npm:6.9.1"
     "@testing-library/react": "npm:16.3.2"
@@ -12874,6 +12891,15 @@ __metadata:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: 10/72900df0616e473e824202113c3df6abae59150dfb73ed13273503127235320e9c8ca4aaaaccfd58cf417c6ca92a6e68ee9a5c3182886ae949a768639b388a7b
+  languageName: node
+  linkType: hard
+
+"react-collapse@npm:5.1.1":
+  version: 5.1.1
+  resolution: "react-collapse@npm:5.1.1"
+  peerDependencies:
+    react: ">=16.3.0"
+  checksum: 10/20e2ad938272e1da13c4e1e44fce131236007378f3b0e3eb19c72fb21b7fd6797a44af167ddc2dc194d2645efda5aa34f3da06fb2ae7bca0a21f3989d46b2622
   languageName: node
   linkType: hard
 
