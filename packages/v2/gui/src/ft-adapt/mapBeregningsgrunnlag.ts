@@ -97,11 +97,11 @@ const mapSammenligningsgrunnlag = (
 
 const mapFaktaOmBeregning = (inp: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
   ...inp,
-  andelerForFaktaOmBeregning: (inp.andelerForFaktaOmBeregning ?? []).map(a => ({
-    ...a,
-    aktivitetStatus: a.aktivitetStatus ?? '-',
-    lagtTilAvSaksbehandler: a.lagtTilAvSaksbehandler ?? false,
-    arbeidsforhold: mapOptionalArbeidsforhold(a.arbeidsforhold),
+  andelerForFaktaOmBeregning: (inp.andelerForFaktaOmBeregning ?? []).map(andel => ({
+    ...andel,
+    aktivitetStatus: andel.aktivitetStatus ?? '-',
+    lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler ?? false,
+    arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
   })),
   frilansAndel:
     inp.frilansAndel != null
@@ -110,25 +110,25 @@ const mapFaktaOmBeregning = (inp: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
           arbeidsforhold: mapOptionalArbeidsforhold(inp.frilansAndel.arbeidsforhold),
         }
       : undefined,
-  arbeidsforholdMedLønnsendringUtenIM: inp.arbeidsforholdMedLønnsendringUtenIM?.map(a => ({
-    ...a,
-    arbeidsforhold: mapOptionalArbeidsforhold(a.arbeidsforhold),
+  arbeidsforholdMedLønnsendringUtenIM: inp.arbeidsforholdMedLønnsendringUtenIM?.map(arbeidsforhold => ({
+    ...arbeidsforhold,
+    arbeidsforhold: mapOptionalArbeidsforhold(arbeidsforhold.arbeidsforhold),
   })),
-  kortvarigeArbeidsforhold: inp.kortvarigeArbeidsforhold?.map(a => ({
-    ...a,
-    aktivitetStatus: a.aktivitetStatus ?? '-',
-    lagtTilAvSaksbehandler: a.lagtTilAvSaksbehandler ?? false,
-    arbeidsforhold: mapOptionalArbeidsforhold(a.arbeidsforhold),
+  kortvarigeArbeidsforhold: inp.kortvarigeArbeidsforhold?.map(arbeidsforhold => ({
+    ...arbeidsforhold,
+    aktivitetStatus: arbeidsforhold.aktivitetStatus ?? '-',
+    lagtTilAvSaksbehandler: arbeidsforhold.lagtTilAvSaksbehandler ?? false,
+    arbeidsforhold: mapOptionalArbeidsforhold(arbeidsforhold.arbeidsforhold),
   })),
   kunYtelse:
     inp.kunYtelse != null
       ? {
           ...inp.kunYtelse,
           fodendeKvinneMedDP: inp.kunYtelse.fodendeKvinneMedDP ?? false,
-          andeler: inp.kunYtelse.andeler?.map(a => ({
-            ...a,
-            fastsattBelopPrMnd: a.fastsattBelopPrMnd ?? null,
-            arbeidsforhold: mapOptionalArbeidsforhold(a.arbeidsforhold),
+          andeler: inp.kunYtelse.andeler?.map(andel => ({
+            ...andel,
+            fastsattBelopPrMnd: andel.fastsattBelopPrMnd ?? null,
+            arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
           })),
         }
       : undefined,
@@ -136,31 +136,33 @@ const mapFaktaOmBeregning = (inp: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
     inp.vurderMottarYtelse != null
       ? {
           ...inp.vurderMottarYtelse,
-          arbeidstakerAndelerUtenIM: inp.vurderMottarYtelse.arbeidstakerAndelerUtenIM?.map(a => ({
-            ...a,
-            lagtTilAvSaksbehandler: a.lagtTilAvSaksbehandler ?? false,
-            arbeidsforhold: mapOptionalArbeidsforhold(a.arbeidsforhold),
+          arbeidstakerAndelerUtenIM: inp.vurderMottarYtelse.arbeidstakerAndelerUtenIM?.map(andel => ({
+            ...andel,
+            lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler ?? false,
+            arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
           })),
         }
       : undefined,
-  arbeidstakerOgFrilanserISammeOrganisasjonListe: inp.arbeidstakerOgFrilanserISammeOrganisasjonListe?.map(a => ({
-    ...a,
-    arbeidsforhold: mapOptionalArbeidsforhold(a.arbeidsforhold),
-  })),
+  arbeidstakerOgFrilanserISammeOrganisasjonListe: inp.arbeidstakerOgFrilanserISammeOrganisasjonListe?.map(
+    arbeidstakerOgFrilanser => ({
+      ...arbeidstakerOgFrilanser,
+      arbeidsforhold: mapOptionalArbeidsforhold(arbeidstakerOgFrilanser.arbeidsforhold),
+    }),
+  ),
   saksopplysninger: inp.saksopplysninger
     ? {
         ...inp.saksopplysninger,
-        kortvarigeArbeidsforhold: (inp.saksopplysninger.kortvarigeArbeidsforhold ?? []).map(k => ({
-          andelsnr: k.andelsnr ?? 0,
-          arbeidsgiverIdent: k.arbeidsgiverIdent ?? '',
-          arbeidsforholdId: k.arbeidsforholdId,
+        kortvarigeArbeidsforhold: (inp.saksopplysninger.kortvarigeArbeidsforhold ?? []).map(arbeidsforhold => ({
+          andelsnr: arbeidsforhold.andelsnr ?? 0,
+          arbeidsgiverIdent: arbeidsforhold.arbeidsgiverIdent ?? '',
+          arbeidsforholdId: arbeidsforhold.arbeidsforholdId,
         })),
-        lønnsendringSaksopplysning: inp.saksopplysninger.lønnsendringSaksopplysning?.map(l => ({
-          ...l,
+        lønnsendringSaksopplysning: inp.saksopplysninger.lønnsendringSaksopplysning?.map(lønnsendring => ({
+          ...lønnsendring,
           arbeidsforhold: {
-            ...l.arbeidsforhold,
-            andelsnr: l.arbeidsforhold.andelsnr ?? 0,
-            arbeidsgiverIdent: l.arbeidsforhold.arbeidsgiverIdent ?? '',
+            ...lønnsendring.arbeidsforhold,
+            andelsnr: lønnsendring.arbeidsforhold.andelsnr ?? 0,
+            arbeidsgiverIdent: lønnsendring.arbeidsforhold.arbeidsgiverIdent ?? '',
           },
         })),
       }
@@ -250,9 +252,9 @@ const mapPgiGrunnlag = (
   inp: InntektsgrunnlagDto['pgiGrunnlag'][number],
 ): FPInntektsgrunnlag['pgiGrunnlag'][number] => ({
   ...inp,
-  inntekter: (inp.inntekter ?? []).map(i => ({
-    ...i,
-    beløp: i.beløp ?? 0,
+  inntekter: (inp.inntekter ?? []).map(inntekt => ({
+    ...inntekt,
+    beløp: inntekt.beløp ?? 0,
   })),
 });
 
