@@ -44,6 +44,7 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
   const isBesteberegningSnittSisteTreÅr =
     data.besteBeregningResultatType === BesteBeregningResultatType.SNITT_SISTE_TRE_ÅR;
   const isBesteberegningSisteÅr = data.besteBeregningResultatType === BesteBeregningResultatType.SISTE_ÅR;
+  const sortertePgiÅrsinntekter = data.pgiÅrsinntekter.toSorted((a, b) => b.årstall - a.årstall);
 
   return (
     <VStack gap="space-8">
@@ -60,7 +61,7 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
           <Heading size="small" level="2" spacing>
             Pensjonsgivende inntekt siste 3 år
           </Heading>
-          {data.pgiÅrsinntekter.length > 0 && (
+          {sortertePgiÅrsinntekter.length > 0 && (
             <Box marginBlock="space-8 space-0" borderRadius="8" borderWidth="1" width="800px">
               <Table>
                 <Table.Header>
@@ -74,8 +75,8 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {data.pgiÅrsinntekter.map(pgi => {
-                    const isBesteberegning = isBesteberegningSisteÅr && pgi.årstall === årstallForSkjæringstidspunkt;
+                  {sortertePgiÅrsinntekter.map((pgi, index) => {
+                    const isBesteberegning = isBesteberegningSisteÅr && index === 0;
                     return (
                       <Table.Row key={pgi.årstall} className={styles.rowWithSpacing}>
                         <Table.DataCell>{pgi.årstall}</Table.DataCell>

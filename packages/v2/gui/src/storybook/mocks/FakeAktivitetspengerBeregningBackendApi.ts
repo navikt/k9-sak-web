@@ -1,5 +1,4 @@
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
-import { BesteBeregningResultatType } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BesteBeregningResultatType.js';
 import type { AktivitetspengerBeregningBackendApiType } from '../../prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendApiType.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
@@ -7,39 +6,25 @@ export class FakeAktivitetspengerBeregningBackendApi implements Aktivitetspenger
   async getBeregningsgrunnnlag(uuid: string): Promise<BeregningsgrunnlagDto> {
     ignoreUnusedDeclared(uuid);
     return {
-      beregningsgrunnlag: 500000,
-      beregningsgrunnlagRedusert: 429000,
-      besteBeregningResultatType: BesteBeregningResultatType.SISTE_ÅR,
-      dagsats: 1650,
+      skjæringstidspunkt: '2026-03-17',
+      årsinntektSisteÅr: 0,
+      årsinntektSisteTreÅr: 93313,
+      beregningsgrunnlag: 93313,
+      beregningsgrunnlagRedusert: 61587,
+      dagsats: 236.87,
       pgiÅrsinntekter: [
         {
-          årstall: 2025,
-          arbeidsinntekt: 400000,
-          næring: 220000,
-          sum: 620000,
-          sumAvkortet: 620000,
-          sumAvkortetOgOppjustert: 620000,
-        },
-        {
-          årstall: 2024,
-          arbeidsinntekt: 380000,
-          næring: 200000,
-          sum: 580000,
-          sumAvkortet: 560000,
-          sumAvkortetOgOppjustert: 592000,
-        },
-        {
           årstall: 2023,
-          arbeidsinntekt: 370000,
-          næring: 200000,
-          sum: 570000,
-          sumAvkortet: 550000,
-          sumAvkortetOgOppjustert: 597000,
+          sum: 250000,
+          sumAvkortet: 250000,
+          sumAvkortetOgOppjustert: 279940,
+          arbeidsinntekt: 0,
+          næring: 250000,
         },
+        { årstall: 2024, sum: 0, sumAvkortet: 0, sumAvkortetOgOppjustert: 0, arbeidsinntekt: 0, næring: 0 },
+        { årstall: 2025, sum: 0, sumAvkortet: 0, sumAvkortetOgOppjustert: 0, arbeidsinntekt: 0, næring: 0 },
       ],
-      skjæringstidspunkt: '2025-01-01',
-      årsinntektSisteTreÅr: 600000,
-      årsinntektSisteÅr: 600000,
+      besteBeregningResultatType: 'SNITT_SISTE_TRE_ÅR',
     };
   }
 }
