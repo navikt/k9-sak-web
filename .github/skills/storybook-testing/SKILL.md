@@ -180,3 +180,58 @@ Shared mock data and utilities live in `packages/v2/gui/src/storybook/mocks/`:
 - `ignoreUnusedDeclared.ts` — suppresses unused-variable lint in fakes
 - `arbeidsgivere.json` — reusable mock arbeidsgiver data
 - `personopplysninger.ts` — reusable mock personopplysninger
+
+## Stories with `useSuspenseQuery`
+
+Components that use `useSuspenseQuery` need `QueryClientProvider` and `Suspense` in addition to the fake API context. Create a local `withFakeApi` decorator:
+
+```typescript
+import type { Decorator } from '@storybook/react-vite';
+import { Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MyFeatureApiContext } from './api/MyFeatureApiContext.js';
+import type { MyDataDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+const withFakeApi = (data: MyDataDto): Decorator => {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return Story => (
+    <QueryClientProvider client={queryClient}>
+      <MyFeatureApiContext value={{ getMyData: async () => data }}>
+        <Suspense>
+          <Story />
+        </Suspense>
+      </MyFeatureApiContext>
+    </QueryClientProvider>
+  );
+};
+
+const meta = {
+  decorators: [withFakeApi(mockData)],
+  args: { behandlingUuid: 'test-uuid' },
+} satisfies Meta<typeof MyComponent>;
+```
+
+Per-story data overrides use story-level decorators:
+```typescript
+export const SpecificScenario: Story = {
+  decorators: [withFakeApi(alternativeData)],
+};
+```
+
+## Kodeverk decorator
+
+Components that use `K9KodeverkoppslagContext` (the type-safe kodeverk system) need a decorator in stories. Use `withK9Kodeverkoppslag()` — it provides mock kodeverk for all backends:
+
+```typescript
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
+
+const meta = {
+  title: 'gui/fakta/myfeature/MyComponent',
+  component: MyComponent,
+  decorators: [withK9Kodeverkoppslag()],
+} satisfies Meta<typeof MyComponent>;
+```
+
+For legacy components still using `useKodeverkContext()`, use `withKodeverkContext()` instead. **Do not use `withKodeverkContext()` in new code.**
+
+**Never** inline kodeverk mock data in stories. The decorators cover all kodeverk lookups automatically.
