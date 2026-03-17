@@ -7,6 +7,53 @@ description: 'Patterns and rules for writing code in packages/v2/. USE FOR: crea
 
 Code in `packages/v2/` follows stricter TypeScript rules and different conventions than the rest of the monorepo.
 
+## Migration Checklist
+
+Use this when migrating any old fakta/prosess panel to v2. Work through it in order — re-iterate until every box is checked.
+
+### Backend types
+- [ ] Stable DTO re-export created in `packages/v2/backend/src/k9sak/kontrakt/<domain>/`
+- [ ] Kodeverk enum re-exports created in `packages/v2/backend/src/k9sak/kodeverk/<path>/` for each enum used
+
+### API contract
+- [ ] Interface defined in `packages/v2/gui/src/fakta/<feature>/api/<Feature>Api.ts`
+- [ ] Context created in `packages/v2/gui/src/fakta/<feature>/api/<Feature>ApiContext.ts`
+- [ ] Production client `K9<Feature>BackendClient` calls the generated SDK function — never a raw URL
+- [ ] `getEndepunkter` **kept** in the old `FaktaPanelDef` for v1 backwards compatibility (removed only when deleting v1 code)
+
+### v2 component
+- [ ] Component fetches its own data via `useSuspenseQuery` + API context — no data received as props from the shell
+- [ ] Uses `K9KodeverkoppslagContext` for kodeverk lookups — no `alleKodeverk` / `kodeverk` prop
+- [ ] CSS module class names use bracket notation: `styles['myClass']` (required by `noPropertyAccessFromIndexSignature`)
+- [ ] All imports use `.js` suffix
+- [ ] No imports from non-v2 packages (`@k9-sak-web/utils`, `@k9-sak-web/types`, `@k9-sak-web/shared-components`, etc.)
+
+### Feature toggle
+- [ ] `BRUK_V2_<FEATURE>: false` added to `rootFeatureToggles` in `FeatureToggles.ts`
+- [ ] Toggle enabled in `k9SpecificFeatureToggles` in `k9/featureToggles.ts`
+
+### FaktaPanelDef wiring (one per behandling package)
+- [ ] `getKomponent` is toggle-guarded — v2 branch passes only what the component needs (typically `behandlingUuid`), v1 branch unchanged
+- [ ] Compile-time deletion guard added to the **old v1 package files** — not the `FaktaPanelDef` (see "Marking old files for deletion" section below)
+
+### AppConfigResolver
+- [ ] `<K9<Feature>BackendClient>` context provider added in `packages/sak-app/src/app/AppConfigResolver.tsx`
+- [ ] Add to ung `AppConfigResolver` too if the feature exists there
+
+### Suspense boundary
+- [ ] `<Suspense fallback={<LoadingPanel />}>` wraps the `<ErrorBoundary>` in each behandling `*Fakta.tsx` that renders the panel
+
+### Stories
+- [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
+- [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>`
+- [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
+- [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
+- [ ] Mock data uses generated DTO types (flat string codes) — not old kodeverk objects
+
+### Verification
+- [ ] `yarn ts-check` passes with zero errors
+- [ ] `yarn test` passes for affected packages
+
 ## Directory Structure
 
 ```
@@ -231,6 +278,23 @@ getKomponent = props => {
 ```
 
 `konverterKodeverkTilKode` recursively converts 2-attr kodeverk objects (`{ kode, kodeverk }`) to plain strings (the `kode` value). Objects with 3+ attrs (e.g. `{ kode, kodeverk, namn }`) are kept as-is. Adjust your v2 component types accordingly.
+
+### Marking old files for deletion — compile-time guard
+
+Add a type assertion in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`). The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
+
+This causes a TypeScript compile error when the toggle key is removed from `FeatureToggles`, forcing cleanup before the build passes:
+
+```typescript
+// Kompileringsfeil her betyr at BRUK_V2_MY_FEATURE er fjernet fra FeatureToggles.
+// Slett hele packages/fakta-<feature> og fjern v1-grenen i FaktaPanelDef når migreringen er ferdig.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting = import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_MY_FEATURE'];
+```
+
+Note: Use the inline `import(...)` form so you don't need to add a top-level import just for the guard.
+
+The `FeatureToggles['BRUK_V2_MY_FEATURE']` lookup will fail with `Property 'BRUK_V2_MY_FEATURE' does not exist on type 'FeatureToggles'` the moment the key is deleted, making it impossible to merge that deletion without also cleaning up the v1 code.
 
 ## Suspense boundary — required for `useSuspenseQuery`
 
