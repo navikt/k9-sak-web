@@ -67,8 +67,9 @@ import { something } from '@k9-sak-web/types';
 
 Generated types and SDK functions come from published client packages (`@navikt/k9-sak-typescript-client`, `@navikt/k9-klage-typescript-client`, etc.) and are re-exported via `@k9-sak-web/backend` using `export *`. All types and SDK functions are available through the `@k9-sak-web/backend` imports. When searching for available types/endpoints, search in `node_modules/@navikt/k9-sak-typescript-client/src/types.gen.ts` and `sdk.gen.ts` — the re-export layer (`packages/v2/backend/src/k9sak/generated/`) uses `export *` so everything is available, but the source files are the definitive reference.
 
-**Never import directly from `generated/types.js`.** The generated type names (e.g. `k9_sak_kontrakt_uttak_UtenlandsoppholdDto`) can change when the OpenAPI spec changes. Instead, create a stable re-export in `packages/v2/backend/src/k9sak/kontrakt/<domain>/` with a friendly alias:
+**Never import directly from `generated/types.js`.** The generated type names (e.g. `k9_sak_kontrakt_uttak_UtenlandsoppholdDto`) can change when the OpenAPI spec changes. Instead, create stable re-exports under `packages/v2/backend/src/k9sak/` with friendly aliases, then always import from those:
 
+**DTO types** — re-export in `kontrakt/<domain>/`:
 ```typescript
 // packages/v2/backend/src/k9sak/kontrakt/uttak/UtenlandsoppholdDto.ts
 export type {
@@ -77,20 +78,30 @@ export type {
 } from '@navikt/k9-sak-typescript-client/types';
 ```
 
-Then import from the stable path:
+**Kodeverk const enums** — re-export under `kodeverk/` mirroring the package path from the generated type name:
+```typescript
+// k9_kodeverk_geografisk_Region → kodeverk/geografisk/Region.ts
+export { k9_kodeverk_geografisk_Region as Region } from '@navikt/k9-sak-typescript-client/types';
+export type { k9_kodeverk_geografisk_Region as RegionType } from '@navikt/k9-sak-typescript-client/types';
+
+// k9_kodeverk_uttak_UtenlandsoppholdÅrsak → kodeverk/uttak/UtenlandsoppholdÅrsak.ts
+export { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsak } from '@navikt/k9-sak-typescript-client/types';
+export type { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsakType } from '@navikt/k9-sak-typescript-client/types';
+```
+
+Then import from the stable paths:
 ```typescript
 import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UtenlandsoppholdDto.js';
+import { Region } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/Region.js';
+import { UtenlandsoppholdÅrsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UtenlandsoppholdÅrsak.js';
 ```
 
 ### Using generated types
-Types are generated from OpenAPI specs. Names use the full package path with underscores as separator:
+Types are generated from OpenAPI specs. Names use the full package path with underscores as separator — use these when creating re-exports:
 
 ```typescript
-import type {
-  k9_sak_kontrakt_behandling_BehandlingDto,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+// In a re-export file:
+export type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@navikt/k9-sak-typescript-client/types';
 ```
 
 ### Combined types
