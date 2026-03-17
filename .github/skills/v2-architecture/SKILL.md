@@ -376,6 +376,19 @@ With `"noPropertyAccessFromIndexSignature": true`, CSS module class names must u
 <div className={styles.myClass} />
 ```
 
+## Null handling and narrowing — avoid `!` in v2 code
+
+When working with DTO fields that can be `null | undefined`, avoid non-null assertions (`value!`) in production code.
+
+- Use `assertDefined(...)` when missing value means a bug and should fail fast.
+- Avoid creating local one-off throw helpers if `assertDefined` covers the need.
+
+```typescript
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
+
+const kode = assertDefined(ap.definisjon);
+```
+
 ## noUncheckedIndexedAccess — array index access returns T | undefined
 
 With `"noUncheckedIndexedAccess": true`, `array[n]` returns `T | undefined`. Use `array[n]!` when you know the index is valid:

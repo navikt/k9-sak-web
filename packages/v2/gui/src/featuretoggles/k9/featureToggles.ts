@@ -6,6 +6,7 @@ import { initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatu
  * NB: Toggles satt her skal ikkje vere satt i baseQFeatureToggles i ../FeatureToggles.ts. Det blir då kompileringsfeil.
  */
 const k9SpecificFeatureToggles = {
+  BRUK_V2_DIREKTE_OVERGANG: true,
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,

@@ -9,6 +9,10 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 import * as Yup from 'yup';
 import styles from './ManglerSøknadForm.module.css';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_DIREKTE_OVERGANG'];
+
 interface Props {
   submitCallback: (SubmitCallback) => void;
   readOnly: boolean;
