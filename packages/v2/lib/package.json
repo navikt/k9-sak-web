@@ -9,6 +9,5 @@
     "./dateUtils/*": "./src/dateUtils/*",
     "./validationUtils/*": "./src/validationUtils/*",
     "./paths/*": "./src/paths/*"
-  },
-  "dependencies": {}
+  }
 }

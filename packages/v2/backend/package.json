@@ -20,6 +20,5 @@
     "@navikt/k9-tilbake-typescript-client": "1.1.20260130152240",
     "@navikt/ung-sak-typescript-client": "2.0.20260312105949",
     "@navikt/ung-tilbake-typescript-client": "3.0.20260304121929"
-  },
-  "devDependencies": {}
+  }
 }
