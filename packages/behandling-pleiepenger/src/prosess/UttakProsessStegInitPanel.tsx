@@ -1,6 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
@@ -28,22 +28,22 @@ interface Props {
 export function UttakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
   const [{ data: behandlingV2, refetch: refetchBehandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] =
     useSuspenseQueries({
       queries: [
         behandlingQueryOptions(props.api, props.behandling),
         aksjonspunkterQueryOptions(props.api, props.behandling),
-        uttakQueryOptions(props.api, props.behandling, !!stegHarUtfall),
+        uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
       ],
     });
 
   if (!erValgt) {
     return null;
   }
-  if (!stegHarUtfall) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   if (!uttak) {

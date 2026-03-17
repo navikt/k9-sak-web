@@ -6,7 +6,7 @@ import {
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -52,7 +52,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
   const [
     { data: personopplysninger },
@@ -66,15 +66,15 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
         k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
       ]),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, !!stegHarUtfall),
+      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
   });
 
   if (!erValgt) {
     return null;
   }
-  if (!stegHarUtfall) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   if (!beregningsresultatUtbetaling) {

@@ -1,5 +1,5 @@
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
 import { Behandling } from '@k9-sak-web/types';
@@ -61,14 +61,14 @@ export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) 
   const skalVisePanel = vilkårForSteg.length > 0;
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
   if (!erValgt || !skalVisePanel) {
     return null;
   }
 
-  if (!stegHarUtfall) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   const allePerioder = transformerTilPerioder(vilkår);

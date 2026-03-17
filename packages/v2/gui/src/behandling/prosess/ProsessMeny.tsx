@@ -139,7 +139,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
     }
   };
 
-  const stegMedUtfall = prosessmotorSteg.filter(s => s.type !== ProcessMenuStepType.default);
+  const alleStegTilBehandlingEllerBehandlet = prosessmotorSteg.filter(s => s.type !== ProcessMenuStepType.default);
 
   return (
     <Box paddingInline="space-24">
@@ -148,7 +148,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
         <ProsessPanelContext.Provider
           value={{
             erValgt: id => id === valgtPanelId,
-            harUtfall: id => stegMedUtfall.some(s => s.id === id),
+            erTilBehandlingEllerBehandlet: id => alleStegTilBehandlingEllerBehandlet.some(s => s.id === id),
           }}
         >
           {children}

@@ -3,7 +3,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { vilkarType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { mapArbeidsgiverOpplysningerPerIdTilFP } from '@k9-sak-web/gui/ft-adapt/mapArbeidsgiverOpplysninger.js';
 import { mapBeregningsgrunnlagTilFP } from '@k9-sak-web/gui/ft-adapt/mapBeregningsgrunnlag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
@@ -67,7 +67,7 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
   }, [k9sak]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const stegHarUtfall = prosessPanelContext?.harUtfall(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
   const [
     { data: aksjonspunkter },
@@ -80,8 +80,8 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
       aksjonspunkterQueryOptions(props.api, props.behandling, BEREGNING_AKSJONSPUNKT_KODER),
       vilkårQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling, !!stegHarUtfall),
-      beregningsgrunnlagQueryOptions(props.api, props.behandling, !!stegHarUtfall),
+      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
   });
 
@@ -95,8 +95,8 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
     return null;
   }
 
-  if (!stegHarUtfall) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   if (!beregningsgrunnlag || !beregningreferanserTilVurdering) {
