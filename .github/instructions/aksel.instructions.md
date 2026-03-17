@@ -8,25 +8,25 @@ applyTo: "**/*.{tsx,ts}"
 
 **CRITICAL**: Always use Nav DS spacing tokens, never Tailwind padding/margin utilities.
 
+Tokens are **rem-based**. The number = rem × 16 equivalent: `space-16` = 1rem, `space-24` = 1.5rem.
+
 ### ✅ Correct Patterns
 
 ```tsx
 import { Box, VStack, HGrid } from "@navikt/ds-react";
 
 // Page container
-<main className="max-w-7xl mx-auto">
-  <Box
-    paddingBlock={{ xs: "space-16", md: "space-24" }}
-    paddingInline={{ xs: "space-16", md: "space-40" }}
-  >
-    {children}
-  </Box>
-</main>
+<Box
+  paddingBlock="space-48"
+  paddingInline="space-40"
+>
+  {children}
+</Box>
 
-// Component with responsive padding
+// Component with padding
 <Box
   background="surface-subtle"
-  padding={{ xs: "space-12", sm: "space-16", md: "space-24" }}
+  padding="space-32"
   borderRadius="large"
 >
   <Heading size="large" level="2">Title</Heading>
@@ -49,37 +49,38 @@ import { Box, VStack, HGrid } from "@navikt/ds-react";
 <Box padding="4">             // ❌ Wrong - no space- prefix
 ```
 
+For the full token list and detailed patterns, use the `aksel-spacing` skill.
+
 ## Spacing Tokens
 
 Available spacing tokens (always with `space-` prefix):
 
-- `space-4` (4px)
-- `space-8` (8px)
-- `space-12` (12px)
-- `space-16` (16px)
-- `space-20` (20px)
-- `space-24` (24px)
-- `space-32` (32px)
-- `space-40` (40px)
+- `space-4` (0.25rem ≈ 4px)
+- `space-8` (0.5rem ≈ 8px)
+- `space-12` (0.75rem ≈ 12px)
+- `space-16` (1rem ≈ 16px)
+- `space-20` (1.25rem ≈ 20px)
+- `space-24` (1.5rem ≈ 24px)
+- `space-32` (2rem ≈ 32px)
+- `space-40` (2.5rem ≈ 40px)
+- `space-48` (3rem ≈ 48px)
 
 ## Responsive Design
 
-Mobile-first approach with breakpoints:
+Minimum supported screen size is **lg (1024px)**. Do not add responsive variants below `lg` unless the component is explicitly designed for smaller screens.
 
-- `xs`: 0px (mobile)
+Breakpoints:
+
+- `xs`: 0px
 - `sm`: 480px
 - `md`: 768px
-- `lg`: 1024px
-- `xl`: 1280px
+- `lg`: 1024px ← minimum supported
+- `2xl`: 1440px
 
 ```tsx
-<HGrid columns={{ xs: 1, md: 2, lg: 3 }} gap="4">
+<HGrid columns={{ lg: 3, "2xl": 4 }} gap="space-16">
   {items.map(item => <Card key={item.id} {...item} />)}
 </HGrid>
-
-<Box
-  padding={{ xs: "space-16", sm: "space-20", md: "space-24" }}
->
 ```
 
 ## Component Patterns
@@ -90,20 +91,20 @@ Mobile-first approach with breakpoints:
 import { Box, VStack, HStack, HGrid } from "@navikt/ds-react";
 
 // Vertical stack with spacing
-<VStack gap="4">
+<VStack gap="space-16">
   <Component1 />
   <Component2 />
   <Component3 />
 </VStack>
 
 // Horizontal stack
-<HStack gap="4" align="center">
+<HStack gap="space-16" align="center">
   <Icon />
   <Text />
 </HStack>
 
 // Responsive grid
-<HGrid columns={{ xs: 1, md: 2, lg: 3 }} gap="4">
+<HGrid columns={3} gap="space-16">
   {/* Grid items */}
 </HGrid>
 ```
@@ -141,13 +142,16 @@ import { Heading, BodyShort, Label } from "@navikt/ds-react";
 <Box background="surface-danger-subtle">  {/* Light red */}
 ```
 
+## Accessibility
+
+Always include ARIA labels and semantic HTML. Never use `<div onClick>`.
+
 ## Boundaries
 
 ### ✅ Always
 
 - Use Aksel Design System components
 - Use spacing tokens with `space-` prefix
-- Mobile-first responsive design
 
 ### ⚠️ Ask First
 
@@ -159,4 +163,3 @@ import { Heading, BodyShort, Label } from "@navikt/ds-react";
 - Use Tailwind padding/margin utilities (`p-*`, `m-*`)
 - Use numeric spacing without `space-` prefix
 - Ignore accessibility requirements
-- Skip responsive props

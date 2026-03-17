@@ -11,7 +11,49 @@ This skill provides responsive layout patterns using Nav Aksel Design System spa
 
 **NEVER use Tailwind padding/margin utilities (`p-`, `m-`, `px-`, `py-`) with Aksel components.**
 
-Always use Aksel spacing tokens: `space-4`, `space-6`, `space-8`, etc.
+Always use Aksel spacing tokens. Token names reflect **rem-based pixel equivalents** at 16px base — `space-16` = 1rem, `space-24` = 1.5rem, etc.
+
+## Spacing Tokens Reference
+
+All tokens are rem values. The number in the name equals `value × 16px`.
+
+```
+space-0   → 0rem
+space-1   → 0.0625rem   (micro, borders)
+space-2   → 0.125rem    (micro)
+space-4   → 0.25rem     (micro)
+space-6   → 0.375rem    (micro)
+space-8   → 0.5rem      (tight)
+space-12  → 0.75rem     (tight)
+space-16  → 1rem        ← Form field gaps, small padding
+space-20  → 1.25rem
+space-24  → 1.5rem      ← Card padding (mobile), section gaps
+space-28  → 1.75rem
+space-32  → 2rem        ← Card padding (desktop)
+space-36  → 2.25rem
+space-40  → 2.5rem      ← Page padding (desktop)
+space-44  → 2.75rem
+space-48  → 3rem        ← Page padding block (desktop)
+space-56  → 3.5rem
+space-64  → 4rem
+space-72  → 4.5rem
+space-80  → 5rem
+space-96  → 6rem
+space-128 → 8rem
+```
+
+## Minimum Supported Size
+
+The minimum supported screen size is **lg (1024px)**. Responsive breakpoints below `lg` (`xs`, `sm`, `md`) are not needed unless the component is explicitly designed for smaller screens.
+
+Use `lg` and `2xl` breakpoints for layouts that adapt between desktop sizes:
+
+```typescript
+// ✅ lg → 2xl responsive
+padding={{ lg: 'space-32', '2xl': 'space-40' }}
+gap={{ lg: 'space-24', '2xl': 'space-32' }}
+columns={{ lg: 3, '2xl': 4 }}
+```
 
 ## Page Container Pattern
 
@@ -20,16 +62,14 @@ import { Box, VStack } from '@navikt/ds-react';
 
 export default function Page() {
   return (
-    <main className="max-w-7xl mx-auto">
-      <Box
-        paddingBlock={{ xs: 'space-8', md: 'space-12' }}
-        paddingInline={{ xs: 'space-4', md: 'space-10' }}
-      >
-        <VStack gap={{ xs: 'space-6', md: 'space-8' }}>
-          {/* Page content */}
-        </VStack>
-      </Box>
-    </main>
+    <Box
+      paddingBlock={{ lg: 'space-40', '2xl': 'space-48' }}
+      paddingInline={{ lg: 'space-40', '2xl': 'space-48' }}
+    >
+      <VStack gap={{ lg: 'space-24', '2xl': 'space-32' }}>
+        {/* Page content */}
+      </VStack>
+    </Box>
   );
 }
 ```
@@ -43,12 +83,12 @@ export function Card({ title, children }: { title: string; children: React.React
   return (
     <Box
       background="surface-default"
-      padding={{ xs: 'space-6', md: 'space-8' }}
+      padding="space-32"
       borderRadius="large"
       borderWidth="1"
       borderColor="border-subtle"
     >
-      <VStack gap="space-4">
+      <VStack gap="space-16">
         <Heading size="medium">{title}</Heading>
         <BodyShort>{children}</BodyShort>
       </VStack>
@@ -64,18 +104,16 @@ import { VStack, HStack, TextField, Button } from '@navikt/ds-react';
 
 export function UserForm() {
   return (
-    <VStack gap="space-6">
-      {/* Input fields with consistent vertical spacing */}
-      <VStack gap="space-4">
-        <TextField label="First Name" />
-        <TextField label="Last Name" />
-        <TextField label="Email" type="email" />
+    <VStack gap="space-24">
+      <VStack gap="space-16">
+        <TextField label="Fornavn" />
+        <TextField label="Etternavn" />
+        <TextField label="E-post" type="email" />
       </VStack>
 
-      {/* Button group with horizontal spacing */}
-      <HStack gap="space-4" justify="end">
-        <Button variant="secondary">Cancel</Button>
-        <Button variant="primary">Submit</Button>
+      <HStack gap="space-16" justify="end">
+        <Button variant="secondary">Avbryt</Button>
+        <Button variant="primary">Lagre</Button>
       </HStack>
     </VStack>
   );
@@ -85,28 +123,26 @@ export function UserForm() {
 ## Dashboard Grid Pattern
 
 ```typescript
-import { HGrid, Box, VStack, Heading } from '@navikt/ds-react';
+import { HGrid, VStack, Box, Heading } from '@navikt/ds-react';
 
 export function Dashboard() {
   return (
-    <VStack gap={{ xs: 'space-6', md: 'space-8' }}>
-      <Heading size="xlarge">Dashboard</Heading>
+    <VStack gap="space-32">
+      <Heading size="xlarge">Oversikt</Heading>
 
-      {/* Responsive grid: 1 col mobile, 2 tablet, 4 desktop */}
-      <HGrid gap="space-4" columns={{ xs: 1, sm: 2, lg: 4 }}>
-        <MetricCard title="Users" value="1 234" />
-        <MetricCard title="Revenue" value="5 678" />
-        <MetricCard title="Orders" value="910" />
-        <MetricCard title="Growth" value="+12%" />
+      <HGrid gap="space-16" columns={{ lg: 2, '2xl': 4 }}>
+        <MetricCard title="Brukere" value="1 234" />
+        <MetricCard title="Inntekt" value="5 678" />
+        <MetricCard title="Bestillinger" value="910" />
+        <MetricCard title="Vekst" value="+12%" />
       </HGrid>
 
-      {/* Content area */}
       <Box
         background="surface-subtle"
-        padding={{ xs: 'space-6', md: 'space-8' }}
+        padding="space-32"
         borderRadius="large"
       >
-        {/* Content */}
+        {/* Innhold */}
       </Box>
     </VStack>
   );
@@ -120,26 +156,24 @@ import { HGrid, Box, VStack } from '@navikt/ds-react';
 
 export function TwoColumnLayout() {
   return (
-    <HGrid gap="space-6" columns={{ xs: 1, md: 2 }}>
-      {/* Left column */}
+    <HGrid gap="space-24" columns={2}>
       <Box
         background="surface-default"
-        padding={{ xs: 'space-6', md: 'space-8' }}
+        padding="space-32"
         borderRadius="large"
       >
-        <VStack gap="space-4">
-          {/* Left content */}
+        <VStack gap="space-16">
+          {/* Venstre innhold */}
         </VStack>
       </Box>
 
-      {/* Right column */}
       <Box
         background="surface-subtle"
-        padding={{ xs: 'space-6', md: 'space-8' }}
+        padding="space-32"
         borderRadius="large"
       >
-        <VStack gap="space-4">
-          {/* Right content */}
+        <VStack gap="space-16">
+          {/* Høyre innhold */}
         </VStack>
       </Box>
     </HGrid>
@@ -156,23 +190,22 @@ export function FilterSection() {
   return (
     <Box
       background="surface-subtle"
-      padding={{ xs: 'space-4', md: 'space-6' }}
+      padding="space-24"
       borderRadius="large"
     >
-      <VStack gap="space-4">
-        <Heading size="small">Filters</Heading>
+      <VStack gap="space-16">
+        <Heading size="small">Filtre</Heading>
 
-        {/* Responsive filter inputs */}
-        <HGrid gap="space-4" columns={{ xs: 1, md: 3 }}>
-          <Select label="Department">
-            <option>All</option>
+        <HGrid gap="space-16" columns={3}>
+          <Select label="Avdeling">
+            <option>Alle</option>
           </Select>
 
           <Select label="Status">
-            <option>All</option>
+            <option>Alle</option>
           </Select>
 
-          <TextField label="Search" />
+          <TextField label="Søk" />
         </HGrid>
       </VStack>
     </Box>
@@ -180,51 +213,38 @@ export function FilterSection() {
 }
 ```
 
-## Spacing Tokens Reference
+## Common Patterns Cheatsheet
 
 ```typescript
-"space-0"; // 0px
-"space-1"; // 4px
-"space-2"; // 8px
-"space-3"; // 12px
-"space-4"; // 16px  ← Form field gaps
-"space-5"; // 20px
-"space-6"; // 24px  ← Card padding (mobile)
-"space-8"; // 32px  ← Card padding (desktop), section gaps
-"space-10"; // 40px  ← Page padding (desktop)
-"space-12"; // 48px  ← Page padding block (desktop)
+// ✅ Page padding (responsive lg → 2xl)
+paddingBlock={{ lg: 'space-40', '2xl': 'space-48' }}
+paddingInline={{ lg: 'space-40', '2xl': 'space-48' }}
+
+// ✅ Card / panel padding
+padding="space-32"
+
+// ✅ Section gaps (responsive lg → 2xl)
+gap={{ lg: 'space-24', '2xl': 'space-32' }}
+
+// ✅ Form field gaps
+gap="space-16"
+
+// ✅ Button group gaps
+gap="space-16"
+
+// ❌ NEVER use Tailwind
+className="p-4 m-2"   // WRONG
+className="px-6 py-4" // WRONG
 ```
 
 ## Responsive Breakpoints
 
-```typescript
-xs: "0px"; // Mobile (default)
-sm: "480px"; // Large mobile
-md: "768px"; // Tablet
-lg: "1024px"; // Desktop
-xl: "1280px"; // Large desktop
+```
+xs → 0px      (mobil, default)
+sm → 480px
+md → 768px    (nettbrett)
+lg → 1024px   (desktop) ← minimum supported size
+2xl → 1440px
 ```
 
-## Common Patterns
-
-```typescript
-// ✅ Page padding
-paddingBlock={{ xs: 'space-8', md: 'space-12' }}
-paddingInline={{ xs: 'space-4', md: 'space-10' }}
-
-// ✅ Card padding
-padding={{ xs: 'space-6', md: 'space-8' }}
-
-// ✅ Section gaps
-gap={{ xs: 'space-6', md: 'space-8' }}
-
-// ✅ Form field gaps
-gap="space-4"
-
-// ✅ Button group gaps
-gap="space-4"
-
-// ❌ NEVER use Tailwind
-className="p-4 m-2"  // WRONG!
-className="px-6 py-4"  // WRONG!
-```
+Do not add responsive variants below `lg` unless the component is explicitly designed for mobile/tablet use.
