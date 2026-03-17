@@ -34,36 +34,36 @@ const mapOptionalArbeidsforhold = (
   af: BeregningsgrunnlagArbeidsforholdDto | undefined | null,
 ): FPBeregningsgrunnlagArbeidsforhold | undefined => (af != null ? mapArbeidsforhold(af) : undefined);
 
-const mapPgiDto = (inp: PgiDto): FPPgiVerdier => {
-  if (inp.beløp != null && inp.årstall != null) {
+const mapPgiDto = (pgi: PgiDto): FPPgiVerdier => {
+  if (pgi.beløp != null && pgi.årstall != null) {
     return {
-      beløp: inp.beløp,
-      årstall: inp.årstall,
+      beløp: pgi.beløp,
+      årstall: pgi.årstall,
     };
   }
   throw new Error(`PgiDto beløp og årstall må vere definert`);
 };
 
-const mapNæringer = (inp: EgenNæringDto): FPNæring => {
+const mapNæringer = (næring: EgenNæringDto): FPNæring => {
   return {
-    ...inp,
-    orgnr: inp.orgnr ?? '',
-    virksomhetType: inp.virksomhetType ?? VirksomhetType.UDEFINERT,
+    ...næring,
+    orgnr: næring.orgnr ?? '',
+    virksomhetType: næring.virksomhetType ?? VirksomhetType.UDEFINERT,
   };
 };
 
 const mapBeregningsgrunnlagPrStatusOgAndelTilFP = (
-  inp: BeregningsgrunnlagPrStatusOgAndelDto,
+  andel: BeregningsgrunnlagPrStatusOgAndelDto,
 ): FPBeregningsgrunnlagAndel => {
-  if (inp.andelsnr == null) {
+  if (andel.andelsnr == null) {
     throw new Error('BeregningsgrunnlagPrStatusOgAndelDto.andelsnr skal aldri vere null');
   }
   return {
-    ...inp,
-    arbeidsforhold: mapOptionalArbeidsforhold(inp.arbeidsforhold),
-    andelsnr: inp.andelsnr,
-    pgiVerdier: inp.dtoType === 'SN' ? inp.pgiVerdier?.map(mapPgiDto) : undefined,
-    næringer: inp.dtoType === 'SN' ? inp.næringer?.map(mapNæringer) : undefined,
+    ...andel,
+    arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
+    andelsnr: andel.andelsnr,
+    pgiVerdier: andel.dtoType === 'SN' ? andel.pgiVerdier?.map(mapPgiDto) : undefined,
+    næringer: andel.dtoType === 'SN' ? andel.næringer?.map(mapNæringer) : undefined,
   };
 };
 
@@ -79,53 +79,53 @@ const mapBeregningsgrunnlagPeriodeTilFP = (periode: BeregningsgrunnlagPeriodeDto
 };
 
 const mapSammenligningsgrunnlag = (
-  inp: NonNullable<BeregningsgrunnlagDto['sammenligningsgrunnlagPrStatus']>[number],
+  sammenligningsgrunnlag: NonNullable<BeregningsgrunnlagDto['sammenligningsgrunnlagPrStatus']>[number],
 ): FPSammenligningsgrunnlag => {
-  if (!inp.sammenligningsgrunnlagType) {
+  if (!sammenligningsgrunnlag.sammenligningsgrunnlagType) {
     throw new Error('sammenligningsgrunnlagType må være definert');
   }
   return {
-    sammenligningsgrunnlagType: inp.sammenligningsgrunnlagType,
-    differanseBeregnet: inp.differanseBeregnet ?? 0,
-    avvikProsent: inp.avvikProsent ?? 0,
-    avvikPromille: inp.avvikPromille ?? 0,
-    rapportertPrAar: inp.rapportertPrAar ?? 0,
-    sammenligningsgrunnlagFom: inp.sammenligningsgrunnlagFom ?? '',
-    sammenligningsgrunnlagTom: inp.sammenligningsgrunnlagTom ?? '',
+    sammenligningsgrunnlagType: sammenligningsgrunnlag.sammenligningsgrunnlagType,
+    differanseBeregnet: sammenligningsgrunnlag.differanseBeregnet ?? 0,
+    avvikProsent: sammenligningsgrunnlag.avvikProsent ?? 0,
+    avvikPromille: sammenligningsgrunnlag.avvikPromille ?? 0,
+    rapportertPrAar: sammenligningsgrunnlag.rapportertPrAar ?? 0,
+    sammenligningsgrunnlagFom: sammenligningsgrunnlag.sammenligningsgrunnlagFom ?? '',
+    sammenligningsgrunnlagTom: sammenligningsgrunnlag.sammenligningsgrunnlagTom ?? '',
   };
 };
 
-const mapFaktaOmBeregning = (inp: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
-  ...inp,
-  andelerForFaktaOmBeregning: (inp.andelerForFaktaOmBeregning ?? []).map(andel => ({
+const mapFaktaOmBeregning = (faktaOmBeregning: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
+  ...faktaOmBeregning,
+  andelerForFaktaOmBeregning: (faktaOmBeregning.andelerForFaktaOmBeregning ?? []).map(andel => ({
     ...andel,
     aktivitetStatus: andel.aktivitetStatus ?? '-',
     lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler ?? false,
     arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
   })),
   frilansAndel:
-    inp.frilansAndel != null
+    faktaOmBeregning.frilansAndel != null
       ? {
-          ...inp.frilansAndel,
-          arbeidsforhold: mapOptionalArbeidsforhold(inp.frilansAndel.arbeidsforhold),
+          ...faktaOmBeregning.frilansAndel,
+          arbeidsforhold: mapOptionalArbeidsforhold(faktaOmBeregning.frilansAndel.arbeidsforhold),
         }
       : undefined,
-  arbeidsforholdMedLønnsendringUtenIM: inp.arbeidsforholdMedLønnsendringUtenIM?.map(arbeidsforhold => ({
+  arbeidsforholdMedLønnsendringUtenIM: faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM?.map(arbeidsforhold => ({
     ...arbeidsforhold,
     arbeidsforhold: mapOptionalArbeidsforhold(arbeidsforhold.arbeidsforhold),
   })),
-  kortvarigeArbeidsforhold: inp.kortvarigeArbeidsforhold?.map(arbeidsforhold => ({
+  kortvarigeArbeidsforhold: faktaOmBeregning.kortvarigeArbeidsforhold?.map(arbeidsforhold => ({
     ...arbeidsforhold,
     aktivitetStatus: arbeidsforhold.aktivitetStatus ?? '-',
     lagtTilAvSaksbehandler: arbeidsforhold.lagtTilAvSaksbehandler ?? false,
     arbeidsforhold: mapOptionalArbeidsforhold(arbeidsforhold.arbeidsforhold),
   })),
   kunYtelse:
-    inp.kunYtelse != null
+    faktaOmBeregning.kunYtelse != null
       ? {
-          ...inp.kunYtelse,
-          fodendeKvinneMedDP: inp.kunYtelse.fodendeKvinneMedDP ?? false,
-          andeler: inp.kunYtelse.andeler?.map(andel => ({
+          ...faktaOmBeregning.kunYtelse,
+          fodendeKvinneMedDP: faktaOmBeregning.kunYtelse.fodendeKvinneMedDP ?? false,
+          andeler: faktaOmBeregning.kunYtelse.andeler?.map(andel => ({
             ...andel,
             fastsattBelopPrMnd: andel.fastsattBelopPrMnd ?? null,
             arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
@@ -133,31 +133,33 @@ const mapFaktaOmBeregning = (inp: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
         }
       : undefined,
   vurderMottarYtelse:
-    inp.vurderMottarYtelse != null
+    faktaOmBeregning.vurderMottarYtelse != null
       ? {
-          ...inp.vurderMottarYtelse,
-          arbeidstakerAndelerUtenIM: inp.vurderMottarYtelse.arbeidstakerAndelerUtenIM?.map(andel => ({
+          ...faktaOmBeregning.vurderMottarYtelse,
+          arbeidstakerAndelerUtenIM: faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM?.map(andel => ({
             ...andel,
             lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler ?? false,
             arbeidsforhold: mapOptionalArbeidsforhold(andel.arbeidsforhold),
           })),
         }
       : undefined,
-  arbeidstakerOgFrilanserISammeOrganisasjonListe: inp.arbeidstakerOgFrilanserISammeOrganisasjonListe?.map(
+  arbeidstakerOgFrilanserISammeOrganisasjonListe: faktaOmBeregning.arbeidstakerOgFrilanserISammeOrganisasjonListe?.map(
     arbeidstakerOgFrilanser => ({
       ...arbeidstakerOgFrilanser,
       arbeidsforhold: mapOptionalArbeidsforhold(arbeidstakerOgFrilanser.arbeidsforhold),
     }),
   ),
-  saksopplysninger: inp.saksopplysninger
+  saksopplysninger: faktaOmBeregning.saksopplysninger
     ? {
-        ...inp.saksopplysninger,
-        kortvarigeArbeidsforhold: (inp.saksopplysninger.kortvarigeArbeidsforhold ?? []).map(arbeidsforhold => ({
-          andelsnr: arbeidsforhold.andelsnr ?? 0,
-          arbeidsgiverIdent: arbeidsforhold.arbeidsgiverIdent ?? '',
-          arbeidsforholdId: arbeidsforhold.arbeidsforholdId,
-        })),
-        lønnsendringSaksopplysning: inp.saksopplysninger.lønnsendringSaksopplysning?.map(lønnsendring => ({
+        ...faktaOmBeregning.saksopplysninger,
+        kortvarigeArbeidsforhold: (faktaOmBeregning.saksopplysninger.kortvarigeArbeidsforhold ?? []).map(
+          arbeidsforhold => ({
+            andelsnr: arbeidsforhold.andelsnr ?? 0,
+            arbeidsgiverIdent: arbeidsforhold.arbeidsgiverIdent ?? '',
+            arbeidsforholdId: arbeidsforhold.arbeidsforholdId,
+          }),
+        ),
+        lønnsendringSaksopplysning: faktaOmBeregning.saksopplysninger.lønnsendringSaksopplysning?.map(lønnsendring => ({
           ...lønnsendring,
           arbeidsforhold: {
             ...lønnsendring.arbeidsforhold,
@@ -170,10 +172,10 @@ const mapFaktaOmBeregning = (inp: FaktaOmBeregningDto): FPFaktaOmBeregning => ({
 });
 
 const mapVurderNyttInntektsforholdDto = (
-  inp: NonNullable<FordelingDto['vurderNyttInntektsforholdDto']>,
+  vurderNyttInntektsforhold: NonNullable<FordelingDto['vurderNyttInntektsforholdDto']>,
 ): NonNullable<FPFaktaOmFordeling['vurderNyttInntektsforholdDto']> => ({
-  ...inp,
-  vurderInntektsforholdPerioder: inp.vurderInntektsforholdPerioder?.map(periode => ({
+  ...vurderNyttInntektsforhold,
+  vurderInntektsforholdPerioder: vurderNyttInntektsforhold.vurderInntektsforholdPerioder?.map(periode => ({
     ...periode,
     inntektsforholdListe: (periode.inntektsforholdListe ?? []).map(forhold => ({
       ...forhold,
@@ -185,11 +187,11 @@ const mapVurderNyttInntektsforholdDto = (
   })),
 });
 
-const mapFaktaOmFordeling = (inp: FordelingDto): FPFaktaOmFordeling => ({
-  fordelBeregningsgrunnlag: inp.fordelBeregningsgrunnlag
+const mapFaktaOmFordeling = (fordeling: FordelingDto): FPFaktaOmFordeling => ({
+  fordelBeregningsgrunnlag: fordeling.fordelBeregningsgrunnlag
     ? {
-        ...inp.fordelBeregningsgrunnlag,
-        fordelBeregningsgrunnlagPerioder: inp.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder?.map(
+        ...fordeling.fordelBeregningsgrunnlag,
+        fordelBeregningsgrunnlagPerioder: fordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder?.map(
           periode => ({
             ...periode,
             fordelBeregningsgrunnlagAndeler: periode.fordelBeregningsgrunnlagAndeler?.map(andel => ({
@@ -201,67 +203,67 @@ const mapFaktaOmFordeling = (inp: FordelingDto): FPFaktaOmFordeling => ({
       }
     : undefined,
   vurderNyttInntektsforholdDto:
-    inp.vurderNyttInntektsforholdDto != null
-      ? mapVurderNyttInntektsforholdDto(inp.vurderNyttInntektsforholdDto)
+    fordeling.vurderNyttInntektsforholdDto != null
+      ? mapVurderNyttInntektsforholdDto(fordeling.vurderNyttInntektsforholdDto)
       : undefined,
 });
 
-const mapRefusjonAndel = (inp: RefusjonTilVurderingDto['andeler'][number]): FPRefusjonTilVurderingAndel => ({
-  ...inp,
-  nyttRefusjonskravFom: inp.nyttRefusjonskravFom ?? '',
-  tidligsteMuligeRefusjonsdato: inp.tidligsteMuligeRefusjonsdato ?? '',
-  skalKunneFastsetteDelvisRefusjon: inp.skalKunneFastsetteDelvisRefusjon ?? false,
+const mapRefusjonAndel = (andel: RefusjonTilVurderingDto['andeler'][number]): FPRefusjonTilVurderingAndel => ({
+  ...andel,
+  nyttRefusjonskravFom: andel.nyttRefusjonskravFom ?? '',
+  tidligsteMuligeRefusjonsdato: andel.tidligsteMuligeRefusjonsdato ?? '',
+  skalKunneFastsetteDelvisRefusjon: andel.skalKunneFastsetteDelvisRefusjon ?? false,
 });
 
 const mapRefusjonTilVurdering = (
-  inp: RefusjonTilVurderingDto,
+  refusjonTilVurdering: RefusjonTilVurderingDto,
 ): NonNullable<FPBeregningsgrunnlag['refusjonTilVurdering']> => ({
-  andeler: inp.andeler.map(mapRefusjonAndel),
+  andeler: refusjonTilVurdering.andeler.map(mapRefusjonAndel),
 });
 
 const mapInntektsgrunnlagInntekt = (
-  i: NonNullable<InntektsgrunnlagDto['beregningsgrunnlagInntekter'][number]['inntekter']>[number],
+  inntekt: NonNullable<InntektsgrunnlagDto['beregningsgrunnlagInntekter'][number]['inntekter']>[number],
 ): FPInntektsgrunnlag['beregningsgrunnlagInntekter'][number]['inntekter'][number] => {
-  if (i.inntektAktivitetType === 'ARBEIDSTAKERINNTEKT') {
+  if (inntekt.inntektAktivitetType === 'ARBEIDSTAKERINNTEKT') {
     return {
       inntektAktivitetType: 'ARBEIDSTAKERINNTEKT',
-      arbeidsgiverIdent: i.arbeidsgiverIdent ?? '',
-      beløp: i.beløp ?? 0,
+      arbeidsgiverIdent: inntekt.arbeidsgiverIdent ?? '',
+      beløp: inntekt.beløp ?? 0,
     };
   }
-  if (i.inntektAktivitetType === 'YTELSEINNTEKT') {
+  if (inntekt.inntektAktivitetType === 'YTELSEINNTEKT') {
     return {
       inntektAktivitetType: 'YTELSEINNTEKT',
-      beløp: i.beløp ?? 0,
+      beløp: inntekt.beløp ?? 0,
     };
   }
   return {
     inntektAktivitetType: 'FRILANSINNTEKT',
-    beløp: i.beløp ?? 0,
+    beløp: inntekt.beløp ?? 0,
   };
 };
 
 const mapInntektsgrunnlagMåned = (
-  inp: InntektsgrunnlagDto['beregningsgrunnlagInntekter'][number],
+  måned: InntektsgrunnlagDto['beregningsgrunnlagInntekter'][number],
 ): FPInntektsgrunnlag['beregningsgrunnlagInntekter'][number] => ({
-  ...inp,
-  inntekter: (inp.inntekter ?? []).map(mapInntektsgrunnlagInntekt),
+  ...måned,
+  inntekter: (måned.inntekter ?? []).map(mapInntektsgrunnlagInntekt),
 });
 
 const mapPgiGrunnlag = (
-  inp: InntektsgrunnlagDto['pgiGrunnlag'][number],
+  pgiGrunnlag: InntektsgrunnlagDto['pgiGrunnlag'][number],
 ): FPInntektsgrunnlag['pgiGrunnlag'][number] => ({
-  ...inp,
-  inntekter: (inp.inntekter ?? []).map(inntekt => ({
+  ...pgiGrunnlag,
+  inntekter: (pgiGrunnlag.inntekter ?? []).map(inntekt => ({
     ...inntekt,
     beløp: inntekt.beløp ?? 0,
   })),
 });
 
-const mapInntektsgrunnlag = (inp: InntektsgrunnlagDto): FPInntektsgrunnlag => ({
-  beregningsgrunnlagInntekter: inp.beregningsgrunnlagInntekter.map(mapInntektsgrunnlagMåned),
-  sammenligningsgrunnlagInntekter: inp.sammenligningsgrunnlagInntekter.map(mapInntektsgrunnlagMåned),
-  pgiGrunnlag: inp.pgiGrunnlag.map(mapPgiGrunnlag),
+const mapInntektsgrunnlag = (inntektsgrunnlag: InntektsgrunnlagDto): FPInntektsgrunnlag => ({
+  beregningsgrunnlagInntekter: inntektsgrunnlag.beregningsgrunnlagInntekter.map(mapInntektsgrunnlagMåned),
+  sammenligningsgrunnlagInntekter: inntektsgrunnlag.sammenligningsgrunnlagInntekter.map(mapInntektsgrunnlagMåned),
+  pgiGrunnlag: inntektsgrunnlag.pgiGrunnlag.map(mapPgiGrunnlag),
 });
 
 export const mapBeregningsgrunnlagTilFP = (bg: BeregningsgrunnlagDto): FPBeregningsgrunnlag => {
