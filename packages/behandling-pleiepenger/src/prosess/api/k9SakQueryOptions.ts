@@ -81,12 +81,6 @@ export const overlappendeYtelserQueryOptions = (api: K9SakProsessApi, behandling
     queryFn: () => api.getOverlappendeYtelser(behandling.uuid),
   });
 
-export const medlemskapQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
-  queryOptions({
-    queryKey: ['medlemskap', behandling.uuid, behandling.versjon],
-    queryFn: () => api.getMedlemskap(behandling.uuid),
-  });
-
 export const beregningreferanserTilVurderingQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
   queryOptions({
     queryKey: ['beregningreferanserTilVurdering', behandling.uuid, behandling.versjon],

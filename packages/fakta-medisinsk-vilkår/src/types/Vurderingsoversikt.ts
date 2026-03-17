@@ -2,7 +2,7 @@ import { Period } from '@fpsak-frontend/utils';
 import Link from './Link';
 import Vurderingselement from './Vurderingselement';
 
-export class Vurderingsoversikt {
+class Vurderingsoversikt {
   vurderingselementer: Vurderingselement[];
 
   resterendeVurderingsperioder: Period[];

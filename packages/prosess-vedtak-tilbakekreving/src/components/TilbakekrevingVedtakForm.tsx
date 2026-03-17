@@ -66,7 +66,7 @@ interface OwnProps {
   erBehandlingBehandlet: boolean;
 }
 
-export const TilbakekrevingVedtakFormImpl = ({
+const TilbakekrevingVedtakFormImpl = ({
   intl,
   readOnly,
   fetchPreviewVedtaksbrev,

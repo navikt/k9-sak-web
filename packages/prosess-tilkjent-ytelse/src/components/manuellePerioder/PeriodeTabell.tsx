@@ -12,7 +12,7 @@ interface OwnProps {
   readOnly: boolean;
 }
 
-export const PeriodeTabell = ({ readOnly }: OwnProps) => {
+const PeriodeTabell = ({ readOnly }: OwnProps) => {
   const {
     watch,
     setValue,
