@@ -25,7 +25,7 @@ jobs:
 
             - name: Run knip
               run: |
-                  yarn knip --include files --no-config-hints --no-exit-code --reporter=markdown > knip-report.md
+                  yarn knip --no-exit-code --reporter=markdown > knip-report.md
                   cat knip-report.md > $GITHUB_STEP_SUMMARY
             - name: Delete previous knip comment (only last marked)
               continue-on-error: true

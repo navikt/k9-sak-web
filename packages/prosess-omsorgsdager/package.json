@@ -7,7 +7,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/ds-css": "8.2.0",
     "@navikt/ds-react": "8.2.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.19",
