@@ -141,7 +141,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       aksjonspunkter={aksjonspunkter}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
       behandling={tilpassetBehandling}
-      beregningsgrunnlag={beregningsgrunnlag ?? []}
+      beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkår}
       submitCallback={handleSubmit}
       simuleringResultat={simuleringResultat}

@@ -22,11 +22,6 @@ describe('mapBeregningsgrunnlagTilFP', () => {
     expect(result.erOverstyrtInntekt).toBe(false);
   });
 
-  it('bruker tom streng som fallback for vilkårsperiodeFom', () => {
-    const result = mapBeregningsgrunnlagTilFP({ ...minimalBg, vilkårsperiodeFom: undefined });
-    expect(result.vilkårsperiodeFom).toBe('');
-  });
-
   it('videresender vilkårsperiodeFom når den er satt', () => {
     const result = mapBeregningsgrunnlagTilFP({ ...minimalBg, vilkårsperiodeFom: '2024-01-01' });
     expect(result.vilkårsperiodeFom).toBe('2024-01-01');
@@ -81,14 +76,6 @@ describe('mapBeregningsgrunnlagTilFP – sammenligningsgrunnlag', () => {
 });
 
 describe('mapBeregningsgrunnlagTilFP – faktaOmBeregning', () => {
-  it('bruker tom array som fallback for andelerForFaktaOmBeregning', () => {
-    const result = mapBeregningsgrunnlagTilFP({
-      ...minimalBg,
-      faktaOmBeregning: {},
-    });
-    expect(result.faktaOmBeregning!.andelerForFaktaOmBeregning).toEqual([]);
-  });
-
   it('mapper andel med fallbacks for aktivitetStatus og lagtTilAvSaksbehandler', () => {
     const result = mapBeregningsgrunnlagTilFP({
       ...minimalBg,
@@ -99,23 +86,6 @@ describe('mapBeregningsgrunnlagTilFP – faktaOmBeregning', () => {
     const andel = result.faktaOmBeregning!.andelerForFaktaOmBeregning[0]!;
     expect(andel.aktivitetStatus).toBe('-');
     expect(andel.lagtTilAvSaksbehandler).toBe(false);
-  });
-
-  it('mapper arbeidsforholdType i andel med fallback til bindestreks', () => {
-    const result = mapBeregningsgrunnlagTilFP({
-      ...minimalBg,
-      faktaOmBeregning: {
-        andelerForFaktaOmBeregning: [
-          {
-            aktivitetStatus: 'AT',
-            lagtTilAvSaksbehandler: false,
-            arbeidsforhold: { arbeidsforholdType: undefined },
-          },
-        ],
-      },
-    });
-    const andel = result.faktaOmBeregning!.andelerForFaktaOmBeregning[0]!;
-    expect(andel.arbeidsforhold!.arbeidsforholdType).toBe('-');
   });
 
   it('mapper saksopplysninger.kortvarigeArbeidsforhold med fallbacks', () => {
@@ -235,19 +205,6 @@ describe('mapBeregningsgrunnlagTilFP – refusjonTilVurdering', () => {
 });
 
 describe('mapBeregningsgrunnlagTilFP – inntektsgrunnlag', () => {
-  it('bruker tom array som fallback for inntekter i måned', () => {
-    const result = mapBeregningsgrunnlagTilFP({
-      ...minimalBg,
-      inntektsgrunnlag: {
-        beregningsgrunnlagInntekter: [{ fom: '2024-01-01', tom: '2024-01-31', inntekter: undefined }],
-        sammenligningsgrunnlagInntekter: [],
-        pgiGrunnlag: [],
-        måneder: [],
-      },
-    });
-    expect(result.inntektsgrunnlag!.beregningsgrunnlagInntekter[0]!.inntekter).toEqual([]);
-  });
-
   it('mapper ARBEIDSTAKERINNTEKT med arbeidsgiverIdent fallback', () => {
     const result = mapBeregningsgrunnlagTilFP({
       ...minimalBg,
@@ -303,18 +260,5 @@ describe('mapBeregningsgrunnlagTilFP – inntektsgrunnlag', () => {
       },
     });
     expect(result.inntektsgrunnlag!.pgiGrunnlag[0]!.inntekter[0]!.beløp).toBe(0);
-  });
-
-  it('bruker tom array som fallback for pgiGrunnlag.inntekter', () => {
-    const result = mapBeregningsgrunnlagTilFP({
-      ...minimalBg,
-      inntektsgrunnlag: {
-        beregningsgrunnlagInntekter: [],
-        sammenligningsgrunnlagInntekter: [],
-        pgiGrunnlag: [{ år: 2023, inntekter: undefined }],
-        måneder: [],
-      },
-    });
-    expect(result.inntektsgrunnlag!.pgiGrunnlag[0]!.inntekter).toEqual([]);
   });
 });
