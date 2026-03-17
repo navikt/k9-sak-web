@@ -1,3 +1,7 @@
+// Kompileringsfeil her betyr at BRUK_V2_UTENLANDSOPPHOLD er fjernet fra FeatureToggles.
+// Slett hele packages/fakta-utenlandsopphold og fjern v1-grenen i FaktaPanelDef når migreringen er ferdig.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting = import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_UTENLANDSOPPHOLD'];
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

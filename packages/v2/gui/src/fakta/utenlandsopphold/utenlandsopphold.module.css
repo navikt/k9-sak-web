@@ -1,0 +1,7 @@
+.utenlandsopphold {
+  max-width: 900px;
+}
+
+.alertstripe :global .aksel-alert__wrapper {
+  max-width: 100%;
+}

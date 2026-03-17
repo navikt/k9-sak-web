@@ -21,6 +21,8 @@ import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
+import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
+import { K9UtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9UtenlandsoppholdBackendClient.js';
 import { IntlProvider } from 'react-intl';
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 
@@ -69,7 +71,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
             <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
               <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
-                  {harFeilet || erFerdig ? children : <LoadingPanel />}
+                  <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                    {harFeilet || erFerdig ? children : <LoadingPanel />}
+                  </UtenlandsoppholdApiContext>
                 </InntektsmeldingApiContext>
               </VedtakKlageApiContext>
             </KlageVurderingApiContext>

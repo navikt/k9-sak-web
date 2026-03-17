@@ -5,6 +5,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import Utenlandsopphold from '@k9-sak-web/fakta-utenlandsopphold';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import UtenlandsoppholdIndex from '@k9-sak-web/gui/fakta/utenlandsopphold/UtenlandsoppholdIndex.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
@@ -14,13 +15,23 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.UTENLANDSOPPHOLD];
 
-  getKomponent = props => (
-    <Utenlandsopphold
-      utenlandsopphold={props.utenlandsopphold}
-      kodeverk={props.alleKodeverk}
-      fagsakYtelseType={fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE}
-    />
-  );
+  getKomponent = props => {
+    if (props.featureToggles?.BRUK_V2_UTENLANDSOPPHOLD) {
+      return (
+        <UtenlandsoppholdIndex
+          behandlingUuid={props.behandling.uuid}
+          fagsakYtelseType={fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE}
+        />
+      );
+    }
+    return (
+      <Utenlandsopphold
+        utenlandsopphold={props.utenlandsopphold}
+        kodeverk={props.alleKodeverk}
+        fagsakYtelseType={fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE}
+      />
+    );
+  };
 
   skalVisePanel = () => true;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
@@ -143,8 +143,9 @@ const PleiepengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
+          <Suspense fallback={<LoadingPanel />}>
+            <ErrorBoundary errorMessageCallback={addErrorMessage}>
+              {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,
               behandling,
@@ -162,7 +163,8 @@ const PleiepengerFakta = ({
               formData,
               setFormData,
             })}
-          </ErrorBoundary>
+            </ErrorBoundary>
+          </Suspense>
         )}
       </SideMenuWrapper>
     );

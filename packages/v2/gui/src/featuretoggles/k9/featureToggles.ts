@@ -10,6 +10,7 @@ const k9SpecificFeatureToggles = {
   UTVIDET_VARSELFELT: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_INNTEKTSMELDING: true,
+  BRUK_V2_UTENLANDSOPPHOLD: true,
   SKJUL_PROSESS_MENY_V2_VELGER: true,
   MARKERING_UTENLANDSTILSNITT: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
