@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      image: mcr.microsoft.com/playwright:v1.57.0-noble
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
@@ -19,11 +19,5 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Storybook
-        run: yarn build-storybook-test --quiet
-
-      - name: Serve Storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on tcp:9001 && yarn test-storybook"
+      - name: Run Storybook tests
+        run: yarn test-storybook
