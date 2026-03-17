@@ -57,7 +57,7 @@ visPanelForResultatVedStadfestYtelsesvedtak.args = {
       ankeVurdering: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
     },
   },
-  readOnly: false,
+  isReadOnly: false,
   readOnlySubmitButton: false,
 };
 
@@ -80,7 +80,7 @@ visPanelForResultatVedOppheveOgHjemsende.args = {
       ankeVurdering: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
     },
   },
-  readOnly: false,
+  isReadOnly: false,
   readOnlySubmitButton: false,
 };
 
@@ -105,7 +105,7 @@ visPanelForResultatVedOmgjør.args = {
       ankeOmgjoerArsakNavn: 'Testårsak',
     },
   },
-  readOnly: false,
+  isReadOnly: false,
   readOnlySubmitButton: false,
 };
 
@@ -125,6 +125,6 @@ visPanelForResultatVedAvvis.args = {
   ankeVurdering: {
     ankeVurderingResultat,
   },
-  readOnly: false,
+  isReadOnly: false,
   readOnlySubmitButton: false,
 };

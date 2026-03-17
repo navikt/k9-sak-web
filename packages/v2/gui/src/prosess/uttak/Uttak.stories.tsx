@@ -102,11 +102,13 @@ export const UttakBasis: Story = {
     const user = userEvent.setup();
 
     await step('Viser perioder', async () => {
-      // Sjekk at periodedatoer er synlige
-      await expect(canvas.getByText(/01\.01\.2024/)).toBeInTheDocument();
-      await expect(canvas.getByText(/15\.01\.2024/)).toBeInTheDocument();
-      await expect(canvas.getByText(/16\.01\.2024/)).toBeInTheDocument();
-      await expect(canvas.getByText(/31\.01\.2024/)).toBeInTheDocument();
+      // Sjekk at periodedatoer er synlige - bruker waitFor fordi komponenten laster data asynkront via useSuspenseQuery
+      await waitFor(async () => {
+        await expect(canvas.getByText(/01\.01\.2024/)).toBeInTheDocument();
+        await expect(canvas.getByText(/15\.01\.2024/)).toBeInTheDocument();
+        await expect(canvas.getByText(/16\.01\.2024/)).toBeInTheDocument();
+        await expect(canvas.getByText(/31\.01\.2024/)).toBeInTheDocument();
+      });
     });
 
     await step('Kan åpne/lukke periodedetaljer', async () => {

@@ -83,9 +83,12 @@ export const EmptyState: Story = {
     const user = userEvent.setup();
 
     await step('Viser Uttak', async () => {
-      await expect(canvas.getByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
-      await expect(canvas.getByRole('cell', { name: /01.02.2024 - 28.02.2024/i })).toBeInTheDocument();
-      await expect(canvas.getByRole('cell', { name: /01.01.2024 - 31.01.2024/i })).toBeInTheDocument();
+      // Bruker waitFor fordi komponenten laster data asynkront via useSuspenseQuery
+      await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: /01.02.2024 - 28.02.2024/i })).toBeInTheDocument();
+        await expect(canvas.getByRole('cell', { name: /01.01.2024 - 31.01.2024/i })).toBeInTheDocument();
+      });
       const expandButtons = canvas.getAllByRole('button', { name: /Åpne/i });
       if (expandButtons[0]) await user.click(expandButtons[0]);
       await expect(canvas.getByRole('heading', { name: 'Gradering mot tilsyn' }));
