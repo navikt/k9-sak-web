@@ -1,10 +1,6 @@
 @import "tailwindcss/theme";
 @import "tailwindcss/utilities";
-
-@theme {
-  --color-ax-neutral-400: var(--ax-neutral-400);
-  --color-warning-yellow: #ff9100;
-}
+@config "../tailwind.config.cjs";
 
 .hide-legend legend {
   position: absolute;
