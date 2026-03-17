@@ -1,10 +1,17 @@
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import react from '@vitejs/plugin-react';
+import { playwright } from '@vitest/browser-playwright';
 import fs from 'fs';
+import { fileURLToPath } from 'node:url';
 import path from 'path';
 import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
-import { defineConfig } from 'vitest/config';
+import { defineConfig, defineProject } from 'vitest/config';
+
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -108,33 +115,90 @@ export default ({ mode }) => {
       },
     },
     test: {
-      server: {
-        deps: {
-          inline: [
-            '@navikt/k9-sak-typescript-client',
-            '@navikt/ung-sak-typescript-client',
-            '@navikt/k9-klage-typescript-client',
-            '@navikt/k9-tilbake-typescript-client',
-            '@navikt/ung-tilbake-typescript-client',
-          ],
-        },
-      },
-      environment: 'happy-dom',
-      css: {
-        modules: {
-          classNameStrategy: 'non-scoped',
-        },
-      },
-      globals: true,
-      setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
-      onConsoleLog(log) {
-        // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
-        return !log.includes(
-          'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
-        );
-      },
+      projects: [
+        // Unit tests project (*.spec.* files)
+        defineProject({
+          plugins: [
+            react({
+              include: [/\.jsx$/, /\.tsx?$/],
+            }),
+            svgr(),
+          ],
+          test: {
+            name: 'test',
+            include: ['packages/**/*.spec.{ts,tsx,js,jsx}'],
+            exclude: ['**/node_modules/**', '**/dist/**', '**/.storybook/**'],
+            // Inherit root test config
+            environment: 'happy-dom',
+            css: {
+              modules: {
+                classNameStrategy: 'non-scoped',
+              },
+            },
+            globals: true,
+            setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
+            server: {
+              deps: {
+                inline: [
+                  '@navikt/k9-sak-typescript-client',
+                  '@navikt/ung-sak-typescript-client',
+                  '@navikt/k9-klage-typescript-client',
+                  '@navikt/k9-tilbake-typescript-client',
+                  '@navikt/ung-tilbake-typescript-client',
+                ],
+              },
+            },
+            onConsoleLog(log) {
+              // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
+              return !log.includes(
+                'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
+              );
+            },
+          },
+        }),
+        // Storybook tests project (*.stories.* files)
+        defineProject({
+          plugins: [
+            storybookTest({
+              // The location of your Storybook config, main.js|ts
+              configDir: path.join(dirname, '.storybook'),
+              // This should match your package.json script to run Storybook
+              // The --no-open flag will skip the automatic opening of a browser
+              storybookScript: 'yarn storybook --no-open',
+            }),
+            react({
+              include: [/\.jsx$/, /\.tsx?$/],
+            }),
+          ],
+          test: {
+            name: 'storybook',
+            include: ['packages/**/*.stories.{ts,tsx,js,jsx}'],
+            testTimeout: 30000,
+            // Enable browser mode
+            browser: {
+              enabled: true,
+              // Make sure to install Playwright
+              provider: playwright({}),
+              headless: true,
+              instances: [{ browser: 'chromium' }],
+            },
+            setupFiles: ['./.storybook/vitest.setup.ts'],
+            server: {
+              deps: {
+                inline: [
+                  '@navikt/k9-sak-typescript-client',
+                  '@navikt/ung-sak-typescript-client',
+                  '@navikt/k9-klage-typescript-client',
+                  '@navikt/k9-tilbake-typescript-client',
+                  '@navikt/ung-tilbake-typescript-client',
+                ],
+              },
+            },
+          },
+        }),
+      ],
     },
   });
 };
