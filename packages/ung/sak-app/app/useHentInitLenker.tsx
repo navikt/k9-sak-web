@@ -17,6 +17,7 @@ const useHentInitLenker = (): boolean[] => {
   const { data: initFetchLinksTilbake = LINKS_TEMPLATE, state: initFetchStateTilbake } =
     restApiHooks.useGlobalStateRestApi<InitLinks>(UngSakApiKeys.INIT_FETCH_TILBAKE, undefined, {
       suspendRequest: skipTilbake,
+      updateTriggers: [],
     });
 
   const harUngsakInitKallFeilet = initFetchStateUngSak === RestApiState.ERROR;
