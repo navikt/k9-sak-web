@@ -438,9 +438,9 @@ export const VisForklaringForBeslutterUtenAksjonspunkt: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('skal vise saksbehandlers forklaring i read-only når perioden mangler aksjonspunkt', async () => {
-      await expect(canvas.getByRole('textbox', { name: 'Begrunn endringene' })).toHaveValue(
-        'Saksbehandler har innvilget medlemskap for utenlandsk borger utenfor EØS.',
-      );
+      await expect(
+        canvas.getByText('Saksbehandler har innvilget medlemskap for utenlandsk borger utenfor EØS.'),
+      ).toBeInTheDocument();
     });
   },
 };
