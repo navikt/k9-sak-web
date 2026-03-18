@@ -158,6 +158,10 @@ describe('<OmsorgspengerFakta>', () => {
 
   // const behandlingPerioderårsakMedVilkår =
 
+  afterEach(() => {
+    requestOmsorgApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt uten Omsorgen for', () => {
     requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
     const fetchedData: Partial<FetchedData> = {

@@ -40,6 +40,10 @@ describe('<BehandlingSupportIndex>', () => {
     },
   };
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal vise godkjennings-panelet', () => {
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});

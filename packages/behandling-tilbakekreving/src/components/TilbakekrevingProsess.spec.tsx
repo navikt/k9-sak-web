@@ -111,6 +111,10 @@ describe('<TilbakekrevingProsess>', () => {
     },
   };
 
+  afterEach(() => {
+    requestTilbakekrevingApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
