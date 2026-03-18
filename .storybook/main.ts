@@ -10,9 +10,11 @@ const config: StorybookConfig = {
       name: getAbsolutePath('@storybook/addon-docs'),
       options: {
         configureJSX: true,
+        csfPluginOptions: null,
       },
     },
     getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('@storybook/addon-vitest'),
   ],
 
   staticDirs: ['../public'],

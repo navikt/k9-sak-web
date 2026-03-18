@@ -68,7 +68,10 @@ export const ÅpentAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel', async () => {
-      await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
+      // Bruker waitFor fordi komponenten laster data asynkront via useSuspenseQuery
+      await waitFor(async () => {
+        await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
+      });
     });
 
     await step('Viser informasjon om endringene i uttak', async () => {

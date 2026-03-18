@@ -32,7 +32,7 @@ configureK9TilbakeClient(mockAuthFixer as any);
 initialize({
   onUnhandledRequest: 'bypass',
   serviceWorker: {
-    url: VITE_LOCAL_STORYBOOK ? '/mockServiceWorker.js' : '/k9-sak-web/mockServiceWorker.js',
+    url: '/mockServiceWorker.js',
   },
 });
 
