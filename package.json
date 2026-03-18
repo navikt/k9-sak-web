@@ -12,10 +12,10 @@
   },
   "scripts": {
     "test": "vitest",
-    "test:all:testonly": "vitest --selectProjects test",
+    "test:all:testonly": "vitest --project test",
     "test:watch": "vitest --watch --silent=false",
     "test:watch:all": "vitest --watchAll",
-    "test:coverage": "vitest --coverage --selectProjects test",
+    "test:coverage": "vitest --coverage --project test",
     "test-storybook": "test-storybook --url http://127.0.0.1:9001 --testTimeout=30_000",
     "ts-check": "tsc | loose-ts-check && tsc --pretty --project packages/v2/tsconfig.json",
     "ts-check:update-ignored": "tsc | loose-ts-check --auto-update && tsc --pretty --project packages/v2/tsconfig.json",

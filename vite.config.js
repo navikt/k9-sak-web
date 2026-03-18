@@ -126,7 +126,6 @@ export default ({ mode }) => {
         },
       },
       globals: true,
-      setupFiles: ['./vitest-setup.ts'],
       watch: false,
       testTimeout: 15000,
       onConsoleLog(log) {
@@ -135,6 +134,24 @@ export default ({ mode }) => {
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );
       },
+      projects: [
+        {
+          extends: true,
+          test: {
+            name: 'v2',
+            include: ['packages/v2/**/*.{spec,test}.{ts,tsx}'],
+            setupFiles: ['./vitest-setup-v2.ts'],
+          },
+        },
+        {
+          extends: true,
+          test: {
+            name: 'test',
+            exclude: ['**/node_modules/**', '**/.git/**', 'packages/v2/**'],
+            setupFiles: ['./vitest-setup.ts'],
+          },
+        },
+      ],
     },
   });
 };
