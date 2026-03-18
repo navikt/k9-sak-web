@@ -24,6 +24,7 @@ import { UngSakApi } from '../data/UngSakApi';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
+import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -160,6 +161,18 @@ export const AktivitetspengerProsess = ({
             if (urlKode === prosessStegCodes.BEREGNING) {
               return <BeregningProsessStegInitPanel key={steg.urlKode} behandling={behandling} />;
             }
+            if (urlKode === prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP) {
+              return (
+                <ForutgåendeMedlemskapInitPanel
+                  api={api}
+                  behandling={behandling}
+                  submitCallback={bekreftAksjonspunktCallback}
+                  key={steg.urlKode}
+                  readOnly={isReadOnly}
+                />
+              );
+            }
+
             return null;
           })}
         </Box>
