@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -122,16 +122,18 @@ const UnntakFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              behandling,
-              alleKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
-            })}
-          </ErrorBoundary>
+          <Suspense fallback={<LoadingPanel />}>
+            <ErrorBoundary errorMessageCallback={addErrorMessage}>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                ...faktaDataUtenCaching,
+                behandling,
+                alleKodeverk,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
+              })}
+            </ErrorBoundary>
+          </Suspense>
         )}
       </SideMenuWrapper>
     );

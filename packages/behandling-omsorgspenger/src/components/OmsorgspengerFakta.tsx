@@ -12,7 +12,7 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { isBefore, parse } from 'date-fns';
 import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omsorgspengerBehandlingApi';
@@ -157,21 +157,23 @@ const OmsorgspengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              fagsak,
-              behandling,
-              alleKodeverk,
-              formData,
-              setFormData,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
-              dokumenter,
-              featureToggles,
-            })}
-          </ErrorBoundary>
+          <Suspense fallback={<LoadingPanel />}>
+            <ErrorBoundary errorMessageCallback={addErrorMessage}>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                ...faktaDataUtenCaching,
+                fagsak,
+                behandling,
+                alleKodeverk,
+                formData,
+                setFormData,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
+                dokumenter,
+                featureToggles,
+              })}
+            </ErrorBoundary>
+          </Suspense>
         )}{' '}
       </SideMenuWrapper>
     );

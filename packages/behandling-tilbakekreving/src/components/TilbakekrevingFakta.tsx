@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
@@ -105,17 +105,19 @@ const TilbakekrevingFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              behandling,
-              alleKodeverk,
-              fpsakKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvTilbakekrevingPaneler, hasFetchError),
-            })}
-          </ErrorBoundary>
+          <Suspense fallback={<LoadingPanel />}>
+            <ErrorBoundary errorMessageCallback={addErrorMessage}>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                ...faktaDataUtenCaching,
+                behandling,
+                alleKodeverk,
+                fpsakKodeverk,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvTilbakekrevingPaneler, hasFetchError),
+              })}
+            </ErrorBoundary>
+          </Suspense>
         )}
       </SideMenuWrapper>
     );
