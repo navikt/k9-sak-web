@@ -1,5 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
 
-export const ProsessStegIkkeVurdert = () => {
+export const ProsessStegIkkeBehandlet = () => {
   return <BodyShort size="small">Dette steget er ikke behandlet</BodyShort>;
 };

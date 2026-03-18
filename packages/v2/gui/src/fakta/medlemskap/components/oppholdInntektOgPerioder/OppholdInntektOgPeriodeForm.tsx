@@ -37,6 +37,14 @@ const transformValues = (values: OppholdInntektOgPeriodeFormState) => ({
   begrunnelse: values.begrunnelse || '---',
 });
 
+const begrunnelseErDefinert = (begrunnelse?: string) => {
+  if (!begrunnelse) {
+    return false;
+  }
+  const trimmed = begrunnelse.trim();
+  return trimmed !== '' && trimmed !== '---';
+};
+
 interface OppholdInntektOgPeriodeFormProps {
   selectedId?: string;
   readOnly: boolean;
@@ -71,6 +79,10 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
 
   const begrunnelse = useWatch({ control, name: 'oppholdInntektOgPeriodeForm.begrunnelse' });
   const perioder = useWatch({ control, name: 'perioder' });
+  const harAksjonspunkt = valgtPeriode.aksjonspunkter.length > 0;
+  const skalViseBegrunnelse =
+    (harAksjonspunkt && (submittable || begrunnelseErDefinert(begrunnelse))) ||
+    (!harAksjonspunkt && readOnly && begrunnelseErDefinert(begrunnelse));
   const harAndreÅpneAksjonspunkter = perioder.some(
     periode => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null,
   );
@@ -85,7 +97,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
           <StatusForBorgerFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
         )}
 
-        {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (submittable || !!begrunnelse) && (
+        {skalViseBegrunnelse && (
           <>
             <RhfTextarea
               control={control}
@@ -145,7 +157,7 @@ export const buildInitialValuesOppholdInntektOgPeriodeForm = (
   ) {
     oppholdValues = buildInitialValuesStatusForBorgerFaktaPanel(valgtPeriode, aksjonspunkter);
   }
-  if (valgtPeriode && valgtPeriode.aksjonspunkter.length > 0) {
+  if (valgtPeriode && (valgtPeriode.aksjonspunkter.length > 0 || begrunnelseErDefinert(valgtPeriode.begrunnelse))) {
     confirmValues = { begrunnelse: valgtPeriode.begrunnelse };
   }
   return {
