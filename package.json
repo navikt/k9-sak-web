@@ -41,7 +41,7 @@
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)",
     "sentry-release-ung": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release-ung.cjs)",
     "knip": "knip",
-    "knip:unused-files": "knip --include files --no-config-hints",
+    "knip:check": "knip --include files --dependencies --no-config-hints",
     "dev:ung": "vite -c ung.vite.config.js serve",
     "dev:aktivitetspenger": "vite -c aktivitetspenger.vite.config.js serve",
     "build:ung": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite -c ung.vite.config.js build"
@@ -72,13 +72,12 @@
     "vite-plugin-svgr": "4.5.0"
   },
   "devDependencies": {
-    "@navikt/aksel": "8.2.0",
-    "@playwright/test": "1.58.2",
     "@sentry/cli": "3.3.0",
     "@storybook/addon-a11y": "10.2.15",
     "@storybook/addon-docs": "10.2.15",
     "@storybook/react-vite": "10.2.15",
     "@storybook/test-runner": "0.24.2",
+    "@tanstack/eslint-plugin-query": "5.91.4",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",

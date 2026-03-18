@@ -19,7 +19,6 @@
     "@k9-sak-web/behandling-utvidet-rett": "1.0.0",
     "@k9-sak-web/gui": "workspace:^",
     "@k9-sak-web/konstanter": "1.0.0",
-    "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
