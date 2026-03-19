@@ -13,32 +13,32 @@
  * - Skjemavalidering
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, userEvent, within, expect, waitFor, fireEvent } from 'storybook/test';
-import { action } from 'storybook/actions';
-import dayjs from 'dayjs';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import Uttak from '../Uttak';
 import {
-  lagUtredBehandling,
-  lagAvsluttetBehandling,
-  lagUttak,
-  lagOppfyltPeriode,
-  lagOverlappendeSakerAksjonspunkt,
-  lagOverlappendePeriode,
+  createOverlappendeSakerHandler,
+  standardUttakHandlers,
+} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import {
   AksjonspunktStatus,
+  lagAvsluttetBehandling,
+  lagOppfyltPeriode,
+  lagOverlappendePeriode,
+  lagOverlappendeSakerAksjonspunkt,
+  lagUtredBehandling,
+  lagUttak,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import {
-  lagRelativePerioder,
   beregnSplittDatoer,
+  lagRelativePerioder,
   tilIsoDato,
   tilVisningsDato,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakTestHelpers.js';
-import {
-  standardUttakHandlers,
-  createOverlappendeSakerHandler,
-} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import dayjs from 'dayjs';
+import { action } from 'storybook/actions';
+import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from '../Uttak';
 
 dayjs.locale('nb');
 
@@ -129,7 +129,7 @@ export const Aksjonspunkt: Story = {
       await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
       await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
       await expect(gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' })).resolves.toBeInTheDocument();
-      await expect(canvas.findByRole('button', { name: 'Bekreft og fortsett' })).resolves.toBeInTheDocument();
+      await waitFor(() => expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument());
     });
   },
 };
