@@ -40,7 +40,7 @@ const PANEL_KONFIG = {
   },
 } as const;
 
-export const beregnVedtakType = (
+const beregnVedtakType = (
   vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
   behandling: Pick<ung_sak_kontrakt_behandling_BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat'>,

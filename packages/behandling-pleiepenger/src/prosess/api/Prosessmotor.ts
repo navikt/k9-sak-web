@@ -139,7 +139,7 @@ interface ProcessMenuStep {
  * @param id - Unik ID for panelet
  * @returns Panelobjekt med status og metadata
  */
-export const byggVilkårPanel = (
+const byggVilkårPanel = (
   skalVisePanel: boolean | undefined,
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   panelKonfig: { vilkår: readonly string[]; aksjonspunkter: readonly string[]; label: string; id: string },
