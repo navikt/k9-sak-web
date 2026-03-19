@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@editorjs/editorjs": "2.31.4",
+    "@editorjs/editorjs": "2.31.5",
     "@editorjs/header": "2.8.8",
     "@editorjs/list": "2.0.9",
     "@editorjs/paragraph": "2.11.7",
@@ -16,7 +16,7 @@
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "classnames": "2.5.1",
-    "css-tree": "3.2.0",
+    "css-tree": "3.2.1",
     "date-fns": "4.1.0",
     "editorjs-html": "3.4.3",
     "formik": "2.4.9",
