@@ -395,10 +395,11 @@ export const LøstAksjonspunktKanRedigeres: Story = {
         canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
       ).resolves.toBeInTheDocument();
 
-      const radios = await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-      radios.forEach(async radio => {
+      await waitFor(() => expect(canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' })).toHaveLength(2));
+      const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
+      for (const radio of radios) {
         await expect(radio).toBeChecked();
-      });
+      }
 
       await expect(canvas.findByDisplayValue('50')).resolves.toHaveAttribute('readonly');
       await expect(canvas.findByDisplayValue('30')).resolves.toHaveAttribute('readonly');
@@ -408,13 +409,13 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     await step('Kan redigere aksjonspunkt', async () => {
       await user.click(await canvas.findByRole('button', { name: 'Rediger' }));
 
-      const gruppeEn = canvas.getByRole('group', {
+      const gruppeEn = await canvas.findByRole('group', {
         name: new RegExp(
           `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)}`,
           'i',
         ),
       });
-      const gruppeTo = canvas.getByRole('group', {
+      const gruppeTo = await canvas.findByRole('group', {
         name: new RegExp(
           `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`,
           'i',
@@ -513,10 +514,11 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
         canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
       ).resolves.toBeInTheDocument();
 
-      const radios = await canvas.findAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-      radios.forEach(async radio => {
+      await waitFor(() => expect(canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' })).toHaveLength(2));
+      const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
+      for (const radio of radios) {
         await expect(radio).toBeChecked();
-      });
+      }
 
       await expect(canvas.findByDisplayValue('60')).resolves.toHaveAttribute('readonly');
       await expect(canvas.findByDisplayValue('70')).resolves.toHaveAttribute('readonly');
