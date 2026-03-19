@@ -28,7 +28,7 @@ type ButtonTypes = {
   question: ButtonType;
 };
 
-export const buttonTypes: ButtonTypes = {
+const buttonTypes: ButtonTypes = {
   prev: {
     src: arrowLeftImageUrl,
     srcHover: arrowLeftFilledImageUrl,

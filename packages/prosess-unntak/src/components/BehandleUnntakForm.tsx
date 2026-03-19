@@ -102,7 +102,7 @@ export const BehandleUnntakForm = ({
   </form>
 );
 
-export const buildInitialValues = createSelector(
+const buildInitialValues = createSelector(
   [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat, ownProps => ownProps.vilkar],
   (vilkårsresultat, behandlingsresultat, vilkar) => ({
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
@@ -113,7 +113,7 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = values => ({
+const transformValues = values => ({
   periode: values.periode,
   avslagsårsak: values.avslagsårsak,
   utfall: values.utfall,

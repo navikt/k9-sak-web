@@ -1,4 +1,3 @@
-type LagreDokumentdataType = (params?: any, keepData?: boolean) => Promise<any>;
 type DokumentDataType = {
   FRITEKSTBREV?: {
     brødtekst?;
@@ -13,4 +12,4 @@ type DokumentDataType = {
   };
 };
 
-export { LagreDokumentdataType, DokumentDataType };
+export { DokumentDataType };

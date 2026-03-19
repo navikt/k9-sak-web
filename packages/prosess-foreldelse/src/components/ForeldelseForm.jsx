@@ -280,7 +280,7 @@ ForeldelseForm.propTypes = {
   behandlingUuid: PropTypes.string.isRequired,
 };
 
-export const transformValues = (values, apCode) => {
+const transformValues = (values, apCode) => {
   const foreldelsePerioder = values.foreldelsesresultatActivity.map(period => ({
     fraDato: period.fom,
     tilDato: period.tom,
@@ -294,7 +294,7 @@ export const transformValues = (values, apCode) => {
     },
   ];
 };
-export const buildInitialValues = foreldelsePerioder => ({
+const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: foreldelsePerioder.map(p => ({
     ...p,
     feilutbetaling: p.belop,

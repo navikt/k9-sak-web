@@ -23,7 +23,7 @@ const formName = 'ArbeidsforholdInfoPanel';
 // METHODS
 // ----------------------------------------------------------------------------
 
-export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
+const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
   arbeidsforhold.map(a => {
     if (a.lagtTilAvSaksbehandler === true) {
       return {
@@ -55,7 +55,7 @@ interface PureOwnProps {
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImpl = ({
+const ArbeidsforholdInfoPanelImpl = ({
   aksjonspunkter,
   readOnly,
   alleMerknaderFraBeslutter,
