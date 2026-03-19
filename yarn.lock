@@ -2129,7 +2129,7 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/ft-plattform-komponenter": "npm:10.5.9"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     lodash: "npm:4.17.23"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.4"
@@ -3117,7 +3117,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:10.5.9"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
     react-hook-form: "npm:7.71.1"
@@ -3133,7 +3133,7 @@ __metadata:
     "@navikt/ds-react": "npm:8.2.0"
     "@navikt/ft-form-hooks": "npm:10.6.10"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
     react-hook-form: "npm:7.71.1"
@@ -3154,7 +3154,7 @@ __metadata:
     "@tanstack/react-query": "npm:5.90.21"
     axios: "npm:1.13.6"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
     react-hook-form: "npm:7.71.1"
@@ -3185,7 +3185,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:10.5.9"
     "@popperjs/core": "npm:2.11.8"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
@@ -3238,7 +3238,7 @@ __metadata:
     "@types/object-hash": "npm:3.0.6"
     axios: "npm:1.13.6"
     css-tree: "npm:3.2.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     editorjs-html: "npm:3.4.3"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.4"
@@ -3329,7 +3329,7 @@ __metadata:
   dependencies:
     "@navikt/ds-react": "npm:8.2.0"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.19"
+    dayjs: "npm:1.11.20"
     lodash: "npm:4.17.23"
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
@@ -7519,6 +7519,13 @@ __metadata:
   version: 1.11.19
   resolution: "dayjs@npm:1.11.19"
   checksum: 10/185b820d68492b83a3ce2b8ddc7543034edc1dfd1423183f6ae4707b29929a3cc56503a81826309279f9084680c15966b99456e74cf41f7d1f6a2f98f9c7196f
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:1.11.20":
+  version: 1.11.20
+  resolution: "dayjs@npm:1.11.20"
+  checksum: 10/5347533f21a55b8bb1b1ef559be9b805514c3a8fb7e68b75fb7e73808131c59e70909c073aa44ce8a0d159195cd110cdd4081cf87ab96cb06fee3edacae791c6
   languageName: node
   linkType: hard
 
