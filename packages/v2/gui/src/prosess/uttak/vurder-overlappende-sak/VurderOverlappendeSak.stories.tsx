@@ -161,28 +161,25 @@ export const LøsAksjonspunkt: Story = {
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvas, step }) => {
     const user = userEvent.setup();
-    const canvas = within(canvasElement);
 
     await step('Fyll ut skjema for overlappende perioder', async () => {
-      await waitFor(async function redigerSkjema() {
-        const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
-        const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
+      const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
+      const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
-        const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
-        const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
+      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
 
-        await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
-        await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
 
-        await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
-        const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
-        if (felt2) {
-          await user.type(felt2, '60');
-        }
-        await user.type(await canvas.findByLabelText('Begrunnelse'), 'Dette er en grundig begrunnelse');
-      });
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
+      if (felt2) {
+        await user.type(felt2, '60');
+      }
+      await user.type(await canvas.findByLabelText('Begrunnelse'), 'Dette er en grundig begrunnelse');
     });
 
     await step('Bekreft og send inn', async () => {
