@@ -3,6 +3,7 @@ import { axe } from 'vitest-axe';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
+import './axe-setup';
 
 const personopplysninger = {
   navBrukerKjonn: { kode: 'K', kodeverk: 'KJONN' },

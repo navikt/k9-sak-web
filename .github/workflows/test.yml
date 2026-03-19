@@ -25,32 +25,7 @@ jobs:
       - name: Kjør tester (shard ${{ matrix.shard }})
         env:
           CI: true
-        run: |
-          if [ "${{ matrix.shard }}" = "1" ]; then
-            # Shard 1: fakta-*, prosess-* (tunge pakker)
-            yarn test --silent=true packages/fakta-* packages/prosess-*
-          else
-            # Shard 2: alle andre pakker
-            ALL_PACKAGES=$(find packages -maxdepth 1 -type d -name "*" | grep -v "^packages$" | sort)
-            OTHER_PACKAGES=""
-            for pkg in $ALL_PACKAGES; do
-              skip=false
-              for heavy in packages/fakta-* packages/prosess-*; do
-                if [[ "$pkg" == $heavy ]]; then
-                  skip=true
-                  break
-                fi
-              done
-              if [ "$skip" = false ]; then
-                OTHER_PACKAGES="$OTHER_PACKAGES $pkg"
-              fi
-            done
-            if [ -n "$OTHER_PACKAGES" ]; then
-              yarn test --silent=true $OTHER_PACKAGES
-            else
-              echo "Ingen andre pakker funnet for shard 2"
-            fi
-          fi
+        run: yarn test --silent=true --shard=${{ matrix.shard }}/2
 
   test-success:
     name: Kjør enhetstester

@@ -1,4 +1,4 @@
-export const felles = {};
+const felles = {};
 
 export const omsorgspenger = {
   ...felles,

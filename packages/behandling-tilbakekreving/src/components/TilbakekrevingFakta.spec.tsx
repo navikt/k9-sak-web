@@ -103,6 +103,10 @@ describe('<TilbakekrevingFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestTilbakekrevingApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     renderWithIntlAndReduxForm(

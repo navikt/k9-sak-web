@@ -11,7 +11,6 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/gui": "workspace:^",
     "@k9-sak-web/konstanter": "1.0.0",
-    "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
@@ -19,10 +18,10 @@
     "@navikt/ft-form-hooks": "10.6.10",
     "@navikt/ft-plattform-komponenter": "10.5.9",
     "@navikt/ft-ui-komponenter": "6.8.10",
-    "@sentry/browser": "10.39.0",
-    "@sentry/react": "10.39.0",
+    "@sentry/browser": "10.43.0",
+    "@sentry/react": "10.43.0",
     "@tanstack/react-query": "5.90.21",
-    "axios": "1.13.5",
+    "axios": "1.13.6",
     "classnames": "2.5.1",
     "history": "5.3.0",
     "react": "19.2.4",
@@ -30,8 +29,7 @@
     "react-intl": "8.1.1",
     "react-redux": "9.2.0",
     "react-router": "7.13.0",
-    "redux": "5.0.1",
-    "redux-form": "8.3.10"
+    "redux": "5.0.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

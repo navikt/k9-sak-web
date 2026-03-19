@@ -13,32 +13,32 @@
  * - Skjemavalidering
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, userEvent, within, expect, waitFor, fireEvent } from 'storybook/test';
-import { action } from 'storybook/actions';
-import dayjs from 'dayjs';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import Uttak from '../Uttak';
 import {
-  lagUtredBehandling,
-  lagAvsluttetBehandling,
-  lagUttak,
-  lagOppfyltPeriode,
-  lagOverlappendeSakerAksjonspunkt,
-  lagOverlappendePeriode,
+  createOverlappendeSakerHandler,
+  standardUttakHandlers,
+} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import {
   AksjonspunktStatus,
+  lagAvsluttetBehandling,
+  lagOppfyltPeriode,
+  lagOverlappendePeriode,
+  lagOverlappendeSakerAksjonspunkt,
+  lagUtredBehandling,
+  lagUttak,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import {
-  lagRelativePerioder,
   beregnSplittDatoer,
+  lagRelativePerioder,
   tilIsoDato,
   tilVisningsDato,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakTestHelpers.js';
-import {
-  standardUttakHandlers,
-  createOverlappendeSakerHandler,
-} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import dayjs from 'dayjs';
+import { action } from 'storybook/actions';
+import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from '../Uttak';
 
 dayjs.locale('nb');
 
@@ -129,7 +129,7 @@ export const Aksjonspunkt: Story = {
       await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
       await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
       await expect(gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' })).resolves.toBeInTheDocument();
-      await expect(canvas.findByRole('button', { name: 'Bekreft og fortsett' })).resolves.toBeInTheDocument();
+      await waitFor(() => expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument());
     });
   },
 };
@@ -161,28 +161,25 @@ export const LøsAksjonspunkt: Story = {
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvas, step }) => {
     const user = userEvent.setup();
-    const canvas = within(canvasElement);
 
     await step('Fyll ut skjema for overlappende perioder', async () => {
-      await waitFor(async function redigerSkjema() {
-        const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
-        const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
+      const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
+      const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
-        const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
-        const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
+      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
 
-        await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
-        await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
 
-        await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
-        const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
-        if (felt2) {
-          await user.type(felt2, '60');
-        }
-        await user.type(await canvas.findByLabelText('Begrunnelse'), 'Dette er en grundig begrunnelse');
-      });
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
+      if (felt2) {
+        await user.type(felt2, '60');
+      }
+      await user.type(await canvas.findByLabelText('Begrunnelse'), 'Dette er en grundig begrunnelse');
     });
 
     await step('Bekreft og send inn', async () => {

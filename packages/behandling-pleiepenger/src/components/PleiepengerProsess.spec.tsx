@@ -178,6 +178,10 @@ describe('<PleiepengerProsess>', () => {
     soknad,
   };
 
+  afterEach(() => {
+    requestPleiepengerApi.clearAllMockData();
+  });
+
   it.skip('skal vise alle aktuelle prosessSteg i meny', () => {
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS);
 

@@ -12,6 +12,7 @@ const config: KnipConfig = {
       entry: [
         'packages/sak-app/src/index.ts',
         'ung.vite.config.js',
+        'aktivitetspenger.vite.config.js',
         'scripts/sentry-release.cjs',
         'scripts/sentry-release-ung.cjs',
       ],

@@ -1,7 +1,7 @@
 type LogExtra = Record<string, unknown>;
 
 const json = (level: string, message: string, extra?: LogExtra): string =>
-  JSON.stringify({ timestamp: new Date().toISOString(), level, message, ...extra });
+  JSON.stringify({ timestamp: new Date().toISOString(), ...extra, level, message });
 
 const log = {
   info: (msg: string, extra?: LogExtra): void => {

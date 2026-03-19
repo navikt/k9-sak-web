@@ -17,21 +17,26 @@ export const NyInntektsmeldingDialog = ({
   forespørselStatus,
 }: NyInntektsmeldingDialogProps) => {
   const renderContent = () => {
-    if (
-      forespørselStatus === ForespørselStatus.UNDER_BEHANDLING ||
-      forespørselStatus === ForespørselStatus.FERDIG ||
-      forespørselStatus === ForespørselStatus.STP_MER_ENN_4_UKER
-    ) {
-      return (
-        <KanIkkeOppretteNyOppgave
-          førsteFraværsdag={førsteFraværsdag}
-          arbeidsgiver={arbeidsgiver}
-          forespørselStatus={forespørselStatus}
-        />
-      );
+    switch (forespørselStatus) {
+      case ForespørselStatus.UNDER_BEHANDLING:
+      case ForespørselStatus.FERDIG:
+      case ForespørselStatus.STP_MER_ENN_4_UKER:
+      case ForespørselStatus.BEHANDLING_FERDIG:
+        return (
+          <KanIkkeOppretteNyOppgave
+            førsteFraværsdag={førsteFraværsdag}
+            arbeidsgiver={arbeidsgiver}
+            forespørselStatus={forespørselStatus}
+          />
+        );
+      case ForespørselStatus.UTGÅTT:
+      case undefined:
+        return <SendForespørselContent førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
+      default: {
+        const _exhaustiveCheck: never = forespørselStatus;
+        throw new Error(`Unhandled ForespørselStatus: ${_exhaustiveCheck}`);
+      }
     }
-
-    return <SendForespørselContent førsteFraværsdag={førsteFraværsdag} arbeidsgiver={arbeidsgiver} />;
   };
 
   return (

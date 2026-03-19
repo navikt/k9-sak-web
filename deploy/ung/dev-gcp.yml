@@ -1,7 +1,7 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: ung-sak-web
+  name: {{ name }}
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
@@ -16,18 +16,22 @@ spec:
   readiness:
     path: /isReady
     initialDelay: 10
+  terminationGracePeriodSeconds: 63 #Fordi vi har 60 sekund timeout mot backends og 2 sekund ventetid før stopp av pod.
   replicas:
     disableAutoScaling: true
-    min: 2
-    max: 2
+    min: {{ replicas.min }}
+    max: {{ replicas.max }}
+  {{#if ttl}}
+  ttl: {{ ttl }}
+  {{/if}}
   resources:
     requests:
       cpu: 200m
-      memory: 32Mi
-    limits:
       memory: 64Mi
+    limits:
+      memory: 128Mi
   ingresses:
-    - 'https://ung.intern.dev.nav.no'
+    - {{ ingress }}
   accessPolicy:
     outbound:
       rules:
