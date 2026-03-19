@@ -5,6 +5,7 @@ vi.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.ur
 vi.stubGlobal('open', vi.fn());
 
 // happy-dom compatibility: Polyfill missing window methods
+// happy-dom has a lighter implementation than jsdom and may not include all window methods
 if (!window.scroll) {
   window.scroll = () => {};
 }

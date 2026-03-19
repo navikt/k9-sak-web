@@ -140,7 +140,7 @@ export default ({ mode }) => {
           test: {
             name: 'v2',
             include: ['packages/v2/**/*.{spec,test}.{ts,tsx}'],
-            setupFiles: ['./vitest-setup-v2.ts'],
+            setupFiles: ['./vitest-setup-base.ts'],
           },
         },
         {
