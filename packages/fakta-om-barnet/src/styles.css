@@ -1,5 +1,6 @@
-@import "tailwindcss/theme";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/theme';
+@import 'tailwindcss/utilities';
+
 @config "../tailwind.config.cjs";
 
 .hide-legend legend {
