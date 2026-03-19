@@ -124,6 +124,10 @@ describe('<FagsakIndex>', () => {
     behandlingÅrsaker: [],
   };
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal hente alle behandlinger fra ungsak, tilbake og klage', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, kodeverk);

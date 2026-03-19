@@ -102,6 +102,10 @@ describe('<TilbakekrevingFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestTilbakekrevingApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     renderWithIntlAndReduxForm(
@@ -129,6 +133,7 @@ describe('<TilbakekrevingFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
       <RestApiErrorProvider>

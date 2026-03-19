@@ -135,6 +135,10 @@ describe('<PleiepengerFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestPleiepengerApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
