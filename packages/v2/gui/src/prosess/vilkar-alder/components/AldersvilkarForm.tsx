@@ -13,14 +13,14 @@ import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
   begrunnelse: string;
-  erVilkarOk: string | null;
+  erVilkarOk: string | undefined;
 };
 
 type Props = {
   relevantAksjonspunkt: AksjonspunktDto;
   submitCallback: (data: any) => void;
   begrunnelseTekst: string;
-  erVilkaretOk: boolean | null;
+  erVilkaretOk: boolean | undefined;
   erVurdert: boolean;
   angitteBarn: { personIdent: string }[];
   fagsak: FagsakDto;
@@ -37,11 +37,11 @@ const AldersvilkarForm = ({
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
   const getErVilkaretOk = () => {
-    if (!erVurdert) return null;
+    if (!erVurdert) return undefined;
 
     if (erVilkaretOk === true) return 'true';
     if (erVilkaretOk === false) return 'false';
-    return null;
+    return undefined;
   };
   const formMethods = useForm<Inputs>({
     defaultValues: {
