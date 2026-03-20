@@ -392,11 +392,13 @@ export const LøstAksjonspunktKanRedigeres: Story = {
         canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
       ).resolves.toBeInTheDocument();
 
-      await waitFor(() => expect(canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' })).toHaveLength(2));
-      const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-      for (const radio of radios) {
-        await expect(radio).toBeChecked();
-      }
+      await waitFor(async () => {
+        const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
+        await expect(radios).toHaveLength(2);
+        for (const radio of radios) {
+          await expect(radio).toBeChecked();
+        }
+      });
 
       await expect(canvas.findByDisplayValue('50')).resolves.toHaveAttribute('readonly');
       await expect(canvas.findByDisplayValue('30')).resolves.toHaveAttribute('readonly');
@@ -511,11 +513,13 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
         canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
       ).resolves.toBeInTheDocument();
 
-      await waitFor(() => expect(canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' })).toHaveLength(2));
-      const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-      for (const radio of radios) {
-        await expect(radio).toBeChecked();
-      }
+      await waitFor(async () => {
+        const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
+        await expect(radios).toHaveLength(2);
+        for (const radio of radios) {
+          await expect(radio).toBeChecked();
+        }
+      });
 
       await expect(canvas.findByDisplayValue('60')).resolves.toHaveAttribute('readonly');
       await expect(canvas.findByDisplayValue('70')).resolves.toHaveAttribute('readonly');
