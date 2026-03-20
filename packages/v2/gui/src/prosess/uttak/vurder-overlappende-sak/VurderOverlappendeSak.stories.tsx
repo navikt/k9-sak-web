@@ -391,13 +391,17 @@ export const LøstAksjonspunktKanRedigeres: Story = {
       await waitFor(async () => {
         await expect(canvas.getByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).toBeInTheDocument();
 
-        const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-        await expect(radios).toHaveLength(2);
-        for (const radio of radios) {
-          await expect(radio).toBeChecked();
+        const radios = Array.from(
+          canvasElement.querySelectorAll<HTMLInputElement>('input[type="radio"][value="JUSTERT_GRAD"]'),
+        );
+        if (radios.length !== 2 || radios.some(radio => !radio.checked)) {
+          throw new Error('Forventer to valgte JUSTERT_GRAD-radioer i lesevisning');
         }
 
-        await expect(canvas.getByRole('textbox', { name: 'Begrunnelse' })).toHaveAttribute('readonly');
+        const begrunnelse = await canvas.findByLabelText('Begrunnelse');
+        if (!begrunnelse.hasAttribute('readonly')) {
+          throw new Error('Forventer at begrunnelsefeltet er skrivebeskyttet i lesevisning');
+        }
       });
     });
 
@@ -508,10 +512,11 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
       await waitFor(async () => {
         await expect(canvas.getByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).toBeInTheDocument();
 
-        const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
-        await expect(radios).toHaveLength(2);
-        for (const radio of radios) {
-          await expect(radio).toBeChecked();
+        const radios = Array.from(
+          canvasElement.querySelectorAll<HTMLInputElement>('input[type="radio"][value="JUSTERT_GRAD"]'),
+        );
+        if (radios.length !== 2 || radios.some(radio => !radio.checked)) {
+          throw new Error('Forventer to valgte JUSTERT_GRAD-radioer i lesevisning');
         }
       });
 
