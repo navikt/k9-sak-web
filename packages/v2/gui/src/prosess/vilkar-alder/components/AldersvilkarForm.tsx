@@ -1,6 +1,5 @@
 import {
   k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
@@ -16,15 +15,14 @@ type Inputs = {
   erVilkarOk: string | undefined;
 };
 
-type Props = {
-  relevantAksjonspunkt: AksjonspunktDto;
+interface Props {
   submitCallback: (data: any) => void;
   begrunnelseTekst: string;
   erVilkaretOk: boolean | undefined;
   erVurdert: boolean;
   angitteBarn: { personIdent: string }[];
   fagsak: FagsakDto;
-};
+}
 
 const AldersvilkarForm = ({
   submitCallback,
