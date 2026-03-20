@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
@@ -85,6 +86,7 @@ export default ({ mode }) => {
     base: '/k9/web',
     publicDir: './public',
     plugins: [
+      tailwindcss(),
       react({
         include: [/\.jsx$/, /\.tsx?$/],
       }),
