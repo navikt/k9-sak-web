@@ -7,12 +7,12 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/ds-react": "8.2.0",
+    "@navikt/ds-react": "8.6.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.19",
     "lodash": "4.17.23",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-hook-form": "7.71.1"
+    "react-hook-form": "7.71.2"
   }
 }
