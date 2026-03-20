@@ -370,7 +370,7 @@ const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
   },
 ];
 
-export class FakeHistorikkBackend implements HistorikkBackendApi {
+export class FakeK9HistorikkBackend implements HistorikkBackendApi {
   #beriker: K9HistorikkInnslagBeriker;
 
   readonly backend = 'k9';
