@@ -388,21 +388,19 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser lesevisning av løst aksjonspunkt', async () => {
-      await expect(
-        canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
-      ).resolves.toBeInTheDocument();
-
       await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).toBeInTheDocument();
+
         const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
         await expect(radios).toHaveLength(2);
         for (const radio of radios) {
           await expect(radio).toBeChecked();
         }
-      });
 
-      await expect(canvas.findByDisplayValue('50')).resolves.toHaveAttribute('readonly');
-      await expect(canvas.findByDisplayValue('30')).resolves.toHaveAttribute('readonly');
-      await expect(canvas.findByRole('textbox', { name: 'Begrunnelse' })).resolves.toHaveAttribute('readonly');
+        await expect(canvas.getByDisplayValue('50')).toHaveAttribute('readonly');
+        await expect(canvas.getByDisplayValue('30')).toHaveAttribute('readonly');
+        await expect(canvas.getByRole('textbox', { name: 'Begrunnelse' })).toHaveAttribute('readonly');
+      });
     });
 
     await step('Kan redigere aksjonspunkt', async () => {
@@ -509,20 +507,18 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     const canvas = within(canvasElement);
 
     await step('Viser leseversjon i avsluttet sak', async () => {
-      await expect(
-        canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
-      ).resolves.toBeInTheDocument();
-
       await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).toBeInTheDocument();
+
         const radios = canvas.getAllByRole('radio', { name: 'Tilpass uttaksgrad' });
         await expect(radios).toHaveLength(2);
         for (const radio of radios) {
           await expect(radio).toBeChecked();
         }
-      });
 
-      await expect(canvas.findByDisplayValue('60')).resolves.toHaveAttribute('readonly');
-      await expect(canvas.findByDisplayValue('70')).resolves.toHaveAttribute('readonly');
+        await expect(canvas.getByDisplayValue('60')).toHaveAttribute('readonly');
+        await expect(canvas.getByDisplayValue('70')).toHaveAttribute('readonly');
+      });
 
       await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
