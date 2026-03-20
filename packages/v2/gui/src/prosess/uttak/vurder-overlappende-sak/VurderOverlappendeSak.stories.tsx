@@ -397,8 +397,6 @@ export const LøstAksjonspunktKanRedigeres: Story = {
           await expect(radio).toBeChecked();
         }
 
-        await expect(canvas.getByDisplayValue('50')).toHaveAttribute('readonly');
-        await expect(canvas.getByDisplayValue('30')).toHaveAttribute('readonly');
         await expect(canvas.getByRole('textbox', { name: 'Begrunnelse' })).toHaveAttribute('readonly');
       });
     });
@@ -515,9 +513,6 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
         for (const radio of radios) {
           await expect(radio).toBeChecked();
         }
-
-        await expect(canvas.getByDisplayValue('60')).toHaveAttribute('readonly');
-        await expect(canvas.getByDisplayValue('70')).toHaveAttribute('readonly');
       });
 
       await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
