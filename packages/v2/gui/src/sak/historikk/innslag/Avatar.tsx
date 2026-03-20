@@ -1,4 +1,4 @@
-import { HistorikkAktørType } from '@k9-sak-web/backend/combined/behandling/historikk/HistorikkAktørType.js';
+import { HistorikkAktør } from '@k9-sak-web/backend/combined/kodeverk/historikk/HistorikkAktør.js';
 import type { FC } from 'react';
 import {
   PersonFillIcon,
@@ -10,24 +10,28 @@ import {
 } from '@navikt/aksel-icons';
 
 export interface AvatarProps {
-  readonly aktørType: HistorikkAktørType;
+  readonly aktørType: HistorikkAktør;
 }
 
 const fontSize = 45;
 
 export const Avatar: FC<AvatarProps> = ({ aktørType }) => {
   switch (aktørType) {
-    case HistorikkAktørType.SAKSBEHANDLER:
+    case HistorikkAktør.SAKSBEHANDLER:
       return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler" />;
-    case HistorikkAktørType.SØKER:
+    case HistorikkAktør.LOKALKONTOR_SAKSBEHANDLER:
+      return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler Nav-lokalt" />;
+    case HistorikkAktør.SØKER:
       return <PersonFillIcon fontSize={fontSize} title="Søker" />;
-    case HistorikkAktørType.BESLUTTER:
+    case HistorikkAktør.BESLUTTER:
       return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter" />;
-    case HistorikkAktørType.VEDTAKSLØSNINGEN:
+    case HistorikkAktør.LOKALKONTOR_BESLUTTER:
+      return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter Nav-lokalt" />;
+    case HistorikkAktør.VEDTAKSLØSNINGEN:
       return <RobotSmileIcon fontSize={fontSize} title="Vedtaksløsningen" />;
-    case HistorikkAktørType.ARBEIDSGIVER:
+    case HistorikkAktør.ARBEIDSGIVER:
       return <PersonSuitFillIcon fontSize={fontSize} title="Arbeidsgiver" />;
-    case HistorikkAktørType.UDEFINERT:
+    case HistorikkAktør.UDEFINERT:
       return <QuestionmarkCircleFillIcon fontSize={fontSize} title="Ukjent aktør type" />;
   }
 };
