@@ -123,8 +123,8 @@ export const Aksjonspunkt: Story = {
       const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
-      const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
-      const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
+      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
 
       await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
       await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
@@ -187,19 +187,19 @@ export const LøsAksjonspunkt: Story = {
 
       await waitFor(async function sjekkFørstePeriode() {
         await expect(submitSpy).toHaveBeenCalledWith(
-          await expect.objectContaining({
+          expect.objectContaining({
             behandlingId: '1',
             behandlingVersjon: 1,
-            bekreftedeAksjonspunktDtoer: await expect.arrayContaining([
-              await expect.objectContaining({
+            bekreftedeAksjonspunktDtoer: expect.arrayContaining([
+              expect.objectContaining({
                 '@type': '9292',
                 begrunnelse: 'Dette er en grundig begrunnelse',
-                perioder: await expect.arrayContaining([
-                  await expect.objectContaining({
+                perioder: expect.arrayContaining([
+                  expect.objectContaining({
                     valg: 'JUSTERT_GRAD',
                     søkersUttaksgrad: 40,
                   }),
-                  await expect.objectContaining({
+                  expect.objectContaining({
                     valg: 'JUSTERT_GRAD',
                     søkersUttaksgrad: 60,
                   }),
@@ -245,18 +245,15 @@ export const LøsAksjonspunktMedSplitt: Story = {
     const canvas = within(canvasElement);
 
     await step('Åpne splitt periode dialog', async () => {
-      await waitFor(async function velgGruppeEn() {
-        const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
-        const gruppeEn = within(canvas.getByRole('group', { name: gruppeEnNavn }));
+      const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
+      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
 
-        await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
-        await fireEvent.change(
-          await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }),
-          { target: { value: '40' } },
-        );
-        await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
-        await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await fireEvent.change(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), {
+        target: { value: '40' },
       });
+      await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
+      await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
     });
 
     await step('Velg periode for splitting', async () => {
@@ -291,7 +288,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 
     await step('Fyll ut og send inn', async () => {
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
-      const gruppeTo = within(canvas.getByRole('group', { name: gruppeToNavn }));
+      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
       await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
 
       await fireEvent.change(await canvas.findByLabelText('Begrunnelse'), {
@@ -436,15 +433,15 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 
       await waitFor(async function sjekkAksjonspunkt() {
         await expect(submitSpy).toHaveBeenCalledWith(
-          await expect.objectContaining({
+          expect.objectContaining({
             behandlingId: '1',
             behandlingVersjon: 1,
-            bekreftedeAksjonspunktDtoer: await expect.arrayContaining([
-              await expect.objectContaining({
+            bekreftedeAksjonspunktDtoer: expect.arrayContaining([
+              expect.objectContaining({
                 '@type': '9292',
                 begrunnelse: 'Dette er en modifisert begrunnelse',
-                perioder: await expect.arrayContaining([
-                  await expect.objectContaining({
+                perioder: expect.arrayContaining([
+                  expect.objectContaining({
                     begrunnelse: 'Dette er en modifisert begrunnelse',
                     periode: {
                       fom: tilIsoDato(fom1),
@@ -452,7 +449,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
                     },
                     valg: 'INGEN_JUSTERING',
                   }),
-                  await expect.objectContaining({
+                  expect.objectContaining({
                     begrunnelse: 'Dette er en modifisert begrunnelse',
                     periode: {
                       fom: tilIsoDato(fom2),
