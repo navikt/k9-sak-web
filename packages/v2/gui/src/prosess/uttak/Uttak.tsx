@@ -44,8 +44,12 @@ const Uttak = ({
     [aksjonspunkter, relevanteAksjonspunkter],
   );
 
-  if (!uttak || !uttakApi) {
+  if (!uttak) {
     return <></>;
+  }
+
+  if (!uttakApi) {
+    throw new Error('Uttak må wrappes i UttakApiContext');
   }
 
   const uttakValues = {
