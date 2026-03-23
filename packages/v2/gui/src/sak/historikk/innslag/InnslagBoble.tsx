@@ -20,8 +20,10 @@ export interface InnslagBobleProps {
 const aktørIkonPlassering = (aktør: HistorikkAktør): 'right' | 'left' => {
   switch (aktør) {
     case HistorikkAktør.SAKSBEHANDLER:
+    case HistorikkAktør.LOKALKONTOR_SAKSBEHANDLER:
     case HistorikkAktør.VEDTAKSLØSNINGEN:
     case HistorikkAktør.BESLUTTER:
+    case HistorikkAktør.LOKALKONTOR_BESLUTTER:
       return 'right';
     default:
       return 'left';
@@ -31,8 +33,10 @@ const aktørIkonPlassering = (aktør: HistorikkAktør): 'right' | 'left' => {
 const aktørFarge = (aktør: HistorikkAktør) => {
   switch (aktør) {
     case HistorikkAktør.SAKSBEHANDLER:
+    case HistorikkAktør.LOKALKONTOR_SAKSBEHANDLER:
       return 'meta-purple';
     case HistorikkAktør.BESLUTTER:
+    case HistorikkAktør.LOKALKONTOR_BESLUTTER:
       return 'meta-lime';
     case HistorikkAktør.VEDTAKSLØSNINGEN:
       return 'neutral';
@@ -40,7 +44,7 @@ const aktørFarge = (aktør: HistorikkAktør) => {
       return 'brand-blue';
     case HistorikkAktør.SØKER:
       return 'brand-beige';
-    default:
+    case HistorikkAktør.UDEFINERT:
       return 'brand-beige';
   }
 };
