@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import Uttak from './Uttak';
+import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  lagUtredBehandling,
-  lagAvsluttetBehandling,
-  lagUttak,
-  lagOppfyltPeriode,
-  lagIkkeOppfyltPeriode,
-  lagInntektsgraderingPeriode,
-  lagTilsynsgraderingPeriode,
-  relevanteAksjonspunkterAlle,
   arbeidsgivereWithTilkommet,
   inntektsgraderingFlereArbeidsgivere,
+  lagAvsluttetBehandling,
+  lagIkkeOppfyltPeriode,
+  lagInntektsgraderingPeriode,
+  lagOppfyltPeriode,
+  lagTilsynsgraderingPeriode,
+  lagUtredBehandling,
+  lagUttak,
+  relevanteAksjonspunkterAlle,
   Årsak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from './Uttak';
 
 const meta = {
   title: 'gui/prosess/Uttak',
@@ -46,11 +46,7 @@ type Story = StoryObj<typeof meta>;
  * Viser perioder og kan åpne/lukke periodedetaljer
  */
 export const UttakBasis: Story = {
-  parameters: {
-    msw: {
-      handlers: [standardUttakHandlers.arbeidsgivere(), standardUttakHandlers.inntektsgradering()],
-    },
-  },
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -154,11 +150,10 @@ export const UttakBasis: Story = {
  *  - Tilsynsgradering
  */
 export const UttakMedUlikeStatuser: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering([
+  decorators: [
+    withFakeUttakBackend({
+      inntektsgraderinger: {
+        perioder: [
           {
             periode: { fom: '2024-03-01', tom: '2024-03-15' },
             beregningsgrunnlag: 500000,
@@ -173,14 +168,14 @@ export const UttakMedUlikeStatuser: Story = {
                 bruttoInntekt: 500000,
                 løpendeInntekt: 200000,
                 erNytt: false,
-                type: 'ARBEIDSTAKER',
+                type: 'AT',
               },
             ],
           },
-        ]),
-      ],
-    },
-  },
+        ],
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -244,14 +239,12 @@ export const UttakMedUlikeStatuser: Story = {
  * UttakGradertMotInntekt
  */
 export const UttakGradertMotInntekt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(arbeidsgivereWithTilkommet),
-        standardUttakHandlers.inntektsgradering(inntektsgraderingFlereArbeidsgivere.perioder),
-      ],
-    },
-  },
+  decorators: [
+    withFakeUttakBackend({
+      arbeidsgivere: arbeidsgivereWithTilkommet,
+      inntektsgraderinger: inntektsgraderingFlereArbeidsgivere,
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -292,11 +285,7 @@ export const UttakGradertMotInntekt: Story = {
  * Viser perioder med gradering mot tilsyn
  */
 export const UttakGradertMotTilsyn: Story = {
-  parameters: {
-    msw: {
-      handlers: [standardUttakHandlers.arbeidsgivere(), standardUttakHandlers.inntektsgradering()],
-    },
-  },
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -336,11 +325,7 @@ export const UttakGradertMotTilsyn: Story = {
  *
  */
 export const UttakLesemodus: Story = {
-  parameters: {
-    msw: {
-      handlers: [standardUttakHandlers.arbeidsgivere(), standardUttakHandlers.inntektsgradering()],
-    },
-  },
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagAvsluttetBehandling(),
     uttak: lagUttak([
