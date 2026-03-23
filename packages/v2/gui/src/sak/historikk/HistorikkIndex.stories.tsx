@@ -5,19 +5,17 @@ import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { HistorikkIndex } from './HistorikkIndex.js';
+import withUngKodeverkoppslag from '../../storybook/decorators/withUngKodeverkoppslag.js';
 
 const meta = {
   title: 'gui/sak/historikk/HistorikkIndex',
   component: HistorikkIndex,
-  decorators: [
-    withMaxWidth(600),
-    withKodeverkContext(),
-    withFakeHistorikkBackend(),
-    withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
-  ],
+  decorators: [withMaxWidth(600), withKodeverkContext()],
 } satisfies Meta<typeof HistorikkIndex>;
 
 type Story = StoryObj<typeof meta>;
+
+export default meta;
 
 export const K9Historikk: Story = {
   args: {
@@ -25,6 +23,10 @@ export const K9Historikk: Story = {
     behandlingId: 1,
     behandlingVersjon: 2,
   },
+  decorators: [
+    withFakeHistorikkBackend('k9'),
+    withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
+  ],
   play: async ({ canvas }) => {
     const boble1El = await canvas.findByTestId(/snakkeboble-2025-08-29T10:41:30.155/);
     await expect(boble1El).toHaveTextContent('Behandling er gjenopptatt');
@@ -72,4 +74,19 @@ export const K9Historikk: Story = {
   },
 };
 
-export default meta;
+export const UngHistorikk: Story = {
+  args: {
+    saksnummer: '12389',
+    behandlingId: 1,
+    behandlingVersjon: 2,
+  },
+  decorators: [
+    withFakeHistorikkBackend('ung'),
+    withUngKodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
+  ],
+  play: async ({ canvas }) => {
+    const boble1El = await canvas.findByTestId(/snakkeboble-2026-01-12T11:38:55.428/);
+    await expect(boble1El).toHaveTextContent('Behandling gjenopptatt');
+    await expect(boble1El).toHaveTextContent('Vedtaksløsningen');
+  },
+};
