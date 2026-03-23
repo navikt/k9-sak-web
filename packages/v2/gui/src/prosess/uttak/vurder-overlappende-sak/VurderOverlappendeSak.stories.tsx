@@ -14,10 +14,7 @@
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import {
-  createOverlappendeSakerHandler,
-  standardUttakHandlers,
-} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
   AksjonspunktStatus,
   lagAvsluttetBehandling,
@@ -84,20 +81,17 @@ type Story = StoryObj<typeof meta>;
 const submitSpy = fn();
 
 export const Aksjonspunkt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        createOverlappendeSakerHandler([
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
           lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ']),
-        ]),
-        standardUttakHandlers.aksjonspunkt(payload => action('aksjonspunkt:submit')(payload)),
-      ],
-    },
-  },
+        ],
+      },
+      onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -135,23 +129,20 @@ export const Aksjonspunkt: Story = {
 };
 
 export const LøsAksjonspunkt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        createOverlappendeSakerHandler([
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
           lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ']),
-        ]),
-        standardUttakHandlers.aksjonspunkt(payload => {
-          submitSpy(payload);
-          action('aksjonspunkt:submit')(payload);
-        }),
-      ],
-    },
-  },
+        ],
+      },
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -214,23 +205,20 @@ export const LøsAksjonspunkt: Story = {
 };
 
 export const LøsAksjonspunktMedSplitt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        createOverlappendeSakerHandler([
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
           lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ']),
-        ]),
-        standardUttakHandlers.aksjonspunkt(payload => {
-          submitSpy(payload);
-          action('aksjonspunkt:submit')(payload);
-        }),
-      ],
-    },
-  },
+        ],
+      },
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -305,13 +293,10 @@ export const LøsAksjonspunktMedSplitt: Story = {
 };
 
 export const LøstAksjonspunkt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        createOverlappendeSakerHandler([
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
             fastsattUttaksgrad: 60.0,
             saksbehandler: 'Sara Sak',
@@ -324,10 +309,10 @@ export const LøstAksjonspunkt: Story = {
             valg: 'JUSTERT_GRAD',
             vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
           }),
-        ]),
-      ],
-    },
-  },
+        ],
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -342,13 +327,10 @@ export const LøstAksjonspunkt: Story = {
 };
 
 export const LøstAksjonspunktKanRedigeres: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        createOverlappendeSakerHandler([
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
             fastsattUttaksgrad: 50.0,
             saksbehandler: 'Sara Sak',
@@ -361,14 +343,14 @@ export const LøstAksjonspunktKanRedigeres: Story = {
             valg: 'JUSTERT_GRAD',
             vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
           }),
-        ]),
-        standardUttakHandlers.aksjonspunkt(payload => {
-          submitSpy(payload);
-          action('aksjonspunkt:submit')(payload);
-        }),
-      ],
-    },
-  },
+        ],
+      },
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -471,13 +453,10 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 };
 
 export const LøstAksjonspunktAvsluttetSak: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        createOverlappendeSakerHandler([
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
             fastsattUttaksgrad: 60.0,
             saksbehandler: 'Sara Sak',
@@ -490,10 +469,10 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
             valg: 'JUSTERT_GRAD',
             vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
           }),
-        ]),
-      ],
-    },
-  },
+        ],
+      },
+    }),
+  ],
   args: {
     behandling: lagAvsluttetBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),

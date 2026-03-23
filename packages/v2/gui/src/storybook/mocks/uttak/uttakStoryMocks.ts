@@ -10,6 +10,8 @@ import {
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
   type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  type k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType,
+  type k9_kodeverk_uttak_EgneOverlappendeSakerValg as EgneOverlappendeSakerValg,
   type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import dayjs from 'dayjs';
@@ -506,11 +508,11 @@ export const lagInntektgraderingPeriodeDto = (
     arbeidstidprosent: number;
     bruttoInntekt: number;
     erNytt?: boolean;
-    type?: string;
+    type?: UttakArbeidType;
   }>,
   beregningsgrunnlag?: number,
 ) => {
-  const [fom, tom] = range.split('/');
+  const [fom, tom] = range.split('/') as [string, string];
 
   // Beregn beregningsgrunnlag hvis ikke oppgitt (sum av alle bruttoInntekter som ikke er nye)
   const calculatedBeregningsgrunnlag =
@@ -541,7 +543,7 @@ export const lagInntektgraderingPeriodeDto = (
       bruttoInntekt: i.bruttoInntekt,
       løpendeInntekt: (i.bruttoInntekt * i.arbeidstidprosent) / 100,
       erNytt: i.erNytt ?? false,
-      type: i.type ?? 'ARBEIDSTAKER',
+      type: i.type ?? 'AT',
     })),
   };
 };
@@ -563,7 +565,7 @@ export const inntektsgraderingEnArbeidsgiver = {
           arbeidstidprosent: 30,
           bruttoInntekt: 500000,
           erNytt: false,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
       ],
       500000,
@@ -591,7 +593,7 @@ export const inntektsgraderingFlereArbeidsgivere = {
           arbeidstidprosent: 30,
           bruttoInntekt: 500000,
           erNytt: false,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
       ],
       500000,
@@ -604,21 +606,21 @@ export const inntektsgraderingFlereArbeidsgivere = {
           arbeidstidprosent: 25,
           bruttoInntekt: 300000,
           erNytt: false,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
         {
           arbeidsgiverIdentifikator: '987654321',
           arbeidstidprosent: 25,
           bruttoInntekt: 200000,
           erNytt: false,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
         {
           arbeidsgiverIdentifikator: '555666777',
           arbeidstidprosent: 50,
           bruttoInntekt: 250000,
           erNytt: true,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
       ],
       500000,
@@ -631,14 +633,14 @@ export const inntektsgraderingFlereArbeidsgivere = {
           arbeidstidprosent: 40,
           bruttoInntekt: 300000,
           erNytt: false,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
         {
           arbeidsgiverIdentifikator: '555666777',
           arbeidstidprosent: 60,
           bruttoInntekt: 300000,
           erNytt: true,
-          type: 'ARBEIDSTAKER',
+          type: 'AT',
         },
       ],
       500000,
@@ -659,12 +661,7 @@ export const inntektsgraderingFlereArbeidsgivere = {
  * @example
  * ```typescript
  * // Uløst overlappende periode
- * const periode = lagOverlappendePeriode(
- *   '2024-01-01',
- *   '2024-01-15',
- *   ['SAK123', 'SAK456'],
- *   { skalVurderes: true }
- * );
+ * const periode = lagOverlappendePeriode('2024-01-01', '2024-01-15', ['SAK123', 'SAK456']);
  *
  * // Løst overlappende periode
  * const løstPeriode = lagOverlappendePeriode(
@@ -672,11 +669,10 @@ export const inntektsgraderingFlereArbeidsgivere = {
  *   '2024-01-31',
  *   ['SAK123', 'SAK456'],
  *   {
- *     skalVurderes: false,
  *     fastsattUttaksgrad: 50,
  *     saksbehandler: 'Z123456',
  *     vurdertTidspunkt: '2024-01-10T10:00:00',
- *     valg: 'VELG_SAK_123'
+ *     valg: 'JUSTERT_GRAD',
  *   }
  * );
  * ```
@@ -684,8 +680,7 @@ export const inntektsgraderingFlereArbeidsgivere = {
  * @param fom - Start-dato (ISO-format YYYY-MM-DD eller dayjs-objekt)
  * @param tom - Slutt-dato (ISO-format YYYY-MM-DD eller dayjs-objekt)
  * @param saksnummer - Array av saksnummer som overlapper (kopieres for immutability)
- * @param options - Valgfrie tilleggsfelt
- * @param options.skalVurderes - Om perioden skal vurderes (default: true)
+ * @param options - Valgfrie tilleggsfelt for løste perioder
  * @param options.fastsattUttaksgrad - Fastsatt uttaksgrad etter vurdering (0-100)
  * @param options.saksbehandler - Saksbehandler som har vurdert perioden
  * @param options.vurdertTidspunkt - Tidspunkt for vurdering (ISO-format)
@@ -697,11 +692,10 @@ export const lagOverlappendePeriode = (
   tom: string | dayjs.Dayjs,
   saksnummer: string[],
   options: {
-    skalVurderes?: boolean;
     fastsattUttaksgrad?: number;
     saksbehandler?: string;
     vurdertTidspunkt?: string;
-    valg?: string;
+    valg?: EgneOverlappendeSakerValg;
   } = {},
 ) => {
   const fomStr = typeof fom === 'string' ? fom : fom.format('YYYY-MM-DD');
@@ -709,7 +703,6 @@ export const lagOverlappendePeriode = (
 
   return {
     periode: { fom: fomStr, tom: tomStr },
-    skalVurderes: options.skalVurderes ?? true,
     saksnummer: [...saksnummer], // Kopier array for immutability
     ...(options.fastsattUttaksgrad !== undefined && {
       fastsattUttaksgrad: options.fastsattUttaksgrad,
