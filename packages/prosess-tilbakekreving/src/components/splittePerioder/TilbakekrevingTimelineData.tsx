@@ -14,7 +14,7 @@ type OwnProps = {
   beregnBelop: (data: any) => Promise<any>;
 };
 
-export const TilbakekrevingTimelineData = ({
+const TilbakekrevingTimelineData = ({
   periode,
   callbackForward,
   callbackBackward,

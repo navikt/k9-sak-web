@@ -156,6 +156,10 @@ describe('<BehandlingSupportIndex>', () => {
     arbeidsgivere: {},
   };
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal vise godkjennings-panelet', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});

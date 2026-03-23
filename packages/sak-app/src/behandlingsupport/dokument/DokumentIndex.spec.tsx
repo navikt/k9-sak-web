@@ -46,6 +46,10 @@ describe('<DokumentIndex>', () => {
     dekningsgrad: 100,
   } as FagsakDto;
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);
 

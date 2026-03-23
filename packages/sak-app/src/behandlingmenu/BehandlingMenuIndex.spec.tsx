@@ -72,6 +72,10 @@ vi.mock('react-router', async () => {
 });
 
 describe('BehandlingMenuIndex', () => {
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});

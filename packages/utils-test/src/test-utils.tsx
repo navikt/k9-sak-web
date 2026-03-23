@@ -6,8 +6,6 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { reducer, reduxForm } from 'redux-form';
 import defaultMessages from '@k9-sak-web/behandling-felles/src/i18n/globalMessages.json';
-export { default as messages } from '@k9-sak-web/behandling-felles/src/i18n/globalMessages.json';
-
 const intlErrorHandler = error => {
   if (error.code === 'MISSING_TRANSLATION') {
     return;

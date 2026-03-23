@@ -11,16 +11,15 @@
     "@fpsak-frontend/prosess-avregning": "1.0.0",
     "@fpsak-frontend/prosess-tilkjent-ytelse": "1.0.0",
     "@fpsak-frontend/prosess-vedtak": "1.0.0",
-    "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "12.6.10",
-    "@navikt/ft-prosess-beregningsgrunnlag": "11.7.10",
+    "@navikt/ft-fakta-beregning": "12.6.15",
+    "@navikt/ft-prosess-beregningsgrunnlag": "11.7.15",
     "react": "19.2.4",
-    "react-intl": "8.1.1"
+    "react-intl": "8.1.3"
   }
 }

@@ -84,7 +84,7 @@ type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions & W
  * som har samme navn i GUI og PropTypen blir fylt inn 'automatisk', mens andre variabler som
  * ikke er med i PropTypen må håndteres f.eks. i UpdateArbeidsforhold metoden.
  */
-export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
+class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
   static buildInitialValues = (arbeidsforhold: ArbeidsforholdV2[]) => ({
     arbeidsforhold,
   });

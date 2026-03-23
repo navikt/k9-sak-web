@@ -14,8 +14,8 @@ import { HGrid } from '@navikt/ds-react';
 import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
 import styles from './tilbakekrevingTimeline.module.css';
 
-export const GODKJENT_CLASSNAME = 'godkjentPeriode';
-export const AVVIST_CLASSNAME = 'avvistPeriode';
+const GODKJENT_CLASSNAME = 'godkjentPeriode';
+const AVVIST_CLASSNAME = 'avvistPeriode';
 
 type Periode = {
   className?: string;

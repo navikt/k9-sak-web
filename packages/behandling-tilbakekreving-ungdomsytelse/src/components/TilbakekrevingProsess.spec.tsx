@@ -111,6 +111,10 @@ describe('<TilbakekrevingProsess>', () => {
     },
   };
 
+  afterEach(() => {
+    requestTilbakekrevingApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
@@ -145,6 +149,10 @@ describe('<TilbakekrevingProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
+      perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
+    });
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
 
     renderWithIntlAndReduxForm(
