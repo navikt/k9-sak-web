@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form';
 
 interface FormValues {
   begrunnelse: string | null;
-  erNyoppstartet: boolean | null;
+  erNyoppstartet: boolean | undefined;
   fom: string | null;
 }
 

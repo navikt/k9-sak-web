@@ -50,7 +50,6 @@ const AldersVilkarAP = ({
     return (
       <AksjonspunktBox erAksjonspunktApent={redigering}>
         <AldersvilkarForm
-          relevantAksjonspunkt={relevantAksjonspunkt}
           submitCallback={submitCallback}
           begrunnelseTekst={begrunnelseTekst}
           erVilkaretOk={vilkarOppfylt}

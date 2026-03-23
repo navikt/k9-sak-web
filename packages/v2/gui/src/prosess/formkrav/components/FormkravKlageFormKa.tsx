@@ -117,10 +117,10 @@ const buildInitialValues = (
   return {
     vedtak: klageFormkavResultatKa ? getPaklagdVedtak(klageFormkavResultatKa, avsluttedeBehandlinger) : '',
     begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
-    erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : null,
-    erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,
-    erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
-    erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
+    erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : undefined,
+    erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : undefined,
+    erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : undefined,
+    erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : undefined,
     valgtPartMedKlagerett: valgtPartMedKlagerett?.identifikasjon?.id,
   };
 };
