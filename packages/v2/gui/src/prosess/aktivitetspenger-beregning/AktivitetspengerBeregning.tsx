@@ -27,7 +27,7 @@ interface Props {
 const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid],
-    queryFn: () => api.getBeregningsgrunnnlag(behandling.uuid),
+    queryFn: () => api.getBeregningsgrunnlag(behandling.uuid),
   });
 
   if (isLoading) {

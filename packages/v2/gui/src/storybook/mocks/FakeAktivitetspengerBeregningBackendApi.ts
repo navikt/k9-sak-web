@@ -3,7 +3,7 @@ import type { AktivitetspengerBeregningBackendApiType } from '../../prosess/akti
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
 export class FakeAktivitetspengerBeregningBackendApi implements AktivitetspengerBeregningBackendApiType {
-  async getBeregningsgrunnnlag(uuid: string): Promise<BeregningsgrunnlagDto> {
+  async getBeregningsgrunnlag(uuid: string): Promise<BeregningsgrunnlagDto> {
     ignoreUnusedDeclared(uuid);
     return {
       skjæringstidspunkt: '2026-03-17',
