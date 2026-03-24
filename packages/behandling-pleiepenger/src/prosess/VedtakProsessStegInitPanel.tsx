@@ -111,7 +111,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeBehandlet />;
   }
 
-  if (!beregningsgrunnlag || !simuleringResultat || !tilbakekrevingvalg || !overlappendeYtelser) {
+  if (!beregningsgrunnlag || !tilbakekrevingvalg || !overlappendeYtelser) {
     return null;
   }
 
