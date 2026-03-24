@@ -257,11 +257,11 @@ export const beregnVedtakType = (
   );
   const vedtakAksjonspunkterSet = new Set(vedtakAksjonspunkter);
   const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
-    ap => vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+    ap => ap.definisjon && vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
   const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
-    ap => !vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+    ap => ap.definisjon && !vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
   if (harIkkeVurdertVilkar || harApenOverstyringBeregning || harÅpneIkkeVedtakAksjonspunkter) {
