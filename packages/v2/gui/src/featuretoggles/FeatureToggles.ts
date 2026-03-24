@@ -9,8 +9,6 @@ const rootFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
   FLYTT_ALDERSVILKAR: false,
-  LOS_MARKER_BEHANDLING_SUBMIT: false,
-  MARKERING_UTENLANDSTILSNITT: false,
   NYE_NOKKELTALL: false,
   OVERSTYR_BEREGNING: false,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
@@ -33,7 +31,6 @@ const rootFeatureToggles = {
 const baseQFeatureToggles = {
   isFor: 'Q',
   BRUK_V2_TILKJENT_YTELSE: true,
-  LOS_MARKER_BEHANDLING_SUBMIT: true,
   UNNTAKSBEHANDLING: true,
   VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,

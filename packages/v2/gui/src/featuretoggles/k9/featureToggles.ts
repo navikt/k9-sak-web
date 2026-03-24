@@ -11,7 +11,6 @@ const k9SpecificFeatureToggles = {
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_INNTEKTSMELDING: true,
   SKJUL_PROSESS_MENY_V2_VELGER: true,
-  MARKERING_UTENLANDSTILSNITT: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
