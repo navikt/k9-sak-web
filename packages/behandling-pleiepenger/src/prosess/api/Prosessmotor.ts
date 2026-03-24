@@ -255,12 +255,13 @@ export const beregnVedtakType = (
     ap =>
       ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
   );
+  const vedtakAksjonspunkterSet = new Set(vedtakAksjonspunkter);
   const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
-    ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+    ap => vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
   const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
-    ap => !vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+    ap => !vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
   if (harIkkeVurdertVilkar || harApenOverstyringBeregning || harÅpneIkkeVedtakAksjonspunkter) {

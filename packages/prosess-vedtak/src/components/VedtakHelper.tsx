@@ -26,9 +26,9 @@ const erTilbakekrevingType = (type: string | undefined | { kode: string }) => {
 const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
   simuleringResultat: VedtakSimuleringResultat | null,
-) =>
+): boolean =>
   tilbakekrevingKode === TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING &&
-  (simuleringResultat?.simuleringResultat?.sumInntrekk || simuleringResultat?.simuleringResultatUtenInntrekk);
+  !!(simuleringResultat?.simuleringResultat?.sumInntrekk || simuleringResultat?.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = (props: {
   simuleringResultat: VedtakSimuleringResultat | null;
