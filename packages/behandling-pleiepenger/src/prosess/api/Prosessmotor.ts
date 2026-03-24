@@ -255,14 +255,18 @@ export const beregnVedtakType = (
     ap =>
       ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
   );
-  const harÅpneAksjonspunkter = aksjonspunkter?.some(
+  const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
     ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
-  if (harIkkeVurdertVilkar || harApenOverstyringBeregning) {
+  const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => !vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  if (harIkkeVurdertVilkar || harApenOverstyringBeregning || harÅpneIkkeVedtakAksjonspunkter) {
     return ProcessMenuStepType.default;
   }
-  if (harÅpneAksjonspunkter) {
+  if (harÅpneVedtakAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {
