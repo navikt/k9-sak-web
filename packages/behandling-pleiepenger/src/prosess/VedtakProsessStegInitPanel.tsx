@@ -99,12 +99,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
     );
   }, [aksjonspunkter]);
 
-  if (
-    !erValgt ||
-    restApiData.state === RestApiState.NOT_STARTED ||
-    restApiData.state === RestApiState.LOADING ||
-    !restApiData.data?.tilgjengeligeVedtaksbrev
-  ) {
+  if (!erValgt || restApiData.state === RestApiState.NOT_STARTED || restApiData.state === RestApiState.LOADING) {
     return null;
   }
   if (!erTilBehandlingEllerBehandlet) {
