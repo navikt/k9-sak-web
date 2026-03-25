@@ -100,7 +100,6 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
         aksjonspunkter={relevanteAksjonspunkter}
         opptjening={opptjeningV2}
         visAllePerioder={props.visAllePerioder}
-        readOnlySubmitButton={false}
         vilkar={vilkårForSteg}
         lovReferanse={vilkårForSteg[0].lovReferanse}
         isAksjonspunktOpen={isAksjonspunktOpen}
