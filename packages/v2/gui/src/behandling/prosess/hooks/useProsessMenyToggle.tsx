@@ -1,6 +1,5 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { ClockDashedIcon, SparklesIcon } from '@navikt/aksel-icons';
-import { HStack, Label, Switch } from '@navikt/ds-react';
+import { HStack, Switch } from '@navikt/ds-react';
 import { use, useCallback, useState } from 'react';
 
 interface UseProsessMenyToggleResult {
@@ -55,17 +54,12 @@ export function useProsessMenyToggle(): UseProsessMenyToggleResult {
           borderRadius: '8px',
           margin: '8px',
           border: '1px solid',
-          paddingTop: '6px',
           backgroundColor: '#ffdea5',
           cursor: 'pointer',
         }}
-        onClick={toggleMenu}
       >
-        <Label>
-          <ClockDashedIcon title="Legacy meny" fontSize="1.4rem" />
-        </Label>
         <Switch size="small" checked={useV2Menu} onChange={toggleMenu}>
-          <SparklesIcon title="v2 meny" fontSize="1.4rem" />
+          Vis ny versjon av prosessmeny
         </Switch>
       </HStack>
     ) : null;

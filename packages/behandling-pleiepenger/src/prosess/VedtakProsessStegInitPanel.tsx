@@ -99,14 +99,21 @@ export function VedtakProsessStegInitPanel(props: Props) {
     );
   }, [aksjonspunkter]);
 
-  if (!erTilBehandlingEllerBehandlet) {
-    return <ProsessStegIkkeBehandlet />;
-  }
-  if (!erValgt || restApiData.state === RestApiState.NOT_STARTED || restApiData.state === RestApiState.LOADING) {
+  if (!erValgt) {
     return null;
   }
 
-  if (!beregningsgrunnlag || !tilbakekrevingvalg || !overlappendeYtelser) {
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (
+    restApiData.state === RestApiState.NOT_STARTED ||
+    restApiData.state === RestApiState.LOADING ||
+    !beregningsgrunnlag ||
+    !tilbakekrevingvalg ||
+    !overlappendeYtelser
+  ) {
     return null;
   }
 
