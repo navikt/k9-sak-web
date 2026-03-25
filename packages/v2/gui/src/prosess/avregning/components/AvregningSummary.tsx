@@ -1,6 +1,5 @@
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
-import { formatPeriod } from '../../../utils/formatters';
-import { formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatCurrencyWithoutKr, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { isUngWeb } from '../../../utils/urlUtils';
 import type { DetaljertSimuleringResultatDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/DetaljertSimuleringResultatDto.js';
 
