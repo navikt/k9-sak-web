@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
+import { ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
 export const TIDENES_ENDE = '9999-12-31';
@@ -229,9 +229,6 @@ export const calcDaysAndWeeks = (fraDatoPeriode?: string, tilDatoPeriode?: strin
   return checkDays(weeks, days);
 };
 
-export const formatPeriod = (fomDate: string, tomDate: string): string =>
-  `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
-
 export default function dateSorter(date1: dayjs.Dayjs, date2: dayjs.Dayjs) {
   if (date1.isBefore(date2)) {
     return -1;
@@ -262,10 +259,6 @@ export const splitWeeksAndDays = (weeks: number, days: number) => {
   return [secondPeriodWeeksAndDays, firstPeriodWeeksAndDays];
 };
 
-export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
-
-export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);
-
 // Skal ikke legge til dag når dato er tidenes ende
 export const addDaysToDate = (dateString: string, nrOfDays: number) =>
   dateString === TIDENES_ENDE
@@ -295,6 +288,7 @@ export const getRangeOfMonths = (fom: string, tom: string) => {
   const range = [
     {
       month: currentMonth.format('MMMM'),
+      shortMonth: currentMonth.format('MMM'),
       year: currentMonth.format('YY'),
     },
   ];
@@ -303,6 +297,7 @@ export const getRangeOfMonths = (fom: string, tom: string) => {
     currentMonth = currentMonth.add(1, 'month');
     range.push({
       month: currentMonth.format('MMMM'),
+      shortMonth: currentMonth.format('MMM'),
       year: currentMonth.format('YY'),
     });
   }
@@ -337,13 +332,4 @@ export const checkForOverlap = (
     // Check if periods overlap: current period starts before other ends AND current period ends after other starts
     return currentStart.isSameOrBefore(otherEnd) && currentEnd.isSameOrAfter(otherStart);
   });
-};
-
-// Eksempel på lukket periode fra Årskvantum: 2022-02-07/2022-02-08
-export const formatereLukketPeriode = (periode: string): string => {
-  const [fom, tom] = periode.split('/');
-  if (!fom || !tom) {
-    return periode;
-  }
-  return `${formatDate(fom)} - ${formatDate(tom)}`;
 };

@@ -11,7 +11,6 @@ const k9SpecificFeatureToggles = {
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_INNTEKTSMELDING: true,
   SKJUL_PROSESS_MENY_V2_VELGER: true,
-  MARKERING_UTENLANDSTILSNITT: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
@@ -25,6 +24,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
+  BRUK_V2_AVREGNING: true,
 });
 
 /**

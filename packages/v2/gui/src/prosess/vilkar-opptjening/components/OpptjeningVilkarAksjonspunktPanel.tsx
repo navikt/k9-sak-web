@@ -63,7 +63,6 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   lovReferanse?: string;
   fagsakType?: FagsakYtelsesType;
   readOnly: boolean;
-  readOnlySubmitButton: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
   activePeriode: VilkårPeriodeDto;
   vilkårPerioder: VilkårPeriodeDto[];
@@ -82,7 +81,6 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
   lovReferanse,
   fagsakType,
   readOnly,
-  readOnlySubmitButton,
   aksjonspunkter,
   activePeriode,
   vilkårPerioder,
@@ -168,7 +166,6 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
         title="Opptjening"
         isAksjonspunktOpen={skalKunneEndreOpptjening}
         isDirty={formMethods.formState.isDirty}
-        readOnlySubmitButton={readOnlySubmitButton || !field?.vurderesIBehandlingen}
         readOnly={readOnly || !field?.vurderesIBehandlingen}
         originalErVilkarOk={field?.kode === 'OPPFYLT'}
         aksjonspunktErLøst={aksjonspunktErLøst}

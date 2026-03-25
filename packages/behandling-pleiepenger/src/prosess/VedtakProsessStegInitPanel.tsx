@@ -82,21 +82,15 @@ export function VedtakProsessStegInitPanel(props: Props) {
     informasjonsbehovVedtaksbrev: any;
     dokumentdataHente: any;
     fritekstdokumenter: any;
+    tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }>(
     [
       { key: PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV },
       { key: PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE },
       { key: PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER },
+      { key: PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV },
     ],
-    { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
-  );
-
-  const { data: tilgjengeligeVedtaksbrev } = restApiPleiepengerHooks.useRestApi<TilgjengeligeVedtaksbrev>(
-    PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    undefined,
-    {
-      updateTriggers: [props.behandling.versjon],
-    },
+    { keepData: true, suspendRequest: !erTilBehandlingEllerBehandlet, updateTriggers: [props.behandling.versjon] },
   );
 
   const vedtakAksjonspunkter = useMemo(() => {
@@ -105,19 +99,14 @@ export function VedtakProsessStegInitPanel(props: Props) {
     );
   }, [aksjonspunkter]);
 
-  if (
-    !erValgt ||
-    restApiData.state === RestApiState.NOT_STARTED ||
-    restApiData.state === RestApiState.LOADING ||
-    !tilgjengeligeVedtaksbrev
-  ) {
-    return null;
-  }
   if (!erTilBehandlingEllerBehandlet) {
     return <ProsessStegIkkeBehandlet />;
   }
+  if (!erValgt || restApiData.state === RestApiState.NOT_STARTED || restApiData.state === RestApiState.LOADING) {
+    return null;
+  }
 
-  if (!beregningsgrunnlag || !simuleringResultat || !tilbakekrevingvalg || !overlappendeYtelser) {
+  if (!beregningsgrunnlag || !tilbakekrevingvalg || !overlappendeYtelser) {
     return null;
   }
 
@@ -150,7 +139,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       previewCallback={props.previewCallback}
       overlappendeYtelser={overlappendeYtelser}
       personopplysninger={personopplysninger}
-      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
     />
   );
 }
