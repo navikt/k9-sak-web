@@ -55,7 +55,6 @@ export function useProsessMenyToggle(): UseProsessMenyToggleResult {
           margin: '8px',
           border: '1px solid',
           backgroundColor: '#ffdea5',
-          cursor: 'pointer',
         }}
       >
         <Switch size="small" checked={useV2Menu} onChange={toggleMenu}>
