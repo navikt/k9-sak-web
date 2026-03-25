@@ -1,9 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
@@ -12,6 +12,9 @@ import { Heading } from '@navikt/ds-react';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import type { FeriepengerPrÅr } from './feriepenger/FeriepengerPanel';
+import FeriepengerPanel from './feriepenger/FeriepengerPanel';
 
 const perioderMedClassName = [];
 
@@ -48,6 +51,8 @@ interface PureOwnProps {
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
   isUngdomsytelseFagsak: boolean;
+  featureToggles?: FeatureToggles;
+  feriepengerPrÅr?: FeriepengerPrÅr;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -58,6 +63,8 @@ const TilkjentYtelsePanelImpl = ({
   readOnly,
   arbeidsgiverOpplysningerPerId,
   isUngdomsytelseFagsak,
+  featureToggles,
+  feriepengerPrÅr,
 }: Partial<PureOwnProps>) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -77,6 +84,15 @@ const TilkjentYtelsePanelImpl = ({
           kodeverkNavnFraKode={kodeverkNavnFraKode}
           isUngdomsytelseFagsak={isUngdomsytelseFagsak}
         />
+      )}
+
+      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr && feriepengerPrÅr.size > 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <FeriepengerPanel
+            feriepengerPrÅr={feriepengerPrÅr}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId ?? {}}
+          />
+        </div>
       )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (

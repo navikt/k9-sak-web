@@ -9,6 +9,7 @@ import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
+  k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
@@ -156,6 +157,40 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
+const feriepengerAndeler2023: FeriepengegrunnlagAndel[] = [
+  {
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '12345678',
+    arbeidsforholdId: null,
+    erBrukerMottaker: false,
+    opptjeningsår: 2023,
+    årsbeløp: 1900,
+  },
+  {
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '12345678',
+    arbeidsforholdId: null,
+    erBrukerMottaker: true,
+    opptjeningsår: 2023,
+    årsbeløp: 5100,
+  },
+];
+
+const feriepengerAndeler2024: FeriepengegrunnlagAndel[] = [
+  {
+    aktivitetStatus: 'FL',
+    arbeidsgiverId: null,
+    arbeidsforholdId: null,
+    erBrukerMottaker: true,
+    opptjeningsår: 2024,
+    årsbeløp: 7200,
+  },
+];
+
+const feriepengerPrÅr = new Map<number, FeriepengegrunnlagAndel[]>();
+feriepengerPrÅr.set(2023, feriepengerAndeler2023);
+feriepengerPrÅr.set(2024, feriepengerAndeler2024);
+
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
@@ -232,5 +267,31 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
 visÅpentAksjonspunktManuellTilkjentYtelse.args = {
   behandling,
   isReadOnly: false,
+  readOnlySubmitButton: true,
+};
+
+export const visMedFeriepengerPanel = args => (
+  <KodeverkProvider
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+    kodeverk={alleKodeverk}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <TilkjentYtelseProsessIndex
+      beregningsresultat={beregningsresultat}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      fagsak={fagsak}
+      featureToggles={{ VIS_FERIEPENGER_PANEL: true } as any}
+      feriepengerPrÅr={feriepengerPrÅr}
+      {...args}
+    />
+  </KodeverkProvider>
+);
+
+visMedFeriepengerPanel.args = {
+  behandling,
+  isReadOnly: true,
   readOnlySubmitButton: true,
 };

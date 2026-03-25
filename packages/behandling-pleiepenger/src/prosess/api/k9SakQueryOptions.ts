@@ -1,6 +1,7 @@
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { queryOptions } from '@tanstack/react-query';
 import { K9SakProsessApi } from './K9SakProsessApi';
+import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 interface Behandling {
   uuid: string;
@@ -85,7 +86,11 @@ export const overlappendeYtelserQueryOptions = (api: K9SakProsessApi, behandling
     queryFn: () => (enabled ? api.getOverlappendeYtelser(behandling.uuid) : null),
   });
 
-export const beregningreferanserTilVurderingQueryOptions = (api: K9SakProsessApi, behandling: Behandling, enabled = true) =>
+export const beregningreferanserTilVurderingQueryOptions = (
+  api: K9SakProsessApi,
+  behandling: Behandling,
+  enabled = true,
+) =>
   queryOptions({
     queryKey: ['beregningreferanserTilVurdering', behandling.uuid, behandling.versjon, enabled],
     queryFn: () => (enabled ? api.getBeregningreferanserTilVurdering(behandling.uuid) : null),
@@ -107,4 +112,20 @@ export const opptjeningQueryOptions = (api: K9SakProsessApi, behandling: Behandl
   queryOptions({
     queryKey: ['opptjening', behandling.uuid, behandling.versjon],
     queryFn: () => api.getOpptjening(behandling.uuid),
+  });
+
+export const feriepengegrunnlagQueryOptions = (api: K9SakProsessApi, behandling: Behandling, enabled = true) =>
+  queryOptions({
+    queryKey: ['feriepengegrunnlag', behandling.uuid, behandling.versjon, enabled],
+    queryFn: () => (enabled ? api.getFeriepengegrunnlag(behandling.uuid) : null),
+    select: data => {
+      const result = new Map<number, k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto[]>();
+      if (!data) return result;
+      for (const andel of data.andeler) {
+        const year = andel.opptjeningsår;
+        if (!result.has(year)) result.set(year, []);
+        result.get(year)!.push(andel);
+      }
+      return result;
+    },
   });

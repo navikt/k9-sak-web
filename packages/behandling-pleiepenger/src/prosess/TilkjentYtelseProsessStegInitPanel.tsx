@@ -18,6 +18,7 @@ import {
   aksjonspunkterQueryOptions,
   arbeidsgiverOpplysningerQueryOptions,
   beregningsresultatUtbetalingQueryOptions,
+  feriepengegrunnlagQueryOptions,
   personopplysningerQueryOptions,
 } from './api/k9SakQueryOptions';
 
@@ -48,7 +49,8 @@ interface Props {
 }
 
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
-  const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
+  const featureToggles = use(FeatureTogglesContext);
+  const { BRUK_V2_TILKJENT_YTELSE, VIS_FERIEPENGER_PANEL } = featureToggles;
   const prosessPanelContext = useContext(ProsessPanelContext);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
@@ -59,6 +61,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     { data: aksjonspunkter },
     { data: arbeidsgiverOpplysningerPerId },
     { data: beregningsresultatUtbetaling },
+    { data: feriepengerPrÅr },
   ] = useSuspenseQueries({
     queries: [
       personopplysningerQueryOptions(props.api, props.behandling),
@@ -67,6 +70,11 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       ]),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
       beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      feriepengegrunnlagQueryOptions(
+        props.api,
+        props.behandling,
+        erTilBehandlingEllerBehandlet && VIS_FERIEPENGER_PANEL && !BRUK_V2_TILKJENT_YTELSE,
+      ),
     ],
   });
 
@@ -112,6 +120,8 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       isReadOnly={props.isReadOnly}
       submitCallback={handleSubmit}
       readOnlySubmitButton={readOnlySubmitButton}
+      featureToggles={featureToggles}
+      feriepengerPrÅr={feriepengerPrÅr ?? new Map()}
     />
   );
 }
