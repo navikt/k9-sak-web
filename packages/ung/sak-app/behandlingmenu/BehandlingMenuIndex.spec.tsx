@@ -81,6 +81,10 @@ const queryClient = new QueryClient({
 });
 
 describe('BehandlingMenuIndex', () => {
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);

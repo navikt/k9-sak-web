@@ -21,11 +21,11 @@ const k9SpecificFeatureToggles = {
  * NB: Sett verdier i baseQFeatureToggles istadenfor viss verdien ikkje må vere spesifikk for k9
  */
 export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
-  MARKERING_UTENLANDSTILSNITT: true,
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_VILKAR_OPPTJENING: true,
   BRUK_V2_AVREGNING: true,
+  PROSESS_MENY_V2: true,
 });
 
 /**

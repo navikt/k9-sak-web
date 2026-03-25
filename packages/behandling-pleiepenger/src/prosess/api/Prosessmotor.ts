@@ -139,7 +139,7 @@ interface ProcessMenuStep {
  * @param id - Unik ID for panelet
  * @returns Panelobjekt med status og metadata
  */
-export const byggVilkårPanel = (
+const byggVilkårPanel = (
   skalVisePanel: boolean | undefined,
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   panelKonfig: { vilkår: readonly string[]; aksjonspunkter: readonly string[]; label: string; id: string },
@@ -160,7 +160,7 @@ export const byggVilkårPanel = (
 // Hjelpefunksjon for å beregne uttak-status
 export const beregnUttakType = (
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
+  uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder | null,
   uttakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   const harApenAksjonspunkt = aksjonspunkter?.some(
@@ -187,11 +187,15 @@ export const beregnUttakType = (
 
 // Hjelpefunksjon for å beregne tilkjent ytelse-status
 export const beregnTilkjentYtelseType = (
-  beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+  beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto | null,
   panelKonfig: { aksjonspunkter: readonly string[] },
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
 ): ProcessMenuStepType => {
-  if (!beregningsresultatUtbetaling.perioder || beregningsresultatUtbetaling.perioder.length === 0) {
+  if (
+    !beregningsresultatUtbetaling ||
+    !beregningsresultatUtbetaling.perioder ||
+    beregningsresultatUtbetaling.perioder.length === 0
+  ) {
     return ProcessMenuStepType.default;
   }
   const type = finnPanelStatus(true, [], aksjonspunkter, panelKonfig.aksjonspunkter);
@@ -204,7 +208,7 @@ export const beregnTilkjentYtelseType = (
 // Hjelpefunksjon for å beregne simulering-status
 export const beregnSimuleringType = (
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  simuleringResultat: k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
+  simuleringResultat: k9_oppdrag_kontrakt_simulering_v1_SimuleringDto | null,
   simuleringAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   const harApentAksjonspunkt = aksjonspunkter.some(
@@ -251,14 +255,19 @@ export const beregnVedtakType = (
     ap =>
       ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
   );
-  const harÅpneAksjonspunkter = aksjonspunkter?.some(
-    ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  const vedtakAksjonspunkterSet = new Set(vedtakAksjonspunkter);
+  const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => ap.definisjon && vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
-  if (harIkkeVurdertVilkar || harApenOverstyringBeregning) {
+  const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => ap.definisjon && !vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  if (harIkkeVurdertVilkar || harApenOverstyringBeregning || harÅpneIkkeVedtakAksjonspunkter) {
     return ProcessMenuStepType.default;
   }
-  if (harÅpneAksjonspunkter) {
+  if (harÅpneVedtakAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {

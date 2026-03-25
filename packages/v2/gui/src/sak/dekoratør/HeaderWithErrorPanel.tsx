@@ -13,7 +13,9 @@ const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const isInDevelopmentModeOrTestEnvironment = () =>
   isRunningOnLocalhost() ||
   window.location.hostname === 'k9.dev.intern.nav.no' ||
-  window.location.hostname === 'ung.intern.dev.nav.no';
+  window.location.hostname === 'ung.intern.dev.nav.no' ||
+  window.location.hostname === 'aktivitetspenger.intern.dev.nav.no';
+
 const getHeaderTitleHref = (getPathToLos: (() => string | null) | undefined, headerTitleHref: string) => {
   if (!isRunningOnLocalhost()) {
     return getPathToLos?.() || headerTitleHref;

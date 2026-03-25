@@ -139,7 +139,13 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     },
   };
 
-  requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
+  afterEach(() => {
+    requestPleiepengerSluttfaseApi.clearAllMockData();
+  });
+
+  beforeEach(() => {
+    requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
+  });
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const fetchedData: Partial<FetchedData> = {

@@ -318,7 +318,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
   );
 };
 
-export const transformValues = (
+const transformValues = (
   values: { vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[] },
   sarligGrunnTyper: KodeverkMedNavn[],
 ) => [
@@ -400,7 +400,7 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector(
   },
 );
 
-export const buildInitialValues = createSelector(
+const buildInitialValues = createSelector(
   [slaSammenOriginaleOgLagredePeriode, (_state, ownProps: PureOwnProps) => ownProps.perioderForeldelse],
   (
     perioder,
