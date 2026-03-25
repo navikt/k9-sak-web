@@ -1,7 +1,8 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { Button, Radio, ReadMore, VStack } from '@navikt/ds-react';
+import { Box, Button, Heading, Radio, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface Props {
@@ -15,6 +16,7 @@ interface FormData {
 }
 
 export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly }: Props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<FormData>({
     defaultValues: {
       erGodkjent: '',
@@ -22,6 +24,7 @@ export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly 
   });
 
   const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
     const erGodkjent = data.erGodkjent === 'true';
     const aksjonspunktKode = aksjonspunkt.definisjon ?? '';
     const payload = {
@@ -29,28 +32,37 @@ export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly 
       begrunnelse: erGodkjent ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
       erGodkjent,
     };
-
-    await submitCallback([payload], [aksjonspunkt]);
+    try {
+      await submitCallback([payload], [aksjonspunkt]);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
-      <VStack gap="space-24">
-        <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>
-        <RhfRadioGroup
-          control={formMethods.control}
-          name="erGodkjent"
-          legend="Er forutgående medlemskap godkjent?"
-          validate={[required]}
-          disabled={readOnly}
-        >
-          <Radio value="true">Ja</Radio>
-          <Radio value="false">Nei</Radio>
-        </RhfRadioGroup>
-        <Button type="submit" size="small" disabled={readOnly}>
-          Bekreft og fortsett
-        </Button>
-      </VStack>
-    </RhfForm>
+    <Box width="fit-content">
+      <Heading size="medium" level="1" spacing>
+        Medlemskap
+      </Heading>
+
+      <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
+        <VStack gap="space-16">
+          <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>
+          <RhfRadioGroup
+            control={formMethods.control}
+            name="erGodkjent"
+            legend="Er forutgående medlemskap godkjent?"
+            validate={[required]}
+            disabled={readOnly}
+          >
+            <Radio value="true">Ja</Radio>
+            <Radio value="false">Nei</Radio>
+          </RhfRadioGroup>
+          <Button type="submit" size="small" disabled={readOnly} loading={isSubmitting}>
+            Bekreft og fortsett
+          </Button>
+        </VStack>
+      </RhfForm>
+    </Box>
   );
 };

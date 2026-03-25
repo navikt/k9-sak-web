@@ -1,13 +1,13 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import {
-  ung_kodeverk_vilkår_Utfall,
-  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
@@ -15,8 +15,9 @@ import { UngSakApi } from '../data/UngSakApi';
 import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../data/ungSakQueryOptions';
 
 const PROSESS_STEG_KODER = {
-  VEDTAK: 'vedtak',
-  BEREGNING: 'beregning',
+  MEDLEMSKAP: prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP,
+  VEDTAK: prosessStegCodes.VEDTAK,
+  BEREGNING: prosessStegCodes.BEREGNING,
 } as const;
 
 const PANEL_KONFIG = {
@@ -38,11 +39,60 @@ const PANEL_KONFIG = {
     id: PROSESS_STEG_KODER.BEREGNING,
     label: 'Beregning',
   },
+  medlemskap: {
+    aksjonspunkter: [AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE],
+    id: PROSESS_STEG_KODER.MEDLEMSKAP,
+    label: 'Medlemskap',
+    vilkår: [vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET],
+  },
 } as const;
 
+const erPanelVurdert = (panelType: ProcessMenuStepType): boolean => {
+  return panelType === ProcessMenuStepType.success || panelType === ProcessMenuStepType.danger;
+};
+
+interface ProcessMenuStep {
+  id: string;
+  label: string;
+  type: ProcessMenuStepType;
+  usePartialStatus?: boolean;
+  erVurdert?: boolean;
+  urlKode?: string;
+}
+
+/**
+ * Bygger et vilkårbasert panel for prosessmenyen.
+ *
+ * @param skalVisePanel - Om forrige panel er ferdig vurdert
+ * @param vilkår - Alle vilkår for behandlingen
+ * @param panelKonfig - Konfigurasjon med relevante vilkår og aksjonspunkter
+ * @param aksjonspunkter - Alle aksjonspunkter for behandlingen
+ * @param label - Paneltittel
+ * @param id - Unik ID for panelet
+ * @returns Panelobjekt med status og metadata
+ */
+const byggVilkårPanel = (
+  skalVisePanel: boolean | undefined,
+  vilkår: VilkårMedPerioderDto[],
+  panelKonfig: { vilkår: readonly string[]; aksjonspunkter: readonly string[]; label: string; id: string },
+  aksjonspunkter: AksjonspunktDto[],
+): ProcessMenuStep => {
+  const relevanteVilkår = vilkår.filter(v => panelKonfig.vilkår.includes(v.vilkarType));
+  const type = finnPanelStatus(!!skalVisePanel, relevanteVilkår, aksjonspunkter, panelKonfig.aksjonspunkter);
+
+  return {
+    type,
+    label: panelKonfig.label,
+    id: panelKonfig.id,
+    usePartialStatus: sjekkDelvisVilkårStatus(relevanteVilkår),
+    erVurdert: erPanelVurdert(type),
+    urlKode: panelKonfig.id,
+  };
+};
+
 const beregnVedtakType = (
-  vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
-  aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
+  aksjonspunkter: AksjonspunktDto[],
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat'>,
   vedtakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
@@ -51,7 +101,7 @@ const beregnVedtakType = (
   }
 
   const harIkkeVurdertVilkar = vilkår.some(v =>
-    v.perioder?.some(periode => periode.vilkarStatus === ung_kodeverk_vilkår_Utfall.IKKE_VURDERT),
+    v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT),
   );
 
   const harÅpneAksjonspunkter = aksjonspunkter?.some(
@@ -79,6 +129,8 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
   return useMemo(() => {
+    const medlemskapPanel = byggVilkårPanel(true, vilkår, PANEL_KONFIG.medlemskap, aksjonspunkter);
+
     const beregningPanel = {
       id: PANEL_KONFIG.beregning.id,
       label: PANEL_KONFIG.beregning.label,
@@ -95,6 +147,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       urlKode: prosessStegCodes.VEDTAK,
     };
 
-    return [beregningPanel, vedtakPanel];
+    return [medlemskapPanel, beregningPanel, vedtakPanel];
   }, [vilkår, aksjonspunkter, behandling]);
 };
