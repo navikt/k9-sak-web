@@ -1,5 +1,3 @@
-import type { Aksjonspunkt } from '@k9-sak-web/types';
-
 /** @deprecated Bruk v2/backend/combined AksjonspunktDefinisjon istaden */
 const aksjonspunktCodes = {
   FORESLA_VEDTAK: '5015',
@@ -102,8 +100,5 @@ const aksjonspunktCodes = {
   VURDER_NYOPPSTARTET: '9016',
   VURDER_OVERLAPPENDE_SØSKENSAK_KODE: '9292',
 };
-
-export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
-  aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
 
 export default aksjonspunktCodes;

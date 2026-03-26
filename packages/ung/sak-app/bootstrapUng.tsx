@@ -93,13 +93,19 @@ init({
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 
 const basePath = '/ung/web';
-const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
-  // Vi må ha ein unik AuthFixer instans pr backend
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-sak'),
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-tilbake'),
-);
-configureUngSakClient(sakAuthFixer);
-configureUngTilbakeClient(tilbakeAuthFixer);
+if (featureToggles.SINGLE_AUTHFIXER) {
+  const authFixer = new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-alle');
+  configureUngSakClient(authFixer);
+  configureUngTilbakeClient(authFixer);
+} else {
+  const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+    // Vi må ha ein unik AuthFixer instans pr backend
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-sak'),
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-tilbake'),
+  );
+  configureUngSakClient(sakAuthFixer);
+  configureUngTilbakeClient(tilbakeAuthFixer);
+}
 
 const store = configureStore();
 

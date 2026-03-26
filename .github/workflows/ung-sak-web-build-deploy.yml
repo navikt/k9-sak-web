@@ -33,6 +33,9 @@ jobs:
       - name: Bygge dist
         run: yarn build:ung
 
+      - name: Bygg server
+        uses: ./.github/actions/build-server
+
       - name: Opprett release med Sentry
         run: yarn sentry-release-ung
         env:
@@ -46,8 +49,6 @@ jobs:
           without_navikt_prefix: true
           #Konfigurerer for bygging av ung docker image:
           build-args: |
-            featureToggles=ung.feature-toggles.json
-            proxyConfig=ung.proxy.nginx
             appVariant=ung
             port=9005
           labels: |
@@ -80,6 +81,7 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/dev-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
 
   deploy-prod:
@@ -135,6 +137,7 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/prod-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
         uses: actions/github-script@v8

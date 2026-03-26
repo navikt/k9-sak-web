@@ -21,7 +21,7 @@ import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 
 const cache = createIntlCache();
 
-export const årskvantumIntl = createIntl(
+const årskvantumIntl = createIntl(
   {
     locale: 'nb-NO',
     messages,

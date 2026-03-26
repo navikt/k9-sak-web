@@ -1,9 +1,9 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
@@ -27,21 +27,27 @@ interface Props {
 
 export function UttakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
-
-  const { data: behandlingV2, refetch: refetchBehandlingV2 } = useSuspenseQuery(
-    behandlingQueryOptions(props.api, props.behandling),
-  );
-  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
-  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(props.api, props.behandling));
-
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+
+  const [{ data: behandlingV2, refetch: refetchBehandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] =
+    useSuspenseQueries({
+      queries: [
+        behandlingQueryOptions(props.api, props.behandling),
+        aksjonspunkterQueryOptions(props.api, props.behandling),
+        uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      ],
+    });
 
   if (!erValgt) {
     return null;
   }
-  if (!erStegVurdert) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (!uttak) {
+    return null;
   }
 
   const relevanteAksjonspunkter = aksjonspunkter

@@ -6,7 +6,7 @@ import {
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { TilkjentYtelseProsessIndex as TilkjentYtelseProsessIndexV2 } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -51,30 +51,34 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
   const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
   const prosessPanelContext = useContext(ProsessPanelContext);
 
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+
   const [
-    { data: beregningsresultatUtbetaling },
     { data: personopplysninger },
     { data: aksjonspunkter },
     { data: arbeidsgiverOpplysningerPerId },
+    { data: beregningsresultatUtbetaling },
   ] = useSuspenseQueries({
     queries: [
-      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
       aksjonspunkterQueryOptions(props.api, props.behandling, [
         k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.VURDER_TILBAKETREKK,
       ]),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
+      beregningsresultatUtbetalingQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
   });
-
-  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   if (!erValgt) {
     return null;
   }
-  if (!erStegVurdert) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (!beregningsresultatUtbetaling) {
+    return null;
   }
 
   const handleSubmit = async (data: any) => {

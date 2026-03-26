@@ -1,5 +1,5 @@
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useCallback } from 'react';
 
@@ -30,11 +30,7 @@ export const useBekreftAksjonspunkt = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
 }: UseBekreftAksjonspunktParams) => {
   return useCallback(
-    async (
-      aksjonspunktModels: any[],
-      aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] = [],
-      skaForhindreOppdaterUrl?: boolean,
-    ) => {
+    async (aksjonspunktModels: any[], aksjonspunkter: AksjonspunktDto[] = [], skaForhindreOppdaterUrl?: boolean) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
         console.warn('Ingen aksjonspunktmodeller å bekrefte');
         return;

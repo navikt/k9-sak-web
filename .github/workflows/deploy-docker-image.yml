@@ -35,6 +35,9 @@ jobs:
       - name: Bygge dist
         run: yarn build
 
+      - name: Bygg server
+        uses: ./.github/actions/build-server
+
       - name: Opprett release med Sentry
         run: yarn sentry-release
         env:

@@ -1,12 +1,12 @@
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktDtoStatus,
-  k9_kodeverk_person_PersonstatusType as AvklartPersonstatusOrginalPersonstatus,
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  k9_kodeverk_medlem_MedlemskapDekningType as MedlemskapPerioderDtoDekningType,
-  k9_kodeverk_medlem_MedlemskapKildeType as MedlemskapPerioderDtoKildeType,
   k9_kodeverk_geografisk_AdresseType as PersonadresseDtoAdresseType,
   k9_kodeverk_geografisk_Region as PersonopplysningDtoRegion,
+  k9_kodeverk_medlem_MedlemskapDekningType as MedlemskapPerioderDtoDekningType,
+  k9_kodeverk_medlem_MedlemskapKildeType as MedlemskapPerioderDtoKildeType,
+  k9_kodeverk_person_PersonstatusType as AvklartPersonstatusOrginalPersonstatus,
   k9_kodeverk_person_SivilstandType as PersonopplysningDtoSivilstand,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
@@ -184,6 +184,26 @@ const periodeMed5023: Periode = {
 
 const medlemskapAp5020 = { ...medlemskap, perioder: [periodeMed5020] };
 const medlemskapAp5023 = { ...medlemskap, perioder: [periodeMed5023] };
+const medlemskapUtenAksjonspunktMedBegrunnelse: Medlemskap = {
+  ...medlemskap,
+  perioder: [
+    {
+      ...periodeMed5020,
+      aksjonspunkter: [],
+      begrunnelse: 'Saksbehandler har innvilget medlemskap for utenlandsk borger utenfor EØS.',
+    },
+  ],
+};
+const medlemskapUtenAksjonspunktMedPlaceholder: Medlemskap = {
+  ...medlemskap,
+  perioder: [
+    {
+      ...periodeMed5020,
+      aksjonspunkter: [],
+      begrunnelse: '---',
+    },
+  ],
+};
 
 const fagsakPerson = {};
 
@@ -401,6 +421,44 @@ export const VisPanelNårEØSBorgerOgAP5023: Story = {
       await expect(canvas.getByRole('radio', { name: 'Utenlandsk borger utenfor EØS' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Søker har oppholdsrett' })).toBeInTheDocument();
       await expect(canvas.getByRole('radio', { name: 'Søker har ikke oppholdsrett' })).toBeInTheDocument();
+    });
+  },
+};
+
+export const VisForklaringForBeslutterUtenAksjonspunkt: Story = {
+  args: {
+    aksjonspunkter: [],
+    behandling,
+    medlemskap: medlemskapUtenAksjonspunktMedBegrunnelse,
+    soknad,
+    fagsakPerson,
+    alleMerknaderFraBeslutter: {},
+    readOnly: true,
+    submittable: false,
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal vise saksbehandlers forklaring i read-only når perioden mangler aksjonspunkt', async () => {
+      await expect(
+        canvas.getByText('Saksbehandler har innvilget medlemskap for utenlandsk borger utenfor EØS.'),
+      ).toBeInTheDocument();
+    });
+  },
+};
+
+export const VisIkkePlaceholderForklaringForBeslutter: Story = {
+  args: {
+    aksjonspunkter: [],
+    behandling,
+    medlemskap: medlemskapUtenAksjonspunktMedPlaceholder,
+    soknad,
+    fagsakPerson,
+    alleMerknaderFraBeslutter: {},
+    readOnly: true,
+    submittable: false,
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal ikke vise placeholder-forklaring i read-only', async () => {
+      await expect(canvas.queryByRole('textbox', { name: 'Begrunn endringene' })).not.toBeInTheDocument();
     });
   },
 };

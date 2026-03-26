@@ -20,6 +20,7 @@ const ungSpecificFeatureToggles = {
  */
 export const qFeatureToggles = initQFeatureToggles(ungSpecificFeatureToggles)({
   ENDRE_FRIST: true,
+  AKTIVITETSPENGER: true,
   // Legg til featuretoggles for ung Q her
 });
 
@@ -32,6 +33,5 @@ export const qFeatureToggles = initQFeatureToggles(ungSpecificFeatureToggles)({
  */
 export const prodFeatureToggles = initProdFeatureToggles(ungSpecificFeatureToggles)({
   isFor: 'prod',
-  LOS_MARKER_BEHANDLING_SUBMIT: true, // Er denne relevant for ung?
   UNNTAKSBEHANDLING: true,
 });

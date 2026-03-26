@@ -103,6 +103,10 @@ describe('<UngdomsytelseProsess>', () => {
     soknad,
   };
 
+  afterEach(() => {
+    requestUngdomsytelseApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestUngdomsytelseApi.mock(UngdomsytelseBehandlingApiKeys.SOKNADSFRIST_STATUS);
     renderWithIntlAndReduxForm(

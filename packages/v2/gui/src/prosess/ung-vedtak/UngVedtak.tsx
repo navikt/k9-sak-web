@@ -1,7 +1,7 @@
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
   type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -16,6 +16,7 @@ import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
 import type { FormData } from './FormData';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 interface UngVedtakProps {
@@ -27,6 +28,7 @@ interface UngVedtakProps {
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
   refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValgResponse, Error>>;
+  tekster: UngVedtakTekster;
 }
 
 const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgResponse | undefined) =>
@@ -45,12 +47,15 @@ export const UngVedtak = ({
   readOnly,
   vedtaksbrevValgResponse,
   refetchVedtaksbrevValg,
+  tekster,
 }: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
     defaultValues: { vedtaksbrevValg: buildInitialValues(vedtaksbrevValgResponse) },
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
+  const behandlingErIkkeFastsatt =
+    behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT;
   const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
   const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,6 +67,9 @@ export const UngVedtak = ({
     error: forhåndsvisningError,
   } = useMutation({
     mutationFn: async (dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType) => {
+      if (!behandling.id) {
+        throw new Error('Behandling ID mangler');
+      }
       const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);
@@ -88,6 +96,9 @@ export const UngVedtak = ({
       nullstill?: boolean;
       dokumentMalType: DokumentMalType;
     }) => {
+      if (!behandling.id) {
+        throw new Error('Behandling ID mangler');
+      }
       const requestData = {
         behandlingId: behandling.id,
         redigertHtml: redigertHtml || undefined,
@@ -124,9 +135,10 @@ export const UngVedtak = ({
             <Label size="small" as="p">
               Resultat
             </Label>
-            <BodyShort size="small">
-              {behandlingErInnvilget ? 'Ungdomsprogramytelse er innvilget' : 'Ungdomsprogramytelse er opphørt'}
-            </BodyShort>
+            {!behandlingErIkkeFastsatt && (
+              <BodyShort size="small">{behandlingErInnvilget ? tekster.innvilget : tekster.avslått}</BodyShort>
+            )}
+            {behandlingErIkkeFastsatt && <BodyShort size="small">Resultat er ikke fastsatt</BodyShort>}
           </div>
           {behandlingErAvslått && (
             <div>

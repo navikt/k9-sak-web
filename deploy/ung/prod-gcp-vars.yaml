@@ -1,0 +1,5 @@
+name: ung-sak-web
+ingress: "https://ung.intern.nav.no"
+replicas:
+  min: 2
+  max: 2

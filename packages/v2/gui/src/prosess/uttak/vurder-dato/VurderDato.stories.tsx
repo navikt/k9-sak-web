@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, within, userEvent, expect, waitFor } from 'storybook/test';
-import { action } from 'storybook/actions';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import Uttak from '../Uttak';
+import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
+  AksjonspunktStatus,
+  lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
-  lagOppfyltPeriode,
   lagVurderDatoNyRegelAksjonspunkt,
-  AksjonspunktStatus,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import { standardUttakHandlers } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from '../Uttak';
 
 /**
  * VurderDato-komponenten håndterer vurdering av virkningsdato for nye uttaksregler.
@@ -44,16 +44,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ÅpentAksjonspunkt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        standardUttakHandlers.aksjonspunkt(payload => action('aksjonspunkt:submit')(payload)),
-      ],
-    },
-  },
+  decorators: [withFakeUttakBackend({ onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload) })],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
@@ -95,15 +86,7 @@ export const ÅpentAksjonspunkt: Story = {
 };
 
 export const Skjemavalidering: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-      ],
-    },
-  },
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
@@ -139,19 +122,14 @@ export const Skjemavalidering: Story = {
 const submitSpy = fn();
 
 export const LøsAksjonspunkt: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        standardUttakHandlers.aksjonspunkt(payload => {
-          submitSpy(payload);
-          action('aksjonspunkt:submit')(payload);
-        }),
-      ],
-    },
-  },
+  decorators: [
+    withFakeUttakBackend({
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
@@ -203,19 +181,14 @@ export const LøsAksjonspunkt: Story = {
 };
 
 export const RedigerVurdering: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        standardUttakHandlers.aksjonspunkt(payload => {
-          submitSpy(payload);
-          action('aksjonspunkt:submit')(payload);
-        }),
-      ],
-    },
-  },
+  decorators: [
+    withFakeUttakBackend({
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {

@@ -1,9 +1,9 @@
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
@@ -45,33 +45,36 @@ interface Props {
   isReadOnly: boolean;
   lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
 }
 
 export function VedtakProsessStegInitPanel(props: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
+
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
   const [
     { data: behandlingV2 },
     { data: aksjonspunkter = [] },
     { data: vilkår },
     { data: arbeidsgiverOpplysningerPerId },
-    { data: beregningsgrunnlag = [] },
+    { data: personopplysninger },
+    { data: beregningsgrunnlag },
     { data: simuleringResultat },
     { data: tilbakekrevingvalg },
     { data: overlappendeYtelser },
-    { data: personopplysninger },
   ] = useSuspenseQueries({
     queries: [
       behandlingQueryOptions(props.api, props.behandling),
       aksjonspunkterQueryOptions(props.api, props.behandling),
       vilkårQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
-      beregningsgrunnlagQueryOptions(props.api, props.behandling),
-      simuleringResultatQueryOptions(props.api, props.behandling),
-      tilbakekrevingvalgQueryOptions(props.api, props.behandling),
-      overlappendeYtelserQueryOptions(props.api, props.behandling),
       personopplysningerQueryOptions(props.api, props.behandling),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      simuleringResultatQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      tilbakekrevingvalgQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      overlappendeYtelserQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
   });
 
@@ -79,21 +82,15 @@ export function VedtakProsessStegInitPanel(props: Props) {
     informasjonsbehovVedtaksbrev: any;
     dokumentdataHente: any;
     fritekstdokumenter: any;
+    tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }>(
     [
       { key: PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV },
       { key: PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE },
       { key: PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER },
+      { key: PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV },
     ],
-    { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
-  );
-
-  const { data: tilgjengeligeVedtaksbrev } = restApiPleiepengerHooks.useRestApi<TilgjengeligeVedtaksbrev>(
-    PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    undefined,
-    {
-      updateTriggers: [props.behandling.versjon],
-    },
+    { keepData: true, suspendRequest: !erTilBehandlingEllerBehandlet, updateTriggers: [props.behandling.versjon] },
   );
 
   const vedtakAksjonspunkter = useMemo(() => {
@@ -102,19 +99,22 @@ export function VedtakProsessStegInitPanel(props: Props) {
     );
   }, [aksjonspunkter]);
 
-  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
-
-  if (
-    !erValgt ||
-    restApiData.state === RestApiState.NOT_STARTED ||
-    restApiData.state === RestApiState.LOADING ||
-    !tilgjengeligeVedtaksbrev
-  ) {
+  if (!erValgt) {
     return null;
   }
-  if (!erStegVurdert) {
-    return <ProsessStegIkkeVurdert />;
+
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (
+    restApiData.state === RestApiState.NOT_STARTED ||
+    restApiData.state === RestApiState.LOADING ||
+    !beregningsgrunnlag ||
+    !tilbakekrevingvalg ||
+    !overlappendeYtelser
+  ) {
+    return null;
   }
 
   const handleSubmit = async (data: any) => {
@@ -146,7 +146,7 @@ export function VedtakProsessStegInitPanel(props: Props) {
       previewCallback={props.previewCallback}
       overlappendeYtelser={overlappendeYtelser}
       personopplysninger={personopplysninger}
-      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+      tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
     />
   );
 }

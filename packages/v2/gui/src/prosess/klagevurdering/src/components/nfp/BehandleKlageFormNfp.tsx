@@ -147,7 +147,7 @@ export const buildInitialValues = (klageVurdering: KlagebehandlingDto, fagsak: F
     : null,
   klageVurderingOmgjoer: klageVurdering.klageVurderingResultatNFP
     ? klageVurdering.klageVurderingResultatNFP.klageVurderingOmgjoer
-    : null,
+    : undefined,
   klageHjemmel:
     fagsak.sakstype !== fagsakYtelsesType.FRISINN &&
     klageVurdering.klageVurderingResultatNFP &&
@@ -165,7 +165,7 @@ export const buildInitialValues = (klageVurdering: KlagebehandlingDto, fagsak: F
 
 interface TransformValues {
   klageMedholdArsak: string | null;
-  klageVurderingOmgjoer: string | null;
+  klageVurderingOmgjoer: string | undefined;
   klageHjemmel: string | null;
   klageVurderingType: string;
   klageVurdering: string;
@@ -200,7 +200,7 @@ export const transformValues = (
     klageVurderingOmgjoer:
       values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
         ? values.klageVurderingOmgjoer
-        : null,
+        : undefined,
     klageHjemmel,
     klageVurdering: values.klageVurdering,
     klageVurderingType: values.klageVurdering,
