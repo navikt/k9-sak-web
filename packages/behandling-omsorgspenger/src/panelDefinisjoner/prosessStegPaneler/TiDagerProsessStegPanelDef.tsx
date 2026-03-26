@@ -8,7 +8,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_1];
 
-  getOverstyrVisningAvKomponent = () => true;
+  getOverstyrVisningAvKomponent = () => false;
 
   getEndepunkter = () => [];
 }

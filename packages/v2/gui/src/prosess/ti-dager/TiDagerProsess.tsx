@@ -62,7 +62,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
               rules={{ required: true }}
               render={({ field, fieldState }) => (
                 <RadioGroup
-                  legend="Fremkommer det av IM at 10 dager er benyttet?"
+                  legend="Fremkommer det av inntektsmelding at 10 dager er benyttet?"
                   onChange={field.onChange}
                   value={field.value ?? ''}
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
