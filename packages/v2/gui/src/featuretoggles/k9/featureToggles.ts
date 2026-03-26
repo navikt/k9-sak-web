@@ -10,7 +10,6 @@ const k9SpecificFeatureToggles = {
   UTVIDET_VARSELFELT: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
   BRUK_V2_INNTEKTSMELDING: true,
-  SKJUL_PROSESS_MENY_V2_VELGER: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
@@ -37,4 +36,5 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
  */
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
+  SKJUL_PROSESS_MENY_V2_VELGER: true,
 });

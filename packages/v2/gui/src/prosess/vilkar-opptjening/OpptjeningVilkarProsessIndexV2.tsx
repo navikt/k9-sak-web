@@ -26,7 +26,6 @@ interface OpptjeningVilkarProsessIndexProps {
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
   isAksjonspunktOpen: boolean;
-  readOnlySubmitButton: boolean;
   visAllePerioder: boolean;
 }
 
@@ -53,7 +52,6 @@ const OpptjeningVilkarProsessIndexV2 = ({
   submitCallback,
   isReadOnly,
   isAksjonspunktOpen,
-  readOnlySubmitButton,
   visAllePerioder,
 }: OpptjeningVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -95,7 +93,6 @@ const OpptjeningVilkarProsessIndexV2 = ({
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår?.perioder ?? []}
             activePeriode={activePeriode}
             opptjeninger={opptjening?.opptjeninger ?? []}
