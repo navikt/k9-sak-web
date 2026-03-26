@@ -12,7 +12,6 @@ import { useContext } from 'react';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import { hentFeriepengegrunnlagPrÅr } from './api/tilkjentYtelseApi.js';
 import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext.js';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
@@ -23,7 +22,6 @@ interface OwnProps {
   isReadOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
-  featureToggles?: FeatureToggles;
 }
 
 const cache = createIntlCache();
@@ -44,11 +42,9 @@ const TilkjentYtelseProsessIndexImpl = ({
   readOnlySubmitButton,
   arbeidsgiverOpplysningerPerId,
   fagsak,
-  featureToggles,
 }: OwnProps) => {
-  const featureTogglesFromContext = useContext(FeatureTogglesContext);
-  const VIS_FERIEPENGER_PANEL =
-    featureToggles?.['VIS_FERIEPENGER_PANEL'] ?? featureTogglesFromContext?.['VIS_FERIEPENGER_PANEL'];
+  const featureToggles = useContext(FeatureTogglesContext);
+  const VIS_FERIEPENGER_PANEL = featureToggles?.['VIS_FERIEPENGER_PANEL'];
 
   const apiOverride = useContext(TilkjentYtelseV1ApiContext);
   const fetchFn = apiOverride?.hentFeriepengegrunnlagPrÅr ?? hentFeriepengegrunnlagPrÅr;

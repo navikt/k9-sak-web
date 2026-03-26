@@ -114,7 +114,6 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
       isReadOnly={props.isReadOnly}
       submitCallback={handleSubmit}
       readOnlySubmitButton={readOnlySubmitButton}
-      featureToggles={featureToggles}
     />
   );
 }

@@ -296,7 +296,6 @@ export const VisMedFeriepengerPanel = args => (
           submitCallback={action('button-click')}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           fagsak={fagsak}
-          featureToggles={{ VIS_FERIEPENGER_PANEL: true } as any}
           {...args}
         />
       </TilkjentYtelseV1ApiContext.Provider>
