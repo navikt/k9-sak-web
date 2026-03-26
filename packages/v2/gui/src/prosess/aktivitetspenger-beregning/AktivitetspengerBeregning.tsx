@@ -1,6 +1,6 @@
 import { BesteBeregningResultatType } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BesteBeregningResultatType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Box, Heading, HStack, InlineMessage, Loader, Table, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';

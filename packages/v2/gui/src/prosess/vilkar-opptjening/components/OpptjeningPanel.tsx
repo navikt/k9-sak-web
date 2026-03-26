@@ -13,7 +13,6 @@ interface OwnProps {
   behandlingVersjon: number;
   lovReferanse?: string;
   isAksjonspunktOpen: boolean;
-  readOnlySubmitButton: boolean;
   originalErVilkarOk?: boolean;
   readOnly: boolean;
   isDirty?: boolean;
@@ -46,7 +45,7 @@ const OpptjeningPanel = ({
   const formMethods = useFormContext<VilkårFieldFormValues>();
 
   const skalViseSubmitKnapp = !skjulAksjonspunktVisning && !readOnly;
-  const skalDisableSubmitKnapp = !isPeriodisertFormComplete || !formMethods.formState.isValid;
+  const skalDisableSubmitKnapp = !isPeriodisertFormComplete;
 
   return (
     <>
