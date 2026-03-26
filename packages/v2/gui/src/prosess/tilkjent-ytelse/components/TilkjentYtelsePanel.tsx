@@ -3,7 +3,7 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Heading } from '@navikt/ds-react';
+import { Box, Heading } from '@navikt/ds-react';
 import type {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
@@ -16,6 +16,8 @@ import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import { FeriepengerPanel, type FeriepengerPrÅr } from './feriepenger/FeriepengerPanel.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { use } from 'react';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.ts';
 
 const perioderMedClassName: PeriodeMedId[] = [];
 
@@ -59,7 +61,6 @@ const TilkjentYtelsePanelImpl = ({
   aksjonspunkter,
   readOnly,
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
   personopplysninger,
   showAndelDetails,
   feriepengerPrÅr,
@@ -68,6 +69,7 @@ const TilkjentYtelsePanelImpl = ({
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
   const vurderTilbaketrekkAP = finnTilbaketrekkAksjonspunkt(aksjonspunkter);
   const opphoersdato = beregningsresultat?.opphoersdato;
+  const featureToggles = use(FeatureTogglesContext);
   return (
     <>
       <Heading size="small" level="2">
@@ -85,12 +87,12 @@ const TilkjentYtelsePanelImpl = ({
       )}
 
       {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr.size > 0 && (
-        <div style={{ marginTop: '1rem' }}>
+        <Box marginBlock="space-16 space-0">
           <FeriepengerPanel
             feriepengerPrÅr={feriepengerPrÅr}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
-        </div>
+        </Box>
       )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (

@@ -8,7 +8,6 @@ import {
   beregningsgrunnlag_hentBeregningsgrunnlagene,
   beregningsgrunnlag_hentNøklerTilVurdering,
   beregningsresultat_hentBeregningsresultatMedUtbetaling,
-  beregningsresultat_hentFeriepengegrunnlag,
   fagsak_hentFagsak,
   opptjening_getOpptjeninger,
   simulering_hentSimuleringResultat,
@@ -82,9 +81,5 @@ export class K9SakProsessBackendClient implements K9SakProsessApi {
 
   async getSøknadsfristStatus(behandlingUuid: string) {
     return (await søknadsfrist_utledStatus({ query: { behandlingUuid } })).data;
-  }
-
-  async getFeriepengegrunnlag(behandlingUuid: string) {
-    return (await beregningsresultat_hentFeriepengegrunnlag({ query: { behandlingUuid } })).data;
   }
 }

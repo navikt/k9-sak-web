@@ -6,7 +6,6 @@ import {
   k9_sak_kontrakt_behandling_BehandlingDto,
   k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
-  k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto,
   type k9_sak_kontrakt_fagsak_FagsakDto,
   k9_sak_kontrakt_medlem_MedlemV2Dto,
   k9_sak_kontrakt_opptjening_OpptjeningerDto,
@@ -43,8 +42,4 @@ export interface K9SakProsessApi {
   getOverlappendeYtelser(behandlingUuid: string): Promise<Array<k9_sak_kontrakt_ytelser_OverlappendeYtelseDto>>;
   getOpptjening(behandlingUuid: string): Promise<k9_sak_kontrakt_opptjening_OpptjeningerDto>;
   getSøknadsfristStatus(behandlingUuid: string): Promise<k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto>;
-
-  getFeriepengegrunnlag(
-    behandlingUuid: string,
-  ): Promise<k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagDto | null>;
 }

@@ -9,9 +9,9 @@ import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
+import withFeatureToggles from '@k9-sak-web/v2/gui';
 
 const fagsak = {
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
@@ -20,6 +20,7 @@ const fagsak = {
 const behandling = {
   id: 1,
   versjon: 1,
+  uuid: 'mock-treatment-uuid-12345',
 } as BehandlingDto;
 
 const beregningsresultat = {
@@ -157,49 +158,17 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
-const feriepengerAndeler2023: FeriepengegrunnlagAndel[] = [
-  {
-    aktivitetStatus: 'AT',
-    arbeidsgiverId: '12345678',
-    arbeidsforholdId: null,
-    erBrukerMottaker: false,
-    opptjeningsår: 2023,
-    årsbeløp: 1900,
-  },
-  {
-    aktivitetStatus: 'AT',
-    arbeidsgiverId: '12345678',
-    arbeidsforholdId: null,
-    erBrukerMottaker: true,
-    opptjeningsår: 2023,
-    årsbeløp: 5100,
-  },
-];
-
-const feriepengerAndeler2024: FeriepengegrunnlagAndel[] = [
-  {
-    aktivitetStatus: 'FL',
-    arbeidsgiverId: null,
-    arbeidsforholdId: null,
-    erBrukerMottaker: true,
-    opptjeningsår: 2024,
-    årsbeløp: 7200,
-  },
-];
-
-const feriepengerPrÅr = new Map<number, FeriepengegrunnlagAndel[]>();
-feriepengerPrÅr.set(2023, feriepengerAndeler2023);
-feriepengerPrÅr.set(2024, feriepengerAndeler2024);
-
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
+  decorators: [withFeatureToggles({ VIS_FERIEPENGER_PANEL: true })],
 };
 
 export const visUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
     aksjonspunkter={[]}
+    behandlingUuid={behandling.uuid}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -209,7 +178,6 @@ export const visUtenAksjonspunkt = args => (
 );
 
 visUtenAksjonspunkt.args = {
-  behandling,
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
@@ -225,6 +193,7 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
         },
       ] as AksjonspunktDto[]
     }
+    behandlingUuid={behandling.uuid}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -234,7 +203,6 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
 );
 
 visÅpentAksjonspunktTilbaketrekk.args = {
-  behandling,
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
@@ -256,6 +224,7 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
           },
         ] as AksjonspunktDto[]
       }
+      behandlingUuid={behandling.uuid}
       submitCallback={action('button-click')}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       fagsak={fagsak}
@@ -265,7 +234,6 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
 );
 
 visÅpentAksjonspunktManuellTilkjentYtelse.args = {
-  behandling,
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
@@ -280,18 +248,17 @@ export const visMedFeriepengerPanel = args => (
     <TilkjentYtelseProsessIndex
       beregningsresultat={beregningsresultat}
       aksjonspunkter={[]}
+      behandlingUuid={behandling.uuid}
       submitCallback={action('button-click')}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       fagsak={fagsak}
       featureToggles={{ VIS_FERIEPENGER_PANEL: true } as any}
-      feriepengerPrÅr={feriepengerPrÅr}
       {...args}
     />
   </KodeverkProvider>
 );
 
 visMedFeriepengerPanel.args = {
-  behandling,
   isReadOnly: true,
   readOnlySubmitButton: true,
 };
