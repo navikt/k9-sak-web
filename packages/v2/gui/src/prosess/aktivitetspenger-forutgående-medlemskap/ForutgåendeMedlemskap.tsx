@@ -25,12 +25,12 @@ export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly 
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    const erGodkjent = data.erGodkjent === 'true';
+    const erVilkarOk = data.erGodkjent === 'true';
     const aksjonspunktKode = aksjonspunkt.definisjon ?? '';
     const payload = {
       kode: aksjonspunktKode,
-      begrunnelse: erGodkjent ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
-      erGodkjent,
+      begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
+      erVilkarOk,
     };
     try {
       await submitCallback([payload], [aksjonspunkt]);
