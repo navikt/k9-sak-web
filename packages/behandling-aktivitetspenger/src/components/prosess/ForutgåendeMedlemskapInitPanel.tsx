@@ -15,7 +15,7 @@ interface Props {
   api: UngSakApi;
   behandling: BehandlingDto;
   readOnly: boolean;
-  submitCallback: (data: any, aksjonspunkt?: AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
 }
 
 export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, submitCallback }: Props) => {
