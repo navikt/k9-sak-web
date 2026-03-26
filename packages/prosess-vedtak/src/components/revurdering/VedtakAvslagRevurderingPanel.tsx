@@ -15,7 +15,7 @@ import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper'
 interface VedtakAvslagRevurderingPanelProps {
   vilkar: VilkårMedPerioderDto[];
   ytelseTypeKode: string;
-  simuleringResultat: VedtakSimuleringResultat;
+  simuleringResultat: VedtakSimuleringResultat | null;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
   behandlingType: string | undefined;

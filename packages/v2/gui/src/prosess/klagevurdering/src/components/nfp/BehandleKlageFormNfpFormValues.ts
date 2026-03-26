@@ -3,6 +3,6 @@ export interface BehandleKlageFormNfpFormValues {
   begrunnelse: string;
   fritekstTilBrev: string;
   klageHjemmel: string | null;
-  klageVurderingOmgjoer: string | null;
+  klageVurderingOmgjoer: string | undefined;
   klageMedholdArsak: string | null;
 }
