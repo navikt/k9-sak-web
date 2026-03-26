@@ -69,7 +69,6 @@ const TilkjentYtelseProsessIndexImpl = ({
       readOnlySubmitButton={readOnlySubmitButton}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
-      featureToggles={featureToggles}
       feriepengerPrÅr={VIS_FERIEPENGER_PANEL ? feriepengerPrÅr : undefined}
     />
   );
