@@ -17,7 +17,7 @@ import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import { FeriepengerPanel, type FeriepengerPrÅr } from './feriepenger/FeriepengerPanel.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { use } from 'react';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.ts';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
 
 const perioderMedClassName: PeriodeMedId[] = [];
 
