@@ -1,7 +1,6 @@
 import { BodyLong, Box, Button, Heading, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
-import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 
 interface TiDagerFormData {
   harUtbetaltPliktigeDager: 'ja' | 'nei';
@@ -33,7 +32,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
   };
 
   return (
-    <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+    <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
       <Heading size="medium" level="2" spacing>
         Ti dager
       </Heading>
@@ -80,14 +79,12 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
               name="begrunnelse"
               rules={{ required: true }}
               render={({ field, fieldState }) => (
-                <ContentMaxWidth>
-                  <Textarea
-                    {...field}
-                    label="Begrunnelse"
-                    size="small"
-                    error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  />
-                </ContentMaxWidth>
+                <Textarea
+                  {...field}
+                  label="Begrunnelse"
+                  size="small"
+                  error={fieldState.error ? 'Feltet er påkrevd' : undefined}
+                />
               )}
             />
           </VStack>
