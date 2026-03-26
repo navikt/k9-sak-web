@@ -2,6 +2,7 @@ import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
+  avp_getBeregningsgrunnlag,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   forutgåendeMedlemskap_medlemskap,
@@ -47,5 +48,8 @@ export class UngSakBackendClient implements UngSakApi {
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {
     return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } })).data;
+  }
+  async getBeregningsgrunnlag(behandlingUuid: string) {
+    return (await avp_getBeregningsgrunnlag({ query: { behandlingUuid } })).data;
   }
 }
