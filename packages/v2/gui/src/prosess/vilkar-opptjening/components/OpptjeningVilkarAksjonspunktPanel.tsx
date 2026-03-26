@@ -209,17 +209,24 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
             </div>
           </HelpText>
         </div>
-        {vilkarFields.map((vilkarField, index) => (
-          <VilkarField
-            key={vilkarField.periode.fom}
-            hidden={index !== indexOfActivePeriode}
-            erOmsorgspenger={erOmsorgspenger}
-            field={vilkarField}
-            readOnly={readOnly || !skalKunneEndreOpptjening}
-            fieldPrefix={`vilkarFields[${index}]`}
-            skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
-          />
-        ))}
+        {vilkarFields.map((vilkarField, index) => {
+          const skalKunneEndreDetteFeltet = !!(
+            (isApOpen || redigererOpptjening) &&
+            vilkarField?.vurderesIBehandlingen &&
+            vilkarField?.vurderesIAksjonspunkt
+          );
+          return (
+            <VilkarField
+              key={vilkarField.periode.fom}
+              hidden={index !== indexOfActivePeriode}
+              erOmsorgspenger={erOmsorgspenger}
+              field={vilkarField}
+              readOnly={readOnly || !skalKunneEndreDetteFeltet}
+              fieldPrefix={`vilkarFields[${index}]`}
+              skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
+            />
+          );
+        })}
         {visRedigeringsknapp && (
           <div>
             <div className="mt-2" />
