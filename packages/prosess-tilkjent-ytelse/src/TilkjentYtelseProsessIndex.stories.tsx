@@ -10,8 +10,9 @@ import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
+import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext';
+import type { FeriepengerPrÅr } from './api/tilkjentYtelseApi';
 
 const fagsak = {
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
@@ -158,13 +159,53 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
+const mockFeriepengerPrÅr: FeriepengerPrÅr = new Map([
+  [
+    2023,
+    [
+      {
+        aktivitetStatus: 'AT',
+        arbeidsgiverId: '123456789',
+        arbeidsforholdId: null,
+        opptjeningsår: 2023,
+        årsbeløp: 8000,
+        erBrukerMottaker: false,
+      },
+      {
+        aktivitetStatus: 'AT',
+        arbeidsgiverId: '123456789',
+        arbeidsforholdId: null,
+        opptjeningsår: 2023,
+        årsbeløp: 4500,
+        erBrukerMottaker: true,
+      },
+    ],
+  ],
+  [
+    2024,
+    [
+      {
+        aktivitetStatus: 'FL',
+        arbeidsgiverId: null,
+        arbeidsforholdId: null,
+        opptjeningsår: 2024,
+        årsbeløp: 6200,
+        erBrukerMottaker: true,
+      },
+    ],
+  ],
+]);
+
+const fakeFeriepengerApi = {
+  hentFeriepengegrunnlagPrÅr: async () => mockFeriepengerPrÅr,
+};
+
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
-  decorators: [withFeatureToggles({ VIS_FERIEPENGER_PANEL: true })],
 };
 
-export const visUtenAksjonspunkt = args => (
+export const VisUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
     aksjonspunkter={[]}
@@ -177,12 +218,12 @@ export const visUtenAksjonspunkt = args => (
   />
 );
 
-visUtenAksjonspunkt.args = {
+VisUtenAksjonspunkt.args = {
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunktTilbaketrekk = args => (
+export const VisÅpentAksjonspunktTilbaketrekk = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
     aksjonspunkter={
@@ -202,12 +243,12 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
   />
 );
 
-visÅpentAksjonspunktTilbaketrekk.args = {
+VisÅpentAksjonspunktTilbaketrekk.args = {
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
+export const VisÅpentAksjonspunktManuellTilkjentYtelse = args => (
   <KodeverkProvider
     behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverk}
@@ -233,32 +274,34 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
   </KodeverkProvider>
 );
 
-visÅpentAksjonspunktManuellTilkjentYtelse.args = {
+VisÅpentAksjonspunktManuellTilkjentYtelse.args = {
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
 
-export const visMedFeriepengerPanel = args => (
+export const VisMedFeriepengerPanel = args => (
   <KodeverkProvider
     behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverk}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
   >
-    <TilkjentYtelseProsessIndex
-      beregningsresultat={beregningsresultat}
-      aksjonspunkter={[]}
-      behandlingUuid={behandling.uuid}
-      submitCallback={action('button-click')}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      fagsak={fagsak}
-      featureToggles={{ VIS_FERIEPENGER_PANEL: true } as any}
-      {...args}
-    />
+    <TilkjentYtelseV1ApiContext.Provider value={fakeFeriepengerApi}>
+      <TilkjentYtelseProsessIndex
+        beregningsresultat={beregningsresultat}
+        aksjonspunkter={[]}
+        behandlingUuid={behandling.uuid}
+        submitCallback={action('button-click')}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        fagsak={fagsak}
+        featureToggles={{ VIS_FERIEPENGER_PANEL: true } as any}
+        {...args}
+      />
+    </TilkjentYtelseV1ApiContext.Provider>
   </KodeverkProvider>
 );
 
-visMedFeriepengerPanel.args = {
+VisMedFeriepengerPanel.args = {
   isReadOnly: true,
   readOnlySubmitButton: true,
 };

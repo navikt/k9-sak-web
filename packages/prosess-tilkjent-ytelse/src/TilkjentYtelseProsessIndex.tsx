@@ -6,11 +6,12 @@ import {
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Fagsak } from '@k9-sak-web/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useContext } from 'react';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import { hentFeriepengegrunnlagPrÅr } from './api/tilkjentYtelseApi.js';
+import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface OwnProps {
@@ -49,9 +50,13 @@ const TilkjentYtelseProsessIndexImpl = ({
   const VIS_FERIEPENGER_PANEL =
     featureToggles?.['VIS_FERIEPENGER_PANEL'] ?? featureTogglesFromContext?.['VIS_FERIEPENGER_PANEL'];
 
-  const { data: feriepengerPrÅr = new Map() } = useSuspenseQuery({
+  const apiOverride = useContext(TilkjentYtelseV1ApiContext);
+  const fetchFn = apiOverride?.hentFeriepengegrunnlagPrÅr ?? hentFeriepengegrunnlagPrÅr;
+
+  const { data: feriepengerPrÅr = new Map() } = useQuery({
     queryKey: ['feriepengegrunnlag', behandlingUuid],
-    queryFn: () => hentFeriepengegrunnlagPrÅr(behandlingUuid),
+    queryFn: () => fetchFn(behandlingUuid),
+    enabled: !!VIS_FERIEPENGER_PANEL,
     staleTime: Infinity,
   });
 
