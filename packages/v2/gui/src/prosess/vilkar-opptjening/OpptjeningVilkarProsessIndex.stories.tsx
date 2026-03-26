@@ -183,7 +183,7 @@ export const VisPanelForÅpentAksjonspunkt: Story = {
     submitCallback: fn(),
     isReadOnly: false,
     isAksjonspunktOpen: true,
-    readOnlySubmitButton: false,
+
     visAllePerioder: false,
   },
   play: async ({ args, canvas }) => {
@@ -266,7 +266,7 @@ export const VisPanelForPSBÅpentAksjonspunktUten847B: Story = {
     submitCallback: asyncAction('Send inn skjema'),
     isReadOnly: false,
     isAksjonspunktOpen: true,
-    readOnlySubmitButton: false,
+
     visAllePerioder: false,
   },
 };
@@ -310,7 +310,7 @@ export const VisPanelForPSBÅpentAksjonspunktMed847B: Story = {
     submitCallback: asyncAction('Send inn skjema'),
     isReadOnly: false,
     isAksjonspunktOpen: true,
-    readOnlySubmitButton: false,
+
     visAllePerioder: false,
   },
 };
@@ -349,7 +349,7 @@ export const VisPanelForNårEnIkkeHarAksjonspunkt: Story = {
     submitCallback: asyncAction('Send inn skjema'),
     isReadOnly: true,
     isAksjonspunktOpen: false,
-    readOnlySubmitButton: false,
+
     visAllePerioder: false,
   },
 };

@@ -95,15 +95,22 @@ const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() })
 
 const basePath = '/k9/web';
 
-const [sakAuthFixer, klageAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
-  // Vi må ha ein unik AuthFixer instans pr backend
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-sak'),
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-klage'),
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-tilbake'),
-);
-configureK9SakClient(sakAuthFixer);
-configureK9KlageClient(klageAuthFixer);
-configureK9TilbakeClient(tilbakeAuthFixer);
+if (featureToggles.SINGLE_AUTHFIXER) {
+  const authFixer = new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-alle');
+  configureK9SakClient(authFixer);
+  configureK9KlageClient(authFixer);
+  configureK9TilbakeClient(authFixer);
+} else {
+  const [sakAuthFixer, klageAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+    // Vi må ha ein unik AuthFixer instans pr backend
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-sak'),
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-klage'),
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'k9-tilbake'),
+  );
+  configureK9SakClient(sakAuthFixer);
+  configureK9KlageClient(klageAuthFixer);
+  configureK9TilbakeClient(tilbakeAuthFixer);
+}
 
 const store = configureStore();
 

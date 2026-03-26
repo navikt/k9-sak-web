@@ -2,7 +2,7 @@ import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+
 import { Aksjonspunkt, Behandling, Fagsak, Opptjening, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
@@ -12,6 +12,7 @@ import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 import styles from './opptjeningVilkarProsessIndex.module.css';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 
 const cx = classNames.bind(styles);
 

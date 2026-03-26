@@ -4,7 +4,7 @@ import {
   type k9_sak_kontrakt_opptjening_OpptjeningerDto,
   type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,6 @@ interface OpptjeningVilkarProsessIndexProps {
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
   isAksjonspunktOpen: boolean;
-  readOnlySubmitButton: boolean;
   visAllePerioder: boolean;
 }
 
@@ -53,7 +52,6 @@ const OpptjeningVilkarProsessIndexV2 = ({
   submitCallback,
   isReadOnly,
   isAksjonspunktOpen,
-  readOnlySubmitButton,
   visAllePerioder,
 }: OpptjeningVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -95,7 +93,6 @@ const OpptjeningVilkarProsessIndexV2 = ({
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår?.perioder ?? []}
             activePeriode={activePeriode}
             opptjeninger={opptjening?.opptjeninger ?? []}

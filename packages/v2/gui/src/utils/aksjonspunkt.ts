@@ -1,22 +1,19 @@
-import {
-  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  type k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingStatus.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
 export const kanAksjonspunktRedigeres = (
   { status: apStatus, erAktivt }: Pick<AksjonspunktDto, 'status' | 'erAktivt'>,
   behStatus: BehandlingStatus,
 ): boolean => {
-  return apStatus === aksjonspunktStatus.UTFØRT && erAktivt === true && behStatus === behandlingStatus.UTREDES;
+  return apStatus === aksjonspunktStatus.UTFØRT && erAktivt === true && behStatus === BehandlingStatus.UTREDES;
 };
 
 export const skalAksjonspunktUtredes = (
   { status: apStatus, erAktivt }: Pick<AksjonspunktDto, 'status' | 'erAktivt'>,
   behStatus: BehandlingStatus,
 ): boolean => {
-  return apStatus === aksjonspunktStatus.OPPRETTET && erAktivt === true && behStatus === behandlingStatus.UTREDES;
+  return apStatus === aksjonspunktStatus.OPPRETTET && erAktivt === true && behStatus === BehandlingStatus.UTREDES;
 };
 
 export const erAksjonspunktReadOnly = ({ kanLoses, status }: Pick<AksjonspunktDto, 'kanLoses' | 'status'>): boolean => {
