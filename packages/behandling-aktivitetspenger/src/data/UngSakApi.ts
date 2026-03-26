@@ -5,6 +5,7 @@ import {
   ung_sak_kontrakt_AsyncPollingStatus,
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 
 export interface UngSakApi {
@@ -16,4 +17,5 @@ export interface UngSakApi {
   getVilkår(behandlingUuid: string): Promise<ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;
   hentBehandlingMidlertidigStatus(behandlingUuid: string): Promise<ung_sak_kontrakt_AsyncPollingStatus>;
+  getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto>;
 }

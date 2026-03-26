@@ -1,10 +1,8 @@
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import { BesteBeregningResultatType } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BesteBeregningResultatType.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Box, Heading, HStack, InlineMessage, Loader, Table, VStack } from '@navikt/ds-react';
-import { useQuery } from '@tanstack/react-query';
-import type { AktivitetspengerBeregningBackendApiType } from './AktivitetspengerBeregningBackendApiType.js';
+import { BodyShort, Box, Heading, HStack, InlineMessage, Table, VStack } from '@navikt/ds-react';
 import styles from './aktivitetspengerBeregning.module.css';
 
 const formatter = new Intl.NumberFormat('nb-NO', {
@@ -20,26 +18,10 @@ const SelectedCell = ({ children }: { children: string }) => (
 );
 
 interface Props {
-  behandling: Pick<BehandlingDto, 'uuid'>;
-  api: AktivitetspengerBeregningBackendApiType;
+  data: BeregningsgrunnlagDto;
 }
 
-const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid],
-    queryFn: () => api.getBeregningsgrunnlag(behandling.uuid),
-  });
-
-  if (isLoading) {
-    return <Loader size="large" />;
-  }
-  if (isError) {
-    return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
-  }
-
-  if (!data) {
-    return <Alert variant="error">Ingen data tilgjengelig</Alert>;
-  }
+const AktivitetspengerBeregning = ({ data }: Props) => {
   const årstallForSkjæringstidspunkt = new Date(data.skjæringstidspunkt).getFullYear();
   const isBesteberegningSnittSisteTreÅr =
     data.besteBeregningResultatType === BesteBeregningResultatType.SNITT_SISTE_TRE_ÅR;
@@ -54,7 +36,7 @@ const AktivitetspengerBeregning = ({ api, behandling }: Props) => {
       <VStack gap="space-36">
         <Box padding="space-16" background="info-soft" width="fit-content">
           <InlineMessage size="small" status="info">
-            Skjæringstidspunkt for beregning {formatDate(data?.skjæringstidspunkt)}
+            Skjæringstidspunkt for beregning {formatDate(data.skjæringstidspunkt)}
           </InlineMessage>
         </Box>
         <div>
