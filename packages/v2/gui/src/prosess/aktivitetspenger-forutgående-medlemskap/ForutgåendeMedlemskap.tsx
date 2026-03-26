@@ -1,3 +1,4 @@
+import type { ung_sak_kontrakt_vilkår_medlemskap_MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Box, Button, Heading, Radio, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
@@ -9,6 +10,7 @@ interface Props {
   submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'>;
   readOnly: boolean;
+  forutgåendeMedlemskap: ung_sak_kontrakt_vilkår_medlemskap_MedlemskapsPeriodeDto[];
 }
 
 interface FormData {

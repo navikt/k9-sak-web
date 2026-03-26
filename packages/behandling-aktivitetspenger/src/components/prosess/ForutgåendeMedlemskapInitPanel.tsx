@@ -21,6 +21,13 @@ interface Props {
 export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, submitCallback }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
+  const { data: forutgåendeMedlemskap } = useSuspenseQuery({
+    queryKey: ['forutgåendeMedlemskap', behandling.uuid],
+    queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
+    select: data => {
+      return data.medlemskapFraBruker ?? [];
+    },
+  });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
   if (!erValgt) {
@@ -32,5 +39,12 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, sub
     return null;
   }
 
-  return <ForutgåendeMedlemskap submitCallback={submitCallback} aksjonspunkt={aksjonspunkt} readOnly={readOnly} />;
+  return (
+    <ForutgåendeMedlemskap
+      submitCallback={submitCallback}
+      aksjonspunkt={aksjonspunkt}
+      readOnly={readOnly}
+      forutgåendeMedlemskap={forutgåendeMedlemskap}
+    />
+  );
 };
