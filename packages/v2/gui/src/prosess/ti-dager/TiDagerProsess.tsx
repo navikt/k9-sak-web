@@ -1,4 +1,5 @@
 import { BodyLong, Box, Button, Heading, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
+import { RhfForm } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 
@@ -19,7 +20,8 @@ interface TiDagerProsessIndexProps {
 }
 
 export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerProsessIndexProps) => {
-  const { control, handleSubmit } = useForm<TiDagerFormData>();
+  const formMethods = useForm<TiDagerFormData>();
+  const { control } = formMethods;
 
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = aksjonspunkter.map(ap => ({
@@ -53,7 +55,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
         </BodyLong>
       </ReadMore>
       <Box marginBlock="space-8">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
           <VStack gap="space-16">
             <Controller
               control={control}
@@ -94,7 +96,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
               Bekreft
             </Button>
           </Box>
-        </form>
+        </RhfForm>
       </Box>
     </Box>
   );
