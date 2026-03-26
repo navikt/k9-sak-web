@@ -40,7 +40,7 @@ const PANEL_KONFIG = {
     label: 'Beregning',
   },
   medlemskap: {
-    aksjonspunkter: [AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE],
+    aksjonspunkter: [AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP],
     id: PROSESS_STEG_KODER.MEDLEMSKAP,
     label: 'Medlemskap',
     vilkår: [vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET],

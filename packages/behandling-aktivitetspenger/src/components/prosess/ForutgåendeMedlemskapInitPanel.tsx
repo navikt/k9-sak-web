@@ -27,9 +27,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, sub
     return null;
   }
 
-  const aksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE,
-  );
+  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP);
   if (!aksjonspunkt) {
     return null;
   }
