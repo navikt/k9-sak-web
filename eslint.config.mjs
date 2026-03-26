@@ -9,7 +9,7 @@ import configPrettier from 'eslint-config-prettier';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
-import pluginVitest from 'eslint-plugin-vitest';
+import pluginVitest from '@vitest/eslint-plugin';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 

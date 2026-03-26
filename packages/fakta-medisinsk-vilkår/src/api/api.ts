@@ -39,7 +39,7 @@ export async function postNyVurdering(
       { signal },
     );
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error, { cause: error });
   }
 }
 
@@ -81,7 +81,7 @@ export async function postEndreVurdering(
       { signal },
     );
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error, { cause: error });
   }
 }
 
