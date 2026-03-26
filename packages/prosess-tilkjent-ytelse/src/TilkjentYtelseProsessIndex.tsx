@@ -7,6 +7,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useContext } from 'react';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import { hentFeriepengegrunnlagPrÅr } from './api/tilkjentYtelseApi.js';
@@ -22,6 +23,9 @@ interface OwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
 }
+
+const cache = createIntlCache();
+const intl = createIntl({ locale: 'nb-NO' }, cache);
 
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
@@ -47,16 +51,18 @@ const TilkjentYtelseProsessIndex = ({
   });
 
   return (
-    <TilkjentYtelsePanel
-      beregningsresultat={beregningsresultat}
-      aksjonspunkter={aksjonspunkter}
-      readOnly={isReadOnly}
-      submitCallback={submitCallback}
-      readOnlySubmitButton={readOnlySubmitButton}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
-      feriepengerPrÅr={VIS_FERIEPENGER_PANEL ? feriepengerPrÅr : undefined}
-    />
+    <RawIntlProvider value={intl}>
+      <TilkjentYtelsePanel
+        beregningsresultat={beregningsresultat}
+        aksjonspunkter={aksjonspunkter}
+        readOnly={isReadOnly}
+        submitCallback={submitCallback}
+        readOnlySubmitButton={readOnlySubmitButton}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
+        feriepengerPrÅr={VIS_FERIEPENGER_PANEL ? feriepengerPrÅr : undefined}
+      />
+    </RawIntlProvider>
   );
 };
 
