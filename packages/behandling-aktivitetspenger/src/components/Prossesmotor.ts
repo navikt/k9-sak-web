@@ -15,12 +15,22 @@ import { UngSakApi } from '../data/UngSakApi';
 import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../data/ungSakQueryOptions';
 
 const PROSESS_STEG_KODER = {
+  INNGANGSVILKAR: prosessStegCodes.INNGANGSVILKAR,
   MEDLEMSKAP: prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP,
   VEDTAK: prosessStegCodes.VEDTAK,
   BEREGNING: prosessStegCodes.BEREGNING,
 } as const;
 
 const PANEL_KONFIG = {
+  inngangsvilkår: {
+    aksjonspunkter: [
+      AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+      AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+      AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+    ],
+    id: PROSESS_STEG_KODER.INNGANGSVILKAR,
+    label: 'Inngangsvilkår',
+  },
   vedtak: {
     aksjonspunkter: [
       AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
@@ -90,6 +100,18 @@ const byggVilkårPanel = (
   };
 };
 
+const byggPanelUtenVilkår = (
+  forrigeVurdert: boolean | undefined,
+  type: ProcessMenuStepType,
+  panelKonfig: { aksjonspunkter: readonly string[]; label: string; id: string },
+): ProcessMenuStep => ({
+  type: forrigeVurdert ? type : ProcessMenuStepType.default,
+  label: panelKonfig.label,
+  id: panelKonfig.id,
+  erVurdert: erPanelVurdert(forrigeVurdert ? type : ProcessMenuStepType.default),
+  urlKode: panelKonfig.id,
+});
+
 const beregnVedtakType = (
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
@@ -120,6 +142,20 @@ const beregnVedtakType = (
   return ProcessMenuStepType.default;
 };
 
+const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[]) => {
+  // Inngangsvilkår har aksjonspunkter definert i panelkonfigurasjonen men har ikke vilkår
+  const harÅpneAksjonspunkter = aksjonspunkter?.some(
+    ap =>
+      PANEL_KONFIG.inngangsvilkår.aksjonspunkter.some(vap => vap === ap.definisjon) &&
+      ap.status &&
+      isAksjonspunktOpen(ap.status),
+  );
+  if (harÅpneAksjonspunkter) {
+    return ProcessMenuStepType.warning;
+  }
+  return ProcessMenuStepType.success;
+};
+
 interface ProsessmotorProps {
   api: UngSakApi;
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
@@ -129,7 +165,17 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
   return useMemo(() => {
-    const medlemskapPanel = byggVilkårPanel(true, vilkår, PANEL_KONFIG.medlemskap, aksjonspunkter);
+    const inngangsvilkårPanel = byggPanelUtenVilkår(
+      true,
+      beregnInngangsvilkårType(aksjonspunkter),
+      PANEL_KONFIG.inngangsvilkår,
+    );
+    const medlemskapPanel = byggVilkårPanel(
+      inngangsvilkårPanel.erVurdert,
+      vilkår,
+      PANEL_KONFIG.medlemskap,
+      aksjonspunkter,
+    );
 
     const beregningPanel = {
       id: PANEL_KONFIG.beregning.id,
@@ -146,7 +192,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       usePartialStatus: false,
       urlKode: prosessStegCodes.VEDTAK,
     };
-
-    return [medlemskapPanel, beregningPanel, vedtakPanel];
+    return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, vedtakPanel];
   }, [vilkår, aksjonspunkter, behandling]);
 };

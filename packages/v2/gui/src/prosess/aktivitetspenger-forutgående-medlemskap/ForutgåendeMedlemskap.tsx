@@ -11,7 +11,7 @@ interface Props {
     data: Array<{ kode: AksjonspunktDto['definisjon']; begrunnelse: string; erVilkarOk: boolean }>,
     aksjonspunkt: Array<Pick<AksjonspunktDto, 'definisjon'>>,
   ) => Promise<unknown>;
-  aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'>;
+  aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'> | undefined;
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
 }
@@ -31,6 +31,9 @@ export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     const erVilkarOk = data.erGodkjent === 'true';
+    if (!aksjonspunkt) {
+      return;
+    }
     const payload = {
       kode: aksjonspunkt.definisjon,
       begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',

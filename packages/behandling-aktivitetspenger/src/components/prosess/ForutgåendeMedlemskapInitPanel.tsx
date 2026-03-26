@@ -35,9 +35,6 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, sub
   }
 
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP);
-  if (!aksjonspunkt) {
-    return null;
-  }
 
   return (
     <ForutgåendeMedlemskap
