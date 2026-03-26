@@ -7,18 +7,19 @@ interface TiDagerFormData {
   begrunnelse: string;
 }
 
-type Aksjonspunkt = {
-  definisjon: {
-    kode: string;
-  };
-};
-
-interface TiDagerProsessIndexProps {
-  submitCallback: (data: any) => Promise<any>;
-  aksjonspunkter: Aksjonspunkt[];
+interface TiDagerSubmitModel {
+  kode: string;
+  harUtbetaltPliktigeDager: boolean;
+  begrunnelse: string;
 }
 
-export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerProsessIndexProps) => {
+interface TiDagerProsessIndexProps {
+  submitCallback: (data: TiDagerSubmitModel[]) => Promise<void>;
+  aksjonspunkter: { definisjon: { kode: string } }[];
+  isReadOnly: boolean;
+}
+
+export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly }: TiDagerProsessIndexProps) => {
   const formMethods = useForm<TiDagerFormData>();
   const { control } = formMethods;
 
@@ -39,11 +40,11 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
       <ReadMore header="Hvordan går jeg frem?" size="small">
         <BodyLong size="small">
           Arbeidsgiver må dekke de første 10 omsorgsdagene hvert kalenderår for ansatte som har barn under 12 år, eller
-          som fyller 12 år det gjeldende året. De kan søke om refusjon fra Nav fra og med 11.dagen hvis den ansatte har
+          som fyller 12 år det gjeldende året. De kan søke om refusjon fra Nav fra og med 11. dagen hvis den ansatte har
           rett på flere enn 10 omsorgsdager.
         </BodyLong>
         <BodyLong size="small">
-          Fyller den ansatte vilkår for å få omsorgspenger fra første dag?Kronisk sykt barn: Ved kronisk sykt barn over
+          Fyller den ansatte vilkår for å få omsorgspenger fra første dag? Kronisk sykt barn: Ved kronisk sykt barn over
           12, og ingen andre barn under 13 år, kan arbeidsgiver søke om refusjon fra første fraværsdag.
         </BodyLong>
         <BodyLong size="small">
@@ -67,6 +68,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
                   value={field.value ?? ''}
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
                   size="small"
+                  readOnly={isReadOnly}
                 >
                   <Radio value="ja">Ja</Radio>
                   <Radio value="nei">Nei</Radio>
@@ -84,15 +86,18 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback }: TiDagerP
                   label="Begrunnelse"
                   size="small"
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
+                  readOnly={isReadOnly}
                 />
               )}
             />
           </VStack>
-          <Box marginBlock="space-16 space-0">
-            <Button size="small" type="submit">
-              Bekreft
-            </Button>
-          </Box>
+          {!isReadOnly && (
+            <Box marginBlock="space-16 space-0">
+              <Button size="small" type="submit">
+                Bekreft
+              </Button>
+            </Box>
+          )}
         </RhfForm>
       </Box>
     </Box>
