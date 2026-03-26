@@ -4,6 +4,9 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import { BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 
+const aksjonspunktErÅpent = (ap?: AksjonspunktDto) =>
+  ap ? ap.status !== ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT : false;
+
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   submitCallback: (
@@ -15,36 +18,34 @@ interface Props {
 export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const vurderBistandsvilkår = aksjonspunkter.find(
-    ap =>
-      ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR &&
-      ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   );
   const lokalkontorForeslårVilkår = aksjonspunkter.find(
-    ap =>
-      ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR &&
-      ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   );
   const lokalkontorBeslutter = aksjonspunkter.find(
-    ap =>
-      ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR &&
-      ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
 
   const harAksjonspunkt = !!vurderBistandsvilkår || !!lokalkontorForeslårVilkår || !!lokalkontorBeslutter;
 
   const alleAksjonspunkterErVurdert =
-    aksjonspunkter.every(ap => ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT) ||
-    !harAksjonspunkt;
+    harAksjonspunkt &&
+    aksjonspunkter.every(ap => ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT);
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const aksjonspunkt = vurderBistandsvilkår ?? lokalkontorForeslårVilkår ?? lokalkontorBeslutter;
+    const aksjonspunkt = lokalkontorBeslutter ?? lokalkontorForeslårVilkår ?? vurderBistandsvilkår;
     if (!aksjonspunkt) {
       return;
     }
     const payload = {
       kode: aksjonspunkt.definisjon,
       begrunnelse: 'fordi',
+
+      aksjonspunktGodkjenningDtos: lokalkontorBeslutter
+        ? [{ aksjonspunktKode: vurderBistandsvilkår?.definisjon, begrunnelse: 'OK', godkjent: true }]
+        : undefined,
     };
     try {
       await submitCallback([payload], [aksjonspunkt]);
@@ -59,19 +60,17 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback
         Inngangsvilkår
       </Heading>
       <VStack gap="space-16">
-        {vurderBistandsvilkår && (
+        {vurderBistandsvilkår && aksjonspunktErÅpent(vurderBistandsvilkår) && (
           <>
             <BodyShort weight="semibold">Vurder bistandsvilkår</BodyShort>
-            <BodyShort>Du må ha rolle LOKALKONTOR_SAKSBEHANDLER</BodyShort>
           </>
         )}
-        {lokalkontorForeslårVilkår && (
+        {lokalkontorForeslårVilkår && aksjonspunktErÅpent(lokalkontorForeslårVilkår) && (
           <>
             <BodyShort weight="semibold">Lokalkontor foreslår vilkår</BodyShort>
-            <BodyShort>Du må ha rolle LOKALKONTOR_SAKSBEHANDLER</BodyShort>
           </>
         )}
-        {lokalkontorBeslutter && (
+        {lokalkontorBeslutter && aksjonspunktErÅpent(lokalkontorBeslutter) && (
           <>
             <BodyShort weight="semibold">Lokalkontor beslutter vilkår</BodyShort>
             <BodyShort>Du må ha rolle LOKALKONTOR_BESLUTTER</BodyShort>

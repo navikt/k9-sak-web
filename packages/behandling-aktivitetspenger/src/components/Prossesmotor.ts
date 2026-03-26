@@ -164,6 +164,7 @@ interface ProsessmotorProps {
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
+
   return useMemo(() => {
     const inngangsvilkårPanel = byggPanelUtenVilkår(
       true,
@@ -180,7 +181,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     const beregningPanel = {
       id: PANEL_KONFIG.beregning.id,
       label: PANEL_KONFIG.beregning.label,
-      type: ProcessMenuStepType.default,
+      type: medlemskapPanel.erVurdert ? ProcessMenuStepType.success : ProcessMenuStepType.default,
       usePartialStatus: false,
       urlKode: prosessStegCodes.BEREGNING,
     };
