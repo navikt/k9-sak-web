@@ -7,7 +7,6 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useContext } from 'react';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import { hentFeriepengegrunnlagPrÅr } from './api/tilkjentYtelseApi.js';
@@ -24,16 +23,7 @@ interface OwnProps {
   readOnlySubmitButton: boolean;
 }
 
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
-
-const TilkjentYtelseProsessIndexImpl = ({
+const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   behandlingUuid,
   aksjonspunkter,
@@ -69,11 +59,5 @@ const TilkjentYtelseProsessIndexImpl = ({
     />
   );
 };
-
-const TilkjentYtelseProsessIndex = (props: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <TilkjentYtelseProsessIndexImpl {...props} />
-  </RawIntlProvider>
-);
 
 export default TilkjentYtelseProsessIndex;
