@@ -44,7 +44,13 @@ const AktivitetspengerBeregning = ({ data }: Props) => {
             Pensjonsgivende inntekt siste 3 år
           </Heading>
           {sortertePgiÅrsinntekter.length > 0 && (
-            <Box marginBlock="space-8 space-0" borderRadius="8" borderWidth="1" width="800px">
+            <Box
+              marginBlock="space-8 space-0"
+              borderRadius="8"
+              borderWidth="1"
+              width="800px"
+              borderColor="neutral-subtle"
+            >
               <Table>
                 <Table.Header>
                   <Table.Row className={styles.rowWithSpacing}>
@@ -97,7 +103,13 @@ const AktivitetspengerBeregning = ({ data }: Props) => {
           <Heading size="small" level="2" spacing>
             Beregning av dagsats
           </Heading>
-          <Box marginBlock="space-8 space-0" borderRadius="8" borderWidth="1" width="800px">
+          <Box
+            marginBlock="space-8 space-0"
+            borderRadius="8"
+            borderWidth="1"
+            width="800px"
+            borderColor="neutral-subtle"
+          >
             <Table>
               <Table.Body>
                 <Table.Row className={styles.rowWithSpacing}>
