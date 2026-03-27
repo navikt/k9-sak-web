@@ -3,15 +3,15 @@ import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 interface UseBekreftAksjonspunktParams {
   fagsak: Fagsak;
-  behandling: Pick<ung_sak_kontrakt_behandling_BehandlingDto, 'id' | 'versjon' | 'uuid'>;
+  behandling: Pick<BehandlingDto, 'id' | 'versjon' | 'uuid'>;
   lagreAksjonspunkter: UseMutateAsyncFunction<
     unknown,
     Error,
