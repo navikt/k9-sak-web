@@ -181,7 +181,11 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     const beregningPanel = {
       id: PANEL_KONFIG.beregning.id,
       label: PANEL_KONFIG.beregning.label,
-      type: medlemskapPanel.erVurdert ? ProcessMenuStepType.success : ProcessMenuStepType.default,
+      type: medlemskapPanel.erVurdert
+        ? medlemskapPanel.type === ProcessMenuStepType.success
+          ? ProcessMenuStepType.success
+          : ProcessMenuStepType.default
+        : ProcessMenuStepType.default,
       usePartialStatus: false,
       urlKode: prosessStegCodes.BEREGNING,
     };

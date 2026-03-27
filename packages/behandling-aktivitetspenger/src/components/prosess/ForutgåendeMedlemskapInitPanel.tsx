@@ -4,10 +4,11 @@ import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/Be
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ForutgåendeMedlemskap } from '@k9-sak-web/gui/prosess/aktivitetspenger-forutgående-medlemskap/ForutgåendeMedlemskap.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { ung_kodeverk_vilkår_VilkårType } from '@navikt/ung-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { UngSakApi } from '../../data/UngSakApi';
-import { aksjonspunkterQueryOptions } from '../../data/ungSakQueryOptions';
+import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../../data/ungSakQueryOptions';
 
 const PANEL_ID = prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP;
 
@@ -21,6 +22,10 @@ interface Props {
 export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, submitCallback }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
+  const { data: vilkår = [] } = useSuspenseQuery({
+    ...vilkårQueryOptions(api, behandling),
+    select: data => data.filter(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+  });
   const { data: forutgåendeMedlemskap } = useSuspenseQuery({
     queryKey: ['forutgåendeMedlemskap', behandling.uuid],
     queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
@@ -42,6 +47,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, sub
       aksjonspunkt={aksjonspunkt}
       readOnly={readOnly}
       forutgåendeMedlemskap={forutgåendeMedlemskap}
+      vilkår={vilkår}
     />
   );
 };
