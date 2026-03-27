@@ -4,6 +4,12 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import { BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 
+const relevanteAksjonspunktDefinisjoner = [
+  AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+  AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+  AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+];
+
 const aksjonspunktErÅpent = (ap?: AksjonspunktDto) =>
   ap ? ap.status !== ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT : false;
 
@@ -17,13 +23,16 @@ interface Props {
 
 export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const vurderBistandsvilkår = aksjonspunkter.find(
+  const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
+    relevanteAksjonspunktDefinisjoner.some(def => def === ap.definisjon),
+  );
+  const vurderBistandsvilkår = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   );
-  const lokalkontorForeslårVilkår = aksjonspunkter.find(
+  const lokalkontorForeslårVilkår = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   );
-  const lokalkontorBeslutter = aksjonspunkter.find(
+  const lokalkontorBeslutter = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
 
@@ -31,7 +40,7 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback
 
   const alleAksjonspunkterErVurdert =
     harAksjonspunkt &&
-    aksjonspunkter.every(ap => ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT);
+    relevanteAksjonspunkter.every(ap => ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT);
 
   const handleSubmit = async () => {
     setIsLoading(true);
