@@ -1,7 +1,7 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { SplittPanel } from '@k9-sak-web/gui/prosess/aktivitetspenger-inngangsvilkår/SplittPanel.js';
+import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivitetspenger-inngangsvilkår/AktivitetspengerInngangsvilkår.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
@@ -25,5 +25,5 @@ export const InngangsvilkårInitPanel = ({ api, behandling, submitCallback }: Pr
     return null;
   }
 
-  return <SplittPanel aksjonspunkter={aksjonspunkter} submitCallback={submitCallback} />;
+  return <AktivitetspengerInngangsvilkår aksjonspunkter={aksjonspunkter} submitCallback={submitCallback} />;
 };
