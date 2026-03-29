@@ -3,12 +3,12 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction';
-import { SplittPanel } from './SplittPanel';
+import { AktivitetspengerInngangsvilkår } from './AktivitetspengerInngangsvilkår';
 
 const meta = {
-  title: 'gui/prosess/aktivitetspenger-inngangsvilkår/SplittPanel',
-  component: SplittPanel,
-} satisfies Meta<typeof SplittPanel>;
+  title: 'gui/prosess/aktivitetspenger-inngangsvilkår/AktivitetspengerInngangsvilkår',
+  component: AktivitetspengerInngangsvilkår,
+} satisfies Meta<typeof AktivitetspengerInngangsvilkår>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
