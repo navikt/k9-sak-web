@@ -3,15 +3,13 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
+import { aksjonspunktErÅpent } from './utils';
 
 const relevanteAksjonspunktDefinisjoner = [
   AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
 ];
-
-const aksjonspunktErÅpent = (ap?: AksjonspunktDto) =>
-  ap ? ap.status !== ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT : false;
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
