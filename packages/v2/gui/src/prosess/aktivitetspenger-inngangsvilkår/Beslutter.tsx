@@ -2,7 +2,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import { BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { SubmitCallback } from './types';
-import { aksjonspunktErÅpent } from './utils';
+import { aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   lokalkontorBeslutterAp: AksjonspunktDto | undefined;

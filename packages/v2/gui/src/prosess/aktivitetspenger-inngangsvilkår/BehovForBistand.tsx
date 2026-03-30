@@ -2,7 +2,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import { Alert, BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { SubmitCallback } from './types';
-import { aksjonspunktErÅpent } from './utils';
+import { aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
@@ -22,9 +22,6 @@ export const BehovForBistand = ({ vurderBistandsvilkårAp, lokalkontorForeslårV
     const payload = {
       kode: aksjonspunkt.definisjon,
       begrunnelse: 'fordi',
-      // aksjonspunktGodkjenningDtos: lokalkontorBeslutter
-      //   ? [{ aksjonspunktKode: vurderBistandsvilkår?.definisjon, begrunnelse: 'OK', godkjent: true }]
-      //   : undefined,
     };
     try {
       await submitCallback([payload], [aksjonspunkt]);

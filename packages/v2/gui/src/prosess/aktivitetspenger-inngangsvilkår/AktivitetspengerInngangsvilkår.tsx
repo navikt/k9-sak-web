@@ -17,6 +17,11 @@ const CustomWarningIcon = () => (
   <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--ax-text-warning-decoration)" />
 );
 
+const tabIkon = (ap?: AksjonspunktDto) => {
+  if (!ap) return undefined;
+  return ap.status === AksjonspunktStatus.UTFØRT ? <CustomCheckmarkIcon /> : <CustomWarningIcon />;
+};
+
 const relevanteAksjonspunktDefinisjoner = [
   AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
@@ -58,33 +63,13 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback
   return (
     <Tabs value={aktivTab} onChange={setAktivTab}>
       <Tabs.List>
-        <Tabs.Tab value="søknadsfrist" label="Søknadsfrist" icon={<CustomCheckmarkIcon />} />
-        <Tabs.Tab value="alder" label="Alder" icon={<CustomCheckmarkIcon />} />
-        <Tabs.Tab value="bosatt_i_trondheim" label="Bosatt i Trondheim" icon={<CustomCheckmarkIcon />} />
-        <Tabs.Tab value="andre_livsoppholdytelser" label="Andre livsoppholdytelser" icon={<CustomCheckmarkIcon />} />
-        <Tabs.Tab
-          value="behov_for_bistand"
-          label="Behov for bistand"
-          icon={
-            vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT ? (
-              <CustomCheckmarkIcon />
-            ) : (
-              <CustomWarningIcon />
-            )
-          }
-        />
+        <Tabs.Tab value="søknadsfrist" label="Søknadsfrist" icon={tabIkon()} />
+        <Tabs.Tab value="alder" label="Alder" icon={tabIkon()} />
+        <Tabs.Tab value="bosatt_i_trondheim" label="Bosatt i Trondheim" icon={tabIkon()} />
+        <Tabs.Tab value="andre_livsoppholdytelser" label="Andre livsoppholdytelser" icon={tabIkon()} />
+        <Tabs.Tab value="behov_for_bistand" label="Behov for bistand" icon={tabIkon(vurderBistandsvilkårAp)} />
         {lokalkontorBeslutterAp && (
-          <Tabs.Tab
-            value="beslutter"
-            label="Beslutter"
-            icon={
-              lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT ? (
-                <CustomCheckmarkIcon />
-              ) : (
-                <CustomWarningIcon />
-              )
-            }
-          />
+          <Tabs.Tab value="beslutter" label="Beslutter" icon={tabIkon(lokalkontorBeslutterAp)} />
         )}
       </Tabs.List>
       <Box marginBlock="space-20 space-0">
