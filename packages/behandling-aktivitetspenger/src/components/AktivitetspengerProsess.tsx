@@ -158,7 +158,7 @@ export const AktivitetspengerProsess = ({
               );
             }
             if (urlKode === prosessStegCodes.BEREGNING) {
-              return <BeregningProsessStegInitPanel key={steg.urlKode} behandling={behandling} />;
+              return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
             }
             return null;
           })}
