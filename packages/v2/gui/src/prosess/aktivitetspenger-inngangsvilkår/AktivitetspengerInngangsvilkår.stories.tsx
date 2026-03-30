@@ -43,3 +43,13 @@ export const MedÅpentLokalkontorForeslårVilkår: Story = {
     submitCallback: asyncAction('submitCallback'),
   },
 };
+
+export const MedÅpentLokalkontorBeslutterVilkår: Story = {
+  args: {
+    aksjonspunkter: [
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
+      lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR),
+    ],
+    submitCallback: asyncAction('submitCallback'),
+  },
+};

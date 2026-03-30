@@ -54,9 +54,11 @@ export const BehovForBistand = ({ vurderBistandsvilkårAp, lokalkontorForeslårV
           </Alert>
         )}
         {vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp) ? (
-          <Button variant="primary" size="small" onClick={handleSubmit} loading={isLoading}>
-            Bekreft
-          </Button>
+          <Box>
+            <Button variant="primary" size="small" onClick={handleSubmit} loading={isLoading}>
+              Bekreft
+            </Button>
+          </Box>
         ) : null}
       </VStack>
     </Box>
