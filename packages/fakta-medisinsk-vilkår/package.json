@@ -14,7 +14,7 @@
     "@navikt/ds-react": "8.6.0",
     "@navikt/ft-plattform-komponenter": "10.5.14",
     "@popperjs/core": "2.11.8",
-    "@tanstack/react-query": "5.91.3",
+    "@tanstack/react-query": "5.95.0",
     "axios": "1.13.6",
     "classnames": "2.5.1",
     "dayjs": "1.11.20",
