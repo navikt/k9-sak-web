@@ -34,3 +34,9 @@ export const beregningsgrunnlagQueryOptions = (api: UngSakApi, behandling: Behan
     queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid, behandling.versjon, enabled],
     queryFn: () => (enabled ? api.getBeregningsgrunnlag(behandling.uuid) : null),
   });
+
+export const innloggetBrukerQueryOptions = (api: UngSakApi) =>
+  queryOptions({
+    queryKey: ['innlogget-bruker'],
+    queryFn: () => api.getInnloggetBruker(),
+  });

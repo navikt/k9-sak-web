@@ -8,9 +8,15 @@ interface Props {
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
   submitCallback: SubmitCallback;
+  kanSaksbehandle: boolean;
 }
 
-export const BehovForBistand = ({ vurderBistandsvilkårAp, lokalkontorForeslårVilkårAp, submitCallback }: Props) => {
+export const BehovForBistand = ({
+  vurderBistandsvilkårAp,
+  lokalkontorForeslårVilkårAp,
+  submitCallback,
+  kanSaksbehandle,
+}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -40,7 +46,7 @@ export const BehovForBistand = ({ vurderBistandsvilkårAp, lokalkontorForeslårV
             <BodyShort weight="semibold">Vurder bistandsvilkår</BodyShort>
           </>
         )}
-        {lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
+        {kanSaksbehandle && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
           <Alert variant="success" size="small">
             <Box marginBlock="space-2 space-12">
               <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
@@ -50,7 +56,7 @@ export const BehovForBistand = ({ vurderBistandsvilkårAp, lokalkontorForeslårV
             </Button>
           </Alert>
         )}
-        {vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp) ? (
+        {kanSaksbehandle && vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp) ? (
           <Box>
             <Button variant="primary" size="small" onClick={handleSubmit} loading={isLoading}>
               Bekreft

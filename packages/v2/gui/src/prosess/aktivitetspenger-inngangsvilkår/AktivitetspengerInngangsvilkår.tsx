@@ -1,6 +1,7 @@
-import { ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Box, Tabs } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
@@ -30,10 +31,12 @@ const relevanteAksjonspunktDefinisjoner = [
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
+  innloggetBruker: InnloggetAnsattUngV2Dto;
   submitCallback: SubmitCallback;
 }
 
-export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback }: Props) => {
+export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruker, submitCallback }: Props) => {
+  const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
     relevanteAksjonspunktDefinisjoner.some(def => def === ap.definisjon),
   );
@@ -89,6 +92,7 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback
           <BehovForBistand
             vurderBistandsvilkårAp={vurderBistandsvilkårAp}
             lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
+            kanSaksbehandle={kanSaksbehandle}
             submitCallback={submitCallback}
           />
         </Tabs.Panel>
@@ -97,6 +101,7 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback
             <Beslutter
               lokalkontorBeslutterAp={lokalkontorBeslutterAp}
               vurderBistandsvilkårAp={vurderBistandsvilkårAp}
+              innloggetBruker={innloggetBruker}
               submitCallback={submitCallback}
             />
           </Tabs.Panel>
