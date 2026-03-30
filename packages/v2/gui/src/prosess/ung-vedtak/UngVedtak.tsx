@@ -23,7 +23,7 @@ interface UngVedtakProps {
   aksjonspunkter: AksjonspunktDto[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: (data: Array<{ kode: AksjonspunktDto['definisjon'] }>) => Promise<unknown>;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;

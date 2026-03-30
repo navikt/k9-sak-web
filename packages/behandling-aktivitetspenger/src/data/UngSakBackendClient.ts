@@ -5,6 +5,7 @@ import {
   avp_getBeregningsgrunnlag,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
+  forutgåendeMedlemskap_medlemskap,
   vilkår_getVilkårV3,
 } from '@navikt/ung-sak-typescript-client/sdk';
 import {
@@ -45,6 +46,9 @@ export class UngSakBackendClient implements UngSakApi {
     return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid } })).data;
   }
 
+  async hentMedlemskapFraSøknad(behandlingUuid: string) {
+    return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } })).data;
+  }
   async getBeregningsgrunnlag(behandlingUuid: string) {
     return (await avp_getBeregningsgrunnlag({ query: { behandlingUuid } })).data;
   }

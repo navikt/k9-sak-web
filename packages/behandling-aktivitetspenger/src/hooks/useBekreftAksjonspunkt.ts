@@ -48,7 +48,7 @@ export const useBekreftAksjonspunkt = ({
   return useCallback(
     async (
       aksjonspunktModels: any[],
-      aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[] = [],
+      aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
       skaForhindreOppdaterUrl?: boolean,
     ) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {

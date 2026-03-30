@@ -24,6 +24,8 @@ import { UngSakApi } from '../data/UngSakApi';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
+import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
+import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -142,7 +144,7 @@ export const AktivitetspengerProsess = ({
         tekstkode="Behandlingen er sendt til godkjenning."
       />
       <ProsessMeny steg={prosessteg}>
-        <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16">
+        <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16" margin="space-16">
           {prosessteg.map(steg => {
             const urlKode = steg.urlKode;
             if (urlKode === prosessStegCodes.VEDTAK) {
@@ -160,6 +162,28 @@ export const AktivitetspengerProsess = ({
             if (urlKode === prosessStegCodes.BEREGNING) {
               return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
             }
+            if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
+              return (
+                <InngangsvilkårInitPanel
+                  api={api}
+                  behandling={behandling}
+                  submitCallback={bekreftAksjonspunktCallback}
+                  key={steg.urlKode}
+                />
+              );
+            }
+            if (urlKode === prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP) {
+              return (
+                <ForutgåendeMedlemskapInitPanel
+                  api={api}
+                  behandling={behandling}
+                  submitCallback={bekreftAksjonspunktCallback}
+                  key={steg.urlKode}
+                  readOnly={isReadOnly}
+                />
+              );
+            }
+
             return null;
           })}
         </Box>
