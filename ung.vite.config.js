@@ -100,7 +100,7 @@ export default ({ mode }) => {
       // Relative to the root
       outDir: './dist/ung/web',
       sourcemap: true,
-      rollupOptions: {
+      rolldownOptions: {
         input: './ung.html',
         external: [
           "mockServiceWorker.js"
