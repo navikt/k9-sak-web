@@ -8,6 +8,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 
 export interface UngSakApi {
   readonly backend: 'ungsak';
@@ -23,4 +24,5 @@ export interface UngSakApi {
     behandlingUuid: string,
   ): Promise<ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto>;
+  getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
 }

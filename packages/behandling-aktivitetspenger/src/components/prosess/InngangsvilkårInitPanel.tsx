@@ -6,7 +6,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { UngSakApi } from '../../data/UngSakApi';
-import { aksjonspunkterQueryOptions } from '../../data/ungSakQueryOptions';
+import { aksjonspunkterQueryOptions, innloggetBrukerQueryOptions } from '../../data/ungSakQueryOptions';
 
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
 
@@ -19,11 +19,18 @@ interface Props {
 export const InngangsvilkårInitPanel = ({ api, behandling, submitCallback }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
+  const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
   if (!erValgt) {
     return null;
   }
 
-  return <AktivitetspengerInngangsvilkår aksjonspunkter={aksjonspunkter} submitCallback={submitCallback} />;
+  return (
+    <AktivitetspengerInngangsvilkår
+      aksjonspunkter={aksjonspunkter}
+      innloggetBruker={innloggetBruker}
+      submitCallback={submitCallback}
+    />
+  );
 };
