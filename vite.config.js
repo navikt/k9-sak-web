@@ -1,7 +1,7 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
-import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
@@ -90,6 +90,14 @@ export default ({ mode }) => {
       }),
       svgr(),
       excludeMsw(),
+      sentryVitePlugin({
+        project: 'k9-sak-web',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        release: {
+          name: process.env.VITE_SENTRY_RELEASE,
+        },
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+      }),
     ],
     build: {
       // Relative to the root
@@ -99,7 +107,6 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
-        plugins: [sourcemaps({ exclude: /@sentry/ })],
         output: {
           manualChunks: {
             diagnosekoder: ['@navikt/diagnosekoder']

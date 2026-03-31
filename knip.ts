@@ -9,13 +9,7 @@ const config: KnipConfig = {
   ignore: ['packages/assets/styles/dayPicker.css', '.yarn/**', 'server/**'],
   workspaces: {
     '.': {
-      entry: [
-        'packages/sak-app/src/index.ts',
-        'ung.vite.config.js',
-        'aktivitetspenger.vite.config.js',
-        'scripts/sentry-release.cjs',
-        'scripts/sentry-release-ung.cjs',
-      ],
+      entry: ['packages/sak-app/src/index.ts', 'ung.vite.config.js', 'aktivitetspenger.vite.config.js'],
     },
     'packages/ung/sak-app': {
       entry: ['bootstrapUng.tsx'],
