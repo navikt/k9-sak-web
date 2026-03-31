@@ -7,7 +7,7 @@ export const Søknadsfrist = () => {
 
   return (
     <VilkårSplittPanel
-      items={[{ id: '1', status: 'success', label: '01.11.2026' }]}
+      items={[{ id: '1', status: 'success', label: '01.11.2026', lovreferanse: 'Forskrift om aktivitetspenger § 4-3' }]}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av søknadsfrist"

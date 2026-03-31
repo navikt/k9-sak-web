@@ -12,6 +12,7 @@ import { Beslutter } from './Beslutter';
 import { BosattITrondheim } from './BosattITrondheim';
 import { Søknadsfrist } from './Søknadsfrist';
 import type { SubmitCallback } from './types';
+import { InngangsvilkårTab } from './types';
 
 const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
 const CustomWarningIcon = () => (
@@ -52,43 +53,51 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruke
 
   const utledAktivTab = () => {
     if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status !== AksjonspunktStatus.UTFØRT) {
-      return 'beslutter';
+      return InngangsvilkårTab.BESLUTTER;
     }
-    return 'behov_for_bistand';
+    return InngangsvilkårTab.BEHOV_FOR_BISTAND;
   };
 
-  const [aktivTab, setAktivTab] = useState(utledAktivTab);
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab);
 
   useEffect(() => {
     setAktivTab(utledAktivTab());
   }, [aksjonspunkter]);
 
   return (
-    <Tabs value={aktivTab} onChange={setAktivTab}>
+    <Tabs value={aktivTab} onChange={value => setAktivTab(value as InngangsvilkårTab)}>
       <Tabs.List>
-        <Tabs.Tab value="søknadsfrist" label="Søknadsfrist" icon={tabIkon()} />
-        <Tabs.Tab value="alder" label="Alder" icon={tabIkon()} />
-        <Tabs.Tab value="bosatt_i_trondheim" label="Bosatt i Trondheim" icon={tabIkon()} />
-        <Tabs.Tab value="andre_livsoppholdytelser" label="Andre livsoppholdytelser" icon={tabIkon()} />
-        <Tabs.Tab value="behov_for_bistand" label="Behov for bistand" icon={tabIkon(vurderBistandsvilkårAp)} />
+        <Tabs.Tab value={InngangsvilkårTab.SØKNADSFRIST} label="Søknadsfrist" icon={tabIkon()} />
+        <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIkon()} />
+        <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon()} />
+        <Tabs.Tab
+          value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
+          label="Andre livsoppholdytelser"
+          icon={tabIkon()}
+        />
+        <Tabs.Tab
+          value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
+          label="Behov for bistand"
+          icon={tabIkon(vurderBistandsvilkårAp)}
+        />
         {lokalkontorBeslutterAp && (
-          <Tabs.Tab value="beslutter" label="Beslutter" icon={tabIkon(lokalkontorBeslutterAp)} />
+          <Tabs.Tab value={InngangsvilkårTab.BESLUTTER} label="Beslutter" icon={tabIkon(lokalkontorBeslutterAp)} />
         )}
       </Tabs.List>
       <Box marginBlock="space-20 space-0">
-        <Tabs.Panel value="søknadsfrist">
+        <Tabs.Panel value={InngangsvilkårTab.SØKNADSFRIST}>
           <Søknadsfrist />
         </Tabs.Panel>
-        <Tabs.Panel value="alder">
+        <Tabs.Panel value={InngangsvilkårTab.ALDER}>
           <Alder />
         </Tabs.Panel>
-        <Tabs.Panel value="bosatt_i_trondheim">
+        <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
           <BosattITrondheim />
         </Tabs.Panel>
-        <Tabs.Panel value="andre_livsoppholdytelser">
+        <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
           <AndreLivsoppholdytelser />
         </Tabs.Panel>
-        <Tabs.Panel value="behov_for_bistand">
+        <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
           <BehovForBistand
             vurderBistandsvilkårAp={vurderBistandsvilkårAp}
             lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
@@ -97,12 +106,13 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruke
           />
         </Tabs.Panel>
         {lokalkontorBeslutterAp && (
-          <Tabs.Panel value="beslutter">
+          <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
             <Beslutter
               lokalkontorBeslutterAp={lokalkontorBeslutterAp}
               vurderBistandsvilkårAp={vurderBistandsvilkårAp}
               innloggetBruker={innloggetBruker}
               submitCallback={submitCallback}
+              onTabChange={setAktivTab}
             />
           </Tabs.Panel>
         )}
