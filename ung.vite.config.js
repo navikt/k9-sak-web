@@ -85,14 +85,6 @@ export default ({ mode }) => {
       }),
       svgr(),
       excludeMsw(),
-      sentryVitePlugin({
-        project: 'ung-sak-web',
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        release: {
-          name: process.env.VITE_SENTRY_RELEASE,
-        },
-        disable: !process.env.SENTRY_AUTH_TOKEN,
-      }),
       {
         // Endre namn på bygd entrypoint html frå ung.html til index.html
         name: "rename-html-entry",
@@ -102,7 +94,15 @@ export default ({ mode }) => {
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
         }
-      }
+      },
+      sentryVitePlugin({
+        project: 'ung-sak-web',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        release: {
+          name: process.env.VITE_SENTRY_RELEASE,
+        },
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+      }),
     ],
     build: {
       // Relative to the root
