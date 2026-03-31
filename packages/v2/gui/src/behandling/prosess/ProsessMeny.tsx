@@ -20,6 +20,7 @@ export interface ProsessSteg {
   type: ProcessMenuStepType;
   /** Valgfritt: Vis delvis fullføringsindikator */
   usePartialStatus?: boolean;
+  locked?: boolean;
 }
 
 /**
@@ -122,6 +123,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
       isActive: prosessSteg.id === valgtPanelId,
       type: prosessSteg.type,
       usePartialStatus: prosessSteg.usePartialStatus,
+      locked: prosessSteg.locked,
     }));
   }, [prosessmotorSteg, valgtPanelId]);
 

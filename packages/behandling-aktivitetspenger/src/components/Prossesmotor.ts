@@ -5,6 +5,7 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
@@ -12,7 +13,11 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { UngSakApi } from '../data/UngSakApi';
-import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../data/ungSakQueryOptions';
+import {
+  aksjonspunkterQueryOptions,
+  innloggetBrukerQueryOptions,
+  vilkårQueryOptions,
+} from '../data/ungSakQueryOptions';
 
 const PROSESS_STEG_KODER = {
   INNGANGSVILKAR: prosessStegCodes.INNGANGSVILKAR,
@@ -67,6 +72,7 @@ interface ProcessMenuStep {
   type: ProcessMenuStepType;
   usePartialStatus?: boolean;
   erVurdert?: boolean;
+  locked?: boolean;
   urlKode?: string;
 }
 
@@ -156,6 +162,22 @@ const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[]) => {
   return ProcessMenuStepType.success;
 };
 
+const byggInngangsvilkårPanel = (
+  aksjonspunkter: AksjonspunktDto[],
+  innloggetBruker: InnloggetAnsattUngV2Dto,
+): ProcessMenuStep => {
+  const type = beregnInngangsvilkårType(aksjonspunkter);
+  const isLocked =
+    type === ProcessMenuStepType.success &&
+    !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
+    !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
+
+  return {
+    ...byggPanelUtenVilkår(true, type, PANEL_KONFIG.inngangsvilkår),
+    locked: isLocked,
+  };
+};
+
 interface ProsessmotorProps {
   api: UngSakApi;
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
@@ -164,13 +186,10 @@ interface ProsessmotorProps {
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
+  const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
 
   return useMemo(() => {
-    const inngangsvilkårPanel = byggPanelUtenVilkår(
-      true,
-      beregnInngangsvilkårType(aksjonspunkter),
-      PANEL_KONFIG.inngangsvilkår,
-    );
+    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, innloggetBruker);
     const medlemskapPanel = byggVilkårPanel(
       inngangsvilkårPanel.erVurdert,
       vilkår,
