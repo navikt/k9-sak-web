@@ -1,4 +1,10 @@
-import { CalendarIcon, CheckmarkCircleFillIcon, ChevronRightIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import {
+  CalendarIcon,
+  CheckmarkCircleFillIcon,
+  ChevronRightIcon,
+  ExclamationmarkTriangleFillIcon,
+  XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
@@ -22,11 +28,11 @@ interface VilkårSplittPanelProps {
 const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
   switch (status) {
     case 'success':
-      return <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />;
+      return <CheckmarkCircleFillIcon fontSize={24} color="var(--ax-bg-success-strong)" />;
     case 'error':
-      return <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />;
+      return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
     case 'warning':
-      return <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-warning-strong)' }} />;
+      return <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />;
   }
 };
 

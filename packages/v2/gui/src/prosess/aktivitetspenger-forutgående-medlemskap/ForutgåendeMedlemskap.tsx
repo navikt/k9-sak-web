@@ -2,10 +2,14 @@ import type { ung_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@k9-sak-web
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
-import { Box, Button, Heading, Radio, ReadMore, VStack } from '@navikt/ds-react';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { BodyShort, Box, Button, HGrid, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
+import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import { VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 
 interface Props {
   submitCallback: (
@@ -15,26 +19,55 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'> | undefined;
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
-  vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
+  vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto;
 }
+
+type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
 interface FormData {
-  erGodkjent: string;
+  vurderinger: Record<string, Vurdering>;
 }
 
-const buildInitialValues = (vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[]): FormData => {
-  if (vilkår.some(v => v.perioder?.some(p => p.vilkarStatus === Utfall.OPPFYLT))) {
-    return { erGodkjent: 'true' };
-  }
-  if (vilkår.some(v => v.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT))) {
-    return { erGodkjent: 'false' };
-  }
-  return {
-    erGodkjent: '',
-  };
+const utfallTilVurdering = (utfall: string): Vurdering => {
+  if (utfall === Utfall.OPPFYLT) return 'oppfylt';
+  if (utfall === Utfall.IKKE_OPPFYLT) return 'ikkeOppfylt';
+  return '';
 };
 
-export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly, vilkår }: Props) => {
+const buildInitialValues = (vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto): FormData => ({
+  vurderinger: Object.fromEntries(
+    (vilkår.perioder ?? []).map(p => [p.periode.fom, utfallTilVurdering(p.vilkarStatus)]),
+  ),
+});
+
+const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
+  if (status === Utfall.OPPFYLT) return 'success';
+  if (status === Utfall.IKKE_OPPFYLT) return 'error';
+  return 'warning';
+};
+
+export const ForutgåendeMedlemskap = ({
+  submitCallback,
+  aksjonspunkt,
+  readOnly,
+  vilkår,
+  forutgåendeMedlemskap,
+}: Props) => {
+  const items: VilkårSplittPanelItem[] = (vilkår.perioder ?? []).map(p => ({
+    id: p.periode.fom,
+    status: getItemStatus(p.vilkarStatus),
+    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+  }));
+
+  const [selectedItemId, setSelectedItemId] = useState(items[0]?.id ?? '');
+
+  const selectedPeriode = vilkår.perioder?.find(p => p.periode.fom === selectedItemId)?.periode;
+  const overlappendeMedlemskap = selectedPeriode
+    ? forutgåendeMedlemskap.filter(
+        m => m.periode && m.periode.fom <= selectedPeriode.tom && m.periode.tom >= selectedPeriode.fom,
+      )
+    : [];
+
   const formMethods = useForm<FormData>({
     defaultValues: buildInitialValues(vilkår),
   });
@@ -43,7 +76,7 @@ export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly,
     if (!aksjonspunkt) {
       return;
     }
-    const erVilkarOk = data.erGodkjent === 'true';
+    const erVilkarOk = data.vurderinger[selectedItemId] === 'oppfylt';
     const payload = {
       kode: aksjonspunkt.definisjon,
       begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
@@ -54,29 +87,62 @@ export const ForutgåendeMedlemskap = ({ submitCallback, aksjonspunkt, readOnly,
   };
 
   return (
-    <Box width="fit-content">
-      <Heading size="medium" level="1" spacing>
-        Medlemskap
-      </Heading>
-
+    <VilkårSplittPanel
+      items={items}
+      selectedItemId={selectedItemId}
+      onItemSelect={setSelectedItemId}
+      detailHeading="Forutgående medlemskap"
+    >
       <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
         <VStack gap="space-16">
           <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>
+          {overlappendeMedlemskap.length > 0 && (
+            <VStack gap="space-8">
+              <Label size="small" as="p">
+                Bosteder i utlandet siste 5 år
+              </Label>
+              <HGrid columns="max-content max-content" gap="space-8" align="center">
+                {overlappendeMedlemskap.map(medlemskap => {
+                  if (!medlemskap.periode) {
+                    return null;
+                  }
+                  const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
+                  return (
+                    <Fragment key={`${medlemskap.land}_${formatertPeriode}`}>
+                      <BodyShort size="small">{`${medlemskap.land}: ${formatertPeriode}`}</BodyShort>
+                      {medlemskap.harTrygdeavtale ? (
+                        <Tag variant="outline" data-color="success" size="small">
+                          Innenfor EØS
+                        </Tag>
+                      ) : (
+                        <Tag variant="outline" data-color="danger" size="small">
+                          Utenfor EØS
+                        </Tag>
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </HGrid>
+            </VStack>
+          )}
           <RhfRadioGroup
+            key={selectedItemId}
             control={formMethods.control}
-            name="erGodkjent"
+            name={`vurderinger.${selectedItemId}` as `vurderinger.${string}`}
             legend="Er forutgående medlemskap godkjent?"
             validate={[required]}
             disabled={readOnly}
           >
-            <Radio value="true">Ja</Radio>
-            <Radio value="false">Nei</Radio>
+            <Radio value="oppfylt">Ja</Radio>
+            <Radio value="ikkeOppfylt">Nei</Radio>
           </RhfRadioGroup>
-          <Button type="submit" size="small" disabled={readOnly} loading={formMethods.formState.isSubmitting}>
-            Bekreft og fortsett
-          </Button>
+          <Box>
+            <Button type="submit" size="small" disabled={readOnly} loading={formMethods.formState.isSubmitting}>
+              Bekreft og fortsett
+            </Button>
+          </Box>
         </VStack>
       </RhfForm>
-    </Box>
+    </VilkårSplittPanel>
   );
 };
