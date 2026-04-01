@@ -34,7 +34,7 @@
     "@navikt/ft-form-validators": "4.4.26",
     "@navikt/ft-types": "^5.3.25",
     "@navikt/ft-utils": "3.11.13",
-    "@tanstack/react-query": "5.91.3",
+    "@tanstack/react-query": "5.95.2",
     "@types/css-tree": "2.3.11",
     "@types/object-hash": "3.0.6",
     "axios": "1.13.6",
