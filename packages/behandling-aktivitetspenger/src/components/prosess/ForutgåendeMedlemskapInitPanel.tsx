@@ -22,9 +22,9 @@ interface Props {
 export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, submitCallback }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const { data: vilkår = [] } = useSuspenseQuery({
+  const { data: vilkår } = useSuspenseQuery({
     ...vilkårQueryOptions(api, behandling),
-    select: data => data.filter(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+    select: data => data.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
   });
   const { data: forutgåendeMedlemskap } = useSuspenseQuery({
     queryKey: ['forutgåendeMedlemskap', behandling.uuid],
@@ -35,7 +35,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, sub
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
-  if (!erValgt) {
+  if (!erValgt || !vilkår) {
     return null;
   }
 
