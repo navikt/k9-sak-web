@@ -1,8 +1,28 @@
-import { ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
-import { useState } from 'react';
+import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { Box, Tabs } from '@navikt/ds-react';
+import { useEffect, useState } from 'react';
+import { Alder } from './Alder';
+import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
+import { BehovForBistand } from './BehovForBistand';
+import { Beslutter } from './Beslutter';
+import { BosattITrondheim } from './BosattITrondheim';
+import { Søknadsfrist } from './Søknadsfrist';
+import type { SubmitCallback } from './types';
+import { InngangsvilkårTab } from './types';
+
+const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
+const CustomWarningIcon = () => (
+  <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--ax-text-warning-decoration)" />
+);
+
+const tabIkon = (ap?: AksjonspunktDto) => {
+  if (!ap) return undefined;
+  return ap.status === AksjonspunktStatus.UTFØRT ? <CustomCheckmarkIcon /> : <CustomWarningIcon />;
+};
 
 const relevanteAksjonspunktDefinisjoner = [
   AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
@@ -10,88 +30,93 @@ const relevanteAksjonspunktDefinisjoner = [
   AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
 ];
 
-const aksjonspunktErÅpent = (ap?: AksjonspunktDto) =>
-  ap ? ap.status !== ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT : false;
-
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
-  submitCallback: (
-    data: Array<{ kode: AksjonspunktDto['definisjon']; begrunnelse: string }>,
-    aksjonspunkt: Array<Pick<AksjonspunktDto, 'definisjon'>>,
-  ) => Promise<unknown>;
+  innloggetBruker: InnloggetAnsattUngV2Dto;
+  submitCallback: SubmitCallback;
 }
 
-export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, submitCallback }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruker, submitCallback }: Props) => {
+  const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
     relevanteAksjonspunktDefinisjoner.some(def => def === ap.definisjon),
   );
-  const vurderBistandsvilkår = relevanteAksjonspunkter.find(
+  const vurderBistandsvilkårAp = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   );
-  const lokalkontorForeslårVilkår = relevanteAksjonspunkter.find(
+  const lokalkontorForeslårVilkårAp = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   );
-  const lokalkontorBeslutter = relevanteAksjonspunkter.find(
+  const lokalkontorBeslutterAp = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
 
-  const harAksjonspunkt = !!vurderBistandsvilkår || !!lokalkontorForeslårVilkår || !!lokalkontorBeslutter;
-
-  const alleAksjonspunkterErVurdert =
-    harAksjonspunkt &&
-    relevanteAksjonspunkter.every(ap => ap.status === ung_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.UTFØRT);
-
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    const aksjonspunkt = lokalkontorBeslutter ?? lokalkontorForeslårVilkår ?? vurderBistandsvilkår;
-    if (!aksjonspunkt) {
-      return;
+  const utledAktivTab = () => {
+    if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status !== AksjonspunktStatus.UTFØRT) {
+      return InngangsvilkårTab.BESLUTTER;
     }
-    const payload = {
-      kode: aksjonspunkt.definisjon,
-      begrunnelse: 'fordi',
-
-      aksjonspunktGodkjenningDtos: lokalkontorBeslutter
-        ? [{ aksjonspunktKode: vurderBistandsvilkår?.definisjon, begrunnelse: 'OK', godkjent: true }]
-        : undefined,
-    };
-    try {
-      await submitCallback([payload], [aksjonspunkt]);
-    } finally {
-      setIsLoading(false);
-    }
+    return InngangsvilkårTab.BEHOV_FOR_BISTAND;
   };
 
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab);
+
+  useEffect(() => {
+    setAktivTab(utledAktivTab());
+  }, [aksjonspunkter]);
+
   return (
-    <Box width="fit-content">
-      <Heading size="medium" level="1" spacing>
-        Inngangsvilkår
-      </Heading>
-      <VStack gap="space-16">
-        {vurderBistandsvilkår && aksjonspunktErÅpent(vurderBistandsvilkår) && (
-          <>
-            <BodyShort weight="semibold">Vurder bistandsvilkår</BodyShort>
-          </>
+    <Tabs value={aktivTab} onChange={value => setAktivTab(value as InngangsvilkårTab)}>
+      <Tabs.List>
+        <Tabs.Tab value={InngangsvilkårTab.SØKNADSFRIST} label="Søknadsfrist" icon={tabIkon()} />
+        <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIkon()} />
+        <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon()} />
+        <Tabs.Tab
+          value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
+          label="Andre livsoppholdytelser"
+          icon={tabIkon()}
+        />
+        <Tabs.Tab
+          value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
+          label="Behov for bistand"
+          icon={tabIkon(vurderBistandsvilkårAp)}
+        />
+        {lokalkontorBeslutterAp && (
+          <Tabs.Tab value={InngangsvilkårTab.BESLUTTER} label="Beslutter" icon={tabIkon(lokalkontorBeslutterAp)} />
         )}
-        {lokalkontorForeslårVilkår && aksjonspunktErÅpent(lokalkontorForeslårVilkår) && (
-          <>
-            <BodyShort weight="semibold">Lokalkontor foreslår vilkår</BodyShort>
-          </>
+      </Tabs.List>
+      <Box marginBlock="space-20 space-0">
+        <Tabs.Panel value={InngangsvilkårTab.SØKNADSFRIST}>
+          <Søknadsfrist />
+        </Tabs.Panel>
+        <Tabs.Panel value={InngangsvilkårTab.ALDER}>
+          <Alder />
+        </Tabs.Panel>
+        <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
+          <BosattITrondheim />
+        </Tabs.Panel>
+        <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
+          <AndreLivsoppholdytelser />
+        </Tabs.Panel>
+        <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
+          <BehovForBistand
+            vurderBistandsvilkårAp={vurderBistandsvilkårAp}
+            lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
+            kanSaksbehandle={kanSaksbehandle}
+            submitCallback={submitCallback}
+          />
+        </Tabs.Panel>
+        {lokalkontorBeslutterAp && (
+          <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
+            <Beslutter
+              lokalkontorBeslutterAp={lokalkontorBeslutterAp}
+              vurderBistandsvilkårAp={vurderBistandsvilkårAp}
+              innloggetBruker={innloggetBruker}
+              submitCallback={submitCallback}
+              onTabChange={setAktivTab}
+            />
+          </Tabs.Panel>
         )}
-        {lokalkontorBeslutter && aksjonspunktErÅpent(lokalkontorBeslutter) && (
-          <>
-            <BodyShort weight="semibold">Lokalkontor beslutter vilkår</BodyShort>
-            <BodyShort>Du må ha rolle LOKALKONTOR_BESLUTTER</BodyShort>
-          </>
-        )}
-        {alleAksjonspunkterErVurdert && <BodyShort>Alle aksjonspunkter er vurdert</BodyShort>}
-        {harAksjonspunkt && !alleAksjonspunkterErVurdert && (
-          <Button variant="primary" size="small" onClick={handleSubmit} loading={isLoading}>
-            Bekreft
-          </Button>
-        )}
-      </VStack>
-    </Box>
+      </Box>
+    </Tabs>
   );
 };
