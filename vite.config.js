@@ -95,14 +95,16 @@ export default ({ mode }) => {
       // Relative to the root
       outDir: './dist/k9/web',
       sourcemap: true,
-      rollupOptions: {
+      rolldownOptions: {
         external: [
           "mockServiceWorker.js"
         ],
         plugins: [sourcemaps({ exclude: /@sentry/ })],
         output: {
-          manualChunks: {
-            diagnosekoder: ['@navikt/diagnosekoder']
+          manualChunks(id) {
+            if (id.includes('@navikt/diagnosekoder')) {
+              return 'diagnosekoder';
+            }
           }
         }
       },
