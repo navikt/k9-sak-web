@@ -1,7 +1,7 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
 import path from 'path';
-import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from 'vite-plugin-svgr';
@@ -94,7 +94,15 @@ export default ({ mode }) => {
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
         }
-      }
+      },
+      sentryVitePlugin({
+        project: 'ung-sak-web',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        release: {
+          name: process.env.VITE_SENTRY_RELEASE,
+        },
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+      }),
     ],
     build: {
       // Relative to the root
@@ -105,7 +113,6 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
-        plugins: [sourcemaps({ exclude: /@sentry/ })],
       },
     },
   });
