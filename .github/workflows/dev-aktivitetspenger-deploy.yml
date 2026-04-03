@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - aktivitetspenger
+      - feat/aktivitetspenger-medlemskap
 
 jobs:
   build-deploy:
