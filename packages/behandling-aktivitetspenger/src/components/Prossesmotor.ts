@@ -217,5 +217,5 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       urlKode: prosessStegCodes.VEDTAK,
     };
     return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, vedtakPanel];
-  }, [vilkår, aksjonspunkter, behandling]);
+  }, [aksjonspunkter, innloggetBruker, vilkår, behandling]);
 };

@@ -1,6 +1,6 @@
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import AktivitetspengerBeregning from './AktivitetspengerBeregning';
+import { AktivitetspengerBeregning } from './AktivitetspengerBeregning';
 
 const data: BeregningsgrunnlagDto = {
   skjæringstidspunkt: '2026-03-17',
