@@ -21,7 +21,7 @@ interface Props {
   data: BeregningsgrunnlagDto;
 }
 
-const AktivitetspengerBeregning = ({ data }: Props) => {
+export const AktivitetspengerBeregning = ({ data }: Props) => {
   const årstallForSkjæringstidspunkt = new Date(data.skjæringstidspunkt).getFullYear();
   const isBesteberegningSnittSisteTreÅr =
     data.besteBeregningResultatType === BesteBeregningResultatType.SNITT_SISTE_TRE_ÅR;
@@ -128,5 +128,3 @@ const AktivitetspengerBeregning = ({ data }: Props) => {
     </VStack>
   );
 };
-
-export default AktivitetspengerBeregning;

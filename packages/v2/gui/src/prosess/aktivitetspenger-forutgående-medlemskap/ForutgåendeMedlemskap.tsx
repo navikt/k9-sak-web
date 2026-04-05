@@ -1,4 +1,4 @@
-import type { ung_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { UngSakVilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
@@ -19,7 +19,7 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'> | undefined;
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
-  vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto;
+  vilkår: UngSakVilkårMedPerioderDto;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -34,7 +34,7 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto): FormData => ({
+const buildInitialValues = (vilkår: UngSakVilkårMedPerioderDto): FormData => ({
   vurderinger: Object.fromEntries(
     (vilkår.perioder ?? []).map(p => [p.periode.fom, utfallTilVurdering(p.vilkarStatus)]),
   ),
@@ -128,7 +128,7 @@ export const ForutgåendeMedlemskap = ({
           <RhfRadioGroup
             key={selectedItemId}
             control={formMethods.control}
-            name={`vurderinger.${selectedItemId}` as `vurderinger.${string}`}
+            name={`vurderinger.${selectedItemId}`}
             legend="Er forutgående medlemskap godkjent?"
             validate={[required]}
             disabled={readOnly}
