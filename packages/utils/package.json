@@ -12,6 +12,6 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "^11.7.15",
     "moment": "2.30.1",
     "react": "19.2.4",
-    "react-intl": "8.1.3"
+    "react-intl": "10.1.1"
   }
 }
