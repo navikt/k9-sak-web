@@ -21,7 +21,7 @@ const ERROR = 2;
 
 const config = tseslint.config(
   {
-    ignores: ['server/**'],
+    ignores: ['**', '!packages/**', 'packages/**/node_modules/**'],
   },
   ...pluginQuery.configs['flat/recommended'],
   eslint.configs.recommended,
@@ -40,7 +40,7 @@ const config = tseslint.config(
       globals: {
         ...globals.browser,
       },
-      parserOptions: { project: './tsconfig.json' },
+      parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
     },
     linterOptions: {
       // Vurder å enable denne seinare
@@ -82,6 +82,14 @@ const config = tseslint.config(
           ],
         },
       ],
+      '@tanstack/query/exhaustive-deps': [
+        'warn',
+        {
+          allowlist: {
+            variables: ['api'],
+          }
+        }
+      ]
     },
   },
   {
