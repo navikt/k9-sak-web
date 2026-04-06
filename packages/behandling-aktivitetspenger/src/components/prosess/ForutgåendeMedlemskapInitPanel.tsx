@@ -1,39 +1,55 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ForutgåendeMedlemskap } from '@k9-sak-web/gui/prosess/aktivitetspenger-forutgående-medlemskap/ForutgåendeMedlemskap.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ung_kodeverk_vilkår_VilkårType } from '@navikt/ung-sak-typescript-client/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useContext } from 'react';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 import { UngSakApi } from '../../data/UngSakApi';
-import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../../data/ungSakQueryOptions';
+import {
+  aksjonspunkterQueryOptions,
+  innloggetBrukerQueryOptions,
+  vilkårQueryOptions,
+} from '../../data/ungSakQueryOptions';
 
 const PANEL_ID = prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP;
 
 interface Props {
   api: UngSakApi;
   behandling: BehandlingDto;
-  readOnly: boolean;
   submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
 }
 
-export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, submitCallback }: Props) => {
+export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, submitCallback }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
-  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const { data: vilkår } = useSuspenseQuery({
-    ...vilkårQueryOptions(api, behandling),
-    select: data => data.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
-  });
-  const { data: forutgåendeMedlemskap } = useSuspenseQuery({
-    queryKey: ['forutgåendeMedlemskap', behandling.uuid],
-    queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
-    select: data => {
-      return data.medlemskapFraBruker ?? [];
-    },
-  });
+  const [{ data: aksjonspunkter = [] }, { data: vilkår }, { data: forutgåendeMedlemskap }, { data: innloggetBruker }] =
+    useSuspenseQueries({
+      queries: [
+        aksjonspunkterQueryOptions(api, behandling),
+        {
+          ...vilkårQueryOptions(api, behandling),
+          select: (data: VilkårMedPerioderDto[]) =>
+            data.find(v => v.vilkarType === vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+        },
+        {
+          queryKey: ['forutgåendeMedlemskap', behandling.uuid],
+          queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
+          select: (data: ForutgåendeMedlemskapResponse) => data.medlemskapFraBruker ?? [],
+        },
+        innloggetBrukerQueryOptions(api),
+      ],
+    });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const isReadOnly = useMemo(() => {
+    return (
+      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
+      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
+    );
+  }, [innloggetBruker]);
 
   if (!erValgt || !vilkår) {
     return null;
@@ -45,7 +61,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, readOnly, sub
     <ForutgåendeMedlemskap
       submitCallback={submitCallback}
       aksjonspunkt={aksjonspunkt}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       forutgåendeMedlemskap={forutgåendeMedlemskap}
       vilkår={vilkår}
     />
