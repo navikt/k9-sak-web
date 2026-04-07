@@ -48,7 +48,8 @@ interface Props {
 }
 
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
-  const { BRUK_V2_TILKJENT_YTELSE } = use(FeatureTogglesContext);
+  const featureToggles = use(FeatureTogglesContext);
+  const { BRUK_V2_TILKJENT_YTELSE } = featureToggles;
   const prosessPanelContext = useContext(ProsessPanelContext);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
@@ -107,6 +108,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     <TilkjentYtelseProsessIndex
       fagsak={props.fagsak}
       beregningsresultat={beregningsresultatUtbetaling}
+      behandlingUuid={props.behandling.uuid}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere}
       aksjonspunkter={aksjonspunkter}
       isReadOnly={props.isReadOnly}

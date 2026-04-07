@@ -31,6 +31,7 @@ export const vurderFeilutbetalingMock: AvregningProsessIndexProps = {
     ansvarligSaksbehandler: 'S123456',
     behandlendeEnhetId: '4409',
     behandlendeEnhetNavn: 'NAV Arbeid og ytelser Arendal',
+    behandlingAnsvarlige: {},
     behandlingÅrsaker: [
       {
         erAutomatiskRevurdering: false,
@@ -788,6 +789,7 @@ export const sjekkHøyEtterbetalingMock: AvregningProsessIndexProps = {
     ansvarligSaksbehandler: 'S123456',
     behandlendeEnhetId: '4409',
     behandlendeEnhetNavn: 'NAV Arbeid og ytelser Arendal',
+    behandlingAnsvarlige: {},
     behandlingÅrsaker: [
       {
         erAutomatiskRevurdering: false,
