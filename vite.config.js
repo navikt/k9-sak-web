@@ -91,12 +91,14 @@ export default ({ mode }) => {
       svgr(),
       excludeMsw(),
       sentryVitePlugin({
-        project: 'k9-sak-web',
         authToken: process.env.SENTRY_AUTH_TOKEN,
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+        org: 'nav',
+        project: 'k9-sak-web',
+        url: 'https://sentry.gc.nav.no',
         release: {
           name: process.env.VITE_SENTRY_RELEASE,
         },
-        disable: !process.env.SENTRY_AUTH_TOKEN,
       }),
     ],
     build: {

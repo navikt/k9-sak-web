@@ -34,6 +34,7 @@ jobs:
         run: yarn build:ung
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_SENTRY_RELEASE: ${{ github.sha }}
 
       - name: Bygg server
         uses: ./.github/actions/build-server

@@ -96,12 +96,14 @@ export default ({ mode }) => {
         }
       },
       sentryVitePlugin({
-        project: 'ung-sak-web',
         authToken: process.env.SENTRY_AUTH_TOKEN,
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+        org: 'nav',
+        project: 'ung-sak-web',
+        url: 'https://sentry.gc.nav.no',
         release: {
           name: process.env.VITE_SENTRY_RELEASE,
         },
-        disable: !process.env.SENTRY_AUTH_TOKEN,
       }),
     ],
     build: {
