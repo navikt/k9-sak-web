@@ -1,20 +1,20 @@
 import {
   folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto,
   k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
+  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_behandling_BehandlingDto,
   k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
+  type k9_sak_kontrakt_fagsak_FagsakDto,
   k9_sak_kontrakt_medlem_MedlemV2Dto,
   k9_sak_kontrakt_opptjening_OpptjeningerDto,
   k9_sak_kontrakt_person_PersonopplysningDto,
   k9_sak_kontrakt_søknadsfrist_SøknadsfristTilstandDto,
+  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto,
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type k9_sak_kontrakt_fagsak_FagsakDto,
-  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export interface K9SakProsessApi {
