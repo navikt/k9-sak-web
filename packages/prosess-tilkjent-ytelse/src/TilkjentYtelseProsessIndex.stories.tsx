@@ -13,7 +13,7 @@ import {
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext';
 import type { FeriepengerPrÅr } from './api/tilkjentYtelseApi';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 
 const fagsak = {
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
@@ -287,21 +287,21 @@ export const VisMedFeriepengerPanel = args => (
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
   >
-    <FeatureTogglesContext.Provider value={{ VIS_FERIEPENGER_PANEL: true } as any}>
-      <TilkjentYtelseV1ApiContext.Provider value={fakeFeriepengerApi}>
-        <TilkjentYtelseProsessIndex
-          beregningsresultat={beregningsresultat}
-          aksjonspunkter={[]}
-          behandlingUuid={behandling.uuid}
-          submitCallback={action('button-click')}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          fagsak={fagsak}
-          {...args}
-        />
-      </TilkjentYtelseV1ApiContext.Provider>
-    </FeatureTogglesContext.Provider>
+    <TilkjentYtelseV1ApiContext.Provider value={fakeFeriepengerApi}>
+      <TilkjentYtelseProsessIndex
+        beregningsresultat={beregningsresultat}
+        aksjonspunkter={[]}
+        behandlingUuid={behandling.uuid}
+        submitCallback={action('button-click')}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        fagsak={fagsak}
+        {...args}
+      />
+    </TilkjentYtelseV1ApiContext.Provider>
   </KodeverkProvider>
 );
+
+VisMedFeriepengerPanel.decorators = [withFeatureToggles({ VIS_FERIEPENGER_PANEL: true })];
 
 VisMedFeriepengerPanel.args = {
   isReadOnly: true,
