@@ -4105,22 +4105,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:5.3.0":
-  version: 5.3.0
-  resolution: "@rollup/pluginutils@npm:5.3.0"
-  dependencies:
-    "@types/estree": "npm:^1.0.0"
-    estree-walker: "npm:^2.0.2"
-    picomatch: "npm:^4.0.2"
-  peerDependencies:
-    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-  checksum: 10/6c7dbab90e0ca5918a36875f745a0f30b47d5e0f45b42ed381ad8f7fed76b23e935766b66e3ae75375a42a80369569913abc8fd2529f4338471a1b2b4dfebaff
-  languageName: node
-  linkType: hard
-
 "@rollup/pluginutils@npm:^4.2.0":
   version: 4.2.1
   resolution: "@rollup/pluginutils@npm:4.2.1"
@@ -10872,7 +10856,6 @@ __metadata:
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
     react-router: "npm:7.13.0"
-    rollup-plugin-sourcemaps2: "npm:0.5.6"
     storybook: "npm:10.3.3"
     stylelint: "npm:17.6.0"
     stylelint-config-standard: "npm:40.0.0"
@@ -13337,21 +13320,6 @@ __metadata:
   bin:
     rolldown: bin/cli.mjs
   checksum: 10/b8cc0d9df80b495a57b63d69a16a5566c600162046edd407f335a6d27e5b6618a2d88d63e82c4e77a1447d18edcc6900696e041c33236ef38ab51d33cf5da2fe
-  languageName: node
-  linkType: hard
-
-"rollup-plugin-sourcemaps2@npm:0.5.6":
-  version: 0.5.6
-  resolution: "rollup-plugin-sourcemaps2@npm:0.5.6"
-  dependencies:
-    "@rollup/pluginutils": "npm:5.3.0"
-  peerDependencies:
-    "@types/node": ">=18.0.0"
-    rollup: ">=4"
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-  checksum: 10/f6106f18d848618a2b56618318f2f29c78932f2010e73e1df0505b5f7c8c309e2e37cc2e153659da0474caa0822c035040f67ae3c131bcc07d1e83ddd6b51f05
   languageName: node
   linkType: hard
 
