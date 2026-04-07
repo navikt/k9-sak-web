@@ -12,7 +12,7 @@ import { Box, Heading } from '@navikt/ds-react';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import type { FeriepengerPrÅr } from './feriepenger/FeriepengerPanel';
+import type { FeriepengerPrÅr } from '../api/tilkjentYtelseApi';
 import FeriepengerPanel from './feriepenger/FeriepengerPanel';
 import { useContext } from 'react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
