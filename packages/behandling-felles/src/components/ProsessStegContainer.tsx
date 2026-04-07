@@ -39,7 +39,7 @@ const ProsessStegContainer = ({
     () =>
       formaterteProsessStegPaneler.map(panel => ({
         ...panel,
-        label: intl.formatMessage({ id: panel.labelId }),
+        label: intl.messages[panel.labelId] ? intl.formatMessage({ id: panel.labelId }) : panel.labelId,
         usePartialStatus: panel.type !== 'default' && panel.type !== 'danger' && panel.usePartialStatus,
       })),
     [formaterteProsessStegPaneler, intl],
