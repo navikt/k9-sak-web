@@ -116,10 +116,12 @@ const AktivitetspengerBeregning = ({ data }: Props) => {
                   <Table.DataCell scope="row">Beregningsgrunnlag redusert til 66 %</Table.DataCell>
                   <Table.DataCell align="right">{formatter.format(data.beregningsgrunnlagRedusert)}</Table.DataCell>
                 </Table.Row>
-                <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
-                  <Table.HeaderCell scope="row">Dagsats (beregningsgrunnlag/260 dager)</Table.HeaderCell>
-                  <Table.DataCell align="right">{formatter.format(data.dagsats)}</Table.DataCell>
-                </Table.Row>
+                {data.dagsats && (
+                  <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
+                    <Table.HeaderCell scope="row">Dagsats (beregningsgrunnlag/260 dager)</Table.HeaderCell>
+                    <Table.DataCell align="right">{formatter.format(data.dagsats)}</Table.DataCell>
+                  </Table.Row>
+                )}
               </Table.Body>
             </Table>
           </Box>
