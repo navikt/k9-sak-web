@@ -39,5 +39,3 @@ server/.yarn
 !/packages/v2/lib*
 /.run/
 
-# Sentry Config File
-.env.sentry-build-plugin
