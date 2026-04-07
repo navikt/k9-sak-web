@@ -21,7 +21,7 @@
     "ts-check:update-ignored": "tsc | loose-ts-check --auto-update && tsc --pretty --project packages/v2/tsconfig.json",
     "ts-check:v2": "tsc --pretty --project packages/v2/tsconfig.json",
     "lint": "eslint --cache packages",
-    "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint --fix --cache packages",
     "css:lint": "stylelint \"packages/**/*.css\"",
     "css:modules:typegen": "tcm ./packages/v2/gui --camelCase dashes --allowArbitraryExtensions ",
     "css:modules:typegen:watch": "tcm ./packages/v2/gui --camelCase dashes --allowArbitraryExtensions --watch",
@@ -72,6 +72,7 @@
     "vite-plugin-svgr": "4.5.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@sentry/cli": "3.3.3",
     "@storybook/addon-a11y": "10.3.1",
     "@storybook/addon-docs": "10.3.1",
@@ -90,6 +91,7 @@
     "@types/react-collapse": "5.0.4",
     "@types/redux-form": "8.3.11",
     "@vitejs/plugin-react": "5.1.4",
+    "@vitest/eslint-plugin": "^1.6.13",
     "autoprefixer": "10.4.27",
     "axios-mock-adapter": "2.1.0",
     "cross-env": "10.1.0",
@@ -99,7 +101,6 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-storybook": "10.3.1",
-    "eslint-plugin-vitest": "~0.5.4",
     "globals": "17.4.0",
     "happy-dom": "20.8.4",
     "husky": "9.1.7",

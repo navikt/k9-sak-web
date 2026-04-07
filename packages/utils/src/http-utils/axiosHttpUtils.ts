@@ -15,7 +15,7 @@ export async function get<T>(
     if (httpErrorShouldBeHandledExternally(error)) {
       handleErrorExternally(error, httpErrorHandler);
     }
-    throw new Error(error);
+    throw new Error(error, { cause: error });
   }
 }
 
