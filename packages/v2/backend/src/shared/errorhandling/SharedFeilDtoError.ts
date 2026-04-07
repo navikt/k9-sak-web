@@ -29,7 +29,7 @@ export abstract class SharedFeilDtoError extends ExtendedApiError {
   }
 
   public get erBehandlingEndretFeil(): boolean {
-    return this.errorData?.type === feilTypeUnion.MANGLER_TILGANG_FEIL;
+    return this.errorData?.type === feilTypeUnion.BEHANDLING_ENDRET_FEIL;
   }
 
   public get erGenerellFeil(): boolean {
