@@ -4102,23 +4102,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-darwin@npm:3.3.3"
-  conditions: os=darwin
-  languageName: node
-  linkType: hard
-
 "@sentry/cli-linux-arm64@npm:2.58.5":
   version: 2.58.5
   resolution: "@sentry/cli-linux-arm64@npm:2.58.5"
-  conditions: (os=linux | os=freebsd | os=android) & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@sentry/cli-linux-arm64@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-linux-arm64@npm:3.3.3"
   conditions: (os=linux | os=freebsd | os=android) & cpu=arm64
   languageName: node
   linkType: hard
@@ -4130,23 +4116,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-linux-arm@npm:3.3.3"
-  conditions: (os=linux | os=freebsd | os=android) & cpu=arm
-  languageName: node
-  linkType: hard
-
 "@sentry/cli-linux-i686@npm:2.58.5":
   version: 2.58.5
   resolution: "@sentry/cli-linux-i686@npm:2.58.5"
-  conditions: (os=linux | os=freebsd | os=android) & (cpu=x86 | cpu=ia32)
-  languageName: node
-  linkType: hard
-
-"@sentry/cli-linux-i686@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-linux-i686@npm:3.3.3"
   conditions: (os=linux | os=freebsd | os=android) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
@@ -4158,23 +4130,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-linux-x64@npm:3.3.3"
-  conditions: (os=linux | os=freebsd | os=android) & cpu=x64
-  languageName: node
-  linkType: hard
-
 "@sentry/cli-win32-arm64@npm:2.58.5":
   version: 2.58.5
   resolution: "@sentry/cli-win32-arm64@npm:2.58.5"
-  conditions: os=win32 & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@sentry/cli-win32-arm64@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-win32-arm64@npm:3.3.3"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
@@ -4186,63 +4144,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-win32-i686@npm:3.3.3"
-  conditions: os=win32 & (cpu=x86 | cpu=ia32)
-  languageName: node
-  linkType: hard
-
 "@sentry/cli-win32-x64@npm:2.58.5":
   version: 2.58.5
   resolution: "@sentry/cli-win32-x64@npm:2.58.5"
   conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@sentry/cli-win32-x64@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli-win32-x64@npm:3.3.3"
-  conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@sentry/cli@npm:3.3.3":
-  version: 3.3.3
-  resolution: "@sentry/cli@npm:3.3.3"
-  dependencies:
-    "@sentry/cli-darwin": "npm:3.3.3"
-    "@sentry/cli-linux-arm": "npm:3.3.3"
-    "@sentry/cli-linux-arm64": "npm:3.3.3"
-    "@sentry/cli-linux-i686": "npm:3.3.3"
-    "@sentry/cli-linux-x64": "npm:3.3.3"
-    "@sentry/cli-win32-arm64": "npm:3.3.3"
-    "@sentry/cli-win32-i686": "npm:3.3.3"
-    "@sentry/cli-win32-x64": "npm:3.3.3"
-    progress: "npm:^2.0.3"
-    proxy-from-env: "npm:^1.1.0"
-    undici: "npm:^6.22.0"
-    which: "npm:^2.0.2"
-  dependenciesMeta:
-    "@sentry/cli-darwin":
-      optional: true
-    "@sentry/cli-linux-arm":
-      optional: true
-    "@sentry/cli-linux-arm64":
-      optional: true
-    "@sentry/cli-linux-i686":
-      optional: true
-    "@sentry/cli-linux-x64":
-      optional: true
-    "@sentry/cli-win32-arm64":
-      optional: true
-    "@sentry/cli-win32-i686":
-      optional: true
-    "@sentry/cli-win32-x64":
-      optional: true
-  bin:
-    sentry-cli: bin/sentry-cli
-  checksum: 10/b7adb6655b0e1d3f0c3cd232b93d00c0445dcbfed7f54a08365e61fcf601c68c6916fc5e083e95b775dbcad59a8d662a3df6b8be8611f4a4a1ef6c38a6724626
   languageName: node
   linkType: hard
 
@@ -10575,7 +10480,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:10.5.14"
     "@popperjs/core": "npm:2.11.8"
     "@sentry/browser": "npm:10.46.0"
-    "@sentry/cli": "npm:3.3.3"
     "@sentry/vite-plugin": "npm:^5.1.1"
     "@storybook/addon-a11y": "npm:10.3.3"
     "@storybook/addon-docs": "npm:10.3.3"
@@ -14547,13 +14451,6 @@ __metadata:
   version: 7.18.2
   resolution: "undici-types@npm:7.18.2"
   checksum: 10/e61a5918f624d68420c3ca9d301e9f15b61cba6e97be39fe2ce266dd6151e4afe424d679372638826cb506be33952774e0424141200111a9857e464216c009af
-  languageName: node
-  linkType: hard
-
-"undici@npm:^6.22.0":
-  version: 6.23.0
-  resolution: "undici@npm:6.23.0"
-  checksum: 10/56950995e7b628e62c996430445d17995ca9b70f6f2afe760a63da54205660d968bd08f0741b6f4fb008f40aa35c69cce979cd96ced399585d8c897a76a4f1d1
   languageName: node
   linkType: hard
 
