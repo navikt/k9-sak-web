@@ -38,8 +38,6 @@
     "build-storybook": "storybook build -o .static_storybook",
     "build-storybook-test": "VITE_LOCAL_STORYBOOK=true storybook build --test -o .static_storybook",
     "prepare": "husky",
-    "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)",
-    "sentry-release-ung": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release-ung.cjs)",
     "knip": "knip",
     "knip:check": "knip --include files,dependencies,exports --no-config-hints",
     "dev:ung": "vite -c ung.vite.config.js serve",
@@ -72,7 +70,7 @@
     "vite-plugin-svgr": "4.5.0"
   },
   "devDependencies": {
-    "@sentry/cli": "3.3.5",
+    "@sentry/vite-plugin": "^5.1.1",
     "@storybook/addon-a11y": "10.3.3",
     "@storybook/addon-docs": "10.3.3",
     "@storybook/react-vite": "10.3.3",
