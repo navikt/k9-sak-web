@@ -47,9 +47,7 @@ const TilkjentYtelseProsessIndex = ({
     queryKey: ['feriepengegrunnlag', behandlingUuid],
     queryFn: () => fetchFn(behandlingUuid),
     enabled: !!VIS_FERIEPENGER_PANEL,
-    staleTime: Infinity,
   });
-
   return (
     <RawIntlProvider value={intl}>
       <TilkjentYtelsePanel
