@@ -12,7 +12,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 import { FakeUngSakBackendClient } from './mocks/FakeUngSakBackendClient';
-import { createQueryClient } from '@k9-sak-web/gui/shared/queryClient.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const { mockNavigate, mockFagsakSøk } = vi.hoisted(() => ({
   mockNavigate: vi.fn(),

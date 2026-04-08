@@ -18,7 +18,7 @@ import userEvent from '@testing-library/user-event';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import PleiepengerProsess from './PleiepengerProsess';
-import { createQueryClient } from '@k9-sak-web/gui/shared/queryClient.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const queryClient = createQueryClient({
   queries: {

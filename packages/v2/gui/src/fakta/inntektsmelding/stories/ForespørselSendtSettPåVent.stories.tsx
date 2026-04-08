@@ -8,7 +8,7 @@ import { InntektsmeldingApiContext } from '../api/InntektsmeldingApiContext.js';
 import InntektsmeldingContext from '../context/InntektsmeldingContext.js';
 import type { InntektsmeldingContextType } from '../types.js';
 import { ForespørselSendtSettPåVent } from '../ui/components/NyInntektsmeldingDialog/ForespørselSendtSettPåVent.js';
-import { createQueryClient } from '../../../shared/queryClient.js';
+import { createQueryClient } from '../../../shared/query/queryClient.js';
 
 const queryClient = createQueryClient();
 

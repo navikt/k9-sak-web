@@ -12,7 +12,7 @@ import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/beha
 import { QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
-import { createQueryClient } from '@k9-sak-web/gui/shared/queryClient.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const navAnsatt = {
   brukernavn: 'Test',

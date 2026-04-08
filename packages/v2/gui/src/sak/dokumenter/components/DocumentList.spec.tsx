@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import DocumentList from './DocumentList';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { createQueryClient } from '../../../shared/queryClient.js';
+import { createQueryClient } from '../../../shared/query/queryClient.js';
 
 const queryClient = createQueryClient({
   queries: {

@@ -12,7 +12,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { createQueryClient } from "@k9-sak-web/gui/shared/queryClient.js";
+import { createQueryClient } from "@k9-sak-web/gui/shared/query/queryClient.js";
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 

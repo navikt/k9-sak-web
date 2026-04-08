@@ -1,4 +1,4 @@
-import { createQueryClient } from '@k9-sak-web/gui/shared/queryClient.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const queryClient = createQueryClient();
 queryClient.setQueryDefaults(['diagnosekodeResponse'], {

@@ -7,7 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
-import { createQueryClient } from '../../../shared/queryClient.js';
+import { createQueryClient } from '../../../shared/query/queryClient.js';
 
 const queryClient = createQueryClient({
   queries: {
