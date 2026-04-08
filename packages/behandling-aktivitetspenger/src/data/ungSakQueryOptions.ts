@@ -9,13 +9,13 @@ interface Behandling {
 
 export const vilkårQueryOptions = (api: UngSakApi, behandling: Behandling) =>
   queryOptions({
-    queryKey: ['vilkar', behandling.uuid, behandling.versjon],
+    queryKey: ['vilkar', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getVilkår(behandling.uuid),
   });
 
 export const aksjonspunkterQueryOptions = (api: UngSakApi, behandling: Behandling, aksjonspunktKoder?: string[]) =>
   queryOptions({
-    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
+    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
     select: aksjonspunktKoder
       ? (data: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
@@ -25,12 +25,12 @@ export const aksjonspunkterQueryOptions = (api: UngSakApi, behandling: Behandlin
 
 export const behandlingQueryOptions = (api: UngSakApi, behandling: Pick<Behandling, 'uuid' | 'versjon'>) =>
   queryOptions({
-    queryKey: ['behandling', behandling.uuid, behandling.versjon],
+    queryKey: ['behandling', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getBehandling(behandling.uuid),
   });
 
 export const beregningsgrunnlagQueryOptions = (api: UngSakApi, behandling: Behandling, enabled = true) =>
   queryOptions({
-    queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid, behandling.versjon, enabled],
+    queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid, behandling.versjon, enabled, api.backend],
     queryFn: () => (enabled ? api.getBeregningsgrunnlag(behandling.uuid) : null),
   });
