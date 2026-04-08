@@ -33,4 +33,5 @@ export const prosessStegCodes = {
   ALDER: 'alder',
   OPPLAERING: 'opplaering',
   KONTROLL_AV_INNTEKT: 'kontroll_av_inntekt',
+  TI_DAGER: 'ti_dager',
 };

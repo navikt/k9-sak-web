@@ -174,12 +174,7 @@ export const oppslagKodeverkSomObjektUngSak = {
       navn: 'Endring fra deltaker',
       kilde: 'RE-END-FRA-BRUKER',
     },
-    {
-      kode: 'RE-END-FRA-BRUKER-AKT',
-      kodeverk: 'BEHANDLING_AARSAK',
-      navn: 'Endring fra søker',
-      kilde: 'RE-END-FRA-BRUKER-AKT',
-    },
+
     {
       kode: 'RE-HENDELSE-DØD-B',
       kodeverk: 'BEHANDLING_AARSAK',
