@@ -1,17 +1,17 @@
 /* eslint-disable max-len */
 import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import DocumentList from './DocumentList';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { createQueryClient } from '../../../shared/queryClient.js';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
+const queryClient = createQueryClient({
+  queries: {
+    retry: false,
   },
 });
+
 const wrapper = (children: React.ReactNode) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );

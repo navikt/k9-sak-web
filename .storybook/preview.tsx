@@ -8,10 +8,11 @@ import '@navikt/ds-css';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react-vite';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import { createQueryClient } from "@k9-sak-web/gui/shared/queryClient.js";
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
@@ -37,11 +38,9 @@ initialize({
   },
 });
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
+const queryClient = createQueryClient({
+  queries: {
+    retry: false,
   },
 });
 
