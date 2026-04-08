@@ -2,8 +2,12 @@ import {
   ung_sak_kontrakt_ungdomsytelse_ytelse_UtbetalingStatus as UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { formatCurrencyWithKr, formatCurrencyWithoutKr } from '@k9-sak-web/gui/utils/formatters.js';
-import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
+import {
+  formatCurrencyWithKr,
+  formatCurrencyWithoutKr,
+  formatDate,
+  formatPeriod,
+} from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
@@ -90,7 +94,13 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               <Heading size="xsmall" level="2">
                 Grunnrett
               </Heading>
-              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1" maxWidth="43.5rem">
+              <Box
+                marginBlock="space-16 space-0"
+                borderRadius="8"
+                borderWidth="1"
+                maxWidth="43.5rem"
+                borderColor="neutral-subtle"
+              >
                 <Table>
                   <Table.Header>
                     <Table.Row>
@@ -139,7 +149,7 @@ export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProp
               </Box>
             )}
             {satser.length > 0 && (
-              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1">
+              <Box marginBlock="space-16 space-0" borderRadius="8" borderWidth="1" borderColor="neutral-subtle">
                 <Table>
                   <Table.Header>
                     <Table.Row>

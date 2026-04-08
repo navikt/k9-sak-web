@@ -2,10 +2,10 @@ import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
   ung_kodeverk_vilkår_Utfall,
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -43,7 +43,7 @@ const PANEL_KONFIG = {
 const beregnVedtakType = (
   vilkår: ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
   aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
-  behandling: Pick<ung_sak_kontrakt_behandling_BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat'>,
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat'>,
   vedtakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   if (!vilkår || vilkår.length === 0) {
@@ -72,7 +72,7 @@ const beregnVedtakType = (
 
 interface ProsessmotorProps {
   api: UngSakApi;
-  behandling: Pick<ung_sak_kontrakt_behandling_BehandlingDto, 'uuid' | 'versjon'>;
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
 }
 
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
