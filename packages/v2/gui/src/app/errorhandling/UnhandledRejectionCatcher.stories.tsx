@@ -5,7 +5,7 @@ import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js
 import { expect, userEvent } from 'storybook/test';
 
 const meta = {
-  title: 'gui/app/UnhandledRejectionCatcher',
+  title: 'gui/app/errorhandling/UnhandledRejectionCatcher',
   component: UnhandledRejectionCatcher,
   decorators: [withFeatureToggles({ VIS_ALLE_ASYNC_ERRORS: true })],
   parameters: {

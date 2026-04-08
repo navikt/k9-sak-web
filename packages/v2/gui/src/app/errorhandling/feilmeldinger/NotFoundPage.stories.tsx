@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import NotFoundPage from './NotFoundPage.js';
 
 const meta = {
-  title: 'gui/app/feilmeldinger',
+  title: 'gui/app/errorhandling/feilmeldinger',
   component: NotFoundPage,
 } satisfies Meta<typeof NotFoundPage>;
 

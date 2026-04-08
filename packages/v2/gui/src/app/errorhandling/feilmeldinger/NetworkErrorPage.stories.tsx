@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import NetworkErrorPage from './NetworkErrorPage.js';
 
 const meta = {
-  title: 'gui/app/feilmeldinger',
+  title: 'gui/app/errorhandling/feilmeldinger',
   component: NetworkErrorPage,
 } satisfies Meta<typeof NetworkErrorPage>;
 

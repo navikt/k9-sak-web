@@ -10,7 +10,7 @@ import GeneralAsyncError from './GeneralAsyncError.js';
 import { TopplinjeAlerts } from './TopplinjeAlerts.js';
 
 const meta = {
-  title: 'gui/app/alerts/TopplinjeAlerts.tsx',
+  title: 'gui/app/errorhandling/alerts/TopplinjeAlerts.tsx',
   component: TopplinjeAlerts,
   args: {
     onErrorDismiss: action('onErrorDismiss'),
