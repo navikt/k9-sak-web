@@ -2,8 +2,10 @@ import { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
-import ForbiddenPage from '@k9-sak-web/gui/app/feilmeldinger/ForbiddenPage.js';
-import UnauthorizedPage, { ungLoginResourcePath } from '@k9-sak-web/gui/app/feilmeldinger/UnauthorizedPage.js';
+import ForbiddenPage from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ForbiddenPage.js';
+import UnauthorizedPage, {
+  ungLoginResourcePath,
+} from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/UnauthorizedPage.js';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
@@ -12,7 +14,7 @@ import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';

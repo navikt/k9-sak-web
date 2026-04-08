@@ -39,7 +39,7 @@ import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/Tilb
 import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { UngTilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/UngTilbakeMeldingerBackendClient.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {

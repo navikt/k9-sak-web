@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import { BigError } from '@k9-sak-web/gui/app/feilmeldinger/BigError.js';
+import { BigError } from './BigError.js';
 
 /**
  * ForbiddenPage

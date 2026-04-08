@@ -4,7 +4,7 @@ import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import ErrorBoundary, { type ErrorFallbackProps } from './ErrorBoundary.js';
 
 const meta = {
-  title: 'gui/app/feilmeldinger/ErrorBoundary',
+  title: 'gui/app/errorhandling/feilmeldinger/ErrorBoundary',
   component: ErrorBoundary,
 } satisfies Meta<typeof ErrorBoundary>;
 

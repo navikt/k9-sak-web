@@ -5,7 +5,7 @@ import { RhfCheckbox, RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks'
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { getFeilmeldingFraFeilDto } from '../../../../app/feilmeldinger/errorUtils.js';
+import { getFeilmeldingFraFeilDto } from '../../../../app/errorhandling/feilmeldinger/errorUtils.js';
 import { useAlleInstitusjoner, useHentOrganisasjonsnummer } from '../../SykdomOgOpplæringQueries';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
 

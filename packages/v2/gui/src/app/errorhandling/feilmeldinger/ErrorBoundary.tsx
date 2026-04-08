@@ -7,7 +7,7 @@ import ForbiddenPage from './ForbiddenPage.js';
 import NotFoundPage from './NotFoundPage.js';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
-import { AuthAbortedPage } from '../auth/AuthAbortedPage.js';
+import { AuthAbortedPage } from '../../auth/AuthAbortedPage.js';
 
 export interface ErrorFallbackProps {
   readonly error: Error;

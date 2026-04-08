@@ -3,7 +3,7 @@ import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.
 import { Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';
+import NetworkErrorPage from '../../app/errorhandling/feilmeldinger/NetworkErrorPage.js';
 import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
 
