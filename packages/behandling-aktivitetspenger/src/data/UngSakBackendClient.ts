@@ -2,6 +2,7 @@ import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
+  avp_getBeregningsgrunnlag,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   vilkår_getVilkårV3,
@@ -13,6 +14,8 @@ import {
 import { UngSakApi } from './UngSakApi';
 
 export class UngSakBackendClient implements UngSakApi {
+  readonly backend = 'ungsak';
+
   async getAksjonspunkter(behandlingId: string) {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;
   }
@@ -42,5 +45,9 @@ export class UngSakBackendClient implements UngSakApi {
 
   async hentBehandlingMidlertidigStatus(behandlingUuid: string) {
     return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid } })).data;
+  }
+
+  async getBeregningsgrunnlag(behandlingUuid: string) {
+    return (await avp_getBeregningsgrunnlag({ query: { behandlingUuid } })).data;
   }
 }
