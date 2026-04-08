@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { action } from 'storybook/actions';
-import { makeFakeExtendedApiError, makeFakeK9SakValidationError } from '../../storybook/mocks/fakeExtendedApiError.js';
+import {
+  makeFakeExtendedApiError,
+  makeFakeK9SakValidationError,
+} from '../../../storybook/mocks/fakeExtendedApiError.js';
 import type { ErrorWithAlertInfo } from './AlertInfo.js';
 import GeneralAsyncError from './GeneralAsyncError.js';
 import { TopplinjeAlerts } from './TopplinjeAlerts.js';

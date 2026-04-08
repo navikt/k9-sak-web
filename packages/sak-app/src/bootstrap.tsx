@@ -18,7 +18,7 @@ import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
-import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
+import { isAlertInfo } from '@k9-sak-web/gui/app/errorhandling/alerts/AlertInfo.js';
 import { AxiosError } from 'axios';
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
