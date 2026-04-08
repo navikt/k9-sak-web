@@ -27,7 +27,7 @@ jobs:
         run: yarn ts-check
 
       - name: Eslint
-        run: yarn lint
+        run: yarn lint --quiet
 
       - name: Css modules typegenerator check
         run: yarn css:modules:typegen:check
