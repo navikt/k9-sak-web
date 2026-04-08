@@ -1,7 +1,7 @@
 import { UnhandledRejectionCatcher } from './UnhandledRejectionCatcher.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useMutation } from '@tanstack/react-query';
-import withFeatureToggles from '../storybook/decorators/withFeatureToggles.js';
+import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { expect, userEvent } from 'storybook/test';
 
 const meta = {

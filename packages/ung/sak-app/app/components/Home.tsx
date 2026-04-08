@@ -6,7 +6,7 @@ import NotFoundPage from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/NotFou
 import FagsakIndex from '../../fagsak/FagsakIndex';
 import { fagsakRoutePath } from '../paths';
 
-import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
+import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/errorhandling/UnhandledRejectionCatcher.js';
 import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 
