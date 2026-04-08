@@ -1,5 +1,5 @@
 @import '@k9-sak-web/gui/tokens/tokens.css';
-@import 'tailwindcss/theme';
+@import 'tailwindcss';
 @import 'tailwindcss/utilities';
 
 @config "../../../tailwind.config.cjs";
