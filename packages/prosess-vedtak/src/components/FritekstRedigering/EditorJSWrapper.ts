@@ -44,10 +44,8 @@ export default class EditorJSWrapper {
 
   public async importer(html: string) {
     await this.editor.isReady;
-    let sanitizedHtml = html;
-
     // Erstatte alle newlines og multiple spaces med single space
-    sanitizedHtml = html.replace(/\s+/g, ' ');
+    let sanitizedHtml = html.replace(/\s+/g, ' ');
 
     // Fjerne space rett etter opening tags
     sanitizedHtml = sanitizedHtml.replace(/(<[^/>][^>]*>)\s+/g, '$1');
