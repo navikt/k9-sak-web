@@ -35,7 +35,7 @@ export const UnhandledRejectionCatcher = () => {
     return () => {
       removeEventListener('unhandledrejection', listener);
     };
-  }, []);
+  }, [VIS_ALLE_ASYNC_ERRORS]);
 
   return <TopplinjeAlerts errors={errors} onErrorDismiss={err => removeError(err.errorId)} />;
 };
