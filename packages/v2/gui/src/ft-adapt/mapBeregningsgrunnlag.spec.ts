@@ -223,9 +223,7 @@ describe('mapBeregningsgrunnlagTilFP – inntektsgrunnlag', () => {
     });
     const inntekt = result.inntektsgrunnlag!.beregningsgrunnlagInntekter[0]!.inntekter[0]!;
     expect(inntekt.inntektAktivitetType).toBe('ARBEIDSTAKERINNTEKT');
-    if (inntekt.inntektAktivitetType === 'ARBEIDSTAKERINNTEKT') {
-      expect(inntekt.arbeidsgiverIdent).toBe('');
-    }
+    expect(inntekt.inntektAktivitetType === 'ARBEIDSTAKERINNTEKT' && inntekt.arbeidsgiverIdent).toBe('');
   });
 
   it('mapper FRILANSINNTEKT uten arbeidsgiverIdent', () => {
