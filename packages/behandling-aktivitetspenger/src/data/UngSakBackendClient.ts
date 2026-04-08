@@ -14,6 +14,8 @@ import {
 import { UngSakApi } from './UngSakApi';
 
 export class UngSakBackendClient implements UngSakApi {
+  readonly backend = 'ungsak';
+
   async getAksjonspunkter(behandlingId: string) {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;
   }
