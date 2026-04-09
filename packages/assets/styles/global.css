@@ -1,8 +1,11 @@
-@import url('tailwindcss/base');
-@import url('tailwindcss/components');
-@import url('tailwindcss/utilities');
-@import url('dayPicker.css');
-@import url('@k9-sak-web/gui/tokens/tokens.css');
+@layer theme, components, utilities;
+
+@import '@k9-sak-web/gui/tokens/tokens.css';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import '@navikt/ds-css' layer(components);
+
+@config "../../../tailwind.config.cjs";
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
 html {

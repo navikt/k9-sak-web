@@ -1,4 +1,5 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
 import path from 'path';
@@ -76,6 +77,7 @@ export default ({ mode }) => {
     base: '/ung/web',
     publicDir: './public',
     plugins: [
+      tailwindcss(),
       createHtmlPlugin({
         template: 'ung.html'
       }),
