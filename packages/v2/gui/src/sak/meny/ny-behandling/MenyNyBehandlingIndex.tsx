@@ -3,11 +3,16 @@ import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/back
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useCallback } from 'react';
-import NyBehandlingModal, { type BehandlingOppretting, type FormValues } from './components/NyBehandlingModal';
+import { use, useCallback } from 'react';
+import NyBehandlingModal, {
+  type BehandlingOppretting,
+  type DelvisRevurderingÅrsakMapping,
+  type FormValues,
+} from './components/NyBehandlingModal';
 import VilkårBackendClient from './VilkårBackendClient';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
@@ -26,6 +31,7 @@ interface OwnProps {
   tilbakekrevingRevurderingArsaker: KodeverkObject[];
   revurderingArsaker: KodeverkObject[];
   behandlingOppretting: BehandlingOppretting[];
+  delvisRevurderingsårsaker?: DelvisRevurderingÅrsakMapping[];
   kanTilbakekrevingOpprettes: {
     kanBehandlingOpprettes: boolean;
     kanRevurderingOpprettes: boolean;
@@ -54,6 +60,7 @@ const MenyNyBehandlingIndexV2 = ({
   tilbakekrevingRevurderingArsaker,
   revurderingArsaker,
   behandlingOppretting,
+  delvisRevurderingsårsaker,
   kanTilbakekrevingOpprettes,
   uuidForSistLukkede,
   erTilbakekrevingAktivert,
@@ -79,11 +86,29 @@ const MenyNyBehandlingIndexV2 = ({
       return !senesteDatoFunnet || tomDato.isAfter(senesteDatoFunnet) ? tomDato.toDate() : senesteDatoFunnet;
     }, null);
 
+  const { REVURDERING_FRA_STEG_V2 } = use(FeatureTogglesContext);
+
   const submit = useCallback(
     (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
       const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
+
+      if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {
+        delete filteredFormValues.steg;
+        delete filteredFormValues.fom;
+        delete filteredFormValues.tom;
+        delete filteredFormValues.revurderingModus;
+      } else if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'DELVIS') {
+        delete filteredFormValues.revurderingModus;
+        delete filteredFormValues.behandlingArsakType;
+        delete filteredFormValues.nyBehandlingEtterKlage;
+      } else if (!REVURDERING_FRA_STEG_V2 && formValues.steg === 'inngangsvilkår') {
+        delete filteredFormValues.steg;
+        delete filteredFormValues.fom;
+        delete filteredFormValues.tom;
+      }
+
       const params = {
         saksnummer: saksnummer.toString(),
         ...tilbakekrevingBehandlingId,
@@ -94,7 +119,7 @@ const MenyNyBehandlingIndexV2 = ({
 
       lukkModal();
     },
-    [behandlingId, saksnummer, lagNyBehandling, lukkModal],
+    [behandlingId, saksnummer, lagNyBehandling, lukkModal, REVURDERING_FRA_STEG_V2],
   );
   return (
     <NyBehandlingModal
@@ -103,6 +128,7 @@ const MenyNyBehandlingIndexV2 = ({
       cancelEvent={lukkModal}
       submitCallback={submit}
       behandlingOppretting={behandlingOppretting}
+      delvisRevurderingsårsaker={delvisRevurderingsårsaker}
       behandlingstyper={behandlingstyper}
       tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
       revurderingArsaker={revurderingArsaker}
