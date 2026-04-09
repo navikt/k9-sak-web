@@ -281,13 +281,13 @@ export class AvregningPanelImpl extends Component {
             </VStack>
           )}
           {harSjekkHøyEtterbetalingAP && (
-            <KontrollerEtterbetalingIndex
-              aksjonspunkt={aksjonspunkter.find(
-                ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
-              )}
-              behandling={behandling}
-              readOnly={readOnly}
-            />
+              <KontrollerEtterbetalingIndex
+                aksjonspunkt={aksjonspunkter.find(
+                  ap => ap.definisjon.kode === AksjonspunktDtoDefinisjon.SJEKK_HØY_ETTERBETALING,
+                )}
+                behandling={behandling}
+                readOnly={readOnly}
+              />
           )}
         </VStack>
       </>
