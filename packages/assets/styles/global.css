@@ -1,5 +1,8 @@
+@layer theme, components, utilities;
+
 @import '@k9-sak-web/gui/tokens/tokens.css';
-@import 'tailwindcss';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
 @import '@navikt/ds-css' layer(components);
 
 @config "../../../tailwind.config.cjs";
