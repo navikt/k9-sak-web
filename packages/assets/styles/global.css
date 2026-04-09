@@ -55,54 +55,6 @@ som fra core/og muligen import fra alla andra komponenter
   display: none;
 }
 
-.soknad {
-  background-color: var(--ax-accent-700);
-  pointer-events: none;
-  top: 6px !important;
-}
-
-.soknad:after {
-  background: transparent url('../../assets/images/soknad.svg') no-repeat;
-  content: '';
-  height: 20px;
-  left: -8px;
-  position: absolute;
-  top: 0;
-  width: 20px;
-}
-
-.fodsel {
-  background-color: #a32a17;
-  pointer-events: none;
-  top: 0 !important;
-}
-
-.fodsel:after {
-  background: transparent url('../../assets/images/fodsel.svg') no-repeat;
-  content: '';
-  height: 20px;
-  left: -8px;
-  position: absolute;
-  top: 0;
-  width: 20px;
-}
-
-.revurdering {
-  background-color: var(--ax-success-700);
-  pointer-events: none;
-  top: 12px !important;
-}
-
-.revurdering:after {
-  background: transparent url('../../assets/images/endringstidspunkt.svg') no-repeat;
-  content: '';
-  height: 20px;
-  left: -8px;
-  position: absolute;
-  top: 0;
-  width: 20px;
-}
-
 .lastDateInSoknad {
   display: none;
 }
