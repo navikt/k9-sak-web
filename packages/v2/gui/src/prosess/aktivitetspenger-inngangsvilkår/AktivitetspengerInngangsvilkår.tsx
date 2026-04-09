@@ -3,7 +3,7 @@ import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandli
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Box, Tabs } from '@navikt/ds-react';
+import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
 import { Alder } from './Alder';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
@@ -65,58 +65,63 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruke
   }, [aksjonspunkter]);
 
   return (
-    <Tabs value={aktivTab} onChange={value => setAktivTab(value as InngangsvilkårTab)}>
-      <Tabs.List>
-        <Tabs.Tab value={InngangsvilkårTab.SØKNADSFRIST} label="Søknadsfrist" icon={tabIkon()} />
-        <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIkon()} />
-        <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon()} />
-        <Tabs.Tab
-          value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
-          label="Andre livsoppholdytelser"
-          icon={tabIkon()}
-        />
-        <Tabs.Tab
-          value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
-          label="Behov for bistand"
-          icon={tabIkon(vurderBistandsvilkårAp)}
-        />
-        {lokalkontorBeslutterAp && (
-          <Tabs.Tab value={InngangsvilkårTab.BESLUTTER} label="Beslutter" icon={tabIkon(lokalkontorBeslutterAp)} />
-        )}
-      </Tabs.List>
-      <Box marginBlock="space-20 space-0">
-        <Tabs.Panel value={InngangsvilkårTab.SØKNADSFRIST}>
-          <Søknadsfrist />
-        </Tabs.Panel>
-        <Tabs.Panel value={InngangsvilkårTab.ALDER}>
-          <Alder />
-        </Tabs.Panel>
-        <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
-          <BosattITrondheim />
-        </Tabs.Panel>
-        <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
-          <AndreLivsoppholdytelser />
-        </Tabs.Panel>
-        <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
-          <BehovForBistand
-            vurderBistandsvilkårAp={vurderBistandsvilkårAp}
-            lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
-            kanSaksbehandle={kanSaksbehandle}
-            submitCallback={submitCallback}
+    <VStack gap="space-20">
+      <Heading size="medium" level="2">
+        Inngangsvilkår
+      </Heading>
+      <Tabs value={aktivTab} onChange={value => setAktivTab(value as InngangsvilkårTab)}>
+        <Tabs.List>
+          <Tabs.Tab value={InngangsvilkårTab.SØKNADSFRIST} label="Søknadsfrist" icon={tabIkon()} />
+          <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIkon()} />
+          <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon()} />
+          <Tabs.Tab
+            value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
+            label="Andre livsoppholdytelser"
+            icon={tabIkon()}
           />
-        </Tabs.Panel>
-        {lokalkontorBeslutterAp && (
-          <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
-            <Beslutter
-              lokalkontorBeslutterAp={lokalkontorBeslutterAp}
+          <Tabs.Tab
+            value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
+            label="Behov for bistand"
+            icon={tabIkon(vurderBistandsvilkårAp)}
+          />
+          {lokalkontorBeslutterAp && (
+            <Tabs.Tab value={InngangsvilkårTab.BESLUTTER} label="Beslutter" icon={tabIkon(lokalkontorBeslutterAp)} />
+          )}
+        </Tabs.List>
+        <Box marginBlock="space-20 space-0">
+          <Tabs.Panel value={InngangsvilkårTab.SØKNADSFRIST}>
+            <Søknadsfrist />
+          </Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.ALDER}>
+            <Alder />
+          </Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
+            <BosattITrondheim />
+          </Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
+            <AndreLivsoppholdytelser />
+          </Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
+            <BehovForBistand
               vurderBistandsvilkårAp={vurderBistandsvilkårAp}
-              innloggetBruker={innloggetBruker}
+              lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
+              kanSaksbehandle={kanSaksbehandle}
               submitCallback={submitCallback}
-              onTabChange={setAktivTab}
             />
           </Tabs.Panel>
-        )}
-      </Box>
-    </Tabs>
+          {lokalkontorBeslutterAp && (
+            <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
+              <Beslutter
+                lokalkontorBeslutterAp={lokalkontorBeslutterAp}
+                vurderBistandsvilkårAp={vurderBistandsvilkårAp}
+                innloggetBruker={innloggetBruker}
+                submitCallback={submitCallback}
+                onTabChange={setAktivTab}
+              />
+            </Tabs.Panel>
+          )}
+        </Box>
+      </Tabs>
+    </VStack>
   );
 };

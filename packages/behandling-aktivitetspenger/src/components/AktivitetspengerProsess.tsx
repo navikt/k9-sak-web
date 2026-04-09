@@ -9,7 +9,7 @@ import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Fagsak } from '@k9-sak-web/types';
-import { Box } from '@navikt/ds-react';
+import { Bleed, Box } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
@@ -134,47 +134,49 @@ export const AktivitetspengerProsess = ({
         tekstkode="Behandlingen er sendt til godkjenning."
       />
       <ProsessMeny steg={prosessteg}>
-        <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16" margin="space-16">
-          {prosessteg.map(steg => {
-            const urlKode = steg.urlKode;
-            if (urlKode === prosessStegCodes.VEDTAK) {
-              return (
-                <VedtakProsessStegInitPanel
-                  key={steg.urlKode}
-                  api={api}
-                  behandling={behandling}
-                  hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
-                  submitCallback={handleVedtakSubmit}
-                />
-              );
-            }
-            if (urlKode === prosessStegCodes.BEREGNING) {
-              return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
-            }
-            if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
-              return (
-                <InngangsvilkårInitPanel
-                  api={api}
-                  behandling={behandling}
-                  submitCallback={bekreftAksjonspunktCallback}
-                  key={steg.urlKode}
-                />
-              );
-            }
-            if (urlKode === prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP) {
-              return (
-                <ForutgåendeMedlemskapInitPanel
-                  api={api}
-                  behandling={behandling}
-                  submitCallback={bekreftAksjonspunktCallback}
-                  key={steg.urlKode}
-                />
-              );
-            }
+        <Bleed marginInline="space-20">
+          <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
+            {prosessteg.map(steg => {
+              const urlKode = steg.urlKode;
+              if (urlKode === prosessStegCodes.VEDTAK) {
+                return (
+                  <VedtakProsessStegInitPanel
+                    key={steg.urlKode}
+                    api={api}
+                    behandling={behandling}
+                    hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
+                    submitCallback={handleVedtakSubmit}
+                  />
+                );
+              }
+              if (urlKode === prosessStegCodes.BEREGNING) {
+                return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
+              }
+              if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
+                return (
+                  <InngangsvilkårInitPanel
+                    api={api}
+                    behandling={behandling}
+                    submitCallback={bekreftAksjonspunktCallback}
+                    key={steg.urlKode}
+                  />
+                );
+              }
+              if (urlKode === prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP) {
+                return (
+                  <ForutgåendeMedlemskapInitPanel
+                    api={api}
+                    behandling={behandling}
+                    submitCallback={bekreftAksjonspunktCallback}
+                    key={steg.urlKode}
+                  />
+                );
+              }
 
-            return null;
-          })}
-        </Box>
+              return null;
+            })}
+          </Box>
+        </Bleed>
       </ProsessMeny>
     </VedtakFormContext.Provider>
   );
