@@ -1,18 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
-import '@k9-sak-web/gui/utils/validation/yupSchemas';
+import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
-import { useAvregningFormState } from '../AvregningContext';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext';
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import { useAvregningFormState } from '../AvregningContext';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
