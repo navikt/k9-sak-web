@@ -253,17 +253,19 @@ const transformValues = (
   aksjonspunkter: AksjonspunktDto[],
   opptjeninger: OpptjeningDto[],
 ) => ({
-  vilkårPeriodeVurderinger: values.vilkarFields.map(vilkarField => ({
-    begrunnelse: vilkarField.begrunnelse,
-    vurderesIBehandlingen: vilkarField.vurderesIBehandlingen,
-    vurderesIAksjonspunkt: vilkarField.vurderesIAksjonspunkt,
-    kode: vilkarField.kode,
-    erVilkarOk: erVilkarOk(vilkarField.kode),
-    innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).some(kode => kode === vilkarField.kode)
-      ? vilkarField.kode
-      : undefined,
-    periode: vilkarField.periode,
-  })),
+  vilkårPeriodeVurderinger: values.vilkarFields
+    .filter(vilkarField => vilkarField.vurderesIAksjonspunkt)
+    .map(vilkarField => ({
+      begrunnelse: vilkarField.begrunnelse,
+      vurderesIBehandlingen: vilkarField.vurderesIBehandlingen,
+      vurderesIAksjonspunkt: vilkarField.vurderesIAksjonspunkt,
+      kode: vilkarField.kode,
+      erVilkarOk: erVilkarOk(vilkarField.kode),
+      innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).some(kode => kode === vilkarField.kode)
+        ? vilkarField.kode
+        : undefined,
+      periode: vilkarField.periode,
+    })),
   opptjeningPerioder: Array.isArray(opptjeninger)
     ? opptjeninger.map(opptjening => ({
         fom: opptjening.fastsattOpptjening?.opptjeningFom,
