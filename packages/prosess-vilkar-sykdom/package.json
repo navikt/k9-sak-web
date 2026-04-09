@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "10.5.14",
+    "@navikt/ft-plattform-komponenter": "10.6.0",
     "classnames": "2.5.1",
     "lodash": "4.18.1",
     "react": "19.2.4",
