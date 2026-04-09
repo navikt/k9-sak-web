@@ -50,10 +50,6 @@ export default {
     "selector-pseudo-class-no-unknown": null,
     "keyframes-name-pattern": null,
     "no-descending-specificity": null,
-    "import-notation": "string",
-    "at-rule-no-unknown": [true, {
-      "ignoreAtRules": ["config", "theme"]
-    }],
     'unit-allowed-list': [
       'em',
       'ex',

@@ -2,7 +2,7 @@ import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combine
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 
 export type BehandlingAvregningBackendApiType = {
-  // denne er optional fordi aksjonspunktet SJEKK_HØY_ETTERBETALING kun finnes i k9sak, og ikke i ungsak.
+  // denne er optional fordi aksjonspunktet SJEKK_HØY_ETTERBETALING kun finnes i k9sak, og ikke i ungsak. 
   bekreftAksjonspunktSjekkHøyEtterbetaling?(
     behandlingId: number,
     behandlingVersjon: number,

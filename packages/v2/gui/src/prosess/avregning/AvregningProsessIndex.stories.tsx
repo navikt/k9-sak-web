@@ -23,7 +23,9 @@ const meta = {
 } satisfies Meta<typeof AvregningProsessIndex>;
 
 type Story = StoryObj<typeof meta>;
-export const AksjonspunktVurderFeilutbetaling8084 = () => <AvregningProsessIndex {...vurderFeilutbetalingMock} />;
+export const AksjonspunktVurderFeilutbetaling8084 = () => (
+  <AvregningProsessIndex {...vurderFeilutbetalingMock} />
+);
 
 export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
   args: { ...vurderFeilutbetalingMock },
@@ -46,7 +48,9 @@ export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
   },
 };
 
-export const AksjonspunktHøyEtterbetaling8086 = () => <AvregningProsessIndex {...sjekkHøyEtterbetalingMock} />;
+export const AksjonspunktHøyEtterbetaling8086 = () => (
+  <AvregningProsessIndex {...sjekkHøyEtterbetalingMock} />
+);
 
 export const FyllAksjonspunktHøyEtterbetaling8086: Story = {
   args: { ...sjekkHøyEtterbetalingMock },
