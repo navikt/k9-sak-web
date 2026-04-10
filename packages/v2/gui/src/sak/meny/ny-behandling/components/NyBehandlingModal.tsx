@@ -53,6 +53,15 @@ export type DelvisRevurderingÅrsakMapping = {
   vilkårType: string;
 };
 
+const VILKÅR_TYPE_KODE_TIL_NAVN: Record<string, string> = {
+  FP_VK_41: 'Beregningsgrunnlagvilkåret',
+  FP_VK_2: 'Medlemskapsvilkåret',
+  K9_VK_1: 'Omsorgen for',
+  FP_VK_23: 'Opptjeningsvilkåret',
+  FP_VK_21: 'Opptjeningsperiodevilkåret',
+  FP_VK_3: 'Søknadsfristvilkåret',
+};
+
 const DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK: Record<string, string> = {
   [BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRING_BEREGNINGSGRUNNLAG]: 'Beregningsgrunnlagvilkåret',
   [BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRET_FORDELING]: 'Beregningsgrunnlagvilkåret',
@@ -63,7 +72,7 @@ const DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK: Record<string, string> = {
 
 const byggÅrsakTilVilkårMap = (backendData?: DelvisRevurderingÅrsakMapping[]): Record<string, string> => {
   if (backendData && backendData.length > 0) {
-    return Object.fromEntries(backendData.map(d => [d.årsak, d.vilkårType]));
+    return Object.fromEntries(backendData.map(d => [d.årsak, VILKÅR_TYPE_KODE_TIL_NAVN[d.vilkårType] ?? d.vilkårType]));
   }
   return DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK;
 };
