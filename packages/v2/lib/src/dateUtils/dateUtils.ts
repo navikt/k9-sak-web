@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import { ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
+import dayjs, { Dayjs } from 'dayjs';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
 export const TIDENES_ENDE = '9999-12-31';
@@ -332,4 +332,16 @@ export const checkForOverlap = (
     // Check if periods overlap: current period starts before other ends AND current period ends after other starts
     return currentStart.isSameOrBefore(otherEnd) && currentEnd.isSameOrAfter(otherStart);
   });
+};
+
+export const isSameOrBefore = (date: string | Dayjs | Date, otherDate: string | Dayjs | Date) => {
+  const dateFormats = [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT];
+  const dateInQuestion = initializeDate(date, dateFormats);
+  const formattedOtherDate = initializeDate(otherDate, dateFormats);
+  return dateInQuestion.isBefore(formattedOtherDate) || dateInQuestion.isSame(formattedOtherDate);
+};
+
+export const prettifyDateString = (dateString: string) => {
+  const dateObject = initializeDate(dateString);
+  return dateObject.format(DDMMYYYY_DATE_FORMAT);
 };
