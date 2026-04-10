@@ -24,6 +24,7 @@ import { UngSakApi } from '../data/UngSakApi';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
+import { SatsOgUtbetalingProsessStegInitPanel } from './prosess/SatsOgUtbetalingProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -159,6 +160,9 @@ export const AktivitetspengerProsess = ({
             }
             if (urlKode === prosessStegCodes.BEREGNING) {
               return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
+            }
+            if (urlKode === prosessStegCodes.SATS_OG_UTBETALING) {
+              return <SatsOgUtbetalingProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
             }
             return null;
           })}

@@ -17,6 +17,7 @@ import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../data/ungSakQ
 const PROSESS_STEG_KODER = {
   VEDTAK: 'vedtak',
   BEREGNING: 'beregning',
+  SATS_OG_UTBETALING: 'sats_og_utbetaling',
 } as const;
 
 const PANEL_KONFIG = {
@@ -37,6 +38,11 @@ const PANEL_KONFIG = {
     aksjonspunkter: [],
     id: PROSESS_STEG_KODER.BEREGNING,
     label: 'Beregning',
+  },
+  satsOgUtbetaling: {
+    aksjonspunkter: [],
+    id: PROSESS_STEG_KODER.SATS_OG_UTBETALING,
+    label: 'Sats og utbetaling',
   },
 } as const;
 
@@ -86,6 +92,13 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       usePartialStatus: false,
       urlKode: prosessStegCodes.BEREGNING,
     };
+    const satsOgUtbetalingPanel = {
+      id: PANEL_KONFIG.satsOgUtbetaling.id,
+      label: PANEL_KONFIG.satsOgUtbetaling.label,
+      type: ProcessMenuStepType.default,
+      usePartialStatus: false,
+      urlKode: prosessStegCodes.SATS_OG_UTBETALING,
+    };
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {
       id: PANEL_KONFIG.vedtak.id,
@@ -95,6 +108,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       urlKode: prosessStegCodes.VEDTAK,
     };
 
-    return [beregningPanel, vedtakPanel];
+    return [beregningPanel, satsOgUtbetalingPanel, vedtakPanel];
   }, [vilkår, aksjonspunkter, behandling]);
 };

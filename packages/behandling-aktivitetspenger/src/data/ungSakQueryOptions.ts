@@ -34,3 +34,9 @@ export const beregningsgrunnlagQueryOptions = (api: UngSakApi, behandling: Behan
     queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getBeregningsgrunnlag(behandling.uuid),
   });
+
+export const satsOgUtbetalingQueryOptions = (api: UngSakApi, behandling: Pick<Behandling, 'uuid'>) =>
+  queryOptions({
+    queryKey: ['aktivitetspenger-sats-og-utbetaling', behandling.uuid, api.backend],
+    queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
+  });
