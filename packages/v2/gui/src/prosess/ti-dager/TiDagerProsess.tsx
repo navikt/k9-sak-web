@@ -93,7 +93,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
           </VStack>
           {!isReadOnly && (
             <Box marginBlock="space-16 space-0">
-              <Button size="small" type="submit">
+              <Button size="small" type="submit" loading={formMethods.formState.isSubmitting}>
                 Bekreft
               </Button>
             </Box>
