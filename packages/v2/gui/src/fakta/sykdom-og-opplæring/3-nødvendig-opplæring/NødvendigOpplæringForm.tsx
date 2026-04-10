@@ -21,7 +21,7 @@ import {
 } from '@navikt/ds-react';
 import { ListItem } from '@navikt/ds-react/List';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import dayjs from 'dayjs';
 import { useContext, useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';

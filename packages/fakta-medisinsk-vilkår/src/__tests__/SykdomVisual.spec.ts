@@ -2,12 +2,12 @@
 // import puppeteer from 'puppeteer';
 
 // Trenger følgende devDeps for å kjøre
-// "@types/expect-puppeteer": "^5.0.1",
-// "@types/jest-environment-puppeteer": "^5.0.2",
-// "@types/puppeteer": "^7.0.4",
-// "jest-puppeteer": "^6.2.0",
-// "expect-puppeteer": "^6.1.1",
-// "puppeteer": "^19.5.2"
+// "@types/expect-puppeteer": "5.0.1",
+// "@types/jest-environment-puppeteer": "5.0.2",
+// "@types/puppeteer": "7.0.4",
+// "jest-puppeteer": "6.2.0",
+// "expect-puppeteer": "6.1.1",
+// "puppeteer": "19.5.2"
 
 // let browser;
 // let page;

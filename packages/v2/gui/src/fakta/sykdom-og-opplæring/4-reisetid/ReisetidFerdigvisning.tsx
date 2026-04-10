@@ -1,6 +1,6 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import ReisedagerIVurdering from './ReisedagerIVurdering';
-import type { Period } from '@navikt/ft-utils';
+import type { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import { BodyLong, Link } from '@navikt/ds-react';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
