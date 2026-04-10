@@ -26,4 +26,12 @@ jobs:
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on tcp:9001 && yarn test-storybook"
+            "npx wait-on tcp:9001 && yarn test-storybook:ci"
+
+      - name: Upload visual diff artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-diffs
+          path: __visual_snapshots__/__diff_output__/
+          retention-days: 30
