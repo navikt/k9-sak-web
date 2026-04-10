@@ -30,11 +30,11 @@
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "workspace:^",
     "@navikt/diagnosekoder": "1.2026.0",
-    "@navikt/ft-form-hooks": "10.6.15",
-    "@navikt/ft-form-validators": "4.4.26",
-    "@navikt/ft-types": "^5.3.25",
-    "@navikt/ft-utils": "3.11.13",
-    "@tanstack/react-query": "5.95.2",
+    "@navikt/ft-form-hooks": "10.7.0",
+    "@navikt/ft-form-validators": "4.5.0",
+    "@navikt/ft-types": "^5.4.0",
+    "@navikt/ft-utils": "3.12.0",
+    "@tanstack/react-query": "5.96.1",
     "@types/css-tree": "2.3.11",
     "@types/object-hash": "3.0.6",
     "axios": "1.14.0",
@@ -44,8 +44,8 @@
     "object-hash": "3.0.0",
     "react": "19.2.4",
     "react-collapse": "5.1.1",
-    "react-hook-form": "7.71.2",
-    "react-router": "7.13.0",
+    "react-hook-form": "7.72.1",
+    "react-router": "7.13.2",
     "yup": "1.7.1"
   }
 }

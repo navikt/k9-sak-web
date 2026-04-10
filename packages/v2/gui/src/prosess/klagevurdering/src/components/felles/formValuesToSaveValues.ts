@@ -30,7 +30,7 @@ export const formValuesToSaveValues = (
       throw new Error(`Ugyldig KlageVurderingOmgjør verdi: ${values.klageVurderingOmgjoer}`);
     }
   }
-  let klageVurdering: KlageVurdering | undefined = undefined;
+  let klageVurdering: KlageVurdering | undefined;
   if (values.klageVurdering == null || isKlageVurdering(values.klageVurdering)) {
     klageVurdering = values.klageVurdering;
   } else {
