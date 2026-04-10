@@ -8,7 +8,7 @@ import {
   k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
-import type { Period } from '@navikt/ft-utils';
+import type { Period } from '@k9-sak-web/gui/utils/Period.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
