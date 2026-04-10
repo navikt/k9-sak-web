@@ -2719,7 +2719,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:10.6.0"
     "@popperjs/core": "npm:2.11.8"
     "@tanstack/react-query": "npm:5.96.1"
-    axios: "npm:1.14.0"
+    axios: "npm:1.15.0"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.20"
     react: "npm:19.2.4"
@@ -2803,7 +2803,7 @@ __metadata:
     "@tanstack/react-query": "npm:5.96.1"
     "@types/css-tree": "npm:2.3.11"
     "@types/object-hash": "npm:3.0.6"
-    axios: "npm:1.14.0"
+    axios: "npm:1.15.0"
     css-tree: "npm:3.2.1"
     dayjs: "npm:1.11.20"
     editorjs-html: "npm:3.4.3"
@@ -2979,7 +2979,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
-    axios: "npm:1.14.0"
+    axios: "npm:1.15.0"
   languageName: unknown
   linkType: soft
 
@@ -3014,7 +3014,7 @@ __metadata:
     "@sentry/browser": "npm:10.47.0"
     "@sentry/react": "npm:10.47.0"
     "@tanstack/react-query": "npm:5.96.1"
-    axios: "npm:1.14.0"
+    axios: "npm:1.15.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
@@ -3057,7 +3057,7 @@ __metadata:
     "@sentry/browser": "npm:10.47.0"
     "@sentry/react": "npm:10.47.0"
     "@tanstack/react-query": "npm:5.96.1"
-    axios: "npm:1.14.0"
+    axios: "npm:1.15.0"
     classnames: "npm:2.5.1"
     history: "npm:5.3.0"
     react: "npm:19.2.4"
@@ -6296,14 +6296,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.14.0":
-  version: 1.14.0
-  resolution: "axios@npm:1.14.0"
+"axios@npm:1.15.0":
+  version: 1.15.0
+  resolution: "axios@npm:1.15.0"
   dependencies:
     follow-redirects: "npm:^1.15.11"
     form-data: "npm:^4.0.5"
     proxy-from-env: "npm:^2.1.0"
-  checksum: 10/c3444e9e3da1714916e4ddd7cda05bb41a5d5d80e3e27b099a116439684c63f2280c88503d1acd65841698b63af0b542b4d5780454e28fd0aed2d783ef90943e
+  checksum: 10/d39a2c0ebc7ff4739401b282e726cc2673377949d6c46d60eb619458f8d7a2f7eadbcada7097f4dbc7d5c59abb4d3bf6fac33d474412bc3415d3f5aa7ed45530
   languageName: node
   linkType: hard
 
@@ -10536,7 +10536,7 @@ __metadata:
     "@types/redux-form": "npm:8.3.11"
     "@vitejs/plugin-react": "npm:6.0.1"
     "@vitest/eslint-plugin": "npm:^1.6.14"
-    axios: "npm:1.14.0"
+    axios: "npm:1.15.0"
     axios-mock-adapter: "npm:2.1.0"
     cross-env: "npm:10.1.0"
     date-fns: "npm:4.1.0"
