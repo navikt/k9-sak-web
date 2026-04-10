@@ -1,22 +1,15 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import {
-  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import {
-  FatterVedtakStatusModal,
-  IverksetterVedtakStatusModal,
-  Rettigheter,
-  prosessStegHooks,
-} from '@k9-sak-web/behandling-felles';
+import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Fagsak } from '@k9-sak-web/types';
-import { Box } from '@navikt/ds-react';
+import { Bleed, Box } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
@@ -24,6 +17,8 @@ import { UngSakApi } from '../data/UngSakApi';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
+import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
+import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -31,7 +26,6 @@ interface OwnProps {
   api: UngSakApi;
   fagsak: Fagsak;
   behandling: BehandlingDto;
-  rettigheter: Rettigheter;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
@@ -42,7 +36,6 @@ export const AktivitetspengerProsess = ({
   api,
   fagsak,
   behandling,
-  rettigheter,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
@@ -51,7 +44,7 @@ export const AktivitetspengerProsess = ({
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
   const { pollTilBehandlingErKlar } = usePollBehandlingStatus(api, behandling, setBehandling);
   const { mutateAsync: lagreAksjonspunktMutation } = useMutation({
-    mutationFn: (aksjonspunktData: ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) =>
+    mutationFn: (aksjonspunktData: BekreftedeAksjonspunkterDto) =>
       api.lagreAksjonspunkt({
         behandlingId: `${behandling.id}`,
         behandlingVersjon: behandling.versjon,
@@ -61,7 +54,7 @@ export const AktivitetspengerProsess = ({
   });
 
   const { mutateAsync: lagreOverstyrteAksjonspunktMutation } = useMutation({
-    mutationFn: (aksjonspunktData: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) =>
+    mutationFn: (aksjonspunktData: BekreftetOgOverstyrteAksjonspunkterDto) =>
       api.lagreAksjonspunktOverstyr({
         behandlingId: `${behandling.id}`,
         behandlingVersjon: behandling.versjon,
@@ -85,7 +78,6 @@ export const AktivitetspengerProsess = ({
   );
 
   const prosessteg = useProsessmotor({ api, behandling });
-  const isReadOnly = !rettigheter.writeAccess.isEnabled;
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
@@ -97,7 +89,7 @@ export const AktivitetspengerProsess = ({
 
   const handleVedtakSubmit = async (
     aksjonspunktModels: { isVedtakSubmission: boolean; kode: string }[],
-    aksjonspunkt: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+    aksjonspunkt: AksjonspunktDto[],
   ) => {
     const fatterVedtakAksjonspunktkoder = [
       aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
@@ -142,27 +134,49 @@ export const AktivitetspengerProsess = ({
         tekstkode="Behandlingen er sendt til godkjenning."
       />
       <ProsessMeny steg={prosessteg}>
-        <Box borderColor="neutral-subtle" borderWidth="1" padding="space-16">
-          {prosessteg.map(steg => {
-            const urlKode = steg.urlKode;
-            if (urlKode === prosessStegCodes.VEDTAK) {
-              return (
-                <VedtakProsessStegInitPanel
-                  key={steg.urlKode}
-                  api={api}
-                  behandling={behandling}
-                  hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
-                  isReadOnly={isReadOnly}
-                  submitCallback={handleVedtakSubmit}
-                />
-              );
-            }
-            if (urlKode === prosessStegCodes.BEREGNING) {
-              return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
-            }
-            return null;
-          })}
-        </Box>
+        <Bleed marginInline="space-20">
+          <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
+            {prosessteg.map(steg => {
+              const urlKode = steg.urlKode;
+              if (urlKode === prosessStegCodes.VEDTAK) {
+                return (
+                  <VedtakProsessStegInitPanel
+                    key={steg.urlKode}
+                    api={api}
+                    behandling={behandling}
+                    hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
+                    submitCallback={handleVedtakSubmit}
+                  />
+                );
+              }
+              if (urlKode === prosessStegCodes.BEREGNING) {
+                return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
+              }
+              if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
+                return (
+                  <InngangsvilkårInitPanel
+                    api={api}
+                    behandling={behandling}
+                    submitCallback={bekreftAksjonspunktCallback}
+                    key={steg.urlKode}
+                  />
+                );
+              }
+              if (urlKode === prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP) {
+                return (
+                  <ForutgåendeMedlemskapInitPanel
+                    api={api}
+                    behandling={behandling}
+                    submitCallback={bekreftAksjonspunktCallback}
+                    key={steg.urlKode}
+                  />
+                );
+              }
+
+              return null;
+            })}
+          </Box>
+        </Bleed>
       </ProsessMeny>
     </VedtakFormContext.Provider>
   );

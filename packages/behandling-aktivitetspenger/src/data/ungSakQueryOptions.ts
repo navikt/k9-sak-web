@@ -29,8 +29,14 @@ export const behandlingQueryOptions = (api: UngSakApi, behandling: Pick<Behandli
     queryFn: () => api.getBehandling(behandling.uuid),
   });
 
-export const beregningsgrunnlagQueryOptions = (api: UngSakApi, behandling: Behandling) =>
+export const beregningsgrunnlagQueryOptions = (api: UngSakApi, behandling: Behandling, enabled = true) =>
   queryOptions({
-    queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid, behandling.versjon, api.backend],
-    queryFn: () => api.getBeregningsgrunnlag(behandling.uuid),
+    queryKey: ['aktivitetspenger-beregningsgrunnlag', behandling.uuid, behandling.versjon, enabled, api.backend],
+    queryFn: () => (enabled ? api.getBeregningsgrunnlag(behandling.uuid) : null),
+  });
+
+export const innloggetBrukerQueryOptions = (api: UngSakApi) =>
+  queryOptions({
+    queryKey: ['innlogget-bruker'],
+    queryFn: () => api.getInnloggetBruker(),
   });

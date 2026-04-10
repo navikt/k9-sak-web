@@ -1,4 +1,4 @@
-import { Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
@@ -16,7 +16,6 @@ import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './data/ungSa
 
 interface OwnProps {
   fagsak: Fagsak;
-  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -35,7 +34,6 @@ const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,
   oppdaterBehandlingVersjon,
   fagsak,
-  rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   setRequestPendingMessage,
@@ -100,7 +98,6 @@ const BehandlingAktivitetspengerIndex = ({
         api={ungSakProsessApi}
         fagsak={fagsak}
         behandling={behandling}
-        rettigheter={rettigheter}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}

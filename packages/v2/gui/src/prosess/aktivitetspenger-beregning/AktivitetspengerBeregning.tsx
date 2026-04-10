@@ -21,7 +21,7 @@ interface Props {
   data: BeregningsgrunnlagDto;
 }
 
-const AktivitetspengerBeregning = ({ data }: Props) => {
+export const AktivitetspengerBeregning = ({ data }: Props) => {
   const årstallForSkjæringstidspunkt = new Date(data.skjæringstidspunkt).getFullYear();
   const isBesteberegningSnittSisteTreÅr =
     data.besteBeregningResultatType === BesteBeregningResultatType.SNITT_SISTE_TRE_ÅR;
@@ -116,12 +116,10 @@ const AktivitetspengerBeregning = ({ data }: Props) => {
                   <Table.DataCell scope="row">Beregningsgrunnlag redusert til 66 %</Table.DataCell>
                   <Table.DataCell align="right">{formatter.format(data.beregningsgrunnlagRedusert)}</Table.DataCell>
                 </Table.Row>
-                {data.dagsats && (
-                  <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
-                    <Table.HeaderCell scope="row">Dagsats (beregningsgrunnlag/260 dager)</Table.HeaderCell>
-                    <Table.DataCell align="right">{formatter.format(data.dagsats)}</Table.DataCell>
-                  </Table.Row>
-                )}
+                <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
+                  <Table.HeaderCell scope="row">Dagsats (beregningsgrunnlag/260 dager)</Table.HeaderCell>
+                  <Table.DataCell align="right">{data.dagsats ? formatter.format(data.dagsats) : '-'}</Table.DataCell>
+                </Table.Row>
               </Table.Body>
             </Table>
           </Box>
@@ -130,5 +128,3 @@ const AktivitetspengerBeregning = ({ data }: Props) => {
     </VStack>
   );
 };
-
-export default AktivitetspengerBeregning;

@@ -3,10 +3,12 @@ import {
   ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
   ung_sak_kontrakt_AsyncPollingStatus,
+  ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse,
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 
 export interface UngSakApi {
   readonly backend: 'ungsak';
@@ -18,5 +20,9 @@ export interface UngSakApi {
   getVilkår(behandlingUuid: string): Promise<ung_sak_kontrakt_vilkår_VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;
   hentBehandlingMidlertidigStatus(behandlingUuid: string): Promise<ung_sak_kontrakt_AsyncPollingStatus>;
+  hentMedlemskapFraSøknad(
+    behandlingUuid: string,
+  ): Promise<ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto>;
+  getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
 }

@@ -1,5 +1,5 @@
-import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
@@ -8,7 +8,11 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { UngSakApi } from '../../data/UngSakApi';
-import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../../data/ungSakQueryOptions';
+import {
+  aksjonspunkterQueryOptions,
+  innloggetBrukerQueryOptions,
+  vilkårQueryOptions,
+} from '../../data/ungSakQueryOptions';
 
 const vedtakAksjonspunktKoder = [
   AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
@@ -31,14 +35,17 @@ interface Props {
   api: UngSakApi;
   behandling: BehandlingDto;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
-  isReadOnly: boolean;
-  submitCallback: (data: any, aksjonspunkt?: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
 }
 
-export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submitCallback }: Props) {
+export function VedtakProsessStegInitPanel({ api, behandling, submitCallback }: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
-  const [{ data: aksjonspunkter = [] }, { data: vilkår }] = useSuspenseQueries({
-    queries: [aksjonspunkterQueryOptions(api, behandling), vilkårQueryOptions(api, behandling)],
+  const [{ data: aksjonspunkter = [] }, { data: vilkår }, { data: innloggetBruker }] = useSuspenseQueries({
+    queries: [
+      aksjonspunkterQueryOptions(api, behandling),
+      vilkårQueryOptions(api, behandling),
+      innloggetBrukerQueryOptions(api),
+    ],
   });
   const vedtakAksjonspunkter = useMemo(() => {
     return (
@@ -46,8 +53,17 @@ export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submit
     );
   }, [aksjonspunkter]);
 
+  const isReadOnly = useMemo(() => {
+    return (
+      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
+      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
+    );
+  }, [innloggetBruker]);
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+  const handleSubmit = async (data: Array<{ kode: AksjonspunktDto['definisjon'] }>) => {
+    await submitCallback(data, vedtakAksjonspunkter);
+  };
 
   if (!erValgt || !behandling) {
     return null;
@@ -62,7 +78,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, isReadOnly, submit
       aksjonspunkter={vedtakAksjonspunkter}
       vilkar={vilkår}
       isReadOnly={isReadOnly}
-      submitCallback={submitCallback}
+      submitCallback={handleSubmit}
       tekster={vedtakPanelTekster}
     />
   );
