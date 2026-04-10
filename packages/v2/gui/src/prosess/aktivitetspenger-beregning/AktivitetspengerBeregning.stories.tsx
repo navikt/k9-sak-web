@@ -30,7 +30,7 @@ const data: BeregningsgrunnlagDto = {
 const api = new FakeAktivitetspengerBeregningBackendApi();
 
 class FakeAktivitetspengerBeregningUtenInntektApi extends FakeAktivitetspengerBeregningBackendApi {
-  async getKontrollerInntekt() {
+  override async getKontrollerInntekt(_behandlingUuid: string) {
     return {
       kontrollperioder: [],
     };
@@ -105,7 +105,7 @@ export const ViserInntektskontroll: Story = {
 export const SkjulerInntektskontrollUtenPerioder: Story = {
   args: {
     data,
-    behandling: { uuid: '123', versjon: 1 },
+    behandling: { uuid: 'ingen-perioder', versjon: 1 },
     api: new FakeAktivitetspengerBeregningUtenInntektApi(),
     submitCallback: asyncAction('Løs aksjonspunkt'),
     aksjonspunkter: [],
