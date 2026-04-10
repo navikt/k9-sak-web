@@ -3,13 +3,13 @@ import { RhfForm } from '@navikt/ft-form-hooks';
 import { Controller, useForm } from 'react-hook-form';
 
 interface TiDagerFormData {
-  harUtbetaltPliktigeDager: 'ja' | 'nei';
+  harRettFraDag1: 'ja' | 'nei';
   begrunnelse: string;
 }
 
 interface TiDagerSubmitModel {
   kode: string;
-  harUtbetaltPliktigeDager: boolean;
+  avklarAgRettFraDag1: boolean;
   begrunnelse: string;
 }
 
@@ -26,7 +26,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = aksjonspunkter.map(ap => ({
       kode: ap.definisjon.kode,
-      harUtbetaltPliktigeDager: data.harUtbetaltPliktigeDager === 'ja',
+      avklarAgRettFraDag1: data.harRettFraDag1 === 'ja',
       begrunnelse: data.begrunnelse,
     }));
     await submitCallback(payload);
@@ -59,7 +59,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
           <VStack gap="space-16">
             <Controller
               control={control}
-              name="harUtbetaltPliktigeDager"
+              name="harRettFraDag1"
               rules={{ required: true }}
               render={({ field, fieldState }) => (
                 <RadioGroup
@@ -93,7 +93,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
           </VStack>
           {!isReadOnly && (
             <Box marginBlock="space-16 space-0">
-              <Button size="small" type="submit">
+              <Button size="small" type="submit" loading={formMethods.formState.isSubmitting}>
                 Bekreft
               </Button>
             </Box>
