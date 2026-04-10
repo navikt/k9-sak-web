@@ -100,7 +100,7 @@ jobs:
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           TAG: prod_${{ needs.build-docker-image.outputs.tag }}
         with:
@@ -138,7 +138,7 @@ jobs:
           VARS: deploy/ung/prod-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             try {
