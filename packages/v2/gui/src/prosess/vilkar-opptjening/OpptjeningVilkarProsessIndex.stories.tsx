@@ -9,7 +9,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles';
 import OpptjeningVilkarProsessIndexV2 from './OpptjeningVilkarProsessIndexV2';
@@ -312,6 +312,70 @@ export const VisPanelForPSBÅpentAksjonspunktMed847B: Story = {
     isAksjonspunktOpen: true,
 
     visAllePerioder: false,
+  },
+};
+
+export const VisIkonKunForPeriodeSomSkalVurderes: Story = {
+  args: {
+    fagsak: {
+      ...fagsak,
+      sakstype: fagsakYtelsesType.OMSORGSPENGER,
+    },
+    behandling: { id: 1, versjon: 1 },
+    opptjening: opptjeninger,
+    vilkar: [
+      {
+        perioder: [
+          {
+            avslagKode: undefined,
+            merknadParametere: {
+              antattGodkjentArbeid: 'P10D',
+              antattOpptjeningAktivitetTidslinje:
+                'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT,
+            periode: { fom: '2018-10-02', tom: '2018-10-02' },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            merknad: '-' as VilkårPeriodeDtoMerknad,
+          },
+          {
+            avslagKode: undefined,
+            merknadParametere: {
+              antattGodkjentArbeid: 'P10D',
+              antattOpptjeningAktivitetTidslinje:
+                'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            vilkarStatus: VilkårPeriodeDtoVilkarStatus.IKKE_VURDERT,
+            periode: { fom: '2018-12-02', tom: '2018-12-02' },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            merknad: '-' as VilkårPeriodeDtoMerknad,
+          },
+        ],
+        vilkarType: k9_kodeverk_vilkår_VilkårType.OPPTJENINGSVILKÅRET,
+        relevanteInnvilgetMerknader: [],
+      },
+    ],
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
+        status: AksjonspunktDtoStatus.OPPRETTET,
+      },
+    ],
+    submitCallback: fn(),
+    isReadOnly: false,
+    isAksjonspunktOpen: true,
+    visAllePerioder: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tabMedAksjonspunkt = canvas.getByRole('button', { name: /02\.10\.2018/ });
+    await expect(tabMedAksjonspunkt.querySelector('svg')).not.toBeNull();
+
+    const tabUtenAksjonspunkt = canvas.getByRole('button', { name: /02\.12\.2018/ });
+    await expect(tabUtenAksjonspunkt.querySelector('svg')).toBeNull();
   },
 };
 
