@@ -8,9 +8,11 @@ export const hentFeriepengegrunnlagPrÅr = async (behandlingUuid: string): Promi
   if (!feriepengegrunnlag) {
     return new Map();
   }
+  const grense = new Date().getFullYear() - 2;
   const result = new Map<number, FeriepengegrunnlagAndel[]>();
   for (const andel of feriepengegrunnlag.andeler) {
     const year = andel.opptjeningsår;
+    if (year < grense) continue;
     if (!result.has(year)) result.set(year, []);
     result.get(year)!.push(andel);
   }

@@ -22,6 +22,7 @@
     "reselect": "5.1.1"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@fpsak-frontend/utils-test": "1.0.0",
+    "@types/react": "19.2.14"
   }
 }
