@@ -41,7 +41,6 @@
     "@navikt/ft-types": "6.0.0",
     "@navikt/ft-ui-komponenter": "7.0.0",
     "@navikt/ft-utils": "4.0.0",
-    "@types/react": "19.2.14",
     "dayjs": "1.11.20",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -49,6 +48,7 @@
     "react-intl": "8.1.4"
   },
   "devDependencies": {
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3"
   }
 }

@@ -11,7 +11,6 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/prosess-felles": "1.0.0",
-    "@types/react": "19.2.14",
     "classnames": "2.5.1",
     "prop-types": "15.8.1",
     "react": "19.2.4",
@@ -20,5 +19,8 @@
     "redux": "5.0.1",
     "redux-form": "8.3.10",
     "reselect": "5.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14"
   }
 }
