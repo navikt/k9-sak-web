@@ -1,7 +1,6 @@
 import { isSameOrBefore, isValidDate, prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
-// @deprecated Bruk Periode fra fpsak-frontend(k9) eller andre utils i denne pakken
 export class Period {
   fom: string;
 
