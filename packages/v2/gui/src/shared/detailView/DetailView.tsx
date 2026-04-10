@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BodyShort, Heading } from '@navikt/ds-react';
 import { CalendarIcon } from '@navikt/aksel-icons';
-import type { Period } from '@navikt/ft-utils';
+import type { Period } from '@k9-sak-web/gui/utils/Period.js';
 
 export interface DetailViewProps {
   title: string;
