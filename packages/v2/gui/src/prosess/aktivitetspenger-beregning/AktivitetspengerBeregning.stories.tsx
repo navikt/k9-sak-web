@@ -115,8 +115,8 @@ export const SkjulerInntektskontrollUtenPerioder: Story = {
     const canvas = within(canvasElement);
 
     await step('Skjuler inntektskontroll-tab uten kontrollperioder', async () => {
+      await canvas.findByRole('tab', { name: 'Beregningsgrunnlag' });
       await expect(canvas.queryByRole('tab', { name: 'Inntektskontroll' })).not.toBeInTheDocument();
-      await expect(canvas.getByRole('tab', { name: 'Beregningsgrunnlag' })).toBeInTheDocument();
     });
   },
 };
