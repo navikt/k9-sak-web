@@ -29,8 +29,8 @@ const Inntekt = ({
       <Heading size="xsmall" level="3">
         {title}
       </Heading>
-      {details?.map(detail => (
-        <HStack justify="space-between" key={detail.label}>
+      {details?.map((detail, index) => (
+        <HStack justify="space-between" key={`${detail.label ?? ''}-${index}`}>
           <BodyShort size="small">{detail.label}</BodyShort>
           <BodyShort size="small" weight="semibold">
             {detail.value}

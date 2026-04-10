@@ -124,7 +124,17 @@ export const AksjonspunktArbeidOgInntekt = ({
                 <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
                   Bekreft og fortsett
                 </Button>
-                <Button size="small" variant="secondary" loading={isSubmitting}>
+                <Button
+                  size="small"
+                  variant="secondary"
+                  type="button"
+                  loading={isSubmitting}
+                  onClick={() => {
+                    formMethods.resetField(`perioder.${fieldIndex}.begrunnelse`);
+                    formMethods.resetField(`perioder.${fieldIndex}.valg`);
+                    formMethods.resetField(`perioder.${fieldIndex}.fastsattInntekt`);
+                  }}
+                >
                   Avbryt
                 </Button>
               </HStack>

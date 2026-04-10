@@ -19,7 +19,7 @@ import styles from './arbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
-  if (!inntekt || (!inntekt.arbeidsinntekt && !inntekt.ytelse)) {
+  if (!inntekt || (inntekt.arbeidsinntekt === undefined && inntekt.ytelse === undefined)) {
     return '-';
   }
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));
