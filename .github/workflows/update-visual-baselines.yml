@@ -34,10 +34,12 @@ jobs:
         run: yarn build-storybook-test --quiet
 
       - name: Generate visual baselines
+        env:
+          VISUAL_UPDATE: "true"
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on tcp:9001 && yarn test-storybook:update-snapshots"
+            "npx wait-on tcp:9001 && yarn test-storybook:ci"
 
       - name: Commit updated baselines
         run: |
