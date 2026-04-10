@@ -2,6 +2,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_typer_Periode,
   type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
   type k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -21,9 +22,18 @@ import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder } from './Vi
 
 dayjs.extend(isBetween);
 
+export const skalPeriodeVurderesIAksjonspunkt = (periode: k9_sak_typer_Periode, opptjeninger: OpptjeningDto[]) => {
+  const skjæringstidspunkt = periode.fom;
+  const opptjeningForPeriode = opptjeninger?.find(
+    o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
+  );
+
+  return !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt;
+};
+
 export const buildInitialValues = (
   vilkårPerioder: VilkårPeriodeDto[],
-  opptjening: OpptjeningDto[],
+  opptjeninger: OpptjeningDto[],
 ): VilkårFieldFormValues => {
   const utledKode = (periode: VilkårPeriodeDto) => {
     if (
@@ -38,16 +48,11 @@ export const buildInitialValues = (
   return {
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => {
-          const skjæringstidspunkt = periode.periode.fom;
-          const opptjeningForPeriode = opptjening?.find(
-            o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
-          );
-
           return {
             periode: periode.periode,
             begrunnelse: periode.begrunnelse ?? '',
             vurderesIBehandlingen: !!periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt,
+            vurderesIAksjonspunkt: skalPeriodeVurderesIAksjonspunkt(periode.periode, opptjeninger),
             kode: utledKode(periode),
           };
         })
