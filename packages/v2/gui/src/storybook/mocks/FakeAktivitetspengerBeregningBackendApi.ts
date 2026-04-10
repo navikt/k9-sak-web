@@ -5,7 +5,7 @@ import type {
 import type { AktivitetspengerBeregningBackendApiType } from '../../prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendApiType';
 
 export class FakeAktivitetspengerBeregningBackendApi implements AktivitetspengerBeregningBackendApiType {
-  async getKontrollerInntekt(): Promise<KontrollerInntektDto> {
+  async getKontrollerInntekt(_behandlingUuid: string): Promise<KontrollerInntektDto> {
     return {
       kontrollperioder: [
         {
