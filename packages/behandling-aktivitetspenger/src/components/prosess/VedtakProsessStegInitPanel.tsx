@@ -1,8 +1,6 @@
-import {
-  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
@@ -31,7 +29,7 @@ const vedtakPanelTekster = {
 
 interface Props {
   api: UngSakApi;
-  behandling: ung_sak_kontrakt_behandling_BehandlingDto;
+  behandling: BehandlingDto;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
   isReadOnly: boolean;
   submitCallback: (data: any, aksjonspunkt?: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
