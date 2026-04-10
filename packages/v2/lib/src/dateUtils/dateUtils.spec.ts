@@ -1,3 +1,4 @@
+import { formatDate, formatereLukketPeriode, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import dayjs from 'dayjs';
 import { describe, expect, it } from 'vitest';
 import {
@@ -7,16 +8,17 @@ import {
   calcDaysAndWeeks,
   calcDaysAndWeeksWithWeekends,
   checkDays,
+  checkForOverlap,
+  combineConsecutivePeriods,
   convertHoursToDays,
   findDifferenceInMonthsAndDays,
   getRangeOfMonths,
+  isSameOrBefore,
   isValidDate,
+  prettifyDateString,
   splitWeeksAndDays,
-  combineConsecutivePeriods,
-  checkForOverlap,
   type DateOrPeriod,
 } from './dateUtils';
-import { formatDate, timeFormat, formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
 
 describe('dateUtils', () => {
   it('Skal kalkulere antall dager mellom to datoer inkludert helger og skrive det ut som uker og dager', () => {
@@ -438,5 +440,45 @@ describe('checkForOverlap', () => {
     const currentPeriod = { fom: '2023-01-02', tom: '2023-01-02' };
     const result = checkForOverlap(1, currentPeriod, singleDayPeriods);
     expect(result).toBe(false);
+  });
+});
+
+describe('isSameOrBefore', () => {
+  it('should return true when date is before otherDate', () => {
+    expect(isSameOrBefore('2023-01-01', '2023-01-02')).toBe(true);
+  });
+
+  it('should return true when date is same as otherDate', () => {
+    expect(isSameOrBefore('2023-01-01', '2023-01-01')).toBe(true);
+  });
+
+  it('should return false when date is after otherDate', () => {
+    expect(isSameOrBefore('2023-01-02', '2023-01-01')).toBe(false);
+  });
+
+  it('should work with DD.MM.YYYY format', () => {
+    expect(isSameOrBefore('01.01.2023', '02.01.2023')).toBe(true);
+    expect(isSameOrBefore('01.01.2023', '01.01.2023')).toBe(true);
+    expect(isSameOrBefore('02.01.2023', '01.01.2023')).toBe(false);
+  });
+
+  it('should work with dayjs objects', () => {
+    expect(isSameOrBefore(dayjs('2023-01-01'), dayjs('2023-01-02'))).toBe(true);
+    expect(isSameOrBefore(dayjs('2023-01-01'), dayjs('2023-01-01'))).toBe(true);
+    expect(isSameOrBefore(dayjs('2023-01-02'), dayjs('2023-01-01'))).toBe(false);
+  });
+});
+
+describe('prettifyDateString', () => {
+  it('should format ISO date to DD.MM.YYYY', () => {
+    expect(prettifyDateString('2023-01-01')).toBe('01.01.2023');
+  });
+
+  it('should format end-of-month date correctly', () => {
+    expect(prettifyDateString('2023-12-31')).toBe('31.12.2023');
+  });
+
+  it('should zero-pad day and month', () => {
+    expect(prettifyDateString('2023-03-05')).toBe('05.03.2023');
   });
 });

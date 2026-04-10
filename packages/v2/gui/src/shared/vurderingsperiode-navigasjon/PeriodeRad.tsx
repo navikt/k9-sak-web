@@ -1,4 +1,4 @@
-import { Period } from '@k9-sak-web/gui/utils/Period.js';
+import { type Period } from '@k9-sak-web/gui/utils/Period.js';
 
 import {
   AirplaneIcon,

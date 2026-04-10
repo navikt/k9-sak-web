@@ -16,6 +16,15 @@ export class Period {
     return `${prettifyDateString(this.fom)} - ${prettifyDateString(this.tom)}`;
   }
 
+  prettifyPeriodYears() {
+    const fomYear = initializeDate(this.fom).year();
+    const tomYear = initializeDate(this.tom).year();
+    if (fomYear === tomYear) {
+      return `${fomYear}`;
+    }
+    return `${fomYear} - ${tomYear}`;
+  }
+
   includesDate(dateString: string) {
     const dateInQuestion = initializeDate(dateString);
     const fomDayjs = initializeDate(this.fom);
@@ -68,7 +77,7 @@ export class Period {
     const fomDayjs = initializeDate(this.fom);
     const tomDayjs = initializeDate(this.tom);
 
-    const list = [];
+    const list: string[] = [];
     for (let currentDate = fomDayjs; isSameOrBefore(currentDate, tomDayjs); currentDate = currentDate.add(1, 'day')) {
       list.push(currentDate.format('YYYY-MM-DD'));
     }

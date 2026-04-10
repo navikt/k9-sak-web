@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
