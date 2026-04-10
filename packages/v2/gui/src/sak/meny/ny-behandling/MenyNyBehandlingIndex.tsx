@@ -95,18 +95,18 @@ const MenyNyBehandlingIndexV2 = ({
       const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
 
       if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {
-        delete filteredFormValues.steg;
-        delete filteredFormValues.fom;
-        delete filteredFormValues.tom;
-        delete filteredFormValues.revurderingModus;
+        delete filteredFormValues['steg'];
+        delete filteredFormValues['fom'];
+        delete filteredFormValues['tom'];
+        delete filteredFormValues['revurderingModus'];
       } else if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'DELVIS') {
-        delete filteredFormValues.revurderingModus;
-        delete filteredFormValues.behandlingArsakType;
-        delete filteredFormValues.nyBehandlingEtterKlage;
+        delete filteredFormValues['revurderingModus'];
+        delete filteredFormValues['behandlingArsakType'];
+        delete filteredFormValues['nyBehandlingEtterKlage'];
       } else if (!REVURDERING_FRA_STEG_V2 && formValues.steg === 'inngangsvilkår') {
-        delete filteredFormValues.steg;
-        delete filteredFormValues.fom;
-        delete filteredFormValues.tom;
+        delete filteredFormValues['steg'];
+        delete filteredFormValues['fom'];
+        delete filteredFormValues['tom'];
       }
 
       const params = {
