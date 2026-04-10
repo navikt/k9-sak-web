@@ -1,4 +1,4 @@
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import {
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
