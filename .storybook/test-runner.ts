@@ -11,10 +11,7 @@ const config: TestRunnerConfig = {
     const storyContext = await getStoryContext(page, context);
 
     // Hopp over visuell test om story er opt-out via tags eller parameters
-    if (
-      storyContext.tags?.includes('no-visual-test') ||
-      storyContext.parameters?.visualTest?.disable === true
-    ) {
+    if (storyContext.tags?.includes('no-visual-test') || storyContext.parameters?.visualTest?.disable === true) {
       return;
     }
 
