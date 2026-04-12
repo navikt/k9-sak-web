@@ -158,7 +158,15 @@ export const AktivitetspengerProsess = ({
               );
             }
             if (urlKode === prosessStegCodes.BEREGNING) {
-              return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
+              return (
+                <BeregningProsessStegInitPanel
+                  key={steg.urlKode}
+                  api={api}
+                  behandling={behandling}
+                  isReadOnly={isReadOnly}
+                  submitCallback={handleVedtakSubmit}
+                />
+              );
             }
             return null;
           })}
