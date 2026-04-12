@@ -30,7 +30,7 @@ const data: BeregningsgrunnlagDto = {
 const api = new FakeAktivitetspengerBeregningBackendApi();
 
 class FakeAktivitetspengerBeregningUtenInntektApi extends FakeAktivitetspengerBeregningBackendApi {
-  override async getKontrollerInntekt(_behandlingUuid: string) {
+  override async getKontrollerInntekt() {
     return {
       kontrollperioder: [],
     };

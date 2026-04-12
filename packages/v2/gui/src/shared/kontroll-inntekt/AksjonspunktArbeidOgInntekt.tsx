@@ -1,8 +1,6 @@
-import {
-  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg,
-  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';

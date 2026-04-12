@@ -1,11 +1,9 @@
-import type {
-  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 import type { AktivitetspengerBeregningBackendApiType } from '../../prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendApiType';
 
 export class FakeAktivitetspengerBeregningBackendApi implements AktivitetspengerBeregningBackendApiType {
-  async getKontrollerInntekt(_behandlingUuid: string): Promise<KontrollerInntektDto> {
+  async getKontrollerInntekt(): Promise<KontrollerInntektDto> {
     return {
       kontrollperioder: [
         {

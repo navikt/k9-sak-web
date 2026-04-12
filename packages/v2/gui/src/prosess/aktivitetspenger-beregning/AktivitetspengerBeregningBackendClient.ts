@@ -1,11 +1,7 @@
-import {
-  arbeidsgiver_getArbeidsgiverOpplysninger,
-  kontroll_hentKontrollerInntekt,
-} from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import type {
-  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { arbeidsgiver_getArbeidsgiverOpplysninger } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/api.js';
+import { kontroll_hentKontrollerInntekt } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/api.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 import type { AktivitetspengerBeregningBackendApiType } from './AktivitetspengerBeregningBackendApiType';
 
 export class AktivitetspengerBeregningBackendClient implements AktivitetspengerBeregningBackendApiType {

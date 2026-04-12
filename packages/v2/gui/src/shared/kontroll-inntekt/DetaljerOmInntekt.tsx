@@ -1,9 +1,7 @@
-import type {
-  ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  ung_sak_kontrakt_kontroll_InntektspostFraRegisterDto as InntektspostFraRegisterDto,
-  ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
-  ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { InntektspostFraRegisterDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/InntektspostFraRegisterDto.js';
+import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
+import type { RapportertInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/RapportertInntektDto.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { getPathToAinntekt } from '@k9-sak-web/lib/paths/paths.js';
