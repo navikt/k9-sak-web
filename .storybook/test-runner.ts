@@ -46,7 +46,7 @@ const config: TestRunnerConfig = {
     if (!fs.existsSync(snapshotPath)) {
       if (process.env.CI && !updateBaselines) {
         throw new Error(
-          `Ingen baseline funnet for story "${context.id}". Kjør update-visual-baselines workflow på branchen din for å generere baselines.`,
+          `Ingen baseline funnet for story "${context.id}". Oppdater baselines via den faktiske flyten for repoet, for eksempel med commit-taggen "[update-baselines]".`,
         );
       }
       fs.mkdirSync(SNAPSHOTS_DIR, { recursive: true });
