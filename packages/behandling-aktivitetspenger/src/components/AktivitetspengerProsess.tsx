@@ -169,7 +169,7 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP) {
+              if (urlKode === prosessStegCodes.FORUTGAENDE_MEDLEMSKAP) {
                 return (
                   <ForutgåendeMedlemskapInitPanel
                     api={api}

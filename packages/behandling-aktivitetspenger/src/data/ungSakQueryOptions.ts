@@ -37,6 +37,6 @@ export const beregningsgrunnlagQueryOptions = (api: UngSakApi, behandling: Behan
 
 export const innloggetBrukerQueryOptions = (api: UngSakApi) =>
   queryOptions({
-    queryKey: ['innlogget-bruker'],
+    queryKey: ['innlogget-bruker', api.backend],
     queryFn: () => api.getInnloggetBruker(),
   });

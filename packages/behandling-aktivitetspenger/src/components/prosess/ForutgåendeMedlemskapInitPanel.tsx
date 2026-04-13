@@ -16,7 +16,7 @@ import {
   vilkårQueryOptions,
 } from '../../data/ungSakQueryOptions';
 
-const PANEL_ID = prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP;
+const PANEL_ID = prosessStegCodes.FORUTGAENDE_MEDLEMSKAP;
 
 interface Props {
   api: UngSakApi;
@@ -36,7 +36,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, submitCallbac
             data.find(v => v.vilkarType === vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
         },
         {
-          queryKey: ['forutgåendeMedlemskap', behandling.uuid],
+          queryKey: ['forutgåendeMedlemskap', behandling.uuid, api.backend],
           queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
           select: (data: ForutgåendeMedlemskapResponse) => data.medlemskapFraBruker ?? [],
         },

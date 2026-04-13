@@ -21,7 +21,7 @@ import {
 
 const PROSESS_STEG_KODER = {
   INNGANGSVILKAR: prosessStegCodes.INNGANGSVILKAR,
-  MEDLEMSKAP: prosessStegCodes.FORUTGÅENDE_MEDLEMSKAP,
+  MEDLEMSKAP: prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
   VEDTAK: prosessStegCodes.VEDTAK,
   BEREGNING: prosessStegCodes.BEREGNING,
 } as const;
