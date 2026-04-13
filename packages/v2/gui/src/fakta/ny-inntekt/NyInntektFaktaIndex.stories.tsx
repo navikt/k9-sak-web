@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import OpptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
 import { type Vilkår } from './src/types/Vilkår';
@@ -580,7 +580,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
       await expect(canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeDisabled();
       await expect(canvas.getByText('Opprett ny vurdering fra')).toBeInTheDocument();
 
-      await userEvent.click(canvas.getByLabelText('Åpne datovelger'));
+      await userEvent.click(canvas.getByRole('button', { name: 'Åpne datovelger' }));
       await userEvent.click(canvas.getByText('18'));
       await expect(await canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeEnabled();
       await expect(canvas.getByText('Nye perioder til vurdering:')).toBeInTheDocument();
@@ -745,7 +745,7 @@ export const KanKunDeleOppMedGyldigDato: Story = {
       await expect(splitButton).toBeDisabled();
 
       // Select valid date using picker
-      await userEvent.click(canvas.getByLabelText('Åpne datovelger'));
+      await userEvent.click(canvas.getByRole('button', { name: 'Åpne datovelger' }));
       await userEvent.click(canvas.getByText('18'));
 
       // Check enabled

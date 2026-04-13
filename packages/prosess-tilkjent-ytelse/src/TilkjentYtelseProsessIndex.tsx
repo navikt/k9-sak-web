@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useContext } from 'react';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
-import { hentFeriepengegrunnlagPrÅr, type FeriepengerPrÅr } from './api/tilkjentYtelseApi.js';
+import { type FeriepengerPrÅr, hentFeriepengegrunnlagPrÅr } from './api/tilkjentYtelseApi.js';
 import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext.js';
 
 const EMPTY_FERIEPENGER_MAP: FeriepengerPrÅr = new Map();
@@ -19,7 +19,8 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   fagsak: Fagsak;
-  behandlingUuid: string;
+  behandlingUuid?: string;
+  behandling?: { uuid: string };
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
@@ -31,7 +32,8 @@ const intl = createIntl({ locale: 'nb-NO' }, cache);
 
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
-  behandlingUuid,
+  behandlingUuid: behandlingUuidProp,
+  behandling,
   aksjonspunkter,
   isReadOnly,
   submitCallback,
@@ -39,6 +41,7 @@ const TilkjentYtelseProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
   fagsak,
 }: OwnProps) => {
+  const behandlingUuid = behandlingUuidProp ?? behandling?.uuid;
   const featureToggles = useContext(FeatureTogglesContext);
   const VIS_FERIEPENGER_PANEL = featureToggles?.['VIS_FERIEPENGER_PANEL'];
 
@@ -47,8 +50,8 @@ const TilkjentYtelseProsessIndex = ({
 
   const { data: feriepengerPrÅr = EMPTY_FERIEPENGER_MAP } = useQuery({
     queryKey: ['feriepengegrunnlag', behandlingUuid],
-    queryFn: () => fetchFn(behandlingUuid),
-    enabled: !!VIS_FERIEPENGER_PANEL,
+    queryFn: () => fetchFn(behandlingUuid!),
+    enabled: !!VIS_FERIEPENGER_PANEL && !!behandlingUuid,
   });
   return (
     <RawIntlProvider value={intl}>

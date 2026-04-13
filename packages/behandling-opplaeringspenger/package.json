@@ -28,10 +28,27 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "12.6.15",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "14.4.15",
-    "@navikt/ft-prosess-beregningsgrunnlag": "11.7.15",
+    "@navikt/aksel-icons": "8.9.1",
+    "@navikt/ds-css": "8.9.1",
+    "@navikt/ds-react": "8.9.1",
+    "@navikt/ft-fakta-beregning": "13.0.0",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "15.0.0",
+    "@navikt/ft-form-hooks": "11.0.0",
+    "@navikt/ft-form-validators": "5.0.0",
+    "@navikt/ft-kodeverk": "3.0.0",
+    "@navikt/ft-plattform-komponenter": "11.0.0",
+    "@navikt/ft-prosess-beregningsgrunnlag": "12.0.0",
+    "@navikt/ft-types": "6.0.0",
+    "@navikt/ft-ui-komponenter": "7.0.0",
+    "@navikt/ft-utils": "4.0.0",
+    "dayjs": "1.11.20",
     "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-hook-form": "7.72.1",
     "react-intl": "8.1.3"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
   }
 }
