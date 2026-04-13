@@ -1,10 +1,8 @@
-import {
-  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as BrukKontrollertInntektValg,
-  ung_sak_kontrakt_kontroll_PeriodeStatus as PeriodeStatus,
-  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
-  type ung_sak_kontrakt_kontroll_RapportertInntektDto as RapportertInntektDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BrukKontrollertInntektValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
+import { PeriodeStatus } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/PeriodeStatus.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
+import type { RapportertInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/RapportertInntektDto.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
@@ -12,14 +10,14 @@ import { RhfForm } from '@navikt/ft-form-hooks';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
+import PeriodLabel from '../periodLabel/PeriodLabel';
 import { formatCurrencyWithKr } from '../../utils/formatters';
 import { AksjonspunktArbeidOgInntekt } from './AksjonspunktArbeidOgInntekt';
 import styles from './arbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
-  if (!inntekt || (!inntekt.arbeidsinntekt && !inntekt.ytelse)) {
+  if (!inntekt || (inntekt.arbeidsinntekt === undefined && inntekt.ytelse === undefined)) {
     return '-';
   }
   return formatCurrencyWithKr((inntekt.arbeidsinntekt ?? 0) + (inntekt.ytelse ?? 0));

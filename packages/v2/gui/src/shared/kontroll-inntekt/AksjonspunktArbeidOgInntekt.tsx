@@ -1,15 +1,13 @@
-import {
-  ung_sak_kontrakt_kontroll_BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg,
-  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  type ung_sak_kontrakt_kontroll_KontrollerInntektPeriodeDto as KontrollerInntektPeriodeDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyLong, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
-import PeriodLabel from '../../shared/periodLabel/PeriodLabel';
+import PeriodLabel from '../periodLabel/PeriodLabel';
 import styles from './aksjonspunktArbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
 
@@ -124,7 +122,17 @@ export const AksjonspunktArbeidOgInntekt = ({
                 <Button size="small" variant="primary" type="submit" loading={isSubmitting}>
                   Bekreft og fortsett
                 </Button>
-                <Button size="small" variant="secondary" loading={isSubmitting}>
+                <Button
+                  size="small"
+                  variant="secondary"
+                  type="button"
+                  loading={isSubmitting}
+                  onClick={() => {
+                    formMethods.resetField(`perioder.${fieldIndex}.begrunnelse`);
+                    formMethods.resetField(`perioder.${fieldIndex}.valg`);
+                    formMethods.resetField(`perioder.${fieldIndex}.fastsattInntekt`);
+                  }}
+                >
                   Avbryt
                 </Button>
               </HStack>
