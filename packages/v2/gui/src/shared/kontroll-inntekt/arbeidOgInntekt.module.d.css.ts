@@ -6,3 +6,4 @@ declare const styles: {
   readonly "lastRow": string;
 };
 export = styles;
+
