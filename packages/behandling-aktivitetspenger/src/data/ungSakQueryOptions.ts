@@ -40,3 +40,9 @@ export const innloggetBrukerQueryOptions = (api: UngSakApi) =>
     queryKey: ['innlogget-bruker', api.backend],
     queryFn: () => api.getInnloggetBruker(),
   });
+
+export const satsOgUtbetalingPerioderQueryOptions = (api: UngSakApi, behandling: Behandling, enabled = true) =>
+  queryOptions({
+    queryKey: ['satsOgUtbetalingPerioder', behandling.uuid, api.backend, enabled],
+    queryFn: () => (enabled ? api.getSatsOgUtbetalingPerioder(behandling.uuid) : null),
+  });

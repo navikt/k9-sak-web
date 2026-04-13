@@ -8,8 +8,8 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
+import { DagsatsOgUtbetaling, sortSatser } from '../../shared/dagsats-og-utbetaling/DagsatsOgUtbetaling';
 import { BarnPanel } from './BarnPanel';
-import { DagsatsOgUtbetaling } from './dagsats-og-utbetaling/DagsatsOgUtbetaling';
 import type { Barn } from './types/Barn';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
 
@@ -37,9 +37,10 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
 };
 
 const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
-  useQuery({
+  const { data: satser } = useQuery({
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
+    select: sortSatser,
   });
 
   const {
@@ -52,7 +53,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     select: sortInntekt,
   });
 
-  useQuery({
+  const { data: ungdomsprogramInformasjon } = useQuery({
     queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
   });
@@ -111,7 +112,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
               <BarnPanel barn={barn} />
             </Tabs.Panel>
             <Tabs.Panel value="dagsats">
-              <DagsatsOgUtbetaling api={api} behandling={behandling} />
+              {satser && <DagsatsOgUtbetaling satser={satser} ungdomsprogramInformasjon={ungdomsprogramInformasjon} />}
             </Tabs.Panel>
           </Tabs>
         )}
