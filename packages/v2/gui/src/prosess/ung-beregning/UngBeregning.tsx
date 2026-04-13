@@ -7,7 +7,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { ArbeidOgInntekt } from './ArbeidOgInntekt';
+import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
 import { BarnPanel } from './BarnPanel';
 import { DagsatsOgUtbetaling } from './dagsats-og-utbetaling/DagsatsOgUtbetaling';
 import type { Barn } from './types/Barn';

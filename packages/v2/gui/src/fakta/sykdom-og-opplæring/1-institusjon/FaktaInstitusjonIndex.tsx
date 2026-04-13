@@ -1,5 +1,5 @@
 import { useState, useMemo, useContext } from 'react';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 import InstitusjonDetails from './components/InstitusjonDetails.js';
