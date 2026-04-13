@@ -267,19 +267,19 @@ export const delvisRevurderingV2: StoryObj<typeof MenyNyBehandlingIndexV2> = {
   },
   play: async ({ canvas, step }) => {
     await step('skal vise modus-velger når revurdering er valgt', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
-        'BT-004',
-      );
+      const behandlingTypeSelect = await canvas.findByRole('combobox', {
+        name: 'Hva slags behandling ønsker du å opprette?',
+      });
+      await userEvent.selectOptions(behandlingTypeSelect, 'BT-004');
       await expect(
         await canvas.findByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
       ).toBeInTheDocument();
     });
     await step('skal vise årsak-velger og vilkår-info ved delvis revurdering', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
-        'BT-004',
-      );
+      const behandlingTypeSelect = await canvas.findByRole('combobox', {
+        name: 'Hva slags behandling ønsker du å opprette?',
+      });
+      await userEvent.selectOptions(behandlingTypeSelect, 'BT-004');
       const revurderingModus = await canvas.findByRole('combobox', {
         name: 'Hvordan vil du opprette revurderingen?',
       });
@@ -289,10 +289,10 @@ export const delvisRevurderingV2: StoryObj<typeof MenyNyBehandlingIndexV2> = {
       ).toBeInTheDocument();
     });
     await step('skal vise vilkår og datovelgere når årsak er valgt', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
-        'BT-004',
-      );
+      const behandlingTypeSelect = await canvas.findByRole('combobox', {
+        name: 'Hva slags behandling ønsker du å opprette?',
+      });
+      await userEvent.selectOptions(behandlingTypeSelect, 'BT-004');
       await userEvent.selectOptions(
         await canvas.findByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
         'DELVIS',
@@ -301,16 +301,17 @@ export const delvisRevurderingV2: StoryObj<typeof MenyNyBehandlingIndexV2> = {
         await canvas.findByRole('combobox', { name: 'Hva er årsaken til revurderingen?' }),
         BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_OPPTJENING,
       );
-      const alert = await canvas.findByRole('alert');
-      await expect(alert).toHaveTextContent('Vilkår som revurderes: Opptjeningsvilkåret');
+      await expect(await canvas.findByText(/Vilkår som revurderes:/)).toHaveTextContent(
+        'Vilkår som revurderes: Opptjeningsvilkåret',
+      );
       await expect(await canvas.findByRole('textbox', { name: 'Fra og med' })).toBeInTheDocument();
       await expect(await canvas.findByRole('textbox', { name: 'Til og med' })).toBeInTheDocument();
     });
     await step('skal vise årsak-dropdown med full revurdering', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
-        'BT-004',
-      );
+      const behandlingTypeSelect = await canvas.findByRole('combobox', {
+        name: 'Hva slags behandling ønsker du å opprette?',
+      });
+      await userEvent.selectOptions(behandlingTypeSelect, 'BT-004');
       await userEvent.selectOptions(
         await canvas.findByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
         'FULL',
