@@ -12,7 +12,7 @@ import {
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
-import { Bleed, BoxNew } from '@navikt/ds-react';
+import { Bleed, Box } from '@navikt/ds-react';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
@@ -31,6 +31,7 @@ import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel'
 import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
 import { getForhandsvisFptilbakeCallback } from './PleiepengerProsess';
+import styles from './pleiepengerProsessV2.module.css';
 
 const PROSESS_STEG_KODER = {
   INNGANGSVILKAR: 'inngangsvilkar',
@@ -168,7 +169,7 @@ export const PleiepengerProsessV2 = ({
 
       <ProsessMeny steg={prosessteg}>
         <Bleed marginInline="space-24">
-          <BoxNew borderColor="neutral-subtle" borderWidth="1" padding="space-16">
+          <Box padding="space-16" className={styles.prosessmenyWrapper}>
             {prosessStegPanelDefinisjoner.map(panelDef => {
               const urlKode = panelDef.getUrlKode();
 
@@ -272,7 +273,7 @@ export const PleiepengerProsessV2 = ({
               }
               return null;
             })}
-          </BoxNew>
+          </Box>
         </Bleed>
       </ProsessMeny>
     </VedtakFormContext.Provider>
