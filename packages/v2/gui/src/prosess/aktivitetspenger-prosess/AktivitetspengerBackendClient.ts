@@ -14,9 +14,9 @@ import type {
   ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
 } from '@navikt/ung-sak-typescript-client/types';
-import { type UngSakApi } from './UngSakApi';
+import { type AktivitetspengerApi } from './AktivitetspengerApi';
 
-export class UngSakBackendClient implements UngSakApi {
+export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
 
   async getAksjonspunkter(behandlingId: string) {

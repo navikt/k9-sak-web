@@ -1,5 +1,5 @@
-import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
-import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { ung_sak_kontrakt_AsyncPollingStatus_Status } from '@navikt/ung-sak-typescript-client/types';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -9,9 +9,9 @@ interface Behandling {
 }
 
 export const usePollBehandlingStatus = (
-  api: UngSakApi,
+  api: AktivitetspengerApi,
   behandling: Behandling,
-  setBehandling: (behandling: Awaited<ReturnType<UngSakApi['getBehandling']>>) => void,
+  setBehandling: (behandling: Awaited<ReturnType<AktivitetspengerApi['getBehandling']>>) => void,
 ) => {
   const queryClient = useQueryClient();
 

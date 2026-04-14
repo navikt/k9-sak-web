@@ -4,12 +4,12 @@ import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontra
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
-import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
   vilkårQueryOptions,
-} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
@@ -33,7 +33,7 @@ const vedtakPanelTekster = {
 };
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
   onVedtakAksjonspunktBekreftet: (visIverksetterVedtakModal: boolean, visFatterVedtakModal: boolean) => void;

@@ -3,7 +3,7 @@ import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/Be
 import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
-import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Bleed, Box } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
@@ -16,7 +16,7 @@ import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel
 import { useProsessmotor } from './Prossesmotor';
 
 interface OwnProps {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;

@@ -8,7 +8,7 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import type { Control, FieldPath, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import type { UngSakApi } from '../aktivitetspenger-prosess/UngSakApi';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import styles from './beslutter.module.css';
 import { InngangsvilkårTab } from './types';
 import { aksjonspunktErÅpent } from './utils/utils';
@@ -58,7 +58,7 @@ interface Props {
   innloggetBruker: InnloggetAnsattUngV2Dto;
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
   onTabChange: React.Dispatch<React.SetStateAction<InngangsvilkårTab>>;
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
 }

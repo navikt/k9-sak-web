@@ -11,7 +11,7 @@ import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { type BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { type InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 
-export interface UngSakApi {
+export interface AktivitetspengerApi {
   readonly backend: 'ungsak';
   getAksjonspunkter(behandlingId: string): Promise<ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]>;
   lagreAksjonspunkt(props: ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto): Promise<unknown>;

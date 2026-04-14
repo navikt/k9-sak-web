@@ -1,11 +1,12 @@
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivitetspenger-inngangsvilkår/AktivitetspengerInngangsvilkår.js';
-import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
-} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
@@ -13,7 +14,7 @@ import { useContext } from 'react';
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
 }

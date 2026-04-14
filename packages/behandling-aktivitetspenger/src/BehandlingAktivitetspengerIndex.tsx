@@ -1,9 +1,9 @@
 import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { UngSakBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakBackendClient.js';
+import { AktivitetspengerBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerBackendClient.js';
 import {
   aksjonspunkterQueryOptions,
   behandlingQueryOptions,
-} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Behandling } from '@k9-sak-web/types';
@@ -30,7 +30,7 @@ interface OwnProps {
   behandlingUuid: string;
 }
 
-const ungSakProsessApi = new UngSakBackendClient();
+const ungSakProsessApi = new AktivitetspengerBackendClient();
 
 const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,

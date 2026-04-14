@@ -3,14 +3,14 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { Alert, BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
-import type { UngSakApi } from '../aktivitetspenger-prosess/UngSakApi';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
   kanSaksbehandle: boolean;
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
 }

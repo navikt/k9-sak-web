@@ -13,10 +13,10 @@ import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import { VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
-import type { UngSakApi } from '../aktivitetspenger-prosess/UngSakApi';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'> | undefined;
   behandling: BehandlingDto;

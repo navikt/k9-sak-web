@@ -6,7 +6,7 @@ import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrak
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
-import type { UngSakApi } from '../aktivitetspenger-prosess/UngSakApi';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { Alder } from './Alder';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
 import { BehovForBistand } from './BehovForBistand';
@@ -34,7 +34,7 @@ const relevanteAksjonspunktDefinisjoner = [
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   innloggetBruker: InnloggetAnsattUngV2Dto;
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
 }

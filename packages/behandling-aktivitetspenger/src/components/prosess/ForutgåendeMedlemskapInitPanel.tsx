@@ -5,12 +5,12 @@ import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ForutgåendeMedlemskap } from '@k9-sak-web/gui/prosess/aktivitetspenger-forutgående-medlemskap/ForutgåendeMedlemskap.js';
-import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
   vilkårQueryOptions,
-} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
@@ -18,7 +18,7 @@ import { useContext, useMemo } from 'react';
 const PANEL_ID = prosessStegCodes.FORUTGAENDE_MEDLEMSKAP;
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
 }

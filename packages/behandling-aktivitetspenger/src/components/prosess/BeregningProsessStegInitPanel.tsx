@@ -4,12 +4,12 @@ import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessP
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregning } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregning.js';
 import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
-import type { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
   beregningsgrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
-} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { KontrollerInntektAksjonspunktSubmit } from '@k9-sak-web/gui/shared/kontroll-inntekt/KontrollerInntektAksjonspunktSubmit.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
@@ -18,7 +18,7 @@ import { useContext, useMemo } from 'react';
 const PANEL_ID = prosessStegCodes.BEREGNING;
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
 }

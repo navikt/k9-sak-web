@@ -1,9 +1,10 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { asyncAction } from '../../storybook/asyncAction';
+import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { AktivitetspengerInngangsvilkår } from './AktivitetspengerInngangsvilkår';
 
 const meta = {
@@ -13,7 +14,6 @@ const meta = {
     innloggetBruker: {
       aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: true },
     } satisfies InnloggetAnsattUngV2Dto,
-    submitCallback: asyncAction('submitCallback'),
   },
 } satisfies Meta<typeof AktivitetspengerInngangsvilkår>;
 export default meta;
@@ -30,21 +30,35 @@ const lagAksjonspunkt = (
   erAktivt: status === AksjonspunktStatus.OPPRETTET,
 });
 
+const fakeBehandling = {
+  uuid: 'fake-uuid',
+  versjon: 1,
+} as unknown as BehandlingDto;
+
 export const MedÅpentBistandsvilkår: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR)],
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: () => {},
   },
 };
 
 export const MedUtførtBistandsvilkår: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT)],
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: () => {},
   },
 };
 
 export const MedÅpentLokalkontorForeslårVilkår: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: () => {},
   },
 };
 
@@ -57,5 +71,8 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     innloggetBruker: {
       aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: true },
     } satisfies InnloggetAnsattUngV2Dto,
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: () => {},
   },
 };
