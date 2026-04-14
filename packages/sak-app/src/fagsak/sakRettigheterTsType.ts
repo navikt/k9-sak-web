@@ -5,6 +5,11 @@ export type ÅrsakOgPerioder = Readonly<{
   perioder: Periode[];
 }>;
 
+export type DelvisRevurderingÅrsak = Readonly<{
+  årsak: Kodeverk;
+  vilkårType: Kodeverk;
+}>;
+
 type BehandlingOppretting = Readonly<{
   behandlingType: Kodeverk;
   kanOppretteBehandling: boolean;
@@ -14,6 +19,7 @@ type BehandlingOppretting = Readonly<{
 type SakRettigheter = Readonly<{
   sakSkalTilInfotrygd: boolean;
   behandlingTypeKanOpprettes: BehandlingOppretting[];
+  delvisRevurderingsårsaker?: DelvisRevurderingÅrsak[];
 }>;
 
 export default SakRettigheter;
