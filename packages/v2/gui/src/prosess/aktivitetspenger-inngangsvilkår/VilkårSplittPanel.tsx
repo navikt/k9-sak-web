@@ -86,7 +86,7 @@ export const VilkårSplittPanel = ({
                   </Table.HeaderCell>
                   <Table.DataCell>
                     <BodyShort size="small" textColor="subtle">
-                      <Link as="p" inlineText>
+                      <Link as="span" inlineText>
                         {item.label}
                       </Link>
                     </BodyShort>
