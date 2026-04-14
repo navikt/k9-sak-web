@@ -1,28 +1,29 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregning } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregning.js';
 import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQueries } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
-import type { UngSakApi } from '../../data/UngSakApi';
+import type { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
 import {
   aksjonspunkterQueryOptions,
   beregningsgrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
-} from '../../data/ungSakQueryOptions';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+import { KontrollerInntektAksjonspunktSubmit } from '@k9-sak-web/gui/shared/kontroll-inntekt/KontrollerInntektAksjonspunktSubmit.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 
 const PANEL_ID = prosessStegCodes.BEREGNING;
 
 interface Props {
   api: UngSakApi;
   behandling: BehandlingDto;
-  submitCallback: (data: any, aksjonspunkt?: AksjonspunktDto[]) => Promise<any>;
+  onAksjonspunktBekreftet: () => void;
 }
 
-export const BeregningProsessStegInitPanel = ({ api, behandling, submitCallback }: Props) => {
+export const BeregningProsessStegInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
   const aktivitetspengerBeregningApi = useMemo(() => new AktivitetspengerBeregningBackendClient(), []);
@@ -40,6 +41,24 @@ export const BeregningProsessStegInitPanel = ({ api, behandling, submitCallback 
       !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
     );
   }, [innloggetBruker]);
+
+  const { mutateAsync: bekreftAksjonspunktMutation } = useMutation({
+    mutationFn: async (data: KontrollerInntektAksjonspunktSubmit[]) => {
+      const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_INNTEKT);
+      if (!aksjonspunkt) {
+        return;
+      }
+      const payload = data.map(d => ({
+        '@type': AksjonspunktDefinisjon.KONTROLLER_INNTEKT,
+        begrunnelse: d.begrunnelse,
+        perioder: d.perioder,
+      }));
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, payload);
+    },
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
 
   if (!erValgt) {
     return null;
@@ -59,7 +78,7 @@ export const BeregningProsessStegInitPanel = ({ api, behandling, submitCallback 
       behandling={behandling}
       api={aktivitetspengerBeregningApi}
       aksjonspunkter={aksjonspunkter}
-      submitCallback={data => submitCallback(data, aksjonspunkter)}
+      submitCallback={data => bekreftAksjonspunktMutation(data)}
       isReadOnly={isReadOnly}
     />
   );

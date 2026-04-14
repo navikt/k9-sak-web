@@ -1,7 +1,12 @@
 import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { UngSakBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakBackendClient.js';
+import {
+  aksjonspunkterQueryOptions,
+  behandlingQueryOptions,
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
@@ -11,11 +16,8 @@ import {
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
-import { UngSakBackendClient } from './data/UngSakBackendClient';
-import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './data/ungSakQueryOptions';
 
 interface OwnProps {
-  fagsak: Fagsak;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -33,7 +35,6 @@ const ungSakProsessApi = new UngSakBackendClient();
 const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,
   oppdaterBehandlingVersjon,
-  fagsak,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   setRequestPendingMessage,
@@ -96,7 +97,6 @@ const BehandlingAktivitetspengerIndex = ({
       <BehandlingPåVent behandling={behandling} aksjonspunkter={aksjonspunkter ?? []} settPaVent={settPaVent} />
       <AktivitetspengerProsess
         api={ungSakProsessApi}
-        fagsak={fagsak}
         behandling={behandling}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}

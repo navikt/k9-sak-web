@@ -7,6 +7,7 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
+import type { KontrollerInntektAksjonspunktSubmit } from '../../shared/kontroll-inntekt/KontrollerInntektAksjonspunktSubmit';
 import type { AktivitetspengerBeregningBackendApiType } from './AktivitetspengerBeregningBackendApiType';
 import AktivitetspengerBeregningsgrunnlag from './AktivitetspengerBeregningsgrunnlag';
 
@@ -29,7 +30,7 @@ interface Props {
   behandling: { uuid: string; versjon: number };
   api: AktivitetspengerBeregningBackendApiType;
   aksjonspunkter: AksjonspunktDto[];
-  submitCallback: (data: unknown) => Promise<any>;
+  submitCallback: (data: KontrollerInntektAksjonspunktSubmit[]) => Promise<any>;
   isReadOnly: boolean;
 }
 

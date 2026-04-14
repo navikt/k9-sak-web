@@ -1,20 +1,21 @@
-import { BrukKontrollertInntektValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
-import { PeriodeStatus } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/PeriodeStatus.js';
-import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
-import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
-import type { RapportertInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/RapportertInntektDto.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import { BrukKontrollertInntektValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
+import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
+import { PeriodeStatus } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/PeriodeStatus.js';
+import type { RapportertInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/RapportertInntektDto.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, HStack, Label, Table } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { parseCurrencyInput, removeSpacesFromNumber } from '@navikt/ft-utils';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import PeriodLabel from '../periodLabel/PeriodLabel';
 import { formatCurrencyWithKr } from '../../utils/formatters';
+import PeriodLabel from '../periodLabel/PeriodLabel';
 import { AksjonspunktArbeidOgInntekt } from './AksjonspunktArbeidOgInntekt';
 import styles from './arbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
+import type { KontrollerInntektAksjonspunktSubmit } from './KontrollerInntektAksjonspunktSubmit';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
   if (!inntekt || (inntekt.arbeidsinntekt === undefined && inntekt.ytelse === undefined)) {
@@ -58,7 +59,7 @@ type Formvalues = {
 };
 
 interface ArbeidOgInntektProps {
-  submitCallback: (data: unknown) => Promise<any>;
+  submitCallback: (data: KontrollerInntektAksjonspunktSubmit[]) => Promise<any>;
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   isReadOnly: boolean;
   arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
@@ -77,7 +78,14 @@ export const ArbeidOgInntekt = ({
 
   const onSubmit = async (values: Formvalues) => {
     setIsSubmitting(true);
-    const perioderMedAvvik = values.perioder.filter(periode => periode.harAvvik && periode.erTilVurdering);
+    const perioderMedAvvik = values.perioder.filter(
+      (
+        periode,
+      ): periode is typeof periode & {
+        periode: NonNullable<typeof periode.periode>;
+        valg: BrukKontrollertInntektValg;
+      } => periode.harAvvik && periode.erTilVurdering && periode.periode != null && periode.valg !== '',
+    );
     try {
       await submitCallback([
         {

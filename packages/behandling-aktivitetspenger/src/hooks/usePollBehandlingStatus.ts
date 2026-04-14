@@ -1,7 +1,7 @@
+import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
 import { ung_sak_kontrakt_AsyncPollingStatus_Status } from '@navikt/ung-sak-typescript-client/types';
 import { useQueryClient } from '@tanstack/react-query';
-import { UngSakApi } from '../data/UngSakApi';
-import { behandlingQueryOptions } from '../data/ungSakQueryOptions';
 
 interface Behandling {
   uuid: string;

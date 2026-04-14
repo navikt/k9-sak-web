@@ -1,30 +1,29 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ForutgåendeMedlemskap } from '@k9-sak-web/gui/prosess/aktivitetspenger-forutgående-medlemskap/ForutgåendeMedlemskap.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQueries } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
-import { UngSakApi } from '../../data/UngSakApi';
+import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
   vilkårQueryOptions,
-} from '../../data/ungSakQueryOptions';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/ungSakQueryOptions.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 
 const PANEL_ID = prosessStegCodes.FORUTGAENDE_MEDLEMSKAP;
 
 interface Props {
   api: UngSakApi;
   behandling: BehandlingDto;
-  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
+  onAksjonspunktBekreftet: () => void;
 }
 
-export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, submitCallback }: Props) => {
+export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const [{ data: aksjonspunkter = [] }, { data: vilkår }, { data: forutgåendeMedlemskap }, { data: innloggetBruker }] =
     useSuspenseQueries({
@@ -59,11 +58,13 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, submitCallbac
 
   return (
     <ForutgåendeMedlemskap
-      submitCallback={submitCallback}
+      api={api}
       aksjonspunkt={aksjonspunkt}
       readOnly={isReadOnly}
       forutgåendeMedlemskap={forutgåendeMedlemskap}
       vilkår={vilkår}
+      behandling={behandling}
+      onAksjonspunktBekreftet={onAksjonspunktBekreftet}
     />
   );
 };

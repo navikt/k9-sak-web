@@ -1,6 +1,6 @@
-import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { UngSakApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakApi.js';
+import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { queryOptions } from '@tanstack/react-query';
+import type { UngSakApi } from './UngSakApi';
 
 interface Behandling {
   uuid: string;
