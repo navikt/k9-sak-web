@@ -39,3 +39,6 @@ server/.yarn
 !/packages/v2/lib*
 /.run/
 
+# Visual regression test diff output (generated on failure)
+__visual_snapshots__/__diff_output__/
+
