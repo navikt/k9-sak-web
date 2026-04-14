@@ -77,10 +77,10 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
         aksjonspunktCodes.FATTER_VEDTAK,
         aksjonspunktCodes.FORESLÅ_VEDTAK_MANUELT,
       ];
-      const visIverksetterVedtakModal = aksjonspunkter.some(ap =>
+      const visIverksetterVedtakModal = vedtakAksjonspunkter.some(ap =>
         fatterVedtakAksjonspunktkoder.some(kode => kode === ap.definisjon),
       );
-      const visFatterVedtakModal = aksjonspunkter[0].definisjon === aksjonspunktCodes.FORESLÅ_VEDTAK;
+      const visFatterVedtakModal = vedtakAksjonspunkter.some(ap => ap.definisjon === aksjonspunktCodes.FORESLÅ_VEDTAK);
       onVedtakAksjonspunktBekreftet(visIverksetterVedtakModal, visFatterVedtakModal);
     },
   });
