@@ -1,18 +1,18 @@
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { satsOgUtbetalingPerioderQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { DagsatsOgUtbetaling, sortSatser } from '@k9-sak-web/gui/shared/dagsats-og-utbetaling/DagsatsOgUtbetaling.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Heading, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
-import type { UngSakApi } from '../../data/UngSakApi';
-import { satsOgUtbetalingPerioderQueryOptions } from '../../data/ungSakQueryOptions';
 
 const PANEL_ID = prosessStegCodes.SATS;
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
 }
 

@@ -42,6 +42,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   async bekreftAksjonspunkt() {
     return undefined;
   }
+
+  async getSatsOgUtbetalingPerioder() {
+    return [];
+  }
 }
 
 export const fakeAktivitetspengerApi = new FakeAktivitetspengerApi();
