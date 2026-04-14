@@ -1,15 +1,23 @@
 import { ung_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { fakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { asyncAction } from '../../storybook/asyncAction';
 import { ForutgåendeMedlemskap } from './ForutgåendeMedlemskap';
+
+const fakeBehandling = {
+  uuid: 'fake-uuid',
+  versjon: 1,
+} as unknown as BehandlingDto;
 
 const meta = {
   title: 'gui/prosess/aktivitetspenger-forutgående-medlemskap/ForutgåendeMedlemskap',
   component: ForutgåendeMedlemskap,
   args: {
-    submitCallback: asyncAction('submitCallback'),
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: () => {},
     aksjonspunkt: { definisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP },
     readOnly: false,
     forutgåendeMedlemskap: [

@@ -1,3 +1,4 @@
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
@@ -10,13 +11,13 @@ import {
   navAnsatt_innloggetBrukerV2,
   vilkår_getVilkårV3,
 } from '@navikt/ung-sak-typescript-client/sdk';
-import {
+import type {
   ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
 } from '@navikt/ung-sak-typescript-client/types';
-import { UngSakApi } from './UngSakApi';
+import { type AktivitetspengerApi } from './AktivitetspengerApi';
 
-export class UngSakBackendClient implements UngSakApi {
+export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
 
   async getAksjonspunkter(behandlingId: string) {
@@ -63,5 +64,19 @@ export class UngSakBackendClient implements UngSakApi {
 
   async getInnloggetBruker() {
     return (await navAnsatt_innloggetBrukerV2()).data;
+  }
+
+  async bekreftAksjonspunkt(
+    behandlingUuid: string,
+    behandlingVersjon: number,
+    bekreftedeAksjonspunktDtoer: BekreftetAksjonspunktDto[],
+  ) {
+    await aksjonspunkt_bekreft({
+      body: {
+        behandlingId: behandlingUuid,
+        behandlingVersjon,
+        bekreftedeAksjonspunktDtoer,
+      },
+    });
   }
 }

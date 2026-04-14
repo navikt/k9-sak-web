@@ -1,40 +1,49 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { Alert, BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
-import { useState } from 'react';
-import type { SubmitCallback } from './types';
+import { useMutation } from '@tanstack/react-query';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
-  submitCallback: SubmitCallback;
   kanSaksbehandle: boolean;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+  onAksjonspunktBekreftet: () => void;
 }
 
 export const BehovForBistand = ({
   vurderBistandsvilkårAp,
   lokalkontorForeslårVilkårAp,
-  submitCallback,
   kanSaksbehandle,
+  api,
+  behandling,
+  onAksjonspunktBekreftet,
 }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
+    mutationFn: async () => {
+      const aksjonspunkt = lokalkontorForeslårVilkårAp ?? vurderBistandsvilkårAp;
+      if (!aksjonspunkt?.definisjon) {
+        return;
+      }
+      const aksjonspunktDefinisjon =
+        aksjonspunkt.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR
+          ? AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR
+          : AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR;
+      const payload = {
+        '@type': aksjonspunktDefinisjon,
+        begrunnelse: 'fordi',
+      };
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    },
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    const aksjonspunkt = lokalkontorForeslårVilkårAp ?? vurderBistandsvilkårAp;
-    if (!aksjonspunkt) {
-      return;
-    }
-    const payload = {
-      kode: aksjonspunkt.definisjon,
-      begrunnelse: 'fordi',
-    };
-    try {
-      await submitCallback([payload], [aksjonspunkt]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
     <Box width="fit-content">
       <VStack gap="space-16">
@@ -51,14 +60,20 @@ export const BehovForBistand = ({
             <Box marginBlock="space-2 space-12">
               <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
             </Box>
-            <Button variant="primary" data-color="accent" size="small" onClick={handleSubmit} loading={isLoading}>
+            <Button
+              variant="primary"
+              data-color="accent"
+              size="small"
+              onClick={() => bekreftAksjonspunktMutation()}
+              loading={isPending}
+            >
               Send vurderinger til beslutter
             </Button>
           </Alert>
         )}
         {kanSaksbehandle && vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp) ? (
           <Box>
-            <Button variant="primary" size="small" onClick={handleSubmit} loading={isLoading}>
+            <Button variant="primary" size="small" onClick={() => bekreftAksjonspunktMutation()} loading={isPending}>
               Bekreft
             </Button>
           </Box>

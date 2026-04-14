@@ -3,6 +3,7 @@ import {
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   type k9_sak_kontrakt_opptjening_OpptjeningerDto,
   type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
+  type k9_sak_typer_Periode,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
@@ -10,7 +11,9 @@ import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState } from 'react';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar';
-import OpptjeningVilkarAksjonspunktPanel from './components/OpptjeningVilkarAksjonspunktPanel';
+import OpptjeningVilkarAksjonspunktPanel, {
+  skalPeriodeVurderesIAksjonspunkt,
+} from './components/OpptjeningVilkarAksjonspunktPanel';
 import styles from './opptjeningVilkarProsessIndex.module.css';
 import type { Behandling } from './types/Behandling';
 import type { Fagsak } from './types/Fagsak';
@@ -29,8 +32,14 @@ interface OpptjeningVilkarProsessIndexProps {
   visAllePerioder: boolean;
 }
 
-const getIconForOpptjeningStatus = (vilkarStatus: VilkårPeriodeDtoVilkarStatus, isAksjonspunktOpen: boolean) => {
-  if (isAksjonspunktOpen) {
+const getIconForOpptjeningStatus = (
+  vilkarStatus: VilkårPeriodeDtoVilkarStatus,
+  isAksjonspunktOpen: boolean,
+  periode: k9_sak_typer_Periode,
+  opptjeninger: k9_sak_kontrakt_opptjening_OpptjeningerDto['opptjeninger'],
+) => {
+  const vurderesIAksjonspunkt = opptjeninger && skalPeriodeVurderesIAksjonspunkt(periode, opptjeninger);
+  if (vurderesIAksjonspunkt && isAksjonspunktOpen) {
     return <AksjonspunktIkon size="small" />;
   }
   if (vilkarStatus === VilkårPeriodeDtoVilkarStatus.OPPFYLT) {
@@ -78,7 +87,7 @@ const OpptjeningVilkarProsessIndexV2 = ({
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-              icon: getIconForOpptjeningStatus(vilkarStatus, isAksjonspunktOpen),
+              icon: getIconForOpptjeningStatus(vilkarStatus, isAksjonspunktOpen, periode, opptjening.opptjeninger),
             }))}
             onClick={setActiveTab}
             heading="Perioder"

@@ -7,17 +7,17 @@ import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunk
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import {
+  aksjonspunkterQueryOptions,
+  innloggetBrukerQueryOptions,
+  vilkårQueryOptions,
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { UngSakApi } from '../data/UngSakApi';
-import {
-  aksjonspunkterQueryOptions,
-  innloggetBrukerQueryOptions,
-  vilkårQueryOptions,
-} from '../data/ungSakQueryOptions';
 
 const PROSESS_STEG_KODER = {
   INNGANGSVILKAR: prosessStegCodes.INNGANGSVILKAR,
@@ -185,7 +185,7 @@ const byggInngangsvilkårPanel = (
 };
 
 interface ProsessmotorProps {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
 }
 

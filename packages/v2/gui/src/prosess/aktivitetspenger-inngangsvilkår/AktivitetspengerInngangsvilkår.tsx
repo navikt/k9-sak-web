@@ -1,17 +1,18 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { Alder } from './Alder';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
 import { BehovForBistand } from './BehovForBistand';
 import { Beslutter } from './Beslutter';
 import { BosattITrondheim } from './BosattITrondheim';
 import { Søknadsfrist } from './Søknadsfrist';
-import type { SubmitCallback } from './types';
 import { InngangsvilkårTab } from './types';
 
 const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
@@ -33,10 +34,18 @@ const relevanteAksjonspunktDefinisjoner = [
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   innloggetBruker: InnloggetAnsattUngV2Dto;
-  submitCallback: SubmitCallback;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+  onAksjonspunktBekreftet: () => void;
 }
 
-export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruker, submitCallback }: Props) => {
+export const AktivitetspengerInngangsvilkår = ({
+  aksjonspunkter,
+  innloggetBruker,
+  api,
+  behandling,
+  onAksjonspunktBekreftet,
+}: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
     relevanteAksjonspunktDefinisjoner.some(def => def === ap.definisjon),
@@ -106,7 +115,9 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruke
               vurderBistandsvilkårAp={vurderBistandsvilkårAp}
               lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
               kanSaksbehandle={kanSaksbehandle}
-              submitCallback={submitCallback}
+              api={api}
+              behandling={behandling}
+              onAksjonspunktBekreftet={onAksjonspunktBekreftet}
             />
           </Tabs.Panel>
           {lokalkontorBeslutterAp && (
@@ -115,8 +126,10 @@ export const AktivitetspengerInngangsvilkår = ({ aksjonspunkter, innloggetBruke
                 lokalkontorBeslutterAp={lokalkontorBeslutterAp}
                 vurderBistandsvilkårAp={vurderBistandsvilkårAp}
                 innloggetBruker={innloggetBruker}
-                submitCallback={submitCallback}
+                api={api}
+                behandling={behandling}
                 onTabChange={setAktivTab}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
               />
             </Tabs.Panel>
           )}

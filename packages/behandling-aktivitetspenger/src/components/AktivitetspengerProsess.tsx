@@ -1,20 +1,13 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
-import { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Fagsak } from '@k9-sak-web/types';
 import { Bleed, Box } from '@navikt/ds-react';
-import { useMutation } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
-import { UngSakApi } from '../data/UngSakApi';
-import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
@@ -24,8 +17,7 @@ import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel
 import { useProsessmotor } from './Prossesmotor';
 
 interface OwnProps {
-  api: UngSakApi;
-  fagsak: Fagsak;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -35,7 +27,6 @@ interface OwnProps {
 
 export const AktivitetspengerProsess = ({
   api,
-  fagsak,
   behandling,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -44,26 +35,6 @@ export const AktivitetspengerProsess = ({
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
   const { pollTilBehandlingErKlar } = usePollBehandlingStatus(api, behandling, setBehandling);
-  const { mutateAsync: lagreAksjonspunktMutation } = useMutation({
-    mutationFn: (aksjonspunktData: BekreftedeAksjonspunkterDto) =>
-      api.lagreAksjonspunkt({
-        behandlingId: `${behandling.id}`,
-        behandlingVersjon: behandling.versjon,
-        bekreftedeAksjonspunktDtoer: aksjonspunktData.bekreftedeAksjonspunktDtoer,
-      }),
-    onSuccess: () => pollTilBehandlingErKlar(),
-  });
-
-  const { mutateAsync: lagreOverstyrteAksjonspunktMutation } = useMutation({
-    mutationFn: (aksjonspunktData: BekreftetOgOverstyrteAksjonspunkterDto) =>
-      api.lagreAksjonspunktOverstyr({
-        behandlingId: `${behandling.id}`,
-        behandlingVersjon: behandling.versjon,
-        bekreftedeAksjonspunktDtoer: [],
-        overstyrteAksjonspunktDtoer: aksjonspunktData.overstyrteAksjonspunktDtoer,
-      }),
-    onSuccess: () => pollTilBehandlingErKlar(),
-  });
 
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
@@ -80,47 +51,25 @@ export const AktivitetspengerProsess = ({
 
   const prosessteg = useProsessmotor({ api, behandling });
 
-  const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
-    fagsak,
-    behandling,
-    lagreAksjonspunkter: lagreAksjonspunktMutation,
-    lagreOverstyrteAksjonspunkter: lagreOverstyrteAksjonspunktMutation,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-  });
+  const lukkModalOgGåTilSøk = useCallback(() => {
+    toggleIverksetterVedtakModal(false);
+    toggleFatterVedtakModal(false);
+    opneSokeside();
+  }, [opneSokeside]);
 
-  const handleVedtakSubmit = async (
-    aksjonspunktModels: { isVedtakSubmission: boolean; kode: string }[],
-    aksjonspunkt: AksjonspunktDto[],
-  ) => {
-    const fatterVedtakAksjonspunktkoder = [
-      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-      aksjonspunktCodes.FATTER_VEDTAK,
-      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-    ];
-    const visIverksetterVedtakModal = aksjonspunktModels.some(
-      ap => ap.isVedtakSubmission && fatterVedtakAksjonspunktkoder.includes(ap.kode),
-    );
-    const visFatterVedtakModal =
-      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+  const onAksjonspunktBekreftet = async () => {
+    await pollTilBehandlingErKlar();
+    oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+  };
 
-    await bekreftAksjonspunktCallback(
-      aksjonspunktModels,
-      aksjonspunkt,
-      visIverksetterVedtakModal || visFatterVedtakModal,
-    );
-
+  const onVedtakAksjonspunktBekreftet = async (visIverksetterVedtakModal: boolean, visFatterVedtakModal: boolean) => {
+    await pollTilBehandlingErKlar();
     if (visFatterVedtakModal) {
       toggleFatterVedtakModal(true);
     } else if (visIverksetterVedtakModal) {
       toggleIverksetterVedtakModal(true);
     }
   };
-
-  const lukkModalOgGåTilSøk = useCallback(() => {
-    toggleIverksetterVedtakModal(false);
-    toggleFatterVedtakModal(false);
-    opneSokeside();
-  }, [opneSokeside]);
 
   return (
     <VedtakFormContext.Provider value={vedtakFormValue}>
@@ -146,7 +95,7 @@ export const AktivitetspengerProsess = ({
                     api={api}
                     behandling={behandling}
                     hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
-                    submitCallback={handleVedtakSubmit}
+                    onVedtakAksjonspunktBekreftet={onVedtakAksjonspunktBekreftet}
                   />
                 );
               }
@@ -156,7 +105,7 @@ export const AktivitetspengerProsess = ({
                     key={steg.urlKode}
                     api={api}
                     behandling={behandling}
-                    submitCallback={handleVedtakSubmit}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }
@@ -165,8 +114,8 @@ export const AktivitetspengerProsess = ({
                   <InngangsvilkårInitPanel
                     api={api}
                     behandling={behandling}
-                    submitCallback={bekreftAksjonspunktCallback}
                     key={steg.urlKode}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }
@@ -175,8 +124,8 @@ export const AktivitetspengerProsess = ({
                   <ForutgåendeMedlemskapInitPanel
                     api={api}
                     behandling={behandling}
-                    submitCallback={bekreftAksjonspunktCallback}
                     key={steg.urlKode}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }

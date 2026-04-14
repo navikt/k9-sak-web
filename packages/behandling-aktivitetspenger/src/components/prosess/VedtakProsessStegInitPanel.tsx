@@ -1,18 +1,19 @@
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
-import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQueries } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
-import { UngSakApi } from '../../data/UngSakApi';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
   vilkårQueryOptions,
-} from '../../data/ungSakQueryOptions';
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 
 const vedtakAksjonspunktKoder = [
   AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
@@ -32,13 +33,13 @@ const vedtakPanelTekster = {
 };
 
 interface Props {
-  api: UngSakApi;
+  api: AktivitetspengerApi;
   behandling: BehandlingDto;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
-  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
+  onVedtakAksjonspunktBekreftet: (visIverksetterVedtakModal: boolean, visFatterVedtakModal: boolean) => void;
 }
 
-export function VedtakProsessStegInitPanel({ api, behandling, submitCallback }: Props) {
+export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspunktBekreftet }: Props) {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const [{ data: aksjonspunkter = [] }, { data: vilkår }, { data: innloggetBruker }] = useSuspenseQueries({
     queries: [
@@ -49,7 +50,10 @@ export function VedtakProsessStegInitPanel({ api, behandling, submitCallback }: 
   });
   const vedtakAksjonspunkter = useMemo(() => {
     return (
-      aksjonspunkter?.filter(ap => ap.definisjon && vedtakAksjonspunktKoder.some(kode => kode === ap.definisjon)) || []
+      aksjonspunkter?.filter(
+        (ap): ap is typeof ap & { definisjon: AksjonspunktDefinisjon } =>
+          ap.definisjon != null && vedtakAksjonspunktKoder.some(kode => kode === ap.definisjon),
+      ) || []
     );
   }, [aksjonspunkter]);
 
@@ -61,9 +65,25 @@ export function VedtakProsessStegInitPanel({ api, behandling, submitCallback }: 
   }, [innloggetBruker]);
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
-  const handleSubmit = async (data: Array<{ kode: AksjonspunktDto['definisjon'] }>) => {
-    await submitCallback(data, vedtakAksjonspunkter);
-  };
+
+  const { mutateAsync: bekreftAksjonspunktMutation } = useMutation({
+    mutationFn: async (data: { kode: AksjonspunktDefinisjon }[]) => {
+      const payload = data.map(ap => ({ '@type': ap.kode }) as BekreftetAksjonspunktDto);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, payload);
+    },
+    onSuccess: () => {
+      const fatterVedtakAksjonspunktkoder = [
+        aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+        aksjonspunktCodes.FATTER_VEDTAK,
+        aksjonspunktCodes.FORESLÅ_VEDTAK_MANUELT,
+      ];
+      const visIverksetterVedtakModal = aksjonspunkter.some(ap =>
+        fatterVedtakAksjonspunktkoder.some(kode => kode === ap.definisjon),
+      );
+      const visFatterVedtakModal = aksjonspunkter[0].definisjon === aksjonspunktCodes.FORESLÅ_VEDTAK;
+      onVedtakAksjonspunktBekreftet(visIverksetterVedtakModal, visFatterVedtakModal);
+    },
+  });
 
   if (!erValgt || !behandling) {
     return null;
@@ -78,7 +98,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, submitCallback }: 
       aksjonspunkter={vedtakAksjonspunkter}
       vilkar={vilkår}
       isReadOnly={isReadOnly}
-      submitCallback={handleSubmit}
+      submitCallback={bekreftAksjonspunktMutation}
       tekster={vedtakPanelTekster}
     />
   );

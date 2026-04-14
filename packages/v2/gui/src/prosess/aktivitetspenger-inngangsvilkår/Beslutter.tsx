@@ -1,13 +1,16 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import { BodyShort, Box, Button, Heading, HStack, Link, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useState } from 'react';
-import type { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import type { Control, FieldPath, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import styles from './beslutter.module.css';
-import { InngangsvilkårTab, type SubmitCallback } from './types';
+import { InngangsvilkårTab } from './types';
 import { aksjonspunktErÅpent } from './utils/utils';
 
 interface VilkårRadioItemProps<TFieldValues extends FieldValues> {
@@ -54,18 +57,20 @@ interface Props {
   lokalkontorBeslutterAp: AksjonspunktDto | undefined;
   innloggetBruker: InnloggetAnsattUngV2Dto;
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
-  submitCallback: SubmitCallback;
   onTabChange: React.Dispatch<React.SetStateAction<InngangsvilkårTab>>;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+  onAksjonspunktBekreftet: () => void;
 }
 
 export const Beslutter = ({
   lokalkontorBeslutterAp,
-  vurderBistandsvilkårAp,
   innloggetBruker,
-  submitCallback,
   onTabChange,
+  api,
+  behandling,
+  onAksjonspunktBekreftet,
 }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
   const formHook = useForm<FormValues>({
     defaultValues: {
       behovForBistand: 'godkjent',
@@ -74,34 +79,33 @@ export const Beslutter = ({
     },
   });
 
-  const onSubmit = async () => {
-    setIsLoading(true);
-    const aksjonspunkt = lokalkontorBeslutterAp;
-    if (!aksjonspunkt) {
-      return;
-    }
-    const payload = {
-      kode: aksjonspunkt.definisjon,
-      begrunnelse: 'fordi',
-      aksjonspunktGodkjenningDtos: [
-        {
-          aksjonspunktKode: vurderBistandsvilkårAp?.definisjon,
-          begrunnelse: 'OK',
-          godkjent: true,
-        },
-      ],
-    };
-    try {
-      await submitCallback([payload], [aksjonspunkt]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
+    mutationFn: async () => {
+      const aksjonspunkt = lokalkontorBeslutterAp;
+      if (!aksjonspunkt?.definisjon) {
+        return;
+      }
+      const aksjonspunktDefinisjon = AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR;
+      const payload = {
+        '@type': aksjonspunktDefinisjon,
+        begrunnelse: 'fordi',
+        aksjonspunktGodkjenningDtos: [
+          {
+            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+            begrunnelse: 'OK',
+            godkjent: true,
+          },
+        ],
+      };
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    },
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
   const kanBeslutte = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte;
 
-  const handleSubmit = (data: FormValues) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<FormValues> = () => bekreftAksjonspunktMutation();
 
   return (
     <Box width="fit-content">
@@ -111,7 +115,7 @@ export const Beslutter = ({
         </Heading>
 
         {lokalkontorBeslutterAp && aksjonspunktErÅpent(lokalkontorBeslutterAp) && (
-          <RhfForm formMethods={formHook} onSubmit={handleSubmit}>
+          <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             {!kanBeslutte && <BodyShort>Du må ha rolle LOKALKONTOR_BESLUTTER</BodyShort>}
             {kanBeslutte && (
               <VStack gap="space-28">
@@ -134,7 +138,7 @@ export const Beslutter = ({
                   onLabelClick={() => onTabChange(InngangsvilkårTab.BEHOV_FOR_BISTAND)}
                 />
                 <Box>
-                  <Button variant="primary" size="small" onClick={onSubmit} loading={isLoading}>
+                  <Button variant="primary" type="submit" size="small" loading={isPending}>
                     Bekreft
                   </Button>
                 </Box>

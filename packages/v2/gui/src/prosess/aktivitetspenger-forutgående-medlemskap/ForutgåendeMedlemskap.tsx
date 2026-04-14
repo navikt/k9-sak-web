@@ -1,22 +1,25 @@
 import type { UngSakVilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Button, HGrid, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
+import { useMutation } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import { VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
-  submitCallback: (
-    data: Array<{ kode: AksjonspunktDto['definisjon']; begrunnelse: string; erVilkarOk: boolean }>,
-    aksjonspunkt: Array<Pick<AksjonspunktDto, 'definisjon'>>,
-  ) => Promise<unknown>;
+  api: AktivitetspengerApi;
+  onAksjonspunktBekreftet: () => void;
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'> | undefined;
+  behandling: BehandlingDto;
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
   vilkår: UngSakVilkårMedPerioderDto;
@@ -47,11 +50,13 @@ const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
 };
 
 export const ForutgåendeMedlemskap = ({
-  submitCallback,
   aksjonspunkt,
+  api,
+  behandling,
   readOnly,
   vilkår,
   forutgåendeMedlemskap,
+  onAksjonspunktBekreftet,
 }: Props) => {
   const items: VilkårSplittPanelItem[] = (vilkår.perioder ?? []).map(p => ({
     id: p.periode.fom,
@@ -72,19 +77,26 @@ export const ForutgåendeMedlemskap = ({
     defaultValues: buildInitialValues(vilkår),
   });
 
-  const onSubmit = async (data: FormData) => {
-    if (!aksjonspunkt) {
-      return;
-    }
-    const erVilkarOk = data.vurderinger[selectedItemId] === 'oppfylt';
-    const payload = {
-      kode: aksjonspunkt.definisjon,
-      begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
-      erVilkarOk,
-      avslagsårsak: erVilkarOk ? undefined : 'SØKER_IKKE_MEDLEM',
-    };
-    await submitCallback([payload], [aksjonspunkt]);
-  };
+  const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
+    mutationFn: async (data: FormData) => {
+      if (!aksjonspunkt) {
+        return;
+      }
+      const erVilkarOk = data.vurderinger[selectedItemId] === 'oppfylt';
+      const payload = {
+        '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
+        begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
+        erVilkarOk,
+        avslagsårsak: erVilkarOk ? undefined : ('SØKER_IKKE_MEDLEM' as const),
+      };
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    },
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
 
   return (
     <VilkårSplittPanel
@@ -137,7 +149,7 @@ export const ForutgåendeMedlemskap = ({
             <Radio value="ikkeOppfylt">Nei</Radio>
           </RhfRadioGroup>
           <Box>
-            <Button type="submit" size="small" disabled={readOnly} loading={formMethods.formState.isSubmitting}>
+            <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
               Bekreft og fortsett
             </Button>
           </Box>
