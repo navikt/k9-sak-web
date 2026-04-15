@@ -39,7 +39,7 @@ export const Alder = ({ alderVilkår }: Props) => {
             Er vilkår om alder oppfylt på søknadstidspunktet?
           </Label>
           <BodyShort size="small">
-            <HStack gap="space-8">
+            <HStack gap="space-8" align="center">
               {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
               <Tag variant="outline" size="small">
                 Fra folkeregisteret
@@ -47,9 +47,11 @@ export const Alder = ({ alderVilkår }: Props) => {
             </HStack>
           </BodyShort>
         </VStack>
-        <HStack gap="space-8">
+        <HStack gap="space-8" align="center">
           <CogIcon title="Automatisk vurdering" fontSize="1.5rem" />
-          <BodyShort size="small">Automatisk vurdert</BodyShort>
+          <BodyShort size="small" weight="semibold">
+            Automatisk vurdert
+          </BodyShort>
         </HStack>
       </VStack>
     </VilkårSplittPanel>

@@ -115,7 +115,7 @@ export const AndreLivsoppholdytelser = ({
     >
       <VStack gap="space-24">
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-          <VStack gap="space-16">
+          <VStack gap="space-24">
             <RhfTextarea
               control={formHook.control}
               name={`vurderinger.${selectedId}.begrunnelse`}
@@ -135,7 +135,6 @@ export const AndreLivsoppholdytelser = ({
               name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
               legend="Har søker andre livsoppholdytelser?"
               validate={[required]}
-              disabled={readOnly}
               readOnly={readOnly}
             >
               <Radio value="oppfylt">Ja</Radio>
@@ -164,11 +163,13 @@ export const AndreLivsoppholdytelser = ({
                 readOnly={readOnly}
               />
             )}
-            <Box>
-              <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
-                Bekreft og fortsett
-              </Button>
-            </Box>
+            {!readOnly && (
+              <Box>
+                <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
+                  Bekreft og fortsett
+                </Button>
+              </Box>
+            )}
           </VStack>
         </RhfForm>
       </VStack>

@@ -52,9 +52,11 @@ export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
             {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
           </BodyShort>
         </VStack>
-        <HStack gap="space-8">
+        <HStack gap="space-8" align="center">
           <CogIcon title="Automatisk vurdering" fontSize="1.5rem" />
-          <BodyShort size="small">Automatisk vurdert</BodyShort>
+          <BodyShort size="small" weight="semibold">
+            Automatisk vurdert
+          </BodyShort>
         </HStack>
       </VStack>
     </VilkårSplittPanel>

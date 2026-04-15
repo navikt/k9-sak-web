@@ -114,7 +114,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
             Bor søker i Trondheim kommune?
           </Label>
           <BodyShort size="small">
-            <HStack gap="space-8">
+            <HStack gap="space-8" align="center">
               {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
               <Tag variant="outline" size="small">
                 Fra søknad
@@ -123,7 +123,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
           </BodyShort>
         </VStack>
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-          <VStack gap="space-16">
+          <VStack gap="space-24">
             <RhfTextarea
               control={formHook.control}
               name={`vurderinger.${selectedId}.begrunnelse`}
@@ -171,11 +171,13 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
                 readOnly={readOnly}
               />
             )}
-            <Box>
-              <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
-                Bekreft og fortsett
-              </Button>
-            </Box>
+            {!readOnly && (
+              <Box>
+                <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
+                  Bekreft og fortsett
+                </Button>
+              </Box>
+            )}
           </VStack>
         </RhfForm>
       </VStack>

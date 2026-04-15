@@ -79,10 +79,7 @@ export const BehovForBistand = ({
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
       const erVurderBistandsvilkårApÅpent = vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp);
-      const aksjonspunktDefinisjon =
-        erVurderBistandsvilkårApÅpent && kanSaksbehandle
-          ? AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR
-          : AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR;
+
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = items.find(item => item.id === selectedId);
       if (!selectedItem) {
@@ -97,13 +94,13 @@ export const BehovForBistand = ({
 
       const payload = erVurderBistandsvilkårApÅpent
         ? {
-            '@type': aksjonspunktDefinisjon,
+            '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
             begrunnelse: vurdering?.begrunnelse ?? '',
             brevtekst: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
             vurdertePerioder: [vurdertePerioder],
           }
         : {
-            '@type': aksjonspunktDefinisjon,
+            '@type': AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
             begrunnelse: 'Send til beslutter',
           };
 
@@ -133,7 +130,7 @@ export const BehovForBistand = ({
     >
       <VStack gap="space-24">
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-          <VStack gap="space-16">
+          <VStack gap="space-24">
             <RhfTextarea
               control={formHook.control}
               name={`vurderinger.${selectedId}.begrunnelse`}
