@@ -7,27 +7,34 @@ import { fakeAksjonspunktClient } from '../../storybook/mocks/FakeAksjonspunktCl
 import { AvregningFormProvider } from './AvregningContext';
 import { AvregningBackendClientContext } from './AvregningBackendClientContext';
 import { AksjonspunktContext } from '../../context/AksjonspunktContext';
+import { BehandlingProvider } from '../../context/BehandlingContext';
+import { fn } from 'storybook/test';
 
 const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
+const refetchBehandling = fn();
 
 const meta = {
   title: 'gui/prosess/avregning/prosess-avregning',
   decorators: [
-    Story => (
-      <AksjonspunktContext value={fakeAksjonspunktClient}>
-        <AvregningBackendClientContext value={fakeAvregningBackendClient}>
-          <AvregningFormProvider behandlingId={1}>
-            <Story />
-          </AvregningFormProvider>
-        </AvregningBackendClientContext>
-      </AksjonspunktContext>
+    (Story, { args }) => (
+      <BehandlingProvider behandling={args.behandling} refetchBehandling={refetchBehandling}>
+        <AksjonspunktContext.Provider value={fakeAksjonspunktClient}>
+          <AvregningBackendClientContext value={fakeAvregningBackendClient}>
+            <AvregningFormProvider behandlingId={args.behandling?.id ?? 1}>
+              <Story />
+            </AvregningFormProvider>
+          </AvregningBackendClientContext>
+        </AksjonspunktContext.Provider>
+      </BehandlingProvider>
     ),
   ],
   component: AvregningProsessIndex,
 } satisfies Meta<typeof AvregningProsessIndex>;
 
 type Story = StoryObj<typeof meta>;
-export const AksjonspunktVurderFeilutbetaling8084 = () => <AvregningProsessIndex {...vurderFeilutbetalingMock} />;
+export const AksjonspunktVurderFeilutbetaling8084: Story = {
+  args: { ...vurderFeilutbetalingMock },
+};
 
 export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
   args: { ...vurderFeilutbetalingMock },
@@ -50,7 +57,9 @@ export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
   },
 };
 
-export const AksjonspunktHøyEtterbetaling8086 = () => <AvregningProsessIndex {...sjekkHøyEtterbetalingMock} />;
+export const AksjonspunktHøyEtterbetaling8086: Story = {
+  args: { ...sjekkHøyEtterbetalingMock },
+};
 
 export const FyllAksjonspunktHøyEtterbetaling8086: Story = {
   args: { ...sjekkHøyEtterbetalingMock },
