@@ -1,6 +1,10 @@
 import Kodeverk from './kodeverkTsType';
 import Periode from './periodeTsType';
 
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type deleteFile = FeatureToggles['BRUK_V2_AVREGNING'];
+// DENNE FILEN KAN SLETTES NÅR V2 AVREGNING ER TOGGLET PÅ I PROD
 export type SimuleringResultatRad = Readonly<{
   feltnavn: string;
   resultaterPerMåned: {

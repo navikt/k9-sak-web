@@ -48,21 +48,6 @@ export const detErIngenInnleggelsePåDato = (dato: string, innleggelsesperioder:
   return true;
 };
 
-export const datoErInnenforResterendeVurderingsperioder = (
-  dato: string,
-  resterendeVurderingsperioder: Period[],
-): string | true => {
-  const datoErInnenfor = resterendeVurderingsperioder.some(period =>
-    new Period(period.fom, period.tom).includesDate(dato),
-  );
-
-  if (datoErInnenfor) {
-    return true;
-  }
-
-  return 'Dato må være innenfor periodene som vurderes';
-};
-
 export const datoErIkkeIEtHull = (dato: string, perioder: Period[]): string | true => {
   if (perioder.length === 1) {
     return true;

@@ -4,8 +4,8 @@ import {
   ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import {
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
@@ -30,12 +30,12 @@ import { useProsessmotor } from './Prossesmotor';
 interface OwnProps {
   api: UngSakApi;
   fagsak: Fagsak;
-  behandling: ung_sak_kontrakt_behandling_BehandlingDto;
+  behandling: BehandlingDto;
   rettigheter: Rettigheter;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
-  setBehandling: (behandling: ung_sak_kontrakt_behandling_BehandlingDto) => void;
+  setBehandling: (behandling: BehandlingDto) => void;
 }
 
 export const AktivitetspengerProsess = ({
@@ -158,7 +158,15 @@ export const AktivitetspengerProsess = ({
               );
             }
             if (urlKode === prosessStegCodes.BEREGNING) {
-              return <BeregningProsessStegInitPanel key={steg.urlKode} />;
+              return (
+                <BeregningProsessStegInitPanel
+                  key={steg.urlKode}
+                  api={api}
+                  behandling={behandling}
+                  isReadOnly={isReadOnly}
+                  submitCallback={handleVedtakSubmit}
+                />
+              );
             }
             return null;
           })}

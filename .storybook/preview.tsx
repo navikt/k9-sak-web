@@ -4,7 +4,6 @@ import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakCl
 import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
-import '@navikt/ds-css';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react-vite';
@@ -31,6 +30,7 @@ configureK9TilbakeClient(mockAuthFixer as any);
 
 initialize({
   onUnhandledRequest: 'bypass',
+  quiet: true,
   serviceWorker: {
     url: VITE_LOCAL_STORYBOOK ? '/mockServiceWorker.js' : '/k9-sak-web/mockServiceWorker.js',
   },
@@ -49,6 +49,9 @@ const preview: Preview = {
     margin: '40px',
     docs: {
       autodocs: true,
+    },
+    a11y: {
+      test: 'off',
     },
   },
   decorators: [

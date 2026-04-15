@@ -10,13 +10,13 @@ __metadata:
   resolution: "@k9-sak-web/server@workspace:."
   dependencies:
     "@types/express": "npm:5.0.6"
-    "@types/express-http-proxy": "npm:1.6.6"
+    "@types/express-http-proxy": "npm:1.6.7"
     "@types/node": "npm:22.15.33"
     express: "npm:5.2.1"
     express-http-proxy: "npm:2.1.2"
-    express-rate-limit: "npm:8.2.2"
+    express-rate-limit: "npm:8.3.1"
     helmet: "npm:8.1.0"
-    typescript: "npm:5.9.3"
+    typescript: "npm:6.0.2"
   languageName: unknown
   linkType: soft
 
@@ -39,12 +39,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-http-proxy@npm:1.6.6":
-  version: 1.6.6
-  resolution: "@types/express-http-proxy@npm:1.6.6"
+"@types/express-http-proxy@npm:1.6.7":
+  version: 1.6.7
+  resolution: "@types/express-http-proxy@npm:1.6.7"
   dependencies:
     "@types/express": "npm:*"
-  checksum: 10/bf8d642e2d00c6d5dc5a3bc6617a4f249d00646b1469a1c523836753c12c6574d97a44d4b1b299798ee6fb93bf0dda969a7d3cd763c5ad0dd92b4f3c6e828982
+  checksum: 10/0f2964b4bc4f5f5f8e282615aed279310b54eab07d5a6fd6b216ca4bb8a1462e428d4658e78a2c32703a7c4e5c13112ea6a0cfe6e0f164d937b0caedf654fcb0
   languageName: node
   linkType: hard
 
@@ -333,14 +333,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-rate-limit@npm:8.2.2":
-  version: 8.2.2
-  resolution: "express-rate-limit@npm:8.2.2"
+"express-rate-limit@npm:8.3.1":
+  version: 8.3.1
+  resolution: "express-rate-limit@npm:8.3.1"
   dependencies:
     ip-address: "npm:10.1.0"
   peerDependencies:
     express: ">= 4.11"
-  checksum: 10/c605c96cc69e1411cd80894f73af805e9a7188aba8b9089fa5cc76f78e520cd3173069719e572561dc3384ba87d44a42f84749bf422577d3767176e012023a7e
+  checksum: 10/dd97bfc48c01a6d4c5433203232b5e7a1e55e21322bde49033e5f8c4339584fe671a94096144a0810f4ea21dcec8aaaf15823109627e609f8ed1bc5912a345cf
   languageName: node
   linkType: hard
 
@@ -813,23 +813,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.9.3":
-  version: 5.9.3
-  resolution: "typescript@npm:5.9.3"
+"typescript@npm:6.0.2":
+  version: 6.0.2
+  resolution: "typescript@npm:6.0.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/c089d9d3da2729fd4ac517f9b0e0485914c4b3c26f80dc0cffcb5de1719a17951e92425d55db59515c1a7ddab65808466debb864d0d56dcf43f27007d0709594
+  checksum: 10/b9fc2fcee7ee8e5ca6f5138181964550531e18e2d20ecb71b802d4d495881e3444e0ef94cbb6e84eb2ba41e913f6feae3ca33cc722b32e6e6dfadb32d23b80e6
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>":
-  version: 5.9.3
-  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
+"typescript@patch:typescript@npm%3A6.0.2#optional!builtin<compat/typescript>":
+  version: 6.0.2
+  resolution: "typescript@patch:typescript@npm%3A6.0.2#optional!builtin<compat/typescript>::version=6.0.2&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/696e1b017bc2635f4e0c94eb4435357701008e2f272f553d06e35b494b8ddc60aa221145e286c28ace0c89ee32827a28c2040e3a69bdc108b1a5dc8fb40b72e3
+  checksum: 10/e5501dfcf8c5b6b9a61f6fa53decc40187cebe3a2b7b2bd51c615007ad4cf6d58298461fef63294f6be9d5f2f33019b2a2e2bf02d9cb7d7f6ec94372bf24ffa2
   languageName: node
   linkType: hard
 

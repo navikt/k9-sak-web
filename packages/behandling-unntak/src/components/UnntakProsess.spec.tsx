@@ -124,6 +124,10 @@ describe('<UnntakProsess>', () => {
     },
   };
 
+  afterEach(() => {
+    requestUnntakApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestUnntakApi.mock(UnntakBehandlingApiKeys.MEDLEMSKAP, []);
     renderWithIntlAndReduxForm(

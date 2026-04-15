@@ -1,35 +1,32 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto as BekreftedeAksjonspunkterDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
-import '@k9-sak-web/gui/utils/validation/yupSchemas';
+import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
-import type { BehandlingAvregningBackendApiType } from '../AvregningBackendApiType';
+import { useAvregningBackendClient } from '../AvregningBackendClientContext';
+import { useAvregningFormState } from '../AvregningContext';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
   behandling: BehandlingDto;
   readOnly?: boolean;
-  api: BehandlingAvregningBackendApiType;
-  oppdaterBehandling: () => void;
 }
 
-interface KontrollerEtterbetalingFormData {
+export interface KontrollerEtterbetalingFormData {
   begrunnelse: string;
 }
 
-export type BekreftKontrollerEtterbetalingAksjonspunktRequest = BekreftedeAksjonspunkterDto;
-
-const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly, api, oppdaterBehandling }) => {
+const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly }) => {
+  const api = useAvregningBackendClient();
+  const { getHøyEtterbetalingState, setHøyEtterbetaling } = useAvregningFormState();
   const [loading, setLoading] = useState(false);
   const [rediger, setRediger] = useState(skalAksjonspunktUtredes(aksjonspunkt, behandling.status));
   const kanRedigeres = !readOnly && kanAksjonspunktRedigeres(aksjonspunkt, behandling.status);
@@ -50,8 +47,14 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
 
   const formMethods = useForm<KontrollerEtterbetalingFormData>({
     resolver: yupResolver(kontrollerEtterbetalingFormSchema),
-    defaultValues: initialValues,
+    defaultValues: getHøyEtterbetalingState() || initialValues,
   });
+
+  useEffect(() => {
+    return () => {
+      setHøyEtterbetaling(formMethods.getValues());
+    };
+  }, []);
 
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
     try {
@@ -64,8 +67,11 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
       if (behandling.id == null) {
         throw new Error(`behandling.id null. Kan ikke bekrefte aksjonspunkt`);
       }
+      if (!api.bekreftAksjonspunktSjekkHøyEtterbetaling) {
+        throw new Error('bekreftAksjonspunktSjekkHøyEtterbetaling er ikke tilgjengelig for denne backend-klienten');
+      }
       await api.bekreftAksjonspunktSjekkHøyEtterbetaling(behandling.id, behandling.versjon, data.begrunnelse);
-      oppdaterBehandling();
+      window.location.reload();
     } finally {
       setLoading(false);
     }

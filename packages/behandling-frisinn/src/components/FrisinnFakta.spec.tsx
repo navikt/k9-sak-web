@@ -125,6 +125,10 @@ describe('<FrisinnFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestFrisinnApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestFrisinnApi.mock(FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER, undefined);
     const fetchedData: Partial<FetchedData> = {

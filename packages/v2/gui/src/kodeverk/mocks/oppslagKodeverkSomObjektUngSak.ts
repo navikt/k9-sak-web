@@ -41,6 +41,12 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'AAP',
     },
     {
+      kode: 'AKT',
+      kodeverk: 'FAGSAK_YTELSE',
+      navn: 'Aktivitetspenger',
+      kilde: 'AKT',
+    },
+    {
       kode: 'DAG',
       kodeverk: 'FAGSAK_YTELSE',
       navn: 'Dagpenger',
@@ -168,6 +174,7 @@ export const oppslagKodeverkSomObjektUngSak = {
       navn: 'Endring fra deltaker',
       kilde: 'RE-END-FRA-BRUKER',
     },
+
     {
       kode: 'RE-HENDELSE-DØD-B',
       kodeverk: 'BEHANDLING_AARSAK',
@@ -185,6 +192,12 @@ export const oppslagKodeverkSomObjektUngSak = {
       kodeverk: 'BEHANDLING_AARSAK',
       navn: 'Melding om endret startdato av ungdomsprogram for deltaker',
       kilde: 'RE-HENDELSE-ENDRET-STARTDATO-UNG',
+    },
+    {
+      kode: 'RE-HENDELSE-FJERN-PERIODE-UNG',
+      kodeverk: 'BEHANDLING_AARSAK',
+      navn: 'Melding om fjerning av deltakelse i ungdomsprogrammet',
+      kilde: 'RE-HENDELSE-FJERN-PERIODE-UNG',
     },
     {
       kode: 'RE-HENDELSE-FØDSEL',
@@ -261,12 +274,6 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'BEH_SAK',
     },
     {
-      kode: 'BEH_SAK',
-      kodeverk: 'OPPGAVE_AARSAK',
-      navn: 'Behandle sak i VL',
-      kilde: 'BEH_SAK',
-    },
-    {
       kode: 'FEILUTBET',
       kodeverk: 'OPPGAVE_AARSAK',
       navn: 'Feilutbetalingsvedtak',
@@ -275,7 +282,7 @@ export const oppslagKodeverkSomObjektUngSak = {
     {
       kode: 'GOD_VED',
       kodeverk: 'OPPGAVE_AARSAK',
-      navn: 'Godkjenne vedtak i VL',
+      navn: 'Godkjenne vedtak',
       kilde: 'GOD_VED',
     },
     {
@@ -287,13 +294,13 @@ export const oppslagKodeverkSomObjektUngSak = {
     {
       kode: 'REG_SOK',
       kodeverk: 'OPPGAVE_AARSAK',
-      navn: 'Registrere søknad i VL',
+      navn: 'Registrere søknad',
       kilde: 'REG_SOK',
     },
     {
       kode: 'RV',
       kodeverk: 'OPPGAVE_AARSAK',
-      navn: 'Revurdere i VL',
+      navn: 'Revurdere',
       kilde: 'RV',
     },
     {
@@ -573,10 +580,22 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'BT-004',
     },
     {
+      kode: 'BT-007',
+      kodeverk: 'BEHANDLING_TYPE',
+      navn: 'Tilbakekreving',
+      kilde: 'BT-007',
+    },
+    {
       kode: 'BT-008',
       kodeverk: 'BEHANDLING_TYPE',
       navn: 'Anke',
       kilde: 'BT-008',
+    },
+    {
+      kode: 'BT-009',
+      kodeverk: 'BEHANDLING_TYPE',
+      navn: 'Tilbakekreving revurdering',
+      kilde: 'BT-009',
     },
   ],
   arbeidTyper: [
@@ -767,6 +786,12 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: '-',
     },
     {
+      kode: 'BISTANDSVILKÅR',
+      kodeverk: 'SKJERMLENKE_TYPE',
+      navn: 'Bistandsvilkår',
+      kilde: 'BISTANDSVILKÅR',
+    },
+    {
       kode: 'FAKTA_OM_SIMULERING',
       kodeverk: 'SKJERMLENKE_TYPE',
       navn: 'Simulering',
@@ -789,6 +814,12 @@ export const oppslagKodeverkSomObjektUngSak = {
       kodeverk: 'SKJERMLENKE_TYPE',
       navn: 'Kontroll av inntekt',
       kilde: 'KONTROLL_AV_INNTEKT',
+    },
+    {
+      kode: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+      kodeverk: 'SKJERMLENKE_TYPE',
+      navn: 'Lokalkontor beslutter vilkår',
+      kilde: 'LOKALKONTOR_BESLUTTER_VILKÅR',
     },
     {
       kode: 'OPPLYSNINGSPLIKT',
@@ -835,6 +866,18 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'BESL',
     },
     {
+      kode: 'LOKALKONTOR_BESL',
+      kodeverk: 'HISTORIKK_AKTOER',
+      navn: 'Beslutter Nav-lokalt',
+      kilde: 'LOKALKONTOR_BESL',
+    },
+    {
+      kode: 'LOKALKONTOR_SBH',
+      kodeverk: 'HISTORIKK_AKTOER',
+      navn: 'Saksbehandler Nav-lokalt',
+      kilde: 'LOKALKONTOR_SBH',
+    },
+    {
       kode: 'SBH',
       kodeverk: 'HISTORIKK_AKTOER',
       navn: 'Saksbehandler',
@@ -871,6 +914,12 @@ export const oppslagKodeverkSomObjektUngSak = {
       kodeverk: 'BEHANDLING_STATUS',
       navn: 'Iverksetter vedtak',
       kilde: 'IVED',
+    },
+    {
+      kode: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+      kodeverk: 'BEHANDLING_STATUS',
+      navn: 'Lokalkontor beslutter vilkår',
+      kilde: 'LOKALKONTOR_BESLUTTER_VILKÅR',
     },
     {
       kode: 'OPPRE',
@@ -934,6 +983,18 @@ export const oppslagKodeverkSomObjektUngSak = {
       navn: 'Endret start av ungdomsprogram',
       kilde: '2002',
     },
+    {
+      kode: '3001',
+      kodeverk: 'AVSLAGSARSAK',
+      navn: 'Søker bor et sted som ikke er forenelig med ytelsen.',
+      kilde: '3001',
+    },
+    {
+      kode: '3002',
+      kodeverk: 'AVSLAGSARSAK',
+      navn: 'Søker har ikke oppfølgingsvedtak etter Navloven §14a.',
+      kilde: '3002',
+    },
   ],
   vilkårTyper: [
     {
@@ -941,6 +1002,18 @@ export const oppslagKodeverkSomObjektUngSak = {
       kodeverk: 'VILKAR_TYPE',
       navn: 'Ikke definert',
       kilde: '-',
+    },
+    {
+      kode: 'AKT_VK_1',
+      kodeverk: 'VILKAR_TYPE',
+      navn: 'Bostedsvilkåret',
+      kilde: 'AKT_VK_1',
+    },
+    {
+      kode: 'AKT_VK_2',
+      kodeverk: 'VILKAR_TYPE',
+      navn: 'Bistandsvilkåret',
+      kilde: 'AKT_VK_2',
     },
     {
       kode: 'UNG_VK_1',
@@ -2275,6 +2348,22 @@ export const oppslagKodeverkSomObjektUngSak = {
   ],
   avslagårsakerPrVilkårTypeKode: {
     '-': [],
+    AKT_VK_1: [
+      {
+        kode: '3001',
+        kodeverk: 'AVSLAGSARSAK',
+        navn: 'Søker bor et sted som ikke er forenelig med ytelsen.',
+        kilde: '3001',
+      },
+    ],
+    AKT_VK_2: [
+      {
+        kode: '3002',
+        kodeverk: 'AVSLAGSARSAK',
+        navn: 'Søker har ikke oppfølgingsvedtak etter Navloven §14a.',
+        kilde: '3002',
+      },
+    ],
     UNG_VK_1: [
       {
         kode: '1089',
@@ -2448,12 +2537,6 @@ export const oppslagKodeverkSomObjektUngSak = {
   ],
   overordnetInntektYtelseType: [
     {
-      kode: 'UDEFINERT',
-      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
-      navn: 'Ikke definert',
-      kilde: 'UDEFINERT',
-    },
-    {
       kode: 'ARBEIDSAVKLARINGSPENGER',
       kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
       navn: 'Arbeidsavklaringspenger',
@@ -2468,7 +2551,7 @@ export const oppslagKodeverkSomObjektUngSak = {
     {
       kode: 'ENSLIG_FORSØRGER',
       kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
-      navn: 'Enslig forsørger',
+      navn: 'Overgangsstønad enslig forsørger',
       kilde: 'ENSLIG_FORSØRGER',
     },
     {
@@ -2478,16 +2561,16 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'FORELDREPENGER',
     },
     {
-      kode: 'OPPLÆRINGSPENGER',
-      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
-      navn: 'Opplæringspenger',
-      kilde: 'OPPLÆRINGSPENGER',
-    },
-    {
       kode: 'OMSORGSPENGER',
       kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
       navn: 'Omsorgspenger',
       kilde: 'OMSORGSPENGER',
+    },
+    {
+      kode: 'OPPLÆRINGSPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Opplæringspenger',
+      kilde: 'OPPLÆRINGSPENGER',
     },
     {
       kode: 'PLEIEPENGER',
@@ -2496,16 +2579,22 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'PLEIEPENGER',
     },
     {
+      kode: 'SVANGERSKAPSPENGER',
+      kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
+      navn: 'Svangerskapspenger',
+      kilde: 'SVANGERSKAPSPENGER',
+    },
+    {
       kode: 'SYKEPENGER',
       kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
       navn: 'Sykepenger',
       kilde: 'SYKEPENGER',
     },
     {
-      kode: 'SVANGERSKAPSPENGER',
+      kode: 'UDEFINERT',
       kodeverk: 'OVERORDNET_INNTEKT_YTELSE_TYPE',
-      navn: 'Svangerskapspenger',
-      kilde: 'SVANGERSKAPSPENGER',
+      navn: 'Udefinert',
+      kilde: 'UDEFINERT',
     },
   ],
 } satisfies AlleKodeverdierSomObjektResponse;

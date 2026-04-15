@@ -3,16 +3,14 @@ import {
   k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
   type k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Button, Heading, HStack, List, Loader, Modal, VStack, Box } from '@navikt/ds-react';
+import { Bleed, BodyShort, Box, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
-import type { FeatureToggles } from '../../../../featuretoggles/FeatureToggles.js';
 import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';
 import styles from './markerBehandlingModal.module.css';
 
@@ -31,13 +29,13 @@ interface FormValues {
   begrunnelse: string;
 }
 
-const getMerknader = (merknader: MerknadResponse, featureToggles: FeatureToggles): string[] => {
+const getMerknader = (merknader: MerknadResponse): string[] => {
   const ubrukteMerknader: EndreMerknadRequestMerknadKode[] = [];
 
   if (!merknader.hastesak.aktiv) {
     ubrukteMerknader.push(EndreMerknadRequestMerknadKode.HASTESAK);
   }
-  if (!merknader.utenlandstilsnitt.aktiv && featureToggles.MARKERING_UTENLANDSTILSNITT) {
+  if (!merknader.utenlandstilsnitt.aktiv) {
     ubrukteMerknader.push(EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT);
   }
   return ubrukteMerknader;
@@ -60,7 +58,7 @@ const getGjeldendeMerknader = (merknader: MerknadResponse) => {
   }
   if (merknader.utenlandstilsnitt.aktiv) {
     gjeldendeMerknader.push({
-      tittel: 'Utenlandstilsnitt',
+      tittel: 'Utenlandssak',
       begrunnelse: merknader.utenlandstilsnitt.fritekst ?? '',
       merknadKode: EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT,
     });
@@ -81,8 +79,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
     },
   });
 
-  const featureToggles = useContext(FeatureTogglesContext);
-  const tilgjengeligeMerknader = merknaderFraLos ? getMerknader(merknaderFraLos, featureToggles) : [];
+  const tilgjengeligeMerknader = merknaderFraLos ? getMerknader(merknaderFraLos) : [];
   const buildInitialValues = (): FormValues => {
     return {
       merknad: '',
@@ -165,11 +162,17 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                     control={formMethods.control}
                     name="merknad"
                     label="Velg ny merknad"
-                    selectValues={tilgjengeligeMerknader.map(merknad => (
-                      <option key={merknad} value={merknad}>
-                        {merknad.charAt(0) + merknad.slice(1).toLowerCase()}
-                      </option>
-                    ))}
+                    selectValues={tilgjengeligeMerknader.map(merknad => {
+                      let label = merknad.charAt(0) + merknad.slice(1).toLowerCase();
+                      if (merknad === EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT) {
+                        label = 'Utenlandssak';
+                      }
+                      return (
+                        <option key={merknad} value={merknad}>
+                          {label}
+                        </option>
+                      );
+                    })}
                   />
                   {valgtMerknad && (
                     <RhfTextarea
@@ -178,16 +181,11 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                       label="Kommentar"
                       validate={[required, minLength3, maxLength100000, hasValidText]}
                       maxLength={100000}
-                      readOnly={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT}
                     />
                   )}
                 </VStack>
                 <div className={styles.buttonContainer}>
-                  <Button
-                    variant="primary"
-                    size="small"
-                    disabled={!featureToggles.LOS_MARKER_BEHANDLING_SUBMIT || formState.isSubmitting}
-                  >
+                  <Button variant="primary" size="small" disabled={formState.isSubmitting}>
                     {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
                   </Button>
                   <Button variant="secondary" size="small" onClick={lukkModal}>

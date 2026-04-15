@@ -170,6 +170,10 @@ describe('<FagsakIndex>', () => {
     behandlingÅrsaker: undefined,
   };
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal hente alle behandlinger fra k9sak, tilbake og klage', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.FETCH_FAGSAK, fagsak);

@@ -82,7 +82,7 @@ interface OwnProps {
   newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
 }
 
-export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: OwnProps) => {
+const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: OwnProps) => {
   const [isOpen, setOpen] = useState(false);
   const { control } = useFormContext<TilkjentYtelseFormState>();
   const { hentKodeverkForKode } = useKodeverkContext();

@@ -1,8 +1,8 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { Vurderingsversjon } from '../types/Vurdering';
-import Vurderingstype from '../types/Vurderingstype';
 import { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
 import { RequestPayload } from '../types/RequestPayload';
+import { Vurderingsversjon } from '../types/Vurdering';
+import Vurderingstype from '../types/Vurderingstype';
 
 type HttpErrorHandler = (statusCode: number, locationHeader?: string) => void;
 
@@ -39,7 +39,7 @@ export async function postNyVurdering(
       { signal },
     );
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error, { cause: error });
   }
 }
 
@@ -81,7 +81,7 @@ export async function postEndreVurdering(
       { signal },
     );
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error, { cause: error });
   }
 }
 

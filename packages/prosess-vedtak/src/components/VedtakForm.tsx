@@ -88,7 +88,7 @@ interface Props {
   personopplysninger: PersonopplysningDto;
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
-  simuleringResultat: VedtakSimuleringResultat;
+  simuleringResultat: VedtakSimuleringResultat | null;
   språkkode: string;
   submitCallback: (object: any) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;

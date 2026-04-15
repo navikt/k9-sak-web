@@ -129,7 +129,6 @@
   "packages/fakta-inntektsmelding/src/util/utils.ts",
   "packages/fakta-inntektsmelding/test/Aksjonspunkt9069.spec.tsx",
   "packages/fakta-inntektsmelding/test/Aksjonspunkt9071.spec.tsx",
-  "packages/fakta-medisinsk-vilkår/mock/apiUtils.ts",
   "packages/fakta-medisinsk-vilkår/mock/handlers.ts",
   "packages/fakta-medisinsk-vilkår/mock/mocked-data/createMockedDokumentelementLinks.ts",
   "packages/fakta-medisinsk-vilkår/mock/mocked-data/createMockedVurderingselementLinks.ts",
