@@ -7,7 +7,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { BekreftAksjonspunktClient } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
+import { fakeAksjonspunktClient } from '@k9-sak-web/gui/storybook/mocks/FakeAksjonspunktClient.js';
 
 import { HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
@@ -15,15 +15,7 @@ import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 
 const refetchBehandling = fn();
-const bekreftFn = fn();
 
-const mockAksjonspunktClient: BekreftAksjonspunktClient = {
-  bekreft: async (...args) => {
-    bekreftFn(...args);
-    return { response: new Response(null, { status: 200 }) };
-  },
-  poll: async () => ({ data: undefined, response: new Response(null, { status: 200 }) }),
-};
 const meta = {
   title: 'gui/prosess/Simulering/Høy-Etterbetaling',
   component: KontrollerEtterbetaling,
@@ -93,7 +85,7 @@ export const LøsAksjonspunkt: Story = {
   },
   render: props => (
     <BehandlingProvider behandling={props.behandling} refetchBehandling={refetchBehandling}>
-      <AksjonspunktContext.Provider value={mockAksjonspunktClient}>
+      <AksjonspunktContext.Provider value={fakeAksjonspunktClient}>
         <HStack>
           <KontrollerEtterbetaling {...props} />
         </HStack>
