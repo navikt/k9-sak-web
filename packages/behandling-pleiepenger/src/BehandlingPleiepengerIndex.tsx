@@ -181,26 +181,26 @@ const BehandlingPleiepengerIndex = ({
         setBehandling={setBehandling}
       >
         <AksjonspunktContext.Provider value={k9SakAksjonspunktClient}>
-        <PleiepengerPaneler
-          behandling={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling : behandling}
-          fetchedData={data!}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk || {}}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          opneSokeside={opneSokeside}
-          hasFetchError={behandlingState === RestApiState.ERROR}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-          featureToggles={featureToggles}
-          dokumenter={alleDokumenter}
-          hentBehandling={hentBehandling}
-        />
+          <PleiepengerPaneler
+            behandling={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling : behandling}
+            fetchedData={data!}
+            fagsak={fagsak}
+            fagsakPerson={fagsakPerson}
+            alleKodeverk={kodeverk || {}}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            opneSokeside={opneSokeside}
+            hasFetchError={behandlingState === RestApiState.ERROR}
+            setBehandling={setBehandling}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+            featureToggles={featureToggles}
+            dokumenter={alleDokumenter}
+            hentBehandling={hentBehandling}
+          />
         </AksjonspunktContext.Provider>
       </BehandlingProvider>
     </>

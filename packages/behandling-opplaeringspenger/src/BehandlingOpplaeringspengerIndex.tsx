@@ -174,27 +174,31 @@ const BehandlingOpplaeringspengerIndex = ({
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling?.versjon : behandling.versjon}
       />
 
-      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <BehandlingProvider
+        behandling={behandling}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        setBehandling={setBehandling}
+      >
         <AksjonspunktContext.Provider value={k9SakAksjonspunktClient}>
-        <OpplaeringspengerPaneler
-          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-          fetchedData={data}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          opneSokeside={opneSokeside}
-          hasFetchError={behandlingState === RestApiState.ERROR}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-          featureToggles={featureToggles}
-          dokumenter={alleDokumenter}
-        />
+          <OpplaeringspengerPaneler
+            behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+            fetchedData={data}
+            fagsak={fagsak}
+            fagsakPerson={fagsakPerson}
+            alleKodeverk={kodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            opneSokeside={opneSokeside}
+            hasFetchError={behandlingState === RestApiState.ERROR}
+            setBehandling={setBehandling}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+            featureToggles={featureToggles}
+            dokumenter={alleDokumenter}
+          />
         </AksjonspunktContext.Provider>
       </BehandlingProvider>
     </>

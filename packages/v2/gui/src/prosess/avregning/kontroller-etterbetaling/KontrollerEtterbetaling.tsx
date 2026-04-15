@@ -4,15 +4,14 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
+import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
+import * as yup from 'yup';
 import { useBekreftAksjonspunkt } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
-import '@k9-sak-web/gui/utils/validation/yupSchemas';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
 
 interface Props {
@@ -26,7 +25,7 @@ interface KontrollerEtterbetalingFormData {
 }
 
 const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly }) => {
-  const { bekreft, loading } = useBekreftAksjonspunkt<BekreftetAksjonspunktDto>();
+  const { bekreft, loading } = useBekreftAksjonspunkt();
   const [rediger, setRediger] = useState(skalAksjonspunktUtredes(aksjonspunkt, behandling.status));
   const kanRedigeres = !readOnly && kanAksjonspunktRedigeres(aksjonspunkt, behandling.status);
 

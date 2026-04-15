@@ -5,6 +5,7 @@ import { AksjonspunktContext } from '../../context/AksjonspunktContext.js';
 import { BehandlingContext } from '../../context/BehandlingContext.js';
 import { pollLocation } from '../polling/pollLocation.js';
 import { usePendingModal } from '../pendingModal/PendingModalContext.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 
 const HTTP_ACCEPTED = 202;
 
@@ -16,9 +17,9 @@ const erBehandlingDto = (data: unknown): data is BehandlingDto =>
  * Klient som vet hvordan aksjonspunkter bekreftes mot en bestemt backend.
  * Hver backend (k9sak, k9klage, osv.) eksporterer sin egen klient fra backend-pakken.
  */
-export interface BekreftAksjonspunktClient<T> {
+export interface BekreftAksjonspunktClient {
   bekreft(
-    aksjonspunkter: T[],
+    aksjonspunkter: BekreftetAksjonspunktDto[],
     behandling: { id: number; versjon: number; uuid: string },
   ): Promise<{ response: Response }>;
   poll(url: string, signal?: AbortSignal): Promise<{ data: unknown; response: Response }>;
@@ -47,8 +48,7 @@ export interface BekreftAksjonspunktClient<T> {
  * ```
  */
 
-// setter denne til never for å tvinge på caller å spesifisere type-parameter T, og dermed få type-sjekk på bekreft()-argumentet.
-export const useBekreftAksjonspunkt = <T = never>() => {
+export const useBekreftAksjonspunkt = () => {
   const behandlingContext = useContext(BehandlingContext);
   if (behandlingContext == null) {
     throw new Error('useBekreftAksjonspunkt må brukes innenfor en BehandlingProvider.');
@@ -65,12 +65,16 @@ export const useBekreftAksjonspunkt = <T = never>() => {
   }, []);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (aksjonspunkter: T[]): Promise<BehandlingDto | undefined> => {
+    mutationFn: async (aksjonspunkter: BekreftetAksjonspunktDto[]): Promise<BehandlingDto | undefined> => {
       if (aksjonspunktClient == null) {
-        throw new Error('useBekreftAksjonspunkt krever at AksjonspunktContext.Provider er satt opp med en aksjonspunktClient.');
+        throw new Error(
+          'useBekreftAksjonspunkt krever at AksjonspunktContext.Provider er satt opp med en aksjonspunktClient.',
+        );
       }
       if (behandling?.id == null || behandling?.versjon == null || behandling?.uuid == null) {
-        throw new Error('useBekreftAksjonspunkt krever at BehandlingProvider har fått behandling med id, versjon og uuid.');
+        throw new Error(
+          'useBekreftAksjonspunkt krever at BehandlingProvider har fått behandling med id, versjon og uuid.',
+        );
       }
 
       // Avbryt eventuell pågående polling fra forrige kall
@@ -113,7 +117,7 @@ export const useBekreftAksjonspunkt = <T = never>() => {
   });
 
   return {
-    bekreft: async (aksjonspunkter: T | T[]) => {
+    bekreft: async (aksjonspunkter: BekreftetAksjonspunktDto | BekreftetAksjonspunktDto[]) => {
       const arr = Array.isArray(aksjonspunkter) ? aksjonspunkter : [aksjonspunkter];
       await mutateAsync(arr);
     },

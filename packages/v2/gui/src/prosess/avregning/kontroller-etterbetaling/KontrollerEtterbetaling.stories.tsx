@@ -17,7 +17,7 @@ import KontrollerEtterbetaling from './KontrollerEtterbetaling';
 const refetchBehandling = fn();
 const bekreftFn = fn();
 
-const mockAksjonspunktClient: BekreftAksjonspunktClient<unknown> = {
+const mockAksjonspunktClient: BekreftAksjonspunktClient = {
   bekreft: async (...args) => {
     bekreftFn(...args);
     return { response: new Response(null, { status: 200 }) };
@@ -92,14 +92,11 @@ export const LøsAksjonspunkt: Story = {
     });
   },
   render: props => (
-    <BehandlingProvider
-      behandling={props.behandling}
-      refetchBehandling={refetchBehandling}
-    >
+    <BehandlingProvider behandling={props.behandling} refetchBehandling={refetchBehandling}>
       <AksjonspunktContext.Provider value={mockAksjonspunktClient}>
-      <HStack>
-        <KontrollerEtterbetaling {...props} />
-      </HStack>
+        <HStack>
+          <KontrollerEtterbetaling {...props} />
+        </HStack>
       </AksjonspunktContext.Provider>
     </BehandlingProvider>
   ),
