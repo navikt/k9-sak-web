@@ -1,6 +1,6 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { expect, userEvent, within } from 'storybook/test';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
