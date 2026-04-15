@@ -1,4 +1,3 @@
-import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
 import { BrukKontrollertInntektValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
 import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
@@ -15,7 +14,7 @@ import PeriodLabel from '../periodLabel/PeriodLabel';
 import { AksjonspunktArbeidOgInntekt } from './AksjonspunktArbeidOgInntekt';
 import styles from './arbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
-import type { KontrollerInntektAksjonspunktSubmit } from './KontrollerInntektAksjonspunktSubmit';
+import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.js';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
   if (!inntekt || (inntekt.arbeidsinntekt === undefined && inntekt.ytelse === undefined)) {
@@ -58,15 +57,15 @@ type Formvalues = {
   }[];
 };
 
-interface ArbeidOgInntektProps {
-  submitCallback: (data: KontrollerInntektAksjonspunktSubmit[]) => Promise<any>;
+export interface ArbeidOgInntektProps {
+  inntektKontrollertCallback: (data: FastsettInntektDto) => Promise<void>;
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   isReadOnly: boolean;
   arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
 }
 
 export const ArbeidOgInntekt = ({
-  submitCallback,
+  inntektKontrollertCallback,
   inntektKontrollperioder,
   isReadOnly,
   arbeidsgivere,
@@ -87,21 +86,19 @@ export const ArbeidOgInntekt = ({
       } => periode.harAvvik && periode.erTilVurdering && periode.periode != null && periode.valg !== '',
     );
     try {
-      await submitCallback([
-        {
-          kode: aksjonspunktCodes.KONTROLLER_INNTEKT,
-          begrunnelse: perioderMedAvvik.map(periode => periode.begrunnelse).join(', '),
-          perioder: perioderMedAvvik.map(periode => ({
-            periode: periode.periode,
-            fastsattInnntekt:
-              periode.valg === BrukKontrollertInntektValg.MANUELT_FASTSATT
-                ? removeSpacesFromNumber(periode.fastsattInntekt)
-                : undefined,
-            valg: periode.valg,
-            begrunnelse: periode.begrunnelse,
-          })),
-        },
-      ]);
+      const data: FastsettInntektDto = {
+        begrunnelse: perioderMedAvvik.map(periode => periode.begrunnelse).join(', '),
+        perioder: perioderMedAvvik.map(periode => ({
+          periode: periode.periode,
+          fastsattInnntekt:
+            periode.valg === BrukKontrollertInntektValg.MANUELT_FASTSATT
+              ? removeSpacesFromNumber(periode.fastsattInntekt)
+              : undefined,
+          valg: periode.valg,
+          begrunnelse: periode.begrunnelse,
+        })),
+      };
+      await inntektKontrollertCallback(data);
     } finally {
       setIsSubmitting(false);
     }

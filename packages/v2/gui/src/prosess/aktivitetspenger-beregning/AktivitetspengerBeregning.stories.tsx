@@ -50,7 +50,7 @@ export const DefaultStory: Story = {
     data,
     behandling: { uuid: '123', versjon: 1 },
     api,
-    submitCallback: asyncAction('Løs aksjonspunkt'),
+    onAksjonspunktBekreftet: asyncAction('aksjonspunkt bekreftet'),
     aksjonspunkter: [
       {
         aksjonspunktType: 'MANU',
@@ -69,23 +69,7 @@ export const DefaultStory: Story = {
 
 export const ViserInntektskontroll: Story = {
   args: {
-    data,
-    behandling: { uuid: '123', versjon: 1 },
-    api,
-    submitCallback: asyncAction('Løs aksjonspunkt'),
-    aksjonspunkter: [
-      {
-        aksjonspunktType: 'MANU',
-        begrunnelse: undefined,
-        definisjon: '8000',
-        erAktivt: true,
-        kanLoses: true,
-        status: 'OPPR',
-        toTrinnsBehandling: true,
-        opprettetAv: 'vtp',
-      },
-    ],
-    isReadOnly: false,
+    ...DefaultStory.args,
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -104,10 +88,9 @@ export const ViserInntektskontroll: Story = {
 
 export const SkjulerInntektskontrollUtenPerioder: Story = {
   args: {
-    data,
+    ...DefaultStory.args,
     behandling: { uuid: 'ingen-perioder', versjon: 1 },
     api: new FakeAktivitetspengerBeregningUtenInntektApi(),
-    submitCallback: asyncAction('Løs aksjonspunkt'),
     aksjonspunkter: [],
     isReadOnly: true,
   },

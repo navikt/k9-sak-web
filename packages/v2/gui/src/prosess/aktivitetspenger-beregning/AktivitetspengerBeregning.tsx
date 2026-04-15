@@ -5,11 +5,11 @@ import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
-import type { KontrollerInntektAksjonspunktSubmit } from '../../shared/kontroll-inntekt/KontrollerInntektAksjonspunktSubmit';
 import type { AktivitetspengerBeregningBackendApiType } from './AktivitetspengerBeregningBackendApiType';
 import AktivitetspengerBeregningsgrunnlag from './AktivitetspengerBeregningsgrunnlag';
+import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.js';
 
 const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   const { kontrollperioder } = data;
@@ -30,7 +30,7 @@ interface Props {
   behandling: { uuid: string; versjon: number };
   api: AktivitetspengerBeregningBackendApiType;
   aksjonspunkter: AksjonspunktDto[];
-  submitCallback: (data: KontrollerInntektAksjonspunktSubmit[]) => Promise<any>;
+  onAksjonspunktBekreftet: () => void;
   isReadOnly: boolean;
 }
 
@@ -39,7 +39,7 @@ export const AktivitetspengerBeregning = ({
   behandling,
   api,
   aksjonspunkter,
-  submitCallback,
+  onAksjonspunktBekreftet,
   isReadOnly,
 }: Props) => {
   const {
@@ -57,12 +57,25 @@ export const AktivitetspengerBeregning = ({
     queryFn: () => api.getArbeidsgiverOpplysninger(behandling.uuid),
   });
 
+  const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
+
+  const { mutateAsync: inntektKontrollertMutation } = useMutation({
+    mutationFn: async (data: FastsettInntektDto) => {
+      if (!aksjonspunkt) {
+        return;
+      }
+      await api.bekreftKontrollerInntektAksjonspunkt(behandling.uuid, behandling.versjon, data);
+    },
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
+
   if (kontrollInntektIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
   const harInntektKontroll = inntekt?.kontrollperioder && inntekt.kontrollperioder.length > 0;
-  const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
   const harUløstAksjonspunkt = aksjonspunkt && aksjonspunkt.status === AksjonspunktDtoStatus.OPPRETTET;
   const defaultTab = aksjonspunkt && harInntektKontroll ? 'inntekt' : 'beregningsgrunnlag';
 
@@ -97,7 +110,7 @@ export const AktivitetspengerBeregning = ({
               <Box maxWidth="860px">
                 <Tabs.Panel value="inntekt">
                   <ArbeidOgInntekt
-                    submitCallback={submitCallback}
+                    inntektKontrollertCallback={inntektKontrollertMutation}
                     inntektKontrollperioder={inntekt?.kontrollperioder ?? []}
                     isReadOnly={isReadOnly}
                     arbeidsgivere={arbeidsgivere}

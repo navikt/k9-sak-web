@@ -8,7 +8,7 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { DagsatsOgUtbetaling, sortSatser } from '../../shared/dagsats-og-utbetaling/DagsatsOgUtbetaling';
-import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
+import { ArbeidOgInntekt, type ArbeidOgInntektProps } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
 import { BarnPanel } from './BarnPanel';
 import type { Barn } from './types/Barn';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
@@ -17,7 +17,7 @@ interface Props {
   behandling: { uuid: string; versjon: number };
   api: UngBeregningBackendApiType;
   barn: Barn[];
-  submitCallback: (data: unknown) => Promise<any>;
+  inntektKontrollertCallback: ArbeidOgInntektProps['inntektKontrollertCallback'];
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
 }
@@ -36,7 +36,7 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   };
 };
 
-const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
+const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjonspunkter, isReadOnly }: Props) => {
   const {
     data: satser,
     isError: satserIsError,
@@ -110,7 +110,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
               <Tabs.Panel value="inntekt">
                 {inntekt?.kontrollperioder && (
                   <ArbeidOgInntekt
-                    submitCallback={submitCallback}
+                    inntektKontrollertCallback={inntektKontrollertCallback}
                     inntektKontrollperioder={inntekt.kontrollperioder}
                     isReadOnly={isReadOnly}
                     arbeidsgivere={arbeidsgivere}
