@@ -143,7 +143,7 @@ export const EØSLandVises: Story = {
   decorators: [withFakeApi({ perioder: [perioder[0]!] })],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Land')).toBeVisible();
+    await expect(await canvas.findByText('Land')).toBeVisible();
     await expect(canvas.getByText('Luxemburg')).toBeVisible();
     await expect(canvas.getByText('EØS')).toBeVisible();
     await expect(canvas.getByText('Ja')).toBeVisible();
@@ -156,7 +156,7 @@ export const LandUtenforEØSVises: Story = {
   decorators: [withFakeApi({ perioder: [perioder[1]!] })],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Land')).toBeVisible();
+    await expect(await canvas.findByText('Land')).toBeVisible();
     await expect(canvas.getByText('Kina')).toBeVisible();
     await expect(canvas.getByText('EØS')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
@@ -170,7 +170,7 @@ export const KosovoVises: Story = {
   decorators: [withFakeApi({ perioder: [perioder[6]!] })],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Kosovo')).toBeVisible();
+    await expect(await canvas.findByText('Kosovo')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
   },
 };
@@ -179,7 +179,7 @@ export const StorbritanniaErIkkeEØS: Story = {
   decorators: [withFakeApi({ perioder: [perioder[7]!] })],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Storbritannia')).toBeVisible();
+    await expect(await canvas.findByText('Storbritannia')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
   },
 };
@@ -188,6 +188,6 @@ export const IngenUtenlandsopphold: Story = {
   decorators: [withFakeApi({ perioder: [] })],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Søker har ingen utenlandsopphold å vise.')).toBeVisible();
+    await expect(await canvas.findByText('Søker har ingen utenlandsopphold å vise.')).toBeVisible();
   },
 };
