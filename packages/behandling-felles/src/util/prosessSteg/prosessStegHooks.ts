@@ -14,6 +14,7 @@ import {
   getBekreftAksjonspunktCallback,
   utledProsessStegPaneler,
 } from './prosessStegUtils';
+import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.ts';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
@@ -26,7 +27,7 @@ const useProsessStegPaneler = (
   hasFetchError: boolean,
   valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string },
-): [ProsessStegUtledet[], ProsessStegUtledet, ProsessStegMenyRad[]] => {
+): [ProsessStegUtledet[], ProsessStegUtledet | undefined, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = {
     ...panelData,
@@ -81,7 +82,7 @@ const useProsessStegPaneler = (
       // alleAndrePanelerEnnSoknadsfristErOppfyllt:
       // I saker hvor søknadsfrist er IKKE_OPPFYLT skal etterfølgende prosessteg fremdeles behandles
       // og skal ikke føre til at senere steg blir stanset av tidligere avslag
-      let alleAndrePanelerEnnSoknadsfristErOppfyllt: boolean;
+      let alleAndrePanelerEnnSoknadsfristErOppfyllt: boolean = false;
       if (forrigePanel.paneler.find(v => v.getId() === 'SOKNADSFRIST')) {
         alleAndrePanelerEnnSoknadsfristErOppfyllt = forrigePanel.paneler
           .filter(v => v.getId() !== 'SOKNADSFRIST')
@@ -144,7 +145,7 @@ const useBekreftAksjonspunkt = (
   lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   valgtPanel?: ProsessStegUtledet,
-) =>
+): LegacyBekreftAksjonspunktCallback =>
   useCallback(
     aksjonspunktModels =>
       getBekreftAksjonspunktCallback(
