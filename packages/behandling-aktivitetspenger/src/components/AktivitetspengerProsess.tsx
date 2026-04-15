@@ -12,6 +12,7 @@ import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
+import { SatsProsessStegInitPanel } from './prosess/SatsProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -127,6 +128,9 @@ export const AktivitetspengerProsess = ({
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
+              }
+              if (urlKode === prosessStegCodes.SATS) {
+                return <SatsProsessStegInitPanel api={api} behandling={behandling} key={steg.urlKode} />;
               }
 
               return null;
