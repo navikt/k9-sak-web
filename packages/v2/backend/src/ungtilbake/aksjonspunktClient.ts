@@ -3,17 +3,17 @@ import { aksjonspunkt_bekreft } from './generated/sdk.js';
 import type { BekreftetAksjonspunktDto } from './kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftAksjonspunktClient } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 
-export class ungTilbakeAksjonspunktClient implements BekreftAksjonspunktClient {
-  bekreft = (aksjonspunkter: BekreftetAksjonspunktDto[], behandling: { id: number; versjon: number; uuid: string }) =>
+export const ungTilbakeClient = {
+  bekreft: (aksjonspunkter: BekreftetAksjonspunktDto[], behandling: { id: number; versjon: number; uuid: string }) =>
     aksjonspunkt_bekreft({
       body: {
         behandlingUuid: behandling.uuid,
         behandlingVersjon: behandling.versjon,
         bekreftedeAksjonspunktDtoer: aksjonspunkter,
       },
-    });
+    }),
 
-  poll = async (url: string, signal?: AbortSignal) => {
+  poll: async (url: string, signal?: AbortSignal) => {
     const parsed = new URL(url);
     let path = parsed.pathname + parsed.search;
     const { baseUrl } = client.getConfig();
@@ -21,7 +21,5 @@ export class ungTilbakeAksjonspunktClient implements BekreftAksjonspunktClient {
       path = path.slice(baseUrl.length);
     }
     return client.get({ url: path, signal, throwOnError: true });
-  };
-}
-
-export const ungTilbakeClient = new ungTilbakeAksjonspunktClient();
+  },
+} satisfies BekreftAksjonspunktClient;
