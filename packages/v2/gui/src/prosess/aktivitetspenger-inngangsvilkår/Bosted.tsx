@@ -1,11 +1,10 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, Radio, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -13,28 +12,26 @@ import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { aksjonspunktErÅpent } from './utils/utils';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
 interface Props {
-  vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
-  vurderBistandsvilkårAp: AksjonspunktDto | undefined;
-  lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
-  kanSaksbehandle: boolean;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  bostedVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
+  behandling: BehandlingDto;
+  api: AktivitetspengerApi;
+  onAksjonspunktBekreftet: () => void;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
 interface FormData {
-  vurderinger: Record<
-    string,
-    { begrunnelse: string; behovForBistand: Vurdering; avslagsårsak?: string; fritekst?: string }
-  >;
+  vurderinger: Record<string, { begrunnelse: string; bosatt: Vurdering; avslagsårsak?: string; fritekst?: string }>;
 }
+
+const getVilkårUtfall = (vilkårStatus: Utfall) => {
+  if (vilkårStatus === Utfall.OPPFYLT) return 'Ja';
+  return 'Nei';
+};
 
 const utfallTilVurdering = (utfall: string): Vurdering => {
   if (utfall === Utfall.OPPFYLT) return 'oppfylt';
@@ -48,24 +45,15 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
       p.periode.fom,
       {
         begrunnelse: p.begrunnelse ?? '',
-        behovForBistand: utfallTilVurdering(p.vilkarStatus),
+        bosatt: utfallTilVurdering(p.vilkarStatus),
         avslagsårsak: p.avslagKode,
       },
     ]),
   ),
 });
 
-export const BehovForBistand = ({
-  vurderBistandsvilkårVilkår,
-  vurderBistandsvilkårAp,
-  lokalkontorForeslårVilkårAp,
-  kanSaksbehandle,
-  api,
-  behandling,
-  onAksjonspunktBekreftet,
-  readOnly,
-}: Props) => {
-  const items: VilkårSplittPanelItem[] = (vurderBistandsvilkårVilkår?.perioder ?? []).map(p => ({
+export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunktBekreftet }: Props) => {
+  const items: VilkårSplittPanelItem[] = (bostedVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
@@ -73,39 +61,29 @@ export const BehovForBistand = ({
   }));
   const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(vurderBistandsvilkårVilkår),
+    defaultValues: buildInitialValues(bostedVilkår),
   });
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
-      const erVurderBistandsvilkårApÅpent = vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp);
-      const aksjonspunktDefinisjon =
-        erVurderBistandsvilkårApÅpent && kanSaksbehandle
-          ? AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR
-          : AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR;
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = items.find(item => item.id === selectedId);
       if (!selectedItem) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const vurdertePerioder = {
-        avslagsårsak: undefined,
+        avslagsårsak: vurdering?.bosatt !== 'oppfylt' ? Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED : undefined,
         begrunnelse: vurdering?.begrunnelse ?? '',
-        erVilkårOppfylt: vurdering?.behovForBistand === 'oppfylt',
+        erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,
       };
 
-      const payload = erVurderBistandsvilkårApÅpent
-        ? {
-            '@type': aksjonspunktDefinisjon,
-            begrunnelse: vurdering?.begrunnelse ?? '',
-            brevtekst: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
-            vurdertePerioder: [vurdertePerioder],
-          }
-        : {
-            '@type': aksjonspunktDefinisjon,
-            begrunnelse: 'Send til beslutter',
-          };
+      const payload = {
+        '@type': AksjonspunktDefinisjon.VURDER_BOSTED,
+        begrunnelse: vurdering?.begrunnelse ?? '',
+        brevtekst: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
+        vurdertePerioder: [vurdertePerioder],
+      };
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -114,59 +92,72 @@ export const BehovForBistand = ({
     },
   });
 
+  const selectedVilkårPeriode = bostedVilkår.perioder?.find(p => p.periode.fom === selectedId);
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
-  const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
+  const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const skalLåseVurderBistandSkjema = readOnly || vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT;
 
-  if (!vurderBistandsvilkårVilkår) {
+  if (!bostedVilkår) {
     return null;
   }
-
   return (
     <VilkårSplittPanel
       items={items}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
-      detailHeading="Vurdering av behov for bistand"
-      lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
+      detailHeading="Vurdering av bostedsvilkår"
+      lovreferanse={bostedVilkår.lovReferanse}
     >
       <VStack gap="space-24">
+        <VStack gap="space-8">
+          <Label size="small" as="p">
+            Bor søker i Trondheim kommune?
+          </Label>
+          <BodyShort size="small">
+            <HStack gap="space-8">
+              {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
+              <Tag variant="outline" size="small">
+                Fra søknad
+              </Tag>
+            </HStack>
+          </BodyShort>
+        </VStack>
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-16">
             <RhfTextarea
               control={formHook.control}
               name={`vurderinger.${selectedId}.begrunnelse`}
-              readOnly={skalLåseVurderBistandSkjema}
+              readOnly={readOnly}
               label={
                 <span>
-                  Vurder om søker har behov for bistand, jmf.{' '}
-                  {vurderBistandsvilkårVilkår.lovReferanse && (
-                    <Lovreferanse isUng>{vurderBistandsvilkårVilkår.lovReferanse}</Lovreferanse>
-                  )}
+                  Vurder om søker er bosatt i Trondheim kommune, jmf.{' '}
+                  {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
                 </span>
               }
             />
             <RhfRadioGroup
               key={selectedId}
               control={formHook.control}
-              name={`vurderinger.${selectedId}.behovForBistand`}
-              legend="Har søker behov for bistand?"
+              name={`vurderinger.${selectedId}.bosatt`}
+              legend="Er søker bosatt i Trondheim kommune?"
               validate={[required]}
-              readOnly={skalLåseVurderBistandSkjema}
+              readOnly={readOnly}
             >
               <Radio value="oppfylt">Ja</Radio>
               <Radio value="ikkeOppfylt">Nei</Radio>
             </RhfRadioGroup>
-            {behovForBistand === 'ikkeOppfylt' && (
+            {bosatt === 'ikkeOppfylt' && (
               <RhfRadioGroup
                 key={selectedId}
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.avslagsårsak`}
                 legend="Avslagsårsak"
                 validate={[required]}
-                readOnly={skalLåseVurderBistandSkjema}
+                readOnly={readOnly}
               >
+                <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
+                  Ytelse ikke tilgjengelig på bosted
+                </Radio>
                 <Radio value="fritekst">Fritekst</Radio>
               </RhfRadioGroup>
             )}
@@ -177,28 +168,16 @@ export const BehovForBistand = ({
                 label="Fritekst avslagsbrev"
                 description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
                 validate={[required]}
-                readOnly={skalLåseVurderBistandSkjema}
+                readOnly={readOnly}
               />
             )}
-            {!skalLåseVurderBistandSkjema && (
-              <Box>
-                <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
-                  Bekreft og fortsett
-                </Button>
-              </Box>
-            )}
+            <Box>
+              <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
+                Bekreft og fortsett
+              </Button>
+            </Box>
           </VStack>
         </RhfForm>
-        {kanSaksbehandle && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
-          <Alert variant="success" size="small">
-            <Box marginBlock="space-2 space-12">
-              <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
-            </Box>
-            <Button variant="primary" data-color="accent" size="small" type="submit" loading={isPending}>
-              Send vurderinger til beslutter
-            </Button>
-          </Alert>
-        )}
       </VStack>
     </VilkårSplittPanel>
   );

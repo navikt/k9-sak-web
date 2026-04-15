@@ -12,7 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
-import { VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import { getItemStatus, VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
@@ -43,12 +43,6 @@ const buildInitialValues = (vilkår: UngSakVilkårMedPerioderDto): FormData => (
   ),
 });
 
-const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
-  if (status === Utfall.OPPFYLT) return 'success';
-  if (status === Utfall.IKKE_OPPFYLT) return 'error';
-  return 'warning';
-};
-
 export const ForutgåendeMedlemskap = ({
   aksjonspunkt,
   api,
@@ -62,6 +56,7 @@ export const ForutgåendeMedlemskap = ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+    periode: p.periode,
   }));
 
   const [selectedItemId, setSelectedItemId] = useState(items[0]?.id ?? '');
@@ -73,7 +68,7 @@ export const ForutgåendeMedlemskap = ({
       )
     : [];
 
-  const formMethods = useForm<FormData>({
+  const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkår),
   });
 
@@ -105,7 +100,7 @@ export const ForutgåendeMedlemskap = ({
       onItemSelect={setSelectedItemId}
       detailHeading="Forutgående medlemskap"
     >
-      <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
+      <RhfForm formMethods={formHook} onSubmit={onSubmit}>
         <VStack gap="space-16">
           <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>
           {overlappendeMedlemskap.length > 0 && (
@@ -139,7 +134,7 @@ export const ForutgåendeMedlemskap = ({
           )}
           <RhfRadioGroup
             key={selectedItemId}
-            control={formMethods.control}
+            control={formHook.control}
             name={`vurderinger.${selectedItemId}`}
             legend="Er forutgående medlemskap godkjent?"
             validate={[required]}

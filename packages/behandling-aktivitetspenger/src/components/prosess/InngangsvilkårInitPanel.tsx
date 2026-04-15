@@ -5,6 +5,7 @@ import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-pr
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
+  vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -23,6 +24,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
   const prosessPanelContext = useContext(ProsessPanelContext);
   const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
   const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
+  const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
   if (!erValgt) {
@@ -33,6 +35,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
     <AktivitetspengerInngangsvilkår
       aksjonspunkter={aksjonspunkter}
       innloggetBruker={innloggetBruker}
+      vilkår={vilkår}
       api={api}
       behandling={behandling}
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}

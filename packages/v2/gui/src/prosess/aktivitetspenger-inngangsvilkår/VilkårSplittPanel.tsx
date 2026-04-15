@@ -1,3 +1,4 @@
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import {
   CalendarIcon,
   CheckmarkCircleFillIcon,
@@ -14,7 +15,10 @@ export interface VilkårSplittPanelItem {
   id: string;
   status: 'success' | 'warning' | 'error';
   label: string;
-  lovreferanse?: string;
+  periode: {
+    fom: string;
+    tom: string;
+  };
 }
 
 interface VilkårSplittPanelProps {
@@ -23,6 +27,7 @@ interface VilkårSplittPanelProps {
   onItemSelect: (id: string) => void;
   detailHeading: string;
   children: ReactNode;
+  lovreferanse?: string;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
@@ -36,12 +41,19 @@ const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) =>
   }
 };
 
+export const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
+  if (status === Utfall.OPPFYLT) return 'success';
+  if (status === Utfall.IKKE_OPPFYLT) return 'error';
+  return 'warning';
+};
+
 export const VilkårSplittPanel = ({
   items,
   selectedItemId,
   onItemSelect,
   detailHeading,
   children,
+  lovreferanse,
 }: VilkårSplittPanelProps) => {
   const selectedItem = items.find(item => item.id === selectedItemId);
 
@@ -107,9 +119,9 @@ export const VilkårSplittPanel = ({
           <Heading size="small" level="2" spacing>
             {detailHeading}
           </Heading>
-          {selectedItem?.lovreferanse && (
+          {lovreferanse && (
             <BodyShort size="small" textColor="subtle">
-              <Lovreferanse isUng>{selectedItem.lovreferanse}</Lovreferanse>
+              <Lovreferanse isUng>{lovreferanse}</Lovreferanse>
             </BodyShort>
           )}
         </HStack>
