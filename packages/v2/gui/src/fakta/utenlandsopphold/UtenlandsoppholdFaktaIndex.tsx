@@ -11,8 +11,8 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { useContext } from 'react';
-import { UtenlandsoppholdApiContext } from './api/UtenlandsoppholdApiContext.js';
 import styles from './utenlandsopphold.module.css';
+import { hentUtenlandsoppholdOptions } from './api/UtenlandsoppholdQueries.js';
 
 countries.registerLocale(norwegianLocale);
 
@@ -22,12 +22,8 @@ interface UtenlandsoppholdFaktaIndexProps {
 }
 
 const UtenlandsoppholdFaktaIndex = ({ behandlingUuid, fagsakYtelseType }: UtenlandsoppholdFaktaIndexProps) => {
-  const api = useContext(UtenlandsoppholdApiContext);
-  if (!api) throw new Error('UtenlandsoppholdApiContext not provided');
-
   const { data: utenlandsopphold } = useSuspenseQuery({
-    queryKey: ['utenlandsopphold', behandlingUuid],
-    queryFn: () => api.hentUtenlandsopphold(behandlingUuid),
+    ...hentUtenlandsoppholdOptions(behandlingUuid),
   });
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
