@@ -1,22 +1,18 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, userEvent, within, expect, waitFor } from 'storybook/test';
-import { action } from 'storybook/actions';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import Uttak from '../Uttak';
+import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  lagUtredBehandling,
-  lagUttak,
+  AksjonspunktStatus,
   lagOppfyltPeriode,
   lagOverstyringUttakAksjonspunkt,
-  defaultArbeidsgivere,
-  AksjonspunktStatus,
+  lagUtredBehandling,
+  lagUttak,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import {
-  standardUttakHandlers,
-  createOverstyrbareAktiviteterHandler,
-} from '@k9-sak-web/gui/storybook/mocks/uttak/uttakMswHandlers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from '../Uttak';
 
 /**
  * OverstyrUttak-komponenten lar saksbehandlere med overstyrerrolle manuelt overstyre
@@ -52,23 +48,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const EmptyState: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
-        createOverstyrbareAktiviteterHandler(
-          [
-            { fom: '2024-01-01', tom: '2024-01-31' },
-            { fom: '2024-02-01', tom: '2024-02-28' },
-          ],
-          defaultArbeidsgivere,
-        ),
+  decorators: [
+    withFakeUttakBackend({
+      onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
+      allowedRanges: [
+        { fom: '2024-01-01', tom: '2024-01-31' },
+        { fom: '2024-02-01', tom: '2024-02-28' },
       ],
-    },
-  },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -96,22 +84,14 @@ export const EmptyState: Story = {
 };
 
 export const LeggTilOverstyring: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(),
-        standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
-        createOverstyrbareAktiviteterHandler(
-          [
-            { fom: '2024-01-01', tom: '2024-12-31' }, // Allow full year for flexibility
-          ],
-          defaultArbeidsgivere,
-        ),
+  decorators: [
+    withFakeUttakBackend({
+      onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
+      allowedRanges: [
+        { fom: '2024-01-01', tom: '2024-12-31' }, // Allow full year for flexibility
       ],
-    },
-  },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
@@ -172,42 +152,38 @@ export const LeggTilOverstyring: Story = {
 };
 
 export const Overstyringer: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
-          {
-            id: 1,
-            periode: { fom: '2024-01-01', tom: '2024-01-15' },
-            søkersUttaksgrad: 80,
-            begrunnelse: 'Justert uttaksgrad basert på spesielle forhold',
-            utbetalingsgrader: [
-              {
-                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                utbetalingsgrad: 80,
-              },
-            ],
-          },
-          {
-            id: 2,
-            periode: { fom: '2024-01-16', tom: '2024-01-31' },
-            søkersUttaksgrad: 60,
-            begrunnelse: 'Redusert uttaksgrad grunnet delvis arbeid',
-            utbetalingsgrader: [
-              {
-                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                utbetalingsgrad: 60,
-              },
-            ],
-          },
-        ]),
-        standardUttakHandlers.overstyrAksjonspunkt(payload => action('overstyr-aksjonspunkt:submit')(payload)),
-        createOverstyrbareAktiviteterHandler([{ fom: '2024-01-01', tom: '2024-12-31' }], defaultArbeidsgivere),
+  decorators: [
+    withFakeUttakBackend({
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Justert uttaksgrad basert på spesielle forhold',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
+        {
+          id: 2,
+          periode: { fom: '2024-01-16', tom: '2024-01-31' },
+          søkersUttaksgrad: 60,
+          begrunnelse: 'Redusert uttaksgrad grunnet delvis arbeid',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 60,
+            },
+          ],
+        },
       ],
-    },
-  },
+      onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
+      allowedRanges: [{ fom: '2024-01-01', tom: '2024-12-31' }],
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -253,33 +229,29 @@ export const Overstyringer: Story = {
 const submitSpy = fn();
 
 export const RedigerOverstyring: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
-          {
-            id: 1,
-            periode: { fom: '2024-01-01', tom: '2024-01-15' },
-            søkersUttaksgrad: 80,
-            begrunnelse: 'Opprinnelig begrunnelse',
-            utbetalingsgrader: [
-              {
-                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                utbetalingsgrad: 80,
-              },
-            ],
-          },
-        ]),
-        standardUttakHandlers.overstyrAksjonspunkt(payload => {
-          submitSpy(payload);
-          action('overstyr-aksjonspunkt:submit')(payload);
-        }),
-        createOverstyrbareAktiviteterHandler([{ fom: '2024-01-01', tom: '2024-12-31' }], defaultArbeidsgivere),
+  decorators: [
+    withFakeUttakBackend({
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Opprinnelig begrunnelse',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
       ],
-    },
-  },
+      onOverstyringUttak: payload => {
+        submitSpy(payload);
+        action('overstyr-aksjonspunkt:submit')(payload);
+      },
+      allowedRanges: [{ fom: '2024-01-01', tom: '2024-12-31' }],
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -346,7 +318,7 @@ export const RedigerOverstyring: Story = {
                 {
                   utbetalingsgrader: [
                     {
-                      arbeidsforhold: { orgnr: '123456789', type: 'ARBEIDSTAKER' },
+                      arbeidsforhold: { orgnr: '123456789', type: 'AT' },
                       utbetalingsgrad: 70,
                     },
                   ],
@@ -366,33 +338,29 @@ export const RedigerOverstyring: Story = {
 };
 
 export const FjernOverstyring: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
-          {
-            id: 1,
-            periode: { fom: '2024-01-01', tom: '2024-01-15' },
-            søkersUttaksgrad: 80,
-            begrunnelse: 'Overstyring som skal slettes',
-            utbetalingsgrader: [
-              {
-                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                utbetalingsgrad: 80,
-              },
-            ],
-          },
-        ]),
-        standardUttakHandlers.overstyrAksjonspunkt(payload => {
-          submitSpy(payload);
-          action('overstyr-aksjonspunkt:submit')(payload);
-        }),
-        createOverstyrbareAktiviteterHandler([{ fom: '2024-01-01', tom: '2024-12-31' }], defaultArbeidsgivere),
+  decorators: [
+    withFakeUttakBackend({
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Overstyring som skal slettes',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
       ],
-    },
-  },
+      onOverstyringUttak: payload => {
+        submitSpy(payload);
+        action('overstyr-aksjonspunkt:submit')(payload);
+      },
+      allowedRanges: [{ fom: '2024-01-01', tom: '2024-12-31' }],
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([
@@ -459,28 +427,24 @@ export const FjernOverstyring: Story = {
 };
 
 export const Lesemodus: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        standardUttakHandlers.arbeidsgivere(),
-        standardUttakHandlers.inntektsgradering(),
-        standardUttakHandlers.overstyrtUttak(defaultArbeidsgivere, [
-          {
-            id: 1,
-            periode: { fom: '2024-01-01', tom: '2024-01-15' },
-            søkersUttaksgrad: 80,
-            begrunnelse: 'Overstyring gjort av annen saksbehandler',
-            utbetalingsgrader: [
-              {
-                arbeidsforhold: { type: 'ARBEIDSTAKER', orgnr: '123456789' },
-                utbetalingsgrad: 80,
-              },
-            ],
-          },
-        ]),
+  decorators: [
+    withFakeUttakBackend({
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Overstyring gjort av annen saksbehandler',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
       ],
-    },
-  },
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([

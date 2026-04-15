@@ -1,10 +1,10 @@
+import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import React, { ReactNode, useMemo, useState } from 'react';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
-import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Box } from '@navikt/ds-react';
 import styles from './prosessStegContainer.module.css';
 
@@ -39,7 +39,7 @@ const ProsessStegContainer = ({
     () =>
       formaterteProsessStegPaneler.map(panel => ({
         ...panel,
-        label: intl.formatMessage({ id: panel.labelId }),
+        label: intl.messages[panel.labelId] ? intl.formatMessage({ id: panel.labelId }) : panel.labelId,
         usePartialStatus: panel.type !== 'default' && panel.type !== 'danger' && panel.usePartialStatus,
       })),
     [formaterteProsessStegPaneler, intl],

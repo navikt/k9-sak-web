@@ -10,6 +10,11 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
+import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
+import { FakeBehandlingAvregningBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeBehandlingAvregningBackendApi.js';
+
+const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
 const fagsak = {
   saksnummer: 123,
@@ -175,6 +180,15 @@ const mockAksjonspunktClient = {
 export default {
   title: 'prosess/prosess-avregning',
   component: AvregningProsessIndex,
+  decorators: [
+    Story => (
+      <AvregningBackendClientContext value={fakeAvregningBackendClient}>
+        <AvregningFormProvider behandlingId={1}>
+          <Story />
+        </AvregningFormProvider>
+      </AvregningBackendClientContext>
+    ),
+  ],
 };
 
 export const visAksjonspunktVurderFeilutbetaling = args => (

@@ -14,11 +14,21 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "10.5.9",
+    "@navikt/aksel-icons": "8.9.1",
+    "@navikt/ds-react": "8.9.1",
+    "@navikt/ft-plattform-komponenter": "11.0.0",
+    "@navikt/ft-utils": "4.0.0",
     "classnames": "2.5.1",
+    "dayjs": "1.11.20",
     "react": "19.2.4",
-    "react-intl": "8.1.1",
+    "react-dom": "19.2.4",
+    "react-intl": "8.1.4",
     "react-redux": "9.2.0",
+    "redux": "5.0.1",
     "redux-form": "8.3.10"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
   }
 }

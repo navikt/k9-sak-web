@@ -45,6 +45,8 @@ updates:
       interval: daily
     cooldown:
       default-days: 7
+    registries:
+      - npm-github
     groups:
       server-patch-and-minor:
         patterns:

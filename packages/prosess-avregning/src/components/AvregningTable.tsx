@@ -17,7 +17,7 @@ interface RangeOfMonths {
   year: string;
 }
 
-export const avregningCodes = {
+const avregningCodes = {
   DIFFERANSE: 'differanse',
   INNTREKK: 'inntrekk',
   FEILUTBETALING: 'feilutbetaling',

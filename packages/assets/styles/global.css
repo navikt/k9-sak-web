@@ -1,8 +1,11 @@
-@import url('tailwindcss/base');
-@import url('tailwindcss/components');
-@import url('tailwindcss/utilities');
-@import url('dayPicker.css');
-@import url('@k9-sak-web/gui/tokens/tokens.css');
+@layer theme, components, utilities;
+
+@import '@k9-sak-web/gui/tokens/tokens.css';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import '@navikt/ds-css' layer(components);
+
+@config "../../../tailwind.config.cjs";
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
 html {
@@ -50,54 +53,6 @@ som fra core/og muligen import fra alla andra komponenter
 
 .currentDate {
   display: none;
-}
-
-.soknad {
-  background-color: var(--ax-accent-700);
-  pointer-events: none;
-  top: 6px !important;
-}
-
-.soknad:after {
-  background: transparent url('../../assets/images/soknad.svg') no-repeat;
-  content: '';
-  height: 20px;
-  left: -8px;
-  position: absolute;
-  top: 0;
-  width: 20px;
-}
-
-.fodsel {
-  background-color: #a32a17;
-  pointer-events: none;
-  top: 0 !important;
-}
-
-.fodsel:after {
-  background: transparent url('../../assets/images/fodsel.svg') no-repeat;
-  content: '';
-  height: 20px;
-  left: -8px;
-  position: absolute;
-  top: 0;
-  width: 20px;
-}
-
-.revurdering {
-  background-color: var(--ax-success-700);
-  pointer-events: none;
-  top: 12px !important;
-}
-
-.revurdering:after {
-  background: transparent url('../../assets/images/endringstidspunkt.svg') no-repeat;
-  content: '';
-  height: 20px;
-  left: -8px;
-  position: absolute;
-  top: 0;
-  width: 20px;
 }
 
 .lastDateInSoknad {

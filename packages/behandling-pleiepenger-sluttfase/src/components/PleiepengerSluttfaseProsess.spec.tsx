@@ -173,6 +173,10 @@ describe('< PleiepengerSluttfaseProsess>', () => {
     soknad,
   };
 
+  afterEach(() => {
+    requestPleiepengerSluttfaseApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.SOKNADSFRIST_STATUS);
     renderWithIntlAndReduxForm(
@@ -210,6 +214,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
+    requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.SOKNADSFRIST_STATUS);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
       <PleiepengerSluttfaseProsess

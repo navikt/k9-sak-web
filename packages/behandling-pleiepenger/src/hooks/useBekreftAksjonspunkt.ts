@@ -30,11 +30,7 @@ export const useBekreftAksjonspunkt = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
 }: UseBekreftAksjonspunktParams) => {
   return useCallback(
-    async (
-      aksjonspunktModels: any[],
-      aksjonspunkter: AksjonspunktDto[] = [],
-      skaForhindreOppdaterUrl?: boolean,
-    ) => {
+    async (aksjonspunktModels: any[], aksjonspunkter: AksjonspunktDto[] = [], skaForhindreOppdaterUrl?: boolean) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
         console.warn('Ingen aksjonspunktmodeller å bekrefte');
         return;

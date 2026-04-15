@@ -8,7 +8,4 @@ export type UngVedtakVilkårPeriodeDto = {
   vilkarStatus: VilkårPeriodeDto['vilkarStatus'];
 };
 
-export type UngVedtakVilkårDto = {
-  vilkarType: VilkårMedPerioderDto['vilkarType'];
-  perioder: UngVedtakVilkårPeriodeDto[];
-};
+export type UngVedtakVilkårDto = Pick<VilkårMedPerioderDto, 'vilkarType' | 'perioder'>;

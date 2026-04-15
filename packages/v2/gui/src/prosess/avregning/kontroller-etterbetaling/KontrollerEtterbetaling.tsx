@@ -1,18 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
 import * as yup from 'yup';
 import { useBekreftAksjonspunkt } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
+import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
+import { useAvregningFormState } from '../AvregningContext';
 
 interface Props {
   aksjonspunkt: AksjonspunktDto;
@@ -20,12 +21,13 @@ interface Props {
   readOnly?: boolean;
 }
 
-interface KontrollerEtterbetalingFormData {
+export interface KontrollerEtterbetalingFormData {
   begrunnelse: string;
 }
 
 const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly }) => {
   const { bekreft, loading } = useBekreftAksjonspunkt();
+  const { getHøyEtterbetalingState, setHøyEtterbetaling } = useAvregningFormState();
   const [rediger, setRediger] = useState(skalAksjonspunktUtredes(aksjonspunkt, behandling.status));
   const kanRedigeres = !readOnly && kanAksjonspunktRedigeres(aksjonspunkt, behandling.status);
 
@@ -45,8 +47,14 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
 
   const formMethods = useForm<KontrollerEtterbetalingFormData>({
     resolver: yupResolver(kontrollerEtterbetalingFormSchema),
-    defaultValues: initialValues,
+    defaultValues: getHøyEtterbetalingState() || initialValues,
   });
+
+  useEffect(() => {
+    return () => {
+      setHøyEtterbetaling(formMethods.getValues());
+    };
+  }, []);
 
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
     if (aksjonspunkt.definisjon != AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING) {
