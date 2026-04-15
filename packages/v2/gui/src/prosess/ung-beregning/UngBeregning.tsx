@@ -7,8 +7,8 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
 import { DagsatsOgUtbetaling, sortSatser } from '../../shared/dagsats-og-utbetaling/DagsatsOgUtbetaling';
+import { ArbeidOgInntekt } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
 import { BarnPanel } from './BarnPanel';
 import type { Barn } from './types/Barn';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
@@ -37,7 +37,11 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
 };
 
 const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
-  const { data: satser } = useQuery({
+  const {
+    data: satser,
+    isError: satserIsError,
+    isLoading: satserIsLoading,
+  } = useQuery({
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
     select: sortSatser,
@@ -53,7 +57,11 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     select: sortInntekt,
   });
 
-  const { data: ungdomsprogramInformasjon } = useQuery({
+  const {
+    data: ungdomsprogramInformasjon,
+    isError: ungdomsprogramInformasjonIsError,
+    isLoading: ungdomsprogramInformasjonIsLoading,
+  } = useQuery({
     queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
   });
@@ -63,7 +71,9 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     queryFn: () => api.getArbeidsgiverOpplysninger(behandling.uuid),
   });
 
-  if (kontrollInntektIsError) {
+  const isLoading = kontrollInntektIsLoading || satserIsLoading || ungdomsprogramInformasjonIsLoading;
+
+  if (kontrollInntektIsError || satserIsError || ungdomsprogramInformasjonIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
@@ -77,7 +87,7 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        {kontrollInntektIsLoading ? (
+        {isLoading ? (
           <Loader size="large" />
         ) : (
           <Tabs defaultValue={aksjonspunkt ? 'inntekt' : 'dagsats'}>
