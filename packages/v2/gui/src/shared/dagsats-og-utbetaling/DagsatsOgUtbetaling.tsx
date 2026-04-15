@@ -1,6 +1,7 @@
 import {
   ung_sak_kontrakt_ungdomsytelse_ytelse_UtbetalingStatus as UngdomsytelseUtbetaltMånedDtoStatus,
   type GetSatsOgUtbetalingPerioderResponse,
+  type ung_sak_kontrakt_ungdomsytelse_UngdomsprogramInformasjonDto as UngdomsprogramInformasjonDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import {
   formatCurrencyWithKr,
@@ -8,9 +9,7 @@ import {
   formatDate,
   formatPeriod,
 } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Heading, Label, Loader, Table, Tag, VStack } from '@navikt/ds-react';
-import { useQuery } from '@tanstack/react-query';
-import type { UngBeregningBackendApiType } from '../UngBeregningBackendApiType';
+import { Alert, BodyShort, Box, Heading, Label, Table, Tag, VStack } from '@navikt/ds-react';
 import { BeregningsDetaljer } from './BeregningsDetaljer';
 import styles from './dagsatsOgUtbetaling.module.css';
 import { formatMonthYear, formatSats } from './dagsatsUtils';
@@ -49,45 +48,23 @@ const StatusTag = ({ status }: { status: UngdomsytelseUtbetaltMånedDtoStatus })
   </Tag>
 );
 
-const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
+export const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
   data?.toSorted((a, b) => new Date(a.måned).getTime() - new Date(b.måned).getTime()).toReversed();
 
 interface DagsatsOgUtbetalingProps {
-  api: UngBeregningBackendApiType;
-  behandling: { uuid: string };
+  satser: GetSatsOgUtbetalingPerioderResponse;
+  ungdomsprogramInformasjon?: UngdomsprogramInformasjonDto;
 }
 
-export const DagsatsOgUtbetaling = ({ api, behandling }: DagsatsOgUtbetalingProps) => {
-  const {
-    data: ungdomsprogramInformasjon,
-    isLoading: ungdomsprogramInformasjonIsLoading,
-    isError: ungdomsprogramInformasjonIsError,
-  } = useQuery({
-    queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
-    queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
-  });
-
-  const {
-    data: satser,
-    isLoading: satserIsLoading,
-    isError: satserIsError,
-  } = useQuery({
-    queryKey: ['satser', behandling.uuid],
-    queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
-    select: sortSatser,
-  });
-  const isLoading = satserIsLoading || ungdomsprogramInformasjonIsLoading;
-  if (isLoading) {
-    <Loader size="large" />;
-  }
-  if (satserIsError || ungdomsprogramInformasjonIsError || !satser) {
+export const DagsatsOgUtbetaling = ({ satser, ungdomsprogramInformasjon }: DagsatsOgUtbetalingProps) => {
+  if (!satser) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
   const grunnrettData = satser[satser.length - 1]?.satsperioder[0];
   return (
     <div className={styles.dagsatsSection}>
       <VStack gap="space-16">
-        <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />
+        {ungdomsprogramInformasjon && <DataSection ungdomsprogramInformasjon={ungdomsprogramInformasjon} />}
         <VStack gap="space-32">
           {grunnrettData && (
             <div>

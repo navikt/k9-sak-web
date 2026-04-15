@@ -3,6 +3,7 @@ import type {
   ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetAksjonspunktDto,
   ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
+  ung_sak_kontrakt_aktivitetspenger_ytelse_AktivitetspengerUtbetaltMånedDto,
   ung_sak_kontrakt_AsyncPollingStatus,
   ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse,
   ung_sak_kontrakt_vilkår_VilkårMedPerioderDto,
@@ -26,6 +27,9 @@ export interface AktivitetspengerApi {
   ): Promise<ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto>;
   getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
+  getSatsOgUtbetalingPerioder(
+    behandlingUuid: string,
+  ): Promise<ung_sak_kontrakt_aktivitetspenger_ytelse_AktivitetspengerUtbetaltMånedDto[]>;
   bekreftAksjonspunkt(
     behandlingUuid: string,
     behandlingVersjon: number,
