@@ -1,6 +1,6 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { expect, userEvent, within } from 'storybook/test';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -160,7 +160,9 @@ export const LandUtenforEØSVises: Story = {
     await expect(canvas.getByText('Kina')).toBeVisible();
     await expect(canvas.getByText('EØS')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
-    await expect(canvas.getByText('Ingen av årsakene over (kan motta pleiepenger i 8 uker)')).toBeVisible();
+    await expect(
+      canvas.getByText('Ingen årsak til utenlandsoppholdet er oppgitt, perioden telles i 8 uker'),
+    ).toBeVisible();
   },
 };
 
