@@ -13,6 +13,7 @@ import { HStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { expect, fireEvent, fn, userEvent, within } from 'storybook/test';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
+import { AvregningFormProvider } from '../AvregningContext';
 
 const refetchBehandling = fn();
 
@@ -86,9 +87,11 @@ export const LøsAksjonspunkt: Story = {
   render: props => (
     <BehandlingProvider behandling={props.behandling} refetchBehandling={refetchBehandling}>
       <AksjonspunktContext.Provider value={fakeAksjonspunktClient}>
-        <HStack>
-          <KontrollerEtterbetaling {...props} />
-        </HStack>
+        <AvregningFormProvider behandlingId={props.behandling?.id ?? 1}>
+          <HStack>
+            <KontrollerEtterbetaling {...props} />
+          </HStack>
+        </AvregningFormProvider>
       </AksjonspunktContext.Provider>
     </BehandlingProvider>
   ),
