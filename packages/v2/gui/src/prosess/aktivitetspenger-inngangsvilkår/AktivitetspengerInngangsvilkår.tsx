@@ -33,11 +33,12 @@ const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderD
   ) : undefined;
 };
 
-const relevanteAksjonspunktDefinisjoner = [
-  AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-  AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
-  AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
-];
+const utledAktivTab = (lokalkontorBeslutterAp: AksjonspunktDto | undefined) => {
+  if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status !== AksjonspunktStatus.UTFØRT) {
+    return InngangsvilkårTab.BESLUTTER;
+  }
+  return InngangsvilkårTab.BEHOV_FOR_BISTAND;
+};
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
@@ -57,45 +58,36 @@ export const AktivitetspengerInngangsvilkår = ({
   vilkår,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
-  const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
-    relevanteAksjonspunktDefinisjoner.some(def => def === ap.definisjon),
-  );
-  const søknadsfristAp = relevanteAksjonspunkter.find(
+
+  const søknadsfristAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
   );
   const søknadsfristVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST);
   const alderVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.ALDERSVILKÅR);
-  const vurderBistandsvilkårAp = relevanteAksjonspunkter.find(
+  const vurderBistandsvilkårAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   );
   const vurderBistandsvilkårVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR);
-  const lokalkontorForeslårVilkårAp = relevanteAksjonspunkter.find(
+  const lokalkontorForeslårVilkårAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   );
-  const lokalkontorBeslutterAp = relevanteAksjonspunkter.find(
+  const lokalkontorBeslutterAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
-  const bostedAp = relevanteAksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
+  const bostedAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
   const bostedVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.BOSTEDSVILKÅR);
-  const andreLivsoppholdytelserAp = relevanteAksjonspunkter.find(
+  const andreLivsoppholdytelserAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
   );
   const andreLivsoppholdytelserVilkår = vilkår.find(
     v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   );
 
-  const utledAktivTab = () => {
-    if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status !== AksjonspunktStatus.UTFØRT) {
-      return InngangsvilkårTab.BESLUTTER;
-    }
-    return InngangsvilkårTab.BEHOV_FOR_BISTAND;
-  };
-
-  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab);
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(lokalkontorBeslutterAp));
 
   useEffect(() => {
-    setAktivTab(utledAktivTab());
-  }, [aksjonspunkter]);
+    setAktivTab(utledAktivTab(lokalkontorBeslutterAp));
+  }, [aksjonspunkter, lokalkontorBeslutterAp]);
 
   return (
     <VStack gap="space-20">
@@ -162,7 +154,6 @@ export const AktivitetspengerInngangsvilkår = ({
                 vurderBistandsvilkårVilkår={vurderBistandsvilkårVilkår}
                 vurderBistandsvilkårAp={vurderBistandsvilkårAp}
                 lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
-                kanSaksbehandle={kanSaksbehandle}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}

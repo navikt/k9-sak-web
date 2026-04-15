@@ -20,7 +20,6 @@ interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
-  kanSaksbehandle: boolean;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -59,7 +58,6 @@ export const BehovForBistand = ({
   vurderBistandsvilkårVilkår,
   vurderBistandsvilkårAp,
   lokalkontorForeslårVilkårAp,
-  kanSaksbehandle,
   api,
   behandling,
   onAksjonspunktBekreftet,
@@ -186,7 +184,7 @@ export const BehovForBistand = ({
             )}
           </VStack>
         </RhfForm>
-        {kanSaksbehandle && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
+        {!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
           <Alert variant="success" size="small">
             <Box marginBlock="space-2 space-12">
               <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
