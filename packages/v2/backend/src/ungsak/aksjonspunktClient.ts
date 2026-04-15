@@ -23,3 +23,5 @@ export class ungSakAksjonspunktClient implements BekreftAksjonspunktClient {
     return client.get({ url: path, signal, throwOnError: true });
   };
 }
+
+export const ungSakClient = new ungSakAksjonspunktClient();

@@ -23,3 +23,5 @@ export class k9SakAksjonspunktClient implements BekreftAksjonspunktClient {
     return client.get({ url: path, signal, throwOnError: true });
   };
 }
+
+export const k9SakClient = new k9SakAksjonspunktClient();

@@ -13,7 +13,7 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
-import { k9KlageAksjonspunktClient } from '@k9-sak-web/backend/k9klage/aksjonspunktClient.js';
+import { k9KlageClient } from '@k9-sak-web/backend/k9klage/aksjonspunktClient.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import FetchedData from './types/fetchedDataTsType';
@@ -141,7 +141,7 @@ const BehandlingKlageIndex = ({
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
       <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
-      <AksjonspunktContext.Provider value={k9KlageAksjonspunktClient}>
+      <AksjonspunktContext.Provider value={k9KlageClient}>
       <KlagePaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}

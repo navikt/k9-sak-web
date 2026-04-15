@@ -5,7 +5,7 @@ import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/t
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
-import { k9TilbakeAksjonspunktClient } from '@k9-sak-web/backend/k9tilbake/aksjonspunktClient.js';
+import { k9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/aksjonspunktClient.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
@@ -151,7 +151,7 @@ const BehandlingTilbakekrevingIndex = ({
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
       <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
-      <AksjonspunktContext.Provider value={k9TilbakeAksjonspunktClient}>
+      <AksjonspunktContext.Provider value={k9TilbakeClient}>
       <TilbakekrevingPaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
