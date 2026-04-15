@@ -34,18 +34,6 @@ export interface BekreftAksjonspunktClient {
  * til prosesseringen er ferdig, og oppdaterer behandling via `setBehandling`
  * eller `refetchBehandling`.
  *
- * @typeParam T - Backend-spesifikk BekreftetAksjonspunktDto som styrer hva `bekreft()` aksepterer.
- *
- * @example
- * ```tsx
- * import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
- *
- * const { bekreft, loading } = useBekreftAksjonspunkt<BekreftetAksjonspunktDto>();
- *
- * const onSubmit = async (data) => {
- *   await bekreft({ '@type': '5084', begrunnelse: data.begrunnelse });
- * };
- * ```
  */
 
 export const useBekreftAksjonspunkt = () => {
