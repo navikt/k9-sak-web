@@ -1,11 +1,11 @@
 ---
 name: storybook-testing
-description: 'Patterns for writing Storybook stories and interaction tests in k9-sak-web. USE FOR: creating stories for v2 components, writing play() interaction tests, setting up fake backend clients for stories, structuring Default vs interaction stories, and running the test runner. DO NOT USE FOR: Vitest unit tests (use for pure logic/utils only), MSW setup, or vi.spyOn HTTP mocking.'
+description: 'Patterns for writing Storybook stories and interaction tests in k9-sak-web. USE FOR: creating stories for v2 components, writing play() interaction tests, setting up fake backend clients for stories, structuring Default vs interaction stories, and running Storybook tests with Vitest addon. DO NOT USE FOR: Vitest unit tests (use for pure logic/utils only), MSW setup, or vi.spyOn HTTP mocking.'
 ---
 
 # Storybook Testing
 
-Storybook is the primary testing tool for React components in v2. Interaction tests run in the Storybook test runner.
+Storybook is the primary testing tool for React components in v2. Interaction tests run with the Storybook Vitest addon.
 
 ## Story File Conventions
 
@@ -34,7 +34,7 @@ type Story = StoryObj<typeof meta>;
 | Story type | Has `play`? | Purpose |
 |---|---|---|
 | `Default` (or `DefaultStory`) | No | Interactive via args/controls in Storybook UI |
-| Named interaction stories | Yes | Automated test scenarios run in test runner |
+| Named interaction stories | Yes | Automated test scenarios run in Storybook test command |
 
 ```typescript
 // ✅ Default: interactive, no play
@@ -167,7 +167,7 @@ export const VisValideringsfeil: Story = {
 
 ```bash
 yarn storybook                           # Start Storybook dev server
-yarn build-storybook-test                # Build Storybook for test runner
+yarn build-storybook-test                # Build Storybook for Storybook test command
 yarn test-storybook                      # Run all interaction tests
 yarn test-storybook -- --watch           # Watch mode
 ```
