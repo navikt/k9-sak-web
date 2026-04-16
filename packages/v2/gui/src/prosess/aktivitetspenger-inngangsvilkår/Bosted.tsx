@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
@@ -10,11 +11,13 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
 interface Props {
+  bostedAp: AksjonspunktDto | undefined;
   bostedVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -52,7 +55,7 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
   ),
 });
 
-export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunktBekreftet }: Props) => {
+export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunktBekreftet, bostedAp }: Props) => {
   const items: VilkårSplittPanelItem[] = (bostedVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
@@ -100,6 +103,10 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
   if (!bostedVilkår) {
     return null;
   }
+  if (!bostedAp && !bostedVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
   return (
     <VilkårSplittPanel
       items={items}
@@ -113,14 +120,14 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
           <Label size="small" as="p">
             Bor søker i Trondheim kommune?
           </Label>
-          <BodyShort size="small">
-            <HStack gap="space-8" align="center">
+          <HStack gap="space-8" align="center">
+            <BodyShort size="small">
               {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
-              <Tag variant="outline" size="small">
-                Fra søknad
-              </Tag>
-            </HStack>
-          </BodyShort>
+            </BodyShort>
+            <Tag variant="outline" size="small">
+              Fra søknad
+            </Tag>
+          </HStack>
         </VStack>
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-24">

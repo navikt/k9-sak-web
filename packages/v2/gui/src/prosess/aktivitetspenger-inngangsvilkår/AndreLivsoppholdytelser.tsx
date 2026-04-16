@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
@@ -10,11 +11,13 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
 interface Props {
+  andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
   andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -50,6 +53,7 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
   ),
 });
 export const AndreLivsoppholdytelser = ({
+  andreLivsoppholdytelserAp,
   andreLivsoppholdytelserVilkår,
   readOnly,
   api,
@@ -105,6 +109,13 @@ export const AndreLivsoppholdytelser = ({
   if (!andreLivsoppholdytelserVilkår) {
     return null;
   }
+  if (
+    !andreLivsoppholdytelserAp &&
+    !andreLivsoppholdytelserVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)
+  ) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
   return (
     <VilkårSplittPanel
       items={items}

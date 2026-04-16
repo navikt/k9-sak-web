@@ -11,6 +11,7 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { aksjonspunktErÅpent } from './utils/utils';
@@ -118,6 +119,13 @@ export const BehovForBistand = ({
     return null;
   }
 
+  if (
+    !vurderBistandsvilkårAp &&
+    !vurderBistandsvilkårVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)
+  ) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
   return (
     <VilkårSplittPanel
       items={items}
@@ -126,8 +134,8 @@ export const BehovForBistand = ({
       detailHeading="Vurdering av behov for bistand"
       lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
     >
-      <VStack gap="space-24">
-        <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+      <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+        <VStack gap="space-24">
           <VStack gap="space-24">
             <RhfTextarea
               control={formHook.control}
@@ -183,18 +191,18 @@ export const BehovForBistand = ({
               </Box>
             )}
           </VStack>
-        </RhfForm>
-        {!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
-          <Alert variant="success" size="small">
-            <Box marginBlock="space-2 space-12">
-              <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
-            </Box>
-            <Button variant="primary" data-color="accent" size="small" type="submit" loading={isPending}>
-              Send vurderinger til beslutter
-            </Button>
-          </Alert>
-        )}
-      </VStack>
+          {!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
+            <Alert variant="success" size="small">
+              <Box marginBlock="space-2 space-12">
+                <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
+              </Box>
+              <Button variant="primary" data-color="accent" size="small" type="submit" loading={isPending}>
+                Send vurderinger til beslutter
+              </Button>
+            </Alert>
+          )}
+        </VStack>
+      </RhfForm>
     </VilkårSplittPanel>
   );
 };

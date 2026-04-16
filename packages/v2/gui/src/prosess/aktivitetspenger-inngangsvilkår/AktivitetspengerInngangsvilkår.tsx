@@ -33,9 +33,16 @@ const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderD
   ) : undefined;
 };
 
-const utledAktivTab = (lokalkontorBeslutterAp: AksjonspunktDto | undefined) => {
-  if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status !== AksjonspunktStatus.UTFØRT) {
-    return InngangsvilkårTab.BESLUTTER;
+const utledAktivTab = (aksjonspunkter: AksjonspunktDto[]) => {
+  const bosattITrondheimAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
+  if (bosattITrondheimAp && bosattITrondheimAp.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
+  }
+  const andreLivsoppholdytelserAp = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+  );
+  if (andreLivsoppholdytelserAp && andreLivsoppholdytelserAp.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
   }
   return InngangsvilkårTab.BEHOV_FOR_BISTAND;
 };
@@ -83,11 +90,11 @@ export const AktivitetspengerInngangsvilkår = ({
     v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   );
 
-  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(lokalkontorBeslutterAp));
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(aksjonspunkter));
 
   useEffect(() => {
-    setAktivTab(utledAktivTab(lokalkontorBeslutterAp));
-  }, [aksjonspunkter, lokalkontorBeslutterAp]);
+    setAktivTab(utledAktivTab(aksjonspunkter));
+  }, [aksjonspunkter]);
 
   return (
     <VStack gap="space-20">
@@ -130,6 +137,7 @@ export const AktivitetspengerInngangsvilkår = ({
             {bostedVilkår && (
               <Bosted
                 bostedVilkår={bostedVilkår}
+                bostedAp={bostedAp}
                 readOnly={!kanSaksbehandle}
                 api={api}
                 behandling={behandling}
@@ -140,6 +148,7 @@ export const AktivitetspengerInngangsvilkår = ({
           <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
             {andreLivsoppholdytelserVilkår && (
               <AndreLivsoppholdytelser
+                andreLivsoppholdytelserAp={andreLivsoppholdytelserAp}
                 andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
                 readOnly={!kanSaksbehandle}
                 api={api}
