@@ -1,5 +1,5 @@
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
-import tabCodes from '../../fakta/sykdom-og-opplæring/tabCodes.js';
+import tabCodes from '../../fakta/sykdom-og-opplaering/tabCodes.js';
 import { faktaPanelCodes } from './faktaPanelCodes.js';
 import { prosessStegCodes } from './prosessStegCodes.js';
 

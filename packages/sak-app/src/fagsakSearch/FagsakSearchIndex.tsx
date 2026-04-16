@@ -6,7 +6,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
+import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSok/FagsakSøkSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { pathToFagsak } from '../app/paths';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';

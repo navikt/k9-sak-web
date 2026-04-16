@@ -1,5 +1,5 @@
-import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
-import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
+import { Feilmelding } from '@k9-sak-web/gui/sak/dekorator/feilmeldingTsType.js';
+import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekorator/HeaderWithErrorPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';

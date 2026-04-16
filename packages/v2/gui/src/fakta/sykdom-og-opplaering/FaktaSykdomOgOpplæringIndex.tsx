@@ -5,7 +5,7 @@ import FaktaInstitusjonIndex from './1-institusjon/FaktaInstitusjonIndex.js';
 import SykdomUperiodisertIndex from './2-sykdom/SykdomUperiodisertIndex.js';
 import { Alert, Tabs } from '@navikt/ds-react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import NødvendigOpplæringIndex from './3-nødvendig-opplæring/NødvendigOpplæringIndex.js';
+import NødvendigOpplæringIndex from './3-nodvendig-opplaering/NødvendigOpplæringIndex.js';
 import ReisetidIndex from './4-reisetid/ReisetidIndex.js';
 
 import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/generated/types.js';

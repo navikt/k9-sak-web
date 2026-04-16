@@ -3,8 +3,8 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import AktorSakIndex from '@k9-sak-web/gui/sak/aktør/AktorSakIndex.js';
-import { Aktørinfo } from '@k9-sak-web/gui/sak/aktør/Aktørinfo.js';
+import AktorSakIndex from '@k9-sak-web/gui/sak/aktor/AktorSakIndex.js';
+import { Aktørinfo } from '@k9-sak-web/gui/sak/aktor/Aktørinfo.js';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 

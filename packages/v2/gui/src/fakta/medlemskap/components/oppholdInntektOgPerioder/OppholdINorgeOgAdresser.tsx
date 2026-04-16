@@ -10,7 +10,7 @@ import { useFormContext } from 'react-hook-form';
 import type { Foreldre } from '../../types/FormState';
 import type { MerknaderFraBeslutter } from '../../types/MerknaderFraBeslutter';
 import type { Opphold } from '../../types/Opphold';
-import BostedSokerView from '../bostedSøker/components/BostedSokerView';
+import BostedSokerView from '../bostedSoker/components/BostedSokerView';
 import styles from './oppholdINorgeOgAdresser.module.css';
 
 countries.registerLocale(norwegianLocale);
