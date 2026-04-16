@@ -1,6 +1,7 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import type { LegacyBekreftAksjonspunktCallback } from '../../utils/typehelp/AksjonspunktSubmitCallbackArgumentType';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -10,7 +11,7 @@ import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 interface UngVedtakIndexProps {
   aksjonspunkter: AksjonspunktDto[];
   behandling: UngVedtakBehandlingDto;
-  submitCallback: (data: any) => Promise<any>;
+  submitCallback: LegacyBekreftAksjonspunktCallback;
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
   tekster: UngVedtakTekster;
@@ -30,7 +31,7 @@ export const UngVedtakIndex = ({
     isLoading,
     refetch: refetchVedtaksbrevValg,
   } = useQuery({
-    queryKey: ['vedtaksbrevValg', behandling.id],
+    queryKey: ['vedtaksbrevValg', behandling.id, ungVedtakBackendClient],
     queryFn: async () => {
       const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id!);
       return response;

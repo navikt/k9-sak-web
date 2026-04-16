@@ -1,6 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
@@ -68,14 +67,33 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
 
   const { mutateAsync: bekreftAksjonspunktMutation } = useMutation({
     mutationFn: async (data: { kode: AksjonspunktDefinisjon }[]) => {
-      const payload = data.map(ap => ({ '@type': ap.kode }) as BekreftetAksjonspunktDto);
+      const payload = data.map(ap => {
+        switch (ap.kode) {
+          case AksjonspunktDefinisjon.FORESLÅ_VEDTAK:
+            return { '@type': ap.kode, skalBrukeOverstyrendeFritekstBrev: false };
+          case AksjonspunktDefinisjon.FATTER_VEDTAK:
+            return { '@type': ap.kode };
+          case AksjonspunktDefinisjon.FORESLÅ_VEDTAK_MANUELT:
+            return { '@type': ap.kode, skalBrukeOverstyrendeFritekstBrev: false };
+          case AksjonspunktDefinisjon.VEDTAK_UTEN_TOTRINNSKONTROLL:
+            return { '@type': ap.kode, skalBrukeOverstyrendeFritekstBrev: false };
+          case AksjonspunktDefinisjon.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST:
+            return { '@type': ap.kode };
+          case AksjonspunktDefinisjon.KONTROLL_AV_MANUELT_OPPRETTET_REVURDERINGSBEHANDLING:
+            return { '@type': ap.kode };
+          case AksjonspunktDefinisjon.SJEKK_TILBAKEKREVING:
+            return { '@type': ap.kode };
+          default:
+            throw new Error(`Ukjent aksjonspunktkode: ${ap.kode}`);
+        }
+      });
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, payload);
     },
     onSuccess: () => {
       const fatterVedtakAksjonspunktkoder = [
-        aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-        aksjonspunktCodes.FATTER_VEDTAK,
-        aksjonspunktCodes.FORESLÅ_VEDTAK_MANUELT,
+        AksjonspunktDefinisjon.VEDTAK_UTEN_TOTRINNSKONTROLL,
+        AksjonspunktDefinisjon.FATTER_VEDTAK,
+        AksjonspunktDefinisjon.FORESLÅ_VEDTAK_MANUELT,
       ];
       const visIverksetterVedtakModal = vedtakAksjonspunkter.some(ap =>
         fatterVedtakAksjonspunktkoder.some(kode => kode === ap.definisjon),

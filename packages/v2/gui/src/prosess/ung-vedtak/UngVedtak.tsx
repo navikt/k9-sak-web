@@ -11,6 +11,7 @@ import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tan
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
+import type { LegacyBekreftAksjonspunktCallback } from '../../utils/typehelp/AksjonspunktSubmitCallbackArgumentType';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
 import type { FormData } from './FormData';
@@ -23,7 +24,7 @@ interface UngVedtakProps {
   aksjonspunkter: AksjonspunktDto[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
-  submitCallback: (data: Array<{ kode: AksjonspunktDto['definisjon'] }>) => Promise<unknown>;
+  submitCallback: LegacyBekreftAksjonspunktCallback;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
@@ -117,14 +118,16 @@ export const UngVedtak = ({
     name: 'vedtaksbrevValg',
   });
 
-  const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
+  const transformValues = () =>
+    aksjonspunkter
+      .filter(ap => ap.kanLoses && ap.definisjon !== undefined)
+      .map(ap => ({ kode: ap.definisjon!, skalBrukeOverstyrendeFritekstBrev: false }));
   const handleSubmit = () => {
     setIsSubmitting(true);
     void submitCallback(transformValues()).finally(() => {
       setIsSubmitting(false);
     });
   };
-
   const harFlereBrev = vedtaksbrevValgResponse?.vedtaksbrevValg && vedtaksbrevValgResponse?.vedtaksbrevValg?.length > 1;
 
   return (
