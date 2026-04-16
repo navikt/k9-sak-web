@@ -96,11 +96,11 @@ jobs:
     java-version: 21
     cache: gradle
 
-# Node/pnpm
+# Node/yarn
 - uses: actions/setup-node@v4
   with:
     node-version: 22
-    cache: pnpm
+    cache: yarn
 
 # Go
 - uses: actions/setup-go@v5
