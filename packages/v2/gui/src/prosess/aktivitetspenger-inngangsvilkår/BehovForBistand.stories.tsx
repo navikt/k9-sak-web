@@ -15,7 +15,6 @@ const meta = {
     api: fakeAktivitetspengerApi,
     behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: () => {},
-    kanSaksbehandle: true,
     readOnly: false,
     vurderBistandsvilkårAp: undefined,
     lokalkontorForeslårVilkårAp: undefined,
@@ -70,7 +69,6 @@ export const MedÅpentLokalkontorForeslår: Story = {
 
 export const IkkeSaksbehandler: Story = {
   args: {
-    kanSaksbehandle: false,
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
   },
 };
