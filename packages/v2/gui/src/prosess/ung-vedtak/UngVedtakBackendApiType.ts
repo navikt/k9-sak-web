@@ -7,6 +7,7 @@ import type {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 export type UngVedtakBackendApiType = {
+  readonly backend: 'ungsak';
   forhåndsvisVedtaksbrev(
     behandlingId: number,
     dokumentMalType: ung_kodeverk_dokument_DokumentMalType,
