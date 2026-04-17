@@ -6,7 +6,6 @@ import {
   k9_kodeverk_vilkår_Utfall as VilkårUtfall,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { screen } from '@testing-library/react';
-import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
 
@@ -38,7 +37,6 @@ describe('<VedtakAvslagPanel>', () => {
   it('skal rendre avslagspanel for pleiepenger', () => {
     renderWithIntl(
       <VedtakAvslagPanelImpl
-        intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={pleiepenger}
@@ -57,7 +55,6 @@ describe('<VedtakAvslagPanel>', () => {
   it('skal rendre avslagspanel for omsorgspenger', () => {
     renderWithIntl(
       <VedtakAvslagPanelImpl
-        intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={omsorgspenger}
@@ -76,7 +73,6 @@ describe('<VedtakAvslagPanel>', () => {
   it('skal rendre avslagspanel for utvidet rett kronisk sykt barn', () => {
     renderWithIntl(
       <VedtakAvslagPanelImpl
-        intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={kroniskSyktBarn}
@@ -95,7 +91,6 @@ describe('<VedtakAvslagPanel>', () => {
   it('skal rendre avslagspanel for midlertidig alene', () => {
     renderWithIntl(
       <VedtakAvslagPanelImpl
-        intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={midlertidigAlene}

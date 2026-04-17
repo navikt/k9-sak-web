@@ -4,7 +4,7 @@ import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-compone
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
@@ -34,7 +34,7 @@ interface MappedOwnProps {
   validate: (formValues: FormValues, props: any) => void;
 }
 
-type Props = PureOwnProps & MappedOwnProps & InjectedFormProps & WrappedComponentProps;
+type Props = PureOwnProps & MappedOwnProps & InjectedFormProps;
 
 // ----------------------------------------------------------------------------------
 // Component: PersonArbeidsforholdDetailForm
@@ -114,5 +114,5 @@ export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
     enableReinitialize: true,
-  })(injectIntl(PersonArbeidsforholdDetailForm)),
+  })(PersonArbeidsforholdDetailForm),
 );

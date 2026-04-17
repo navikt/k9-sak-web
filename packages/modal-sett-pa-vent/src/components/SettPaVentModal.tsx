@@ -18,7 +18,7 @@ import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
 import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import styles from './settPaVentModal.module.css';
@@ -143,7 +143,8 @@ export const SettPaVentModal = ({
   ventearsakVariant,
   originalVentearsakVariant,
   isSubmitting,
-}: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
+}: PureOwnProps & Partial<MappedOwnProps> & InjectedFormProps) => {
+  const intl = useIntl();
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =
     (!originalVentearsakVariant && !!ventearsakVariant) ||
@@ -362,5 +363,5 @@ export default connect(mapStateToProps)(
   reduxForm({
     form: 'settPaVentModalForm',
     enableReinitialize: true,
-  })(injectIntl(SettPaVentModal)),
+  })(SettPaVentModal),
 );

@@ -4,7 +4,7 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Detail, Label } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
@@ -53,9 +53,9 @@ const AktsomhetGradUaktsomhetFormPanel = ({
   feilutbetalingBelop,
   erTotalBelopUnder4Rettsgebyr,
   andelSomTilbakekreves,
-  intl,
   erValgtResultatTypeForstoBurdeForstaatt,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
+  const intl = useIntl();
   const grovUaktsomOffset = erValgtResultatTypeForstoBurdeForstaatt ? 188 : 208;
   return (
     <ArrowBox alignOffset={handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM ? grovUaktsomOffset : 28}>
@@ -122,4 +122,4 @@ const AktsomhetGradUaktsomhetFormPanel = ({
   );
 };
 
-export default injectIntl(AktsomhetGradUaktsomhetFormPanel);
+export default AktsomhetGradUaktsomhetFormPanel;
