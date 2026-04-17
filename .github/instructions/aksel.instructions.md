@@ -4,18 +4,17 @@ applyTo: "**/*.{tsx,ts}"
 
 # Aksel Design System
 
-## Spacing Rules
+## Spacing-regler
 
-**CRITICAL**: Always use Nav DS spacing tokens, never Tailwind padding/margin utilities.
+**VIKTIG**: Bruk alltid Nav DS spacing-tokens, aldri Tailwind padding/margin.
 
-Tokens are **rem-based**. The number = rem × 16 equivalent: `space-16` = 1rem, `space-24` = 1.5rem.
+Tokens er **rem-baserte**. Tallet = rem × 16: `space-16` = 1rem, `space-24` = 1.5rem.
 
-### ✅ Correct Patterns
+### ✅ Riktig
 
 ```tsx
 import { Box, VStack, HGrid } from "@navikt/ds-react";
 
-// Page container
 <Box
   paddingBlock="space-48"
   paddingInline="space-40"
@@ -23,37 +22,33 @@ import { Box, VStack, HGrid } from "@navikt/ds-react";
   {children}
 </Box>
 
-// Component with padding
 <Box
   background="surface-subtle"
   padding="space-32"
   borderRadius="large"
 >
-  <Heading size="large" level="2">Title</Heading>
-  <BodyShort>Content</BodyShort>
+  <Heading size="large" level="2">Tittel</Heading>
+  <BodyShort>Innhold</BodyShort>
 </Box>
 
-// Directional padding
+// Retningsbestemt padding
 <Box
-  paddingBlock="space-16"    // Top and bottom
-  paddingInline="space-24"   // Left and right
+  paddingBlock="space-16"    // Topp og bunn
+  paddingInline="space-24"   // Venstre og høyre
 >
 ```
 
-### ❌ Incorrect Patterns
+### ❌ Feil
 
 ```tsx
-// Never use Tailwind padding/margin
-<div className="p-4 md:p-6">  // ❌ Wrong
-<div className="mx-4 my-2">   // ❌ Wrong
-<Box padding="4">             // ❌ Wrong - no space- prefix
+<div className="p-4 md:p-6">  // ❌ Feil
+<div className="mx-4 my-2">   // ❌ Feil
+<Box padding="4">             // ❌ Feil — mangler space-prefiks
 ```
 
-For the full token list and detailed patterns, use the `aksel-spacing` skill.
+## Spacing-tokens
 
-## Spacing Tokens
-
-Available spacing tokens (always with `space-` prefix):
+Tilgjengelige tokens (alltid med `space-`-prefiks):
 
 - `space-4` (0.25rem ≈ 4px)
 - `space-8` (0.5rem ≈ 8px)
@@ -65,16 +60,16 @@ Available spacing tokens (always with `space-` prefix):
 - `space-40` (2.5rem ≈ 40px)
 - `space-48` (3rem ≈ 48px)
 
-## Responsive Design
+## Responsiv design
 
-Minimum supported screen size is **lg (1024px)**. Do not add responsive variants below `lg` unless the component is explicitly designed for smaller screens.
+Minimum støttet skjermstørrelse er **lg (1024px)**. Ikke legg til responsive varianter under `lg` med mindre komponenten er eksplisitt designet for mindre skjermer.
 
 Breakpoints:
 
 - `xs`: 0px
 - `sm`: 480px
 - `md`: 768px
-- `lg`: 1024px ← minimum supported
+- `lg`: 1024px ← minimum støttet
 - `2xl`: 1440px
 
 ```tsx
@@ -83,83 +78,154 @@ Breakpoints:
 </HGrid>
 ```
 
-## Component Patterns
+## Komponentmønstre
 
-### Layout Components
+### Layout-komponenter
 
 ```tsx
 import { Box, VStack, HStack, HGrid } from "@navikt/ds-react";
 
-// Vertical stack with spacing
 <VStack gap="space-16">
-  <Component1 />
-  <Component2 />
-  <Component3 />
+  <Komponent1 />
+  <Komponent2 />
 </VStack>
 
-// Horizontal stack
 <HStack gap="space-16" align="center">
   <Icon />
   <Text />
 </HStack>
 
-// Responsive grid
 <HGrid columns={3} gap="space-16">
-  {/* Grid items */}
+  {/* Grid-elementer */}
 </HGrid>
 ```
 
-### Typography
+### Typografi
 
 ```tsx
 import { Heading, BodyShort, Label } from "@navikt/ds-react";
 
-<Heading size="large|medium|small" level="1-6">
-  Title
-</Heading>
-
-<BodyShort size="large|medium|small">
-  Regular text content
-</BodyShort>
-
-<BodyShort weight="semibold">
-  Bold text
-</BodyShort>
-
-<Label size="large|medium|small">
-  Input label
-</Label>
+<Heading size="large|medium|small" level="1-6">Tittel</Heading>
+<BodyShort size="large|medium|small">Vanlig tekstinnhold</BodyShort>
+<BodyShort weight="semibold">Halvfet tekst</BodyShort>
+<Label size="large|medium|small">Skjemaetikett</Label>
 ```
 
-### Background Colors
+### Bakgrunnsfarger
 
 ```tsx
-<Box background="surface-default">     {/* White */}
-<Box background="surface-subtle">      {/* Light gray */}
-<Box background="surface-action-subtle">  {/* Light blue */}
-<Box background="surface-success-subtle"> {/* Light green */}
-<Box background="surface-warning-subtle"> {/* Light orange */}
-<Box background="surface-danger-subtle">  {/* Light red */}
+<Box background="surface-default">          {/* Hvit */}
+<Box background="surface-subtle">           {/* Lys grå */}
+<Box background="surface-action-subtle">    {/* Lys blå */}
+<Box background="surface-success-subtle">   {/* Lys grønn */}
+<Box background="surface-warning-subtle">   {/* Lys oransje */}
+<Box background="surface-danger-subtle">    {/* Lys rød */}
 ```
 
-## Accessibility
+## Tallformatering
 
-Always include ARIA labels and semantic HTML. Never use `<div onClick>`.
+Bruk alltid norsk locale for tallformatering.
+
+## Tilgjengelighet
+
+Alltid inkluder ARIA-labels og semantisk HTML. Bruk aldri `<div onClick>`.
+
+## When Using React Query (Server State)
+
+React Query (@tanstack/react-query) er standard for server state ved Nav.
+
+```tsx
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+export function ResourceList() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["resources"],
+    queryFn: () => fetch("/api/resources").then((res) => res.json()),
+  });
+
+  if (isLoading) return <Loader title="Laster..." />;
+  if (error) return <Alert variant="error">Kunne ikke laste data</Alert>;
+
+  return (
+    <VStack gap="space-16">
+      {data.map((resource) => (
+        <ResourceCard key={resource.id} resource={resource} />
+      ))}
+    </VStack>
+  );
+}
+
+// Mutation med cache-invalidering
+const queryClient = useQueryClient();
+const mutation = useMutation({
+  mutationFn: (data: CreateRequest) =>
+    fetch("/api/resources", { method: "POST", body: JSON.stringify(data) }),
+  onSuccess: () => queryClient.invalidateQueries({ queryKey: ["resources"] }),
+});
+```
+
+Ikke introduser React Query i prosjekter som ikke allerede bruker det.
+
+## When Using React Hook Form (Form State)
+
+React Hook Form foretrekkes for komplekse skjemaer med validering.
+
+```tsx
+import { useForm } from "react-hook-form";
+import { TextField, Button, VStack } from "@navikt/ds-react";
+
+interface FormData {
+  name: string;
+  email: string;
+}
+
+export function RegistrationForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <VStack gap="space-16">
+        <TextField
+          label="Navn"
+          {...register("name", { required: "Navn er påkrevd" })}
+          error={errors.name?.message}
+        />
+        <Button type="submit">Registrer</Button>
+      </VStack>
+    </form>
+  );
+}
+```
+
+## Package Manager
+
+**yarn** er package manager for dette prosjektet.
+
+```bash
+yarn install
+yarn add @navikt/ds-react
+yarn test
+```
 
 ## Boundaries
 
 ### ✅ Always
 
-- Use Aksel Design System components
-- Use spacing tokens with `space-` prefix
+- Bruk Aksel Design System-komponenter
+- Bruk spacing-tokens med `space-`-prefiks
+- Norsk tallformatering
+- Semantisk HTML og ARIA-labels
 
 ### ⚠️ Ask First
 
-- Adding custom Tailwind utilities
-- Deviating from Aksel patterns
+- Legge til egendefinerte Tailwind utilities
+- Avvike fra Aksel-mønstre
+- Introdusere React Query eller React Hook Form i eksisterende prosjekter
 
 ### 🚫 Never
 
-- Use Tailwind padding/margin utilities (`p-*`, `m-*`)
-- Use numeric spacing without `space-` prefix
-- Ignore accessibility requirements
+- Bruk Tailwind padding/margin (`p-*`, `m-*`)
+- Bruk numerisk spacing uten `space-`-prefiks
+- Ignorer tilgjengelighetskrav
+- Bruk `<div onClick>`
+- Legg til kodekommentarer med mindre eksplisitt bedt om det
