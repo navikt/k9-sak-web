@@ -150,7 +150,7 @@ export const VilkårSplittPanel = ({
               padding={effectiveLocked ? 'space-16' : 'space-0'}
               background={effectiveLocked ? 'info-softA' : undefined}
             >
-              <VStack gap={effectiveLocked ? 'space-20' : 'space-0'}>
+              <VStack gap={isEditable && !readOnly ? 'space-20' : 'space-0'}>
                 {children(effectiveLocked, setIsEditable)}
                 <Bleed marginInline="space-8">
                   {isEditable && !readOnly && (

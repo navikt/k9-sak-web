@@ -38,14 +38,14 @@ export const Alder = ({ alderVilkår }: Props) => {
           <Label size="small" as="p">
             Er vilkår om alder oppfylt på søknadstidspunktet?
           </Label>
-          <BodyShort size="small">
-            <HStack gap="space-8" align="center">
+          <HStack gap="space-8" align="center">
+            <BodyShort size="small">
               {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
-              <Tag variant="outline" size="small">
-                Fra folkeregisteret
-              </Tag>
-            </HStack>
-          </BodyShort>
+            </BodyShort>
+            <Tag variant="outline" size="small">
+              Fra folkeregisteret
+            </Tag>
+          </HStack>
         </VStack>
         <HStack gap="space-8" align="center">
           <CogIcon title="Automatisk vurdering" fontSize="1.5rem" />

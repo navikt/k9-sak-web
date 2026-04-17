@@ -5,7 +5,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, Radio, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -113,7 +113,7 @@ export const BehovForBistand = ({
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const skalLåseVurderBistandSkjema = readOnly || vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT;
+  const isAksjonspunktSolved = vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT;
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -133,76 +133,83 @@ export const BehovForBistand = ({
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av behov for bistand"
       lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
+      defaultIsEditable={isAksjonspunktSolved}
+      readOnly={readOnly}
     >
-      <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-        <VStack gap="space-24">
+      {(isEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
+        <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-24">
-            <RhfTextarea
-              control={formHook.control}
-              name={`vurderinger.${selectedId}.begrunnelse`}
-              readOnly={skalLåseVurderBistandSkjema}
-              label={
-                <span>
-                  Vurder om søker har behov for bistand, jmf.{' '}
-                  {vurderBistandsvilkårVilkår.lovReferanse && (
-                    <Lovreferanse isUng>{vurderBistandsvilkårVilkår.lovReferanse}</Lovreferanse>
-                  )}
-                </span>
-              }
-            />
-            <RhfRadioGroup
-              key={selectedId}
-              control={formHook.control}
-              name={`vurderinger.${selectedId}.behovForBistand`}
-              legend="Har søker behov for bistand?"
-              validate={[required]}
-              readOnly={skalLåseVurderBistandSkjema}
-            >
-              <Radio value="oppfylt">Ja</Radio>
-              <Radio value="ikkeOppfylt">Nei</Radio>
-            </RhfRadioGroup>
-            {behovForBistand === 'ikkeOppfylt' && (
+            <VStack gap="space-24">
+              <RhfTextarea
+                control={formHook.control}
+                name={`vurderinger.${selectedId}.begrunnelse`}
+                readOnly={isEditable}
+                label={
+                  <span>
+                    Vurder om søker har behov for bistand, jmf.{' '}
+                    {vurderBistandsvilkårVilkår.lovReferanse && (
+                      <Lovreferanse isUng>{vurderBistandsvilkårVilkår.lovReferanse}</Lovreferanse>
+                    )}
+                  </span>
+                }
+              />
               <RhfRadioGroup
                 key={selectedId}
                 control={formHook.control}
-                name={`vurderinger.${selectedId}.avslagsårsak`}
-                legend="Avslagsårsak"
+                name={`vurderinger.${selectedId}.behovForBistand`}
+                legend="Har søker behov for bistand?"
                 validate={[required]}
-                readOnly={skalLåseVurderBistandSkjema}
+                readOnly={isEditable}
               >
-                <Radio value="fritekst">Fritekst</Radio>
+                <Radio value="oppfylt">Ja</Radio>
+                <Radio value="ikkeOppfylt">Nei</Radio>
               </RhfRadioGroup>
-            )}
-            {avslagsårsak === 'fritekst' && (
-              <RhfTextarea
-                control={formHook.control}
-                name={`vurderinger.${selectedId}.fritekst`}
-                label="Fritekst avslagsbrev"
-                description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                validate={[required]}
-                readOnly={skalLåseVurderBistandSkjema}
-              />
-            )}
-            {!skalLåseVurderBistandSkjema && (
-              <Box>
-                <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
-                  Bekreft og fortsett
+              {behovForBistand === 'ikkeOppfylt' && (
+                <RhfRadioGroup
+                  key={selectedId}
+                  control={formHook.control}
+                  name={`vurderinger.${selectedId}.avslagsårsak`}
+                  legend="Avslagsårsak"
+                  validate={[required]}
+                  readOnly={isEditable}
+                >
+                  <Radio value="fritekst">Fritekst</Radio>
+                </RhfRadioGroup>
+              )}
+              {avslagsårsak === 'fritekst' && (
+                <RhfTextarea
+                  control={formHook.control}
+                  name={`vurderinger.${selectedId}.fritekst`}
+                  label="Fritekst avslagsbrev"
+                  description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+                  validate={[required]}
+                  readOnly={isEditable}
+                />
+              )}
+              {!isEditable && (
+                <HStack gap="space-8">
+                  <Button type="submit" size="small" loading={isPending}>
+                    Bekreft og fortsett
+                  </Button>
+                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                    Avbryt
+                  </Button>
+                </HStack>
+              )}
+            </VStack>
+            {!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
+              <Alert variant="success" size="small">
+                <Box marginBlock="space-2 space-12">
+                  <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
+                </Box>
+                <Button variant="primary" data-color="accent" size="small" type="submit" loading={isPending}>
+                  Send vurderinger til beslutter
                 </Button>
-              </Box>
+              </Alert>
             )}
           </VStack>
-          {!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
-            <Alert variant="success" size="small">
-              <Box marginBlock="space-2 space-12">
-                <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
-              </Box>
-              <Button variant="primary" data-color="accent" size="small" type="submit" loading={isPending}>
-                Send vurderinger til beslutter
-              </Button>
-            </Alert>
-          )}
-        </VStack>
-      </RhfForm>
+        </RhfForm>
+      )}
     </VilkårSplittPanel>
   );
 };

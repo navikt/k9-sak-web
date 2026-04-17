@@ -1,11 +1,12 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Box, Button, Radio, VStack } from '@navikt/ds-react';
+import { Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -67,6 +68,7 @@ export const AndreLivsoppholdytelser = ({
     periode: p.periode,
   }));
   const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
+  const isAksjonspunktSolved = andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT;
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår),
   });
@@ -123,14 +125,16 @@ export const AndreLivsoppholdytelser = ({
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av andre livsoppholdytelser"
       lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
+      defaultIsEditable={isAksjonspunktSolved}
+      readOnly={readOnly}
     >
-      <VStack gap="space-24">
+      {(isEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-24">
             <RhfTextarea
               control={formHook.control}
               name={`vurderinger.${selectedId}.begrunnelse`}
-              readOnly={readOnly}
+              readOnly={isEditable}
               label={
                 <span>
                   Vurder om søker har andre livsoppholdytelser, jmf.{' '}
@@ -146,7 +150,7 @@ export const AndreLivsoppholdytelser = ({
               name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
               legend="Har søker andre livsoppholdytelser?"
               validate={[required]}
-              readOnly={readOnly}
+              readOnly={isEditable}
             >
               <Radio value="oppfylt">Ja</Radio>
               <Radio value="ikkeOppfylt">Nei</Radio>
@@ -158,7 +162,7 @@ export const AndreLivsoppholdytelser = ({
                 name={`vurderinger.${selectedId}.avslagsårsak`}
                 legend="Avslagsårsak"
                 validate={[required]}
-                readOnly={readOnly}
+                readOnly={isEditable}
               >
                 <Radio value={Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE}>Søker har annen livsoppholdytelse</Radio>
                 <Radio value="fritekst">Fritekst</Radio>
@@ -171,19 +175,22 @@ export const AndreLivsoppholdytelser = ({
                 label="Fritekst avslagsbrev"
                 description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
                 validate={[required]}
-                readOnly={readOnly}
+                readOnly={isEditable}
               />
             )}
-            {!readOnly && (
-              <Box>
-                <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
+            {!isEditable && (
+              <HStack gap="space-8">
+                <Button type="submit" size="small" loading={isPending}>
                   Bekreft og fortsett
                 </Button>
-              </Box>
+                <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                  Avbryt
+                </Button>
+              </HStack>
             )}
           </VStack>
         </RhfForm>
-      </VStack>
+      )}
     </VilkårSplittPanel>
   );
 };
