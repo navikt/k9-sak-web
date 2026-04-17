@@ -25,15 +25,6 @@ type VedtakAksjonspunktKode = (typeof vedtakAksjonspunktKoder)[number];
 export type VedtakBekreftetAksjonspunktDto = Extract<BekreftetAksjonspunktDto, { '@type': VedtakAksjonspunktKode }>;
 
 /**
- * Type narrowing sjekk for VedtakBekreftetAksjonspunktDto
- */
-export const isVedtakBekreftetAksjonspunktDto = (
-  ap: BekreftetAksjonspunktDto,
-): ap is VedtakBekreftetAksjonspunktDto => {
-  return vedtakAksjonspunktKoder.some(vk => vk === ap['@type']);
-};
-
-/**
  * Type som avgrenser alle AksjonspunktDto typer til kun dei som gjeld vedtak
  */
 export type VedtakAksjonspunktDto = AksjonspunktDto & { definisjon: VedtakAksjonspunktKode };
