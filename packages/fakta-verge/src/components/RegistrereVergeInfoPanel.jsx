@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Alert, BodyLong, BodyShort, Heading, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
@@ -18,7 +18,6 @@ import FaktaSubmitButton from './FaktaSubmitButton';
  * Presentasjonskomponent. Har ansvar for å sette opp formen for att registrere verge.
  */
 export const RegistrereVergeInfoPanelImpl = ({
-  intl,
   hasOpenAksjonspunkter,
   submittable = true,
   readOnly,
@@ -28,6 +27,7 @@ export const RegistrereVergeInfoPanelImpl = ({
   behandlingVersjon,
   ...formProps
 }) => {
+  const intl = useIntl();
   if (!aksjonspunkt) {
     return null;
   }
@@ -84,7 +84,6 @@ export const RegistrereVergeInfoPanelImpl = ({
 };
 
 RegistrereVergeInfoPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
@@ -122,5 +121,5 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAVN,
-  })(injectIntl(RegistrereVergeInfoPanelImpl)),
+  })(RegistrereVergeInfoPanelImpl),
 );
