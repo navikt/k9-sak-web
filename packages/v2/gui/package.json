@@ -21,7 +21,7 @@
     "./context/*": "./src/context/*"
   },
   "dependencies": {
-    "@editorjs/editorjs": "2.31.5",
+    "@editorjs/editorjs": "2.31.6",
     "@editorjs/header": "2.8.8",
     "@editorjs/list": "2.0.9",
     "@editorjs/paragraph": "2.11.7",
@@ -37,7 +37,7 @@
     "@navikt/ft-types": "6.0.0",
     "@navikt/ft-ui-komponenter": "7.0.0",
     "@navikt/ft-utils": "4.0.0",
-    "@tanstack/react-query": "5.96.2",
+    "@tanstack/react-query": "5.97.0",
     "@types/css-tree": "2.3.11",
     "@types/object-hash": "3.0.6",
     "axios": "1.15.0",
