@@ -48,7 +48,7 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
   webServer: {
-    command: "pnpm dev",
+    command: "yarn dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },
