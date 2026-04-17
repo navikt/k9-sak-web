@@ -25,7 +25,7 @@ export interface UngVedtakProps {
   aksjonspunkter: VedtakAksjonspunktDto[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
-  submitCallback: UngVedtakBekreftelseCallback;
+  vedtakBekreftelseCallback: UngVedtakBekreftelseCallback;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
@@ -44,7 +44,7 @@ export const UngVedtak = ({
   api,
   behandling,
   aksjonspunkter,
-  submitCallback,
+  vedtakBekreftelseCallback,
   vilkår,
   readOnly,
   vedtaksbrevValgResponse,
@@ -126,7 +126,7 @@ export const UngVedtak = ({
   };
   const handleSubmit = () => {
     setIsSubmitting(true);
-    void submitCallback(transformValues()).finally(() => {
+    void vedtakBekreftelseCallback(transformValues()).finally(() => {
       setIsSubmitting(false);
     });
   };

@@ -55,6 +55,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
+  // Når behandling-ungdomsytelse VedtakProsessStegPanelDef er modernisert kan denne callback flyttast ned til UngVedtak
   const { mutateAsync: bekreftAksjonspunktMutation } = useMutation({
     mutationFn: async (data: VedtakBekreftetAksjonspunktDto[]) => {
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, data);
@@ -86,7 +87,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
       aksjonspunkter={vedtakAksjonspunkter}
       vilkar={vilkår}
       isReadOnly={isReadOnly}
-      submitCallback={bekreftAksjonspunktMutation}
+      vedtakBekreftelseCallback={bekreftAksjonspunktMutation}
       tekster={vedtakPanelTekster}
     />
   );

@@ -6,10 +6,10 @@ import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
-interface UngVedtakIndexProps {
+export interface UngVedtakIndexProps {
   aksjonspunkter: UngVedtakProps['aksjonspunkter'];
   behandling: UngVedtakBehandlingDto;
-  submitCallback: UngVedtakProps['submitCallback'];
+  vedtakBekreftelseCallback: UngVedtakProps['vedtakBekreftelseCallback'];
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
   tekster: UngVedtakTekster;
@@ -18,7 +18,7 @@ interface UngVedtakIndexProps {
 export const UngVedtakIndex = ({
   aksjonspunkter,
   behandling,
-  submitCallback,
+  vedtakBekreftelseCallback,
   vilkar,
   isReadOnly,
   tekster,
@@ -46,7 +46,7 @@ export const UngVedtakIndex = ({
           aksjonspunkter={aksjonspunkter}
           api={ungVedtakBackendClient}
           behandling={behandling}
-          submitCallback={submitCallback}
+          vedtakBekreftelseCallback={vedtakBekreftelseCallback}
           vilkår={vilkar}
           readOnly={isReadOnly}
           vedtaksbrevValgResponse={vedtaksbrevValgResponse}

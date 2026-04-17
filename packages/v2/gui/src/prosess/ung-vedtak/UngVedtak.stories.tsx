@@ -17,7 +17,7 @@ const meta = {
   args: {
     aksjonspunkter: [],
     api,
-    submitCallback: asyncAction('button-click'),
+    vedtakBekreftelseCallback: asyncAction('vedtak bekreftelse'),
     vedtaksbrevValgResponse: {},
     refetchVedtaksbrevValg: fn(),
     tekster: {
