@@ -208,7 +208,6 @@ const FritekstEditor = ({
             {kanInkludereKalender && (
               <div>
                 <InkluderKalenderCheckbox
-                  intl={intl}
                   setFieldValue={setFieldValue}
                   skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                   disabled={readOnly}

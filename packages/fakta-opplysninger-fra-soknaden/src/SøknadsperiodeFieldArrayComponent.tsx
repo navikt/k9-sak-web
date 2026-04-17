@@ -153,9 +153,7 @@ const SøknadsperiodeFieldArrayComponent = (
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
-                  typographyElement={DSLabel}
-                  intl={intl}
-                />
+                  typographyElement={DSLabel}/>
               }
               name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_SSN}`}
             />
@@ -185,9 +183,7 @@ const SøknadsperiodeFieldArrayComponent = (
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
-                  typographyElement={DSLabel}
-                  intl={intl}
-                />
+                  typographyElement={DSLabel}/>
               }
               name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_FRILANSER}`}
             />

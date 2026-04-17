@@ -64,7 +64,6 @@ const ArbeidsforholdInfoPanelImpl = ({
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
-  intl,
   ...formProps
 }: PureOwnProps & InjectedFormProps) => {
   const shouldDisableSubmitButton = formProps.pristine;
@@ -89,7 +88,6 @@ const ArbeidsforholdInfoPanelImpl = ({
       </h3>
       <form onSubmit={formProps.handleSubmit}>
         <PersonArbeidsforholdPanel
-          intl={intl}
           readOnly={readOnly}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}

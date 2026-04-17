@@ -128,7 +128,6 @@ interface MappedOwnProps {
 }
 const maxLength200 = maxLength(200);
 export const SettPaVentModal = ({
-  intl,
   handleSubmit,
   cancelEvent,
   showModal,
