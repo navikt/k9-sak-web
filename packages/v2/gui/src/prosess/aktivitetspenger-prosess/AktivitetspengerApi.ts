@@ -1,5 +1,4 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import type { AktivitetspengerUtbetaltMånedDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AktivitetspengerUtbetaltMånedDto.js';
@@ -13,7 +12,6 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 export interface AktivitetspengerApi {
   readonly backend: 'ungsak';
   getAksjonspunkter(behandlingId: string): Promise<AksjonspunktDto[]>;
-  lagreAksjonspunkt(props: BekreftedeAksjonspunkterDto): Promise<unknown>;
   lagreAksjonspunktOverstyr(props: BekreftetOgOverstyrteAksjonspunkterDto): Promise<unknown>;
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;

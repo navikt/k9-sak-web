@@ -1,17 +1,15 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import type { LegacyBekreftAksjonspunktCallback } from '../../utils/typehelp/AksjonspunktSubmitCallbackArgumentType';
-import { UngVedtak } from './UngVedtak';
+import { UngVedtak, type UngVedtakProps } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
-interface UngVedtakIndexProps {
-  aksjonspunkter: AksjonspunktDto[];
+export interface UngVedtakIndexProps {
+  aksjonspunkter: UngVedtakProps['aksjonspunkter'];
   behandling: UngVedtakBehandlingDto;
-  submitCallback: LegacyBekreftAksjonspunktCallback;
+  vedtakBekreftelseCallback: UngVedtakProps['vedtakBekreftelseCallback'];
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
   tekster: UngVedtakTekster;
@@ -20,7 +18,7 @@ interface UngVedtakIndexProps {
 export const UngVedtakIndex = ({
   aksjonspunkter,
   behandling,
-  submitCallback,
+  vedtakBekreftelseCallback,
   vilkar,
   isReadOnly,
   tekster,
@@ -48,7 +46,7 @@ export const UngVedtakIndex = ({
           aksjonspunkter={aksjonspunkter}
           api={ungVedtakBackendClient}
           behandling={behandling}
-          submitCallback={submitCallback}
+          vedtakBekreftelseCallback={vedtakBekreftelseCallback}
           vilkår={vilkar}
           readOnly={isReadOnly}
           vedtaksbrevValgResponse={vedtaksbrevValgResponse}
