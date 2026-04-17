@@ -95,6 +95,16 @@ export const Beslutter = ({
             begrunnelse: 'OK',
             godkjent: true,
           },
+          {
+            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+            begrunnelse: 'OK',
+            godkjent: true,
+          },
+          {
+            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTED,
+            begrunnelse: 'OK',
+            godkjent: true,
+          },
         ],
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
