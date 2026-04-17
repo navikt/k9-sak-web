@@ -1,4 +1,3 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
@@ -11,7 +10,6 @@ import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tan
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
-import type { LegacyBekreftAksjonspunktCallback } from '../../utils/typehelp/AksjonspunktSubmitCallbackArgumentType';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
 import type { FormData } from './FormData';
@@ -19,12 +17,15 @@ import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
+import { type VedtakAksjonspunktDto, type VedtakBekreftetAksjonspunktDto } from './ungVedtakAksjonspunktAvgrensing.js';
 
-interface UngVedtakProps {
-  aksjonspunkter: AksjonspunktDto[];
+type UngVedtakBekreftelseCallback = (bekreftet: VedtakBekreftetAksjonspunktDto[]) => Promise<void>;
+
+export interface UngVedtakProps {
+  aksjonspunkter: VedtakAksjonspunktDto[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
-  submitCallback: LegacyBekreftAksjonspunktCallback;
+  submitCallback: UngVedtakBekreftelseCallback;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
@@ -118,10 +119,11 @@ export const UngVedtak = ({
     name: 'vedtaksbrevValg',
   });
 
-  const transformValues = () =>
-    aksjonspunkter
+  const transformValues = (): VedtakBekreftetAksjonspunktDto[] => {
+    return aksjonspunkter
       .filter(ap => ap.kanLoses && ap.definisjon !== undefined)
-      .map(ap => ({ kode: ap.definisjon!, skalBrukeOverstyrendeFritekstBrev: false }));
+      .map(ap => ({ '@type': ap.definisjon, skalBrukeOverstyrendeFritekstBrev: false, ...ap }));
+  };
   const handleSubmit = () => {
     setIsSubmitting(true);
     void submitCallback(transformValues()).finally(() => {

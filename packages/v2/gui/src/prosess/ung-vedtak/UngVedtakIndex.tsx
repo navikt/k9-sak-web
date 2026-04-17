@@ -1,17 +1,15 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import type { LegacyBekreftAksjonspunktCallback } from '../../utils/typehelp/AksjonspunktSubmitCallbackArgumentType';
-import { UngVedtak } from './UngVedtak';
+import { UngVedtak, type UngVedtakProps } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 interface UngVedtakIndexProps {
-  aksjonspunkter: AksjonspunktDto[];
+  aksjonspunkter: UngVedtakProps['aksjonspunkter'];
   behandling: UngVedtakBehandlingDto;
-  submitCallback: LegacyBekreftAksjonspunktCallback;
+  submitCallback: UngVedtakProps['submitCallback'];
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
   tekster: UngVedtakTekster;

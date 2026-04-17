@@ -146,6 +146,7 @@ export const MedBrev: Story = {
     readOnly: false,
     aksjonspunkter: [
       {
+        definisjon: '5015',
         kanLoses: true,
       },
     ],
