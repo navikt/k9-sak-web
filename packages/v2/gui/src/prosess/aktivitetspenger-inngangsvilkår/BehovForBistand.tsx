@@ -36,6 +36,7 @@ export const BehovForBistand = ({
       const payload = {
         '@type': aksjonspunktDefinisjon,
         begrunnelse: 'fordi',
+        vurdertePerioder: [],
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
