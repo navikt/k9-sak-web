@@ -65,8 +65,8 @@
     "dayjs": "1.11.20",
     "history": "5.3.0",
     "i18n-iso-countries": "7.14.0",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "react-hook-form": "7.72.1",
     "react-intl": "8.1.4",
     "react-router": "7.14.0",
@@ -126,7 +126,7 @@
   },
   "resolutions": {
     "parse-url": "8.1.0",
-    "@types/react": "19.0.3"
+    "@types/react": "19.2.14"
   },
   "msw": {
     "workerDirectory": "public"
