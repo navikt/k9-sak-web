@@ -44,7 +44,7 @@ import { Skeleton } from "@navikt/ds-react";
 
 export default function Page() {
   return (
-    <VStack gap="8">
+    <VStack gap="space-8">
       <Heading size="large" level="1">Oversikt</Heading>
       <QuickSummary />
       <Suspense fallback={<Skeleton variant="rounded" height={300} />}>

@@ -40,7 +40,7 @@ export function {ComponentName}({
       padding={{ xs: "space-16", md: "space-24" }}
       borderRadius="large"
     >
-      <VStack gap="4">
+      <VStack gap="space-4">
         <Heading size="medium" level="2">
           {title}
         </Heading>
@@ -66,7 +66,7 @@ export function {ComponentName}({
   borderRadius="large"
   className="hover:shadow-lg transition-shadow"
 >
-  <VStack gap="4">
+  <VStack gap="space-4">
     <Heading size="medium" level="3">
       {title}
     </Heading>
@@ -78,7 +78,7 @@ export function {ComponentName}({
 ### Responsiv grid-layout
 
 ```tsx
-<HGrid columns={{ xs: 1, md: 2, lg: 3 }} gap="4">
+<HGrid columns={{ xs: 1, md: 2, lg: 3 }} gap="space-4">
   {items.map((item) => (
     <Card key={item.id} {...item} />
   ))}
@@ -89,11 +89,11 @@ export function {ComponentName}({
 
 ```tsx
 <Box paddingBlock="space-24">
-  <VStack gap="8">
+  <VStack gap="space-8">
     <Heading size="large" level="2">
       Form Title
     </Heading>
-    <VStack gap="4">
+    <VStack gap="space-4">
       <TextField label="Felt 1" />
       <TextField label="Felt 2" />
       <Button>Send inn</Button>
@@ -106,16 +106,16 @@ export function {ComponentName}({
 
 ```tsx
 <Box background="surface-default" padding={{ xs: "space-16", md: "space-24" }} borderRadius="medium">
-  <VStack gap="6">
-    <div className="flex items-center justify-between">
+  <VStack gap="space-6">
+    <HStack justify="space-between" align="center">
       <Heading size="large" level="2">
         Section Title
       </Heading>
       <Button variant="secondary" size="small">
         Action
       </Button>
-    </div>
-    <HGrid columns={{ xs: 1, sm: 2, lg: 4 }} gap="4">
+    </HStack>
+    <HGrid columns={{ xs: 1, sm: 2, lg: 4 }} gap="space-4">
       {metrics.map((metric) => (
         <MetricCard key={metric.id} {...metric} />
       ))}
