@@ -1,11 +1,13 @@
 import type { UngSakVilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Button, HGrid, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { BodyShort, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -18,7 +20,7 @@ import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/Aktivitets
 interface Props {
   api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
-  aksjonspunkt: Pick<AksjonspunktDto, 'definisjon'> | undefined;
+  aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
@@ -52,6 +54,7 @@ export const ForutgåendeMedlemskap = ({
   forutgåendeMedlemskap,
   onAksjonspunktBekreftet,
 }: Props) => {
+  const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
   const items: VilkårSplittPanelItem[] = (vilkår.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
@@ -82,7 +85,7 @@ export const ForutgåendeMedlemskap = ({
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
         erVilkarOk,
-        avslagsårsak: erVilkarOk ? undefined : ('SØKER_IKKE_MEDLEM' as const),
+        avslagsårsak: erVilkarOk ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -99,57 +102,66 @@ export const ForutgåendeMedlemskap = ({
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
       detailHeading="Forutgående medlemskap"
+      defaultIsEditable={isAksjonspunktSolved}
+      readOnly={readOnly}
     >
-      <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-        <VStack gap="space-16">
-          <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>
-          {overlappendeMedlemskap.length > 0 && (
-            <VStack gap="space-8">
-              <Label size="small" as="p">
-                Bosteder i utlandet siste 5 år
-              </Label>
-              <HGrid columns="max-content max-content" gap="space-8" align="center">
-                {overlappendeMedlemskap.map(medlemskap => {
-                  if (!medlemskap.periode) {
-                    return null;
-                  }
-                  const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
-                  return (
-                    <Fragment key={`${medlemskap.land}_${formatertPeriode}`}>
-                      <BodyShort size="small">{`${medlemskap.land}: ${formatertPeriode}`}</BodyShort>
-                      {medlemskap.harTrygdeavtale ? (
-                        <Tag variant="outline" data-color="success" size="small">
-                          Innenfor EØS
-                        </Tag>
-                      ) : (
-                        <Tag variant="outline" data-color="danger" size="small">
-                          Utenfor EØS
-                        </Tag>
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </HGrid>
-            </VStack>
-          )}
-          <RhfRadioGroup
-            key={selectedItemId}
-            control={formHook.control}
-            name={`vurderinger.${selectedItemId}`}
-            legend="Er forutgående medlemskap godkjent?"
-            validate={[required]}
-            disabled={readOnly}
-          >
-            <Radio value="oppfylt">Ja</Radio>
-            <Radio value="ikkeOppfylt">Nei</Radio>
-          </RhfRadioGroup>
-          <Box>
-            <Button type="submit" size="small" disabled={readOnly} loading={isPending}>
-              Bekreft og fortsett
-            </Button>
-          </Box>
-        </VStack>
-      </RhfForm>
+      {(defaultIsEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
+        <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+          <VStack gap="space-16">
+            {!defaultIsEditable && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
+            {overlappendeMedlemskap.length > 0 && (
+              <VStack gap="space-8">
+                <Label size="small" as="p">
+                  Bosteder i utlandet siste 5 år
+                </Label>
+                <HGrid columns="max-content max-content" gap="space-8" align="center">
+                  {overlappendeMedlemskap.map(medlemskap => {
+                    if (!medlemskap.periode) {
+                      return null;
+                    }
+                    const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
+                    return (
+                      <Fragment key={`${medlemskap.land}_${formatertPeriode}`}>
+                        <BodyShort size="small">{`${medlemskap.land}: ${formatertPeriode}`}</BodyShort>
+                        {medlemskap.harTrygdeavtale ? (
+                          <Tag variant="outline" data-color="success" size="small">
+                            Innenfor EØS
+                          </Tag>
+                        ) : (
+                          <Tag variant="outline" data-color="danger" size="small">
+                            Utenfor EØS
+                          </Tag>
+                        )}
+                      </Fragment>
+                    );
+                  })}
+                </HGrid>
+              </VStack>
+            )}
+            <RhfRadioGroup
+              key={selectedItemId}
+              control={formHook.control}
+              name={`vurderinger.${selectedItemId}`}
+              legend="Er forutgående medlemskap godkjent?"
+              validate={[required]}
+              readOnly={defaultIsEditable}
+            >
+              <Radio value="oppfylt">Ja</Radio>
+              <Radio value="ikkeOppfylt">Nei</Radio>
+            </RhfRadioGroup>
+            {!defaultIsEditable && (
+              <HStack gap="space-8">
+                <Button type="submit" size="small" loading={isPending}>
+                  Bekreft og fortsett
+                </Button>
+                <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                  Avbryt
+                </Button>
+              </HStack>
+            )}
+          </VStack>
+        </RhfForm>
+      )}
     </VilkårSplittPanel>
   );
 };

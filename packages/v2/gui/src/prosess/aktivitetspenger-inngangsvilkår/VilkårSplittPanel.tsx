@@ -4,10 +4,12 @@ import {
   CheckmarkCircleFillIcon,
   ChevronRightIcon,
   ExclamationmarkTriangleFillIcon,
+  PencilIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Box, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
+import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
@@ -26,8 +28,10 @@ interface VilkårSplittPanelProps {
   selectedItemId: string;
   onItemSelect: (id: string) => void;
   detailHeading: string;
-  children: ReactNode;
   lovreferanse?: string;
+  defaultIsEditable?: boolean;
+  readOnly?: boolean;
+  children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
@@ -52,10 +56,15 @@ export const VilkårSplittPanel = ({
   selectedItemId,
   onItemSelect,
   detailHeading,
+  defaultIsEditable = false,
+  readOnly = false,
   children,
   lovreferanse,
 }: VilkårSplittPanelProps) => {
   const selectedItem = items.find(item => item.id === selectedItemId);
+  const isRenderProp = typeof children === 'function';
+  const [isEditable, setIsEditable] = useState(defaultIsEditable);
+  const effectiveLocked = isEditable || readOnly;
 
   return (
     <HGrid columns="400px 1fr" gap="space-32">
@@ -135,7 +144,31 @@ export const VilkårSplittPanel = ({
             </HStack>
           )}
           <Box borderWidth="1 0 0 0" />
-          {children}
+          {isRenderProp ? (
+            <Box
+              borderRadius="8"
+              padding={effectiveLocked ? 'space-16' : 'space-0'}
+              background={effectiveLocked ? 'info-softA' : undefined}
+            >
+              <VStack gap={effectiveLocked ? 'space-20' : 'space-0'}>
+                {children(effectiveLocked, setIsEditable)}
+                <Bleed marginInline="space-8">
+                  {isEditable && !readOnly && (
+                    <Button
+                      size="small"
+                      variant="tertiary"
+                      icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
+                      onClick={() => setIsEditable(false)}
+                    >
+                      Rediger vurdering
+                    </Button>
+                  )}
+                </Bleed>
+              </VStack>
+            </Box>
+          ) : (
+            children
+          )}
         </VStack>
       </Box>
     </HGrid>

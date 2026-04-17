@@ -1,6 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
@@ -14,16 +13,11 @@ import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakInde
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
-
-const vedtakAksjonspunktKoder = [
-  AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
-  AksjonspunktDefinisjon.FATTER_VEDTAK,
-  AksjonspunktDefinisjon.FORESLÅ_VEDTAK_MANUELT,
-  AksjonspunktDefinisjon.VEDTAK_UTEN_TOTRINNSKONTROLL,
-  AksjonspunktDefinisjon.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-  AksjonspunktDefinisjon.KONTROLL_AV_MANUELT_OPPRETTET_REVURDERINGSBEHANDLING,
-  AksjonspunktDefinisjon.SJEKK_TILBAKEKREVING,
-];
+import {
+  isVedtakAksjonspunktDto,
+  VedtakAksjonspunktDto,
+  VedtakBekreftetAksjonspunktDto,
+} from '@k9-sak-web/gui/prosess/ung-vedtak/ungVedtakAksjonspunktAvgrensing.js';
 
 const PANEL_ID = prosessStegCodes.VEDTAK;
 
@@ -48,13 +42,8 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
       innloggetBrukerQueryOptions(api),
     ],
   });
-  const vedtakAksjonspunkter = useMemo(() => {
-    return (
-      aksjonspunkter?.filter(
-        (ap): ap is typeof ap & { definisjon: AksjonspunktDefinisjon } =>
-          ap.definisjon != null && vedtakAksjonspunktKoder.some(kode => kode === ap.definisjon),
-      ) || []
-    );
+  const vedtakAksjonspunkter: VedtakAksjonspunktDto[] = useMemo(() => {
+    return aksjonspunkter.filter(isVedtakAksjonspunktDto);
   }, [aksjonspunkter]);
 
   const isReadOnly = useMemo(() => {
@@ -66,16 +55,16 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
+  // Når behandling-ungdomsytelse VedtakProsessStegPanelDef er modernisert kan denne callback flyttast ned til UngVedtak
   const { mutateAsync: bekreftAksjonspunktMutation } = useMutation({
-    mutationFn: async (data: { kode: AksjonspunktDefinisjon }[]) => {
-      const payload = data.map(ap => ({ '@type': ap.kode }) as BekreftetAksjonspunktDto);
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, payload);
+    mutationFn: async (data: VedtakBekreftetAksjonspunktDto[]) => {
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, data);
     },
     onSuccess: () => {
       const fatterVedtakAksjonspunktkoder = [
-        aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-        aksjonspunktCodes.FATTER_VEDTAK,
-        aksjonspunktCodes.FORESLÅ_VEDTAK_MANUELT,
+        AksjonspunktDefinisjon.VEDTAK_UTEN_TOTRINNSKONTROLL,
+        AksjonspunktDefinisjon.FATTER_VEDTAK,
+        AksjonspunktDefinisjon.FORESLÅ_VEDTAK_MANUELT,
       ];
       const visIverksetterVedtakModal = vedtakAksjonspunkter.some(ap =>
         fatterVedtakAksjonspunktkoder.some(kode => kode === ap.definisjon),
@@ -98,7 +87,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
       aksjonspunkter={vedtakAksjonspunkter}
       vilkar={vilkår}
       isReadOnly={isReadOnly}
-      submitCallback={bekreftAksjonspunktMutation}
+      vedtakBekreftelseCallback={bekreftAksjonspunktMutation}
       tekster={vedtakPanelTekster}
     />
   );

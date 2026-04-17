@@ -11,10 +11,7 @@ import {
   navAnsatt_innloggetBrukerV2,
   vilkår_getVilkårV3,
 } from '@navikt/ung-sak-typescript-client/sdk';
-import type {
-  ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-} from '@navikt/ung-sak-typescript-client/types';
+import type { ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto } from '@navikt/ung-sak-typescript-client/types';
 import { type AktivitetspengerApi } from './AktivitetspengerApi';
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
@@ -22,12 +19,6 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async getAksjonspunkter(behandlingId: string) {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;
-  }
-
-  async lagreAksjonspunkt(props: ung_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) {
-    const { behandlingId, behandlingVersjon, bekreftedeAksjonspunktDtoer } = props;
-    return (await aksjonspunkt_bekreft({ body: { behandlingId, behandlingVersjon, bekreftedeAksjonspunktDtoer } }))
-      .data;
   }
 
   async lagreAksjonspunktOverstyr(props: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) {

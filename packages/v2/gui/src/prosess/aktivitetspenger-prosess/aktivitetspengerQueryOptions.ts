@@ -1,4 +1,3 @@
-import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { queryOptions } from '@tanstack/react-query';
 import type { AktivitetspengerApi } from './AktivitetspengerApi';
 
@@ -13,18 +12,10 @@ export const vilkårQueryOptions = (api: AktivitetspengerApi, behandling: Behand
     queryFn: () => api.getVilkår(behandling.uuid),
   });
 
-export const aksjonspunkterQueryOptions = (
-  api: AktivitetspengerApi,
-  behandling: Behandling,
-  aksjonspunktKoder?: string[],
-) =>
+export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
   queryOptions({
     queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
-    select: aksjonspunktKoder
-      ? (data: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
-          data.filter(ap => aksjonspunktKoder.some(kode => kode === ap.definisjon))
-      : undefined,
   });
 
 export const behandlingQueryOptions = (api: AktivitetspengerApi, behandling: Pick<Behandling, 'uuid' | 'versjon'>) =>
