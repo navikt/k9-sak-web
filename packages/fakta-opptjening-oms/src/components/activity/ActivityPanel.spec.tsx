@@ -179,7 +179,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('combobox', { name: 'ActivityPanel.Activity' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Aktivitet' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Arbeid' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Næring' })).toBeInTheDocument();
   });

@@ -7,7 +7,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
-import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
+import { VedtakAvslagPanel } from './VedtakAvslagPanel';
 
 const pleiepenger = fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 const omsorgspenger = fagsakYtelsesType.OMSORGSPENGER;
@@ -36,7 +36,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   it('skal rendre avslagspanel for pleiepenger', () => {
     renderWithIntl(
-      <VedtakAvslagPanelImpl
+      <VedtakAvslagPanel
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={pleiepenger}
@@ -54,7 +54,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   it('skal rendre avslagspanel for omsorgspenger', () => {
     renderWithIntl(
-      <VedtakAvslagPanelImpl
+      <VedtakAvslagPanel
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={omsorgspenger}
@@ -72,7 +72,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   it('skal rendre avslagspanel for utvidet rett kronisk sykt barn', () => {
     renderWithIntl(
-      <VedtakAvslagPanelImpl
+      <VedtakAvslagPanel
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={kroniskSyktBarn}
@@ -90,7 +90,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   it('skal rendre avslagspanel for midlertidig alene', () => {
     renderWithIntl(
-      <VedtakAvslagPanelImpl
+      <VedtakAvslagPanel
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={midlertidigAlene}

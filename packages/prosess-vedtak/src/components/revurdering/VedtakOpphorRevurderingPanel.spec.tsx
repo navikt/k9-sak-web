@@ -3,12 +3,12 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { screen } from '@testing-library/react';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
-import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
+import { VedtakOpphorRevurderingPanel } from './VedtakOpphorRevurderingPanel';
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak', () => {
     renderWithIntl(
-      <VedtakOpphorRevurderingPanelImpl
+      <VedtakOpphorRevurderingPanel
         intl={intlMock}
         ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
         medlemskapFom="2021-01-01"
@@ -32,7 +32,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
   });
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
     renderWithIntl(
-      <VedtakOpphorRevurderingPanelImpl
+      <VedtakOpphorRevurderingPanel
         intl={intlMock}
         ytelseTypeKode={fagsakYtelsesType.SVANGERSKAPSPENGER}
         medlemskapFom="2021-01-01"

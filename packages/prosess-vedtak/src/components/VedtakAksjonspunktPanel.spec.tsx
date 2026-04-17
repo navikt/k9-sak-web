@@ -2,13 +2,13 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
-import { VedtakAksjonspunktPanelImpl } from './VedtakAksjonspunktPanel';
+import { VedtakAksjonspunktPanel } from './VedtakAksjonspunktPanel';
 
 describe('<VedtakAksjonspunktPanel>', () => {
   it('skal rendre komponent korrekt', () => {
     const aksjonspunktKoder = [];
     renderWithIntl(
-      <VedtakAksjonspunktPanelImpl
+      <VedtakAksjonspunktPanel
         behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
         readOnly={false}
         aksjonspunktKoder={aksjonspunktKoder}

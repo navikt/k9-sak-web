@@ -33,7 +33,7 @@ interface VedtakHelpTextPanelProps {
  * Det er i denne filen teksten vises ...
  */
 
-export const VedtakHelpTextPanelImpl = ({
+export const VedtakHelpTextPanel = ({
   readOnly,
   aksjonspunktKoder,
   viseFlereSjekkbokserForBrev,
@@ -69,4 +69,4 @@ export const VedtakHelpTextPanelImpl = ({
   return null;
 };
 
-export default VedtakHelpTextPanelImpl;
+export default VedtakHelpTextPanel;

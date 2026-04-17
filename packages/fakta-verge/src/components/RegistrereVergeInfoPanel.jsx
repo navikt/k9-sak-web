@@ -17,7 +17,7 @@ import FaktaSubmitButton from './FaktaSubmitButton';
  *
  * Presentasjonskomponent. Har ansvar for å sette opp formen for att registrere verge.
  */
-export const RegistrereVergeInfoPanelImpl = ({
+export const RegistrereVergeInfoPanel = ({
   hasOpenAksjonspunkter,
   submittable = true,
   readOnly,
@@ -83,7 +83,7 @@ export const RegistrereVergeInfoPanelImpl = ({
   );
 };
 
-RegistrereVergeInfoPanelImpl.propTypes = {
+RegistrereVergeInfoPanel.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
@@ -121,5 +121,5 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: FORM_NAVN,
-  })(RegistrereVergeInfoPanelImpl),
+  })(RegistrereVergeInfoPanel),
 );

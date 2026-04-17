@@ -31,7 +31,7 @@ interface OwnState {
   opphoersdato?: string;
 }
 
-export const VedtakOpphorRevurderingPanelImpl = ({
+export const VedtakOpphorRevurderingPanel = ({
   opphoersdato = '',
   ytelseTypeKode,
 }: VedtakOpphorRevurderingPanelProps & OwnState) => {
@@ -80,4 +80,4 @@ const mapStateToProps = (state, ownProps: VedtakOpphorRevurderingPanelProps) => 
   opphoersdato: getOpphorsdato(ownProps),
 });
 
-export default connect(mapStateToProps)(VedtakOpphorRevurderingPanelImpl);
+export default connect(mapStateToProps)(VedtakOpphorRevurderingPanel);

@@ -22,7 +22,7 @@ interface VedtakAvslagPanelProps {
   tilbakekrevingvalg: TilbakekrevingValgDto;
 }
 
-export const VedtakAvslagPanelImpl = ({
+export const VedtakAvslagPanel = ({
   vilkar,
   behandlingsresultat,
   ytelseTypeKode,
@@ -55,4 +55,4 @@ const mapStateToProps = (state, ownProps: VedtakAvslagPanelProps) => ({
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 
-export default connect(mapStateToProps)(VedtakAvslagPanelImpl);
+export default connect(mapStateToProps)(VedtakAvslagPanel);

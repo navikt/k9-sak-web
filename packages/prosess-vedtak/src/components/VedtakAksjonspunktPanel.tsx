@@ -25,7 +25,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
+export const VedtakAksjonspunktPanel: React.FC<Props> = ({
   children,
   behandlingStatusKode,
   aksjonspunktKoder,
@@ -66,4 +66,4 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
   );
 };
 
-export default VedtakAksjonspunktPanelImpl;
+export default VedtakAksjonspunktPanel;
