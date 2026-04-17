@@ -3,6 +3,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Button, HGrid, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
@@ -87,7 +88,7 @@ export const ForutgåendeMedlemskap = ({
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
         erVilkarOk,
-        avslagsårsak: erVilkarOk ? undefined : ('SØKER_IKKE_MEDLEM' as const),
+        avslagsårsak: erVilkarOk ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
