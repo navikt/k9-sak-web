@@ -148,7 +148,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
                 }
               />
               <RhfRadioGroup
-                key={selectedId}
+                key={`${selectedId}-bosatt`}
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.bosatt`}
                 legend="Er søker bosatt i Trondheim kommune?"
@@ -160,7 +160,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
               </RhfRadioGroup>
               {bosatt === 'ikkeOppfylt' && (
                 <RhfRadioGroup
-                  key={selectedId}
+                  key={`${selectedId}-avslagsårsak`}
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.avslagsårsak`}
                   legend="Avslagsårsak"
@@ -175,6 +175,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
               )}
               {avslagsårsak === 'fritekst' && (
                 <RhfTextarea
+                  key={`${selectedId}-fritekst`}
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.fritekst`}
                   label="Fritekst avslagsbrev"

@@ -145,7 +145,7 @@ export const AndreLivsoppholdytelser = ({
               }
             />
             <RhfRadioGroup
-              key={selectedId}
+              key={`${selectedId}-andreLivsoppholdytelser`}
               control={formHook.control}
               name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
               legend="Har søker andre livsoppholdytelser?"
@@ -157,7 +157,7 @@ export const AndreLivsoppholdytelser = ({
             </RhfRadioGroup>
             {andreLivsoppholdytelser === 'ikkeOppfylt' && (
               <RhfRadioGroup
-                key={selectedId}
+                key={`${selectedId}-avslagsårsak`}
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.avslagsårsak`}
                 legend="Avslagsårsak"
@@ -170,6 +170,7 @@ export const AndreLivsoppholdytelser = ({
             )}
             {avslagsårsak === 'fritekst' && (
               <RhfTextarea
+                key={`${selectedId}-fritekst`}
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.fritekst`}
                 label="Fritekst avslagsbrev"

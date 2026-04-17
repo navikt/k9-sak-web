@@ -154,7 +154,7 @@ export const BehovForBistand = ({
                 }
               />
               <RhfRadioGroup
-                key={selectedId}
+                key={`${selectedId}-behovForBistand`}
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.behovForBistand`}
                 legend="Har søker behov for bistand?"
@@ -166,7 +166,7 @@ export const BehovForBistand = ({
               </RhfRadioGroup>
               {behovForBistand === 'ikkeOppfylt' && (
                 <RhfRadioGroup
-                  key={selectedId}
+                  key={`${selectedId}-avslagsårsak`}
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.avslagsårsak`}
                   legend="Avslagsårsak"
@@ -178,6 +178,7 @@ export const BehovForBistand = ({
               )}
               {avslagsårsak === 'fritekst' && (
                 <RhfTextarea
+                  key={`${selectedId}-fritekst`}
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.fritekst`}
                   label="Fritekst avslagsbrev"
