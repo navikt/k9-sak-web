@@ -29,9 +29,10 @@ interface VilkårSplittPanelProps {
   onItemSelect: (id: string) => void;
   detailHeading: string;
   lovreferanse?: string;
-  defaultIsEditable?: boolean;
+  defaultIsLocked?: boolean;
   readOnly?: boolean;
   children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
+  afterEditButton?: ReactNode;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
@@ -56,15 +57,16 @@ export const VilkårSplittPanel = ({
   selectedItemId,
   onItemSelect,
   detailHeading,
-  defaultIsEditable = false,
+  defaultIsLocked = false,
   readOnly = false,
   children,
+  afterEditButton,
   lovreferanse,
 }: VilkårSplittPanelProps) => {
   const selectedItem = items.find(item => item.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
-  const [isEditable, setIsEditable] = useState(defaultIsEditable);
-  const effectiveLocked = isEditable || readOnly;
+  const [isFormLocked, setIsFormLocked] = useState(defaultIsLocked);
+  const effectiveLocked = isFormLocked || readOnly;
 
   return (
     <HGrid columns="400px 1fr" gap="space-32">
@@ -150,20 +152,21 @@ export const VilkårSplittPanel = ({
               padding={effectiveLocked ? 'space-16' : 'space-0'}
               background={effectiveLocked ? 'info-softA' : undefined}
             >
-              <VStack gap={isEditable && !readOnly ? 'space-20' : 'space-0'}>
-                {children(effectiveLocked, setIsEditable)}
+              <VStack gap={isFormLocked && !readOnly ? 'space-20' : 'space-0'}>
+                {children(effectiveLocked, setIsFormLocked)}
                 <Bleed marginInline="space-8">
-                  {isEditable && !readOnly && (
+                  {isFormLocked && !readOnly && (
                     <Button
                       size="small"
                       variant="tertiary"
                       icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
-                      onClick={() => setIsEditable(false)}
+                      onClick={() => setIsFormLocked(false)}
                     >
                       Rediger vurdering
                     </Button>
                   )}
                 </Bleed>
+                {afterEditButton}
               </VStack>
             </Box>
           ) : (

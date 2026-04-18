@@ -1,57 +1,73 @@
+import {
+  ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
+  ung_kodeverk_behandling_aksjonspunkt_VurderÅrsak as VurderÅrsak,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
-import { BodyShort, Box, Button, Heading, HStack, Link, Radio, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import {
+  BodyShort,
+  Box,
+  Button,
+  Detail,
+  ErrorMessage,
+  Fieldset,
+  Heading,
+  HStack,
+  Link,
+  Radio,
+  VStack,
+} from '@navikt/ds-react';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useMutation } from '@tanstack/react-query';
-import type { Control, FieldPath, FieldValues, SubmitHandler } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm, useWatch, type SubmitHandler } from 'react-hook-form';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import styles from './beslutter.module.css';
 import { InngangsvilkårTab } from './types';
 import { aksjonspunktErÅpent } from './utils/utils';
 
-interface VilkårRadioItemProps<TFieldValues extends FieldValues> {
-  label: string;
-  name: FieldPath<TFieldValues>;
-  control: Control<TFieldValues>;
-  onLabelClick: () => void;
-}
-
-const VilkårRadioItem = <TFieldValues extends FieldValues>({
-  label,
-  name,
-  control,
-  onLabelClick,
-}: VilkårRadioItemProps<TFieldValues>) => (
-  <Box>
-    <button type="button" onClick={onLabelClick} className={styles.buttonLink}>
-      <Link as={BodyShort} weight="semibold" size="small">
-        {label}
-      </Link>
-    </button>
-    <RhfRadioGroup
-      name={name}
-      legend="Vurder om vilkåret er godkjent"
-      hideLegend
-      control={control}
-      validate={[required]}
-    >
-      <HStack gap="space-16">
-        <Radio value="godkjent">Godkjent</Radio>
-        <Radio value="ikkeGodkjent">Ikke godkjent</Radio>
-      </HStack>
-    </RhfRadioGroup>
-  </Box>
-);
+type AksjonspunktGodkjenningItem = {
+  aksjonspunktKode: string;
+  skjermlenkeType: string;
+  totrinnskontrollGodkjent?: boolean;
+  besluttersBegrunnelse?: string;
+  feilFakta?: boolean;
+  feilRegel?: boolean;
+  feilLov?: boolean;
+  annet?: boolean;
+};
 
 interface FormValues {
-  behovForBistand?: 'godkjent' | 'ikkeGodkjent';
-  bosattITrondheim?: 'godkjent' | 'ikkeGodkjent';
-  andreLivsoppholdytelser?: 'godkjent' | 'ikkeGodkjent';
+  aksjonspunktGodkjenning: AksjonspunktGodkjenningItem[];
 }
+
+const skjermlenkeTypeToTab: Record<string, InngangsvilkårTab | undefined> = {
+  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BOSTEDSVILKÅR]: InngangsvilkårTab.BOSATT_I_TRONDHEIM,
+  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER]:
+    InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
+  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BISTANDSVILKÅR]: InngangsvilkårTab.BEHOV_FOR_BISTAND,
+  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.SOEKNADSFRIST]: InngangsvilkårTab.SØKNADSFRIST,
+};
+
+const buildDefaultValues = (
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[],
+): FormValues => ({
+  aksjonspunktGodkjenning: totrinnskontrollSkjermlenkeContext.flatMap(ctx =>
+    (ctx.totrinnskontrollAksjonspunkter ?? []).map(ap => ({
+      aksjonspunktKode: ap.aksjonspunktKode ?? '',
+      skjermlenkeType: ctx.skjermlenkeType,
+      totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
+      besluttersBegrunnelse: ap.besluttersBegrunnelse,
+      feilFakta: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_FAKTA) ?? false,
+      feilRegel: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_REGEL) ?? false,
+      feilLov: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_LOV) ?? false,
+      annet: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.ANNET) ?? false,
+    })),
+  ),
+});
 
 interface Props {
   lokalkontorBeslutterAp: AksjonspunktDto | undefined;
@@ -61,6 +77,7 @@ interface Props {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
 }
 
 export const Beslutter = ({
@@ -70,42 +87,42 @@ export const Beslutter = ({
   api,
   behandling,
   onAksjonspunktBekreftet,
+  totrinnskontrollSkjermlenkeContext,
 }: Props) => {
   const formHook = useForm<FormValues>({
-    defaultValues: {
-      behovForBistand: 'godkjent',
-      bosattITrondheim: 'godkjent',
-      andreLivsoppholdytelser: 'godkjent',
-    },
+    defaultValues: buildDefaultValues(totrinnskontrollSkjermlenkeContext),
   });
 
+  const { control, getFieldState, trigger } = formHook;
+  const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
+  const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
+
+  const kanBeslutte = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte;
+
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (data: FormValues) => {
       const aksjonspunkt = lokalkontorBeslutterAp;
       if (!aksjonspunkt?.definisjon) {
         return;
       }
-      const aksjonspunktDefinisjon = AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR;
       const payload = {
-        '@type': aksjonspunktDefinisjon,
-        begrunnelse: 'fordi',
-        aksjonspunktGodkjenningDtos: [
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-            begrunnelse: 'OK',
-            godkjent: true,
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-            begrunnelse: 'OK',
-            godkjent: true,
-          },
-          {
-            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTED,
-            begrunnelse: 'OK',
-            godkjent: true,
-          },
-        ],
+        '@type': AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+        // begrunnelse: data.aksjonspunktGodkjenning.map(apGodkjenning => apGodkjenning.besluttersBegrunnelse).join('\n'),
+        aksjonspunktGodkjenningDtos: data.aksjonspunktGodkjenning.map(apGodkjenning => {
+          const arsaker: VurderÅrsak[] = [];
+          if (!apGodkjenning.totrinnskontrollGodkjent) {
+            if (apGodkjenning.feilFakta) arsaker.push(VurderÅrsak.FEIL_FAKTA);
+            if (apGodkjenning.feilLov) arsaker.push(VurderÅrsak.FEIL_LOV);
+            if (apGodkjenning.feilRegel) arsaker.push(VurderÅrsak.FEIL_REGEL);
+            if (apGodkjenning.annet) arsaker.push(VurderÅrsak.ANNET);
+          }
+          return {
+            aksjonspunktKode: apGodkjenning.aksjonspunktKode,
+            godkjent: apGodkjenning.totrinnskontrollGodkjent ?? false,
+            begrunnelse: apGodkjenning.besluttersBegrunnelse,
+            arsaker,
+          };
+        }),
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -113,9 +130,8 @@ export const Beslutter = ({
       onAksjonspunktBekreftet();
     },
   });
-  const kanBeslutte = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte;
 
-  const onSubmit: SubmitHandler<FormValues> = () => bekreftAksjonspunktMutation();
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => bekreftAksjonspunktMutation(data);
 
   return (
     <Box width="fit-content">
@@ -129,26 +145,104 @@ export const Beslutter = ({
             {!kanBeslutte && <BodyShort>Du må ha rolle LOKALKONTOR_BESLUTTER</BodyShort>}
             {kanBeslutte && (
               <VStack gap="space-28">
-                <VilkårRadioItem
-                  label="Bosatt i Trondheim"
-                  name="bosattITrondheim"
-                  control={formHook.control}
-                  onLabelClick={() => onTabChange(InngangsvilkårTab.BOSATT_I_TRONDHEIM)}
-                />
-                <VilkårRadioItem
-                  label="Andre livsoppholdytelser"
-                  name="andreLivsoppholdytelser"
-                  control={formHook.control}
-                  onLabelClick={() => onTabChange(InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER)}
-                />
-                <VilkårRadioItem
-                  label="Behov for bistand"
-                  name="behovForBistand"
-                  control={formHook.control}
-                  onLabelClick={() => onTabChange(InngangsvilkårTab.BEHOV_FOR_BISTAND)}
-                />
+                {fields.map((field, index) => {
+                  const item = aksjonspunktGodkjenning?.[index];
+                  const visAvslagsårsakKryssbokser = item?.totrinnskontrollGodkjent === false;
+                  const visBegrunnelseTekstfelt = item?.totrinnskontrollGodkjent === false;
+
+                  const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
+                  const checkboxValidationError = error?.message;
+                  const reValidate = () => trigger(`aksjonspunktGodkjenning.${index}`);
+
+                  const tab = skjermlenkeTypeToTab[item?.skjermlenkeType ?? ''];
+                  const formaterSkjermlenkeType = (skjermlenkeType?: string) => {
+                    switch (skjermlenkeType) {
+                      case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BOSTEDSVILKÅR:
+                        return 'Bosatt i Trondheim';
+                      case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
+                        return 'Andre livsoppholdsytelser';
+                      case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BISTANDSVILKÅR:
+                        return 'Behov for bistand';
+                      case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.SOEKNADSFRIST:
+                        return 'Søknadsfrist';
+                      default:
+                        return skjermlenkeType;
+                    }
+                  };
+                  return (
+                    <Box key={field.id}>
+                      <button type="button" onClick={() => tab && onTabChange(tab)} className={styles.buttonLink}>
+                        <Link as={BodyShort} weight="semibold" size="small">
+                          {formaterSkjermlenkeType(item?.skjermlenkeType)}
+                        </Link>
+                      </button>
+                      <Fieldset legend="" hideLegend>
+                        <RhfRadioGroup
+                          control={control}
+                          name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
+                          legend="Vurder om vilkåret er godkjent"
+                          hideLegend
+                        >
+                          <HStack gap="space-16">
+                            <Radio value={true}>Godkjent</Radio>
+                            <Radio value={false}>Vurder på nytt</Radio>
+                          </HStack>
+                        </RhfRadioGroup>
+                        {visBegrunnelseTekstfelt && (
+                          <ArrowBox alignOffset={110}>
+                            {visAvslagsårsakKryssbokser && (
+                              <VStack gap="space-8">
+                                <Detail>Årsak</Detail>
+                                <Fieldset legend="" hideLegend>
+                                  <HStack gap="space-80">
+                                    <div>
+                                      <RhfCheckbox
+                                        control={control}
+                                        name={`aksjonspunktGodkjenning.${index}.feilFakta`}
+                                        label="Feil fakta"
+                                        onChange={reValidate}
+                                      />
+                                      <RhfCheckbox
+                                        control={control}
+                                        name={`aksjonspunktGodkjenning.${index}.feilRegel`}
+                                        label="Feil regelforståelse"
+                                        onChange={reValidate}
+                                      />
+                                    </div>
+                                    <div>
+                                      <RhfCheckbox
+                                        control={control}
+                                        name={`aksjonspunktGodkjenning.${index}.feilLov`}
+                                        label="Feil lovanvendelse"
+                                        onChange={reValidate}
+                                      />
+                                      <RhfCheckbox
+                                        control={control}
+                                        name={`aksjonspunktGodkjenning.${index}.annet`}
+                                        label="Annet"
+                                        onChange={reValidate}
+                                      />
+                                    </div>
+                                  </HStack>
+                                  {checkboxValidationError && <ErrorMessage>{checkboxValidationError}</ErrorMessage>}
+                                </Fieldset>
+                              </VStack>
+                            )}
+                            <div className="mt-4">
+                              <RhfTextarea
+                                control={control}
+                                name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
+                                label="Begrunnelse"
+                              />
+                            </div>
+                          </ArrowBox>
+                        )}
+                      </Fieldset>
+                    </Box>
+                  );
+                })}
                 <Box>
-                  <Button variant="primary" type="submit" size="small" loading={isPending}>
+                  <Button variant="primary" size="small" type="submit" loading={isPending}>
                     Bekreft
                   </Button>
                 </Box>

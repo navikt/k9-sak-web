@@ -133,17 +133,39 @@ export const BehovForBistand = ({
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av behov for bistand"
       lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
-      defaultIsEditable={isAksjonspunktSolved}
+      defaultIsLocked={
+        isAksjonspunktSolved ||
+        (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp))
+      }
       readOnly={readOnly}
+      afterEditButton={
+        !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
+          <Alert variant="success" size="small">
+            <Box marginBlock="space-2 space-12">
+              <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
+            </Box>
+            <Button
+              variant="primary"
+              data-color="accent"
+              size="small"
+              type="button"
+              loading={isPending}
+              onClick={() => void formHook.handleSubmit(onSubmit)()}
+            >
+              Send vurderinger til beslutter
+            </Button>
+          </Alert>
+        ) : null
+      }
     >
-      {(isEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
+      {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-24">
             <VStack gap="space-24">
               <RhfTextarea
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelse`}
-                readOnly={isEditable}
+                readOnly={isFormLocked}
                 label={
                   <span>
                     Vurder om søker har behov for bistand, jmf.{' '}
@@ -159,7 +181,7 @@ export const BehovForBistand = ({
                 name={`vurderinger.${selectedId}.behovForBistand`}
                 legend="Har søker behov for bistand?"
                 validate={[required]}
-                readOnly={isEditable}
+                readOnly={isFormLocked}
               >
                 <Radio value="oppfylt">Ja</Radio>
                 <Radio value="ikkeOppfylt">Nei</Radio>
@@ -171,7 +193,7 @@ export const BehovForBistand = ({
                   name={`vurderinger.${selectedId}.avslagsårsak`}
                   legend="Avslagsårsak"
                   validate={[required]}
-                  readOnly={isEditable}
+                  readOnly={isFormLocked}
                 >
                   <Radio value="fritekst">Fritekst</Radio>
                 </RhfRadioGroup>
@@ -184,30 +206,20 @@ export const BehovForBistand = ({
                   label="Fritekst avslagsbrev"
                   description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
                   validate={[required]}
-                  readOnly={isEditable}
+                  readOnly={isFormLocked}
                 />
               )}
-              {!isEditable && (
+              {!isFormLocked && (
                 <HStack gap="space-8">
                   <Button type="submit" size="small" loading={isPending}>
                     Bekreft og fortsett
                   </Button>
-                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
                     Avbryt
                   </Button>
                 </HStack>
               )}
             </VStack>
-            {!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) && (
-              <Alert variant="success" size="small">
-                <Box marginBlock="space-2 space-12">
-                  <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
-                </Box>
-                <Button variant="primary" data-color="accent" size="small" type="submit" loading={isPending}>
-                  Send vurderinger til beslutter
-                </Button>
-              </Alert>
-            )}
           </VStack>
         </RhfForm>
       )}

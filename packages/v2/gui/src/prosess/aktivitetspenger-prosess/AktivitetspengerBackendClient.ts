@@ -9,6 +9,7 @@ import {
   behandlinger_hentBehandlingMidlertidigStatus1,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
+  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
 } from '@navikt/ung-sak-typescript-client/sdk';
 import type { ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto } from '@navikt/ung-sak-typescript-client/types';
@@ -69,5 +70,9 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
         bekreftedeAksjonspunktDtoer,
       },
     });
+  }
+
+  async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string) {
+    return (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({ query: { behandlingUuid } })).data;
   }
 }

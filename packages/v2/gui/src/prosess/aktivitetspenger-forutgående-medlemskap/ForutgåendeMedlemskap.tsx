@@ -102,13 +102,13 @@ export const ForutgåendeMedlemskap = ({
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
       detailHeading="Forutgående medlemskap"
-      defaultIsEditable={isAksjonspunktSolved}
+      defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
     >
-      {(defaultIsEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
+      {(defaultIsLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-16">
-            {!defaultIsEditable && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
+            {!defaultIsLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
             {overlappendeMedlemskap.length > 0 && (
               <VStack gap="space-8">
                 <Label size="small" as="p">
@@ -144,17 +144,17 @@ export const ForutgåendeMedlemskap = ({
               name={`vurderinger.${selectedItemId}`}
               legend="Er forutgående medlemskap godkjent?"
               validate={[required]}
-              readOnly={defaultIsEditable}
+              readOnly={defaultIsLocked}
             >
               <Radio value="oppfylt">Ja</Radio>
               <Radio value="ikkeOppfylt">Nei</Radio>
             </RhfRadioGroup>
-            {!defaultIsEditable && (
+            {!defaultIsLocked && (
               <HStack gap="space-8">
                 <Button type="submit" size="small" loading={isPending}>
                   Bekreft og fortsett
                 </Button>
-                <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
                   Avbryt
                 </Button>
               </HStack>

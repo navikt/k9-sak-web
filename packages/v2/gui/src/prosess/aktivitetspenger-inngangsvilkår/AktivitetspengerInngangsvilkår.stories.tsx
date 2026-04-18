@@ -5,6 +5,7 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { AktivitetspengerInngangsvilkår } from './AktivitetspengerInngangsvilkår';
@@ -54,6 +55,7 @@ export const MedÅpentBistandsvilkår: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -63,6 +65,7 @@ export const MedUtførtBistandsvilkår: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -72,6 +75,7 @@ export const MedÅpentLokalkontorForeslårVilkår: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -87,6 +91,18 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: () => {},
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: 'BOSATT_I_TRONDHEIM',
+        totrinnskontrollAksjonspunkter: [{ aksjonspunktKode: '5014', totrinnskontrollGodkjent: undefined }],
+      },
+      {
+        skjermlenkeType: 'BEHOV_FOR_BISTAND',
+        totrinnskontrollAksjonspunkter: [
+          { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, totrinnskontrollGodkjent: undefined },
+        ],
+      },
+    ] satisfies TotrinnskontrollSkjermlenkeContextDto[],
   },
 };
 
@@ -97,6 +113,7 @@ export const MedÅpentBostedVilkår: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -107,5 +124,6 @@ export const MedUtførtBostedVilkår: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };

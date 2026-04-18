@@ -125,16 +125,16 @@ export const AndreLivsoppholdytelser = ({
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av andre livsoppholdytelser"
       lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
-      defaultIsEditable={isAksjonspunktSolved}
+      defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
     >
-      {(isEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
+      {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-24">
             <RhfTextarea
               control={formHook.control}
               name={`vurderinger.${selectedId}.begrunnelse`}
-              readOnly={isEditable}
+              readOnly={isFormLocked}
               label={
                 <span>
                   Vurder om søker har andre livsoppholdytelser, jmf.{' '}
@@ -150,7 +150,7 @@ export const AndreLivsoppholdytelser = ({
               name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
               legend="Har søker andre livsoppholdytelser?"
               validate={[required]}
-              readOnly={isEditable}
+              readOnly={isFormLocked}
             >
               <Radio value="oppfylt">Ja</Radio>
               <Radio value="ikkeOppfylt">Nei</Radio>
@@ -162,7 +162,7 @@ export const AndreLivsoppholdytelser = ({
                 name={`vurderinger.${selectedId}.avslagsårsak`}
                 legend="Avslagsårsak"
                 validate={[required]}
-                readOnly={isEditable}
+                readOnly={isFormLocked}
               >
                 <Radio value={Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE}>Søker har annen livsoppholdytelse</Radio>
                 <Radio value="fritekst">Fritekst</Radio>
@@ -176,15 +176,15 @@ export const AndreLivsoppholdytelser = ({
                 label="Fritekst avslagsbrev"
                 description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
                 validate={[required]}
-                readOnly={isEditable}
+                readOnly={isFormLocked}
               />
             )}
-            {!isEditable && (
+            {!isFormLocked && (
               <HStack gap="space-8">
                 <Button type="submit" size="small" loading={isPending}>
                   Bekreft og fortsett
                 </Button>
-                <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
                   Avbryt
                 </Button>
               </HStack>

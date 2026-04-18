@@ -5,6 +5,7 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
@@ -44,6 +45,12 @@ const utledAktivTab = (aksjonspunkter: AksjonspunktDto[]) => {
   if (andreLivsoppholdytelserAp && andreLivsoppholdytelserAp.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
   }
+  const lokalkontorBeslutterAp = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+  );
+  if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.BESLUTTER;
+  }
   return InngangsvilkårTab.BEHOV_FOR_BISTAND;
 };
 
@@ -54,6 +61,7 @@ interface Props {
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
   vilkår: VilkårMedPerioderDto[];
+  totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
 }
 
 export const AktivitetspengerInngangsvilkår = ({
@@ -63,6 +71,7 @@ export const AktivitetspengerInngangsvilkår = ({
   behandling,
   onAksjonspunktBekreftet,
   vilkår,
+  totrinnskontrollSkjermlenkeContext,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
 
@@ -180,6 +189,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 behandling={behandling}
                 onTabChange={setAktivTab}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
               />
             </Tabs.Panel>
           )}

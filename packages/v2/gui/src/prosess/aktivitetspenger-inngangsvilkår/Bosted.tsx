@@ -116,10 +116,10 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av bostedsvilkår"
       lovreferanse={bostedVilkår.lovReferanse}
-      defaultIsEditable={isAksjonspunktSolved}
+      defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
     >
-      {(isEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
+      {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
         <VStack gap="space-24">
           <VStack gap="space-8">
             <Label size="small" as="p">
@@ -139,7 +139,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
               <RhfTextarea
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelse`}
-                readOnly={isEditable}
+                readOnly={isFormLocked}
                 label={
                   <span>
                     Vurder om søker er bosatt i Trondheim kommune, jmf.{' '}
@@ -153,7 +153,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
                 name={`vurderinger.${selectedId}.bosatt`}
                 legend="Er søker bosatt i Trondheim kommune?"
                 validate={[required]}
-                readOnly={isEditable}
+                readOnly={isFormLocked}
               >
                 <Radio value="oppfylt">Ja</Radio>
                 <Radio value="ikkeOppfylt">Nei</Radio>
@@ -165,7 +165,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
                   name={`vurderinger.${selectedId}.avslagsårsak`}
                   legend="Avslagsårsak"
                   validate={[required]}
-                  readOnly={isEditable}
+                  readOnly={isFormLocked}
                 >
                   <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
                     Ytelse ikke tilgjengelig på bosted
@@ -181,15 +181,15 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
                   label="Fritekst avslagsbrev"
                   description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
                   validate={[required]}
-                  readOnly={isEditable}
+                  readOnly={isFormLocked}
                 />
               )}
-              {!isEditable && (
+              {!isFormLocked && (
                 <HStack gap="space-8">
                   <Button type="submit" size="small" loading={isPending}>
                     Bekreft og fortsett
                   </Button>
-                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
                     Avbryt
                   </Button>
                 </HStack>
