@@ -1,7 +1,7 @@
 import { BodyShortProps, Label as DSLabel, LabelProps, OverridableComponent } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import styles from './label.module.css';
 
@@ -14,10 +14,10 @@ interface Props {
   textOnly?: boolean;
 }
 
-export const Label = (props: Props & WrappedComponentProps) => {
+export const Label = (props: Props) => {
+  const intl = useIntl();
   const format = label => {
     if (label && label.id) {
-      const { intl } = props;
       return intl.formatMessage({ id: label.id }, label.args);
     }
     return label;
@@ -39,4 +39,4 @@ export const Label = (props: Props & WrappedComponentProps) => {
   );
 };
 
-export default injectIntl(Label);
+export default Label;

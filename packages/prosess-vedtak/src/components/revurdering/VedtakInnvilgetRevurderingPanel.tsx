@@ -11,7 +11,7 @@ import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { BeregningResultat } from '../../types/BeregningResultat';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
@@ -66,11 +66,11 @@ interface VedtakInnvilgetRevurderingPanelProps {
 }
 
 const VedtakInnvilgetRevurderingPanelImpl = ({
-  intl,
   konsekvenserForYtelsen,
   tilbakekrevingText,
   bgPeriodeMedAvslagsårsak,
-}: VedtakInnvilgetRevurderingPanelProps & WrappedComponentProps) => {
+}: VedtakInnvilgetRevurderingPanelProps) => {
+  const intl = useIntl();
   const { kodeverkNavnFraKode } = useKodeverkContext();
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -103,4 +103,4 @@ const mapStateToProps = (state, ownProps: VedtakInnvilgetRevurderingPanelProps) 
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakInnvilgetRevurderingPanelImpl));
+export default connect(mapStateToProps)(VedtakInnvilgetRevurderingPanelImpl);

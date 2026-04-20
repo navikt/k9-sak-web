@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
@@ -41,4 +41,4 @@ const FritekstFeilmeldinger = () => {
   return null;
 };
 
-export default injectIntl(FritekstFeilmeldinger);
+export default FritekstFeilmeldinger;
