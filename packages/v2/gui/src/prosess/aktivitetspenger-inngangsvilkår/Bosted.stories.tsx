@@ -41,6 +41,7 @@ export const IkkeVurdert: Story = {
       perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -51,6 +52,7 @@ export const Oppfylt: Story = {
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -68,6 +70,7 @@ export const IkkeOppfylt: Story = {
       ],
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -79,6 +82,7 @@ export const ReadOnly: Story = {
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -92,5 +96,6 @@ export const FlerePerioder: Story = {
       ],
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    isPermanentlyReadOnly: false,
   },
 };

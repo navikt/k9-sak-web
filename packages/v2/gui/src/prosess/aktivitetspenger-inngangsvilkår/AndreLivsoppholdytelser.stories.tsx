@@ -44,6 +44,7 @@ export const IkkeVurdert: Story = {
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktStatus.UTFØRT,
     ),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -57,6 +58,7 @@ export const Oppfylt: Story = {
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktStatus.UTFØRT,
     ),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -77,6 +79,7 @@ export const IkkeOppfylt: Story = {
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktStatus.UTFØRT,
     ),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -91,6 +94,7 @@ export const ReadOnly: Story = {
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktStatus.UTFØRT,
     ),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -111,5 +115,6 @@ export const FlerePerioder: Story = {
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktStatus.UTFØRT,
     ),
+    isPermanentlyReadOnly: false,
   },
 };

@@ -33,7 +33,7 @@ interface VilkårSplittPanelProps {
   readOnly?: boolean;
   children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
   afterEditButton?: ReactNode;
-  isPermanentlyReadOnly: boolean;
+  isPermanentlyReadOnly?: boolean;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {

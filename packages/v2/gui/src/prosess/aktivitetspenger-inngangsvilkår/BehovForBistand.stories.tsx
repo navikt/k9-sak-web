@@ -41,6 +41,7 @@ const lagAksjonspunkt = (
 export const MedÅpentBistandsvilkår: Story = {
   args: {
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -57,6 +58,7 @@ export const MedUtførtBistandsvilkår: Story = {
         },
       ],
     },
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -64,12 +66,14 @@ export const MedÅpentLokalkontorForeslår: Story = {
   args: {
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
     lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR),
+    isPermanentlyReadOnly: false,
   },
 };
 
 export const IkkeSaksbehandler: Story = {
   args: {
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+    isPermanentlyReadOnly: false,
   },
 };
 
@@ -87,5 +91,6 @@ export const ReadOnly: Story = {
         },
       ],
     },
+    isPermanentlyReadOnly: false,
   },
 };
