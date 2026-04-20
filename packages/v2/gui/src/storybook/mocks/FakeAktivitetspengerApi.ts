@@ -46,6 +46,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   async getSatsOgUtbetalingPerioder() {
     return [];
   }
+
+  async hentTotrinnskontrollSkjermlenkeContext() {
+    return [];
+  }
 }
 
 export const fakeAktivitetspengerApi = new FakeAktivitetspengerApi();

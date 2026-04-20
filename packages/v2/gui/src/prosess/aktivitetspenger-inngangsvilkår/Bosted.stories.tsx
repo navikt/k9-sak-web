@@ -1,9 +1,22 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { Bosted } from './Bosted';
+
+const lagAksjonspunkt = (
+  definisjon: AksjonspunktDto['definisjon'],
+  status: AksjonspunktDto['status'] = AksjonspunktStatus.OPPRETTET,
+): AksjonspunktDto => ({
+  definisjon,
+  status,
+  kanLoses: status === AksjonspunktStatus.OPPRETTET,
+  erAktivt: status === AksjonspunktStatus.OPPRETTET,
+});
 
 const meta = {
   title: 'gui/prosess/aktivitetspenger-inngangsvilkår/Bosted',
@@ -27,6 +40,7 @@ export const IkkeVurdert: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
     },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
   },
 };
 
@@ -36,6 +50,7 @@ export const Oppfylt: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
     },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
   },
 };
 
@@ -52,6 +67,7 @@ export const IkkeOppfylt: Story = {
         },
       ],
     },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
   },
 };
 
@@ -62,6 +78,7 @@ export const ReadOnly: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
     },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
   },
 };
 
@@ -74,5 +91,6 @@ export const FlerePerioder: Story = {
         { periode: { fom: '2024-07-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_VURDERT },
       ],
     },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
   },
 };

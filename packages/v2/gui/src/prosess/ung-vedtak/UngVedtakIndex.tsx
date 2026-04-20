@@ -23,15 +23,15 @@ export const UngVedtakIndex = ({
   isReadOnly,
   tekster,
 }: UngVedtakIndexProps) => {
-  const ungVedtakBackendClient = new UngVedtakBackendClient();
+  const api = new UngVedtakBackendClient();
   const {
     data: vedtaksbrevValgResponse,
     isLoading,
     refetch: refetchVedtaksbrevValg,
   } = useQuery({
-    queryKey: ['vedtaksbrevValg', behandling.id, ungVedtakBackendClient],
+    queryKey: ['vedtaksbrevValg', behandling.id, api.backend],
     queryFn: async () => {
-      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id!);
+      const response = await api.vedtaksbrevValg(behandling.id!);
       return response;
     },
     enabled: behandling.id !== undefined,
@@ -44,7 +44,7 @@ export const UngVedtakIndex = ({
       {!isLoading && (
         <UngVedtak
           aksjonspunkter={aksjonspunkter}
-          api={ungVedtakBackendClient}
+          api={api}
           behandling={behandling}
           vedtakBekreftelseCallback={vedtakBekreftelseCallback}
           vilkår={vilkar}
