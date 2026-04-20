@@ -3,7 +3,7 @@ import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 import PreviewLink from '../PreviewLink';
 import EditorJSWrapper from './EditorJSWrapper';
@@ -54,8 +54,8 @@ const FritekstEditor = ({
   prefiksInnhold,
   suffiksInnhold,
   brevStiler,
-  intl,
-}: ownProps & WrappedComponentProps) => {
+}: ownProps) => {
+  const intl = useIntl();
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
   const editorRef = useRef<EditorJSWrapper | null>(null);
@@ -208,7 +208,6 @@ const FritekstEditor = ({
             {kanInkludereKalender && (
               <div>
                 <InkluderKalenderCheckbox
-                  intl={intl}
                   setFieldValue={setFieldValue}
                   skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                   disabled={readOnly}
@@ -272,4 +271,4 @@ const FritekstEditor = ({
   );
 };
 
-export default injectIntl(FritekstEditor);
+export default FritekstEditor;

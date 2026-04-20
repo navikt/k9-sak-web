@@ -1133,14 +1133,14 @@ if (emailError) {
 ```typescript
 // Centered loader pattern
 const LoadingPage = () => (
-  <VStack justify="center" align="center" marginBlock="10">
+  <VStack justify="center" align="center" marginBlock="space-10">
     <Loader size="3xlarge" />
   </VStack>
 );
 
 // Skeleton loading for cards
 const CardSkeleton = () => (
-  <VStack gap="4">
+  <VStack gap="space-4">
     <Skeleton variant="rectangle" width="100%" height="40px" />
     <Skeleton variant="text" width="80%" />
     <Skeleton variant="text" width="60%" />
@@ -1170,7 +1170,7 @@ const AlertWithCloseButton = ({ children, variant }) => {
 };
 
 // Stacked alerts for system messages
-<VStack gap="4">
+<VStack gap="space-4">
   {messages.map(({ severity, text, id }) => (
     <Alert variant={severity} fullWidth key={id}>
       {text}
@@ -1184,17 +1184,19 @@ const AlertWithCloseButton = ({ children, variant }) => {
 ```typescript
 // Standard page wrapper
 const DefaultPageLayout = ({ children }) => (
-  <VStack gap="10" className="p-5 max-w-[1128px] mx-auto">
-    <PageHeader />
-    {children}
-  </VStack>
+  <Box padding="space-20" className="max-w-[1128px] mx-auto">
+    <VStack gap="space-10">
+      <PageHeader />
+      {children}
+    </VStack>
+  </Box>
 );
 
 // Two-column responsive layout with sidebar
-<Box className="md:flex md:gap-6">
-  <div className="md:grow mb-10 md:mb-0">{mainContent}</div>
-  <div className="shrink-0 md:w-72">{sidebar}</div>
-</Box>
+<HGrid columns={{ xs: 1, md: "1fr 288px" }} gap="space-24">
+  <div>{mainContent}</div>
+  <div>{sidebar}</div>
+</HGrid>
 ```
 
 ### Box.New Patterns (v7.x - from sosialhjelp-innsyn)
@@ -1205,7 +1207,7 @@ const DefaultPageLayout = ({ children }) => (
   borderWidth="1"
   borderRadius="xlarge"
   borderColor="neutral-subtle"
-  padding="8"
+  padding="space-8"
 >
   {children}
 </BoxNew>
@@ -1213,7 +1215,8 @@ const DefaultPageLayout = ({ children }) => (
 // Info box with background
 <BoxNew
   background="brand-blue-moderateA"
-  className="inline-block rounded-xl p-6"
+  padding="space-24"
+  className="inline-block rounded-xl"
 >
   {children}
 </BoxNew>
@@ -1236,7 +1239,7 @@ const DefaultPageLayout = ({ children }) => (
 <Bleed marginInline="full" marginBlock="space-0 space-64" asChild>
   <BoxNew background="neutral-soft" padding="space-24" className="flex-1">
     <div className="max-w-2xl mx-auto">
-      <VStack gap="20">
+      <VStack gap="space-20">
         {content}
       </VStack>
     </div>
@@ -1249,12 +1252,12 @@ const DefaultPageLayout = ({ children }) => (
 ```typescript
 // Form sections with consistent spacing
 const FormSections = ({ children }) => (
-  <VStack gap="12">{children}</VStack>
+  <VStack gap="space-12">{children}</VStack>
 );
 
 // Questions group
 const Questions = ({ children }) => (
-  <VStack gap="8">{children}</VStack>
+  <VStack gap="space-8">{children}</VStack>
 );
 
 // Form panel with background
@@ -1263,7 +1266,7 @@ const Questions = ({ children }) => (
   background="neutral-soft"
   borderRadius="8"
   borderWidth="1"
-  padding={{ xs: "2", sm: "4", md: "6" }}
+  padding={{ xs: "space-8", sm: "space-16", md: "space-24" }}
 >
   {children}
 </BoxNew>
@@ -1273,13 +1276,13 @@ const Questions = ({ children }) => (
 
 ```typescript
 // Responsive button group
-<HStack gap="4" justify="end">
+<HStack gap="space-4" justify="end">
   <Button variant="secondary">Avbryt</Button>
   <Button variant="primary">Lagre</Button>
 </HStack>
 
 // Step navigation with icons
-<HGrid gap={{ xs: "4", sm: "8 4" }} columns={{ xs: 1, sm: 2 }} width={{ sm: "fit-content" }}>
+<HGrid gap={{ xs: "space-4", sm: "space-8 space-4" }} columns={{ xs: 1, sm: 2 }} width={{ sm: "fit-content" }}>
   <Button variant="secondary" icon={<ArrowLeftIcon />} iconPosition="left">
     Tilbake
   </Button>
@@ -1292,7 +1295,7 @@ const Questions = ({ children }) => (
 ### Tags Container (from endringsmelding-pleiepenger)
 
 ```typescript
-<HStack gap="2">
+<HStack gap="space-2">
   {tags.map((tag) => (
     <Tag key={tag.id} variant="info">{tag.label}</Tag>
   ))}
@@ -1303,8 +1306,8 @@ const Questions = ({ children }) => (
 
 ```typescript
 const Kvittering = ({ tittel, children }) => (
-  <VStack gap="10">
-    <VStack align="center" gap="10">
+  <VStack gap="space-10">
+    <VStack align="center" gap="space-10">
       <CheckmarkIcon />
       <Heading level="1" size="large">
         {tittel}

@@ -6,7 +6,7 @@ import {
   ISO_DATE_FORMAT,
 } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment from 'moment';
-import { injectIntl, IntlShape } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 import { Fields } from 'redux-form';
 import Label from './Label';
 import LabelType from './LabelType';
@@ -72,28 +72,24 @@ const renderReadOnly =
   };
 
 const renderPeriodpicker = (hideLabel?: boolean) =>
-  injectIntl(
-    ({
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      intl,
-      label,
+  ({
+    label,
+    names,
+    ...otherProps
+  }: {
+    label: LabelType;
+    names: string[];
+  }) => {
+    const intl = useIntl();
+    const fieldProps = {
+      id: `${names[0]}-${names[1]}`,
+      feil: formatError(intl, otherProps, names),
+      label: <Label input={label} readOnly={false} />,
       names,
-      ...otherProps
-    }: {
-      intl: IntlShape;
-      label: LabelType;
-      names: string[];
-    }) => {
-      const fieldProps = {
-        id: `${names[0]}-${names[1]}`,
-        feil: formatError(intl, otherProps, names),
-        label: <Label input={label} readOnly={false} />,
-        names,
-      };
-      // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-      return <Periodpicker {...fieldProps} {...otherProps} hideLabel={hideLabel} />;
-    },
-  );
+    };
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
+    return <Periodpicker {...fieldProps} {...otherProps} hideLabel={hideLabel} />;
+  };
 
 const isoToDdMmYyyy = (string: string) => {
   const parsedDate = moment(string, ISO_DATE_FORMAT, true);

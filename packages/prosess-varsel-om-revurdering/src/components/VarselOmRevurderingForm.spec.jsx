@@ -6,7 +6,7 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
-import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';
+import { VarselOmRevurderingForm as UnwrappedForm } from './VarselOmRevurderingForm';
 
 const soknad = {
   fodselsdatoer: { 1: '2019-01-10' },

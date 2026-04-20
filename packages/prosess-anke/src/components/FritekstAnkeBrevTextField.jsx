@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromspråkkode, hasValidText, required } from '@fpsak-frontend/utils';
 
 import styles from './fritekstAnkeBrevTextField.module.css';
 
-const FritekstAnkeBrevTextField = ({ språkkode, readOnly = false, intl }) => (
+const FritekstAnkeBrevTextField = ({ språkkode, readOnly = false }) => {
+  const intl = useIntl();
+  return (
   <div className={styles.fritekstTilBrevTextArea}>
     <TextAreaField
       name="fritekstTilBrev"
@@ -24,12 +26,12 @@ const FritekstAnkeBrevTextField = ({ språkkode, readOnly = false, intl }) => (
       ]}
     />
   </div>
-);
+  );
+};
 
 FritekstAnkeBrevTextField.propTypes = {
   språkkode: PropTypes.shape().isRequired,
-  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
 };
 
-export default injectIntl(FritekstAnkeBrevTextField);
+export default FritekstAnkeBrevTextField;

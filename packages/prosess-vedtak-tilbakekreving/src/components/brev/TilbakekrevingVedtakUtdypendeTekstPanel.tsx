@@ -4,7 +4,7 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Detail } from '@navikt/ds-react';
 import { useContext, useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -26,13 +26,13 @@ interface OwnProps {
 }
 
 export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
-  intl,
   isEmpty,
   type,
   readOnly,
   fritekstPakrevet,
   maximumLength,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
+  const intl = useIntl();
   const featureToggles = useContext(FeatureTogglesContext);
   const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELFELT;
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
@@ -93,4 +93,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({
     )(state, ownProps.type) === undefined,
 });
 
-export default connect(mapStateToProps)(injectIntl(TilbakekrevingVedtakUtdypendeTekstPanel));
+export default connect(mapStateToProps)(TilbakekrevingVedtakUtdypendeTekstPanel);

@@ -1,6 +1,6 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import React, { useCallback } from 'react';
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -29,7 +29,6 @@ interface OwnProps {
   harAutomatiskVedtaksbrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   kanInkludereKalender: boolean;
-  intl: IntlShape;
   formikProps: CustomFormikProps;
   dokumentdata: DokumentDataType;
   dokumentdataInformasjonsbehov: any;
@@ -45,13 +44,13 @@ const FritekstBrevPanel = ({
   harAutomatiskVedtaksbrev,
   tilgjengeligeVedtaksbrev,
   kanInkludereKalender,
-  intl,
   formikProps,
   dokumentdata,
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
   setForhaandsvisningKlart,
 }: OwnProps) => {
+  const intl = useIntl();
   const { formatMessage } = intl;
   const kanRedigereFritekstbrev = kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
@@ -139,7 +138,6 @@ const FritekstBrevPanel = ({
           {kanInkludereKalender && !kanRedigereFritekstbrev && (
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
               <InkluderKalenderCheckbox
-                intl={intl}
                 setFieldValue={formikProps.setFieldValue}
                 skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                 disabled={readOnly}
@@ -152,4 +150,4 @@ const FritekstBrevPanel = ({
   );
 };
 
-export default injectIntl(FritekstBrevPanel);
+export default FritekstBrevPanel;

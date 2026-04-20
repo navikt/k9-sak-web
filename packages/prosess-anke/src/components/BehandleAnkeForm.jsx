@@ -20,7 +20,7 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -148,9 +148,10 @@ const BehandleAnkeFormImpl = ({
   språkkode,
   formValues = {},
   behandlinger,
-  intl,
   ...formProps
-}) => (
+}) => {
+  const intl = useIntl();
+  return (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
       <Heading size="small" level="2">
@@ -308,7 +309,7 @@ const BehandleAnkeFormImpl = ({
 
       <div className={styles.confirmVilkarForm}>
         <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} intl={intl} />
+        <FritekstBrevTextField språkkode={språkkode} readOnly={readOnly} />
         <VerticalSpacer sixteenPx />
         <HGrid gap="space-4" columns={{ xs: '8fr 2fr 2fr' }}>
           <div>
@@ -343,7 +344,8 @@ const BehandleAnkeFormImpl = ({
       </div>
     </FadingPanel>
   </form>
-);
+  );
+};
 
 BehandleAnkeFormImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
@@ -440,4 +442,4 @@ const BehandleAnkeForm = connect(mapStateToPropsFactory)(
 
 BehandleAnkeForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
 
-export default injectIntl(BehandleAnkeForm);
+export default BehandleAnkeForm;

@@ -197,7 +197,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
             <DatepickerField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_NYOPPSTARTET_DATO}
               readOnly={formIsEditable}
-              label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }} intl={intl} />}
+              label={<Label input={{ id: 'OpplysningerFraSoknaden.NyoppstartetDato', args: {} }}/>}
             />
           </div>
         </>
