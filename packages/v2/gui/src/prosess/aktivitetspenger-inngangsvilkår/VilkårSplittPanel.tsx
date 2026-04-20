@@ -156,8 +156,8 @@ export const VilkårSplittPanel = ({
             >
               <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-20' : 'space-0'}>
                 {children(effectiveLocked, setIsFormLocked)}
-                <Bleed marginInline="space-8">
-                  {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
+                {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
+                  <Bleed marginInline="space-8">
                     <Button
                       size="small"
                       variant="tertiary"
@@ -166,8 +166,8 @@ export const VilkårSplittPanel = ({
                     >
                       Rediger vurdering
                     </Button>
-                  )}
-                </Bleed>
+                  </Bleed>
+                )}
                 {afterEditButton}
               </VStack>
             </Box>
