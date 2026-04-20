@@ -1,9 +1,7 @@
-import {
-  ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType,
-  ung_kodeverk_behandling_aksjonspunkt_VurderÅrsak as VurderÅrsak,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import { VurderÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
@@ -50,11 +48,10 @@ interface FormValues {
 }
 
 const skjermlenkeTypeToTab: Record<string, InngangsvilkårTab | undefined> = {
-  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BOSTEDSVILKÅR]: InngangsvilkårTab.BOSATT_I_TRONDHEIM,
-  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER]:
-    InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
-  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BISTANDSVILKÅR]: InngangsvilkårTab.BEHOV_FOR_BISTAND,
-  [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.SOEKNADSFRIST]: InngangsvilkårTab.SØKNADSFRIST,
+  [SkjermlenkeType.BOSTEDSVILKÅR]: InngangsvilkårTab.BOSATT_I_TRONDHEIM,
+  [SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER]: InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
+  [SkjermlenkeType.BISTANDSVILKÅR]: InngangsvilkårTab.BEHOV_FOR_BISTAND,
+  [SkjermlenkeType.SOEKNADSFRIST]: InngangsvilkårTab.SØKNADSFRIST,
 };
 
 const tabSortOrder: InngangsvilkårTab[] = [
@@ -204,13 +201,13 @@ export const Beslutter = ({
                       const tab = skjermlenkeTypeToTab[item?.skjermlenkeType ?? ''];
                       const formaterSkjermlenkeType = (skjermlenkeType?: string) => {
                         switch (skjermlenkeType) {
-                          case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BOSTEDSVILKÅR:
+                          case SkjermlenkeType.BOSTEDSVILKÅR:
                             return 'Bosatt i Trondheim';
-                          case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
+                          case SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
                             return 'Andre livsoppholdsytelser';
-                          case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.BISTANDSVILKÅR:
+                          case SkjermlenkeType.BISTANDSVILKÅR:
                             return 'Behov for bistand';
-                          case ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.SOEKNADSFRIST:
+                          case SkjermlenkeType.SOEKNADSFRIST:
                             return 'Søknadsfrist';
                           default:
                             return skjermlenkeType;

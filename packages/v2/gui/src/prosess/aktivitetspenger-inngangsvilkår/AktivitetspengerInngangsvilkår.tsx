@@ -1,7 +1,7 @@
-import { ung_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
@@ -78,12 +78,12 @@ export const AktivitetspengerInngangsvilkår = ({
   const søknadsfristAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
   );
-  const søknadsfristVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST);
-  const alderVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.ALDERSVILKÅR);
+  const søknadsfristVilkår = vilkår.find(v => v.vilkarType === vilkarType.SØKNADSFRIST);
+  const alderVilkår = vilkår.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR);
   const vurderBistandsvilkårAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   );
-  const vurderBistandsvilkårVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR);
+  const vurderBistandsvilkårVilkår = vilkår.find(v => v.vilkarType === vilkarType.BISTANDSVILKÅR);
   const lokalkontorForeslårVilkårAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   );
@@ -91,13 +91,11 @@ export const AktivitetspengerInngangsvilkår = ({
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
   const bostedAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
-  const bostedVilkår = vilkår.find(v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.BOSTEDSVILKÅR);
+  const bostedVilkår = vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR);
   const andreLivsoppholdytelserAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
   );
-  const andreLivsoppholdytelserVilkår = vilkår.find(
-    v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
-  );
+  const andreLivsoppholdytelserVilkår = vilkår.find(v => v.vilkarType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR);
 
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(aksjonspunkter));
 

@@ -1,4 +1,5 @@
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
@@ -11,8 +12,7 @@ import {
   navAnsatt_innloggetBrukerV2,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
-} from '@navikt/ung-sak-typescript-client/sdk';
-import type { ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto } from '@navikt/ung-sak-typescript-client/types';
+} from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import { type AktivitetspengerApi } from './AktivitetspengerApi';
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
@@ -22,7 +22,7 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;
   }
 
-  async lagreAksjonspunktOverstyr(props: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) {
+  async lagreAksjonspunktOverstyr(props: BekreftetOgOverstyrteAksjonspunkterDto) {
     const { behandlingId, behandlingVersjon, bekreftedeAksjonspunktDtoer, overstyrteAksjonspunktDtoer } = props;
     return (
       await aksjonspunkt_overstyr({
