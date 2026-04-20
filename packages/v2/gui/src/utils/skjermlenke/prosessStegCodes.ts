@@ -33,5 +33,7 @@ export const prosessStegCodes = {
   ALDER: 'alder',
   OPPLAERING: 'opplaering',
   KONTROLL_AV_INNTEKT: 'kontroll_av_inntekt',
+  FORUTGAENDE_MEDLEMSKAP: 'forutgaende_medlemskap',
   TI_DAGER: 'ti_dager',
+  SATS: 'sats',
 };

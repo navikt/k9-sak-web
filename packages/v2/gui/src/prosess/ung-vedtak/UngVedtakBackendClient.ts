@@ -10,8 +10,10 @@ import type {
   ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest,
   VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 
-export default class UngVedtakBackendClient {
+export default class UngVedtakBackendClient implements UngVedtakBackendApiType {
+  readonly backend = 'ungsak';
   async lagreVedtaksbrev(data: ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest) {
     return (await formidling_lagreVedtaksbrevValg({ body: data })).data;
   }

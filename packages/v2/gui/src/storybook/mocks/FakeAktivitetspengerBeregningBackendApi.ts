@@ -1,6 +1,8 @@
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
 import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 import type { AktivitetspengerBeregningBackendApiType } from '../../prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendApiType';
+import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.ts';
+import { asyncAction } from '../asyncAction.js';
 
 export class FakeAktivitetspengerBeregningBackendApi implements AktivitetspengerBeregningBackendApiType {
   async getKontrollerInntekt(): Promise<KontrollerInntektDto> {
@@ -22,5 +24,17 @@ export class FakeAktivitetspengerBeregningBackendApi implements Aktivitetspenger
     return {
       arbeidsgivere: {},
     };
+  }
+
+  async bekreftKontrollerInntektAksjonspunkt(
+    behandlingUuid: string,
+    behandlingVersjon: number,
+    fastsettInntektDto: FastsettInntektDto,
+  ) {
+    await asyncAction('bekreftKontrollerInntektAksjonspunkt')({
+      behandlingUuid,
+      behandlingVersjon,
+      fastsettInntektDto,
+    });
   }
 }

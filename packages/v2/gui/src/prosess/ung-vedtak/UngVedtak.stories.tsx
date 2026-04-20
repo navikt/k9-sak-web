@@ -17,7 +17,7 @@ const meta = {
   args: {
     aksjonspunkter: [],
     api,
-    submitCallback: asyncAction('button-click'),
+    vedtakBekreftelseCallback: asyncAction('vedtak bekreftelse'),
     vedtaksbrevValgResponse: {},
     refetchVedtaksbrevValg: fn(),
     tekster: {
@@ -146,6 +146,7 @@ export const MedBrev: Story = {
     readOnly: false,
     aksjonspunkter: [
       {
+        definisjon: '5015',
         kanLoses: true,
       },
     ],
