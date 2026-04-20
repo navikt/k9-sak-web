@@ -69,7 +69,7 @@ export const BehovForBistand = ({
   const items: VilkårSplittPanelItem[] = (vurderBistandsvilkårVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+    label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
   const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
