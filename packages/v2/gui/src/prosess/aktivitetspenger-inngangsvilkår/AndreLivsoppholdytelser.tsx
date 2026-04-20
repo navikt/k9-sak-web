@@ -6,7 +6,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -121,80 +121,89 @@ export const AndreLivsoppholdytelser = ({
   }
 
   return (
-    <VilkårSplittPanel
-      items={items}
-      selectedItemId={selectedId}
-      onItemSelect={setSelectedId}
-      detailHeading="Vurdering av andre livsoppholdytelser"
-      lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
-      defaultIsLocked={isAksjonspunktSolved}
-      readOnly={readOnly}
-      isPermanentlyReadOnly={isPermanentlyReadOnly}
-    >
-      {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
-        <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-          <VStack gap="space-24">
-            <RhfTextarea
-              control={formHook.control}
-              name={`vurderinger.${selectedId}.begrunnelse`}
-              readOnly={isFormLocked}
-              label={
-                <span>
-                  Vurder om søker har andre livsoppholdytelser, jmf.{' '}
-                  {andreLivsoppholdytelserVilkår.lovReferanse && (
-                    <Lovreferanse isUng>{andreLivsoppholdytelserVilkår.lovReferanse}</Lovreferanse>
-                  )}
-                </span>
-              }
-            />
-            <RhfRadioGroup
-              key={`${selectedId}-andreLivsoppholdytelser`}
-              control={formHook.control}
-              name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
-              legend="Har søker andre livsoppholdytelser?"
-              validate={[required]}
-              readOnly={isFormLocked}
-            >
-              <Radio value="oppfylt">Ja</Radio>
-              <Radio value="ikkeOppfylt">Nei</Radio>
-            </RhfRadioGroup>
-            {andreLivsoppholdytelser === 'ikkeOppfylt' && (
-              <RhfRadioGroup
-                key={`${selectedId}-avslagsårsak`}
+    <VStack gap="space-20">
+      {!isAksjonspunktSolved && (
+        <Alert variant="warning" size="small">
+          Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.
+        </Alert>
+      )}
+      <VilkårSplittPanel
+        items={items}
+        selectedItemId={selectedId}
+        onItemSelect={setSelectedId}
+        detailHeading="Vurdering av andre livsoppholdytelser"
+        lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
+        defaultIsLocked={isAksjonspunktSolved}
+        readOnly={readOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly}
+      >
+        {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
+          <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+            <VStack gap="space-24">
+              <RhfTextarea
                 control={formHook.control}
-                name={`vurderinger.${selectedId}.avslagsårsak`}
-                legend="Avslagsårsak"
+                name={`vurderinger.${selectedId}.begrunnelse`}
+                readOnly={isFormLocked}
+                label={
+                  <span>
+                    Vurder om søker har andre livsoppholdytelser, jmf.{' '}
+                    {andreLivsoppholdytelserVilkår.lovReferanse && (
+                      <Lovreferanse isUng>{andreLivsoppholdytelserVilkår.lovReferanse}</Lovreferanse>
+                    )}
+                  </span>
+                }
+              />
+              <RhfRadioGroup
+                key={`${selectedId}-andreLivsoppholdytelser`}
+                control={formHook.control}
+                name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
+                legend="Har søker andre livsoppholdytelser?"
                 validate={[required]}
                 readOnly={isFormLocked}
               >
-                <Radio value={Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE}>Søker har annen livsoppholdytelse</Radio>
-                <Radio value="fritekst">Fritekst</Radio>
+                <Radio value="oppfylt">Ja</Radio>
+                <Radio value="ikkeOppfylt">Nei</Radio>
               </RhfRadioGroup>
-            )}
-            {avslagsårsak === 'fritekst' && (
-              <RhfTextarea
-                key={`${selectedId}-fritekst`}
-                control={formHook.control}
-                name={`vurderinger.${selectedId}.fritekst`}
-                label="Fritekst avslagsbrev"
-                description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                validate={[required]}
-                readOnly={isFormLocked}
-              />
-            )}
-            {!isFormLocked && (
-              <HStack gap="space-8">
-                <Button type="submit" size="small" loading={isPending}>
-                  Bekreft og fortsett
-                </Button>
-                <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
-                  Avbryt
-                </Button>
-              </HStack>
-            )}
-          </VStack>
-        </RhfForm>
-      )}
-    </VilkårSplittPanel>
+              {andreLivsoppholdytelser === 'ikkeOppfylt' && (
+                <RhfRadioGroup
+                  key={`${selectedId}-avslagsårsak`}
+                  control={formHook.control}
+                  name={`vurderinger.${selectedId}.avslagsårsak`}
+                  legend="Avslagsårsak"
+                  validate={[required]}
+                  readOnly={isFormLocked}
+                >
+                  <Radio value={Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE}>
+                    Søker har annen livsoppholdytelse
+                  </Radio>
+                  <Radio value="fritekst">Fritekst</Radio>
+                </RhfRadioGroup>
+              )}
+              {avslagsårsak === 'fritekst' && (
+                <RhfTextarea
+                  key={`${selectedId}-fritekst`}
+                  control={formHook.control}
+                  name={`vurderinger.${selectedId}.fritekst`}
+                  label="Fritekst avslagsbrev"
+                  description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+                  validate={[required]}
+                  readOnly={isFormLocked}
+                />
+              )}
+              {!isFormLocked && (
+                <HStack gap="space-8">
+                  <Button type="submit" size="small" loading={isPending}>
+                    Bekreft og fortsett
+                  </Button>
+                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
+                    Avbryt
+                  </Button>
+                </HStack>
+              )}
+            </VStack>
+          </RhfForm>
+        )}
+      </VilkårSplittPanel>
+    </VStack>
   );
 };

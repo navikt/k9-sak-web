@@ -6,7 +6,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -119,95 +119,102 @@ export const Bosted = ({
   }
 
   return (
-    <VilkårSplittPanel
-      items={items}
-      selectedItemId={selectedId}
-      onItemSelect={setSelectedId}
-      detailHeading="Vurdering av bostedsvilkår"
-      lovreferanse={bostedVilkår.lovReferanse}
-      defaultIsLocked={isAksjonspunktSolved}
-      readOnly={readOnly}
-      isPermanentlyReadOnly={isPermanentlyReadOnly}
-    >
-      {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
-        <VStack gap="space-24">
-          <VStack gap="space-8">
-            <Label size="small" as="p">
-              Bor søker i Trondheim kommune?
-            </Label>
-            <HStack gap="space-8" align="center">
-              <BodyShort size="small">
-                {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
-              </BodyShort>
-              <Tag variant="outline" size="small">
-                Fra søknad
-              </Tag>
-            </HStack>
-          </VStack>
-          <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-            <VStack gap="space-24">
-              <RhfTextarea
-                control={formHook.control}
-                name={`vurderinger.${selectedId}.begrunnelse`}
-                readOnly={isFormLocked}
-                label={
-                  <span>
-                    Vurder om søker er bosatt i Trondheim kommune, jmf.{' '}
-                    {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
-                  </span>
-                }
-              />
-              <RhfRadioGroup
-                key={`${selectedId}-bosatt`}
-                control={formHook.control}
-                name={`vurderinger.${selectedId}.bosatt`}
-                legend="Er søker bosatt i Trondheim kommune?"
-                validate={[required]}
-                readOnly={isFormLocked}
-              >
-                <Radio value="oppfylt">Ja</Radio>
-                <Radio value="ikkeOppfylt">Nei</Radio>
-              </RhfRadioGroup>
-              {bosatt === 'ikkeOppfylt' && (
-                <RhfRadioGroup
-                  key={`${selectedId}-avslagsårsak`}
+    <VStack gap="space-20">
+      {!isAksjonspunktSolved && (
+        <Alert variant="warning" size="small">
+          Vurder om søker er bosatt i Trondheim kommune på søknadstidspunktet.
+        </Alert>
+      )}
+      <VilkårSplittPanel
+        items={items}
+        selectedItemId={selectedId}
+        onItemSelect={setSelectedId}
+        detailHeading="Vurdering av bostedsvilkår"
+        lovreferanse={bostedVilkår.lovReferanse}
+        defaultIsLocked={isAksjonspunktSolved}
+        readOnly={readOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly}
+      >
+        {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
+          <VStack gap="space-24">
+            <VStack gap="space-8">
+              <Label size="small" as="p">
+                Bor søker i Trondheim kommune?
+              </Label>
+              <HStack gap="space-8" align="center">
+                <BodyShort size="small">
+                  {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
+                </BodyShort>
+                <Tag variant="outline" size="small">
+                  Fra søknad
+                </Tag>
+              </HStack>
+            </VStack>
+            <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+              <VStack gap="space-24">
+                <RhfTextarea
                   control={formHook.control}
-                  name={`vurderinger.${selectedId}.avslagsårsak`}
-                  legend="Avslagsårsak"
+                  name={`vurderinger.${selectedId}.begrunnelse`}
+                  readOnly={isFormLocked}
+                  label={
+                    <span>
+                      Vurder om søker er bosatt i Trondheim kommune, jmf.{' '}
+                      {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
+                    </span>
+                  }
+                />
+                <RhfRadioGroup
+                  key={`${selectedId}-bosatt`}
+                  control={formHook.control}
+                  name={`vurderinger.${selectedId}.bosatt`}
+                  legend="Er søker bosatt i Trondheim kommune?"
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
-                  <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
-                    Ytelse ikke tilgjengelig på bosted
-                  </Radio>
-                  <Radio value="fritekst">Fritekst</Radio>
+                  <Radio value="oppfylt">Ja</Radio>
+                  <Radio value="ikkeOppfylt">Nei</Radio>
                 </RhfRadioGroup>
-              )}
-              {avslagsårsak === 'fritekst' && (
-                <RhfTextarea
-                  key={`${selectedId}-fritekst`}
-                  control={formHook.control}
-                  name={`vurderinger.${selectedId}.fritekst`}
-                  label="Fritekst avslagsbrev"
-                  description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                  validate={[required]}
-                  readOnly={isFormLocked}
-                />
-              )}
-              {!isFormLocked && (
-                <HStack gap="space-8">
-                  <Button type="submit" size="small" loading={isPending}>
-                    Bekreft og fortsett
-                  </Button>
-                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
-                    Avbryt
-                  </Button>
-                </HStack>
-              )}
-            </VStack>
-          </RhfForm>
-        </VStack>
-      )}
-    </VilkårSplittPanel>
+                {bosatt === 'ikkeOppfylt' && (
+                  <RhfRadioGroup
+                    key={`${selectedId}-avslagsårsak`}
+                    control={formHook.control}
+                    name={`vurderinger.${selectedId}.avslagsårsak`}
+                    legend="Avslagsårsak"
+                    validate={[required]}
+                    readOnly={isFormLocked}
+                  >
+                    <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
+                      Ytelse ikke tilgjengelig på bosted
+                    </Radio>
+                    <Radio value="fritekst">Fritekst</Radio>
+                  </RhfRadioGroup>
+                )}
+                {avslagsårsak === 'fritekst' && (
+                  <RhfTextarea
+                    key={`${selectedId}-fritekst`}
+                    control={formHook.control}
+                    name={`vurderinger.${selectedId}.fritekst`}
+                    label="Fritekst avslagsbrev"
+                    description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+                    validate={[required]}
+                    readOnly={isFormLocked}
+                  />
+                )}
+                {!isFormLocked && (
+                  <HStack gap="space-8">
+                    <Button type="submit" size="small" loading={isPending}>
+                      Bekreft og fortsett
+                    </Button>
+                    <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
+                      Avbryt
+                    </Button>
+                  </HStack>
+                )}
+              </VStack>
+            </RhfForm>
+          </VStack>
+        )}
+      </VilkårSplittPanel>
+    </VStack>
   );
 };

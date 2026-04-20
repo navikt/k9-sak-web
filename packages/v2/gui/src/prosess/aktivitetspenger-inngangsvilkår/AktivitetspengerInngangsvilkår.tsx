@@ -186,7 +186,6 @@ export const AktivitetspengerInngangsvilkår = ({
             <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
               <Beslutter
                 lokalkontorBeslutterAp={lokalkontorBeslutterAp}
-                vurderBistandsvilkårAp={vurderBistandsvilkårAp}
                 innloggetBruker={innloggetBruker}
                 api={api}
                 behandling={behandling}
