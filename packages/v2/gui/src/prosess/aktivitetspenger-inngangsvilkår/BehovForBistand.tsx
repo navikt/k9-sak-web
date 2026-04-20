@@ -5,8 +5,8 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { Alert, Box, Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
+import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -33,7 +33,14 @@ type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 interface FormData {
   vurderinger: Record<
     string,
-    { begrunnelse: string; behovForBistand: Vurdering; avslagsårsak?: string; fritekst?: string }
+    {
+      begrunnelse: string;
+      behovForBistand: Vurdering;
+      avslagsårsak?: string;
+      fritekst?: string;
+      bistandStart: string;
+      bistandSlutt: string;
+    }
   >;
 }
 
@@ -51,6 +58,8 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
         begrunnelse: p.begrunnelse ?? '',
         behovForBistand: utfallTilVurdering(p.vilkarStatus),
         avslagsårsak: p.avslagKode,
+        bistandStart: p.periode.fom ?? '',
+        bistandSlutt: p.periode.tom ?? '',
       },
     ]),
   ),
@@ -76,21 +85,21 @@ export const BehovForBistand = ({
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vurderBistandsvilkårVilkår),
   });
+  const selectedItem = items.find(item => item.id === selectedId);
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
       const erVurderBistandsvilkårApÅpent = vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp);
 
       const vurdering = data.vurderinger[selectedId];
-      const selectedItem = items.find(item => item.id === selectedId);
-      if (!selectedItem) {
+      if (!vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const vurdertePerioder = {
         avslagsårsak: undefined,
-        begrunnelse: vurdering?.begrunnelse ?? '',
-        erVilkårOppfylt: vurdering?.behovForBistand === 'oppfylt',
-        periode: selectedItem.periode,
+        begrunnelse: vurdering.begrunnelse ?? '',
+        erVilkårOppfylt: vurdering.behovForBistand === 'oppfylt',
+        periode: { fom: vurdering.bistandStart, tom: vurdering.bistandSlutt },
       };
 
       const payload = erVurderBistandsvilkårApÅpent
@@ -149,21 +158,23 @@ export const BehovForBistand = ({
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
           !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
-            <Alert variant="success" size="small">
-              <Box marginBlock="space-2 space-12">
-                <BodyShort size="small">Alle inngangsvilkår for Nav lokalt er ferdig vurdert.</BodyShort>
+            <VStack gap="space-20">
+              <Alert variant="success" size="small">
+                Alle inngangsvilkår for Nav lokalt er ferdig vurdert.
+              </Alert>
+              <Box>
+                <Button
+                  variant="primary"
+                  data-color="accent"
+                  size="small"
+                  type="button"
+                  loading={isPending}
+                  onClick={() => void formHook.handleSubmit(onSubmit)()}
+                >
+                  Send til beslutter
+                </Button>
               </Box>
-              <Button
-                variant="primary"
-                data-color="accent"
-                size="small"
-                type="button"
-                loading={isPending}
-                onClick={() => void formHook.handleSubmit(onSubmit)()}
-              >
-                Send vurderinger til beslutter
-              </Button>
-            </Alert>
+            </VStack>
           ) : null
         }
       >
@@ -195,6 +206,30 @@ export const BehovForBistand = ({
                   <Radio value="oppfylt">Ja</Radio>
                   <Radio value="ikkeOppfylt">Nei</Radio>
                 </RhfRadioGroup>
+                {behovForBistand === 'oppfylt' && (
+                  <VStack gap="space-12">
+                    <Label size="small" as="p">
+                      I hvilken periode er det behov for bistand?
+                    </Label>
+                    <HStack gap="space-24">
+                      <RhfDatepicker
+                        control={formHook.control}
+                        name={`vurderinger.${selectedId}.bistandStart`}
+                        label="Fra"
+                        disabled
+                      />
+                      <RhfDatepicker
+                        control={formHook.control}
+                        name={`vurderinger.${selectedId}.bistandSlutt`}
+                        label="Til"
+                        readOnly={isFormLocked}
+                        validate={[required]}
+                        fromDate={selectedItem?.periode.fom ? new Date(selectedItem?.periode.fom) : undefined}
+                        toDate={selectedItem?.periode.tom ? new Date(selectedItem?.periode.tom) : undefined}
+                      />
+                    </HStack>
+                  </VStack>
+                )}
                 {behovForBistand === 'ikkeOppfylt' && (
                   <RhfRadioGroup
                     key={`${selectedId}-avslagsårsak`}

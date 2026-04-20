@@ -147,30 +147,32 @@ export const VilkårSplittPanel = ({
               </BodyShort>
             </HStack>
           )}
-          <Box borderWidth="1 0 0 0" />
+          <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
           {isRenderProp ? (
-            <Box
-              borderRadius="8"
-              padding={effectiveLocked ? 'space-16' : 'space-0'}
-              background={effectiveLocked ? 'info-softA' : undefined}
-            >
-              <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-20' : 'space-0'}>
-                {children(effectiveLocked, setIsFormLocked)}
-                {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
-                  <Bleed marginInline="space-8">
-                    <Button
-                      size="small"
-                      variant="tertiary"
-                      icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
-                      onClick={() => setIsFormLocked(false)}
-                    >
-                      Rediger vurdering
-                    </Button>
-                  </Bleed>
-                )}
-                {afterEditButton}
-              </VStack>
-            </Box>
+            <>
+              <Box
+                borderRadius="8"
+                padding={effectiveLocked ? 'space-16' : 'space-0'}
+                background={effectiveLocked ? 'info-softA' : undefined}
+              >
+                <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-20' : 'space-0'}>
+                  {children(effectiveLocked, setIsFormLocked)}
+                  {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
+                    <Bleed marginInline="space-8">
+                      <Button
+                        size="small"
+                        variant="tertiary"
+                        icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
+                        onClick={() => setIsFormLocked(false)}
+                      >
+                        Rediger vurdering
+                      </Button>
+                    </Bleed>
+                  )}
+                </VStack>
+              </Box>
+              {isFormLocked && afterEditButton}
+            </>
           ) : (
             children
           )}
