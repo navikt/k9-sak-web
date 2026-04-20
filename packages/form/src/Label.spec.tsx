@@ -2,8 +2,6 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import { Label } from './Label';
 
-const FORMATTED_MESSAGE = 'En formatert melding';
-
 describe('<Label>', () => {
   it('skal ikke formatere input hvis den er en node', () => {
     renderWithIntl(<Label input="Hei" />);

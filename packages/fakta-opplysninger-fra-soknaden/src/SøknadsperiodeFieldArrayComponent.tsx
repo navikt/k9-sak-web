@@ -7,7 +7,7 @@ import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { Label as DSLabel } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormAction, WrappedFieldArrayProps } from 'redux-form';
 import oppgittOpptjeningRevurderingFormName from './formName';
@@ -103,7 +103,6 @@ interface StateProps {
 const SøknadsperiodeFieldArrayComponent = (
   props: SøknadsperiodeFieldArrayComponentProps & StateProps & WrappedFieldArrayProps,
 ) => {
-  const intl = useIntl();
   const {
     kanEndrePåSøknadsopplysninger,
     formChange,
