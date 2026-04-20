@@ -74,7 +74,7 @@ export const AktivitetspengerInngangsvilkår = ({
   totrinnskontrollSkjermlenkeContext,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
-
+  const kanBeslutte = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte;
   const søknadsfristAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
   );
@@ -134,7 +134,11 @@ export const AktivitetspengerInngangsvilkår = ({
             icon={tabIcon(vurderBistandsvilkårAp)}
           />
           {lokalkontorBeslutterAp && (
-            <Tabs.Tab value={InngangsvilkårTab.BESLUTTER} label="Beslutter" icon={tabIcon(lokalkontorBeslutterAp)} />
+            <Tabs.Tab
+              value={InngangsvilkårTab.BESLUTTER}
+              label="Beslutter"
+              icon={kanBeslutte ? tabIcon(lokalkontorBeslutterAp) : undefined}
+            />
           )}
         </Tabs.List>
         <Box marginBlock="space-20 space-0">

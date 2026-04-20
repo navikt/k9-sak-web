@@ -156,7 +156,7 @@ export const Beslutter = ({
 
   return (
     <VStack gap="space-20">
-      {!isAksjonspunktSolved && (
+      {!isAksjonspunktSolved && kanBeslutte && (
         <Alert variant="warning" size="small">
           Kontroller faglige vurderinger for inngangsvilkår.
         </Alert>
@@ -164,12 +164,16 @@ export const Beslutter = ({
       <Box width="fit-content">
         <VStack gap="space-16">
           <Heading size="small" level="2">
-            Besluttervurdering
+            Beslutter
           </Heading>
 
           {lokalkontorBeslutterAp && aksjonspunktErÅpent(lokalkontorBeslutterAp) && (
             <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-              {!kanBeslutte && <BodyShort>Du må ha rolle LOKALKONTOR_BESLUTTER</BodyShort>}
+              {!kanBeslutte && (
+                <Alert size="small" variant="info">
+                  Saken er sendt til beslutter.
+                </Alert>
+              )}
               {kanBeslutte && (
                 <VStack gap="space-28">
                   {fields.map((field, index) => {
