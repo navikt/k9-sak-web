@@ -186,7 +186,7 @@ export const AktivitetspengerInngangsvilkår = ({
               />
             )}
           </Tabs.Panel>
-          {lokalkontorBeslutterAp && (
+          {lokalkontorBeslutterAp && søknadsfristVilkår && (
             <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
               <Beslutter
                 lokalkontorBeslutterAp={lokalkontorBeslutterAp}
@@ -196,6 +196,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 onTabChange={setAktivTab}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+                søknadsfristVilkår={søknadsfristVilkår}
               />
             </Tabs.Panel>
           )}
