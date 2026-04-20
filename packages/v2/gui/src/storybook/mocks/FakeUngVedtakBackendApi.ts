@@ -9,6 +9,7 @@ import { fakePdf } from './fakePdf.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
 export class FakeUngVedtakBackendApi {
+  readonly backend = 'ungsak';
   async forhåndsvisVedtaksbrev(): Promise<ForhåndsvisVedtaksbrevResponse> {
     return fakePdf();
   }

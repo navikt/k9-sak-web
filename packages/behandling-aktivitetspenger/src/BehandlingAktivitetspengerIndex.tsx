@@ -1,7 +1,12 @@
-import { Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { AktivitetspengerBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerBackendClient.js';
+import {
+  aksjonspunkterQueryOptions,
+  behandlingQueryOptions,
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
@@ -11,12 +16,8 @@ import {
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
-import { UngSakBackendClient } from './data/UngSakBackendClient';
-import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './data/ungSakQueryOptions';
 
 interface OwnProps {
-  fagsak: Fagsak;
-  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -29,13 +30,11 @@ interface OwnProps {
   behandlingUuid: string;
 }
 
-const ungSakProsessApi = new UngSakBackendClient();
+const ungSakProsessApi = new AktivitetspengerBackendClient();
 
 const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,
   oppdaterBehandlingVersjon,
-  fagsak,
-  rettigheter,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   setRequestPendingMessage,
@@ -98,9 +97,7 @@ const BehandlingAktivitetspengerIndex = ({
       <BehandlingPåVent behandling={behandling} aksjonspunkter={aksjonspunkter ?? []} settPaVent={settPaVent} />
       <AktivitetspengerProsess
         api={ungSakProsessApi}
-        fagsak={fagsak}
         behandling={behandling}
-        rettigheter={rettigheter}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
