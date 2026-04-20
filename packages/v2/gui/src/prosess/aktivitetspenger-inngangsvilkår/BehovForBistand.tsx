@@ -216,7 +216,8 @@ export const BehovForBistand = ({
                         control={formHook.control}
                         name={`vurderinger.${selectedId}.bistandStart`}
                         label="Fra"
-                        disabled
+                        disabled={!isFormLocked}
+                        readOnly={isFormLocked}
                       />
                       <RhfDatepicker
                         control={formHook.control}
