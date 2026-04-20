@@ -25,6 +25,7 @@ interface Props {
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
   readOnly: boolean;
+  isPermanentlyReadOnly: boolean;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -63,6 +64,7 @@ export const BehovForBistand = ({
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
+  isPermanentlyReadOnly,
 }: Props) => {
   const items: VilkårSplittPanelItem[] = (vurderBistandsvilkårVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
@@ -138,6 +140,7 @@ export const BehovForBistand = ({
         (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp))
       }
       readOnly={readOnly}
+      isPermanentlyReadOnly={isPermanentlyReadOnly}
       afterEditButton={
         !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
           <Alert variant="success" size="small">

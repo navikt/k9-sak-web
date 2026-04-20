@@ -24,6 +24,7 @@ interface Props {
   behandling: BehandlingDto;
   api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
+  isPermanentlyReadOnly: boolean;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -60,6 +61,7 @@ export const AndreLivsoppholdytelser = ({
   api,
   behandling,
   onAksjonspunktBekreftet,
+  isPermanentlyReadOnly,
 }: Props) => {
   const items: VilkårSplittPanelItem[] = (andreLivsoppholdytelserVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
@@ -127,6 +129,7 @@ export const AndreLivsoppholdytelser = ({
       lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
+      isPermanentlyReadOnly={isPermanentlyReadOnly}
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
         <RhfForm formMethods={formHook} onSubmit={onSubmit}>

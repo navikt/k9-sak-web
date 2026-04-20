@@ -24,6 +24,7 @@ interface Props {
   behandling: BehandlingDto;
   api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
+  isPermanentlyReadOnly: boolean;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -56,7 +57,15 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
   ),
 });
 
-export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunktBekreftet, bostedAp }: Props) => {
+export const Bosted = ({
+  bostedVilkår,
+  readOnly,
+  api,
+  behandling,
+  onAksjonspunktBekreftet,
+  bostedAp,
+  isPermanentlyReadOnly,
+}: Props) => {
   const items: VilkårSplittPanelItem[] = (bostedVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
@@ -118,6 +127,7 @@ export const Bosted = ({ bostedVilkår, readOnly, api, behandling, onAksjonspunk
       lovreferanse={bostedVilkår.lovReferanse}
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
+      isPermanentlyReadOnly={isPermanentlyReadOnly}
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
         <VStack gap="space-24">

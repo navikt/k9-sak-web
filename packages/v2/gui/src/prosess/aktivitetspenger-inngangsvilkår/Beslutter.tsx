@@ -52,22 +52,42 @@ const skjermlenkeTypeToTab: Record<string, InngangsvilkårTab | undefined> = {
   [ung_kodeverk_behandling_aksjonspunkt_SkjermlenkeType.SOEKNADSFRIST]: InngangsvilkårTab.SØKNADSFRIST,
 };
 
+const tabSortOrder: InngangsvilkårTab[] = [
+  InngangsvilkårTab.SØKNADSFRIST,
+  InngangsvilkårTab.ALDER,
+  InngangsvilkårTab.BOSATT_I_TRONDHEIM,
+  InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
+  InngangsvilkårTab.BEHOV_FOR_BISTAND,
+];
+
+const getTabOrderIndex = (skjermlenkeType: string): number => {
+  const tab = skjermlenkeTypeToTab[skjermlenkeType];
+  const index = tab ? tabSortOrder.indexOf(tab) : -1;
+  return index === -1 ? Number.POSITIVE_INFINITY : index;
+};
+
 const buildDefaultValues = (
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[],
-): FormValues => ({
-  aksjonspunktGodkjenning: totrinnskontrollSkjermlenkeContext.flatMap(ctx =>
-    (ctx.totrinnskontrollAksjonspunkter ?? []).map(ap => ({
-      aksjonspunktKode: ap.aksjonspunktKode ?? '',
-      skjermlenkeType: ctx.skjermlenkeType,
-      totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
-      besluttersBegrunnelse: ap.besluttersBegrunnelse,
-      feilFakta: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_FAKTA) ?? false,
-      feilRegel: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_REGEL) ?? false,
-      feilLov: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_LOV) ?? false,
-      annet: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.ANNET) ?? false,
-    })),
-  ),
-});
+): FormValues => {
+  const aksjonspunktGodkjenning = totrinnskontrollSkjermlenkeContext
+    .flatMap(ctx =>
+      (ctx.totrinnskontrollAksjonspunkter ?? []).map(ap => ({
+        aksjonspunktKode: ap.aksjonspunktKode ?? '',
+        skjermlenkeType: ctx.skjermlenkeType,
+        totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
+        besluttersBegrunnelse: ap.besluttersBegrunnelse,
+        feilFakta: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_FAKTA) ?? false,
+        feilRegel: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_REGEL) ?? false,
+        feilLov: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.FEIL_LOV) ?? false,
+        annet: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.ANNET) ?? false,
+      })),
+    )
+    .sort((a, b) => getTabOrderIndex(a.skjermlenkeType) - getTabOrderIndex(b.skjermlenkeType));
+
+  return {
+    aksjonspunktGodkjenning,
+  };
+};
 
 interface Props {
   lokalkontorBeslutterAp: AksjonspunktDto | undefined;

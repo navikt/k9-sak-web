@@ -33,6 +33,7 @@ interface VilkårSplittPanelProps {
   readOnly?: boolean;
   children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
   afterEditButton?: ReactNode;
+  isPermanentlyReadOnly: boolean;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
@@ -62,6 +63,7 @@ export const VilkårSplittPanel = ({
   children,
   afterEditButton,
   lovreferanse,
+  isPermanentlyReadOnly,
 }: VilkårSplittPanelProps) => {
   const selectedItem = items.find(item => item.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
@@ -152,10 +154,10 @@ export const VilkårSplittPanel = ({
               padding={effectiveLocked ? 'space-16' : 'space-0'}
               background={effectiveLocked ? 'info-softA' : undefined}
             >
-              <VStack gap={isFormLocked && !readOnly ? 'space-20' : 'space-0'}>
+              <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-20' : 'space-0'}>
                 {children(effectiveLocked, setIsFormLocked)}
                 <Bleed marginInline="space-8">
-                  {isFormLocked && !readOnly && (
+                  {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
                     <Button
                       size="small"
                       variant="tertiary"

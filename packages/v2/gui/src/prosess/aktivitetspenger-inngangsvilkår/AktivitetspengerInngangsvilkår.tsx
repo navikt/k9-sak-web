@@ -98,6 +98,7 @@ export const AktivitetspengerInngangsvilkår = ({
   const andreLivsoppholdytelserVilkår = vilkår.find(
     v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   );
+  const hasOpenBeslutterAp = !!lokalkontorBeslutterAp && lokalkontorBeslutterAp.status === AksjonspunktStatus.OPPRETTET;
 
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(aksjonspunkter));
 
@@ -147,10 +148,11 @@ export const AktivitetspengerInngangsvilkår = ({
               <Bosted
                 bostedVilkår={bostedVilkår}
                 bostedAp={bostedAp}
-                readOnly={!kanSaksbehandle}
+                readOnly={!kanSaksbehandle && !hasOpenBeslutterAp}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                isPermanentlyReadOnly={!!lokalkontorBeslutterAp}
               />
             )}
           </Tabs.Panel>
@@ -159,10 +161,11 @@ export const AktivitetspengerInngangsvilkår = ({
               <AndreLivsoppholdytelser
                 andreLivsoppholdytelserAp={andreLivsoppholdytelserAp}
                 andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
-                readOnly={!kanSaksbehandle}
+                readOnly={!kanSaksbehandle && !hasOpenBeslutterAp}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                isPermanentlyReadOnly={!!lokalkontorBeslutterAp}
               />
             )}
           </Tabs.Panel>
@@ -175,7 +178,8 @@ export const AktivitetspengerInngangsvilkår = ({
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                readOnly={!kanSaksbehandle}
+                readOnly={!kanSaksbehandle && !hasOpenBeslutterAp}
+                isPermanentlyReadOnly={!!lokalkontorBeslutterAp}
               />
             )}
           </Tabs.Panel>
