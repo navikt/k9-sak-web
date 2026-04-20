@@ -22,7 +22,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
   it('skal rendre submit panel uten medhold i klagevurdering', () => {
     renderWithIntl(
       <VedtakKlageSubmitPanelImpl
-        intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPåVent={false}
@@ -38,7 +37,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
   it('skal rendre submit panel med medhold i klagevurdering', () => {
     renderWithIntl(
       <VedtakKlageSubmitPanelImpl
-        intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPåVent={false}
@@ -54,7 +52,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
   it('skal rendre submit panel med behandling på vent', () => {
     renderWithIntl(
       <VedtakKlageSubmitPanelImpl
-        intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPåVent
