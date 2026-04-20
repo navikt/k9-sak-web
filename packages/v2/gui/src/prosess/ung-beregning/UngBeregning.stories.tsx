@@ -23,7 +23,7 @@ export const DefaultStory: Story = {
         dødsdato: '',
       },
     ],
-    submitCallback: asyncAction('Løs aksjonspunkt'),
+    inntektKontrollertCallback: asyncAction('Inntekt kontrollert'),
     aksjonspunkter: [
       {
         aksjonspunktType: 'MANU',

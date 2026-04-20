@@ -1,4 +1,3 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
@@ -18,12 +17,15 @@ import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
+import { type VedtakAksjonspunktDto, type VedtakBekreftetAksjonspunktDto } from './ungVedtakAksjonspunktAvgrensing.js';
 
-interface UngVedtakProps {
-  aksjonspunkter: AksjonspunktDto[];
+type UngVedtakBekreftelseCallback = (bekreftet: VedtakBekreftetAksjonspunktDto[]) => Promise<void>;
+
+export interface UngVedtakProps {
+  aksjonspunkter: VedtakAksjonspunktDto[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
-  submitCallback: (data: any) => Promise<any>;
+  vedtakBekreftelseCallback: UngVedtakBekreftelseCallback;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
@@ -42,7 +44,7 @@ export const UngVedtak = ({
   api,
   behandling,
   aksjonspunkter,
-  submitCallback,
+  vedtakBekreftelseCallback,
   vilkår,
   readOnly,
   vedtaksbrevValgResponse,
@@ -117,14 +119,17 @@ export const UngVedtak = ({
     name: 'vedtaksbrevValg',
   });
 
-  const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
+  const transformValues = (): VedtakBekreftetAksjonspunktDto[] => {
+    return aksjonspunkter
+      .filter(ap => ap.kanLoses && ap.definisjon !== undefined)
+      .map(ap => ({ '@type': ap.definisjon, skalBrukeOverstyrendeFritekstBrev: false, ...ap }));
+  };
   const handleSubmit = () => {
     setIsSubmitting(true);
-    void submitCallback(transformValues()).finally(() => {
+    void vedtakBekreftelseCallback(transformValues()).finally(() => {
       setIsSubmitting(false);
     });
   };
-
   const harFlereBrev = vedtaksbrevValgResponse?.vedtaksbrevValg && vedtaksbrevValgResponse?.vedtaksbrevValg?.length > 1;
 
   return (
