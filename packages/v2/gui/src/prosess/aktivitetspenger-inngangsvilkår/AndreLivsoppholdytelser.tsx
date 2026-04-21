@@ -6,7 +6,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -118,6 +118,16 @@ export const AndreLivsoppholdytelser = ({
     !andreLivsoppholdytelserVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)
   ) {
     return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (andreLivsoppholdytelserVilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+    return (
+      <Box width="fit-content">
+        <Alert variant="info" size="small">
+          Ingen perioder å vurdere.
+        </Alert>
+      </Box>
+    );
   }
 
   return (

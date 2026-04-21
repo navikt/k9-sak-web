@@ -9,7 +9,7 @@ import {
 } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
@@ -68,6 +68,13 @@ export const VilkårSplittPanel = ({
   const selectedItem = items.find(item => item.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
   const [isFormLocked, setIsFormLocked] = useState(defaultIsLocked);
+
+  useEffect(() => {
+    if (defaultIsLocked) {
+      setIsFormLocked(true);
+    }
+  }, [defaultIsLocked]);
+
   const effectiveLocked = isFormLocked || readOnly;
 
   return (

@@ -1,5 +1,4 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -124,7 +123,7 @@ export const BehovForBistand = ({
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const isAksjonspunktSolved = vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT;
+  const isVurderBistandsvilkårApSolved = vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp);
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -137,9 +136,43 @@ export const BehovForBistand = ({
     return <ProsessStegIkkeBehandlet />;
   }
 
+  if (!isVurderBistandsvilkårApSolved && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp)) {
+    return (
+      <VStack gap="space-20">
+        <Box width="fit-content">
+          <Alert variant="success" size="small">
+            Alle inngangsvilkår for Nav lokalt er ferdig vurdert.
+          </Alert>
+        </Box>
+        <Box>
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isPending}
+            onClick={() => void formHook.handleSubmit(onSubmit)()}
+          >
+            Send til beslutter
+          </Button>
+        </Box>
+      </VStack>
+    );
+  }
+
+  if (vurderBistandsvilkårVilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+    return (
+      <Box width="fit-content">
+        <Alert variant="info" size="small">
+          Ingen perioder å vurdere.
+        </Alert>
+      </Box>
+    );
+  }
+
   return (
     <VStack gap="space-20">
-      {!isAksjonspunktSolved && (
+      {!isVurderBistandsvilkårApSolved && (
         <Alert variant="warning" size="small">
           Vurder behov for bistand på søknadstidspunktet.
         </Alert>
@@ -151,7 +184,7 @@ export const BehovForBistand = ({
         detailHeading="Vurdering av behov for bistand"
         lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
         defaultIsLocked={
-          isAksjonspunktSolved ||
+          isVurderBistandsvilkårApSolved ||
           (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp))
         }
         readOnly={readOnly}
