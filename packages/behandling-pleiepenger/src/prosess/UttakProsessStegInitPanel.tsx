@@ -2,12 +2,11 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
+import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
@@ -21,7 +20,7 @@ const PANEL_ID = 'uttak';
 interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
   erOverstyrer: boolean;
   isReadOnly: boolean;
 }
@@ -31,8 +30,9 @@ export function UttakProsessStegInitPanel(props: Props) {
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
-  const [{ data: aksjonspunkter = [] }, { data: uttak }] = useSuspenseQueries({
+  const [{ data: behandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] = useSuspenseQueries({
     queries: [
+      behandlingQueryOptions(props.api, props.behandling),
       aksjonspunkterQueryOptions(props.api, props.behandling),
       uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
@@ -54,22 +54,15 @@ export function UttakProsessStegInitPanel(props: Props) {
     .map(ap => ap.definisjon)
     .filter(definisjon => definisjon !== undefined);
 
-  const hentBehandling = async () => {
-    if (props.hentBehandling) {
-      await props.hentBehandling();
-    }
-  };
-
-  const behandlingMedKonverterteKodeverk = JSON.parse(JSON.stringify(props.behandling));
-  konverterKodeverkTilKode(behandlingMedKonverterteKodeverk, false);
-
   return (
     <Uttak
       uttak={uttak}
-      behandling={behandlingMedKonverterteKodeverk}
+      behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
-      hentBehandling={hentBehandling}
+      hentBehandling={async () => {
+        await props.hentBehandling();
+      }}
       erOverstyrer={props.erOverstyrer}
       readOnly={props.isReadOnly}
     />
