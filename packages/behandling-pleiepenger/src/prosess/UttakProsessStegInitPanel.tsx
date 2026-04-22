@@ -55,7 +55,7 @@ export function UttakProsessStegInitPanel(props: Props) {
     .filter(definisjon => definisjon !== undefined);
 
   const hentBehandling = async () => {
-    await props.hentBehandling({ behandlingId: props.behandling.uuid }, false);
+    await props.hentBehandling({ behandlingId: props.behandling.id }, false);
   };
 
   return (
