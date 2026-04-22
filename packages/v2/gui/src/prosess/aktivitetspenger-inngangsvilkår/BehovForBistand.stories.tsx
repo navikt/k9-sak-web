@@ -5,6 +5,7 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { BehovForBistand } from './BehovForBistand';
 
@@ -92,5 +93,32 @@ export const ReadOnly: Story = {
       ],
     },
     isPermanentlyReadOnly: false,
+  },
+};
+
+export const BytterFelterBasertPåVurdering: Story = {
+  args: {
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser datofelter når bruker velger oppfylt', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
+      await expect(canvas.getByLabelText('Til')).toBeInTheDocument();
+    });
+
+    await step('viser avslagsårsak når bruker velger ikke oppfylt', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await expect(canvas.getByText('Avslagsårsak')).toBeInTheDocument();
+      await expect(canvas.getByRole('radio', { name: 'Fritekst' })).toBeInTheDocument();
+    });
+
+    await step('viser fritekstfelt når fritekst velges', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Fritekst' }));
+      await expect(canvas.getByLabelText('Fritekst avslagsbrev')).toBeInTheDocument();
+    });
   },
 };

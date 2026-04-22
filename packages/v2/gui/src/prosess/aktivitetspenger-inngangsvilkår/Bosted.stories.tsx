@@ -5,6 +5,7 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { Bosted } from './Bosted';
 
@@ -97,5 +98,30 @@ export const FlerePerioder: Story = {
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
+  },
+};
+
+export const ViserFritekstVedAvslag: Story = {
+  args: {
+    bostedVilkår: {
+      vilkarType: vilkarType.BOSTEDSVILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser avslagsårsak ved negativ vurdering', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await expect(canvas.getByText('Avslagsårsak')).toBeInTheDocument();
+      await expect(canvas.getByRole('radio', { name: 'Fritekst' })).toBeInTheDocument();
+    });
+
+    await step('viser fritekstfelt når fritekst velges', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Fritekst' }));
+      await expect(canvas.getByLabelText('Fritekst avslagsbrev')).toBeInTheDocument();
+    });
   },
 };
