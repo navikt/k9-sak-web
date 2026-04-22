@@ -2,11 +2,12 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
+import { aksjonspunkterQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
@@ -30,14 +31,12 @@ export function UttakProsessStegInitPanel(props: Props) {
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
-  const [{ data: behandlingV2, refetch: refetchBehandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] =
-    useSuspenseQueries({
-      queries: [
-        behandlingQueryOptions(props.api, props.behandling),
-        aksjonspunkterQueryOptions(props.api, props.behandling),
-        uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
-      ],
-    });
+  const [{ data: aksjonspunkter = [] }, { data: uttak }] = useSuspenseQueries({
+    queries: [
+      aksjonspunkterQueryOptions(props.api, props.behandling),
+      uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+    ],
+  });
 
   if (!erValgt) {
     return null;
@@ -59,13 +58,15 @@ export function UttakProsessStegInitPanel(props: Props) {
     if (props.hentBehandling) {
       await props.hentBehandling();
     }
-    await refetchBehandlingV2();
   };
+
+  const behandlingMedKonverterteKodeverk = JSON.parse(JSON.stringify(props.behandling));
+  konverterKodeverkTilKode(behandlingMedKonverterteKodeverk, false);
 
   return (
     <Uttak
       uttak={uttak}
-      behandling={behandlingV2}
+      behandling={behandlingMedKonverterteKodeverk}
       aksjonspunkter={aksjonspunkter}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
       hentBehandling={hentBehandling}
