@@ -26,6 +26,7 @@ const meta = {
     api: fakeAktivitetspengerApi,
     behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: () => {},
+    lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
   },
 } satisfies Meta<typeof Bosted>;

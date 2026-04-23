@@ -2,7 +2,7 @@ import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { BesteBeregningResultatType } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BesteBeregningResultatType.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, Heading, HStack, InlineMessage, Table, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Heading, HelpText, HStack, InlineMessage, Table, VStack } from '@navikt/ds-react';
 import styles from './aktivitetspengerBeregning.module.css';
 
 const formatter = new Intl.NumberFormat('nb-NO', {
@@ -59,7 +59,15 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                     <Table.HeaderCell align="right">Arbeid/Frilans</Table.HeaderCell>
                     <Table.HeaderCell align="right">Næring</Table.HeaderCell>
                     <Table.HeaderCell align="right">Sum</Table.HeaderCell>
-                    <Table.HeaderCell align="right">G-justert({årstallForSkjæringstidspunkt})</Table.HeaderCell>
+                    <Table.HeaderCell>
+                      <HStack gap="space-4" justify="end" align="center">
+                        G-justert({årstallForSkjæringstidspunkt})
+                        <HelpText>
+                          Inntekt over 6G er fjernet, siden inntekt over 6 G ikke tas med i grunnlaget jf, forskriftens
+                          § 11
+                        </HelpText>
+                      </HStack>
+                    </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
