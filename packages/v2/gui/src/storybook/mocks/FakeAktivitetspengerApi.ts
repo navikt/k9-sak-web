@@ -1,4 +1,5 @@
-import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/bosatt/BostedGrunnlagResponseDto.js';
+import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
@@ -29,6 +30,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
 
   async hentMedlemskapFraSøknad() {
     return {};
+  }
+
+  async hentBostedGrunnlag(): Promise<BostedGrunnlagResponseDto> {
+    return { perioder: [] };
   }
 
   async getBeregningsgrunnlag(): Promise<never> {

@@ -11,8 +11,10 @@ import {
   navAnsatt_innloggetBrukerV2,
   vilkår_getVilkårV3,
 } from '@navikt/ung-sak-typescript-client/sdk';
+import { client } from '@navikt/ung-sak-typescript-client/client';
 import type { ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto } from '@navikt/ung-sak-typescript-client/types';
-import { type AktivitetspengerApi } from './AktivitetspengerApi';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/bosatt/BostedGrunnlagResponseDto.js';
+import { type AktivitetspengerApi } from './AktivitetspengerApi.js';
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
@@ -44,6 +46,14 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {
     return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } })).data;
+  }
+
+  async hentBostedGrunnlag(behandlingUuid: string): Promise<BostedGrunnlagResponseDto> {
+    const response = await client.get<BostedGrunnlagResponseDto>({
+      url: '/api/behandling/bosatt',
+      query: { behandlingUuid },
+    });
+    return response.data as BostedGrunnlagResponseDto;
   }
   async getBeregningsgrunnlag(behandlingUuid: string) {
     return (await avp_getBeregningsgrunnlag({ query: { behandlingUuid } })).data;

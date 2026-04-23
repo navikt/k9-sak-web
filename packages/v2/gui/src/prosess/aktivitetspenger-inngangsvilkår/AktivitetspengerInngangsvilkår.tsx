@@ -1,19 +1,22 @@
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktDefinisjon, BostedAksjonspunktKode } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { ung_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { Alder } from './Alder';
-import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
-import { BehovForBistand } from './BehovForBistand';
-import { Beslutter } from './Beslutter';
-import { BosattITrondheim } from './BosattITrondheim';
-import { Søknadsfrist } from './Søknadsfrist';
-import { InngangsvilkårTab } from './types';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { Alder } from './Alder.js';
+import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser.js';
+import { BehovForBistand } from './BehovForBistand.js';
+import { Beslutter } from './Beslutter.js';
+import { BosattITrondheim } from './BosattITrondheim.js';
+import { Søknadsfrist } from './Søknadsfrist.js';
+import { InngangsvilkårTab } from './types.js';
+import type { UngSakVilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 
 const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
 const CustomWarningIcon = () => (
@@ -29,13 +32,16 @@ const relevanteAksjonspunktDefinisjoner = [
   AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
   AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
-];
+  BostedAksjonspunktKode.VURDER_BOSTED,
+  BostedAksjonspunktKode.FASTSETT_BOSTED,
+] as string[];
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
   innloggetBruker: InnloggetAnsattUngV2Dto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
+  vilkår?: VilkårMedPerioderDto[];
   onAksjonspunktBekreftet: () => void;
 }
 
@@ -44,11 +50,12 @@ export const AktivitetspengerInngangsvilkår = ({
   innloggetBruker,
   api,
   behandling,
+  vilkår,
   onAksjonspunktBekreftet,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
-    relevanteAksjonspunktDefinisjoner.some(def => def === ap.definisjon),
+    relevanteAksjonspunktDefinisjoner.some(def => def === (ap.definisjon as string)),
   );
   const vurderBistandsvilkårAp = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
@@ -59,6 +66,16 @@ export const AktivitetspengerInngangsvilkår = ({
   const lokalkontorBeslutterAp = relevanteAksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
+  const vurderBostedAp = relevanteAksjonspunkter.find(
+    ap => (ap.definisjon as string) === BostedAksjonspunktKode.VURDER_BOSTED,
+  );
+  const fastsettBostedAp = relevanteAksjonspunkter.find(
+    ap => (ap.definisjon as string) === BostedAksjonspunktKode.FASTSETT_BOSTED,
+  );
+
+  const bostedsvilkår = vilkår?.find(
+    v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.BOSTEDSVILKÅR,
+  ) as UngSakVilkårMedPerioderDto | undefined;
 
   const utledAktivTab = () => {
     if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status !== AksjonspunktStatus.UTFØRT) {
@@ -82,7 +99,7 @@ export const AktivitetspengerInngangsvilkår = ({
         <Tabs.List>
           <Tabs.Tab value={InngangsvilkårTab.SØKNADSFRIST} label="Søknadsfrist" icon={tabIkon()} />
           <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIkon()} />
-          <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon()} />
+          <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon(vurderBostedAp ?? fastsettBostedAp)} />
           <Tabs.Tab
             value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
             label="Andre livsoppholdytelser"
@@ -105,7 +122,14 @@ export const AktivitetspengerInngangsvilkår = ({
             <Alder />
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
-            <BosattITrondheim />
+            <BosattITrondheim
+              aksjonspunkter={aksjonspunkter}
+              vilkår={bostedsvilkår}
+              api={api}
+              behandling={behandling}
+              kanSaksbehandle={kanSaksbehandle}
+              onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+            />
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
             <AndreLivsoppholdytelser />
