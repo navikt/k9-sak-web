@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { aksjonspunktErÅpent } from './utils/utils';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
@@ -210,6 +211,11 @@ export const BehovForBistand = ({
             </VStack>
           ) : null
         }
+        lockedContent={
+          isVurderBistandsvilkårApSolved ? (
+            <VurdertAv ident={vurderBistandsvilkårAp.ansvarligSaksbehandler} />
+          ) : undefined
+        }
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
@@ -288,7 +294,7 @@ export const BehovForBistand = ({
                   />
                 )}
                 {!isFormLocked && (
-                  <HStack gap="space-8">
+                  <HStack gap="space-8" marginBlock="space-24 space-0">
                     <Button type="submit" size="small" loading={isPending}>
                       Bekreft og fortsett
                     </Button>

@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
@@ -133,6 +134,7 @@ export const Bosted = ({
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isAksjonspunktSolved}
         readOnly={readOnly}
+        lockedContent={isAksjonspunktSolved ? <VurdertAv ident={bostedAp.ansvarligSaksbehandler} /> : undefined}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
@@ -200,17 +202,17 @@ export const Bosted = ({
                     readOnly={isFormLocked}
                   />
                 )}
-                {!isFormLocked && (
-                  <HStack gap="space-8">
-                    <Button type="submit" size="small" loading={isPending}>
-                      Bekreft og fortsett
-                    </Button>
-                    <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
-                      Avbryt
-                    </Button>
-                  </HStack>
-                )}
               </VStack>
+              {!isFormLocked && (
+                <HStack gap="space-8" marginBlock="space-24 space-0">
+                  <Button type="submit" size="small" loading={isPending}>
+                    Bekreft og fortsett
+                  </Button>
+                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
+                    Avbryt
+                  </Button>
+                </HStack>
+              )}
             </RhfForm>
           </VStack>
         )}

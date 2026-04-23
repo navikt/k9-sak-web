@@ -20,8 +20,8 @@ import {
   KodeverkMedNavn,
   NavAnsatt,
   Personopplysninger,
-  SaksbehandlereInfo,
 } from '@k9-sak-web/types';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
@@ -30,9 +30,12 @@ import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
+import { UngSakBackendClient } from '../data/UngSakBackendClient';
 import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+
+const api = new UngSakBackendClient();
 
 /**
  * FagsakIndex
@@ -153,11 +156,11 @@ const FagsakIndex = () => {
     options,
   );
 
-  const { data: saksbehandlereSomHarGjortEndringerIBehandlingen } = restApiHooks.useRestApi<SaksbehandlereInfo>(
-    UngSakApiKeys.HENT_SAKSBEHANDLERE,
-    { behandlingUuid: behandling?.uuid },
-    options,
-  );
+  const { data: saksbehandlereSomHarGjortEndringerIBehandlingen } = useQuery({
+    queryKey: ['saksbehandlere', api.backend, behandling?.uuid],
+    queryFn: () => api.hentSaksbehandlere(behandling?.uuid ?? ''),
+    enabled: !!behandling?.uuid,
+  });
 
   const featureToggles = useContext(FeatureTogglesContext);
 

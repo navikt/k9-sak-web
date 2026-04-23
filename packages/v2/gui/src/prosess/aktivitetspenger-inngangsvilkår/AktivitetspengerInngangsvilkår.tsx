@@ -7,7 +7,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
-import { CheckmarkIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
@@ -18,20 +18,27 @@ import { Beslutter } from './Beslutter';
 import { Bosted } from './Bosted';
 import { Søknadsfrist } from './Søknadsfrist';
 import { InngangsvilkårTab } from './types';
+import { aksjonspunktErÅpent } from './utils/utils';
 
 const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
 const CustomWarningIcon = () => (
-  <ExclamationmarkTriangleFillIcon fontSize="1.5rem" color="var(--ax-text-warning-decoration)" />
+  <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />
 );
 
 const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderDto) => {
   if (!ap && !vilkår) return undefined;
   if (ap) {
-    return ap.status === AksjonspunktStatus.UTFØRT ? <CustomCheckmarkIcon /> : <CustomWarningIcon />;
+    if (aksjonspunktErÅpent(ap)) {
+      return <CustomWarningIcon />;
+    }
   }
-  return vilkår?.perioder?.every(periode => periode.vilkarStatus !== Utfall.IKKE_VURDERT) ? (
-    <CustomCheckmarkIcon />
-  ) : undefined;
+  if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.OPPFYLT)) {
+    return <CustomCheckmarkIcon />;
+  }
+  if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
+    return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
+  }
+  return undefined;
 };
 
 const utledAktivTab = (aksjonspunkter: AksjonspunktDto[]) => {
@@ -129,9 +136,9 @@ export const AktivitetspengerInngangsvilkår = ({
           <Tabs.Tab
             value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
             label="Behov for bistand"
-            icon={tabIcon(vurderBistandsvilkårAp)}
+            icon={tabIcon(vurderBistandsvilkårAp, vurderBistandsvilkårVilkår)}
           />
-          {lokalkontorBeslutterAp && (
+          {lokalkontorBeslutterAp && aksjonspunktErÅpent(lokalkontorBeslutterAp) && (
             <Tabs.Tab
               value={InngangsvilkårTab.BESLUTTER}
               label="Beslutter"
@@ -184,7 +191,7 @@ export const AktivitetspengerInngangsvilkår = ({
               />
             )}
           </Tabs.Panel>
-          {lokalkontorBeslutterAp && søknadsfristVilkår && (
+          {lokalkontorBeslutterAp && (
             <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
               <Beslutter
                 lokalkontorBeslutterAp={lokalkontorBeslutterAp}
@@ -194,7 +201,6 @@ export const AktivitetspengerInngangsvilkår = ({
                 onTabChange={setAktivTab}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-                søknadsfristVilkår={søknadsfristVilkår}
               />
             </Tabs.Panel>
           )}
