@@ -16,10 +16,13 @@ import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIk
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { sendTilBeslutter } from './utils/sendTilBeslutter';
+import { aksjonspunktErÅpent } from './utils/utils';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
 interface Props {
   andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
+  lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
   andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -57,6 +60,7 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
 });
 export const AndreLivsoppholdytelser = ({
   andreLivsoppholdytelserAp,
+  lokalkontorForeslårVilkårAp,
   andreLivsoppholdytelserVilkår,
   readOnly,
   api,
@@ -107,9 +111,24 @@ export const AndreLivsoppholdytelser = ({
     },
   });
 
+  const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
+    mutationFn: async () => sendTilBeslutter(api, behandling),
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
+
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
   const andreLivsoppholdytelser = formHook.watch(`vurderinger.${selectedId}.andreLivsoppholdytelser`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
+  const harAvslagIAndreLivsoppholdytelser = andreLivsoppholdytelserVilkår.perioder?.some(
+    p => p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
+  const skalViseSendTilBeslutter =
+    !!harAvslagIAndreLivsoppholdytelser &&
+    !!lokalkontorForeslårVilkårAp &&
+    aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) &&
+    !readOnly;
 
   if (!andreLivsoppholdytelserVilkår) {
     return null;
@@ -147,6 +166,27 @@ export const AndreLivsoppholdytelser = ({
         defaultIsLocked={isAksjonspunktSolved}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
+        afterEditButton={
+          skalViseSendTilBeslutter ? (
+            <VStack gap="space-20">
+              <Alert variant="info" size="small">
+                Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
+              </Alert>
+              <Box>
+                <Button
+                  variant="primary"
+                  data-color="accent"
+                  size="small"
+                  type="button"
+                  loading={isSendingTilBeslutter}
+                  onClick={() => void sendTilBeslutterMutation()}
+                >
+                  Send til beslutter
+                </Button>
+              </Box>
+            </VStack>
+          ) : null
+        }
         lockedContent={
           isAksjonspunktSolved ? <VurdertAv ident={andreLivsoppholdytelserAp.ansvarligSaksbehandler} /> : undefined
         }
@@ -205,7 +245,7 @@ export const AndreLivsoppholdytelser = ({
                 />
               )}
               {!isFormLocked && (
-                <HStack gap="space-8" marginBlock="space-24 space-0">
+                <HStack gap="space-8">
                   <Button type="submit" size="small" loading={isPending}>
                     Bekreft og fortsett
                   </Button>

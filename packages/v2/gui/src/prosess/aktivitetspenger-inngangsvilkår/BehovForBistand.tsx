@@ -14,6 +14,7 @@ import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIk
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { sendTilBeslutter } from './utils/sendTilBeslutter';
 import { aksjonspunktErÅpent } from './utils/utils';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
@@ -106,13 +107,18 @@ export const BehovForBistand = ({
         ? {
             '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
             begrunnelse: vurdering?.begrunnelse ?? '',
-            brevtekst: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
+            brevtekst:
+              vurdering.behovForBistand === 'ikkeOppfylt' && vurdering?.avslagsårsak === 'fritekst'
+                ? vurdering?.fritekst
+                : undefined,
             vurdertePerioder: [vurdertePerioder],
           }
-        : {
-            '@type': AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
-            begrunnelse: 'Send til beslutter',
-          };
+        : undefined;
+
+      if (!payload) {
+        await sendTilBeslutter(api, behandling);
+        return;
+      }
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -135,30 +141,6 @@ export const BehovForBistand = ({
     !vurderBistandsvilkårVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)
   ) {
     return <ProsessStegIkkeBehandlet />;
-  }
-
-  if (!isVurderBistandsvilkårApSolved && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp)) {
-    return (
-      <VStack gap="space-20">
-        <Box width="fit-content">
-          <Alert variant="success" size="small">
-            Alle inngangsvilkår for Nav lokalt er ferdig vurdert.
-          </Alert>
-        </Box>
-        <Box>
-          <Button
-            variant="primary"
-            data-color="accent"
-            size="small"
-            type="button"
-            loading={isPending}
-            onClick={() => void formHook.handleSubmit(onSubmit)()}
-          >
-            Send til beslutter
-          </Button>
-        </Box>
-      </VStack>
-    );
   }
 
   if (vurderBistandsvilkårVilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
@@ -282,7 +264,7 @@ export const BehovForBistand = ({
                     <Radio value="fritekst">Fritekst</Radio>
                   </RhfRadioGroup>
                 )}
-                {avslagsårsak === 'fritekst' && (
+                {behovForBistand === 'ikkeOppfylt' && avslagsårsak === 'fritekst' && (
                   <RhfTextarea
                     key={`${selectedId}-fritekst`}
                     control={formHook.control}
@@ -294,7 +276,7 @@ export const BehovForBistand = ({
                   />
                 )}
                 {!isFormLocked && (
-                  <HStack gap="space-8" marginBlock="space-24 space-0">
+                  <HStack gap="space-8">
                     <Button type="submit" size="small" loading={isPending}>
                       Bekreft og fortsett
                     </Button>

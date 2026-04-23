@@ -6,7 +6,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -16,10 +16,13 @@ import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIk
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { sendTilBeslutter } from './utils/sendTilBeslutter';
+import { aksjonspunktErÅpent } from './utils/utils';
 import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
+  lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
   bostedVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -65,6 +68,7 @@ export const Bosted = ({
   behandling,
   onAksjonspunktBekreftet,
   bostedAp,
+  lokalkontorForeslårVilkårAp,
   isPermanentlyReadOnly,
 }: Props) => {
   const items: VilkårSplittPanelItem[] = (bostedVilkår?.perioder ?? []).map(p => ({
@@ -106,11 +110,24 @@ export const Bosted = ({
     },
   });
 
+  const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
+    mutationFn: async () => sendTilBeslutter(api, behandling),
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
+
   const isAksjonspunktSolved = bostedAp?.status === AksjonspunktStatus.UTFØRT;
   const selectedVilkårPeriode = bostedVilkår.perioder?.find(p => p.periode.fom === selectedId);
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
+  const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
+  const skalViseSendTilBeslutter =
+    !!harAvslagIBosted &&
+    !!lokalkontorForeslårVilkårAp &&
+    aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) &&
+    !readOnly;
 
   if (!bostedVilkår) {
     return null;
@@ -135,6 +152,27 @@ export const Bosted = ({
         defaultIsLocked={isAksjonspunktSolved}
         readOnly={readOnly}
         lockedContent={isAksjonspunktSolved ? <VurdertAv ident={bostedAp.ansvarligSaksbehandler} /> : undefined}
+        afterEditButton={
+          skalViseSendTilBeslutter ? (
+            <VStack gap="space-20">
+              <Alert variant="info" size="small">
+                Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
+              </Alert>
+              <Box>
+                <Button
+                  variant="primary"
+                  data-color="accent"
+                  size="small"
+                  type="button"
+                  loading={isSendingTilBeslutter}
+                  onClick={() => void sendTilBeslutterMutation()}
+                >
+                  Send til beslutter
+                </Button>
+              </Box>
+            </VStack>
+          ) : null
+        }
         isPermanentlyReadOnly={isPermanentlyReadOnly}
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
@@ -202,17 +240,17 @@ export const Bosted = ({
                     readOnly={isFormLocked}
                   />
                 )}
+                {!isFormLocked && (
+                  <HStack gap="space-8">
+                    <Button type="submit" size="small" loading={isPending}>
+                      Bekreft og fortsett
+                    </Button>
+                    <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
+                      Avbryt
+                    </Button>
+                  </HStack>
+                )}
               </VStack>
-              {!isFormLocked && (
-                <HStack gap="space-8" marginBlock="space-24 space-0">
-                  <Button type="submit" size="small" loading={isPending}>
-                    Bekreft og fortsett
-                  </Button>
-                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
-                    Avbryt
-                  </Button>
-                </HStack>
-              )}
             </RhfForm>
           </VStack>
         )}

@@ -42,22 +42,43 @@ const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderD
 };
 
 const utledAktivTab = (aksjonspunkter: AksjonspunktDto[]) => {
-  const bosattITrondheimAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
-  if (bosattITrondheimAp && bosattITrondheimAp.status === AksjonspunktStatus.OPPRETTET) {
-    return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
-  }
+  // Samle alle aksjonspunkter på toppen for effektivitet
+  const bostedAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
   const andreLivsoppholdytelserAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
   );
-  if (andreLivsoppholdytelserAp && andreLivsoppholdytelserAp.status === AksjonspunktStatus.OPPRETTET) {
-    return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
-  }
+  const vurderBistandsvilkårAp = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+  );
+  const lokalkontorForeslårVilkårAp = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+  );
   const lokalkontorBeslutterAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   );
-  if (lokalkontorBeslutterAp && lokalkontorBeslutterAp.status === AksjonspunktStatus.OPPRETTET) {
+
+  // Prioriter åpne aksjonspunkter som krever handling
+  if (bostedAp?.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
+  }
+  if (andreLivsoppholdytelserAp?.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
+  }
+  if (lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BESLUTTER;
   }
+
+  // Håndter avslag-flow: hvis bosted eller andre livsoppholdytelser er avslått,
+  // vis den sluttførte fanen hvis ingen videre vilkår skal behandles
+  if (lokalkontorForeslårVilkårAp) {
+    if (bostedAp?.status === AksjonspunktStatus.UTFØRT && !andreLivsoppholdytelserAp) {
+      return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
+    }
+    if (andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT && !vurderBistandsvilkårAp) {
+      return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
+    }
+  }
+
   return InngangsvilkårTab.BEHOV_FOR_BISTAND;
 };
 
@@ -156,6 +177,7 @@ export const AktivitetspengerInngangsvilkår = ({
               <Bosted
                 bostedVilkår={bostedVilkår}
                 bostedAp={bostedAp}
+                lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
                 readOnly={!kanSaksbehandle}
                 api={api}
                 behandling={behandling}
@@ -168,6 +190,7 @@ export const AktivitetspengerInngangsvilkår = ({
             {andreLivsoppholdytelserVilkår && (
               <AndreLivsoppholdytelser
                 andreLivsoppholdytelserAp={andreLivsoppholdytelserAp}
+                lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
                 andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
                 readOnly={!kanSaksbehandle}
                 api={api}
