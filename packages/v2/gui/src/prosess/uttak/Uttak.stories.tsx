@@ -378,7 +378,7 @@ export const UttakLesemodus: Story = {
 /**
  * UttakMedOpphold
  *
- * et opphold mellom uke 10 og uke 11 (mandag 09.03 er en ukedag i gapet).
+ * Et opphold mellom uke 10 og uke 11 (mandag 09.03 er en ukedag i gapet).
  */
 export const UttakMedOpphold: Story = {
   decorators: [withFakeUttakBackend()],
