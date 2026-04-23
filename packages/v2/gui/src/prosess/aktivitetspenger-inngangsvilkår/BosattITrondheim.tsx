@@ -1,4 +1,3 @@
-import { ung_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { BostedAksjonspunktKode } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -6,12 +5,13 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BostedGrunnlagPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/bosatt/BostedGrunnlagResponseDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Button, HStack, Radio, Textarea, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import { BodyShort, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, useWatch, type SubmitHandler } from 'react-hook-form';
 import type { UngSakVilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårSplittPanelItem } from './VilkårSplittPanel.js';
 import { VilkårSplittPanel } from './VilkårSplittPanel.js';
@@ -29,7 +29,8 @@ interface Props {
 // --- Form-typer ---
 
 interface VurderPeriodeForm {
-  erBosattITrondheim: 'ja' | 'nei' | '';
+  borITrondheimIHelePerioden: 'ja' | 'nei' | '';
+  fraflyttingsDato: string;
   begrunnelse: string;
 }
 
@@ -63,48 +64,65 @@ const finnÅpentAksjonspunkt = (aksjonspunkter: AksjonspunktDto[], kode: string)
 
 interface VurderBostedSkjemaProps {
   selectedFom: string;
+  selectedTom: string;
   formMethods: ReturnType<typeof useForm<VurderBostedForm>>;
   isPending: boolean;
   isReadOnly: boolean;
 }
 
-const VurderBostedSkjema = ({ selectedFom, formMethods, isPending, isReadOnly }: VurderBostedSkjemaProps) => (
-  <VStack gap="space-16">
-    <RhfRadioGroup
-      key={selectedFom}
-      control={formMethods.control}
-      name={`perioder.${selectedFom}.erBosattITrondheim`}
-      legend="Er bruker bosatt i Trondheim?"
-      validate={[required]}
-      readOnly={isReadOnly}
-    >
-      <Radio value="ja">Ja</Radio>
-      <Radio value="nei">Nei</Radio>
-    </RhfRadioGroup>
-    <RhfTextarea
-      key={`begrunnelse-${selectedFom}`}
-      control={formMethods.control}
-      name={`perioder.${selectedFom}.begrunnelse`}
-      label="Begrunnelse"
-      readOnly={isReadOnly}
-    />
-    {!isReadOnly && (
-      <RhfTextarea
+const VurderBostedSkjema = ({ selectedFom, selectedTom, formMethods, isPending, isReadOnly }: VurderBostedSkjemaProps) => {
+  const borHele = useWatch({ control: formMethods.control, name: `perioder.${selectedFom}.borITrondheimIHelePerioden` });
+
+  return (
+    <VStack gap="space-16">
+      <RhfRadioGroup
+        key={selectedFom}
         control={formMethods.control}
-        name="brevtekst"
-        label="Tekst til bruker (valgfritt)"
-        description="Sendes med varselet til bruker"
+        name={`perioder.${selectedFom}.borITrondheimIHelePerioden`}
+        legend="Bor bruker i Trondheim i hele perioden?"
+        validate={[required]}
+        readOnly={isReadOnly}
+      >
+        <Radio value="ja">Ja</Radio>
+        <Radio value="nei">Nei</Radio>
+      </RhfRadioGroup>
+      {borHele === 'nei' && (
+        <RhfDatepicker
+          key={`fraflytting-${selectedFom}`}
+          control={formMethods.control}
+          name={`perioder.${selectedFom}.fraflyttingsDato`}
+          label="Dato for fraflytting fra Trondheim"
+          validate={[required, hasValidDate]}
+          fromDate={dayjs(selectedFom).toDate()}
+          toDate={dayjs(selectedTom).toDate()}
+          readOnly={isReadOnly}
+        />
+      )}
+      <RhfTextarea
+        key={`begrunnelse-${selectedFom}`}
+        control={formMethods.control}
+        name={`perioder.${selectedFom}.begrunnelse`}
+        label="Begrunnelse"
+        readOnly={isReadOnly}
       />
-    )}
-    {!isReadOnly && (
-      <HStack gap="space-8">
-        <Button type="submit" size="small" loading={isPending}>
-          Bekreft og send varsel
-        </Button>
-      </HStack>
-    )}
-  </VStack>
-);
+      {!isReadOnly && (
+        <RhfTextarea
+          control={formMethods.control}
+          name="brevtekst"
+          label="Tekst til bruker (valgfritt)"
+          description="Sendes med varselet til bruker"
+        />
+      )}
+      {!isReadOnly && (
+        <HStack gap="space-8">
+          <Button type="submit" size="small" loading={isPending}>
+            Bekreft og send varsel
+          </Button>
+        </HStack>
+      )}
+    </VStack>
+  );
+};
 
 // --- FastsettBosted-skjema ---
 
@@ -222,11 +240,8 @@ export const BosattITrondheim = ({
       perioder.map(p => [
         p.periode.fom,
         {
-          erBosattITrondheim: grunnlagByFom[p.periode.fom]?.foreslåttErBosattITrondheim === true
-            ? 'ja'
-            : grunnlagByFom[p.periode.fom]?.foreslåttErBosattITrondheim === false
-              ? 'nei'
-              : '',
+          borITrondheimIHelePerioden: '',
+          fraflyttingsDato: '',
           begrunnelse: '',
         } satisfies VurderPeriodeForm,
       ]),
@@ -240,9 +255,11 @@ export const BosattITrondheim = ({
     mutationFn: async (data: VurderBostedForm) => {
       const avklaringer = perioder.map(p => {
         const periodeForm = data.perioder[p.periode.fom];
+        const borHele = periodeForm?.borITrondheimIHelePerioden === 'ja';
         return {
           periode: { fom: p.periode.fom, tom: p.periode.tom },
-          erBosattITrondheim: periodeForm?.erBosattITrondheim === 'ja',
+          borITrondheimIHelePerioden: borHele,
+          fraflyttingsDato: borHele ? null : (periodeForm?.fraflyttingsDato ?? null),
           begrunnelse: periodeForm?.begrunnelse ?? '',
         };
       });
@@ -302,6 +319,9 @@ export const BosattITrondheim = ({
     return <BodyShort>Ingen vilkårsperioder funnet for bostedsvilkåret.</BodyShort>;
   }
 
+  const selectedPeriode = perioder.find(p => p.periode.fom === selectedFom);
+  const selectedTom = selectedPeriode?.periode.tom ?? selectedFom;
+
   return (
     <VilkårSplittPanel
       items={items}
@@ -327,6 +347,7 @@ export const BosattITrondheim = ({
             <RhfForm formMethods={vurderForm} onSubmit={onVurderSubmit}>
               <VurderBostedSkjema
                 selectedFom={selectedFom}
+                selectedTom={selectedTom}
                 formMethods={vurderForm}
                 isPending={isPendingVurder}
                 isReadOnly={effectiveLocked}
