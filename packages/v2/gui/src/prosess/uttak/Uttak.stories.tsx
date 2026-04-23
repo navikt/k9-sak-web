@@ -2,6 +2,7 @@ import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
   arbeidsgivereWithTilkommet,
+  Endringsstatus,
   inntektsgraderingFlereArbeidsgivere,
   lagAvsluttetBehandling,
   lagIkkeOppfyltPeriode,
@@ -371,5 +372,89 @@ export const UttakLesemodus: Story = {
         canvas.getByRole('row', { name: '1 - 3 01.01.2024 - 15.01.2024 100% Søker 100 % Ny denne behandlingen' }),
       );
     });
+  },
+};
+
+/**
+ * UttakMedOpphold
+ *
+ * et opphold mellom uke 10 og uke 11 (mandag 09.03 er en ukedag i gapet).
+ */
+export const UttakMedOpphold: Story = {
+  decorators: [withFakeUttakBackend()],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([
+      lagIkkeOppfyltPeriode('2026-02-24/2026-02-24', [Årsak.FOR_LAV_TAPT_ARBEIDSTID], {
+        uttaksgrad: 0,
+        endringsstatus: Endringsstatus.ENDRET,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT7H30M',
+            utbetalingsgrad: 0,
+            tilkommet: false,
+          },
+        ],
+      }),
+      lagOppfyltPeriode('2026-02-25/2026-02-25', {
+        uttaksgrad: 27,
+        søkersTapteArbeidstid: 27,
+        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+        endringsstatus: Endringsstatus.ENDRET,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT5H28M',
+            utbetalingsgrad: 27,
+            tilkommet: false,
+          },
+        ],
+      }),
+      lagOppfyltPeriode('2026-02-26/2026-02-27', {
+        uttaksgrad: 20,
+        søkersTapteArbeidstid: 20,
+        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+        endringsstatus: Endringsstatus.UENDRET,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT6H',
+            utbetalingsgrad: 20,
+            tilkommet: false,
+          },
+        ],
+      }),
+      lagOppfyltPeriode('2026-03-02/2026-03-06', {
+        uttaksgrad: 20,
+        søkersTapteArbeidstid: 20,
+        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+        endringsstatus: Endringsstatus.NY,
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT6H',
+            utbetalingsgrad: 20,
+            tilkommet: false,
+          },
+        ],
+      }),
+      // Gap mellom 06.03 og 10.03: 07.03 lørdag, 08.03 søndag, 09.03 mandag (ukedag) → opphold
+      lagOppfyltPeriode('2026-03-10/2026-03-10', {
+        uttaksgrad: 100,
+        søkersTapteArbeidstid: 100,
+        årsaker: [Årsak.FULL_DEKNING],
+        endringsstatus: Endringsstatus.NY,
+      }),
+    ]),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    hentBehandling: fn(),
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: true,
   },
 };
