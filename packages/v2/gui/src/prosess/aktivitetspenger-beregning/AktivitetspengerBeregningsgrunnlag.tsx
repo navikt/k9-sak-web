@@ -59,7 +59,6 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                     <Table.HeaderCell align="right">Arbeid/Frilans</Table.HeaderCell>
                     <Table.HeaderCell align="right">Næring</Table.HeaderCell>
                     <Table.HeaderCell align="right">Sum</Table.HeaderCell>
-                    <Table.HeaderCell align="right">Sum avkortet 6G</Table.HeaderCell>
                     <Table.HeaderCell align="right">G-justert({årstallForSkjæringstidspunkt})</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -72,7 +71,6 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                         <Table.DataCell align="right">{formatter.format(pgi.arbeidsinntekt)}</Table.DataCell>
                         <Table.DataCell align="right">{formatter.format(pgi.næring)}</Table.DataCell>
                         <Table.DataCell align="right">{formatter.format(pgi.sum)}</Table.DataCell>
-                        <Table.DataCell align="right">{formatter.format(pgi.sumAvkortet)}</Table.DataCell>
                         <Table.DataCell align="right">
                           {isBesteberegning ? (
                             <SelectedCell>{formatter.format(pgi.sumAvkortetOgOppjustert)}</SelectedCell>
@@ -84,7 +82,7 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                     );
                   })}
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
-                    <Table.HeaderCell scope="row" colSpan={5}>
+                    <Table.HeaderCell scope="row" colSpan={4}>
                       Gjennomsnittlig pensjonsgivende inntekt siste 3 år{' '}
                     </Table.HeaderCell>
                     <Table.DataCell align="right">
@@ -117,7 +115,7 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                   <Table.DataCell scope="row">Beregningsgrunnlag redusert til 66 %</Table.DataCell>
                   <Table.DataCell align="right">{formatter.format(data.beregningsgrunnlagRedusert)}</Table.DataCell>
                 </Table.Row>
-                {data.dagsats && (
+                {data.dagsats !== undefined && (
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
                     <Table.HeaderCell scope="row">Dagsats (beregningsgrunnlag/260 dager)</Table.HeaderCell>
                     <Table.DataCell align="right">{formatter.format(data.dagsats)}</Table.DataCell>
