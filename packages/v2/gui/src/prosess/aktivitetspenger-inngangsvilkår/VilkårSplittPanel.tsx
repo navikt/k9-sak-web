@@ -66,7 +66,7 @@ export const VilkårSplittPanel = ({
         style={{ alignSelf: 'start' }}
       >
         <Heading size="small" level="2">
-          Alle søknader
+          Alle perioder
         </Heading>
         <Bleed marginInline="space-16">
           <Table size="medium">
@@ -76,7 +76,7 @@ export const VilkårSplittPanel = ({
                   Status
                 </Table.HeaderCell>
                 <Table.HeaderCell textSize="small" scope="col" colSpan={2}>
-                  Søknadstidspunkt
+                  Periode
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
