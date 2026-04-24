@@ -51,3 +51,9 @@ export const totrinnskontrollSkjermlenkeContextQueryOptions = (api: Aktivitetspe
     queryKey: ['totrinnskontroll-skjermlenke-context', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.hentTotrinnskontrollSkjermlenkeContext(behandling.uuid),
   });
+
+export const lovligeBehandlingsoperasjonerQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['lovlige-behandlingsoperasjoner', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentLovligeBehandlingsoperasjoner(behandling.uuid),
+  });

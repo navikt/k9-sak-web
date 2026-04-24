@@ -4,6 +4,7 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
@@ -90,6 +91,7 @@ interface Props {
   onAksjonspunktBekreftet: () => void;
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
+  lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;
 }
 
 export const AktivitetspengerInngangsvilkår = ({
@@ -100,9 +102,12 @@ export const AktivitetspengerInngangsvilkår = ({
   onAksjonspunktBekreftet,
   vilkår,
   totrinnskontrollSkjermlenkeContext,
+  lovligeBehandlingsoperasjoner,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
-  const kanBeslutte = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte;
+  const kanBeslutte =
+    !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
+    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
   const søknadsfristAp = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
   );
@@ -218,12 +223,12 @@ export const AktivitetspengerInngangsvilkår = ({
             <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
               <Beslutter
                 lokalkontorBeslutterAp={lokalkontorBeslutterAp}
-                innloggetBruker={innloggetBruker}
                 api={api}
                 behandling={behandling}
                 onTabChange={setAktivTab}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+                kanBeslutte={kanBeslutte}
               />
             </Tabs.Panel>
           )}

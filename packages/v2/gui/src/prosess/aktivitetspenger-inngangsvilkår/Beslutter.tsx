@@ -4,7 +4,6 @@ import { SkjermlenkeType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/
 import { VurderÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import {
   Alert,
@@ -88,22 +87,22 @@ const buildDefaultValues = (
 
 interface Props {
   lokalkontorBeslutterAp: AksjonspunktDto | undefined;
-  innloggetBruker: InnloggetAnsattUngV2Dto;
   onTabChange: React.Dispatch<React.SetStateAction<InngangsvilkårTab>>;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
+  kanBeslutte: boolean;
 }
 
 export const Beslutter = ({
   lokalkontorBeslutterAp,
-  innloggetBruker,
   onTabChange,
   api,
   behandling,
   onAksjonspunktBekreftet,
   totrinnskontrollSkjermlenkeContext,
+  kanBeslutte,
 }: Props) => {
   const formHook = useForm<FormValues>({
     defaultValues: buildDefaultValues(totrinnskontrollSkjermlenkeContext),
@@ -113,7 +112,6 @@ export const Beslutter = ({
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
   const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
   const isAksjonspunktSolved = lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT;
-  const kanBeslutte = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormValues) => {

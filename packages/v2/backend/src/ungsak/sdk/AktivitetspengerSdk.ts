@@ -6,6 +6,7 @@ export {
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
+  behandlinger_hentLovligeBehandlingsoperasjoner,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,

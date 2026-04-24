@@ -23,6 +23,12 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     throw new Error('Not implemented');
   }
 
+  async hentLovligeBehandlingsoperasjoner(behandlingUuid: string) {
+    return {
+      uuid: behandlingUuid,
+    };
+  }
+
   async hentBehandlingMidlertidigStatus(): Promise<never> {
     throw new Error('Not implemented');
   }

@@ -8,6 +8,7 @@ import {
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
+  behandlinger_hentLovligeBehandlingsoperasjoner,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
@@ -37,6 +38,10 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async getBehandling(behandlingUuid: string) {
     return (await behandlinger_hentBehandlingData1({ query: { behandlingUuid } })).data;
+  }
+
+  async hentLovligeBehandlingsoperasjoner(behandlingUuid: string) {
+    return (await behandlinger_hentLovligeBehandlingsoperasjoner({ query: { behandlingUuid } })).data;
   }
 
   async hentBehandlingMidlertidigStatus(behandlingUuid: string) {
