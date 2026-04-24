@@ -20,7 +20,7 @@ export interface skjulNotatMutationVariables {
 interface NotaterProps {
   fagsakId: string;
   navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
-  opprettNotat: (formState: FormState) => void;
+  opprettNotat: (formState: FormState) => Promise<void>;
   endreNotat: (formState: FormState, id: string, fagsakIdFraRedigertNotat: string, versjon: number) => void;
   skjulNotat: ({ skjul, id, saksnummer, versjon }: SkjulNotatPayload) => void;
   isLoading: boolean;
@@ -45,19 +45,13 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   endreNotat,
 }) => {
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
-  const [isSubmittingNotat, setIsSubmittingNotat] = useState(false);
 
   const toggleVisSkjulteNotater = () => {
     setVisSkjulteNotater(current => !current);
   };
 
   const submitNyttNotat = async (data: FormState) => {
-    setIsSubmittingNotat(true);
-    try {
-      opprettNotat(data);
-    } finally {
-      setIsSubmittingNotat(false);
-    }
+    await opprettNotat(data);
   };
 
   const alleNotaterErSkjulte = useMemo(() => notater?.every(notat => notat.skjult), [notater]);
@@ -91,7 +85,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
                 label="Vis notat i alle saker tilknyttet pleietrengende"
               />
             )}
-            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary" loading={isSubmittingNotat} disabled={isSubmittingNotat}>
+            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
               Legg til notat
             </Button>
           </RhfForm>

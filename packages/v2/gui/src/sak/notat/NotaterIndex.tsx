@@ -82,7 +82,9 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
   const endreNotat = (data: FormState, id: string, fagsakIdFraRedigertNotat: string, versjon: number) =>
     endreNotatMutation.mutate({ data, id, fagsakIdFraRedigertNotat, versjon });
 
-  const opprettNotat = (data: FormState) => opprettNotatMutation.mutate({ data });
+  const opprettNotat = async (data: FormState): Promise<void> => {
+    await opprettNotatMutation.mutateAsync({ data });
+  };
 
   const skjulNotat = (data: skjulNotatMutationVariables) => skjulNotatMutation.mutate(data);
 

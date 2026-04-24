@@ -15,7 +15,7 @@ import { Alert, Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
 import { RhfCheckbox, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { use, useEffect, useState } from 'react';
+import { use, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './nyBehandlingModal.module.css';
 
@@ -90,7 +90,7 @@ interface NyBehandlingModalProps {
       fagsakYtelseType: FagsakYtelsesType;
       periode?: Periode;
     } & FormValues,
-  ) => void;
+  ) => Promise<void>;
   behandlingOppretting: BehandlingOppretting[];
   delvisRevurderingsårsaker?: DelvisRevurderingÅrsakMapping[];
   behandlingstyper: KodeverkObject[];
@@ -178,7 +178,6 @@ export const NyBehandlingModal = ({
       fomForPeriodeForInntektskontroll: '',
     },
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [valgtBehandlingTypeKode, steg, fom, behandlingArsakType, revurderingModus] = formMethods.watch([
     'behandlingType',
     'steg',
@@ -234,29 +233,24 @@ export const NyBehandlingModal = ({
     return rettigheterForBehandling.gyldigePerioderPerÅrsak?.find(it => it.årsak === behandlingArsakType)?.perioder;
   };
   const handleSubmit = async (formValues: FormValues) => {
-    setIsSubmitting(true);
-    try {
-      const klageOnlyValues =
-        formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
-          ? {
-              aktørId: aktorId,
-              behandlendeEnhetId: gjeldendeVedtakBehandlendeEnhetId,
-              behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
-            }
-          : {};
-      submitCallback({
-        ...formValues,
-        behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
-        eksternUuid: uuidForSistLukkede,
-        fagsakYtelseType: ytelseType,
-        periode: erUngdomsprogramytelse
-          ? getUngPerioderTilRevurdering()?.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
-          : undefined,
-        ...klageOnlyValues,
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    const klageOnlyValues =
+      formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
+        ? {
+            aktørId: aktorId,
+            behandlendeEnhetId: gjeldendeVedtakBehandlendeEnhetId,
+            behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
+          }
+        : {};
+    await submitCallback({
+      ...formValues,
+      behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
+      eksternUuid: uuidForSistLukkede,
+      fagsakYtelseType: ytelseType,
+      periode: erUngdomsprogramytelse
+        ? getUngPerioderTilRevurdering()?.find(p => p.fom === formValues.fomForPeriodeForInntektskontroll)
+        : undefined,
+      ...klageOnlyValues,
+    });
   };
 
   return (
@@ -419,7 +413,7 @@ export const NyBehandlingModal = ({
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>
-            <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
+            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
               Opprett behandling
             </Button>
           </HStack>
