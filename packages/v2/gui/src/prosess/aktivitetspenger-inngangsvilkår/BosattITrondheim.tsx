@@ -258,9 +258,11 @@ export const BosattITrondheim = ({
         const borHele = periodeForm?.borITrondheimIHelePerioden === 'ja';
         return {
           periode: { fom: p.periode.fom, tom: p.periode.tom },
-          borITrondheimIHelePerioden: borHele,
-          fraflyttingsDato: borHele ? null : (periodeForm?.fraflyttingsDato ?? null),
-          begrunnelse: periodeForm?.begrunnelse ?? '',
+          vurdering: {
+            borITrondheimIHelePerioden: borHele,
+            fraflyttingsDato: borHele ? null : (periodeForm?.fraflyttingsDato ?? null),
+            begrunnelse: periodeForm?.begrunnelse ?? '',
+          },
         };
       });
       const payload = {
