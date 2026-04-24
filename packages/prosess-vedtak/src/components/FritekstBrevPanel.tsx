@@ -23,7 +23,7 @@ const minLength3 = minLength(3);
 
 interface OwnProps {
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
-  lagreDokumentdata: (any) => void;
+  lagreDokumentdata: (any) => Promise<void>;
   hentFritekstbrevHtmlCallback: (parameters: any) => any;
   readOnly: boolean;
   harAutomatiskVedtaksbrev: boolean;
@@ -58,7 +58,7 @@ const FritekstBrevPanel = ({
   const handleFritekstSubmit = useCallback(
     async (html: string, request) => {
       await formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
-      lagreDokumentdata(request);
+      await lagreDokumentdata(request);
     },
     [formikProps.setFieldValue, lagreDokumentdata],
   );

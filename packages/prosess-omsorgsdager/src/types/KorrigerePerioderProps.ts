@@ -5,7 +5,7 @@ export interface KorrigerePerioderProps {
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   informasjonTilLesemodus?: KorrigerePerioderLesemodus;
-  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => void;
+  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => Promise<void>;
   konfliktMedArbeidsgiver: boolean;
   formState: FormState;
 }

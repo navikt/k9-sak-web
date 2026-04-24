@@ -7,7 +7,7 @@ import styles from './VedtakSjekkTilbakekreving.module.css';
 interface Props {
   readOnly: boolean;
   redigerSjekkTilbakekreving: boolean;
-  submitCallback: (aksjonspunktData: any) => void;
+  submitCallback: (aksjonspunktData: any) => Promise<void>;
   toggleSjekkTilbakekreving: () => void;
 }
 

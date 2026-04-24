@@ -13,7 +13,7 @@ import { validerRedigertHtml } from './RedigeringUtils';
 import styles from './RedigerFritekstbrev.module.css';
 
 interface ownProps {
-  handleSubmit: (value: string) => void;
+  handleSubmit: (value: string) => Promise<void>;
   lukkEditor: () => void;
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
@@ -70,7 +70,7 @@ const FritekstEditor = ({
       await editor.erKlar();
       const html = await editor.lagre();
       if (html !== lastSubmitHtml.current) {
-        handleSubmit(html);
+        await handleSubmit(html);
         lastSubmitHtml.current = html;
       }
     }

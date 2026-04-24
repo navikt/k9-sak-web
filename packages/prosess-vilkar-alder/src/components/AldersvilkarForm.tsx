@@ -17,7 +17,7 @@ type Inputs = {
 
 type Props = {
   relevantAksjonspunkt: Aksjonspunkt;
-  submitCallback: (any) => void;
+  submitCallback: (any) => Promise<void>;
   begrunnelseTekst: string;
   erVilkaretOk: boolean | null;
   erVurdert: boolean;

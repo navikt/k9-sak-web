@@ -89,7 +89,7 @@ interface Props {
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat | null;
   språkkode: string;
-  submitCallback: (object: any) => void;
+  submitCallback: (object: any) => Promise<void>;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   vedtakVarsel?: VedtakVarsel;

@@ -6,6 +6,7 @@ import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
   BeriketBeregningsresultatPeriode,
@@ -70,10 +71,17 @@ const TilkjentYtelseNyPeriode = ({
 
   const feilmelding = validateForm(perioder, formState.fom, formState.tom);
 
+  const [isAdding, setIsAdding] = useState(false);
+
   const handleSubmit = async () => {
-    const valid = await formMethods.trigger(['nyPeriodeForm']);
-    if (valid && !feilmelding) {
-      newPeriodeCallback(transformValues(formState));
+    setIsAdding(true);
+    try {
+      const valid = await formMethods.trigger(['nyPeriodeForm']);
+      if (valid && !feilmelding) {
+        newPeriodeCallback(transformValues(formState));
+      }
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -132,8 +140,8 @@ const TilkjentYtelseNyPeriode = ({
           className={styles.oppdaterMargin}
           type="button"
           size="small"
-          loading={formMethods.formState.isSubmitting}
-          disabled={formMethods.formState.isSubmitting}
+          loading={isAdding}
+          disabled={isAdding}
           onClick={handleSubmit}
         >
           Legg til ny periode
