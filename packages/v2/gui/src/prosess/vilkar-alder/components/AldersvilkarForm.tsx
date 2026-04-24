@@ -16,7 +16,7 @@ type Inputs = {
 };
 
 interface Props {
-  submitCallback: (data: any) => void;
+  submitCallback: (data: any) => Promise<void>;
   begrunnelseTekst: string;
   erVilkaretOk: boolean | undefined;
   erVurdert: boolean;

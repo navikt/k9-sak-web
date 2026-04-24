@@ -126,7 +126,7 @@ const InntektsmeldingContainer = () => {
   const kanVurderes = harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderMedUiState);
   const kanSendeInn = !readOnly && kanVurderes && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
@@ -146,7 +146,7 @@ const InntektsmeldingContainer = () => {
 
     setIsSubmitting(true);
     try {
-      onFinished({
+      await onFinished({
         '@type': aksjonspunktKode,
         kode: aksjonspunktKode,
         perioder,
