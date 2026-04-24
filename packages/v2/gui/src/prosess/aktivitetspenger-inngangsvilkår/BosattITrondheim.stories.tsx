@@ -33,8 +33,8 @@ const lagAksjonspunkt = (kode: string, status: AksjonspunktDto['status'] = Aksjo
 const fakeApiMedGrunnlag = new FakeAktivitetspengerApi();
 fakeApiMedGrunnlag.hentBostedGrunnlag = async () => ({
   perioder: [
-    { fom: '2024-01-01', foreslåttErBosattITrondheim: true, fastsattErBosattITrondheim: null },
-    { fom: '2024-07-01', foreslåttErBosattITrondheim: false, fastsattErBosattITrondheim: null },
+    { fom: '2024-01-01', foreslåttErBosattITrondheim: true, fastsattErBosattITrondheim: null, harUttalelse: true, uttalelseTekst: 'Jeg bor fortsatt på Trondheim adresse, men planlegger å flytte.' },
+    { fom: '2024-07-01', foreslåttErBosattITrondheim: false, fastsattErBosattITrondheim: null, harUttalelse: false, uttalelseTekst: null },
   ],
 });
 

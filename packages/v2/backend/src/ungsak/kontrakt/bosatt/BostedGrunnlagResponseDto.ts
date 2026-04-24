@@ -6,6 +6,10 @@ export interface BostedGrunnlagPeriodeDto {
   foreslåttErBosattITrondheim: boolean;
   /** Fastsatt vurdering etter FASTSETT_BOSTED. Null dersom ikke fastset ennå. */
   fastsattErBosattITrondheim: boolean | null;
+  /** Om bruker har avgitt uttalelse om bosted. */
+  harUttalelse: boolean;
+  /** Brukerens uttalelsetekst. Null dersom bruker ikke har svart. */
+  uttalelseTekst: string | null;
 }
 
 /** Respons fra GET /behandling/bosatt. */
