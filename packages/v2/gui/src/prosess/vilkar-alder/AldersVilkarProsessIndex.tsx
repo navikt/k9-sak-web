@@ -14,7 +14,7 @@ import type { AlderVilkårType } from './types/AlderVilkårType';
 
 interface AldersVilkarProsessIndexProps {
   behandling: AldersVilkårBehandlingType;
-  submitCallback: (data: any) => Promise<void>;
+  submitCallback: (data: unknown) => Promise<void>;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
   angitteBarn: { personIdent: string }[];
