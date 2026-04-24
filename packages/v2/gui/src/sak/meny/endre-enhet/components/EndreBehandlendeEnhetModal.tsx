@@ -2,6 +2,7 @@ import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HGrid, Modal } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './endreBehandlendeEnhetModal.module.css';
 
@@ -52,8 +53,14 @@ export const EndreBehandlendeEnhetModal = ({
       )),
     );
 
-  const handleSubmit = (formValues: FormValues) => {
-    onSubmit(formValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleSubmit = async (formValues: FormValues) => {
+    setIsSubmitting(true);
+    try {
+      await onSubmit(formValues);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <Modal className={styles.modal} open aria-label="Endre behandlende enhet" onClose={lukkModal}>
@@ -104,7 +111,7 @@ export const EndreBehandlendeEnhetModal = ({
             <div />
             <Box marginBlock="space-16 space-0">
               <div className={styles.floatButtons}>
-                <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse)} type="submit">
+                <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse) || isSubmitting} loading={isSubmitting} type="submit">
                   OK
                 </Button>
                 <Button variant="secondary" type="button" size="small" onClick={lukkModal}>

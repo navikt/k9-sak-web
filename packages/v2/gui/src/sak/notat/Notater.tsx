@@ -45,12 +45,20 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   endreNotat,
 }) => {
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
+  const [isSubmittingNotat, setIsSubmittingNotat] = useState(false);
 
   const toggleVisSkjulteNotater = () => {
     setVisSkjulteNotater(current => !current);
   };
 
-  const submitNyttNotat = (data: FormState) => opprettNotat(data);
+  const submitNyttNotat = async (data: FormState) => {
+    setIsSubmittingNotat(true);
+    try {
+      opprettNotat(data);
+    } finally {
+      setIsSubmittingNotat(false);
+    }
+  };
 
   const alleNotaterErSkjulte = useMemo(() => notater?.every(notat => notat.skjult), [notater]);
 
@@ -83,7 +91,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
                 label="Vis notat i alle saker tilknyttet pleietrengende"
               />
             )}
-            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
+            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary" loading={isSubmittingNotat} disabled={isSubmittingNotat}>
               Legg til notat
             </Button>
           </RhfForm>
