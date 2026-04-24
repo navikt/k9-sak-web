@@ -151,9 +151,8 @@ const InntektsmeldingContainer = () => {
         kode: aksjonspunktKode,
         perioder,
       });
-    } catch (e) {
+    } finally {
       setIsSubmitting(false);
-      throw e;
     }
   };
 
@@ -169,7 +168,7 @@ const InntektsmeldingContainer = () => {
       <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
-          onFormSubmit={onFinished}
+          onFormSubmit={(payload) => Promise.resolve(onFinished(payload))}
           aksjonspunkt={gjeldeneAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}

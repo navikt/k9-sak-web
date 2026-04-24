@@ -9,7 +9,7 @@ import InntektsmeldingVurdering from './InntektsmeldingVurdering';
 
 interface InntektsmeldingListeProps {
   tilstander: TilstandMedUiState[];
-  onFormSubmit: (payload: InntektsmeldingRequestPayload) => void;
+  onFormSubmit: (payload: InntektsmeldingRequestPayload) => Promise<void>;
   aksjonspunkt?: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;
   harFlereTilstanderTilVurdering: boolean;

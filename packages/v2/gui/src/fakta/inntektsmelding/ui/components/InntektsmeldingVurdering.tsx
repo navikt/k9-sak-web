@@ -8,7 +8,7 @@ import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
 
 interface InntektsmeldingVurderingProps {
   tilstand: TilstandMedUiState;
-  onSubmit: (payload: InntektsmeldingRequestPayload) => void;
+  onSubmit: (payload: InntektsmeldingRequestPayload) => Promise<void>;
   aksjonspunkt?: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;
   harFlereTilstanderTilVurdering: boolean;
