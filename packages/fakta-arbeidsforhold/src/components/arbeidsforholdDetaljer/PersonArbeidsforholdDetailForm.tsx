@@ -72,9 +72,9 @@ export const PersonArbeidsforholdDetailForm = ({
               <Button
                 variant="primary"
                 size="small"
-                loading={false}
+                loading={formProps.submitting}
                 onClick={formProps.handleSubmit}
-                disabled={formProps.pristine}
+                disabled={formProps.pristine || formProps.submitting}
               >
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
               </Button>
