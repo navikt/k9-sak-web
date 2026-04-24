@@ -1,17 +1,17 @@
-import { Select } from '@navikt/ds-react';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
-import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import { Select } from '@navikt/ds-react';
+import { type ArbeidsgiverOpplysningerPerId, type Personopplysninger } from '../../utils/formidling.js';
 
 type MottakerSelectProps = {
   readonly valgtMal: Template | undefined;
   readonly valgtMottakerId: string | undefined;
-  readonly personopplysninger: Personopplysninger | undefined;
-  readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
+  readonly personopplysninger: Personopplysninger;
+  readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readonly onChange?: (valgtMottaker: Mottaker | undefined) => void;
   readonly disabled?: boolean;
   readonly showValidation: boolean;
@@ -35,7 +35,7 @@ const unavailableCauseTxt = (cause: UtilgjengeligÅrsak | undefined): string | u
 
 export const lagVisningsnavnForMottaker = (
   mottaker: Mottaker,
-  personopplysninger?: Personopplysninger,
+  personopplysninger: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string => {
   const utilgjengeligÅrsakTxt =
@@ -48,7 +48,7 @@ export const lagVisningsnavnForMottaker = (
     return `${arbeidsgiverOpplysningerPerId[mottaker.id]?.navn} (${mottaker.id})${utilgjengeligÅrsakTxt}`;
   }
 
-  if (personopplysninger && personopplysninger.aktoerId === mottaker.id && personopplysninger.navn) {
+  if (personopplysninger.aktoerId === mottaker.id && personopplysninger.navn) {
     return `${personopplysninger.navn} (${personopplysninger.fnr || personopplysninger.nummer || mottaker.id})${utilgjengeligÅrsakTxt}`;
   }
 

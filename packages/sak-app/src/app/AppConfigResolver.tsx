@@ -3,22 +3,30 @@ import { ReactElement, useContext, useEffect } from 'react';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
+import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
+import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
+import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import K9KlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/K9KlageVurderingBackendClient.js';
 import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
 import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
 import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
+import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
+import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
+import { IntlProvider } from 'react-intl';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
 import ApplicationContextPath from './ApplicationContextPath';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
+import { K9AvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/K9AvregningBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -44,8 +52,6 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(K9sakApiKeys.NAV_ANSATT, NO_PARAMS, options);
 
-  const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(K9sakApiKeys.LANGUAGE_FILE, NO_PARAMS);
-
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
@@ -53,28 +59,32 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   const tilbakeAktivert = enabledApplicationContexts.includes(ApplicationContextPath.TILBAKE);
   const k9KodeverkOppslag = useK9Kodeverkoppslag(klageAktivert, tilbakeAktivert);
 
-  const harFeilet = harK9sakInitKallFeilet && sprakFilState === RestApiState.SUCCESS;
+  const harFeilet = harK9sakInitKallFeilet;
 
-  const erFerdig =
-    harHentetFerdigInitLenker &&
-    harHentetFerdigKodeverk &&
-    navAnsattState === RestApiState.SUCCESS &&
-    sprakFilState === RestApiState.SUCCESS;
+  const erFerdig = harHentetFerdigInitLenker && harHentetFerdigKodeverk && navAnsattState === RestApiState.SUCCESS;
 
   const formidlingClient = useContext(FormidlingClientContext);
 
   return (
-    <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
-      <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
-        <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
-          <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
-            <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
-              {harFeilet || erFerdig ? children : <LoadingPanel />}
-            </VedtakKlageApiContext>
-          </KlageVurderingApiContext>
-        </TilkjentYtelseApiContext>
-      </InnloggetAnsattProvider>
-    </K9KodeverkoppslagContext>
+    <IntlProvider locale="nb" messages={globalMessages}>
+      <K9KodeverkoppslagContext value={k9KodeverkOppslag}>
+        <InnloggetAnsattProvider api={new K9SakInnloggetAnsattBackendClient()}>
+          <TilkjentYtelseApiContext value={new K9TilkjentYtelseBackendClient()}>
+            <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
+              <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
+                <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
+                  <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
+                    <UttakApiContext value={new BehandlingUttakBackendClient()}>
+                      {harFeilet || erFerdig ? children : <LoadingPanel />}
+                    </UttakApiContext>
+                  </AvregningBackendClientContext>
+                </InntektsmeldingApiContext>
+              </VedtakKlageApiContext>
+            </KlageVurderingApiContext>
+          </TilkjentYtelseApiContext>
+        </InnloggetAnsattProvider>
+      </K9KodeverkoppslagContext>
+    </IntlProvider>
   );
 };
 

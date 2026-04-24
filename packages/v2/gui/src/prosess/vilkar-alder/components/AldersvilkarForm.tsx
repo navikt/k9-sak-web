@@ -1,4 +1,7 @@
-import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
+  type k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { Box, Button, HStack, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -9,27 +12,34 @@ import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
   begrunnelse: string;
-  erVilkarOk: string | null;
+  erVilkarOk: string | undefined;
 };
 
-type Props = {
-  relevantAksjonspunkt: AksjonspunktDto;
+interface Props {
   submitCallback: (data: any) => void;
   begrunnelseTekst: string;
-  erVilkaretOk: boolean | null;
+  erVilkaretOk: boolean | undefined;
   erVurdert: boolean;
   angitteBarn: { personIdent: string }[];
-};
+  fagsak: FagsakDto;
+}
 
-const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVurdert, angitteBarn }: Props) => {
+const AldersvilkarForm = ({
+  submitCallback,
+  begrunnelseTekst,
+  erVilkaretOk,
+  erVurdert,
+  angitteBarn,
+  fagsak,
+}: Props) => {
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
   const getErVilkaretOk = () => {
-    if (!erVurdert) return null;
+    if (!erVurdert) return undefined;
 
     if (erVilkaretOk === true) return 'true';
     if (erVilkaretOk === false) return 'false';
-    return null;
+    return undefined;
   };
   const formMethods = useForm<Inputs>({
     defaultValues: {
@@ -46,11 +56,11 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
       <AksjonspunktHelpText isAksjonspunktOpen>
         {[
           'Vurder om aldersvilkåret er oppfylt.',
-          'På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.',
-        ]}
+          fagsak.sakstype === FagsakYtelseType.OMSORGSPENGER_AO &&
+            'På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.',
+        ].filter(Boolean)}
       </AksjonspunktHelpText>
-
-      <Box.New marginBlock={'4 0'}>
+      <Box marginBlock={'space-16 space-0'}>
         <div className={style.opplysninger}>
           <p className="label">Opplysninger fra søknaden:</p>
           <b>Søkers barn:</b>
@@ -70,8 +80,8 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
             maxLength={2000}
           />
         </div>
-      </Box.New>
-      <Box.New marginBlock={'4 0'}>
+      </Box>
+      <Box marginBlock={'space-16 space-0'}>
         <RhfRadioGroup
           control={formMethods.control}
           legend="Er aldersvilkåret oppfylt?"
@@ -83,12 +93,12 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
             <Radio value={false}>Nei</Radio>
           </HStack>
         </RhfRadioGroup>
-      </Box.New>
-      <Box.New marginBlock={'4 0'}>
+      </Box>
+      <Box marginBlock={'space-16 space-0'}>
         <Button size="small" variant="primary" type="submit">
           Bekreft og fortsett
         </Button>
-      </Box.New>
+      </Box>
     </RhfForm>
   );
 };

@@ -8,8 +8,8 @@ import {
   Kodeverk,
   KodeverkMedNavn,
   ArbeidsgiverOpplysningerWrapper,
-  FeatureToggles,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 

@@ -28,7 +28,6 @@
     "sourceMap": true,
     "jsx": "react-jsx",
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
-    "baseUrl": "packages/v2/",
     "skipLibCheck": true
   },
   "include": ["./**/*"]

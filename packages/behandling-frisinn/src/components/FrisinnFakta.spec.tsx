@@ -16,6 +16,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnFakta from './FrisinnFakta';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {
@@ -124,6 +125,10 @@ describe('<FrisinnFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestFrisinnApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestFrisinnApi.mock(FrisinnBehandlingApiKeys.INNTEKT_OG_YTELSER, undefined);
     const fetchedData: Partial<FetchedData> = {
@@ -147,7 +152,7 @@ describe('<FrisinnFakta>', () => {
           setApentFaktaPanel={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
+          featureToggles={qFeatureToggles}
         />
       </RestApiErrorProvider>,
     );
@@ -180,7 +185,7 @@ describe('<FrisinnFakta>', () => {
           setApentFaktaPanel={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
+          featureToggles={qFeatureToggles}
         />
       </RestApiErrorProvider>,
     );

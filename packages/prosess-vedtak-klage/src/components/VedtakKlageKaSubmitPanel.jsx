@@ -1,7 +1,7 @@
 import { Button, HGrid, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -11,7 +11,7 @@ import styles from './vedtakKlageSubmitPanel.module.css';
 const medholdIKlage = klageVurderingResultat =>
   klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;
 
-export const isMedholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) =>
+const isMedholdIKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) =>
   medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
 
 const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
@@ -47,8 +47,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klage
   e.preventDefault();
 };
 
-export const VedtakKlageKaSubmitPanelImpl = ({
-  intl,
+const VedtakKlageKaSubmitPanelImpl = ({
   behandlingPåVent,
   previewVedtakCallback,
   begrunnelse,
@@ -56,6 +55,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
   formProps,
   readOnly,
 }) => {
+  const intl = useIntl();
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat);
 
   return (
@@ -99,7 +99,6 @@ export const VedtakKlageKaSubmitPanelImpl = ({
 };
 
 VedtakKlageKaSubmitPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   behandlingPåVent: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
@@ -108,4 +107,4 @@ VedtakKlageKaSubmitPanelImpl.propTypes = {
   formProps: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(VedtakKlageKaSubmitPanelImpl);
+export default VedtakKlageKaSubmitPanelImpl;

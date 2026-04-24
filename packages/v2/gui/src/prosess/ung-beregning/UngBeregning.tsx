@@ -7,9 +7,9 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { ArbeidOgInntekt } from './ArbeidOgInntekt';
+import { DagsatsOgUtbetaling, sortSatser } from '../../shared/dagsats-og-utbetaling/DagsatsOgUtbetaling';
+import { ArbeidOgInntekt, type ArbeidOgInntektProps } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
 import { BarnPanel } from './BarnPanel';
-import { DagsatsOgUtbetaling } from './dagsats-og-utbetaling/DagsatsOgUtbetaling';
 import type { Barn } from './types/Barn';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
 
@@ -17,7 +17,7 @@ interface Props {
   behandling: { uuid: string; versjon: number };
   api: UngBeregningBackendApiType;
   barn: Barn[];
-  submitCallback: (data: unknown) => Promise<any>;
+  inntektKontrollertCallback: ArbeidOgInntektProps['inntektKontrollertCallback'];
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
 }
@@ -36,10 +36,15 @@ const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   };
 };
 
-const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
-  useQuery({
+const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjonspunkter, isReadOnly }: Props) => {
+  const {
+    data: satser,
+    isError: satserIsError,
+    isLoading: satserIsLoading,
+  } = useQuery({
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
+    select: sortSatser,
   });
 
   const {
@@ -52,7 +57,11 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     select: sortInntekt,
   });
 
-  useQuery({
+  const {
+    data: ungdomsprogramInformasjon,
+    isError: ungdomsprogramInformasjonIsError,
+    isLoading: ungdomsprogramInformasjonIsLoading,
+  } = useQuery({
     queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
   });
@@ -62,7 +71,9 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
     queryFn: () => api.getArbeidsgiverOpplysninger(behandling.uuid),
   });
 
-  if (kontrollInntektIsError) {
+  const isLoading = kontrollInntektIsLoading || satserIsLoading || ungdomsprogramInformasjonIsLoading;
+
+  if (kontrollInntektIsError || satserIsError || ungdomsprogramInformasjonIsError) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
 
@@ -71,12 +82,12 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
   const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_INNTEKT);
   const harUløstAksjonspunkt = aksjonspunkt && aksjonspunkt.status === AksjonspunktDtoStatus.OPPRETTET;
   return (
-    <Box.New paddingInline="4 8" paddingBlock="2">
-      <Box.New minHeight="100svh">
+    <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+      <Box minHeight="100svh">
         <Heading size="medium" level="1" spacing>
           Sats og beregning
         </Heading>
-        {kontrollInntektIsLoading ? (
+        {isLoading ? (
           <Loader size="large" />
         ) : (
           <Tabs defaultValue={aksjonspunkt ? 'inntekt' : 'dagsats'}>
@@ -95,28 +106,28 @@ const UngBeregning = ({ api, behandling, barn, submitCallback, aksjonspunkter, i
               {harBarn && <Tabs.Tab value="barn" label="Registrerte barn" />}
               {(harInntekt || harBarn) && <Tabs.Tab value="dagsats" label="Dagsats og utbetaling" />}
             </Tabs.List>
-            <Box.New maxWidth="860px">
+            <Box maxWidth="860px">
               <Tabs.Panel value="inntekt">
                 {inntekt?.kontrollperioder && (
                   <ArbeidOgInntekt
-                    submitCallback={submitCallback}
+                    inntektKontrollertCallback={inntektKontrollertCallback}
                     inntektKontrollperioder={inntekt.kontrollperioder}
                     isReadOnly={isReadOnly}
                     arbeidsgivere={arbeidsgivere}
                   />
                 )}
               </Tabs.Panel>
-            </Box.New>
+            </Box>
             <Tabs.Panel value="barn">
               <BarnPanel barn={barn} />
             </Tabs.Panel>
             <Tabs.Panel value="dagsats">
-              <DagsatsOgUtbetaling api={api} behandling={behandling} />
+              {satser && <DagsatsOgUtbetaling satser={satser} ungdomsprogramInformasjon={ungdomsprogramInformasjon} />}
             </Tabs.Panel>
           </Tabs>
         )}
-      </Box.New>
-    </Box.New>
+      </Box>
+    </Box>
   );
 };
 

@@ -5,7 +5,7 @@ import { omit } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Box } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -23,7 +23,7 @@ const formName = 'ArbeidsforholdInfoPanel';
 // METHODS
 // ----------------------------------------------------------------------------
 
-export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
+const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
   arbeidsforhold.map(a => {
     if (a.lagtTilAvSaksbehandler === true) {
       return {
@@ -55,7 +55,7 @@ interface PureOwnProps {
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImpl = ({
+const ArbeidsforholdInfoPanelImpl = ({
   aksjonspunkter,
   readOnly,
   alleMerknaderFraBeslutter,
@@ -64,16 +64,15 @@ export const ArbeidsforholdInfoPanelImpl = ({
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
-  intl,
   ...formProps
-}: PureOwnProps & InjectedFormProps & WrappedComponentProps) => {
+}: PureOwnProps & InjectedFormProps) => {
   const shouldDisableSubmitButton = formProps.pristine;
   const harAksjonspunktAvklarArbeidsforhold = harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter);
 
   return (
     <>
       {aksjonspunkter.length > 0 && (
-        <Box.New padding="4" className={styles.begrunnelseSaksbehandler}>
+        <Box padding="space-16" className={styles.begrunnelseSaksbehandler}>
           <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
             {[
               <FormattedMessage
@@ -82,14 +81,13 @@ export const ArbeidsforholdInfoPanelImpl = ({
               />,
             ]}
           </AksjonspunktHelpText>
-        </Box.New>
+        </Box>
       )}
       <h3>
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />
       </h3>
       <form onSubmit={formProps.handleSubmit}>
         <PersonArbeidsforholdPanel
-          intl={intl}
           readOnly={readOnly}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
@@ -151,4 +149,4 @@ const mapStateToProps = (_state, ownProps: PureOwnProps) => ({
   onSubmit: lagSubmitFn(ownProps),
 });
 
-export default connect(mapStateToProps)(behandlingForm({ form: formName })(injectIntl(ArbeidsforholdInfoPanelImpl)));
+export default connect(mapStateToProps)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));

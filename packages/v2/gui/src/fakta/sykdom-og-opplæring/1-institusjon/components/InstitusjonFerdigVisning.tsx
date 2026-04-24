@@ -14,7 +14,7 @@ interface OwnProps {
 const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
   return (
     <>
-      <Box.New className="mt-8">
+      <Box className="mt-8">
         <LabelledContent
           label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
           size="small"
@@ -26,7 +26,7 @@ const InstitusjonFerdigVisning = ({ vurdering }: OwnProps) => {
             />
           }
         />
-      </Box.New>
+      </Box>
       <div className="flex flex-col gap-6 mt-6">
         <LabelledContent
           label={
@@ -98,7 +98,7 @@ const InstitusjonsnavnFerdigVisning = ({
           {gjeldendeInstitusjonFinnesIListen ? gjeldendeInstitusjon : 'Annen: ' + gjeldendeInstitusjon}
         </BodyShort>
         {institusjonFraSøknad === gjeldendeInstitusjon ? (
-          <Tag size="small" variant="info">
+          <Tag data-color="info" size="small" variant="outline">
             Fra søknad
           </Tag>
         ) : (

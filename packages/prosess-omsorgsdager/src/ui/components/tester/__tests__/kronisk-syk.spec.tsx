@@ -1,9 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import { axe } from 'vitest-axe';
-import React from 'react';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
+import './axe-setup';
+
+const personopplysninger = {
+  navBrukerKjonn: { kode: 'K', kodeverk: 'KJONN' },
+  statsborgerskap: { kode: 'NOR', kodeverk: 'LAND', navn: 'Norge' },
+  avklartPersonstatus: {
+    orginalPersonstatus: { kode: 'BOSA', kodeverk: 'PERSONSTATUS' },
+    overstyrtPersonstatus: { kode: 'BOSA', kodeverk: 'PERSONSTATUS' },
+  },
+  personstatus: { kode: 'BOSA', kodeverk: 'PERSONSTATUS' },
+  diskresjonskode: { kode: 'U', kodeverk: 'DISKRESJONSKODE' },
+  sivilstand: { kode: 'UG', kodeverk: 'SIVILSTAND' },
+  navn: 'Ola Nordmann',
+  adresser: [],
+  region: { kode: '03', kodeverk: 'REGION' },
+};
 
 describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
@@ -28,6 +43,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -70,6 +86,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -100,6 +117,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -151,6 +169,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -184,6 +203,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -214,6 +234,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -253,6 +274,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
@@ -289,6 +311,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkar: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
+      personopplysninger,
     } as VilkarKroniskSyktBarnProps;
 
     const { container } = render(<VilkarKroniskSyktBarn {...props} />);

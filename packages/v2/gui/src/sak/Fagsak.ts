@@ -1,5 +1,6 @@
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.ts';
 import type { FagsakStatusKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.ts';
+import type { FagsakYtelsesType as FagsakYtelsesTypeUng } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 
 /**
  * Blir brukt for å sende nødvendig info om sak ned til subkomponenter.
@@ -11,7 +12,7 @@ import type { FagsakStatusKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/be
  */
 export type Fagsak = Readonly<{
   saksnummer: string;
-  sakstype: FagsakYtelsesType;
+  sakstype: FagsakYtelsesType | FagsakYtelsesTypeUng;
 
   status: FagsakStatusKodeverk;
   person: {

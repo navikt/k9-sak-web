@@ -13,7 +13,7 @@ interface MedlemskapEndringerTabellProps {
   selectedId?: string;
 }
 
-const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: MedlemskapEndringerTabellProps) => {
+const MedlemskapEndringerTabell = ({ velgPeriodeCallback, selectedId }: MedlemskapEndringerTabellProps) => {
   const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
   const { perioder } = getValues();
   const sortertePerioder = perioder.sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
@@ -44,7 +44,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
             }
           >
             <Table.DataCell>
-              <HStack gap="2">
+              <HStack gap="space-8">
                 {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
                   <ExclamationmarkTriangleFillIcon
                     fontSize="1.5rem"
@@ -62,4 +62,4 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
   );
 };
 
-export default MedlemskapEndringerTabellImpl;
+export default MedlemskapEndringerTabell;

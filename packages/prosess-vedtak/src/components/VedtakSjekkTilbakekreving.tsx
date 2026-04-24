@@ -11,7 +11,7 @@ interface Props {
   toggleSjekkTilbakekreving: () => void;
 }
 
-export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
+const VedtakSjekkTilbakekreving: React.FC<Props> = ({
   readOnly,
   redigerSjekkTilbakekreving = false,
   toggleSjekkTilbakekreving = () => {},

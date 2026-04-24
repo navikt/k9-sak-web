@@ -16,6 +16,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 const getbehandlingPerioderårsakMedVilkår = (fom: string, tom: string) => ({
   perioderMedÅrsak: {
@@ -157,6 +158,10 @@ describe('<OmsorgspengerFakta>', () => {
 
   // const behandlingPerioderårsakMedVilkår =
 
+  afterEach(() => {
+    requestOmsorgApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt uten Omsorgen for', () => {
     requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
     const fetchedData: Partial<FetchedData> = {
@@ -182,7 +187,7 @@ describe('<OmsorgspengerFakta>', () => {
           setApentFaktaPanel={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
           dokumenter={[]}
         />
       </RestApiErrorProvider>,
@@ -218,7 +223,7 @@ describe('<OmsorgspengerFakta>', () => {
           setApentFaktaPanel={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
           dokumenter={[]}
         />
       </RestApiErrorProvider>,
@@ -253,7 +258,7 @@ describe('<OmsorgspengerFakta>', () => {
           setApentFaktaPanel={vi.fn()}
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
           dokumenter={[]}
         />
       </RestApiErrorProvider>,

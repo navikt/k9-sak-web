@@ -94,7 +94,7 @@ const VilkarresultatMedOverstyringHeader = ({
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
   return (
-    <Box.New marginBlock={'0 2'}>
+    <Box marginBlock={'space-0 space-8'}>
       <VStack gap="space-8">
         <HStack gap="space-16">
           {!erOverstyrt && erVilkarOk !== undefined && (
@@ -116,7 +116,7 @@ const VilkarresultatMedOverstyringHeader = ({
           )}
         </HStack>
         <HStack gap="space-16">
-          <Box.New marginBlock={'2 0'}>{vilkårResultatText(erVilkarOk, periode)}</Box.New>
+          <Box marginBlock={'space-8 space-0'}>{vilkårResultatText(erVilkarOk, periode)}</Box>
           {erVilkarOk !== undefined &&
             !isHidden(
               !!kanOverstyreAccess?.isEnabled,
@@ -125,7 +125,7 @@ const VilkarresultatMedOverstyringHeader = ({
               !!periode?.vurderesIBehandlingen,
               skjulOverstyring,
             ) && (
-              <Box.New marginBlock={'1 0'}>
+              <Box marginBlock={'space-4 space-0'}>
                 <Button
                   variant="tertiary"
                   size="xsmall"
@@ -133,11 +133,11 @@ const VilkarresultatMedOverstyringHeader = ({
                   icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
                   disabled={erOverstyrt || overrideReadOnly}
                 />
-              </Box.New>
+              </Box>
             )}
         </HStack>
       </VStack>
-    </Box.New>
+    </Box>
   );
 };
 

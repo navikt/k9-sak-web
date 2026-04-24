@@ -83,11 +83,11 @@ const StrukturerDokumentController = ({
   return (
     <>
       {hasError && (
-        <Box.New marginBlock="0 4">
+        <Box marginBlock="space-0 space-16">
           <Alert size="small" variant="error">
             {getErrorMessage()}
           </Alert>
-        </Box.New>
+        </Box>
       )}
       {!erFagsakOLPEllerPLS(fagsakYtelseType) && (
         <StrukturerDokumentForm
@@ -119,13 +119,12 @@ const StrukturerDokumentController = ({
           strukturerteDokumenter={strukturerteDokumenter}
         />
       )}
-
       {hasError && (
-        <Box.New marginBlock="4 0">
+        <Box marginBlock="space-16 space-0">
           <Alert size="small" variant="error">
             {getErrorMessage()}
           </Alert>
-        </Box.New>
+        </Box>
       )}
     </>
   );

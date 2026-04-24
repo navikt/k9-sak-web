@@ -1,32 +1,45 @@
+import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
-import React, { ReactNode, useMemo, useState } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
+import React, { ReactNode, useMemo, useState } from 'react';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
+import { Box } from '@navikt/ds-react';
 import styles from './prosessStegContainer.module.css';
 
 interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
-  noBorder?: boolean;
+  hideMenu?: boolean; // Skjul menyen når v2-menyen brukes
 }
 
-export const VedtakFormContext = React.createContext(null);
+interface VedtakFormState {
+  brødtekst: string;
+  overskrift: string;
+  maler: VedtaksbrevMal[];
+}
+
+interface VedtakFormContextType {
+  vedtakFormState: VedtakFormState | null;
+  setVedtakFormState: React.Dispatch<React.SetStateAction<VedtakFormState | null>>;
+}
+
+export const VedtakFormContext = React.createContext<VedtakFormContextType | null>(null);
 
 const ProsessStegContainer = ({
-  intl,
   formaterteProsessStegPaneler,
   velgProsessStegPanelCallback,
   children,
-  noBorder,
-}: OwnProps & WrappedComponentProps) => {
+  hideMenu = false,
+}: OwnProps) => {
+  const intl = useIntl();
   const steg = useMemo(
     () =>
       formaterteProsessStegPaneler.map(panel => ({
         ...panel,
-        label: intl.formatMessage({ id: panel.labelId }),
+        label: intl.messages[panel.labelId] ? intl.formatMessage({ id: panel.labelId }) : panel.labelId,
         usePartialStatus: panel.type !== 'default' && panel.type !== 'danger' && panel.usePartialStatus,
       })),
     [formaterteProsessStegPaneler, intl],
@@ -38,17 +51,20 @@ const ProsessStegContainer = ({
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
   return (
-    <div className={noBorder ? '' : styles.container}>
-      <div className={styles.meny}>
-        <ProcessMenu
-          steps={steg}
-          onClick={velgProsessStegPanelCallback}
-          stepArrowContainerStyle={styles.stepArrowContainer}
-        />
-      </div>
+    <Box>
+      {/* Skjul menyen når v2-menyen brukes */}
+      {!hideMenu && (
+        <div className={styles.meny}>
+          <ProcessMenu
+            steps={steg}
+            onClick={velgProsessStegPanelCallback}
+            stepArrowContainerStyle={styles.stepArrowContainer}
+          />
+        </div>
+      )}
       <VedtakFormContext.Provider value={value}>{children}</VedtakFormContext.Provider>
-    </div>
+    </Box>
   );
 };
 
-export default injectIntl(ProsessStegContainer);
+export default ProsessStegContainer;

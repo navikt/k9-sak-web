@@ -1,3 +1,4 @@
+import { Personopplysninger } from '@k9-sak-web/types';
 import { FormState } from './FormState';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
@@ -19,6 +20,7 @@ export interface VilkarKroniskSyktBarnProps {
     erTidsbegrenset: boolean,
   ) => void;
   formState: FormState;
+  personopplysninger: Personopplysninger;
 }
 
 export interface InformasjonTilLesemodusKroniskSyk {
@@ -27,4 +29,5 @@ export interface InformasjonTilLesemodusKroniskSyk {
   avslagsårsakKode: string;
   fraDato: string;
   tilDato: string;
+  erTidsbegrenset: boolean;
 }

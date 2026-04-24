@@ -4,15 +4,14 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import FormkravProsessIndex from '@k9-sak-web/gui/prosess/formkrav/FormkravProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <FormkravProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA];
 
-  getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
-    featureToggles.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) => fagsak.sakstype === fagsakYtelsesType.FRISINN;
 
   getData = ({
     alleBehandlinger,

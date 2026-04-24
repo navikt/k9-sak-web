@@ -150,7 +150,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
               <Label as="p" size="small">
                 Gjelder:
               </Label>
-              <Tag className={styles.navnTag} size="small" variant="neutral">
+              <Tag data-color="neutral" className={styles.navnTag} size="small" variant="outline">
                 {gjelderType}
               </Tag>
             </div>

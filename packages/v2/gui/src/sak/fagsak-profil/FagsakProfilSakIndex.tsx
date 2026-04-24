@@ -1,6 +1,6 @@
-import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { type ReactNode } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import type { Fagsak } from '../Fagsak';
 import FagsakProfile from './components/FagsakProfile';
 
 const cache = createIntlCache();
@@ -14,7 +14,7 @@ const intl = createIntl(
 
 interface OwnProps {
   saksnummer: string;
-  fagsakYtelseType: FagsakYtelsesType;
+  fagsakYtelseType: Fagsak['sakstype'];
   fagsakStatus: string;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;

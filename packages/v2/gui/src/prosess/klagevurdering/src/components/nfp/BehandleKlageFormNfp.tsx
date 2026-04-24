@@ -71,12 +71,12 @@ export const BehandleKlageFormNfp = ({
       <Heading size="small" level="2">
         Behandle klage
       </Heading>
-      <Box.New marginBlock="space-4 0">
+      <Box marginBlock="space-4 space-0">
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
           Vurder om klagen skal tas til følge
         </AksjonspunktHelpText>
-      </Box.New>
-      <Box.New marginBlock="space-16 0">
+      </Box>
+      <Box marginBlock="space-16 space-0">
         <KlageVurderingRadioOptionsNfp
           fagsak={fagsak}
           readOnly={isReadOnly}
@@ -85,7 +85,7 @@ export const BehandleKlageFormNfp = ({
           medholdReasons={medholdReasons}
           ungHjemler={ungHjemler}
         />
-      </Box.New>
+      </Box>
       <div className={styles.confirmVilkarForm}>
         <VStack gap="space-16">
           <ContentMaxWidth>
@@ -147,7 +147,7 @@ export const buildInitialValues = (klageVurdering: KlagebehandlingDto, fagsak: F
     : null,
   klageVurderingOmgjoer: klageVurdering.klageVurderingResultatNFP
     ? klageVurdering.klageVurderingResultatNFP.klageVurderingOmgjoer
-    : null,
+    : undefined,
   klageHjemmel:
     fagsak.sakstype !== fagsakYtelsesType.FRISINN &&
     klageVurdering.klageVurderingResultatNFP &&
@@ -165,7 +165,7 @@ export const buildInitialValues = (klageVurdering: KlagebehandlingDto, fagsak: F
 
 interface TransformValues {
   klageMedholdArsak: string | null;
-  klageVurderingOmgjoer: string | null;
+  klageVurderingOmgjoer: string | undefined;
   klageHjemmel: string | null;
   klageVurderingType: string;
   klageVurdering: string;
@@ -200,7 +200,7 @@ export const transformValues = (
     klageVurderingOmgjoer:
       values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
         ? values.klageVurderingOmgjoer
-        : null,
+        : undefined,
     klageHjemmel,
     klageVurdering: values.klageVurdering,
     klageVurderingType: values.klageVurdering,

@@ -42,7 +42,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
                 ? arbeidsgivere[arbeidsgiverIdentifikator]
                 : undefined;
             return (
-              <Box.New
+              <Box
                 key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
                 className={styles.uttakDetaljerBeregningFirma}
               >
@@ -51,13 +51,13 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
                     ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
                     : 'Frilanser'}{' '}
                   {inntForhold.erNytt && (
-                    <Tag size="small" variant="info">
+                    <Tag data-color="info" size="small" variant="outline">
                       Ny
                     </Tag>
                   )}
                 </BodyShort>
                 <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
-              </Box.New>
+              </Box>
             );
           })}
       </UttakDetaljerEkspanderbar>
@@ -70,13 +70,13 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
               : undefined;
           return (
             <Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
-              <Box.New className={styles.uttakDetaljerBeregningFirma}>
+              <Box className={styles.uttakDetaljerBeregningFirma}>
                 <BodyShort size="small" weight="semibold">
                   {inntForhold.type !== InntektsforholdDtoType.FRILANSER
                     ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
                     : 'Frilanser'}{' '}
                   {inntForhold.erNytt && (
-                    <Tag size="small" variant="info">
+                    <Tag data-color="info" size="small" variant="outline">
                       Ny
                     </Tag>
                   )}
@@ -90,13 +90,13 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
                 <BodyShort className="leading-6" size="small">
                   = {formatNOK(inntForhold.løpendeInntekt)} i utbetalt lønn
                 </BodyShort>
-              </Box.New>
+              </Box>
             </Fragment>
           );
         })}
       </UttakDetaljerEkspanderbar>
       <UttakDetaljerEkspanderbar title={`Tapt inntekt: ${bortfaltInntekt}`}>
-        <Box.New className={styles.uttakDetaljerTaptInntektBeregning}>
+        <Box className={styles.uttakDetaljerTaptInntektBeregning}>
           <BodyShort as="div" size="small">
             <span className={styles.uttakDetaljerTaptInntektAnnotasjon}></span>
             {beregningsgrunnlag} (beregningsgrunnlag)
@@ -109,9 +109,8 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
             <span className={styles.uttakDetaljerTaptInntektAnnotasjon}>=</span>
             {bortfaltInntekt} i tapt inntekt
           </BodyShort>
-        </Box.New>
+        </Box>
       </UttakDetaljerEkspanderbar>
-
       <VStack className={styles.uttakDetaljerNyGradering}>
         <BodyShort as="div" size="small" weight="semibold" className="leading-6">
           Ny gradering
@@ -126,12 +125,11 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
           = {reduksjonsProsent} % reduksjon pga. utbetalt lønn
         </BodyShort>
       </VStack>
-
-      <Box.New>
+      <Box>
         <BodyShort as="div" size="small" className={`${styles.uttakDetaljerDetailSum} leading-6`}>
           = {graderingsProsent} % totalt inntektstap
         </BodyShort>
-      </Box.New>
+      </Box>
     </VStack>
   );
 };

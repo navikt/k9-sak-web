@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import styleLesemodus from './AldersvilkarLese.module.css';
 
@@ -17,8 +17,8 @@ const AldersvilkarLese = ({
   aksjonspunktLost,
   vilkarOppfylt,
   begrunnelseTekst,
-  intl,
-}: Props & WrappedComponentProps) => {
+}: Props) => {
+  const intl = useIntl();
   const sokersBarn = angitteBarn ? angitteBarn.map(barn => barn.personIdent).join(', ') : '';
 
   const handleKlikk = e => {
@@ -71,4 +71,4 @@ const AldersvilkarLese = ({
   );
 };
 
-export default injectIntl(AldersvilkarLese);
+export default AldersvilkarLese;

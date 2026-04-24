@@ -3,7 +3,7 @@ import {
   ung_kodeverk_vilkår_Avslagsårsak as VilkårResultatDtoAvslagsårsak,
   type ung_sak_kontrakt_vilkår_VilkårMedPerioderDto as VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Detail, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
@@ -16,11 +16,11 @@ const VilkårHeadingSection = ({ lovreferanse }: { lovreferanse?: string }) => (
       I ungdomsprogrammet
     </Heading>
     {lovreferanse && (
-      <Box.New>
+      <Box>
         <Detail className={styles.lovreferanse}>
           <Lovreferanse isUng>{lovreferanse}</Lovreferanse>
         </Detail>
-      </Box.New>
+      </Box>
     )}
   </HStack>
 );

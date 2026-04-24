@@ -39,7 +39,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
   const harBegrunnelse = aktiverteInformasjonsbehov.some(behov => values[behov.kode]?.length > 0);
 
   const getAksjonspunktInfoboks = () => {
-    let tekst = '';
+    let tekst: string;
     if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.BEREGNING_SKJONNSMESSIG)) {
       tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig' });
     } else if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.REVURDERING_ENDRING)) {

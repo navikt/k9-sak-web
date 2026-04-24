@@ -8,6 +8,7 @@ import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
@@ -29,7 +30,7 @@ import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
-import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
+import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 
@@ -142,7 +143,7 @@ const FagsakIndex = () => {
     {},
     {
       updateTriggers: [behandlingId],
-      suspendRequest: !behandling,
+      suspendRequest: !behandling || isAktivitetspenger(),
     },
   );
 
@@ -233,9 +234,7 @@ const FagsakIndex = () => {
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
                   behandlingRettigheter={behandlingRettigheter}
-                  personopplysninger={behandlingPersonopplysninger}
                   navAnsatt={navAnsatt}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                   featureToggles={featureToggles}
                 />
               );
@@ -258,7 +257,7 @@ const FagsakIndex = () => {
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
-                    ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
+                    ungdomsytelseDeltakerStatus={isAktivitetspenger() ? undefined : ungdomsytelseDeltakerStatus}
                     erIkkeDigitalBruker={fagsak.erIkkeDigitalBruker}
                   />
                 </div>

@@ -36,7 +36,8 @@ const environment = window.location.hostname;
 
 init({
   environment,
-  dsn: IS_DEV ? 'http://dev@localhost:9000/1' : 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
+  dsn: 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
+  enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,
@@ -92,13 +93,19 @@ init({
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 
 const basePath = '/ung/web';
-const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
-  // Vi må ha ein unik AuthFixer instans pr backend
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-sak'),
-  new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-tilbake'),
-);
-configureUngSakClient(sakAuthFixer);
-configureUngTilbakeClient(tilbakeAuthFixer);
+if (featureToggles.SINGLE_AUTHFIXER) {
+  const authFixer = new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-alle');
+  configureUngSakClient(authFixer);
+  configureUngTilbakeClient(authFixer);
+} else {
+  const [sakAuthFixer, tilbakeAuthFixer] = sequentialAuthFixerSetup(
+    // Vi må ha ein unik AuthFixer instans pr backend
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-sak'),
+    new AuthFixer(`${basePath}${authRedirectDoneWindowPath}`, 'ung-tilbake'),
+  );
+  configureUngSakClient(sakAuthFixer);
+  configureUngTilbakeClient(tilbakeAuthFixer);
+}
 
 const store = configureStore();
 

@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { formatereLukketPeriode } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
 import AldersVilkarAP from './components/AldersvilkarAP';
@@ -54,17 +54,20 @@ const AldersVilkarProsessIndex = ({
   let begrunnelseTekst = '';
   if (!vilkaretErAutomatiskInnvilget) begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
 
+  const skalVilkårStatusVises = vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises;
+  const skalAksjonspunktVises = !vilkaretErAutomatiskInnvilget && relevantAksjonspunkt;
+
   return (
     <RawIntlProvider value={intl}>
-      {(vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises) && (
+      {skalVilkårStatusVises && (
         <AldersVilkarStatus
           vilkarOppfylt={vilkarOppfylt}
           vilkarReferanse={aldersVilkarBarn.lovReferanse}
           periode={formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`)}
-          begrunnelse={begrunnelseTekst}
+          begrunnelse={skalAksjonspunktVises ? null : begrunnelseTekst}
         />
       )}
-      {!vilkaretErAutomatiskInnvilget && relevantAksjonspunkt && (
+      {skalAksjonspunktVises && (
         <AldersVilkarAP
           behandling={behandling}
           submitCallback={submitCallback}

@@ -4,22 +4,20 @@ import { Accordion, Alert, BodyLong, Box, Heading } from '@navikt/ds-react';
 
 import styles from './kompletthetsoversikt.module.css';
 
-const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: { manglerInntektsmelding: boolean }): JSX.Element => (
+const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
-    <Box.New marginBlock="0 6">
-      {manglerInntektsmelding && (
-        <Alert variant="warning" size="small" className={styles.alert}>
-          <Heading spacing size="xsmall" level="3">
-            Vurder om du kan fortsette behandlingen uten inntektsmelding.
-          </Heading>
-          <BodyLong>
-            Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
-            arbeidsgiver.
-          </BodyLong>
-        </Alert>
-      )}
-    </Box.New>
-    <Box.New marginBlock="0 6">
+    <Box marginBlock="space-0 space-24">
+      <Alert variant="warning" size="small" className={styles.alert}>
+        <Heading spacing size="xsmall" level="3">
+          Vurder om du kan fortsette behandlingen uten inntektsmelding.
+        </Heading>
+        <BodyLong>
+          Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
+          arbeidsgiver.
+        </BodyLong>
+      </Alert>
+    </Box>
+    <Box marginBlock="space-0 space-24">
       <Alert variant="info" size="small">
         <Accordion className={styles.alertAccordion}>
           <Accordion.Item>
@@ -42,7 +40,7 @@ const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: { manglerInntekt
                   lavere risiko for at arbeidsgiver vil kreve refusjon.
                 </li>
               </ul>
-              <Box.New marginBlock="6 0">
+              <Box marginBlock="space-24 space-0">
                 Du bør ikke gå videre uten inntektsmelding hvis:
                 <ul className={styles.kompletthet__list}>
                   <li>
@@ -56,12 +54,12 @@ const InntektsmeldingManglerInfo = ({ manglerInntektsmelding }: { manglerInntekt
                     ikke utbetale til bruker, men vente på inntektsmelding.
                   </li>
                 </ul>
-              </Box.New>
+              </Box>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
       </Alert>
-    </Box.New>
+    </Box>
   </>
 );
 

@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
 import { pathToBehandling } from '../../utils/paths.js';
+import { queryKeys } from '../../shared/query-keys/queryKeys.js';
 
 interface OwnProps {
   saksnummer: string;
@@ -30,7 +31,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
   }
 
   const { data: historikk, isLoading } = useQuery({
-    queryKey: ['historikk', saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
+    queryKey: [...queryKeys.HISTORIKK, saksnummer, behandlingId, behandlingVersjon, historikkBackendApi.backend], // XXX Burde ikkje vere nødvendig å alltid hente på nytt fordi behandlingId endra seg.
     queryFn: () => historikkBackendApi.hentAlleInnslag(saksnummer),
     enabled: saksnummer != null && saksnummer.length > 0,
     select: ({ innslag, feilet }) => {
@@ -44,9 +45,9 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(
-    (behandlingId: number) => ({
+    (behandlingIdOrUuid: number | string) => ({
       ...location,
-      pathname: pathToBehandling(saksnummer, behandlingId),
+      pathname: pathToBehandling(saksnummer, behandlingIdOrUuid),
     }),
     [location, saksnummer],
   );
@@ -67,7 +68,7 @@ export const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: 
           <InnslagBoble
             key={`${innslag.opprettetTidspunkt}-${innslag?.aktør?.ident}-${idx}`}
             innslag={innslag}
-            behandlingLocation={getBehandlingLocation(behandlingId)}
+            behandlingLocation={getBehandlingLocation(innslag.behandlingUuid ?? behandlingId)}
           />
         );
       })}

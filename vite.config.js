@@ -1,7 +1,8 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
-import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
@@ -74,8 +75,8 @@ export default ({ mode }) => {
         '/k9/oppdrag': createProxy(process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070'),
         '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
         '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
-        'k9/endringslogg': createProxy(
-          process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
+        '/k9/endringslogg': createProxy(
+          process.env.ENDRINGSLOGG_URL || 'https://endringslogg.intern.dev.nav.no',
           {
             '^/k9/endringslogg': '',
           },
@@ -84,25 +85,40 @@ export default ({ mode }) => {
     },
     base: '/k9/web',
     publicDir: './public',
+    resolve: {
+      dedupe: ['react', 'react-dom'],
+    },
     plugins: [
+      tailwindcss(),
       react({
         include: [/\.jsx$/, /\.tsx?$/],
       }),
       svgr(),
       excludeMsw(),
+      sentryVitePlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+        org: 'nav',
+        project: 'k9-sak-web',
+        url: 'https://sentry.gc.nav.no',
+        release: {
+          name: process.env.VITE_SENTRY_RELEASE,
+        },
+      }),
     ],
     build: {
       // Relative to the root
       outDir: './dist/k9/web',
       sourcemap: true,
-      rollupOptions: {
+      rolldownOptions: {
         external: [
           "mockServiceWorker.js"
         ],
-        plugins: [sourcemaps({ exclude: /@sentry/ })],
         output: {
-          manualChunks: {
-            diagnosekoder: ['@navikt/diagnosekoder']
+          manualChunks(id) {
+            if (id.includes('@navikt/diagnosekoder')) {
+              return 'diagnosekoder';
+            }
           }
         }
       },
@@ -126,7 +142,6 @@ export default ({ mode }) => {
         },
       },
       globals: true,
-      setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
       onConsoleLog(log) {
@@ -135,6 +150,24 @@ export default ({ mode }) => {
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );
       },
+      projects: [
+        {
+          extends: true,
+          test: {
+            name: 'v2',
+            include: ['packages/v2/**/*.{spec,test}.{ts,tsx}'],
+            setupFiles: ['./vitest-setup-base.ts'],
+          },
+        },
+        {
+          extends: true,
+          test: {
+            name: 'test',
+            exclude: ['**/node_modules/**', '**/.git/**', 'packages/v2/**'],
+            setupFiles: ['./vitest-setup.ts'],
+          },
+        },
+      ],
     },
   });
 };

@@ -13,7 +13,6 @@ interface OwnProps {
   behandlingVersjon: number;
   lovReferanse?: string;
   isAksjonspunktOpen: boolean;
-  readOnlySubmitButton: boolean;
   originalErVilkarOk?: boolean;
   readOnly: boolean;
   isDirty?: boolean;
@@ -36,6 +35,7 @@ const OpptjeningPanel = ({
   originalErVilkarOk,
   isAksjonspunktOpen,
   readOnly,
+  isPeriodisertFormComplete,
   children,
   skjulAksjonspunktVisning,
   aksjonspunktErLøst,
@@ -43,6 +43,10 @@ const OpptjeningPanel = ({
   setRedigererOpptjening,
 }: OwnProps) => {
   const formMethods = useFormContext<VilkårFieldFormValues>();
+
+  const skalViseSubmitKnapp = !skjulAksjonspunktVisning && !readOnly;
+  const skalDisableSubmitKnapp = !isPeriodisertFormComplete;
+
   return (
     <>
       <VStack gap="space-16">
@@ -88,9 +92,15 @@ const OpptjeningPanel = ({
       <AksjonspunktBox erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}>
         {children}
         {!readOnly && <div className="mt-4" />}
-        {!skjulAksjonspunktVisning && !readOnly && (
+        {skalViseSubmitKnapp && (
           <div className="flex gap-2">
-            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} type="submit">
+            <Button
+              variant="primary"
+              size="small"
+              loading={formMethods.formState.isSubmitting}
+              type="submit"
+              disabled={skalDisableSubmitKnapp}
+            >
               Bekreft og fortsett
             </Button>
             {redigererOpptjening && (

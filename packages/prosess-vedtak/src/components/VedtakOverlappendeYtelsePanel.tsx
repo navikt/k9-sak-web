@@ -10,7 +10,7 @@ import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } fro
 import { k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Periodeinfo } from '../types/Periodeinfo';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
 import styles from './VedtakOverlappendeYtelsePanel.module.css';
@@ -22,12 +22,12 @@ interface Props {
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
 
-const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = ({
+const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
   overlappendeYtelser,
-  intl,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
+  const intl = useIntl();
   const { hentKodeverkForKode, kodeverkNavnFraKode } = useKodeverkContext();
   const [valgtPeriode, setValgtPeriode] = React.useState<Periode<Periodeinfo> | null>(null);
   const { submitCount } = useFormikContext();
@@ -109,15 +109,15 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             <BorderBox>
               <header>Detaljer om periode</header>
               <div className={styles.periodeDetaljer}>
-                <Tag variant="warning" className={styles.periodeDetalj}>
+                <Tag data-color="warning" variant="outline" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
                   {utledFagSystem(valgtPeriode.periodeinfo.kilde)}
                 </Tag>
-                <Tag variant="info" className={styles.periodeDetalj}>
+                <Tag data-color="info" variant="outline" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
                   {kodeverkNavnFraKode(valgtPeriode.periodeinfo.ytelseType, KodeverkTypeV2.FAGSAK_YTELSE)}
                 </Tag>
-                <Tag variant="info" className={styles.periodeDetalj}>
+                <Tag data-color="info" variant="outline" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>
                   {valgtPeriode.fom} - {valgtPeriode.tom}
                 </Tag>
@@ -190,4 +190,4 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
   );
 };
 
-export default injectIntl(VedtakOverlappendeYtelsePanel);
+export default VedtakOverlappendeYtelsePanel;

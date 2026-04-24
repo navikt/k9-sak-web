@@ -9,6 +9,7 @@ import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/te
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {
@@ -39,6 +40,10 @@ describe('<BehandlingSupportIndex>', () => {
     },
   };
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal vise godkjennings-panelet', () => {
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
@@ -54,6 +59,7 @@ describe('<BehandlingSupportIndex>', () => {
           behandlingId={1}
           behandlingVersjon={2}
           navAnsatt={navAnsatt}
+          featureToggles={prodFeatureToggles}
           behandlingRettigheter={{
             behandlingKanBytteEnhet: false,
             behandlingKanHenlegges: false,

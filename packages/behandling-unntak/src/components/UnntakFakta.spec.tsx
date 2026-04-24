@@ -122,6 +122,10 @@ describe('<UnntakFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestUnntakApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestUnntakApi.mock(UnntakBehandlingApiKeys.ARBEIDSFORHOLD, []);
     const fetchedData: Partial<FetchedData> = {

@@ -2,6 +2,7 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   k9_kodeverk_vilkår_VilkårUtfallMerknad as VilkårPeriodeDtoMerknad,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
+  type k9_sak_typer_Periode,
   type k9_sak_kontrakt_opptjening_OpptjeningDto as OpptjeningDto,
   type k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -11,11 +12,8 @@ import { Button, HelpText, Label } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import type { FeatureToggles } from '../../../featuretoggles/FeatureToggles.js';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
-import type { Aksjonspunkt } from '../types/Aksjonspunkt';
 import type { SubmitCallback } from '../types/SubmitCallback';
 import { type VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import OpptjeningPanel from './OpptjeningPanel';
@@ -24,10 +22,18 @@ import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder } from './Vi
 
 dayjs.extend(isBetween);
 
+export const skalPeriodeVurderesIAksjonspunkt = (periode: k9_sak_typer_Periode, opptjeninger: OpptjeningDto[]) => {
+  const skjæringstidspunkt = periode.fom;
+  const opptjeningForPeriode = opptjeninger?.find(
+    o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
+  );
+
+  return !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt;
+};
+
 export const buildInitialValues = (
   vilkårPerioder: VilkårPeriodeDto[],
-  opptjening: OpptjeningDto[],
-  featureToggles: FeatureToggles,
+  opptjeninger: OpptjeningDto[],
 ): VilkårFieldFormValues => {
   const utledKode = (periode: VilkårPeriodeDto) => {
     if (
@@ -42,17 +48,11 @@ export const buildInitialValues = (
   return {
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => {
-          const skjæringstidspunkt = periode.periode.fom;
-          const opptjeningForPeriode = opptjening?.find(
-            o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
-          );
-
           return {
+            periode: periode.periode,
             begrunnelse: periode.begrunnelse ?? '',
             vurderesIBehandlingen: !!periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']
-              ? !!opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt
-              : true,
+            vurderesIAksjonspunkt: skalPeriodeVurderesIAksjonspunkt(periode.periode, opptjeninger),
             kode: utledKode(periode),
           };
         })
@@ -61,16 +61,15 @@ export const buildInitialValues = (
 };
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: AksjonspunktDto[];
   behandlingId: number;
   behandlingVersjon: number;
   isApOpen: boolean;
   lovReferanse?: string;
   fagsakType?: FagsakYtelsesType;
   readOnly: boolean;
-  readOnlySubmitButton: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
-  periodeIndex: number;
+  activePeriode: VilkårPeriodeDto;
   vilkårPerioder: VilkårPeriodeDto[];
   opptjeninger: OpptjeningDto[];
 }
@@ -87,27 +86,28 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
   lovReferanse,
   fagsakType,
   readOnly,
-  readOnlySubmitButton,
   aksjonspunkter,
-  periodeIndex,
+  activePeriode,
   vilkårPerioder,
   opptjeninger,
   submitCallback,
 }: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const featureToggles = useContext(FeatureTogglesContext);
-
   const [redigererOpptjening, setRedigererOpptjening] = useState(false);
   const formMethods = useForm({
-    defaultValues: buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
+    defaultValues: buildInitialValues(vilkårPerioder, opptjeninger),
   });
 
   const vilkarFields = useWatch({ control: formMethods.control, name: 'vilkarFields' });
 
   const handleSubmit = async (formvalues: VilkårFieldFormValues) => {
-    await submitCallback([transformValues(formvalues, aksjonspunkter, vilkårPerioder, opptjeninger)]);
+    await submitCallback([transformValues(formvalues, aksjonspunkter, opptjeninger)]);
   };
 
-  const vilkarField = vilkarFields?.[periodeIndex];
+  const indexOfActivePeriode = vilkarFields.findIndex(
+    vilkarField =>
+      vilkarField.periode.fom === activePeriode.periode.fom && vilkarField.periode.tom === activePeriode.periode.tom,
+  );
+  const field = vilkarFields[indexOfActivePeriode];
   const allePerioderHarVurdering = () => {
     const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
@@ -130,8 +130,8 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
   const erOpplæringspenger = fagsakType === fagsakYtelsesType.OPPLÆRINGSPENGER;
   const skalKunneEndreOpptjening = !!(
     (isApOpen || redigererOpptjening) &&
-    vilkarField?.vurderesIBehandlingen &&
-    vilkarField?.vurderesIAksjonspunkt
+    field?.vurderesIBehandlingen &&
+    field?.vurderesIAksjonspunkt
   );
   const aksjonspunktErLøst = aksjonspunkter.some(
     ap => AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET === ap.definisjon && ap.status === 'UTFO',
@@ -171,9 +171,8 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
         title="Opptjening"
         isAksjonspunktOpen={skalKunneEndreOpptjening}
         isDirty={formMethods.formState.isDirty}
-        readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
-        readOnly={readOnly || !vilkårPerioder[periodeIndex]?.vurderesIBehandlingen}
-        originalErVilkarOk={vilkårPerioder[periodeIndex]?.vilkarStatus === 'OPPFYLT'}
+        readOnly={readOnly || !field?.vurderesIBehandlingen}
+        originalErVilkarOk={field?.kode === 'OPPFYLT'}
         aksjonspunktErLøst={aksjonspunktErLøst}
         lovReferanse={lovReferanse}
         behandlingId={behandlingId}
@@ -215,15 +214,24 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
             </div>
           </HelpText>
         </div>
-        {vilkarField && (
-          <VilkarField
-            erOmsorgspenger={erOmsorgspenger}
-            field={vilkarField}
-            readOnly={readOnly || !skalKunneEndreOpptjening}
-            fieldPrefix={`vilkarFields[${periodeIndex}]`}
-            skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
-          />
-        )}
+        {vilkarFields.map((vilkarField, index) => {
+          const skalKunneEndreDetteFeltet = !!(
+            (isApOpen || redigererOpptjening) &&
+            vilkarField?.vurderesIBehandlingen &&
+            vilkarField?.vurderesIAksjonspunkt
+          );
+          return (
+            <VilkarField
+              key={vilkarField.periode.fom}
+              hidden={index !== indexOfActivePeriode}
+              erOmsorgspenger={erOmsorgspenger}
+              field={vilkarField}
+              readOnly={readOnly || !skalKunneEndreDetteFeltet}
+              fieldPrefix={`vilkarFields[${index}]`}
+              skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
+            />
+          );
+        })}
         {visRedigeringsknapp && (
           <div>
             <div className="mt-2" />
@@ -248,17 +256,21 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
 const transformValues = (
   values: VilkårFieldFormValues,
   aksjonspunkter: AksjonspunktDto[],
-  vilkårPerioder: VilkårPeriodeDto[],
   opptjeninger: OpptjeningDto[],
 ) => ({
-  vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
-    ...vilkarField,
-    erVilkarOk: erVilkarOk(vilkarField.kode),
-    innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).some(kode => kode === vilkarField.kode)
-      ? vilkarField.kode
-      : undefined,
-    periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
-  })),
+  vilkårPeriodeVurderinger: values.vilkarFields
+    .filter(vilkarField => vilkarField.vurderesIAksjonspunkt)
+    .map(vilkarField => ({
+      begrunnelse: vilkarField.begrunnelse,
+      vurderesIBehandlingen: vilkarField.vurderesIBehandlingen,
+      vurderesIAksjonspunkt: vilkarField.vurderesIAksjonspunkt,
+      kode: vilkarField.kode,
+      erVilkarOk: erVilkarOk(vilkarField.kode),
+      innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).some(kode => kode === vilkarField.kode)
+        ? vilkarField.kode
+        : undefined,
+      periode: vilkarField.periode,
+    })),
   opptjeningPerioder: Array.isArray(opptjeninger)
     ? opptjeninger.map(opptjening => ({
         fom: opptjening.fastsattOpptjening?.opptjeningFom,

@@ -34,6 +34,9 @@ export type nødvendigOpplæringPayload = {
 };
 
 const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
+  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON)) {
+    return tabCodes.INSTITUSJON;
+  }
   if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_LANGVARIG_SYK)) {
     return tabCodes.SYKDOM;
   }
@@ -42,9 +45,6 @@ const finnTabMedAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]) => {
   }
   if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_REISETID)) {
     return tabCodes.REISEDAG;
-  }
-  if (harÅpentAksjonspunkt(aksjonspunkter, aksjonspunktCodes.VURDER_INSTITUSJON)) {
-    return tabCodes.INSTITUSJON;
   }
 
   return '';

@@ -2,7 +2,7 @@ import { Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
@@ -280,7 +280,7 @@ ForeldelseForm.propTypes = {
   behandlingUuid: PropTypes.string.isRequired,
 };
 
-export const transformValues = (values, apCode) => {
+const transformValues = (values, apCode) => {
   const foreldelsePerioder = values.foreldelsesresultatActivity.map(period => ({
     fraDato: period.fom,
     tilDato: period.tom,
@@ -294,7 +294,7 @@ export const transformValues = (values, apCode) => {
     },
   ];
 };
-export const buildInitialValues = foreldelsePerioder => ({
+const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: foreldelsePerioder.map(p => ({
     ...p,
     feilutbetaling: p.belop,
@@ -333,9 +333,7 @@ export default connect(
   mapStateToPropsFactory,
   mapDispatchToProps,
 )(
-  injectIntl(
-    behandlingForm({
-      form: FORELDELSE_FORM_NAME,
-    })(ForeldelseForm),
-  ),
+  behandlingForm({
+    form: FORELDELSE_FORM_NAME,
+  })(ForeldelseForm),
 );

@@ -128,27 +128,27 @@ const VurderingAvOmsorgsperioderForm = ({
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...formMethods}>
           {omsorgsperiode.relasjon && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <LabelledContent
                 label="Hvilken relasjon har søker til barnet?"
                 content={
                   <HStack align="center" gap="space-8">
                     <BodyShort size="small">{omsorgsperiode.relasjon}</BodyShort>
-                    <Tag size="small" variant="info">
+                    <Tag data-color="info" size="small" variant="outline">
                       Fra søknad
                     </Tag>
                   </HStack>
                 }
               />
-            </Box.New>
+            </Box>
           )}
           {skalViseRelasjonsbeskrivelse && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <LabelledContent
                 label="Beskrivelse fra søker"
                 content={<BodyShort size="small">{omsorgsperiode.relasjonsbeskrivelse}</BodyShort>}
               />
-            </Box.New>
+            </Box>
           )}
           <FormWithButtons
             onSubmit={formMethods.handleSubmit(handleSubmit)}
@@ -157,15 +157,15 @@ const VurderingAvOmsorgsperioderForm = ({
             shouldShowSubmitButton={!readOnly}
             smallButtons
           >
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-32 space-0">
               <Label size="small" htmlFor={FieldName.BEGRUNNELSE}>
                 {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
                 <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
               </Label>
               {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
               <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
-            </Box.New>
-            <Box.New marginBlock="8 0">
+            </Box>
+            <Box marginBlock="space-32 space-0">
               <RadioGroupPanelRHF
                 question={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
                 radios={radios}
@@ -173,9 +173,9 @@ const VurderingAvOmsorgsperioderForm = ({
                 validators={{ required }}
                 disabled={readOnly}
               />
-            </Box.New>
+            </Box>
             {harSøkerOmsorgenFor === RadioOptions.DELER && (
-              <Box.New marginBlock="8 0">
+              <Box marginBlock="space-32 space-0">
                 <PeriodpickerListRHF
                   name={FieldName.PERIODER}
                   legend="I hvilke perioder har søker omsorgen for barnet?"
@@ -207,13 +207,13 @@ const VurderingAvOmsorgsperioderForm = ({
                     )
                   }
                   renderAfterFieldArray={fieldArrayMethods => (
-                    <Box.New marginBlock="6 0">
+                    <Box marginBlock="space-24 space-0">
                       <AddButton
                         label="Legg til periode"
                         onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
                         id="leggTilPeriodeKnapp"
                       />
-                    </Box.New>
+                    </Box>
                   )}
                   validators={{
                     overlaps: (valgtPeriode: Period) => {
@@ -232,10 +232,10 @@ const VurderingAvOmsorgsperioderForm = ({
                     },
                   }}
                 />
-              </Box.New>
+              </Box>
             )}
             {resterendePerioder.length > 0 && (
-              <Box.New marginBlock="8 0">
+              <Box marginBlock="space-32 space-0">
                 <Alert size="small" variant="info">
                   <LabelledContent
                     label="Resterende perioder har søkeren ikke omsorgen for barnet:"
@@ -246,7 +246,7 @@ const VurderingAvOmsorgsperioderForm = ({
                     ))}
                   />
                 </Alert>
-              </Box.New>
+              </Box>
             )}
           </FormWithButtons>
         </FormProvider>

@@ -20,7 +20,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-export const TempsaveAnkeButton = ({ formValues, saveAnke, spinner = false, aksjonspunktCode, readOnly = false }) => {
+const TempsaveAnkeButton = ({ formValues, saveAnke, spinner = false, aksjonspunktCode, readOnly = false }) => {
   const tempSave = event => {
     event.preventDefault();
     saveAnke(transformValues(formValues, aksjonspunktCode));

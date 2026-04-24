@@ -22,21 +22,21 @@ const VurderingsoversiktMessages = ({
 
   if (!harGyldigSignatur) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <ManglerGyldigSignaturMelding>
           Du kan ikke vurdere behov for
           {` ${vurderingsnavn} `}
           før søker har sendt inn legeerklæring fra sykehus/spesialisthelsetjenesten.
         </ManglerGyldigSignaturMelding>
-      </Box.New>
+      </Box>
     );
   }
 
   if (vurderingsoversikt && vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <IngenPerioderÅVurdereMelding />
-      </Box.New>
+      </Box>
     );
   }
 
@@ -47,20 +47,20 @@ const VurderingsoversiktMessages = ({
 
     return (
       <>
-        <Box.New marginBlock="0 6">
+        <Box marginBlock="space-0 space-24">
           <Alert size="small" variant="warning">
             {`Vurder behov for ${vurderingsnavn} for ${getHumanReadablePeriodString(
               vurderingsoversikt.resterendeVurderingsperioder,
             )}.`}
           </Alert>
-        </Box.New>
+        </Box>
         {vurderingsoversikt.harPerioderDerPleietrengendeErOver18år && (
-          <Box.New marginBlock="0 6">
+          <Box marginBlock="space-0 space-24">
             <Alert size="small" variant="warning">
               Barnet er 18 år {barnetsAttenårsdag}. Du må gjøre en egen vurdering etter § 9-10, tredje ledd fra datoen
               barnet fyller 18 år.
             </Alert>
-          </Box.New>
+          </Box>
         )}
       </>
     );

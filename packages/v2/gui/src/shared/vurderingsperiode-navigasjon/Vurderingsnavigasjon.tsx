@@ -8,7 +8,7 @@ import {
   k9_kodeverk_sykdom_Resultat as sykdomEnumObject,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
-import type { Period } from '@navikt/ft-utils';
+import type { Period } from '@k9-sak-web/gui/utils/Period.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PeriodeRad } from './PeriodeRad';
 import styles from './periodeRad.module.css';
@@ -130,11 +130,10 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
   };
 
   return (
-    <Box.New className="min-w-[400px]">
+    <Box className="min-w-[400px]">
       <Heading size="xsmall" className="ml-[15px] mt-[21px] mb-[24px]">
         {title}
       </Heading>
-
       {allePerioder.length === 0 && <div className="ml-[15px] mt-[15px] mb-5">Ingen vurderinger å vise</div>}
       {allePerioder.length > 0 && (
         <>
@@ -164,7 +163,7 @@ const Vurderingsnavigasjon = <T extends Vurderingselement = Vurderingselement>({
           </ul>
         </>
       )}
-    </Box.New>
+    </Box>
   );
 };
 

@@ -4,7 +4,7 @@ import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
 import { Field, FieldArray, Form, Formik } from 'formik';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
@@ -31,8 +31,8 @@ const OverstyrBeregningFaktaForm = ({
   readOnly,
   submittable,
   aksjonspunkter,
-  intl,
-}: Props & WrappedComponentProps) => {
+}: Props) => {
+  const intl = useIntl();
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
@@ -123,13 +123,13 @@ const OverstyrBeregningFaktaForm = ({
                     return (
                       <div key={skjaeringstidspunkt}>
                         <BorderBox>
-                          <Tag variant="info" className="skjaeringstidspunkt">
+                          <Tag data-color="info" variant="outline" className="skjaeringstidspunkt">
                             Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
                           </Tag>
                           {harKategoriNæring && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <Tag variant="warning">
+                              <Tag data-color="warning" variant="outline">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
                               </Tag>
                             </div>
@@ -137,7 +137,7 @@ const OverstyrBeregningFaktaForm = ({
                           {harKategoriFrilans && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <Tag variant="warning">
+                              <Tag data-color="warning" variant="outline">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
                               </Tag>
                             </div>
@@ -230,4 +230,4 @@ const OverstyrBeregningFaktaForm = ({
   );
 };
 
-export default injectIntl(OverstyrBeregningFaktaForm);
+export default OverstyrBeregningFaktaForm;

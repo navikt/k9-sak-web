@@ -1,15 +1,18 @@
 import { Location } from 'history';
 import { lazy, Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router';
+import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
+import { FagsakYtelseType } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
+import BehandlingAktivitetspengerIndex from '@k9-sak-web/behandling-aktivitetspenger';
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
@@ -20,13 +23,8 @@ import {
   KodeverkMedNavn,
   NavAnsatt,
 } from '@k9-sak-web/types';
-import {
-  getFaktaLocation,
-  getLocationWithDefaultProsessStegAndFakta,
-  getPathToK9Los,
-  getProsessStegLocation,
-} from '../app/paths';
-import useTrackRouteParam from '../app/useTrackRouteParam';
+import { ung_kodeverk_behandling_BehandlingType } from '@navikt/ung-sak-typescript-client/types';
+import { getFaktaLocation, getLocationWithDefaultProsessStegAndFakta, getProsessStegLocation } from '../app/paths';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 
@@ -35,8 +33,8 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = lazy(
 );
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>
-  behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
-  behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
+  behandlingTypeKode === ung_kodeverk_behandling_BehandlingType.TILBAKEKREVING ||
+  behandlingTypeKode === ung_kodeverk_behandling_BehandlingType.REVURDERING_TILBAKEKREVING;
 
 const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -64,7 +62,7 @@ const getOppdaterProsessStegOgFaktaPanelIUrl =
   };
 
 interface OwnProps {
-  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
+  setBehandlingIdOgVersjon: (behandlingId: number | undefined, behandlingVersjon: number | undefined) => void;
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -84,26 +82,23 @@ const BehandlingIndex = ({
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
 }: OwnProps) => {
-  const { selected: behandlingId } = useTrackRouteParam<number>({
-    paramName: 'behandlingId',
-    parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
-  });
-
-  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  const behandlingVersjon = behandling?.versjon;
+  const { behandlingIdOrUuid } = useParams();
+  const behandling = alleBehandlinger.find(
+    b => b.id === gyldigBehandlingId(behandlingIdOrUuid) || b.uuid === gyldigBehandlingUuid(behandlingIdOrUuid),
+  );
 
   useEffect(() => {
-    if (behandling) {
+    if (behandling != null) {
       requestApi.setLinks(behandling.links, LinkCategory.BEHANDLING);
-      setBehandlingIdOgVersjon(behandlingId, behandlingVersjon);
+      setBehandlingIdOgVersjon(behandling.id, behandling.versjon);
     }
   }, [behandling]);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const oppdaterBehandlingVersjon = useCallback(
-    versjon => setBehandlingIdOgVersjon(behandlingId, versjon),
-    [behandlingId],
+    versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
+    [behandling?.id],
   );
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(UngSakApiKeys.KODEVERK);
@@ -114,13 +109,13 @@ const BehandlingIndex = ({
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(
     () => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type),
-    [fagsak.status, behandlingId, behandling?.status, behandling?.type],
+    [fagsak.status, behandling?.id, behandling?.status, behandling?.type],
   );
 
   const location = useLocation();
   const navigate = useNavigate();
   const opneSokeside = useCallback(() => {
-    window.location.assign(getPathToK9Los() || '/');
+    window.location.assign('/');
   }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [
     location,
@@ -130,7 +125,7 @@ const BehandlingIndex = ({
   const query = parseQueryString(location.search);
 
   const defaultProps = {
-    behandlingId,
+    behandlingId: behandling?.id,
     behandlingUuid: behandling?.uuid,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
@@ -161,57 +156,79 @@ const BehandlingIndex = ({
     [alleBehandlinger],
   );
 
-  const behandlingTypeKode = behandling?.type.kode ?? undefined;
+  const behandlingTypeKode = behandling?.type.kode ?? '';
 
-  if (!behandling) {
+  if (behandling == null) {
     return <LoadingPanel />;
   }
 
-  if (erTilbakekreving(behandlingTypeKode)) {
+  const renderContent = () => {
+    if (erTilbakekreving(behandlingTypeKode)) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            <BehandlingTilbakekrevingUngdomsytelseIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              harApenRevurdering={fagsakBehandlingerInfo.some(
+                b =>
+                  b.type.kode === ung_kodeverk_behandling_BehandlingType.REVURDERING &&
+                  b.status.kode !== BehandlingStatus.AVSLUTTET,
+              )}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (behandlingTypeKode === ung_kodeverk_behandling_BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            <BehandlingKlageUngdomsytelseIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              alleBehandlinger={fagsakBehandlingerInfo}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            <BehandlingAktivitetspengerIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              behandlingVersjon={behandling.versjon}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingTilbakekrevingUngdomsytelseIndex
+          <BehandlingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            harApenRevurdering={fagsakBehandlingerInfo.some(
-              b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
-            )}
             valgtFaktaSteg={query.fakta}
-            key={behandlingId}
+            key={behandling.id}
             {...defaultProps}
           />
         </ErrorBoundary>
       </Suspense>
     );
-  }
+  };
 
-  if (behandlingTypeKode === BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingKlageUngdomsytelseIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            alleBehandlinger={fagsakBehandlingerInfo}
-            key={behandlingId}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  return (
-    <Suspense fallback={<LoadingPanel />}>
-      <ErrorBoundary errorMessageCallback={addErrorMessage}>
-        <BehandlingUngdomsytelseIndex
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          valgtFaktaSteg={query.fakta}
-          key={behandlingId}
-          {...defaultProps}
-        />
-      </ErrorBoundary>
-    </Suspense>
-  );
+  return <AvregningFormProvider behandlingId={behandling.id}>{renderContent()}</AvregningFormProvider>;
 };
 
 export default BehandlingIndex;

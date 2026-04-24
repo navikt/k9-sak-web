@@ -82,7 +82,7 @@ const Utenlandsopphold = ({
           <ul>
             <li>
               Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker
-              kan motta ${ytelseTekst.ytelseNavnUbestemt}.
+              kan motta {ytelseTekst.ytelseNavnUbestemt}.
             </li>
             <li>
               For opphold utenfor EØS skal perioden med ytelse i utgangspunktet begrenses til 8 uker i løpet av en
@@ -98,10 +98,10 @@ const Utenlandsopphold = ({
                 </ul>
               </li>
             )}
-            <li>Vilkårene for rett til ${ytelseTekst.ytelseNavnUbestemt} må være oppfylt hele perioden.</li>
+            <li>Vilkårene for rett til {ytelseTekst.ytelseNavnUbestemt} må være oppfylt hele perioden.</li>
             {erPleiepenger && (
               <li>
-                Det utbetales ikke ${ytelseTekst.ytelseNavnUbestemt} når søker avvikler ferie. Utenlandsopphold i en
+                Det utbetales ikke {ytelseTekst.ytelseNavnUbestemt} når søker avvikler ferie. Utenlandsopphold i en
                 periode med ferie telles derfor ikke med, uavhengig av årsaken til utenlandsoppholdet.
               </li>
             )}

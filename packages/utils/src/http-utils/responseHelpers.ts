@@ -15,6 +15,5 @@ export const handleErrorExternally = (
   error: AxiosError,
   errorHandler: (statusCode: number, locationHeader?: string) => void,
 ) => {
-  const { status, headers } = error.response;
-  errorHandler(status, headers.location);
+  errorHandler(error.response?.status ?? 0, error.response?.headers.location);
 };

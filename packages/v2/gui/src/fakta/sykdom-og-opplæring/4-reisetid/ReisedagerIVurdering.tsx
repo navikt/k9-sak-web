@@ -1,6 +1,6 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidInfoFraSøker as ReisetidInfoFraSøker } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Label, BodyLong, Tag } from '@navikt/ds-react';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 
 const formaterReisedager = (period: Period) => {
   return period.asListOfDays().length > 1 ? period.prettifyPeriod() : period.prettifyPeriod().split(' - ')[0];
@@ -27,7 +27,7 @@ const ReisedagerIVurdering = ({
         <Label size={size}>Reisedager:</Label>
         <div className="flex gap-2">
           <BodyLong size={size}>{reisedager}</BodyLong>
-          <Tag size="small" variant="info">
+          <Tag data-color="info" size="small" variant="outline">
             Flyttet fra nødvendig opplæring
           </Tag>
         </div>
@@ -41,7 +41,7 @@ const ReisedagerIVurdering = ({
       <Label size={size}>Reisedager:</Label>{' '}
       <div className="flex gap-2">
         <BodyLong size={size}>{reisedager}</BodyLong>
-        <Tag size="small" variant="info">
+        <Tag data-color="info" size="small" variant="outline">
           Fra søknad
         </Tag>
       </div>

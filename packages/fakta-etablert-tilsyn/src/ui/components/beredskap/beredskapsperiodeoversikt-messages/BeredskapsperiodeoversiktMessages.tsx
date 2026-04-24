@@ -20,11 +20,11 @@ const BeredskapsperiodeoversiktMessages = ({
   if (beredskapData.harPerioderTilVurdering()) {
     const perioderTilVurdering = beredskapData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
-      <Box.New>
+      <Box>
         <Alert size="small" variant="warning">
           {`Vurder behov for beredskap i ${getStringMedPerioder(perioderTilVurdering)}.`}
         </Alert>
-      </Box.New>
+      </Box>
     );
   } else if (skalViseFortsettUtenEndring) {
     return (

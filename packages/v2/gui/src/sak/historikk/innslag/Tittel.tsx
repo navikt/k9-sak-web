@@ -1,4 +1,8 @@
 import type { ReactNode } from 'react';
 import { Heading } from '@navikt/ds-react';
 
-export const Tittel = ({ children }: { children: ReactNode }) => <Heading size="xsmall">{children}</Heading>;
+export const Tittel = ({ children }: { children: ReactNode }) => (
+  <Heading level="4" size="xsmall">
+    {children}
+  </Heading>
+);

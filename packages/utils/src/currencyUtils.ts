@@ -3,7 +3,7 @@ export const formatCurrencyWithKr = (value: string | number) => {
   return `${formattedValue} kr`;
 };
 
-export const formatCurrencyNoKr = (value: string | number) => {
+export const formatCurrencyNoKr = (value: string | number | undefined | null) => {
   if (value === null || value === undefined) {
     return undefined;
   }

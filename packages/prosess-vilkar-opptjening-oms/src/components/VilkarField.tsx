@@ -2,16 +2,15 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { FeatureToggles, Opptjening, Vilkarperiode } from '@k9-sak-web/types';
+import { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { BodyShort } from '@navikt/ds-react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import dayjs from 'dayjs';
-import { useContext } from 'react';
 import styles from './VilkarFields.module.css';
 
 export const opptjeningMidlertidigInaktivKoder = {
@@ -20,10 +19,10 @@ export const opptjeningMidlertidigInaktivKoder = {
 };
 
 export type VilkårFieldType = {
-  begrunnelse: string;
+  begrunnelse: string | undefined;
   vurderesIBehandlingen: boolean;
   vurderesIAksjonspunkt: boolean;
-  kode: '7847A' | '7847B' | 'OPPFYLT' | 'IKKE_OPPFYLT';
+  kode: '7847A' | '7847B' | 'OPPFYLT' | 'IKKE_OPPFYLT' | undefined;
 };
 
 type FormValues = {
@@ -38,7 +37,7 @@ interface VilkarFieldsProps {
   skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
-export const erVilkarOk = (kode: string) => {
+export const erVilkarOk = (kode: string | undefined) => {
   if (
     kode === 'OPPFYLT' ||
     opptjeningMidlertidigInaktivKoder.TYPE_A === kode ||
@@ -49,15 +48,15 @@ export const erVilkarOk = (kode: string) => {
   return false;
 };
 
-export const hent847Text = (kode: string) => {
+const hent847Text = (kode: string | undefined) => {
   const kodeTekster: { [key: string]: string } = {
     [opptjeningMidlertidigInaktivKoder.TYPE_A]: 'Vilkåret beregnes jf § 8-47 bokstav A',
     [opptjeningMidlertidigInaktivKoder.TYPE_B]: 'Vilkåret beregnes jf § 8-47 bokstav B',
   };
 
-  return kodeTekster[kode] || '';
+  return kodeTekster[kode ?? ''] ?? '';
 };
-export const VilkarField = ({
+const VilkarField = ({
   erOmsorgspenger,
   fieldPrefix,
   field,
@@ -65,14 +64,13 @@ export const VilkarField = ({
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
-  const featureToggles = useContext(FeatureTogglesContext);
   const erIkkeOppfyltText = (
     <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
   );
   const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
 
   const vilkarVurderingTekst = () => {
-    if (erVilkarOk(field?.kode) && Object.values(opptjeningMidlertidigInaktivKoder).includes(field?.kode)) {
+    if (erVilkarOk(field?.kode) && Object.values(opptjeningMidlertidigInaktivKoder).includes(field?.kode ?? '')) {
       return hent847Text(field?.kode);
     }
     if (erVilkarOk(field?.kode)) {
@@ -146,10 +144,7 @@ export const VilkarField = ({
                 ]
               : []),
           ].filter(v => {
-            if (featureToggles?.OPPTJENING_READ_ONLY_PERIODER) {
-              return v.value !== 'OPPFYLT';
-            }
-            return true;
+            return v.value !== 'OPPFYLT';
           })}
         />
       )}
@@ -161,14 +156,16 @@ export const VilkarField = ({
 VilkarField.buildInitialValues = (
   vilkårPerioder: Vilkarperiode[],
   opptjening: Opptjening[],
+  // Ikkje fjerna fordi det krevde mykje omskriving. Prøv igjen seinare:
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   featureToggles: FeatureToggles,
 ): FormValues => {
   const utledKode = (periode: Vilkarperiode) => {
     if (
-      periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_A ||
-      periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_B
+      periode.merknad?.kode === opptjeningMidlertidigInaktivKoder.TYPE_A ||
+      periode.merknad?.kode === opptjeningMidlertidigInaktivKoder.TYPE_B
     ) {
-      return periode.merknad.kode as '7847A' | '7847B';
+      return periode.merknad?.kode as '7847A' | '7847B' | undefined;
     }
     return periode.vilkarStatus.kode as 'OPPFYLT' | 'IKKE_OPPFYLT';
   };
@@ -183,10 +180,8 @@ VilkarField.buildInitialValues = (
 
           return {
             begrunnelse: periode.begrunnelse,
-            vurderesIBehandlingen: periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: featureToggles?.OPPTJENING_READ_ONLY_PERIODER
-              ? opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt
-              : true,
+            vurderesIBehandlingen: periode.vurderesIBehandlingen ?? false,
+            vurderesIAksjonspunkt: opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt ?? false,
             kode: utledKode(periode),
           };
         })

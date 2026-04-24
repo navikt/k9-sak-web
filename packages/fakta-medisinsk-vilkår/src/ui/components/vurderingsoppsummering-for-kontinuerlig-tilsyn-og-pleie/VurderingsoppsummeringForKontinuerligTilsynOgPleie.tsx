@@ -30,14 +30,14 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
       perioder={perioder}
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : undefined}
     >
-      <Box.New marginBlock="6 0">
+      <Box marginBlock="space-24 space-0">
         {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
         {!manglerLegeerklæring && (
-          <Box.New marginBlock="4 0">
+          <Box marginBlock="space-16 space-0">
             <LabelledContent
               label="Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?"
               content={
-                <Box.New marginBlock="4 0">
+                <Box marginBlock="space-16 space-0">
                   <BasicList
                     elements={dokumenter
                       .filter(({ benyttet }) => benyttet)
@@ -45,10 +45,10 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
                         <DokumentLink dokument={dokument} visDokumentIkon />
                       ))}
                   />
-                </Box.New>
+                </Box>
               }
             />
-          </Box.New>
+          </Box>
         )}
 
         {manglerLegeerklæring && (
@@ -56,7 +56,7 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
             Det foreligger ikke riktig legeerklæring for perioden, jmf. §9-16
           </Alert>
         )}
-        <Box.New marginBlock="8 0">
+        <Box marginBlock="space-32 space-0">
           {!manglerLegeerklæring && (
             <LabelledContent
               label="Gjør en vurdering av om det er behov for kontinuerlig tilsyn og pleie som følge
@@ -67,19 +67,19 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
             />
           )}
           <VurdertAv ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} size="small" />
-        </Box.New>
+        </Box>
 
         {!manglerLegeerklæring && (
-          <Box.New marginBlock="8 0">
+          <Box marginBlock="space-32 space-0">
             <LabelledContent
               size="small"
               label="Er det behov for tilsyn og pleie?"
               content={<span>{resultat === Vurderingsresultat.OPPFYLT ? 'Ja' : 'Nei'}</span>}
             />
-          </Box.New>
+          </Box>
         )}
 
-        <Box.New marginBlock="8 0">
+        <Box marginBlock="space-32 space-0">
           <LabelledContent
             label={resultat === Vurderingsresultat.OPPFYLT ? 'Perioder innvilget' : 'Perioder avslått'}
             size="small"
@@ -96,8 +96,8 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
               </ul>
             }
           />
-        </Box.New>
-      </Box.New>
+        </Box>
+      </Box>
     </DetailViewVurdering>
   );
 };

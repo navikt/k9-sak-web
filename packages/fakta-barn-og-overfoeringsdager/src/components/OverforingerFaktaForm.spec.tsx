@@ -4,9 +4,9 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import FormValues from '../types/FormValues';
-import { OverforingerFaktaFormImpl } from './OverforingerFaktaForm';
+import { OverforingerFaktaForm } from './OverforingerFaktaForm';
 
-describe('<OverforingerFaktaFormImpl>', () => {
+describe('<OverforingerFaktaForm>', () => {
   const formValues: FormValues = {
     fordelingFår: [],
     fordelingGir: [],
@@ -18,7 +18,7 @@ describe('<OverforingerFaktaFormImpl>', () => {
 
   it('rendrer overføringer seksjon', () => {
     renderWithIntl(
-      <OverforingerFaktaFormImpl
+      <OverforingerFaktaForm
         {...reduxFormPropsMock}
         formValues={formValues}
         rammevedtak={[]}

@@ -1,7 +1,6 @@
 import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
   ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
-  type ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
   type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
@@ -16,24 +15,28 @@ import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
 import type { FormData } from './FormData';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
+import { type VedtakAksjonspunktDto, type VedtakBekreftetAksjonspunktDto } from './ungVedtakAksjonspunktAvgrensing.js';
 
-interface UngVedtakProps {
-  aksjonspunkter: AksjonspunktDto[];
+type UngVedtakBekreftelseCallback = (bekreftet: VedtakBekreftetAksjonspunktDto[]) => Promise<void>;
+
+export interface UngVedtakProps {
+  aksjonspunkter: VedtakAksjonspunktDto[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
-  submitCallback: (data: any) => Promise<any>;
+  vedtakBekreftelseCallback: UngVedtakBekreftelseCallback;
   vilkår: UngVedtakVilkårDto[];
   readOnly: boolean;
   vedtaksbrevValgResponse: VedtaksbrevValgResponse | undefined;
   refetchVedtaksbrevValg: (options?: RefetchOptions) => Promise<QueryObserverResult<VedtaksbrevValgResponse, Error>>;
+  tekster: UngVedtakTekster;
 }
 
 const buildInitialValues = (vedtaksbrevValg: VedtaksbrevValgResponse | undefined) =>
   vedtaksbrevValg?.vedtaksbrevValg?.map(v => ({
     dokumentMalType: v.dokumentMalType?.kilde,
-    hindreUtsendingAvBrev: !!v.hindret || false,
-    redigertHtml: v.redigertBrevHtml ?? '',
+    redigertHtml: '',
     originalHtml: '',
   })) ?? [];
 
@@ -41,17 +44,20 @@ export const UngVedtak = ({
   api,
   behandling,
   aksjonspunkter,
-  submitCallback,
+  vedtakBekreftelseCallback,
   vilkår,
   readOnly,
   vedtaksbrevValgResponse,
   refetchVedtaksbrevValg,
+  tekster,
 }: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
     defaultValues: { vedtaksbrevValg: buildInitialValues(vedtaksbrevValgResponse) },
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
+  const behandlingErIkkeFastsatt =
+    behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT;
   const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
   const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -63,6 +69,9 @@ export const UngVedtak = ({
     error: forhåndsvisningError,
   } = useMutation({
     mutationFn: async (dokumentMalType: ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType) => {
+      if (!behandling.id) {
+        throw new Error('Behandling ID mangler');
+      }
       const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType.kilde, false);
       // Create a URL object from the PDF blob
       const fileURL = window.URL.createObjectURL(response);
@@ -89,6 +98,9 @@ export const UngVedtak = ({
       nullstill?: boolean;
       dokumentMalType: DokumentMalType;
     }) => {
+      if (!behandling.id) {
+        throw new Error('Behandling ID mangler');
+      }
       const requestData = {
         behandlingId: behandling.id,
         redigertHtml: redigertHtml || undefined,
@@ -107,27 +119,31 @@ export const UngVedtak = ({
     name: 'vedtaksbrevValg',
   });
 
-  const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
+  const transformValues = (): VedtakBekreftetAksjonspunktDto[] => {
+    return aksjonspunkter
+      .filter(ap => ap.kanLoses && ap.definisjon !== undefined)
+      .map(ap => ({ '@type': ap.definisjon, skalBrukeOverstyrendeFritekstBrev: false, ...ap }));
+  };
   const handleSubmit = () => {
     setIsSubmitting(true);
-    void submitCallback(transformValues()).finally(() => {
+    void vedtakBekreftelseCallback(transformValues()).finally(() => {
       setIsSubmitting(false);
     });
   };
-
   const harFlereBrev = vedtaksbrevValgResponse?.vedtaksbrevValg && vedtaksbrevValgResponse?.vedtaksbrevValg?.length > 1;
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
-      <Box.New marginBlock="4">
+      <Box marginBlock="space-16">
         <VStack gap="space-16">
           <div>
             <Label size="small" as="p">
               Resultat
             </Label>
-            <BodyShort size="small">
-              {behandlingErInnvilget ? 'Ungdomsprogramytelse er innvilget' : 'Ungdomsprogramytelse er opphørt'}
-            </BodyShort>
+            {!behandlingErIkkeFastsatt && (
+              <BodyShort size="small">{behandlingErInnvilget ? tekster.innvilget : tekster.avslått}</BodyShort>
+            )}
+            {behandlingErIkkeFastsatt && <BodyShort size="small">Resultat er ikke fastsatt</BodyShort>}
           </div>
           {behandlingErAvslått && (
             <div>
@@ -151,9 +167,9 @@ export const UngVedtak = ({
 
               return (
                 <div key={field.id}>
-                  <Box.New
+                  <Box
                     borderWidth={index === 0 ? '0 0 1 0' : '0'}
-                    paddingBlock={readOnly ? '0' : '0 space-20'}
+                    paddingBlock={readOnly ? 'space-0' : 'space-0 space-20'}
                     width="450px"
                   >
                     {vedtaksbrevValgResponse?.harBrev && (
@@ -170,7 +186,7 @@ export const UngVedtak = ({
                         api={api}
                       />
                     )}
-                  </Box.New>
+                  </Box>
                 </div>
               );
             })}
@@ -192,13 +208,13 @@ export const UngVedtak = ({
           </VStack>
         </VStack>
         {harAksjonspunkt && !readOnly && (
-          <Box.New marginBlock="space-24 0">
+          <Box marginBlock="space-24 space-0">
             <Button type="submit" variant="primary" size="small" loading={isSubmitting}>
               {harAksjonspunktMedTotrinnsbehandling ? 'Send til beslutter' : 'Fatt vedtak'}
             </Button>
-          </Box.New>
+          </Box>
         )}
-      </Box.New>
+      </Box>
     </RhfForm>
   );
 };

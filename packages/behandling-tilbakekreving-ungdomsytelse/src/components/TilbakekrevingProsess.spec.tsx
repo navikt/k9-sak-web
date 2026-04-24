@@ -4,7 +4,6 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -112,14 +111,17 @@ describe('<TilbakekrevingProsess>', () => {
     },
   };
 
+  afterEach(() => {
+    requestTilbakekrevingApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
     });
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
     renderWithIntlAndReduxForm(
-      <TilbakekrevingProsess.WrappedComponent
-        intl={intlMock}
+      <TilbakekrevingProsess
         data={{
           aksjonspunkter,
           perioderForeldelse,
@@ -147,11 +149,14 @@ describe('<TilbakekrevingProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
+      perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
+    });
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
 
     renderWithIntlAndReduxForm(
-      <TilbakekrevingProsess.WrappedComponent
-        intl={intlMock}
+      <TilbakekrevingProsess
         data={{
           aksjonspunkter,
           perioderForeldelse,

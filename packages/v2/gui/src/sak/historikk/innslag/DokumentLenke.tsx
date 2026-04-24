@@ -16,7 +16,7 @@ export const DokumentLenke = ({ dokumentLink }: DokumentLenkeProps) => {
     );
   }
   return (
-    <Link target="_blank" rel="noopener noreferrer" href={dokumentLink.serverUrl}>
+    <Link target="_blank" rel="noopener noreferrer" href={dokumentLink.serverUrl} data-color="accent">
       <HStack align="center" gap="space-4">
         <FileIcon title={dokumentLink.tag} width={24} height={24} />
         {dokumentLink.tag}

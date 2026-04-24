@@ -3,14 +3,13 @@ import { Route, Routes } from 'react-router';
 import IngenBehandlingValgtPanel from '@k9-sak-web/gui/app/feilmeldinger/IngenBehandlingValgtPanel.js';
 import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { behandlingRoutePath } from '../app/paths';
 import BehandlingIndex from './BehandlingIndex';
 
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
-  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
+  setBehandlingIdOgVersjon: (behandlingId: number | undefined, behandlingVersjon: number | undefined) => void;
   setRequestPendingMessage: (message: string) => void;
 }
 
@@ -23,7 +22,7 @@ export const BehandlingerIndex = ({
 }: OwnProps) => (
   <Routes>
     <Route
-      path={behandlingRoutePath}
+      path="/:behandlingIdOrUuid/"
       element={
         <BehandlingIndex
           fagsak={fagsak}

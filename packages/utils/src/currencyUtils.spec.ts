@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { formatCurrencyNoKr, formatCurrencyWithKr, parseCurrencyInput, removeSpacesFromNumber } from './currencyUtils';
 
 describe('Currency-utils', () => {
@@ -5,8 +6,8 @@ describe('Currency-utils', () => {
     expect(formatCurrencyWithKr('120000')).toEqual('120 000 kr');
   });
   it('skal teste at beloep er korrekt formatert uten krone-notasjon', () => {
-    expect(formatCurrencyNoKr('120000').toString()).toEqual('120 000');
-    expect(formatCurrencyNoKr(120000).toString()).toEqual('120 000');
+    expect(formatCurrencyNoKr('120000')).toEqual('120 000');
+    expect(formatCurrencyNoKr(120000)).toEqual('120 000');
   });
   it('skal teste metoden som fjerner mellomrom fra tall og gjør de til number og ikke string', () => {
     expect(removeSpacesFromNumber('450 000')).toEqual(450000);

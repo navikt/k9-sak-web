@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import { axe } from 'vitest-axe';
 import { AleneOmOmsorgenProps } from '../../../../types/AleneOmOmsorgenProps';
 import AleneOmOmsorgen from '../../alene-om-omsorgen/AleneOmOmsorgen';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
+import './axe-setup';
 
 describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser åpen aksjonspunkt som forventet', () => {

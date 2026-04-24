@@ -30,6 +30,7 @@ export default ({ behandling: { links, sakstype }, readOnly, aksjonspunkter, sub
   return (
     <OmsorgenFor
       data={{
+        omsorgenForAksjonspunkt: omsorgenForAksjonspunkt,
         httpErrorHandler: httpErrorHandlerCaller,
         endpoints: findEndpointsFromRels(links, [
           {

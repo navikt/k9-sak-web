@@ -5,19 +5,17 @@ import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { HistorikkIndex } from './HistorikkIndex.js';
+import withUngKodeverkoppslag from '../../storybook/decorators/withUngKodeverkoppslag.js';
 
 const meta = {
   title: 'gui/sak/historikk/HistorikkIndex',
   component: HistorikkIndex,
-  decorators: [
-    withMaxWidth(600),
-    withKodeverkContext(),
-    withFakeHistorikkBackend(),
-    withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
-  ],
+  decorators: [withMaxWidth(600), withKodeverkContext()],
 } satisfies Meta<typeof HistorikkIndex>;
 
 type Story = StoryObj<typeof meta>;
+
+export default meta;
 
 export const K9Historikk: Story = {
   args: {
@@ -25,6 +23,10 @@ export const K9Historikk: Story = {
     behandlingId: 1,
     behandlingVersjon: 2,
   },
+  decorators: [
+    withFakeHistorikkBackend('k9'),
+    withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
+  ],
   play: async ({ canvas }) => {
     const boble1El = await canvas.findByTestId(/snakkeboble-2025-08-29T10:41:30.155/);
     await expect(boble1El).toHaveTextContent('Behandling er gjenopptatt');
@@ -32,7 +34,7 @@ export const K9Historikk: Story = {
 
     const boble2El = canvas.getByTestId('snakkeboble-2025-05-06T11:16:01.228');
     await expect(boble2El).toHaveTextContent('Saksbehandler');
-    await expect(boble2El.querySelector('h1')).toHaveTextContent('Behandling er henlagt');
+    await expect(boble2El.querySelector('h4')).toHaveTextContent('Behandling er henlagt');
 
     const boble3El = canvas.getByTestId('snakkeboble-2025-05-06T11:16:00.607');
     await expect(boble3El.querySelector('a')).toHaveTextContent('Formkrav klage Vedtaksinstans');
@@ -43,25 +45,48 @@ export const K9Historikk: Story = {
     // Test at skjermlenke på historikkinnslag har blitt rendra:
     await expect(boble4El.querySelector('a')).toHaveTextContent('Tilbakekreving');
 
-    const boble5El = await canvas.findByTestId('snakkeboble-2025-01-20T07:07:51.914');
-    await expect(boble5El).toHaveTextContent('Simulering');
-    await expect(boble5El).toHaveTextContent('Fastsett videre behandling er satt til Opprett tilbakekreving');
-    await expect(boble5El).toHaveTextContent('test');
+    const boble5El = await canvas.findByTestId('snakkeboble-2026-01-12T11:39:38.694');
+    await expect(boble5El).toHaveTextContent('Fakta endret');
+    await expect(boble5El.querySelector('a')).toHaveTextContent('Medisinsk');
+    await expect(boble5El).toHaveTextContent('Sykdom manuelt behandlet');
 
-    const boble6El = canvas.getByTestId('snakkeboble-2025-01-16T06:44:26.799');
+    const boble6El = canvas.getByTestId('snakkeboble-2026-01-12T11:38:54.64');
     await expect(boble6El).toHaveTextContent('Inntektsmelding bestilt fra arbeidsgiver');
     const btn = within(boble6El).queryByRole('button');
     if (btn != null) {
       await userEvent.click(btn); // Vis all tekst
     }
     await expect(boble6El).toHaveTextContent(
-      'Oppgave til INTERESSANT INTUITIV KATT DIAMETER om å sende inntektsmelding for skjæringstidspunkt 2024-10-01',
+      'Oppgave til BEDRIFT AS om å sende inntektsmelding for skjæringstidspunkt 2025-12-15',
     );
 
     // Test at skjermlenke på historikk-linje har blitt rendra:
-    const boble7El = canvas.getByTestId('snakkeboble-2025-01-16T07:05:25.69');
-    await expect(boble7El.querySelector('a')).toHaveTextContent('Medisinsk');
+    const boble7El = canvas.getByTestId('snakkeboble-2025-11-28T10:00:38.993');
+    await expect(boble7El).toHaveTextContent('Gjeldende fra');
+    await expect(boble7El).toHaveTextContent('27.10.2025');
+    {
+      const btn = within(boble7El).queryByRole('button');
+      if (btn != null) {
+        await userEvent.click(btn); // Vis all tekst
+      }
+    }
+    await expect(boble7El).toHaveTextContent('Inntekt fra GENIERKLÆRT STRIDLYNT KATT SKYVEDØR (315227569)');
   },
 };
 
-export default meta;
+export const UngHistorikk: Story = {
+  args: {
+    saksnummer: '12389',
+    behandlingId: 1,
+    behandlingVersjon: 2,
+  },
+  decorators: [
+    withFakeHistorikkBackend('ung'),
+    withUngKodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
+  ],
+  play: async ({ canvas }) => {
+    const boble1El = await canvas.findByTestId(/snakkeboble-2026-01-12T11:38:55.428/);
+    await expect(boble1El).toHaveTextContent('Behandling gjenopptatt');
+    await expect(boble1El).toHaveTextContent('Vedtaksløsningen');
+  },
+};

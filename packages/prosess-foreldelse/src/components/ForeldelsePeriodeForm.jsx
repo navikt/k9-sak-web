@@ -5,7 +5,7 @@ import { Button, Detail, HGrid } from '@navikt/ds-react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
@@ -21,7 +21,7 @@ const maxLength1500 = maxLength(1500);
 
 export const FORELDELSE_PERIODE_FORM_NAME = 'foreldelsesresultatActivity';
 
-export class ForeldelsePeriodeFormImpl extends Component {
+export class ForeldelsePeriodeForm extends Component {
   constructor() {
     super();
     this.resetFields = this.resetFields.bind(this);
@@ -117,7 +117,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
   }
 }
 
-ForeldelsePeriodeFormImpl.propTypes = {
+ForeldelsePeriodeForm.propTypes = {
   periode: PropTypes.shape().isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   skjulPeriode: PropTypes.func.isRequired,
@@ -164,16 +164,14 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ForeldelsePeriodeForm = connect(
+const ConnectedForeldelsePeriodeForm = connect(
   mapStateToPropsFactory,
   mapDispatchToProps,
 )(
-  injectIntl(
-    behandlingForm({
-      form: FORELDELSE_PERIODE_FORM_NAME,
-      enableReinitialize: true,
-    })(ForeldelsePeriodeFormImpl),
-  ),
+  behandlingForm({
+    form: FORELDELSE_PERIODE_FORM_NAME,
+    enableReinitialize: true,
+  })(ForeldelsePeriodeForm),
 );
 
-export default ForeldelsePeriodeForm;
+export default ConnectedForeldelsePeriodeForm;

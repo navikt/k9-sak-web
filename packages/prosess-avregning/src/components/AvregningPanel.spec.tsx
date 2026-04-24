@@ -5,7 +5,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import messages from '../../i18n/nb_NO.json';
-import { AvregningPanelImpl, transformValues } from './AvregningPanel';
+import { AvregningPanel, transformValues } from './AvregningPanel';
 
 const simuleringResultat = {
   simuleringResultat: {
@@ -157,9 +157,9 @@ const mockProps = {
   hasOpenTilbakekrevingsbehandling: false,
 };
 
-describe('<AvregningPanelImpl>', () => {
+describe('<AvregningPanel>', () => {
   it('skal rendre AvregningPanel', () => {
-    renderWithIntlAndReduxForm(<AvregningPanelImpl {...mockProps} />, { messages });
+    renderWithIntlAndReduxForm(<AvregningPanel {...mockProps} />, { messages });
 
     expect(screen.getByRole('heading', { name: 'Simulering' })).toBeInTheDocument();
     expect(screen.getByText('Bruker')).toBeInTheDocument();
@@ -174,14 +174,14 @@ describe('<AvregningPanelImpl>', () => {
       harSjekkHøyEtterbetalingAP: false,
       apCodes: ['5084'],
     };
-    renderWithIntlAndReduxForm(<AvregningPanelImpl {...props} />, { messages });
+    renderWithIntlAndReduxForm(<AvregningPanel {...props} />, { messages });
 
     expect(screen.getByRole('radio', { name: 'Opprett tilbakekreving, ikke send varsel' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Avvent samordning, ingen tilbakekreving' })).toBeInTheDocument();
   });
 
   it('method toggleDetails skal oppdatere og toggle tabeler med showDetails state', async () => {
-    renderWithIntlAndReduxForm(<AvregningPanelImpl {...mockProps} />, { messages });
+    renderWithIntlAndReduxForm(<AvregningPanel {...mockProps} />, { messages });
 
     expect(screen.queryByText('Foreldrepenger nytt beløp')).not.toBeInTheDocument();
     await act(async () => {
@@ -198,7 +198,7 @@ describe('<AvregningPanelImpl>', () => {
       erTilbakekrevingVilkårOppfylt: undefined,
       hasOpenTilbakekrevingsbehandling: true,
     };
-    renderWithIntlAndReduxForm(<AvregningPanelImpl {...props} />, { messages });
+    renderWithIntlAndReduxForm(<AvregningPanel {...props} />, { messages });
 
     expect(
       screen.getByText(
@@ -214,7 +214,7 @@ describe('<AvregningPanelImpl>', () => {
       erTilbakekrevingVilkårOppfylt: undefined,
       hasOpenTilbakekrevingsbehandling: false,
     };
-    renderWithIntlAndReduxForm(<AvregningPanelImpl {...props} />, { messages });
+    renderWithIntlAndReduxForm(<AvregningPanel {...props} />, { messages });
     expect(
       screen.queryByText(
         'Det foreligger en åpen tilbakekrevingsbehandling, endringer i vedtaket vil automatisk oppdatere eksisterende feilutbetalte perioder og beløp.',

@@ -1,11 +1,11 @@
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Detail, HStack } from '@navikt/ds-react';
 import React, { useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import type { Feilmelding } from './feilmeldingTsType';
 
+import { generateUUID } from '../../utils/uuidGenerator';
 import styles from './errorMessagePanel.module.css';
 
 interface OwnProps {
@@ -38,7 +38,10 @@ export const ErrorMessagePanel = (props: OwnProps) => {
   };
 
   const { errorMessages, removeErrorMessage } = props;
-  const errorMessagesWithId = useMemo(() => errorMessages.map(error => ({ ...error, id: uuidv4() })), [errorMessages]);
+  const errorMessagesWithId = useMemo(
+    () => errorMessages.map(error => ({ ...error, id: generateUUID() })),
+    [errorMessages],
+  );
 
   if (errorMessagesWithId.length === 0) {
     return null;

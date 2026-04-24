@@ -48,7 +48,7 @@ export const TidligereVurderteAktiviteterPanel = ({
                 {harInntektsmelding && !harBruttoInntekt && (
                   <>
                     <BeløpLabel beløp={inntektsforhold.inntektFraInntektsmeldingPrÅr ?? 0} kr />
-                    <Tag className={styles.inntektsmeldingTag} variant="neutral" size="xsmall">
+                    <Tag data-color="neutral" className={styles.inntektsmeldingTag} variant="outline" size="xsmall">
                       IM
                     </Tag>
                   </>

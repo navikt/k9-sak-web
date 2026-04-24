@@ -1,12 +1,13 @@
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
 import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
 import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
 import { LegendBox } from '@fpsak-frontend/tidslinje';
 
-const TilbakekrevingTidslinjeHjelpetekster = ({ intl }: WrappedComponentProps) => {
+const TilbakekrevingTidslinjeHjelpetekster = () => {
+  const intl = useIntl();
   const legends = [
     {
       src: oppfyltUrl,
@@ -24,4 +25,4 @@ const TilbakekrevingTidslinjeHjelpetekster = ({ intl }: WrappedComponentProps) =
   return <LegendBox legends={legends} />;
 };
 
-export default injectIntl(TilbakekrevingTidslinjeHjelpetekster);
+export default TilbakekrevingTidslinjeHjelpetekster;

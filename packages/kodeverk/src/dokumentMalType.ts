@@ -1,3 +1,6 @@
+/**
+ * @deprecated  Bruk heller generert kodeverdi konstant.
+ */
 const dokumentMalType = {
   INNHENT_DOK: 'INNHEN',
   INNOPP: 'INNOPP',

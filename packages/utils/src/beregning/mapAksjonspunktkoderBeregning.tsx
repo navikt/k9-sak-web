@@ -1,7 +1,7 @@
 import beregningAvklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-const mapTilAksjonspunktkode = (avklaringsbehovkode: string): string => {
+const mapTilAksjonspunktkode = (avklaringsbehovkode: string): string | null => {
   switch (avklaringsbehovkode) {
     case beregningAvklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
       return aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS;

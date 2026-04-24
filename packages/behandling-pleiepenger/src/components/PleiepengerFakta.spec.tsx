@@ -16,6 +16,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import ForeldrepengerFakta from './PleiepengerFakta';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
@@ -134,6 +135,10 @@ describe('<PleiepengerFakta>', () => {
     },
   };
 
+  afterEach(() => {
+    requestPleiepengerApi.clearAllMockData();
+  });
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
@@ -159,7 +164,7 @@ describe('<PleiepengerFakta>', () => {
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
         />
       </RestApiErrorProvider>,
     );
@@ -201,7 +206,7 @@ describe('<PleiepengerFakta>', () => {
           setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
-          featureToggles={{}}
+          featureToggles={qFeatureToggles}
         />
       </RestApiErrorProvider>,
     );

@@ -13,21 +13,21 @@ const VurderingsoversiktLangvarigSykdomMessages = ({
 }: VurderingsoversiktLangvarigSykdomMessagesProps): JSX.Element => {
   if (!vurderingsoversikt || vurderingsoversikt.harIngenPerioderÅVise()) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <IngenPerioderÅVurdereMelding />
-      </Box.New>
+      </Box>
     );
   }
 
   if (vurderingsoversikt.harPerioderSomSkalVurderes() === true) {
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-24">
         <Alert size="small" variant="warning">
           {`Vurder om pleietrengende har langvarig sykdom i søknadsperioden ${getHumanReadablePeriodString(
             vurderingsoversikt.resterendeVurderingsperioder,
           )}.`}
         </Alert>
-      </Box.New>
+      </Box>
     );
   }
   return <></>;

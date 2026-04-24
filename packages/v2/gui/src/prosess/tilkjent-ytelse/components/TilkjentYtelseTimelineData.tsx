@@ -149,7 +149,7 @@ const TilkjentYtelseTimeLineData = ({
                     <BodyShort size="small" className="inline-block">
                       {`${createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon)} kr`}
                     </BodyShort>
-                    <Tag size="xsmall" variant="neutral-moderate" className={styles['tilkjentYtelseTag']}>
+                    <Tag data-color="neutral" size="xsmall" variant="moderate" className={styles['tilkjentYtelseTag']}>
                       Refusjon
                     </Tag>
                   </div>
@@ -159,7 +159,7 @@ const TilkjentYtelseTimeLineData = ({
                     <BodyShort size="small" className="inline-block">
                       {`${createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}: ${Number(andel.tilSoker)} kr`}
                     </BodyShort>
-                    <Tag size="xsmall" variant="neutral-moderate" className={styles['tilkjentYtelseTag']}>
+                    <Tag data-color="neutral" size="xsmall" variant="moderate" className={styles['tilkjentYtelseTag']}>
                       Til bruker
                     </Tag>
                   </div>

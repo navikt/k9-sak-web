@@ -52,7 +52,7 @@ interface PureOwnProps {
   feriepengerPrÅr: FeriepengerPrÅr;
 }
 
-const TilkjentYtelsePanelImpl = ({
+const TilkjentYtelsePanel = ({
   beregningsresultat,
   submitCallback,
   readOnlySubmitButton,
@@ -101,7 +101,6 @@ const TilkjentYtelsePanelImpl = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          featureToggles={featureToggles}
         />
       )}
 
@@ -118,4 +117,4 @@ const TilkjentYtelsePanelImpl = ({
   );
 };
 
-export default TilkjentYtelsePanelImpl;
+export default TilkjentYtelsePanel;

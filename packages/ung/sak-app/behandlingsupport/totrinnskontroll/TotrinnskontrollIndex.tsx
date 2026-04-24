@@ -18,7 +18,7 @@ import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  behandlingId: number;
+  behandlingId: number | undefined;
   api: TotrinnskontrollApi;
   urlEtterpå: string;
 }

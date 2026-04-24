@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form';
 
 interface FormValues {
   begrunnelse: string | null;
-  erNyoppstartet: boolean | null;
+  erNyoppstartet: boolean | undefined;
   fom: string | null;
 }
 
@@ -79,7 +79,7 @@ export const VurderNyoppstartet = ({
               readOnly={readOnly}
             />
           )}
-          <Box.New maxWidth="70ch">
+          <Box maxWidth="70ch">
             <RhfTextarea
               control={formMethods.control}
               name="begrunnelse"
@@ -88,7 +88,7 @@ export const VurderNyoppstartet = ({
               maxLength={1500}
               readOnly={readOnly}
             />
-          </Box.New>
+          </Box>
           {!readOnly && (
             <HStack>
               <Button type="submit" size="small">

@@ -1,11 +1,11 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Button, Link, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import dayjs from 'dayjs';
 import { useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import PeriodePicker from '../../../shared/periode-picker/PeriodePicker';
+import Periodevelger from '../../../shared/periodevelger/Periodevelger';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import ReisedagerIVurdering from './ReisedagerIVurdering';
 import { resultatTilJaNei } from './utils';
@@ -22,8 +22,8 @@ const defaultValues = (vurdering: ReisetidVurderingDto & { perioder: Period[] })
     begrunnelse: vurdering.reisetid.begrunnelse,
     godkjent: resultatTilJaNei(vurdering.reisetid.resultat),
     periode: {
-      fom: new Date(vurdering.perioder[0]?.fom as string),
-      tom: new Date(vurdering.perioder[0]?.tom as string),
+      fom: vurdering.perioder[0]?.fom as string,
+      tom: vurdering.perioder[0]?.tom as string,
     },
   };
 };
@@ -37,8 +37,8 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
     begrunnelse: string;
     godkjent: string;
     periode: {
-      fom: Date;
-      tom: Date;
+      fom: string;
+      tom: string;
     };
   }>({
     defaultValues: defaultValues(vurdering),
@@ -118,17 +118,16 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
             )}
           />
           {formMethods.watch('godkjent') === 'ja' && !vurderingGjelderEnkeltdag && (
-            <PeriodePicker
-              minDate={new Date(vurdering.perioder[0]?.fom as string)}
-              maxDate={new Date(vurdering.perioder[0]?.tom as string)}
-              size="small"
+            <Periodevelger
+              minDate={vurdering.perioder[0]?.fom ? dayjs(vurdering.perioder[0]?.fom as string).toDate() : undefined}
+              maxDate={vurdering.perioder[0]?.tom ? dayjs(vurdering.perioder[0]?.tom as string).toDate() : undefined}
               fromField={{
                 name: 'periode.fom',
-                validate: value => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd'),
+                validate: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Fra er påkrevd')],
               }}
               toField={{
                 name: 'periode.tom',
-                validate: value => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd'),
+                validate: [(value: string) => (value && dayjs(value).isValid() ? undefined : 'Til er påkrevd')],
               }}
               readOnly={lesemodus}
             />

@@ -9,7 +9,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
-import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -60,7 +60,7 @@ const getAksjonspunktHelpTexts = (activities: OpptjeningAktivitet[]) => {
   return texts;
 };
 
-const findSkjaringstidspunkt = (date: string) => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
+const findSkjaringstidspunkt = (date: string) => moment(date).add(1, 'days');
 
 const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
 
@@ -300,15 +300,15 @@ export class OpptjeningFaktaFormImpl extends Component<
             <VerticalSpacer sixteenPx />
             <Tabs defaultValue="0">
               <Tabs.List>
-                {opptjeningList.map((_, currentOpptjeningIndex) => (
+                {opptjeningList.map((opptjening, currentOpptjeningIndex) => (
                   <Tabs.Tab
                     key={
                       opptjeningList.length <= 8 ? `Periode ${currentOpptjeningIndex + 1}` : currentOpptjeningIndex + 1
                     }
                     value={`${currentOpptjeningIndex}`}
-                    label={
-                      opptjeningList.length <= 8 ? `Periode ${currentOpptjeningIndex + 1}` : currentOpptjeningIndex + 1
-                    }
+                    label={findSkjaringstidspunkt(opptjening.fastsattOpptjening.opptjeningTom).format(
+                      DDMMYYYY_DATE_FORMAT,
+                    )}
                     onClick={() => this.setActiveTab(currentOpptjeningIndex)}
                   />
                 ))}
@@ -343,7 +343,7 @@ export class OpptjeningFaktaFormImpl extends Component<
             <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
           </Detail>
           <BodyShort size="small">
-            <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
+            <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom).format(ISO_DATE_FORMAT)} />
           </BodyShort>
           <VerticalSpacer twentyPx />
           <OpptjeningTimeLine

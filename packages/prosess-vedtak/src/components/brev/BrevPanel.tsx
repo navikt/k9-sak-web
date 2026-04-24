@@ -12,20 +12,20 @@ import {
   kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
-  lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { lagVisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import {
   k9_sak_kontrakt_behandling_BehandlingsresultatDto as BehandlingsresultatDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
+  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
@@ -60,7 +60,7 @@ export const manuellBrevPreview = ({
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   values: FormikValues;
   redigertHtml: any;
-  overstyrtMottaker: Brevmottaker;
+  overstyrtMottaker: Brevmottaker | undefined;
   brødtekst: string;
   overskrift: string;
   aapneINyttVindu: boolean;
@@ -143,7 +143,7 @@ const getHentHtmlMalCallback =
 
 interface BrevPanelProps {
   aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysningerPerId: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto['arbeidsgivere'];
   begrunnelse: string;
   behandlingResultat: BehandlingsresultatDto;
   brødtekst: string;
@@ -153,7 +153,6 @@ interface BrevPanelProps {
   hentFritekstbrevHtmlCallback: (parameters: any) => any;
   informasjonsbehovValues: any[];
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  intl: IntlShape;
   lagreDokumentdata: (any) => void;
   overskrift: string;
   overstyrtMottaker?: Brevmottaker;
@@ -168,7 +167,6 @@ interface BrevPanelProps {
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const {
-    intl,
     readOnly,
     språkkode,
     personopplysninger,
@@ -190,6 +188,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
+  const intl = useIntl();
   const [forhaandsvisningKlart, setForhaandsvisningKlart] = useState(true);
   const [, meta] = useField({ name: 'overstyrtMottaker' });
 
@@ -297,7 +296,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
                 {lagVisningsnavnForMottaker(mottaker, personopplysninger, arbeidsgiverOpplysningerPerId)}
               </option>
             ))}
-            className={readOnly ? styles.selectReadOnly : null}
+            className={readOnly ? styles.selectReadOnly : undefined}
             label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
             validate={[required]}
             bredde="xl"
@@ -320,4 +319,4 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   );
 };
 
-export default injectIntl(BrevPanel);
+export default BrevPanel;

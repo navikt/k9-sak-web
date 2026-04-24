@@ -32,11 +32,12 @@ jobs:
 
       - name: Bygge dist
         run: yarn build:ung
-
-      - name: Opprett release med Sentry
-        run: yarn sentry-release-ung
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_SENTRY_RELEASE: ${{ github.sha }}
+
+      - name: Bygg server
+        uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
@@ -46,8 +47,6 @@ jobs:
           without_navikt_prefix: true
           #Konfigurerer for bygging av ung docker image:
           build-args: |
-            featureToggles=ung.feature-toggles.json
-            proxyConfig=ung.proxy.nginx
             appVariant=ung
             port=9005
           labels: |
@@ -80,6 +79,7 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/dev-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
 
   deploy-prod:
@@ -100,7 +100,7 @@ jobs:
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           TAG: prod_${{ needs.build-docker-image.outputs.tag }}
         with:
@@ -135,9 +135,10 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/prod-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             try {

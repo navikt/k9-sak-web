@@ -3,9 +3,7 @@ import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-ico
 import { BodyShort, Box, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import type { VilkårFieldFormValues } from '../types/VilkårFieldFormValues';
 import type { VilkårFieldType } from '../types/VilkårFieldType';
 
@@ -19,9 +17,10 @@ export const opptjeningMidlertidigInaktivKoder = {
 
 interface VilkarFieldsProps {
   erOmsorgspenger?: boolean;
+  field: VilkårFieldType;
+  hidden: boolean;
   fieldPrefix: string;
   readOnly: boolean;
-  field: VilkårFieldType;
   skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
@@ -45,14 +44,14 @@ export const hent847Text = (kode: string) => {
   return kodeTekster[kode] || '';
 };
 export const VilkarField = ({
+  hidden,
   erOmsorgspenger,
-  fieldPrefix,
   field,
+  fieldPrefix,
   readOnly,
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<VilkårFieldFormValues>) => {
   const { control } = useFormContext();
-  const featureToggles = useContext(FeatureTogglesContext);
   const erIkkeOppfyltText = (
     <>
       Søker har ikke oppfylt krav om 28 dagers opptjening, vilkåret er <b>ikke</b> oppfylt.
@@ -105,25 +104,21 @@ export const VilkarField = ({
         ]
       : []),
   ].filter(v => {
-    if (featureToggles?.['OPPTJENING_READ_ONLY_PERIODER']) {
-      return v.value !== 'OPPFYLT';
-    }
-    return true;
+    return v.value !== 'OPPFYLT';
   });
 
   return (
-    <div className="mt-4">
+    <div className={`mt-4 ${hidden ? 'hidden' : ''}`}>
       <RhfTextarea
         control={control}
         name={`${fieldPrefix}.begrunnelse`}
         size="small"
         label={erOmsorgspenger ? 'Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B' : 'Vurdering'}
-        validate={[required, validateMinLength3, validateMaxLength1500]}
+        validate={readOnly ? [] : [required, validateMinLength3, validateMaxLength1500]}
         readOnly={readOnly}
         maxLength={1500}
       />
-
-      <Box.New marginBlock="4">
+      <Box marginBlock="space-16">
         {readOnly && (
           <div className="flex gap-4">
             {erVilkarOk(field?.kode) ? (
@@ -138,7 +133,7 @@ export const VilkarField = ({
           <RhfRadioGroup
             control={control}
             name={`${fieldPrefix}.kode`}
-            validate={[required]}
+            validate={readOnly ? [] : [required]}
             readOnly={readOnly}
             legend=""
             hideLegend
@@ -150,7 +145,7 @@ export const VilkarField = ({
             ))}
           </RhfRadioGroup>
         )}
-      </Box.New>
+      </Box>
     </div>
   );
 };

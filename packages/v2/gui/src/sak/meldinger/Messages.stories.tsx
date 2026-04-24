@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import {
   type Mottaker,
@@ -8,40 +8,23 @@ import {
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import type { k9_sak_kontrakt_dokument_MottakerDto as MottakerDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
-import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
-import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
-import Messages, { type MessagesProps } from './Messages.js';
-
-const newStickyState = (): MessagesProps['stickyState'] => ({
-  messages: new StickyStateReducer(),
-  fritekst: {
-    tekst: new StickyStateReducer(),
-    tittel: new StickyStateReducer(),
-  },
-});
-
-const withStickyState = (): Decorator => (Story, ctx) => {
-  ctx.args['stickyState'] = newStickyState();
-  return <Story />;
-};
+import Messages from './Messages.js';
 
 const api = new FakeMessagesBackendApi();
 const meta = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
-  decorators: [withMaxWidth(420), withStickyState()],
+  decorators: [withMaxWidth(420)],
   beforeEach: () => {
     api.reset();
-  },
-  args: {
-    stickyState: newStickyState(),
   },
 } satisfies Meta<typeof Messages>;
 export default meta;
@@ -85,7 +68,7 @@ export const DefaultStory: Story = {
         kodeverk: 'SPRAAK_KODE',
       },
     },
-    maler: templates,
+    maler: api.dummyMaler,
     personopplysninger,
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,
@@ -170,17 +153,31 @@ export const TilTredjepartsmottaker: Story = {
     ...DefaultStory.args,
   },
   play: async ({ canvasElement, step }) => {
-    const { sendTilTredjepartEl, orgnrInp, orgNavnInp } = elemsfinder(canvasElement);
+    const { sendTilTredjepartEl, orgnrInp, orgNavnInp, fritekstEl, sendBrevBtn } = elemsfinder(canvasElement);
     await userEvent.click(canvasElement); // Nødvendig for at tredjepartsmottakerCheckbox kall under skal fungere. Må ha fokus på sida.
+    const dummyText = 'tredjepartsmottaker text';
+    const tredjepartsMottaker: MottakerDto = {
+      id: '333444555',
+      type: 'ORGNR',
+    };
     await step('Sjekk initiell visining ved sending til tredjepart', async () => {
       await userEvent.click(sendTilTredjepartEl()); // Aktiver sending til tredjepartsmottaker
       await expect(orgnrInp()).toBeInTheDocument();
       await expect(orgNavnInp()).toBeInTheDocument();
     });
     await step('Inntasting av org nr skal fungere', async () => {
-      const orgnr = '333444555';
+      const orgnr = tredjepartsMottaker.id;
       await userEvent.type(orgnrInp(), orgnr);
       await expect(orgNavnInp()).toHaveValue(`Fake storybook org (${orgnr})`);
+    });
+    await step('Submit med tredjepartsmottaker skal fungere', async () => {
+      api.resetSisteFakeDokumentBestilling();
+      // Fyll inn tekst så den input er gyldig
+      await userEvent.type(fritekstEl(), dummyText);
+      await userEvent.click(sendBrevBtn());
+
+      await expect(api.sisteFakeDokumentBestilling?.fritekst).toEqual(dummyText);
+      await expect(api.sisteFakeDokumentBestilling?.overstyrtMottaker).toEqual(tredjepartsMottaker);
     });
   },
 };
@@ -244,6 +241,23 @@ export const UtilgjengeligeMottakere: Story = {
       },
     );
     api.fakeDelayMillis = 800; // Reaktiver delay
+  },
+};
+
+// Denne mal har ingen tekst input felt
+export const InnhentOpplysningerIkkeAktivtArbeidsforhold: Story = {
+  args: {
+    ...DefaultStory.args,
+  },
+  play: async ({ canvasElement }) => {
+    const malkode = 'INNHENT_OPPLYSNINGER_IKKE_AKTIVT_ARBEIDSFORHOLD';
+    const { malEl, sendBrevBtn } = elemsfinder(canvasElement);
+    await userEvent.click(canvasElement);
+    await userEvent.selectOptions(malEl(), malkode);
+    await userEvent.click(sendBrevBtn());
+    await expect(api.sisteFakeDokumentBestilling).toBeDefined();
+    await expect(api.sisteFakeDokumentBestilling?.brevmalkode).toEqual(malkode);
+    await expect(api.sisteFakeDokumentBestilling?.fritekst).toBeUndefined();
   },
 };
 

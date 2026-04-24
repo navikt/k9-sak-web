@@ -1,7 +1,8 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, FeatureToggles, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { HelpText, Label } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -47,7 +48,7 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
-export const OpptjeningVilkarAksjonspunktPanelImpl = ({
+const OpptjeningVilkarAksjonspunktPanelImpl = ({
   behandlingId,
   behandlingVersjon,
   isApOpen,
@@ -169,7 +170,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   );
 };
 
-export const buildInitialValues = createSelector(
+const buildInitialValues = createSelector(
   [
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.aksjonspunkter,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårPerioder,

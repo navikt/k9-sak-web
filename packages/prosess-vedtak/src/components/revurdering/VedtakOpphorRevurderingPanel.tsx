@@ -1,9 +1,9 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { VedtakVarsel } from '../../types/VedtakVarsel';
@@ -24,18 +24,19 @@ const ytelseNavnMap = kode => {
 interface VedtakOpphorRevurderingPanelProps {
   ytelseTypeKode: string;
   medlemskapFom: string;
-  vedtakVarsel: VedtakVarsel;
+  vedtakVarsel?: VedtakVarsel;
 }
 
 interface OwnState {
   opphoersdato?: string;
 }
 
-export const VedtakOpphorRevurderingPanelImpl = ({
-  intl,
+export const VedtakOpphorRevurderingPanel = ({
   opphoersdato = '',
   ytelseTypeKode,
-}: VedtakOpphorRevurderingPanelProps & OwnState & WrappedComponentProps) => (
+}: VedtakOpphorRevurderingPanelProps & OwnState) => {
+  const intl = useIntl();
+  return (
   <div data-testid="opphorRevurdering">
     <Label size="small" as="p">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -62,7 +63,8 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     )}
     <VerticalSpacer sixteenPx />
   </div>
-);
+  );
+};
 
 const getOpphorsdato = createSelector(
   [ownProps => ownProps.medlemskapFom, ownProps => ownProps.vedtakVarsel],
@@ -78,4 +80,4 @@ const mapStateToProps = (state, ownProps: VedtakOpphorRevurderingPanelProps) => 
   opphoersdato: getOpphorsdato(ownProps),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakOpphorRevurderingPanelImpl));
+export default connect(mapStateToProps)(VedtakOpphorRevurderingPanel);

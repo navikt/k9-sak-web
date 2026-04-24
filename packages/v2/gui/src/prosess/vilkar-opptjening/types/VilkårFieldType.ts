@@ -1,6 +1,10 @@
 import type { k9_kodeverk_vilkår_Utfall as VilkårPeriodeDtoVilkarStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export type VilkårFieldType = {
+  periode: {
+    fom: string;
+    tom: string;
+  };
   begrunnelse: string;
   vurderesIBehandlingen: boolean;
   vurderesIAksjonspunkt: boolean;

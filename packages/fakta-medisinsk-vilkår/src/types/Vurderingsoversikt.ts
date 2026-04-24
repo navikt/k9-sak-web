@@ -2,7 +2,7 @@ import { Period } from '@fpsak-frontend/utils';
 import Link from './Link';
 import Vurderingselement from './Vurderingselement';
 
-export class Vurderingsoversikt {
+class Vurderingsoversikt {
   vurderingselementer: Vurderingselement[];
 
   resterendeVurderingsperioder: Period[];
@@ -35,7 +35,7 @@ export class Vurderingsoversikt {
       this.pleietrengendesFødselsdato = data.pleietrengendesFødselsdato;
       this.harPerioderDerPleietrengendeErOver18år = data.harPerioderDerPleietrengendeErOver18år;
     } catch (error) {
-      throw new Error(`Processing Vurderingsoversikt\n${error}`);
+      throw new Error(`Processing Vurderingsoversikt\n${error}`, { cause: error });
     }
   }
 

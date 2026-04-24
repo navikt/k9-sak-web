@@ -5,7 +5,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/fakta-inntekt-og-ytelser": "1.0.0",
     "@fpsak-frontend/fakta-opptjening-oms": "1.0.0",
@@ -16,7 +15,6 @@
     "@fpsak-frontend/prosess-varsel-om-revurdering": "1.0.0",
     "@fpsak-frontend/prosess-vedtak": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-opptjening-oms": "1.0.0",
-    "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "1.0.0",
@@ -26,11 +24,6 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "react": "19.2.0",
-    "react-intl": "7.1.14",
-    "react-redux": "9.2.0",
-    "redux": "5.0.1",
-    "redux-form": "8.3.10",
-    "reselect": "5.1.1"
+    "react": "19.2.5"
   }
 }

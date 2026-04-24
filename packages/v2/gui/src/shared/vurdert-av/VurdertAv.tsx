@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-
+import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-
-import { prettifyDateString } from '@navikt/ft-utils';
-
+import { useContext } from 'react';
 import { SaksbehandlernavnContext } from '../SaksbehandlernavnContext/SaksbehandlernavnContext';
 
 export interface IVurdertAvProps {

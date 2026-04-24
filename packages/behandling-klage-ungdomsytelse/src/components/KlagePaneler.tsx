@@ -4,10 +4,10 @@ import {
   Behandling,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@navikt/ung-sak-typescript-client/types';
 import FetchedData from '../types/fetchedDataTsType';

@@ -1,10 +1,11 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import type { ung_sak_kontrakt_vilkår_VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort } from '@navikt/ds-react';
-import type { UngVedtakVilkårDto, UngVedtakVilkårPeriodeDto } from './UngVedtakVilkårDto';
+import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
-const finnUnikeAvslagskoder = (avslåttePerioder: UngVedtakVilkårPeriodeDto[] = []) => {
+const finnUnikeAvslagskoder = (avslåttePerioder: ung_sak_kontrakt_vilkår_VilkårPeriodeDto[] = []) => {
   const funnedeAvslagskoder = new Set();
   const unikeAvslagskoder = avslåttePerioder.filter(el => {
     const erDuplikat = funnedeAvslagskoder.has(el.avslagKode);

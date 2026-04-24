@@ -20,6 +20,7 @@ import {
 } from '../data/pleiepengerSluttfaseBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 
 describe('< PleiepengerSluttfaseProsess>', () => {
   const fagsak = {
@@ -172,6 +173,10 @@ describe('< PleiepengerSluttfaseProsess>', () => {
     soknad,
   };
 
+  afterEach(() => {
+    requestPleiepengerSluttfaseApi.clearAllMockData();
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.SOKNADSFRIST_STATUS);
     renderWithIntlAndReduxForm(
@@ -192,7 +197,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
         setBeregningErBehandlet={() => {}}
       />,
       { messages },
@@ -209,6 +214,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
+    requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.SOKNADSFRIST_STATUS);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
       <PleiepengerSluttfaseProsess
@@ -228,7 +234,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         opneSokeside={vi.fn()}
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{}}
+        featureToggles={qFeatureToggles}
         setBeregningErBehandlet={() => {}}
       />,
       { messages },

@@ -2,7 +2,7 @@ import { HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
@@ -14,8 +14,8 @@ import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 
 import styles from './tilbakekrevingTimeline.module.css';
 
-export const GODKJENT_CLASSNAME = 'godkjentPeriode';
-export const AVVIST_CLASSNAME = 'avvistPeriode';
+const GODKJENT_CLASSNAME = 'godkjentPeriode';
+const AVVIST_CLASSNAME = 'avvistPeriode';
 
 const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
 
@@ -217,4 +217,9 @@ TilbakekrevingTimeline.propTypes = {
   kjonn: PropTypes.string.isRequired,
 };
 
-export default injectIntl(TilbakekrevingTimeline);
+const TilbakekrevingTimelineWithIntl = props => {
+  const intl = useIntl();
+  return <TilbakekrevingTimeline {...props} intl={intl} />;
+};
+
+export default TilbakekrevingTimelineWithIntl;

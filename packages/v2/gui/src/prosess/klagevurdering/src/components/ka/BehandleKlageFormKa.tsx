@@ -60,18 +60,18 @@ export const BehandleKlageFormKa = ({
       <Heading size="small" level="2">
         Behandle klage
       </Heading>
-      <Box.New marginBlock="space-4 0">
+      <Box marginBlock="space-4 space-0">
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
           Vurder om klagen skal tas til følge
         </AksjonspunktHelpText>
-      </Box.New>
-      <Box.New marginBlock="space-16 0">
+      </Box>
+      <Box marginBlock="space-16 space-0">
         <KlageVurderingRadioOptionsKa
           readOnly={isReadOnly}
           klageVurdering={formValues.klageVurdering}
           medholdReasons={medholdReasons}
         />
-      </Box.New>
+      </Box>
       <div className={styles.confirmVilkarForm}>
         <VStack gap="space-16">
           <ContentMaxWidth>
@@ -122,7 +122,7 @@ export const buildInitialValues = (klageVurdering: KlagebehandlingDto) => ({
     : null,
   klageVurderingOmgjoer: klageVurdering.klageVurderingResultatNK
     ? klageVurdering.klageVurderingResultatNK.klageVurderingOmgjoer
-    : null,
+    : undefined,
   klageVurdering: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.klageVurdering : '',
   begrunnelse: klageVurdering.klageVurderingResultatNK ? klageVurdering.klageVurderingResultatNK.begrunnelse : '',
   fritekstTilBrev: klageVurdering.klageVurderingResultatNK
@@ -132,7 +132,7 @@ export const buildInitialValues = (klageVurdering: KlagebehandlingDto) => ({
 
 interface TransformedValues {
   klageMedholdArsak: string | null;
-  klageVurderingOmgjoer: string | null;
+  klageVurderingOmgjoer: string | undefined;
   klageVurdering: string;
   klageVurderingType: string;
   fritekstTilBrev: string;
@@ -149,7 +149,7 @@ export const transformValues = (values: BehandleKlageFormKaFormValues): Transfor
   klageVurderingOmgjoer:
     values.klageVurdering === ung_kodeverk_klage_KlageVurderingType.MEDHOLD_I_KLAGE
       ? values.klageVurderingOmgjoer
-      : null,
+      : undefined,
   klageVurdering: values.klageVurdering,
   klageVurderingType: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,

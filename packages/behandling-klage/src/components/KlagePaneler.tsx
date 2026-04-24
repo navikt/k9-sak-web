@@ -8,8 +8,8 @@ import {
   KodeverkMedNavn,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
-  FeatureToggles,
 } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
