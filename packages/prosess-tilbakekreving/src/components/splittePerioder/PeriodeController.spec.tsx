@@ -1,4 +1,3 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -10,7 +9,6 @@ describe('<PeriodeController>', () => {
   it('skal vise knapp for å dele opp perioden og knapper for å velge forrige eller neste periode', () => {
     renderWithIntl(
       <PeriodeController
-        intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
         behandlingUuid="123"
@@ -32,7 +30,6 @@ describe('<PeriodeController>', () => {
   it('skal ikke vise knapp for å dele opp perioder når readonly', () => {
     renderWithIntl(
       <PeriodeController
-        intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
         behandlingUuid="123"
@@ -71,7 +68,6 @@ describe('<PeriodeController>', () => {
     };
     renderWithIntlAndReduxForm(
       <PeriodeController
-        intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
         behandlingUuid="123"

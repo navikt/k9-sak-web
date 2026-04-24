@@ -39,6 +39,10 @@ describe('<FagsakSearchIndex>', () => {
   };
   const fagsaker = [fagsak, fagsak2];
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal søke opp fagsaker', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverkV2);
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);

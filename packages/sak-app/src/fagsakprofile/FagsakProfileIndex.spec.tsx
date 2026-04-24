@@ -149,6 +149,10 @@ describe('<FagsakProfileIndex>', () => {
     behandlingTypeKanOpprettes: [],
   };
 
+  afterEach(() => {
+    requestApi.clearAllMockData();
+  });
+
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});

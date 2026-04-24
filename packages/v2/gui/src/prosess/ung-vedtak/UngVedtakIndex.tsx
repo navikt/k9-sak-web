@@ -1,37 +1,40 @@
-import type { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { UngVedtak } from './UngVedtak';
+import { UngVedtak, type UngVedtakProps } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
-interface UngVedtakIndexProps {
-  aksjonspunkter: AksjonspunktDto[];
+export interface UngVedtakIndexProps {
+  aksjonspunkter: UngVedtakProps['aksjonspunkter'];
   behandling: UngVedtakBehandlingDto;
-  submitCallback: (data: any) => Promise<any>;
+  vedtakBekreftelseCallback: UngVedtakProps['vedtakBekreftelseCallback'];
   vilkar: UngVedtakVilkårDto[];
   isReadOnly: boolean;
+  tekster: UngVedtakTekster;
 }
 
 export const UngVedtakIndex = ({
   aksjonspunkter,
   behandling,
-  submitCallback,
+  vedtakBekreftelseCallback,
   vilkar,
   isReadOnly,
+  tekster,
 }: UngVedtakIndexProps) => {
-  const ungVedtakBackendClient = new UngVedtakBackendClient();
+  const api = new UngVedtakBackendClient();
   const {
     data: vedtaksbrevValgResponse,
     isLoading,
     refetch: refetchVedtaksbrevValg,
   } = useQuery({
-    queryKey: ['vedtaksbrevValg', behandling.id],
+    queryKey: ['vedtaksbrevValg', behandling.id, api.backend],
     queryFn: async () => {
-      const response = await ungVedtakBackendClient.vedtaksbrevValg(behandling.id);
+      const response = await api.vedtaksbrevValg(behandling.id!);
       return response;
     },
+    enabled: behandling.id !== undefined,
   });
   return (
     <Box paddingInline="space-16 space-32" paddingBlock="space-8">
@@ -41,13 +44,14 @@ export const UngVedtakIndex = ({
       {!isLoading && (
         <UngVedtak
           aksjonspunkter={aksjonspunkter}
-          api={ungVedtakBackendClient}
+          api={api}
           behandling={behandling}
-          submitCallback={submitCallback}
+          vedtakBekreftelseCallback={vedtakBekreftelseCallback}
           vilkår={vilkar}
           readOnly={isReadOnly}
           vedtaksbrevValgResponse={vedtaksbrevValgResponse}
           refetchVedtaksbrevValg={refetchVedtaksbrevValg}
+          tekster={tekster}
         />
       )}
     </Box>

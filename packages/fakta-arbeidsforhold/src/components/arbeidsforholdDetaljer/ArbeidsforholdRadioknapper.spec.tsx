@@ -1,4 +1,3 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
@@ -7,7 +6,7 @@ import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 
 it('skal vise to radioknapper', () => {
   renderWithIntlAndReduxForm(
-    <ArbeidsforholdRadioknapper.WrappedComponent intl={intlMock} formName="" behandlingId={1} behandlingVersjon={1} />,
+    <ArbeidsforholdRadioknapper formName="" behandlingId={1} behandlingVersjon={1} />,
     { messages },
   );
 

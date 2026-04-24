@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field as reduxFormField } from 'redux-form';
 
 import { TextField } from '@navikt/ds-react';
@@ -29,8 +28,8 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
     normalizeOnBlur?: (value: any) => void;
     component?: () => reduxFormField;
   }
-  class FieldComponent extends Component<FieldComponentProps & WrappedComponentProps> {
-    constructor(props: FieldComponentProps & WrappedComponentProps) {
+  class FieldComponent extends Component<FieldComponentProps> {
+    constructor(props: FieldComponentProps) {
       super(props);
       this.blurHandler = this.blurHandler.bind(this);
     }
@@ -45,7 +44,7 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
             ...input,
             onBlur: event => {
               const value =
-                event && event.target && Object.prototype.hasOwnProperty.call(event.target, 'value')
+                event && event.target && Object.hasOwn(event.target, 'value')
                   ? event.target.value
                   : event;
               const newValue = normalizeOnBlur ? normalizeOnBlur(value) : value;
@@ -65,7 +64,7 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
     }
   }
 
-  const FieldComponentWithIntl = injectIntl(FieldComponent);
+  const FieldComponentWithIntl = FieldComponent;
 
   FieldComponentWithIntl.WrappedComponent = FieldComponent;
 

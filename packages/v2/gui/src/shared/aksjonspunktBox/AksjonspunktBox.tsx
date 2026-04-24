@@ -16,7 +16,7 @@ const AksjonspunktBox = ({ erAksjonspunktApent, className, children, maxWidth = 
     className={`${styles.aksjonspunkt} ${className} ${erAksjonspunktApent ? styles.erAksjonspunktApent : ''}`}
     borderWidth={erAksjonspunktApent ? '3' : undefined}
     borderRadius={erAksjonspunktApent ? '8' : undefined}
-    padding={erAksjonspunktApent ? 'space-4' : undefined}
+    padding={erAksjonspunktApent ? 'space-28' : undefined}
     maxWidth={maxWidth ? K9MaxTextWidth : undefined}
   >
     {children}

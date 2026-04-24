@@ -12,17 +12,13 @@ dayjs.extend(duration);
 dayjs.extend(customParseFormat);
 dayjs.extend(weekOfYear);
 
-export function isSameOrBefore(date, otherDate) {
+function isSameOrBefore(date, otherDate) {
   const dateInQuestion = dayjs(date, dateFormats).utc(true);
   const formattedOtherDate = dayjs(otherDate, dateFormats).utc(true);
   return dateInQuestion.isBefore(formattedOtherDate) || dateInQuestion.isSame(formattedOtherDate);
 }
 
-export function dateFromString(dateString: string) {
-  return dayjs(dateString, dateFormats).utc(true);
-}
-
-export function getPeriodAsListOfDays(period: Period) {
+function getPeriodAsListOfDays(period: Period) {
   const fom = dayjs(period.fom).utc(true);
   const tom = dayjs(period.tom).utc(true);
 
@@ -45,7 +41,7 @@ function getDaySequencesAsListOfPeriods(daySequences: string[][]): Period[] {
 export function getPeriodDifference(basePeriod: Period, periods: Period[]) {
   const baseListOfDays = getPeriodAsListOfDays(basePeriod);
 
-  const listOfDaysToExclude = periods.map(period => getPeriodAsListOfDays(period)).flat();
+  const listOfDaysToExclude = periods.flatMap(period => getPeriodAsListOfDays(period));
 
   const daysToInclude: string[][] = [];
   let index = 0;

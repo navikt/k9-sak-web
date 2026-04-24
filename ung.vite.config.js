@@ -1,7 +1,8 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
 import path from 'path';
-import sourcemaps from 'rollup-plugin-sourcemaps2';
 import { loadEnv } from 'vite';
 import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from 'vite-plugin-svgr';
@@ -75,7 +76,11 @@ export default ({ mode }) => {
     },
     base: '/ung/web',
     publicDir: './public',
+    resolve: {
+      dedupe: ['react', 'react-dom'],
+    },
     plugins: [
+      tailwindcss(),
       createHtmlPlugin({
         template: 'ung.html'
       }),
@@ -94,18 +99,27 @@ export default ({ mode }) => {
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
         }
-      }
+      },
+      sentryVitePlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+        org: 'nav',
+        project: 'ung-sak-web',
+        url: 'https://sentry.gc.nav.no',
+        release: {
+          name: process.env.VITE_SENTRY_RELEASE,
+        },
+      }),
     ],
     build: {
       // Relative to the root
       outDir: './dist/ung/web',
       sourcemap: true,
-      rollupOptions: {
+      rolldownOptions: {
         input: './ung.html',
         external: [
           "mockServiceWorker.js"
         ],
-        plugins: [sourcemaps({ exclude: /@sentry/ })],
       },
     },
   });

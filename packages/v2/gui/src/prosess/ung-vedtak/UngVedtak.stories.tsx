@@ -17,9 +17,13 @@ const meta = {
   args: {
     aksjonspunkter: [],
     api,
-    submitCallback: asyncAction('button-click'),
+    vedtakBekreftelseCallback: asyncAction('vedtak bekreftelse'),
     vedtaksbrevValgResponse: {},
     refetchVedtaksbrevValg: fn(),
+    tekster: {
+      innvilget: 'Innvilget',
+      avslått: 'Avslått',
+    },
   },
   component: UngVedtak,
   render: props => (
@@ -54,6 +58,7 @@ export const InnvilgetStory: Story = {
             avslagKode: undefined,
 
             vilkarStatus: 'OPPFYLT',
+            periode: { fom: '', tom: '' },
           },
         ],
       },
@@ -63,6 +68,7 @@ export const InnvilgetStory: Story = {
           {
             avslagKode: undefined,
             vilkarStatus: 'OPPFYLT',
+            periode: { fom: '', tom: '' },
           },
         ],
       },
@@ -80,6 +86,7 @@ export const AvslåttStory: Story = {
           {
             avslagKode: undefined,
             vilkarStatus: 'OPPFYLT',
+            periode: { fom: '', tom: '' },
           },
         ],
       },
@@ -89,6 +96,7 @@ export const AvslåttStory: Story = {
           {
             avslagKode: '1090',
             vilkarStatus: 'IKKE_OPPFYLT',
+            periode: { fom: '', tom: '' },
           },
         ],
       },
@@ -120,6 +128,7 @@ export const MedBrev: Story = {
           {
             avslagKode: undefined,
             vilkarStatus: 'OPPFYLT',
+            periode: { fom: '', tom: '' },
           },
         ],
       },
@@ -129,6 +138,7 @@ export const MedBrev: Story = {
           {
             avslagKode: undefined,
             vilkarStatus: 'OPPFYLT',
+            periode: { fom: '', tom: '' },
           },
         ],
       },
@@ -136,6 +146,7 @@ export const MedBrev: Story = {
     readOnly: false,
     aksjonspunkter: [
       {
+        definisjon: '5015',
         kanLoses: true,
       },
     ],

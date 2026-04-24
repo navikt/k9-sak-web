@@ -50,7 +50,7 @@ const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   return null;
 };
 
-export const FormContent = ({
+const FormContent = ({
   handleSubmit,
   isAksjonspunktOpen,
   fosterbarn,

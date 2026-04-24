@@ -12,13 +12,13 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
 import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import styles from './settPaVentModal.module.css';
@@ -128,7 +128,6 @@ interface MappedOwnProps {
 }
 const maxLength200 = maxLength(200);
 export const SettPaVentModal = ({
-  intl,
   handleSubmit,
   cancelEvent,
   showModal,
@@ -143,7 +142,8 @@ export const SettPaVentModal = ({
   ventearsakVariant,
   originalVentearsakVariant,
   isSubmitting,
-}: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
+}: PureOwnProps & Partial<MappedOwnProps> & InjectedFormProps) => {
+  const intl = useIntl();
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =
     (!originalVentearsakVariant && !!ventearsakVariant) ||
@@ -362,5 +362,5 @@ export default connect(mapStateToProps)(
   reduxForm({
     form: 'settPaVentModalForm',
     enableReinitialize: true,
-  })(injectIntl(SettPaVentModal)),
+  })(SettPaVentModal),
 );

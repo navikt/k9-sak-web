@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -66,8 +66,7 @@ interface OwnProps {
   erBehandlingBehandlet: boolean;
 }
 
-export const TilbakekrevingVedtakFormImpl = ({
-  intl,
+const TilbakekrevingVedtakFormImpl = ({
   readOnly,
   fetchPreviewVedtaksbrev,
   vedtaksbrevAvsnitt,
@@ -81,7 +80,9 @@ export const TilbakekrevingVedtakFormImpl = ({
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
   erBehandlingBehandlet,
   ...formProps
-}: OwnProps & InjectedFormProps & WrappedComponentProps) => (
+}: OwnProps & InjectedFormProps) => {
+  const intl = useIntl();
+  return (
   <form aria-label="form" onSubmit={formProps.handleSubmit} data-testid="tilbakekrevingvedtakform">
     <VerticalSpacer twentyPx />
     <TilbakekrevingEditerVedtaksbrevPanel
@@ -144,7 +145,8 @@ export const TilbakekrevingVedtakFormImpl = ({
       </FlexRow>
     </FlexContainer>
   </form>
-);
+  );
+};
 
 const transformValues = (values: any, apKode: string) => [
   {
@@ -225,7 +227,7 @@ const mapStateToPropsFactory = (state: any, ownProps: PureOwnProps) => {
   };
 };
 
-export const TilbakekrevingVedtakFormImplWithIntl = injectIntl(TilbakekrevingVedtakFormImpl);
+export const TilbakekrevingVedtakFormImplWithIntl = TilbakekrevingVedtakFormImpl;
 
 const TilbakekrevingVedtakForm = connect(mapStateToPropsFactory)(
   behandlingForm({

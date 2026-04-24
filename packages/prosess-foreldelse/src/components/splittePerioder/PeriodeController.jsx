@@ -1,7 +1,7 @@
 import { HGrid, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
@@ -171,4 +171,9 @@ export class PeriodeController extends Component {
   }
 }
 
-export default injectIntl(PeriodeController);
+const PeriodeControllerWithIntl = props => {
+  const intl = useIntl();
+  return <PeriodeController {...props} intl={intl} />;
+};
+
+export default PeriodeControllerWithIntl;

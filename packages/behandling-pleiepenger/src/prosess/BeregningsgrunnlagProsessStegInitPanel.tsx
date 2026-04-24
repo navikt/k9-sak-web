@@ -3,13 +3,16 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { vilkarType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeVurdert } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeVurdert.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
+import { mapArbeidsgiverOpplysningerPerIdTilFP } from '@k9-sak-web/gui/ft-adapt/mapArbeidsgiverOpplysninger.js';
+import { mapBeregningsgrunnlagTilFP } from '@k9-sak-web/gui/ft-adapt/mapBeregningsgrunnlag.js';
+import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling } from '@k9-sak-web/types';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import { useSuspenseQueries } from '@tanstack/react-query';
-import { ComponentProps, useContext, useMemo, use } from 'react';
+import { ComponentProps, use, useContext, useMemo } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
 import {
   aksjonspunkterQueryOptions,
@@ -18,9 +21,6 @@ import {
   beregningsgrunnlagQueryOptions,
   vilkårQueryOptions,
 } from './api/k9SakQueryOptions';
-import { mapArbeidsgiverOpplysningerPerIdTilFP } from '@k9-sak-web/gui/ft-adapt/mapArbeidsgiverOpplysninger.js';
-import { mapBeregningsgrunnlagTilFP } from '@k9-sak-web/gui/ft-adapt/mapBeregningsgrunnlag.js';
-import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -66,24 +66,24 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
     };
   }, [k9sak]);
 
+  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+
   const [
     { data: aksjonspunkter },
     { data: vilkår },
-    { data: beregningreferanserTilVurdering = [] },
-    { data: beregningsgrunnlag },
     { data: arbeidsgiverOpplysningerPerId },
+    { data: beregningreferanserTilVurdering },
+    { data: beregningsgrunnlag },
   ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(props.api, props.behandling, BEREGNING_AKSJONSPUNKT_KODER),
       vilkårQueryOptions(props.api, props.behandling),
-      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling),
-      beregningsgrunnlagQueryOptions(props.api, props.behandling),
       arbeidsgiverOpplysningerQueryOptions(props.api, props.behandling),
+      beregningreferanserTilVurderingQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      beregningsgrunnlagQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
   });
-
-  const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const erStegVurdert = prosessPanelContext?.erVurdert(PANEL_ID);
 
   const bgVilkaret = vilkår?.find(v => v.vilkarType === k9_kodeverk_vilkår_VilkårType.BEREGNINGSGRUNNLAGVILKÅR);
 
@@ -95,15 +95,19 @@ export function BeregningsgrunnlagProsessStegInitPanel(props: Beregningsgrunnlag
     return null;
   }
 
-  if (!erStegVurdert) {
-    return <ProsessStegIkkeVurdert />;
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (!beregningsgrunnlag || !beregningreferanserTilVurdering) {
+    return null;
   }
 
   return (
     <BeregningsgrunnlagProsessIndex
       beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
       beregningsgrunnlagListe={beregningsgrunnlag.map(mapBeregningsgrunnlagTilFP)}
-      arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId.arbeidsgivere)}
+      arbeidsgiverOpplysningerPerId={mapArbeidsgiverOpplysningerPerIdTilFP(arbeidsgiverOpplysningerPerId)}
       submitCallback={submitData => handleSubmit(transformBeregningValues(submitData, true))}
       formData={props.formData}
       kodeverkSamling={kodeverkSamling}

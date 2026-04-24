@@ -4,7 +4,7 @@ import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils
 import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import styles from './delOppPeriodeModal.module.css';
@@ -13,10 +13,11 @@ export const DelOppPeriodeModalImpl = ({
   periodeData,
   showModal,
   cancelEvent,
-  intl,
   finnesBelopMed0Verdi,
   ...formProps
-}) => (
+}) => {
+  const intl = useIntl();
+  return (
   <Modal
     open={showModal}
     aria-label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
@@ -73,7 +74,8 @@ export const DelOppPeriodeModalImpl = ({
       </div>
     </Modal.Body>
   </Modal>
-);
+  );
+};
 
 DelOppPeriodeModalImpl.propTypes = {
   periodeData: PropTypes.shape({
@@ -82,7 +84,7 @@ DelOppPeriodeModalImpl.propTypes = {
   }).isRequired,
   cancelEvent: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
-  intl: PropTypes.shape().isRequired,
+  finnesBelopMed0Verdi: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -130,4 +132,4 @@ const DelOppPeriodeModal = connect(mapStateToPropsFactory)(
   })(DelOppPeriodeModalImpl),
 );
 
-export default injectIntl(DelOppPeriodeModal);
+export default DelOppPeriodeModal;

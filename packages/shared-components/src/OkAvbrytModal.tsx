@@ -1,5 +1,5 @@
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FlexColumn from './flexGrid/FlexColumn';
 import FlexContainer from './flexGrid/FlexContainer';
 import FlexRow from './flexGrid/FlexRow';
@@ -26,8 +26,9 @@ const OkAvbrytModal = ({
   showModal,
   cancel,
   submit,
-  intl,
-}: OwnProps & WrappedComponentProps) => (
+}: OwnProps) => {
+  const intl = useIntl();
+  return (
   <Modal
     className={styles.modal}
     open={showModal}
@@ -54,6 +55,7 @@ const OkAvbrytModal = ({
       </FlexContainer>
     </Modal.Body>
   </Modal>
-);
+  );
+};
 
-export default injectIntl(OkAvbrytModal);
+export default OkAvbrytModal;

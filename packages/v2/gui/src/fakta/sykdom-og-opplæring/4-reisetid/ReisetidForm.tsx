@@ -1,7 +1,7 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Button, Link, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import dayjs from 'dayjs';
 import { useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';

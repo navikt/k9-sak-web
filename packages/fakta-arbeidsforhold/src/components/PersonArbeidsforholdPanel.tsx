@@ -9,7 +9,6 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BriefcaseIcon } from '@navikt/aksel-icons';
 import { ExpansionCard, HStack, VStack } from '@navikt/ds-react';
 import { Component } from 'react';
-import { WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
@@ -75,7 +74,7 @@ interface StaticFunctions {
   isReadOnly?: (state: any, behandlingId: number, behandlingVersjon: number) => boolean;
 }
 
-type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions & WrappedComponentProps;
+type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions;
 
 /**
  * PersonArbeidsforholdPanelImpl:
@@ -84,7 +83,7 @@ type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions & W
  * som har samme navn i GUI og PropTypen blir fylt inn 'automatisk', mens andre variabler som
  * ikke er med i PropTypen må håndteres f.eks. i UpdateArbeidsforhold metoden.
  */
-export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
+class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
   static buildInitialValues = (arbeidsforhold: ArbeidsforholdV2[]) => ({
     arbeidsforhold,
   });
@@ -211,7 +210,6 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
 
   render() {
     const {
-      intl,
       arbeidsgiverOpplysningerPerId,
       arbeidsforhold,
       alleMerknaderFraBeslutter,
@@ -261,7 +259,6 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                 </ExpansionCard.Header>
                 <ExpansionCard.Content>
                   <PersonArbeidsforholdTable
-                    intl={intl}
                     harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}

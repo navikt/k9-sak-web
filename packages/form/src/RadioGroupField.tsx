@@ -9,9 +9,7 @@ import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/valid
 
 type Direction = 'horizontal' | 'vertical';
 
-interface RenderProp<TChildrenProps, TElement = any> {
-  (props: TChildrenProps): React.ReactElement<TElement>;
-}
+type RenderProp<TChildrenProps, TElement = any> = (props: TChildrenProps) => React.ReactElement<TElement>
 
 interface RadioProps {
   value: string | boolean;
@@ -99,7 +97,7 @@ const renderRadioGroupField = renderNavField(
   ),
 );
 
-export const RadioGroupField = ({
+const RadioGroupField = ({
   columns = 0,
   rows = 0,
   label = '',
