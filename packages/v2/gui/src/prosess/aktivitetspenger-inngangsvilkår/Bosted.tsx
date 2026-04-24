@@ -11,7 +11,7 @@ import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
@@ -119,7 +119,6 @@ export const Bosted = ({
 
   const isAksjonspunktSolved = bostedAp?.status === AksjonspunktStatus.UTFØRT;
   const selectedVilkårPeriode = bostedVilkår.perioder?.find(p => p.periode.fom === selectedId);
-  const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
@@ -190,7 +189,13 @@ export const Bosted = ({
                 </Tag>
               </HStack>
             </VStack>
-            <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+            <RhfForm
+              formMethods={formHook}
+              onSubmit={async data => {
+                await bekreftAksjonspunktMutation(data);
+                setIsFormLocked(true);
+              }}
+            >
               <VStack gap="space-24">
                 <RhfTextarea
                   control={formHook.control}

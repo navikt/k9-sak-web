@@ -200,7 +200,13 @@ export const BehovForBistand = ({
         }
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
-          <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+          <RhfForm
+            formMethods={formHook}
+            onSubmit={async data => {
+              await bekreftAksjonspunktMutation(data);
+              setIsFormLocked(true);
+            }}
+          >
             <VStack gap="space-24">
               <VStack gap="space-24">
                 <RhfTextarea

@@ -7,12 +7,13 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import { getItemStatus, VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
@@ -95,6 +96,20 @@ export const ForutgåendeMedlemskap = ({
   });
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
+
+  if (!aksjonspunkt && !vilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (vilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+    return (
+      <Box width="fit-content">
+        <Alert variant="info" size="small">
+          Ingen perioder å vurdere.
+        </Alert>
+      </Box>
+    );
+  }
 
   return (
     <VilkårSplittPanel

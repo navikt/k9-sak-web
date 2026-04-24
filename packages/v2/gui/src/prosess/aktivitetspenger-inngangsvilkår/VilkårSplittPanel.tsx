@@ -45,13 +45,20 @@ const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) =>
       return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
     case 'warning':
       return <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />;
+    default:
+      return null;
   }
 };
 
-export const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
-  if (status === Utfall.OPPFYLT) return 'success';
-  if (status === Utfall.IKKE_OPPFYLT) return 'error';
-  return 'warning';
+export const getItemStatus = (status: Utfall): VilkårSplittPanelItem['status'] => {
+  switch (status) {
+    case Utfall.OPPFYLT:
+      return 'success';
+    case Utfall.IKKE_OPPFYLT:
+      return 'error';
+    default:
+      return 'warning';
+  }
 };
 
 export const VilkårSplittPanel = ({

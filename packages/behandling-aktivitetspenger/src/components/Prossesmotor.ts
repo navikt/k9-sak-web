@@ -39,6 +39,13 @@ const PANEL_KONFIG = {
     ],
     id: PROSESS_STEG_KODER.INNGANGSVILKAR,
     label: 'Inngangsvilkår',
+    vilkår: [
+      vilkarType.SØKNADSFRIST,
+      vilkarType.BISTANDSVILKÅR,
+      vilkarType.BOSTEDSVILKÅR,
+      vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      vilkarType.ALDERSVILKÅR,
+    ],
   },
   vedtak: {
     aksjonspunkter: [
@@ -157,8 +164,7 @@ const beregnVedtakType = (
   return ProcessMenuStepType.default;
 };
 
-const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[]) => {
-  // Inngangsvilkår har aksjonspunkter definert i panelkonfigurasjonen men har ikke vilkår
+const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]) => {
   const harÅpneAksjonspunkter = aksjonspunkter?.some(
     ap =>
       PANEL_KONFIG.inngangsvilkår.aksjonspunkter.some(vap => vap === ap.definisjon) &&
@@ -168,14 +174,26 @@ const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[]) => {
   if (harÅpneAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
+  const relevanteVilkår = vilkår.filter(v =>
+    PANEL_KONFIG.inngangsvilkår.vilkår.some(vilkårType => vilkårType === v.vilkarType),
+  );
+
+  // Dersom et vilkår bare har en periode og denne er avslått, skal panelet vises som avslag.
+  const harAvslag = relevanteVilkår.some(
+    v => v.perioder?.length === 1 && v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_OPPFYLT),
+  );
+  if (harAvslag) {
+    return ProcessMenuStepType.danger;
+  }
   return ProcessMenuStepType.success;
 };
 
 const byggInngangsvilkårPanel = (
   aksjonspunkter: AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
   innloggetBruker: InnloggetAnsattUngV2Dto,
 ): ProcessMenuStep => {
-  const type = beregnInngangsvilkårType(aksjonspunkter);
+  const type = beregnInngangsvilkårType(aksjonspunkter, vilkår);
   const isLocked =
     type === ProcessMenuStepType.success &&
     !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
@@ -198,9 +216,9 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
 
   return useMemo(() => {
-    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, innloggetBruker);
+    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
     const medlemskapPanel = byggVilkårPanel(
-      inngangsvilkårPanel.erVurdert,
+      inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
       vilkår,
       PANEL_KONFIG.medlemskap,
       aksjonspunkter,
