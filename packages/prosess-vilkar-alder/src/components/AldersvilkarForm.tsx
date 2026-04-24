@@ -47,7 +47,9 @@ const AldersvilkarForm = ({
       erVilkarOk: getErVilkaretOk(),
     },
   });
-  const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  const bekreftAksjonspunkt = async (data: Inputs) => {
+    await submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  };
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
@@ -95,7 +97,7 @@ const AldersvilkarForm = ({
       </RhfRadioGroup>
       <VerticalSpacer sixteenPx />
 
-      <Button size="small" variant="primary" type="submit">
+      <Button size="small" variant="primary" type="submit" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
         <FormattedMessage id="AlderVilkar.Bekreft" />
       </Button>
     </RhfForm>

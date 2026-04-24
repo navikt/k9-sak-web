@@ -133,6 +133,7 @@ const TilkjentYtelseNyPeriode = ({
           type="button"
           size="small"
           loading={formMethods.formState.isSubmitting}
+          disabled={formMethods.formState.isSubmitting}
           onClick={handleSubmit}
         >
           Legg til ny periode

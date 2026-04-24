@@ -73,7 +73,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   });
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     getValues,
     handleSubmit,
     watch,
@@ -98,7 +98,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({
+  const bekreftAksjonspunkt = async ({
     begrunnelse,
     erSokerenMidlertidigAleneOmOmsorgen,
     avslagsårsakKode,
@@ -112,7 +112,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       !errors.erSokerenMidlertidigAleneOmOmsorgen &&
       !errors.avslagsårsakKode
     ) {
-      losAksjonspunkt({
+      await losAksjonspunkt({
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
         fra: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
@@ -242,7 +242,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 </Fieldset>
               )}
 
-              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
+              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit" loading={isSubmitting} disabled={isSubmitting}>
                 {' '}
                 {tekst.bekreftFortsettKnapp}
               </Button>

@@ -71,7 +71,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   });
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     getValues,
     handleSubmit,
     watch,
@@ -102,7 +102,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({ begrunnelse, avslagsårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
+  const bekreftAksjonspunkt = async ({ begrunnelse, avslagsårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
     if (
       (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering) ||
       (!errors.begrunnelse &&
@@ -111,7 +111,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
         !errors.erSokerenAleneOmOmsorgen &&
         erBehandlingstypeRevurdering)
     ) {
-      losAksjonspunkt({
+      await losAksjonspunkt({
         begrunnelse,
         avslagsårsakKode,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
@@ -274,7 +274,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   )}
                 </Fieldset>
               )}
-              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
+              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit" loading={isSubmitting} disabled={isSubmitting}>
                 {' '}
                 {tekst.bekreftFortsettKnapp}
               </Button>

@@ -19,13 +19,21 @@ const VedtakSjekkTilbakekreving: React.FC<Props> = ({
 }: Props) => {
   const [deaktiverBekreftKnapp, setDeaktiverBekreftKnapp] = React.useState<boolean>(true);
   const [visAdvarselTekst, setVisAdvarselTekst] = React.useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const handleChange = value => {
     setDeaktiverBekreftKnapp(value === 'ja');
     setVisAdvarselTekst(true);
   };
 
-  const handleSubmit = () => submitCallback([{ kode: aksjonspunktCodes.SJEKK_TILBAKEKREVING }]);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      await submitCallback([{ kode: aksjonspunktCodes.SJEKK_TILBAKEKREVING }]);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -45,7 +53,7 @@ const VedtakSjekkTilbakekreving: React.FC<Props> = ({
           <Radio value="nei">Nei, behandle denne behandlingen videre</Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
-        <Button size="small" variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
+        <Button size="small" variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp || isSubmitting} loading={isSubmitting}>
           Bekreft
         </Button>
         {redigerSjekkTilbakekreving && (
