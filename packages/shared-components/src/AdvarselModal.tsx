@@ -19,8 +19,14 @@ interface OwnProps {
  */
 const AdvarselModal = ({ bodyText, headerText, showModal, submit, isSubmitting = false }: OwnProps) => {
   const intl = getPackageIntl();
+  const handleClose = () => {
+    if (isSubmitting) {
+      return;
+    }
+    submit();
+  };
   return (
-    <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={submit}>
+    <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={handleClose}>
       <Modal.Body>
         <HGrid gap="space-4" columns={{ xs: '1fr 8fr 2fr' }}>
           <div className="relative">

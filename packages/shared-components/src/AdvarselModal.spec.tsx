@@ -11,4 +11,10 @@ describe('<AdvarselModal>', () => {
     expect(screen.getAllByRole('img')).toHaveLength(1);
     expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
   });
+
+  it('skal disable OK-knappen når isSubmitting er true', () => {
+    renderWithIntl(<AdvarselModal bodyText="Åpne behandling" showModal submit={vi.fn()} isSubmitting />);
+
+    expect(screen.getByRole('button', { name: /OK/ })).toBeDisabled();
+  });
 });
