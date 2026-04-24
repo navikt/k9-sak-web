@@ -26,7 +26,7 @@ jobs:
       - name: Typescript-sjekk
         run: yarn ts-check
 
-      - name: Eslint
+      - name: Lint (Biome)
         run: yarn lint
 
       - name: Css modules typegenerator check

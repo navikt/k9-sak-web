@@ -12,4 +12,4 @@ type DokumentDataType = {
   };
 };
 
-export { DokumentDataType };
+export type { DokumentDataType };

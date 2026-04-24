@@ -94,7 +94,7 @@ const lagAndelerPrIdMap = (
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
   kodeverkoppslag: K9Kodeverkoppslag,
 ): AndelerPrId[] => {
-  const listeMedAndelerPrId = new Array<AndelerPrId>();
+  const listeMedAndelerPrId: AndelerPrId[] = [];
   for (const ferieAndel of andeler) {
     const andelTilSøker = ferieAndel.erBrukerMottaker ? ferieAndel.årsbeløp : 0;
     const andelTilRefusjon = !ferieAndel.erBrukerMottaker ? ferieAndel.årsbeløp : 0;

@@ -88,7 +88,7 @@ const lagAndelerPrIdMap = (
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string,
 ): AndelPrId[] => {
-  const liste = new Array<AndelPrId>();
+  const liste: AndelPrId[] = [];
   for (const ferieAndel of andeler) {
     const andelTilSøker = ferieAndel.erBrukerMottaker ? ferieAndel.årsbeløp : 0;
     const andelTilRefusjon = !ferieAndel.erBrukerMottaker ? ferieAndel.årsbeløp : 0;
