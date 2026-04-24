@@ -1,5 +1,8 @@
 import { type AlertInfo, makeErrorId } from './AlertInfo.js';
 
+/**
+ * @deprecated Trur ikkje denne er noko poeng å ha
+ */
 export default class GeneralAsyncError extends Error implements AlertInfo {
   public readonly errorId = makeErrorId();
 

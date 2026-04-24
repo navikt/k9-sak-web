@@ -8,6 +8,7 @@ import NotFoundPage from './NotFoundPage.js';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
 import { AuthAbortedPage } from '../../auth/AuthAbortedPage.js';
+import { ensureError } from '../ensureError.js';
 
 export interface ErrorFallbackProps {
   readonly error: Error;
@@ -15,7 +16,7 @@ export interface ErrorFallbackProps {
   readonly reset: () => void;
 }
 
-interface OwnProps {
+export interface ErrorBoundaryProps {
   errorMessageCallback?: (error: string) => void;
   children: ReactNode;
   doNotShowErrorPage?: boolean;
@@ -30,26 +31,20 @@ interface State {
 
 const initialState: State = { error: null, sentryId: undefined };
 
-export class ErrorBoundary extends Component<OwnProps, State> {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   static defaultProps = {
     doNotShowErrorPage: false,
   };
 
   private errorCount = 0;
 
-  constructor(props: OwnProps) {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = initialState;
   }
 
   static ensureError(error: unknown): Error {
-    if (error instanceof Error) {
-      return error;
-    }
-    if (error == null) {
-      return new Error('Feil fanga, men feilobjekt var null/undefined');
-    }
-    return new Error(String(error));
+    return ensureError(error);
   }
 
   // Vi ønsker ikkje å rapportere alle feil til Sentry, feks viss har utgått sesjon.
