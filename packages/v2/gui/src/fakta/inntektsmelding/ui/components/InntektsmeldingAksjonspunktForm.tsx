@@ -4,6 +4,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { useState } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
@@ -90,6 +91,7 @@ const InntektsmeldingAksjonspunktForm = ({
 }: InntektsmeldingFormProps) => {
   const { arbeidsforhold, readOnly } = useInntektsmeldingContext();
   const { watch, reset, control } = formMethods;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const aksjonspunktKode = aksjonspunkt.definisjon as AksjonspunktKode;
   const { redigeringsmodus, setRedigeringsmodus, beslutningFieldName, begrunnelseFieldName } = tilstand;
@@ -123,12 +125,18 @@ const InntektsmeldingAksjonspunktForm = ({
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
     };
 
-    onSubmit({
-      '@type': aksjonspunktKode,
-      kode: aksjonspunktKode,
-      begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
-      perioder: [periode],
-    });
+    setIsSubmitting(true);
+    try {
+      onSubmit({
+        '@type': aksjonspunktKode,
+        kode: aksjonspunktKode,
+        begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
+        perioder: [periode],
+      });
+    } catch (e) {
+      setIsSubmitting(false);
+      throw e;
+    }
   };
 
   const avbrytRedigering = () => {
@@ -180,7 +188,7 @@ const InntektsmeldingAksjonspunktForm = ({
         <Box marginBlock="space-24 space-0">
           <div className="flex gap-4">
             {!harFlereTilstanderTilVurdering && beslutning && (
-              <Button variant="primary" size="small">
+              <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
                 {knappetekster[aksjonspunktKode][beslutning] ?? 'Send inn'}
               </Button>
             )}

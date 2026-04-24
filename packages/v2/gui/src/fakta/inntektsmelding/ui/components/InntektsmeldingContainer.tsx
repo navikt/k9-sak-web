@@ -93,6 +93,7 @@ const InntektsmeldingContainer = () => {
   const aksjonspunktKode = gjeldeneAksjonspunkt?.definisjon;
 
   const [editStates, setEditStates] = useState<Record<string, boolean>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const tilstanderMedUiState = useMemo<TilstandMedUiState[]>(
     () =>
@@ -143,11 +144,17 @@ const InntektsmeldingContainer = () => {
       };
     });
 
-    onFinished({
-      '@type': aksjonspunktKode,
-      kode: aksjonspunktKode,
-      perioder,
-    });
+    setIsSubmitting(true);
+    try {
+      onFinished({
+        '@type': aksjonspunktKode,
+        kode: aksjonspunktKode,
+        perioder,
+      });
+    } catch (e) {
+      setIsSubmitting(false);
+      throw e;
+    }
   };
 
   return (
@@ -171,7 +178,7 @@ const InntektsmeldingContainer = () => {
       {kanSendeInn && (
         <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
               Send inn
             </Button>
           </form>

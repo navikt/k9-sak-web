@@ -70,16 +70,16 @@ const SykdomUperiodisertForm = ({
   return (
     <RhfForm
       formMethods={formMethods}
-      onSubmit={data => {
+      onSubmit={async data => {
         return vurdering.uuid
-          ? løsAksjonspunkt9301(vurdering.uuid, {
+          ? await løsAksjonspunkt9301(vurdering.uuid, {
               behandlingUuid,
               diagnoser: data.diagnosekoder,
               begrunnelse: data.begrunnelse,
               godkjent: data.godkjent === 'ja',
               avslagsårsak: data.godkjent !== 'ja' ? finnAvslagsårsak(data.godkjent) : undefined,
             })
-          : løsAksjonspunkt9301(undefined, {
+          : await løsAksjonspunkt9301(undefined, {
               behandlingUuid,
               diagnoser: data.diagnosekoder,
               begrunnelse: data.begrunnelse,
@@ -136,7 +136,7 @@ const SykdomUperiodisertForm = ({
           </Alert>
         )}
         <div className="flex gap-4">
-          <Button variant="primary" type="submit" size="small">
+          <Button variant="primary" type="submit" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
             Bekreft og fortsett
           </Button>
           {redigerer && (

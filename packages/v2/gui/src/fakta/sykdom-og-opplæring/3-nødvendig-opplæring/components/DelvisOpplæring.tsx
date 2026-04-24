@@ -319,6 +319,7 @@ const PeriodeHandlinger = ({
   const [visModal, setVisModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [klippetPeriode, setKlippetPeriode] = useState<{ fom: string; tom: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCloseModal = () => {
     setVisModal(false);
@@ -332,23 +333,28 @@ const PeriodeHandlinger = ({
       setError('Du må spesifisere en periode');
       return;
     }
-    const uncoveredDays = findUncoveredDays(
-      { fom: periodeUtenNødvendigOpplæring.fom, tom: periodeUtenNødvendigOpplæring.tom },
-      [{ fom: klippetPeriode.fom, tom: klippetPeriode.tom }],
-    );
+    setIsSubmitting(true);
+    try {
+      const uncoveredDays = findUncoveredDays(
+        { fom: periodeUtenNødvendigOpplæring.fom, tom: periodeUtenNødvendigOpplæring.tom },
+        [{ fom: klippetPeriode.fom, tom: klippetPeriode.tom }],
+      );
 
-    const combinedPeriods = combineConsecutivePeriods(uncoveredDays);
-    const newPeriods = [...combinedPeriods, { fom: klippetPeriode.fom, tom: klippetPeriode.tom }]
-      .sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom)))
-      .map(period => ({
-        fom: period.fom,
-        tom: period.tom,
-        resultat: '' as const,
-        avslagsårsak: '' as const,
-      }));
-    replace(newPeriods);
+      const combinedPeriods = combineConsecutivePeriods(uncoveredDays);
+      const newPeriods = [...combinedPeriods, { fom: klippetPeriode.fom, tom: klippetPeriode.tom }]
+        .sort((a, b) => dayjs(a.fom).diff(dayjs(b.fom)))
+        .map(period => ({
+          fom: period.fom,
+          tom: period.tom,
+          resultat: '' as const,
+          avslagsårsak: '' as const,
+        }));
+      replace(newPeriods);
 
-    handleCloseModal();
+      handleCloseModal();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -391,7 +397,7 @@ const PeriodeHandlinger = ({
             <Button variant="tertiary" type="button" onClick={handleCloseModal}>
               Avbryt
             </Button>
-            <Button variant="primary" type="button" onClick={handleSubmit}>
+            <Button variant="primary" type="button" onClick={handleSubmit} loading={isSubmitting} disabled={isSubmitting}>
               Legg til
             </Button>
           </div>
