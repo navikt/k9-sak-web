@@ -186,7 +186,7 @@ const VurderingAvOmsorgsperioderForm = ({
             <Box.New marginBlock="8 0">
               <RhfRadioGroup
                 control={formMethods.control}
-                label={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
+                legend={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
                 name={FieldName.HAR_SØKER_OMSORGEN_FOR_I_PERIODE}
                 validate={[required]}
                 disabled={readOnly}
@@ -206,59 +206,6 @@ const VurderingAvOmsorgsperioderForm = ({
                   readOnly={readOnly}
                   fromDate={omsorgsperiode.periode?.fom}
                   toDate={omsorgsperiode.periode?.tom}
-                  // fromDatepickerProps={{
-                  //   label: 'Fra',
-                  //   ariaLabel: 'Fra',
-                  //   limitations: {
-                  //     minDate: omsorgsperiode.periode?.fom,
-                  //     maxDate: omsorgsperiode.periode?.tom,
-                  //   },
-                  // }}
-                  // toDatepickerProps={{
-                  //   label: 'Til',
-                  //   ariaLabel: 'Til',
-                  //   limitations: {
-                  //     minDate: omsorgsperiode.periode?.fom,
-                  //     maxDate: omsorgsperiode.periode?.tom,
-                  //   },
-                  // }}
-                  // defaultValues={[{ fom: omsorgsperiode.periode.fom, tom: omsorgsperiode.periode.tom }]}
-                  // renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
-                  //   numberOfItems > 1 ? (
-                  //     <DeleteButton
-                  //       onClick={() => {
-                  //         fieldArrayMethods.remove(index);
-                  //       }}
-                  //     />
-                  //   ) : (
-                  //     <></>
-                  //   )
-                  // }
-                  // renderAfterFieldArray={fieldArrayMethods => (
-                  //   <Box.New marginBlock="6 0">
-                  //     <AddButton
-                  //       label="Legg til periode"
-                  //       onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
-                  //       id="leggTilPeriodeKnapp"
-                  //     />
-                  //   </Box.New>
-                  // )}
-                  // validators={{
-                  //   overlaps: (valgtPeriode: Period) => {
-                  //     const andreValgtePerioder = formMethods
-                  //       .getValues()
-                  //       .perioder.filter(
-                  //         (periodWrapper: { period: Partial<Period> }) => periodWrapper.period !== valgtPeriode,
-                  //       )
-                  //       .map(({ period }: { period: Partial<Period> }) => new Period(period.fom, period.tom));
-                  //     const { fom, tom } = valgtPeriode;
-                  //     const valgtPeriodePeriod = new Period(fom, tom);
-                  //     if (valgtPeriodePeriod.overlapsWithSomePeriodInList(andreValgtePerioder)) {
-                  //       return 'Omsorgsperiodene kan ikke overlappe';
-                  //     }
-                  //     return null;
-                  //   },
-                  // }}
                 />
               </Box.New>
             )}
@@ -268,7 +215,7 @@ const VurderingAvOmsorgsperioderForm = ({
                   <LabelledContent
                     label="Resterende perioder har søkeren ikke omsorgen for barnet:"
                     content={resterendePerioder.map(periode => (
-                      <p key={`${periode.fom}-${periode.tom}`} style={{ margin: 0 }}>
+                      <p key={`${periode.fom}-${periode.tom}`} className={styles.resterendePeriode}>
                         {prettifyPeriode(periode)}
                       </p>
                     ))}

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { Delete } from '@navikt/ds-icons';
 import { Box, Button, Heading, Table } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
@@ -48,30 +47,6 @@ const Fosterbarn = ({ setFosterbarn, readOnly }: FosterbarnProps) => {
                   <Table.Row key={field.id}>
                     <Table.DataCell>{`Fosterbarn ${index + 1}`}</Table.DataCell>
                     <Table.DataCell>
-                      {/* <TextField
-                        {...register(`fosterbarn.${index}.fødselsnummer`, {
-                          minLength: {
-                            value: 11,
-                            message: 'Fødselsnummer må være 11 siffer',
-                          },
-                          maxLength: {
-                            value: 11,
-                            message: 'Fødselsnummer må være 11 siffer',
-                          },
-                          validate: {
-                            hasValidFodselsnummer: value => {
-                              if (validator.fnr(value).status === 'valid') {
-                                return '';
-                              }
-                              return 'Ugyldig fødselsnummer';
-                            },
-                          },
-                        })}
-                        hideLabel
-                        label="Fødselsnummer"
-                        size="small"
-                        htmlSize={11}
-                      /> */}
                       <RhfTextField
                         control={control}
                         name={`fosterbarn.${index}.fødselsnummer`}

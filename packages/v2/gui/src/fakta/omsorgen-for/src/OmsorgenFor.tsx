@@ -1,6 +1,6 @@
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
-import { Box } from '@navikt/ds-react';
+import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { type JSX } from 'react';
 import { IntlProvider } from 'react-intl';
@@ -42,7 +42,9 @@ const OmsorgenFor = ({
 
   return (
     <IntlProvider locale="nb-NO" messages={teksterForSakstype(sakstype)}>
-      <h1 style={{ fontSize: 22 }}>{sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}</h1>
+      <Heading size="medium" level="1">
+        {sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}
+      </Heading>
       <Box.New marginBlock="6 0">
         <PageContainer isLoading={isLoading} hasError={omsorgsperiodeoversiktHarFeilet}>
           <div className={styles.mainComponent}>

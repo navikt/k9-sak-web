@@ -82,6 +82,7 @@ const Omsorgsperiodeoversikt = ({
                 onEditClick={() => setErRedigeringsmodus(true)}
                 registrertForeldrerelasjon={!!omsorgsperiodeoversikt.registrertForeldrerelasjon}
                 readOnly={readOnly}
+                sakstype={sakstype}
               />
             );
           }

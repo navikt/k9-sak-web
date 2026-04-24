@@ -1,5 +1,5 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction';
 import { FakeOmsorgenForBackendApi } from '../../storybook/mocks/FakeOmsorgenForBackendApi';
 import OmsorgenFor from './src/OmsorgenFor';

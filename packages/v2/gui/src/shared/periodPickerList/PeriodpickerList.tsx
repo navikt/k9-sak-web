@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { HStack } from '@navikt/ds-react';
-import { PeriodFieldArray, RhfDatepicker } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfFieldArray } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { type JSX } from 'react';
 import { useFieldArray, useFormContext, type FieldValues } from 'react-hook-form';
@@ -22,14 +22,18 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
   });
   const { fields } = fieldArrayMethods;
   return (
-    <PeriodFieldArray
-      fields={fields}
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    <RhfFieldArray
+      fields={fields as any}
       remove={fieldArrayMethods.remove}
-      append={fieldArrayMethods.append}
-      bodyText={legend}
+      append={fieldArrayMethods.append as any}
+      titleText={legend}
       readOnly={readOnly}
+      addButtonText="Legg til periode"
+      emptyTemplate={{ fom: '', tom: '' } as any}
+      size="small"
     >
-      {(field, index, getRemoveButton) => {
+      {(field, index, removeButton) => {
         return (
           <HStack key={field.id} gap="space-16" paddingBlock="2">
             <RhfDatepicker
@@ -64,10 +68,10 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
               fromDate={fromDate ? new Date(fromDate) : undefined}
               toDate={toDate ? new Date(toDate) : undefined}
             />
-            {getRemoveButton && <div>{getRemoveButton()}</div>}
+            {removeButton && <div>{removeButton}</div>}
           </HStack>
         );
       }}
-    </PeriodFieldArray>
+    </RhfFieldArray>
   );
 };
