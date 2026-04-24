@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: "packages/**/*.{ts,tsx,js,jsx}"
+      exclude: '\.module\.d\.css\.(ts|tsx|js|jsx)$'
+      run: yarn eslint --cache --fix {staged_files}
+      stage_fixed: true
+    prettier-ts:
+      glob: "packages/**/*.{ts,tsx,js,jsx}"
+      exclude: '\.module\.d\.css\.(ts|tsx|js|jsx)$'
+      run: yarn prettier --write {staged_files}
+      stage_fixed: true
+    stylelint:
+      glob: "packages/**/*.css"
+      run: yarn stylelint --fix {staged_files}
+      stage_fixed: true
+    prettier-css:
+      glob: "packages/**/*.css"
+      run: yarn prettier --write {staged_files}
+      stage_fixed: true
