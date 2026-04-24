@@ -1,9 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { HStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfFieldArray } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { type JSX } from 'react';
-import { useFieldArray, useFormContext, type FieldValues } from 'react-hook-form';
+import { useFieldArray, useFormContext, type FieldPath } from 'react-hook-form';
+
+type PeriodField = { fom: string; tom: string };
+type PeriodListFormValues = { [key: string]: PeriodField[] };
 
 interface PeriodpickerListProps {
   name: string;
@@ -13,55 +15,52 @@ interface PeriodpickerListProps {
   toDate?: string;
 }
 export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: PeriodpickerListProps): JSX.Element => {
-  const formMethods = useFormContext<FieldValues>();
-  const { control, formState, getValues, trigger } = formMethods;
+  const { control, formState, getValues, trigger } = useFormContext<PeriodListFormValues>();
   const { isSubmitted } = formState;
-  const fieldArrayMethods = useFieldArray({
+  const { fields, remove, append } = useFieldArray<PeriodListFormValues, string>({
     control,
     name,
   });
-  const { fields } = fieldArrayMethods;
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <RhfFieldArray
-      fields={fields as any}
-      remove={fieldArrayMethods.remove}
-      append={fieldArrayMethods.append as any}
+    <RhfFieldArray<PeriodListFormValues, string>
+      fields={fields}
+      remove={remove}
+      append={append}
       titleText={legend}
       readOnly={readOnly}
       addButtonText="Legg til periode"
-      emptyTemplate={{ fom: '', tom: '' } as any}
+      emptyTemplate={{ fom: '', tom: '' }}
       size="small"
     >
       {(field, index, removeButton) => {
         return (
           <HStack key={field.id} gap="space-16" paddingBlock="2">
-            <RhfDatepicker
-              name={`${name}.${index}.fom`}
+            <RhfDatepicker<PeriodListFormValues>
+              name={`${name}.${index}.fom` as FieldPath<PeriodListFormValues>}
               control={control}
               label={index === 0 ? 'Fra' : ''}
               validate={[
                 required,
                 hasValidDate,
                 fomVerdi => {
-                  const tomVerdi = getValues(`${name}.${index}.tom`);
-                  return tomVerdi && fomVerdi ? dateBeforeOrEqual(tomVerdi)(fomVerdi) : null;
+                  const tomVerdi = getValues(`${name}.${index}.tom` as FieldPath<PeriodListFormValues>);
+                  return tomVerdi && fomVerdi ? dateBeforeOrEqual(String(tomVerdi))(fomVerdi) : null;
                 },
               ]}
               onChange={() => (isSubmitted ? trigger() : undefined)}
               fromDate={fromDate ? new Date(fromDate) : undefined}
               toDate={toDate ? new Date(toDate) : undefined}
             />
-            <RhfDatepicker
-              name={`${name}.${index}.tom`}
+            <RhfDatepicker<PeriodListFormValues>
+              name={`${name}.${index}.tom` as FieldPath<PeriodListFormValues>}
               control={control}
               label={index === 0 ? 'Til' : ''}
               validate={[
                 required,
                 hasValidDate,
                 tomVerdi => {
-                  const fomVerdi = getValues(`${name}.${index}.fom`);
-                  return tomVerdi && fomVerdi ? dateAfterOrEqual(fomVerdi)(tomVerdi) : null;
+                  const fomVerdi = getValues(`${name}.${index}.fom` as FieldPath<PeriodListFormValues>);
+                  return tomVerdi && fomVerdi ? dateAfterOrEqual(String(fomVerdi))(tomVerdi) : null;
                 },
               ]}
               onChange={() => (isSubmitted ? trigger() : undefined)}
