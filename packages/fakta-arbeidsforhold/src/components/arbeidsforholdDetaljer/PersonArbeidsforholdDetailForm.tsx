@@ -24,7 +24,7 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   skjulArbeidsforhold: () => void;
-  updateArbeidsforhold: (values) => void;
+  updateArbeidsforhold: (values) => void | Promise<void>;
 }
 
 type FormValues = CustomArbeidsforhold;
@@ -92,8 +92,8 @@ const validateForm = values => ({
 
 const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => (state, ownProps) => {
   const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
-  const onSubmit = values => {
-    initialOwnProps.updateArbeidsforhold(values);
+  const onSubmit = async (values) => {
+    await initialOwnProps.updateArbeidsforhold(values);
     skjulArbeidsforhold();
   };
   const validate = (values: FormValues) => validateForm(values);
