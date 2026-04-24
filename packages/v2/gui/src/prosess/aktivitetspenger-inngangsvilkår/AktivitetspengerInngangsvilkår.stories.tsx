@@ -17,6 +17,10 @@ const meta = {
     innloggetBruker: {
       aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: true },
     } satisfies InnloggetAnsattUngV2Dto,
+    lovligeBehandlingsoperasjoner: {
+      uuid: 'fake-uuid',
+      behandlingTilGodkjenningVedLokalkontor: true,
+    },
     vilkår: [],
   },
 } satisfies Meta<typeof AktivitetspengerInngangsvilkår>;
