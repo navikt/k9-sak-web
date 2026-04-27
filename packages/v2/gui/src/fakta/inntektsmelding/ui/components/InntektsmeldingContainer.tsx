@@ -93,7 +93,6 @@ const InntektsmeldingContainer = () => {
   const aksjonspunktKode = gjeldeneAksjonspunkt?.definisjon;
 
   const [editStates, setEditStates] = useState<Record<string, boolean>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const tilstanderMedUiState = useMemo<TilstandMedUiState[]>(
     () =>
@@ -144,16 +143,11 @@ const InntektsmeldingContainer = () => {
       };
     });
 
-    setIsSubmitting(true);
-    try {
-      await onFinished({
-        '@type': aksjonspunktKode,
-        kode: aksjonspunktKode,
-        perioder,
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    await onFinished({
+      '@type': aksjonspunktKode,
+      kode: aksjonspunktKode,
+      perioder,
+    });
   };
 
   return (
@@ -168,7 +162,7 @@ const InntektsmeldingContainer = () => {
       <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
-          onFormSubmit={(payload) => Promise.resolve(onFinished(payload))}
+          onFormSubmit={payload => Promise.resolve(onFinished(payload))}
           aksjonspunkt={gjeldeneAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
@@ -177,7 +171,7 @@ const InntektsmeldingContainer = () => {
       {kanSendeInn && (
         <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
+            <Button variant="primary" size="small" loading={formState.isSubmitting} disabled={formState.isSubmitting}>
               Send inn
             </Button>
           </form>
