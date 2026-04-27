@@ -12,6 +12,7 @@ interface OwnProps {
   showModal: boolean;
   submit: () => void;
   cancel: () => void;
+  isSubmitting?: boolean;
 }
 
 /**
@@ -26,6 +27,7 @@ const OkAvbrytModal = ({
   showModal,
   cancel,
   submit,
+  isSubmitting = false,
 }: OwnProps) => {
   const intl = useIntl();
   return (
@@ -42,7 +44,7 @@ const OkAvbrytModal = ({
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus>
+            <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus disabled={isSubmitting} loading={isSubmitting}>
               {intl.formatMessage({ id: okButtonTextCode })}
             </Button>
           </FlexColumn>
