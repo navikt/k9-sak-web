@@ -7,14 +7,15 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
-import { VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import { getItemStatus, VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
@@ -45,12 +46,6 @@ const buildInitialValues = (vilkår: UngSakVilkårMedPerioderDto): FormData => (
   ),
 });
 
-const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
-  if (status === Utfall.OPPFYLT) return 'success';
-  if (status === Utfall.IKKE_OPPFYLT) return 'error';
-  return 'warning';
-};
-
 export const ForutgåendeMedlemskap = ({
   aksjonspunkt,
   api,
@@ -65,6 +60,7 @@ export const ForutgåendeMedlemskap = ({
     id: p.periode.fom,
     status: getItemStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+    periode: p.periode,
   }));
 
   const [selectedItemId, setSelectedItemId] = useState(items[0]?.id ?? '');
@@ -76,7 +72,7 @@ export const ForutgåendeMedlemskap = ({
       )
     : [];
 
-  const formMethods = useForm<FormData>({
+  const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkår),
   });
 
@@ -101,19 +97,33 @@ export const ForutgåendeMedlemskap = ({
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
 
+  if (!aksjonspunkt && !vilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (vilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+    return (
+      <Box width="fit-content">
+        <Alert variant="info" size="small">
+          Ingen perioder å vurdere.
+        </Alert>
+      </Box>
+    );
+  }
+
   return (
     <VilkårSplittPanel
       items={items}
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
       detailHeading="Forutgående medlemskap"
-      defaultIsEditable={isAksjonspunktSolved}
+      defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
     >
-      {(defaultIsEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
-        <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
+      {(defaultIsLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
+        <RhfForm formMethods={formHook} onSubmit={onSubmit}>
           <VStack gap="space-16">
-            {!defaultIsEditable && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
+            {!defaultIsLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
             {overlappendeMedlemskap.length > 0 && (
               <VStack gap="space-8">
                 <Label size="small" as="p">
@@ -145,21 +155,21 @@ export const ForutgåendeMedlemskap = ({
             )}
             <RhfRadioGroup
               key={selectedItemId}
-              control={formMethods.control}
+              control={formHook.control}
               name={`vurderinger.${selectedItemId}`}
               legend="Er forutgående medlemskap godkjent?"
               validate={[required]}
-              readOnly={defaultIsEditable}
+              readOnly={defaultIsLocked}
             >
               <Radio value="oppfylt">Ja</Radio>
               <Radio value="ikkeOppfylt">Nei</Radio>
             </RhfRadioGroup>
-            {!defaultIsEditable && (
+            {!defaultIsLocked && (
               <HStack gap="space-8">
                 <Button type="submit" size="small" loading={isPending}>
                   Bekreft og fortsett
                 </Button>
-                <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
+                <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
                   Avbryt
                 </Button>
               </HStack>

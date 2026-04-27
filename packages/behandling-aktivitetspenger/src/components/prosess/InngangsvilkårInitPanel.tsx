@@ -5,10 +5,13 @@ import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-pr
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
+  lovligeBehandlingsoperasjonerQueryOptions,
+  totrinnskontrollSkjermlenkeContextQueryOptions,
+  vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
@@ -21,8 +24,21 @@ interface Props {
 
 export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
-  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
+  const [
+    { data: aksjonspunkter = [] },
+    { data: innloggetBruker },
+    { data: vilkår },
+    { data: totrinnskontrollSkjermlenkeContext },
+    { data: lovligeBehandlingsoperasjoner },
+  ] = useSuspenseQueries({
+    queries: [
+      aksjonspunkterQueryOptions(api, behandling),
+      innloggetBrukerQueryOptions(api),
+      vilkårQueryOptions(api, behandling),
+      totrinnskontrollSkjermlenkeContextQueryOptions(api, behandling),
+      lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
+    ],
+  });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
   if (!erValgt) {
@@ -33,9 +49,12 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
     <AktivitetspengerInngangsvilkår
       aksjonspunkter={aksjonspunkter}
       innloggetBruker={innloggetBruker}
+      vilkår={vilkår}
       api={api}
       behandling={behandling}
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+      totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+      lovligeBehandlingsoperasjoner={lovligeBehandlingsoperasjoner}
     />
   );
 };

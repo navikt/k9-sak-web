@@ -5,7 +5,9 @@ import type { AktivitetspengerUtbetaltMånedDto } from '@k9-sak-web/backend/ungs
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import type { AsyncPollingStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import { type BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import { type InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 
@@ -15,6 +17,7 @@ export interface AktivitetspengerApi {
   lagreAksjonspunktOverstyr(props: BekreftetOgOverstyrteAksjonspunkterDto): Promise<unknown>;
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;
+  hentLovligeBehandlingsoperasjoner(behandlingUuid: string): Promise<BehandlingOperasjonerDto>;
   hentBehandlingMidlertidigStatus(behandlingUuid: string): Promise<AsyncPollingStatus>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto>;
@@ -25,4 +28,5 @@ export interface AktivitetspengerApi {
     behandlingVersjon: number,
     bekreftedeAksjonspunktDtoer: BekreftetAksjonspunktDto[],
   ): Promise<void>;
+  hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollSkjermlenkeContextDto[]>;
 }

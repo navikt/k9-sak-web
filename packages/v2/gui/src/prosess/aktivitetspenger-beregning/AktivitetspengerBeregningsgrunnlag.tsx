@@ -2,7 +2,7 @@ import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { BesteBeregningResultatType } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BesteBeregningResultatType.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, Heading, HStack, InlineMessage, Table, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Heading, HelpText, HStack, InlineMessage, Table, VStack } from '@navikt/ds-react';
 import styles from './aktivitetspengerBeregning.module.css';
 
 const formatter = new Intl.NumberFormat('nb-NO', {
@@ -59,8 +59,15 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                     <Table.HeaderCell align="right">Arbeid/Frilans</Table.HeaderCell>
                     <Table.HeaderCell align="right">Næring</Table.HeaderCell>
                     <Table.HeaderCell align="right">Sum</Table.HeaderCell>
-                    <Table.HeaderCell align="right">Sum avkortet 6G</Table.HeaderCell>
-                    <Table.HeaderCell align="right">G-justert({årstallForSkjæringstidspunkt})</Table.HeaderCell>
+                    <Table.HeaderCell>
+                      <HStack gap="space-4" justify="end" align="center">
+                        G-justert({årstallForSkjæringstidspunkt})
+                        <HelpText>
+                          Inntekt over 6G er fjernet, siden inntekt over 6 G ikke tas med i grunnlaget jf, forskriftens
+                          § 11
+                        </HelpText>
+                      </HStack>
+                    </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -72,7 +79,6 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                         <Table.DataCell align="right">{formatter.format(pgi.arbeidsinntekt)}</Table.DataCell>
                         <Table.DataCell align="right">{formatter.format(pgi.næring)}</Table.DataCell>
                         <Table.DataCell align="right">{formatter.format(pgi.sum)}</Table.DataCell>
-                        <Table.DataCell align="right">{formatter.format(pgi.sumAvkortet)}</Table.DataCell>
                         <Table.DataCell align="right">
                           {isBesteberegning ? (
                             <SelectedCell>{formatter.format(pgi.sumAvkortetOgOppjustert)}</SelectedCell>
@@ -84,7 +90,7 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                     );
                   })}
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
-                    <Table.HeaderCell scope="row" colSpan={5}>
+                    <Table.HeaderCell scope="row" colSpan={4}>
                       Gjennomsnittlig pensjonsgivende inntekt siste 3 år{' '}
                     </Table.HeaderCell>
                     <Table.DataCell align="right">
@@ -117,7 +123,7 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                   <Table.DataCell scope="row">Beregningsgrunnlag redusert til 66 %</Table.DataCell>
                   <Table.DataCell align="right">{formatter.format(data.beregningsgrunnlagRedusert)}</Table.DataCell>
                 </Table.Row>
-                {data.dagsats && (
+                {data.dagsats !== undefined && (
                   <Table.Row className={`${styles.bottomCell} ${styles.rowWithSpacing}`}>
                     <Table.HeaderCell scope="row">Dagsats (beregningsgrunnlag/260 dager)</Table.HeaderCell>
                     <Table.DataCell align="right">{formatter.format(data.dagsats)}</Table.DataCell>

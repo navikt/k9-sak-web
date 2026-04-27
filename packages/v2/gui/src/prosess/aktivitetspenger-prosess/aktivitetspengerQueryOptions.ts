@@ -45,3 +45,15 @@ export const satsOgUtbetalingPerioderQueryOptions = (
     queryKey: ['satsOgUtbetalingPerioder', behandling.uuid, api.backend, enabled],
     queryFn: () => (enabled ? api.getSatsOgUtbetalingPerioder(behandling.uuid) : null),
   });
+
+export const totrinnskontrollSkjermlenkeContextQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['totrinnskontroll-skjermlenke-context', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentTotrinnskontrollSkjermlenkeContext(behandling.uuid),
+  });
+
+export const lovligeBehandlingsoperasjonerQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['lovlige-behandlingsoperasjoner', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentLovligeBehandlingsoperasjoner(behandling.uuid),
+  });

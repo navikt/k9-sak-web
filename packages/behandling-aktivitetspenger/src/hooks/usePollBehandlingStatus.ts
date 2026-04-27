@@ -13,17 +13,29 @@ export const usePollBehandlingStatus = (
   behandling: Behandling,
   setBehandling: (behandling: Awaited<ReturnType<AktivitetspengerApi['getBehandling']>>) => void,
 ) => {
+  const MAX_POLL_ATTEMPTS = 150;
   const queryClient = useQueryClient();
 
   const pollTilBehandlingErKlar = async () => {
-    const poll = async (): Promise<void> => {
+    const poll = async (remainingAttempts: number): Promise<boolean> => {
+      if (remainingAttempts === 0) {
+        return false;
+      }
+
       const status = await api.hentBehandlingMidlertidigStatus(behandling.uuid);
       if (status?.status === ung_sak_kontrakt_AsyncPollingStatus_Status.PENDING) {
         await new Promise(resolve => setTimeout(resolve, status.pollIntervalMillis ?? 500));
-        return poll();
+        return poll(remainingAttempts - 1);
       }
+
+      return true;
     };
-    await poll();
+
+    const erKlar = await poll(MAX_POLL_ATTEMPTS);
+    if (!erKlar) {
+      return;
+    }
+
     const nyBehandling = await queryClient.fetchQuery(
       behandlingQueryOptions(api, { uuid: behandling.uuid, versjon: behandling.versjon }),
     );
