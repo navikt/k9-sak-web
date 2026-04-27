@@ -175,6 +175,7 @@ export const ActivityPanel = ({
   alleMerknaderFraBeslutter,
   handleSubmit,
   pristine,
+  submitting,
   arbeidsgiverOpplysningerPerId,
   erGodkjent,
 }: Partial<ActivityPanelProps> & StateProps & InjectedFormProps) => {
@@ -281,7 +282,7 @@ export const ActivityPanel = ({
       <FlexContainer>
         <FlexRow className={styles.buttonContainer}>
           <FlexColumn>
-            <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={pristine}>
+            <Button variant="primary" size="small" type="button" onClick={handleSubmit} loading={submitting} disabled={pristine || submitting}>
               <FormattedMessage id="ActivityPanel.Oppdater" />
             </Button>
           </FlexColumn>

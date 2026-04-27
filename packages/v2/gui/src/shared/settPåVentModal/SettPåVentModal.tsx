@@ -97,7 +97,7 @@ const getKodeverkKilde = (erTilbakekreving: boolean, erKlage: boolean) => {
 };
 
 interface PureOwnProps {
-  submitCallback: (formData: FormState) => void;
+  submitCallback: (formData: FormState) => void | Promise<void>;
   cancelEvent: () => void;
   showModal: boolean;
   erTilbakekreving: boolean;
@@ -192,8 +192,8 @@ export const SettPåVentModal = ({
     }
   };
 
-  const handleSubmit = (data: FormState) => {
-    submitCallback(data);
+  const handleSubmit = async (data: FormState) => {
+    await submitCallback(data);
   };
 
   const disableEndreFrist = venteårsakerSomIkkeKanEndreFrist.some(va => va === ventearsak);
@@ -318,13 +318,17 @@ export const SettPåVentModal = ({
                 }
                 className={styles.button}
                 onClick={getHovedknappOnClick}
-                disabled={isButtonDisabled(
-                  frist,
-                  showAvbryt,
-                  hasManualPaVent,
-                  erVenterEtterlysInntektsmelding,
-                  formHasChanges,
-                )}
+                loading={formMethods.formState.isSubmitting}
+                disabled={
+                  formMethods.formState.isSubmitting ||
+                  isButtonDisabled(
+                    frist,
+                    showAvbryt,
+                    hasManualPaVent,
+                    erVenterEtterlysInntektsmelding,
+                    formHasChanges,
+                  )
+                }
               >
                 {getHovedknappTekst()}
               </Button>
