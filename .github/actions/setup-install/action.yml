@@ -20,4 +20,4 @@ runs:
 
     - name: Installere dependencies
       shell: bash
-      run: HUSKY=0 yarn install --immutable
+      run: LEFTHOOK=0 yarn install --immutable
