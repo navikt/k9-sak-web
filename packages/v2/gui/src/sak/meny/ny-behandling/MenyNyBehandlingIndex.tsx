@@ -89,7 +89,7 @@ const MenyNyBehandlingIndexV2 = ({
   const { REVURDERING_FRA_STEG_V2 } = use(FeatureTogglesContext);
 
   const submit = useCallback(
-    (formValues: FormValues) => {
+    async (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
       const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
