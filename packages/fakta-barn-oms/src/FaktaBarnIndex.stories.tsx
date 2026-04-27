@@ -51,7 +51,7 @@ const rammevedtak: Rammevedtak[] = [
   },
   {
     type: RammevedtakEnum.UIDENTIFISERT,
-    fritekst: '03070189827 @9-6,20 D (Denne mangler type)',
+    fritekst: '18410162721 @9-6,20 D (Denne mangler type)',
   },
 ];
 

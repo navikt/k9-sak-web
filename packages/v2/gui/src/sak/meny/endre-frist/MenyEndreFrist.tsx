@@ -156,7 +156,7 @@ export const MenyEndreFrist = ({
           </Box>
         </Modal.Body>
         <Modal.Footer>
-          <Button size="small" type="submit">
+          <Button size="small" type="submit" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
             Utsett frist
           </Button>
           <Button size="small" variant="secondary" type="button" onClick={lukkModal}>

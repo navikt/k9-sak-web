@@ -28,7 +28,7 @@ const headerColumnContent = [
 
 interface OwnProps {
   alleArbeidsforhold: ArbeidsforholdV2[];
-  updateArbeidsforhold: (values: any) => void;
+  updateArbeidsforhold: (values: any) => void | Promise<void>;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   selectedId?: string;
   behandlingId: number;
