@@ -21,6 +21,45 @@ import { Søknadsfrist } from './Søknadsfrist';
 import { InngangsvilkårTab } from './types';
 import { aksjonspunktErÅpent } from './utils/utils';
 
+interface InngangsvilkårData {
+  søknadsfristAp?: AksjonspunktDto;
+  søknadsfristVilkår?: VilkårMedPerioderDto;
+  alderVilkår?: VilkårMedPerioderDto;
+  vurderBistandsvilkårAp?: AksjonspunktDto;
+  vurderBistandsvilkårVilkår?: VilkårMedPerioderDto;
+  lokalkontorForeslårVilkårAp?: AksjonspunktDto;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
+  bostedAp?: AksjonspunktDto;
+  bostedVilkår?: VilkårMedPerioderDto;
+  andreLivsoppholdytelserAp?: AksjonspunktDto;
+  andreLivsoppholdytelserVilkår?: VilkårMedPerioderDto;
+}
+
+const samleInngangsvilkårData = (
+  aksjonspunkter: AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
+): InngangsvilkårData => ({
+  søknadsfristAp: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+  ),
+  søknadsfristVilkår: vilkår.find(v => v.vilkarType === vilkarType.SØKNADSFRIST),
+  alderVilkår: vilkår.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR),
+  vurderBistandsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+  vurderBistandsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.BISTANDSVILKÅR),
+  lokalkontorForeslårVilkårAp: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+  ),
+  lokalkontorBeslutterAp: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+  ),
+  bostedAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED),
+  bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
+  andreLivsoppholdytelserAp: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+  ),
+  andreLivsoppholdytelserVilkår: vilkår.find(v => v.vilkarType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR),
+});
+
 const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
 const CustomWarningIcon = () => (
   <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />
@@ -42,40 +81,25 @@ const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderD
   return undefined;
 };
 
-const utledAktivTab = (aksjonspunkter: AksjonspunktDto[]) => {
-  // Samle alle aksjonspunkter på toppen for effektivitet
-  const bostedAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
-  const andreLivsoppholdytelserAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-  );
-  const vurderBistandsvilkårAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-  );
-  const lokalkontorForeslårVilkårAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
-  );
-  const lokalkontorBeslutterAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
-  );
-
+const utledAktivTab = (data: InngangsvilkårData) => {
   // Prioriter åpne aksjonspunkter som krever handling
-  if (bostedAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.bostedAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
   }
-  if (andreLivsoppholdytelserAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
   }
-  if (lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BESLUTTER;
   }
 
   // Håndter avslag-flow: hvis bosted eller andre livsoppholdytelser er avslått,
   // vis den sluttførte fanen hvis ingen videre vilkår skal behandles
-  if (lokalkontorForeslårVilkårAp) {
-    if (bostedAp?.status === AksjonspunktStatus.UTFØRT && !andreLivsoppholdytelserAp) {
+  if (data.lokalkontorForeslårVilkårAp) {
+    if (data.bostedAp?.status === AksjonspunktStatus.UTFØRT && !data.andreLivsoppholdytelserAp) {
       return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
     }
-    if (andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT && !vurderBistandsvilkårAp) {
+    if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBistandsvilkårAp) {
       return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
     }
   }
@@ -108,33 +132,14 @@ export const AktivitetspengerInngangsvilkår = ({
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
     !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
-  const søknadsfristAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-  );
-  const søknadsfristVilkår = vilkår.find(v => v.vilkarType === vilkarType.SØKNADSFRIST);
-  const alderVilkår = vilkår.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR);
-  const vurderBistandsvilkårAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-  );
-  const vurderBistandsvilkårVilkår = vilkår.find(v => v.vilkarType === vilkarType.BISTANDSVILKÅR);
-  const lokalkontorForeslårVilkårAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
-  );
-  const lokalkontorBeslutterAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
-  );
-  const bostedAp = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTED);
-  const bostedVilkår = vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR);
-  const andreLivsoppholdytelserAp = aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-  );
-  const andreLivsoppholdytelserVilkår = vilkår.find(v => v.vilkarType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR);
 
-  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(aksjonspunkter));
+  const inngangsvilkårdata = samleInngangsvilkårData(aksjonspunkter, vilkår);
+
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(inngangsvilkårdata));
 
   useEffect(() => {
-    setAktivTab(utledAktivTab(aksjonspunkter));
-  }, [aksjonspunkter]);
+    setAktivTab(utledAktivTab(inngangsvilkårdata));
+  }, [inngangsvilkårdata]);
 
   return (
     <VStack gap="space-20">
@@ -146,83 +151,95 @@ export const AktivitetspengerInngangsvilkår = ({
           <Tabs.Tab
             value={InngangsvilkårTab.SØKNADSFRIST}
             label="Søknadsfrist"
-            icon={tabIcon(søknadsfristAp, søknadsfristVilkår)}
+            icon={tabIcon(inngangsvilkårdata.søknadsfristAp, inngangsvilkårdata.søknadsfristVilkår)}
           />
-          <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIcon(undefined, alderVilkår)} />
+          <Tabs.Tab
+            value={InngangsvilkårTab.ALDER}
+            label="Alder"
+            icon={tabIcon(undefined, inngangsvilkårdata.alderVilkår)}
+          />
           <Tabs.Tab
             value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}
             label="Bosatt i Trondheim"
-            icon={tabIcon(bostedAp, bostedVilkår)}
+            icon={tabIcon(inngangsvilkårdata.bostedAp, inngangsvilkårdata.bostedVilkår)}
           />
           <Tabs.Tab
             value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
             label="Andre livsoppholdytelser"
-            icon={tabIcon(andreLivsoppholdytelserAp, andreLivsoppholdytelserVilkår)}
+            icon={tabIcon(
+              inngangsvilkårdata.andreLivsoppholdytelserAp,
+              inngangsvilkårdata.andreLivsoppholdytelserVilkår,
+            )}
           />
           <Tabs.Tab
             value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
             label="Behov for bistand"
-            icon={tabIcon(vurderBistandsvilkårAp, vurderBistandsvilkårVilkår)}
+            icon={tabIcon(inngangsvilkårdata.vurderBistandsvilkårAp, inngangsvilkårdata.vurderBistandsvilkårVilkår)}
           />
-          {lokalkontorBeslutterAp && aksjonspunktErÅpent(lokalkontorBeslutterAp) && (
-            <Tabs.Tab
-              value={InngangsvilkårTab.BESLUTTER}
-              label="Beslutter"
-              icon={kanBeslutte ? tabIcon(lokalkontorBeslutterAp) : undefined}
-            />
-          )}
+          {inngangsvilkårdata.lokalkontorBeslutterAp &&
+            aksjonspunktErÅpent(inngangsvilkårdata.lokalkontorBeslutterAp) && (
+              <Tabs.Tab
+                value={InngangsvilkårTab.BESLUTTER}
+                label="Beslutter"
+                icon={kanBeslutte ? tabIcon(inngangsvilkårdata.lokalkontorBeslutterAp) : undefined}
+              />
+            )}
         </Tabs.List>
         <Box marginBlock="space-20 space-0">
           <Tabs.Panel value={InngangsvilkårTab.SØKNADSFRIST}>
-            {søknadsfristVilkår && <Søknadsfrist søknadsfristVilkår={søknadsfristVilkår} />}
+            {inngangsvilkårdata.søknadsfristVilkår && (
+              <Søknadsfrist søknadsfristVilkår={inngangsvilkårdata.søknadsfristVilkår} />
+            )}
           </Tabs.Panel>
-          <Tabs.Panel value={InngangsvilkårTab.ALDER}>{alderVilkår && <Alder alderVilkår={alderVilkår} />}</Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.ALDER}>
+            {inngangsvilkårdata.alderVilkår && <Alder alderVilkår={inngangsvilkårdata.alderVilkår} />}
+          </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
-            {bostedVilkår && (
+            {inngangsvilkårdata.bostedVilkår && (
               <Bosted
-                bostedVilkår={bostedVilkår}
-                bostedAp={bostedAp}
-                lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
+                bostedVilkår={inngangsvilkårdata.bostedVilkår}
+                bostedAp={inngangsvilkårdata.bostedAp}
+                lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
                 readOnly={!kanSaksbehandle}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                isPermanentlyReadOnly={!!lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
               />
             )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
-            {andreLivsoppholdytelserVilkår && (
+            {inngangsvilkårdata.andreLivsoppholdytelserVilkår && (
               <AndreLivsoppholdytelser
-                andreLivsoppholdytelserAp={andreLivsoppholdytelserAp}
-                lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
-                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
+                andreLivsoppholdytelserAp={inngangsvilkårdata.andreLivsoppholdytelserAp}
+                lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                andreLivsoppholdytelserVilkår={inngangsvilkårdata.andreLivsoppholdytelserVilkår}
                 readOnly={!kanSaksbehandle}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                isPermanentlyReadOnly={!!lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
               />
             )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
-            {vurderBistandsvilkårVilkår && (
+            {inngangsvilkårdata.vurderBistandsvilkårVilkår && (
               <BehovForBistand
-                vurderBistandsvilkårVilkår={vurderBistandsvilkårVilkår}
-                vurderBistandsvilkårAp={vurderBistandsvilkårAp}
-                lokalkontorForeslårVilkårAp={lokalkontorForeslårVilkårAp}
+                vurderBistandsvilkårVilkår={inngangsvilkårdata.vurderBistandsvilkårVilkår}
+                vurderBistandsvilkårAp={inngangsvilkårdata.vurderBistandsvilkårAp}
+                lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={!!lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
               />
             )}
           </Tabs.Panel>
-          {lokalkontorBeslutterAp && (
+          {inngangsvilkårdata.lokalkontorBeslutterAp && (
             <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
               <Beslutter
-                lokalkontorBeslutterAp={lokalkontorBeslutterAp}
+                lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                 api={api}
                 behandling={behandling}
                 onTabChange={setAktivTab}
