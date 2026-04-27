@@ -196,7 +196,7 @@ export const Bosted = ({
                 setIsFormLocked(true);
               }}
             >
-              <VStack gap="space-24">
+              <VStack gap="space-24" width="70ch">
                 <RhfTextarea
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.begrunnelse`}

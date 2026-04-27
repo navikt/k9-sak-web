@@ -250,13 +250,13 @@ export const Beslutter = ({
                                   </Fieldset>
                                 </VStack>
                               )}
-                              <div className="mt-4">
+                              <Box marginBlock="space-16 space-0" width="70ch">
                                 <RhfTextarea
                                   control={control}
                                   name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                                   label="Begrunnelse"
                                 />
-                              </div>
+                              </Box>
                             </ArrowBox>
                           )}
                         </Fieldset>
