@@ -18,6 +18,7 @@ import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backe
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
 import { useAvregningFormState } from '../AvregningContext.js';
+import { useBekreftAksjonspunkt } from '../../../shared/hooks/useBekreftAksjonspunkt.js';
 
 const OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
   `${TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING}IKKE_SEND` as const;
@@ -72,6 +73,7 @@ export const VurderFeilutbetaling = ({
   tilbakekrevingvalg,
 }: VurderFeilutbetalingProps) => {
   const { getFeilutbetalingState, setFeilutbetaling } = useAvregningFormState();
+  const { bekreft } = useBekreftAksjonspunkt();
   const formMethods = useForm<VurderFeilutbetalingFormValues>({
     defaultValues: getFeilutbetalingState() || buildInitialValues(aksjonspunkter, tilbakekrevingvalg),
   });
@@ -114,15 +116,12 @@ export const VurderFeilutbetaling = ({
         ? TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING
         : values.videreBehandling;
 
-    await avregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling(
-      behandling.id,
-      behandling.versjon,
-      values.begrunnelse ?? null,
+    await bekreft({
+      '@type': AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+      begrunnelse: values.begrunnelse ?? null,
       videreBehandling,
-      values.varseltekst ?? null,
-    );
-    /// trenger polling
-    window.location.reload();
+      varseltekst: values.varseltekst ?? null,
+    });
   });
 
   return (

@@ -17,6 +17,8 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
+import { k9SakClient } from '@k9-sak-web/backend/k9sak/aksjonspunktClient.js';
 import OmsorgspengerPaneler from './components/OmsorgspengerPaneler';
 import {
   OmsorgspengerBehandlingApiKeys,
@@ -171,7 +173,8 @@ const BehandlingOmsorgspengerIndex = ({
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling?.versjon : behandling.versjon}
       />
 
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+        <AksjonspunktContext.Provider value={k9SakClient}>
         <OmsorgspengerPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}
@@ -191,6 +194,7 @@ const BehandlingOmsorgspengerIndex = ({
           featureToggles={featureToggles}
           dokumenter={alleDokumenter}
         />
+        </AksjonspunktContext.Provider>
       </BehandlingProvider>
     </>
   );

@@ -17,6 +17,8 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
+import { k9SakClient } from '@k9-sak-web/backend/k9sak/aksjonspunktClient.js';
 import OpplaeringspengerPaneler from './components/OpplaeringspengerPaneler';
 import {
   OpplaeringspengerBehandlingApiKeys,
@@ -172,26 +174,32 @@ const BehandlingOpplaeringspengerIndex = ({
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling?.versjon : behandling.versjon}
       />
 
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
-        <OpplaeringspengerPaneler
-          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-          fetchedData={data}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          opneSokeside={opneSokeside}
-          hasFetchError={behandlingState === RestApiState.ERROR}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-          featureToggles={featureToggles}
-          dokumenter={alleDokumenter}
-        />
+      <BehandlingProvider
+        behandling={behandling}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        setBehandling={setBehandling}
+      >
+        <AksjonspunktContext.Provider value={k9SakClient}>
+          <OpplaeringspengerPaneler
+            behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+            fetchedData={data}
+            fagsak={fagsak}
+            fagsakPerson={fagsakPerson}
+            alleKodeverk={kodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            opneSokeside={opneSokeside}
+            hasFetchError={behandlingState === RestApiState.ERROR}
+            setBehandling={setBehandling}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+            featureToggles={featureToggles}
+            dokumenter={alleDokumenter}
+          />
+        </AksjonspunktContext.Provider>
       </BehandlingProvider>
     </>
   );

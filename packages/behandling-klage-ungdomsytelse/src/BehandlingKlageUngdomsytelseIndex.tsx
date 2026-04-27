@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
+import { ungSakClient } from '@k9-sak-web/backend/ungsak/aksjonspunktClient.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -139,6 +142,8 @@ const BehandlingKlageUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
+      <BehandlingProvider behandling={behandling} refetchBehandling={() => hentBehandling({ behandlingId }, true)} setBehandling={setBehandling}>
+      <AksjonspunktContext.Provider value={ungSakClient}>
       <KlagePaneler
         behandling={hasNotFinished ? forrigeBehandling : behandling}
         fetchedData={data}
@@ -156,6 +161,8 @@ const BehandlingKlageUngdomsytelseIndex = ({
         setBehandling={setBehandling}
         featureToggles={featureToggles}
       />
+      </AksjonspunktContext.Provider>
+      </BehandlingProvider>
     </>
   );
 };

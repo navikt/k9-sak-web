@@ -1,37 +1,10 @@
 import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
-import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import type { BehandlingAvregningBackendApiType } from '../../prosess/avregning/AvregningBackendApiType';
 import { fakePdf } from './fakePdf';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 import { fn } from 'storybook/test';
 
 export class FakeBehandlingAvregningBackendApi implements BehandlingAvregningBackendApiType {
-  bekreftAksjonspunktSjekkHøyEtterbetaling = fn(
-    async (behandlingId: number, behandlingVersjon: number, begrunnelse: string): Promise<void> => {
-      ignoreUnusedDeclared(behandlingId);
-      ignoreUnusedDeclared(behandlingVersjon);
-      ignoreUnusedDeclared(begrunnelse);
-      return Promise.resolve();
-    },
-  );
-
-  bekreftAksjonspunktVurderFeilutbetaling = fn(
-    async (
-      behandlingId: number,
-      behandlingVersjon: number,
-      begrunnelse: string,
-      videreBehandling: TilbakekrevingVidereBehandling,
-      varseltekst?: string,
-    ): Promise<void> => {
-      ignoreUnusedDeclared(behandlingId);
-      ignoreUnusedDeclared(behandlingVersjon);
-      ignoreUnusedDeclared(begrunnelse);
-      ignoreUnusedDeclared(videreBehandling);
-      ignoreUnusedDeclared(varseltekst);
-      return Promise.resolve();
-    },
-  );
-
   hentForhåndsvisningVarselbrev = fn(
     async (
       behandlingUuid: string,

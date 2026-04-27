@@ -23,12 +23,6 @@ const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Pr
   );
   konverterKodeverkTilKode(deepCopyProps, false);
 
-  /*
-   * Midlertidig fiks for å oppdatere behandling etter å ha fullført aksjonspunkt. Ifm med
-   * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
-   * tilpasses til å kunne trigge oppdatering av behandling "on-demand"
-   */
-
   return (
     <KontrollerEtterbetaling
       behandling={deepCopyProps.behandling}
