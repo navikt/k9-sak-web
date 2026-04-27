@@ -9,6 +9,7 @@ import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/back
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
 import { AuthAbortedPage } from '../../auth/AuthAbortedPage.js';
 import { ensureError } from '../ensureError.js';
+import { shouldReportToSentry } from '../sentry.js';
 
 export interface ErrorFallbackProps {
   readonly error: Error;
@@ -50,12 +51,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   // Vi ønsker ikkje å rapportere alle feil til Sentry, feks viss har utgått sesjon.
   // Legg til fleire her ved behov.
   protected static shouldReportToSentry(error: Error | null): boolean {
-    const apiError = ExtendedApiError.findInError(error);
-    if (apiError != null) {
-      const doNotReport = apiError.isUnauthorized;
-      return !doNotReport;
-    }
-    return true;
+    return shouldReportToSentry(error);
   }
 
   override componentDidCatch(anyError: any, info: ErrorInfo): void {
