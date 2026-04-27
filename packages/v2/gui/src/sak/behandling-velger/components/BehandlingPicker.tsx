@@ -67,6 +67,7 @@ const getSøknadsperioderForValgtBehandling = (
 
 const renderListItems = ({
   behandlinger,
+  alleBehandlinger,
   getBehandlingLocation,
   setValgtBehandlingId,
   alleSøknadsperioder,
@@ -74,6 +75,7 @@ const renderListItems = ({
   kodeverkNavnFraKode,
 }: {
   behandlinger: Behandling[];
+  alleBehandlinger: Behandling[];
   getBehandlingLocation: (behandlingId: number) => Location;
   setValgtBehandlingId: React.Dispatch<React.SetStateAction<number | undefined>>;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
@@ -90,8 +92,11 @@ const renderListItems = ({
     return aktiveFilter.includes(behandling.type);
   });
 
-  return sorterteOgFiltrerteBehandlinger.map((behandling, index) => {
+  const alleSorterteBehandlinger = sortBehandlinger(alleBehandlinger);
+
+  return sorterteOgFiltrerteBehandlinger.map(behandling => {
     const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
+    const globalIndex = alleSorterteBehandlinger.findIndex(b => b.id === behandling.id);
     return (
       <li data-testid="BehandlingPickerItem" key={behandling.id}>
         <NavLink
@@ -108,7 +113,7 @@ const renderListItems = ({
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={getSøknadsperioderForValgtBehandling(alleSøknadsperioder, behandling)}
-            index={sorterteOgFiltrerteBehandlinger.length - index}
+            index={alleSorterteBehandlinger.length - globalIndex}
           />
         </NavLink>
       </li>
@@ -332,6 +337,7 @@ const BehandlingPicker = ({
             {!noExistingBehandlinger &&
               renderListItems({
                 behandlinger: behandlingerSomSkalVises,
+                alleBehandlinger: behandlinger,
                 getBehandlingLocation,
                 setValgtBehandlingId,
                 alleSøknadsperioder: søknadsperioder,
