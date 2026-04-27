@@ -125,7 +125,7 @@ const InntektsmeldingContainer = () => {
   const kanVurderes = harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderMedUiState);
   const kanSendeInn = !readOnly && kanVurderes && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
@@ -143,7 +143,7 @@ const InntektsmeldingContainer = () => {
       };
     });
 
-    onFinished({
+    await onFinished({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
       perioder,
@@ -162,7 +162,7 @@ const InntektsmeldingContainer = () => {
       <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
-          onFormSubmit={onFinished}
+          onFormSubmit={payload => Promise.resolve(onFinished(payload))}
           aksjonspunkt={gjeldeneAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
@@ -171,7 +171,7 @@ const InntektsmeldingContainer = () => {
       {kanSendeInn && (
         <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={formState.isSubmitting} disabled={formState.isSubmitting}>
               Send inn
             </Button>
           </form>

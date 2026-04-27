@@ -44,7 +44,7 @@ const InntektsmeldingStatus = ({ status }: { status: Status }) => {
   if (erIkkePåkrevd) {
     return (
       <>
-        <InformationSquareFillIcon fontSize={24} style={{ color: 'var(--ax-color-blue-500)' }} />
+        <InformationSquareFillIcon fontSize={24} style={{ color: 'var(--ax-bg-info-strong)' }} />
         <span className="ml-2">{statusTekster[status] ?? status}</span>
       </>
     );

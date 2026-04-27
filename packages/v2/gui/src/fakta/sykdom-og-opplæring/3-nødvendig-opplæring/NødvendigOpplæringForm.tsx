@@ -215,7 +215,7 @@ const NødvendigOpplæringForm = ({
     <>
       <RhfForm
         formMethods={formMethods}
-        onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
+        onSubmit={async data => await løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
       >
         <div className="flex flex-col gap-6">
           <Controller
@@ -414,7 +414,7 @@ const NødvendigOpplæringForm = ({
           )}
           {!readOnly && (
             <div className="flex gap-4">
-              <Button variant="primary" type="submit" size="small">
+              <Button variant="primary" type="submit" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
                 Bekreft og fortsett
               </Button>
               {redigerer && (

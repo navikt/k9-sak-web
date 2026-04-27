@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
@@ -17,13 +16,14 @@ import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
+import { asyncAction } from '../../../storybook/asyncAction.js';
 
 const createProps = (
   behandlingUuid: string,
   props: Partial<InntektsmeldingContainerProps>,
 ): InntektsmeldingContainerProps => ({
   ...inntektsmeldingPropsMock,
-  submitCallback: action('submitCallback'),
+  submitCallback: asyncAction('submitCallback'),
   ...props,
   behandling: {
     uuid: behandlingUuid,
