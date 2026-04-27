@@ -90,7 +90,7 @@ interface NyBehandlingModalProps {
       fagsakYtelseType: FagsakYtelsesType;
       periode?: Periode;
     } & FormValues,
-  ) => void;
+  ) => Promise<void>;
   behandlingOppretting: BehandlingOppretting[];
   delvisRevurderingsårsaker?: DelvisRevurderingÅrsakMapping[];
   behandlingstyper: KodeverkObject[];
@@ -232,7 +232,7 @@ export const NyBehandlingModal = ({
     }
     return rettigheterForBehandling.gyldigePerioderPerÅrsak?.find(it => it.årsak === behandlingArsakType)?.perioder;
   };
-  const handleSubmit = (formValues: FormValues) => {
+  const handleSubmit = async (formValues: FormValues) => {
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
         ? {
@@ -241,7 +241,7 @@ export const NyBehandlingModal = ({
             behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
           }
         : {};
-    submitCallback({
+    await submitCallback({
       ...formValues,
       behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
@@ -413,7 +413,7 @@ export const NyBehandlingModal = ({
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
               Opprett behandling
             </Button>
           </HStack>

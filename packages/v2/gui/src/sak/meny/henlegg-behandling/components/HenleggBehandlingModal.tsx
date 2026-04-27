@@ -116,7 +116,7 @@ interface HenleggBehandlingModalProps {
   brevmottakere?: Klagepart[];
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'];
-  handleSubmit: (formValues: any) => void;
+  handleSubmit: (formValues: any) => Promise<void>;
 }
 
 /**
@@ -254,7 +254,14 @@ export const HenleggBehandlingModal = ({
                 )}
                 <HGrid gap="space-4" columns={{ xs: '7fr 4fr 1fr' }}>
                   <div>
-                    <Button variant="primary" size="small" className={styles.button} type="submit">
+                    <Button
+                      variant="primary"
+                      size="small"
+                      className={styles.button}
+                      type="submit"
+                      loading={formMethods.formState.isSubmitting}
+                      disabled={formMethods.formState.isSubmitting}
+                    >
                       Henlegg behandling
                     </Button>
                     <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
@@ -280,6 +287,7 @@ export const HenleggBehandlingModal = ({
                             )}
                             data-testid="previewLink"
                             loading={isFetchingPreview}
+                            disabled={isFetchingPreview}
                           >
                             Forhåndsvis brev
                           </Button>

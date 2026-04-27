@@ -185,7 +185,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                   )}
                 </VStack>
                 <div className={styles.buttonContainer}>
-                  <Button variant="primary" size="small" disabled={formState.isSubmitting}>
+                  <Button variant="primary" size="small" disabled={formState.isSubmitting} loading={formState.isSubmitting}>
                     {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
                   </Button>
                   <Button variant="secondary" size="small" onClick={lukkModal}>
