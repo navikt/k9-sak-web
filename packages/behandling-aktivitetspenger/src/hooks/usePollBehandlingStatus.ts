@@ -33,7 +33,9 @@ export const usePollBehandlingStatus = (
 
     const erKlar = await poll(MAX_POLL_ATTEMPTS);
     if (!erKlar) {
-      return;
+      throw new Error(
+        `Polling av behandling ${behandling.uuid} nådde maks antall forsøk uten at behandlingen ble klar.`,
+      );
     }
 
     const nyBehandling = await queryClient.fetchQuery(

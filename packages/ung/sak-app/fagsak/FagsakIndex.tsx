@@ -159,7 +159,7 @@ const FagsakIndex = () => {
   const { data: saksbehandlereSomHarGjortEndringerIBehandlingen } = useQuery({
     queryKey: ['saksbehandlere', api.backend, behandling?.uuid, behandling?.versjon],
     queryFn: () => api.hentSaksbehandlere(behandling?.uuid ?? ''),
-    enabled: !!behandling?.uuid,
+    enabled: !!behandling?.uuid && !skalIkkeHenteData,
   });
 
   const featureToggles = useContext(FeatureTogglesContext);
