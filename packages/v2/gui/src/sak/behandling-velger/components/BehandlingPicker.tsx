@@ -67,7 +67,7 @@ const getSøknadsperioderForValgtBehandling = (
 
 const renderListItems = ({
   behandlinger,
-  alleBehandlinger,
+  behandlingsnummerById,
   getBehandlingLocation,
   setValgtBehandlingId,
   alleSøknadsperioder,
@@ -75,14 +75,14 @@ const renderListItems = ({
   kodeverkNavnFraKode,
 }: {
   behandlinger: Behandling[];
-  alleBehandlinger: Behandling[];
+  behandlingsnummerById: Map<number, number>;
   getBehandlingLocation: (behandlingId: number) => Location;
   setValgtBehandlingId: React.Dispatch<React.SetStateAction<number | undefined>>;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   aktiveFilter: string[];
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
 }): ReactElement<void>[] => {
-  const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
+  const sorterteOgFiltrerteBehandlinger = behandlinger.filter(behandling => {
     if (aktiveFilter.length === 0) {
       return true;
     }
@@ -92,11 +92,9 @@ const renderListItems = ({
     return aktiveFilter.includes(behandling.type);
   });
 
-  const alleSorterteBehandlinger = sortBehandlinger(alleBehandlinger);
-
   return sorterteOgFiltrerteBehandlinger.map(behandling => {
     const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
-    const globalIndex = alleSorterteBehandlinger.findIndex(b => b.id === behandling.id);
+    const globalIndex = behandlingsnummerById.get(behandling.id) ?? 0;
     return (
       <li data-testid="BehandlingPickerItem" key={behandling.id}>
         <NavLink
@@ -113,7 +111,7 @@ const renderListItems = ({
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={getSøknadsperioderForValgtBehandling(alleSøknadsperioder, behandling)}
-            index={alleSorterteBehandlinger.length - globalIndex}
+            index={globalIndex}
           />
         </NavLink>
       </li>
@@ -223,6 +221,13 @@ const BehandlingPicker = ({
       aktiveFilter,
     );
   }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, aktiveFilter]);
+
+  const behandlingsnummerById = useMemo(() => {
+    const sorterteBehandlinger = sortBehandlinger(behandlinger);
+    return new Map(
+      sorterteBehandlinger.map((behandling, index) => [behandling.id, sorterteBehandlinger.length - index]),
+    );
+  }, [behandlinger]);
 
   const behandlingerMedPerioderMedÅrsak = useMemo(
     () =>
@@ -337,7 +342,7 @@ const BehandlingPicker = ({
             {!noExistingBehandlinger &&
               renderListItems({
                 behandlinger: behandlingerSomSkalVises,
-                alleBehandlinger: behandlinger,
+                behandlingsnummerById,
                 getBehandlingLocation,
                 setValgtBehandlingId,
                 alleSøknadsperioder: søknadsperioder,
