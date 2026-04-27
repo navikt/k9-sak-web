@@ -20,7 +20,7 @@ interface AlderProsessStegProps {
   isReadOnly: boolean;
   readOnlySubmitButton: boolean;
   status: string;
-  submitCallback: () => void;
+  submitCallback: (data: any) => Promise<void>;
   vilkar: Vilkar[];
   setFormData: () => any;
 }

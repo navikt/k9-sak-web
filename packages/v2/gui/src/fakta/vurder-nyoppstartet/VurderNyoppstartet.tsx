@@ -35,8 +35,8 @@ export const VurderNyoppstartet = ({
 
   const erNyoppstartet = useWatch({ control: formMethods.control, name: 'erNyoppstartet' });
 
-  const onSubmit = (values: FormValues) => {
-    submitCallback([
+  const onSubmit = async (values: FormValues) => {
+    await submitCallback([
       {
         begrunnelse: values.begrunnelse,
         kode: AksjonspunktCodes.VURDER_NYOPPSTARTET,
@@ -91,7 +91,7 @@ export const VurderNyoppstartet = ({
           </Box>
           {!readOnly && (
             <HStack>
-              <Button type="submit" size="small">
+              <Button type="submit" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
                 Bekreft
               </Button>
             </HStack>

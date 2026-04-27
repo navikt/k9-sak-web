@@ -64,16 +64,19 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   alleMerknaderFraBeslutter,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { control, formState, trigger } = useFormContext<OppholdInntektOgPerioderFormState>();
   const oppholdInntektOgPeriodeFormValues = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     try {
       const isValid = await trigger('oppholdInntektOgPeriodeForm');
       if (isValid) {
         setIsSubmitted(true);
       }
-    } finally {
       updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -113,7 +116,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
         {submittable && (
           <>
             <HStack gap="space-16">
-              <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={!formState.isDirty}>
+              <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={isSubmitting || !formState.isDirty} loading={isSubmitting}>
                 Oppdater
               </Button>
               <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>

@@ -93,6 +93,7 @@ const InntektsmeldingContainer = () => {
   const aksjonspunktKode = gjeldeneAksjonspunkt?.definisjon;
 
   const [editStates, setEditStates] = useState<Record<string, boolean>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const tilstanderMedUiState = useMemo<TilstandMedUiState[]>(
     () =>
@@ -125,7 +126,7 @@ const InntektsmeldingContainer = () => {
   const kanVurderes = harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderMedUiState);
   const kanSendeInn = !readOnly && kanVurderes && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
@@ -143,11 +144,16 @@ const InntektsmeldingContainer = () => {
       };
     });
 
-    onFinished({
-      '@type': aksjonspunktKode,
-      kode: aksjonspunktKode,
-      perioder,
-    });
+    setIsSubmitting(true);
+    try {
+      await onFinished({
+        '@type': aksjonspunktKode,
+        kode: aksjonspunktKode,
+        perioder,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -162,7 +168,7 @@ const InntektsmeldingContainer = () => {
       <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
-          onFormSubmit={onFinished}
+          onFormSubmit={(payload) => Promise.resolve(onFinished(payload))}
           aksjonspunkt={gjeldeneAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
@@ -171,7 +177,7 @@ const InntektsmeldingContainer = () => {
       {kanSendeInn && (
         <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
               Send inn
             </Button>
           </form>

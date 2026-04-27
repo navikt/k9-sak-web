@@ -14,7 +14,7 @@ export interface InntektsmeldingContainerProps {
   arbeidsgiverOpplysningerPerId: Record<string, ArbeidsgiverOpplysningerDto>;
   dokumenter?: DokumentDto[];
   aksjonspunkter: AksjonspunktDto[];
-  submitCallback: (aksjonspunkter: InntektsmeldingRequestPayload[]) => void;
+  submitCallback: (aksjonspunkter: InntektsmeldingRequestPayload[]) => Promise<void>;
 }
 
 const InntektsmeldingIndex = ({
