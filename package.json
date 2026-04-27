@@ -125,7 +125,7 @@
   },
   "resolutions": {
     "parse-url": "8.1.0",
-    "@types/react": "19.0.3"
+    "@types/react": "19.2.14"
   },
   "msw": {
     "workerDirectory": "public"
