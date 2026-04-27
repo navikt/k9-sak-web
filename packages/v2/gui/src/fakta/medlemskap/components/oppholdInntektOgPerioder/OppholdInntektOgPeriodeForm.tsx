@@ -73,8 +73,8 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
       const isValid = await trigger('oppholdInntektOgPeriodeForm');
       if (isValid) {
         setIsSubmitted(true);
+        updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
       }
-      updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
     } finally {
       setIsSubmitting(false);
     }
