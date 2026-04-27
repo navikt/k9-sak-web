@@ -382,7 +382,7 @@ describe('Validators', () => {
 
   describe('hasValidFodselsnummer', () => {
     it('skal ikke feile når fødselsnummer er gyldig', () => {
-      const result = hasValidFodselsnummer('22121588017');
+      const result = hasValidFodselsnummer('24420167209');
       expect(result).toBeNull();
     });
 
@@ -435,7 +435,7 @@ describe('Validators', () => {
 
   describe('hasValidSaksnummerOrFodselsnummerFormat', () => {
     it('skal ikke feile når saksnummer eller fødselsnummer har gyldig pattern', () => {
-      const result = hasValidSaksnummerOrFodselsnummerFormat('22121588017');
+      const result = hasValidSaksnummerOrFodselsnummerFormat('24420167209');
       expect(result).toBeNull();
     });
 
