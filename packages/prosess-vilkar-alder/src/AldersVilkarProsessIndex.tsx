@@ -22,7 +22,7 @@ const intl = createIntl(
 
 interface AldersVilkarProsessIndexProps {
   behandling: Behandling;
-  submitCallback: () => void;
+  submitCallback: () => Promise<void>;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
   angitteBarn: { personIdent: string }[];

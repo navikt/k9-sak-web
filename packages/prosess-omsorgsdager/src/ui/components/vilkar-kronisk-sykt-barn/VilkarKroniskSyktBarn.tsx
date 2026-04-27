@@ -102,7 +102,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const {
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
     getValues,
     register,
@@ -131,7 +131,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     getValues,
   );
 
-  const bekreftAksjonspunkt = (data: FormData) => {
+  const bekreftAksjonspunkt = async (data: FormData) => {
     if (
       !errors.begrunnelse &&
       !errors.avslagsårsakKode &&
@@ -139,7 +139,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       !errors.harDokumentasjonOgFravaerRisiko &&
       !errors.tilDato
     ) {
-      losAksjonspunkt(
+      await losAksjonspunkt(
         tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko),
         data.begrunnelse,
         data.avslagsårsakKode,
@@ -414,7 +414,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                 </div>
               )}
 
-              <Button size="small" variant="primary" type="submit">
+              <Button size="small" variant="primary" type="submit" loading={isSubmitting} disabled={isSubmitting}>
                 Bekreft og fortsett
               </Button>
             </form>

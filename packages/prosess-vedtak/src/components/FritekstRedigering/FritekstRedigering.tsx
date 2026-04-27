@@ -24,7 +24,7 @@ import {
 } from './RedigeringUtils';
 
 interface ownProps {
-  handleSubmit: (html: string, request: any) => void;
+  handleSubmit: (html: string, request: any) => Promise<void>;
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
@@ -119,7 +119,7 @@ const FritekstRedigering = ({
   // useCallback for å unngå unødvendig re-initialisering av editorjs i FritekstEditor
   const handleLagre = useCallback(
     async html => {
-      handleSubmit(
+      await handleSubmit(
         html,
         lagLagreHtmlDokumentdataRequest({
           dokumentdata,
