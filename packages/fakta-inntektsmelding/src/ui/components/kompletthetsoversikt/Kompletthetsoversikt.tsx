@@ -56,7 +56,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
     mode: 'onTouched',
     defaultValues: tilstanderBeriket.reduce(reducer, {}),
   });
-  const { isDirty } = formMethods.formState;
+  const { isDirty, isSubmitting } = formMethods.formState;
   const { handleSubmit, watch } = formMethods;
 
   const tilstanderTilVurdering = [
@@ -95,7 +95,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
       {kanSendeInn() && (
         <Box marginBlock="space-24 space-0">
           <form
-            onSubmit={handleSubmit((data: any) => {
+            onSubmit={handleSubmit(async (data: any) => {
               const perioder = tilstanderTilVurdering.map(tilstand => {
                 const skalViseBegrunnelse = !(
                   aksjonspunktKode === '9069' && watch(tilstand.beslutningFieldName) !== Kode.FORTSETT
@@ -109,14 +109,14 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
                   kode: aksjonspunktKode,
                 };
               });
-              onFormSubmit({
+              return onFormSubmit({
                 '@type': aksjonspunktKode,
                 kode: aksjonspunktKode,
                 perioder,
               });
             })}
           >
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
               Send inn
             </Button>
           </form>
