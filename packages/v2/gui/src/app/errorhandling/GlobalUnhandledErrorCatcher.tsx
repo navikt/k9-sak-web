@@ -1,5 +1,6 @@
 import { createContext, type FC, type ReactNode, useEffect, useState, use } from 'react';
 import { ensureError } from './ensureError.js';
+import { GlobalErrorBoundary } from './GlobalErrorBoundary.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -47,7 +48,12 @@ export const GlobalUnhandledErrorCatcher: FC<{ children?: ReactNode }> = ({ chil
       removeEventListener('unhandledrejection', promiseRejectionListener);
     };
   }, []);
+
   return (
-    <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors }}>{children}</GlobalUnhandledErrorsContext>
+    <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors }}>
+      <GlobalErrorBoundary onError={error => setGlobalErrors(prevErrors => [...prevErrors, error])}>
+        {children}
+      </GlobalErrorBoundary>
+    </GlobalUnhandledErrorsContext>
   );
 };

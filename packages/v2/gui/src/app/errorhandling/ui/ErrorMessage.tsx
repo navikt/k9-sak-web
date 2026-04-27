@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ErrorModal, type ErrorModalProps } from './ErrorModal.js';
 
 import css from './handCursor.module.css';
+import { SentryReportedError } from '../SentryReportedError.js';
 
 export interface ErrorMessageProps {
   readonly error: Error;
@@ -24,7 +25,7 @@ export const ErrorMessage = ({ error, onReload }: ErrorMessageProps) => {
               <ErrorReference ref={errorRef} />
             </small>
           ) : null}
-          {error.name != 'Error' ? <small>({error.name})</small> : null}
+          {error.name != 'Error' ? <small>({SentryReportedError.unwrapped(error).name})</small> : null}
           {additionalInfo != null ? (
             <>
               <ErrorModal

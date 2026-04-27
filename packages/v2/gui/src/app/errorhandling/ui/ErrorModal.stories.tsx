@@ -7,6 +7,7 @@ import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/Feil
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { ErrorModal } from './ErrorModal.js';
 import { action } from 'storybook/actions';
+import { SentryReportedError } from '../SentryReportedError.js';
 
 const withAppScaffolding = (): Decorator => Story => {
   return (
@@ -85,5 +86,11 @@ export const ShowFrontendError: Story = {
 export const ShowApiError: Story = {
   args: {
     error: fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
+  },
+};
+
+export const ShowSentryReportedError: Story = {
+  args: {
+    error: new SentryReportedError(new FrontendError('Feil rapportert til sentry'), 'sentry-002'),
   },
 };

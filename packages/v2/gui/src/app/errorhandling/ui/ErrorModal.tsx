@@ -3,6 +3,7 @@ import { ErrorReference } from './ErrorReference.js';
 import { ArrowCirclepathIcon, XMarkIcon } from '@navikt/aksel-icons';
 import css from './textsizedButton.module.css';
 import { resolveErrorUiData } from './resolveErrorUiData.js';
+import { SentryReportedError } from '../SentryReportedError.js';
 
 export interface ErrorModalProps {
   readonly error: Error | undefined;
@@ -18,7 +19,7 @@ export const ErrorModal = ({ error, onClose, onReload }: ErrorModalProps) => {
         {error != null ? (
           <LocalAlert status="error">
             <LocalAlert.Header>
-              <LocalAlert.Title>Uventet feil ({error.name})</LocalAlert.Title>
+              <LocalAlert.Title>Uventet feil ({SentryReportedError.unwrapped(error).name})</LocalAlert.Title>
               <LocalAlert.CloseButton onClick={onClose} />
             </LocalAlert.Header>
             <LocalAlert.Content>

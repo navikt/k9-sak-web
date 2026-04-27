@@ -2,17 +2,18 @@ import { Button, GlobalAlert, Link, VStack } from '@navikt/ds-react';
 import { ErrorMessage } from './ErrorMessage.js';
 import { useState } from 'react';
 import { ChevronDownDoubleIcon, ChevronUpDoubleIcon } from '@navikt/aksel-icons';
-import { resolveErrorUiData } from './resolveErrorUiData.ts';
-import { makeErrorId } from '../alerts/AlertInfo.ts';
+import { resolveErrorUiData } from './resolveErrorUiData.js';
+import { makeErrorId } from '../alerts/AlertInfo.js';
 
 import css from './handCursor.module.css';
+import { SentryReportedError } from '../SentryReportedError.js';
 
 export interface TopErrorPanelProps {
   readonly errors: ReadonlyArray<Error>;
 }
 
 const resolveErrorNames = (errors: ReadonlyArray<Error>): string[] => {
-  const names = new Set(errors.map(e => e.name));
+  const names = new Set(errors.map(e => (e instanceof SentryReportedError ? e.reported.name : e.name)));
   // Vi ønsker maks tre unike navn returnert
   const max3 = Array.from(names).slice(0, 3);
   if (names.size > 3) {

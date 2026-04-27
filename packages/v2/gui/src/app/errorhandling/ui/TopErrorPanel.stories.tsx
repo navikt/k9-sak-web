@@ -7,6 +7,7 @@ import { AdditionalInfoError } from '../AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
+import { SentryReportedError } from '../SentryReportedError.js';
 
 const withAppScaffolding = (): Decorator => Story => {
   return (
@@ -57,6 +58,12 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 export const OneError: Story = {
   args: {
     errors: [new Error('Test error 1')],
+  },
+};
+
+export const SentryReported: Story = {
+  args: {
+    errors: [new SentryReportedError(new FrontendError('Test error 1'), 'sentryId-1')],
   },
 };
 
