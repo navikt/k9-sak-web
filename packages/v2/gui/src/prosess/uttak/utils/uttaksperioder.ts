@@ -1,21 +1,21 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
-import type {
-  k9_sak_typer_Periode as Periode,
-  pleiepengerbarn_uttak_kontrakter_Uttaksplan as Uttaksplan,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
+import type { Uttaksplan } from '@k9-sak-web/backend/k9sak/kontrakt/Uttaksplan.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import type { Dayjs } from 'dayjs';
 
-const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) => {
-  const sisteUkeIFørstePeriode = initializeDate(periode.tom).week();
-  const førsteUkeINestePeriode = initializeDate(nestePeriode.fom).week();
-  return (
-    sisteUkeIFørstePeriode === førsteUkeINestePeriode ||
-    førsteUkeINestePeriode === sisteUkeIFørstePeriode + 1 ||
-    (sisteUkeIFørstePeriode >= 52 && førsteUkeINestePeriode === 1)
-  );
+const oppholdHarUkedager = (tom: Dayjs, fom: Dayjs) => {
+  for (let dag = tom.add(1, 'day'); dag.isBefore(fom); dag = dag.add(1, 'day')) {
+    // hvis dag er en ukedag (mandag-fredag), returner true
+    if ([1, 2, 3, 4, 5].includes(dag.day())) return true;
+  }
+  return false;
 };
+
+const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) =>
+  !oppholdHarUkedager(initializeDate(periode.tom), initializeDate(nestePeriode.fom));
 
 const lagUttaksperiodeliste = (uttaksperioder: Uttaksplan['perioder']): UttaksperiodeBeriket[] => {
   const perioder = Object.keys(uttaksperioder ?? {})

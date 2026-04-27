@@ -31,7 +31,7 @@ jobs:
 
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.4
         with:
-          install_command: HUSKY=0 yarn install --immutable
+          install_command: LEFTHOOK=0 yarn install --immutable
           build_command: yarn build-storybook
           path: .static_storybook
           checkout: false

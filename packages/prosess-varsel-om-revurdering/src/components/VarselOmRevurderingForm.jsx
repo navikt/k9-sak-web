@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { formPropTypes, setSubmitFailed } from 'redux-form';
@@ -27,7 +27,7 @@ const minLength3 = minLength(3);
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av varsel om revurdering i søknad.
  */
-export class VarselOmRevurderingFormImpl extends React.Component {
+export class VarselOmRevurderingForm extends React.Component {
   static defaultProps = {
     sendVarsel: false,
     fritekst: null,
@@ -196,7 +196,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
   }
 }
 
-VarselOmRevurderingFormImpl.propTypes = {
+VarselOmRevurderingForm.propTypes = {
   intl: PropTypes.shape().isRequired,
   handleSubmit: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
@@ -277,16 +277,19 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
-const VarselOmRevurderingForm = connect(
+const VarselOmRevurderingFormWithIntl = props => {
+  const intl = useIntl();
+  return <VarselOmRevurderingForm {...props} intl={intl} />;
+};
+
+const ConnectedVarselOmRevurderingForm = connect(
   mapStateToPropsFactory,
   mapDispatchToProps,
 )(
-  injectIntl(
-    behandlingForm({
-      form: formName,
-      enableReinitialize: true,
-    })(VarselOmRevurderingFormImpl),
-  ),
+  behandlingForm({
+    form: formName,
+    enableReinitialize: true,
+  })(VarselOmRevurderingFormWithIntl),
 );
 
-export default VarselOmRevurderingForm;
+export default ConnectedVarselOmRevurderingForm;

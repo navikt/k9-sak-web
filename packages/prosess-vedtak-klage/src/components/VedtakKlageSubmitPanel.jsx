@@ -1,7 +1,7 @@
 import { Button, HGrid, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -23,7 +23,8 @@ const getPreviewCallback = (formProps, previewVedtakCallback) => e => {
   e.preventDefault();
 };
 
-export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVedtakCallback, formProps, readOnly }) => {
+export const VedtakKlageSubmitPanelImpl = ({ behandlingPåVent, previewVedtakCallback, formProps, readOnly }) => {
+  const intl = useIntl();
   const previewBrev = getPreviewCallback(formProps, previewVedtakCallback);
 
   return (
@@ -56,11 +57,10 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPåVent, previewVed
 };
 
 VedtakKlageSubmitPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   behandlingPåVent: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(VedtakKlageSubmitPanelImpl);
+export default VedtakKlageSubmitPanelImpl;

@@ -1,6 +1,5 @@
 import { renderWithIntlAndReactQueryClient, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
@@ -8,7 +7,6 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
     renderWithIntlAndReactQueryClient(
       <TilbakekrevingVedtakUtdypendeTekstPanel
-        intl={intlMock}
         isEmpty
         type="OPPSUMMERING"
         readOnly={false}
@@ -24,7 +22,6 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise textarea når en har trykket på lenke', () => {
     renderWithIntlAndReduxForm(
       <TilbakekrevingVedtakUtdypendeTekstPanel
-        intl={intlMock}
         isEmpty={false}
         type="OPPSUMMERING"
         readOnly={false}
@@ -40,7 +37,6 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise textarea når fritekst er påkrevet', () => {
     renderWithIntlAndReduxForm(
       <TilbakekrevingVedtakUtdypendeTekstPanel
-        intl={intlMock}
         isEmpty
         type="OPPSUMMERING"
         readOnly={false}
@@ -56,7 +52,6 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal ikke vise lenke eller textarea når verdi ikke finnes og en er i readonly-modus', () => {
     renderWithIntlAndReactQueryClient(
       <TilbakekrevingVedtakUtdypendeTekstPanel
-        intl={intlMock}
         isEmpty
         type="OPPSUMMERING"
         readOnly

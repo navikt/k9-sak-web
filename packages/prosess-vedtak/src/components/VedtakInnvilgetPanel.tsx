@@ -22,7 +22,7 @@ interface VedtakInnvilgetPanelProps {
   behandlingType: string | undefined;
 }
 
-export const VedtakInnvilgetPanelImpl = ({
+export const VedtakInnvilgetPanel = ({
   intl,
   behandlingsresultat,
   ytelseTypeKode,
@@ -48,4 +48,4 @@ const mapStateToProps = (state, ownProps: VedtakInnvilgetPanelProps) => ({
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 
-export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);
+export default connect(mapStateToProps)(VedtakInnvilgetPanel);
