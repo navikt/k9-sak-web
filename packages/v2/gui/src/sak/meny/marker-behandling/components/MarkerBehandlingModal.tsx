@@ -1,8 +1,5 @@
-// import { MerknadEndretDtoMerknadKode } from '@k9-sak-web/backend/k9sak/generated';
-import {
-  k9_kodeverk_produksjonsstyring_BehandlingMerknadType as EndreMerknadRequestMerknadKode,
-  type k9_sak_web_app_tjenester_los_dto_MerknadResponse as MerknadResponse,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { merknadType, type MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
+import type { MerknadResponse } from '@k9-sak-web/backend/k9sak/kontrakt/los/MerknadResponse.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
@@ -30,13 +27,13 @@ interface FormValues {
 }
 
 const getMerknader = (merknader: MerknadResponse): string[] => {
-  const ubrukteMerknader: EndreMerknadRequestMerknadKode[] = [];
+  const ubrukteMerknader: MerknadType[] = [];
 
   if (!merknader.hastesak.aktiv) {
-    ubrukteMerknader.push(EndreMerknadRequestMerknadKode.HASTESAK);
+    ubrukteMerknader.push(merknadType.HASTESAK);
   }
-  if (!merknader.utenlandstilsnitt.aktiv) {
-    ubrukteMerknader.push(EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT);
+  if (!merknader.utenlandssak.aktiv) {
+    ubrukteMerknader.push(merknadType.UTENLANDSSAK);
   }
   return ubrukteMerknader;
 };
@@ -45,7 +42,7 @@ const getGjeldendeMerknader = (merknader: MerknadResponse) => {
   interface Merknad {
     tittel: string;
     begrunnelse: string;
-    merknadKode: EndreMerknadRequestMerknadKode;
+    merknadKode: MerknadType;
   }
 
   const gjeldendeMerknader: Merknad[] = [];
@@ -53,14 +50,14 @@ const getGjeldendeMerknader = (merknader: MerknadResponse) => {
     gjeldendeMerknader.push({
       tittel: 'Hastesak',
       begrunnelse: merknader.hastesak.fritekst ?? '',
-      merknadKode: EndreMerknadRequestMerknadKode.HASTESAK,
+      merknadKode: merknadType.HASTESAK,
     });
   }
-  if (merknader.utenlandstilsnitt.aktiv) {
+  if (merknader.utenlandssak.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Utenlandssak',
-      begrunnelse: merknader.utenlandstilsnitt.fritekst ?? '',
-      merknadKode: EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT,
+      begrunnelse: merknader.utenlandssak.fritekst ?? '',
+      merknadKode: merknadType.UTENLANDSSAK,
     });
   }
   return gjeldendeMerknader;
@@ -96,7 +93,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
       await api.markerBehandling({
         behandlingUuid,
         fritekst: values.begrunnelse ?? '',
-        merknadKode: values.merknad as EndreMerknadRequestMerknadKode,
+        merknadKode: values.merknad as MerknadType,
       });
       if (erVeileder) {
         goToSearch();
@@ -106,7 +103,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
     }
   };
 
-  const slettMerknad = async (merknadKode: EndreMerknadRequestMerknadKode) => {
+  const slettMerknad = async (merknadKode: MerknadType) => {
     await api.fjernMerknad({
       behandlingUuid,
       merknadKode,
@@ -164,7 +161,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                     label="Velg ny merknad"
                     selectValues={tilgjengeligeMerknader.map(merknad => {
                       let label = merknad.charAt(0) + merknad.slice(1).toLowerCase();
-                      if (merknad === EndreMerknadRequestMerknadKode.UTENLANDSTILSNITT) {
+                      if (merknad === merknadType.UTENLANDSSAK) {
                         label = 'Utenlandssak';
                       }
                       return (
@@ -185,7 +182,12 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                   )}
                 </VStack>
                 <div className={styles.buttonContainer}>
-                  <Button variant="primary" size="small" disabled={formState.isSubmitting} loading={formState.isSubmitting}>
+                  <Button
+                    variant="primary"
+                    size="small"
+                    disabled={formState.isSubmitting}
+                    loading={formState.isSubmitting}
+                  >
                     {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
                   </Button>
                   <Button variant="secondary" size="small" onClick={lukkModal}>
