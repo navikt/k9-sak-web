@@ -49,7 +49,7 @@ interface VedtakProsessIndexProps {
   personopplysninger: PersonopplysningDto;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
   simuleringResultat: VedtakSimuleringResultat | null;
-  submitCallback: (data) => Promise<void>;
+  submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
   vedtakVarsel?: VedtakVarsel;

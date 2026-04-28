@@ -77,7 +77,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     watch,
     setValue,
     getValues,
@@ -95,9 +95,9 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = async data => {
+  const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.harOmsorgen && losAksjonspunkt) {
-      await losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
+      losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
       setValue('åpenForRedigering', false);
 
       if (!tekstTilBoolean(data.harOmsorgen)) mellomlagringFormState.fjerneDataTilknyttetBehandling(behandlingsID);
@@ -179,7 +179,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
                 {errors.harOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              <Button size="small" variant="primary" type="submit" loading={isSubmitting} disabled={isSubmitting}>
+              <Button size="small" variant="primary" type="submit">
                 Bekreft og fortsett
               </Button>
             </form>

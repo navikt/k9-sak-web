@@ -13,7 +13,7 @@ import { validerRedigertHtml } from './RedigeringUtils';
 import styles from './RedigerFritekstbrev.module.css';
 
 interface ownProps {
-  handleSubmit: (value: string) => Promise<void>;
+  handleSubmit: (value: string) => void;
   lukkEditor: () => void;
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
@@ -58,7 +58,6 @@ const FritekstEditor = ({
   const intl = useIntl();
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const editorRef = useRef<EditorJSWrapper | null>(null);
   const lastSubmitHtml = useRef(redigerbartInnhold);
   const initImportNotDone = useRef(true);
@@ -70,7 +69,7 @@ const FritekstEditor = ({
       await editor.erKlar();
       const html = await editor.lagre();
       if (html !== lastSubmitHtml.current) {
-        await handleSubmit(html);
+        handleSubmit(html);
         lastSubmitHtml.current = html;
       }
     }
@@ -110,13 +109,8 @@ const FritekstEditor = ({
   }, [redigerbartInnhold, redigerbartInnholdKlart, readOnly]);
 
   const handleLagreOgLukk = async () => {
-    setIsSubmitting(true);
-    try {
-      await handleLagre();
-      lukkEditor();
-    } finally {
-      setIsSubmitting(false);
-    }
+    await handleLagre();
+    lukkEditor();
   };
 
   const onForhåndsvis = async e => {
@@ -251,8 +245,7 @@ const FritekstEditor = ({
                   type="button"
                   variant="primary"
                   onClick={handleLagreOgLukk}
-                  disabled={!redigerbartInnholdKlart || readOnly || isSubmitting}
-                  loading={isSubmitting}
+                  disabled={!redigerbartInnholdKlart || readOnly}
                   size="small"
                 >
                   <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />

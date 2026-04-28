@@ -17,7 +17,7 @@ type Inputs = {
 
 type Props = {
   relevantAksjonspunkt: Aksjonspunkt;
-  submitCallback: (any) => Promise<void>;
+  submitCallback: (any) => void;
   begrunnelseTekst: string;
   erVilkaretOk: boolean | null;
   erVurdert: boolean;
@@ -47,9 +47,7 @@ const AldersvilkarForm = ({
       erVilkarOk: getErVilkaretOk(),
     },
   });
-  const bekreftAksjonspunkt = async (data: Inputs) => {
-    await submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
-  };
+  const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
@@ -97,7 +95,7 @@ const AldersvilkarForm = ({
       </RhfRadioGroup>
       <VerticalSpacer sixteenPx />
 
-      <Button size="small" variant="primary" type="submit" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+      <Button size="small" variant="primary" type="submit">
         <FormattedMessage id="AlderVilkar.Bekreft" />
       </Button>
     </RhfForm>

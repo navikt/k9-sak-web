@@ -8,7 +8,7 @@ import AldersvilkarLese from './AldersvilkarLese';
 
 interface AldersVilkarAPProps {
   behandling: Behandling;
-  submitCallback: () => Promise<void>;
+  submitCallback: () => void;
   relevantAksjonspunkt: Aksjonspunkt;
   isReadOnly: boolean;
   angitteBarn: { personIdent: string }[];

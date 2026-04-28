@@ -153,7 +153,7 @@ interface BrevPanelProps {
   hentFritekstbrevHtmlCallback: (parameters: any) => any;
   informasjonsbehovValues: any[];
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  lagreDokumentdata: (any) => Promise<void>;
+  lagreDokumentdata: (any) => void;
   overskrift: string;
   overstyrtMottaker?: Brevmottaker;
   personopplysninger: PersonopplysningDto;

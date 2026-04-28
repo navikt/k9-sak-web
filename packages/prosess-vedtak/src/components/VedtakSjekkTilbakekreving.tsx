@@ -7,7 +7,7 @@ import styles from './VedtakSjekkTilbakekreving.module.css';
 interface Props {
   readOnly: boolean;
   redigerSjekkTilbakekreving: boolean;
-  submitCallback: (aksjonspunktData: any) => Promise<void>;
+  submitCallback: (aksjonspunktData: any) => void;
   toggleSjekkTilbakekreving: () => void;
 }
 
@@ -19,21 +19,13 @@ const VedtakSjekkTilbakekreving: React.FC<Props> = ({
 }: Props) => {
   const [deaktiverBekreftKnapp, setDeaktiverBekreftKnapp] = React.useState<boolean>(true);
   const [visAdvarselTekst, setVisAdvarselTekst] = React.useState<boolean>(false);
-  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const handleChange = value => {
     setDeaktiverBekreftKnapp(value === 'ja');
     setVisAdvarselTekst(true);
   };
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-    try {
-      await submitCallback([{ kode: aksjonspunktCodes.SJEKK_TILBAKEKREVING }]);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const handleSubmit = () => submitCallback([{ kode: aksjonspunktCodes.SJEKK_TILBAKEKREVING }]);
 
   return (
     <>
@@ -53,7 +45,7 @@ const VedtakSjekkTilbakekreving: React.FC<Props> = ({
           <Radio value="nei">Nei, behandle denne behandlingen videre</Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
-        <Button size="small" variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp || isSubmitting} loading={isSubmitting}>
+        <Button size="small" variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
           Bekreft
         </Button>
         {redigerSjekkTilbakekreving && (

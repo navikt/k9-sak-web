@@ -131,7 +131,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
           antallDagerDelvisInnvilget: dagerDelvisInnvilget > 0 ? dagerDelvisInnvilget : null,
         },
         konfliktMedArbeidsgiver: visKonfliktMedArbeidsgiverAksjonspunkt,
-        losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) =>
+        losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
               aksjonspunkt.definisjon.kode,
@@ -139,7 +139,8 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
               begrunnelse,
               antallDagerDelvisInnvilget,
             ),
-          ]),
+          ]);
+        },
         formState: FormState,
       } as SaerligSmittevernhensynProps,
     };

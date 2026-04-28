@@ -76,7 +76,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     watch,
     setValue,
     getValues,
@@ -94,12 +94,12 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = async data => {
+  const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.fravaerGrunnetSmittevernhensynEllerStengt) {
       if (data.fravaerGrunnetSmittevernhensynEllerStengt === 'delvis') {
-        await losAksjonspunkt(true, data.begrunnelse, Number(data.antallDagerDelvisInnvilget));
+        losAksjonspunkt(true, data.begrunnelse, Number(data.antallDagerDelvisInnvilget));
       } else {
-        await losAksjonspunkt(data.fravaerGrunnetSmittevernhensynEllerStengt, data.begrunnelse, null);
+        losAksjonspunkt(data.fravaerGrunnetSmittevernhensynEllerStengt, data.begrunnelse, null);
       }
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
@@ -221,7 +221,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
               />
             </div>
           )}
-          <Button size="small" variant="primary" className={styles.knapp} type="submit" loading={isSubmitting} disabled={isSubmitting}>
+          <Button size="small" variant="primary" className={styles.knapp} type="submit">
             Bekreft og fortsett
           </Button>
           <Button
