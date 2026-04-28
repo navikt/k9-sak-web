@@ -15,7 +15,7 @@ interface EndreBehandlendeEnhetModalProps {
   }[];
   gjeldendeBehandlendeEnhetId?: string;
   gjeldendeBehandlendeEnhetNavn?: string;
-  onSubmit: (formValues: FormValues) => void;
+  onSubmit: (formValues: FormValues) => Promise<void>;
 }
 
 export interface FormValues {
@@ -52,8 +52,8 @@ export const EndreBehandlendeEnhetModal = ({
       )),
     );
 
-  const handleSubmit = (formValues: FormValues) => {
-    onSubmit(formValues);
+  const handleSubmit = async (formValues: FormValues) => {
+    await onSubmit(formValues);
   };
   return (
     <Modal className={styles.modal} open aria-label="Endre behandlende enhet" onClose={lukkModal}>
@@ -104,7 +104,7 @@ export const EndreBehandlendeEnhetModal = ({
             <div />
             <Box marginBlock="space-16 space-0">
               <div className={styles.floatButtons}>
-                <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse)} type="submit">
+                <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse) || formMethods.formState.isSubmitting} loading={formMethods.formState.isSubmitting} type="submit">
                   OK
                 </Button>
                 <Button variant="secondary" type="button" size="small" onClick={lukkModal}>

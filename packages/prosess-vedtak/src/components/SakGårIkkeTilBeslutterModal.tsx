@@ -1,10 +1,21 @@
 import { Alert, BodyShort, Button, Modal } from '@navikt/ds-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './sakGårIkkeTilBeslutterModal.module.css';
 
 const SakGårIkkeTilBeslutterModal = ({ onClose, onSubmit }) => {
   const intl = useIntl();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      await onSubmit();
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Modal open aria-label={intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.ModalAriaLabel' })} onClose={onClose}>
       <Modal.Body className={styles.modalContent}>
@@ -15,7 +26,15 @@ const SakGårIkkeTilBeslutterModal = ({ onClose, onSubmit }) => {
           </div>
         </Alert>
         <div className={styles.buttonContainer}>
-          <Button className={styles.submitButton} variant="primary" onClick={onSubmit} size="small" type="button">
+          <Button
+            className={styles.submitButton}
+            variant="primary"
+            onClick={handleSubmit}
+            size="small"
+            type="button"
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
             {intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.FattVedtak' })}
           </Button>
           <Button variant="secondary" onClick={onClose} size="small" type="button">

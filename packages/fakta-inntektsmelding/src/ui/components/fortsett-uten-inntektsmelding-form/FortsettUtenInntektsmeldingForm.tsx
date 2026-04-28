@@ -41,7 +41,12 @@ const FortsettUtenInntektsmeldingForm = ({
   const arbeidsforhold = containerContext?.arbeidsforhold ?? {};
   const readOnly = containerContext?.readOnly ?? false;
 
-  const { watch, reset, control } = formMethods;
+  const {
+    watch,
+    reset,
+    control,
+    formState: { isSubmitting },
+  } = formMethods;
   const { beslutningFieldName = 'beslutning', begrunnelseFieldName = 'begrunnelse' } = tilstand;
   const beslutningId = `beslutning-${tilstand.periodeOpprinneligFormat}`;
   const begrunnelseId = `begrunnelse-${tilstand.periodeOpprinneligFormat}`;
@@ -80,7 +85,7 @@ const FortsettUtenInntektsmeldingForm = ({
     }
   });
 
-  const submit = data => {
+  const submit = async data => {
     const periode: Perioder = {
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : null,
       periode: tilstand.periodeOpprinneligFormat,
@@ -216,7 +221,7 @@ const FortsettUtenInntektsmeldingForm = ({
           <Box marginBlock="space-24 space-0">
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
               {!harFlereTilstanderTilVurdering && !!beslutning && (
-                <Button variant="primary" size="small">
+                <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
                   {fortsettKnappTekstFunc[aksjonspunktKode](beslutning)}
                 </Button>
               )}

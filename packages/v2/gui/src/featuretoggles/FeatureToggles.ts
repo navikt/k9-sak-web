@@ -7,6 +7,7 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
 const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
+  BRUK_V2_UTENLANDSOPPHOLD: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,

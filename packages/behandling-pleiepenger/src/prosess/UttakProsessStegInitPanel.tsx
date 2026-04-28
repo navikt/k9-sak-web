@@ -20,7 +20,7 @@ const PANEL_ID = 'uttak';
 interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
+  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
   erOverstyrer: boolean;
   isReadOnly: boolean;
 }
@@ -30,14 +30,13 @@ export function UttakProsessStegInitPanel(props: Props) {
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
-  const [{ data: behandlingV2, refetch: refetchBehandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] =
-    useSuspenseQueries({
-      queries: [
-        behandlingQueryOptions(props.api, props.behandling),
-        aksjonspunkterQueryOptions(props.api, props.behandling),
-        uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
-      ],
-    });
+  const [{ data: behandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] = useSuspenseQueries({
+    queries: [
+      behandlingQueryOptions(props.api, props.behandling),
+      aksjonspunkterQueryOptions(props.api, props.behandling),
+      uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+    ],
+  });
 
   if (!erValgt) {
     return null;
@@ -56,10 +55,7 @@ export function UttakProsessStegInitPanel(props: Props) {
     .filter(definisjon => definisjon !== undefined);
 
   const hentBehandling = async () => {
-    if (props.hentBehandling) {
-      await props.hentBehandling();
-    }
-    await refetchBehandlingV2();
+    await props.hentBehandling({ behandlingId: props.behandling.id }, false);
   };
 
   return (

@@ -45,6 +45,6 @@ export interface InntektsmeldingContextType {
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
   dokumenter?: DokumentDto[];
-  onFinished: (data: InntektsmeldingRequestPayload) => void;
+  onFinished: (data: InntektsmeldingRequestPayload) => Promise<void>;
   aksjonspunkter: AksjonspunktDto[];
 }

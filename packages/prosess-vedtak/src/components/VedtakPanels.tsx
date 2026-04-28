@@ -49,7 +49,7 @@ interface VedtakPanelsProps {
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat | null;
   språkkode: string;
-  submitCallback: (data) => void;
+  submitCallback: (data) => Promise<void>;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
   vedtakVarsel?: VedtakVarsel;
