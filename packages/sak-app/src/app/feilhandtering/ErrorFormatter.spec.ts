@@ -3,13 +3,7 @@ import ErrorMessage from './ErrorMessage';
 import ErrorEventType from './errorEventType';
 
 describe('ErrorFormatter', () => {
-  it('skal legge til crashmessage til de formaterte feilene', () => {
-    const crashMessage = 'Feilet';
-    expect(new ErrorFormatter().format([], crashMessage)).toEqual([ErrorMessage.withMessage(crashMessage)]);
-  });
-
   it('skal legge til både crashmessage og flere feil av ulik type til de formaterte feilene', () => {
-    const crashMessage = 'Feilet';
     const errorMessages = [
       {
         type: ErrorEventType.POLLING_HALTED_OR_DELAYED,
@@ -24,8 +18,7 @@ describe('ErrorFormatter', () => {
       },
     ];
 
-    expect(new ErrorFormatter().format(errorMessages, crashMessage)).toEqual([
-      ErrorMessage.withMessage(crashMessage),
+    expect(new ErrorFormatter().format(errorMessages)).toEqual([
       ErrorMessage.withMessageCode('Rest.ErrorMessage.General', { errorDetails: 'halted' }),
       ErrorMessage.withMessageCode('Rest.ErrorMessage.PollingTimeout', errorMessages[1]),
     ]);

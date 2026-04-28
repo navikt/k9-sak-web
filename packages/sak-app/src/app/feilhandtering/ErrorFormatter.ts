@@ -21,12 +21,8 @@ type InputErrorMessage =
   | ErrorDataTimeoutOrNotFound;
 
 class ErrorFormatter {
-  format = (errorMessages: InputErrorMessage[], crashMessage?: string): ErrorMessage[] => {
+  format = (errorMessages: InputErrorMessage[]): ErrorMessage[] => {
     const allErrorMessages: ErrorMessage[] = [];
-    if (crashMessage) {
-      allErrorMessages.push(defaultFormatter.formatString(crashMessage));
-    }
-
     if (errorMessages.length > 0) {
       errorMessages
         .map((e: any) => {
