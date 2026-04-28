@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { Component, MouseEvent, RefObject } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
@@ -96,6 +96,7 @@ interface OwnProps {
   selectPeriodCallback: (...args: any[]) => any;
   hjelpetekstKomponent: React.ReactNode;
   kjonn: string;
+  intl: IntlShape;
 }
 
 /**
@@ -104,10 +105,10 @@ interface OwnProps {
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for tilbakekreving
  */
 
-class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps> {
+class TilbakekrevingTimeline extends Component<OwnProps> {
   timelineRef: RefObject<any>;
 
-  constructor(props: OwnProps & WrappedComponentProps) {
+  constructor(props: OwnProps) {
     super(props);
 
     this.goForward = this.goForward.bind(this);
@@ -205,4 +206,9 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
   }
 }
 
-export default injectIntl(TilbakekrevingTimeline);
+const TilbakekrevingTimelineWithIntl = (props: Omit<OwnProps, 'intl'>) => {
+  const intl = useIntl();
+  return <TilbakekrevingTimeline {...props} intl={intl} />;
+};
+
+export default TilbakekrevingTimelineWithIntl;

@@ -16,7 +16,7 @@ describe('<Omsorg>', () => {
         begrunnelse: '',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -63,7 +63,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -92,7 +92,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -139,7 +139,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -188,7 +188,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -237,7 +237,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -269,7 +269,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -310,7 +310,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -345,7 +345,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
       },
-      barn: ['01010050053'],
+      barn: ['17420373147'],
       harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {

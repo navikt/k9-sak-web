@@ -1,7 +1,7 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './fatterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -17,11 +17,11 @@ interface OwnProps {
  * ved totrinnskontroll. Ved å trykke på knapp blir saksbehandler tatt tilbake til søkesiden.
  */
 const FatterVedtakStatusModal = ({
-  intl,
   visModal = false,
   lukkModal,
   tekstkode,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
+  const intl = useIntl();
   const modalLabel = intl.messages[tekstkode] ? intl.formatMessage({ id: tekstkode }) : tekstkode;
   return (
     <Modal className={styles.modal} open={visModal} aria-label={modalLabel} onClose={lukkModal}>
@@ -48,4 +48,4 @@ const FatterVedtakStatusModal = ({
   );
 };
 
-export default injectIntl(FatterVedtakStatusModal);
+export default FatterVedtakStatusModal;

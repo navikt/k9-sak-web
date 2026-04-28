@@ -10,7 +10,7 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Edit } from '@navikt/ds-icons';
 import { Button, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
 import {
@@ -24,7 +24,7 @@ import {
 } from './RedigeringUtils';
 
 interface ownProps {
-  handleSubmit: (html: string, request: any) => void;
+  handleSubmit: (html: string, request: any) => Promise<void>;
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
@@ -55,7 +55,7 @@ const FritekstRedigering = ({
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
   setForhaandsvisningKlart,
-}: ownProps & WrappedComponentProps) => {
+}: ownProps) => {
   useEffect(() => {
     setForhaandsvisningKlart(false);
   }, []);
@@ -119,7 +119,7 @@ const FritekstRedigering = ({
   // useCallback for å unngå unødvendig re-initialisering av editorjs i FritekstEditor
   const handleLagre = useCallback(
     async html => {
-      handleSubmit(
+      await handleSubmit(
         html,
         lagLagreHtmlDokumentdataRequest({
           dokumentdata,
@@ -197,4 +197,4 @@ const FritekstRedigering = ({
   );
 };
 
-export default injectIntl(FritekstRedigering);
+export default FritekstRedigering;

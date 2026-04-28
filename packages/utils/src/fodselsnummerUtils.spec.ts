@@ -1,6 +1,6 @@
 import { isValidFodselsnummer } from './fodselsnummerUtils';
 
-const validFodselsnummer = '07078518434';
+const validFodselsnummer = '17420373147';
 
 describe('Fødselsnummer-utils', () => {
   it('skal godkjenne gyldig fødselsnummer', () => {

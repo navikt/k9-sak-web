@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@tanstack/react-query": "5.97.0",
+    "@tanstack/react-query": "5.99.0",
     "react": "19.2.5",
-    "react-intl": "8.1.4"
+    "react-intl": "10.1.1"
   },
   "devDependencies": {
     "@types/react": "19.2.14"

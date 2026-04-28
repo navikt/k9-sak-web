@@ -1,6 +1,6 @@
 import { Tag, Textarea, TextareaProps } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
@@ -37,10 +37,11 @@ interface TextAreaFieldProps {
 
 const TextAreaWithBadge = ({
   badges,
-  intl,
   dataId,
   ...otherProps
-}: TextAreaWithBadgeProps & WrappedComponentProps & TextareaProps) => (
+}: TextAreaWithBadgeProps & TextareaProps) => {
+  const intl = useIntl();
+  return (
   <div className={badges ? styles.textAreaFieldWithBadges : undefined}>
     {badges && (
       <div className={styles.etikettWrapper}>
@@ -53,9 +54,10 @@ const TextAreaWithBadge = ({
     )}
     <Textarea size="small" data-testid={dataId} {...otherProps} />
   </div>
-);
+  );
+};
 
-const renderNavTextArea = renderNavField(injectIntl(TextAreaWithBadge));
+const renderNavTextArea = renderNavField(TextAreaWithBadge);
 
 const TextAreaField = ({ name, label, validate = undefined, readOnly = false, ...otherProps }: TextAreaFieldProps) => (
   <Field

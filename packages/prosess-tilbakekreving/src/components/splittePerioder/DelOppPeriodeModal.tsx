@@ -3,7 +3,7 @@ import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@fp
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import styles from './delOppPeriodeModal.module.css';
@@ -21,13 +21,14 @@ interface OwnProps {
 }
 
 export const DelOppPeriodeModalImpl = ({
-  intl,
   periodeData,
   showModal,
   cancelEvent,
   finnesBelopMed0Verdi,
   ...formProps
-}: OwnProps & WrappedComponentProps & InjectedFormProps) => (
+}: OwnProps & InjectedFormProps) => {
+  const intl = useIntl();
+  return (
   <Modal
     open={showModal}
     aria-label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
@@ -83,7 +84,8 @@ export const DelOppPeriodeModalImpl = ({
       </div>
     </Modal.Body>
   </Modal>
-);
+  );
+};
 
 const validateForm = (value: any, periodeData: PeriodeData) => {
   if (
@@ -134,5 +136,5 @@ export const mapStateToPropsFactory = (_initialState, ownProps: PureOwnProps) =>
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: 'DelOppPeriode',
-  })(injectIntl(DelOppPeriodeModalImpl)),
+  })(DelOppPeriodeModalImpl),
 );

@@ -31,7 +31,7 @@ import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import { KeyboardEvent, MouseEvent } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
@@ -159,7 +159,6 @@ interface StateProps {
  * Presentasjonskomponent. Viser informasjon om valgt aktivitet
  */
 export const ActivityPanel = ({
-  intl,
   initialValues,
   readOnly,
   opptjeningAktivitetTypes,
@@ -176,9 +175,12 @@ export const ActivityPanel = ({
   alleMerknaderFraBeslutter,
   handleSubmit,
   pristine,
+  submitting,
   arbeidsgiverOpplysningerPerId,
   erGodkjent,
-}: Partial<ActivityPanelProps> & WrappedComponentProps & StateProps & InjectedFormProps) => (
+}: Partial<ActivityPanelProps> & StateProps & InjectedFormProps) => {
+  const intl = useIntl();
+  return (
   <FaktaGruppe
     className={styles.panel}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
@@ -280,7 +282,7 @@ export const ActivityPanel = ({
       <FlexContainer>
         <FlexRow className={styles.buttonContainer}>
           <FlexColumn>
-            <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={pristine}>
+            <Button variant="primary" size="small" type="button" onClick={handleSubmit} loading={submitting} disabled={pristine || submitting}>
               <FormattedMessage id="ActivityPanel.Oppdater" />
             </Button>
           </FlexColumn>
@@ -293,7 +295,8 @@ export const ActivityPanel = ({
       </FlexContainer>
     )}
   </FaktaGruppe>
-);
+  );
+};
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProps) => {
   const { activity, alleKodeverk, behandlingId, behandlingVersjon, opptjeningAktivitetTypes, updateActivity } =
@@ -358,5 +361,5 @@ export default connect(mapStateToPropsFactory)(
     form: activityPanelNameFormName,
     validate: validateForm,
     enableReinitialize: true,
-  })(injectIntl(ActivityPanel)),
+  })(ActivityPanel),
 );

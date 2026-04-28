@@ -11,13 +11,13 @@
   "dependencies": {
     "express": "5.2.1",
     "express-http-proxy": "2.1.2",
-    "express-rate-limit": "8.3.1",
+    "express-rate-limit": "8.3.2",
     "helmet": "8.1.0"
   },
   "devDependencies": {
     "@types/express": "5.0.6",
     "@types/express-http-proxy": "1.6.7",
     "@types/node": "22.15.33",
-    "typescript": "6.0.2"
+    "typescript": "6.0.3"
   }
 }

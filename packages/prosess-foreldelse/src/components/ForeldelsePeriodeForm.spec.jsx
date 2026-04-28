@@ -4,13 +4,13 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import { ForeldelsePeriodeFormImpl } from './ForeldelsePeriodeForm';
+import { ForeldelsePeriodeForm } from './ForeldelsePeriodeForm';
 
 describe('<ForeldelsePeriodeForm>', () => {
   it('skal rendre komponent korrekt', () => {
     const periode = { fom: '2020-01-01', tom: '2020-02-01' };
     renderWithIntlAndReduxForm(
-      <ForeldelsePeriodeFormImpl
+      <ForeldelsePeriodeForm
         periode={periode}
         behandlingFormPrefix="form"
         skjulPeriode={vi.fn()}

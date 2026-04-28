@@ -1,15 +1,13 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { screen } from '@testing-library/react';
-import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
-import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
+import { VedtakOpphorRevurderingPanel } from './VedtakOpphorRevurderingPanel';
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak', () => {
     renderWithIntl(
-      <VedtakOpphorRevurderingPanelImpl
-        intl={intlMock}
+      <VedtakOpphorRevurderingPanel
         ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
         medlemskapFom="2021-01-01"
         vedtakVarsel={{
@@ -32,8 +30,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
   });
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
     renderWithIntl(
-      <VedtakOpphorRevurderingPanelImpl
-        intl={intlMock}
+      <VedtakOpphorRevurderingPanel
         ytelseTypeKode={fagsakYtelsesType.SVANGERSKAPSPENGER}
         medlemskapFom="2021-01-01"
         vedtakVarsel={{

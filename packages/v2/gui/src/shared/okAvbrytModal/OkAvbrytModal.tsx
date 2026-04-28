@@ -7,6 +7,7 @@ interface OwnProps {
   showModal: boolean;
   submit: () => void;
   cancel: () => void;
+  isSubmitting?: boolean;
 }
 
 /**
@@ -14,7 +15,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Modal som viser en valgfri tekst i tillegg til knappene OK og Avbryt.
  */
-const OkAvbrytModal = ({ headerText, okButtonText = 'OK', showModal, cancel, submit }: OwnProps) => (
+const OkAvbrytModal = ({ headerText, okButtonText = 'OK', showModal, cancel, submit, isSubmitting = false }: OwnProps) => (
   <Modal className={styles.modal} open={showModal} aria-label={headerText || 'Bekreft eller avbryt'} onClose={cancel}>
     {headerText && (
       <Modal.Header>
@@ -23,7 +24,7 @@ const OkAvbrytModal = ({ headerText, okButtonText = 'OK', showModal, cancel, sub
     )}
     <Modal.Body>
       <HStack gap="space-8">
-        <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus>
+        <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus disabled={isSubmitting} loading={isSubmitting}>
           {okButtonText}
         </Button>
         <Button variant="secondary" size="small" type="reset" onClick={cancel}>
