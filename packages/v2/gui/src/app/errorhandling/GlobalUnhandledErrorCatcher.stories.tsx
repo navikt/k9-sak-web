@@ -76,6 +76,15 @@ const ErrorStatusDisplay = () => {
   );
 };
 
+const InputComponent = () => {
+  return (
+    <>
+      <label htmlFor="test-input">Test input: </label>
+      <input type="text" name="test-input" id="test-input" />
+    </>
+  );
+};
+
 const ErrorHandlingDemoApp = ({ throwInInitialRender, maxErrorCount }: ErrorHandlingDemoAppProps) => {
   return (
     <>
@@ -87,6 +96,7 @@ const ErrorHandlingDemoApp = ({ throwInInitialRender, maxErrorCount }: ErrorHand
         <NormalErrorThrowingComponent />
         <InAsyncErrorThrowingComponent />
         <MutationThrowingComponent />
+        <InputComponent />
       </GlobalUnhandledErrorCatcher>
     </>
   );
@@ -109,12 +119,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const NoError: Story = {};
-
-export const DefaultErrorInRender: Story = {
-  args: {
-    throwInInitialRender: true,
-  },
-};
 
 export const RenderingError: Story = {
   play: async ({ canvas }) => {
@@ -140,5 +144,14 @@ export const TooManyErrors: Story = {
 
     // Verifiser at "For mange feil" meldinga blir vist
     await expect(canvas.getByText(`For mange feil (${(args.maxErrorCount ?? 0) + 1})`)).toBeInTheDocument();
+  },
+};
+
+export const InputValueRemains: Story = {
+  play: async ({ canvas }) => {
+    const input = canvas.getByRole('textbox', { name: 'Test input:' });
+    await userEvent.type(input, 'Test input data');
+    await userEvent.click(canvas.getByRole('button', { name: 'Throw in mutation' }));
+    await expect(input).toHaveValue('Test input data');
   },
 };

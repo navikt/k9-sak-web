@@ -22,6 +22,10 @@ const withGlobalUnhandledErrorCatcher =
               Throw error
             </button>
           </p>
+          <p>
+            <label htmlFor="test-input">Test input: </label>
+            <input type="text" id="test-input" />
+          </p>
         </GlobalUnhandledErrorCatcher>
       </>
     );
@@ -52,5 +56,20 @@ export const ThrowError: Story = {
     await expect(dialog).toBeInTheDocument();
     await expect(within(dialog).getByText('Uventet feil', { exact: false })).toBeInTheDocument();
     await expect(within(dialog).getByText(errMsg, { exact: false })).toBeInTheDocument();
+  },
+};
+
+export const InputValueRemainsAfterError: Story = {
+  play: async ({ canvas }) => {
+    const input = canvas.getByRole('textbox', { name: 'Test input:' });
+    await userEvent.type(input, 'Test input data');
+    await userEvent.click(canvas.getByRole('button', { name: 'Throw error' }));
+    const dialog = await within(document.body).findByRole('alertdialog');
+    await expect(dialog).toBeInTheDocument();
+    await expect(input).toHaveValue('Test input data');
+    // Lukk dialogen
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Lukk feilmelding' }));
+    // Sjekk at inputverdien framleis er intakt etter at dialogen er lukka
+    await expect(input).toHaveValue('Test input data');
   },
 };
