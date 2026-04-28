@@ -47,9 +47,9 @@ interface VedtakPanelsProps {
   personopplysninger: PersonopplysningDto;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
   readOnly: boolean;
-  simuleringResultat: VedtakSimuleringResultat;
+  simuleringResultat: VedtakSimuleringResultat | null;
   språkkode: string;
-  submitCallback: (data) => void;
+  submitCallback: (data) => Promise<void>;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
   vedtakVarsel?: VedtakVarsel;

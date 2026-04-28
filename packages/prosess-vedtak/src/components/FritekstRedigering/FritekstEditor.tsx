@@ -3,7 +3,7 @@ import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 import PreviewLink from '../PreviewLink';
 import EditorJSWrapper from './EditorJSWrapper';
@@ -13,7 +13,7 @@ import { validerRedigertHtml } from './RedigeringUtils';
 import styles from './RedigerFritekstbrev.module.css';
 
 interface ownProps {
-  handleSubmit: (value: string) => void;
+  handleSubmit: (value: string) => Promise<void>;
   lukkEditor: () => void;
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
@@ -54,10 +54,11 @@ const FritekstEditor = ({
   prefiksInnhold,
   suffiksInnhold,
   brevStiler,
-  intl,
-}: ownProps & WrappedComponentProps) => {
+}: ownProps) => {
+  const intl = useIntl();
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const editorRef = useRef<EditorJSWrapper | null>(null);
   const lastSubmitHtml = useRef(redigerbartInnhold);
   const initImportNotDone = useRef(true);
@@ -69,7 +70,7 @@ const FritekstEditor = ({
       await editor.erKlar();
       const html = await editor.lagre();
       if (html !== lastSubmitHtml.current) {
-        handleSubmit(html);
+        await handleSubmit(html);
         lastSubmitHtml.current = html;
       }
     }
@@ -109,8 +110,13 @@ const FritekstEditor = ({
   }, [redigerbartInnhold, redigerbartInnholdKlart, readOnly]);
 
   const handleLagreOgLukk = async () => {
-    await handleLagre();
-    lukkEditor();
+    setIsSubmitting(true);
+    try {
+      await handleLagre();
+      lukkEditor();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const onForhåndsvis = async e => {
@@ -208,7 +214,6 @@ const FritekstEditor = ({
             {kanInkludereKalender && (
               <div>
                 <InkluderKalenderCheckbox
-                  intl={intl}
                   setFieldValue={setFieldValue}
                   skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                   disabled={readOnly}
@@ -246,7 +251,8 @@ const FritekstEditor = ({
                   type="button"
                   variant="primary"
                   onClick={handleLagreOgLukk}
-                  disabled={!redigerbartInnholdKlart || readOnly}
+                  disabled={!redigerbartInnholdKlart || readOnly || isSubmitting}
+                  loading={isSubmitting}
                   size="small"
                 >
                   <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
@@ -272,4 +278,4 @@ const FritekstEditor = ({
   );
 };
 
-export default injectIntl(FritekstEditor);
+export default FritekstEditor;

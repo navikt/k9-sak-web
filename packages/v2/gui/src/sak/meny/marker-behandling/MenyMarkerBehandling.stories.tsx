@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import { asyncAction } from '../../../storybook/asyncAction';
-import withFeatureToggles from '../../../storybook/decorators/withFeatureToggles';
 import { FakeMarkerBehandlingBackendApi } from '../../../storybook/mocks/FakeMarkerBehandlingBackendApi';
 import { delay } from '../../../utils/delay';
 import MarkerBehandlingModal from './components/MarkerBehandlingModal';
@@ -9,7 +8,6 @@ import MarkerBehandlingModal from './components/MarkerBehandlingModal';
 const meta = {
   title: 'gui/sak/meny/marker-behandling',
   component: MarkerBehandlingModal,
-  decorators: [withFeatureToggles({ LOS_MARKER_BEHANDLING_SUBMIT: true, MARKERING_UTENLANDSTILSNITT: true })],
 } satisfies Meta<typeof MarkerBehandlingModal>;
 
 export default meta;

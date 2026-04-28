@@ -10,6 +10,6 @@ export interface SaerligSmittevernhensynProps {
     antallDagerDelvisInnvilget: number;
   };
   konfliktMedArbeidsgiver: boolean;
-  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => void;
+  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => Promise<void>;
   formState: FormStateType;
 }

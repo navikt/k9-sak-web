@@ -257,7 +257,7 @@ const FagsakIndex = () => {
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}
-                    ungdomsytelseDeltakerStatus={ungdomsytelseDeltakerStatus}
+                    ungdomsytelseDeltakerStatus={isAktivitetspenger() ? undefined : ungdomsytelseDeltakerStatus}
                     erIkkeDigitalBruker={fagsak.erIkkeDigitalBruker}
                   />
                 </div>

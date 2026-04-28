@@ -142,7 +142,7 @@ const MedisinskVilkår = (): JSX.Element => {
         type: ActionType.SHOW_ERROR,
         step: null,
       });
-      throw new Error(error);
+      throw new Error(error, { cause: error });
     }
   };
 

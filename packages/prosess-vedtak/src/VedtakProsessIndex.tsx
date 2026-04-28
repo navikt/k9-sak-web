@@ -48,8 +48,8 @@ interface VedtakProsessIndexProps {
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
-  simuleringResultat: VedtakSimuleringResultat;
-  submitCallback: (data) => void;
+  simuleringResultat: VedtakSimuleringResultat | null;
+  submitCallback: (data) => Promise<void>;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: Vedtaksbrev;
   vedtakVarsel?: VedtakVarsel;

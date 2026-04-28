@@ -8,12 +8,12 @@ import {
   checkIfPeriodsAreEdgeToEdge,
   combineConsecutivePeriods,
   findUncoveredDays,
-  formatPeriod,
   getDaysInPeriod,
 } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { PlusCircleIcon, ScissorsFillIcon, TrashIcon } from '@navikt/aksel-icons';
 import { Alert, Button, DatePicker, Label, Modal, Radio, RadioGroup } from '@navikt/ds-react';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import dayjs from 'dayjs';
 import React, { useContext, useEffect, useState } from 'react';
 import {

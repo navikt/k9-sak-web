@@ -1,6 +1,6 @@
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@k9-sak-web/types';
@@ -17,7 +17,7 @@ type Inputs = {
 
 type Props = {
   relevantAksjonspunkt: Aksjonspunkt;
-  submitCallback: (any) => void;
+  submitCallback: (any) => Promise<void>;
   begrunnelseTekst: string;
   erVilkaretOk: boolean | null;
   erVurdert: boolean;
@@ -30,8 +30,8 @@ const AldersvilkarForm = ({
   erVilkaretOk,
   erVurdert,
   angitteBarn,
-  intl,
-}: Props & WrappedComponentProps) => {
+}: Props) => {
+  const intl = useIntl();
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
   const getErVilkaretOk = () => {
@@ -47,7 +47,9 @@ const AldersvilkarForm = ({
       erVilkarOk: getErVilkaretOk(),
     },
   });
-  const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  const bekreftAksjonspunkt = async (data: Inputs) => {
+    await submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  };
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={bekreftAksjonspunkt}>
@@ -95,11 +97,11 @@ const AldersvilkarForm = ({
       </RhfRadioGroup>
       <VerticalSpacer sixteenPx />
 
-      <Button size="small" variant="primary" type="submit">
+      <Button size="small" variant="primary" type="submit" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
         <FormattedMessage id="AlderVilkar.Bekreft" />
       </Button>
     </RhfForm>
   );
 };
 
-export default injectIntl(AldersvilkarForm);
+export default AldersvilkarForm;

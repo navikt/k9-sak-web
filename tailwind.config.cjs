@@ -11,8 +11,5 @@ module.exports = {
       sans: ['Source Sans Pro', 'Arial', 'sans-serif'],
     },
   },
-  corePlugins: {
-    preflight: false,
-  },
   plugins: [],
 };

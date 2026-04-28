@@ -1,4 +1,4 @@
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Tag, Tooltip, type TagProps, type TooltipProps } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';

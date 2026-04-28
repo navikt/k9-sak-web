@@ -1,18 +1,18 @@
 import {
-  k9_klage_kodeverk_behandling_BehandlingType as BehandlingType,
   k9_klage_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
+  k9_klage_kodeverk_behandling_BehandlingType as BehandlingType,
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
-import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import {
   folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
   folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto as TilbakekrevingValgDto,
   k9_kodeverk_økonomi_tilbakekreving_TilbakekrevingVidereBehandling as TilbakekrevingVidereBehandling,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
+import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
@@ -25,13 +25,13 @@ const erTilbakekrevingType = (type: string | undefined | { kode: string }) => {
 
 const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
-  simuleringResultat: VedtakSimuleringResultat,
-) =>
+  simuleringResultat: VedtakSimuleringResultat | null,
+): boolean =>
   tilbakekrevingKode === TilbakekrevingVidereBehandling.OPPRETT_TILBAKEKREVING &&
-  (simuleringResultat.simuleringResultat?.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
+  !!(simuleringResultat?.simuleringResultat?.sumInntrekk || simuleringResultat?.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = (props: {
-  simuleringResultat: VedtakSimuleringResultat;
+  simuleringResultat: VedtakSimuleringResultat | null;
   tilbakekrevingvalg?: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
   behandlingType: string | undefined;

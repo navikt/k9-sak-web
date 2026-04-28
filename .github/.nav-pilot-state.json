@@ -1,0 +1,97 @@
+{
+  "collection": "nextjs-frontend",
+  "version": "2026.04.15-085456-a1b5704",
+  "scope": "repo",
+  "source_sha": "a1b5704",
+  "installed_at": "2026-04-16T18:08:21Z",
+  "files": [
+    {
+      "path": ".github/agents/accessibility.agent.md",
+      "hash": "98867df3e31b8cd4"
+    },
+    {
+      "path": ".github/agents/accessibility.metadata.json",
+      "hash": "8c9bd3f0474b10a2"
+    },
+    {
+      "path": ".github/agents/forfatter.agent.md",
+      "hash": "42eb060eeeaef4cf"
+    },
+    {
+      "path": ".github/agents/forfatter.metadata.json",
+      "hash": "415648fcdc323588"
+    },
+    {
+      "path": ".github/agents/nav-pilot.agent.md",
+      "hash": "3eac438b61ab279a"
+    },
+    {
+      "path": ".github/agents/nav-pilot.metadata.json",
+      "hash": "a2346eca6efdb9f5"
+    },
+    {
+      "path": ".github/skills/playwright-testing/",
+      "hash": "2b2fa6a6440ecccd"
+    },
+    {
+      "path": ".github/skills/web-design-reviewer/",
+      "hash": "6a734ef4c3d544d9"
+    },
+    {
+      "path": ".github/skills/nav-plan/",
+      "hash": "c1dccd4a9b3c3c4c"
+    },
+    {
+      "path": ".github/skills/nav-deep-interview/",
+      "hash": "db67aa1434fb4610"
+    },
+    {
+      "path": ".github/skills/nav-architecture-review/",
+      "hash": "3210c935f870aa0a"
+    },
+    {
+      "path": ".github/skills/nav-troubleshoot/",
+      "hash": "a836d38dbcabe99e"
+    },
+    {
+      "path": ".github/instructions/nextjs-aksel.instructions.md",
+      "hash": "6aa56ec320c72809"
+    },
+    {
+      "path": ".github/instructions/performance.instructions.md",
+      "hash": "23b58fe157ef8f0e"
+    },
+    {
+      "path": ".github/instructions/testing.instructions.md",
+      "hash": "4a6a7547a3701ce1"
+    },
+    {
+      "path": ".github/instructions/testing-typescript.instructions.md",
+      "hash": "d3fd7e7d5f2ee256"
+    },
+    {
+      "path": ".github/instructions/accessibility.instructions.md",
+      "hash": "3f682e93474bfdd8"
+    },
+    {
+      "path": ".github/instructions/github-actions.instructions.md",
+      "hash": "bbef6f3e56b8b3b3"
+    },
+    {
+      "path": ".github/instructions/docker.instructions.md",
+      "hash": "32db7a2f8aaab2ac"
+    },
+    {
+      "path": ".github/prompts/aksel-component.prompt.md",
+      "hash": "9da00ddfc10aefc4"
+    },
+    {
+      "path": ".github/prompts/nextjs-api-route.prompt.md",
+      "hash": "6dc6506e5264a67b"
+    },
+    {
+      "path": ".github/prompts/nais-manifest.prompt.md",
+      "hash": "7b1e6ac5b4115c3f"
+    }
+  ]
+}

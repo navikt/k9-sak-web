@@ -1,8 +1,9 @@
+import type { Utfall } from '@k9-sak-web/backend/combined/kodeverk/vilkår/Utfall.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_kodeverk_vilkår_Utfall,
-  type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
@@ -10,12 +11,6 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
  * Type for vilkår med perioder.
  * Brukes som input til sjekkDelvisVilkårStatus.
  */
-interface VilkårMedPerioder {
-  perioder?: Array<{
-    vurderesIBehandlingen?: boolean;
-    vilkarStatus: k9_kodeverk_vilkår_Utfall;
-  }>;
-}
 
 /**
  * Sjekker om vilkår har delvis status (blanding av oppfylt/ikke oppfylt/ikke vurdert).
@@ -41,13 +36,13 @@ interface VilkårMedPerioder {
  * const harDelvisStatus = sjekkDelvisVilkårStatus(vilkår); // true
  * ```
  */
-export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioder[]): boolean {
+export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioderDto[]): boolean {
   if (vilkårForSteg.length === 0) {
     return false;
   }
 
   // Samle alle vilkårstatuser fra perioder som vurderes i behandlingen
-  const vilkarStatusCodes: k9_kodeverk_vilkår_Utfall[] = [];
+  const vilkarStatusCodes: Utfall[] = [];
   vilkårForSteg.forEach(vilkår =>
     vilkår.perioder
       ?.filter(periode => periode.vurderesIBehandlingen)
@@ -80,8 +75,8 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioder[]): 
 
 export const finnPanelStatus = (
   skalVisePanel: boolean,
-  vilkårForSteg: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[],
-  aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[],
+  vilkårForSteg: VilkårMedPerioderDto[],
+  aksjonspunkter: AksjonspunktDto[],
   relevanteAksjonspunktkoder: readonly string[],
 ) => {
   // Hvis panelet ikke skal vises, bruk default

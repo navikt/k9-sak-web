@@ -22,7 +22,7 @@ const supportedFormats = [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT];
 
 export const initializeDate = (
   date: string | dayjs.Dayjs | Date,
-  customFormat?: string,
+  customFormat?: string | string[],
   strict?: boolean,
   keepHoursAndMinutes?: boolean,
 ) => {

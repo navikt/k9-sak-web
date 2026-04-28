@@ -3,7 +3,7 @@ import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import styles from './OverstyrBeregningFaktaForm.module.css';
 
@@ -16,15 +16,15 @@ interface Props {
   readOnly: boolean;
 }
 
-const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = ({
+const OverstyrBeregningAktivitetForm: React.FC<Props> = ({
   key,
   periodeIndex,
   aktivitetIndex,
   firmaNavn,
   skalKunneEndreRefusjon,
   readOnly,
-  intl,
 }) => {
+  const intl = useIntl();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<OverstyrInputForBeregningDto>();
   return (
     <Table.Row key={key}>
@@ -121,4 +121,4 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
   );
 };
 
-export default injectIntl(OverstyrBeregningAktivitetForm);
+export default OverstyrBeregningAktivitetForm;

@@ -1,6 +1,6 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
 import { type JSX } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
@@ -36,7 +36,6 @@ export const submitKnappTekst = (aksjonspunkter: AksjonspunktDto[]) =>
     : 'VedtakForm.FattVedtak';
 
 const VedtakRevurderingSubmitPanelImpl = ({
-  intl,
   formikValues,
   readOnly,
   harRedusertUtbetaling,
@@ -46,7 +45,8 @@ const VedtakRevurderingSubmitPanelImpl = ({
   handleSubmit,
   aksjonspunkter,
   errorOnSubmit,
-}: OwnProps & WrappedComponentProps): JSX.Element => {
+}: OwnProps): JSX.Element => {
+  const intl = useIntl();
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
       ? handleSubmit(event)
@@ -106,4 +106,4 @@ const mapStateToProps = (state, ownProps: OwnProps) => ({
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakRevurderingSubmitPanelImpl));
+export default connect(mapStateToProps)(VedtakRevurderingSubmitPanelImpl);

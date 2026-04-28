@@ -13,7 +13,7 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -183,7 +183,6 @@ AnkeResultat.propTypes = {
 };
 
 const AnkeResultatForm = ({
-  intl,
   handleSubmit,
   previewCallback,
   aksjonspunktCode,
@@ -193,7 +192,9 @@ const AnkeResultatForm = ({
   behandlingId,
   behandlingVersjon,
   ...formProps
-}) => (
+}) => {
+  const intl = useIntl();
+  return (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
       <Heading size="small" level="2">
@@ -239,10 +240,10 @@ const AnkeResultatForm = ({
       />
     </FadingPanel>
   </form>
-);
+  );
+};
 
 AnkeResultatForm.propTypes = {
-  intl: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   saveAnke: PropTypes.func.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
@@ -319,7 +320,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 const BehandleResultatForm = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(AnkeResultatForm)),
+  })(AnkeResultatForm),
 );
 
 export default BehandleResultatForm;

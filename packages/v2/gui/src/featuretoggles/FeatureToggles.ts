@@ -7,10 +7,9 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
 const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
+  BRUK_V2_UTENLANDSOPPHOLD: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
   FLYTT_ALDERSVILKAR: false,
-  LOS_MARKER_BEHANDLING_SUBMIT: false,
-  MARKERING_UTENLANDSTILSNITT: false,
   NYE_NOKKELTALL: false,
   OVERSTYR_BEREGNING: false,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
@@ -19,10 +18,12 @@ const rootFeatureToggles = {
   UTVIDET_VARSELFELT: false, // Brukt i jsx
   VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
+  BRUK_V2_AVREGNING: false,
   PROSESS_MENY_V2: false,
   SKJUL_PROSESS_MENY_V2_VELGER: false,
   ENDRE_FRIST: false,
   AKTIVITETSPENGER: false,
+  REVURDERING_FRA_STEG_V2: false,
   SINGLE_AUTHFIXER: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
@@ -34,7 +35,6 @@ const rootFeatureToggles = {
 const baseQFeatureToggles = {
   isFor: 'Q',
   BRUK_V2_TILKJENT_YTELSE: true,
-  LOS_MARKER_BEHANDLING_SUBMIT: true,
   UNNTAKSBEHANDLING: true,
   VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,

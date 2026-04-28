@@ -2,7 +2,7 @@ import { k9_kodeverk_behandling_aksjonspunkt_Venteårsak } from '@k9-sak-web/bac
 import { VenteÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/VenteÅrsakType.js';
 import { ung_kodeverk_behandling_aksjonspunkt_Venteårsak } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Label, Modal, Select } from '@navikt/ds-react';
@@ -97,7 +97,7 @@ const getKodeverkKilde = (erTilbakekreving: boolean, erKlage: boolean) => {
 };
 
 interface PureOwnProps {
-  submitCallback: (formData: FormState) => void;
+  submitCallback: (formData: FormState) => void | Promise<void>;
   cancelEvent: () => void;
   showModal: boolean;
   erTilbakekreving: boolean;
@@ -192,8 +192,8 @@ export const SettPåVentModal = ({
     }
   };
 
-  const handleSubmit = (data: FormState) => {
-    submitCallback(data);
+  const handleSubmit = async (data: FormState) => {
+    await submitCallback(data);
   };
 
   const disableEndreFrist = venteårsakerSomIkkeKanEndreFrist.some(va => va === ventearsak);
@@ -318,13 +318,17 @@ export const SettPåVentModal = ({
                 }
                 className={styles.button}
                 onClick={getHovedknappOnClick}
-                disabled={isButtonDisabled(
-                  frist,
-                  showAvbryt,
-                  hasManualPaVent,
-                  erVenterEtterlysInntektsmelding,
-                  formHasChanges,
-                )}
+                loading={formMethods.formState.isSubmitting}
+                disabled={
+                  formMethods.formState.isSubmitting ||
+                  isButtonDisabled(
+                    frist,
+                    showAvbryt,
+                    hasManualPaVent,
+                    erVenterEtterlysInntektsmelding,
+                    formHasChanges,
+                  )
+                }
               >
                 {getHovedknappTekst()}
               </Button>

@@ -1,5 +1,4 @@
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
@@ -31,7 +30,6 @@ describe('<ActivityPanel>', () => {
     const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -59,7 +57,6 @@ describe('<ActivityPanel>', () => {
     const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -87,7 +84,6 @@ describe('<ActivityPanel>', () => {
     const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -115,7 +111,6 @@ describe('<ActivityPanel>', () => {
     const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -143,7 +138,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -171,7 +165,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -186,7 +179,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('combobox', { name: 'ActivityPanel.Activity' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Aktivitet' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Arbeid' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Næring' })).toBeInTheDocument();
   });
@@ -201,7 +194,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -229,7 +221,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -258,7 +249,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -285,7 +275,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -315,7 +304,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -344,7 +332,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -372,7 +359,6 @@ describe('<ActivityPanel>', () => {
     renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
-        intl={intlMock}
         initialValues={activity}
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}

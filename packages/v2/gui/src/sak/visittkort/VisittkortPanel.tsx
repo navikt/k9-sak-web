@@ -4,10 +4,10 @@ import {
   type k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
   type k9_sak_kontrakt_fagsak_RelatertSakDto as RelatertSakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
-import { prettifyDateString } from '@navikt/ft-utils';
 import { isUngWeb } from '../../utils/urlUtils';
 import RelatertFagsak from './relatert-fagsak/RelatertFagsak';
 import TagContainer from './TagContainer';

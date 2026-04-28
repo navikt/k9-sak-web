@@ -1,4 +1,3 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { screen } from '@testing-library/react';
@@ -8,8 +7,7 @@ import AksjonspunktAvklarArbeidsforholdText from './AksjonspunktAvklarArbeidsfor
 describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
   it('Utleder riktig text når arbeidsforholdet er registrert uten IM', () => {
     renderWithIntl(
-      <AksjonspunktAvklarArbeidsforholdText.WrappedComponent
-        intl={intlMock}
+      <AksjonspunktAvklarArbeidsforholdText
         arbeidsforhold={
           {
             arbeidsforhold: {
@@ -32,8 +30,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
   });
   it('Utleder riktig text når det er overgang av arbeidsforhold-Id', () => {
     renderWithIntl(
-      <AksjonspunktAvklarArbeidsforholdText.WrappedComponent
-        intl={intlMock}
+      <AksjonspunktAvklarArbeidsforholdText
         arbeidsforhold={
           {
             aksjonspunktÅrsaker: [

@@ -4,7 +4,7 @@ import Vurderingsnavigasjon, {
 import { useVurdertOpplæring } from '../SykdomOgOpplæringQueries';
 import { useContext, useState } from 'react';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { type k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringVurderingDto as OpplæringVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import NødvendigOpplæringContainer from './NødvendigOpplæringContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';

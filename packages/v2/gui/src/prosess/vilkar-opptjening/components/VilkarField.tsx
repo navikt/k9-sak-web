@@ -114,7 +114,7 @@ export const VilkarField = ({
         name={`${fieldPrefix}.begrunnelse`}
         size="small"
         label={erOmsorgspenger ? 'Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B' : 'Vurdering'}
-        validate={[required, validateMinLength3, validateMaxLength1500]}
+        validate={readOnly ? [] : [required, validateMinLength3, validateMaxLength1500]}
         readOnly={readOnly}
         maxLength={1500}
       />
@@ -133,7 +133,7 @@ export const VilkarField = ({
           <RhfRadioGroup
             control={control}
             name={`${fieldPrefix}.kode`}
-            validate={[required]}
+            validate={readOnly ? [] : [required]}
             readOnly={readOnly}
             legend=""
             hideLegend

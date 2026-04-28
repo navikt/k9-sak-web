@@ -1,12 +1,14 @@
 import BeregningsgrunnlagProsessStegPanelDef from './prosessStegPaneler/BeregningsgrunnlagProsessStegPanelDef';
 import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
+import TiDagerProsessStegPanelDef from './prosessStegPaneler/TiDagerProsessStegPanelDef';
 import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtelseProsessStegPanelDef';
 import UttakProsessStegPanelDef from './prosessStegPaneler/UttakProsessStegPanelDef';
 import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
 
 const prosessStegPanelDefinisjoner = [
+  new TiDagerProsessStegPanelDef(),
   new VarselProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
   new UttakProsessStegPanelDef(),

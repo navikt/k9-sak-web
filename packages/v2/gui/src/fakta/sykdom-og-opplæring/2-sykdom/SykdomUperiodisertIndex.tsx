@@ -8,7 +8,7 @@ import { useLangvarigSykVurderingerFagsak, useVurdertLangvarigSykdom } from '../
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import SykdomUperiodisertContainer from './SykdomUperiodisertContainer';
 import { NavigationWithDetailView } from '../../../shared/navigation-with-detail-view/NavigationWithDetailView';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import NavigasjonsmenyRad from './NavigasjonsmenyRad';
 import { utledResultat } from './utils';
 import { utledGodkjent } from './utils';

@@ -105,9 +105,7 @@ describe('Prosessmotor', () => {
       await waitFor(() => {
         const inngangsvilkårPanel = result.current[0];
         expect(inngangsvilkårPanel.type).toBe(ProcessMenuStepType.success);
-        if ('erVurdert' in inngangsvilkårPanel) {
-          expect(inngangsvilkårPanel.erVurdert).toBe(true);
-        }
+        expect(inngangsvilkårPanel).toHaveProperty('erVurdert', true);
       });
     });
 

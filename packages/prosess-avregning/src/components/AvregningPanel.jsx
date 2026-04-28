@@ -7,6 +7,7 @@ import {
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
+
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -17,7 +18,7 @@ import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kont
 import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
@@ -50,7 +51,7 @@ const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
     : simuleringResultat.simuleringResultatUtenInntrekk;
 };
 
-export class AvregningPanelImpl extends Component {
+export class AvregningPanel extends Component {
   static defaultProps = {
     simuleringResultat: null,
   };
@@ -123,9 +124,11 @@ export class AvregningPanelImpl extends Component {
       fagsak,
       ...formProps
     } = this.props;
+
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
     const fagsakSakstype = typeof fagsak?.sakstype === 'string' ? fagsak?.sakstype : fagsak?.sakstype?.kode;
     const isUngFagsak = fagsakSakstype === ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE;
+
     return (
       <>
         <VStack gap="space-32">
@@ -292,13 +295,17 @@ export class AvregningPanelImpl extends Component {
   }
 }
 
-AvregningPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
+AvregningPanel.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: avregningSimuleringResultatPropType,
   previewCallback: PropTypes.func.isRequired,
   hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
   ...formPropTypes,
+};
+
+const AvregningPanelWithIntl = props => {
+  const intl = useIntl();
+  return <AvregningPanel {...props} intl={intl} />;
 };
 
 export const transformValues = (values, ap) => {
@@ -384,5 +391,5 @@ export default connect(
   behandlingForm({
     form: formName,
     enableReinitialize: true,
-  })(injectIntl(AvregningPanelImpl)),
+  })(AvregningPanelWithIntl),
 );

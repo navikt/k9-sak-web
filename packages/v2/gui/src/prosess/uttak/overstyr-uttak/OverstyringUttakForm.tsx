@@ -152,8 +152,8 @@ const OverstyringUttakForm: FC<OwnProps> = ({
   );
 
   const disabledDays: DatePickerProps['disabled'] = [
-    date => dayjs(date).isBefore(tidligsteStartDato),
-    date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering ?? [])),
+    date => dayjs(date).isBefore(tidligsteStartDato, 'day'),
+    date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering ?? []), 'day'),
   ];
 
   return (

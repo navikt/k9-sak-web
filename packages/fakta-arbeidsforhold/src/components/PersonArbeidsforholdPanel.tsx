@@ -9,7 +9,6 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BriefcaseIcon } from '@navikt/aksel-icons';
 import { ExpansionCard, HStack, VStack } from '@navikt/ds-react';
 import { Component } from 'react';
-import { WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
@@ -75,7 +74,7 @@ interface StaticFunctions {
   isReadOnly?: (state: any, behandlingId: number, behandlingVersjon: number) => boolean;
 }
 
-type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions & WrappedComponentProps;
+type Props = PureOwnProps & MappedOwnProps & DispatchProps & StaticFunctions;
 
 /**
  * PersonArbeidsforholdPanelImpl:
@@ -211,7 +210,6 @@ class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
 
   render() {
     const {
-      intl,
       arbeidsgiverOpplysningerPerId,
       arbeidsforhold,
       alleMerknaderFraBeslutter,
@@ -261,7 +259,6 @@ class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                 </ExpansionCard.Header>
                 <ExpansionCard.Content>
                   <PersonArbeidsforholdTable
-                    intl={intl}
                     harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}

@@ -37,7 +37,7 @@ import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
@@ -81,16 +81,15 @@ interface Props {
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
   hentFritekstbrevHtmlCallback: (parameters: any) => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  intl: IntlShape;
   lagreDokumentdata: LagreDokumentdataType;
   medlemskapFom: string;
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
-  simuleringResultat: VedtakSimuleringResultat;
+  simuleringResultat: VedtakSimuleringResultat | null;
   språkkode: string;
-  submitCallback: (object: any) => void;
+  submitCallback: (object: any) => Promise<void>;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   vedtakVarsel?: VedtakVarsel;
@@ -99,7 +98,6 @@ interface Props {
 }
 
 export const VedtakForm: React.FC<Props> = ({
-  intl,
   readOnly,
   behandlingStatus,
   behandlingresultat,
@@ -129,6 +127,7 @@ export const VedtakForm: React.FC<Props> = ({
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
+  const intl = useIntl();
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
@@ -398,7 +397,7 @@ export const VedtakForm: React.FC<Props> = ({
     if (manueltBrev) {
       try {
         await getPreviewManuellBrevCallback(values);
-        submitCallback(createPayload(values));
+        await submitCallback(createPayload(values));
         return;
       } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
@@ -408,7 +407,7 @@ export const VedtakForm: React.FC<Props> = ({
     }
 
     if (hindreUtsending) {
-      submitCallback(createPayload(values));
+      await submitCallback(createPayload(values));
       return;
     }
 
@@ -416,13 +415,13 @@ export const VedtakForm: React.FC<Props> = ({
       // Tillater at automatisk brev eventuelt feiler i saker hvor man ikke kan undertrykke brev.
       // Dette er fordi det er bedre at søker får utbetalt, men ikke noe brev, enn at det blir umulig å få gjennom saken.
       if (!kanHindreUtsending(tilgjengeligeVedtaksbrev)) {
-        submitCallback(createPayload(values));
+        await submitCallback(createPayload(values));
         return;
       }
 
       try {
         await getPreviewAutomatiskBrevCallback(values)({ aapneINyttVindu: false })(undefined);
-        submitCallback(createPayload(values));
+        await submitCallback(createPayload(values));
         return;
       } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
@@ -622,4 +621,4 @@ export const VedtakForm: React.FC<Props> = ({
   );
 };
 
-export default injectIntl(VedtakForm);
+export default VedtakForm;

@@ -1,68 +1,65 @@
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
+import { AktivitetspengerBeregning } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregning.js';
+import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
+import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import {
+  aksjonspunkterQueryOptions,
+  beregningsgrunnlagQueryOptions,
+  innloggetBrukerQueryOptions,
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Box, Heading, Table, VStack } from '@navikt/ds-react';
-import { useContext } from 'react';
-
-const mockData = {
-  virkningstidspunkt: '2026-02-26',
-  årsinntektSisteÅr: 0,
-  årsinntektSisteTreÅr: 0,
-  besteBeregning: 0,
-  pgiÅrsinntekter: [
-    {
-      årstall: 2023,
-      pgiÅrsinntekt: 0,
-      avkortetOgOppjustert: 0,
-    },
-    {
-      årstall: 2024,
-      pgiÅrsinntekt: 0,
-      avkortetOgOppjustert: 0,
-    },
-    {
-      årstall: 2025,
-      pgiÅrsinntekt: 0,
-      avkortetOgOppjustert: 0,
-    },
-  ],
-};
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 
 const PANEL_ID = prosessStegCodes.BEREGNING;
 
-export const BeregningProsessStegInitPanel = () => {
+interface Props {
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+  onAksjonspunktBekreftet: () => void;
+}
+
+export const BeregningProsessStegInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+  const aktivitetspengerBeregningApi = useMemo(() => new AktivitetspengerBeregningBackendClient(), []);
+  const [{ data: beregningsgrunnlag }, { data: aksjonspunkter }, { data: innloggetBruker }] = useSuspenseQueries({
+    queries: [
+      beregningsgrunnlagQueryOptions(api, behandling, erTilBehandlingEllerBehandlet),
+      aksjonspunkterQueryOptions(api, behandling),
+      innloggetBrukerQueryOptions(api),
+    ],
+  });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
+  const isReadOnly = useMemo(() => {
+    return (
+      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
+      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
+    );
+  }, [innloggetBruker]);
+
   if (!erValgt) {
     return null;
   }
+
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (!beregningsgrunnlag) {
+    return null;
+  }
+
   return (
-    <Box paddingInline="space-16 space-32" paddingBlock="space-8">
-      <VStack gap="space-16">
-        <Heading size="medium" level="1" spacing>
-          Beregning
-        </Heading>
-        <Heading size="small" level="2" spacing>
-          Pensjonsgivende inntekt
-        </Heading>
-        <Table size="small">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>3 siste år fra skatt</Table.HeaderCell>
-              <Table.HeaderCell>Inntekt</Table.HeaderCell>
-              <Table.HeaderCell>Avkortet og oppjustert</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {mockData.pgiÅrsinntekter.map(inntekt => (
-              <Table.Row key={inntekt.årstall}>
-                <Table.DataCell>{inntekt.årstall}</Table.DataCell>
-                <Table.DataCell>{inntekt.pgiÅrsinntekt}</Table.DataCell>
-                <Table.DataCell>{inntekt.avkortetOgOppjustert}</Table.DataCell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
-      </VStack>
-    </Box>
+    <AktivitetspengerBeregning
+      data={beregningsgrunnlag}
+      behandling={behandling}
+      api={aktivitetspengerBeregningApi}
+      aksjonspunkter={aksjonspunkter}
+      onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+      isReadOnly={isReadOnly}
+    />
   );
 };
