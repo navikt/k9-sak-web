@@ -5,6 +5,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import Utenlandsopphold from '@k9-sak-web/fakta-utenlandsopphold';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import UtenlandsoppholdFaktaIndex from '@k9-sak-web/gui/fakta/utenlandsopphold/UtenlandsoppholdFaktaIndex.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 
 class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
@@ -14,13 +15,23 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.UTENLANDSOPPHOLD];
 
-  getKomponent = props => (
-    <Utenlandsopphold
-      utenlandsopphold={props.utenlandsopphold}
-      kodeverk={props.alleKodeverk}
-      fagsakYtelseType={fagsakYtelsesType.OPPLÆRINGSPENGER}
-    />
-  );
+  getKomponent = props => {
+    if (props.featureToggles?.BRUK_V2_UTENLANDSOPPHOLD) {
+      return (
+        <UtenlandsoppholdFaktaIndex
+          behandlingUuid={props.behandling.uuid}
+          fagsakYtelseType={fagsakYtelsesType.OPPLÆRINGSPENGER}
+        />
+      );
+    }
+    return (
+      <Utenlandsopphold
+        utenlandsopphold={props.utenlandsopphold}
+        kodeverk={props.alleKodeverk}
+        fagsakYtelseType={fagsakYtelsesType.OPPLÆRINGSPENGER}
+      />
+    );
+  };
 
   skalVisePanel = () => true;
 }
