@@ -1,6 +1,7 @@
 import { createContext, type FC, type ReactNode, useEffect, useState, use } from 'react';
 import { ensureError } from './ensureError.js';
 import { GlobalErrorBoundary } from './GlobalErrorBoundary.js';
+import { BigError, DefaultErrorMsg } from './feilmeldinger/BigError.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -18,6 +19,13 @@ export const useGlobalUnhandledErrors = () => {
   return use(GlobalUnhandledErrorsContext);
 };
 
+export interface GlobalUnhandledErrorCatcherProps {
+  // Viss globalErrors får så mange feil kan det tyde på ein evig feil-loop.
+  // Avbryter då all rendering og viser krasj melding.
+  readonly maxErrorCount?: number;
+  readonly children?: ReactNode;
+}
+
 /**
  * Fanger opp alle uhandterte feil og promise rejections. Feil-liste blir tilgjengeleggjort gjennom context i useGlobalUnhandledErrors
  * slik at andre komponenter lenger nede i hierarkiet kan liste dei ut/slette alle feil frå lista.
@@ -25,7 +33,7 @@ export const useGlobalUnhandledErrors = () => {
  *   Viss error event.error ikkje er av type Error (eller subtype), blir den konvertert til Error før den blir lagt til i lista.
  * </p>
  */
-export const GlobalUnhandledErrorCatcher: FC<{ children?: ReactNode }> = ({ children }) => {
+export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> = ({ children, maxErrorCount = 50 }) => {
   const [globalErrors, setGlobalErrors] = useState<Error[]>([]);
   const clearGlobalErrors = () => setGlobalErrors([]);
   useEffect(() => {
@@ -48,6 +56,15 @@ export const GlobalUnhandledErrorCatcher: FC<{ children?: ReactNode }> = ({ chil
       removeEventListener('unhandledrejection', promiseRejectionListener);
     };
   }, []);
+
+  if (globalErrors.length > maxErrorCount) {
+    return (
+      <BigError title={`For mange feil (${globalErrors.length})`}>
+        <p>For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.</p>
+        <DefaultErrorMsg />
+      </BigError>
+    );
+  }
 
   return (
     <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors }}>
