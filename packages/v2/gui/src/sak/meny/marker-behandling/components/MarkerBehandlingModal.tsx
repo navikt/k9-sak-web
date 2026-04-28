@@ -26,7 +26,11 @@ interface FormValues {
   begrunnelse: string;
 }
 
-const getMerknader = (merknader: MerknadResponse): string[] => {
+/**
+ * Hastesak og utenlandssak kan markeres manuelt.
+ * Direkte utbetaling markeres kun maskinelt.
+ */
+const getMerknader = (merknader: MerknadResponse): MerknadType[] => {
   const ubrukteMerknader: MerknadType[] = [];
 
   if (!merknader.hastesak.aktiv) {
