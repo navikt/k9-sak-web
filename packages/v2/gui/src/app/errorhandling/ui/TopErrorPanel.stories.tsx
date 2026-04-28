@@ -1,38 +1,22 @@
-import { TopErrorPanel } from './TopErrorPanel.js';
-import { type Decorator, type Meta, type StoryObj } from '@storybook/react-vite';
+import { TopErrorPanelUI } from './TopErrorPanel.js';
+import { type Meta, type StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import HeaderWithErrorPanel from '../../../sak/dekoratør/HeaderWithErrorPanel.js';
 import { FrontendError } from '../FrontendError.js';
 import { AdditionalInfoError } from '../AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { SentryReportedError } from '../SentryReportedError.js';
-
-const withAppScaffolding = (): Decorator => Story => {
-  return (
-    <>
-      <HeaderWithErrorPanel
-        removeErrorMessage={() => undefined}
-        setSiteHeight={() => undefined}
-        aaregPath="/aaregPath"
-        ytelse="Demo feilhåndtering"
-        headerTitleHref="/k9/web"
-      />
-      <Story />
-      <h3>Saksdata...</h3>
-    </>
-  );
-};
+import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
 
 const meta = {
   title: 'gui/app/errorhandling/TopErrorPanel',
-  component: TopErrorPanel,
+  component: TopErrorPanelUI,
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [withAppScaffolding()],
-} satisfies Meta<typeof TopErrorPanel>;
+  decorators: [withTopDekoratør(), withContentBelowStory()],
+} satisfies Meta<typeof TopErrorPanelUI>;
 
 export default meta;
 

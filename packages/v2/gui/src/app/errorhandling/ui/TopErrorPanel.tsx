@@ -7,8 +7,9 @@ import { makeErrorId } from '../alerts/AlertInfo.js';
 
 import css from './handCursor.module.css';
 import { SentryReportedError } from '../SentryReportedError.js';
+import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
 
-export interface TopErrorPanelProps {
+interface TopErrorPanelUIProps {
   readonly errors: ReadonlyArray<Error>;
 }
 
@@ -22,7 +23,8 @@ const resolveErrorNames = (errors: ReadonlyArray<Error>): string[] => {
   return max3;
 };
 
-export const TopErrorPanel = ({ errors }: TopErrorPanelProps) => {
+/** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
+export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
   const [hidden, setHidden] = useState(false);
   const reload = () => window.location.reload();
 
@@ -67,4 +69,9 @@ export const TopErrorPanel = ({ errors }: TopErrorPanelProps) => {
   } else {
     return undefined;
   }
+};
+
+export const TopErrorPanel = () => {
+  const { globalErrors } = useGlobalUnhandledErrors();
+  return <TopErrorPanelUI errors={globalErrors} />;
 };
