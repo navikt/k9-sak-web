@@ -100,8 +100,7 @@ export const HjelpetekstKanToggle: Story = {
   args: {
     fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas, step }) => {
     await step('Hjelpetekst er lukket som standard', async () => {
       await expect(
         canvas.getByRole('button', {
@@ -128,8 +127,7 @@ export const OmsorgspengerYtelsestype: Story = {
   args: {
     fagsakYtelseType: fagsakYtelsesType.OMSORGSPENGER,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await expect(
       canvas.getByRole('button', {
         name: 'Hvor lenge har søker rett på omsorgspenger i utlandet?',
@@ -141,8 +139,7 @@ export const OmsorgspengerYtelsestype: Story = {
 
 export const EØSLandVises: Story = {
   decorators: [withFakeApi({ perioder: [perioder[0]!] })],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await expect(await canvas.findByText('Land')).toBeVisible();
     await expect(canvas.getByText('Luxemburg')).toBeVisible();
     await expect(canvas.getByText('EØS')).toBeVisible();
@@ -154,8 +151,7 @@ export const EØSLandVises: Story = {
 
 export const LandUtenforEØSVises: Story = {
   decorators: [withFakeApi({ perioder: [perioder[1]!] })],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await expect(await canvas.findByText('Land')).toBeVisible();
     await expect(canvas.getByText('Kina')).toBeVisible();
     await expect(canvas.getByText('EØS')).toBeVisible();
@@ -168,8 +164,7 @@ export const LandUtenforEØSVises: Story = {
 
 export const KosovoVises: Story = {
   decorators: [withFakeApi({ perioder: [perioder[6]!] })],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await expect(await canvas.findByText('Kosovo')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
   },
@@ -177,8 +172,7 @@ export const KosovoVises: Story = {
 
 export const StorbritanniaErIkkeEØS: Story = {
   decorators: [withFakeApi({ perioder: [perioder[7]!] })],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await expect(await canvas.findByText('Storbritannia')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
   },
@@ -186,8 +180,7 @@ export const StorbritanniaErIkkeEØS: Story = {
 
 export const IngenUtenlandsopphold: Story = {
   decorators: [withFakeApi({ perioder: [] })],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await expect(await canvas.findByText('Søker har ingen utenlandsopphold å vise.')).toBeVisible();
   },
 };
