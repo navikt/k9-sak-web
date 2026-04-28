@@ -15,7 +15,7 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
         .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)),
     );
 
-    if (vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
+    if (vilkarStatusCodes.length === 0 || vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
 
@@ -46,7 +46,6 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]
     const harFlereVilkår = vilkarStatusCodes.length > 1;
 
     if (harFlereVilkår) {
-
       const erDelvisIkkeOppfylt =
         vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
 
