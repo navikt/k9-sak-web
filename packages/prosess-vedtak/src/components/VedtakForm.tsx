@@ -397,7 +397,7 @@ export const VedtakForm: React.FC<Props> = ({
     if (manueltBrev) {
       try {
         await getPreviewManuellBrevCallback(values);
-        submitCallback(createPayload(values));
+        await submitCallback(createPayload(values));
         return;
       } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
@@ -407,7 +407,7 @@ export const VedtakForm: React.FC<Props> = ({
     }
 
     if (hindreUtsending) {
-      submitCallback(createPayload(values));
+      await submitCallback(createPayload(values));
       return;
     }
 
@@ -415,13 +415,13 @@ export const VedtakForm: React.FC<Props> = ({
       // Tillater at automatisk brev eventuelt feiler i saker hvor man ikke kan undertrykke brev.
       // Dette er fordi det er bedre at søker får utbetalt, men ikke noe brev, enn at det blir umulig å få gjennom saken.
       if (!kanHindreUtsending(tilgjengeligeVedtaksbrev)) {
-        submitCallback(createPayload(values));
+        await submitCallback(createPayload(values));
         return;
       }
 
       try {
         await getPreviewAutomatiskBrevCallback(values)({ aapneINyttVindu: false })(undefined);
-        submitCallback(createPayload(values));
+        await submitCallback(createPayload(values));
         return;
       } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
