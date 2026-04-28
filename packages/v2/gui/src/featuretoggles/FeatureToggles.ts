@@ -17,7 +17,6 @@ const rootFeatureToggles = {
   UNG_KLAGE: false,
   UNNTAKSBEHANDLING: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
-  VIS_ALLE_ASYNC_ERRORS: false,
   VIS_FERIEPENGER_PANEL: false,
   PROSESS_MENY_V2: false,
   SKJUL_PROSESS_MENY_V2_VELGER: false,
@@ -35,7 +34,6 @@ const baseQFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: true,
   LOS_MARKER_BEHANDLING_SUBMIT: true,
   UNNTAKSBEHANDLING: true,
-  VIS_ALLE_ASYNC_ERRORS: true,
   VIS_FERIEPENGER_PANEL: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 

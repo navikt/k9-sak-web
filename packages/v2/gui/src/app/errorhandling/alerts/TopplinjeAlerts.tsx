@@ -15,6 +15,8 @@ export interface TopplinjeAlertsProps {
  *
  * Det er forventa at komponent lenger oppe i hierarkiet handterer state oppdatering slik at feilmelding forsvinner når
  * bruker krysser den ut.
+ *
+ * @deprecated Går over til TopErrorPanel/GlobalErrorModal
  */
 export const TopplinjeAlerts = ({ errors, onErrorDismiss }: TopplinjeAlertsProps) => {
   const prevErrors = useRef<ErrorWithAlertInfo[]>(errors);
