@@ -20,4 +20,4 @@ export const errorOfType = (error: ErrorType, errorType: string): boolean =>
   error && getErrorResponseData(error).type === errorType;
 
 export const isHandledError = (errorType?: string): boolean =>
-  errorType && handledErrorTypes.some(het => het === errorType);
+  errorType != null && handledErrorTypes.some(het => het === errorType);
