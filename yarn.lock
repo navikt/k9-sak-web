@@ -2097,6 +2097,7 @@ __metadata:
   resolution: "@k9-sak-web/behandling-aktivitetspenger@workspace:packages/behandling-aktivitetspenger"
   dependencies:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
+    "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
