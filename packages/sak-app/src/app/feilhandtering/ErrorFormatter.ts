@@ -20,21 +20,17 @@ type InputErrorMessage =
   | ErrorDataHaltedOrDelayed
   | ErrorDataTimeoutOrNotFound;
 
-class ErrorFormatter {
-  format = (errorMessages: InputErrorMessage[]): ErrorMessage[] => {
-    const allErrorMessages: ErrorMessage[] = [];
-    if (errorMessages.length > 0) {
-      errorMessages
-        .map((e: any) => {
-          const formatter = formatters.find(f => f.isOfType(e.type));
-          return formatter ? formatter.format(e) : undefined;
-        })
-        .filter(e => e != null)
-        .forEach(e => allErrorMessages.push(e));
-    }
+export const formatErrorMessages = (errorMessages: InputErrorMessage[]): ErrorMessage[] => {
+  const allErrorMessages: ErrorMessage[] = [];
+  if (errorMessages.length > 0) {
+    errorMessages
+      .map((e: any) => {
+        const formatter = formatters.find(f => f.isOfType(e.type));
+        return formatter ? formatter.format(e) : undefined;
+      })
+      .filter(e => e != null)
+      .forEach(e => allErrorMessages.push(e));
+  }
 
-    return allErrorMessages;
-  };
-}
-
-export default ErrorFormatter;
+  return allErrorMessages;
+};

@@ -1,4 +1,4 @@
-import ErrorFormatter from './ErrorFormatter';
+import { formatErrorMessages } from './ErrorFormatter';
 import ErrorMessage from './ErrorMessage';
 import ErrorEventType from './errorEventType';
 
@@ -18,7 +18,7 @@ describe('ErrorFormatter', () => {
       },
     ];
 
-    expect(new ErrorFormatter().format(errorMessages)).toEqual([
+    expect(formatErrorMessages(errorMessages)).toEqual([
       ErrorMessage.withMessageCode('Rest.ErrorMessage.General', { errorDetails: 'halted' }),
       ErrorMessage.withMessageCode('Rest.ErrorMessage.PollingTimeout', errorMessages[1]),
     ]);

@@ -4,7 +4,7 @@ import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetA
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
+import { formatErrorMessages } from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
 
@@ -83,7 +83,7 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
   };
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
-  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages), [errorMessages]);
+  const formaterteFeilmeldinger = useMemo(() => formatErrorMessages(errorMessages), [errorMessages]);
 
   const resolvedErrorMessages = useMemo(
     () => lagFeilmeldinger(formaterteFeilmeldinger, queryStrings),

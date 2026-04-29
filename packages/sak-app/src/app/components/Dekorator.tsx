@@ -4,7 +4,7 @@ import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetA
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { use, useMemo } from 'react';
-import ErrorFormatter from '../feilhandtering/ErrorFormatter';
+import { formatErrorMessages } from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
 
@@ -14,6 +14,8 @@ type QueryStrings = {
 };
 
 // Feilmeldingsmaler som tidligere lå i public/sprak/nb_NO.json
+// Disse kodane blir oppretta i ulike Formatter klasser i feilhandtering/. Alt dette kan fjernast når feilhandtering er
+// over på GlobalUnhandled... ved å gjere mapping som Formatter klasser gjere enklare og meir direkte til error message.
 const feilmeldingsmaler: Record<string, (params?: Record<string, string>) => string> = {
   'Rest.ErrorMessage.General': () =>
     'Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.',
@@ -84,7 +86,7 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
   };
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
-  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages), [errorMessages]);
+  const formaterteFeilmeldinger = useMemo(() => formatErrorMessages(errorMessages), [errorMessages]);
 
   const resolvedErrorMessages = useMemo(
     () => lagFeilmeldinger(formaterteFeilmeldinger, queryStrings),

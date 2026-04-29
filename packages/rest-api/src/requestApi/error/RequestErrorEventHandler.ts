@@ -54,7 +54,7 @@ class RequestErrorEventHandler {
     this.isPollingRequest = isPollingRequest;
   }
 
-  handleError = async (error: ErrorType | TimeoutError): Promise<string> => {
+  handleError = async (error: ErrorType | TimeoutError): Promise<void> => {
     if (error instanceof TimeoutError) {
       this.notify(EventType.POLLING_TIMEOUT, { location: error.location });
       return;
