@@ -3,8 +3,5 @@
  */
 export type Feilmelding = {
   message: string;
-  additionalInfo?: {
-    feilmelding: string;
-    url: string;
-  };
+  additionalInfo?: Record<string, string>;
 };

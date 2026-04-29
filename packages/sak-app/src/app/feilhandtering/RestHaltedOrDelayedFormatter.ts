@@ -3,9 +3,6 @@ import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 import Formatter from './Formatter';
 
-const HALTED_PROCESS_TASK_MESSAGE_CODE = 'Rest.ErrorMessage.General';
-const DELAYED_PROCESS_TASK_MESSAGE_CODE = 'Rest.ErrorMessage.DownTime';
-
 export type ErrorData = {
   message: string;
   status: string;
@@ -21,14 +18,16 @@ class RestHaltedOrDelayedFormatter implements Formatter<ErrorData> {
   format = (errorData: ErrorData) => {
     const { message, status, eta } = errorData;
     if (status === 'HALTED') {
-      return ErrorMessage.withMessageCode(HALTED_PROCESS_TASK_MESSAGE_CODE, { errorDetails: message });
+      return ErrorMessage.withMessage(
+        'Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.',
+        { systemMelding: message },
+      );
     }
     if (status === 'DELAYED') {
-      return ErrorMessage.withMessageCode(DELAYED_PROCESS_TASK_MESSAGE_CODE, {
-        date: formatDate(eta),
-        time: timeFormat(eta),
-        message,
-      });
+      return ErrorMessage.withMessage(
+        `Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen ${formatDate(eta)} kl. ${timeFormat(eta)}.`,
+        { systemMelding: message },
+      );
     }
     return undefined;
   };

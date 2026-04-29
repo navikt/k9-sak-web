@@ -2,8 +2,6 @@ import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 import Formatter from './Formatter';
 
-const TIMEOUT_MESSAGE_CODE = 'Rest.ErrorMessage.PollingTimeout';
-
 export type ErrorData = {
   type: string;
   message: string;
@@ -15,7 +13,10 @@ class RestTimeoutFormatter implements Formatter<ErrorData> {
 
   isOfType = (type: string) => type === this.type;
 
-  format = (errorData: ErrorData) => ErrorMessage.withMessageCode(TIMEOUT_MESSAGE_CODE, errorData);
+  format = (errorData: ErrorData) =>
+    ErrorMessage.withMessage(`Serverkall har gått ut på tid: ${errorData.location ?? ''}`, {
+      systemMelding: errorData.message,
+    });
 }
 
 export default RestTimeoutFormatter;

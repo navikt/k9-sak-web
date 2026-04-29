@@ -4,7 +4,6 @@ import Formatter from './Formatter';
 export type ErrorData = {
   feilmelding?: string;
   message?: string;
-  type: string;
 };
 
 class DefaultFormatter implements Formatter<ErrorData> {
@@ -17,10 +16,10 @@ class DefaultFormatter implements Formatter<ErrorData> {
       return ErrorMessage.withMessage(errorData);
     }
     if (errorData.feilmelding) {
-      return ErrorMessage.withMessage(errorData.feilmelding, errorData.type);
+      return ErrorMessage.withMessage(errorData.feilmelding);
     }
     if (errorData.message) {
-      return ErrorMessage.withMessage(errorData.message, errorData.type);
+      return ErrorMessage.withMessage(errorData.message);
     }
     return undefined;
   };

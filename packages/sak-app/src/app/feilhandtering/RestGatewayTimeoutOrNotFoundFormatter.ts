@@ -2,8 +2,6 @@ import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 import Formatter from './Formatter';
 
-const TIMEOUT_MESSAGE_CODE = 'Rest.ErrorMessage.GatewayTimeoutOrNotFound';
-
 const findContextPath = (location: string): string => location.split('/')[1].toUpperCase();
 
 export type ErrorData = {
@@ -17,11 +15,11 @@ class RestGatewayTimeoutOrNotFoundFormatter implements Formatter<ErrorData> {
 
   isOfType = (type: string) => type === this.type;
 
-  format = (errorData: ErrorData) =>
-    ErrorMessage.withMessageCode(TIMEOUT_MESSAGE_CODE, {
-      contextPath: errorData.location ? findContextPath(errorData.location) : '',
-      location: errorData.location,
-    });
+  format = (errorData: ErrorData) => {
+    const contextPath = errorData.location ? findContextPath(errorData.location) : '';
+    const location = errorData.location;
+    return ErrorMessage.withMessage(`Får ikke kontakt med ${contextPath} (${location})`);
+  };
 }
 
 export default RestGatewayTimeoutOrNotFoundFormatter;

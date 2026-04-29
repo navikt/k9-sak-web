@@ -21,7 +21,10 @@ describe('RestHaltedOrDelayedFormatter', () => {
       type: ErrorEventType.POLLING_HALTED_OR_DELAYED,
     };
     expect(new RestHaltedOrDelayedFormatter().format(errorData)).toEqual(
-      ErrorMessage.withMessageCode('Rest.ErrorMessage.General', { errorDetails: errorData.message }),
+      ErrorMessage.withMessage(
+        'Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.',
+        { systemMelding: errorData.message },
+      ),
     );
   });
 
@@ -33,11 +36,10 @@ describe('RestHaltedOrDelayedFormatter', () => {
       type: ErrorEventType.POLLING_HALTED_OR_DELAYED,
     };
     expect(new RestHaltedOrDelayedFormatter().format(errorData)).toEqual(
-      ErrorMessage.withMessageCode('Rest.ErrorMessage.DownTime', {
-        date: '02.08.2018',
-        time: '00:54',
-        message: errorData.message,
-      }),
+      ErrorMessage.withMessage(
+        `Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen 02.08.2018 kl. 00:54.`,
+        { systemMelding: errorData.message },
+      ),
     );
   });
 });

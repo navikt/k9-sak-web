@@ -8,6 +8,7 @@ import { formatErrorMessages } from '@k9-sak-web/sak-app/src/app/feilhandtering/
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
+import { FrontendError } from '@k9-sak-web/gui/app/errorhandling/FrontendError.js';
 
 const getYtelseNavn = (): string => {
   if (isAktivitetspenger()) {
@@ -21,41 +22,21 @@ type QueryStrings = {
   errormessage?: string;
 };
 
-// Feilmeldingsmaler som tidligere lå i public/sprak/nb_NO.json
-const feilmeldingsmaler: Record<string, (params?: Record<string, string>) => string> = {
-  'Rest.ErrorMessage.General': () =>
-    'Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.',
-  'Rest.ErrorMessage.DownTime': p =>
-    `Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen ${p?.date ?? ''} kl. ${p?.time ?? ''}.\n${p?.message ?? ''}`,
-  'Rest.ErrorMessage.PollingTimeout': p => `Serverkall har gått ut på tid: ${p?.location ?? ''}`,
-  'Rest.ErrorMessage.GatewayTimeoutOrNotFound': p =>
-    `Får ikke kontakt med ${p?.contextPath ?? ''} (${p?.location ?? ''})`,
-};
-
-const formaterFeilmelding = (code: string, params?: Record<string, string>): string => {
-  const mal = feilmeldingsmaler[code];
-  return mal ? mal(params) : code;
-};
-
 const lagFeilmeldinger = (errorMessages: ErrorMessage[], queryStrings: QueryStrings): Feilmelding[] => {
   const resolvedErrorMessages: Feilmelding[] = [];
   if (queryStrings.errorcode) {
-    resolvedErrorMessages.push({ message: formaterFeilmelding(queryStrings.errorcode) });
+    throw new FrontendError(`Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`);
   }
   if (queryStrings.errormessage) {
-    resolvedErrorMessages.push({ message: queryStrings.errormessage });
+    throw new FrontendError(
+      `Dekorator queryString.errormessage satt (${queryStrings.errormessage}). Ikke støttet lenger`,
+    );
   }
   errorMessages.forEach(message => {
-    let msg = {
-      message: message.code ? formaterFeilmelding(message.code, message.params) : message.text,
-      additionalInfo: undefined,
+    const msg = {
+      message: message.text,
+      additionalInfo: message.extra,
     };
-    if (message.params && message.params.errorDetails) {
-      msg = {
-        ...msg,
-        additionalInfo: JSON.parse(message.params.errorDetails),
-      };
-    }
     resolvedErrorMessages.push(msg);
   });
   return resolvedErrorMessages;

@@ -19,8 +19,11 @@ describe('ErrorFormatter', () => {
     ];
 
     expect(formatErrorMessages(errorMessages)).toEqual([
-      ErrorMessage.withMessageCode('Rest.ErrorMessage.General', { errorDetails: 'halted' }),
-      ErrorMessage.withMessageCode('Rest.ErrorMessage.PollingTimeout', errorMessages[1]),
+      ErrorMessage.withMessage(
+        'Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.',
+        { systemMelding: errorMessages[0].message },
+      ),
+      ErrorMessage.withMessage('Serverkall har gått ut på tid: url', { systemMelding: errorMessages[1].message }),
     ]);
   });
 });

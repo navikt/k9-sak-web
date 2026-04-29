@@ -20,7 +20,7 @@ describe('RestTimeoutFormatter', () => {
       location: 'url',
     };
     expect(new RestTimeoutFormatter().format(errorData)).toEqual(
-      ErrorMessage.withMessageCode('Rest.ErrorMessage.PollingTimeout', errorData),
+      ErrorMessage.withMessage(`Serverkall har gått ut på tid: url`, { systemMelding: errorData.message }),
     );
   });
 });
