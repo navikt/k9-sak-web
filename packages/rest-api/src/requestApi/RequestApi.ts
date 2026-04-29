@@ -78,7 +78,7 @@ class RequestApi extends AbstractRequestApi {
     return undefined;
   };
 
-  private findLinks = (rel: string): Link =>
+  private findLinks = (rel: string): Link | undefined =>
     Object.values(this.links)
       .flat()
       .find(link => link.rel === rel);
@@ -88,9 +88,9 @@ class RequestApi extends AbstractRequestApi {
     if (!endpointConfig) {
       throw new Error(`Mangler konfig for endepunkt ${endpointName}`);
     }
-    const link = this.findLinks(endpointConfig.rel);
-    const restMethod = link ? link.type : endpointConfig.restMethod;
-    const href = link ? link.href : endpointConfig.path;
+    const link = endpointConfig.rel ? this.findLinks(endpointConfig.rel) : undefined;
+    const restMethod = link?.type ?? endpointConfig.restMethod ?? '';
+    const href = link?.href ?? endpointConfig.path ?? '';
 
     const useCaching = isCachingOn && isGetRequest(restMethod);
     if (useCaching) {
@@ -100,8 +100,8 @@ class RequestApi extends AbstractRequestApi {
       }
     }
 
-    const apiRestMethod = getMethod(this.httpClientApi, restMethod, endpointConfig.config.isResponseBlob);
-    const runner = new RequestRunner(this.httpClientApi, apiRestMethod, href, endpointConfig.config);
+    const apiRestMethod = getMethod(this.httpClientApi, restMethod, endpointConfig.config?.isResponseBlob ?? false);
+    const runner = new RequestRunner(this.httpClientApi, apiRestMethod, href, endpointConfig.config ?? {});
     if (this.notificationMapper) {
       runner.setNotificationEmitter(this.notificationMapper.getNotificationEmitter());
     }
@@ -125,7 +125,7 @@ class RequestApi extends AbstractRequestApi {
     if (!endpointConfig) {
       throw new Error(`Mangler konfig for endepunkt ${endpointName}`);
     }
-    const link = this.findLinks(endpointConfig.rel);
+    const link = endpointConfig.rel ? this.findLinks(endpointConfig.rel) : undefined;
     return !!link?.href || !!endpointConfig?.path;
   };
 

@@ -299,7 +299,6 @@
   "packages/rest-api-hooks/src/local-data/useRestApiRunner.tsx",
   "packages/rest-api/src/axios/initRestMethods.ts",
   "packages/rest-api/src/requestApi/NotificationMapper.ts",
-  "packages/rest-api/src/requestApi/RequestApi.ts",
   "packages/rest-api/src/requestApi/RequestRunner.ts",
   "packages/rest-api/src/requestApi/error/ErrorTypes.ts",
   "packages/rest-api/src/requestApi/error/RequestErrorEventHandler.ts",
