@@ -1,6 +1,28 @@
 import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import ErrorEventType from './errorEventType';
-import ErrorMessage from './ErrorMessage';
+
+/**
+ * ErrorEventType
+ *
+ * Dette er eventer som skal spesialformateres. Eventene her speiler eventene i eventType i rest-api.
+ */
+export enum ErrorEventType {
+  POLLING_TIMEOUT = 'POLLING_TIMEOUT',
+  POLLING_HALTED_OR_DELAYED = 'POLLING_HALTED_OR_DELAYED',
+  REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND = 'REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND',
+}
+
+export class ErrorMessage {
+  text: string;
+
+  extra?: Record<string, string>;
+
+  static withMessage(message: string, extra?: Record<string, string>) {
+    const errorMessage = new ErrorMessage();
+    errorMessage.text = message;
+    errorMessage.extra = extra;
+    return errorMessage;
+  }
+}
 
 type ErrorDataRestTimeout = {
   type: string;

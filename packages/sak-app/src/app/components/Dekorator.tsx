@@ -3,36 +3,14 @@ import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithError
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { use, useMemo } from 'react';
-import { formatErrorMessages } from '../feilhandtering/formatErrorMessages';
-import ErrorMessage from '../feilhandtering/ErrorMessage';
+import { use } from 'react';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
-import { FrontendError } from '@k9-sak-web/gui/app/errorhandling/FrontendError.js';
+import * as Sentry from '@sentry/react';
 
 type QueryStrings = {
   errorcode?: string;
   errormessage?: string;
-};
-
-const lagFeilmeldinger = (errorMessages: ErrorMessage[], queryStrings: QueryStrings): Feilmelding[] => {
-  const resolvedErrorMessages: Feilmelding[] = [];
-  if (queryStrings.errorcode) {
-    throw new FrontendError(`Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`);
-  }
-  if (queryStrings.errormessage) {
-    throw new FrontendError(
-      `Dekorator queryString.errormessage satt (${queryStrings.errormessage}). Ikke støttet lenger`,
-    );
-  }
-  errorMessages.forEach(message => {
-    const msg = {
-      message: message.text,
-      additionalInfo: message.extra,
-    };
-    resolvedErrorMessages.push(msg);
-  });
-  return resolvedErrorMessages;
 };
 
 const EMPTY_ARRAY = [];
@@ -65,13 +43,22 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
     return `${aaregPath}?saksnummer=${fagsakFraUrl}`;
   };
 
-  const errorMessages = useRestApiError() || EMPTY_ARRAY;
-  const formaterteFeilmeldinger = useMemo(() => formatErrorMessages(errorMessages), [errorMessages]);
+  if (queryStrings.errorcode) {
+    const msg = `Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`;
+    console.warn(msg);
+    Sentry.logger.warn(msg);
+  }
+  if (queryStrings.errormessage) {
+    const msg = `Dekorator queryString.errormessage satt (${queryStrings.errormessage}). Ikke støttet lenger`;
+    console.warn(msg);
+    Sentry.logger.warn(msg);
+  }
 
-  const resolvedErrorMessages = useMemo(
-    () => lagFeilmeldinger(formaterteFeilmeldinger, queryStrings),
-    [formaterteFeilmeldinger, queryStrings],
-  );
+  const formaterteFeilmeldinger = useRestApiError() || EMPTY_ARRAY;
+  const resolvedErrorMessages: Feilmelding[] = formaterteFeilmeldinger.map(fm => ({
+    message: fm.text,
+    additionalInfo: fm.extra,
+  }));
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
 

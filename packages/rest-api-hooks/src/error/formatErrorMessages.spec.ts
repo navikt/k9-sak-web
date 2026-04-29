@@ -1,6 +1,4 @@
-import { formatErrorMessages } from './formatErrorMessages';
-import ErrorMessage from './ErrorMessage';
-import ErrorEventType from './errorEventType';
+import { formatErrorMessages, ErrorEventType, ErrorMessage } from './formatErrorMessages';
 
 describe('ErrorFormatter', () => {
   it('skal legge til både crashmessage og flere feil av ulik type til de formaterte feilene', () => {

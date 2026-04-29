@@ -22,6 +22,7 @@ const rootFeatureToggles = {
   SKJUL_PROSESS_MENY_V2_VELGER: false,
   ENDRE_FRIST: false,
   AKTIVITETSPENGER: false,
+  GLOBAL_ERROR_CATCHER: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
@@ -35,6 +36,7 @@ const baseQFeatureToggles = {
   LOS_MARKER_BEHANDLING_SUBMIT: true,
   UNNTAKSBEHANDLING: true,
   VIS_FERIEPENGER_PANEL: true,
+  GLOBAL_ERROR_CATCHER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 
 // Viss det trengs baseProdFeatureToggles kan det leggast til her på samme måte som baseQFeatureToggles.
