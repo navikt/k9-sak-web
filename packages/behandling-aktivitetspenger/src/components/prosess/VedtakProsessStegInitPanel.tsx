@@ -1,5 +1,6 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
@@ -9,15 +10,15 @@ import {
   innloggetBrukerQueryOptions,
   vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
-import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
 import {
   isVedtakAksjonspunktDto,
   VedtakAksjonspunktDto,
   VedtakBekreftetAksjonspunktDto,
 } from '@k9-sak-web/gui/prosess/ung-vedtak/ungVedtakAksjonspunktAvgrensing.js';
+import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
+import { useContext, useMemo } from 'react';
 
 const PANEL_ID = prosessStegCodes.VEDTAK;
 
@@ -48,10 +49,11 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
 
   const isReadOnly = useMemo(() => {
     return (
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
+      (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
+        !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
+      behandling.status === BehandlingStatus.AVSLUTTET
     );
-  }, [innloggetBruker]);
+  }, [innloggetBruker, behandling]);
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 

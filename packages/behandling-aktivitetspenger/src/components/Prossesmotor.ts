@@ -24,7 +24,7 @@ const PROSESS_STEG_KODER = {
   MEDLEMSKAP: prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
   VEDTAK: prosessStegCodes.VEDTAK,
   BEREGNING: prosessStegCodes.BEREGNING,
-  SATS: prosessStegCodes.SATS,
+  BEREGNET_UTBETALING: prosessStegCodes.BEREGNET_UTBETALING,
 } as const;
 
 const PANEL_KONFIG = {
@@ -71,10 +71,10 @@ const PANEL_KONFIG = {
     label: 'Medlemskap',
     vilkår: [vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET],
   },
-  sats: {
+  beregnetUtbetaling: {
     aksjonspunkter: [],
-    id: PROSESS_STEG_KODER.SATS,
-    label: 'Sats',
+    id: PROSESS_STEG_KODER.BEREGNET_UTBETALING,
+    label: 'Beregnet utbetaling',
   },
 } as const;
 
@@ -235,12 +235,12 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       usePartialStatus: false,
       urlKode: prosessStegCodes.BEREGNING,
     };
-    const satsPanel = {
-      id: PANEL_KONFIG.sats.id,
-      label: PANEL_KONFIG.sats.label,
+    const beregnetUtbetalingPanel = {
+      id: PANEL_KONFIG.beregnetUtbetaling.id,
+      label: PANEL_KONFIG.beregnetUtbetaling.label,
       type:
         beregningPanel.type === ProcessMenuStepType.success ? ProcessMenuStepType.success : ProcessMenuStepType.default,
-      urlKode: prosessStegCodes.SATS,
+      urlKode: prosessStegCodes.BEREGNET_UTBETALING,
     };
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {
@@ -250,6 +250,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       usePartialStatus: false,
       urlKode: prosessStegCodes.VEDTAK,
     };
-    return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, satsPanel, vedtakPanel];
+    return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, beregnetUtbetalingPanel, vedtakPanel];
   }, [aksjonspunkter, innloggetBruker, vilkår, behandling]);
 };

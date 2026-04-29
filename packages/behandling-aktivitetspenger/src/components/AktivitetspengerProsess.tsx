@@ -9,10 +9,10 @@ import { Bleed, Box } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
+import { BeregnetUtbetalingStegInitPanel } from './prosess/BeregnetUtbetalingStegInitPanel';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
-import { SatsProsessStegInitPanel } from './prosess/SatsProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -100,14 +100,7 @@ export const AktivitetspengerProsess = ({
                 );
               }
               if (urlKode === prosessStegCodes.BEREGNING) {
-                return (
-                  <BeregningProsessStegInitPanel
-                    key={steg.urlKode}
-                    api={api}
-                    behandling={behandling}
-                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                  />
-                );
+                return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
               }
               if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
                 return (
@@ -129,8 +122,15 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.SATS) {
-                return <SatsProsessStegInitPanel api={api} behandling={behandling} key={steg.urlKode} />;
+              if (urlKode === prosessStegCodes.BEREGNET_UTBETALING) {
+                return (
+                  <BeregnetUtbetalingStegInitPanel
+                    api={api}
+                    behandling={behandling}
+                    key={steg.urlKode}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  />
+                );
               }
 
               return null;
