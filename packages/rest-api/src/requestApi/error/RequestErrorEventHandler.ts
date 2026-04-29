@@ -8,7 +8,8 @@ type NotificationEmitter = (eventType: keyof typeof EventType, data?: any, isPol
 
 const isString = (value: any): boolean => typeof value === 'string';
 
-const isOfTypeBlob = (error: ErrorType): boolean => error && error.config && error.config.responseType === 'blob';
+const isOfTypeBlob = (error: ErrorType): boolean =>
+  error != null && error.config != null && error.config.responseType === 'blob';
 
 const blobParser = (blob: any): Promise<string> => {
   const fileReader = new FileReader();
@@ -20,7 +21,7 @@ const blobParser = (blob: any): Promise<string> => {
     };
 
     fileReader.onload = () => {
-      if (!(fileReader.result instanceof ArrayBuffer)) {
+      if (fileReader.result !== null && !(fileReader.result instanceof ArrayBuffer)) {
         resolve(fileReader.result);
       } else {
         reject(new Error('Problem parsing blob'));
@@ -70,6 +71,7 @@ class RequestErrorEventHandler {
     }
 
     if (formattedError.isGatewayTimeoutOrNotFound) {
+      console.debug('gateway teimeout', formattedError);
       this.notify(
         EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND,
         { location: formattedError.location },
@@ -84,15 +86,22 @@ class RequestErrorEventHandler {
     } else if (!error.response && error.message) {
       this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
     } else if (!isHandledError(formattedError.type)) {
-      this.notify(EventType.REQUEST_ERROR, this.getFormattedData(formattedError.data), this.isPollingRequest);
+      this.notify(
+        EventType.REQUEST_ERROR,
+        formattedError.data !== undefined ? this.getFormattedData(formattedError.data) : undefined,
+        this.isPollingRequest,
+      );
     }
   };
 
   getFormattedData = (data: string | Record<string, any>): string | Record<string, any> =>
     isString(data) ? { message: data } : data;
 
-  findErrorData = (response: { data?: any; status?: number; statusText?: string }): string | ErrorResponse =>
-    response.data ? response.data : response.statusText;
+  findErrorData = (response: {
+    data?: any;
+    status?: number;
+    statusText?: string;
+  }): string | ErrorResponse | undefined => (response.data ? response.data : response.statusText);
 
   formatError = (error: ErrorType): FormatedError => {
     const response = error && error.response ? error.response : undefined;
