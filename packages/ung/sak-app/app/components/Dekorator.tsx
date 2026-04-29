@@ -4,7 +4,7 @@ import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetA
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { formatErrorMessages } from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
+import { formatErrorMessages } from '@k9-sak-web/sak-app/src/app/feilhandtering/formatErrorMessages';
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';

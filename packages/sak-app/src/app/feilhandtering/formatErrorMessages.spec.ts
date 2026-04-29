@@ -1,4 +1,4 @@
-import { formatErrorMessages } from './ErrorFormatter';
+import { formatErrorMessages } from './formatErrorMessages';
 import ErrorMessage from './ErrorMessage';
 import ErrorEventType from './errorEventType';
 

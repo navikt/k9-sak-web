@@ -4,7 +4,7 @@ import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetA
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { use, useMemo } from 'react';
-import { formatErrorMessages } from '../feilhandtering/ErrorFormatter';
+import { formatErrorMessages } from '../feilhandtering/formatErrorMessages';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
