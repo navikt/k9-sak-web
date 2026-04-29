@@ -109,6 +109,59 @@ describe('Prosessmotor', () => {
       });
     });
 
+    test('tilkjentYtelse og simulering er default når uttakPanel er danger (alle perioder avslått)', async () => {
+      const api = new FakeK9SakProsessApi({
+        uttak: {
+          uttaksplan: {
+            perioder: {
+              '2024-01-01/2024-01-31': { utfall: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT },
+              '2024-02-01/2024-02-28': { utfall: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT },
+            },
+          },
+          simulertUttaksplan: {},
+        },
+        beregningsresultatUtbetaling: {
+          perioder: [
+            {
+              andeler: [
+                {
+                  uttak: [
+                    { utfall: 'INNVILGET', periode: { fom: '2024-01-01', tom: '2024-01-31' }, utbetalingsgrad: 100 },
+                  ],
+                  inntektskategori: '-',
+                },
+              ],
+              dagsats: 500,
+              fom: '2024-01-01',
+              tom: '2024-01-31',
+            },
+          ],
+        },
+      });
+      const behandling = createMockBehandling();
+
+      const { result } = renderHook(() => useProsessmotor({ api, behandling }), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        const uttakPanel = result.current[4];
+        const tilkjentYtelsePanel = result.current[5];
+        const simuleringPanel = result.current[6];
+
+        expect(uttakPanel.id).toBe('uttak');
+        expect(uttakPanel.type).toBe(ProcessMenuStepType.danger);
+
+        expect(tilkjentYtelsePanel.id).toBe('tilkjent_ytelse');
+        expect(tilkjentYtelsePanel.type).toBe(ProcessMenuStepType.default);
+        expect(tilkjentYtelsePanel).toHaveProperty('erVurdert', false);
+
+        expect(simuleringPanel.id).toBe('simulering');
+        expect(simuleringPanel.type).toBe(ProcessMenuStepType.default);
+        expect(simuleringPanel).toHaveProperty('erVurdert', false);
+      });
+    });
+
     test('setter panel til warning når det finnes åpent aksjonspunkt', async () => {
       const api = new FakeK9SakProsessApi({
         vilkår: [
