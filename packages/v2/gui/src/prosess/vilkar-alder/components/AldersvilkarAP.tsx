@@ -11,7 +11,7 @@ import AldersvilkarLese from './AldersvilkarLese';
 
 interface AldersVilkarAPProps {
   behandling: AldersVilkårBehandlingType;
-  submitCallback: () => void;
+  submitCallback: (data: unknown) => Promise<void>;
   relevantAksjonspunkt: AksjonspunktDto;
   isReadOnly: boolean;
   angitteBarn: { personIdent: string }[];

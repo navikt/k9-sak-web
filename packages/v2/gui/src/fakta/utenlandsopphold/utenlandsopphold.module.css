@@ -1,0 +1,21 @@
+.utenlandsopphold {
+  max-width: 900px;
+}
+
+.utenlandsopphold__info {
+  background: inherit !important;
+  border: none !important;
+}
+
+.utenlandsopphold__info:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.alertstripe .alertstripe__tekst {
+  max-width: 100%;
+}
+
+.alertstripe :global .aksel-alert__wrapper {
+  max-width: 100%;
+}

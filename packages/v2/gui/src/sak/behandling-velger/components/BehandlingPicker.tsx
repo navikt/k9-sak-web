@@ -67,6 +67,7 @@ const getSøknadsperioderForValgtBehandling = (
 
 const renderListItems = ({
   behandlinger,
+  behandlingsnummerById,
   getBehandlingLocation,
   setValgtBehandlingId,
   alleSøknadsperioder,
@@ -74,13 +75,14 @@ const renderListItems = ({
   kodeverkNavnFraKode,
 }: {
   behandlinger: Behandling[];
+  behandlingsnummerById: Map<number, number>;
   getBehandlingLocation: (behandlingId: number) => Location;
   setValgtBehandlingId: React.Dispatch<React.SetStateAction<number | undefined>>;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   aktiveFilter: string[];
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
 }): ReactElement<void>[] => {
-  const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
+  const sorterteOgFiltrerteBehandlinger = behandlinger.filter(behandling => {
     if (aktiveFilter.length === 0) {
       return true;
     }
@@ -90,8 +92,9 @@ const renderListItems = ({
     return aktiveFilter.includes(behandling.type);
   });
 
-  return sorterteOgFiltrerteBehandlinger.map((behandling, index) => {
+  return sorterteOgFiltrerteBehandlinger.map(behandling => {
     const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
+    const globalIndex = behandlingsnummerById.get(behandling.id) ?? 0;
     return (
       <li data-testid="BehandlingPickerItem" key={behandling.id}>
         <NavLink
@@ -108,7 +111,7 @@ const renderListItems = ({
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={getSøknadsperioderForValgtBehandling(alleSøknadsperioder, behandling)}
-            index={sorterteOgFiltrerteBehandlinger.length - index}
+            index={globalIndex}
           />
         </NavLink>
       </li>
@@ -209,15 +212,22 @@ const BehandlingPicker = ({
     return sorterteBehandlinger.slice(0, numberOfBehandlingperioderToFetch);
   };
 
+  const sorterteBehandlinger = useMemo(() => sortBehandlinger(behandlinger), [behandlinger]);
+
   const behandlingerSomSkalVises = useMemo(() => {
-    const sorterteBehandlinger = sortBehandlinger(behandlinger);
     return getBehandlingerSomSkalVises(
       sorterteBehandlinger,
       valgtBehandlingId,
       numberOfBehandlingperioderToFetch,
       aktiveFilter,
     );
-  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, aktiveFilter]);
+  }, [sorterteBehandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, aktiveFilter]);
+
+  const behandlingsnummerById = useMemo(() => {
+    return new Map(
+      sorterteBehandlinger.map((behandling, index) => [behandling.id, sorterteBehandlinger.length - index]),
+    );
+  }, [sorterteBehandlinger]);
 
   const behandlingerMedPerioderMedÅrsak = useMemo(
     () =>
@@ -228,7 +238,7 @@ const BehandlingPicker = ({
   );
   const søknadsperioder = useQueries({
     queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
-      queryKey: ['behandlingId', behandling.id, api],
+      queryKey: ['behandlingPerioderÅrsaker', behandling.uuid, behandling.id],
       queryFn: () => api.getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
       enabled: hentSøknadsperioder,
@@ -332,6 +342,7 @@ const BehandlingPicker = ({
             {!noExistingBehandlinger &&
               renderListItems({
                 behandlinger: behandlingerSomSkalVises,
+                behandlingsnummerById,
                 getBehandlingLocation,
                 setValgtBehandlingId,
                 alleSøknadsperioder: søknadsperioder,
