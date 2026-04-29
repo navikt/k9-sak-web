@@ -31,6 +31,7 @@ import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOther
 import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 const environment = window.location.hostname;
 
@@ -131,18 +132,20 @@ const renderFunc = () => {
     const root = createRoot(app);
     root.render(
       <FeatureTogglesContext value={featureToggles}>
-        <Provider store={store}>
-          <BrowserRouter basename={basePath}>
-            <SentryRoutes>
-              <Route element={<RootLayout />}>
-                <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
-                <Route element={<RestApiProviderLayout />}>
-                  <Route path="*" element={<AppIndex />} />
+        <GlobalUnhandledErrorCatcher>
+          <Provider store={store}>
+            <BrowserRouter basename={basePath}>
+              <SentryRoutes>
+                <Route element={<RootLayout />}>
+                  <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
+                  <Route element={<RestApiProviderLayout />}>
+                    <Route path="*" element={<AppIndex />} />
+                  </Route>
                 </Route>
-              </Route>
-            </SentryRoutes>
-          </BrowserRouter>
-        </Provider>
+              </SentryRoutes>
+            </BrowserRouter>
+          </Provider>
+        </GlobalUnhandledErrorCatcher>
       </FeatureTogglesContext>,
     );
   };

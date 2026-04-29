@@ -7,7 +7,6 @@ import AktoerIndex from '../../aktoer/AktoerIndex';
 import FagsakIndex from '../../fagsak/FagsakIndex';
 import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 
-import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/errorhandling/UnhandledRejectionCatcher.js';
 import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 
@@ -30,7 +29,6 @@ const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
  */
 const Home = ({ headerHeight }: OwnProps) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
-    <UnhandledRejectionCatcher />
     <SentryRoutes>
       <Route path="/" element={<FagsakSearchIndex />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />

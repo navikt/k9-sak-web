@@ -7,6 +7,7 @@ import { use, useMemo } from 'react';
 import { formatErrorMessages } from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
+import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
 
 type QueryStrings = {
   errorcode?: string;
@@ -96,19 +97,22 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
 
   return (
-    <HeaderWithErrorPanel
-      navAnsattName={navAnsatt?.navn}
-      navBrukernavn={navAnsatt?.brukernavn}
-      removeErrorMessage={removeErrorMessages}
-      errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
-      setSiteHeight={setSiteHeight}
-      getPathToLos={getPathToK9Los}
-      getPathToK9Punsj={getPathToK9Punsj}
-      ainntektPath={getAinntektPath()}
-      aaregPath={getAaregPath()}
-      ytelse="Pleiepenger, Omsorgspenger og Opplæringspenger"
-      headerTitleHref="/k9/web"
-    />
+    <>
+      <HeaderWithErrorPanel
+        navAnsattName={navAnsatt?.navn}
+        navBrukernavn={navAnsatt?.brukernavn}
+        removeErrorMessage={removeErrorMessages}
+        errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
+        setSiteHeight={setSiteHeight}
+        getPathToLos={getPathToK9Los}
+        getPathToK9Punsj={getPathToK9Punsj}
+        ainntektPath={getAinntektPath()}
+        aaregPath={getAaregPath()}
+        ytelse="Pleiepenger, Omsorgspenger og Opplæringspenger"
+        headerTitleHref="/k9/web"
+      />
+      <TopErrorPanel />
+    </>
   );
 };
 

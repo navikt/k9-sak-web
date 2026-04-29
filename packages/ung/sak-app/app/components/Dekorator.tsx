@@ -7,6 +7,7 @@ import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api
 import { formatErrorMessages } from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
 import ErrorMessage from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorMessage';
 import { use, useMemo } from 'react';
+import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
 
 const getYtelseNavn = (): string => {
   if (isAktivitetspenger()) {
@@ -94,17 +95,20 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
   const ytelse = getYtelseNavn();
 
   return (
-    <HeaderWithErrorPanel
-      navAnsattName={navAnsatt.navn ?? navAnsatt?.brukernavn}
-      navBrukernavn={navAnsatt.brukernavn}
-      removeErrorMessage={removeErrorMessages}
-      errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
-      setSiteHeight={setSiteHeight}
-      aaregPath={getAaregPath()}
-      ytelse={ytelse}
-      headerTitleHref="/ung/web"
-      showEndringslogg={false}
-    />
+    <>
+      <HeaderWithErrorPanel
+        navAnsattName={navAnsatt.navn ?? navAnsatt?.brukernavn}
+        navBrukernavn={navAnsatt.brukernavn}
+        removeErrorMessage={removeErrorMessages}
+        errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
+        setSiteHeight={setSiteHeight}
+        aaregPath={getAaregPath()}
+        ytelse={ytelse}
+        headerTitleHref="/ung/web"
+        showEndringslogg={false}
+      />
+      <TopErrorPanel />
+    </>
   );
 };
 
