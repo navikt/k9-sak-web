@@ -300,8 +300,6 @@
   "packages/rest-api/src/axios/initRestMethods.ts",
   "packages/rest-api/src/requestApi/NotificationMapper.ts",
   "packages/rest-api/src/requestApi/RequestRunner.ts",
-  "packages/rest-api/src/requestApi/requestApi.spec.ts",
-  "packages/rest-api/src/requestApi/requestRunner.spec.ts",
   "packages/sak-app/src/app/useTrackRouteParam.tsx",
   "packages/sak-app/src/behandling/BehandlingEventHandler.ts",
   "packages/sak-app/src/behandling/BehandlingIndex.tsx",
