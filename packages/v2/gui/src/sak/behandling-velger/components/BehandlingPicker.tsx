@@ -238,7 +238,7 @@ const BehandlingPicker = ({
   );
   const søknadsperioder = useQueries({
     queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
-      queryKey: ['behandlingId', behandling.uuid],
+      queryKey: ['behandlingPerioderÅrsaker', behandling.uuid, behandling.id],
       queryFn: () => api.getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
       enabled: hentSøknadsperioder,
