@@ -54,8 +54,6 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioderDto[]
       .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus)),
   );
 
-  // Sjekk om alle vilkår har samme status
-  const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT);
   const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT);
   const alleVilkårErOppfylt = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT);
 
@@ -63,16 +61,12 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioderDto[]
   const harFlereVilkår = vilkarStatusCodes.length > 1;
 
   if (harFlereVilkår) {
-    // Sjekk om noen (men ikke alle) vilkår har en bestemt status
-    const erDelvisIkkeVurdert =
-      vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
-
     const erDelvisIkkeOppfylt =
       vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
 
     const erDelvisOppfylt =
       vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT) && !alleVilkårErOppfylt;
-    return erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt;
+    return erDelvisIkkeOppfylt || erDelvisOppfylt;
   }
 
   return false;
