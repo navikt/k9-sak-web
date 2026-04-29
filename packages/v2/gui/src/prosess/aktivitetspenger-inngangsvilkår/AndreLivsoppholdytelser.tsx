@@ -216,7 +216,7 @@ export const AndreLivsoppholdytelser = ({
                 key={`${selectedId}-andreLivsoppholdytelser`}
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.andreLivsoppholdytelser`}
-                legend="Mottar søker ikke andre livsoppholdsytelser?"
+                legend="Er søker uten andre livsoppholdsytelser?"
                 validate={[required]}
                 readOnly={isFormLocked}
               >
