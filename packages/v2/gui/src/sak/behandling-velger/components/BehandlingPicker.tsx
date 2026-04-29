@@ -212,22 +212,22 @@ const BehandlingPicker = ({
     return sorterteBehandlinger.slice(0, numberOfBehandlingperioderToFetch);
   };
 
+  const sorterteBehandlinger = useMemo(() => sortBehandlinger(behandlinger), [behandlinger]);
+
   const behandlingerSomSkalVises = useMemo(() => {
-    const sorterteBehandlinger = sortBehandlinger(behandlinger);
     return getBehandlingerSomSkalVises(
       sorterteBehandlinger,
       valgtBehandlingId,
       numberOfBehandlingperioderToFetch,
       aktiveFilter,
     );
-  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, aktiveFilter]);
+  }, [sorterteBehandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, aktiveFilter]);
 
   const behandlingsnummerById = useMemo(() => {
-    const sorterteBehandlinger = sortBehandlinger(behandlinger);
     return new Map(
       sorterteBehandlinger.map((behandling, index) => [behandling.id, sorterteBehandlinger.length - index]),
     );
-  }, [behandlinger]);
+  }, [sorterteBehandlinger]);
 
   const behandlingerMedPerioderMedÅrsak = useMemo(
     () =>
@@ -238,7 +238,7 @@ const BehandlingPicker = ({
   );
   const søknadsperioder = useQueries({
     queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
-      queryKey: ['behandlingId', behandling.id, api],
+      queryKey: ['behandlingId', behandling.uuid],
       queryFn: () => api.getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
       enabled: hentSøknadsperioder,
