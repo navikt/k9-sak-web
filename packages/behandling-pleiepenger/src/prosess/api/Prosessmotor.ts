@@ -332,7 +332,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     );
 
     const tilkjentYtelsePanel = byggPanelUtenVilkår(
-      uttakPanel.erVurdert,
+      uttakPanel.erVurdert && uttakPanel.type !== ProcessMenuStepType.danger,
       beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       PANEL_KONFIG.tilkjentYtelse.label,
       PANEL_KONFIG.tilkjentYtelse.id,
