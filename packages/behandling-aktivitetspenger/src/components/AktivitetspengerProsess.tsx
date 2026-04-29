@@ -1,4 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
@@ -34,7 +35,7 @@ export const AktivitetspengerProsess = ({
   setBehandling,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
-  const { pollTilBehandlingErKlar } = usePollBehandlingStatus(api, behandling, setBehandling);
+  const { pollTilBehandlingErKlar, isPolling } = usePollBehandlingStatus(api, behandling, setBehandling);
 
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
@@ -73,6 +74,7 @@ export const AktivitetspengerProsess = ({
 
   return (
     <VedtakFormContext.Provider value={vedtakFormValue}>
+      {isPolling && <DataFetchPendingModal pendingMessage="Venter på behandling..." />}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
         lukkModal={lukkModalOgGåTilSøk}
