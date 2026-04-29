@@ -152,7 +152,7 @@ const byggVilkårPanel = (
     type,
     label: panelKonfig.label,
     id: panelKonfig.id,
-    usePartialStatus: sjekkDelvisVilkårStatus(relevanteVilkår),
+    usePartialStatus: type === ProcessMenuStepType.success ? sjekkDelvisVilkårStatus(relevanteVilkår) : false,
     erVurdert: erPanelVurdert(type),
   };
 };

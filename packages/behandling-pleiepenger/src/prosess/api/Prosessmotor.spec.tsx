@@ -190,6 +190,47 @@ describe('Prosessmotor', () => {
         expect(inngangsvilkårPanel.type).toBe(ProcessMenuStepType.warning);
       });
     });
+
+    test('setter aldri usePartialStatus=true når panel er warning, selv med delvis oppfylt vilkår', async () => {
+      const api = new FakeK9SakProsessApi({
+        vilkår: [
+          {
+            vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+            perioder: [
+              {
+                vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT,
+                periode: { fom: '', tom: '' },
+                vurderesIBehandlingen: true,
+              },
+              {
+                vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT,
+                periode: { fom: '', tom: '' },
+                vurderesIBehandlingen: true,
+              },
+            ],
+            relevanteInnvilgetMerknader: [],
+          },
+        ],
+        aksjonspunkter: [
+          {
+            definisjon:
+              k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+            status: k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
+          },
+        ],
+      });
+      const behandling = createMockBehandling();
+
+      const { result } = renderHook(() => useProsessmotor({ api, behandling }), {
+        wrapper: createWrapper(queryClient),
+      });
+
+      await waitFor(() => {
+        const inngangsvilkårPanel = result.current[0];
+        expect(inngangsvilkårPanel.type).toBe(ProcessMenuStepType.warning);
+        expect(inngangsvilkårPanel.usePartialStatus).toBe(false);
+      });
+    });
   });
 
   describe('beregnUttakType', () => {
