@@ -52,12 +52,14 @@ export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
           />
         </GlobalAlert.Header>
         <GlobalAlert.Content hidden={hidden}>
-          {headerTxt} oppsto. Dette kan bety at skjermbildet ikke viser korrekt tilstand. Du bør{' '}
-          <Link inlineText href="#" onClick={reload}>
-            laste inn på nytt
-          </Link>{' '}
-          hvis du er usikker.
-          <VStack gap="space-16" marginBlock="space-16 space-0">
+          <small>
+            {headerTxt} oppsto. Dette kan bety at skjermbildet ikke viser korrekt tilstand. Du bør{' '}
+            <Link inlineText href="#" onClick={reload}>
+              laste inn på nytt
+            </Link>{' '}
+            hvis du er usikker.
+          </small>
+          <VStack gap="space-16" marginBlock="space-4 space-0">
             {errors.map(error => {
               const { errorId } = resolveErrorUiData(error);
               return <ErrorMessage error={error} onReload={reload} key={errorId ?? makeErrorId()} />;
