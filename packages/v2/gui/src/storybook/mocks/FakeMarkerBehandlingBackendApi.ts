@@ -1,4 +1,4 @@
-import { k9_kodeverk_produksjonsstyring_BehandlingMerknadType as BehandlingMerknadKode } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 
 export class FakeMarkerBehandlingBackendApi {
@@ -6,7 +6,8 @@ export class FakeMarkerBehandlingBackendApi {
     ignoreUnusedDeclared(behandlingUuid);
     return Promise.resolve({
       hastesak: { aktiv: true, fritekst: 'En tekst om hvorfor dette er en hastesak' },
-      utenlandstilsnitt: { aktiv: false, fritekst: undefined },
+      utenlandssak: { aktiv: false, fritekst: undefined },
+      direkteutbetaling: { aktiv: false, fritekst: undefined },
     });
   }
 
@@ -17,13 +18,13 @@ export class FakeMarkerBehandlingBackendApi {
   }: {
     behandlingUuid: string;
     fritekst: string;
-    merknadKode: BehandlingMerknadKode;
+    merknadKode: MerknadType;
   }) {
     ignoreUnusedDeclared({ behandlingUuid, fritekst, merknadKode });
     return Promise.resolve();
   }
 
-  fjernMerknad({ behandlingUuid, merknadKode }: { behandlingUuid: string; merknadKode: BehandlingMerknadKode }) {
+  fjernMerknad({ behandlingUuid, merknadKode }: { behandlingUuid: string; merknadKode: MerknadType }) {
     ignoreUnusedDeclared({ behandlingUuid, merknadKode });
     return Promise.resolve();
   }
