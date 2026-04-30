@@ -19,7 +19,7 @@ const useRestApiErrorDispatcher = () => {
         return;
       }
       if (featuretoggles.GLOBAL_ERROR_CATCHER) {
-        throw new LegacyApiError(formatertFeilmelding.text, formatertFeilmelding.extra);
+        throw new LegacyApiError(formatertFeilmelding.text, formatertFeilmelding.type, formatertFeilmelding.extra);
       } else {
         dispatch?.({ type: 'add', data: formatertFeilmelding });
       }

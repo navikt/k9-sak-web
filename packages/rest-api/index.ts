@@ -11,6 +11,7 @@ export type { default as Link } from './src/requestApi/LinkTsType';
 export { default as RequestApi } from './src/requestApi/RequestApi';
 export { REQUEST_POLLING_CANCELLED } from './src/requestApi/RequestRunner';
 export { default as RestApiConfigBuilder } from './src/RestApiConfigBuilder';
+export { default as EventType } from './src/requestApi/eventType';
 
 let isUnitTestModeOn = false;
 
