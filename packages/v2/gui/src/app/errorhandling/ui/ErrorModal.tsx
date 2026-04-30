@@ -51,9 +51,9 @@ export const ErrorModal = ({ error, onClose, onReload }: ErrorModalProps) => {
                     </Tooltip>
                   </p>
                   <p>
-                    <b>NB:</b> hvis du har fyllt inn data i skjema på siden inn vil dette sannsynligvis forsvinne hvis
-                    du trykker <i>Last på nytt</i>. Lukk feilmelding uten å laste på nytt hvis du har behov for å
-                    kopiere ut skjemadata.
+                    <b>NB:</b> hvis du har fyllt inn data i skjema på siden vil dette sannsynligvis forsvinne hvis du
+                    trykker <i>Last på nytt</i>. Lukk feilmelding uten å laste på nytt hvis du har behov for å kopiere
+                    ut skjemadata.
                   </p>
                 </ReadMore>
                 {errorRef != null ? (
