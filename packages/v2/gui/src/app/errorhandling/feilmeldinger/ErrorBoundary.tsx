@@ -18,7 +18,7 @@ export interface ErrorFallbackProps {
 }
 
 export interface ErrorBoundaryProps {
-  errorMessageCallback?: (error: string) => void;
+  errorMessageCallback?: (error: Record<string, unknown>) => void;
   children: ReactNode;
   doNotShowErrorPage?: boolean;
   doNotShowErrorPageMaxCount?: number;
@@ -75,15 +75,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
     });
 
     if (errorMessageCallback != null) {
-      errorMessageCallback(
-        [
-          error.toString(),
-          info.componentStack
-            ?.split('\n')
-            .map(line => line.trim())
-            .find(line => !!line),
-        ].join(' '),
-      );
+      const componentStackString = info.componentStack
+        ?.split('\n')
+        .map(line => line.trim())
+        .find(line => !!line);
+      errorMessageCallback({ message: `${error.toString()} ${componentStackString}`.trim() });
     }
 
     if (error != null) {

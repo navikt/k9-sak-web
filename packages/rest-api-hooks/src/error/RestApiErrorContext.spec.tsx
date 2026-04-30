@@ -7,8 +7,8 @@ import useRestApiErrorDispatcher from './useRestApiErrorDispatcher';
 const TestErrorMessage = ({ skalFjerne = false }) => {
   const { addErrorMessage, removeErrorMessages } = useRestApiErrorDispatcher();
   useEffect(() => {
-    addErrorMessage('Feilmeldingstest 1');
-    addErrorMessage('Feilmeldingstest 2');
+    addErrorMessage({ message: 'Feilmeldingstest 1' });
+    addErrorMessage({ message: 'Feilmeldingstest 2' });
 
     if (skalFjerne) {
       removeErrorMessages();

@@ -3,7 +3,7 @@ import { use, useCallback } from 'react';
 import { RestApiErrorDispatchContext } from './RestApiErrorContext';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { LegacyApiError } from './LegacyApiError.js';
-import { formatErrorMessages } from './formatErrorMessages.js';
+import { formatErrorMessage } from './formatErrorMessages.js';
 
 /**
  * Hook som tilbyr funksjoner for å legge til eller fjerne feil i kontekst.
@@ -14,7 +14,10 @@ const useRestApiErrorDispatcher = () => {
   const dispatch = use(RestApiErrorDispatchContext);
   const addErrorMessage = useCallback(
     (data: Record<string, unknown>) => {
-      const formatertFeilmelding = formatErrorMessages([data])[0];
+      const formatertFeilmelding = formatErrorMessage(data);
+      if (formatertFeilmelding == null) {
+        return;
+      }
       if (featuretoggles.GLOBAL_ERROR_CATCHER) {
         throw new LegacyApiError(formatertFeilmelding.text, formatertFeilmelding.extra);
       } else {
