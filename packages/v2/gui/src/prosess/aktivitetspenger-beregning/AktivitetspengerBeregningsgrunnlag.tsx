@@ -63,8 +63,8 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
                       <HStack gap="space-4" justify="end" align="center">
                         G-justert({årstallForSkjæringstidspunkt})
                         <HelpText>
-                          Inntekt over 6G er fjernet, siden inntekt over 6 G ikke tas med i grunnlaget jf, forskriftens
-                          § 11
+                          Inntekt over 6G er fjernet, siden inntekt over 6G ikke tas med i grunnlaget jf. forskriftens §
+                          11
                         </HelpText>
                       </HStack>
                     </Table.HeaderCell>

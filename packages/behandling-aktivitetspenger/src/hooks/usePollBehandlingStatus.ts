@@ -76,7 +76,9 @@ export const usePollBehandlingStatus = (
         setBehandling(nyBehandling);
       }
     } finally {
-      setIsPolling(false);
+      if (abortControllerRef.current === controller) {
+        setIsPolling(false);
+      }
     }
   };
 
