@@ -89,7 +89,6 @@ interface ProcessMenuStep {
   usePartialStatus?: boolean;
   erVurdert?: boolean;
   locked?: boolean;
-  urlKode?: string;
 }
 
 /**
@@ -118,7 +117,6 @@ const byggVilkårPanel = (
     id: panelKonfig.id,
     usePartialStatus: type === ProcessMenuStepType.success ? sjekkDelvisVilkårStatus(relevanteVilkår) : false,
     erVurdert: erPanelVurdert(type),
-    urlKode: panelKonfig.id,
   };
 };
 
@@ -131,7 +129,6 @@ const byggPanelUtenVilkår = (
   label: panelKonfig.label,
   id: panelKonfig.id,
   erVurdert: erPanelVurdert(forrigeVurdert ? type : ProcessMenuStepType.default),
-  urlKode: panelKonfig.id,
 });
 
 const beregnVedtakType = (
@@ -233,14 +230,12 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
           : ProcessMenuStepType.default
         : ProcessMenuStepType.default,
       usePartialStatus: false,
-      urlKode: prosessStegCodes.BEREGNING,
     };
     const beregnetUtbetalingPanel = {
       id: PANEL_KONFIG.beregnetUtbetaling.id,
       label: PANEL_KONFIG.beregnetUtbetaling.label,
       type:
         beregningPanel.type === ProcessMenuStepType.success ? ProcessMenuStepType.success : ProcessMenuStepType.default,
-      urlKode: prosessStegCodes.BEREGNET_UTBETALING,
     };
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {
@@ -248,7 +243,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       label: PANEL_KONFIG.vedtak.label,
       type: vedtakType,
       usePartialStatus: false,
-      urlKode: prosessStegCodes.VEDTAK,
     };
     return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, beregnetUtbetalingPanel, vedtakPanel];
   }, [aksjonspunkter, innloggetBruker, vilkår, behandling]);

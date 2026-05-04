@@ -89,11 +89,10 @@ export const AktivitetspengerProsess = ({
         <Bleed marginInline="space-20">
           <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
             {prosessteg.map(steg => {
-              const urlKode = steg.urlKode;
-              if (urlKode === prosessStegCodes.VEDTAK) {
+              if (steg.id === prosessStegCodes.VEDTAK) {
                 return (
                   <VedtakProsessStegInitPanel
-                    key={steg.urlKode}
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
                     hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
@@ -101,35 +100,35 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.BEREGNING) {
-                return <BeregningProsessStegInitPanel key={steg.urlKode} api={api} behandling={behandling} />;
+              if (steg.id === prosessStegCodes.BEREGNING) {
+                return <BeregningProsessStegInitPanel key={steg.id} api={api} behandling={behandling} />;
               }
-              if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
+              if (steg.id === prosessStegCodes.INNGANGSVILKAR) {
                 return (
                   <InngangsvilkårInitPanel
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
-                    key={steg.urlKode}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.FORUTGAENDE_MEDLEMSKAP) {
+              if (steg.id === prosessStegCodes.FORUTGAENDE_MEDLEMSKAP) {
                 return (
                   <ForutgåendeMedlemskapInitPanel
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
-                    key={steg.urlKode}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.BEREGNET_UTBETALING) {
+              if (steg.id === prosessStegCodes.BEREGNET_UTBETALING) {
                 return (
                   <BeregnetUtbetalingStegInitPanel
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
-                    key={steg.urlKode}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
