@@ -40,8 +40,6 @@ export interface VisittkortPanelProps {
   erIkkeDigitalBruker?: boolean;
   /** Indikerer om saken har merknad om utenlandssak fra LOS. */
   erUtenlandssak?: boolean;
-  /** Indikerer om saken har merknad om direkte utbetaling fra LOS. */
-  erDirekteUtbetaling?: boolean;
 }
 
 const VisittkortPanel = ({
