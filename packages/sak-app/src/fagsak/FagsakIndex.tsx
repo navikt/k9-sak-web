@@ -195,7 +195,6 @@ const FagsakIndex = () => {
 
   const erHastesak = merknaderFraLos?.hastesak?.aktiv;
   const erUtenlandssak = merknaderFraLos?.utenlandssak?.aktiv;
-  const erDirekteUtbetaling = merknaderFraLos?.direkteutbetaling?.aktiv;
 
   if (fagsak == null) {
     if (isRequestNotDone(fagsakState)) {
@@ -298,7 +297,6 @@ const FagsakIndex = () => {
                     erPbSak={fagsak.erPbSak}
                     erHastesak={erHastesak}
                     erUtenlandssak={erUtenlandssak}
-                    erDirekteUtbetaling={erDirekteUtbetaling}
                   />
 
                   {behandling && (
