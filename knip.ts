@@ -6,7 +6,7 @@ const config: KnipConfig = {
     'index.html',
     'ung.html',
   ],
-  ignore: ['.yarn/**', 'server/**'],
+  ignore: ['server/**'],
   workspaces: {
     '.': {
       entry: ['packages/sak-app/src/index.ts', 'ung.vite.config.js', 'aktivitetspenger.vite.config.js'],

@@ -37,7 +37,7 @@ Run with `run_in_terminal`:
 
 ```bash
 # Install Aksel packages
-yarn add @navikt/ds-react @navikt/ds-css
+pnpm add @navikt/ds-react @navikt/ds-css
 ```
 
 **Setup**:
@@ -63,7 +63,7 @@ Install React and SVG icons from Aksel
 Run with `run_in_terminal`:
 
 ```bash
-yarn add @navikt/aksel-icons
+pnpm add @navikt/aksel-icons
 ```
 
 Use:
@@ -81,7 +81,7 @@ import { StarIcon } from "@navikt/aksel-icons";
 Run with `run_in_terminal`:
 
 ```bash
-yarn add @navikt/ds-tokens
+pnpm add @navikt/ds-tokens
 ```
 
 **Import paths**:
@@ -97,7 +97,7 @@ Run with `run_in_terminal`:
 
 ```bash
 # Install Aksel packages
-yarn add @navikt/ds-react @navikt/ds-css
+pnpm add @navikt/ds-react @navikt/ds-css
 
 # Run v8 spacing migration codemods
 npx @navikt/aksel codemod v8-primitive-spacing  # React primitives

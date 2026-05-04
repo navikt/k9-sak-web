@@ -44,7 +44,7 @@ zizmor .github/workflows/
 git log -p --all -S 'password' -- '*.ts' '*.tsx' | head -100
 
 # Audit dependencies
-yarn audit
+pnpm audit
 ```
 
 **Search tools**: Use `grep_search` for security patterns, `semantic_search` for auth/validation code.

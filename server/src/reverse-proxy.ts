@@ -6,7 +6,7 @@ import log from './log.js';
 
 // ── Token exchange hook ──
 // Currently a passthrough. To add OBO token exchange later:
-//   1. yarn add @navikt/oasis  (in server/)
+//   1. pnpm add @navikt/oasis  (in server/)
 //   2. Implement this function using the api.scopes field
 //   3. Uncomment the call in proxyReqOptDecorator below
 //
@@ -21,7 +21,6 @@ import log from './log.js';
 // }
 
 const errorStatusMap: Record<string, number> = { ENOTFOUND: 502, ECONNREFUSED: 502, ECONNRESET: 504, ETIMEDOUT: 504 };
-
 
 function makeOptions(api: ProxyApi): ProxyOptions {
   return {
@@ -56,7 +55,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     },
 
     proxyErrorHandler: (err: NodeJS.ErrnoException, res: Response, next: (err?: unknown) => void): void => {
-      const navCallid = res.req.header("Nav-Callid")
+      const navCallid = res.req.header('Nav-Callid');
       const status = err.code ? errorStatusMap[err.code] : undefined;
       log.error('proxy request failed', {
         error: {
@@ -69,7 +68,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
           url: res.req.originalUrl,
           responseStatusCode: status,
           navCallid,
-        }
+        },
       });
       if (status != null) {
         res.status(status).send();
@@ -77,7 +76,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
         next(err);
       }
     },
-  }
+  };
 }
 
 export default function setupProxy(app: Express, apis: ProxyApi[]): void {
