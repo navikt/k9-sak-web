@@ -57,7 +57,6 @@ const VisittkortPanel = ({
   ungdomsytelseDeltakerStatus,
   erIkkeDigitalBruker,
   erUtenlandssak,
-  erDirekteUtbetaling,
 }: VisittkortPanelProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -175,7 +174,6 @@ const VisittkortPanel = ({
               {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
               {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
               {erIkkeDigitalBruker && <TagContainer tagVariant="warning">Ikke-digital bruker</TagContainer>}
-              {erDirekteUtbetaling && <TagContainer tagVariant="info">Direkte utbetaling</TagContainer>}
             </HStack>
           </div>
         </div>
