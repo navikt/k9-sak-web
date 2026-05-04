@@ -19,6 +19,6 @@ runs:
 
     - name: Installere dependencies
       shell: bash
-      run: LEFTHOOK=0 pnpm install --frozen-lockfile
+      run: pnpm install --frozen-lockfile --ignore-scripts
       env:
         NPM_AUTH_TOKEN: ${{ inputs.npmAuthToken }}
