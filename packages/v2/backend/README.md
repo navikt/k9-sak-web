@@ -20,14 +20,14 @@ Eksempel på bruk: Sjå feks _gui/src/behandling/support/historikk/k9/HistorikkB
 
 Viss ein feks skal jobbe med ein api definisjon for k9-sak som endå ikkje er på master branch i k9-sak, og dermed ikkje har blitt publisert
 i _k9-sak-typescript-client_ pakke endå, kan generere klientpakken lokalt ut frå k9-sak prosjektet, og deretter bruke
-yarn link til å koble den inn i lokalt k9-sak-web utviklingsmiljø.
+pnpm link til å koble den inn i lokalt k9-sak-web utviklingsmiljø.
 
 1. Sjekk ut den branch av [k9-sak](https://github.com/navikt/k9-sak) du ønsker å ha ein klient generert ut frå.
 2. Køyr intellij run config `web/generate typescript client` for å generere lokal versjon. (`gcloud auth login` må vere køyrt før dette)
-3. Bruk _yarn link_ som beskrive under for å linke den inn i k9-sak-web.
+3. Bruk _pnpm link_ som beskrive under for å linke den inn i k9-sak-web.
 
 ```shell
-yarn link ~/devel/k9-sak/web/target/ts-client
+pnpm link ~/devel/k9-sak/web/target/ts-client
 ```
 
 Juster filstien slik at den stemmer med der du har klona din k9-sak kode til.
@@ -35,11 +35,11 @@ Juster filstien slik at den stemmer med der du har klona din k9-sak kode til.
 **NB:** Hugs å fjerne link igjen før du committer, slik at endringa i package.json _"resolutions"_ ikkje blir med ut.
 
 ```shell
-yarn unlink @navikt/k9-sak-typescript-client
+pnpm unlink @navikt/k9-sak-typescript-client
 ```
 
-**NB2:** Etter _yarn link_ eller _yarn unlink_ må kanskje vite restartast for å få med seg endringa i avhengighet.
+**NB2:** Etter _pnpm link_ eller _pnpm unlink_ må kanskje vite restartast for å få med seg endringa i avhengighet.
 
 #### Storybook problem
 Når ein har linka inn lokal kopi av generert typescript klient ser det ut til at det kan føre til feil i storybook.
-Uvisst kvifor, men viss ein opplever rare problem i storybook, forsøk å fjerne link, og køyr `yarn cache clean && yarn install`
+Uvisst kvifor, men viss ein opplever rare problem i storybook, forsøk å fjerne link, og køyr `pnpm store prune && pnpm install`

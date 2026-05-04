@@ -25,7 +25,7 @@ jobs:
       - name: Kjør tester (shard ${{ matrix.shard }})
         env:
           CI: true
-        run: yarn test --silent=true --shard=${{ matrix.shard }}/2
+        run: pnpm test --silent=true --shard=${{ matrix.shard }}/2
 
   test-success:
     name: Kjør enhetstester

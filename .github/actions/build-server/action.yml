@@ -1,5 +1,5 @@
 name: Build server
-description: Install dependencies and compile TypeScript for the Express server.
+description: Compile TypeScript for the Express server.
 
 runs:
   using: composite
@@ -9,7 +9,6 @@ runs:
       with:
         node-version: '24'
 
-    - name: Installere server-avhengigheter og bygge
+    - name: Bygge server
       shell: bash
-      working-directory: server
-      run: yarn install && yarn build
+      run: pnpm --filter @k9-sak-web/server build

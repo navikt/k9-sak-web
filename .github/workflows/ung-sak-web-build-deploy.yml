@@ -31,7 +31,7 @@ jobs:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
-        run: yarn build:ung
+        run: pnpm build:ung
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_SENTRY_RELEASE: ${{ github.sha }}

@@ -166,10 +166,10 @@ export const VisValideringsfeil: Story = {
 ## Running Tests
 
 ```bash
-yarn storybook                           # Start Storybook dev server
-yarn build-storybook-test                # Build Storybook for test runner
-yarn test-storybook                      # Run all interaction tests
-yarn test-storybook -- --watch           # Watch mode
+pnpm storybook                           # Start Storybook dev server
+pnpm build-storybook-test                # Build Storybook for test runner
+pnpm test-storybook                      # Run all interaction tests
+pnpm test-storybook -- --watch           # Watch mode
 ```
 
 ## Common Shared Mocks

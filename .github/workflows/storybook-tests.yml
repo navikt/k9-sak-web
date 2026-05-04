@@ -20,10 +20,10 @@ jobs:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Storybook
-        run: yarn build-storybook-test --quiet
+        run: pnpm build-storybook-test --quiet
 
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on tcp:9001 && yarn test-storybook"
+            "npx wait-on tcp:9001 && pnpm test-storybook"

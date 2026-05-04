@@ -14,24 +14,26 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
 
-      - name: Setup yarnrc
-        uses: ./.github/actions/setup-yarnrc
+      - name: Sette opp pnpm
+        uses: pnpm/action-setup@v4
         with:
-          npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
+          version: 10
 
       - name: Sette opp Node
         uses: actions/setup-node@v6
         with:
           node-version: "22"
-          cache: "yarn"
+          cache: "pnpm"
 
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.4
         with:
-          install_command: LEFTHOOK=0 yarn install --immutable
-          build_command: yarn build-storybook
+          install_command: LEFTHOOK=0 pnpm install --frozen-lockfile
+          build_command: pnpm build-storybook
           path: .static_storybook
           checkout: false

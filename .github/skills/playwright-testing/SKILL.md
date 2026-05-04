@@ -19,7 +19,7 @@ Generate Playwright tests for Nav web applications. Covers page object pattern, 
 
 ```bash
 # Install Playwright
-yarn add -D @playwright/test
+pnpm add -D @playwright/test
 npx playwright install --with-deps chromium
 
 # Create configuration
@@ -48,7 +48,7 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
   webServer: {
-    command: "yarn dev",
+    command: "pnpm dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },
@@ -231,10 +231,13 @@ e2e:
     - uses: actions/setup-node@v4
       with:
         node-version: 22
-        cache: yarn
-    - run: yarn install --frozen-lockfile
+        cache: pnpm
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 10
+    - run: pnpm install --frozen-lockfile
     - run: npx playwright install --with-deps chromium
-    - run: yarn playwright test
+    - run: pnpm playwright test
     - uses: actions/upload-artifact@v4
       if: failure()
       with:

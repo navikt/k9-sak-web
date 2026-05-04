@@ -60,8 +60,8 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 
 ### Verification
 
-- [ ] `yarn ts-check` passes with zero errors
-- [ ] `yarn test` passes for affected packages
+- [ ] `pnpm ts-check` passes with zero errors
+- [ ] `pnpm test` passes for affected packages
 
 ## Directory Structure
 
@@ -185,9 +185,9 @@ If the k9-sak API hasn't been released yet:
 
 ```bash
 # In k9-sak project: run "web/generate typescript client" IntelliJ run config
-yarn link ~/path/to/k9-sak/web/target/ts-client
+pnpm link ~/path/to/k9-sak/web/target/ts-client
 # Remember to unlink before committing!
-yarn unlink @navikt/k9-sak-typescript-client
+pnpm unlink @navikt/k9-sak-typescript-client
 ```
 
 ## API Contract Pattern

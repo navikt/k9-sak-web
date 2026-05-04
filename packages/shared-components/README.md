@@ -1,7 +1,7 @@
 # shared-components
 
 ```
-yarn add @fpsak-frontend/shared-components
+pnpm add @fpsak-frontend/shared-components
 ```
 
 ### AksjonspunktHelpText

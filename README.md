@@ -8,17 +8,14 @@ Monorepo for Frontend kode for k9-sak og ung-sak.
 ## Komme i gang
 
 Først installer node: `brew install node`
-Så installer yarn: `brew install yarn`
+Så installer pnpm: `npm install -g pnpm`
 
-For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) med `read:packages`-tilgang i lokalt utviklingsmiljø, før man gjør `yarn install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages).
+For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) med `read:packages`-tilgang i lokalt utviklingsmiljø, før man gjør `pnpm install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages).
 
-TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, og putte det i en egen ~/.yarnrc.yml-fil slik:
+TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, og sette miljøvariabelen `NPM_AUTH_TOKEN` til tokenet ditt, f.eks. i `~/.bashrc` eller `~/.zshrc`:
 
 ```
-npmRegistries:
-  https://npm.pkg.github.com:
-    npmAlwaysAuth: true
-    npmAuthToken: <token>
+export NPM_AUTH_TOKEN=<token>
 ```
 
 Merk at dette _ikke_ skal sjekkes inn i versjonskontroll.
@@ -26,11 +23,11 @@ Merk at dette _ikke_ skal sjekkes inn i versjonskontroll.
 Når dette er gjort kan man kjøre dette på rot av repo'et for å kjøre opp lokalt utviklingsmiljø:
 
 ```
-yarn install
-yarn dev
+pnpm install
+pnpm dev
 ```
 
-Storybook brukes også til utvikling, startes med `yarn storybook`. Se ellers _package.json_ for mer info.
+Storybook brukes også til utvikling, startes med `pnpm storybook`. Se ellers _package.json_ for mer info.
 
 ## Workspaces
 
@@ -50,7 +47,7 @@ Noen sub-pakker i dette prosjekt har avhengigheter til kode fra [ft-frontend-sak
 
 Samtidig har disse sub-pakkene felles avhengigheter med koden i [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling).
 Dette gjør at oppdatering av disse avhengighetene må gjøres synkronisert, slik at vi unngår dupliserte avhengigheter. Viss versjonsnr ikke er
-nøyaktig likt vil yarn laste ned flere kopier og installere node_modules med disse nede i avhengighetstreet. Det kan føre til kompileringsfeil,
+nøyaktig likt vil pnpm laste ned flere kopier og installere node_modules med disse nede i avhengighetstreet. Det kan føre til kompileringsfeil,
 eller kjøretidsfeil viss avhengighet som blir duplisert inneholder css.
 
 Så ved oppdatering av følgende avhengigheter må man samtidig sørge for at alle pakker som starter på **@navikt/ft-** blir oppdatert

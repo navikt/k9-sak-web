@@ -24,18 +24,18 @@ jobs:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Typescript-sjekk
-        run: yarn ts-check
+        run: pnpm ts-check
 
       - name: Eslint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Css modules typegenerator check
-        run: yarn css:modules:typegen:check
+        run: pnpm css:modules:typegen:check
 
       - name: CSS-lint
-        run: yarn css:lint
+        run: pnpm css:lint
 
       - name: Sjekker at koden bygger
         if: ${{inputs.run-build}}
-        run: yarn build
+        run: pnpm build
         timeout-minutes: 30

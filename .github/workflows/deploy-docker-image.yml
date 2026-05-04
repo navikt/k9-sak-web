@@ -33,7 +33,7 @@ jobs:
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Bygge dist
-        run: yarn build
+        run: pnpm build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_SENTRY_RELEASE: ${{ github.sha }}

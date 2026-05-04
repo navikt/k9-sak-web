@@ -28,7 +28,7 @@ jobs:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygge dist
-        run: yarn build:ung
+        run: pnpm build:ung
 
       - name: Bygg server
         uses: ./.github/actions/build-server

@@ -199,12 +199,12 @@ export function RegistrationForm() {
 
 ## Package Manager
 
-**yarn** er package manager for dette prosjektet.
+**pnpm** er package manager for dette prosjektet.
 
 ```bash
-yarn install
-yarn add @navikt/ds-react
-yarn test
+pnpm install
+pnpm add @navikt/ds-react
+pnpm test
 ```
 
 ## Boundaries

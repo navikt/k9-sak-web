@@ -29,13 +29,6 @@ node_modules_bak
 .eslintcache
 public/client/src
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-server/.yarn
 !/packages/v2/lib*
 /.run/
 

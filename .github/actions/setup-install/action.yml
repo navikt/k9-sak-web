@@ -1,5 +1,5 @@
 name: Setup + Install
-description: Run commands needed to setup yarn and install dependencies.
+description: Run commands needed to setup pnpm and install dependencies.
 inputs:
   npmAuthToken:
     description: Token that has packages:read permission for the navikt organization
@@ -8,16 +8,19 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: ./.github/actions/setup-yarnrc
+    - name: Sette opp pnpm
+      uses: pnpm/action-setup@v4
       with:
-        npmAuthToken: ${{ inputs.npmAuthToken }}
+        version: 10
 
     - name: Sette opp node
       uses: actions/setup-node@v6
       with:
         node-version: '22'
-        cache: yarn
+        cache: pnpm
 
     - name: Installere dependencies
       shell: bash
-      run: LEFTHOOK=0 yarn install --immutable
+      run: LEFTHOOK=0 pnpm install --frozen-lockfile
+      env:
+        NPM_AUTH_TOKEN: ${{ inputs.npmAuthToken }}

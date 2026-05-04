@@ -4,19 +4,19 @@
     "sessionEnd": [
       {
         "type": "command",
-        "bash": "git diff --name-only --diff-filter=ACM HEAD | grep -E '\\.(ts|tsx|js|jsx|css|json|md)$' | xargs -r yarn prettier --write",
+        "bash": "git diff --name-only --diff-filter=ACM HEAD | grep -E '\\.(ts|tsx|js|jsx|css|json|md)$' | xargs -r pnpm prettier --write",
         "cwd": ".",
         "timeoutSec": 60
       },
       {
         "type": "command",
-        "bash": "yarn lint:fix 2>&1 | tail -30",
+        "bash": "pnpm lint:fix 2>&1 | tail -30",
         "cwd": ".",
         "timeoutSec": 120
       },
       {
         "type": "command",
-        "bash": "yarn ts-check:v2 2>&1 | tail -30",
+        "bash": "pnpm ts-check:v2 2>&1 | tail -30",
         "cwd": ".",
         "timeoutSec": 120
       }

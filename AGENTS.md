@@ -8,7 +8,7 @@ React/TypeScript monorepo for NAV's K9 case handling system (K9 Sak). Processes 
 
 - **React 19** + TypeScript 5 (strict in `packages/v2/`)
 - **Vite 7** for building and dev server
-- **Yarn 4** (ALWAYS use yarn, never npm)
+- **pnpm 10** (ALWAYS use pnpm, never npm or yarn)
 - **NAV Aksel Design System** (`@navikt/ds-react`, `@navikt/ds-css`, `@navikt/ds-tailwind`)
 - **CSS Modules + Tailwind CSS** for styling
 - **react-hook-form**, **react-router 7**
@@ -17,16 +17,16 @@ React/TypeScript monorepo for NAV's K9 case handling system (K9 Sak). Processes 
 ## Build & Test Commands
 
 ```bash
-yarn install        # Installer avhengigheter
-yarn dev            # Start utviklingsserver (K9)
-yarn dev:ung        # Start utviklingsserver (Ungdomsytelse)
-yarn test           # Kjør tester
-yarn test:watch     # Kjør tester i watch-modus
-yarn ts-check       # Typekontroll
-yarn lint           # Lint kode
-yarn lint:fix       # Auto-fiks linting
-yarn storybook      # Start Storybook
-yarn build          # Bygg for produksjon
+pnpm install        # Installer avhengigheter
+pnpm dev            # Start utviklingsserver (K9)
+pnpm dev:ung        # Start utviklingsserver (Ungdomsytelse)
+pnpm test           # Kjør tester
+pnpm test:watch     # Kjør tester i watch-modus
+pnpm ts-check       # Typekontroll
+pnpm lint           # Lint kode
+pnpm lint:fix       # Auto-fiks linting
+pnpm storybook      # Start Storybook
+pnpm build          # Bygg for produksjon
 ```
 
 ## Project Structure
@@ -57,12 +57,12 @@ packages/
 
 ### ✅ Always
 
-- Bruk `yarn`, aldri `npm`
+- Bruk `pnpm`, aldri `npm` eller `yarn`
 - Følg eksisterende kode‑mønstre i pakken du jobber i
 - Ny kode i `packages/v2/` — ikke importer fra ikke-v2-pakker der inne
 - Sjekk null/undefined eksplisitt (strict null checks)
 - Inkluder loading-, error- og empty-states
-- Kjør `yarn test` og `yarn ts-check` før commit
+- Kjør `pnpm test` og `pnpm ts-check` før commit
 
 ### ⚠️ Spør først
 
@@ -73,7 +73,7 @@ packages/
 
 ### 🚫 Never
 
-- Bruk `npm install` — alltid `yarn`
+- Bruk `npm install` eller `yarn` — alltid `pnpm`
 - Commit hemmeligheter eller credentials
 - Bruk `any` uten god grunn
 - Inline styles (`style={{ ... }}`)

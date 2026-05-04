@@ -1,7 +1,7 @@
 # form
 
 ```
-yarn add @fpsak-frontend/form
+pnpm add @fpsak-frontend/form
 ```
 
 ### CheckboxField

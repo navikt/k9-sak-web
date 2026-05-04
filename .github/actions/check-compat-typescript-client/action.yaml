@@ -23,8 +23,8 @@ runs:
       with:
         npmAuthToken: ${{ inputs.readerToken }}
       # Link inn ny klient pakke (allereie på plass frå steg før denne action blir kalla)
-    - run: yarn link ${{ inputs.newClientPath }}
+    - run: pnpm link ${{ inputs.newClientPath }}
       shell: bash
       # Køyr ts-check
-    - run: yarn ts-check
+    - run: pnpm ts-check
       shell: bash

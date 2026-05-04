@@ -1,7 +1,7 @@
 # utils
 
 ```
-yarn add @fpsak-frontend/utils
+pnpm add @fpsak-frontend/utils
 ```
 
 ### createVisningsnavnForAktivitet
