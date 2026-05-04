@@ -14,8 +14,8 @@ import { useMutation } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
-import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
-import { getItemStatus, VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import type { VilkårSplittPanelPeriod } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
@@ -56,14 +56,14 @@ export const ForutgåendeMedlemskap = ({
   onAksjonspunktBekreftet,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
-  const items: VilkårSplittPanelItem[] = (vilkår.perioder ?? []).map(p => ({
+  const periods: VilkårSplittPanelPeriod[] = (vilkår.perioder ?? []).map(p => ({
     id: p.periode.fom,
-    status: getItemStatus(p.vilkarStatus),
+    status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
     periode: p.periode,
   }));
 
-  const [selectedItemId, setSelectedItemId] = useState(items[0]?.id ?? '');
+  const [selectedItemId, setSelectedItemId] = useState(periods[0]?.id ?? '');
 
   const selectedPeriode = vilkår.perioder?.find(p => p.periode.fom === selectedItemId)?.periode;
   const overlappendeMedlemskap = selectedPeriode
@@ -113,7 +113,7 @@ export const ForutgåendeMedlemskap = ({
 
   return (
     <VilkårSplittPanel
-      items={items}
+      periods={periods}
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
       detailHeading="Forutgående medlemskap"

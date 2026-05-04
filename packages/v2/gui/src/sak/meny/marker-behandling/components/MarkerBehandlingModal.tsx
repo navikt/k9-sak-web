@@ -1,4 +1,4 @@
-import { merknadType, type MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
+import { MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
 import type { MerknadResponse } from '@k9-sak-web/backend/k9sak/kontrakt/los/MerknadResponse.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
@@ -34,10 +34,10 @@ const getMerknader = (merknader: MerknadResponse): MerknadType[] => {
   const ubrukteMerknader: MerknadType[] = [];
 
   if (!merknader.hastesak.aktiv) {
-    ubrukteMerknader.push(merknadType.HASTESAK);
+    ubrukteMerknader.push(MerknadType.HASTESAK);
   }
   if (!merknader.utenlandssak.aktiv) {
-    ubrukteMerknader.push(merknadType.UTENLANDSSAK);
+    ubrukteMerknader.push(MerknadType.UTENLANDSSAK);
   }
   return ubrukteMerknader;
 };
@@ -54,14 +54,14 @@ const getGjeldendeMerknader = (merknader: MerknadResponse) => {
     gjeldendeMerknader.push({
       tittel: 'Hastesak',
       begrunnelse: merknader.hastesak.fritekst ?? '',
-      merknadKode: merknadType.HASTESAK,
+      merknadKode: MerknadType.HASTESAK,
     });
   }
   if (merknader.utenlandssak.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Utenlandssak',
       begrunnelse: merknader.utenlandssak.fritekst ?? '',
-      merknadKode: merknadType.UTENLANDSSAK,
+      merknadKode: MerknadType.UTENLANDSSAK,
     });
   }
   return gjeldendeMerknader;
@@ -165,7 +165,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                     label="Velg ny merknad"
                     selectValues={tilgjengeligeMerknader.map(merknad => {
                       let label = merknad.charAt(0) + merknad.slice(1).toLowerCase();
-                      if (merknad === merknadType.UTENLANDSSAK) {
+                      if (merknad === MerknadType.UTENLANDSSAK) {
                         label = 'Utenlandssak';
                       }
                       return (

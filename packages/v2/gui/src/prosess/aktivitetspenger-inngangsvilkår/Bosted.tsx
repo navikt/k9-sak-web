@@ -18,7 +18,7 @@ import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
 import { aksjonspunktErÅpent } from './utils/utils';
-import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
@@ -71,13 +71,13 @@ export const Bosted = ({
   lokalkontorForeslårVilkårAp,
   isPermanentlyReadOnly,
 }: Props) => {
-  const items: VilkårSplittPanelItem[] = (bostedVilkår?.perioder ?? []).map(p => ({
+  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
-    status: getItemStatus(p.vilkarStatus),
+    status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedVilkår),
   });
@@ -85,7 +85,7 @@ export const Bosted = ({
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
       const vurdering = data.vurderinger[selectedId];
-      const selectedItem = items.find(item => item.id === selectedId);
+      const selectedItem = periods.find(period => period.id === selectedId);
       if (!selectedItem) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
@@ -143,7 +143,7 @@ export const Bosted = ({
         </Alert>
       )}
       <VilkårSplittPanel
-        items={items}
+        periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av bostedsvilkår"

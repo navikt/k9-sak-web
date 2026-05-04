@@ -16,7 +16,7 @@ import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
 import { aksjonspunktErÅpent } from './utils/utils';
-import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
@@ -76,17 +76,17 @@ export const BehovForBistand = ({
   readOnly,
   isPermanentlyReadOnly,
 }: Props) => {
-  const items: VilkårSplittPanelItem[] = (vurderBistandsvilkårVilkår?.perioder ?? []).map(p => ({
+  const periods: VilkårSplittPanelPeriod[] = (vurderBistandsvilkårVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
-    status: getItemStatus(p.vilkarStatus),
+    status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vurderBistandsvilkårVilkår),
   });
-  const selectedItem = items.find(item => item.id === selectedId);
+  const selectedItem = periods.find(period => period.id === selectedId);
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
@@ -161,7 +161,7 @@ export const BehovForBistand = ({
         </Alert>
       )}
       <VilkårSplittPanel
-        items={items}
+        periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av behov for bistand"

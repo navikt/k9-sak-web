@@ -44,8 +44,8 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await behandlinger_hentLovligeBehandlingsoperasjoner({ query: { behandlingUuid } })).data;
   }
 
-  async hentBehandlingMidlertidigStatus(behandlingUuid: string) {
-    return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid } })).data;
+  async hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal) {
+    return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid }, signal })).data;
   }
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {

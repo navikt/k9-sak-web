@@ -78,7 +78,7 @@ const buildDefaultValues = (
         annet: ap.vurderPaNyttArsaker?.includes(VurderÅrsak.ANNET) ?? false,
       })),
     )
-    .sort((a, b) => getTabOrderIndex(a.skjermlenkeType) - getTabOrderIndex(b.skjermlenkeType));
+    .toSorted((a, b) => getTabOrderIndex(a.skjermlenkeType) - getTabOrderIndex(b.skjermlenkeType));
 
   return {
     aksjonspunktGodkjenning,

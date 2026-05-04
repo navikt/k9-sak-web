@@ -4,7 +4,7 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CogIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
-import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
   søknadsfristVilkår: VilkårMedPerioderDto;
@@ -16,13 +16,13 @@ const getVilkårUtfall = (vilkårStatus: Utfall) => {
 };
 
 export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
-  const items: VilkårSplittPanelItem[] = (søknadsfristVilkår?.perioder ?? []).map(p => ({
+  const periods: VilkårSplittPanelPeriod[] = (søknadsfristVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
-    status: getItemStatus(p.vilkarStatus),
+    status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
 
   if (!søknadsfristVilkår) {
     return null;
@@ -31,7 +31,7 @@ export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
 
   return (
     <VilkårSplittPanel
-      items={items}
+      periods={periods}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av søknadsfrist"

@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
-export interface VilkårSplittPanelItem {
+export interface VilkårSplittPanelPeriod {
   id: string;
   status: 'success' | 'warning' | 'error';
   label: string;
@@ -24,7 +24,7 @@ export interface VilkårSplittPanelItem {
 }
 
 interface VilkårSplittPanelProps {
-  items: VilkårSplittPanelItem[];
+  periods: VilkårSplittPanelPeriod[];
   selectedItemId: string;
   onItemSelect: (id: string) => void;
   detailHeading: string;
@@ -37,7 +37,7 @@ interface VilkårSplittPanelProps {
   isPermanentlyReadOnly?: boolean;
 }
 
-const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
+const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
   switch (status) {
     case 'success':
       return <CheckmarkCircleFillIcon fontSize={24} color="var(--ax-bg-success-strong)" />;
@@ -50,7 +50,7 @@ const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) =>
   }
 };
 
-export const getItemStatus = (status: Utfall): VilkårSplittPanelItem['status'] => {
+export const getPeriodStatus = (status: Utfall): VilkårSplittPanelPeriod['status'] => {
   switch (status) {
     case Utfall.OPPFYLT:
       return 'success';
@@ -62,7 +62,7 @@ export const getItemStatus = (status: Utfall): VilkårSplittPanelItem['status'] 
 };
 
 export const VilkårSplittPanel = ({
-  items,
+  periods,
   selectedItemId,
   onItemSelect,
   detailHeading,
@@ -74,7 +74,7 @@ export const VilkårSplittPanel = ({
   lovreferanse,
   isPermanentlyReadOnly,
 }: VilkårSplittPanelProps) => {
-  const selectedItem = items.find(item => item.id === selectedItemId);
+  const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
   const [isFormLocked, setIsFormLocked] = useState(defaultIsLocked);
 
@@ -113,22 +113,22 @@ export const VilkårSplittPanel = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {items.map(item => (
+              {periods.map(period => (
                 <Table.Row
-                  key={item.id}
-                  onClick={() => onItemSelect(item.id)}
-                  selected={item.id === selectedItemId}
-                  className={`${styles.selectableRow} ${item.id === selectedItemId ? styles.selectedRow : ''}`}
+                  key={period.id}
+                  onClick={() => onItemSelect(period.id)}
+                  selected={period.id === selectedItemId}
+                  className={`${styles.selectableRow} ${period.id === selectedItemId ? styles.selectedRow : ''}`}
                 >
                   <Table.HeaderCell scope="row" align="center">
                     <HStack align="center" justify="center">
-                      <StatusIcon status={item.status} />
+                      <StatusIcon status={period.status} />
                     </HStack>
                   </Table.HeaderCell>
                   <Table.DataCell>
                     <BodyShort size="small" textColor="subtle">
                       <Link as="span" inlineText>
-                        {item.label}
+                        {period.label}
                       </Link>
                     </BodyShort>
                   </Table.DataCell>

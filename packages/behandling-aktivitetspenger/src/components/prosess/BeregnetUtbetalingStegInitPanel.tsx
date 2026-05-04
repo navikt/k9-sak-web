@@ -114,7 +114,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
   }
 
   if (kontrollInntektIsError) {
-    return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
+    return <Alert variant="error">Innlasting av inntektskontrolldata feilet, vennligst prøv igjen senere</Alert>;
   }
 
   const harInntektKontroll = inntekt?.kontrollperioder && inntekt.kontrollperioder.length > 0;

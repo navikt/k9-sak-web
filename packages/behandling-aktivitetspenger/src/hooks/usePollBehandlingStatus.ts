@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { delay } from '@k9-sak-web/gui/utils/delay.js';
 import { ung_sak_kontrakt_AsyncPollingStatus_Status } from '@navikt/ung-sak-typescript-client/types';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -41,21 +42,11 @@ export const usePollBehandlingStatus = (
       while (attempts < MAX_POLL_ATTEMPTS) {
         if (controller.signal.aborted) return;
 
-        const status = await api.hentBehandlingMidlertidigStatus(behandlingRef.current.uuid);
+        const status = await api.hentBehandlingMidlertidigStatus(behandlingRef.current.uuid, controller.signal);
         if (status?.status !== ung_sak_kontrakt_AsyncPollingStatus_Status.PENDING) break;
 
         attempts++;
-        await new Promise<void>(resolve => {
-          const abortListener = () => {
-            clearTimeout(timeout);
-            resolve();
-          };
-          const timeout = setTimeout(() => {
-            controller.signal.removeEventListener('abort', abortListener);
-            resolve();
-          }, status.pollIntervalMillis ?? 500);
-          controller.signal.addEventListener('abort', abortListener, { once: true });
-        });
+        await delay(status.pollIntervalMillis ?? 500, controller.signal).catch(() => {});
       }
 
       if (controller.signal.aborted) return;

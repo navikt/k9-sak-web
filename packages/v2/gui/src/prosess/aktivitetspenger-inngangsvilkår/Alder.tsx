@@ -4,7 +4,7 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CogIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
-import { getItemStatus, VilkårSplittPanel, type VilkårSplittPanelItem } from './VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 interface Props {
   alderVilkår: VilkårMedPerioderDto;
 }
@@ -15,19 +15,19 @@ const getVilkårUtfall = (vilkårStatus: Utfall) => {
 };
 
 export const Alder = ({ alderVilkår }: Props) => {
-  const items: VilkårSplittPanelItem[] = (alderVilkår?.perioder ?? []).map(p => ({
+  const periods: VilkårSplittPanelPeriod[] = (alderVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
-    status: getItemStatus(p.vilkarStatus),
+    status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(items[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
 
   const selectedVilkårPeriode = alderVilkår.perioder?.find(p => p.periode.fom === selectedId);
 
   return (
     <VilkårSplittPanel
-      items={items}
+      periods={periods}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av alder"
