@@ -1,12 +1,13 @@
 import { BostedAksjonspunktKode } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { FraflyttingsÅrsak, fraflyttingsÅrsakLabels } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/FraflyttingsÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BostedGrunnlagPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/bosatt/BostedGrunnlagResponseDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -31,6 +32,7 @@ interface Props {
 interface VurderPeriodeForm {
   borITrondheimIHelePerioden: 'ja' | 'nei' | '';
   fraflyttingsDato: string;
+  fraflyttingsÅrsak: string;
   begrunnelse: string;
 }
 
@@ -43,6 +45,7 @@ interface FastsettPeriodeForm {
   foreslåttErGyldig: 'ja' | 'nei' | '';
   nyBorITrondheimIHelePerioden?: 'ja' | 'nei' | '';
   nyFraflyttingsDato?: string;
+  nyFraflyttingsÅrsak?: string;
   nyBegrunnelse?: string;
 }
 
@@ -98,6 +101,21 @@ const VurderBostedSkjema = ({ selectedFom, selectedTom, formMethods, isPending, 
           fromDate={dayjs(selectedFom).toDate()}
           toDate={dayjs(selectedTom).toDate()}
           readOnly={isReadOnly}
+        />
+      )}
+      {borHele === 'nei' && (
+        <RhfSelect
+          key={`aarsak-${selectedFom}`}
+          control={formMethods.control}
+          name={`perioder.${selectedFom}.fraflyttingsÅrsak`}
+          label="Årsak til fraflytting"
+          validate={[required]}
+          readOnly={isReadOnly}
+          selectValues={Object.values(FraflyttingsÅrsak).map(kode => (
+            <option value={kode} key={kode}>
+              {fraflyttingsÅrsakLabels[kode]}
+            </option>
+          ))}
         />
       )}
       <RhfTextarea
@@ -211,6 +229,20 @@ const FastsettBostedSkjema = ({
               toDate={dayjs(selectedTom).toDate()}
             />
           )}
+          {watchedNyBorHele === 'nei' && (
+            <RhfSelect
+              key={`nyAarsak-${selectedFom}`}
+              control={formMethods.control}
+              name={`perioder.${selectedFom}.nyFraflyttingsÅrsak`}
+              label="Årsak til fraflytting"
+              validate={[required]}
+              selectValues={Object.values(FraflyttingsÅrsak).map(kode => (
+                <option value={kode} key={kode}>
+                  {fraflyttingsÅrsakLabels[kode]}
+                </option>
+              ))}
+            />
+          )}
           <RhfTextarea
             key={`nyBegrunnelse-${selectedFom}`}
             control={formMethods.control}
@@ -286,6 +318,7 @@ export const BosattITrondheim = ({
         {
           borITrondheimIHelePerioden: '',
           fraflyttingsDato: '',
+          fraflyttingsÅrsak: '',
           begrunnelse: '',
         } satisfies VurderPeriodeForm,
       ]),
@@ -305,6 +338,7 @@ export const BosattITrondheim = ({
           vurdering: {
             borITrondheimIHelePerioden: borHele,
             fraflyttingsDato: borHele ? null : (periodeForm?.fraflyttingsDato ?? null),
+            fraflyttingsÅrsak: borHele ? null : (periodeForm?.fraflyttingsÅrsak ?? null),
             begrunnelse: periodeForm?.begrunnelse ?? '',
           },
         };
@@ -332,6 +366,7 @@ export const BosattITrondheim = ({
           foreslåttErGyldig: '',
           nyBorITrondheimIHelePerioden: '',
           nyFraflyttingsDato: '',
+          nyFraflyttingsÅrsak: '',
           nyBegrunnelse: '',
         } satisfies FastsettPeriodeForm,
       ]),
@@ -355,6 +390,7 @@ export const BosattITrondheim = ({
             : {
                 borITrondheimIHelePerioden: borHeleNy,
                 fraflyttingsDato: borHeleNy ? null : (periodeForm?.nyFraflyttingsDato ?? null),
+                fraflyttingsÅrsak: borHeleNy ? null : (periodeForm?.nyFraflyttingsÅrsak ?? null),
                 begrunnelse: periodeForm?.nyBegrunnelse ?? '',
               },
         };
