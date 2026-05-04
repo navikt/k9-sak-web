@@ -22,6 +22,13 @@ const createMockApi = (responseData = {}, shouldFail = false) => ({
     }
     return Promise.resolve(responseData);
   },
+  getMerknader: () => {
+    return Promise.resolve({
+      hastesak: { aktiv: false },
+      utenlandssak: { aktiv: false },
+      direkteutbetaling: { aktiv: false },
+    });
+  },
 });
 
 export const IngenOppgaver: Story = {

@@ -25,7 +25,7 @@ export const VisMenyMarkerBehandlingHastekø: Story = {
     await step('skal vise inputfelt for tekst gitt at checkbox er valgt', async () => {
       await delay(100);
       await expect(canvas.queryByLabelText('Kommentar')).not.toBeInTheDocument();
-      await userEvent.selectOptions(canvas.getByRole('combobox'), 'UTENLANDSTILSNITT');
+      await userEvent.selectOptions(canvas.getByRole('combobox'), 'UTENLANDSSAK');
       await expect(canvas.getByLabelText('Kommentar')).toBeInTheDocument();
     });
   },
