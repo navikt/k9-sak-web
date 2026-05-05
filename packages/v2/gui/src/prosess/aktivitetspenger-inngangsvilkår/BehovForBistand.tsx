@@ -269,7 +269,7 @@ export const BehovForBistand = ({
                     readOnly={isFormLocked}
                   >
                     <Radio value={Avslagsårsak.IKKE_14A_VEDTAK}>
-                      Søker har ikke oppfølgingsvedtak etter Navloven §14a.
+                      Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.
                     </Radio>
                     <Radio value="fritekst">Fritekst</Radio>
                   </RhfRadioGroup>
