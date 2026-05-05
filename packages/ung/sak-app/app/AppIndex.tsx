@@ -6,7 +6,7 @@ import ForbiddenPage from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/Forbi
 import UnauthorizedPage, {
   ungLoginResourcePath,
 } from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/UnauthorizedPage.js';
-import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
 import AppConfigResolver from './AppConfigResolver';
@@ -37,25 +37,18 @@ const EMPTY_ARRAY = [];
 const AppIndex = () => {
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
-  const [hasCrashed, setCrashed] = useState(false);
 
   const setSiteHeight = useCallback((newHeaderHeight): void => {
     document.documentElement.setAttribute('style', `height: calc(100% - ${newHeaderHeight}px)`);
     setHeaderHeight(newHeaderHeight);
   }, []);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-  const addErrorMessageAndSetAsCrashed = error => {
-    addErrorMessage(error);
-    setCrashed(true);
-  };
-
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
   const queryStrings = parseQueryString(location.search);
   const forbiddenErrors = errorMessages.filter(o => o.type === EventType.REQUEST_FORBIDDEN);
   const unauthorizedErrors = errorMessages.filter(o => o.type === EventType.REQUEST_UNAUTHORIZED);
   const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
-  const shouldRenderHome = !hasCrashed && !hasForbiddenOrUnauthorizedErrors;
+  const shouldRenderHome = !hasForbiddenOrUnauthorizedErrors;
 
   // Start forhåndslasting av kodeverk oppslag data
   usePrefetchQuery(kodeverkOppslagQueryOptions.ungSak);
@@ -67,7 +60,7 @@ const AppIndex = () => {
   return (
     <RootSuspense heading="Laster grunnleggende systemdata">
       <AppConfigResolver>
-        <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
+        <ErrorBoundary>
           {isAktivitetspenger() && <title>Aktivitetspenger</title>}
           <Dekorator
             hideErrorMessages={hasForbiddenOrUnauthorizedErrors}

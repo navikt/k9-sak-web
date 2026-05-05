@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 
 import { BigError } from './BigError.js';
+import ErrorBoundary from './ErrorBoundary.js';
 
 /**
  * ForbiddenPage
@@ -9,9 +10,11 @@ import { BigError } from './BigError.js';
  * Det blir presentert en generell feilmelding og en lenke som tar NAV-ansatt tilbake til hovedsiden.
  */
 const ForbiddenPage = () => (
-  <BigError title="Du har ikke tilgang til å slå opp denne personen">
-    <Link to="/">Gå til forsiden</Link>
-  </BigError>
+  <ErrorBoundary>
+    <BigError title="Du har ikke tilgang til å slå opp denne personen">
+      <Link to="/">Gå til forsiden</Link>
+    </BigError>
+  </ErrorBoundary>
 );
 
 export default ForbiddenPage;

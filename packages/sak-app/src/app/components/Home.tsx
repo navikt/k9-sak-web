@@ -9,6 +9,7 @@ import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 
 import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 
 interface OwnProps {
   headerHeight: number;
@@ -28,16 +29,18 @@ const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
  * Presentasjonskomponent. Wrapper for sideinnholdet som vises under header.
  */
 const Home = ({ headerHeight }: OwnProps) => (
-  <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
-    <SentryRoutes>
-      <Route path="/" element={<FagsakSearchIndex />} />
-      <Route path={fagsakRoutePath} element={<FagsakIndex />} />
-      {/* OBS: AktoerRoutePath brukes av NKS fra Salesforce til K9-sak-web. Kanskje andre også */}
-      <Route path={aktoerRoutePath} element={<AktoerIndex />} />
-      <Route path="/close" element={<CloseWindow />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </SentryRoutes>
-  </div>
+  <ErrorBoundary>
+    <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
+      <SentryRoutes>
+        <Route path="/" element={<FagsakSearchIndex />} />
+        <Route path={fagsakRoutePath} element={<FagsakIndex />} />
+        {/* OBS: AktoerRoutePath brukes av NKS fra Salesforce til K9-sak-web. Kanskje andre også */}
+        <Route path={aktoerRoutePath} element={<AktoerIndex />} />
+        <Route path="/close" element={<CloseWindow />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </SentryRoutes>
+    </div>
+  </ErrorBoundary>
 );
 
 export default Home;

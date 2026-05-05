@@ -20,7 +20,6 @@ export interface ErrorFallbackProps {
 export interface ErrorBoundaryProps {
   errorMessageCallback?: (error: Record<string, unknown>) => void;
   children: ReactNode;
-  doNotShowErrorPage?: boolean;
   doNotShowErrorPageMaxCount?: number;
   errorFallback?: FC<ErrorFallbackProps>;
 }
@@ -33,10 +32,6 @@ interface State {
 const initialState: State = { error: null, sentryId: undefined };
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
-  static defaultProps = {
-    doNotShowErrorPage: false,
-  };
-
   private errorCount = 0;
 
   constructor(props: ErrorBoundaryProps) {
@@ -94,26 +89,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
     const {
       errorFallback: ErrorFallback,
       children,
-      doNotShowErrorPage,
       errorMessageCallback,
       doNotShowErrorPageMaxCount = 16,
     } = this.props;
     const { error, sentryId } = this.state;
-    // I utgangspunktet visast feilside viss doNotShowErrorPage ikkje er true. Ellers blir berre errorMessageCallback
-    // kalla, og rendering fortsetter etter beste evne.
-    let showErrorPage = !doNotShowErrorPage;
-    if (!showErrorPage) {
-      // Dette kan likevel bli overstyrt slik at feilside visast viss errorMessageCallback ikkje er definert, eller viss
-      // det har oppstått meir enn 16 feil sidan sist ErrorBoundary vart resatt, for å unngå evig loop viss ein feil gjenoppstår
-      // for kvar rendering av children.
-      if (errorMessageCallback == null) {
-        console.info(`Ingen errorMessageCallback definert, vis separat feilside.`);
-        showErrorPage = true;
-      } else if (this.errorCount > doNotShowErrorPageMaxCount) {
-        console.info(`Meir enn ${doNotShowErrorPageMaxCount} feil på rad, vis separat feilside.`);
-        showErrorPage = true;
-      }
-    }
+    // Separat feilside visast viss errorMessageCallback ikkje er satt, eller det har oppstått for mange feil ved visning av errorFallback
+    const showErrorPage = errorMessageCallback == null || this.errorCount > doNotShowErrorPageMaxCount;
 
     if (error != null && showErrorPage) {
       if (ErrorFallback != null) {
