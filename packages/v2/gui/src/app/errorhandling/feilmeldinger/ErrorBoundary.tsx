@@ -124,7 +124,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
         if (error instanceof AuthAbortedError) {
           return <AuthAbortedPage retryURL={error.retryURL} />;
         }
-        return <ErrorPage sentryId={sentryId} />;
+        return <ErrorPage sentryId={sentryId} errorMessage={error.message} />;
       }
     }
 

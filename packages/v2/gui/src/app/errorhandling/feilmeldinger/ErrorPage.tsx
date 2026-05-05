@@ -3,9 +3,10 @@ import { CopyButton } from '@navikt/ds-react';
 
 export interface ErrorPageProps {
   readonly sentryId?: string;
+  readonly errorMessage?: string;
 }
 
-const ErrorPage = ({ sentryId }: ErrorPageProps) => {
+const ErrorPage = ({ sentryId, errorMessage }: ErrorPageProps) => {
   const SentryRef = () =>
     sentryId !== undefined ? (
       <p>
@@ -16,6 +17,7 @@ const ErrorPage = ({ sentryId }: ErrorPageProps) => {
     ) : null;
   return (
     <BigError title="Det har oppstått en teknisk feil i denne behandlingen.">
+      <p>{errorMessage}</p>
       <DefaultErrorMsg />
       <SentryRef />
     </BigError>
