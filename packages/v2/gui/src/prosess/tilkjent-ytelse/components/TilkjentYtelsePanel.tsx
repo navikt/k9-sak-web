@@ -1,5 +1,4 @@
 import {aksjonspunktkodeDefinisjonType} from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
-import type {FeatureToggles} from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import {useKodeverkContext} from '@k9-sak-web/gui/kodeverk/index.js';
 import {DDMMYYYY_DATE_FORMAT} from '@k9-sak-web/lib/dateUtils/formats.js';
 import {initializeDate} from '@k9-sak-web/lib/dateUtils/initializeDate.js';
@@ -46,7 +45,6 @@ interface PureOwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  featureToggles?: FeatureToggles;
   personopplysninger: PersonopplysningDto;
   showAndelDetails?: boolean;
   feriepengerPrÅr: FeriepengerPrÅr;
@@ -59,7 +57,6 @@ const TilkjentYtelsePanel = ({
   aksjonspunkter,
   readOnly,
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
   personopplysninger,
   showAndelDetails,
   feriepengerPrÅr,
