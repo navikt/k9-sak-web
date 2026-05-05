@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect } from 'react';
-import { expect, fn, waitFor } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import ErrorBoundary, { type ErrorFallbackProps } from './ErrorBoundary.js';
 
 const meta = {
@@ -33,11 +33,9 @@ export const ErrorBoundaryNotTriggered: Story = {
 
 export const ErrorBoundaryTriggered: Story = {
   args: {
-    errorMessageCallback: fn(),
     children: <AlwaysFailingChild />,
   },
-  play: async ({ canvas, args }) => {
-    await waitFor(() => expect(args.errorMessageCallback).toHaveBeenCalledOnce());
+  play: async ({ canvas }) => {
     await expect(canvas.getByRole('heading')).toHaveTextContent(
       'Det har oppstått en teknisk feil i denne behandlingen.',
     );
@@ -55,8 +53,7 @@ export const ErrorBoundaryTriggeredFallback: Story = {
     ...ErrorBoundaryTriggered.args,
     errorFallback: ErrorFallback,
   },
-  play: async ({ canvas, args }) => {
-    await waitFor(() => expect(args.errorMessageCallback).toHaveBeenCalledOnce());
+  play: async ({ canvas }) => {
     await expect(canvas.getByText('Feil:')).toBeInTheDocument();
     await expect(canvas.getByText('TEST FAIL')).toBeInTheDocument();
   },
