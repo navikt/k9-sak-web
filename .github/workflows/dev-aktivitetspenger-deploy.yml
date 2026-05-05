@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - feat/aktivitetspenger-inngangsvilkår-flere-vilkår
+      - master
 
 jobs:
   build-deploy:
