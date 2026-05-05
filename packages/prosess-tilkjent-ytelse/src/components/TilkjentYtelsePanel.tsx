@@ -5,16 +5,16 @@ import {
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto as BeregningsresultatMedUtbetaltePeriodeDto,
   k9_sak_kontrakt_beregningsresultat_BeregningsresultatPeriodeDto as BeregningsresultatPeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { Box, Heading } from '@navikt/ds-react';
-import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
+import {useKodeverkContext} from '@k9-sak-web/gui/kodeverk/index.js';
+import {DDMMYYYY_DATE_FORMAT} from '@k9-sak-web/lib/dateUtils/formats.js';
+import {initializeDate} from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import {Box, Heading} from '@navikt/ds-react';
+import TilkjentYtelse, {PeriodeMedId} from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import type { FeriepengerPrÅr } from '../api/tilkjentYtelseApi';
+import type {FeriepengerPrÅr} from '../api/tilkjentYtelseApi';
 import FeriepengerPanel from './feriepenger/FeriepengerPanel';
-import { useContext } from 'react';
+import {useContext} from 'react';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 const perioderMedClassName = [];
@@ -86,7 +86,7 @@ const TilkjentYtelsePanelImpl = ({
         />
       )}
 
-      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr && feriepengerPrÅr.size > 0 && (
+      {feriepengerPrÅr && feriepengerPrÅr.size > 0 && (
         <Box marginBlock="space-16 space-0">
           <FeriepengerPanel
             feriepengerPrÅr={feriepengerPrÅr}
