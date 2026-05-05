@@ -37,7 +37,7 @@ import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<T
 
 export type <Domain>BackendApiType = {
   readonly backend: '<backend>';
-  <getMethod>(behandlingUuid: string): Promise<<ResponseDto>>;
+  <getMethod>(behandlingUuid: string): Promise<ResponseDto>;
   <postMethod>(behandlingUuid: string, behandlingVersjon: number, body: <RequestDto>): Promise<void>;
 };
 ```

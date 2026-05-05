@@ -34,8 +34,10 @@ Ask the user for:
 Find the generated SDK file for the chosen backend:
 
 ```
-node_modules/@navikt/<client-package>-typescript-client/src/sdk.gen.ts
+node_modules/<client-package>/src/sdk.gen.ts
 ```
+
+Where `<client-package>` is the full package name from the table above (e.g., `@navikt/ung-sak-typescript-client`).
 
 Read the function signatures for each requested endpoint. Note:
 - The HTTP method (GET/POST/PUT/DELETE)
@@ -44,9 +46,11 @@ Read the function signatures for each requested endpoint. Note:
 
 ### Step 2: Read the Types
 
-In `node_modules/@navikt/<client-package>-typescript-client/src/types.gen.ts`, find:
+In `node_modules/<client-package>/src/types.gen.ts`, find:
 - The `XxxData` type — contains `query` and/or `body` fields showing the request shape
 - The response type — the actual DTO returned
+
+Where `<client-package>` is the full package name from the table above (e.g., `@navikt/ung-sak-typescript-client`).
 
 Extract the DTO type names needed for the BackendApiType.
 
@@ -88,13 +92,13 @@ import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<T
 
 export type <Domain>BackendApiType = {
   readonly backend: '<backend>';
-  <methodName>(param1: string): Promise<<ReturnType>>;
+  <methodName>(param1: string): Promise<ReturnType>;
   <methodName2>(param1: string, param2: number): Promise<void>;
 };
 ```
 
 Rules:
-- Include `backend: string` as first field
+- Include `readonly backend: '<backend>'` as first field
 - Method names should be descriptive (e.g. `getKontrollerInntekt`, not `kontroll_hentKontrollerInntekt`)
 - GET endpoints return `Promise<DtoType>`
 - POST/PUT endpoints that mutate return `Promise<void>` (unless they return data)
