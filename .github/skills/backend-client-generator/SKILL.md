@@ -13,7 +13,7 @@ Ask the user for:
 
 1. **SDK endpoints** — function names from the generated `sdk.gen.ts` (e.g. `kontroll_hentKontrollerInntekt`)
 2. **Domain name** — PascalCase name for the feature (e.g. `AktivitetspengerBeregning`)
-3. **Backend** — one of: `ungsak`, `k9sak`, `k9klage`, `k9tilbake`
+3. **Backend** — one of: `ungsak`, `k9sak`, `k9klage`, `k9tilbake`, `ungtilbake`
 4. **Target folder** — relative path in `packages/v2/gui/src/` (e.g. `prosess/aktivitetspenger-beregning/`)
 5. **QueryOptions** — whether to generate a queryOptions file (default: no)
 
@@ -25,6 +25,7 @@ Ask the user for:
 | `k9sak` | `@navikt/k9-sak-typescript-client` | `@k9-sak-web/backend/k9sak/` |
 | `k9klage` | `@navikt/k9-klage-typescript-client` | `@k9-sak-web/backend/k9klage/` |
 | `k9tilbake` | `@navikt/k9-tilbake-typescript-client` | `@k9-sak-web/backend/k9tilbake/` |
+| `ungtilbake` | `@navikt/ung-tilbake-typescript-client` | `@k9-sak-web/backend/ungtilbake/` |
 
 ## Workflow
 
@@ -33,7 +34,7 @@ Ask the user for:
 Find the generated SDK file for the chosen backend:
 
 ```
-node_modules/@navikt/<backend>-typescript-client/src/sdk.gen.ts
+node_modules/@navikt/<client-package>-typescript-client/src/sdk.gen.ts
 ```
 
 Read the function signatures for each requested endpoint. Note:
@@ -43,7 +44,7 @@ Read the function signatures for each requested endpoint. Note:
 
 ### Step 2: Read the Types
 
-In `node_modules/@navikt/<backend>-typescript-client/src/types.gen.ts`, find:
+In `node_modules/@navikt/<client-package>-typescript-client/src/types.gen.ts`, find:
 - The `XxxData` type — contains `query` and/or `body` fields showing the request shape
 - The response type — the actual DTO returned
 
@@ -86,7 +87,7 @@ import type { <Type1> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<T
 import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type2>.js';
 
 export type <Domain>BackendApiType = {
-  backend: string;
+  readonly backend: '<backend>';
   <methodName>(param1: string): Promise<<ReturnType>>;
   <methodName2>(param1: string, param2: number): Promise<void>;
 };

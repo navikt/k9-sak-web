@@ -36,7 +36,7 @@ import type { <Type1> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<T
 import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type2>.js';
 
 export type <Domain>BackendApiType = {
-  backend: string;
+  readonly backend: '<backend>';
   <getMethod>(behandlingUuid: string): Promise<<ResponseDto>>;
   <postMethod>(behandlingUuid: string, behandlingVersjon: number, body: <RequestDto>): Promise<void>;
 };
@@ -112,6 +112,7 @@ When creating type re-exports, strip the namespace prefix:
 | `k9sak` | `k9_sak_kontrakt_<domain>_` | `k9_sak_kontrakt_uttak_UtenlandsoppholdDto` → `UtenlandsoppholdDto` |
 | `k9klage` | `k9_klage_kontrakt_<domain>_` | `k9_klage_kontrakt_klage_KlageVurderingDto` → `KlageVurderingDto` |
 | `k9tilbake` | `k9_tilbake_kontrakt_<domain>_` | `k9_tilbake_kontrakt_vedtak_VedtakDto` → `VedtakDto` |
+| `ungtilbake` | `ung_tilbake_kontrakt_<domain>_` | `ung_tilbake_kontrakt_vedtak_VedtakDto` → `VedtakDto` |
 
 ## SDK Function Parameter Patterns
 
