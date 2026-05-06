@@ -93,7 +93,7 @@ const MenyNyBehandlingIndexV2 = ({
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
       const filteredFormValues: Record<string, unknown> = Object.fromEntries(
-        Object.entries(formValues).filter(([, v]) => v !== ''),
+        Object.entries(formValues).filter(([, v]) => v !== '' && v !== undefined && (!Array.isArray(v) || v.length > 0)),
       );
 
       if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {

@@ -49,7 +49,13 @@ describe('<MenyNyBehandlingIndex>', () => {
             },
           ]}
           tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
+          revurderingArsaker={[
+            {
+              kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+              kodeverk: 'BEHANDLING_AARSAK',
+              navn: 'Opplysninger om beregningsgrunnlag',
+            },
+          ]}
           kanTilbakekrevingOpprettes={{
             kanBehandlingOpprettes: false,
             kanRevurderingOpprettes: false,
@@ -106,7 +112,13 @@ describe('<MenyNyBehandlingIndex>', () => {
             },
           ]}
           tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
+          revurderingArsaker={[
+            {
+              kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+              kodeverk: 'BEHANDLING_AARSAK',
+              navn: 'Opplysninger om beregningsgrunnlag',
+            },
+          ]}
           kanTilbakekrevingOpprettes={{
             kanBehandlingOpprettes: false,
             kanRevurderingOpprettes: false,
@@ -129,6 +141,10 @@ describe('<MenyNyBehandlingIndex>', () => {
         screen.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
         'inngangsvilkår',
       );
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hva er årsaken til den nye behandlingen?' }),
+        BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+      );
       await userEvent.click(screen.getByRole('button', { name: 'Opprett behandling' }));
     });
 
@@ -137,6 +153,7 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(kall[0]?.[0]).toBe(BehandlingTypeK9Sak.REVURDERING);
     expect(kall[0]?.[1]).toEqual({
       behandlingType: BehandlingTypeK9Sak.REVURDERING,
+      behandlingArsakType: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
       eksternUuid: '2323',
       fagsakYtelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
       saksnummer: '123',
@@ -231,7 +248,7 @@ describe('<MenyNyBehandlingIndex>', () => {
             ]}
             delvisRevurderingsårsaker={[
               {
-                årsak: BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG,
+                årsak: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
                 vilkårType: 'FP_VK_41',
                 periodeType: 'STP',
                 valgbarePerioder: [
@@ -250,9 +267,9 @@ describe('<MenyNyBehandlingIndex>', () => {
             tilbakekrevingRevurderingArsaker={[]}
             revurderingArsaker={[
               {
-                kode: BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG,
+                kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
                 kodeverk: 'BEHANDLING_AARSAK',
-                navn: 'Endring beregningsgrunnlag',
+                navn: 'Opplysninger om beregningsgrunnlag',
               },
             ]}
             kanTilbakekrevingOpprettes={{
@@ -277,7 +294,7 @@ describe('<MenyNyBehandlingIndex>', () => {
       await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }), 'DELVIS');
       await userEvent.selectOptions(
         screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' }),
-        BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG,
+        BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
       );
       await userEvent.click(screen.getByRole('checkbox', { name: 'Skjæringstidspunkt 01.01.2026' }));
       await userEvent.click(screen.getByRole('button', { name: 'Opprett behandling' }));
@@ -292,7 +309,7 @@ describe('<MenyNyBehandlingIndex>', () => {
       fagsakYtelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
       perioder: [{ fom: '2026-01-01', tom: '2026-01-31' }],
       saksnummer: '123',
-      steg: BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG,
+      steg: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
     });
     expect(lukkModalCallback.mock.calls).toHaveLength(1);
   });
