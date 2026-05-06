@@ -11,7 +11,7 @@ import { AuthAbortedPage } from '../../auth/AuthAbortedPage.js';
 import { ensureError } from '../ensureError.js';
 import { shouldReportToSentry } from '../sentry.js';
 import { isAlertInfo } from '../alerts/AlertInfo.js';
-import { SentryReportedError } from '../SentryReportedError.ts';
+import { SentryReportedError } from '../SentryReportedError.js';
 
 export interface ErrorFallbackProps {
   readonly error: Error;
