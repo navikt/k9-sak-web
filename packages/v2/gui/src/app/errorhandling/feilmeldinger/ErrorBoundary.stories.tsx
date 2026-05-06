@@ -23,11 +23,11 @@ const AlwaysFailingChild = () => {
 
 export const ErrorBoundaryNotTriggered: Story = {
   args: {
-    errorMessageCallback: fn(),
+    errorCallback: fn(),
     children: <NonFailingChild />,
   },
   play: async ({ args }) => {
-    await expect(args.errorMessageCallback).toHaveBeenCalledTimes(0);
+    await expect(args.errorCallback).toHaveBeenCalledTimes(0);
   },
 };
 

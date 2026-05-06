@@ -20,8 +20,6 @@ export interface ErrorFallbackProps {
 }
 
 export interface ErrorBoundaryProps {
-  // @deprecated Use errorCallback instead.
-  errorMessageCallback?: (error: Record<string, unknown>) => void;
   children: ReactNode;
   maxErrorCount?: number;
   // If set, the ErrorBoundary will only report error to Sentry and this callback, not display error itself. May be combined with errorFallback.
@@ -61,7 +59,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   }
 
   override componentDidCatch(_: any, info: ErrorInfo): void {
-    const { errorMessageCallback, errorCallback } = this.props;
+    const { errorCallback } = this.props;
     const { error } = this.state;
     if (error != null) {
       this.errorCount++;
@@ -81,13 +79,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
       }
       if (errorCallback != null) {
         errorCallback(this.sentryId != null ? new SentryReportedError(error, this.sentryId) : error);
-      }
-      if (errorMessageCallback != null) {
-        const componentStackString = info.componentStack
-          ?.split('\n')
-          .map(line => line.trim())
-          .find(line => !!line);
-        errorMessageCallback({ message: `${error.toString()} ${componentStackString}`.trim() });
       }
     }
   }
@@ -118,13 +109,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   }
 
   override render(): ReactNode {
-    const {
-      errorFallback: ErrorFallback,
-      children,
-      errorMessageCallback,
-      errorCallback,
-      maxErrorCount = 16,
-    } = this.props;
+    const { errorFallback: ErrorFallback, children, errorCallback, maxErrorCount = 16 } = this.props;
     const { error } = this.state;
     if (error != null) {
       // Viss errorCount har gått over grense vis separat feilside uten å rendre children eller errorFallback, sidan det tyder på rekursiv/evig feilsituasjon
@@ -136,7 +121,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
           this.setState(initialState);
         };
         return <ErrorFallback error={error} sentryId={this.sentryId} reset={reset} />;
-      } else if ((errorCallback == null && errorMessageCallback == null) || children == null) {
+      } else if (errorCallback == null || children == null) {
         return this.#renderErrorMessage(error);
       }
     }
