@@ -4,14 +4,15 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
+import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
+import * as yup from 'yup';
+import { useBekreftAksjonspunkt } from '@k9-sak-web/gui/shared/hooks/useBekreftAksjonspunkt.js';
 import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { useEffect, useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
-import { useAvregningBackendClient } from '../AvregningBackendClientContext';
 import { useAvregningFormState } from '../AvregningContext';
 
 interface Props {
@@ -25,9 +26,8 @@ export interface KontrollerEtterbetalingFormData {
 }
 
 const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly }) => {
-  const api = useAvregningBackendClient();
+  const { bekreft, loading } = useBekreftAksjonspunkt();
   const { getHøyEtterbetalingState, setHøyEtterbetaling } = useAvregningFormState();
-  const [loading, setLoading] = useState(false);
   const [rediger, setRediger] = useState(skalAksjonspunktUtredes(aksjonspunkt, behandling.status));
   const kanRedigeres = !readOnly && kanAksjonspunktRedigeres(aksjonspunkt, behandling.status);
 
@@ -57,24 +57,15 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   }, []);
 
   const onSubmit = async (data: KontrollerEtterbetalingFormData) => {
-    try {
-      setLoading(true);
-      if (aksjonspunkt.definisjon != AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING) {
-        throw new Error(
-          `Forventet aksjonspunkt kode ${AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING}, fikk ${aksjonspunkt.definisjon}.`,
-        );
-      }
-      if (behandling.id == null) {
-        throw new Error(`behandling.id null. Kan ikke bekrefte aksjonspunkt`);
-      }
-      if (!api.bekreftAksjonspunktSjekkHøyEtterbetaling) {
-        throw new Error('bekreftAksjonspunktSjekkHøyEtterbetaling er ikke tilgjengelig for denne backend-klienten');
-      }
-      await api.bekreftAksjonspunktSjekkHøyEtterbetaling(behandling.id, behandling.versjon, data.begrunnelse);
-      window.location.reload();
-    } finally {
-      setLoading(false);
+    if (aksjonspunkt.definisjon != AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING) {
+      throw new Error(
+        `Forventet aksjonspunkt kode ${AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING}, fikk ${aksjonspunkt.definisjon}.`,
+      );
     }
+    await bekreft({
+      '@type': AksjonspunktDefinisjon.SJEKK_HØY_ETTERBETALING,
+      begrunnelse: data.begrunnelse,
+    });
   };
 
   const {

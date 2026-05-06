@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktContext } from '@k9-sak-web/gui/context/AksjonspunktContext.js';
+import { k9SakClient } from '@k9-sak-web/backend/k9sak/aksjonspunktClient.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -184,27 +187,35 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <RawIntlProvider value={intl}>
-        <PleiepengerSluttfasePaneler
-          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-          fetchedData={data}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          opneSokeside={opneSokeside}
-          hasFetchError={behandlingState === RestApiState.ERROR}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-          featureToggles={featureToggles}
-          dokumenter={alleDokumenter}
-        />
-      </RawIntlProvider>
+      <BehandlingProvider
+        behandling={behandling}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        setBehandling={setBehandling}
+      >
+        <AksjonspunktContext.Provider value={k9SakClient}>
+        <RawIntlProvider value={intl}>
+          <PleiepengerSluttfasePaneler
+            behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+            fetchedData={data}
+            fagsak={fagsak}
+            fagsakPerson={fagsakPerson}
+            alleKodeverk={kodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            opneSokeside={opneSokeside}
+            hasFetchError={behandlingState === RestApiState.ERROR}
+            setBehandling={setBehandling}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+            featureToggles={featureToggles}
+            dokumenter={alleDokumenter}
+          />
+        </RawIntlProvider>
+        </AksjonspunktContext.Provider>
+      </BehandlingProvider>
     </>
   );
 };
