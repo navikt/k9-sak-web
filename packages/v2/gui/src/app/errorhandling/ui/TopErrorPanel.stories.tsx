@@ -10,7 +10,7 @@ import { SentryReportedError } from '../SentryReportedError.js';
 import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
 
 const meta = {
-  title: 'gui/app/errorhandling/TopErrorPanel',
+  title: 'gui/app/errorhandling/ui/TopErrorPanel',
   component: TopErrorPanelUI,
   parameters: {
     layout: 'fullscreen',
