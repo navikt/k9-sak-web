@@ -11,15 +11,15 @@ import { withTopDekoratør } from '../../storybook/decorators/withTopDekoratør.
 import { TopErrorPanel } from './ui/TopErrorPanel.js';
 
 interface ErrorThrowingComponentProps {
-  readonly throwInInitialRender?: boolean;
+  readonly foreverThrowInRender?: boolean;
 }
 
 type ErrorHandlingDemoAppProps = ErrorThrowingComponentProps & Omit<GlobalUnhandledErrorCatcherProps, 'children'>;
 
-const InRenderErrorThrowingComponent = ({ throwInInitialRender }: ErrorThrowingComponentProps) => {
-  const [shallRenderThrow, triggerRenderThrow] = useState(throwInInitialRender ?? false);
+const InRenderErrorThrowingComponent = ({ foreverThrowInRender }: ErrorThrowingComponentProps) => {
+  const [shallRenderThrow, triggerRenderThrow] = useState(foreverThrowInRender ?? false);
   const throwError = () => {
-    throw new Error('In render error');
+    throw new Error('Simple in-render error');
   };
   return (
     <p>
@@ -85,14 +85,14 @@ const InputComponent = () => {
   );
 };
 
-const ErrorHandlingDemoApp = ({ throwInInitialRender, maxErrorCount }: ErrorHandlingDemoAppProps) => {
+const ErrorHandlingDemoApp = ({ foreverThrowInRender, maxErrorCount }: ErrorHandlingDemoAppProps) => {
   return (
     <>
       <GlobalUnhandledErrorCatcher maxErrorCount={maxErrorCount}>
         <TopErrorPanel />
         <h1>Demo app for demonstrating global top-level error handling</h1>
         <ErrorStatusDisplay />
-        <InRenderErrorThrowingComponent throwInInitialRender={throwInInitialRender} />
+        <InRenderErrorThrowingComponent foreverThrowInRender={foreverThrowInRender} />
         <NormalErrorThrowingComponent />
         <InAsyncErrorThrowingComponent />
         <MutationThrowingComponent />
@@ -123,6 +123,12 @@ export const NoError: Story = {};
 export const RenderingError: Story = {
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Throw render error' }));
+  },
+};
+
+export const ContinuousFailure: Story = {
+  args: {
+    foreverThrowInRender: true,
   },
 };
 

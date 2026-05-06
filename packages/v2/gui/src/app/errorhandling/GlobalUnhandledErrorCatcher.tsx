@@ -1,6 +1,7 @@
 import { createContext, type FC, type ReactNode, useEffect, useState, use } from 'react';
 import { ensureError } from './ensureError.js';
 import { BigError, DefaultErrorMsg } from './feilmeldinger/BigError.js';
+import ErrorBoundary from './feilmeldinger/ErrorBoundary.tsx';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -66,6 +67,10 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   }
 
   return (
-    <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors }}>{children}</GlobalUnhandledErrorsContext>
+    <ErrorBoundary>
+      <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors }}>
+        {children}
+      </GlobalUnhandledErrorsContext>
+    </ErrorBoundary>
   );
 };
