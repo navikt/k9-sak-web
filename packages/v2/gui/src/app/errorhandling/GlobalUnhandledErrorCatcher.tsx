@@ -1,16 +1,21 @@
-import { createContext, type FC, type ReactNode, useEffect, useState, use } from 'react';
+import { createContext, type FC, type ReactNode, useEffect, useState, use, useCallback } from 'react';
 import { ensureError } from './ensureError.js';
 import { BigError, DefaultErrorMsg } from './feilmeldinger/BigError.js';
-import ErrorBoundary from './feilmeldinger/ErrorBoundary.tsx';
+import ErrorBoundary from './feilmeldinger/ErrorBoundary.js';
+import { FrontendError } from './FrontendError.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
   clearGlobalErrors(): void;
+  addError(error: Error): void;
 }
 
 const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
+  addError(error: Error) {
+    throw new FrontendError('GlobalUnhandledErrorsContext not initialized before adding error', error);
+  },
 };
 
 const GlobalUnhandledErrorsContext = createContext<GlobalUnhandledErrors>(empty);
@@ -36,26 +41,32 @@ export interface GlobalUnhandledErrorCatcherProps {
 export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> = ({ children, maxErrorCount = 50 }) => {
   const [globalErrors, setGlobalErrors] = useState<Error[]>([]);
   const clearGlobalErrors = () => setGlobalErrors([]);
+  const addError = useCallback(
+    (error: Error) => {
+      setGlobalErrors(prevErrors => [...prevErrors, error]);
+    },
+    [setGlobalErrors],
+  );
   useEffect(() => {
     const errorListener = (ev: ErrorEvent) => {
       const error: Error = ensureError(ev.error);
-      setGlobalErrors(prevErrors => [...prevErrors, error]);
+      addError(error);
     };
     addEventListener('error', errorListener);
     return () => {
       removeEventListener('error', errorListener);
     };
-  }, []);
+  }, [addError]);
   useEffect(() => {
     const promiseRejectionListener = (ev: PromiseRejectionEvent) => {
       const error: Error = ensureError(ev.reason);
-      setGlobalErrors(prevErrors => [...prevErrors, error]);
+      addError(error);
     };
     addEventListener('unhandledrejection', promiseRejectionListener);
     return () => {
       removeEventListener('unhandledrejection', promiseRejectionListener);
     };
-  }, []);
+  }, [addError]);
 
   if (globalErrors.length > maxErrorCount) {
     return (
@@ -68,8 +79,8 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
 
   return (
     <ErrorBoundary>
-      <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors }}>
-        {children}
+      <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addError }}>
+        <ErrorBoundary errorCallback={addError}>{children}</ErrorBoundary>
       </GlobalUnhandledErrorsContext>
     </ErrorBoundary>
   );

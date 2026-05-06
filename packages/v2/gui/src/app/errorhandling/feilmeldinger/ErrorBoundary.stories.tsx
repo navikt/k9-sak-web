@@ -42,6 +42,17 @@ export const ErrorBoundaryTriggered: Story = {
   },
 };
 
+export const ErrorBoundaryTriggeredCallback: Story = {
+  args: {
+    children: <AlwaysFailingChild />,
+    errorCallback: fn(),
+    errorFallback: () => <p>I failed</p>,
+  },
+  play: async ({ args }) => {
+    await expect(args.errorCallback).toHaveBeenCalledOnce();
+  },
+};
+
 const ErrorFallback = ({ error }: ErrorFallbackProps) => (
   <p>
     Feil: <span>{error.message}</span>
