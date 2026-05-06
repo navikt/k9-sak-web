@@ -92,7 +92,9 @@ const MenyNyBehandlingIndexV2 = ({
     async (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
-      const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
+      const filteredFormValues: Record<string, unknown> = Object.fromEntries(
+        Object.entries(formValues).filter(([, v]) => v !== ''),
+      );
 
       if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {
         delete filteredFormValues['steg'];
