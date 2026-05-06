@@ -1,6 +1,5 @@
 import { get, Period } from '@fpsak-frontend/utils';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import React, { useMemo, type JSX } from 'react';
 import Step, { langvarigSykdomSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -31,9 +30,8 @@ const VilkårsvurderingLangvarigSykdom = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingLangvarigSykdomProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, fagsakYtelseType, behandlingType, medisinskVilkårAksjonspunkt } =
-    React.useContext(ContainerContext);
-  const refetchBehandling = useRefetchBehandling();
+  const { endpoints, httpErrorHandler, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -124,7 +122,7 @@ const VilkårsvurderingLangvarigSykdom = ({
     dispatch({ type: ActionType.PENDING });
     try {
       const status = await hentSykdomsstegStatus();
-      if (!isAksjonspunktOpen(medisinskVilkårAksjonspunkt?.status.kode)) void refetchBehandling();
+      refetchBehandlingVedSykdomsendring();
       const nesteSteg = finnNesteStegForOpplæringspenger(status);
       if (nesteSteg === langvarigSykdomSteg || nesteSteg === null) {
         await oppdaterVurderingsoversikt();
