@@ -14,7 +14,7 @@ const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
   addError(error: Error) {
-    throw new FrontendError('GlobalUnhandledErrorsContext not initialized before adding error', error);
+    throw new FrontendError('addError called outside GlobalUnhandledErrorCatcher', error);
   },
 };
 
