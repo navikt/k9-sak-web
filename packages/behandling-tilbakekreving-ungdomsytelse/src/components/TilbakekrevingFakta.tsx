@@ -2,7 +2,8 @@ import React from 'react';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
@@ -37,7 +38,7 @@ const TilbakekrevingFakta = ({
   setBehandling,
 }: OwnProps) => {
   const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { addError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -105,7 +106,7 @@ const TilbakekrevingFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary errorCallback={addError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,

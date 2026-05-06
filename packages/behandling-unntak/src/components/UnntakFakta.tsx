@@ -3,12 +3,13 @@ import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } 
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 
 import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER];
 
@@ -45,7 +46,7 @@ const UnntakFakta = ({
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { addError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiUnntakHooks.useRestApiRunner<Behandling>(
     UnntakBehandlingApiKeys.SAVE_AKSJONSPUNKT,
@@ -122,7 +123,7 @@ const UnntakFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary errorCallback={addError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,

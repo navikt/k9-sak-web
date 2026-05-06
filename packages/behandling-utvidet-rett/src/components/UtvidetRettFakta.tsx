@@ -2,12 +2,13 @@ import React from 'react';
 import { SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import faktaUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidetRettPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { FaktaProps } from '../types/FaktaProps';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 const UtvidetRettFakta = ({
   data,
@@ -26,7 +27,7 @@ const UtvidetRettFakta = ({
   arbeidsgiverOpplysningerPerId,
 }: FaktaProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { addError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -96,7 +97,7 @@ const UtvidetRettFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary errorCallback={addError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,
