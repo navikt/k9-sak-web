@@ -107,14 +107,14 @@ export function {ComponentName}({
 ```tsx
 <Box background="surface-default" padding={{ xs: "space-16", md: "space-24" }} borderRadius="medium">
   <VStack gap="space-6">
-    <div className="flex items-center justify-between">
+    <HStack justify="space-between" align="center">
       <Heading size="large" level="2">
         Section Title
       </Heading>
       <Button variant="secondary" size="small">
         Action
       </Button>
-    </div>
+    </HStack>
     <HGrid columns={{ xs: 1, sm: 2, lg: 4 }} gap="space-4">
       {metrics.map((metric) => (
         <MetricCard key={metric.id} {...metric} />
