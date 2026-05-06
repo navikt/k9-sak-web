@@ -1,4 +1,6 @@
 import { get, Period } from '@fpsak-frontend/utils';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
@@ -26,7 +28,8 @@ const VilkårsvurderingAvTilsynOgPleie = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingAvTilsynOgPleieProps): JSX.Element => {
-  const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, medisinskVilkårAksjonspunkt } = React.useContext(ContainerContext);
+  const refetchBehandling = useRefetchBehandling();
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -115,6 +118,9 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     dispatch({ type: ActionType.PENDING });
     try {
       const status = await hentSykdomsstegStatus();
+      if (!isAksjonspunktOpen(medisinskVilkårAksjonspunkt?.status.kode)) {
+        void refetchBehandling();
+      }
       if (status.kanLøseAksjonspunkt) {
         navigerTilNesteSteg(toOmsorgspersonerSteg, true);
         return;
