@@ -117,8 +117,8 @@ export const Aksjonspunkt: Story = {
       const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
-      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
-      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
+      const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
 
       await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
       await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
@@ -159,8 +159,8 @@ export const LøsAksjonspunkt: Story = {
       const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
-      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
-      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
+      const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
 
       await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
       await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
@@ -234,7 +234,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 
     await step('Åpne splitt periode dialog', async () => {
       const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
-      const gruppeEn = within(await canvas.findByRole('group', { name: gruppeEnNavn }));
+      const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
 
       await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
       await fireEvent.change(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), {
@@ -265,7 +265,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 
       // Verifiser at periodene er splittet - bruker RegExp for å matche uten "Splitt periode" knappen
       await expect(
-        canvas.findByRole('group', {
+        canvas.findByRole('radiogroup', {
           name: new RegExp(
             `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(splittFom.subtract(1, 'day'))}`,
             'i',
@@ -276,7 +276,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 
     await step('Fyll ut og send inn', async () => {
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
-      const gruppeTo = within(await canvas.findByRole('group', { name: gruppeToNavn }));
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
       await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
 
       await fireEvent.change(await canvas.findByLabelText('Begrunnelse'), {
@@ -390,13 +390,13 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     await step('Kan redigere aksjonspunkt', async () => {
       await user.click(await canvas.findByRole('button', { name: 'Rediger' }));
 
-      const gruppeEn = await canvas.findByRole('group', {
+      const gruppeEn = await canvas.findByRole('radiogroup', {
         name: new RegExp(
           `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)}`,
           'i',
         ),
       });
-      const gruppeTo = await canvas.findByRole('group', {
+      const gruppeTo = await canvas.findByRole('radiogroup', {
         name: new RegExp(
           `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`,
           'i',

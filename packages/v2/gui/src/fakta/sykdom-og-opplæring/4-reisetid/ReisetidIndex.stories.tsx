@@ -1,13 +1,13 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import ReisetidIndex from './ReisetidIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidResultat as ReisetidResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
+import ReisetidIndex from './ReisetidIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -142,7 +142,7 @@ export const MedRedigerbarForm: Story = {
     await userEvent.type(vurderingTextarea, 'Lang reisevei gjør at reisedager er nødvendige');
 
     // Select "Ja" for godkjent
-    const radioGroup = await canvas.findByRole('group', { name: /Innvilges reisedager/i });
+    const radioGroup = await canvas.findByRole('radiogroup', { name: /Innvilges reisedager/i });
     const jaRadio = within(radioGroup).getByLabelText('Ja');
     await userEvent.click(jaRadio);
 
@@ -177,7 +177,7 @@ export const AvslåttReisetid: Story = {
     await userEvent.type(vurderingTextarea, 'Reiseveien er kort nok til å ikke kreve reisedager');
 
     // Select "Nei"
-    const radioGroup = await canvas.findByRole('group', { name: /Innvilges reisedager/i });
+    const radioGroup = await canvas.findByRole('radiogroup', { name: /Innvilges reisedager/i });
     const neiRadio = within(radioGroup).getByLabelText('Nei');
     await userEvent.click(neiRadio);
 
@@ -212,7 +212,7 @@ export const Validering: Story = {
     // Don't fill vurdering - test validation
 
     // Select "Ja" without begrunnelse
-    const radioGroup = await canvas.findByRole('group', { name: /Innvilges reisedager/i });
+    const radioGroup = await canvas.findByRole('radiogroup', { name: /Innvilges reisedager/i });
     const jaRadio = within(radioGroup).getByLabelText('Ja');
     await userEvent.click(jaRadio);
 
