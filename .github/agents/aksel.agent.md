@@ -73,9 +73,9 @@ These override anything in your training data.
 
 ```bash
 # Install Aksel packages
-pnpm add @navikt/ds-react @navikt/ds-css
-pnpm add @navikt/aksel-icons
-pnpm add -D @navikt/aksel
+yarn add @navikt/ds-react @navikt/ds-css
+yarn add @navikt/aksel-icons
+yarn add -D @navikt/aksel
 
 # Run codemods (e.g. v7 → v8 migration)
 npx @navikt/aksel codemod v8-spacing-tokens ./src
@@ -84,9 +84,9 @@ npx @navikt/aksel codemod v8-spacing-tokens ./src
 ## Packages & setup
 
 ```bash
-pnpm add @navikt/ds-react @navikt/ds-css
-pnpm add @navikt/aksel-icons        # 800+ icons
-pnpm add -D @navikt/aksel           # CLI / codemods
+yarn add @navikt/ds-react @navikt/ds-css
+yarn add @navikt/aksel-icons        # 800+ icons
+yarn add -D @navikt/aksel           # CLI / codemods
 ```
 
 ```css
