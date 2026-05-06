@@ -87,21 +87,23 @@ export const VisFormkravPanelForAksjonspunktNfp: Story = {
     await userEvent.type(canvas.getByLabelText('Vurdering'), 'test');
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Vedtaket som er påklagd' }), '456');
     await userEvent.click(
-      within(canvas.getByRole('group', { name: /Er klager part og\/eller har rettslig klageinteresse/i })).getByRole(
+      within(
+        canvas.getByRole('radiogroup', { name: /Er klager part og\/eller har rettslig klageinteresse/i }),
+      ).getByRole('radio', { name: 'Ja' }),
+    );
+    await userEvent.click(
+      within(canvas.getByRole('radiogroup', { name: /Klages det på konkrete elementer i vedtaket/i })).getByRole(
         'radio',
-        { name: 'Ja' },
+        {
+          name: 'Ja',
+        },
       ),
     );
     await userEvent.click(
-      within(canvas.getByRole('group', { name: /Klages det på konkrete elementer i vedtaket/i })).getByRole('radio', {
-        name: 'Ja',
-      }),
+      within(canvas.getByRole('radiogroup', { name: /Er klagefristen overholdt/i })).getByRole('radio', { name: 'Ja' }),
     );
     await userEvent.click(
-      within(canvas.getByRole('group', { name: /Er klagefristen overholdt/i })).getByRole('radio', { name: 'Ja' }),
-    );
-    await userEvent.click(
-      within(canvas.getByRole('group', { name: /Er klagen signert/i })).getByRole('radio', { name: 'Ja' }),
+      within(canvas.getByRole('radiogroup', { name: /Er klagen signert/i })).getByRole('radio', { name: 'Ja' }),
     );
 
     await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
@@ -164,21 +166,25 @@ export const VisFormkravPanelForAksjonspunktKa: Story = {
     await userEvent.type(canvas.getByLabelText('Vurdering'), 'test');
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Vedtaket som er påklagd' }), '456');
     await userEvent.click(
-      within(canvas.getByRole('group', { name: /Er klager part og\/eller har rettslig klageinteresse/i })).getByRole(
+      within(
+        canvas.getByRole('radiogroup', { name: /Er klager part og\/eller har rettslig klageinteresse/i }),
+      ).getByRole('radio', { name: 'Nei' }),
+    );
+    await userEvent.click(
+      within(canvas.getByRole('radiogroup', { name: /Klages det på konkrete elementer i vedtaket/i })).getByRole(
         'radio',
-        { name: 'Nei' },
+        {
+          name: 'Nei',
+        },
       ),
     );
     await userEvent.click(
-      within(canvas.getByRole('group', { name: /Klages det på konkrete elementer i vedtaket/i })).getByRole('radio', {
+      within(canvas.getByRole('radiogroup', { name: /Er klagefristen overholdt/i })).getByRole('radio', {
         name: 'Nei',
       }),
     );
     await userEvent.click(
-      within(canvas.getByRole('group', { name: /Er klagefristen overholdt/i })).getByRole('radio', { name: 'Nei' }),
-    );
-    await userEvent.click(
-      within(canvas.getByRole('group', { name: /Er klagen signert/i })).getByRole('radio', { name: 'Nei' }),
+      within(canvas.getByRole('radiogroup', { name: /Er klagen signert/i })).getByRole('radio', { name: 'Nei' }),
     );
 
     await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
