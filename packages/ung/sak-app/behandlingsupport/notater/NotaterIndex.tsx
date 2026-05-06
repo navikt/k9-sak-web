@@ -1,9 +1,9 @@
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
 import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak } from '@k9-sak-web/types';
 import { sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { LocalAlertError } from '@k9-sak-web/gui/app/errorhandling/ui/LocalAlertError.js';
 
 interface OwnProps {
   navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
@@ -16,12 +16,11 @@ interface OwnProps {
  * Container komponent. Har ansvar for å vise notater i saken.
  */
 const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
   if (!fagsak) {
     return <LoadingPanel />;
   }
   return (
-    <ErrorBoundary errorMessageCallback={addErrorMessage}>
+    <ErrorBoundary errorFallback={({ error }) => <LocalAlertError title="Notatskjema feilet" error={error} />}>
       <NotaterIndex
         fagsakId={fagsak.saksnummer}
         navAnsatt={navAnsatt}
