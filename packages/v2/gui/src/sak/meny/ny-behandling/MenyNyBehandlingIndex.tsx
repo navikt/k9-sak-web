@@ -100,6 +100,23 @@ const MenyNyBehandlingIndexV2 = ({
         delete filteredFormValues['tom'];
         delete filteredFormValues['revurderingModus'];
       } else if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'DELVIS') {
+        const valgtePerioder = Array.isArray(formValues.valgtePerioder)
+          ? formValues.valgtePerioder
+              .filter(Boolean)
+              .map(value => {
+                const [fom, tom] = value.split('/');
+                return fom && tom ? { fom, tom } : null;
+              })
+              .filter((p): p is { fom: string; tom: string } => p !== null)
+          : [];
+
+        if (valgtePerioder.length > 0) {
+          filteredFormValues['perioder'] = valgtePerioder;
+          delete filteredFormValues['fom'];
+          delete filteredFormValues['tom'];
+        }
+
+        delete filteredFormValues['valgtePerioder'];
         delete filteredFormValues['revurderingModus'];
         delete filteredFormValues['behandlingArsakType'];
         delete filteredFormValues['nyBehandlingEtterKlage'];
