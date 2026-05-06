@@ -1,11 +1,11 @@
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -108,7 +108,7 @@ export const Default: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for the form to appear
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
     await expect(godkjentRadioGroup).toBeInTheDocument();
@@ -146,7 +146,7 @@ export const GodkjentMedSkriftligVurdering: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 
@@ -195,7 +195,7 @@ export const IkkeGodkjent: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 
@@ -237,7 +237,7 @@ export const Validering: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 

@@ -9,8 +9,8 @@ import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
-import { KlagevurderingProsessIndex } from './KlagevurderingProsessIndex';
 import { withFakeKlageVurderingApi } from '../../storybook/decorators/withFakeKlageVurderingApi.js';
+import { KlagevurderingProsessIndex } from './KlagevurderingProsessIndex';
 
 const meta = {
   title: 'gui/prosess/klagevurdering',
