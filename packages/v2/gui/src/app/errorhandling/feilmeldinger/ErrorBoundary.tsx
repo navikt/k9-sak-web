@@ -67,6 +67,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
           if (info.digest != null) {
             scope.setExtra('digest', info.digest);
           }
+          if (isAlertInfo(error)) {
+            scope.setTag('errorId', error.errorId);
+          }
           this.sentryId = captureException(error);
         });
       }
