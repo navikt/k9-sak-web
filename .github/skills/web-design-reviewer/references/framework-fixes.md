@@ -194,6 +194,28 @@ const Card = styled.div`
 
 ---
 
+## Next.js / App Router
+
+### Global Style Fixes
+
+```css
+/* app/globals.css */
+
+/* Prevent layout overflow */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Prevent image overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+---
+
 ## Common Patterns
 
 ### Fixing Flexbox Layout Issues
