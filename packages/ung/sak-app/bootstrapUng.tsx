@@ -66,11 +66,13 @@ init({
         event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
       } else if (exception instanceof ExtendedApiError) {
         event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
-        event.extra.callId = exception.navCallid;
+        event.tags = event.tags ?? {};
+        event.tags['callId'] = exception.navCallid;
       }
       // For alle Error typer som implementerer AlertInfo tek vi med errorId i sentry rapport.
       if (isAlertInfo(exception)) {
-        event.extra.errorId = `${exception.errorId}`;
+        event.tags = event.tags ?? {};
+        event.tags['errorId'] = `${exception.errorId}`;
       }
     } catch (e) {
       try {
