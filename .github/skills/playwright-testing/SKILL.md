@@ -1,6 +1,11 @@
 ---
 name: playwright-testing
 description: Generer og kjør Playwright E2E-tester for webapplikasjoner med page objects, auth fixtures og tilgjengelighetstester
+license: MIT
+compatibility: Node.js with Playwright
+metadata:
+  domain: testing
+  tags: playwright e2e testing accessibility responsive
 ---
 
 # Playwright E2E Testing Skill

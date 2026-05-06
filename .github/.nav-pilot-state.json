@@ -1,65 +1,53 @@
 {
-  "collection": "nextjs-frontend",
-  "version": "2026.04.15-085456-a1b5704",
+  "collection": "frontend",
+  "version": "2026.04.30-090824-bb25c0e",
   "scope": "repo",
-  "source_sha": "a1b5704",
-  "installed_at": "2026-04-16T18:08:21Z",
+  "source_sha": "bb25c0e",
+  "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
       "path": ".github/agents/accessibility.agent.md",
       "hash": "98867df3e31b8cd4"
     },
     {
-      "path": ".github/agents/accessibility.metadata.json",
-      "hash": "8c9bd3f0474b10a2"
+      "path": ".github/agents/aksel.agent.md",
+      "hash": "f3f31e695bc1df0f"
     },
     {
       "path": ".github/agents/forfatter.agent.md",
-      "hash": "42eb060eeeaef4cf"
-    },
-    {
-      "path": ".github/agents/forfatter.metadata.json",
-      "hash": "415648fcdc323588"
+      "hash": "4e55f4d189619dcb"
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "3eac438b61ab279a"
+      "hash": "8384742b958b4b84"
     },
     {
-      "path": ".github/agents/nav-pilot.metadata.json",
-      "hash": "a2346eca6efdb9f5"
+      "path": ".github/skills/aksel-spacing/",
+      "hash": "690f23009e204e36"
     },
     {
       "path": ".github/skills/playwright-testing/",
-      "hash": "2b2fa6a6440ecccd"
+      "hash": "d8991a8ed8a5e0b5"
     },
     {
       "path": ".github/skills/web-design-reviewer/",
-      "hash": "6a734ef4c3d544d9"
+      "hash": "07b2096b77bf5ae3"
     },
     {
       "path": ".github/skills/nav-plan/",
-      "hash": "c1dccd4a9b3c3c4c"
+      "hash": "0849265460ea23e2"
     },
     {
       "path": ".github/skills/nav-deep-interview/",
-      "hash": "db67aa1434fb4610"
+      "hash": "42e9aab52e591ef0"
     },
     {
       "path": ".github/skills/nav-architecture-review/",
-      "hash": "3210c935f870aa0a"
+      "hash": "4618dec566442509"
     },
     {
       "path": ".github/skills/nav-troubleshoot/",
-      "hash": "a836d38dbcabe99e"
-    },
-    {
-      "path": ".github/instructions/nextjs-aksel.instructions.md",
-      "hash": "6aa56ec320c72809"
-    },
-    {
-      "path": ".github/instructions/performance.instructions.md",
-      "hash": "23b58fe157ef8f0e"
+      "hash": "ce043cf29ce427b1"
     },
     {
       "path": ".github/instructions/testing.instructions.md",
@@ -83,15 +71,11 @@
     },
     {
       "path": ".github/prompts/aksel-component.prompt.md",
-      "hash": "9da00ddfc10aefc4"
-    },
-    {
-      "path": ".github/prompts/nextjs-api-route.prompt.md",
-      "hash": "6dc6506e5264a67b"
+      "hash": "9119d15db318622d"
     },
     {
       "path": ".github/prompts/nais-manifest.prompt.md",
-      "hash": "7b1e6ac5b4115c3f"
+      "hash": "a7564098ae008cce"
     }
   ]
 }
