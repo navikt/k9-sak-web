@@ -1,6 +1,11 @@
 ---
 name: web-design-reviewer
 description: 'Visuell inspeksjon av nettsider for å identifisere og fikse designproblemer. Trigges av forespørsler som "sjekk designet", "gå gjennom UI-en", "fiks layouten", "finn designfeil". Finner problemer med responsivt design, tilgjengelighet, visuell konsistens og layout, og fikser dem i kildekoden.'
+license: MIT
+compatibility: Web application with browser access
+metadata:
+  domain: frontend
+  tags: design-review responsive accessibility layout visual-inspection
 ---
 
 # Nettside-designgjennomgang
