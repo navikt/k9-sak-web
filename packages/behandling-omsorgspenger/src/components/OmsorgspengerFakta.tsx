@@ -74,7 +74,7 @@ const OmsorgspengerFakta = ({
   dokumenter,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addError } = useGlobalUnhandledErrors();
+  const { addGlobalError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiOmsorgHooks.useRestApiRunner<Behandling>(
     OmsorgspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT,
@@ -158,7 +158,7 @@ const OmsorgspengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorCallback={addError}>
+          <ErrorBoundary errorCallback={addGlobalError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,

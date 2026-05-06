@@ -63,7 +63,7 @@ const PleiepengerSluttfaseFakta = ({
   beregningErBehandlet,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addError } = useGlobalUnhandledErrors();
+  const { addGlobalError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
@@ -151,7 +151,7 @@ const PleiepengerSluttfaseFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorCallback={addError}>
+          <ErrorBoundary errorCallback={addGlobalError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,

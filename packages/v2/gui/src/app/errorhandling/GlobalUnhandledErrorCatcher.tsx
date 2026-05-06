@@ -7,14 +7,14 @@ import { FrontendError } from './FrontendError.js';
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
   clearGlobalErrors(): void;
-  addError(error: Error): void;
+  addGlobalError(error: Error): void;
 }
 
 const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
-  addError(error: Error) {
-    throw new FrontendError('addError called outside GlobalUnhandledErrorCatcher', error);
+  addGlobalError(error: Error) {
+    throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
   },
 };
 
@@ -41,7 +41,7 @@ export interface GlobalUnhandledErrorCatcherProps {
 export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> = ({ children, maxErrorCount = 50 }) => {
   const [globalErrors, setGlobalErrors] = useState<Error[]>([]);
   const clearGlobalErrors = () => setGlobalErrors([]);
-  const addError = useCallback(
+  const addGlobalError = useCallback(
     (error: Error) => {
       setGlobalErrors(prevErrors => [...prevErrors, error]);
     },
@@ -50,23 +50,23 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   useEffect(() => {
     const errorListener = (ev: ErrorEvent) => {
       const error: Error = ensureError(ev.error);
-      addError(error);
+      addGlobalError(error);
     };
     addEventListener('error', errorListener);
     return () => {
       removeEventListener('error', errorListener);
     };
-  }, [addError]);
+  }, [addGlobalError]);
   useEffect(() => {
     const promiseRejectionListener = (ev: PromiseRejectionEvent) => {
       const error: Error = ensureError(ev.reason);
-      addError(error);
+      addGlobalError(error);
     };
     addEventListener('unhandledrejection', promiseRejectionListener);
     return () => {
       removeEventListener('unhandledrejection', promiseRejectionListener);
     };
-  }, [addError]);
+  }, [addGlobalError]);
 
   if (globalErrors.length > maxErrorCount) {
     return (
@@ -79,8 +79,8 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
 
   return (
     <ErrorBoundary>
-      <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addError }}>
-        <ErrorBoundary errorCallback={addError}>{children}</ErrorBoundary>
+      <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError }}>
+        <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
       </GlobalUnhandledErrorsContext>
     </ErrorBoundary>
   );

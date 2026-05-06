@@ -93,7 +93,7 @@ const BehandlingIndex = ({
     }
   }, [behandling]);
 
-  const { addError } = useGlobalUnhandledErrors();
+  const { addGlobalError } = useGlobalUnhandledErrors();
 
   const oppdaterBehandlingVersjon = useCallback(
     versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
@@ -164,7 +164,7 @@ const BehandlingIndex = ({
   if (erTilbakekreving(behandlingTypeKode)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorCallback={addError}>
+        <ErrorBoundary errorCallback={addGlobalError}>
           <BehandlingTilbakekrevingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             harApenRevurdering={fagsakBehandlingerInfo.some(
@@ -184,7 +184,7 @@ const BehandlingIndex = ({
   if (behandlingTypeKode === ung_kodeverk_behandling_BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorCallback={addError}>
+        <ErrorBoundary errorCallback={addGlobalError}>
           <BehandlingKlageUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
@@ -199,7 +199,7 @@ const BehandlingIndex = ({
   if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorCallback={addError}>
+        <ErrorBoundary errorCallback={addGlobalError}>
           <BehandlingAktivitetspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
@@ -214,7 +214,7 @@ const BehandlingIndex = ({
 
   return (
     <Suspense fallback={<LoadingPanel />}>
-      <ErrorBoundary errorCallback={addError}>
+      <ErrorBoundary errorCallback={addGlobalError}>
         <BehandlingUngdomsytelseIndex
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           valgtFaktaSteg={query.fakta}

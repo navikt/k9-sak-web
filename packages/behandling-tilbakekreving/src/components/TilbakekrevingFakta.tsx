@@ -38,7 +38,7 @@ const TilbakekrevingFakta = ({
   setBehandling,
 }: OwnProps) => {
   const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
-  const { addError } = useGlobalUnhandledErrors();
+  const { addGlobalError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -106,7 +106,7 @@ const TilbakekrevingFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorCallback={addError}>
+          <ErrorBoundary errorCallback={addGlobalError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,

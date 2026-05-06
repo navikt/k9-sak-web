@@ -63,7 +63,7 @@ const OpplaeringspengerFakta = ({
   beregningErBehandlet,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addError } = useGlobalUnhandledErrors();
+  const { addGlobalError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiOpplaeringspengerHooks.useRestApiRunner<Behandling>(OpplaeringspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -149,7 +149,7 @@ const OpplaeringspengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorCallback={addError}>
+          <ErrorBoundary errorCallback={addGlobalError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,

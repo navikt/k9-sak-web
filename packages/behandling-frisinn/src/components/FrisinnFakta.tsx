@@ -49,7 +49,7 @@ const FrisinnFakta = ({
   featureToggles,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addError } = useGlobalUnhandledErrors();
+  const { addGlobalError } = useGlobalUnhandledErrors();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
     FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
@@ -134,7 +134,7 @@ const FrisinnFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorCallback={addError}>
+          <ErrorBoundary errorCallback={addGlobalError}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
               ...faktaDataUtenCaching,
