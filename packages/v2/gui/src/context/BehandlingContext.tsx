@@ -1,4 +1,4 @@
-import React, { createContext, type ReactNode } from 'react';
+import { useContext, createContext, type ReactNode } from 'react';
 
 export interface BehandlingContextType {
   refetchBehandling: () => Promise<any>;
@@ -17,7 +17,7 @@ export const BehandlingProvider = ({
 };
 
 export const useRefetchBehandling = (): BehandlingContextType['refetchBehandling'] => {
-  const context = React.useContext(BehandlingContext);
+  const context = useContext(BehandlingContext);
   if (!context) {
     throw new Error('useRefetchBehandling must be used within a BehandlingProvider');
   }
