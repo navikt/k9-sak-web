@@ -85,7 +85,7 @@ export const CheckAdditionalInfoDialogDisplay: Story = {
     await expect(within(dialog).getByText('Testfeil 3')).toBeInTheDocument();
     await expect(within(dialog).getByText(/Extra description of error/)).toBeInTheDocument();
     // Lukk dialogen og verifiser at den er borte
-    const lukkButton = within(dialog).getByRole('button', { name: 'Lukk feilmelding' });
+    const lukkButton = within(dialog).getByRole('button', { name: 'Lukk' });
     await userEvent.click(lukkButton);
     await expect(within(dialog).queryByText('Testfeil 3')).not.toBeInTheDocument();
   },

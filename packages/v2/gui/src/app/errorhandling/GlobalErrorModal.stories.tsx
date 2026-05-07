@@ -68,7 +68,7 @@ export const InputValueRemainsAfterError: Story = {
     await expect(dialog).toBeInTheDocument();
     await expect(input).toHaveValue('Test input data');
     // Lukk dialogen
-    await userEvent.click(within(dialog).getByRole('button', { name: 'Lukk feilmelding' }));
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Lukk' }));
     // Sjekk at inputverdien framleis er intakt etter at dialogen er lukka
     await expect(input).toHaveValue('Test input data');
   },
