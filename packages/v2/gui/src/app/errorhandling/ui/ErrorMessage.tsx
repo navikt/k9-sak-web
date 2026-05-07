@@ -7,10 +7,10 @@ import css from './handCursor.module.css';
 
 export interface ErrorMessageProps {
   readonly error: Error;
-  readonly onReload: ErrorModalProps['onReload'];
+  readonly onTryAgain?: ErrorModalProps['onTryAgain'];
 }
 
-export const ErrorMessage = ({ error, onReload }: ErrorMessageProps) => {
+export const ErrorMessage = ({ error, onTryAgain }: ErrorMessageProps) => {
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const { additionalInfo } = resolveErrorUiData(error);
   return (
@@ -21,7 +21,7 @@ export const ErrorMessage = ({ error, onReload }: ErrorMessageProps) => {
           <ErrorModal
             error={showAdditionalInfo ? error : undefined}
             onClose={() => setShowAdditionalInfo(false)}
-            onReload={onReload}
+            onTryAgain={onTryAgain}
           />
           <small>
             <Link className={css.handCursor} onClick={() => setShowAdditionalInfo(true)}>

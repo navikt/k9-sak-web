@@ -1,6 +1,6 @@
 import { BodyLong, Button, HStack, VStack } from '@navikt/ds-react';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowsCirclepathIcon, ArrowCirclepathIcon } from '@navikt/aksel-icons';
-import { ErrorInfoCopy } from './ErrorInfoCopy.tsx';
+import { ErrorInfoCopy } from './ErrorInfoCopy.js';
 import { type ReactNode, useState } from 'react';
 
 // Felles props for alle knappane i ErrorHandlingWizard

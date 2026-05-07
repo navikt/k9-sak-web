@@ -17,7 +17,6 @@ export const GlobalErrorModal = () => {
       return undefined;
     }
   }, [globalErrors, closedError]);
-  const reload = () => window.location.reload();
 
-  return <ErrorModal error={modalError} onClose={() => setClosedError(modalError)} onReload={reload} />;
+  return <ErrorModal error={modalError} onClose={() => setClosedError(modalError)} />;
 };

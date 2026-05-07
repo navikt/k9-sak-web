@@ -16,7 +16,6 @@ interface TopErrorPanelUIProps {
 /** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
 export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
   const [hidden, setHidden] = useState(false);
-  const reload = () => window.location.reload();
 
   if (errors.length > 0) {
     const headerTxt = errors.length > 1 ? `${errors.length} Uventede feil` : `Uventet feil`;
@@ -45,7 +44,7 @@ export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
             <VStack gap="space-16" marginBlock="space-4 space-0">
               {errors.map(error => {
                 const { errorId } = resolveErrorUiData(error);
-                return <ErrorMessage error={error} onReload={reload} key={errorId ?? makeErrorId()} />;
+                return <ErrorMessage error={error} key={errorId ?? makeErrorId()} />;
               })}
             </VStack>
           </ErrorHandlingWizard>

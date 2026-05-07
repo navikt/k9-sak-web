@@ -34,7 +34,7 @@ const meta = {
   decorators: [withAppScaffolding()],
   args: {
     onClose: action('onClose'),
-    onReload: action('onReload'),
+    onTryAgain: action('onTryAgain'),
   },
 } satisfies Meta<typeof ErrorModal>;
 
