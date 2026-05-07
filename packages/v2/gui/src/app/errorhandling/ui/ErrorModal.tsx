@@ -9,6 +9,7 @@ export interface ErrorModalProps {
 }
 
 export const ErrorModal = ({ error, onClose, onTryAgain }: ErrorModalProps) => {
+  const retryTxt = onTryAgain ? 'prøve på nytt' : 'laste inn på nytt';
   const { additionalInfo } = resolveErrorUiData(error);
   return (
     <Dialog open={error != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
@@ -20,7 +21,7 @@ export const ErrorModal = ({ error, onClose, onTryAgain }: ErrorModalProps) => {
               <LocalAlert.CloseButton onClick={onClose} />
             </LocalAlert.Header>
             <LocalAlert.Content>
-              <ErrorHandlingWizard errors={[error]} onTryAgain={onTryAgain}>
+              <ErrorHandlingWizard errors={[error]} onTryAgain={onTryAgain} withoutDefaultInfo>
                 <ErrorContentBox>
                   <div>{error.message}</div>
                   {/* additionalInfo er noko som kan komme frå legacy kode. Litt uvisst kva innhaldet kan vere. Implementert tilsvarande som utlisting i legacy ErrorMessageDetailsModal */}
@@ -36,6 +37,14 @@ export const ErrorModal = ({ error, onClose, onTryAgain }: ErrorModalProps) => {
                     </VStack>
                   ) : null}
                 </ErrorContentBox>
+                <BodyLong>
+                  Skjermbildet kan mangle/vise feil informasjon. For å sikre korrekt visning bør du {retryTxt}.{' '}
+                </BodyLong>
+                <BodyLong>
+                  <b>NB:</b> Hvis du har utfylt skjemainformasjon som ikke er lagret, lukk denne dialog og ta vare på
+                  skjemainformasjon først.
+                </BodyLong>
+                <BodyLong> Rapporter feil i porten hvis den vedvarer.</BodyLong>
               </ErrorHandlingWizard>
             </LocalAlert.Content>
           </LocalAlert>

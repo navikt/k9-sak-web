@@ -14,6 +14,8 @@ export type ErrorHandlingWizardProps = Readonly<{
   children: ReactNode;
   errors: ReadonlyArray<Error>;
   onTryAgain?: () => void;
+  // Fjerner standard info tekst om prøv på nytt og rapporter, i tilfelle dette er inkludert i eigendefinert tekst i children.
+  withoutDefaultInfo?: boolean;
 }>;
 
 export const ErrorContentBox = ({ children }: { children: ReactNode }) => (
@@ -22,7 +24,7 @@ export const ErrorContentBox = ({ children }: { children: ReactNode }) => (
   </Box>
 );
 
-export const ErrorHandlingWizard = ({ children, errors, onTryAgain }: ErrorHandlingWizardProps) => {
+export const ErrorHandlingWizard = ({ children, errors, onTryAgain, withoutDefaultInfo }: ErrorHandlingWizardProps) => {
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
   const retryText = onTryAgain != null ? 'Prøv på nytt' : 'Last på nytt';
   const retryAction = onTryAgain ?? (() => window.location.reload());
@@ -56,7 +58,9 @@ export const ErrorHandlingWizard = ({ children, errors, onTryAgain }: ErrorHandl
       ) : (
         <>
           {children}
-          <div>{retryText}. Rapporter feil i porten hvis den vedvarer.</div>
+          {withoutDefaultInfo ? null : (
+            <div>{retryText} for å få feilfri visning. Rapporter feil i porten hvis den vedvarer.</div>
+          )}
           <HStack gap="space-4">
             <Button {...btnProps} onClick={retryAction} icon={retryIcon} iconPosition="right">
               {retryText}
