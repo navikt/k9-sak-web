@@ -11,9 +11,9 @@ import { sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as 
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
+import { Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
-import { RhfCheckbox, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { use, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -84,6 +84,8 @@ const byggÅrsakTilVilkårMap = (backendData?: DelvisRevurderingÅrsakMapping[])
 export const DELVIS_REVURDERING_ARSAKER_FALLBACK = new Set(Object.keys(DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK));
 
 const formaterPeriodeDato = (dato?: string) => (dato ? visnDato(dato) : '');
+const requiredValgtePerioder = (perioder?: string[]) =>
+  perioder && perioder.length > 0 ? undefined : 'Velg minst én periode for delvis revurdering';
 
 const resetRevurderingFelter = (setValue: ReturnType<typeof useForm<FormValues>>['setValue']) => {
   setValue('steg', undefined);
@@ -239,6 +241,9 @@ export const NyBehandlingModal = ({
   const valgtDelvisÅrsak = delvisRevurderingsårsaker?.find(a => a.årsak === steg);
   const valgbarePerioder = valgtDelvisÅrsak?.valgbarePerioder ?? [];
   const enesteValgbarePeriode = valgbarePerioder.length === 1 ? valgbarePerioder[0] : undefined;
+  const harFlereValgbarePerioder = valgbarePerioder.length > 1;
+  const harEnValgbarPeriode = valgbarePerioder.length === 1 && !!enesteValgbarePeriode;
+  const harIngenValgbarePerioder = !harFlereValgbarePerioder && !harEnValgbarPeriode;
   useEffect(() => {
     if (REVURDERING_FRA_STEG_V2 && erRevurdering && !kanVelgeDelvisRevurdering) {
       formMethods.setValue('revurderingModus', 'FULL');
@@ -259,14 +264,6 @@ export const NyBehandlingModal = ({
       ? [`${enesteValgbarePeriode.fom}/${enesteValgbarePeriode.tom}`]
       : undefined;
     const valgtePerioder = automatiskValgtPeriode ?? formValues.valgtePerioder;
-
-    if (erDelvisRevurdering && steg && valgbarePerioder.length > 1 && (!valgtePerioder || valgtePerioder.length === 0)) {
-      formMethods.setError('valgtePerioder', {
-        type: 'required',
-        message: 'Velg minst én periode for delvis revurdering',
-      });
-      return;
-    }
 
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
@@ -362,36 +359,37 @@ export const NyBehandlingModal = ({
             )}
             {erDelvisRevurdering && steg && (
               <>
-                {valgbarePerioder.length > 1 ? (
-                  <Fieldset legend="Hvilke perioder vil du revurdere?">
-                    <VStack gap="space-8">
-                      {valgbarePerioder.map(periode => {
-                        const value = `${periode.fom}/${periode.tom}`;
-                        const label =
-                          valgtDelvisÅrsak?.periodeType === 'STP'
-                            ? `Skjæringstidspunkt ${formaterPeriodeDato(periode.fom)}`
-                            : `${formaterPeriodeDato(periode.fom)} - ${formaterPeriodeDato(periode.tom)}`;
-                        return (
-                          <label key={value}>
-                            <input type="checkbox" value={value} {...formMethods.register('valgtePerioder')} /> {label}
-                          </label>
-                        );
-                      })}
-                    </VStack>
-                    {formMethods.formState.errors.valgtePerioder?.message && (
-                      <Alert variant="error" size="small">
-                        {String(formMethods.formState.errors.valgtePerioder.message)}
-                      </Alert>
-                    )}
-                  </Fieldset>
-                ) : valgbarePerioder.length === 1 && enesteValgbarePeriode ? (
+                {harFlereValgbarePerioder && (
+                  <RhfCheckboxGroup
+                    control={formMethods.control}
+                    name="valgtePerioder"
+                    legend="Hvilke perioder vil du revurdere?"
+                    validate={[requiredValgtePerioder]}
+                  >
+                    {valgbarePerioder.map(periode => {
+                      const value = `${periode.fom}/${periode.tom}`;
+                      const label =
+                        valgtDelvisÅrsak?.periodeType === 'STP'
+                          ? `Skjæringstidspunkt ${formaterPeriodeDato(periode.fom)}`
+                          : `${formaterPeriodeDato(periode.fom)} - ${formaterPeriodeDato(periode.tom)}`;
+
+                      return (
+                        <Checkbox key={value} value={value}>
+                          {label}
+                        </Checkbox>
+                      );
+                    })}
+                  </RhfCheckboxGroup>
+                )}
+                {harEnValgbarPeriode && enesteValgbarePeriode && (
                   <Alert variant="info" size="small">
                     {valgtDelvisÅrsak?.periodeType === 'STP' ? 'Skjæringstidspunkt' : 'Periode'} som revurderes:{' '}
                     {valgtDelvisÅrsak?.periodeType === 'STP'
                       ? `${formaterPeriodeDato(enesteValgbarePeriode.fom)}`
                       : `${formaterPeriodeDato(enesteValgbarePeriode.fom)} - ${formaterPeriodeDato(enesteValgbarePeriode.tom)}`}
                   </Alert>
-                ) : (
+                )}
+                {harIngenValgbarePerioder && (
                   <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
                     <RhfDatepicker
                       control={formMethods.control}
