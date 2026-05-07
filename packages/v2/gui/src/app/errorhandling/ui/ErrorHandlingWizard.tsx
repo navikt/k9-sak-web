@@ -59,6 +59,10 @@ export const ErrorHandlingWizard = ({ children, errors, onTryAgain, withoutDefau
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowLeftIcon />} iconPosition="left">
               Tilbake
             </Button>
+            <Button {...btnProps} onClick={retryAction} icon={retryIcon} iconPosition="right">
+              {' '}
+              {retryText}{' '}
+            </Button>
           </HStack>
         </>
       ) : (
@@ -69,7 +73,8 @@ export const ErrorHandlingWizard = ({ children, errors, onTryAgain, withoutDefau
           )}
           <HStack gap="space-4">
             <Button {...btnProps} onClick={retryAction} icon={retryIcon} iconPosition="right">
-              {retryText}
+              {' '}
+              {retryText}{' '}
             </Button>
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowRightIcon />} iconPosition="right">
               Rapporter feil
