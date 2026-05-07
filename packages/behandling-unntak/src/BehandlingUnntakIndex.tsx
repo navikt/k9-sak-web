@@ -5,6 +5,7 @@ import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import UnntakPaneler from './components/UnntakPaneler';
 import { requestUnntakApi, restApiUnntakHooks, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
@@ -133,24 +134,26 @@ const BehandlingUnntakIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <UnntakPaneler
-        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        featureToggles={featureToggles}
-      />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+        <UnntakPaneler
+          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          alleKodeverk={kodeverk}
+          rettigheter={rettigheter}
+          valgtProsessSteg={valgtProsessSteg}
+          valgtFaktaSteg={valgtFaktaSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          opneSokeside={opneSokeside}
+          hasFetchError={behandlingState === RestApiState.ERROR}
+          setBehandling={setBehandling}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          featureToggles={featureToggles}
+        />
+      </BehandlingProvider>
     </>
   );
 };
