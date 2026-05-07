@@ -1,7 +1,7 @@
-import { BigError } from './BigError.js';
+import { BigError } from '../feilmeldinger/BigError.js';
 import { Link } from '@navikt/ds-react';
 import type { FC } from 'react';
-import ErrorBoundary from './ErrorBoundary.js';
+import ErrorBoundary from '../feilmeldinger/ErrorBoundary.js';
 
 interface UnauthorizedPageProps {
   readonly loginUrl: string;
@@ -13,8 +13,7 @@ export const ungLoginResourcePath = '/ung/sak/resource/login';
 /**
  * UnauthorizedPage
  *
- * Presentasjonskomponent. Denne komponenten vises når den NAV-ansatte prøver å aksessere en url som ikke finnes.
- * Det blir presentert en generell feilmelding og en lenke som tar NAV-ansatt tilbake til hovedsiden.
+ * Visast når bruker ikkje er innlogga.
  */
 const UnauthorizedPage: FC<UnauthorizedPageProps> = ({ loginUrl }) => (
   <ErrorBoundary>

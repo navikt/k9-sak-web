@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import UnauthorizedPage from './UnauthorizedPage.js';
 
 const meta = {
-  title: 'gui/app/errorhandling/feilmeldinger',
+  title: 'gui/app/errorhandling/pages/UnauthorizedPage',
   component: UnauthorizedPage,
 } satisfies Meta<typeof UnauthorizedPage>;
 
@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const FeilmeldingIkkeInnlogget: Story = {
+export const Default: Story = {
   args: {
     loginUrl: '/',
   },

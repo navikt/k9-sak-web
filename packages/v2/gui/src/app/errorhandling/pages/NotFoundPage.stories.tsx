@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import NotFoundPage from './NotFoundPage.js';
 
 const meta = {
-  title: 'gui/app/errorhandling/feilmeldinger',
+  title: 'gui/app/errorhandling/pages/NotFoundPage',
   component: NotFoundPage,
 } satisfies Meta<typeof NotFoundPage>;
 
@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const FeilmeldingIkkeFunnet: Story = {
+export const Default: Story = {
   play: async ({ canvas }) => {
     await expect(
       canvas.getByRole('heading', { name: 'Beklager, vi finner ikke siden du leter etter.' }),
