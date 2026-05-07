@@ -3,6 +3,7 @@ import { type Decorator, type Meta, type StoryObj } from '@storybook/react-vite'
 import { GlobalUnhandledErrorCatcher } from './GlobalUnhandledErrorCatcher.js';
 import { GlobalErrorModal } from './GlobalErrorModal.js';
 import { expect, userEvent, within } from 'storybook/test';
+import { BodyShort, Button, Dialog } from '@navikt/ds-react';
 
 const errMsg = 'Test error ';
 
@@ -71,5 +72,45 @@ export const InputValueRemainsAfterError: Story = {
     await userEvent.click(within(dialog).getByRole('button', { name: 'Lukk' }));
     // Sjekk at inputverdien framleis er intakt etter at dialogen er lukka
     await expect(input).toHaveValue('Test input data');
+  },
+};
+
+/**
+ * Viser GlobalErrorModal som dukkar opp medan ein annan dialog allereie er open.
+ * Simulerer eit scenario der brukar jobbar i ein dialog og ein uhandtert feil oppstår.
+ */
+export const ErrorWhileDialogOpen: Story = {
+  decorators: [
+    Story => (
+      <>
+        <Dialog open>
+          <Dialog.Popup width="medium">
+            <Dialog.Header>
+              <Dialog.Title>Registrer opplysningar</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Body>
+              <BodyShort>Dette er ein dummy-dialog som simulerer ein aktiv arbeidsflyt.</BodyShort>
+              <Button
+                variant="secondary-neutral"
+                onClick={() => {
+                  throw new Error(errMsg + Date.now());
+                }}
+              >
+                Utløys feil
+              </Button>
+            </Dialog.Body>
+          </Dialog.Popup>
+        </Dialog>
+        <Story />
+      </>
+    ),
+  ],
+  play: async () => {
+    const dialog = await within(document.body).findByRole('dialog');
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Utløys feil' }));
+    const alertDialog = await within(document.body).findByRole('alertdialog');
+    await expect(alertDialog).toBeInTheDocument();
+    await expect(alertDialog).toBeVisible();
+    await expect(within(alertDialog).getByText('Uventet feil', { exact: false })).toBeInTheDocument();
   },
 };
