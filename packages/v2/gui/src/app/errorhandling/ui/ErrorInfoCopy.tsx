@@ -26,7 +26,7 @@ export const ErrorInfoCopy = ({ errors, onCopied, ...btnProps }: ErrorInfoCopyPr
 
   return (
     <Button {...btnProps} onClick={copyAction} icon={<FilesIcon />} iconPosition="right">
-      Kopier rapporteringsinfo
+      Kopier feilinformasjon
     </Button>
   );
 };
