@@ -7,7 +7,7 @@ import { makeErrorId } from '../alerts/AlertInfo.js';
 
 import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
-import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
+import { ErrorHandlingWizard, ErrorContentBox } from './ErrorHandlingWizard.js';
 
 interface TopErrorPanelUIProps {
   readonly errors: ReadonlyArray<Error>;
@@ -41,10 +41,14 @@ export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
         </GlobalAlert.Header>
         <GlobalAlert.Content hidden={hidden}>
           <ErrorHandlingWizard errors={errors}>
-            <VStack gap="space-16" marginBlock="space-4 space-0">
+            <VStack gap="space-8">
               {errors.map(error => {
                 const { errorId } = resolveErrorUiData(error);
-                return <ErrorMessage error={error} key={errorId ?? makeErrorId()} />;
+                return (
+                  <ErrorContentBox key={errorId ?? makeErrorId()}>
+                    <ErrorMessage error={error} />
+                  </ErrorContentBox>
+                );
               })}
             </VStack>
           </ErrorHandlingWizard>

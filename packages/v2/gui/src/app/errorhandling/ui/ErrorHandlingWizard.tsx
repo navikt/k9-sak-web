@@ -1,4 +1,4 @@
-import { BodyLong, Button, HStack, VStack } from '@navikt/ds-react';
+import { BodyLong, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowsCirclepathIcon, ArrowCirclepathIcon } from '@navikt/aksel-icons';
 import { ErrorInfoCopy } from './ErrorInfoCopy.js';
 import { type ReactNode, useState } from 'react';
@@ -11,10 +11,16 @@ const btnProps = {
 } as const;
 
 export type ErrorHandlingWizardProps = Readonly<{
-  children?: ReactNode;
+  children: ReactNode;
   errors: ReadonlyArray<Error>;
   onTryAgain?: () => void;
 }>;
+
+export const ErrorContentBox = ({ children }: { children: ReactNode }) => (
+  <Box paddingBlock="space-0 space-8" borderColor="neutral-subtleA" borderWidth="0 0 4">
+    {children}
+  </Box>
+);
 
 export const ErrorHandlingWizard = ({ children, errors, onTryAgain }: ErrorHandlingWizardProps) => {
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');

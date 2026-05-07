@@ -1,6 +1,6 @@
 import { LocalAlert } from '@navikt/ds-react';
 import { type ReactNode } from 'react';
-import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
+import { ErrorContentBox, ErrorHandlingWizard } from './ErrorHandlingWizard.js';
 
 export type LocalAlertErrorProps = Readonly<{
   title: string;
@@ -17,7 +17,7 @@ export const LocalAlertError = ({ title, children, error, onTryAgain }: LocalAle
       </LocalAlert.Header>
       <LocalAlert.Content>
         <ErrorHandlingWizard errors={[error]} onTryAgain={onTryAgain}>
-          {children ?? `${error.message}.`}
+          <ErrorContentBox>{children ?? `${error.message}.`}</ErrorContentBox>
         </ErrorHandlingWizard>
       </LocalAlert.Content>
     </LocalAlert>
