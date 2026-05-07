@@ -74,17 +74,6 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
     const gyldigePanelIds = prosessmotorSteg.map(s => s.id);
     const panelMedAksjonspunkt = prosessmotorSteg.find(steg => steg.type === ProcessMenuStepType.warning);
 
-    // Automatisk naviger til panel med aksjonspunkt hvis bruker ikke har valgt noe
-    if (panelMedAksjonspunkt && !sisteAktivtValgtePanelId) {
-      setValgtPanelId(panelMedAksjonspunkt.id);
-      setSearchParams(forrige => {
-        const neste = new URLSearchParams(forrige);
-        neste.set('punkt', panelMedAksjonspunkt.id);
-        return neste;
-      });
-      return;
-    }
-
     // Velg default panel når ingen er valgt
     if (urlPanelId === 'default') {
       setSisteAktivtValgtePanelId(null);
@@ -102,6 +91,8 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
           return neste;
         });
       }
+
+      return;
     }
 
     // Respekter siste aktive valg
@@ -113,6 +104,16 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
     if (urlPanelId && gyldigePanelIds.includes(urlPanelId)) {
       setValgtPanelId(urlPanelId);
       return;
+    }
+
+    // Automatisk naviger til panel med aksjonspunkt hvis bruker ikke har valgt noe
+    if (panelMedAksjonspunkt && !sisteAktivtValgtePanelId) {
+      setValgtPanelId(panelMedAksjonspunkt.id);
+      setSearchParams(forrige => {
+        const neste = new URLSearchParams(forrige);
+        neste.set('punkt', panelMedAksjonspunkt.id);
+        return neste;
+      });
     }
   }, [urlPanelId, prosessmotorSteg, setSearchParams, sisteAktivtValgtePanelId]);
 
