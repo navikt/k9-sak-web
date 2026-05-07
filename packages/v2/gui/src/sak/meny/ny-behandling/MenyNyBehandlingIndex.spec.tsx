@@ -494,4 +494,63 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(options.some(o => o.value === BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG)).toBe(true);
     expect(options.some(o => o.value === BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG)).toBe(false);
   });
+
+  it('skal skjule delvis-valg når backend ikke har delvisårsaker', async () => {
+    const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
+
+    render(
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
+        <QueryClientProvider client={queryClient}>
+          <MenyNyBehandlingIndexV2
+            ytelseType={fagsakYtelseType.OMSORGSPENGER}
+            saksnummer="123"
+            behandlingId={3}
+            behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
+            lagNyBehandling={lagNyBehandlingCallback}
+            behandlingOppretting={[
+              {
+                behandlingType: BehandlingTypeK9Sak.REVURDERING,
+                kanOppretteBehandling: true,
+              },
+            ]}
+            delvisRevurderingsårsaker={[]}
+            behandlingstyper={[
+              {
+                kode: BehandlingTypeK9Sak.REVURDERING,
+                kodeverk: 'BEHANDLING_TYPE',
+                navn: 'Revurdering',
+              },
+            ]}
+            tilbakekrevingRevurderingArsaker={[]}
+            revurderingArsaker={[
+              {
+                kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+                kodeverk: 'BEHANDLING_AARSAK',
+                navn: 'Opplysninger om beregningsgrunnlag',
+              },
+            ]}
+            kanTilbakekrevingOpprettes={{
+              kanBehandlingOpprettes: false,
+              kanRevurderingOpprettes: false,
+            }}
+            uuidForSistLukkede="2323"
+            erTilbakekrevingAktivert
+            sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+            lukkModal={vi.fn()}
+          />
+        </QueryClientProvider>
+      </FeatureTogglesContext.Provider>,
+    );
+
+    await act(async () => {
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
+        BehandlingTypeK9Sak.REVURDERING,
+      );
+    });
+
+    expect(screen.queryByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' })).not.toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Hva er årsaken til den nye behandlingen?' })).toBeInTheDocument();
+  });
 });

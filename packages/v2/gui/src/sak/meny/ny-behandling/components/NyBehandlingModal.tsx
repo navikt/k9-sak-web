@@ -85,6 +85,12 @@ export const DELVIS_REVURDERING_ARSAKER_FALLBACK = new Set(Object.keys(DELVIS_RE
 
 const formaterPeriodeDato = (dato?: string) => (dato ? visnDato(dato) : '');
 
+const resetRevurderingFelter = (setValue: ReturnType<typeof useForm<FormValues>>['setValue']) => {
+  setValue('steg', undefined);
+  setValue('fom', '');
+  setValue('tom', '');
+};
+
 interface NyBehandlingModalProps {
   ytelseType: FagsakYtelsesType;
   saksnummer: string;
@@ -197,9 +203,7 @@ export const NyBehandlingModal = ({
 
   useEffect(() => {
     if (REVURDERING_FRA_STEG_V2) {
-      formMethods.setValue('steg', undefined);
-      formMethods.setValue('fom', '');
-      formMethods.setValue('tom', '');
+      resetRevurderingFelter(formMethods.setValue);
     }
   }, [revurderingModus, REVURDERING_FRA_STEG_V2, formMethods]);
   const behandlingTyper = getBehandlingTyper(behandlingstyper);
@@ -217,23 +221,30 @@ export const NyBehandlingModal = ({
     valgtBehandlingTypeKode,
     erUngdomsprogramytelse,
   );
+  const støttedeDelvisÅrsaker = new Set(delvisRevurderingsårsaker?.map(a => a.årsak) ?? []);
+  const delvisWhitelist = [...manuelleRevurderingsArsaker, BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRET_FORDELING];
+  const delvisRevurderingÅrsaker = revurderingArsaker
+    .filter(a => delvisWhitelist.includes(a.kode) && støttedeDelvisÅrsaker.has(a.kode))
+    .sort((a, b) => a.navn.localeCompare(b.navn));
+  const kanVelgeDelvisRevurdering = delvisRevurderingÅrsaker.length > 0;
+  const effektivRevurderingModus = kanVelgeDelvisRevurdering ? revurderingModus : 'FULL';
   const visÅrsak =
     (erRevurdering && !REVURDERING_FRA_STEG_V2 && steg === 'inngangsvilkår') ||
-    (erRevurdering && REVURDERING_FRA_STEG_V2 && revurderingModus === 'FULL') ||
+    (erRevurdering && REVURDERING_FRA_STEG_V2 && effektivRevurderingModus === 'FULL') ||
     (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0) ||
     (erRevurdering && erUngdomsprogramytelse);
-
-  const erDelvisRevurdering = REVURDERING_FRA_STEG_V2 && erRevurdering && revurderingModus === 'DELVIS';
+  const erDelvisRevurdering = REVURDERING_FRA_STEG_V2 && erRevurdering && effektivRevurderingModus === 'DELVIS';
   const årsakTilVilkårMap = byggÅrsakTilVilkårMap(delvisRevurderingsårsaker);
-  const delvisWhitelist = [...manuelleRevurderingsArsaker, BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRET_FORDELING];
-  const gyldigeDelvisÅrsaker = Object.keys(årsakTilVilkårMap);
-  const delvisRevurderingÅrsaker = revurderingArsaker
-    .filter(a => delvisWhitelist.includes(a.kode) && gyldigeDelvisÅrsaker.includes(a.kode))
-    .sort((a, b) => a.navn.localeCompare(b.navn));
   const vilkårSomRevurderes = steg ? årsakTilVilkårMap[steg] : undefined;
   const valgtDelvisÅrsak = delvisRevurderingsårsaker?.find(a => a.årsak === steg);
   const valgbarePerioder = valgtDelvisÅrsak?.valgbarePerioder ?? [];
   const enesteValgbarePeriode = valgbarePerioder.length === 1 ? valgbarePerioder[0] : undefined;
+  useEffect(() => {
+    if (REVURDERING_FRA_STEG_V2 && erRevurdering && !kanVelgeDelvisRevurdering) {
+      formMethods.setValue('revurderingModus', 'FULL');
+      resetRevurderingFelter(formMethods.setValue);
+    }
+  }, [REVURDERING_FRA_STEG_V2, erRevurdering, kanVelgeDelvisRevurdering, formMethods]);
   const getUngPerioderTilRevurdering = () => {
     const rettigheterForBehandling = behandlingOppretting.find(
       b => b.behandlingType === BehandlingTypeK9Klage.REVURDERING,
@@ -299,7 +310,7 @@ export const NyBehandlingModal = ({
               validate={[required]}
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
-            {erRevurdering && !erUngdomsprogramytelse && REVURDERING_FRA_STEG_V2 && (
+            {erRevurdering && !erUngdomsprogramytelse && REVURDERING_FRA_STEG_V2 && kanVelgeDelvisRevurdering && (
               <RhfSelect
                 control={formMethods.control}
                 name="revurderingModus"
