@@ -59,7 +59,11 @@ const StruktureringAvDokumentasjon = ({
     visRedigeringAvDokument,
   } = state;
 
-  const skalViseInnleggelsesperioderOgDiagnosekoder = ![
+  const skalViseInnleggelsesperioder = ![fagsakYtelsesType.OPPLÆRINGSPENGER].some(
+    ytelseType => ytelseType === fagsakYtelseType,
+  );
+
+  const skalViseDiagnosekoder = ![
     fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
     fagsakYtelsesType.OPPLÆRINGSPENGER,
   ].some(ytelseType => ytelseType === fagsakYtelseType);
@@ -143,7 +147,7 @@ const StruktureringAvDokumentasjon = ({
       <DokumentoversiktMessages
         dokumentoversikt={dokumentoversikt}
         harRegistrertDiagnosekode={
-          !skalViseInnleggelsesperioderOgDiagnosekoder || !sykdomsstegStatus?.manglerDiagnosekode
+          !skalViseDiagnosekoder || !sykdomsstegStatus?.manglerDiagnosekode
         }
         kanNavigereVidere={sykdomsstegStatus ? nesteStegErVurderingFn(sykdomsstegStatus) : false}
         navigerTilNesteSteg={navigerTilNesteSteg}
@@ -188,11 +192,17 @@ const StruktureringAvDokumentasjon = ({
             }
           />
 
-          {skalViseInnleggelsesperioderOgDiagnosekoder && (
+          {(skalViseInnleggelsesperioder || skalViseDiagnosekoder) && (
             <Box marginBlock="space-64 space-0">
               <DokumentasjonFooter
-                firstSectionRenderer={() => <Innleggelsesperiodeoversikt onInnleggelsesperioderUpdated={sjekkStatus} />}
-                secondSectionRenderer={() => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} />}
+                firstSectionRenderer={
+                  skalViseInnleggelsesperioder
+                    ? () => <Innleggelsesperiodeoversikt onInnleggelsesperioderUpdated={sjekkStatus} />
+                    : undefined
+                }
+                secondSectionRenderer={
+                  skalViseDiagnosekoder ? () => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} /> : undefined
+                }
                 thirdSectionRenderer={() => <SignertSeksjon harGyldigSignatur={dokumentoversikt.harGyldigSignatur()} />}
               />
             </Box>

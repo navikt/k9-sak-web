@@ -11,8 +11,10 @@ import React, { type JSX } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import Vurderingstype from '../../../types/Vurderingstype';
 import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
 import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';
+import VurderingContext from '../../context/VurderingContext';
 import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
@@ -21,7 +23,14 @@ interface VurderingsperiodeElementProps {
   visParterLabel?: boolean;
 }
 
-const renderInnleggelsesperiodeIcon = (resultat: Vurderingsresultat) => {
+const renderInnleggelsesperiodeIcon = (resultat: Vurderingsresultat, vurderingstype?: Vurderingstype) => {
+  if (vurderingstype === Vurderingstype.LIVETS_SLUTTFASE) {
+    return (
+      <Tooltip content="Innleggelsesperiode - avslått">
+        <InnleggelsesperiodeIkonOverIkkeOppfylt />
+      </Tooltip>
+    );
+  }
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
       <Tooltip content="Innleggelsesperiode over oppfylt periode">
@@ -61,10 +70,10 @@ const renderResultatIcon = (resultat: Vurderingsresultat, manglerLegeerklæring:
   return null;
 };
 
-const renderStatusIndicator = (vurderingselement: Vurderingselement) => {
+const renderStatusIndicator = (vurderingselement: Vurderingselement, vurderingstype?: Vurderingstype) => {
   const { erInnleggelsesperiode, resultat, manglerLegeerklæring } = vurderingselement as ManuellVurdering;
   if (erInnleggelsesperiode) {
-    return renderInnleggelsesperiodeIcon(resultat);
+    return renderInnleggelsesperiodeIcon(resultat, vurderingstype);
   }
   return renderResultatIcon(resultat, manglerLegeerklæring);
 };
@@ -89,10 +98,11 @@ const VurderingsperiodeElement = ({
   visParterLabel,
 }: VurderingsperiodeElementProps): JSX.Element => {
   const { periode } = vurderingselement;
+  const { vurderingstype } = React.useContext(VurderingContext);
   return (
     <div className={styles.vurderingsperiodeElement}>
       <span className={styles.visuallyHidden}>Type</span>
-      <div className={styles.vurderingsperiodeElement__indicator}>{renderStatusIndicator(vurderingselement)}</div>
+      <div className={styles.vurderingsperiodeElement__indicator}>{renderStatusIndicator(vurderingselement, vurderingstype)}</div>
       <div className={styles.vurderingsperiodeElement__texts}>
         <p className={styles.vurderingsperiodeElement__texts__period}>
           <span className={styles.visuallyHidden}>Periode</span>

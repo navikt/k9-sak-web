@@ -5,7 +5,7 @@ import { Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
+import AvslattAvInnleggelsesperiodeMelding from '../avslatt-av-innleggelsesperiode-melding/AvslattAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 
@@ -31,7 +31,7 @@ const VurderingsoppsummeringForSluttfase = ({
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
       <Box marginBlock="space-24 space-0">
-        {erInnleggelsesperiode && <DekketAvInnleggelsesperiodeMelding />}
+        {erInnleggelsesperiode && <AvslattAvInnleggelsesperiodeMelding />}
         <Box marginBlock="space-16 space-0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om livets sluttfase?"
