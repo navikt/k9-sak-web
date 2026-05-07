@@ -11,6 +11,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
 import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import {
   UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
@@ -93,7 +94,7 @@ const BehandlingAktivitetspengerIndex = ({
   }
 
   return (
-    <>
+    <BehandlingProvider refetchBehandling={() => refetchBehandling()}>
       <BehandlingPåVent behandling={behandling} aksjonspunkter={aksjonspunkter ?? []} settPaVent={settPaVent} />
       <AktivitetspengerProsess
         api={ungSakProsessApi}
@@ -103,7 +104,7 @@ const BehandlingAktivitetspengerIndex = ({
         opneSokeside={opneSokeside}
         setBehandling={setBehandling}
       />
-    </>
+    </BehandlingProvider>
   );
 };
 

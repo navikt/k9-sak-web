@@ -1,4 +1,5 @@
 import { get, Period } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
@@ -27,6 +28,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
   sykdomsstegStatus,
 }: VilkårsvurderingAvTilsynOgPleieProps): JSX.Element => {
   const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -115,6 +117,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
     dispatch({ type: ActionType.PENDING });
     try {
       const status = await hentSykdomsstegStatus();
+      refetchBehandlingVedSykdomsendring();
       if (status.kanLøseAksjonspunkt) {
         navigerTilNesteSteg(toOmsorgspersonerSteg, true);
         return;

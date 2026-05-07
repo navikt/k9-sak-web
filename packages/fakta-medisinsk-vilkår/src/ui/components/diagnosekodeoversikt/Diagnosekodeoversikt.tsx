@@ -1,4 +1,5 @@
 import { httpUtils } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 
 import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
@@ -34,6 +35,7 @@ interface DiagnosekodeoversiktProps {
 
 const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktProps): JSX.Element => {
   const { endpoints, httpErrorHandler, readOnly } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const addButtonRef = React.useRef<HTMLButtonElement>(undefined);
 
@@ -96,9 +98,9 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
 
   const slettDiagnosekodeMutation = useMutation({
     mutationFn: (diagnosekode: string) => slettDiagnosekode(diagnosekode),
-
     onSuccess: async () => {
       await refetch().finally(() => {
+        refetchBehandlingVedSykdomsendring();
         onDiagnosekoderUpdated();
         focusAddButton();
       });
@@ -106,9 +108,9 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   });
   const lagreDiagnosekodeMutation = useMutation({
     mutationFn: (nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder),
-
     onSuccess: async () => {
       await refetch().finally(() => {
+        refetchBehandlingVedSykdomsendring();
         onDiagnosekoderUpdated();
         setModalIsOpen(false);
         focusAddButton();
