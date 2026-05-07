@@ -1,7 +1,7 @@
 import { BodyLong, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowsCirclepathIcon, ArrowCirclepathIcon } from '@navikt/aksel-icons';
 import { ErrorInfoCopy } from './ErrorInfoCopy.js';
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
 // Felles props for alle knappane i ErrorHandlingWizard
 const btnProps = {
@@ -26,6 +26,12 @@ export const ErrorContentBox = ({ children }: { children: ReactNode }) => (
 
 export const ErrorHandlingWizard = ({ children, errors, onTryAgain, withoutDefaultInfo }: ErrorHandlingWizardProps) => {
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
+
+  // Tilbakestill visningstilstand når antal feil endrar seg
+  useEffect(() => {
+    setDisplay('error');
+  }, [errors.length]);
+
   const retryText = onTryAgain != null ? 'Prøv på nytt' : 'Last på nytt';
   const retryAction = onTryAgain ?? (() => window.location.reload());
   const retryIcon = onTryAgain != null ? <ArrowsCirclepathIcon /> : <ArrowCirclepathIcon />;
