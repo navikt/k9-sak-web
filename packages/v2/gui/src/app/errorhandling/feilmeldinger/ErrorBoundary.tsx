@@ -10,7 +10,7 @@ import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedErr
 import { AuthAbortedPage } from '../../auth/AuthAbortedPage.js';
 import { ensureError } from '../ensureError.js';
 import { shouldReportToSentry } from '../sentry.js';
-import { isAlertInfo } from '../alerts/AlertInfo.js';
+import { isAlertInfo } from '../AlertInfo.js';
 import { SentryReportedError } from '../SentryReportedError.js';
 
 export interface ErrorFallbackProps {

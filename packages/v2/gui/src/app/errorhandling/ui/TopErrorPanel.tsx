@@ -3,7 +3,7 @@ import { ErrorMessage } from './ErrorMessage.js';
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { resolveErrorUiData } from './resolveErrorUiData.js';
-import { makeErrorId } from '../alerts/AlertInfo.js';
+import { makeErrorId } from '../AlertInfo.js';
 
 import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';

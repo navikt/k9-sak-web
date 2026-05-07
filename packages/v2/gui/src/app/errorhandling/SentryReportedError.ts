@@ -1,4 +1,4 @@
-import { type AlertInfo, isErrorWithAlertInfo, makeErrorId } from './alerts/AlertInfo.js';
+import { type AlertInfo, isErrorWithAlertInfo, makeErrorId } from './AlertInfo.js';
 
 /**
  * Når feil har blitt rapportert til sentry og blir sendt vidare skal den pakkes inn i denne, slik at vidare feilhandteringskode

@@ -18,7 +18,7 @@ import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/Exten
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
-import { isAlertInfo } from '@k9-sak-web/gui/app/errorhandling/alerts/AlertInfo.js';
+import { isAlertInfo } from '@k9-sak-web/gui/app/errorhandling/AlertInfo.js';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import { AxiosError } from 'axios';
 import AppIndex from './app/AppIndex';

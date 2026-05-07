@@ -1,4 +1,4 @@
-import { isErrorWithAlertInfo } from '../alerts/AlertInfo.js';
+import { isErrorWithAlertInfo } from '../AlertInfo.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AdditionalInfoError } from '../AdditionalInfoError.js';
 import { SentryReportedError } from '../SentryReportedError.js';

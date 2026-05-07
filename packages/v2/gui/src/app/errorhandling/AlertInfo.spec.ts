@@ -1,5 +1,5 @@
 import { isErrorWithAlertInfo } from './AlertInfo.js';
-import { FrontendError } from '../FrontendError.js';
+import { FrontendError } from './FrontendError.js';
 
 describe('isErrorWithAlertInfo', () => {
   it('should return true when given a instance of FrontendError', () => {

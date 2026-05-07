@@ -1,4 +1,4 @@
-import { isAlertInfo } from '../alerts/AlertInfo.js';
+import { isAlertInfo } from '../AlertInfo.js';
 import { Button } from '@navikt/ds-react';
 import { type ComponentProps, useCallback } from 'react';
 import { FilesIcon } from '@navikt/aksel-icons';
