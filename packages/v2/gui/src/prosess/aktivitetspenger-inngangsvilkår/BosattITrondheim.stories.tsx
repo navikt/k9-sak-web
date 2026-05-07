@@ -29,16 +29,7 @@ const lagAksjonspunkt = (kode: string, status: AksjonspunktDto['status'] = Aksjo
   erAktivt: status === AksjonspunktStatus.OPPRETTET,
 });
 
-// API med forhåndsdata for grunnlag (brukt i FASTSETT_BOSTED-historier)
-const fakeApiMedGrunnlag = new FakeAktivitetspengerApi();
-fakeApiMedGrunnlag.hentBostedGrunnlag = async () => ({
-  perioder: [
-    { fom: '2024-01-01', foreslåttErBosattITrondheim: true, fastsattErBosattITrondheim: null, harUttalelse: true, uttalelseTekst: 'Jeg bor fortsatt på Trondheim adresse, men planlegger å flytte.' },
-    { fom: '2024-07-01', foreslåttErBosattITrondheim: false, fastsattErBosattITrondheim: null, harUttalelse: false, uttalelseTekst: null },
-  ],
-});
-
-const fakeApiUtenGrunnlag = new FakeAktivitetspengerApi();
+const fakeApi = new FakeAktivitetspengerApi();
 
 const meta = {
   title: 'gui/prosess/aktivitetspenger-inngangsvilkår/BosattITrondheim',
@@ -47,6 +38,7 @@ const meta = {
     behandling: fakeBehandling,
     vilkår: bostedsvilkår,
     kanSaksbehandle: true,
+    api: fakeApi,
     onAksjonspunktBekreftet: () => {},
   },
 } satisfies Meta<typeof BosattITrondheim>;
@@ -54,33 +46,17 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Saksbehandler vurderer om bruker bor i Trondheim for første gang
+// Saksbehandler vurderer om bruker bor i Trondheim
 export const ÅpentVurderBosted: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(BostedAksjonspunktKode.VURDER_BOSTED)],
-    api: fakeApiUtenGrunnlag,
   },
 };
 
-// Saksbehandler fastsetter bosted etter at bruker har gitt uttalelse
-export const ÅpentFastsettBosted: Story = {
-  args: {
-    aksjonspunkter: [
-      lagAksjonspunkt(BostedAksjonspunktKode.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
-      lagAksjonspunkt(BostedAksjonspunktKode.FASTSETT_BOSTED),
-    ],
-    api: fakeApiMedGrunnlag,
-  },
-};
-
-// Begge aksjonspunkter utført — read-only visning
+// Aksjonspunkt utført — read-only visning
 export const UtførtBosattVurdering: Story = {
   args: {
-    aksjonspunkter: [
-      lagAksjonspunkt(BostedAksjonspunktKode.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
-      lagAksjonspunkt(BostedAksjonspunktKode.FASTSETT_BOSTED, AksjonspunktStatus.UTFØRT),
-    ],
-    api: fakeApiMedGrunnlag,
+    aksjonspunkter: [lagAksjonspunkt(BostedAksjonspunktKode.VURDER_BOSTED, AksjonspunktStatus.UTFØRT)],
     vilkår: {
       ...bostedsvilkår,
       perioder: [
@@ -95,7 +71,6 @@ export const UtførtBosattVurdering: Story = {
 export const ReadOnly: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(BostedAksjonspunktKode.VURDER_BOSTED)],
-    api: fakeApiUtenGrunnlag,
     kanSaksbehandle: false,
   },
 };

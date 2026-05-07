@@ -3,13 +3,12 @@ import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandli
 import { FraflyttingsÅrsak, fraflyttingsÅrsakLabels } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/FraflyttingsÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BostedGrunnlagPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/bosatt/BostedGrunnlagResponseDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { BodyShort, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useForm, useWatch, type SubmitHandler } from 'react-hook-form';
@@ -39,19 +38,6 @@ interface VurderPeriodeForm {
 interface VurderBostedForm {
   perioder: Record<string, VurderPeriodeForm>;
   brevtekst: string;
-}
-
-interface FastsettPeriodeForm {
-  foreslåttErGyldig: 'ja' | 'nei' | '';
-  nyBorITrondheimIHelePerioden?: 'ja' | 'nei' | '';
-  nyFraflyttingsDato?: string;
-  nyFraflyttingsÅrsak?: string;
-  nyBegrunnelse?: string;
-}
-
-interface FastsettBostedForm {
-  perioder: Record<string, FastsettPeriodeForm>;
-  begrunnelse: string;
 }
 
 // --- Hjelpefunksjoner ---
@@ -144,134 +130,6 @@ const VurderBostedSkjema = ({ selectedFom, selectedTom, formMethods, isPending, 
   );
 };
 
-// --- FastsettBosted-skjema ---
-
-interface FastsettBostedSkjemaProps {
-  selectedFom: string;
-  selectedTom: string;
-  grunnlagPeriode: BostedGrunnlagPeriodeDto | undefined;
-  formMethods: ReturnType<typeof useForm<FastsettBostedForm>>;
-  isPending: boolean;
-  isReadOnly: boolean;
-}
-
-const FastsettBostedSkjema = ({
-  selectedFom,
-  selectedTom,
-  grunnlagPeriode,
-  formMethods,
-  isPending,
-  isReadOnly,
-}: FastsettBostedSkjemaProps) => {
-  const foreslåttVerdi = grunnlagPeriode?.foreslåttErBosattITrondheim;
-  const watchedGyldig = formMethods.watch(`perioder.${selectedFom}.foreslåttErGyldig`);
-  const watchedNyBorHele = useWatch({ control: formMethods.control, name: `perioder.${selectedFom}.nyBorITrondheimIHelePerioden` });
-
-  return (
-    <VStack gap="space-16">
-      {/* Brukerens uttalelse */}
-      {grunnlagPeriode && (
-        <Box background="neutral-soft" padding="space-12" borderRadius="8">
-          <BodyShort size="small" weight="semibold">Brukerens uttalelse:</BodyShort>
-          {grunnlagPeriode.harUttalelse && grunnlagPeriode.uttalelseTekst ? (
-            <BodyShort size="small">{grunnlagPeriode.uttalelseTekst}</BodyShort>
-          ) : grunnlagPeriode.harUttalelse ? (
-            <BodyShort size="small">Bruker har svart, men uten kommentar.</BodyShort>
-          ) : (
-            <BodyShort size="small">Bruker har ikke avgitt uttalelse.</BodyShort>
-          )}
-        </Box>
-      )}
-
-      {/* Foreslått vurdering */}
-      {foreslåttVerdi !== undefined && (
-        <Box background="neutral-soft" padding="space-12" borderRadius="8">
-          <BodyShort size="small" weight="semibold">
-            Foreslått vurdering:{' '}
-            <span style={{ fontWeight: 'normal' }}>{foreslåttVerdi ? 'Ja – bosatt i Trondheim i hele perioden' : 'Nei – ikke bosatt i hele perioden'}</span>
-          </BodyShort>
-        </Box>
-      )}
-
-      <RhfRadioGroup
-        key={selectedFom}
-        control={formMethods.control}
-        name={`perioder.${selectedFom}.foreslåttErGyldig`}
-        legend="Er foreslått vurdering fortsatt gyldig?"
-        validate={[required]}
-        readOnly={isReadOnly}
-      >
-        <Radio value="ja">Ja, bekreft foreslått vurdering</Radio>
-        <Radio value="nei">Nei, overstyr vurdering</Radio>
-      </RhfRadioGroup>
-
-      {/* Overstyrings-skjema: samme form som VURDER_BOSTED */}
-      {watchedGyldig === 'nei' && !isReadOnly && (
-        <VStack gap="space-12">
-          <RhfRadioGroup
-            key={`nyBorHele-${selectedFom}`}
-            control={formMethods.control}
-            name={`perioder.${selectedFom}.nyBorITrondheimIHelePerioden`}
-            legend="Bor bruker i Trondheim i hele perioden?"
-            validate={[required]}
-          >
-            <Radio value="ja">Ja</Radio>
-            <Radio value="nei">Nei</Radio>
-          </RhfRadioGroup>
-          {watchedNyBorHele === 'nei' && (
-            <RhfDatepicker
-              key={`nyFraflytting-${selectedFom}`}
-              control={formMethods.control}
-              name={`perioder.${selectedFom}.nyFraflyttingsDato`}
-              label="Dato for flytting fra Trondheim"
-              validate={[required, hasValidDate]}
-              fromDate={dayjs(selectedFom).toDate()}
-              toDate={dayjs(selectedTom).toDate()}
-            />
-          )}
-          {watchedNyBorHele === 'nei' && (
-            <RhfSelect
-              key={`nyAarsak-${selectedFom}`}
-              control={formMethods.control}
-              name={`perioder.${selectedFom}.nyFraflyttingsÅrsak`}
-              label="Årsak til fraflytting"
-              validate={[required]}
-              selectValues={Object.values(FraflyttingsÅrsak).map(kode => (
-                <option value={kode} key={kode}>
-                  {fraflyttingsÅrsakLabels[kode]}
-                </option>
-              ))}
-            />
-          )}
-          <RhfTextarea
-            key={`nyBegrunnelse-${selectedFom}`}
-            control={formMethods.control}
-            name={`perioder.${selectedFom}.nyBegrunnelse`}
-            label="Begrunnelse for ny vurdering"
-            validate={[required]}
-          />
-        </VStack>
-      )}
-
-      {!isReadOnly && (
-        <RhfTextarea
-          control={formMethods.control}
-          name="begrunnelse"
-          label="Begrunnelse"
-          validate={[required]}
-        />
-      )}
-      {!isReadOnly && (
-        <HStack gap="space-8">
-          <Button type="submit" size="small" loading={isPending}>
-            Bekreft
-          </Button>
-        </HStack>
-      )}
-    </VStack>
-  );
-};
-
 // --- Hoved-komponent ---
 
 export const BosattITrondheim = ({
@@ -283,9 +141,7 @@ export const BosattITrondheim = ({
   onAksjonspunktBekreftet,
 }: Props) => {
   const vurderBostedAp = finnÅpentAksjonspunkt(aksjonspunkter, BostedAksjonspunktKode.VURDER_BOSTED);
-  const fastsettBostedAp = finnÅpentAksjonspunkt(aksjonspunkter, BostedAksjonspunktKode.FASTSETT_BOSTED);
-  const harÅpentAksjonspunkt = !!(vurderBostedAp || fastsettBostedAp);
-  const isReadOnly = !kanSaksbehandle || !harÅpentAksjonspunkt;
+  const isReadOnly = !kanSaksbehandle || !vurderBostedAp;
 
   const bostedsvilkår = vilkår ?? null;
   const perioder = bostedsvilkår?.perioder ?? [];
@@ -297,19 +153,6 @@ export const BosattITrondheim = ({
   }));
 
   const [selectedFom, setSelectedFom] = useState(items[0]?.id ?? '');
-
-  // Hent bostedgrunnlag (trengs for FASTSETT_BOSTED og for forhåndsutfylling)
-  const { data: bostedGrunnlag } = useQuery({
-    queryKey: ['bostedGrunnlag', behandling.uuid],
-    queryFn: () => api.hentBostedGrunnlag(behandling.uuid),
-    enabled: harÅpentAksjonspunkt,
-  });
-
-  const grunnlagByFom = Object.fromEntries(
-    (bostedGrunnlag?.perioder ?? []).map(p => [p.fom, p]),
-  );
-
-  // --- VURDER_BOSTED skjema ---
 
   const buildVurderDefaultValues = (): VurderBostedForm => ({
     perioder: Object.fromEntries(
@@ -356,57 +199,6 @@ export const BosattITrondheim = ({
 
   const onVurderSubmit: SubmitHandler<VurderBostedForm> = data => bekreftVurderBosted(data);
 
-  // --- FASTSETT_BOSTED skjema ---
-
-  const buildFastsettDefaultValues = (): FastsettBostedForm => ({
-    perioder: Object.fromEntries(
-      perioder.map(p => [
-        p.periode.fom,
-        {
-          foreslåttErGyldig: '',
-          nyBorITrondheimIHelePerioden: '',
-          nyFraflyttingsDato: '',
-          nyFraflyttingsÅrsak: '',
-          nyBegrunnelse: '',
-        } satisfies FastsettPeriodeForm,
-      ]),
-    ),
-    begrunnelse: '',
-  });
-
-  const fastsettForm = useForm<FastsettBostedForm>({ defaultValues: buildFastsettDefaultValues() });
-
-  const { mutateAsync: bekreftFastsettBosted, isPending: isPendingFastsett } = useMutation({
-    mutationFn: async (data: FastsettBostedForm) => {
-      const avklaringer = perioder.map(p => {
-        const periodeForm = data.perioder[p.periode.fom];
-        const foreslåttErGyldig = periodeForm?.foreslåttErGyldig === 'ja';
-        const borHeleNy = periodeForm?.nyBorITrondheimIHelePerioden === 'ja';
-        return {
-          periode: { fom: p.periode.fom, tom: p.periode.tom },
-          foreslåttVurderingErGyldig: foreslåttErGyldig,
-          nyVurdering: foreslåttErGyldig
-            ? undefined
-            : {
-                borITrondheimIHelePerioden: borHeleNy,
-                fraflyttingsDato: borHeleNy ? null : (periodeForm?.nyFraflyttingsDato ?? null),
-                fraflyttingsÅrsak: borHeleNy ? null : (periodeForm?.nyFraflyttingsÅrsak ?? null),
-                begrunnelse: periodeForm?.nyBegrunnelse ?? '',
-              },
-        };
-      });
-      const payload = {
-        '@type': BostedAksjonspunktKode.FASTSETT_BOSTED,
-        begrunnelse: data.begrunnelse,
-        avklaringer,
-      };
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload as never]);
-    },
-    onSuccess: onAksjonspunktBekreftet,
-  });
-
-  const onFastsettSubmit: SubmitHandler<FastsettBostedForm> = data => bekreftFastsettBosted(data);
-
   if (items.length === 0) {
     return <BodyShort>Ingen vilkårsperioder funnet for bostedsvilkåret.</BodyShort>;
   }
@@ -424,32 +216,16 @@ export const BosattITrondheim = ({
       readOnly={isReadOnly}
     >
       {(effectiveLocked: boolean) => (
-        <>
-          {fastsettBostedAp ? (
-            <RhfForm formMethods={fastsettForm} onSubmit={onFastsettSubmit}>
-              <FastsettBostedSkjema
-                selectedFom={selectedFom}
-                selectedTom={selectedTom}
-                grunnlagPeriode={grunnlagByFom[selectedFom]}
-                formMethods={fastsettForm}
-                isPending={isPendingFastsett}
-                isReadOnly={effectiveLocked}
-              />
-            </RhfForm>
-          ) : (
-            <RhfForm formMethods={vurderForm} onSubmit={onVurderSubmit}>
-              <VurderBostedSkjema
-                selectedFom={selectedFom}
-                selectedTom={selectedTom}
-                formMethods={vurderForm}
-                isPending={isPendingVurder}
-                isReadOnly={effectiveLocked}
-              />
-            </RhfForm>
-          )}
-        </>
+        <RhfForm formMethods={vurderForm} onSubmit={onVurderSubmit}>
+          <VurderBostedSkjema
+            selectedFom={selectedFom}
+            selectedTom={selectedTom}
+            formMethods={vurderForm}
+            isPending={isPendingVurder}
+            isReadOnly={effectiveLocked}
+          />
+        </RhfForm>
       )}
     </VilkårSplittPanel>
   );
 };
-

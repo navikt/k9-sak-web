@@ -33,7 +33,6 @@ const relevanteAksjonspunktDefinisjoner = [
   AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   BostedAksjonspunktKode.VURDER_BOSTED,
-  BostedAksjonspunktKode.FASTSETT_BOSTED,
 ] as string[];
 
 interface Props {
@@ -69,9 +68,6 @@ export const AktivitetspengerInngangsvilkår = ({
   const vurderBostedAp = relevanteAksjonspunkter.find(
     ap => (ap.definisjon as string) === BostedAksjonspunktKode.VURDER_BOSTED,
   );
-  const fastsettBostedAp = relevanteAksjonspunkter.find(
-    ap => (ap.definisjon as string) === BostedAksjonspunktKode.FASTSETT_BOSTED,
-  );
 
   const bostedsvilkår = vilkår?.find(
     v => v.vilkarType === ung_kodeverk_vilkår_VilkårType.BOSTEDSVILKÅR,
@@ -99,7 +95,7 @@ export const AktivitetspengerInngangsvilkår = ({
         <Tabs.List>
           <Tabs.Tab value={InngangsvilkårTab.SØKNADSFRIST} label="Søknadsfrist" icon={tabIkon()} />
           <Tabs.Tab value={InngangsvilkårTab.ALDER} label="Alder" icon={tabIkon()} />
-          <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon(vurderBostedAp ?? fastsettBostedAp)} />
+          <Tabs.Tab value={InngangsvilkårTab.BOSATT_I_TRONDHEIM} label="Bosatt i Trondheim" icon={tabIkon(vurderBostedAp)} />
           <Tabs.Tab
             value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
             label="Andre livsoppholdytelser"
