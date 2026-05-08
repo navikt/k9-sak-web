@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
-import ForbiddenPage from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ForbiddenPage.js';
+import ForbiddenPage from '@k9-sak-web/gui/app/errorhandling/pages/ForbiddenPage.js';
 import UnauthorizedPage, { ungLoginResourcePath } from '@k9-sak-web/gui/app/errorhandling/pages/UnauthorizedPage.js';
 import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';

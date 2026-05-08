@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import { BigError } from './BigError.js';
+import { BigError } from '../feilmeldinger/BigError.js';
 import ErrorBoundary from '../boundary/ErrorBoundary.js';
 
 /**
