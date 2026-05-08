@@ -12,8 +12,9 @@ import {
   restApiTilbakekrevingHooks,
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
-import NetworkErrorPage from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/NetworkErrorPage.js';
-import { extractErrorInfo } from '../../rest-api-hooks/src/error/extractErrorInfo.js';
+import { AxiosError } from 'axios';
+import { ExtendedAxiosError } from '@k9-sak-web/gui/app/errorhandling/ExtendedAxiosError.js';
+import { FrontendError } from '@k9-sak-web/gui/app/errorhandling/FrontendError.js';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },
@@ -138,7 +139,11 @@ const BehandlingTilbakekrevingIndex = ({
   }
 
   if (state === RestApiState.ERROR) {
-    return <NetworkErrorPage {...extractErrorInfo(error)} />;
+    if (error instanceof AxiosError) {
+      throw new ExtendedAxiosError(error);
+    } else {
+      throw new FrontendError('RestApi error', error);
+    }
   }
 
   return (

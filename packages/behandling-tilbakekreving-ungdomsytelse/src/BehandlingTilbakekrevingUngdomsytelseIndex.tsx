@@ -2,9 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import NetworkErrorPage from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/NetworkErrorPage.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { extractErrorInfo } from '@k9-sak-web/rest-api-hooks/src/error/extractErrorInfo';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import {
@@ -13,6 +11,9 @@ import {
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
+import { AxiosError } from 'axios';
+import { ExtendedAxiosError } from '@k9-sak-web/gui/app/errorhandling/ExtendedAxiosError.js';
+import { FrontendError } from '@k9-sak-web/gui/app/errorhandling/FrontendError.js';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },
@@ -137,7 +138,11 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   }
 
   if (state === RestApiState.ERROR) {
-    return <NetworkErrorPage {...extractErrorInfo(error)} />;
+    if (error instanceof AxiosError) {
+      throw new ExtendedAxiosError(error);
+    } else {
+      throw new FrontendError('RestApi error', error);
+    }
   }
 
   return (

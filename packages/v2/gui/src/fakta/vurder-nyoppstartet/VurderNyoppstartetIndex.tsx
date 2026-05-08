@@ -2,10 +2,11 @@ import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } 
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import NetworkErrorPage from '../../app/errorhandling/feilmeldinger/NetworkErrorPage.js';
+import axios, { AxiosError } from 'axios';
 import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
+import { ExtendedAxiosError } from '../../app/errorhandling/ExtendedAxiosError.js';
+import { FrontendError } from '../../app/errorhandling/FrontendError.js';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;
@@ -33,6 +34,7 @@ export const VurderNyoppstartetIndex = ({
     data: nyoppstartetData,
     isFetching,
     isError,
+    error,
   } = useQuery<NyoppstartetData>({
     queryKey: ['nyoppstartet', behandlingUUID],
     queryFn: () =>
@@ -54,7 +56,11 @@ export const VurderNyoppstartetIndex = ({
     return <Loader />;
   }
   if (isError) {
-    return <NetworkErrorPage />;
+    if (error instanceof AxiosError) {
+      throw new ExtendedAxiosError(error);
+    } else {
+      throw new FrontendError('serverforespørsel feila, men ikke med forventet AxiosError', error);
+    }
   }
   return (
     <VurderNyoppstartet
