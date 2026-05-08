@@ -6,6 +6,7 @@ import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/Exten
 import { resolveApiErrorViewProps } from './resolveApiErrorViewProps.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
 import { EnterIcon } from '@navikt/aksel-icons';
+import { ExtendedAxiosError } from '../ExtendedAxiosError.js';
 
 export type ErrorViewProps = Readonly<{
   title: string;
@@ -55,6 +56,19 @@ const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
   };
 };
 
+const extendedAxiosErrorViewProps = (error: ExtendedAxiosError): Omit<ErrorViewProps, 'fixAction'> => {
+  const title = 'Feil ved henting/sending av data';
+  const errorInfo = (
+    <BodyLong>
+      Serverkall returnerte feilmelding <i>{error.message}</i>.
+    </BodyLong>
+  );
+  return {
+    title,
+    errorInfo,
+  };
+};
+
 // Utleder tekst og handling for å hjelpe bruker handtere ulike feil som kan oppstå.
 // Returverdi passer inn i diverse gui komponenter for visning av feil.
 export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
@@ -69,6 +83,10 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
     if (apiError != null) {
       ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(apiError));
     }
+  }
+
+  if (error instanceof ExtendedAxiosError) {
+    ({ title, errorInfo } = extendedAxiosErrorViewProps(error));
   }
 
   if (error instanceof AdditionalInfoError && error.additionalInfo != null) {
