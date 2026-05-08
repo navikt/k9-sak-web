@@ -228,7 +228,6 @@ const PleiepengerProsess = ({
         behandling={behandling}
         rettigheter={rettigheter}
         data={data}
-        hentBehandling={hentBehandling}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         visIverksetterVedtakModal={visIverksetterVedtakModal}
         toggleIverksetterVedtakModal={toggleIverksetterVedtakModal}
