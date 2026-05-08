@@ -27,12 +27,10 @@ export type UttakContextType = {
   uttak: UttaksplanMedUtsattePerioder;
   uttakApi: BehandlingUttakBackendClient;
   perioderTilVurdering: string[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   hentUttak?: () => Promise<any>;
   harEtUløstAksjonspunktIUttak: boolean;
   erOverstyrer: boolean;
   readOnly: boolean;
-  oppdaterBehandling: () => void;
   virkningsdatoUttakNyeRegler: string | undefined;
   redigerVirkningsdato: boolean;
   setRedigervirkningsdato: Dispatch<SetStateAction<boolean>>;
@@ -56,11 +54,9 @@ export interface UttakProviderProps {
     | 'uttak'
     | 'uttakApi'
     | 'perioderTilVurdering'
-    | 'hentBehandling'
     | 'harEtUløstAksjonspunktIUttak'
     | 'erOverstyrer'
     | 'readOnly'
-    | 'oppdaterBehandling'
     | 'virkningsdatoUttakNyeRegler'
   > & { aksjonspunkter: Aksjonspunkt[] };
   children: ReactNode;
@@ -110,11 +106,9 @@ export const UttakProvider = ({
     uttak: value.uttak,
     uttakApi: value.uttakApi,
     perioderTilVurdering: value.perioderTilVurdering,
-    hentBehandling: value.hentBehandling,
     harEtUløstAksjonspunktIUttak: value.harEtUløstAksjonspunktIUttak,
     erOverstyrer: value.erOverstyrer,
     readOnly: value.readOnly,
-    oppdaterBehandling: value.oppdaterBehandling,
     virkningsdatoUttakNyeRegler: value.virkningsdatoUttakNyeRegler,
     redigerVirkningsdato,
     setRedigervirkningsdato,
