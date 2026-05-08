@@ -1,9 +1,11 @@
 import { AdditionalInfoError } from '../AdditionalInfoError.js';
 import type { ReactNode } from 'react';
 import { type ErrorHandlingWizardFixAction, reloadAction } from './ErrorHandlingWizard.js';
-import { BodyLong, VStack } from '@navikt/ds-react';
+import { BodyLong, BodyShort, VStack } from '@navikt/ds-react';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { resolveApiErrorViewProps } from './resolveApiErrorViewProps.js';
+import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
+import { EnterIcon } from '@navikt/aksel-icons';
 
 export type ErrorViewProps = Readonly<{
   title: string;
@@ -26,12 +28,48 @@ const additionalInfoListing = (error: AdditionalInfoError): ReactNode => {
   );
 };
 
+const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
+  return {
+    title: 'Innlogging avbrutt',
+    errorInfo: (
+      <>
+        <BodyLong>Automatisk innlogging ble avbrutt før den var fullført.</BodyLong>
+        <BodyShort>Mulige årsaker:</BodyShort>
+        <ul>
+          <li>Du lukket popupvinduet før innlogging var ferdig</li>
+          <li>Nettleser blokkerte automatisk åpning av popup vinduet for innlogging</li>
+          <li>Teknisk feil i autentiseringsflyt</li>
+        </ul>
+      </>
+    ),
+    fixAction: {
+      label: 'Logg inn',
+      icon: <EnterIcon />,
+      info: (
+        <BodyShort>
+          Hvis du ønsker å logge inn, prøv på nytt med <i>Logg inn</i> knappen.
+        </BodyShort>
+      ),
+      href: `${error.retryURL ?? '/'}`,
+    },
+  };
+};
+
 // Utleder tekst og handling for å hjelpe bruker handtere ulike feil som kan oppstå.
 // Returverdi passer inn i diverse gui komponenter for visning av feil.
 export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
   let title = 'Uventet feil';
   let errorInfo: ReactNode = <BodyLong>{error.message}</BodyLong>;
   let fixAction = reloadAction;
+
+  if (error instanceof ExtendedApiError) {
+    ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(error));
+  } else {
+    const apiError = ExtendedApiError.findInError(error);
+    if (apiError != null) {
+      ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(apiError));
+    }
+  }
 
   if (error instanceof AdditionalInfoError && error.additionalInfo != null) {
     errorInfo = (
@@ -40,13 +78,10 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
         {additionalInfoListing(error)}
       </>
     );
-  } else if (error instanceof ExtendedApiError) {
-    ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(error));
-  } else {
-    const apiError = ExtendedApiError.findInError(error);
-    if (apiError != null) {
-      ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(apiError));
-    }
+  }
+
+  if (error instanceof AuthAbortedError) {
+    ({ title, errorInfo, fixAction } = authAbortedViewProps(error));
   }
 
   return {

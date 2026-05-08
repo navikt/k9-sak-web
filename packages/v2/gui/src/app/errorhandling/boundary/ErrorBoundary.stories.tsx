@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect } from 'react';
 import { expect, fn } from 'storybook/test';
-import ErrorBoundary, { type ErrorFallbackProps } from './ErrorBoundary.js';
+import ErrorBoundary, { type ErrorBoundaryFallbackProps } from './ErrorBoundary.js';
+import { FrontendError } from '../FrontendError.js';
 
 const meta = {
   title: 'gui/app/errorhandling/boundary/ErrorBoundary',
@@ -16,12 +17,12 @@ const NonFailingChild = () => <p>Nothing to see here, move along.</p>;
 
 const AlwaysFailingChild = () => {
   useEffect(() => {
-    throw new Error('TEST FAIL');
+    throw new FrontendError('TEST FAIL');
   }, []);
   return <p>Error boundary should be displayed instead of this</p>;
 };
 
-export const ErrorBoundaryNotTriggered: Story = {
+export const NotTriggered: Story = {
   args: {
     errorCallback: fn(),
     children: <NonFailingChild />,
@@ -31,18 +32,26 @@ export const ErrorBoundaryNotTriggered: Story = {
   },
 };
 
-export const ErrorBoundaryTriggered: Story = {
+export const DefaultFallback: Story = {
   args: {
     children: <AlwaysFailingChild />,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading')).toHaveTextContent(
-      'Det har oppstått en teknisk feil i denne behandlingen.',
-    );
+    await expect(canvas.getByRole('heading')).toHaveTextContent('Uventet feil');
   },
 };
 
-export const ErrorBoundaryTriggeredCallback: Story = {
+export const CustomErrorFallback: Story = {
+  args: {
+    ...DefaultFallback.args,
+    errorFallback: ({ error }: ErrorBoundaryFallbackProps) => <p>Feil: {error.message}</p>,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Feil: TEST FAIL')).toBeInTheDocument();
+  },
+};
+
+export const ErrorCallbackAndErrorFallback: Story = {
   args: {
     children: <AlwaysFailingChild />,
     errorCallback: fn(),
@@ -53,19 +62,16 @@ export const ErrorBoundaryTriggeredCallback: Story = {
   },
 };
 
-const ErrorFallback = ({ error }: ErrorFallbackProps) => (
-  <p>
-    Feil: <span>{error.message}</span>
-  </p>
-);
-
-export const ErrorBoundaryTriggeredFallback: Story = {
+// Utløser CrashErrorView fallback pga gjentakande feil i ErrorBoundary rendering ved å sette errorCallback uten
+// errorFallback, slik at ErrorBoundary fortsetter å rendre children, som i dette tilfellet alltid feiler
+export const AlwaysCrashingFallback: Story = {
   args: {
-    ...ErrorBoundaryTriggered.args,
-    errorFallback: ErrorFallback,
+    ...DefaultFallback.args,
+    errorCallback: fn(),
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Feil:')).toBeInTheDocument();
+    await expect(canvas.getByText('Uventet mange feil oppsto')).toBeInTheDocument();
     await expect(canvas.getByText('TEST FAIL')).toBeInTheDocument();
+    await expect(canvas.getByText('rapporter informasjonen over i porten', { exact: false })).toBeInTheDocument();
   },
 };

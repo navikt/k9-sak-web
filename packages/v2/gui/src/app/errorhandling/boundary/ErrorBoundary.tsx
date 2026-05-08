@@ -1,19 +1,13 @@
-import { Component, type ReactNode, type ErrorInfo, type FC } from 'react';
+import { Component, type ErrorInfo, type FC, type ReactNode } from 'react';
 import { captureException, withScope } from '@sentry/browser';
-import ErrorPage from '../feilmeldinger/ErrorPage.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import UnauthorizedPage from '../pages/UnauthorizedPage.js';
-import ForbiddenPage from '../feilmeldinger/ForbiddenPage.js';
-import NotFoundPage from '../pages/NotFoundPage.js';
-import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
-import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
-import { AuthAbortedPage } from '../../auth/AuthAbortedPage.js';
 import { ensureError } from '../ensureError.js';
 import { shouldReportToSentry } from '../sentry.js';
 import { isAlertInfo } from '../AlertInfo.js';
 import { SentryReportedError } from '../SentryReportedError.js';
+import { DefaultErrorView } from './DefaultErrorView.js';
+import { CrashErrorView } from './CrashErrorView.js';
 
-export interface ErrorFallbackProps {
+export interface ErrorBoundaryFallbackProps {
   readonly error: Error;
   readonly sentryId: string | undefined;
   readonly reset: () => void;
@@ -24,8 +18,8 @@ export interface ErrorBoundaryProps {
   maxErrorCount?: number;
   // If set, the ErrorBoundary will only report error to Sentry and this callback, not display error itself. May be combined with errorFallback.
   errorCallback?: (error: Error) => void;
-  // If set the component given will be rendered instead of children or error message from ErrorBoundary
-  errorFallback?: FC<ErrorFallbackProps>;
+  // If set the component given will be rendered instead of children
+  errorFallback?: FC<ErrorBoundaryFallbackProps>;
 }
 
 interface State {
@@ -83,46 +77,22 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
     }
   }
 
-  #renderErrorMessage(error: Error): ReactNode {
-    // Utled feilside som skal visast.
-    const apiError = ExtendedApiError.findInError(error);
-    if (apiError != null) {
-      if (apiError.isUnauthorized) {
-        const loginUrl = withRedirectToCurrentLocation(resolveLoginURL(apiError.location));
-        if (loginUrl != null) {
-          return <UnauthorizedPage loginUrl={loginUrl.toString()} />;
-        } else {
-          return <UnauthorizedPage loginUrl="/" />;
-        }
-      }
-      if (apiError.isForbidden) {
-        return <ForbiddenPage />;
-      }
-      if (apiError.isNotFound) {
-        return <NotFoundPage />;
-      }
-    }
-    if (error instanceof AuthAbortedError) {
-      return <AuthAbortedPage retryURL={error.retryURL} />;
-    }
-    return <ErrorPage sentryId={this.sentryId} errorMessage={error.message} />;
-  }
-
   override render(): ReactNode {
     const { errorFallback: ErrorFallback, children, errorCallback, maxErrorCount = 16 } = this.props;
     const { error } = this.state;
     if (error != null) {
+      const reset = () => {
+        // Vurder å legge til tanstack query reset her
+        this.setState(initialState);
+      };
       // Viss errorCount har gått over grense vis separat feilside uten å rendre children eller errorFallback, sidan det tyder på rekursiv/evig feilsituasjon
       if (this.errorCount > maxErrorCount) {
-        return this.#renderErrorMessage(error);
+        return <CrashErrorView error={error} sentryId={this.sentryId} reset={reset} />;
       } else if (ErrorFallback != null) {
         // Viss errorFallback er angitt, vis den istadenfor standard feilside
-        const reset = () => {
-          this.setState(initialState);
-        };
         return <ErrorFallback error={error} sentryId={this.sentryId} reset={reset} />;
       } else if (errorCallback == null || children == null) {
-        return this.#renderErrorMessage(error);
+        return <DefaultErrorView error={error} sentryId={this.sentryId} reset={reset} />;
       }
     }
 
