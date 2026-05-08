@@ -1,6 +1,6 @@
 import { BodyLong, Dialog, LocalAlert, VStack } from '@navikt/ds-react';
 import { resolveErrorUiData } from './resolveErrorUiData.js';
-import { ErrorContentBox, ErrorHandlingWizard } from './ErrorHandlingWizard.js';
+import { ErrorContentBox, ErrorHandlingWizard, retryAction } from './ErrorHandlingWizard.js';
 
 export interface ErrorModalProps {
   readonly error: Error | undefined;
@@ -10,6 +10,7 @@ export interface ErrorModalProps {
 
 export const ErrorModal = ({ error, onClose, onTryAgain }: ErrorModalProps) => {
   const retryTxt = onTryAgain ? 'prøve på nytt' : 'laste inn på nytt';
+  const fixAction = onTryAgain ? retryAction(onTryAgain) : undefined;
   const { additionalInfo } = resolveErrorUiData(error);
   return (
     <Dialog open={error != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
@@ -21,7 +22,7 @@ export const ErrorModal = ({ error, onClose, onTryAgain }: ErrorModalProps) => {
               <LocalAlert.CloseButton onClick={onClose} />
             </LocalAlert.Header>
             <LocalAlert.Content>
-              <ErrorHandlingWizard errors={[error]} onTryAgain={onTryAgain} withoutDefaultInfo>
+              <ErrorHandlingWizard errors={[error]} fixAction={fixAction} withoutDefaultInfo>
                 <ErrorContentBox>
                   <div>{error.message}</div>
                   {/* additionalInfo er noko som kan komme frå legacy kode. Litt uvisst kva innhaldet kan vere. Implementert tilsvarande som utlisting i legacy ErrorMessageDetailsModal */}

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Button, VStack } from '@navikt/ds-react';
 import { ErrorBoundary } from '../feilmeldinger/ErrorBoundary.js';
 import { LocalAlertError } from './LocalAlertError.js';
+import { retryAction } from './ErrorHandlingWizard.js';
+import { action } from 'storybook/actions';
 
 /**
  * Komponent som kastar ein feil når `shouldThrow` er true.
@@ -31,10 +33,10 @@ const ErrorTriggerWrapper = () => {
           <LocalAlertError
             title="Eksempel-feil"
             error={error}
-            onTryAgain={() => {
+            fixAction={retryAction(() => {
               setShouldThrow(false);
               reset();
-            }}
+            })}
           />
         )}
       >
@@ -57,7 +59,7 @@ export const DefaultStory: Story = {
   args: {
     title: 'Eksempel-feil',
     error: new Error('Lorem ipsum error'),
-    onTryAgain: () => {},
+    fixAction: retryAction(action('fix problem')),
   },
 };
 
@@ -77,8 +79,8 @@ export const MedEgneChildren: Story = {
   args: {
     title: 'Eksempel-feil',
     error: new Error('Lorem ipsum error'),
-    onTryAgain: () => {},
     children: 'Eigendefinert feilmelding som overstyrer error.message.',
+    fixAction: retryAction(action('fix problem')),
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Eigendefinert feilmelding som overstyrer error.message.')).toBeInTheDocument();

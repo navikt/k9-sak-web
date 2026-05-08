@@ -10,10 +10,37 @@ const btnProps = {
   'data-color': 'neutral',
 } as const;
 
+// Genererer fixAction verdi for standard Prøv på nytt knapp i ErrorHandlingWizard
+export const retryAction = (callback: () => void) => {
+  return { label: 'Prøv på nytt', icon: <ArrowsCirclepathIcon />, callback };
+};
+
+export const reloadAction = {
+  label: 'Last på nytt',
+  icon: <ArrowCirclepathIcon />,
+  callback: () => window.location.reload(),
+};
+
 export type ErrorHandlingWizardProps = Readonly<{
   children: ReactNode;
   errors: ReadonlyArray<Error>;
-  onTryAgain?: () => void;
+  // Spesifiserer tekst, ikon og handling for "fikseknappen" i wizard. Vanlegvis "prøv på nytt". Standardverdi viss ikkje spesifisert er "Last på nytt" med full reload av sida.
+  fixAction?: Readonly<
+    {
+      label: string;
+      icon: ReactNode;
+    } & (
+      | {
+          callback: () => void;
+          href?: never;
+        }
+      | {
+          callback?: never;
+          href: string;
+        }
+    )
+  >;
+
   // Fjerner standard info tekst om prøv på nytt og rapporter, i tilfelle dette er inkludert i eigendefinert tekst i children.
   withoutDefaultInfo?: boolean;
 }>;
@@ -24,17 +51,30 @@ export const ErrorContentBox = ({ children }: { children: ReactNode }) => (
   </Box>
 );
 
-export const ErrorHandlingWizard = ({ children, errors, onTryAgain, withoutDefaultInfo }: ErrorHandlingWizardProps) => {
+export const ErrorHandlingWizard = ({
+  children,
+  errors,
+  fixAction = reloadAction,
+  withoutDefaultInfo,
+}: ErrorHandlingWizardProps) => {
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
+  const { label: fixLabel, icon: fixIcon, callback: fixCallback, href: fixHref } = fixAction;
 
   // Tilbakestill visningstilstand når antal feil endrar seg
   useEffect(() => {
     setDisplay('error');
   }, [errors.length]);
 
-  const retryText = onTryAgain != null ? 'Prøv på nytt' : 'Last på nytt';
-  const retryAction = onTryAgain ?? (() => window.location.reload());
-  const retryIcon = onTryAgain != null ? <ArrowsCirclepathIcon /> : <ArrowCirclepathIcon />;
+  const fixButton =
+    fixCallback != null ? (
+      <Button {...btnProps} onClick={fixCallback} icon={fixIcon} iconPosition="right">
+        {fixLabel}
+      </Button>
+    ) : (
+      <Button {...btnProps} as="a" href={fixHref} icon={fixIcon} iconPosition="right">
+        {fixLabel}
+      </Button>
+    );
 
   return (
     <VStack gap="space-8">
@@ -59,23 +99,17 @@ export const ErrorHandlingWizard = ({ children, errors, onTryAgain, withoutDefau
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowLeftIcon />} iconPosition="left">
               Tilbake
             </Button>
-            <Button {...btnProps} onClick={retryAction} icon={retryIcon} iconPosition="right">
-              {' '}
-              {retryText}{' '}
-            </Button>
+            {fixButton}
           </HStack>
         </>
       ) : (
         <>
           {children}
           {withoutDefaultInfo ? null : (
-            <div>{retryText} for å få feilfri visning. Rapporter feil i porten hvis den vedvarer.</div>
+            <div>{fixLabel} for å få feilfri visning. Rapporter feil i porten hvis den vedvarer.</div>
           )}
           <HStack gap="space-4">
-            <Button {...btnProps} onClick={retryAction} icon={retryIcon} iconPosition="right">
-              {' '}
-              {retryText}{' '}
-            </Button>
+            {fixButton}
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowRightIcon />} iconPosition="right">
               Rapporter feil
             </Button>
