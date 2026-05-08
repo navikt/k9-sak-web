@@ -22,6 +22,13 @@ const AlwaysFailingChild = () => {
   return <p>Error boundary should be displayed instead of this</p>;
 };
 
+const BaseErrorChild = () => {
+  useEffect(() => {
+    throw new Error('BASE ERROR');
+  }, []);
+  return <p>Skal ikkje visast</p>;
+};
+
 export const NotTriggered: Story = {
   args: {
     errorCallback: fn(),
@@ -73,5 +80,30 @@ export const AlwaysCrashingFallback: Story = {
     await expect(canvas.getByText('Uventet mange feil oppsto')).toBeInTheDocument();
     await expect(canvas.getByText('TEST FAIL')).toBeInTheDocument();
     await expect(canvas.getByText('rapporter informasjonen over i porten', { exact: false })).toBeInTheDocument();
+  },
+};
+
+// Filter som berre fangar FrontendError — vanleg Error blir sendt vidare til ytre boundary
+export const FilterCatchesMatching: Story = {
+  args: {
+    children: <AlwaysFailingChild />,
+    filter: (error: Error) => error instanceof FrontendError,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading')).toHaveTextContent('Uventet feil');
+  },
+};
+
+// Filter som ikkje matcher feilen — ytre ErrorBoundary fangar den i staden
+export const FilterPropagatesNonMatching: StoryObj = {
+  render: () => (
+    <ErrorBoundary errorFallback={({ error }) => <p>Ytre boundary fanga: {error.message}</p>}>
+      <ErrorBoundary filter={(error: Error) => error instanceof FrontendError}>
+        <BaseErrorChild />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Ytre boundary fanga: BASE ERROR')).toBeInTheDocument();
   },
 };

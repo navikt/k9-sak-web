@@ -20,6 +20,8 @@ export interface ErrorBoundaryProps {
   errorCallback?: (error: Error) => void;
   // If set the component given will be rendered instead of children
   errorFallback?: FC<ErrorBoundaryFallbackProps>;
+  // If set, this ErrorBoundary will only catch errors for which the function returns true. Others will propagate to the next boundary.
+  filter?: (error: Error) => boolean;
 }
 
 interface State {
@@ -53,9 +55,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   }
 
   override componentDidCatch(_: any, info: ErrorInfo): void {
-    const { errorCallback } = this.props;
+    const { errorCallback, filter } = this.props;
     const { error } = this.state;
     if (error != null) {
+      // Viss filter er sett og returnerer false, ikkje rapporter eller kall callback — feilen blir kasta vidare i render()
+      if (filter != null && !filter(error)) {
+        return;
+      }
       this.errorCount++;
       if (ErrorBoundary.shouldReportToSentry(error)) {
         withScope(scope => {
@@ -78,14 +84,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   }
 
   override render(): ReactNode {
-    const { errorFallback: ErrorFallback, children, errorCallback, maxErrorCount = 16 } = this.props;
+    const { errorFallback: ErrorFallback, children, errorCallback, maxErrorCount = 16, filter } = this.props;
     const { error } = this.state;
     if (error != null) {
+      // Viss filter er sett og returnerer false for denne feilen, kast den vidare til neste ErrorBoundary
+      if (filter != null && !filter(error)) {
+        throw error;
+      }
       const reset = () => {
         // Vurder å legge til tanstack query reset her
         this.setState(initialState);
       };
-      // Viss errorCount har gått over grense vis separat feilside uten å rendre children eller errorFallback, sidan det tyder på rekursiv/evig feilsituasjon
+      // Viss errorCount har gått over grense vis separat feilside utan å rendre children eller errorFallback, sidan det tyder på rekursiv/evig feilsituasjon
       if (this.errorCount > maxErrorCount) {
         return <CrashErrorView error={error} sentryId={this.sentryId} reset={reset} />;
       } else if (ErrorFallback != null) {
