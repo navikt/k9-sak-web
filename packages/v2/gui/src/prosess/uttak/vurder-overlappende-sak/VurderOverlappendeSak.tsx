@@ -324,7 +324,7 @@ const VurderOverlappendeSak: FC = () => {
                         </Alert>
 
                         <HStack gap="space-16">
-                          <Button type="submit" size="small" disabled={readOnly} loading={loading}>
+                          <Button type="submit" size="small" disabled={readOnly || loading} loading={loading}>
                             Bekreft og fortsett
                           </Button>
                           {rediger && (
