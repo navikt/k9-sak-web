@@ -42,6 +42,11 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
     );
   } else if (error instanceof ExtendedApiError) {
     ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(error));
+  } else {
+    const apiError = ExtendedApiError.findInError(error);
+    if (apiError != null) {
+      ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(apiError));
+    }
   }
 
   return {
