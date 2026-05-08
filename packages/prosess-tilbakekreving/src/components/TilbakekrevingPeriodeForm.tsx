@@ -25,7 +25,7 @@ import {
 } from '@navikt/ung-tilbake-typescript-client/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
@@ -123,9 +123,10 @@ interface DispatchProps {
 }
 
 export const TilbakekrevingPeriodeFormImpl = (
-  props: OwnProps & DispatchProps & WrappedComponentProps & InjectedFormProps,
+  props: OwnProps & DispatchProps & InjectedFormProps,
 ) => {
   const [showModal, setShowModal] = useState(false);
+  const intl = useIntl();
   const {
     valgtVilkarResultatType,
     handletUaktsomhetGrad,
@@ -147,7 +148,6 @@ export const TilbakekrevingPeriodeFormImpl = (
     behandlingVersjon,
     behandlingUuid,
     beregnBelop,
-    intl,
     vilkarsVurdertePerioder,
     ...formProps
   } = props;
@@ -544,7 +544,7 @@ const TilbakekrevingPeriodeForm = connect(
   behandlingForm({
     form: TILBAKEKREVING_PERIODE_FORM_NAME,
     enableReinitialize: true,
-  })(injectIntl(TilbakekrevingPeriodeFormImpl)),
+  })(TilbakekrevingPeriodeFormImpl),
 );
 
 // TODO Fiks typen til periode

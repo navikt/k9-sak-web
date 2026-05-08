@@ -1,4 +1,4 @@
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { Button, HGrid } from '@navikt/ds-react';
 import styles from './vedtakKlageSubmitPanel.module.css';
@@ -26,12 +26,13 @@ interface Props {
  * @param formProps - Handle submit funksjonen fra Redux Forms, fullfører aksjonspunktet
  */
 const VedtakKlageNkkSubmitPanel = ({
-  intl,
   klageResultat,
   formProps,
   readOnly,
   behandlingPåVent,
-}: Props & WrappedComponentProps) => (
+}: Props) => {
+  const intl = useIntl();
+  return (
   <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
     <div>
       {!readOnly && (
@@ -47,6 +48,7 @@ const VedtakKlageNkkSubmitPanel = ({
       )}
     </div>
   </HGrid>
-);
+  );
+};
 
-export default injectIntl(VedtakKlageNkkSubmitPanel);
+export default VedtakKlageNkkSubmitPanel;

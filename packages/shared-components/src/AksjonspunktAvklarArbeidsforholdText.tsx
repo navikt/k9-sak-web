@@ -1,7 +1,7 @@
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
@@ -40,7 +40,8 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
   return <FormattedMessage id="HelpText.IngenAksjonspunkt" />;
 };
 
-const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
+const AksjonspunktAvklarArbeidsforholdText = ({ arbeidsforhold }: OwnProps) => {
+  const intl = useIntl();
   const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker
     .map(k => k.kode)
     .includes(aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE);
@@ -112,4 +113,4 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
   );
 };
 
-export default injectIntl(AksjonspunktAvklarArbeidsforholdText);
+export default AksjonspunktAvklarArbeidsforholdText;

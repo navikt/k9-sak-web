@@ -6,7 +6,7 @@ import {
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from '../AvslagsårsakListe';
@@ -26,11 +26,12 @@ interface OwnState {
 }
 
 const VedtakAvslagRevurderingPanelImpl = ({
-  intl,
   vilkar,
   ytelseTypeKode,
   tilbakekrevingText = null,
-}: VedtakAvslagRevurderingPanelProps & OwnState & WrappedComponentProps) => (
+}: VedtakAvslagRevurderingPanelProps & OwnState) => {
+  const intl = useIntl();
+  return (
   <div>
     <Label size="small" as="p">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -54,10 +55,11 @@ const VedtakAvslagRevurderingPanelImpl = ({
     </div>
     <VerticalSpacer sixteenPx />
   </div>
-);
+  );
+};
 
 const mapStateToProps = (state: OwnState, ownProps: VedtakAvslagRevurderingPanelProps) => ({
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakAvslagRevurderingPanelImpl));
+export default connect(mapStateToProps)(VedtakAvslagRevurderingPanelImpl);

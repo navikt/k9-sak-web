@@ -1,6 +1,10 @@
 ---
 name: nav-deep-interview
 description: Strukturert intervju som avdekker blinde flekker i Nav-prosjekter — personvern, auth, avhengigheter og observerbarhet
+license: MIT
+metadata:
+  domain: general
+  tags: planning requirements interview onboarding
 ---
 
 # Deep Interview — Nav Project Clarification

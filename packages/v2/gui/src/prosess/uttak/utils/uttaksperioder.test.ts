@@ -62,6 +62,26 @@ describe('lagUttaksperiodeliste', () => {
     await expect(earlier?.harOppholdTilNestePeriode).toBe(false);
   });
 
+  it('setter ikke opphold når perioder skilles kun av helg (fredag til mandag)', async () => {
+    const perioder = {
+      [key('2024-01-01', '2024-01-05')]: {}, // mandag–fredag
+      [key('2024-01-08', '2024-01-12')]: {}, // neste mandag–fredag
+    } as any;
+    const liste = lagUttaksperiodeliste(perioder);
+    const earlier = liste.find(p => p.periode.fom === '2024-01-01');
+    await expect(earlier?.harOppholdTilNestePeriode).toBe(false);
+  });
+
+  it('markerer opphold når det er minst én ukedag i gapet', async () => {
+    const perioder = {
+      [key('2024-01-01', '2024-01-04')]: {}, // mandag–torsdag
+      [key('2024-01-08', '2024-01-12')]: {}, // neste mandag
+    } as any;
+    const liste = lagUttaksperiodeliste(perioder);
+    const earlier = liste.find(p => p.periode.fom === '2024-01-01');
+    await expect(earlier?.harOppholdTilNestePeriode).toBe(true);
+  });
+
   it('ignorerer ugyldig nøkkel-format', async () => {
     const perioder = {
       ugyldigNøkkel: { some: 'x' },

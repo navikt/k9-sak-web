@@ -1,4 +1,3 @@
-import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/bosatt/BostedGrunnlagResponseDto.js';
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
@@ -24,16 +23,18 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     throw new Error('Not implemented');
   }
 
+  async hentLovligeBehandlingsoperasjoner(behandlingUuid: string) {
+    return {
+      uuid: behandlingUuid,
+    };
+  }
+
   async hentBehandlingMidlertidigStatus(): Promise<never> {
     throw new Error('Not implemented');
   }
 
   async hentMedlemskapFraSøknad() {
     return {};
-  }
-
-  async hentBostedGrunnlag(): Promise<BostedGrunnlagResponseDto> {
-    return { perioder: [] };
   }
 
   async getBeregningsgrunnlag(): Promise<never> {
@@ -49,6 +50,12 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   }
 
   async getSatsOgUtbetalingPerioder() {
+    return [];
+  }
+
+  async hentTotrinnskontrollSkjermlenkeContext(): ReturnType<
+    AktivitetspengerApi['hentTotrinnskontrollSkjermlenkeContext']
+  > {
     return [];
   }
 }

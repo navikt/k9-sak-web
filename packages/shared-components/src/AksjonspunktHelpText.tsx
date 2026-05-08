@@ -1,6 +1,5 @@
 import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './aksjonspunktHelpText.module.css';
 
 interface OwnProps {
@@ -8,7 +7,7 @@ interface OwnProps {
   isAksjonspunktOpen: boolean;
 }
 
-const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps & WrappedComponentProps) => {
+const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps) => {
   if (!children || (Array.isArray(children) && children.length === 0)) {
     return null;
   }
@@ -37,4 +36,4 @@ const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps & Wrapp
   );
 };
 
-export default injectIntl(AksjonspunktHelpText);
+export default AksjonspunktHelpText;

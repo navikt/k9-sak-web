@@ -27,7 +27,7 @@ interface OverforingerFaktaFormProps {
   formValues?: FormValues;
 }
 
-export const OverforingerFaktaFormImpl = ({
+export const OverforingerFaktaForm = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   rammevedtak,
 
@@ -128,5 +128,5 @@ export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: rammevedtakFormName,
     enableReinitialize: true,
-  })(OverforingerFaktaFormImpl),
+  })(OverforingerFaktaForm),
 );

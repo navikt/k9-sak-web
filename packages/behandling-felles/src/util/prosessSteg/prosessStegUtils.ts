@@ -1,3 +1,4 @@
+import { addBreadcrumb } from '@sentry/browser';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { SetStateAction } from 'react';
 
@@ -139,6 +140,13 @@ export const getBekreftAksjonspunktCallback =
       '@type': ap.kode,
       ...ap,
     }));
+
+    addBreadcrumb({
+      category: 'aksjonspunkt',
+      message: 'Sender inn aksjonspunkt',
+      data: { koder: models.map(ap => ap.kode) },
+      level: 'info',
+    });
 
     const params = {
       saksnummer: fagsak.saksnummer,

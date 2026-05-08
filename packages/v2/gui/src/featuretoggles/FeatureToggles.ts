@@ -1,4 +1,4 @@
-import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } from './FeatureTogglesFor.js';
+import type {FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ} from './FeatureTogglesFor.js';
 
 /**
  * Alle feature toggles må leggast til her, med false som verdi. Må deretter i tillegg settast til true for den/dei
@@ -7,6 +7,7 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
 const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
+  BRUK_V2_UTENLANDSOPPHOLD: false,
   BRUK_V2_VILKAR_OPPTJENING: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
@@ -16,7 +17,6 @@ const rootFeatureToggles = {
   UNNTAKSBEHANDLING: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
   VIS_ALLE_ASYNC_ERRORS: false,
-  VIS_FERIEPENGER_PANEL: false,
   BRUK_V2_AVREGNING: false,
   PROSESS_MENY_V2: false,
   SKJUL_PROSESS_MENY_V2_VELGER: false,
@@ -36,7 +36,6 @@ const baseQFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: true,
   UNNTAKSBEHANDLING: true,
   VIS_ALLE_ASYNC_ERRORS: true,
-  VIS_FERIEPENGER_PANEL: true,
   SINGLE_AUTHFIXER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 

@@ -6,7 +6,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from './AvslagsårsakListe';
@@ -22,13 +22,13 @@ interface VedtakAvslagPanelProps {
   tilbakekrevingvalg: TilbakekrevingValgDto;
 }
 
-export const VedtakAvslagPanelImpl = ({
-  intl,
+export const VedtakAvslagPanel = ({
   vilkar,
   behandlingsresultat,
   ytelseTypeKode,
   tilbakekrevingText = null,
-}: VedtakAvslagPanelProps & WrappedComponentProps) => {
+}: VedtakAvslagPanelProps) => {
+  const intl = useIntl();
   return (
     <div>
       <Label size="small" as="p" data-testid="avslaatt">
@@ -55,4 +55,4 @@ const mapStateToProps = (state, ownProps: VedtakAvslagPanelProps) => ({
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 
-export default connect(mapStateToProps)(injectIntl(VedtakAvslagPanelImpl));
+export default connect(mapStateToProps)(VedtakAvslagPanel);

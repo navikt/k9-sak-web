@@ -37,7 +37,7 @@ import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
@@ -81,7 +81,6 @@ interface Props {
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
   hentFritekstbrevHtmlCallback: (parameters: any) => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  intl: IntlShape;
   lagreDokumentdata: LagreDokumentdataType;
   medlemskapFom: string;
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
@@ -99,7 +98,6 @@ interface Props {
 }
 
 export const VedtakForm: React.FC<Props> = ({
-  intl,
   readOnly,
   behandlingStatus,
   behandlingresultat,
@@ -129,6 +127,7 @@ export const VedtakForm: React.FC<Props> = ({
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
+  const intl = useIntl();
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
@@ -622,4 +621,4 @@ export const VedtakForm: React.FC<Props> = ({
   );
 };
 
-export default injectIntl(VedtakForm);
+export default VedtakForm;

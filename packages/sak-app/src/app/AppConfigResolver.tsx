@@ -25,6 +25,8 @@ import ApplicationContextPath from './ApplicationContextPath';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
+import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
+import { K9UtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9UtenlandsoppholdBackendClient.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
 import { K9AvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/K9AvregningBackendClient.js';
 
@@ -73,11 +75,13 @@ const AppConfigResolver = ({ children }: OwnProps) => {
             <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
               <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
-                  <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
-                    <UttakApiContext value={new BehandlingUttakBackendClient()}>
-                      {harFeilet || erFerdig ? children : <LoadingPanel />}
-                    </UttakApiContext>
-                  </AvregningBackendClientContext>
+                  <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                    <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
+                      <UttakApiContext value={new BehandlingUttakBackendClient()}>
+                        {harFeilet || erFerdig ? children : <LoadingPanel />}
+                      </UttakApiContext>
+                    </AvregningBackendClientContext>
+                  </UtenlandsoppholdApiContext>
                 </InntektsmeldingApiContext>
               </VedtakKlageApiContext>
             </KlageVurderingApiContext>

@@ -89,10 +89,12 @@ const MenyNyBehandlingIndexV2 = ({
   const { REVURDERING_FRA_STEG_V2 } = use(FeatureTogglesContext);
 
   const submit = useCallback(
-    (formValues: FormValues) => {
+    async (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
-      const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
+      const filteredFormValues: Record<string, unknown> = Object.fromEntries(
+        Object.entries(formValues).filter(([, v]) => v !== '' && v !== undefined && (!Array.isArray(v) || v.length > 0)),
+      );
 
       if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {
         delete filteredFormValues['steg'];
@@ -100,6 +102,23 @@ const MenyNyBehandlingIndexV2 = ({
         delete filteredFormValues['tom'];
         delete filteredFormValues['revurderingModus'];
       } else if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'DELVIS') {
+        const valgtePerioder = Array.isArray(formValues.valgtePerioder)
+          ? formValues.valgtePerioder
+              .filter(Boolean)
+              .map(value => {
+                const [fom, tom] = value.split('/');
+                return fom && tom ? { fom, tom } : null;
+              })
+              .filter((p): p is { fom: string; tom: string } => p !== null)
+          : [];
+
+        if (valgtePerioder.length > 0) {
+          filteredFormValues['perioder'] = valgtePerioder;
+          delete filteredFormValues['fom'];
+          delete filteredFormValues['tom'];
+        }
+
+        delete filteredFormValues['valgtePerioder'];
         delete filteredFormValues['revurderingModus'];
         delete filteredFormValues['behandlingArsakType'];
         delete filteredFormValues['nyBehandlingEtterKlage'];

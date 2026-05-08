@@ -4,7 +4,7 @@ import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-compone
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
@@ -24,7 +24,7 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   skjulArbeidsforhold: () => void;
-  updateArbeidsforhold: (values) => void;
+  updateArbeidsforhold: (values) => void | Promise<void>;
 }
 
 type FormValues = CustomArbeidsforhold;
@@ -34,7 +34,7 @@ interface MappedOwnProps {
   validate: (formValues: FormValues, props: any) => void;
 }
 
-type Props = PureOwnProps & MappedOwnProps & InjectedFormProps & WrappedComponentProps;
+type Props = PureOwnProps & MappedOwnProps & InjectedFormProps;
 
 // ----------------------------------------------------------------------------------
 // Component: PersonArbeidsforholdDetailForm
@@ -72,9 +72,9 @@ export const PersonArbeidsforholdDetailForm = ({
               <Button
                 variant="primary"
                 size="small"
-                loading={false}
+                loading={formProps.submitting}
                 onClick={formProps.handleSubmit}
-                disabled={formProps.pristine}
+                disabled={formProps.pristine || formProps.submitting}
               >
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
               </Button>
@@ -92,8 +92,8 @@ const validateForm = values => ({
 
 const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => (state, ownProps) => {
   const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
-  const onSubmit = values => {
-    initialOwnProps.updateArbeidsforhold(values);
+  const onSubmit = async (values) => {
+    await initialOwnProps.updateArbeidsforhold(values);
     skjulArbeidsforhold();
   };
   const validate = (values: FormValues) => validateForm(values);
@@ -114,5 +114,5 @@ export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
     enableReinitialize: true,
-  })(injectIntl(PersonArbeidsforholdDetailForm)),
+  })(PersonArbeidsforholdDetailForm),
 );

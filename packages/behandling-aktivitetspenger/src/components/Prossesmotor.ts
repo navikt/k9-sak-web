@@ -24,7 +24,7 @@ const PROSESS_STEG_KODER = {
   MEDLEMSKAP: prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
   VEDTAK: prosessStegCodes.VEDTAK,
   BEREGNING: prosessStegCodes.BEREGNING,
-  SATS: prosessStegCodes.SATS,
+  BEREGNET_UTBETALING: prosessStegCodes.BEREGNET_UTBETALING,
 } as const;
 
 const PANEL_KONFIG = {
@@ -33,9 +33,19 @@ const PANEL_KONFIG = {
       AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
       AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
       AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktDefinisjon.VURDER_BOSTED,
+      AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
     ],
     id: PROSESS_STEG_KODER.INNGANGSVILKAR,
     label: 'Inngangsvilkår',
+    vilkår: [
+      vilkarType.SØKNADSFRIST,
+      vilkarType.BISTANDSVILKÅR,
+      vilkarType.BOSTEDSVILKÅR,
+      vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      vilkarType.ALDERSVILKÅR,
+    ],
   },
   vedtak: {
     aksjonspunkter: [
@@ -61,10 +71,10 @@ const PANEL_KONFIG = {
     label: 'Medlemskap',
     vilkår: [vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET],
   },
-  sats: {
+  beregnetUtbetaling: {
     aksjonspunkter: [],
-    id: PROSESS_STEG_KODER.SATS,
-    label: 'Sats',
+    id: PROSESS_STEG_KODER.BEREGNET_UTBETALING,
+    label: 'Beregnet utbetaling',
   },
 } as const;
 
@@ -79,7 +89,6 @@ interface ProcessMenuStep {
   usePartialStatus?: boolean;
   erVurdert?: boolean;
   locked?: boolean;
-  urlKode?: string;
 }
 
 /**
@@ -106,9 +115,8 @@ const byggVilkårPanel = (
     type,
     label: panelKonfig.label,
     id: panelKonfig.id,
-    usePartialStatus: sjekkDelvisVilkårStatus(relevanteVilkår),
+    usePartialStatus: type === ProcessMenuStepType.success ? sjekkDelvisVilkårStatus(relevanteVilkår) : false,
     erVurdert: erPanelVurdert(type),
-    urlKode: panelKonfig.id,
   };
 };
 
@@ -121,7 +129,6 @@ const byggPanelUtenVilkår = (
   label: panelKonfig.label,
   id: panelKonfig.id,
   erVurdert: erPanelVurdert(forrigeVurdert ? type : ProcessMenuStepType.default),
-  urlKode: panelKonfig.id,
 });
 
 const beregnVedtakType = (
@@ -154,8 +161,7 @@ const beregnVedtakType = (
   return ProcessMenuStepType.default;
 };
 
-const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[]) => {
-  // Inngangsvilkår har aksjonspunkter definert i panelkonfigurasjonen men har ikke vilkår
+const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]) => {
   const harÅpneAksjonspunkter = aksjonspunkter?.some(
     ap =>
       PANEL_KONFIG.inngangsvilkår.aksjonspunkter.some(vap => vap === ap.definisjon) &&
@@ -165,14 +171,26 @@ const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[]) => {
   if (harÅpneAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
+  const relevanteVilkår = vilkår.filter(v =>
+    PANEL_KONFIG.inngangsvilkår.vilkår.some(vilkårType => vilkårType === v.vilkarType),
+  );
+
+  // Dersom et vilkår bare har en periode og denne er avslått, skal panelet vises som avslag.
+  const harAvslag = relevanteVilkår.some(
+    v => v.perioder?.length === 1 && v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_OPPFYLT),
+  );
+  if (harAvslag) {
+    return ProcessMenuStepType.danger;
+  }
   return ProcessMenuStepType.success;
 };
 
 const byggInngangsvilkårPanel = (
   aksjonspunkter: AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
   innloggetBruker: InnloggetAnsattUngV2Dto,
 ): ProcessMenuStep => {
-  const type = beregnInngangsvilkårType(aksjonspunkter);
+  const type = beregnInngangsvilkårType(aksjonspunkter, vilkår);
   const isLocked =
     type === ProcessMenuStepType.success &&
     !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
@@ -195,9 +213,9 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
 
   return useMemo(() => {
-    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, innloggetBruker);
+    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
     const medlemskapPanel = byggVilkårPanel(
-      inngangsvilkårPanel.erVurdert,
+      inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
       vilkår,
       PANEL_KONFIG.medlemskap,
       aksjonspunkter,
@@ -212,14 +230,12 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
           : ProcessMenuStepType.default
         : ProcessMenuStepType.default,
       usePartialStatus: false,
-      urlKode: prosessStegCodes.BEREGNING,
     };
-    const satsPanel = {
-      id: PANEL_KONFIG.sats.id,
-      label: PANEL_KONFIG.sats.label,
+    const beregnetUtbetalingPanel = {
+      id: PANEL_KONFIG.beregnetUtbetaling.id,
+      label: PANEL_KONFIG.beregnetUtbetaling.label,
       type:
         beregningPanel.type === ProcessMenuStepType.success ? ProcessMenuStepType.success : ProcessMenuStepType.default,
-      urlKode: prosessStegCodes.SATS,
     };
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {
@@ -227,8 +243,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       label: PANEL_KONFIG.vedtak.label,
       type: vedtakType,
       usePartialStatus: false,
-      urlKode: prosessStegCodes.VEDTAK,
     };
-    return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, satsPanel, vedtakPanel];
+    return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, beregnetUtbetalingPanel, vedtakPanel];
   }, [aksjonspunkter, innloggetBruker, vilkår, behandling]);
 };

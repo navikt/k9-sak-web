@@ -1,4 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
@@ -9,10 +10,10 @@ import { Bleed, Box } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
+import { BeregnetUtbetalingStegInitPanel } from './prosess/BeregnetUtbetalingStegInitPanel';
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
-import { SatsProsessStegInitPanel } from './prosess/SatsProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prossesmotor';
 
@@ -34,7 +35,7 @@ export const AktivitetspengerProsess = ({
   setBehandling,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
-  const { pollTilBehandlingErKlar } = usePollBehandlingStatus(api, behandling, setBehandling);
+  const { pollTilBehandlingErKlar, isPolling } = usePollBehandlingStatus(api, behandling, setBehandling);
 
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
@@ -73,6 +74,7 @@ export const AktivitetspengerProsess = ({
 
   return (
     <VedtakFormContext.Provider value={vedtakFormValue}>
+      {isPolling && <DataFetchPendingModal pendingMessage="Venter på behandling..." />}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
         lukkModal={lukkModalOgGåTilSøk}
@@ -87,11 +89,10 @@ export const AktivitetspengerProsess = ({
         <Bleed marginInline="space-20">
           <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
             {prosessteg.map(steg => {
-              const urlKode = steg.urlKode;
-              if (urlKode === prosessStegCodes.VEDTAK) {
+              if (steg.id === prosessStegCodes.VEDTAK) {
                 return (
                   <VedtakProsessStegInitPanel
-                    key={steg.urlKode}
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
                     hentFritekstbrevHtmlCallback={hentFriteksbrevHtml}
@@ -99,38 +100,38 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.BEREGNING) {
-                return (
-                  <BeregningProsessStegInitPanel
-                    key={steg.urlKode}
-                    api={api}
-                    behandling={behandling}
-                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                  />
-                );
+              if (steg.id === prosessStegCodes.BEREGNING) {
+                return <BeregningProsessStegInitPanel key={steg.id} api={api} behandling={behandling} />;
               }
-              if (urlKode === prosessStegCodes.INNGANGSVILKAR) {
+              if (steg.id === prosessStegCodes.INNGANGSVILKAR) {
                 return (
                   <InngangsvilkårInitPanel
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
-                    key={steg.urlKode}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.FORUTGAENDE_MEDLEMSKAP) {
+              if (steg.id === prosessStegCodes.FORUTGAENDE_MEDLEMSKAP) {
                 return (
                   <ForutgåendeMedlemskapInitPanel
+                    key={steg.id}
                     api={api}
                     behandling={behandling}
-                    key={steg.urlKode}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   />
                 );
               }
-              if (urlKode === prosessStegCodes.SATS) {
-                return <SatsProsessStegInitPanel api={api} behandling={behandling} key={steg.urlKode} />;
+              if (steg.id === prosessStegCodes.BEREGNET_UTBETALING) {
+                return (
+                  <BeregnetUtbetalingStegInitPanel
+                    key={steg.id}
+                    api={api}
+                    behandling={behandling}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  />
+                );
               }
 
               return null;

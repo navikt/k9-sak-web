@@ -6,7 +6,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
-import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
+import { VedtakInnvilgetPanel } from './VedtakInnvilgetPanel';
 
 const foreldrepenger = fagsakYtelsesType.FORELDREPENGER;
 const behandlingsresultat = {
@@ -16,7 +16,7 @@ const behandlingsresultat = {
 describe('<VedtakInnvilgetPanel>', () => {
   it('skal rendre innvilget panel for pleiepenger', () => {
     renderWithIntl(
-      <VedtakInnvilgetPanelImpl
+      <VedtakInnvilgetPanel
         intl={intlMock}
         ytelseTypeKode={foreldrepenger}
         behandlingsresultat={behandlingsresultat}

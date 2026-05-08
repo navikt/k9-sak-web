@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
@@ -26,7 +26,8 @@ interface OwnProps {
   readOnly: boolean;
 }
 
-export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
+export const PeriodeController = (props: OwnProps) => {
+  const intl = useIntl();
   const [showDelPeriodeModal, setShowDelPeriodeModal] = useState(false);
   const [finnesBelopMed0Verdi, setFinnesBelopMed0Verdi] = useState(false);
 
@@ -91,7 +92,7 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
     });
   };
 
-  const { intl, callbackForward, callbackBackward, periode, readOnly, behandlingId, behandlingVersjon } = props;
+  const { callbackForward, callbackBackward, periode, readOnly, behandlingId, behandlingVersjon } = props;
 
   return (
     <HGrid gap="space-4" columns={{ xs: '2fr 8fr 2fr' }}>
@@ -149,4 +150,4 @@ export const PeriodeController = (props: OwnProps & WrappedComponentProps) => {
   );
 };
 
-export default injectIntl(PeriodeController);
+export default PeriodeController;

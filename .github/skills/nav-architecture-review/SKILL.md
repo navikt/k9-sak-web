@@ -1,6 +1,10 @@
 ---
 name: nav-architecture-review
 description: Generer Architecture Decision Records (ADR) med flerperspektiv-review tilpasset Nav
+license: MIT
+metadata:
+  domain: general
+  tags: architecture adr review planning
 ---
 
 # Architecture Review — ADR Generator

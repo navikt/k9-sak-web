@@ -22,7 +22,7 @@ import { KodeverkMedUndertype } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { FormattedMessage, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { change, clearFields, getFormValues, InjectedFormProps } from 'redux-form';
@@ -72,7 +72,7 @@ interface DispatchProps {
 }
 
 export const FeilutbetalingInfoPanelImpl = (
-  props: FeilutbetalingInfoPanelProps & MappedOwnProps & InjectedFormProps & WrappedComponentProps & DispatchProps,
+  props: FeilutbetalingInfoPanelProps & MappedOwnProps & InjectedFormProps & DispatchProps,
 ) => {
   const onChangeÅrsak = (event: React.ChangeEvent<HTMLInputElement>, elementId: number, årsak: string) => {
     const {

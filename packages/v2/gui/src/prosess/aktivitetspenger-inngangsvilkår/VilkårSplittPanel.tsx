@@ -1,3 +1,4 @@
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import {
   CalendarIcon,
   CheckmarkCircleFillIcon,
@@ -8,28 +9,35 @@ import {
 } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
-export interface VilkårSplittPanelItem {
+export interface VilkårSplittPanelPeriod {
   id: string;
   status: 'success' | 'warning' | 'error';
   label: string;
-  lovreferanse?: string;
+  periode: {
+    fom: string;
+    tom: string;
+  };
 }
 
 interface VilkårSplittPanelProps {
-  items: VilkårSplittPanelItem[];
+  periods: VilkårSplittPanelPeriod[];
   selectedItemId: string;
   onItemSelect: (id: string) => void;
   detailHeading: string;
-  defaultIsEditable?: boolean;
+  lovreferanse?: string;
+  defaultIsLocked?: boolean;
   readOnly?: boolean;
   children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
+  afterEditButton?: ReactNode;
+  lockedContent?: ReactNode;
+  isPermanentlyReadOnly?: boolean;
 }
 
-const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) => {
+const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
   switch (status) {
     case 'success':
       return <CheckmarkCircleFillIcon fontSize={24} color="var(--ax-bg-success-strong)" />;
@@ -37,22 +45,46 @@ const StatusIcon = ({ status }: { status: VilkårSplittPanelItem['status'] }) =>
       return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
     case 'warning':
       return <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />;
+    default:
+      return null;
+  }
+};
+
+export const getPeriodStatus = (status: Utfall): VilkårSplittPanelPeriod['status'] => {
+  switch (status) {
+    case Utfall.OPPFYLT:
+      return 'success';
+    case Utfall.IKKE_OPPFYLT:
+      return 'error';
+    default:
+      return 'warning';
   }
 };
 
 export const VilkårSplittPanel = ({
-  items,
+  periods,
   selectedItemId,
   onItemSelect,
   detailHeading,
-  defaultIsEditable = false,
+  defaultIsLocked = false,
   readOnly = false,
   children,
+  afterEditButton,
+  lockedContent,
+  lovreferanse,
+  isPermanentlyReadOnly,
 }: VilkårSplittPanelProps) => {
-  const selectedItem = items.find(item => item.id === selectedItemId);
+  const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
-  const [isEditable, setIsEditable] = useState(defaultIsEditable);
-  const effectiveLocked = isEditable || readOnly;
+  const [isFormLocked, setIsFormLocked] = useState(defaultIsLocked);
+
+  useEffect(() => {
+    if (defaultIsLocked) {
+      setIsFormLocked(true);
+    }
+  }, [defaultIsLocked]);
+
+  const effectiveLocked = isFormLocked || readOnly;
 
   return (
     <HGrid columns="400px 1fr" gap="space-32">
@@ -81,22 +113,22 @@ export const VilkårSplittPanel = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {items.map(item => (
+              {periods.map(period => (
                 <Table.Row
-                  key={item.id}
-                  onClick={() => onItemSelect(item.id)}
-                  selected={item.id === selectedItemId}
-                  className={`${styles.selectableRow} ${item.id === selectedItemId ? styles.selectedRow : ''}`}
+                  key={period.id}
+                  onClick={() => onItemSelect(period.id)}
+                  selected={period.id === selectedItemId}
+                  className={`${styles.selectableRow} ${period.id === selectedItemId ? styles.selectedRow : ''}`}
                 >
                   <Table.HeaderCell scope="row" align="center">
                     <HStack align="center" justify="center">
-                      <StatusIcon status={item.status} />
+                      <StatusIcon status={period.status} />
                     </HStack>
                   </Table.HeaderCell>
                   <Table.DataCell>
                     <BodyShort size="small" textColor="subtle">
                       <Link as="span" inlineText>
-                        {item.label}
+                        {period.label}
                       </Link>
                     </BodyShort>
                   </Table.DataCell>
@@ -116,9 +148,9 @@ export const VilkårSplittPanel = ({
           <Heading size="small" level="2" spacing>
             {detailHeading}
           </Heading>
-          {selectedItem?.lovreferanse && (
+          {lovreferanse && (
             <BodyShort size="small" textColor="subtle">
-              <Lovreferanse isUng>{selectedItem.lovreferanse}</Lovreferanse>
+              <Lovreferanse isUng>{lovreferanse}</Lovreferanse>
             </BodyShort>
           )}
         </HStack>
@@ -131,29 +163,33 @@ export const VilkårSplittPanel = ({
               </BodyShort>
             </HStack>
           )}
-          <Box borderWidth="1 0 0 0" />
+          <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
           {isRenderProp ? (
-            <Box
-              borderRadius="8"
-              padding={effectiveLocked ? 'space-16' : 'space-0'}
-              background={effectiveLocked ? 'info-softA' : undefined}
-            >
-              <VStack gap={effectiveLocked ? 'space-20' : 'space-0'}>
-                {children(effectiveLocked, setIsEditable)}
-                <Bleed marginInline="space-8">
-                  {isEditable && !readOnly && (
-                    <Button
-                      size="small"
-                      variant="tertiary"
-                      icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
-                      onClick={() => setIsEditable(false)}
-                    >
-                      Rediger vurdering
-                    </Button>
+            <>
+              <Box
+                borderRadius="8"
+                padding={effectiveLocked ? 'space-16' : 'space-0'}
+                background={effectiveLocked ? 'info-softA' : undefined}
+              >
+                <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-12' : 'space-0'}>
+                  {children(effectiveLocked, setIsFormLocked)}
+                  {isFormLocked && lockedContent}
+                  {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
+                    <Bleed marginInline="space-8">
+                      <Button
+                        size="small"
+                        variant="tertiary"
+                        icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
+                        onClick={() => setIsFormLocked(false)}
+                      >
+                        Rediger vurdering
+                      </Button>
+                    </Bleed>
                   )}
-                </Bleed>
-              </VStack>
-            </Box>
+                </VStack>
+              </Box>
+              {isFormLocked && afterEditButton}
+            </>
           ) : (
             children
           )}
