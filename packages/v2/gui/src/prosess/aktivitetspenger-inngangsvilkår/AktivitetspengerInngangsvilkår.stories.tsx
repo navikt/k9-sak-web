@@ -112,7 +112,7 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
 
 export const MedÅpentBostedVilkår: Story = {
   args: {
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
     vilkår: [fakeBostedVilkår],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
@@ -123,7 +123,7 @@ export const MedÅpentBostedVilkår: Story = {
 
 export const MedUtførtBostedVilkår: Story = {
   args: {
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT)],
     vilkår: [{ ...fakeBostedVilkår, perioder: [{ ...fakeBostedVilkårPeriode, vilkarStatus: Utfall.OPPFYLT }] }],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
