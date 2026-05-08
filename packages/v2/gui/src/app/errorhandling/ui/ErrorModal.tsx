@@ -1,54 +1,44 @@
-import { BodyLong, Dialog, LocalAlert, VStack } from '@navikt/ds-react';
-import { resolveErrorUiData } from './resolveErrorUiData.js';
-import { ErrorContentBox, ErrorHandlingWizard, retryAction } from './ErrorHandlingWizard.js';
+import { Dialog, LocalAlert } from '@navikt/ds-react';
+import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
+import type { ComponentProps, ReactNode } from 'react';
+import { resolveMissingErrorViewProps } from './resolveErrorViewProps.js';
 
-export interface ErrorModalProps {
-  readonly error: Error | undefined;
+export type ErrorModalProps = Readonly<{
+  title?: string;
+  children?: ReactNode;
+  error?: Error;
+  fixAction?: ComponentProps<typeof ErrorHandlingWizard>['fixAction'];
   onClose(): void;
-  onTryAgain?: () => void;
-}
+}>;
 
-export const ErrorModal = ({ error, onClose, onTryAgain }: ErrorModalProps) => {
-  const retryTxt = onTryAgain ? 'prøve på nytt' : 'laste inn på nytt';
-  const fixAction = onTryAgain ? retryAction(onTryAgain) : undefined;
-  const { additionalInfo } = resolveErrorUiData(error);
+const ErrorDialogContent = (
+  { error, children, onClose, ...rest }: ErrorModalProps & { error: Error } /* error er alltid satt her */,
+) => {
+  const { title, errorInfo, fixAction } = resolveMissingErrorViewProps({ errorInfo: children, ...rest }, error);
+  // Vurder å legge inn noko slikt: const fixAction = {...fa, info: <>{fa.info}<BodyLong>Hvis du har fylt ut viktig, ulagret informasjon i skjermbildet kan du lukke denne dialog og ta vare på informasjonen først.</BodyLong></>}
+  return (
+    <LocalAlert status="error">
+      <LocalAlert.Header>
+        <LocalAlert.Title>{title}</LocalAlert.Title>
+        <LocalAlert.CloseButton onClick={onClose} />
+      </LocalAlert.Header>
+      <LocalAlert.Content>
+        <ErrorHandlingWizard reportErrors={[error]} fixAction={fixAction}>
+          <ErrorHandlingWizard.ErrorBox>{errorInfo}</ErrorHandlingWizard.ErrorBox>
+        </ErrorHandlingWizard>
+      </LocalAlert.Content>
+    </LocalAlert>
+  );
+};
+
+export const ErrorModal = ({ error, onClose, children, ...rest }: ErrorModalProps) => {
   return (
     <Dialog open={error != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
       <Dialog.Popup closeOnOutsideClick={false} role="alertdialog" width="large">
         {error != null ? (
-          <LocalAlert status="error">
-            <LocalAlert.Header>
-              <LocalAlert.Title>Uventet feil</LocalAlert.Title>
-              <LocalAlert.CloseButton onClick={onClose} />
-            </LocalAlert.Header>
-            <LocalAlert.Content>
-              <ErrorHandlingWizard errors={[error]} fixAction={fixAction} withoutDefaultInfo>
-                <ErrorContentBox>
-                  <div>{error.message}</div>
-                  {/* additionalInfo er noko som kan komme frå legacy kode. Litt uvisst kva innhaldet kan vere. Implementert tilsvarande som utlisting i legacy ErrorMessageDetailsModal */}
-                  {additionalInfo != null ? (
-                    <VStack gap="space-4">
-                      {Object.entries(additionalInfo).map(([key, val]) => {
-                        return (
-                          <BodyLong key={key} size="small">
-                            <i>{key}</i>: {typeof val == 'string' ? val : String(val)}
-                          </BodyLong>
-                        );
-                      })}
-                    </VStack>
-                  ) : null}
-                </ErrorContentBox>
-                <BodyLong>
-                  Skjermbildet kan mangle/vise feil informasjon. For å sikre korrekt visning bør du {retryTxt}.{' '}
-                </BodyLong>
-                <BodyLong>
-                  <b>NB:</b> Hvis du har utfylt skjemainformasjon som ikke er lagret, lukk denne dialog og ta vare på
-                  skjemainformasjon først.
-                </BodyLong>
-                <BodyLong> Rapporter feil i porten hvis den vedvarer.</BodyLong>
-              </ErrorHandlingWizard>
-            </LocalAlert.Content>
-          </LocalAlert>
+          <ErrorDialogContent error={error} onClose={onClose} {...rest}>
+            {children}
+          </ErrorDialogContent>
         ) : null}
       </Dialog.Popup>
     </Dialog>

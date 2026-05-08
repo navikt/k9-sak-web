@@ -6,8 +6,10 @@ import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiE
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { ErrorModal } from './ErrorModal.js';
+import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { SentryReportedError } from '../SentryReportedError.js';
+import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
 
 const withAppScaffolding = (): Decorator => Story => {
   return (
@@ -34,7 +36,6 @@ const meta = {
   decorators: [withAppScaffolding()],
   args: {
     onClose: action('onClose'),
-    onTryAgain: action('onTryAgain'),
   },
 } satisfies Meta<typeof ErrorModal>;
 
@@ -62,6 +63,7 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 export const ShowError: Story = {
   args: {
     error: new Error('Test error 1'),
+    fixAction: retryAction(action('retryAction')),
   },
 };
 
@@ -92,5 +94,26 @@ export const ShowApiError: Story = {
 export const ShowSentryReportedError: Story = {
   args: {
     error: new SentryReportedError(new FrontendError('Feil rapportert til sentry'), 'sentry-002'),
+  },
+};
+
+export const BadRequest: Story = {
+  args: {
+    error: makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
+  },
+};
+export const Unauthorized: Story = {
+  args: {
+    error: makeFakeExtendedApiError({ status: 401 }),
+  },
+};
+export const Forbidden: Story = {
+  args: {
+    error: makeFakeExtendedApiError({ status: 403 }),
+  },
+};
+export const NotFound: Story = {
+  args: {
+    error: makeFakeExtendedApiError({ status: 404 }),
   },
 };

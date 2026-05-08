@@ -1,5 +1,11 @@
 import { BodyLong, Box, Button, HStack, VStack } from '@navikt/ds-react';
-import { ArrowLeftIcon, ArrowRightIcon, ArrowsCirclepathIcon, ArrowCirclepathIcon } from '@navikt/aksel-icons';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowsCirclepathIcon,
+  ArrowCirclepathIcon,
+  ArrowCirclepathReverseIcon,
+} from '@navikt/aksel-icons';
 import { ErrorInfoCopy } from './ErrorInfoCopy.js';
 import { type ReactNode, useEffect, useState } from 'react';
 
@@ -11,59 +17,71 @@ const btnProps = {
 } as const;
 
 // Genererer fixAction verdi for standard Prøv på nytt knapp i ErrorHandlingWizard
-export const retryAction = (callback: () => void) => {
-  return { label: 'Prøv på nytt', icon: <ArrowsCirclepathIcon />, callback };
+export const retryAction = (callback: () => void): ErrorHandlingWizardFixAction => {
+  return {
+    label: 'Prøv på nytt',
+    icon: <ArrowsCirclepathIcon />,
+    info: <BodyLong>Prøv på nytt for å få feilfri visning. Rapporter feil i porten hvis den vedvarer.</BodyLong>,
+    callback,
+  };
 };
 
-export const reloadAction = {
+export const reloadAction: ErrorHandlingWizardFixAction = {
   label: 'Last på nytt',
   icon: <ArrowCirclepathIcon />,
+  info: <BodyLong>Last på nytt for å få feilfri visning. Rapporter feil i porten hvis den vedvarer.</BodyLong>,
   callback: () => window.location.reload(),
 };
 
+export const restartAction: ErrorHandlingWizardFixAction = {
+  label: 'Start på nytt',
+  icon: <ArrowCirclepathReverseIcon />,
+  info: 'Prøv å starte på nytt fra startsiden. Rapporter feil hvis det ikke hjelper.',
+  href: '/',
+};
+
+export type ErrorHandlingWizardFixAction = Readonly<
+  {
+    // Tekst på "fikseknapp" i wizard
+    label: string;
+    // Ikon på "fikseknapp" i wizard
+    icon: ReactNode;
+    // Tekst til bruker, om kva som kan gjerast for å fikse problem, evt rapportere det. Ikkje putt avansert markup her.
+    info: ReactNode;
+  } & (
+    | {
+        callback: () => void; // Onclick på "fikseknapp" kaller denne
+        href?: never;
+      }
+    | {
+        callback?: never;
+        href: string; // Klikk på "fikseknapp" (link) navigerer til denne.
+      }
+  )
+>;
+
 export type ErrorHandlingWizardProps = Readonly<{
   children: ReactNode;
-  errors: ReadonlyArray<Error>;
-  // Spesifiserer tekst, ikon og handling for "fikseknappen" i wizard. Vanlegvis "prøv på nytt". Standardverdi viss ikkje spesifisert er "Last på nytt" med full reload av sida.
-  fixAction?: Readonly<
-    {
-      label: string;
-      icon: ReactNode;
-    } & (
-      | {
-          callback: () => void;
-          href?: never;
-        }
-      | {
-          callback?: never;
-          href: string;
-        }
-    )
-  >;
-
-  // Fjerner standard info tekst om prøv på nytt og rapporter, i tilfelle dette er inkludert i eigendefinert tekst i children.
-  withoutDefaultInfo?: boolean;
+  // Feil som blir med i kopiert rapporteringsinfo
+  reportErrors: ReadonlyArray<Error>;
+  // Spesifiserer tekst, ikon og handling for "fikseknappen" i wizard og tilhøyrande veiledning. Vanlegvis "prøv på nytt". Standardverdi viss ikkje spesifisert er "Last på nytt" med full reload av sida.
+  fixAction?: ErrorHandlingWizardFixAction;
 }>;
 
-export const ErrorContentBox = ({ children }: { children: ReactNode }) => (
+const ErrorContentBox = ({ children }: { children: ReactNode }) => (
   <Box paddingBlock="space-0 space-8" borderColor="neutral-subtleA" borderWidth="0 0 4">
     {children}
   </Box>
 );
 
-export const ErrorHandlingWizard = ({
-  children,
-  errors,
-  fixAction = reloadAction,
-  withoutDefaultInfo,
-}: ErrorHandlingWizardProps) => {
+export const ErrorHandlingWizard = ({ children, reportErrors, fixAction = reloadAction }: ErrorHandlingWizardProps) => {
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
-  const { label: fixLabel, icon: fixIcon, callback: fixCallback, href: fixHref } = fixAction;
+  const { label: fixLabel, icon: fixIcon, info: fixInfo, callback: fixCallback, href: fixHref } = fixAction;
 
   // Tilbakestill visningstilstand når antal feil endrar seg
   useEffect(() => {
     setDisplay('error');
-  }, [errors.length]);
+  }, [reportErrors.length]);
 
   const fixButton =
     fixCallback != null ? (
@@ -89,7 +107,7 @@ export const ErrorHandlingWizard = ({
             <Button {...btnProps} onClick={() => setDisplay('error')} icon={<ArrowLeftIcon />} iconPosition="left">
               Tilbake
             </Button>
-            <ErrorInfoCopy {...btnProps} errors={errors} onCopied={() => setDisplay('copied')} />
+            <ErrorInfoCopy {...btnProps} errors={reportErrors} onCopied={() => setDisplay('copied')} />
           </HStack>
         </>
       ) : display == 'copied' ? (
@@ -105,9 +123,7 @@ export const ErrorHandlingWizard = ({
       ) : (
         <>
           {children}
-          {withoutDefaultInfo ? null : (
-            <div>{fixLabel} for å få feilfri visning. Rapporter feil i porten hvis den vedvarer.</div>
-          )}
+          {fixInfo}
           <HStack gap="space-4">
             {fixButton}
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowRightIcon />} iconPosition="right">
@@ -119,3 +135,5 @@ export const ErrorHandlingWizard = ({
     </VStack>
   );
 };
+
+ErrorHandlingWizard.ErrorBox = ErrorContentBox;
