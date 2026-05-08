@@ -1,36 +1,92 @@
-import { BodyLong, Box, Button, Heading, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Box, Button, Heading, Label, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
+
+interface AgRettFraDagEnOpplysning {
+  journalpostId: string;
+  arbeidsgiverNavn: string;
+  foersteFravaersdag: string;
+}
+
+interface TiDagerVurderingFormData {
+  journalpostId: string;
+  harRettFraDagEn?: 'ja' | 'nei';
+}
 
 interface TiDagerFormData {
-  harRettFraDag1: 'ja' | 'nei';
+  vurderinger: TiDagerVurderingFormData[];
   begrunnelse: string;
 }
 
 interface TiDagerSubmitModel {
   kode: string;
-  avklarAgRettFraDag1: boolean;
   begrunnelse: string;
+  vurderinger: Array<{
+    journalpostId: string;
+    avklarAgRettFraDagEn: boolean;
+  }>;
 }
 
 interface TiDagerProsessIndexProps {
   submitCallback: (data: TiDagerSubmitModel[]) => Promise<void>;
   aksjonspunkter: { definisjon: { kode: string } }[];
   isReadOnly: boolean;
+  behandlingUUID: string;
 }
 
-export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly }: TiDagerProsessIndexProps) => {
-  const formMethods = useForm<TiDagerFormData>();
-  const { control } = formMethods;
+export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID }: TiDagerProsessIndexProps) => {
+  const {
+    data: opplysninger,
+    isFetching,
+    isError,
+  } = useQuery<AgRettFraDagEnOpplysning[]>({
+    queryKey: ['agRettFraDagEn', behandlingUUID],
+    queryFn: () =>
+      axios
+        .get(
+          '/k9/sak/api/behandling/ag-rett-fra-dag-en',
+          addLegacySerializerOption({ params: { behandlingUuid: behandlingUUID } }),
+        )
+        .then(({ data }) => data),
+  });
+
+  const defaultVurderinger = (opplysninger ?? []).map(o => ({
+    journalpostId: o.journalpostId,
+    harRettFraDagEn: undefined,
+  }));
+
+  const formMethods = useForm<TiDagerFormData>({
+    defaultValues: { vurderinger: defaultVurderinger, begrunnelse: '' },
+  });
+
+  const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
 
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = aksjonspunkter.map(ap => ({
       kode: ap.definisjon.kode,
-      avklarAgRettFraDag1: data.harRettFraDag1 === 'ja',
       begrunnelse: data.begrunnelse,
+      vurderinger: data.vurderinger.map(v => ({
+        journalpostId: v.journalpostId,
+        avklarAgRettFraDagEn: v.harRettFraDagEn === 'ja',
+      })),
     }));
     await submitCallback(payload);
   };
+
+  if (isFetching) {
+    return <Loader title="Laster opplysninger om rett fra dag én" />;
+  }
+
+  if (isError) {
+    return (
+      <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+        <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
+      </Box>
+    );
+  }
 
   return (
     <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
@@ -57,27 +113,44 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
       <Box marginBlock="space-8">
         <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
           <VStack gap="space-16">
-            <Controller
-              control={control}
-              name="harRettFraDag1"
-              rules={{ required: true }}
-              render={({ field, fieldState }) => (
-                <RadioGroup
-                  legend="Fremkommer det av inntektsmelding at 10 dager er benyttet?"
-                  onChange={field.onChange}
-                  value={field.value ?? ''}
-                  error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  size="small"
-                  readOnly={isReadOnly}
-                >
-                  <Radio value="ja">Ja</Radio>
-                  <Radio value="nei">Nei</Radio>
-                </RadioGroup>
-              )}
-            />
+            {fields.map((field, index) => {
+              const opplysning = opplysninger?.find(o => o.journalpostId === field.journalpostId);
+              return (
+                <Box key={field.id} borderWidth="1" borderRadius="8" padding="space-12">
+                  <VStack gap="space-8">
+                    <VStack gap="space-4">
+                      <Label size="small">Arbeidsgiver</Label>
+                      <BodyShort size="small">{opplysning?.arbeidsgiverNavn ?? field.journalpostId}</BodyShort>
+                    </VStack>
+                    <VStack gap="space-4">
+                      <Label size="small">Første fraværsdag</Label>
+                      <BodyShort size="small">{opplysning?.foersteFravaersdag ?? '–'}</BodyShort>
+                    </VStack>
+                    <Controller
+                      control={formMethods.control}
+                      name={`vurderinger.${index}.harRettFraDagEn`}
+                      rules={{ required: true }}
+                      render={({ field: radioField, fieldState }) => (
+                        <RadioGroup
+                          legend="Fremkommer det av inntektsmelding at 10 dager er benyttet?"
+                          onChange={radioField.onChange}
+                          value={radioField.value ?? ''}
+                          error={fieldState.error ? 'Feltet er påkrevd' : undefined}
+                          size="small"
+                          readOnly={isReadOnly}
+                        >
+                          <Radio value="ja">Ja</Radio>
+                          <Radio value="nei">Nei</Radio>
+                        </RadioGroup>
+                      )}
+                    />
+                  </VStack>
+                </Box>
+              );
+            })}
 
             <Controller
-              control={control}
+              control={formMethods.control}
               name="begrunnelse"
               rules={{ required: true }}
               render={({ field, fieldState }) => (
