@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import { useState } from 'react';
 import { Button, VStack } from '@navikt/ds-react';
-import { ErrorBoundary } from '../feilmeldinger/ErrorBoundary.js';
+import { ErrorBoundary } from '../boundary/ErrorBoundary.js';
 import { LocalAlertError } from './LocalAlertError.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';

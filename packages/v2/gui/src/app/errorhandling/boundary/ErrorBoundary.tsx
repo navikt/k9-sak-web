@@ -1,9 +1,9 @@
 import { Component, type ReactNode, type ErrorInfo, type FC } from 'react';
 import { captureException, withScope } from '@sentry/browser';
-import ErrorPage from './ErrorPage.js';
+import ErrorPage from '../feilmeldinger/ErrorPage.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import UnauthorizedPage from '../pages/UnauthorizedPage.js';
-import ForbiddenPage from './ForbiddenPage.js';
+import ForbiddenPage from '../feilmeldinger/ForbiddenPage.js';
 import NotFoundPage from '../pages/NotFoundPage.js';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';

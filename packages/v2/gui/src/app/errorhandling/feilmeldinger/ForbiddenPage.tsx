@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 
 import { BigError } from './BigError.js';
-import ErrorBoundary from './ErrorBoundary.js';
+import ErrorBoundary from '../boundary/ErrorBoundary.js';
 
 /**
  * ForbiddenPage

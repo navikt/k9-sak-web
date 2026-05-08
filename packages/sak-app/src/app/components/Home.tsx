@@ -9,7 +9,7 @@ import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 
 import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 
 interface OwnProps {
   headerHeight: number;

@@ -1,4 +1,4 @@
-import ErrorBoundary from '../errorhandling/feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from '../errorhandling/boundary/ErrorBoundary.js';
 import { Theme } from '@navikt/ds-react';
 import { Outlet } from 'react-router';
 import { RootSuspense } from './suspense/RootSuspense.js';

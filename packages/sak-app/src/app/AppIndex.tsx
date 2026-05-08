@@ -7,7 +7,7 @@ import UnauthorizedPage, { k9LoginResourcePath } from '@k9-sak-web/gui/app/error
 import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import AppConfigResolver from './AppConfigResolver';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';

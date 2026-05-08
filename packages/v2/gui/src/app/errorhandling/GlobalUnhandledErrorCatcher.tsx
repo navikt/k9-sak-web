@@ -1,7 +1,7 @@
 import { createContext, type FC, type ReactNode, useEffect, useState, use, useCallback } from 'react';
 import { ensureError } from './ensureError.js';
 import { BigError, DefaultErrorMsg } from './feilmeldinger/BigError.js';
-import ErrorBoundary from './feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { FrontendError } from './FrontendError.js';
 
 interface GlobalUnhandledErrors {
