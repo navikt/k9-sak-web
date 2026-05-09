@@ -1,7 +1,7 @@
 import { Component, type ErrorInfo, type FC, type ReactNode } from 'react';
 import { captureException, withScope } from '@sentry/browser';
 import { ensureError } from '../ensureError.js';
-import { sentryReportedErrorIdLookup, shouldReportToSentry } from '../sentry.js';
+import { shouldReportToSentry } from '../sentry.js';
 import { isAlertInfo } from '../AlertInfo.js';
 import { DefaultErrorView } from './DefaultErrorView.js';
 import { CrashErrorView } from './CrashErrorView.js';
@@ -67,8 +67,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
           if (isAlertInfo(error)) {
             scope.setTag('errorId', error.errorId);
           }
-          const sentryId = captureException(error);
-          sentryReportedErrorIdLookup.set(error, sentryId); // Slik at vi kan slå opp igjen sentryId i ErrorInfoCopy etc
+          captureException(error);
         });
       }
       if (errorCallback != null) {

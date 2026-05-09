@@ -1,10 +1,12 @@
 import { isAlertInfo } from '../AlertInfo.js';
-import { sentryReportedErrorIdLookup } from '../sentry.js';
+import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AxiosError } from 'axios';
 
 export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
   const errLines: string[] = [];
+  const allSentryIds = `==== Rapportert Sentry: (${sentryReportedIdList.join(', ')}) ====`;
+  errLines.push(allSentryIds);
   for (const error of errors) {
     const errorId = isAlertInfo(error) ? error.errorId : '';
     const sentryId = `sentry:${sentryReportedErrorIdLookup.get(error)}`;

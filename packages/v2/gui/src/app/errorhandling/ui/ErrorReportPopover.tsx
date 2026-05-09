@@ -7,6 +7,8 @@ type ErrorReportPopoverProps = Readonly<{
 }> &
   ButtonProps;
 
+// NB: Sidan makeErrorReportText leser global sentryReportedIdList array, bør ikkje denne komponent rendrast før ein
+// veit at alle feil har blitt rapportert gjennom sentry.
 export const ErrorReportPopover: FC<ErrorReportPopoverProps> = ({ errors, children, ...btnProps }) => {
   const [showReportBtn, setShowReportBtn] = useState<HTMLElement | null>(null);
   const [reportShowing, setReportShowing] = useState(false);

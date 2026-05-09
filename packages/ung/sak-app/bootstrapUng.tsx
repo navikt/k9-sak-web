@@ -31,7 +31,7 @@ import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOther
 import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { sentryReportedErrorIdLookup } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
+import { sentryReportedErrorIdLookup, sentryReportedIdList } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
 
 const environment = window.location.hostname;
 
@@ -76,8 +76,14 @@ init({
         event.tags['errorId'] = `${exception.errorId}`;
       }
       // Slik at feilrapportering gui kan hente ut sentryId
-      if (event.event_id != null && hint.originalException instanceof Error) {
-        sentryReportedErrorIdLookup.set(hint.originalException, event.event_id);
+      if (event.event_id != null) {
+        sentryReportedIdList.push(event.event_id);
+        if (sentryReportedIdList.length > 50) {
+          sentryReportedIdList.shift(); // Veldig usansynleg, men unngå for stor array
+        }
+        if (hint.originalException instanceof Error) {
+          sentryReportedErrorIdLookup.set(hint.originalException, event.event_id);
+        }
       }
     } catch (e) {
       try {
