@@ -8,7 +8,6 @@ import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentat
 import { ErrorModal } from './ErrorModal.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
-import { SentryReportedError } from '../SentryReportedError.js';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
 import { createErrorAndId } from '../AlertInfo.js';
 
@@ -93,14 +92,6 @@ export const ShowFrontendError: Story = {
 export const ShowApiError: Story = {
   args: {
     errorAndId: createErrorAndId(fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)')),
-  },
-};
-
-export const ShowSentryReportedError: Story = {
-  args: {
-    errorAndId: createErrorAndId(
-      new SentryReportedError(new FrontendError('Feil rapportert til sentry'), 'sentry-002'),
-    ),
   },
 };
 

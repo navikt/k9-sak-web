@@ -31,7 +31,6 @@ import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOther
 import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { SentryReportedError } from '@k9-sak-web/gui/app/errorhandling/SentryReportedError.js';
 import { sentryReportedErrorIdLookup } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
 
 const environment = window.location.hostname;
@@ -57,9 +56,6 @@ init({
     try {
       event.extra = event.extra || {};
       const exception = hint.originalException;
-      if (exception instanceof SentryReportedError) {
-        return null; // Feil allereie rapportert, returnerer null her for å unngå dobbeltrapportering
-      }
       if (exception instanceof AxiosError) {
         const requestUrl = new URL(exception.request.responseURL);
         event.fingerprint = [

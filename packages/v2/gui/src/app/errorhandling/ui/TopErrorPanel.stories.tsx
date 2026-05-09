@@ -6,7 +6,6 @@ import { AdditionalInfoError } from '../AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
-import { SentryReportedError } from '../SentryReportedError.js';
 import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
 import { createErrorAndId } from '../AlertInfo.js';
 
@@ -43,12 +42,6 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 export const OneError: Story = {
   args: {
     errorAndIds: [createErrorAndId(new FrontendError('Test error 1'))],
-  },
-};
-
-export const SentryReported: Story = {
-  args: {
-    errorAndIds: [createErrorAndId(new SentryReportedError(new FrontendError('Test error 1'), 'sentryId-1'))],
   },
 };
 
