@@ -2,10 +2,9 @@ import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } 
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
-import { ExtendedAxiosError } from '../../app/errorhandling/ExtendedAxiosError.js';
 import { FrontendError } from '../../app/errorhandling/FrontendError.js';
 
 interface VurderNyoppstartetIndexProps {
@@ -56,8 +55,8 @@ export const VurderNyoppstartetIndex = ({
     return <Loader />;
   }
   if (isError) {
-    if (error instanceof AxiosError) {
-      throw new ExtendedAxiosError(error);
+    if (error instanceof Error) {
+      throw error;
     } else {
       throw new FrontendError('serverforespørsel feila, men ikke med forventet AxiosError', error);
     }

@@ -6,7 +6,7 @@ import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/Exten
 import { resolveApiErrorViewProps } from './resolveApiErrorViewProps.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
 import { EnterIcon } from '@navikt/aksel-icons';
-import { ExtendedAxiosError } from '../ExtendedAxiosError.js';
+import { AxiosError } from 'axios';
 
 export type ErrorViewProps = Readonly<{
   title: string;
@@ -56,7 +56,7 @@ const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
   };
 };
 
-const extendedAxiosErrorViewProps = (error: ExtendedAxiosError): Omit<ErrorViewProps, 'fixAction'> => {
+const axiosErrorViewProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction'> => {
   const title = 'Feil ved henting/sending av data';
   const errorInfo = (
     <BodyLong>
@@ -85,8 +85,8 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
     }
   }
 
-  if (error instanceof ExtendedAxiosError) {
-    ({ title, errorInfo } = extendedAxiosErrorViewProps(error));
+  if (error instanceof AxiosError) {
+    ({ title, errorInfo } = axiosErrorViewProps(error));
   }
 
   if (error instanceof AdditionalInfoError && error.additionalInfo != null) {

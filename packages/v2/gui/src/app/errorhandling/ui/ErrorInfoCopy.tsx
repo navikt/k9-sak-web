@@ -3,8 +3,8 @@ import { Button } from '@navikt/ds-react';
 import { type ComponentProps, useCallback } from 'react';
 import { FilesIcon } from '@navikt/aksel-icons';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import { ExtendedAxiosError } from '../ExtendedAxiosError.js';
 import { sentryReportedErrorIdLookup } from '../sentry.js';
+import { AxiosError } from 'axios';
 
 const prepareCopyText = (errorAndIds: ReadonlyArray<ErrorAndId>): string => {
   const errLines: string[] = [];
@@ -15,7 +15,7 @@ const prepareCopyText = (errorAndIds: ReadonlyArray<ErrorAndId>): string => {
     if (error instanceof ExtendedApiError) {
       errLines.push(`NavCallid:${error.navCallid}`);
     }
-    if (error instanceof ExtendedAxiosError) {
+    if (error instanceof AxiosError) {
       const callId = error.config?.headers.get('Nav-Callid');
       if (typeof callId === 'string') {
         errLines.push(`NavCallid:${callId}`);

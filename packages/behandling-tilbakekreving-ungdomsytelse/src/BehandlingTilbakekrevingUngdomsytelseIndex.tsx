@@ -11,8 +11,6 @@ import {
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
-import { AxiosError } from 'axios';
-import { ExtendedAxiosError } from '@k9-sak-web/gui/app/errorhandling/ExtendedAxiosError.js';
 import { FrontendError } from '@k9-sak-web/gui/app/errorhandling/FrontendError.js';
 
 const tilbakekrevingData = [
@@ -138,8 +136,8 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   }
 
   if (state === RestApiState.ERROR) {
-    if (error instanceof AxiosError) {
-      throw new ExtendedAxiosError(error);
+    if (error instanceof Error) {
+      throw error;
     } else {
       throw new FrontendError('RestApi error', error);
     }
