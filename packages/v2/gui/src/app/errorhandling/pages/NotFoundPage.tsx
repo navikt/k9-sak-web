@@ -1,4 +1,4 @@
-import { BigError } from '../feilmeldinger/BigError.js';
+import { BigError } from './BigError.js';
 import { Link } from 'react-router';
 
 /**
