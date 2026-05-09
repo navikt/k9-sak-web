@@ -18,14 +18,3 @@ export type ErrorWithAlertInfo = Error & AlertInfo;
 export const isErrorWithAlertInfo = (v: unknown): v is ErrorWithAlertInfo => v instanceof Error && isAlertInfo(v);
 
 export const makeErrorId = (): number => Math.floor(Math.random() * 1000000000);
-
-export type ErrorAndId<T extends Error = Error> = Readonly<{
-  error: T;
-  errorId: number;
-}>;
-
-// TODO rename to something that doesnot look like it creates a new error
-export const createErrorAndId = <T extends Error>(error: T): ErrorAndId<T> => {
-  const errorId = isAlertInfo(error) ? error.errorId : makeErrorId();
-  return { error, errorId };
-};

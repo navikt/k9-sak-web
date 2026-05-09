@@ -2,19 +2,18 @@ import { createContext, type FC, type ReactNode, useEffect, useState, use, useCa
 import { ensureError } from './ensureError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { FrontendError } from './FrontendError.js';
-import { createErrorAndId, type ErrorAndId } from './AlertInfo.js';
 
 interface GlobalUnhandledErrors {
-  readonly globalErrors: ReadonlyArray<ErrorAndId>;
+  readonly globalErrors: ReadonlyArray<Error>;
   clearGlobalErrors(): void;
-  addGlobalError(errorAndId: ErrorAndId): void;
+  addGlobalError(error: Error): void;
 }
 
 const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
-  addGlobalError(errorAndId: ErrorAndId) {
-    throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', errorAndId.error);
+  addGlobalError(error: Error) {
+    throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
   },
 };
 
@@ -39,18 +38,18 @@ export interface GlobalUnhandledErrorCatcherProps {
  * </p>
  */
 export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> = ({ children, maxErrorCount = 50 }) => {
-  const [globalErrors, setGlobalErrors] = useState<ErrorAndId[]>([]);
+  const [globalErrors, setGlobalErrors] = useState<Error[]>([]);
   const clearGlobalErrors = () => setGlobalErrors([]);
   const addGlobalError = useCallback(
-    (errorAndId: ErrorAndId) => {
-      setGlobalErrors(prevErrors => [...prevErrors, errorAndId]);
+    (error: Error) => {
+      setGlobalErrors(prevErrors => [...prevErrors, error]);
     },
     [setGlobalErrors],
   );
   useEffect(() => {
     const errorListener = (ev: ErrorEvent) => {
       const error = ensureError(ev.error);
-      addGlobalError(createErrorAndId(error));
+      addGlobalError(error);
     };
     addEventListener('error', errorListener);
     return () => {
@@ -60,7 +59,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   useEffect(() => {
     const promiseRejectionListener = (ev: PromiseRejectionEvent) => {
       const error = ensureError(ev.reason);
-      addGlobalError(createErrorAndId(error));
+      addGlobalError(error);
     };
     addEventListener('unhandledrejection', promiseRejectionListener);
     return () => {
@@ -69,10 +68,10 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   }, [addGlobalError]);
 
   if (globalErrors.length > maxErrorCount) {
-    const lastErrorAndId = globalErrors.at(-1);
+    const lastError = globalErrors.at(-1);
     throw new FrontendError(
       'For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.',
-      lastErrorAndId?.error,
+      lastError,
     );
   }
 

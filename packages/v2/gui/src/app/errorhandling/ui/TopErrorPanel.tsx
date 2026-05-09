@@ -1,7 +1,7 @@
 import { BodyLong, Button, GlobalAlert, Link, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
-import { type ErrorAndId } from '../AlertInfo.js';
+import { isAlertInfo } from '../AlertInfo.js';
 
 import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
@@ -10,24 +10,21 @@ import { ErrorModal } from './ErrorModal.js';
 import { AdditionalInfoError } from '../AdditionalInfoError.js';
 
 interface TopErrorPanelUIProps {
-  readonly errorAndIds: ReadonlyArray<ErrorAndId>;
+  readonly errors: ReadonlyArray<Error>;
 }
 
-const isAdditionalInfoErrorAndId = (errorAndId: ErrorAndId): errorAndId is ErrorAndId<AdditionalInfoError> =>
-  errorAndId.error instanceof AdditionalInfoError;
+const isAdditionalInfoError = (error: Error): error is AdditionalInfoError => error instanceof AdditionalInfoError;
 
 /** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
-export const TopErrorPanelUI = ({ errorAndIds }: TopErrorPanelUIProps) => {
+export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
   const [hidden, setHidden] = useState(false);
-  const [displayAdditionalInfoError, setDisplayAdditionalInfoError] = useState<
-    ErrorAndId<AdditionalInfoError> | undefined
-  >();
+  const [displayAdditionalInfoError, setDisplayAdditionalInfoError] = useState<AdditionalInfoError | undefined>();
 
-  if (errorAndIds.length > 0) {
-    const headerTxt = errorAndIds.length > 1 ? `${errorAndIds.length} Uventede feil` : `Uventet feil`;
+  if (errors.length > 0) {
+    const headerTxt = errors.length > 1 ? `${errors.length} Uventede feil` : `Uventet feil`;
     return (
       <>
-        <ErrorModal errorAndId={displayAdditionalInfoError} onClose={() => setDisplayAdditionalInfoError(undefined)} />
+        <ErrorModal error={displayAdditionalInfoError} onClose={() => setDisplayAdditionalInfoError(undefined)} />
         <GlobalAlert status="error" centered={false} size="small">
           <GlobalAlert.Header onClick={() => setHidden(prev => !prev)} className={css.handCursor}>
             <GlobalAlert.Title>{headerTxt}</GlobalAlert.Title>
@@ -48,17 +45,17 @@ export const TopErrorPanelUI = ({ errorAndIds }: TopErrorPanelUIProps) => {
             </Button>
           </GlobalAlert.Header>
           <GlobalAlert.Content hidden={hidden}>
-            <ErrorHandlingWizard errorAndIds={errorAndIds}>
+            <ErrorHandlingWizard errors={errors}>
               <VStack gap="space-8">
-                {errorAndIds.map(errorAndId => {
-                  const { error, errorId } = errorAndId;
+                {errors.map((error, index) => {
+                  const key = isAlertInfo(error) ? error.errorId : index;
                   return (
-                    <ErrorHandlingWizard.ErrorBox key={errorId}>
+                    <ErrorHandlingWizard.ErrorBox key={key}>
                       <VStack>
                         <BodyLong>{error.message}</BodyLong>
-                        {isAdditionalInfoErrorAndId(errorAndId) ? (
+                        {isAdditionalInfoError(error) ? (
                           <small>
-                            <Link className={css.handCursor} onClick={() => setDisplayAdditionalInfoError(errorAndId)}>
+                            <Link className={css.handCursor} onClick={() => setDisplayAdditionalInfoError(error)}>
                               Vis ekstra info
                             </Link>
                           </small>
@@ -80,5 +77,5 @@ export const TopErrorPanelUI = ({ errorAndIds }: TopErrorPanelUIProps) => {
 
 export const TopErrorPanel = () => {
   const { globalErrors } = useGlobalUnhandledErrors();
-  return <TopErrorPanelUI errorAndIds={globalErrors} />;
+  return <TopErrorPanelUI errors={globalErrors} />;
 };

@@ -51,7 +51,7 @@ export const DefaultFallback: Story = {
 export const CustomErrorFallback: Story = {
   args: {
     ...DefaultFallback.args,
-    errorFallback: ({ caught }: ErrorBoundaryFallbackProps) => <p>Feil: {caught.error.message}</p>,
+    errorFallback: ({ error }: ErrorBoundaryFallbackProps) => <p>Feil: {error.message}</p>,
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Feil: TEST FAIL')).toBeInTheDocument();
@@ -100,7 +100,7 @@ export const FilterCatchesMatching: Story = {
 // Filter som ikkje matcher feilen — ytre ErrorBoundary fangar den i staden
 export const FilterPropagatesNonMatching: StoryObj = {
   render: () => (
-    <ErrorBoundary errorFallback={({ caught }) => <p>Ytre boundary fanga: {caught.error.message}</p>}>
+    <ErrorBoundary errorFallback={({ error }) => <p>Ytre boundary fanga: {error.message}</p>}>
       <ErrorBoundary filter={(error: Error) => error instanceof FrontendError}>
         <BaseErrorChild />
       </ErrorBoundary>

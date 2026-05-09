@@ -9,7 +9,6 @@ import { ErrorModal } from './ErrorModal.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
-import { createErrorAndId } from '../AlertInfo.js';
 
 const withAppScaffolding = (): Decorator => Story => {
   return (
@@ -45,7 +44,7 @@ type Story = StoryObj<typeof meta>;
 
 export const NoError: Story = {
   args: {
-    errorAndId: undefined,
+    error: undefined,
   },
 };
 
@@ -62,58 +61,52 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 
 export const ShowError: Story = {
   args: {
-    errorAndId: createErrorAndId(new FrontendError('Test error 1')),
+    error: new FrontendError('Test error 1'),
     fixAction: retryAction(action('retryAction')),
   },
 };
 
 export const ShowAdditionalInfoError: Story = {
   args: {
-    errorAndId: createErrorAndId(
-      new AdditionalInfoError('Test error 2', undefined, {
-        longDetailedMessage:
-          "Extra description of error. Might be a bit of a long description in some cases. Don't worry though, the lines will break at some point.",
-        location: '/fake',
-      }),
-    ),
+    error: new AdditionalInfoError('Test error 2', undefined, {
+      longDetailedMessage:
+        "Extra description of error. Might be a bit of a long description in some cases. Don't worry though, the lines will break at some point.",
+      location: '/fake',
+    }),
   },
 };
 
 export const ShowFrontendError: Story = {
   args: {
-    errorAndId: createErrorAndId(
-      new FrontendError(
-        'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
-      ),
+    error: new FrontendError(
+      'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
     ),
   },
 };
 
 export const ShowApiError: Story = {
   args: {
-    errorAndId: createErrorAndId(fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)')),
+    error: fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
   },
 };
 
 export const BadRequest: Story = {
   args: {
-    errorAndId: createErrorAndId(
-      makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
-    ),
+    error: makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
   },
 };
 export const Unauthorized: Story = {
   args: {
-    errorAndId: createErrorAndId(makeFakeExtendedApiError({ status: 401 })),
+    error: makeFakeExtendedApiError({ status: 401 }),
   },
 };
 export const Forbidden: Story = {
   args: {
-    errorAndId: createErrorAndId(makeFakeExtendedApiError({ status: 403 })),
+    error: makeFakeExtendedApiError({ status: 403 }),
   },
 };
 export const NotFound: Story = {
   args: {
-    errorAndId: createErrorAndId(makeFakeExtendedApiError({ status: 404 })),
+    error: makeFakeExtendedApiError({ status: 404 }),
   },
 };

@@ -8,7 +8,6 @@ import {
 } from '@navikt/aksel-icons';
 import { ErrorInfoCopy } from './ErrorInfoCopy.js';
 import { type ReactNode, useEffect, useState } from 'react';
-import type { ErrorAndId } from '../AlertInfo.js';
 import { ErrorReportPopover } from './ErrorReportPopover.js';
 
 // Felles props for alle knappane i ErrorHandlingWizard
@@ -65,7 +64,7 @@ export type ErrorHandlingWizardFixAction = Readonly<
 export type ErrorHandlingWizardProps = Readonly<{
   children: ReactNode;
   // Feil som blir med i kopiert rapporteringsinfo
-  errorAndIds: ReadonlyArray<ErrorAndId>;
+  errors: ReadonlyArray<Error>;
   // Spesifiserer tekst, ikon og handling for "fikseknappen" i wizard og tilhøyrande veiledning. Vanlegvis "prøv på nytt". Standardverdi viss ikkje spesifisert er "Last på nytt" med full reload av sida.
   fixAction?: ErrorHandlingWizardFixAction;
 }>;
@@ -76,14 +75,14 @@ const ErrorContentBox = ({ children }: { children: ReactNode }) => (
   </Box>
 );
 
-export const ErrorHandlingWizard = ({ children, errorAndIds, fixAction = reloadAction }: ErrorHandlingWizardProps) => {
+export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction }: ErrorHandlingWizardProps) => {
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
   const { label: fixLabel, icon: fixIcon, info: fixInfo, callback: fixCallback, href: fixHref } = fixAction;
 
   // Tilbakestill visningstilstand når antal feil endrar seg
   useEffect(() => {
     setDisplay('error');
-  }, [errorAndIds.length]);
+  }, [errors.length]);
 
   const fixButton =
     fixCallback != null ? (
@@ -109,7 +108,7 @@ export const ErrorHandlingWizard = ({ children, errorAndIds, fixAction = reloadA
             <Button {...btnProps} onClick={() => setDisplay('error')} icon={<ArrowLeftIcon />} iconPosition="left">
               Tilbake
             </Button>
-            <ErrorInfoCopy {...btnProps} errorAndIds={errorAndIds} onCopied={() => setDisplay('copied')} />
+            <ErrorInfoCopy {...btnProps} errors={errors} onCopied={() => setDisplay('copied')} />
           </HStack>
         </>
       ) : display == 'copied' ? (
@@ -119,7 +118,7 @@ export const ErrorHandlingWizard = ({ children, errorAndIds, fixAction = reloadA
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowLeftIcon />} iconPosition="left">
               Tilbake
             </Button>
-            <ErrorReportPopover errorAndIds={errorAndIds} {...btnProps}>
+            <ErrorReportPopover errors={errors} {...btnProps}>
               Vis kopiert
             </ErrorReportPopover>
             {fixButton}

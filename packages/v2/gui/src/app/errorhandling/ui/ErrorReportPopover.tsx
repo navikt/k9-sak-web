@@ -1,18 +1,17 @@
 import { useState, useId, type FC } from 'react';
-import type { ErrorAndId } from '../AlertInfo.js';
 import { Button, type ButtonProps, Popover } from '@navikt/ds-react';
 import { makeErrorReportText } from './makeErrorReportText.js';
 
 type ErrorReportPopoverProps = Readonly<{
-  errorAndIds: ReadonlyArray<ErrorAndId>;
+  errors: ReadonlyArray<Error>;
 }> &
   ButtonProps;
 
-export const ErrorReportPopover: FC<ErrorReportPopoverProps> = ({ errorAndIds, children, ...btnProps }) => {
+export const ErrorReportPopover: FC<ErrorReportPopoverProps> = ({ errors, children, ...btnProps }) => {
   const [showReportBtn, setShowReportBtn] = useState<HTMLElement | null>(null);
   const [reportShowing, setReportShowing] = useState(false);
   const popoverId = useId();
-  const reportTxt = makeErrorReportText(errorAndIds);
+  const reportTxt = makeErrorReportText(errors);
   return (
     <>
       <Popover

@@ -7,7 +7,6 @@ import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiE
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
-import { createErrorAndId } from '../AlertInfo.js';
 
 const meta = {
   title: 'gui/app/errorhandling/ui/TopErrorPanel',
@@ -24,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const NoError: Story = {
   args: {
-    errorAndIds: [],
+    errors: [],
   },
 };
 
@@ -41,45 +40,35 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 
 export const OneError: Story = {
   args: {
-    errorAndIds: [createErrorAndId(new FrontendError('Test error 1'))],
+    errors: [new FrontendError('Test error 1')],
   },
 };
 
 export const TwoErrors: Story = {
   args: {
-    errorAndIds: [
-      createErrorAndId(new FrontendError('Test error 1')),
-      createErrorAndId(
-        new AdditionalInfoError('Test error 2', undefined, { message: 'Extra description of error', url: '/fake' }),
-      ),
+    errors: [
+      new FrontendError('Test error 1'),
+      new AdditionalInfoError('Test error 2', undefined, { message: 'Extra description of error', url: '/fake' }),
     ],
   },
 };
 
 export const MoreThanThreeUniqueErrorTypes: Story = {
   args: {
-    errorAndIds: [
-      createErrorAndId(new FrontendError('Testfeil 1')),
-      createErrorAndId(
-        new FrontendError(
-          'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
-        ),
+    errors: [
+      new FrontendError('Testfeil 1'),
+      new FrontendError(
+        'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
       ),
-      createErrorAndId(
-        new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
-      ),
-      createErrorAndId(fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)')),
+      new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
+      fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
     ],
   },
 };
 
 export const CheckAdditionalInfoDialogDisplay: Story = {
   args: {
-    errorAndIds: [
-      createErrorAndId(
-        new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
-      ),
-    ],
+    errors: [new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' })],
   },
   play: async ({ canvas }) => {
     const visEkstraInfoLink = canvas.getByText('Vis ekstra info');

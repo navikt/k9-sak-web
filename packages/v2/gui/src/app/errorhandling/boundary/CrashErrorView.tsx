@@ -2,11 +2,12 @@ import type { ErrorBoundaryFallbackProps } from './ErrorBoundary.js';
 import { BodyLong, Heading, HStack, Link, VStack } from '@navikt/ds-react';
 import { XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { sentryReportedErrorIdLookup } from '../sentry.js';
+import { isAlertInfo } from '../AlertInfo.js';
 
-export const CrashErrorView = ({ caught }: ErrorBoundaryFallbackProps) => {
+export const CrashErrorView = ({ error }: ErrorBoundaryFallbackProps) => {
   let sentryId = '';
   try {
-    sentryId = sentryReportedErrorIdLookup.get(caught.error) ?? '';
+    sentryId = sentryReportedErrorIdLookup.get(error) ?? '';
   } catch {
     // Do nothing
   }
@@ -26,9 +27,9 @@ export const CrashErrorView = ({ caught }: ErrorBoundaryFallbackProps) => {
         <BodyLong>Det oppsto for mange feil uten ny innlasting av systemet.</BodyLong>
         <BodyLong>Dette kan tyde på en ukontrollert gjentagende feilsituasjon.</BodyLong>
         <BodyLong>
-          Siste feil som oppsto ({caught.error.name}, id:{caught.errorId}, sentry:{sentryId}):
+          Siste feil som oppsto ({error.name}, id:{isAlertInfo(error) ? error.errorId : ''}, sentry:{sentryId}):
         </BodyLong>
-        <BodyLong>{caught.error.message}</BodyLong>
+        <BodyLong>{error.message}</BodyLong>
         <BodyLong>
           <Link href="/">Gå til startsiden</Link> for å prøve på nytt, eller rapporter informasjonen over i porten.
         </BodyLong>

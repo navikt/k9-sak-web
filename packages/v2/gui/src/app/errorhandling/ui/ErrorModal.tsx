@@ -2,28 +2,24 @@ import { Dialog, LocalAlert } from '@navikt/ds-react';
 import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
 import type { ComponentProps, ReactNode } from 'react';
 import { resolveMissingErrorViewProps } from './resolveErrorViewProps.js';
-import type { ErrorAndId } from '../AlertInfo.js';
 
 export type ErrorModalProps = Readonly<{
   title?: string;
   children?: ReactNode;
-  errorAndId?: ErrorAndId;
+  error?: Error;
   fixAction?: ComponentProps<typeof ErrorHandlingWizard>['fixAction'];
   onClose(): void;
 }>;
 
 const ErrorDialogContent = (
   {
-    errorAndId,
+    error,
     children,
     onClose,
     ...rest
-  }: ErrorModalProps & Required<Pick<ErrorModalProps, 'errorAndId'>> /* errorAndId er alltid satt her */,
+  }: ErrorModalProps & Required<Pick<ErrorModalProps, 'error'>> /* error er alltid satt her */,
 ) => {
-  const { title, errorInfo, fixAction } = resolveMissingErrorViewProps(
-    { errorInfo: children, ...rest },
-    errorAndId.error,
-  );
+  const { title, errorInfo, fixAction } = resolveMissingErrorViewProps({ errorInfo: children, ...rest }, error);
   // Vurder å legge inn noko slikt: const fixAction = {...fa, info: <>{fa.info}<BodyLong>Hvis du har fylt ut viktig, ulagret informasjon i skjermbildet kan du lukke denne dialog og ta vare på informasjonen først.</BodyLong></>}
   return (
     <LocalAlert status="error">
@@ -32,7 +28,7 @@ const ErrorDialogContent = (
         <LocalAlert.CloseButton onClick={onClose} />
       </LocalAlert.Header>
       <LocalAlert.Content>
-        <ErrorHandlingWizard errorAndIds={[errorAndId]} fixAction={fixAction}>
+        <ErrorHandlingWizard errors={[error]} fixAction={fixAction}>
           <ErrorHandlingWizard.ErrorBox>{errorInfo}</ErrorHandlingWizard.ErrorBox>
         </ErrorHandlingWizard>
       </LocalAlert.Content>
@@ -40,12 +36,12 @@ const ErrorDialogContent = (
   );
 };
 
-export const ErrorModal = ({ errorAndId, onClose, children, ...rest }: ErrorModalProps) => {
+export const ErrorModal = ({ error, onClose, children, ...rest }: ErrorModalProps) => {
   return (
-    <Dialog open={errorAndId != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
+    <Dialog open={error != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
       <Dialog.Popup closeOnOutsideClick={false} role="alertdialog" width="large">
-        {errorAndId != null ? (
-          <ErrorDialogContent errorAndId={errorAndId} onClose={onClose} {...rest}>
+        {error != null ? (
+          <ErrorDialogContent error={error} onClose={onClose} {...rest}>
             {children}
           </ErrorDialogContent>
         ) : null}
