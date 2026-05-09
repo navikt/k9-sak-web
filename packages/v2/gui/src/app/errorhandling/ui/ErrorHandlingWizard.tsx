@@ -9,6 +9,7 @@ import {
 import { ErrorInfoCopy } from './ErrorInfoCopy.js';
 import { type ReactNode, useEffect, useState } from 'react';
 import type { ErrorAndId } from '../AlertInfo.js';
+import { ErrorReportPopover } from './ErrorReportPopover.js';
 
 // Felles props for alle knappane i ErrorHandlingWizard
 const btnProps = {
@@ -113,11 +114,14 @@ export const ErrorHandlingWizard = ({ children, errorAndIds, fixAction = reloadA
         </>
       ) : display == 'copied' ? (
         <>
-          <BodyLong>Rapporteringsinfo er kopiert. Lim den inn i porten sak for å melde feil til oss.</BodyLong>
+          <BodyLong>Feilinformasjon er kopiert. Lim den inn i porten sak for å melde feil til oss.</BodyLong>
           <HStack gap="space-4">
             <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowLeftIcon />} iconPosition="left">
               Tilbake
             </Button>
+            <ErrorReportPopover errorAndIds={errorAndIds} {...btnProps}>
+              Vis kopiert
+            </ErrorReportPopover>
             {fixButton}
           </HStack>
         </>
