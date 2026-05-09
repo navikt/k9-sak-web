@@ -20,7 +20,7 @@ const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
     return <LoadingPanel />;
   }
   return (
-    <ErrorBoundary errorFallback={({ error }) => <LocalAlertError title="Notatskjema feilet" error={error} />}>
+    <ErrorBoundary errorFallback={({ caught }) => <LocalAlertError title="Notatskjema feilet" errorAndId={caught} />}>
       <NotaterIndex
         fagsakId={fagsak.saksnummer}
         navAnsatt={navAnsatt}

@@ -1,20 +1,20 @@
 import { createContext, type FC, type ReactNode, useEffect, useState, use, useCallback } from 'react';
 import { ensureError } from './ensureError.js';
-import { BigError, DefaultErrorMsg } from './feilmeldinger/BigError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { FrontendError } from './FrontendError.js';
+import { createErrorAndId, type ErrorAndId } from './AlertInfo.js';
 
 interface GlobalUnhandledErrors {
-  readonly globalErrors: ReadonlyArray<Error>;
+  readonly globalErrors: ReadonlyArray<ErrorAndId>;
   clearGlobalErrors(): void;
-  addGlobalError(error: Error): void;
+  addGlobalError(errorAndId: ErrorAndId): void;
 }
 
 const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
-  addGlobalError(error: Error) {
-    throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
+  addGlobalError(errorAndId: ErrorAndId) {
+    throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', errorAndId.error);
   },
 };
 
@@ -39,18 +39,18 @@ export interface GlobalUnhandledErrorCatcherProps {
  * </p>
  */
 export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> = ({ children, maxErrorCount = 50 }) => {
-  const [globalErrors, setGlobalErrors] = useState<Error[]>([]);
+  const [globalErrors, setGlobalErrors] = useState<ErrorAndId[]>([]);
   const clearGlobalErrors = () => setGlobalErrors([]);
   const addGlobalError = useCallback(
-    (error: Error) => {
-      setGlobalErrors(prevErrors => [...prevErrors, error]);
+    (errorAndId: ErrorAndId) => {
+      setGlobalErrors(prevErrors => [...prevErrors, errorAndId]);
     },
     [setGlobalErrors],
   );
   useEffect(() => {
     const errorListener = (ev: ErrorEvent) => {
-      const error: Error = ensureError(ev.error);
-      addGlobalError(error);
+      const error = ensureError(ev.error);
+      addGlobalError(createErrorAndId(error));
     };
     addEventListener('error', errorListener);
     return () => {
@@ -59,8 +59,8 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   }, [addGlobalError]);
   useEffect(() => {
     const promiseRejectionListener = (ev: PromiseRejectionEvent) => {
-      const error: Error = ensureError(ev.reason);
-      addGlobalError(error);
+      const error = ensureError(ev.reason);
+      addGlobalError(createErrorAndId(error));
     };
     addEventListener('unhandledrejection', promiseRejectionListener);
     return () => {
@@ -69,19 +69,16 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   }, [addGlobalError]);
 
   if (globalErrors.length > maxErrorCount) {
-    return (
-      <BigError title={`For mange feil (${globalErrors.length})`}>
-        <p>For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.</p>
-        <DefaultErrorMsg />
-      </BigError>
+    const lastErrorAndId = globalErrors.at(-1);
+    throw new FrontendError(
+      'For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.',
+      lastErrorAndId?.error,
     );
   }
 
   return (
-    <ErrorBoundary>
-      <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError }}>
-        <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
-      </GlobalUnhandledErrorsContext>
-    </ErrorBoundary>
+    <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError }}>
+      <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
+    </GlobalUnhandledErrorsContext>
   );
 };

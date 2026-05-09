@@ -7,6 +7,8 @@ import { LocalAlertError } from './LocalAlertError.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
+import { FrontendError } from '../FrontendError.js';
+import { createErrorAndId } from '../AlertInfo.js';
 
 /**
  * Komponent som kastar ein feil når `shouldThrow` er true.
@@ -30,10 +32,10 @@ const ErrorTriggerWrapper = () => {
         Trigger feil
       </Button>
       <ErrorBoundary
-        errorFallback={({ error, reset }) => (
+        errorFallback={({ caught, reset }) => (
           <LocalAlertError
             title="Eksempel-feil"
-            error={error}
+            errorAndId={caught}
             fixAction={retryAction(() => {
               setShouldThrow(false);
               reset();
@@ -59,7 +61,7 @@ type Story = StoryObj<typeof meta>;
 export const DefaultStory: Story = {
   args: {
     title: 'Eksempel-feil',
-    error: new Error('Lorem ipsum error'),
+    errorAndId: createErrorAndId(new FrontendError('Lorem ipsum error')),
     fixAction: retryAction(action('fix problem')),
   },
 };
@@ -79,7 +81,7 @@ export const MedErrorBoundary: StoryObj = {
 export const MedEgneChildren: Story = {
   args: {
     title: 'Eksempel-feil',
-    error: new Error('Lorem ipsum error'),
+    errorAndId: createErrorAndId(new FrontendError('Lorem ipsum error')),
     children: 'Eigendefinert feilmelding som overstyrer error.message.',
     fixAction: retryAction(action('fix problem')),
   },
@@ -92,7 +94,7 @@ export const MedEgneChildren: Story = {
 
 export const Minimal: Story = {
   args: {
-    error: new Error('Lorem ipsum error'),
+    errorAndId: createErrorAndId(new FrontendError('Lorem ipsum error')),
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
@@ -102,22 +104,24 @@ export const Minimal: Story = {
 
 export const BadRequest: Story = {
   args: {
-    error: makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
+    errorAndId: createErrorAndId(
+      makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
+    ),
   },
 };
 export const Unauthorized: Story = {
   args: {
-    error: makeFakeExtendedApiError({ status: 401 }),
+    errorAndId: createErrorAndId(makeFakeExtendedApiError({ status: 401 })),
   },
 };
 export const Forbidden: Story = {
   args: {
-    error: makeFakeExtendedApiError({ status: 403 }),
+    errorAndId: createErrorAndId(makeFakeExtendedApiError({ status: 403 })),
   },
 };
 export const NotFound: Story = {
   args: {
-    error: makeFakeExtendedApiError({ status: 404 }),
+    errorAndId: createErrorAndId(makeFakeExtendedApiError({ status: 404 })),
   },
 };
 

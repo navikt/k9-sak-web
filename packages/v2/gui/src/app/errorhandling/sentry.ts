@@ -14,3 +14,9 @@ export const shouldReportToSentry = (error: Error | null): boolean => {
   }
   return true;
 };
+
+// Når global sentry handler rapporterer feil blir sentryId til rapportert Error instans lagra i denne lookup map.
+// Andre deler av koden som ønsker å få tak i sentryId til ein Error instans kan deretter slå opp her for å finne den.
+// Brukast til å legge til sentryId i visning og utkopiert feilinformasjon, slik at vi kan slå opp feil rapportert frå
+// brukarar direkte i sentry. Sidan det er ein WeakMap blir innhaldet automatisk fjerna når Error instans ikkje er "live" lenger.
+export const sentryReportedErrorIdLookup = new WeakMap<Error, string>();

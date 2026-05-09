@@ -1,15 +1,13 @@
 import { Component, type ErrorInfo, type FC, type ReactNode } from 'react';
 import { captureException, withScope } from '@sentry/browser';
 import { ensureError } from '../ensureError.js';
-import { shouldReportToSentry } from '../sentry.js';
-import { isAlertInfo } from '../AlertInfo.js';
-import { SentryReportedError } from '../SentryReportedError.js';
+import { sentryReportedErrorIdLookup, shouldReportToSentry } from '../sentry.js';
+import { createErrorAndId, type ErrorAndId } from '../AlertInfo.js';
 import { DefaultErrorView } from './DefaultErrorView.js';
 import { CrashErrorView } from './CrashErrorView.js';
 
 export interface ErrorBoundaryFallbackProps {
-  readonly error: Error;
-  readonly sentryId: string | undefined;
+  readonly caught: ErrorAndId;
   readonly reset: () => void;
 }
 
@@ -17,7 +15,7 @@ export interface ErrorBoundaryProps {
   children: ReactNode;
   maxErrorCount?: number;
   // If set, the ErrorBoundary will only report error to Sentry and this callback, not display error itself. May be combined with errorFallback.
-  errorCallback?: (error: Error) => void;
+  errorCallback?: (caught: ErrorAndId) => void;
   // If set the component given will be rendered instead of children
   errorFallback?: FC<ErrorBoundaryFallbackProps>;
   // If set, this ErrorBoundary will only catch errors for which the function returns true. Others will propagate to the next boundary.
@@ -25,22 +23,17 @@ export interface ErrorBoundaryProps {
 }
 
 interface State {
-  error: Error | null;
+  caught: ErrorAndId | null;
 }
 
-const initialState: State = { error: null };
+const initialState: State = { caught: null };
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
-  private sentryId: string | undefined;
   private errorCount = 0;
 
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = initialState;
-  }
-
-  static ensureError(error: unknown): Error {
-    return ensureError(error);
   }
 
   // Vi ønsker ikkje å rapportere alle feil til Sentry, feks viss har utgått sesjon.
@@ -50,20 +43,20 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   }
 
   static getDerivedStateFromError(anyError: unknown): State {
-    const error = ErrorBoundary.ensureError(anyError);
-    return { error };
+    const caught = createErrorAndId(ensureError(anyError));
+    return { caught };
   }
 
   override componentDidCatch(_: any, info: ErrorInfo): void {
     const { errorCallback, filter } = this.props;
-    const { error } = this.state;
-    if (error != null) {
+    const { caught } = this.state;
+    if (caught != null) {
       // Viss filter er sett og returnerer false, ikkje rapporter eller kall callback — feilen blir kasta vidare i render()
-      if (filter != null && !filter(error)) {
+      if (filter != null && !filter(caught.error)) {
         return;
       }
       this.errorCount++;
-      if (ErrorBoundary.shouldReportToSentry(error)) {
+      if (ErrorBoundary.shouldReportToSentry(caught.error)) {
         withScope(scope => {
           if (info.componentStack != null) {
             scope.setExtra('componentStack', info.componentStack);
@@ -71,25 +64,24 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
           if (info.digest != null) {
             scope.setExtra('digest', info.digest);
           }
-          if (isAlertInfo(error)) {
-            scope.setTag('errorId', error.errorId);
-          }
-          this.sentryId = captureException(error);
+          scope.setTag('errorId', caught.errorId);
+          const sentryId = captureException(caught.error);
+          sentryReportedErrorIdLookup.set(caught.error, sentryId); // Slik at vi kan slå opp igjen sentryId i ErrorInfoCopy etc
         });
       }
       if (errorCallback != null) {
-        errorCallback(this.sentryId != null ? new SentryReportedError(error, this.sentryId) : error);
+        errorCallback(caught);
       }
     }
   }
 
   override render(): ReactNode {
     const { errorFallback: ErrorFallback, children, errorCallback, maxErrorCount = 16, filter } = this.props;
-    const { error } = this.state;
-    if (error != null) {
+    const { caught } = this.state;
+    if (caught != null) {
       // Viss filter er sett og returnerer false for denne feilen, kast den vidare til neste ErrorBoundary
-      if (filter != null && !filter(error)) {
-        throw error;
+      if (filter != null && !filter(caught.error)) {
+        throw caught.error;
       }
       const reset = () => {
         // Vurder å legge til tanstack query reset her
@@ -97,12 +89,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
       };
       // Viss errorCount har gått over grense vis separat feilside utan å rendre children eller errorFallback, sidan det tyder på rekursiv/evig feilsituasjon
       if (this.errorCount > maxErrorCount) {
-        return <CrashErrorView error={error} sentryId={this.sentryId} reset={reset} />;
+        return <CrashErrorView caught={caught} reset={reset} />;
       } else if (ErrorFallback != null) {
         // Viss errorFallback er angitt, vis den istadenfor standard feilside
-        return <ErrorFallback error={error} sentryId={this.sentryId} reset={reset} />;
+        return <ErrorFallback caught={caught} reset={reset} />;
       } else if (errorCallback == null || children == null) {
-        return <DefaultErrorView error={error} sentryId={this.sentryId} reset={reset} />;
+        return <DefaultErrorView caught={caught} reset={reset} />;
       }
     }
 

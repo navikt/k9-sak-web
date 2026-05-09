@@ -8,6 +8,7 @@ import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/Feil
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { SentryReportedError } from '../SentryReportedError.js';
 import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
+import { createErrorAndId } from '../AlertInfo.js';
 
 const meta = {
   title: 'gui/app/errorhandling/ui/TopErrorPanel',
@@ -24,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const NoError: Story = {
   args: {
-    errors: [],
+    errorAndIds: [],
   },
 };
 
@@ -41,41 +42,51 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 
 export const OneError: Story = {
   args: {
-    errors: [new Error('Test error 1')],
+    errorAndIds: [createErrorAndId(new FrontendError('Test error 1'))],
   },
 };
 
 export const SentryReported: Story = {
   args: {
-    errors: [new SentryReportedError(new FrontendError('Test error 1'), 'sentryId-1')],
+    errorAndIds: [createErrorAndId(new SentryReportedError(new FrontendError('Test error 1'), 'sentryId-1'))],
   },
 };
 
 export const TwoErrors: Story = {
   args: {
-    errors: [
-      new Error('Test error 1'),
-      new AdditionalInfoError('Test error 2', undefined, { message: 'Extra description of error', url: '/fake' }),
+    errorAndIds: [
+      createErrorAndId(new FrontendError('Test error 1')),
+      createErrorAndId(
+        new AdditionalInfoError('Test error 2', undefined, { message: 'Extra description of error', url: '/fake' }),
+      ),
     ],
   },
 };
 
 export const MoreThanThreeUniqueErrorTypes: Story = {
   args: {
-    errors: [
-      new Error('Testfeil 1'),
-      new FrontendError(
-        'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
+    errorAndIds: [
+      createErrorAndId(new FrontendError('Testfeil 1')),
+      createErrorAndId(
+        new FrontendError(
+          'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
+        ),
       ),
-      new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
-      fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
+      createErrorAndId(
+        new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
+      ),
+      createErrorAndId(fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)')),
     ],
   },
 };
 
 export const CheckAdditionalInfoDialogDisplay: Story = {
   args: {
-    errors: [new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' })],
+    errorAndIds: [
+      createErrorAndId(
+        new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
+      ),
+    ],
   },
   play: async ({ canvas }) => {
     const visEkstraInfoLink = canvas.getByText('Vis ekstra info');

@@ -9,6 +9,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { withTopDekoratør } from '../../storybook/decorators/withTopDekoratør.js';
 import { TopErrorPanel } from './ui/TopErrorPanel.js';
+import withErrorBoundary from '../../storybook/decorators/withErrorBoundary.js';
 
 interface ErrorThrowingComponentProps {
   readonly foreverThrowInRender?: boolean;
@@ -111,7 +112,7 @@ const meta = {
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
-  decorators: [withTopDekoratør()],
+  decorators: [withTopDekoratør(), withErrorBoundary()],
 } satisfies Meta<typeof ErrorHandlingDemoApp>;
 
 export default meta;
@@ -136,7 +137,7 @@ export const TooManyErrors: Story = {
   args: {
     maxErrorCount: 4, // Reduser denne for å forenkle testing av overskridelse
   },
-  play: async ({ canvas, args }) => {
+  play: async ({ canvas }) => {
     const throwErrorButton = canvas.getByRole('button', { name: 'Throw error' });
 
     // Klikk "Throw error" to gonger
@@ -149,7 +150,7 @@ export const TooManyErrors: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Throw render error' }));
 
     // Verifiser at "For mange feil" meldinga blir vist
-    await expect(canvas.getByText(`For mange feil (${(args.maxErrorCount ?? 0) + 1})`)).toBeInTheDocument();
+    await expect(canvas.getByText(`For mange feil oppsto`, { exact: false })).toBeInTheDocument();
   },
 };
 
