@@ -1,5 +1,5 @@
-import { formatErrorMessage, ErrorMessage } from './formatErrorMessages';
-import { EventType } from '@k9-sak-web/rest-api';
+import { formatErrorMessage, ErrorMessage } from './formatErrorMessages.js';
+import { EventType } from './eventType.js';
 
 describe('ErrorFormatter', () => {
   it('skal formatere feil med status HALTED', () => {

@@ -1,4 +1,4 @@
-import { FrontendError } from './FrontendError.js';
+import { FrontendError } from '../FrontendError.js';
 
 export type AdditionalInfo = Readonly<Record<string, unknown>>;
 

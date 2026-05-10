@@ -2,7 +2,7 @@ import { TopErrorPanelUI } from './TopErrorPanel.js';
 import { type Meta, type StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { FrontendError } from '../FrontendError.js';
-import { AdditionalInfoError } from '../AdditionalInfoError.js';
+import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';

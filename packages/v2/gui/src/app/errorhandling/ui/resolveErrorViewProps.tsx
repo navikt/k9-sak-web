@@ -1,4 +1,4 @@
-import { AdditionalInfoError } from '../AdditionalInfoError.js';
+import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 import type { ReactNode } from 'react';
 import { type ErrorHandlingWizardFixAction, reloadAction } from './ErrorHandlingWizard.js';
 import { BodyLong, BodyShort, VStack } from '@navikt/ds-react';

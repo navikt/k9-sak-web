@@ -7,7 +7,7 @@ import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
 import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
 import { ErrorModal } from './ErrorModal.js';
-import { AdditionalInfoError } from '../AdditionalInfoError.js';
+import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 
 interface TopErrorPanelUIProps {
   readonly errors: ReadonlyArray<Error>;

@@ -1,5 +1,5 @@
-import { AdditionalInfoError } from '@k9-sak-web/gui/app/errorhandling/AdditionalInfoError.js';
-import { EventType } from '@k9-sak-web/rest-api';
+import { EventType } from './eventType.js';
+import { AdditionalInfoError } from './AdditionalInfoError.js';
 
 /**
  * legacy api error handling rapporterer feil som objekt med diverse properties. Ser ut til at det alltid er message prop
@@ -16,12 +16,12 @@ export class LegacyApiError extends AdditionalInfoError {
     let data = structuredClone(errorData);
     let msg = message ?? 'Legacy api error';
     if (data != null) {
-      if ('message' in data && typeof data.message === 'string') {
-        msg = data.message;
-        delete data.message;
+      if ('message' in data && typeof data['message'] === 'string') {
+        msg = data['message'];
+        delete data['message'];
       }
-      if ('type' in data && data.type === 'REQUEST_ERROR') {
-        delete data.type;
+      if ('type' in data && data['type'] === 'REQUEST_ERROR') {
+        delete data['type'];
       }
       if (Object.keys(data).length == 0) {
         data = undefined;

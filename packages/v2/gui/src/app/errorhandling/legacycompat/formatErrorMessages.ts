@@ -1,5 +1,5 @@
+import { EventType } from './eventType.js';
 import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { EventType } from '@k9-sak-web/rest-api';
 
 export class ErrorMessage {
   text: string;
@@ -8,12 +8,14 @@ export class ErrorMessage {
 
   type?: EventType;
 
+  constructor(message: string, eventType: EventType | undefined, extra?: Record<string, string>) {
+    this.type = eventType;
+    this.text = message;
+    this.extra = extra;
+  }
+
   static withMessage(message: string, eventType: EventType | undefined, extra?: Record<string, string>) {
-    const errorMessage = new ErrorMessage();
-    errorMessage.type = eventType;
-    errorMessage.text = message;
-    errorMessage.extra = extra;
-    return errorMessage;
+    return new ErrorMessage(message, eventType, extra);
   }
 }
 
@@ -26,7 +28,7 @@ interface InputErrorMessage {
   feilmelding?: string;
 }
 
-const findContextPath = (location: string): string => location.split('/')[1].toUpperCase();
+const findContextPath = (location: string): string => location.split('/')[1]?.toUpperCase() ?? '';
 
 /**
  * Formaterer én feilmelding basert på type.
