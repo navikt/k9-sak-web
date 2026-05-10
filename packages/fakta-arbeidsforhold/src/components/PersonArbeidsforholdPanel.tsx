@@ -289,7 +289,7 @@ const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => 
     ownProps.behandlingVersjon,
   )(state, 'arbeidsforhold');
   return {
-    arbeidsforhold,
+    arbeidsforhold: Array.isArray(arbeidsforhold) ? arbeidsforhold : [],
     arbeidsgiverOpplysningerPerId: ownProps.arbeidsgiverOpplysningerPerId,
     behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   };
