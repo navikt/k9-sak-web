@@ -7,7 +7,6 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -17,6 +16,7 @@ import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBeha
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnFakta from './FrisinnFakta';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
+import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {
@@ -137,7 +137,7 @@ describe('<FrisinnFakta>', () => {
       personopplysninger: soker,
     };
     renderWithIntl(
-      <RestApiErrorProvider>
+      <GlobalUnhandledErrorCatcher>
         <FrisinnFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -154,7 +154,7 @@ describe('<FrisinnFakta>', () => {
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={qFeatureToggles}
         />
-      </RestApiErrorProvider>,
+      </GlobalUnhandledErrorCatcher>,
     );
 
     expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
@@ -170,7 +170,7 @@ describe('<FrisinnFakta>', () => {
     };
 
     renderWithIntl(
-      <RestApiErrorProvider>
+      <GlobalUnhandledErrorCatcher>
         <FrisinnFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -187,7 +187,7 @@ describe('<FrisinnFakta>', () => {
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={qFeatureToggles}
         />
-      </RestApiErrorProvider>,
+      </GlobalUnhandledErrorCatcher>,
     );
 
     await act(async () => {

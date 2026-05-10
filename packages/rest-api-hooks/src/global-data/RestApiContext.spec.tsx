@@ -2,10 +2,10 @@
 import { AbstractRequestApi } from '@k9-sak-web/rest-api';
 import { render } from '@testing-library/react';
 import React, { useEffect, act } from 'react';
-import { RestApiErrorProvider } from '../error/RestApiErrorContext';
 import { RestApiProvider } from './RestApiContext';
 import getUseGlobalStateRestApi from './useGlobalStateRestApi';
 import useGlobalStateRestApiData from './useGlobalStateRestApiData';
+import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 class RequestApiTestMock extends AbstractRequestApi {
   data: any;
@@ -73,9 +73,9 @@ describe('<RestApiContext>', () => {
     await act(async () => {
       render(
         <RestApiProvider>
-          <RestApiErrorProvider>
+          <GlobalUnhandledErrorCatcher>
             <TestGlobalData setValue={setValue} />
-          </RestApiErrorProvider>
+          </GlobalUnhandledErrorCatcher>
         </RestApiProvider>,
       );
     });

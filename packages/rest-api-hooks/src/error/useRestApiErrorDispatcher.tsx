@@ -16,13 +16,8 @@ const useRestApiErrorDispatcher = () => {
     },
     [showLegacyRestApiError],
   );
-  const removeErrorMessages = useCallback(() => {
-    // We don't remove error messages before full reload anymore
-  }, []);
-
   return {
     addErrorMessage,
-    removeErrorMessages,
   };
 };
 

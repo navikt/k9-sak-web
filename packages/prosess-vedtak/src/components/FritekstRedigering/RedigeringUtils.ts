@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Brevmottaker, VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { safeJSONParse } from '@fpsak-frontend/utils';
+import { LegacyApiError } from '@k9-sak-web/gui/app/errorhandling/legacycompat/LegacyApiError.js';
 
 export const utledStiler = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
@@ -113,29 +114,8 @@ export const validerRedigertHtml = Yup.string().test('validate-redigert-html', '
   validerManueltRedigertBrev(value),
 );
 
-export const harDokumentdataApiFeilmelding = ({ feilmeldinger }: { feilmeldinger: any[] }) =>
-  feilmeldinger.some(feilmelding => {
-    if (feilmelding.feilmelding) {
-      return feilmelding.feilmelding.includes('/k9/formidling/dokumentdata/api');
-    }
-    if (feilmelding.message === '') {
-      return feilmelding.message.length < 1;
-    }
-    return false;
-  });
+export const harDokumentdataApiFeilmelding = ({ errors }: { errors: LegacyApiError[] }) =>
+  errors.some(error => error.message.includes('/k9/formidling/dokumentdata/api'));
 
-export const harForhandsvisFeilmeldinger = ({ feilmeldinger }: { feilmeldinger: any[] }) =>
-  feilmeldinger.some(
-    feilmelding =>
-      !!(feilmelding.feilmelding && feilmelding.feilmelding.includes('/k9/formidling/api/brev/forhaandsvis')),
-  );
-
-export const utledForhandsvisFeilmeldinger = ({
-  feilmeldinger,
-}: {
-  feilmeldinger: any[];
-}): { feilmelding: string; type: string }[] =>
-  feilmeldinger.filter(
-    feilmelding =>
-      !!(feilmelding.feilmelding && feilmelding.feilmelding.includes('/k9/formidling/api/brev/forhaandsvis')),
-  );
+export const harForhandsvisFeilmeldinger = ({ errors }: { errors: LegacyApiError[] }) =>
+  errors.some(error => error.message.includes('/k9/formidling/api/brev/forhaandsvis'));

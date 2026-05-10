@@ -7,7 +7,6 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -17,6 +16,7 @@ import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/ple
 import FetchedData from '../types/FetchedData';
 import ForeldrepengerFakta from './PleiepengerFakta';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
+import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
@@ -148,7 +148,7 @@ describe('<PleiepengerFakta>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <RestApiErrorProvider>
+      <GlobalUnhandledErrorCatcher>
         <ForeldrepengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -166,7 +166,7 @@ describe('<PleiepengerFakta>', () => {
           dokumenter={[]}
           featureToggles={qFeatureToggles}
         />
-      </RestApiErrorProvider>,
+      </GlobalUnhandledErrorCatcher>,
     );
 
     expect(screen.getByRole('button', { name: /Om barnet/i })).toBeInTheDocument();
@@ -190,7 +190,7 @@ describe('<PleiepengerFakta>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <RestApiErrorProvider>
+      <GlobalUnhandledErrorCatcher>
         <ForeldrepengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -208,7 +208,7 @@ describe('<PleiepengerFakta>', () => {
           dokumenter={[]}
           featureToggles={qFeatureToggles}
         />
-      </RestApiErrorProvider>,
+      </GlobalUnhandledErrorCatcher>,
     );
 
     await act(async () => {

@@ -1,37 +1,25 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
 import { Alert } from '@navikt/ds-react';
 
-import {
-  harDokumentdataApiFeilmelding,
-  harForhandsvisFeilmeldinger,
-  utledForhandsvisFeilmeldinger,
-} from './RedigeringUtils';
+import { harDokumentdataApiFeilmelding, harForhandsvisFeilmeldinger } from './RedigeringUtils';
 
 import styles from './RedigerFritekstbrev.module.css';
 
 const FritekstFeilmeldinger = () => {
-  const errorMessages = useRestApiError() || [];
+  const errors = useRestApiError() || [];
 
-  if (
-    harDokumentdataApiFeilmelding({ feilmeldinger: errorMessages }) ||
-    harForhandsvisFeilmeldinger({ feilmeldinger: errorMessages })
-  ) {
+  if (harDokumentdataApiFeilmelding({ errors }) || harForhandsvisFeilmeldinger({ errors })) {
     return (
       <>
         <VerticalSpacer sixteenPx />
         <Alert variant="error" className={styles.alertMeldinger}>
-          {utledForhandsvisFeilmeldinger({ feilmeldinger: errorMessages }).map(feilmelding => (
-            <p>{feilmelding.feilmelding}</p>
-          ))}
-          {harDokumentdataApiFeilmelding({ feilmeldinger: errorMessages }) && (
-            <p>
-              <FormattedMessage id="RedigeringAvFritekstBrev.KommunikasjonsfeilLagre" />
-            </p>
-          )}
+          {errors.map(error => {
+            return <p key={error.errorId}>{error.message}</p>;
+          })}
         </Alert>
         <VerticalSpacer sixteenPx />
       </>
