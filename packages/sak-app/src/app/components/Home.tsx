@@ -11,10 +11,6 @@ import styles from './home.module.css';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 
-interface OwnProps {
-  headerHeight: number;
-}
-
 // Brukes av RequestRunner.ts for å lukke en popup som logger inn igjen ved 401
 const CloseWindow = () => {
   window.close();
@@ -28,9 +24,9 @@ const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
  *
  * Presentasjonskomponent. Wrapper for sideinnholdet som vises under header.
  */
-const Home = ({ headerHeight }: OwnProps) => (
+const Home = () => (
   <ErrorBoundary>
-    <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
+    <div className={styles.content}>
       <SentryRoutes>
         <Route path="/" element={<FagsakSearchIndex />} />
         <Route path={fagsakRoutePath} element={<FagsakIndex />} />

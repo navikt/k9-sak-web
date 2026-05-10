@@ -2,12 +2,9 @@ import { RETTSKILDE_URL, SHAREPOINT_URL } from '@k9-sak-web/konstanter';
 import { ExternalLinkIcon, MenuGridIcon } from '@navikt/aksel-icons';
 import { Dropdown, InternalHeader, Spacer, Theme } from '@navikt/ds-react';
 import Endringslogg from '@navikt/endringslogg';
-import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { isUngWeb } from '../../utils/urlUtils';
-import ErrorMessagePanel from './ErrorMessagePanel';
-import type { Feilmelding } from './feilmeldingTsType';
-import styles from './headerWithErrorPanel.module.css';
+import styles from './headerPanel.module.css';
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const isInDevelopmentModeOrTestEnvironment = () =>
@@ -26,9 +23,6 @@ const getHeaderTitleHref = (getPathToLos: (() => string | null) | undefined, hea
 interface OwnProps {
   navAnsattName?: string;
   navBrukernavn?: string;
-  removeErrorMessage: () => void;
-  errorMessages?: Feilmelding[];
-  setSiteHeight: (height: number) => void;
   getPathToLos?: () => string | null;
   getPathToK9Punsj?: () => string | null;
   ainntektPath?: string;
@@ -43,14 +37,10 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Definerer header-linjen som alltid vises øverst nettleservinduet.
  * Denne viser lenke tilbake til hovedsiden, nettside-navnet, NAV-ansatt navn og lenke til rettskildene.
- * I tillegg vil den vise potensielle feilmeldinger i ErrorMessagePanel.
  */
-const HeaderWithErrorPanel = ({
+export const HeaderPanel = ({
   navAnsattName = '',
   navBrukernavn,
-  removeErrorMessage,
-  errorMessages = [],
-  setSiteHeight,
   getPathToLos,
   getPathToK9Punsj,
   ainntektPath,
@@ -60,13 +50,6 @@ const HeaderWithErrorPanel = ({
   showEndringslogg = true,
 }: OwnProps) => {
   const location = useLocation();
-
-  const fixedHeaderRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (fixedHeaderRef?.current?.clientHeight) {
-      setSiteHeight(fixedHeaderRef?.current?.clientHeight);
-    }
-  }, [errorMessages.length]);
 
   const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn && showEndringslogg;
   const skalBrukeLos = !isUngWeb();
@@ -130,9 +113,6 @@ const HeaderWithErrorPanel = ({
         </Dropdown>
         <InternalHeader.User name={navAnsattName} />
       </InternalHeader>
-      <ErrorMessagePanel removeErrorMessage={removeErrorMessage} errorMessages={errorMessages} />
     </div>
   );
 };
-
-export default HeaderWithErrorPanel;

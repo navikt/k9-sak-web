@@ -1,9 +1,7 @@
-import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
-import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
+import { HeaderPanel } from '@k9-sak-web/gui/sak/dekoratør/HeaderPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
-import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { use } from 'react';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
 import * as Sentry from '@sentry/react';
@@ -20,16 +18,12 @@ type QueryStrings = {
   errormessage?: string;
 };
 
-const EMPTY_ARRAY = [];
-
 interface OwnProps {
   queryStrings: QueryStrings;
-  hideErrorMessages?: boolean;
-  setSiteHeight: (headerHeight: number) => void;
   pathname: string;
 }
 
-const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = false }: OwnProps) => {
+const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
   const navAnsatt = use(InnloggetAnsattContext);
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
@@ -52,24 +46,13 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
     console.warn(msg);
     Sentry.logger.warn(msg);
   }
-
-  const formaterteFeilmeldinger = useRestApiError() || EMPTY_ARRAY;
-  const resolvedErrorMessages: Feilmelding[] = formaterteFeilmeldinger.map(fm => ({
-    message: fm.text,
-    additionalInfo: fm.extra,
-  }));
-
-  const { removeErrorMessages } = useRestApiErrorDispatcher();
   const ytelse = getYtelseNavn();
 
   return (
     <>
-      <HeaderWithErrorPanel
+      <HeaderPanel
         navAnsattName={navAnsatt.navn ?? navAnsatt?.brukernavn}
         navBrukernavn={navAnsatt.brukernavn}
-        removeErrorMessage={removeErrorMessages}
-        errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
-        setSiteHeight={setSiteHeight}
         aaregPath={getAaregPath()}
         ytelse={ytelse}
         headerTitleHref="/ung/web"

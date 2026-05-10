@@ -1,5 +1,4 @@
 import { type Decorator, type Meta, type StoryObj } from '@storybook/react-vite';
-import HeaderWithErrorPanel from '../../../sak/dekoratør/HeaderWithErrorPanel.js';
 import { FrontendError } from '../FrontendError.js';
 import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
@@ -9,17 +8,11 @@ import { ErrorModal } from './ErrorModal.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
+import { withTopDekoratør } from '@k9-sak-web/gui/storybook/decorators/withTopDekoratør.js';
 
-const withAppScaffolding = (): Decorator => Story => {
+const withSaksdataDecorator = (): Decorator => Story => {
   return (
     <>
-      <HeaderWithErrorPanel
-        removeErrorMessage={() => undefined}
-        setSiteHeight={() => undefined}
-        aaregPath="/aaregPath"
-        ytelse="Demo feilhåndtering"
-        headerTitleHref="/k9/web"
-      />
       <Story />
       <h3>Saksdata...</h3>
     </>
@@ -32,7 +25,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [withAppScaffolding()],
+  decorators: [withSaksdataDecorator(), withTopDekoratør()],
   args: {
     onClose: action('onClose'),
   },

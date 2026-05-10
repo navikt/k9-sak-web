@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -25,13 +25,11 @@ const FagsakSearchIndex = () => {
   );
 
   const navigate = useNavigate();
-  const { removeErrorMessages } = useRestApiErrorDispatcher();
   const goToFagsak = useCallback(
     async (saksnummer: string) => {
-      removeErrorMessages();
       await navigate(pathToFagsak(saksnummer));
     },
-    [navigate, removeErrorMessages],
+    [navigate],
   );
 
   const {

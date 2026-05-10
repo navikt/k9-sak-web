@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
@@ -34,12 +33,6 @@ const EMPTY_ARRAY = [];
  */
 const AppIndex = () => {
   const location = useLocation();
-  const [headerHeight, setHeaderHeight] = useState(0);
-
-  const setSiteHeight = useCallback((newHeaderHeight): void => {
-    document.documentElement.setAttribute('style', `height: calc(100% - ${newHeaderHeight}px)`);
-    setHeaderHeight(newHeaderHeight);
-  }, []);
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
   const queryStrings = parseQueryString(location.search);
@@ -60,13 +53,8 @@ const AppIndex = () => {
       <AppConfigResolver>
         <ErrorBoundary>
           {isAktivitetspenger() && <title>Aktivitetspenger</title>}
-          <Dekorator
-            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-            queryStrings={queryStrings}
-            setSiteHeight={setSiteHeight}
-            pathname={location.pathname}
-          />
-          {shouldRenderHome && <Home headerHeight={headerHeight} />}
+          <Dekorator queryStrings={queryStrings} pathname={location.pathname} />
+          {shouldRenderHome && <Home />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}
           {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
         </ErrorBoundary>

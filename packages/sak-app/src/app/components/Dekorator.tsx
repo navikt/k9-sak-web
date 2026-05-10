@@ -1,8 +1,6 @@
-import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
-import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
+import { HeaderPanel } from '@k9-sak-web/gui/sak/dekoratør/HeaderPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
-import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { use } from 'react';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
@@ -13,16 +11,12 @@ type QueryStrings = {
   errormessage?: string;
 };
 
-const EMPTY_ARRAY = [];
-
 interface OwnProps {
   queryStrings: QueryStrings;
-  hideErrorMessages?: boolean;
-  setSiteHeight: (headerHeight: number) => void;
   pathname: string;
 }
 
-const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = false }: OwnProps) => {
+const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
   const navAnsatt = use(InnloggetAnsattContext);
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
@@ -54,22 +48,11 @@ const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = 
     Sentry.logger.warn(msg);
   }
 
-  const formaterteFeilmeldinger = useRestApiError() || EMPTY_ARRAY;
-  const resolvedErrorMessages: Feilmelding[] = formaterteFeilmeldinger.map(fm => ({
-    message: fm.text,
-    additionalInfo: fm.extra,
-  }));
-
-  const { removeErrorMessages } = useRestApiErrorDispatcher();
-
   return (
     <>
-      <HeaderWithErrorPanel
+      <HeaderPanel
         navAnsattName={navAnsatt?.navn}
         navBrukernavn={navAnsatt?.brukernavn}
-        removeErrorMessage={removeErrorMessages}
-        errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
-        setSiteHeight={setSiteHeight}
         getPathToLos={getPathToK9Los}
         getPathToK9Punsj={getPathToK9Punsj}
         ainntektPath={getAinntektPath()}

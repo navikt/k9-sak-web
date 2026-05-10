@@ -1,5 +1,5 @@
 import type { Decorator } from '@storybook/react-vite';
-import HeaderWithErrorPanel from '../../sak/dekoratør/HeaderWithErrorPanel.js';
+import { HeaderPanel } from '../../sak/dekoratør/HeaderPanel.js';
 
 interface TopDekoratørProps {
   readonly ytelseNavn: string;
@@ -13,13 +13,7 @@ export const withTopDekoratør =
   Story => {
     return (
       <>
-        <HeaderWithErrorPanel
-          removeErrorMessage={() => undefined}
-          setSiteHeight={() => undefined}
-          aaregPath="/aaregPath"
-          ytelse={ytelseNavn}
-          headerTitleHref="/k9/web"
-        />
+        <HeaderPanel aaregPath="/aaregPath" ytelse={ytelseNavn} headerTitleHref="/k9/web" />
         <Story />
       </>
     );
