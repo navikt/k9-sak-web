@@ -6,7 +6,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -193,7 +193,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       vilkar,
     };
 
-    renderWithIntl(
+    renderWithIntlAndReduxForm(
       <GlobalUnhandledErrorCatcher>
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
