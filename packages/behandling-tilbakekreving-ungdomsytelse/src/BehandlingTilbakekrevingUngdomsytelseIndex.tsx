@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import {
@@ -78,8 +78,6 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   } = restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-
   const { startRequest: nyBehandlendeEnhet } = restApiTilbakekrevingHooks.useRestApiRunner(
     TilbakekrevingBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
   );
@@ -115,7 +113,6 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
     });
 
     requestTilbakekrevingApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestTilbakekrevingApi.setAddErrorMessageHandler(addErrorMessage);
 
     void hentBehandling(behandlingUuid, false);
 
