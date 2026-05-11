@@ -10,16 +10,16 @@ Disse instruksjonene gjelder for GitHub Copilot code review for alle filer i det
 ## Generelle sjekker
 
 ### Branch-navngivning
-Flag dersom source branch ikke følger navnekonvensjon. Forventede prefikser:
+Flagg dersom source branch ikke følger navnekonvensjon. Forventede prefikser:
 - `feature/`, `fix/`, `chore/`, `docs/`
 
 ### Relevans
 Verifiser at endringene er rimelige i omfang og relevante for oppgitt formål.
-Flag dersom PRen inneholder urelaterte endringer blandet inn.
+Flagg dersom PRen inneholder urelaterte endringer blandet inn.
 
 ## Domene-spesifikke punkter
 
-Flag følgende for menneskelig reviewer. Ikke blokker — fremhev med kommentar.
+Flagg følgende for menneskelig reviewer. Ikke blokker — fremhev med kommentar.
 
 ### NAIS-konfigurasjon
 - Endringer i `nais*.yaml` eller `naiserator.yaml` som modifiserer:
@@ -46,7 +46,7 @@ Flag følgende for menneskelig reviewer. Ikke blokker — fremhev med kommentar.
 ### Miljøvariabler og hemmeligheter
 - Nye eller endrede miljøvariabler som inneholder `SCOPE`, `CLIENT_ID`, `CLIENT_SECRET` eller `CREDENTIAL`
 - Referanser til Vault eller Azure Key Vault-hemmeligheter
-- Hardkodede URLer, tokens eller credentials (flag som sikkerhetsproblem)
+- Hardkodede URLer, tokens eller credentials (flagg som sikkerhetsproblem)
 
 ### GitHub Actions workflows
 - Endringer i `.github/workflows/` som påvirker bygg, test eller deploy-pipelines
