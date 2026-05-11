@@ -39,7 +39,6 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
   setBeregningErBehandlet: (value: boolean) => void;
-  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 export const getForhandsvisFptilbakeCallback =
@@ -124,7 +123,6 @@ const PleiepengerProsess = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   setBeregningErBehandlet,
-  hentBehandling,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
@@ -276,7 +274,6 @@ const PleiepengerProsess = ({
           lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
           useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
           featureToggles={featureToggles}
-          hentBehandling={hentBehandling}
           erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
         />
       </ProsessStegContainer>
