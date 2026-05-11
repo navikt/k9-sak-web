@@ -163,7 +163,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapaneler og sidemeny korrekt uten Omsorgen for', () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, []);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -199,7 +199,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapaneler og sidemeny korrekt med Omsorgen for', () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, []);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -235,7 +235,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

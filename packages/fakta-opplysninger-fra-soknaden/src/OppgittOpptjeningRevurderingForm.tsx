@@ -144,7 +144,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
       <div className={styles.tabsContainer}>
         <Tabs defaultValue="0">
           <Tabs.List>
-            {(oppgittOpptjening?.måneder ?? []).map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => (
+            {oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => (
               <Tabs.Tab
                 key={`${formatDate(currentOppgittOpptjening.måned.fom)} - ${formatDate(
                   currentOppgittOpptjening.måned.tom,
@@ -238,8 +238,8 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
   );
 };
 
-const buildInitialValues = (values: OpplysningerFraSøknaden | undefined, aksjonspunkter: Aksjonspunkt[]) => {
-  const { førSøkerPerioden } = values ?? {};
+const buildInitialValues = (values: OpplysningerFraSøknaden, aksjonspunkter: Aksjonspunkt[]) => {
+  const { førSøkerPerioden } = values;
 
   const næringFørSøknadsperioden =
     førSøkerPerioden?.oppgittEgenNæring.length > 0 ? førSøkerPerioden.oppgittEgenNæring : null;
@@ -264,7 +264,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden | undefined, aksjon
     [SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020]: inntektsperiodenFørSøknadsperiodeErI2020
       ? næringsinntektFørSøknadsperioden
       : null,
-    [fieldArrayName]: (values?.måneder ?? []).map(måned => buildInitialValuesForSøknadsperiode(måned)),
+    [fieldArrayName]: values.måneder.map(måned => buildInitialValuesForSøknadsperiode(måned)),
     [SøknadFormValue.BEGRUNNELSE]: aksjonspunkt ? aksjonspunkt.begrunnelse : null,
   };
 };

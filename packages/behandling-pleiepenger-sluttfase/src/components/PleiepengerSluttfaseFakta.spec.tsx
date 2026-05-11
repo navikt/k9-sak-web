@@ -72,11 +72,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     },
   ];
   const vilkar = [];
-  const arbeidsforhold = {
-    skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
-    relatertTilgrensendeYtelserForAnnenForelder: [],
-  };
+  const arbeidsforhold = [];
 
   const soker = {
     navn: 'Espen Utvikler',

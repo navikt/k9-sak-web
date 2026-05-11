@@ -162,7 +162,10 @@ describe('<FrisinnFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, undefined);
+    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, {
+      måneder: [],
+      førSøkerPerioden: { oppgittEgenNæring: [] },
+    });
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
