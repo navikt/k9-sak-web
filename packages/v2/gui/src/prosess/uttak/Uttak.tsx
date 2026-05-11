@@ -17,6 +17,7 @@ interface UttakProps {
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
   relevanteAksjonspunkter: AksjonspunktDefinisjon[];
+  onAksjonspunktBekreftet?: () => void;
 }
 
 const Uttak = ({
@@ -26,6 +27,7 @@ const Uttak = ({
   aksjonspunkter,
   relevanteAksjonspunkter,
   readOnly,
+  onAksjonspunktBekreftet,
 }: UttakProps): JSX.Element => {
   const uttakApi = use(UttakApiContext);
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
@@ -60,6 +62,7 @@ const Uttak = ({
     virkningsdatoUttakNyeRegler,
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     aksjonspunkter,
+    onAksjonspunktBekreftet,
   };
 
   return (
