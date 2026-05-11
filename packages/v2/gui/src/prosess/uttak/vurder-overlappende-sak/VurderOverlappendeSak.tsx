@@ -169,9 +169,12 @@ const VurderOverlappendeSak: FC = () => {
         behandlingVersjon: versjon,
         bekreftedeAksjonspunktDtoer: [bekreftetAksjonspunkt],
       };
-      await uttakApi.bekreftAksjonspunkt(requestBody);
-      setLoading(false);
-      await oppdaterBehandling();
+      try {
+        await uttakApi.bekreftAksjonspunkt(requestBody);
+        await oppdaterBehandling();
+      } finally {
+        setLoading(false);
+      }
     } else {
       throw new Error(
         `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt?.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
