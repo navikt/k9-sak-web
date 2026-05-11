@@ -7,7 +7,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { ArbeidsforholdV2, Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -72,7 +72,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     },
   ];
   const vilkar = [];
-  const arbeidsforhold = [];
+  const arbeidsforhold: ArbeidsforholdV2[] = [];
 
   const soker = {
     navn: 'Espen Utvikler',

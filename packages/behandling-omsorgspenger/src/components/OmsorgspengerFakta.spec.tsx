@@ -7,7 +7,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { ArbeidsforholdV2, Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -156,6 +156,8 @@ describe('<OmsorgspengerFakta>', () => {
     },
   };
 
+  const arbeidsforhold: ArbeidsforholdV2[] = [];
+
   // const behandlingPerioderårsakMedVilkår =
 
   afterEach(() => {
@@ -163,7 +165,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapaneler og sidemeny korrekt uten Omsorgen for', () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, []);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -199,7 +201,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal rendre faktapaneler og sidemeny korrekt med Omsorgen for', () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, []);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -235,7 +237,7 @@ describe('<OmsorgspengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, []);
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

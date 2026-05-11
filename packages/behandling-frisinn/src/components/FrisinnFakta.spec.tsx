@@ -7,7 +7,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak, OpplysningerFraSøknaden } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -63,6 +63,15 @@ describe('<FrisinnFakta>', () => {
     },
   ];
   const vilkar = [];
+
+  const oppgittOpptjening: OpplysningerFraSøknaden = {
+    måneder: [],
+    førSøkerPerioden: {
+      oppgittEgenNæring: [],
+      oppgittFrilans: { oppgittFrilansoppdrag: [] },
+      oppgittArbeidsforhold: [],
+    },
+  };
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -162,10 +171,7 @@ describe('<FrisinnFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, {
-      måneder: [],
-      førSøkerPerioden: { oppgittEgenNæring: [] },
-    });
+    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, oppgittOpptjening);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
