@@ -71,7 +71,6 @@ class RequestErrorEventHandler {
     }
 
     if (formattedError.isGatewayTimeoutOrNotFound) {
-      console.debug('gateway teimeout', formattedError);
       this.notify(
         EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND,
         { location: formattedError.location },
