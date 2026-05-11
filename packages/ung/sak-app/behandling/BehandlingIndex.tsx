@@ -12,7 +12,6 @@ import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBound
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -93,8 +92,6 @@ const BehandlingIndex = ({
     }
   }, [behandling]);
 
-  const { addGlobalError } = useGlobalUnhandledErrors();
-
   const oppdaterBehandlingVersjon = useCallback(
     versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
     [behandling?.id],
@@ -164,7 +161,7 @@ const BehandlingIndex = ({
   if (erTilbakekreving(behandlingTypeKode)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorCallback={addGlobalError}>
+        <ErrorBoundary>
           <BehandlingTilbakekrevingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             harApenRevurdering={fagsakBehandlingerInfo.some(
@@ -184,7 +181,7 @@ const BehandlingIndex = ({
   if (behandlingTypeKode === ung_kodeverk_behandling_BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorCallback={addGlobalError}>
+        <ErrorBoundary>
           <BehandlingKlageUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
@@ -199,7 +196,7 @@ const BehandlingIndex = ({
   if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorCallback={addGlobalError}>
+        <ErrorBoundary>
           <BehandlingAktivitetspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
@@ -214,7 +211,7 @@ const BehandlingIndex = ({
 
   return (
     <Suspense fallback={<LoadingPanel />}>
-      <ErrorBoundary errorCallback={addGlobalError}>
+      <ErrorBoundary>
         <BehandlingUngdomsytelseIndex
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           valgtFaktaSteg={query.fakta}
