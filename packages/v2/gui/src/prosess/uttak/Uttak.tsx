@@ -15,7 +15,6 @@ interface UttakProps {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   readOnly: boolean;
   relevanteAksjonspunkter: AksjonspunktDefinisjon[];
 }
@@ -25,7 +24,6 @@ const Uttak = ({
   behandling,
   erOverstyrer = false,
   aksjonspunkter,
-  hentBehandling,
   relevanteAksjonspunkter,
   readOnly,
 }: UttakProps): JSX.Element => {
@@ -56,11 +54,9 @@ const Uttak = ({
     behandling,
     uttak,
     uttakApi,
-    hentBehandling,
     erOverstyrer,
     harEtUløstAksjonspunktIUttak,
     readOnly,
-    oppdaterBehandling: () => hentBehandling?.({ behandlingId: behandling.uuid }, false),
     virkningsdatoUttakNyeRegler,
     perioderTilVurdering: uttak?.perioderTilVurdering || [],
     aksjonspunkter,
