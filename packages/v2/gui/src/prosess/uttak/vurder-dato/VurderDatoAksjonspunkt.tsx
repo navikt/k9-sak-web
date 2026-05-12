@@ -4,6 +4,7 @@ import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './VurderDatoAksjonspunkt.module.css';
 
@@ -20,8 +21,8 @@ interface Props {
 }
 
 const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
-  const { readOnly, behandling, uttakApi, oppdaterBehandling, setRedigervirkningsdato, virkningsdatoUttakNyeRegler } =
-    useUttakContext();
+  const { readOnly, behandling, uttakApi, setRedigervirkningsdato, virkningsdatoUttakNyeRegler } = useUttakContext();
+  const oppdaterBehandling = useRefetchBehandling();
 
   const formMethods = useForm<FormData>({
     defaultValues: initialValues,
@@ -43,8 +44,8 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
       };
       return uttakApi.bekreftAksjonspunkt(payload);
     },
-    onSuccess: () => {
-      oppdaterBehandling();
+    onSuccess: async () => {
+      await oppdaterBehandling();
     },
   });
 

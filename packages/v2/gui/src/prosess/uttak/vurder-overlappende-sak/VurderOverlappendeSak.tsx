@@ -29,6 +29,7 @@ import { RhfForm } from '@navikt/ft-form-hooks';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
 import { useUttakContext } from '../context/UttakContext';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
@@ -50,13 +51,8 @@ export interface VurderOverlappendeSakFormData {
 const gyldigAksjonspunktType = '9292' as const;
 
 const VurderOverlappendeSak: FC = () => {
-  const {
-    behandling,
-    aksjonspunktVurderOverlappendeSaker: aksjonspunkt,
-    uttakApi,
-    readOnly,
-    oppdaterBehandling,
-  } = useUttakContext();
+  const { behandling, aksjonspunktVurderOverlappendeSaker: aksjonspunkt, uttakApi, readOnly } = useUttakContext();
+  const oppdaterBehandling = useRefetchBehandling();
 
   const { status, uuid, id, versjon } = behandling;
   const [rediger, setRediger] = useState<boolean>(aksjonspunkt ? skalAksjonspunktUtredes(aksjonspunkt, status) : false);
@@ -173,9 +169,12 @@ const VurderOverlappendeSak: FC = () => {
         behandlingVersjon: versjon,
         bekreftedeAksjonspunktDtoer: [bekreftetAksjonspunkt],
       };
-      await uttakApi.bekreftAksjonspunkt(requestBody);
-      setLoading(false);
-      oppdaterBehandling();
+      try {
+        await uttakApi.bekreftAksjonspunkt(requestBody);
+        await oppdaterBehandling();
+      } finally {
+        setLoading(false);
+      }
     } else {
       throw new Error(
         `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt?.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
@@ -328,7 +327,7 @@ const VurderOverlappendeSak: FC = () => {
                         </Alert>
 
                         <HStack gap="space-16">
-                          <Button type="submit" size="small" disabled={readOnly} loading={loading}>
+                          <Button type="submit" size="small" disabled={readOnly || loading} loading={loading}>
                             Bekreft og fortsett
                           </Button>
                           {rediger && (

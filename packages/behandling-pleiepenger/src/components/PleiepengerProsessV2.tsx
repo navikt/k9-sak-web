@@ -50,7 +50,6 @@ export interface PleiepengerProsessV2Props {
   behandling: Behandling;
   rettigheter: Rettigheter;
   data: FetchedData;
-  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   visIverksetterVedtakModal: boolean;
   toggleIverksetterVedtakModal: Dispatch<SetStateAction<boolean>>;
@@ -72,7 +71,6 @@ export const PleiepengerProsessV2 = ({
   behandling,
   rettigheter,
   data,
-  hentBehandling,
   oppdaterProsessStegOgFaktaPanelIUrl,
   visIverksetterVedtakModal,
   toggleIverksetterVedtakModal,
@@ -212,7 +210,6 @@ export const PleiepengerProsessV2 = ({
                     key={urlKode}
                     behandling={behandling}
                     api={k9SakProsessApi}
-                    hentBehandling={hentBehandling}
                     erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
                     isReadOnly={isReadOnly}
                   />
