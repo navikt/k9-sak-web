@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",
+    "@k9-sak-web/gui": "workspace:^",
     "axios": "1.13.6"
   }
 }

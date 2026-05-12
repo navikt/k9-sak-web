@@ -1,4 +1,4 @@
-import ErrorType from './errorTsType';
+import { AxiosError } from 'axios';
 
 /**
  * Feiltyper til differensiering av framvisning i GUI
@@ -13,11 +13,11 @@ export enum ErrorTypes {
 
 const handledErrorTypes = [ErrorTypes.MANGLER_TILGANG_FEIL];
 
-export const getErrorResponseData = (error: ErrorType): any =>
-  error && error.response && error.response.data ? error.response.data : error;
+export const getErrorResponseData = (error: Error): any =>
+  error instanceof AxiosError && error.response && error.response.data ? error.response.data : error;
 
-export const errorOfType = (error: ErrorType, errorType: string): boolean =>
-  error && getErrorResponseData(error).type === errorType;
+export const errorOfType = (error: Error, errorType: string): boolean =>
+  error instanceof AxiosError && getErrorResponseData(error).type === errorType;
 
 export const isHandledError = (errorType?: string): boolean =>
   errorType != null && handledErrorTypes.some(het => het === errorType);

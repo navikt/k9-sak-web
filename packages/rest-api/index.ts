@@ -5,7 +5,6 @@ import RequestApiMock from './src/requestApi/RequestApiMock';
 import RequestConfig from './src/RequestConfig';
 
 export { default as AbstractRequestApi } from './src/requestApi/AbstractRequestApi';
-export type { default as ErrorType } from './src/requestApi/error/errorTsType';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/requestApi/error/ErrorTypes';
 export type { default as Link } from './src/requestApi/LinkTsType';
 export { default as RequestApi } from './src/requestApi/RequestApi';

@@ -5,6 +5,7 @@ import RequestErrorEventHandler from './error/RequestErrorEventHandler';
 import TimeoutError from './error/TimeoutError';
 import EventType from './eventType';
 import { Response } from './ResponseTsType';
+import { NotificationEmitter } from './NotificationEmitter.js';
 
 const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
@@ -16,9 +17,6 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const hasLocationAndStatusDelayedOrHalted = (responseData): boolean =>
   responseData.location &&
   (responseData.status === AsyncPollingStatus.DELAYED || responseData.status === AsyncPollingStatus.HALTED);
-
-type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void;
-type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void;
 
 let popupWindow = null;
 
@@ -40,7 +38,7 @@ class RequestRunner {
 
   maxPollingLimit: number = MAX_POLLING_ATTEMPTS;
 
-  notify: Notify = () => undefined;
+  notify: NotificationEmitter = () => undefined;
 
   isCancelled = false;
 

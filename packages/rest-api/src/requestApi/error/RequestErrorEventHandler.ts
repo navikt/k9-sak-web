@@ -1,14 +1,13 @@
 import EventType from '../eventType';
-import ErrorType from './errorTsType';
 import { isHandledError } from './ErrorTypes';
 import TimeoutError from './TimeoutError';
 import { ErrorResponse } from '../ResponseTsType';
-
-type NotificationEmitter = (eventType: keyof typeof EventType, data?: any, isPollingRequest?: boolean) => void;
+import { AxiosError } from 'axios';
+import type { NotificationEmitter } from '../NotificationEmitter.js';
 
 const isString = (value: any): boolean => typeof value === 'string';
 
-const isOfTypeBlob = (error: ErrorType): boolean =>
+const isOfTypeBlob = (error: AxiosError): boolean =>
   error != null && error.config != null && error.config.responseType === 'blob';
 
 const blobParser = (blob: any): Promise<string> => {
@@ -55,41 +54,48 @@ class RequestErrorEventHandler {
     this.isPollingRequest = isPollingRequest;
   }
 
-  handleError = async (error: ErrorType | TimeoutError): Promise<void> => {
+  handleError = async (error: Error): Promise<void> => {
     if (error instanceof TimeoutError) {
       this.notify(EventType.POLLING_TIMEOUT, { location: error.location });
       return;
     }
 
-    const formattedError = this.formatError(error);
+    if (error instanceof AxiosError) {
+      const formattedError = this.formatError(error);
 
-    if (isOfTypeBlob(error)) {
-      const jsonErrorString = await blobParser(formattedError.data);
-      if (isString(jsonErrorString)) {
-        formattedError.data = JSON.parse(jsonErrorString);
+      if (isOfTypeBlob(error)) {
+        const jsonErrorString = await blobParser(formattedError.data);
+        if (isString(jsonErrorString)) {
+          formattedError.data = JSON.parse(jsonErrorString);
+        }
       }
-    }
 
-    if (formattedError.isGatewayTimeoutOrNotFound) {
-      this.notify(
-        EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND,
-        { location: formattedError.location },
-        this.isPollingRequest,
-      );
-    } else if (formattedError.isUnauthorized) {
-      this.notify(EventType.REQUEST_UNAUTHORIZED, { message: error.message }, this.isPollingRequest);
-    } else if (formattedError.isForbidden) {
-      this.notify(EventType.REQUEST_FORBIDDEN, formattedError.data ? formattedError.data : { message: error.message });
-    } else if (formattedError.is418) {
-      this.notify(EventType.POLLING_HALTED_OR_DELAYED, formattedError.data);
-    } else if (!error.response && error.message) {
+      if (formattedError.isGatewayTimeoutOrNotFound) {
+        this.notify(
+          EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND,
+          { location: formattedError.location },
+          this.isPollingRequest,
+        );
+      } else if (formattedError.isUnauthorized) {
+        this.notify(EventType.REQUEST_UNAUTHORIZED, { message: error.message }, this.isPollingRequest);
+      } else if (formattedError.isForbidden) {
+        this.notify(
+          EventType.REQUEST_FORBIDDEN,
+          formattedError.data ? formattedError.data : { message: error.message },
+        );
+      } else if (formattedError.is418) {
+        this.notify(EventType.POLLING_HALTED_OR_DELAYED, formattedError.data);
+      } else if (!error.response && error.message) {
+        this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
+      } else if (!isHandledError(formattedError.type)) {
+        this.notify(
+          EventType.REQUEST_ERROR,
+          formattedError.data !== undefined ? this.getFormattedData(formattedError.data) : undefined,
+          this.isPollingRequest,
+        );
+      }
+    } else {
       this.notify(EventType.REQUEST_ERROR, { message: error.message }, this.isPollingRequest);
-    } else if (!isHandledError(formattedError.type)) {
-      this.notify(
-        EventType.REQUEST_ERROR,
-        formattedError.data !== undefined ? this.getFormattedData(formattedError.data) : undefined,
-        this.isPollingRequest,
-      );
     }
   };
 
@@ -102,11 +108,11 @@ class RequestErrorEventHandler {
     statusText?: string;
   }): string | ErrorResponse | undefined => (response.data ? response.data : response.statusText);
 
-  formatError = (error: ErrorType): FormatedError => {
+  formatError = (error: AxiosError): FormatedError => {
     const response = error && error.response ? error.response : undefined;
     return {
       data: response ? this.findErrorData(response) : undefined,
-      type: response && response.data ? response.data.type : undefined,
+      type: response && response.data ? response.data['type'] : undefined,
       status: response ? response.status : undefined,
       isForbidden: response ? response.status === 403 : undefined,
       isUnauthorized: response ? response.status === 401 : undefined,
