@@ -1,6 +1,6 @@
 import type { k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto as RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { Decorator } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction.js';
@@ -97,23 +97,28 @@ export const VisValideringsfeil: Story = {
   play: async ({ canvas }) => {
     const button = await canvas.findByRole('button', { name: 'Bekreft' });
     await userEvent.click(button);
-    await expect(canvas.getAllByText('Feltet er påkrevd')).toHaveLength(2);
+    const radioGroup = await canvas.findByRole('group', {
+      name: 'Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket?',
+    });
+    await expect(radioGroup).toHaveTextContent('Feltet er påkrevd');
+    await expect(await canvas.findByRole('textbox', { name: 'Begrunnelse' })).toBeInvalid();
   },
 };
 
 export const SendInnVurdering: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
-  play: async ({ canvas, step }) => {
+  args: { submitCallback: fn() },
+  play: async ({ canvas, args, step }) => {
     await step('Velg Ja og fyll begrunnelse', async () => {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
       await userEvent.click(jaRadio);
       const begrunnelse = await canvas.findByRole('textbox', { name: 'Begrunnelse' });
       await userEvent.type(begrunnelse, 'Arbeidsgiver har rett fra første dag.');
     });
-    await step('Klikk Bekreft', async () => {
+    await step('Klikk Bekreft og verifiser innsending', async () => {
       const button = await canvas.findByRole('button', { name: 'Bekreft' });
       await userEvent.click(button);
-      await expect(canvas.queryByText('Feltet er påkrevd')).not.toBeInTheDocument();
+      await expect(args.submitCallback).toHaveBeenCalledOnce();
     });
   },
 };
