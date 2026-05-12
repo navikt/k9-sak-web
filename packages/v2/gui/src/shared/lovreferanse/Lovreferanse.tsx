@@ -68,7 +68,7 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
         <Fragment key={index}>
           {prefix}
           <Link href={link} title="Les mer på Lovdata.no" target="_blank">
-            {isKapittel ? `Kapittel ${kapittelOgKanskjeParagraf}` : kapittelOgKanskjeParagraf}
+            {isKapittel ? `kapittel ${kapittelOgKanskjeParagraf}` : kapittelOgKanskjeParagraf}
           </Link>
           {suffix}
         </Fragment>
