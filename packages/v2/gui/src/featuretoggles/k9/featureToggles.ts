@@ -1,4 +1,4 @@
-import { initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatureToggles } from '../FeatureToggles.js';
+import {initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatureToggles} from '../FeatureToggles.js';
 
 /**
  * Toggles satt her bli gjeldande kun for k9, men både i Q og prod.
@@ -27,6 +27,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_AVREGNING: true,
   PROSESS_MENY_V2: true,
   REVURDERING_FRA_STEG_V2: true,
+  VIS_INNLEGGELSE_FOR_PILS: true,
 });
 
 /**

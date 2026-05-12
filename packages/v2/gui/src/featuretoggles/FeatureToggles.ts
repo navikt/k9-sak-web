@@ -24,6 +24,7 @@ const rootFeatureToggles = {
   AKTIVITETSPENGER: false,
   REVURDERING_FRA_STEG_V2: false,
   SINGLE_AUTHFIXER: false,
+  VIS_INNLEGGELSE_FOR_PILS: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
@@ -37,6 +38,7 @@ const baseQFeatureToggles = {
   UNNTAKSBEHANDLING: true,
   VIS_ALLE_ASYNC_ERRORS: true,
   SINGLE_AUTHFIXER: true,
+  VIS_INNLEGGELSE_FOR_PILS: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 
 // Viss det trengs baseProdFeatureToggles kan det leggast til her på samme måte som baseQFeatureToggles.
