@@ -33,8 +33,13 @@ interface TiDagerProsessIndexProps {
   behandlingUUID: string;
 }
 
-function arbeidsgiverVisning(journalpost: JournalpostVisningDto): string {
+function formatArbeidsgiverNavn(journalpost: JournalpostVisningDto): string {
   return journalpost.arbeidsgiver?.arbeidsgiverOrgnr ?? journalpost.arbeidsgiver?.arbeidsgiverAktørId ?? journalpost.journalpostId;
+}
+
+function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | undefined {
+  if (value == null) return undefined;
+  return value ? 'ja' : 'nei';
 }
 
 export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID }: TiDagerProsessIndexProps) => {
@@ -53,7 +58,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
 
   const defaultVurderinger = (opplysninger?.journalposter ?? []).map(jp => ({
     journalpostId: jp.journalpostId,
-    harUtbetaltPliktigeDager: jp.harUtbetaltPliktigeDager != null ? (jp.harUtbetaltPliktigeDager ? 'ja' : 'nei') as 'ja' | 'nei' : undefined,
+    harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
   }));
 
   const formMethods = useForm<TiDagerFormData>({
@@ -124,7 +129,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                   <VStack gap="space-8">
                     <VStack gap="space-4">
                       <Label size="small">Arbeidsgiver</Label>
-                      <BodyShort size="small">{journalpost ? arbeidsgiverVisning(journalpost) : field.journalpostId}</BodyShort>
+                      <BodyShort size="small">{journalpost ? formatArbeidsgiverNavn(journalpost) : field.journalpostId}</BodyShort>
                     </VStack>
                     <VStack gap="space-4">
                       <Label size="small">Første fraværsdag</Label>
