@@ -44,7 +44,7 @@ export const DefaultFallback: Story = {
     children: <AlwaysFailingChild />,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading')).toHaveTextContent('Uventet feil');
+    await expect(await canvas.findByRole('heading')).toHaveTextContent('Uventet feil');
   },
 };
 
@@ -54,7 +54,7 @@ export const CustomErrorFallback: Story = {
     errorFallback: ({ error }: ErrorBoundaryFallbackProps) => <p>Feil: {error.message}</p>,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Feil: TEST FAIL')).toBeInTheDocument();
+    await expect(await canvas.findByText('Feil: TEST FAIL')).toBeInTheDocument();
   },
 };
 
@@ -64,7 +64,8 @@ export const ErrorCallbackAndErrorFallback: Story = {
     errorCallback: fn(),
     errorFallback: () => <p>I failed</p>,
   },
-  play: async ({ args }) => {
+  play: async ({ canvas, args }) => {
+    await expect(await canvas.findByText('I failed')).toBeInTheDocument();
     await expect(args.errorCallback).toHaveBeenCalledOnce();
   },
 };
@@ -80,9 +81,11 @@ export const AlwaysCrashingFallback: Story = {
     layout: 'fullscreen',
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Uventet mange feil oppsto')).toBeInTheDocument();
-    await expect(canvas.getByText('TEST FAIL')).toBeInTheDocument();
-    await expect(canvas.getByText('rapporter informasjonen over i porten', { exact: false })).toBeInTheDocument();
+    await expect(await canvas.findByText('Uventet mange feil oppsto')).toBeInTheDocument();
+    await expect(await canvas.findByText('TEST FAIL')).toBeInTheDocument();
+    await expect(
+      await canvas.findByText('rapporter informasjonen over i porten', { exact: false }),
+    ).toBeInTheDocument();
   },
 };
 
@@ -93,7 +96,7 @@ export const FilterCatchesMatching: Story = {
     filter: (error: Error) => error instanceof FrontendError,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading')).toHaveTextContent('Uventet feil');
+    await expect(await canvas.findByRole('heading')).toHaveTextContent('Uventet feil');
   },
 };
 
@@ -107,6 +110,6 @@ export const FilterPropagatesNonMatching: StoryObj = {
     </ErrorBoundary>
   ),
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Ytre boundary fanga: BASE ERROR')).toBeInTheDocument();
+    await expect(await canvas.findByText('Ytre boundary fanga: BASE ERROR')).toBeInTheDocument();
   },
 };
