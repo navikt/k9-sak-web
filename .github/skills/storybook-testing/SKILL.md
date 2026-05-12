@@ -50,7 +50,7 @@ export const SendsBrevOnSubmit: Story = {
       await userEvent.click(canvas.getByLabelText('Mal'));
       // ...
     });
-    await expect(canvas.findByText('Sendt')).toBeInTheDocument();
+    expect(await canvas.findByText('Sendt')).toBeInTheDocument();
   },
 };
 ```
