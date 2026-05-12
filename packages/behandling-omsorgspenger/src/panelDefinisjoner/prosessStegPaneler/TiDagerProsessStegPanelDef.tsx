@@ -6,7 +6,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <TiDagerProsessIndex {...props} behandlingUUID={props.behandling.uuid} />;
 
-  getAksjonspunktKoder = () => [AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_1];
+  getAksjonspunktKoder = () => [AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN];
 
   getOverstyrVisningAvKomponent = () => false;
 

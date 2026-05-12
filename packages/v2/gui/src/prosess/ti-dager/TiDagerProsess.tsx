@@ -1,19 +1,16 @@
+import type {
+  k9_sak_kontrakt_inngangsvilkår_AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto,
+  k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { BodyLong, BodyShort, Box, Button, Heading, Label, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
-
-interface AgRettFraDagEnOpplysning {
-  journalpostId: string;
-  arbeidsgiverNavn: string;
-  foersteFravaersdag: string;
-}
+import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 
 interface TiDagerVurderingFormData {
   journalpostId: string;
-  harRettFraDagEn?: 'ja' | 'nei';
+  harUtbetaltPliktigeDager?: 'ja' | 'nei';
 }
 
 interface TiDagerFormData {
@@ -24,10 +21,9 @@ interface TiDagerFormData {
 interface TiDagerSubmitModel {
   kode: string;
   begrunnelse: string;
-  vurderinger: Array<{
-    journalpostId: string;
-    avklarAgRettFraDagEn: boolean;
-  }>;
+  avklarRettFraDagEn: {
+    vurderinger: JournalpostVurderingDto[];
+  };
 }
 
 interface TiDagerProsessIndexProps {
@@ -37,25 +33,27 @@ interface TiDagerProsessIndexProps {
   behandlingUUID: string;
 }
 
+function arbeidsgiverVisning(journalpost: JournalpostVisningDto): string {
+  return journalpost.arbeidsgiver?.arbeidsgiverOrgnr ?? journalpost.arbeidsgiver?.arbeidsgiverAktørId ?? journalpost.journalpostId;
+}
+
 export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID }: TiDagerProsessIndexProps) => {
+  const api = useTiDagerBackendClient();
+
   const {
     data: opplysninger,
     isFetching,
     isError,
-  } = useQuery<AgRettFraDagEnOpplysning[]>({
-    queryKey: ['agRettFraDagEn', behandlingUUID],
-    queryFn: () =>
-      axios
-        .get(
-          '/k9/sak/api/behandling/ag-rett-fra-dag-en',
-          addLegacySerializerOption({ params: { behandlingUuid: behandlingUUID } }),
-        )
-        .then(({ data }) => data),
-  });
+  } = useQuery(
+    queryOptions({
+      queryKey: ['rettFraDagEn', behandlingUUID],
+      queryFn: () => api.hentRettFraDagEnOpplysninger(behandlingUUID),
+    }),
+  );
 
-  const defaultVurderinger = (opplysninger ?? []).map(o => ({
-    journalpostId: o.journalpostId,
-    harRettFraDagEn: undefined,
+  const defaultVurderinger = (opplysninger?.journalposter ?? []).map(jp => ({
+    journalpostId: jp.journalpostId,
+    harUtbetaltPliktigeDager: jp.harUtbetaltPliktigeDager != null ? (jp.harUtbetaltPliktigeDager ? 'ja' : 'nei') as 'ja' | 'nei' : undefined,
   }));
 
   const formMethods = useForm<TiDagerFormData>({
@@ -68,10 +66,16 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
     const payload = aksjonspunkter.map(ap => ({
       kode: ap.definisjon.kode,
       begrunnelse: data.begrunnelse,
-      vurderinger: data.vurderinger.map(v => ({
-        journalpostId: v.journalpostId,
-        avklarAgRettFraDagEn: v.harRettFraDagEn === 'ja',
-      })),
+      avklarRettFraDagEn: {
+        vurderinger: data.vurderinger.map(v => {
+          const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === v.journalpostId);
+          return {
+            journalpostId: v.journalpostId,
+            harUtbetaltPliktigeDager: v.harUtbetaltPliktigeDager === 'ja',
+            arbeidsgiver: journalpost?.arbeidsgiver,
+          };
+        }),
+      },
     }));
     await submitCallback(payload);
   };
@@ -114,21 +118,21 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
         <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
           <VStack gap="space-16">
             {fields.map((field, index) => {
-              const opplysning = opplysninger?.find(o => o.journalpostId === field.journalpostId);
+              const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === field.journalpostId);
               return (
                 <Box key={field.id} borderWidth="1" borderRadius="8" padding="space-12">
                   <VStack gap="space-8">
                     <VStack gap="space-4">
                       <Label size="small">Arbeidsgiver</Label>
-                      <BodyShort size="small">{opplysning?.arbeidsgiverNavn ?? field.journalpostId}</BodyShort>
+                      <BodyShort size="small">{journalpost ? arbeidsgiverVisning(journalpost) : field.journalpostId}</BodyShort>
                     </VStack>
                     <VStack gap="space-4">
                       <Label size="small">Første fraværsdag</Label>
-                      <BodyShort size="small">{opplysning?.foersteFravaersdag ?? '–'}</BodyShort>
+                      <BodyShort size="small">{journalpost?.foersteOppgitteFravaersdag ?? '–'}</BodyShort>
                     </VStack>
                     <Controller
                       control={formMethods.control}
-                      name={`vurderinger.${index}.harRettFraDagEn`}
+                      name={`vurderinger.${index}.harUtbetaltPliktigeDager`}
                       rules={{ required: true }}
                       render={({ field: radioField, fieldState }) => (
                         <RadioGroup
