@@ -1,4 +1,4 @@
-import { Accordion, BodyShort } from '@navikt/ds-react';
+import { BodyShort, ExpansionCard } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { type JSX } from 'react';
 import { Dokument, Dokumenttype } from '../../../types/Dokument';
@@ -49,62 +49,62 @@ const Dokumentnavigasjon = ({
 
   return (
     <div className={styles.dokumentnavigasjon}>
-      <Accordion>
-        <Accordion.Item defaultOpen={expandedByDefault} className="shadow-none">
-          <Accordion.Header>{tittel}</Accordion.Header>
-          <Accordion.Content>
-            <div className={styles.dokumentnavigasjon__container}>
-              <div className={styles.dokumentnavigasjon__columnHeadings}>
-                <div className={styles['dokumentnavigasjon__columnHeading--first']}>
-                  <BodyShort weight="semibold" size="small">
-                    Status
-                  </BodyShort>
-                </div>
-                {!displayFilterOption && (
-                  <div className={styles['dokumentnavigasjon__columnHeading--second']}>
-                    <BodyShort weight="semibold" size="small">
-                      Type
-                    </BodyShort>
-                  </div>
-                )}
-                {displayFilterOption && (
-                  <Dokumentfilter
-                    className={styles['dokumentnavigasjon__columnHeading--second']}
-                    text="Type"
-                    filters={dokumenttypeFilter}
-                    onFilterChange={updateDokumenttypeFilter}
-                  />
-                )}
-                <div className={styles['dokumentnavigasjon__columnHeading--third']}>
-                  <BodyShort weight="semibold" size="small">
-                    Datert
-                  </BodyShort>
-                </div>
-                <div className={styles['dokumentnavigasjon__columnHeading--fourth']}>
-                  <BodyShort weight="semibold" size="small">
-                    Part
-                  </BodyShort>
-                </div>
+      <ExpansionCard size="small" aria-label={tittel} defaultOpen={expandedByDefault}>
+        <ExpansionCard.Header>
+          <ExpansionCard.Title size="small">{tittel}</ExpansionCard.Title>
+        </ExpansionCard.Header>
+        <ExpansionCard.Content>
+          <div className={styles.dokumentnavigasjon__container}>
+            <div className={styles.dokumentnavigasjon__columnHeadings}>
+              <div className={styles['dokumentnavigasjon__columnHeading--first']}>
+                <BodyShort weight="semibold" size="small">
+                  Status
+                </BodyShort>
               </div>
-              {dokumentElementer.length === 0 && (
-                <div style={{ padding: '0.5rem 1rem 1rem 1rem' }}>
-                  <BodyShort size="small">Ingen dokumenter å vise</BodyShort>
+              {!displayFilterOption && (
+                <div className={styles['dokumentnavigasjon__columnHeading--second']}>
+                  <BodyShort weight="semibold" size="small">
+                    Type
+                  </BodyShort>
                 </div>
               )}
-              <InteractiveList
-                elements={dokumentElementer
-                  .filter(element => dokumenttypeFilter.includes(element?.dokument?.type))
-                  .map((element, currentIndex) => ({
-                    content: element.renderer(),
-                    active: element.dokument === valgtDokument,
-                    key: `${currentIndex}`,
-                    onClick: () => onDokumentValgt(element.dokument),
-                  }))}
-              />
+              {displayFilterOption && (
+                <Dokumentfilter
+                  className={styles['dokumentnavigasjon__columnHeading--second']}
+                  text="Type"
+                  filters={dokumenttypeFilter}
+                  onFilterChange={updateDokumenttypeFilter}
+                />
+              )}
+              <div className={styles['dokumentnavigasjon__columnHeading--third']}>
+                <BodyShort weight="semibold" size="small">
+                  Datert
+                </BodyShort>
+              </div>
+              <div className={styles['dokumentnavigasjon__columnHeading--fourth']}>
+                <BodyShort weight="semibold" size="small">
+                  Part
+                </BodyShort>
+              </div>
             </div>
-          </Accordion.Content>
-        </Accordion.Item>
-      </Accordion>
+            {dokumentElementer.length === 0 && (
+              <div style={{ padding: '0.5rem 1rem 1rem 1rem' }}>
+                <BodyShort size="small">Ingen dokumenter å vise</BodyShort>
+              </div>
+            )}
+            <InteractiveList
+              elements={dokumentElementer
+                .filter(element => dokumenttypeFilter.includes(element?.dokument?.type))
+                .map((element, currentIndex) => ({
+                  content: element.renderer(),
+                  active: element.dokument === valgtDokument,
+                  key: `${currentIndex}`,
+                  onClick: () => onDokumentValgt(element.dokument),
+                }))}
+            />
+          </div>
+        </ExpansionCard.Content>
+      </ExpansionCard>
     </div>
   );
 };

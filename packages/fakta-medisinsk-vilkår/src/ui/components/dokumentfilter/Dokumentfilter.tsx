@@ -57,7 +57,12 @@ const Dokumentfilter = ({
               <FilterFilled className={listeErFiltrert ? '' : styles.chevronDropdown__hidden} />
               <div className={styles.chevronDropdown__dropdown__checkbox}>
                 {dokumenttypeListe.map(type => (
-                  <Checkbox key={type} checked={filters.includes(type)} onChange={() => filtrerDokumenttype(type)}>
+                  <Checkbox
+                    key={type}
+                    size="small"
+                    checked={filters.includes(type)}
+                    onChange={() => filtrerDokumenttype(type)}
+                  >
                     {dokumentLabel[type]}
                   </Checkbox>
                 ))}
