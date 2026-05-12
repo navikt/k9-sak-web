@@ -22,7 +22,7 @@ interface Props {
   api: K9SakProsessApi;
   erOverstyrer: boolean;
   isReadOnly: boolean;
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string | undefined, faktanavn?: string | undefined) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
 export function UttakProsessStegInitPanel(props: Props) {
