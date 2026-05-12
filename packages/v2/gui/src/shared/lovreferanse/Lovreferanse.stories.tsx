@@ -171,7 +171,7 @@ export const KapitlerBlirLenketRiktig: Story = {
       await expect(firstLink).toHaveTextContent('Kapittel 2');
       await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
 
-      await expect(root()).toHaveTextContent('Kapittel 2');
+      await expect(root()).toHaveTextContent('kapittel 2');
     });
   },
 };
@@ -188,7 +188,7 @@ export const KapitlerBlirLenketRiktigMedParagrafer: Story = {
       await expect(firstLink).toHaveTextContent('9-1');
       await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§9-1');
 
-      await expect(secondLink).toHaveTextContent('Kapittel 2');
+      await expect(secondLink).toHaveTextContent('kapittel 2');
       await expect(secondLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
 
       await expect(root()).toHaveTextContent('§ 9-1, jamfør kapittel 2');
@@ -209,7 +209,7 @@ export const MedlemskapReferanse: Story = {
       await expect(paragrafLink).toHaveTextContent('9-2');
       await expect(paragrafLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§9-2');
 
-      await expect(kapittelLink).toHaveTextContent('Kapittel 2');
+      await expect(kapittelLink).toHaveTextContent('kapittel 2');
       await expect(kapittelLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
 
       await expect(root()).toHaveTextContent('§ 9-2 jf. kapittel 2');
