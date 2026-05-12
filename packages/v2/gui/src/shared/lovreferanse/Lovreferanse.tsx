@@ -42,10 +42,14 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
     .replace(/,\s*/g, ', ')
     .replace(/\s+/g, ' ')
     .split(' ')
-    .map((del, index) => {
+    .map((del, index, parts) => {
       const kapittelOgKanskjeParagraf = del.match(seksjonsRegex)?.[0];
 
       if (!kapittelOgKanskjeParagraf) {
+        // "Kapittel"-ordet håndteres av neste token
+        if (/^Kapittel$/i.test(del) && index + 1 < parts.length && parts[index + 1]?.match(seksjonsRegex)) {
+          return null;
+        }
         return <span key={index}>{del} </span>;
       }
 
@@ -54,6 +58,9 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
           ? `${grunnUrlen}§${kapittelOgKanskjeParagraf}`
           : `${grunnUrlen}§${kapittelOgKanskjeParagraf}-1`;
 
+      const prevToken = index > 0 ? parts[index - 1] : '';
+      const isKapittel = /^Kapittel$/i.test(prevToken ?? '');
+
       const prefix = del.includes('§§') ? '§§ ' : del.includes('§') ? '§ ' : '';
       const suffix = del.endsWith(',') ? ', ' : ' ';
 
@@ -61,7 +68,7 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
         <Fragment key={index}>
           {prefix}
           <Link href={link} title="Les mer på Lovdata.no" target="_blank">
-            {kapittelOgKanskjeParagraf}
+            {isKapittel ? `Kapittel ${kapittelOgKanskjeParagraf}` : kapittelOgKanskjeParagraf}
           </Link>
           {suffix}
         </Fragment>
