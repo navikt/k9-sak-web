@@ -135,7 +135,6 @@
   "packages/fakta-medisinsk-vilkår/mock/mocked-data/createStrukturertDokument.ts",
   "packages/fakta-medisinsk-vilkår/mock/mocked-data/mockedVurderingsoversiktLinks.ts",
   "packages/fakta-medisinsk-vilkår/src/types/Vurderingsoversikt.ts",
-  "packages/fakta-medisinsk-vilkår/src/ui/MedisinskVilkår.stories.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/confirmation-modal/ConfirmationModal.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/diagnosekodeoversikt/Diagnosekodeoversikt.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/dokumentnavigasjon/Dokumentnavigasjon.spec.tsx",
