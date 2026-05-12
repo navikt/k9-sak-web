@@ -151,7 +151,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                       rules={{ required: true }}
                       render={({ field: radioField, fieldState }) => (
                         <RadioGroup
-                          legend="Fremkommer det av inntektsmelding at 10 dager er benyttet?"
+                          legend="Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket?"
                           onChange={radioField.onChange}
                           value={radioField.value ?? ''}
                           error={fieldState.error ? 'Feltet er påkrevd' : undefined}
