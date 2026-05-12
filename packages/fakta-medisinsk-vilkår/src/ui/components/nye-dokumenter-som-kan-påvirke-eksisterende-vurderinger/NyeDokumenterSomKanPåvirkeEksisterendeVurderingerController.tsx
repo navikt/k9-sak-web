@@ -1,4 +1,5 @@
 import { httpUtils } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
 import React, { useMemo, type JSX } from 'react';
@@ -16,6 +17,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
   afterEndringerRegistrert,
 }: NyeDokumenterSomKanPåvirkeEksisterendeVurderingerControllerProps): JSX.Element => {
   const { endpoints, httpErrorHandler, behandlingUuid } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [httpErrorHasOccured, setHttpErrorHasOccured] = React.useState(false);
@@ -36,6 +38,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
     try {
       await bekreftAtEndringerErRegistrert();
       afterEndringerRegistrert();
+      refetchBehandlingVedSykdomsendring();
       setIsSubmitting(false);
     } catch {
       setHttpErrorHasOccured(true);

@@ -34,7 +34,7 @@ const PANEL_KONFIG = {
       AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
       AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-      AksjonspunktDefinisjon.VURDER_BOSTED,
+      AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
       AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
     ],
     id: PROSESS_STEG_KODER.INNGANGSVILKAR,

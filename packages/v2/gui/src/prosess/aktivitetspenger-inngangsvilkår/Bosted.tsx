@@ -94,12 +94,12 @@ export const Bosted = ({
         begrunnelse: vurdering?.begrunnelse ?? '',
         erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,
+        fritekstVurderingBrev: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
       };
 
       const payload = {
-        '@type': AksjonspunktDefinisjon.VURDER_BOSTED,
+        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
         begrunnelse: vurdering?.begrunnelse ?? '',
-        brevtekst: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
         vurdertePerioder: [vurdertePerioder],
       };
 

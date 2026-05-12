@@ -51,7 +51,7 @@ const getIconForOpptjeningStatus = (
   return null;
 };
 
-const OpptjeningVilkarProsessIndexV2 = ({
+const OpptjeningVilkarProsessIndex = ({
   fagsak,
   behandling,
   opptjening,
@@ -113,4 +113,4 @@ const OpptjeningVilkarProsessIndexV2 = ({
   );
 };
 
-export default OpptjeningVilkarProsessIndexV2;
+export default OpptjeningVilkarProsessIndex;
