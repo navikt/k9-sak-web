@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { AbstractRequestApi } from '@k9-sak-web/rest-api';
+import { AbstractRequestApi, type ErrorNotifier } from '@k9-sak-web/rest-api';
 import { render } from '@testing-library/react';
 import React, { useEffect, act } from 'react';
 import { RestApiProvider } from './RestApiContext';
@@ -26,6 +26,9 @@ class RequestApiTestMock extends AbstractRequestApi {
   public isMock = () => false;
 
   public setAddErrorMessageHandler = () => {};
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public setErrorNotifier(notifier: ErrorNotifier) {}
 
   public setRequestPendingHandler = () => {};
 

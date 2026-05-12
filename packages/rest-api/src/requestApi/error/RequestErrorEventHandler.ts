@@ -4,6 +4,7 @@ import TimeoutError from './TimeoutError';
 import { ErrorResponse } from '../ResponseTsType';
 import { AxiosError } from 'axios';
 import type { NotificationEmitter } from '../NotificationEmitter.js';
+import type { ErrorNotifier } from './ErrorNotifier.js';
 
 const isString = (value: any): boolean => typeof value === 'string';
 
@@ -46,15 +47,22 @@ interface FormatedError {
 
 class RequestErrorEventHandler {
   notify: NotificationEmitter;
+  errorNotifier: ErrorNotifier | undefined;
 
   isPollingRequest: boolean;
 
-  constructor(notificationEmitter: NotificationEmitter, isPollingRequest: boolean) {
+  constructor(
+    notificationEmitter: NotificationEmitter,
+    isPollingRequest: boolean,
+    errorNotifier: ErrorNotifier | undefined,
+  ) {
     this.notify = notificationEmitter;
+    this.errorNotifier = errorNotifier;
     this.isPollingRequest = isPollingRequest;
   }
 
   handleError = async (error: Error): Promise<void> => {
+    this.errorNotifier?.(error);
     if (error instanceof TimeoutError) {
       this.notify(EventType.POLLING_TIMEOUT, { location: error.location });
       return;

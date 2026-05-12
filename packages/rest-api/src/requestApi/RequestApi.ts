@@ -5,6 +5,7 @@ import Link from './LinkTsType';
 import NotificationMapper from './NotificationMapper';
 import RequestRunner from './RequestRunner';
 import ResponseCache from './ResponseCache';
+import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 const DEFAULT_CATEGORY = 'DEFAULT_CATEGORY';
 
@@ -57,6 +58,7 @@ class RequestApi extends AbstractRequestApi {
   links: { [key: string]: Link[] } = {};
 
   notificationMapper: NotificationMapper = new NotificationMapper();
+  errorNotifier: ErrorNotifier | undefined;
 
   cache: ResponseCache = new ResponseCache();
 
@@ -104,6 +106,9 @@ class RequestApi extends AbstractRequestApi {
     const runner = new RequestRunner(this.httpClientApi, apiRestMethod, href, endpointConfig.config ?? {});
     if (this.notificationMapper) {
       runner.setNotificationEmitter(this.notificationMapper.getNotificationEmitter());
+    }
+    if (this.errorNotifier != null) {
+      runner.setErrorNotifier(this.errorNotifier);
     }
 
     if (!useCaching) {
@@ -159,6 +164,14 @@ class RequestApi extends AbstractRequestApi {
       addErrorMessage({ ...errorData, type });
     });
   };
+
+  /**
+   * Erstatter setAddErrorMessageHandler brukt tidlegare, for å få rapportert feil direkte ut og få vist dei i nytt feilhandteringsregime.
+   * @param notifier
+   */
+  public setErrorNotifier(notifier: ErrorNotifier) {
+    this.errorNotifier = notifier;
+  }
 
   public resetCache = (): void => {
     this.cache = new ResponseCache();

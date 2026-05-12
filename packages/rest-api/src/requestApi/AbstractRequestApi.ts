@@ -1,4 +1,5 @@
 import Link from './LinkTsType';
+import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 /**
  * AbstractRequestApi
@@ -15,7 +16,17 @@ abstract class AbstractRequestApi {
 
   public abstract setRequestPendingHandler(requestPendingHandler): void;
 
+  /**
+   * @deprecated Bruk setErrorNotifier for ny feilhandtering
+   * @param addErrorMessage
+   */
   public abstract setAddErrorMessageHandler(addErrorMessage): void;
+
+  /**
+   * Erstatter setAddErrorMessageHandler brukt tidlegare, for å få rapportert feil direkte ut og få vist dei i nytt feilhandteringsregime.
+   * @param notifier
+   */
+  public abstract setErrorNotifier(notifier: ErrorNotifier): void;
 
   public abstract resetCache(): void;
 
