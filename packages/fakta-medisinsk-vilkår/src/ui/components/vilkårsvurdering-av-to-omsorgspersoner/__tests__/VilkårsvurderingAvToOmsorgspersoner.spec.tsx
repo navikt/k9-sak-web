@@ -10,7 +10,7 @@ import VilkårsvurderingAvToOmsorgspersoner from '../VilkårsvurderingAvToOmsorg
 const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';
 
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 
 const vurderingsoversiktMock = {
   perioderSomKanVurderes: [],
@@ -39,7 +39,7 @@ const contextWrapper = ui =>
       value={
         {
           endpoints: { vurderingsoversiktBehovForToOmsorgspersoner: vurderingsoversiktEndpoint },
-          httpErrorHandler: httpErrorHandlerMock,
+          errorNotifier: errorNotifierMock,
           readOnly: false,
           onFinished: onFinishedMock.fn,
         } as any

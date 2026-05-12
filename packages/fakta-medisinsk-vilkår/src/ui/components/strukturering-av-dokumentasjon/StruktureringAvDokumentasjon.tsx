@@ -38,7 +38,7 @@ const StruktureringAvDokumentasjon = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: StruktureringAvDokumentasjonProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, fagsakYtelseType } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, fagsakYtelseType } = React.useContext(ContainerContext);
   const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
 
   const [state, dispatch] = React.useReducer(dokumentReducer, {
@@ -77,7 +77,7 @@ const StruktureringAvDokumentasjon = ({
   };
 
   const getDokumentoversikt = () =>
-    get<DokumentoversiktResponse>(endpoints.dokumentoversikt, httpErrorHandler, {
+    get<DokumentoversiktResponse>(endpoints.dokumentoversikt, errorNotifier, {
       cancelToken: httpCanceler.token,
     });
 

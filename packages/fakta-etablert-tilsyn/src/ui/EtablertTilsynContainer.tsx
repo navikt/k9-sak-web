@@ -87,18 +87,18 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
-  const { endpoints, httpErrorHandler, harAksjonspunktForBeredskap, harAksjonspunktForNattevåk } = data;
+  const { endpoints, errorNotifier, harAksjonspunktForBeredskap, harAksjonspunktForNattevåk } = data;
 
   const getTilsyn = (signal: AbortSignal) =>
-    get<TilsynResponse>(endpoints.tilsyn, httpErrorHandler, {
+    get<TilsynResponse>(endpoints.tilsyn, errorNotifier, {
       signal: signal,
     });
   const getSykdom = (signal: AbortSignal) =>
-    get<SykdomResponse>(endpoints.sykdom, httpErrorHandler, {
+    get<SykdomResponse>(endpoints.sykdom, errorNotifier, {
       signal: signal,
     });
   const getInnleggelser = (signal: AbortSignal) =>
-    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, httpErrorHandler, {
+    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, errorNotifier, {
       signal: signal,
     });
 

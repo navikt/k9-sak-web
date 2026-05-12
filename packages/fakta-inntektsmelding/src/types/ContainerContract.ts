@@ -15,7 +15,7 @@ interface ContainerContract {
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
-  httpErrorHandler?: (statusCode: number, locationHeader?: string) => void;
+  errorNotifier?: (error: Error) => void;
   endpoints: {
     kompletthetBeregning: string;
   };

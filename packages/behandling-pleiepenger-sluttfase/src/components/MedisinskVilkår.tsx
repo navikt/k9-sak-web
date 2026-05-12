@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
 import { MedisinskVilkår } from '@k9-sak-web/fakta-medisinsk-vilkar';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 export default ({
   behandling: { links, uuid },
@@ -12,9 +12,7 @@ export default ({
   fagsakYtelseType,
   behandlingType,
 }) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
-    httpErrorHandler(status, addErrorMessage, locationHeader);
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const medisinskVilkårAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
   const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon.kode;
@@ -31,7 +29,7 @@ export default ({
   return (
     <MedisinskVilkår
       data={{
-        httpErrorHandler: httpErrorHandlerCaller,
+        errorNotifier: legacyErrorNotifier,
         endpoints: findEndpointsFromRels(links, [
           { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
           { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },

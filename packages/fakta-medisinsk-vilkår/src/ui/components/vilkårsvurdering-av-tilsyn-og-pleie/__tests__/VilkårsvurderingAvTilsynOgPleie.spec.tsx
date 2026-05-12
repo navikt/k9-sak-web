@@ -10,7 +10,7 @@ import VilkårsvurderingAvTilsynOgPleie from '../VilkårsvurderingAvTilsynOgPlei
 const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';
 
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 
 const vurderingsoversiktMock = {
   perioderSomKanVurderes: [],
@@ -35,7 +35,7 @@ const contextWrapper = ui =>
       value={
         {
           endpoints: { vurderingsoversiktKontinuerligTilsynOgPleie: vurderingsoversiktEndpoint },
-          httpErrorHandler: httpErrorHandlerMock,
+          errorNotifier: errorNotifierMock,
           readOnly: false,
         } as any
       }

@@ -26,7 +26,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingAvTilsynOgPleieProps): JSX.Element => {
-  const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier } = React.useContext(ContainerContext);
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -51,7 +51,7 @@ const VilkårsvurderingAvTilsynOgPleie = ({
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
-    get<Vurderingsoversikt>(endpoints.vurderingsoversiktKontinuerligTilsynOgPleie, httpErrorHandler, {
+    get<Vurderingsoversikt>(endpoints.vurderingsoversiktKontinuerligTilsynOgPleie, errorNotifier, {
       signal: controller.signal,
     });
 

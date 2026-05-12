@@ -33,13 +33,13 @@ interface DiagnosekodeoversiktProps {
 }
 
 const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, readOnly } = React.useContext(ContainerContext);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const addButtonRef = React.useRef<HTMLButtonElement>(undefined);
 
   const hentDiagnosekoder = () =>
     httpUtils
-      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
+      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, errorNotifier)
       .then((response: DiagnosekodeResponse) => response);
 
   const { isLoading, data, refetch } = useQuery({
@@ -80,7 +80,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
         versjon,
         diagnosekoder: diagnosekoder.filter(kode => kode !== diagnosekode),
       },
-      httpErrorHandler,
+      errorNotifier,
     );
 
   const lagreDiagnosekode = (nyeDiagnosekoder: string[]) =>
@@ -91,7 +91,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
         versjon,
         diagnosekoder: [...new Set([...diagnosekoder, ...nyeDiagnosekoder])],
       },
-      httpErrorHandler,
+      errorNotifier,
     );
 
   const slettDiagnosekodeMutation = useMutation({

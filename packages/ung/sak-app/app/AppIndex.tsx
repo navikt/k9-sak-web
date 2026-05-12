@@ -3,8 +3,9 @@ import { useLocation } from 'react-router';
 import { parseQueryString } from '@fpsak-frontend/utils';
 import ForbiddenPage from '@k9-sak-web/gui/app/errorhandling/pages/ForbiddenPage.js';
 import UnauthorizedPage, { ungLoginResourcePath } from '@k9-sak-web/gui/app/errorhandling/pages/UnauthorizedPage.js';
-import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
+import { AxiosError } from 'axios';
 
 import AppConfigResolver from './AppConfigResolver';
 import Dekorator from './components/Dekorator';
@@ -23,7 +24,11 @@ import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
 
-const EMPTY_ARRAY = [];
+const isForbidden = (e: Error) =>
+  (e instanceof AxiosError && e.response?.status === 403) || ('type' in e && e.type === EventType.REQUEST_FORBIDDEN);
+
+const isUnauthorized = (e: Error) =>
+  (e instanceof AxiosError && e.response?.status === 401) || ('type' in e && e.type === EventType.REQUEST_UNAUTHORIZED);
 
 /**
  * AppIndex
@@ -34,10 +39,10 @@ const EMPTY_ARRAY = [];
 const AppIndex = () => {
   const location = useLocation();
 
-  const errorMessages = useRestApiError() || EMPTY_ARRAY;
+  const { globalErrors } = useGlobalUnhandledErrors();
   const queryStrings = parseQueryString(location.search);
-  const forbiddenErrors = errorMessages.filter(o => o.type === EventType.REQUEST_FORBIDDEN);
-  const unauthorizedErrors = errorMessages.filter(o => o.type === EventType.REQUEST_UNAUTHORIZED);
+  const forbiddenErrors = globalErrors.filter(isForbidden);
+  const unauthorizedErrors = globalErrors.filter(isUnauthorized);
   const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
   const shouldRenderHome = !hasForbiddenOrUnauthorizedErrors;
 

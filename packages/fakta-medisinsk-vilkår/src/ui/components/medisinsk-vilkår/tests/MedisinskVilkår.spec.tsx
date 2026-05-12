@@ -19,14 +19,14 @@ const vurderingsoversiktMock = {
   links: [],
 } as any;
 
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 const contextWrapper = (ui, contextValues?: Partial<ContainerContract>) =>
   render(
     <QueryClientProvider client={queryClient}>
       <ContainerContext.Provider
         value={
           {
-            httpErrorHandler: httpErrorHandlerMock,
+            errorNotifier: errorNotifierMock,
             endpoints: { status: statusEndpointMock },
             ...contextValues,
           } as any
