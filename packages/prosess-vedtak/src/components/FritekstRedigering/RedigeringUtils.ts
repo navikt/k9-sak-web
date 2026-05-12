@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { Brevmottaker, VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { safeJSONParse } from '@fpsak-frontend/utils';
-import { LegacyApiError } from '@k9-sak-web/gui/app/errorhandling/legacycompat/LegacyApiError.js';
 
 export const utledStiler = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
@@ -113,9 +112,3 @@ export const validerManueltRedigertBrev = (html: string): boolean => {
 export const validerRedigertHtml = Yup.string().test('validate-redigert-html', '', value =>
   validerManueltRedigertBrev(value),
 );
-
-export const harDokumentdataApiFeilmelding = ({ errors }: { errors: LegacyApiError[] }) =>
-  errors.some(error => error.message.includes('/k9/formidling/dokumentdata/api'));
-
-export const harForhandsvisFeilmeldinger = ({ errors }: { errors: LegacyApiError[] }) =>
-  errors.some(error => error.message.includes('/k9/formidling/api/brev/forhaandsvis'));
