@@ -16,7 +16,6 @@ class PanelDef extends ProsessStegPanelDef {
         behandling={deepCopyProps.behandling}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
         relevanteAksjonspunkter={deepCopyProps.relevanteAksjonspunkter}
-        hentBehandling={props.hentBehandling}
         erOverstyrer={props.erOverstyrer}
         readOnly={props.isReadOnly}
       />

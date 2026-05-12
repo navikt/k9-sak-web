@@ -152,6 +152,9 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagRevurderingFraStegK9Sak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK,
   );
+  const { startRequest: lagRevurderingFlerePerioderFraStegK9Sak } = restApiHooks.useRestApiRunner<boolean>(
+    K9sakApiKeys.NEW_BEHANDLING_REVURDERING_FLERE_PERIODER_FRA_STEG_K9SAK,
+  );
   const { startRequest: lagNyBehandlingTilbake } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_TILBAKE,
   );
@@ -181,7 +184,9 @@ export const BehandlingMenuIndex = ({
       lagNy = lagNyBehandlingTilbake;
     }
     if (bTypeKode === BehandlingType.REVURDERING && typeof params.steg === 'string' && delvisÅrsaker.has(params.steg)) {
-      lagNy = lagRevurderingFraStegK9Sak;
+      lagNy = Array.isArray(params.perioder) && params.perioder.length > 0
+        ? lagRevurderingFlerePerioderFraStegK9Sak
+        : lagRevurderingFraStegK9Sak;
     }
     if (bTypeKode === BehandlingType.KLAGE) {
       lagNy = lagNyBehandlingKlage;
@@ -291,6 +296,8 @@ export const BehandlingMenuIndex = ({
             delvisRevurderingsårsaker={sakRettigheter.delvisRevurderingsårsaker?.map(d => ({
               årsak: d.årsak.kode,
               vilkårType: d.vilkårType.kode,
+              periodeType: d.periodeType,
+              valgbarePerioder: d.valgbarePerioder,
             }))}
             kanTilbakekrevingOpprettes={{
               kanBehandlingOpprettes,
