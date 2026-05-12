@@ -3,7 +3,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 import AnkePaneler from './components/AnkePaneler';
 import FetchedData from './types/fetchedDataTsType';
@@ -69,7 +70,7 @@ const BehandlingAnkeIndex = ({
   );
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const { startRequest: nyBehandlendeEnhet } = restApiAnkeHooks.useRestApiRunner(
     AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -95,14 +96,14 @@ const BehandlingAnkeIndex = ({
     });
 
     requestAnkeApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestAnkeApi.setAddErrorMessageHandler(addErrorMessage);
+    requestAnkeApi.setErrorNotifier(legacyErrorNotifier);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, []);
+  }, [legacyErrorNotifier]);
 
   const { data, state } = restApiAnkeHooks.useMultipleRestApi<FetchedData>(ankeData, {
     keepData: true,

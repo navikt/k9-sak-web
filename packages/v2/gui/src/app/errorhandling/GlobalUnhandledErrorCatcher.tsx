@@ -13,6 +13,7 @@ interface GlobalUnhandledErrors {
   clearGlobalErrors(): void;
   addGlobalError(error: Error): void;
   showLegacyRestApiError(data: Record<string, unknown>): void;
+  legacyErrorNotifier(error: Error): void;
 }
 
 const empty: GlobalUnhandledErrors = {
@@ -28,6 +29,9 @@ const empty: GlobalUnhandledErrors = {
     }
     const error = new LegacyApiError(formatertFeilmelding.text, formatertFeilmelding.type, formatertFeilmelding.extra);
     throw new FrontendError('showLegacyRestApiError called outside GlobalUnhandledErrorCatcher', error);
+  },
+  legacyErrorNotifier(error: Error) {
+    throw new FrontendError('legacyErrorNotifier called outside GlobalUnhandledErrorCatcher', error);
   },
 };
 
@@ -105,6 +109,21 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
     },
     [addGlobalError],
   );
+  const legacyErrorNotifier = useCallback(
+    (error: Error) => {
+      // error som kjem inn her blir ikkje ellers rapportert, så logg den til Sentry her.
+      if (shouldReportToSentry(error)) {
+        withScope(scope => {
+          if (isAlertInfo(error)) {
+            scope.setTag('errorId', error.errorId);
+          }
+          captureException(error);
+        });
+      }
+      addGlobalError(error);
+    },
+    [addGlobalError],
+  );
 
   if (globalErrors.length > maxErrorCount) {
     const lastError = globalErrors.at(-1);
@@ -115,7 +134,9 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   }
 
   return (
-    <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError, showLegacyRestApiError }}>
+    <GlobalUnhandledErrorsContext
+      value={{ globalErrors, clearGlobalErrors, addGlobalError, showLegacyRestApiError, legacyErrorNotifier }}
+    >
       <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
     </GlobalUnhandledErrorsContext>
   );
