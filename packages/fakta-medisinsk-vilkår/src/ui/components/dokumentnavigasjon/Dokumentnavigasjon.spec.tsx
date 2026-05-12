@@ -45,7 +45,7 @@ describe('Dokumentnavigasjon', () => {
         onDokumentValgt={() => null}
       />,
     );
-    expect(container.getElementsByClassName('aksel-accordion__content--closed')).toHaveLength(1);
+    expect(container.querySelector('.aksel-expansioncard__content[data-open="false"]')).toBeTruthy();
   });
 
   test('documents are filtered correctly', async () => {
