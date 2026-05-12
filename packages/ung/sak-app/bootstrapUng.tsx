@@ -56,14 +56,24 @@ init({
     try {
       event.extra = event.extra || {};
       const exception = hint.originalException;
+      // Slik at feilrapportering gui kan hente ut sentryId
+      if (event.event_id != null) {
+        sentryReportedIdList.push(event.event_id);
+        if (sentryReportedIdList.length > 50) {
+          sentryReportedIdList.shift(); // Veldig usansynleg, men unngå for stor array
+        }
+        if (exception instanceof Error) {
+          sentryReportedErrorIdLookup.set(exception, event.event_id);
+        }
+      }
       if (exception instanceof AxiosError) {
-        const requestUrl = new URL(exception.request.responseURL);
-        event.fingerprint = [
-          '{{ default }}',
-          String(exception.name),
-          String(exception.message),
-          String(requestUrl.pathname),
-        ];
+        let pathname = '';
+        const responseURL = exception.request?.responseURL ?? '';
+        if (responseURL.length > 0) {
+          const requestUrl = new URL(responseURL);
+          pathname = requestUrl.pathname;
+        }
+        event.fingerprint = ['{{ default }}', String(exception.name), String(exception.message), String(pathname)];
         event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
       } else if (exception instanceof ExtendedApiError) {
         event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
@@ -74,16 +84,6 @@ init({
       if (isAlertInfo(exception)) {
         event.tags = event.tags ?? {};
         event.tags['errorId'] = `${exception.errorId}`;
-      }
-      // Slik at feilrapportering gui kan hente ut sentryId
-      if (event.event_id != null) {
-        sentryReportedIdList.push(event.event_id);
-        if (sentryReportedIdList.length > 50) {
-          sentryReportedIdList.shift(); // Veldig usansynleg, men unngå for stor array
-        }
-        if (hint.originalException instanceof Error) {
-          sentryReportedErrorIdLookup.set(hint.originalException, event.event_id);
-        }
       }
     } catch (e) {
       try {
