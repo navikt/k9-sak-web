@@ -20,7 +20,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    språk: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
     show: true,
     fritekstModus: 'EnkelFritekst',
     showValidation: true,

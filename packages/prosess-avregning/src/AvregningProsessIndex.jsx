@@ -38,7 +38,6 @@ const AvregningProsessIndex = ({
       behandling={behandling}
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      språkkode={behandling.språkkode}
       aksjonspunkter={aksjonspunkter}
       simuleringResultat={simuleringResultat}
       tilbakekrevingvalg={tilbakekrevingvalg}

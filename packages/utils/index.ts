@@ -10,11 +10,7 @@ export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';
 export { default as getAddresses } from './src/getAddresses';
 export { default as guid } from './src/guid';
-export {
-  getLanguageCodeFromspråkkode,
-  getLanguageFromspråkkode,
-  replaceNorwegianCharacters,
-} from './src/languageUtils';
+export { replaceNorwegianCharacters } from './src/languageUtils';
 export { isEqual, omit } from './src/objectUtils';
 export { buildPath, formatQueryString, parseQueryString } from './src/urlUtils';
 export {

@@ -123,7 +123,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
 
   const tilpassetBehandling = {
     ...behandlingV2,
-    språkkode: behandlingV2.sprakkode?.kode ?? 'NB',
   };
 
   return (

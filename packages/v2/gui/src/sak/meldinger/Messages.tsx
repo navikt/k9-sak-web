@@ -401,7 +401,6 @@ const Messages = ({
         onChange={setTredjepartsmottaker}
       />
       <FritekstInput
-        språk={behandling.språkkode}
         defaultValue={valgtFritekstInputValue}
         ref={fritekstInputRef}
         show={showFritekstInput}

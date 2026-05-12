@@ -22,9 +22,6 @@ const fagsak = {
 const behandling = {
   id: 1,
   versjon: 1,
-  språkkode: {
-    kode: 'NO',
-  },
   status: behandlingStatus.UTREDES,
 };
 

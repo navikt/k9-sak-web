@@ -124,13 +124,7 @@ export const TilbakeMessages = ({ maler, behandling, api, onMessageSent }: Tilba
           </option>
         ))}
       </Select>
-      <FritekstInput
-        språk={behandling.språkkode}
-        ref={fritekstInputRef}
-        show
-        fritekstModus={fritekstModus}
-        showValidation={showValidation}
-      />
+      <FritekstInput ref={fritekstInputRef} show fritekstModus={fritekstModus} showValidation={showValidation} />
       <HStack gap="space-12">
         <Button size="small" variant="primary" icon={<PaperplaneIcon />} loading={isBusy} onClick={submitHandler}>
           Send brev

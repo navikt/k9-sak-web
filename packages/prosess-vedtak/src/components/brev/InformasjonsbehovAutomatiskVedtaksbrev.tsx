@@ -14,7 +14,6 @@ export interface InformasjonsbehovVedtaksbrev {
 
 interface Props {
   intl: IntlShape;
-  språkkode: string;
   readOnly: boolean;
   begrunnelse: string;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
@@ -22,7 +21,6 @@ interface Props {
 
 const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
   intl,
-  språkkode,
   readOnly,
   begrunnelse,
   informasjonsbehovVedtaksbrev,
@@ -69,9 +67,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
         {aktiverteInformasjonsbehov.map(behov => (
           <VedtakFritekstPanel
             key={behov.kode}
-            intl={intl}
             readOnly={readOnly}
-            språkkode={språkkode}
             label={behov.beskrivelse}
             begrunnelse={begrunnelse}
             begrunnelseFieldName={behov.kode}

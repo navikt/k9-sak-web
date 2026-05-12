@@ -624,8 +624,6 @@ export const vurderFeilutbetalingMock: AvregningProsessIndexProps = {
       },
     ],
     opprettet: '2026-02-12T12:28:33',
-    sprakkode: 'NB',
-    språkkode: 'NB',
     status: 'UTRED',
     stegTilstand: {
       stegType: 'SIMOPP',
@@ -1436,8 +1434,6 @@ export const sjekkHøyEtterbetalingMock: AvregningProsessIndexProps = {
       },
     ],
     opprettet: '2026-02-12T12:21:30',
-    sprakkode: 'NB',
-    språkkode: 'NB',
     status: 'UTRED',
     stegTilstand: {
       stegType: 'SIMOPP',

@@ -1,4 +1,3 @@
-import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.ts';
 import type { BehandlingTypeKodeverk } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.ts';
 
 /**
@@ -12,7 +11,6 @@ import type { BehandlingTypeKodeverk } from '@k9-sak-web/backend/combined/kodeve
 export type BehandlingInfo = Readonly<{
   id: number;
   uuid: string;
-  språkkode: Språkkode;
 
   type: BehandlingTypeKodeverk;
 }>;

@@ -47,7 +47,6 @@ export const Default: Story = {
       <UngMessages
         api={mockApi}
         behandlingId={1}
-        språkkode="nb"
         onMessageSent={() => asyncAction('Melding er sendt')}
         brevmaler={brevmaler}
         ungMessagesFormValues={formValues}

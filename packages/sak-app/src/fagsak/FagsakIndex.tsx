@@ -289,7 +289,6 @@ const FagsakIndex = () => {
                 <div style={{ overflow: 'hidden' }}>
                   <VisittkortPanel
                     personopplysninger={behandlingPersonopplysningerV2}
-                    språkkode={behandling?.språkkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                     relaterteFagsaker={relaterteFagsaker}

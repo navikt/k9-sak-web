@@ -16,10 +16,6 @@ describe('<AvregningProsessIndex>', () => {
   const behandling = {
     id: 1,
     versjon: 1,
-    språkkode: {
-      kode: 'NO',
-      kodeverk: '',
-    },
   };
 
   const aksjonspunkter = [

@@ -160,7 +160,6 @@ interface BrevPanelProps {
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   skalBrukeOverstyrendeFritekstBrev: boolean;
-  språkkode: string;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   ytelseTypeKode: FagsakYtelsesType;
 }
@@ -168,7 +167,6 @@ interface BrevPanelProps {
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const {
     readOnly,
-    språkkode,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
     tilgjengeligeVedtaksbrev,
@@ -262,7 +260,6 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
         <InformasjonsbehovAutomatiskVedtaksbrev
           intl={intl}
           readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-          språkkode={språkkode}
           begrunnelse={begrunnelse}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         />

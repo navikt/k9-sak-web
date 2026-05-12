@@ -55,10 +55,6 @@ export const DefaultStory: Story = {
       id: 101,
       uuid: 'XUYPS4',
       type: { kode: BehandlingType.TILBAKEKREVING, kodeverk: 'BEHANDLING_TYPE' },
-      språkkode: {
-        kode: 'NB',
-        kodeverk: 'SPRAAK_KODE',
-      },
     },
     maler: testMaler,
     api,

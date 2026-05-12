@@ -1,10 +1,9 @@
 import { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer, useRef } from 'react';
-import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
+import { Textarea, TextField } from '@navikt/ds-react';
 import {
   $k9_sak_kontrakt_dokument_BestillBrevDto as $BestillBrevDto,
   $k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as $FritekstbrevinnholdDto,
 } from '@k9-sak-web/backend/k9sak/generated/schemas.js';
-import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 
 export type Valid = {
@@ -33,7 +32,6 @@ export interface FritekstInputInvalid {
 export type FritekstModus = 'EnkelFritekst' | 'StørreFritekstOgTittel';
 
 export type FritekstInputProps = {
-  readonly språk: Språkkode;
   readonly show: boolean;
   readonly fritekstModus: FritekstModus;
   readonly showValidation: boolean;
@@ -87,24 +85,6 @@ const validateTekst = (tekst: string | undefined, fritekstModus: FritekstModus):
 const tekstReducer = (_: Valid | Error, newValue: { tekst: string | undefined; modus: FritekstModus }): Valid | Error =>
   validateTekst(newValue.tekst, newValue.modus);
 
-const resolveLanguageName = (språk: Språkkode): string => {
-  switch (språk.kode.toUpperCase()) {
-    case 'NB':
-      return 'Bokmål';
-    case 'NO':
-      return 'Norsk';
-    case 'NN':
-      return 'Nynorsk';
-    case 'EN':
-      return 'Engelsk';
-    default:
-      return 'Ukjent';
-  }
-};
-
-const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
-  resolveLanguageName(språk) === 'Ukjent' ? 'warning' : 'info';
-
 /**
  * Denne komponent er for at bruker skal kunne skrive inn tekst og evt tittel i brev som har fritekstinnhold.
  *
@@ -115,7 +95,7 @@ const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
  */
 const FritekstInput = forwardRef(
   (
-    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange }: FritekstInputProps,
+    { show, fritekstModus, showValidation = false, defaultValue, onChange }: FritekstInputProps,
     ref: ForwardedRef<FritekstInputMethods>,
   ) => {
     const [tittel, setTittel] = useReducer(tittelReducer, validateTittel(defaultValue?.tittel));
@@ -182,14 +162,7 @@ const FritekstInput = forwardRef(
           <Textarea
             value={tekst.input}
             size="small"
-            label={
-              <span>
-                Fritekst&nbsp;&nbsp;{' '}
-                <Tag size="xsmall" variant={resolveLanguageTagVariant(språk)}>
-                  {resolveLanguageName(språk)}
-                </Tag>
-              </span>
-            }
+            label="Fritekst"
             maxLength={fritekstMaxLength}
             resize="vertical"
             error={showValidation && tekst?.error}

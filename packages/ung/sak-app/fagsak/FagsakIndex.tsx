@@ -255,8 +255,6 @@ const FagsakIndex = () => {
                 <div style={{ overflow: 'hidden' }}>
                   <VisittkortPanel
                     personopplysninger={behandlingPersonopplysningerV2}
-                    // @ts-expect-error: Skal endres til språkkode når det er gjort i ung-sak
-                    sprakkode={behandling?.sprakkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                     hideVisittkortDetaljerPopup={true}

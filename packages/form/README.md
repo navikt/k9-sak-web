@@ -240,12 +240,5 @@ yarn add @fpsak-frontend/form
   rows={1}
   readOnly={readOnly}
   className={styles.smallTextArea}
-  badges={[
-    {
-      type: 'warning',
-      textId: getLanguageCodeFromspråkkode(språkkode),
-      title: 'Malform.Beskrivelse',
-    },
-  ]}
 />
 ```

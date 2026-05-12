@@ -88,7 +88,6 @@ interface Props {
   previewCallback: (values, aapneINyttVindu) => Promise<any>;
   readOnly: boolean;
   simuleringResultat: VedtakSimuleringResultat | null;
-  språkkode: string;
   submitCallback: (object: any) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
@@ -106,7 +105,6 @@ export const VedtakForm: React.FC<Props> = ({
   vedtakVarsel,
   previewCallback,
   hentFritekstbrevHtmlCallback,
-  språkkode,
   ytelseTypeKode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -555,7 +553,6 @@ export const VedtakForm: React.FC<Props> = ({
 
               <BrevPanel
                 readOnly={readOnly}
-                språkkode={språkkode}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}

@@ -51,7 +51,6 @@ export default meta;
 export const Default: StoryObj<typeof VisittkortPanel> = {
   args: {
     fagsakPerson,
-    språkkode: 'NN',
     personopplysninger: personopplysningerSoker,
   },
   play: async ({ canvas }) => {

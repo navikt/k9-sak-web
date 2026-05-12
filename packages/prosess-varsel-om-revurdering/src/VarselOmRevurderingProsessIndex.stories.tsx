@@ -14,9 +14,6 @@ const behandling = {
       erAutomatiskRevurdering: true,
     },
   ],
-  språkkode: {
-    kode: 'NN',
-  },
   type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
   },

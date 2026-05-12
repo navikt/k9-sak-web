@@ -36,7 +36,6 @@ const UnntakProsessIndex = ({
         behandlingsresultat={behandlingsresultat}
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
-        språkkode={behandling.språkkode}
         aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
         readOnly={isReadOnly}

@@ -34,7 +34,7 @@ interface VedtakProsessIndexProps {
   behandling: Pick<
     k9_sak_kontrakt_behandling_BehandlingDto,
     'type' | 'status' | 'behandlingsresultat' | 'behandlingPåVent' | 'behandlingÅrsaker'
-  > & { språkkode: string };
+  >;
   beregningsgrunnlag: Beregningsgrunnlag[];
   dokumentdataHente: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
@@ -84,7 +84,6 @@ const VedtakProsessIndex = ({
     <VedtakPanels
       behandlingTypeKode={behandling.type}
       behandlingStatus={behandling.status}
-      språkkode={behandling.språkkode}
       behandlingresultat={behandling.behandlingsresultat}
       behandlingPåVent={behandling.behandlingPåVent}
       behandlingÅrsaker={behandling.behandlingÅrsaker}

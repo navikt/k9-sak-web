@@ -17,7 +17,6 @@ const createBehandling = behandlingResultatType => ({
   fagsakId: 1,
   aksjonspunkter: [],
   behandlingPåVent: false,
-  språkkode: 'NO',
   behandlingsresultat: {
     id: 1,
     type: behandlingResultatType,
@@ -82,7 +81,6 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          språkkode={revurdering.språkkode}
           behandlingPåVent={revurdering.behandlingPåVent}
           previewCallback={previewCallback}
           readOnly={false}
@@ -142,7 +140,6 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          språkkode={revurdering.språkkode}
           behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
@@ -194,7 +191,6 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          språkkode={revurdering.språkkode}
           behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
@@ -245,7 +241,6 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          språkkode={revurdering.språkkode}
           behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
@@ -292,7 +287,6 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
-          språkkode={revurdering.språkkode}
           behandlingPåVent={revurdering.behandlingPåVent}
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}

@@ -18,7 +18,6 @@ import type { UngMessagesFormState } from './UngMessagesFormState';
 interface UngMessagesProps {
   api: UngMeldingerBackendApi;
   behandlingId: number;
-  språkkode: string;
   onMessageSent: () => void;
   brevmaler: InformasjonsbrevValgDto[];
   ungMessagesFormValues: UngMessagesFormState | undefined;
@@ -26,8 +25,7 @@ interface UngMessagesProps {
 }
 
 export const UngMessages = (props: UngMessagesProps) => {
-  const { api, behandlingId, språkkode, onMessageSent, brevmaler, ungMessagesFormValues, setUngMessagesFormValues } =
-    props;
+  const { api, behandlingId, onMessageSent, brevmaler, ungMessagesFormValues, setUngMessagesFormValues } = props;
 
   const formMethods = useForm<UngMessagesFormState>({
     defaultValues: ungMessagesFormValues ?? {
@@ -105,9 +103,7 @@ export const UngMessages = (props: UngMessagesProps) => {
       <VStack gap="space-16">
         {brevmaler && <MalSelect brevmaler={brevmaler} />}
         {mottakere && <MottakerSelect mottakere={mottakere} valgtMal={valgtMal} disabled={false} />}
-        {showFritekstInput && (
-          <FritekstInput malStøtterTittel={!!valgtMal?.støtterTittelOgFritekst} språkkode={språkkode} />
-        )}
+        {showFritekstInput && <FritekstInput malStøtterTittel={!!valgtMal?.støtterTittelOgFritekst} />}
         <HStack gap="space-12">
           <Button
             type="submit"

@@ -18,7 +18,6 @@ const behandling = {
   versjon: 1,
   type: k9_kodeverk_behandling_BehandlingType.FØRSTEGANGSSØKNAD,
   status: k9_kodeverk_behandling_BehandlingStatus.UTREDES,
-  språkkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
     type: BehandlingResultatType.IKKE_FASTSATT,

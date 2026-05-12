@@ -34,7 +34,6 @@ const AnkeProsessIndex = ({
     <BehandleAnkeForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      språkkode={behandling.språkkode}
       ankeVurderingResultat={ankeVurdering ? ankeVurdering.ankeVurderingResultat : {}}
       behandlinger={behandlinger}
       aksjonspunkter={aksjonspunkter}

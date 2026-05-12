@@ -63,10 +63,6 @@ export const DefaultStory: Story = {
       id: 101,
       uuid: 'XUYPS4',
       type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-      språkkode: {
-        kode: 'NB',
-        kodeverk: 'SPRAAK_KODE',
-      },
     },
     maler: api.dummyMaler,
     personopplysninger,

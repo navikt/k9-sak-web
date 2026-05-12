@@ -4,7 +4,6 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, HStack, Label, Tag, Tooltip, VStack } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import getAddresses, { type Adresser } from '../../utils/getAddresses';
-import { getLanguageFromspråkkode } from '../../utils/språkUtils';
 import type { Personopplysninger } from './types/Personopplysninger';
 import styles from './visittkortDetaljerPopup.module.css';
 
@@ -23,10 +22,9 @@ const findPersonStatus = (personopplysning: Personopplysninger): string => {
 
 interface OwnProps {
   personopplysninger: Personopplysninger;
-  språkkode?: string;
 }
 
-const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) => {
+const VisittkortDetaljerPopup = ({ personopplysninger }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser ?? []), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);
@@ -64,11 +62,6 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
               </Tag>
             </Tooltip>
           )}
-          <Tooltip content="Foretrukket språk" placement="bottom">
-            <Tag data-color="info" variant="outline" className={styles.etikett} size="small">
-              {getLanguageFromspråkkode(språkkode)}
-            </Tag>
-          </Tooltip>
         </HStack>
         <VStack gap="space-8">
           <HStack gap="space-8">

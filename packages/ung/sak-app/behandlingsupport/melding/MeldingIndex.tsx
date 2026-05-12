@@ -14,8 +14,7 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MeldingIndex = ({ alleBehandlinger, behandlingId }: OwnProps) => {
-  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
+const MeldingIndex = ({ behandlingId }: OwnProps) => {
   const ungMeldingerBackendClient = new UngMeldingerBackendClient();
   const [ungMessagesFormValues, setUngMessagesFormValues] = useState<UngMessagesFormState | undefined>(undefined);
   /*
@@ -43,7 +42,6 @@ const MeldingIndex = ({ alleBehandlinger, behandlingId }: OwnProps) => {
       api={ungMeldingerBackendClient}
       behandlingId={behandlingId}
       onMessageSent={reloadWindow}
-      språkkode={behandling?.språkkode.kode ?? ''}
       ungMessagesFormValues={ungMessagesFormValues}
       setUngMessagesFormValues={setUngMessagesFormValues}
     />

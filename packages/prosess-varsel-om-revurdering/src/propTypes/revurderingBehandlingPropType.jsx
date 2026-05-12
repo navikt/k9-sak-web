@@ -13,7 +13,6 @@ const revurderingBehandlingPropType = PropTypes.shape({
     }),
   ),
   type: kodeverkObjektPropType.isRequired,
-  språkkode: kodeverkObjektPropType.isRequired,
 });
 
 export default revurderingBehandlingPropType;

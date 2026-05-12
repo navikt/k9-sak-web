@@ -11,7 +11,7 @@ import {
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getLanguageCodeFromspråkkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
@@ -113,7 +113,6 @@ export class AvregningPanel extends Component {
       isApOpen,
       apCodes,
       readOnly,
-      språkkode,
       featureUtvidetVarselfelt,
       previewCallback,
       hasOpenTilbakekrevingsbehandling,
@@ -224,13 +223,6 @@ export class AvregningPanel extends Component {
                                     maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
                                     readOnly={readOnly}
                                     id="avregningFritekst"
-                                    badges={[
-                                      {
-                                        type: 'warning',
-                                        textId: getLanguageCodeFromspråkkode(språkkode),
-                                        title: 'Malform.Beskrivelse',
-                                      },
-                                    ]}
                                   />
                                   <VerticalSpacer fourPx />
                                   <Link
@@ -354,7 +346,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
   const onSubmit = values => ownPropsStatic.submitCallback([transformValues(values, ownPropsStatic.apCodes[0])]);
 
   return (state, ownProps) => {
-    const { språkkode, tilbakekrevingvalg, simuleringResultat, fagsak, featureToggles, behandling } = ownProps;
+    const { tilbakekrevingvalg, simuleringResultat, fagsak, featureToggles, behandling } = ownProps;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
@@ -368,7 +360,6 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       featureUtvidetVarselfelt: featureToggles?.UTVIDET_VARSELFELT,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
-      språkkode,
       simuleringResultat,
       onSubmit,
     };

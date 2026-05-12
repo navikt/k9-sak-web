@@ -10,10 +10,6 @@ import messages from '../../i18n/nb_NO.json';
 import { BehandleUnntakForm } from './BehandleUnntakForm';
 
 describe('<BehandleKlageFormKaImpl>', () => {
-  const språkkode = {
-    kode: 'NO',
-    navn: 'Norsk',
-  };
   const formValues1 = {
     fritekst: '123',
     behandlingResultatType: behandlingResultatType.INNVILG,
@@ -30,7 +26,6 @@ describe('<BehandleKlageFormKaImpl>', () => {
         saveUnntak={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        språkkode={språkkode}
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,
@@ -54,7 +49,6 @@ describe('<BehandleKlageFormKaImpl>', () => {
         saveUnntak={vi.fn()}
         intl={intlMock}
         formProps={{}}
-        språkkode={språkkode}
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,

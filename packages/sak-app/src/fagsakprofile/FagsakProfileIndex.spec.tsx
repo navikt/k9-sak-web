@@ -109,7 +109,6 @@ describe('<FagsakProfileIndex>', () => {
     behandlingPåVent: false,
     behandlingHenlagt: false,
     gjeldendeVedtak: true,
-    språkkode: undefined,
     behandlingKoet: undefined,
     toTrinnsBehandling: undefined,
     behandlingÅrsaker: undefined,

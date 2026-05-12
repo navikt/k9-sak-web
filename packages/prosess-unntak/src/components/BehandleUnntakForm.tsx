@@ -17,7 +17,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Kodeverk } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -33,7 +32,6 @@ interface OwnProps {
   behandlingVersjon: number;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  språkkode: Kodeverk;
 }
 
 export const BehandleUnntakForm = ({
@@ -42,7 +40,6 @@ export const BehandleUnntakForm = ({
   readOnly,
   handleSubmit,
   readOnlySubmitButton,
-  språkkode,
   // alleKodeverk,
   ...formProps
 }: OwnProps & InjectedFormProps) => (
@@ -65,7 +62,7 @@ export const BehandleUnntakForm = ({
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
 
-      <FritekstTextField språkkode={språkkode} readOnly={readOnly} />
+      <FritekstTextField readOnly={readOnly} />
 
       <VerticalSpacer twentyPx />
 

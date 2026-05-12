@@ -3,7 +3,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getLanguageCodeFromspråkkode, hasValidText, minLength, required } from '@fpsak-frontend/utils';
+import { hasValidText, minLength, required } from '@fpsak-frontend/utils';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { BodyShort, Button, Detail, Heading, Link } from '@navikt/ds-react';
@@ -32,7 +32,6 @@ export class VarselOmRevurderingForm extends React.Component {
     sendVarsel: false,
     fritekst: null,
     begrunnelse: null,
-    languageCode: null,
     erAutomatiskRevurdering: false,
     ventearsaker: [],
     avklartBarn: undefined,
@@ -94,7 +93,6 @@ export class VarselOmRevurderingForm extends React.Component {
     const {
       intl,
       previewCallback,
-      languageCode,
       readOnly,
       sendVarsel,
       aksjonspunktStatus,
@@ -134,7 +132,6 @@ export class VarselOmRevurderingForm extends React.Component {
             {sendVarsel && (
               <ArrowBox>
                 <TextAreaField
-                  badges={[{ textId: languageCode, type: 'warning', title: 'Malform.Beskrivelse' }]}
                   name="fritekst"
                   label={intl.formatMessage({ id: 'VarselOmRevurderingForm.FritekstIBrev' })}
                   validate={[required, minLength3, hasValidText]}
@@ -203,7 +200,6 @@ VarselOmRevurderingForm.propTypes = {
   aksjonspunktStatus: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
-  languageCode: PropTypes.string,
   erAutomatiskRevurdering: PropTypes.bool,
   sendVarsel: PropTypes.bool,
   fritekst: PropTypes.string,
@@ -241,7 +237,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingArsaker,
     aksjonspunkter,
     submitCallback,
-    språkkode,
     familiehendelse,
   } = ownProps;
   const onSubmit = values => submitCallback([values]);
@@ -250,7 +245,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingArsaker.reduce((result, current) => result || current.erAutomatiskRevurdering, false);
   const aksjonspunkt = aksjonspunkter[0];
   const ventearsaker = ownProps.alleKodeverk[kodeverkTyper.VENT_AARSAK];
-  const languageCode = getLanguageCodeFromspråkkode(språkkode);
 
   return state => ({
     initialValues: buildInitialValues(state, ownProps),
@@ -261,7 +255,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     termindato: nullSafe(familiehendelse.gjeldende).termindato,
     vedtaksDatoSomSvangerskapsuke: nullSafe(familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
     behandlingTypeKode: behandlingType.kode,
-    languageCode,
     ventearsaker,
     erAutomatiskRevurdering,
     onSubmit,

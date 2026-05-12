@@ -36,7 +36,6 @@ const VarselOmRevurderingProsessIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       behandlingArsaker={behandling.behandlingÅrsaker}
-      språkkode={behandling.språkkode}
       behandlingType={behandling.type}
       familiehendelse={familiehendelse}
       soknad={soknad}
