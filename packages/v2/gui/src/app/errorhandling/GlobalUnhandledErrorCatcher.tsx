@@ -2,8 +2,6 @@ import { createContext, type FC, type ReactNode, useEffect, useState, use, useCa
 import { ensureError } from './ensureError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { FrontendError } from './FrontendError.js';
-import { formatErrorMessage } from './legacycompat/formatErrorMessages.js';
-import { LegacyApiError } from './legacycompat/LegacyApiError.js';
 import { shouldReportToSentry } from './sentry.js';
 import { captureException, withScope } from '@sentry/browser';
 import { isAlertInfo } from './AlertInfo.js';
@@ -12,7 +10,6 @@ interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
   clearGlobalErrors(): void;
   addGlobalError(error: Error): void;
-  showLegacyRestApiError(data: Record<string, unknown>): void;
   legacyErrorNotifier(error: Error): void;
 }
 
@@ -21,14 +18,6 @@ const empty: GlobalUnhandledErrors = {
   clearGlobalErrors() {},
   addGlobalError(error: Error) {
     throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
-  },
-  showLegacyRestApiError(data: Record<string, unknown>) {
-    const formatertFeilmelding = formatErrorMessage(data);
-    if (formatertFeilmelding == null) {
-      return;
-    }
-    const error = new LegacyApiError(formatertFeilmelding.text, formatertFeilmelding.type, formatertFeilmelding.extra);
-    throw new FrontendError('showLegacyRestApiError called outside GlobalUnhandledErrorCatcher', error);
   },
   legacyErrorNotifier(error: Error) {
     throw new FrontendError('legacyErrorNotifier called outside GlobalUnhandledErrorCatcher', error);
@@ -85,30 +74,6 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
     };
   }, [addGlobalError]);
 
-  const showLegacyRestApiError = useCallback(
-    (data: Record<string, unknown>) => {
-      const formatertFeilmelding = formatErrorMessage(data);
-      if (formatertFeilmelding == null) {
-        return;
-      }
-      const error = new LegacyApiError(
-        formatertFeilmelding.text,
-        formatertFeilmelding.type,
-        formatertFeilmelding.extra,
-      );
-      // Sidan error feil blir oppretta her, og ikkje blir kasta, logg den til Sentry her.
-      if (shouldReportToSentry(error)) {
-        withScope(scope => {
-          if (isAlertInfo(error)) {
-            scope.setTag('errorId', error.errorId);
-          }
-        });
-        captureException(error);
-      }
-      addGlobalError(error);
-    },
-    [addGlobalError],
-  );
   const legacyErrorNotifier = useCallback(
     (error: Error) => {
       // error som kjem inn her blir ikkje ellers rapportert, så logg den til Sentry her.
@@ -134,9 +99,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   }
 
   return (
-    <GlobalUnhandledErrorsContext
-      value={{ globalErrors, clearGlobalErrors, addGlobalError, showLegacyRestApiError, legacyErrorNotifier }}
-    >
+    <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError, legacyErrorNotifier }}>
       <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
     </GlobalUnhandledErrorsContext>
   );
