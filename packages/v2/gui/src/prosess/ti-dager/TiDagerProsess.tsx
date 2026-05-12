@@ -2,6 +2,7 @@ import type {
   k9_sak_kontrakt_inngangsvilkår_AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto,
   k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
 import { BodyLong, BodyShort, Box, Button, Heading, Label, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { queryOptions, useQuery } from '@tanstack/react-query';
@@ -31,10 +32,19 @@ interface TiDagerProsessIndexProps {
   aksjonspunkter: { definisjon: { kode: string } }[];
   isReadOnly: boolean;
   behandlingUUID: string;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-function formatArbeidsgiverNavn(journalpost: JournalpostVisningDto): string {
-  return journalpost.arbeidsgiver?.arbeidsgiverOrgnr ?? journalpost.arbeidsgiver?.arbeidsgiverAktørId ?? journalpost.journalpostId;
+function formatArbeidsgiverNavn(
+  journalpost: JournalpostVisningDto,
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
+): string {
+  const identifikator = journalpost.arbeidsgiver?.arbeidsgiverOrgnr ?? journalpost.arbeidsgiver?.arbeidsgiverAktørId;
+  if (identifikator) {
+    const navn = arbeidsgiverOpplysningerPerId?.[identifikator]?.navn;
+    if (navn) return navn;
+  }
+  return identifikator ?? journalpost.journalpostId;
 }
 
 function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | undefined {
@@ -42,7 +52,7 @@ function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | unde
   return value ? 'ja' : 'nei';
 }
 
-export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID }: TiDagerProsessIndexProps) => {
+export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID, arbeidsgiverOpplysningerPerId }: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
 
   const {
@@ -129,7 +139,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                   <VStack gap="space-8">
                     <VStack gap="space-4">
                       <Label size="small">Arbeidsgiver</Label>
-                      <BodyShort size="small">{journalpost ? formatArbeidsgiverNavn(journalpost) : field.journalpostId}</BodyShort>
+                      <BodyShort size="small">{journalpost ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId) : field.journalpostId}</BodyShort>
                     </VStack>
                     <VStack gap="space-4">
                       <Label size="small">Første fraværsdag</Label>

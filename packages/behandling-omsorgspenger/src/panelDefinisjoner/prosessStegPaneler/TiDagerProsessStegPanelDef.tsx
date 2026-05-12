@@ -11,6 +11,8 @@ class PanelDef extends ProsessStegPanelDef {
   getOverstyrVisningAvKomponent = () => false;
 
   getEndepunkter = () => [];
+
+  getData = ({ arbeidsgiverOpplysningerPerId }) => ({ arbeidsgiverOpplysningerPerId });
 }
 
 class TiDagerProsessStegPanelDef extends ProsessStegDef {
