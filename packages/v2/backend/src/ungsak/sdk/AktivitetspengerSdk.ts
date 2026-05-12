@@ -2,6 +2,7 @@ export {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
+  aktivitetspenger_hentBosattFakta,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   behandlinger_hentBehandlingData1,
