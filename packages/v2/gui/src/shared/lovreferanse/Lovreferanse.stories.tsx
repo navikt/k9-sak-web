@@ -171,7 +171,7 @@ export const KapitlerBlirLenketRiktig: Story = {
       await expect(firstLink).toHaveTextContent('Kapittel 2');
       await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
 
-      await expect(root()).toHaveTextContent('kapittel 2');
+      await expect(root()).toHaveTextContent('Kapittel 2');
     });
   },
 };
