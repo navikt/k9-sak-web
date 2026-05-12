@@ -11,7 +11,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    const { kvoteInfo, hentBehandling, erOverstyrer, isReadOnly } = props;
+    const { kvoteInfo, erOverstyrer, isReadOnly } = props;
     const { uttak, behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
     return (
       <>
@@ -21,7 +21,6 @@ class PanelDef extends ProsessStegPanelDef {
           behandling={behandling}
           aksjonspunkter={aksjonspunkter}
           relevanteAksjonspunkter={relevanteAksjonspunkter}
-          hentBehandling={hentBehandling}
           erOverstyrer={erOverstyrer}
           readOnly={isReadOnly}
         />
