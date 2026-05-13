@@ -1,0 +1,20 @@
+{
+  "description": "Generer BackendClient, BackendApiType, QueryOptions og SDK re-export filer fra OpenAPI-genererte SDK-endepunkter",
+  "domain": "backend",
+  "tags": ["v2", "backend-client", "api", "code-generation", "typescript", "tanstack-query"],
+  "references": ["references/templates.md"],
+  "examples": [
+    {
+      "prompt": "Lag BackendClient for kontroll_hentKontrollerInntekt og arbeidsgiver_getArbeidsgiverOpplysninger. Backend: ungsak. Domene: AktivitetspengerBeregning. Mappe: prosess/aktivitetspenger-beregning/. Lag queryOptions.",
+      "scenario": "Ny BackendClient med queryOptions for ung-sak"
+    },
+    {
+      "prompt": "Generer BackendClient for uttak_hentUttaksresultat. Backend: k9sak. Domene: Uttak. Mappe: prosess/uttak/.",
+      "scenario": "Enkel BackendClient uten queryOptions for k9-sak"
+    },
+    {
+      "prompt": "Lag BackendClient for tilbakekreving_hentVedtak og tilbakekreving_bekreftAksjonspunkt. Backend: k9tilbake. Domene: Tilbakekreving. Mappe: prosess/tilbakekreving/. Lag queryOptions for GET-endepunktene.",
+      "scenario": "BackendClient med blanding av GET og POST for k9-tilbake"
+    }
+  ]
+}
