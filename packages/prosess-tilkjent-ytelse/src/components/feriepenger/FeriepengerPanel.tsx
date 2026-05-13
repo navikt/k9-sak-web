@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Accordion, Heading, VStack } from '@navikt/ds-react';
+import { ExpansionCard, Heading, VStack } from '@navikt/ds-react';
 
 import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
@@ -23,27 +23,27 @@ const FeriepengerPanel = ({ feriepengerPrÅr, arbeidsgiverOpplysningerPerId }: P
   }
 
   return (
-    <Accordion>
-      <Accordion.Item open={erPanelÅpent}>
-        <Accordion.Header onClick={() => setErPanelÅpent(!erPanelÅpent)}>
+    <ExpansionCard open={erPanelÅpent} aria-label="Feriepenger" size="small">
+      <ExpansionCard.Header onClick={() => setErPanelÅpent(!erPanelÅpent)}>
+        <ExpansionCard.Title>
           <Heading size="small" level="2">
             Feriepenger
           </Heading>
-        </Accordion.Header>
-        <Accordion.Content>
-          <VStack gap="space-16">
-            {[...feriepengerPrÅr.keys()].map(år => (
-              <FeriepengerPrÅrTabell
-                key={`tabell_${år}`}
-                åretsAndeler={feriepengerPrÅr.get(år) ?? []}
-                opptjeningsår={år}
-                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              />
-            ))}
-          </VStack>
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion>
+        </ExpansionCard.Title>
+      </ExpansionCard.Header>
+      <ExpansionCard.Content>
+        <VStack gap="space-16">
+          {[...feriepengerPrÅr.keys()].map(år => (
+            <FeriepengerPrÅrTabell
+              key={`tabell_${år}`}
+              åretsAndeler={feriepengerPrÅr.get(år) ?? []}
+              opptjeningsår={år}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            />
+          ))}
+        </VStack>
+      </ExpansionCard.Content>
+    </ExpansionCard>
   );
 };
 
