@@ -34,6 +34,7 @@ const findContextPath = (location: string): string => location.split('/')[1]?.to
  * Formaterer én feilmelding basert på type.
  * Håndterer polling-timeout, polling halted/delayed, gateway-timeout/not-found og standardfeil.
  */
+//TODO Reimplementer dette i visning av AxiosError
 export const formatErrorMessage = (e: InputErrorMessage): ErrorMessage | undefined => {
   if (e.type === EventType.POLLING_TIMEOUT) {
     return ErrorMessage.withMessage(`Serverkall har gått ut på tid: ${e.location ?? ''}`, e.type, {

@@ -7,6 +7,9 @@ import { resolveApiErrorViewProps } from './resolveApiErrorViewProps.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
 import { EnterIcon } from '@navikt/aksel-icons';
 import { AxiosError } from 'axios';
+import { resolveAxiosErrorView } from './resolveAxiosErrorView.js';
+import TimeoutError from '../legacycompat/TimeoutError.js';
+import { resolveTimeoutErrorView } from './resolveTimeoutErrorView.js';
 
 export type ErrorViewProps = Readonly<{
   title: string;
@@ -56,19 +59,6 @@ const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
   };
 };
 
-const axiosErrorViewProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction'> => {
-  const title = 'Feil ved henting/sending av data';
-  const errorInfo = (
-    <BodyLong>
-      Serverkall returnerte feilmelding <i>{error.message}</i>.
-    </BodyLong>
-  );
-  return {
-    title,
-    errorInfo,
-  };
-};
-
 // Utleder tekst og handling for å hjelpe bruker handtere ulike feil som kan oppstå.
 // Returverdi passer inn i diverse gui komponenter for visning av feil.
 export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
@@ -86,7 +76,10 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
   }
 
   if (error instanceof AxiosError) {
-    ({ title, errorInfo } = axiosErrorViewProps(error));
+    ({ title, errorInfo, fixAction } = resolveAxiosErrorView(error));
+  }
+  if (error instanceof TimeoutError) {
+    ({ title, errorInfo, fixAction } = resolveTimeoutErrorView(error));
   }
 
   if (error instanceof AdditionalInfoError && error.additionalInfo != null) {
