@@ -63,14 +63,11 @@ const StruktureringAvDokumentasjon = ({
     visRedigeringAvDokument,
   } = state;
 
-  const skalViseDiagnosekoder = ![
-    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
-    fagsakYtelsesType.OPPLÆRINGSPENGER,
-  ].some(ytelseType => ytelseType === fagsakYtelseType);
+  const skalViseDiagnosekoder = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 
-  const skalViseInnleggelsesperioder = VIS_INNLEGGELSE_FOR_PILS ? ![fagsakYtelsesType.OPPLÆRINGSPENGER].some(
-    ytelseType => ytelseType === fagsakYtelseType,
-  ) : skalViseDiagnosekoder;
+  const skalViseInnleggelsesperioder =
+    fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN ||
+    (VIS_INNLEGGELSE_FOR_PILS && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE);
 
   const nesteStegErVurderingFn = (nesteSteg: SykdomsstegStatusResponse) => {
     if (fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
