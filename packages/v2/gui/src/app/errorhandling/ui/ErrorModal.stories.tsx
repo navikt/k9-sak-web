@@ -1,6 +1,5 @@
 import { type Decorator, type Meta, type StoryObj } from '@storybook/react-vite';
 import { FrontendError } from '../FrontendError.js';
-import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
@@ -56,16 +55,6 @@ export const ShowError: Story = {
   args: {
     error: new FrontendError('Test error 1'),
     fixAction: retryAction(action('retryAction')),
-  },
-};
-
-export const ShowAdditionalInfoError: Story = {
-  args: {
-    error: new AdditionalInfoError('Test error 2', undefined, {
-      longDetailedMessage:
-        "Extra description of error. Might be a bit of a long description in some cases. Don't worry though, the lines will break at some point.",
-      location: '/fake',
-    }),
   },
 };
 

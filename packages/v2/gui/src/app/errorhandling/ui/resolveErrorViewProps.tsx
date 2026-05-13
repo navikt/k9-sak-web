@@ -1,7 +1,6 @@
-import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 import type { ReactNode } from 'react';
 import { type ErrorHandlingWizardFixAction, reloadAction } from './ErrorHandlingWizard.js';
-import { BodyLong, BodyShort, VStack } from '@navikt/ds-react';
+import { BodyLong, BodyShort } from '@navikt/ds-react';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { resolveApiErrorViewProps } from './resolveApiErrorViewProps.js';
 import { AuthAbortedError } from '@k9-sak-web/backend/shared/auth/AuthAbortedError.js';
@@ -16,21 +15,6 @@ export type ErrorViewProps = Readonly<{
   errorInfo: ReactNode; // Element returnert her må ikkje vere for avansert. (Skal passe inn i LocalAlert, etc)
   fixAction: ErrorHandlingWizardFixAction;
 }>;
-
-// Legacy api feil blir AdditionalInfoError av og til
-const additionalInfoListing = (error: AdditionalInfoError): ReactNode => {
-  return (
-    <VStack gap="space-4">
-      {Object.entries(error.additionalInfo ?? []).map(([key, val]) => {
-        return (
-          <BodyLong key={key} size="small">
-            <i>{key}</i>: {typeof val == 'string' ? val : String(val)}
-          </BodyLong>
-        );
-      })}
-    </VStack>
-  );
-};
 
 const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
   return {
@@ -80,15 +64,6 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
   }
   if (error instanceof TimeoutError) {
     ({ title, errorInfo, fixAction } = resolveTimeoutErrorView(error));
-  }
-
-  if (error instanceof AdditionalInfoError && error.additionalInfo != null) {
-    errorInfo = (
-      <>
-        {errorInfo}
-        {additionalInfoListing(error)}
-      </>
-    );
   }
 
   if (error instanceof AuthAbortedError) {

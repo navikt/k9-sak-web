@@ -1,8 +1,6 @@
 import { TopErrorPanelUI } from './TopErrorPanel.js';
 import { type Meta, type StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, within } from 'storybook/test';
 import { FrontendError } from '../FrontendError.js';
-import { AdditionalInfoError } from '../legacycompat/AdditionalInfoError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
@@ -46,10 +44,7 @@ export const OneError: Story = {
 
 export const TwoErrors: Story = {
   args: {
-    errors: [
-      new FrontendError('Test error 1'),
-      new AdditionalInfoError('Test error 2', undefined, { message: 'Extra description of error', url: '/fake' }),
-    ],
+    errors: [new FrontendError('Test error 1'), new FrontendError('Test error 2')],
   },
 };
 
@@ -60,26 +55,8 @@ export const MoreThanThreeUniqueErrorTypes: Story = {
       new FrontendError(
         'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
       ),
-      new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' }),
+      new FrontendError('Testfeil 3'),
       fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
     ],
-  },
-};
-
-export const CheckAdditionalInfoDialogDisplay: Story = {
-  args: {
-    errors: [new AdditionalInfoError('Testfeil 3', undefined, { message: 'Extra description of error', url: '/fake' })],
-  },
-  play: async ({ canvas }) => {
-    const visEkstraInfoLink = canvas.getByText('Vis ekstra info');
-    await userEvent.click(visEkstraInfoLink);
-    const dialog = await within(document.body).findByRole('alertdialog');
-    await expect(dialog).toBeInTheDocument();
-    await expect(within(dialog).getByText('Testfeil 3')).toBeInTheDocument();
-    await expect(within(dialog).getByText(/Extra description of error/)).toBeInTheDocument();
-    // Lukk dialogen og verifiser at den er borte
-    const lukkButton = within(dialog).getByRole('button', { name: 'Lukk' });
-    await userEvent.click(lukkButton);
-    await expect(within(dialog).queryByText('Testfeil 3')).not.toBeInTheDocument();
   },
 };
