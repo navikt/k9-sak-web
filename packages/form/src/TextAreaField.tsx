@@ -35,25 +35,21 @@ interface TextAreaFieldProps {
   placeholder?: string;
 }
 
-const TextAreaWithBadge = ({
-  badges,
-  dataId,
-  ...otherProps
-}: TextAreaWithBadgeProps & TextareaProps) => {
+const TextAreaWithBadge = ({ badges, dataId, ...otherProps }: TextAreaWithBadgeProps & TextareaProps) => {
   const intl = useIntl();
   return (
-  <div className={badges ? styles.textAreaFieldWithBadges : undefined}>
-    {badges && (
-      <div className={styles.etikettWrapper}>
-        {badges.map(({ textId, type, title }) => (
-          <Tag variant={type || 'warning'} key={textId} title={intl.formatMessage({ id: title })}>
-            <FormattedMessage id={textId} />
-          </Tag>
-        ))}
-      </div>
-    )}
-    <Textarea size="small" data-testid={dataId} {...otherProps} />
-  </div>
+    <div className={badges ? styles.textAreaFieldWithBadges : undefined}>
+      {badges && (
+        <div className={styles.etikettWrapper}>
+          {badges.map(({ textId, type, title }) => (
+            <Tag variant={type || 'warning'} size="small" key={textId} title={intl.formatMessage({ id: title })}>
+              <FormattedMessage id={textId} />
+            </Tag>
+          ))}
+        </div>
+      )}
+      <Textarea size="small" data-testid={dataId} {...otherProps} />
+    </div>
   );
 };
 
