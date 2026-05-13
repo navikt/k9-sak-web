@@ -5,6 +5,7 @@ import { ErrorResponse } from '../ResponseTsType';
 import { AxiosError } from 'axios';
 import type { NotificationEmitter } from '../NotificationEmitter.js';
 import type { ErrorNotifier } from './ErrorNotifier.js';
+import { BlobResponseAxiosError } from '@k9-sak-web/gui/app/errorhandling/legacycompat/BlobResponseAxiosError.js';
 
 const isString = (value: any): boolean => typeof value === 'string';
 
@@ -32,6 +33,17 @@ const blobParser = (blob: any): Promise<string> => {
       fileReader.readAsText(blob);
     }
   });
+};
+
+const resolveBlobErrorText = async (error: AxiosError): Promise<string | null> => {
+  if (!isOfTypeBlob(error)) return null;
+  const responseData = error.response?.data;
+  try {
+    const text = await blobParser(responseData);
+    return isString(text) ? text : null;
+  } catch {
+    return null;
+  }
 };
 
 interface FormatedError {
@@ -62,12 +74,18 @@ class RequestErrorEventHandler {
   }
 
   handleError = async (error: Error): Promise<void> => {
-    this.errorNotifier?.(error);
+    // Ny feilrapportering:
+    if (error instanceof AxiosError) {
+      const blobText = await resolveBlobErrorText(error);
+      this.errorNotifier?.(blobText != null ? new BlobResponseAxiosError(error, blobText) : error);
+    } else {
+      this.errorNotifier?.(error);
+    }
+    // Gammal feilrapportering:
     if (error instanceof TimeoutError) {
       this.notify(EventType.POLLING_TIMEOUT, { location: error.location });
       return;
     }
-
     if (error instanceof AxiosError) {
       const formattedError = this.formatError(error);
 
