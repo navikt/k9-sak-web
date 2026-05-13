@@ -21,6 +21,9 @@ const meta = {
       uuid: 'fake-uuid',
       behandlingTilGodkjenningVedLokalkontor: true,
     },
+    bosattFakta: {
+      perioder: [],
+    },
     vilkår: [],
   },
 } satisfies Meta<typeof AktivitetspengerInngangsvilkår>;
