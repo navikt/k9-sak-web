@@ -35,7 +35,7 @@ const blobParser = (blob: any): Promise<string> => {
 };
 
 interface FormatedError {
-  data?: string | ErrorResponse;
+  data?: string | ErrorResponse | Record<string, unknown>;
   type?: string;
   status?: number;
   isForbidden?: boolean;
