@@ -5,46 +5,10 @@ import { ErrorResponse } from '../ResponseTsType';
 import { AxiosError } from 'axios';
 import type { NotificationEmitter } from '../NotificationEmitter.js';
 import type { ErrorNotifier } from './ErrorNotifier.js';
+import { blobToText, isOfTypeBlob } from '@k9-sak-web/gui/app/errorhandling/legacycompat/blobResponseHelper.js';
 import { BlobResponseAxiosError } from '@k9-sak-web/gui/app/errorhandling/legacycompat/BlobResponseAxiosError.js';
 
 const isString = (value: any): boolean => typeof value === 'string';
-
-const isOfTypeBlob = (error: AxiosError): boolean =>
-  error != null && error.config != null && error.config.responseType === 'blob';
-
-const blobParser = (blob: any): Promise<string> => {
-  const fileReader = new FileReader();
-
-  return new Promise((resolve, reject) => {
-    fileReader.onerror = () => {
-      fileReader.abort();
-      reject(new Error('Problem parsing blob'));
-    };
-
-    fileReader.onload = () => {
-      if (fileReader.result !== null && !(fileReader.result instanceof ArrayBuffer)) {
-        resolve(fileReader.result);
-      } else {
-        reject(new Error('Problem parsing blob'));
-      }
-    };
-
-    if (blob instanceof Blob) {
-      fileReader.readAsText(blob);
-    }
-  });
-};
-
-const resolveBlobErrorText = async (error: AxiosError): Promise<string | null> => {
-  if (!isOfTypeBlob(error)) return null;
-  const responseData = error.response?.data;
-  try {
-    const text = await blobParser(responseData);
-    return isString(text) ? text : null;
-  } catch {
-    return null;
-  }
-};
 
 interface FormatedError {
   data?: string | ErrorResponse | Record<string, unknown>;
@@ -75,9 +39,9 @@ class RequestErrorEventHandler {
 
   handleError = async (error: Error): Promise<void> => {
     // Ny feilrapportering:
-    if (error instanceof AxiosError) {
-      const blobText = await resolveBlobErrorText(error);
-      this.errorNotifier?.(blobText != null ? new BlobResponseAxiosError(error, blobText) : error);
+    if (error instanceof AxiosError && isOfTypeBlob(error) && error.response?.data instanceof Blob) {
+      const text = await blobToText(error.response.data);
+      this.errorNotifier?.(new BlobResponseAxiosError(error, text));
     } else {
       this.errorNotifier?.(error);
     }
@@ -88,9 +52,8 @@ class RequestErrorEventHandler {
     }
     if (error instanceof AxiosError) {
       const formattedError = this.formatError(error);
-
-      if (isOfTypeBlob(error)) {
-        const jsonErrorString = await blobParser(formattedError.data);
+      if (isOfTypeBlob(error) && formattedError.data instanceof Blob) {
+        const jsonErrorString = await blobToText(formattedError.data);
         if (isString(jsonErrorString)) {
           formattedError.data = JSON.parse(jsonErrorString);
         }
