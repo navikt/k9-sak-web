@@ -5,6 +5,7 @@ import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/back
 import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
 import { reloadAction, restartAction } from './ErrorHandlingWizard.js';
+import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
 
 // Henter første del av URL-stien som kontekstnavn (f.eks. "k9-sak" -> "K9-SAK")
 const findContextPath = (location: string): string => {
@@ -35,9 +36,26 @@ const extractBodyMessage = (data: unknown): string | null => {
   return null;
 };
 
+// For BlobResponseAxiosError, parser responseText til objekt. Returnerer null viss parsing feiler.
+const parseBlobResponseText = (error: AxiosError): unknown | null => {
+  if (!(error instanceof BlobResponseAxiosError)) return null;
+  try {
+    return JSON.parse(error.responseText);
+  } catch {
+    return null;
+  }
+};
+
+// Hent effektiv response-data: for blob-errors bruker vi parsa responseText, elles response.data
+const getEffectiveResponseData = (error: AxiosError): unknown => {
+  const parsed = parseBlobResponseText(error);
+  if (parsed != null) return parsed;
+  return error.response?.data;
+};
+
 // Spesialhandtering for status 418 (polling halted/delayed). Tilsvarer legacy POLLING_HALTED_OR_DELAYED.
 const resolveTeapotProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction'> | null => {
-  const data = asRecord(error.response?.data);
+  const data = asRecord(getEffectiveResponseData(error));
   if (data == null) return null;
 
   const status = typeof data['status'] === 'string' ? data['status'] : undefined;
@@ -91,7 +109,7 @@ const resolveTeapotProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction'
  */
 export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   const status = error.response?.status;
-  const responseData = error.response?.data;
+  const responseData = getEffectiveResponseData(error);
   const requestUrl = error.config?.url ?? error.response?.config?.url ?? '';
   const bodyMessage = extractBodyMessage(responseData);
 
