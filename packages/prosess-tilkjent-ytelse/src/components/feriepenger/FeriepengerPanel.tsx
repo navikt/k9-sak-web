@@ -23,8 +23,8 @@ const FeriepengerPanel = ({ feriepengerPrÅr, arbeidsgiverOpplysningerPerId }: P
   }
 
   return (
-    <ExpansionCard open={erPanelÅpent} aria-label="Feriepenger" size="small">
-      <ExpansionCard.Header onClick={() => setErPanelÅpent(!erPanelÅpent)}>
+    <ExpansionCard open={erPanelÅpent} onToggle={() => setErPanelÅpent(!erPanelÅpent)} aria-label="Feriepenger" size="small">
+      <ExpansionCard.Header>
         <ExpansionCard.Title>
           <Heading size="small" level="2">
             Feriepenger
