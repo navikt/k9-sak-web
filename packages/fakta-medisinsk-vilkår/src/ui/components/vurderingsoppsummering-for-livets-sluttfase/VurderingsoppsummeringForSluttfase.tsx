@@ -1,3 +1,4 @@
+  redigerVurdering: () => void;
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
@@ -5,7 +6,7 @@ import { Box } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import AvslattAvInnleggelsesperiodeMelding from '../avslatt-av-innleggelsesperiode-melding/AvslattAvInnleggelsesperiodeMelding';
+import AvslåttAvInnleggelsesperiodeMelding from '../avslått-av-innleggelsesperiode-melding/AvslåttAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 
@@ -31,7 +32,7 @@ const VurderingsoppsummeringForSluttfase = ({
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
       <Box marginBlock="space-24 space-0">
-        {erInnleggelsesperiode && <AvslattAvInnleggelsesperiodeMelding />}
+        {erInnleggelsesperiode && <AvslåttAvInnleggelsesperiodeMelding />}
         <Box marginBlock="space-16 space-0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om livets sluttfase?"
