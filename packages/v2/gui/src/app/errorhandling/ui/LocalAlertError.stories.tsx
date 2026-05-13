@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, spyOn, userEvent } from 'storybook/test';
 import { useState } from 'react';
-import { Button, VStack } from '@navikt/ds-react';
+import { BodyLong, Button, VStack } from '@navikt/ds-react';
 import { AxiosError, AxiosHeaders, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 import { ErrorBoundary } from '../boundary/ErrorBoundary.js';
 import { LocalAlertError } from './LocalAlertError.js';
@@ -11,6 +11,7 @@ import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedA
 import { FrontendError } from '../FrontendError.js';
 import { TimeoutError } from '../legacycompat/TimeoutError.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
+import { resolveErrorViewProps } from './resolveErrorViewProps.js';
 
 /**
  * Komponent som kastar ein feil når `shouldThrow` er true.
@@ -36,8 +37,7 @@ const ErrorTriggerWrapper = () => {
       <ErrorBoundary
         errorFallback={({ error, reset }) => (
           <LocalAlertError
-            title="Eksempel-feil"
-            error={error}
+            {...resolveErrorViewProps(error)}
             fixAction={retryAction(() => {
               setShouldThrow(false);
               reset();
@@ -64,6 +64,7 @@ export const DefaultStory: Story = {
   args: {
     title: 'Eksempel-feil',
     error: new FrontendError('Lorem ipsum error'),
+    errorInfo: <BodyLong>Lorem ipsum error</BodyLong>,
     fixAction: retryAction(action('fix problem')),
   },
 };
@@ -73,18 +74,18 @@ export const MedErrorBoundary: StoryObj = {
   render: () => <ErrorTriggerWrapper />,
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Trigger feil' }));
-    await expect(canvas.getByText('Eksempel-feil')).toBeInTheDocument();
+    await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
     await expect(canvas.getByRole('button', { name: 'Prøv på nytt' })).toBeInTheDocument();
     await expect(canvas.getByRole('button', { name: 'Rapporter feil' })).toBeInTheDocument();
   },
 };
 
-/** Viser at children overstyrer standard error.message-visning */
+/** Viser LocalAlertError med eigendefinert errorInfo */
 export const MedEgneChildren: Story = {
   args: {
     title: 'Eksempel-feil',
     error: new FrontendError('Lorem ipsum error'),
-    children: 'Eigendefinert feilmelding som overstyrer error.message.',
+    errorInfo: 'Eigendefinert feilmelding som overstyrer error.message.',
     fixAction: retryAction(action('fix problem')),
   },
   play: async ({ canvas }) => {
@@ -95,9 +96,7 @@ export const MedEgneChildren: Story = {
 };
 
 export const Minimal: Story = {
-  args: {
-    error: new FrontendError('Lorem ipsum error'),
-  },
+  args: resolveErrorViewProps(new FrontendError('Lorem ipsum error')),
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
     await expect(canvas.queryByRole('button', { name: 'Last på nytt' })).toBeInTheDocument();
@@ -105,24 +104,18 @@ export const Minimal: Story = {
 };
 
 export const BadRequest: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
-  },
+  args: resolveErrorViewProps(
+    makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
+  ),
 };
 export const Unauthorized: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 401 }),
-  },
+  args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 401 })),
 };
 export const Forbidden: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 403 }),
-  },
+  args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 403 })),
 };
 export const NotFound: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 404 }),
-  },
+  args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 404 })),
 };
 
 /** Viser at reset-funksjonaliteten fungerer */
@@ -130,7 +123,7 @@ export const ResetEtterFeil: StoryObj = {
   render: () => <ErrorTriggerWrapper />,
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Trigger feil' }));
-    await expect(canvas.getByText('Eksempel-feil')).toBeInTheDocument();
+    await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
     await userEvent.click(canvas.getByRole('button', { name: 'Prøv på nytt' }));
     await expect(canvas.getByText('Innhald utan feil.')).toBeInTheDocument();
   },
@@ -153,55 +146,43 @@ const makeFakeAxiosError = (status: number, data?: unknown, url = '/api/k9-sak/b
 // --- AxiosError stories (resolveAxiosErrorView) ---
 
 export const Axios401Unauthorized: Story = {
-  args: {
-    error: makeFakeAxiosError(401),
-  },
+  args: resolveErrorViewProps(makeFakeAxiosError(401)),
 };
 
 export const Axios403Forbidden: Story = {
-  args: {
-    error: makeFakeAxiosError(403, { feilmelding: 'Du mangler tilgang til denne ressursen.' }),
-  },
+  args: resolveErrorViewProps(makeFakeAxiosError(403, { feilmelding: 'Du mangler tilgang til denne ressursen.' })),
 };
 
 export const Axios400BadRequest: Story = {
-  args: {
-    error: makeFakeAxiosError(400, { feilmelding: 'Felt "fødselsdato" er ugyldig.' }),
-  },
+  args: resolveErrorViewProps(makeFakeAxiosError(400, { feilmelding: 'Felt "fødselsdato" er ugyldig.' })),
 };
 
 export const Axios404NotFound: Story = {
-  args: {
-    error: makeFakeAxiosError(404, undefined, '/api/k9-sak/behandling/123'),
-  },
+  args: resolveErrorViewProps(makeFakeAxiosError(404, undefined, '/api/k9-sak/behandling/123')),
 };
 
 export const Axios504GatewayTimeout: Story = {
-  args: {
-    error: makeFakeAxiosError(504, undefined, '/api/k9-sak/oppgave'),
-  },
+  args: resolveErrorViewProps(makeFakeAxiosError(504, undefined, '/api/k9-sak/oppgave')),
 };
 
 export const Axios418PollingHalted: Story = {
-  args: {
-    error: makeFakeAxiosError(418, { status: 'HALTED', message: 'Eksternt system feilet under prosessering.' }),
-  },
+  args: resolveErrorViewProps(
+    makeFakeAxiosError(418, { status: 'HALTED', message: 'Eksternt system feilet under prosessering.' }),
+  ),
 };
 
 export const Axios418PollingDelayed: Story = {
-  args: {
-    error: makeFakeAxiosError(418, {
+  args: resolveErrorViewProps(
+    makeFakeAxiosError(418, {
       status: 'DELAYED',
       eta: '2026-05-14T10:00:00',
       message: 'Inntektskomponenten har planlagt nedetid.',
     }),
-  },
+  ),
 };
 
 export const Axios500ServerError: Story = {
-  args: {
-    error: makeFakeAxiosError(500, { feilmelding: 'Uventet feil i backend-tjenesten.' }),
-  },
+  args: resolveErrorViewProps(makeFakeAxiosError(500, { feilmelding: 'Uventet feil i backend-tjenesten.' })),
   play: async ({ canvas }) => {
     const writeText = spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined);
 
@@ -224,35 +205,31 @@ export const Axios500ServerError: Story = {
 };
 
 export const AxiosNetworkError: Story = {
-  args: {
-    error: new AxiosError('Network Error', 'ERR_NETWORK'),
-  },
+  args: resolveErrorViewProps(new AxiosError('Network Error', 'ERR_NETWORK')),
 };
 
 // --- BlobResponseAxiosError stories ---
 
 export const BlobResponseError: Story = {
-  args: {
-    error: new BlobResponseAxiosError(
+  args: resolveErrorViewProps(
+    new BlobResponseAxiosError(
       makeFakeAxiosError(500, undefined, '/api/k9-formidling/brev'),
       JSON.stringify({ feilmelding: 'Feil ved generering av dokument.' }),
     ),
-  },
+  ),
 };
 
 export const BlobResponse418Halted: Story = {
-  args: {
-    error: new BlobResponseAxiosError(
+  args: resolveErrorViewProps(
+    new BlobResponseAxiosError(
       makeFakeAxiosError(418, undefined, '/api/k9-formidling/brev'),
       JSON.stringify({ status: 'HALTED', message: 'Dokumentgenerering stoppet.' }),
     ),
-  },
+  ),
 };
 
 // --- TimeoutError stories (resolveTimeoutErrorView) ---
 
 export const PollingTimeout: Story = {
-  args: {
-    error: new TimeoutError('/api/k9-sak/behandling/status'),
-  },
+  args: resolveErrorViewProps(new TimeoutError('/api/k9-sak/behandling/status')),
 };

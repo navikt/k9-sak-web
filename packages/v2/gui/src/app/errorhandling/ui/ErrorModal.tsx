@@ -1,25 +1,18 @@
 import { Dialog, LocalAlert } from '@navikt/ds-react';
 import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
-import type { ComponentProps, ReactNode } from 'react';
-import { resolveMissingErrorViewProps } from './resolveErrorViewProps.js';
+import type { ErrorViewProps } from './resolveErrorViewProps.js';
 
 export type ErrorModalProps = Readonly<{
-  title?: string;
-  children?: ReactNode;
-  error?: Error;
-  fixAction?: ComponentProps<typeof ErrorHandlingWizard>['fixAction'];
+  errorProps?: ErrorViewProps;
   onClose(): void;
 }>;
 
 const ErrorDialogContent = (
   {
-    error,
-    children,
+    errorProps: { error, title, errorInfo, fixAction },
     onClose,
-    ...rest
-  }: ErrorModalProps & Required<Pick<ErrorModalProps, 'error'>> /* error er alltid satt her */,
+  }: Required<ErrorModalProps> /* errorProps er alltid sett her */,
 ) => {
-  const { title, errorInfo, fixAction } = resolveMissingErrorViewProps({ errorInfo: children, ...rest }, error);
   // Vurder å legge inn noko slikt: const fixAction = {...fa, info: <>{fa.info}<BodyLong>Hvis du har fylt ut viktig, ulagret informasjon i skjermbildet kan du lukke denne dialog og ta vare på informasjonen først.</BodyLong></>}
   return (
     <LocalAlert status="error">
@@ -36,15 +29,11 @@ const ErrorDialogContent = (
   );
 };
 
-export const ErrorModal = ({ error, onClose, children, ...rest }: ErrorModalProps) => {
+export const ErrorModal = ({ onClose, errorProps }: ErrorModalProps) => {
   return (
-    <Dialog open={error != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
+    <Dialog open={errorProps != null} onOpenChange={changeTo => (!changeTo ? onClose() : null)}>
       <Dialog.Popup closeOnOutsideClick={false} role="alertdialog" width="large">
-        {error != null ? (
-          <ErrorDialogContent error={error} onClose={onClose} {...rest}>
-            {children}
-          </ErrorDialogContent>
-        ) : null}
+        {errorProps != null ? <ErrorDialogContent errorProps={errorProps} onClose={onClose} /> : null}
       </Dialog.Popup>
     </Dialog>
   );

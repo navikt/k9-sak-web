@@ -8,7 +8,7 @@ import { reloadAction, restartAction } from './ErrorHandlingWizard.js';
 
 // Utleder feilmelding og anbefalt handling som blir vist for ulike ExtendedApiError varianter.
 // Slik at bruker forhåpentlegvis kan forstå kva som har gått gale og korrigere viss mulig.
-export const resolveApiErrorViewProps = (error: ExtendedApiError): Omit<ErrorViewProps, 'error'> => {
+export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProps => {
   let title = 'Server forespørsel feilet';
   let errorInfo: ReactNode = (
     <>
@@ -78,6 +78,7 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): Omit<ErrorVie
   }
 
   return {
+    error,
     title,
     errorInfo,
     fixAction,

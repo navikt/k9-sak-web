@@ -54,7 +54,7 @@ const getEffectiveResponseData = (error: AxiosError): unknown => {
 };
 
 // Spesialhandtering for status 418 (polling halted/delayed). Tilsvarer legacy POLLING_HALTED_OR_DELAYED.
-const resolveTeapotProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction'> | null => {
+const resolveTeapotProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction' | 'error'> | null => {
   const data = asRecord(getEffectiveResponseData(error));
   if (data == null) return null;
 
@@ -121,6 +121,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
         resolveLoginURL(typeof locationHeader === 'string' ? locationHeader : null),
       )?.toString() ?? '/';
     return {
+      error,
       title: 'Ikke innlogget',
       errorInfo: <BodyLong>Du er ikke innlogget.</BodyLong>,
       fixAction: {
@@ -135,6 +136,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   // 403 — Tilgang nektet.
   if (status === 403) {
     return {
+      error,
       title: 'Tilgang nektet',
       errorInfo: (
         <>
@@ -158,6 +160,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   if (status === 504 || status === 404) {
     const contextPath = requestUrl ? findContextPath(requestUrl) : '';
     return {
+      error,
       title: status === 404 ? 'Ikke funnet' : 'Tidsavbrudd mot server',
       errorInfo: (
         <>
@@ -179,13 +182,14 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   if (status === 418) {
     const teapot = resolveTeapotProps(error);
     if (teapot != null) {
-      return { ...teapot, fixAction: reloadAction };
+      return { error, ...teapot, fixAction: reloadAction };
     }
   }
 
   // 400 — ugyldig forespørsel. Speglar resolveApiErrorViewProps.
   if (status === 400) {
     return {
+      error,
       title: 'Ugyldig forespørsel',
       errorInfo: (
         <>
@@ -206,6 +210,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   // Ingen response (typisk nettverksfeil / CORS / avbrutt).
   if (error.response == null) {
     return {
+      error,
       title: 'Nettverksfeil',
       errorInfo: (
         <BodyLong>
@@ -218,6 +223,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
 
   // Standard fallback: vis melding frå body eller error.message.
   return {
+    error,
     title: 'Server forespørsel feilet',
     errorInfo: (
       <>

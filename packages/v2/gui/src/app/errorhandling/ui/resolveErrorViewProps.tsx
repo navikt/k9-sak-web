@@ -11,6 +11,7 @@ import TimeoutError from '../legacycompat/TimeoutError.js';
 import { resolveTimeoutErrorView } from './resolveTimeoutErrorView.js';
 
 export type ErrorViewProps = Readonly<{
+  error: Error;
   title: string;
   errorInfo: ReactNode; // Element returnert her må ikkje vere for avansert. (Skal passe inn i LocalAlert, etc)
   fixAction: ErrorHandlingWizardFixAction;
@@ -18,6 +19,7 @@ export type ErrorViewProps = Readonly<{
 
 const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
   return {
+    error,
     title: 'Innlogging avbrutt',
     errorInfo: (
       <>
@@ -46,48 +48,29 @@ const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
 // Utleder tekst og handling for å hjelpe bruker handtere ulike feil som kan oppstå.
 // Returverdi passer inn i diverse gui komponenter for visning av feil.
 export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
-  let title = 'Uventet feil';
-  let errorInfo: ReactNode = <BodyLong>{error.message}</BodyLong>;
-  let fixAction = reloadAction;
-
   if (error instanceof ExtendedApiError) {
-    ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(error));
-  } else {
-    const apiError = ExtendedApiError.findInError(error);
-    if (apiError != null) {
-      ({ title, errorInfo, fixAction } = resolveApiErrorViewProps(apiError));
-    }
+    return resolveApiErrorViewProps(error);
+  }
+
+  const apiError = ExtendedApiError.findInError(error);
+  if (apiError != null) {
+    return { ...resolveApiErrorViewProps(apiError), error };
   }
 
   if (error instanceof AxiosError) {
-    ({ title, errorInfo, fixAction } = resolveAxiosErrorView(error));
+    return resolveAxiosErrorView(error);
   }
   if (error instanceof TimeoutError) {
-    ({ title, errorInfo, fixAction } = resolveTimeoutErrorView(error));
+    return resolveTimeoutErrorView(error);
   }
-
   if (error instanceof AuthAbortedError) {
-    ({ title, errorInfo, fixAction } = authAbortedViewProps(error));
+    return authAbortedViewProps(error);
   }
 
   return {
-    title,
-    errorInfo,
-    fixAction,
+    error,
+    title: 'Uventet feil',
+    errorInfo: <BodyLong>{error.message}</BodyLong>,
+    fixAction: reloadAction,
   };
-};
-
-// Viss nokon av properties i existing ikkje er satt, utled dei med resolveErrorViewProps og returner komplett ErrorViewProps
-export const resolveMissingErrorViewProps = (existing: Partial<ErrorViewProps>, error: Error): ErrorViewProps => {
-  const { title, errorInfo, fixAction } = existing;
-  if (title != null && errorInfo != null && fixAction != null) {
-    return { title, errorInfo, fixAction };
-  } else {
-    const resolved = resolveErrorViewProps(error);
-    return {
-      title: title ?? resolved.title,
-      errorInfo: errorInfo ?? resolved.errorInfo,
-      fixAction: fixAction ?? resolved.fixAction,
-    };
-  }
 };

@@ -8,6 +8,7 @@ import { reloadAction } from './ErrorHandlingWizard.js';
  * Reimplementerer legacy logikk frå formatErrorMessage for EventType.POLLING_TIMEOUT.
  */
 export const resolveTimeoutErrorView = (error: TimeoutError): ErrorViewProps => ({
+  error,
   title: 'Serverkall har gått ut på tid',
   errorInfo: (
     <>

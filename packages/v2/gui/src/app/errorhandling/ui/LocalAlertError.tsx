@@ -1,17 +1,10 @@
 import { LocalAlert } from '@navikt/ds-react';
-import { type ComponentProps, type ReactNode } from 'react';
 import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
-import { resolveMissingErrorViewProps } from './resolveErrorViewProps.js';
+import type { ErrorViewProps } from './resolveErrorViewProps.js';
 
-export type LocalAlertErrorProps = Readonly<{
-  title?: string;
-  children?: ReactNode;
-  error: Error;
-  fixAction?: ComponentProps<typeof ErrorHandlingWizard>['fixAction'];
-}>;
+export type LocalAlertErrorProps = ErrorViewProps;
 
-export const LocalAlertError = ({ error, children, ...rest }: LocalAlertErrorProps) => {
-  const { title, errorInfo, fixAction } = resolveMissingErrorViewProps({ errorInfo: children, ...rest }, error);
+export const LocalAlertError = ({ error, title, errorInfo, fixAction }: LocalAlertErrorProps) => {
   return (
     <LocalAlert status="error">
       <LocalAlert.Header>

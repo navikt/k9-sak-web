@@ -1,6 +1,7 @@
 import { useGlobalUnhandledErrors } from './GlobalUnhandledErrorCatcher.js';
 import { useMemo, useState } from 'react';
 import { ErrorModal } from './ui/ErrorModal.js';
+import { resolveErrorViewProps } from './ui/resolveErrorViewProps.js';
 
 /**
  * Denne viser siste feil som har oppstått til bruker. Merk at viss det oppstår fleire feil fortløpande vil den kun vise siste,
@@ -18,5 +19,7 @@ export const GlobalErrorModal = () => {
     }
   }, [globalErrors, closedError]);
 
-  return <ErrorModal error={modalError} onClose={() => setClosedError(modalError)} />;
+  const errorProps = modalError != null ? resolveErrorViewProps(modalError) : undefined;
+
+  return <ErrorModal errorProps={errorProps} onClose={() => setClosedError(modalError)} />;
 };

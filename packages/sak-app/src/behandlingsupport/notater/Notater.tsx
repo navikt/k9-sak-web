@@ -4,6 +4,7 @@ import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { LocalAlertError } from '@k9-sak-web/gui/app/errorhandling/ui/LocalAlertError.js';
+import { resolveErrorViewProps } from '@k9-sak-web/gui/app/errorhandling/ui/resolveErrorViewProps.js';
 
 interface OwnProps {
   navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
@@ -20,7 +21,9 @@ const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
     return <LoadingPanel />;
   }
   return (
-    <ErrorBoundary errorFallback={({ error }) => <LocalAlertError title="Notatskjema feilet" error={error} />}>
+    <ErrorBoundary
+      errorFallback={({ error }) => <LocalAlertError {...resolveErrorViewProps(error)} title="Notatskjema feilet" />}
+    >
       <NotaterIndex
         fagsakId={fagsak.saksnummer}
         navAnsatt={navAnsatt}

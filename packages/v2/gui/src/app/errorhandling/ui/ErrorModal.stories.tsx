@@ -4,10 +4,10 @@ import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiE
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { ErrorModal } from './ErrorModal.js';
-import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
 import { withTopDekoratør } from '@k9-sak-web/gui/storybook/decorators/withTopDekoratør.js';
+import { resolveErrorViewProps } from './resolveErrorViewProps.js';
 
 const withSaksdataDecorator = (): Decorator => Story => {
   return (
@@ -17,6 +17,9 @@ const withSaksdataDecorator = (): Decorator => Story => {
     </>
   );
 };
+
+/** Løyser ErrorViewProps for ein feil og returnerer errorProps for ErrorModal */
+const resolvedArgs = (error: Error) => ({ errorProps: resolveErrorViewProps(error) });
 
 const meta = {
   title: 'gui/app/errorhandling/ErrorModal',
@@ -36,7 +39,7 @@ type Story = StoryObj<typeof meta>;
 
 export const NoError: Story = {
   args: {
-    error: undefined,
+    errorProps: undefined,
   },
 };
 
@@ -52,43 +55,30 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 };
 
 export const ShowError: Story = {
-  args: {
-    error: new FrontendError('Test error 1'),
-    fixAction: retryAction(action('retryAction')),
-  },
+  args: resolvedArgs(new FrontendError('Test error 1')),
 };
 
 export const ShowFrontendError: Story = {
-  args: {
-    error: new FrontendError(
+  args: resolvedArgs(
+    new FrontendError(
       'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
     ),
-  },
+  ),
 };
 
 export const ShowApiError: Story = {
-  args: {
-    error: fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
-  },
+  args: resolvedArgs(fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)')),
 };
 
 export const BadRequest: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
-  },
+  args: resolvedArgs(makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } })),
 };
 export const Unauthorized: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 401 }),
-  },
+  args: resolvedArgs(makeFakeExtendedApiError({ status: 401 })),
 };
 export const Forbidden: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 403 }),
-  },
+  args: resolvedArgs(makeFakeExtendedApiError({ status: 403 })),
 };
 export const NotFound: Story = {
-  args: {
-    error: makeFakeExtendedApiError({ status: 404 }),
-  },
+  args: resolvedArgs(makeFakeExtendedApiError({ status: 404 })),
 };
