@@ -1,4 +1,3 @@
-  redigerVurdering: () => void;
 import { BasicList } from '@k9-sak-web/gui/shared/basicList/BasicList.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
