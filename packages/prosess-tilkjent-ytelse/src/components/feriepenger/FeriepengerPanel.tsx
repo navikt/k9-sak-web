@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ExpansionCard, Heading, VStack } from '@navikt/ds-react';
+import { ExpansionCard, VStack } from '@navikt/ds-react';
 
 import type {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
@@ -23,13 +23,14 @@ const FeriepengerPanel = ({ feriepengerPrÅr, arbeidsgiverOpplysningerPerId }: P
   }
 
   return (
-    <ExpansionCard open={erPanelÅpent} onToggle={() => setErPanelÅpent(!erPanelÅpent)} aria-label="Feriepenger" size="small">
+    <ExpansionCard
+      open={erPanelÅpent}
+      onToggle={() => setErPanelÅpent(!erPanelÅpent)}
+      aria-label="Feriepenger"
+      size="small"
+    >
       <ExpansionCard.Header>
-        <ExpansionCard.Title>
-          <Heading size="small" level="2">
-            Feriepenger
-          </Heading>
-        </ExpansionCard.Title>
+        <ExpansionCard.Title size="small">Feriepenger</ExpansionCard.Title>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
         <VStack gap="space-16">

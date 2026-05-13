@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ExpansionCard, Heading, VStack } from '@navikt/ds-react';
+import { ExpansionCard, VStack } from '@navikt/ds-react';
 
 import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType.js';
@@ -28,11 +28,7 @@ export const FeriepengerPanel = ({ feriepengerPrÅr, arbeidsgiverOpplysningerPer
       size="small"
     >
       <ExpansionCard.Header>
-        <ExpansionCard.Title>
-          <Heading size="small" level="2">
-            Feriepenger
-          </Heading>
-        </ExpansionCard.Title>
+        <ExpansionCard.Title size="small">Feriepenger</ExpansionCard.Title>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
         <VStack gap="space-16">
