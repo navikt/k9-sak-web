@@ -1,10 +1,10 @@
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { Button } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './VurderDatoAksjonspunkt.module.css';
 
@@ -21,7 +21,14 @@ interface Props {
 }
 
 const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
-  const { readOnly, behandling, uttakApi, setRedigervirkningsdato, virkningsdatoUttakNyeRegler } = useUttakContext();
+  const {
+    readOnly,
+    behandling,
+    uttakApi,
+    setRedigervirkningsdato,
+    virkningsdatoUttakNyeRegler,
+    onAksjonspunktBekreftet,
+  } = useUttakContext();
   const oppdaterBehandling = useRefetchBehandling();
 
   const formMethods = useForm<FormData>({
@@ -46,6 +53,7 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
     },
     onSuccess: async () => {
       await oppdaterBehandling();
+      onAksjonspunktBekreftet?.();
     },
   });
 
