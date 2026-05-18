@@ -50,7 +50,7 @@ export const SendsBrevOnSubmit: Story = {
       await userEvent.click(canvas.getByLabelText('Mal'));
       // ...
     });
-    await expect(canvas.getByText('Sendt')).toBeInTheDocument();
+    expect(await canvas.findByText('Sendt')).toBeInTheDocument();
   },
 };
 ```
@@ -156,7 +156,7 @@ export const VisValideringsfeil: Story = {
   args: { /* minimal args */ },
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Send' }));
-    await expect(canvas.getByText('Feltet er påkrevd')).toBeInTheDocument();
+    await expect(await canvas.findByText('Feltet er påkrevd')).toBeInTheDocument();
   },
 };
 ```
