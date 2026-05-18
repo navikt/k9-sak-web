@@ -5,14 +5,12 @@ import { RootSuspense } from './suspense/RootSuspense.js';
 import { createQueryClient } from '../../shared/query/queryClient.js';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { GlobalUnhandledErrorCatcher } from '../errorhandling/GlobalUnhandledErrorCatcher.js';
-import { GlobalErrorModal } from '../errorhandling/GlobalErrorModal.js';
 
 export const RootLayout = () => {
   return (
     <Theme theme="light">
       <ErrorBoundary>
         <GlobalUnhandledErrorCatcher>
-          <GlobalErrorModal />
           <QueryClientProvider client={createQueryClient()}>
             <RootSuspense>
               <Outlet />

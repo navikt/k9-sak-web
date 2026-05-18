@@ -1,9 +1,11 @@
-import { createContext, type FC, type ReactNode, useEffect, useState, use, useCallback } from 'react';
+import { createContext, type FC, type ReactNode, useEffect, useState, use, useCallback, useMemo } from 'react';
 import { ensureError } from './ensureError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { AppError } from './AppError.js';
 import { shouldReportToSentry } from './sentry.js';
 import { captureException } from '@sentry/browser';
+import { ErrorModal } from './ui/ErrorModal.js';
+import { resolveErrorViewProps } from './ui/resolveErrorViewProps.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -84,6 +86,19 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
     [addGlobalError],
   );
 
+  // Vis siste oppståtte feil i ErrorModal, så lenge den ikkje har blitt lukka etter visning
+  const [lastClosedError, setLastClosedError] = useState<Error | undefined>(undefined);
+  const modalError = useMemo(() => {
+    const lastError = globalErrors[globalErrors.length - 1];
+    if (lastClosedError != lastError) {
+      return lastError;
+    } else {
+      return undefined;
+    }
+  }, [globalErrors, lastClosedError]);
+
+  const lastErrorModalProps = modalError != null ? resolveErrorViewProps(modalError) : undefined;
+
   if (globalErrors.length > maxErrorCount) {
     const lastError = globalErrors.at(-1);
     throw new AppError({
@@ -95,6 +110,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   return (
     <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError, legacyErrorNotifier }}>
       <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
+      <ErrorModal errorProps={lastErrorModalProps} onClose={() => setLastClosedError(modalError)} />
     </GlobalUnhandledErrorsContext>
   );
 };

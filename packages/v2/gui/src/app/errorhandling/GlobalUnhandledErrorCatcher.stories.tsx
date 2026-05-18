@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { useState } from 'react';
 import {
   GlobalUnhandledErrorCatcher,
@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { withTopDekoratør } from '../../storybook/decorators/withTopDekoratør.js';
 import { TopErrorPanel } from './ui/TopErrorPanel.js';
 import withErrorBoundary from '../../storybook/decorators/withErrorBoundary.js';
+import { BodyShort, Button, Dialog } from '@navikt/ds-react';
 
 interface ErrorThrowingComponentProps {
   readonly foreverThrowInRender?: boolean;
@@ -86,6 +87,36 @@ const InputComponent = () => {
   );
 };
 
+const DialogErrorTrigger = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <p>
+      Error from dialog (with form).
+      <button onClick={() => setOpen(true)}>Open dialog</button>
+      <Dialog open={open} onOpenChange={nextOpen => setOpen(nextOpen)}>
+        <Dialog.Popup width="medium">
+          <Dialog.Header>
+            <Dialog.Title>Registrer opplysningar</Dialog.Title>
+          </Dialog.Header>
+          <Dialog.Body>
+            <label htmlFor="dialog-input">Dialog input: </label>
+            <input type="text" id="dialog-input" />
+            <BodyShort>Dette er ein dummy-dialog som simulerer ein aktiv arbeidsflyt.</BodyShort>
+            <Button
+              variant="secondary-neutral"
+              onClick={() => {
+                throw new Error('Error from dialog');
+              }}
+            >
+              Utløys feil
+            </Button>
+          </Dialog.Body>
+        </Dialog.Popup>
+      </Dialog>
+    </p>
+  );
+};
+
 const ErrorHandlingDemoApp = ({ foreverThrowInRender, maxErrorCount }: ErrorHandlingDemoAppProps) => {
   return (
     <>
@@ -97,6 +128,7 @@ const ErrorHandlingDemoApp = ({ foreverThrowInRender, maxErrorCount }: ErrorHand
         <NormalErrorThrowingComponent />
         <InAsyncErrorThrowingComponent />
         <MutationThrowingComponent />
+        <DialogErrorTrigger />
         <InputComponent />
       </GlobalUnhandledErrorCatcher>
     </>
@@ -160,5 +192,24 @@ export const InputValueRemains: Story = {
     await userEvent.type(input, 'Test input data');
     await userEvent.click(canvas.getByRole('button', { name: 'Throw in mutation' }));
     await expect(input).toHaveValue('Test input data');
+  },
+};
+
+/**
+ * Viser ErrorModal som dukkar opp medan ein annan dialog allereie er open.
+ * Simulerer eit scenario der brukar jobbar i ein dialog og ein uhandtert feil oppstår.
+ */
+export const ErrorWhileDialogOpen: Story = {
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Open dialog' }));
+    const dialog = await within(document.body).findByRole('dialog');
+    const dialogInput = within(dialog).getByRole('textbox', { name: 'Dialog input:' });
+    await userEvent.type(dialogInput, 'Skjemadata');
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Utløys feil' }));
+    const alertDialog = await within(document.body).findByRole('alertdialog');
+    await expect(alertDialog).toBeInTheDocument();
+    await expect(alertDialog).toBeVisible();
+    // Verifiser at input-verdien i dialogen framleis er intakt etter feildialogen dukka opp
+    await expect(dialogInput).toHaveValue('Skjemadata');
   },
 };
