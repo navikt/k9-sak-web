@@ -1,6 +1,7 @@
 import { useState, useId, type FC } from 'react';
 import { Button, type ButtonProps, Popover } from '@navikt/ds-react';
 import { makeErrorReportText } from './makeErrorReportText.js';
+import css from './errorReportPopover.module.css';
 
 type ErrorReportPopoverProps = Readonly<{
   errors: ReadonlyArray<Error>;
@@ -24,9 +25,7 @@ export const ErrorReportPopover: FC<ErrorReportPopoverProps> = ({ errors, childr
         id={popoverId}
       >
         <Popover.Content>
-          <small>
-            <pre>{reportTxt}</pre>
-          </small>
+          <p className={css.reportText}>{reportTxt}</p>
         </Popover.Content>
       </Popover>
       <Button
