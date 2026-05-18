@@ -102,7 +102,8 @@ export const VisValideringsfeil: Story = {
   play: async ({ canvas }) => {
     const button = await canvas.findByRole('button', { name: 'Bekreft' });
     await userEvent.click(button);
-    await expect(await canvas.findByText('Feltet er påkrevd')).toBeInTheDocument();
+    const valideringsfeilmeldinger = await canvas.findAllByText('Feltet er påkrevd');
+    await expect(valideringsfeilmeldinger).toHaveLength(2);
     await expect(await canvas.findByRole('textbox', { name: 'Begrunnelse' })).toBeInvalid();
   },
 };
