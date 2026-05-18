@@ -66,10 +66,14 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
   if (error instanceof AuthAbortedError) {
     return authAbortedViewProps(error);
   }
+  let title = 'Uventet feil';
+  if (error.message.length < 40) {
+    title = error.message;
+  }
 
   return {
     error,
-    title: 'Uventet feil',
+    title,
     errorInfo: <BodyLong>{error.message}</BodyLong>,
     fixAction: reloadAction,
   };
