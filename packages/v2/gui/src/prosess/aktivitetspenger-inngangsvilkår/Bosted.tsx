@@ -1,9 +1,11 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
@@ -29,6 +31,7 @@ interface Props {
   api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
   isPermanentlyReadOnly: boolean;
+  bosattFakta: BostedGrunnlagResponseDto;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -36,11 +39,6 @@ type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 interface FormData {
   vurderinger: Record<string, { begrunnelse: string; bosatt: Vurdering; avslagsårsak?: string; fritekst?: string }>;
 }
-
-const getVilkårUtfall = (vilkårStatus: Utfall) => {
-  if (vilkårStatus === Utfall.OPPFYLT) return 'Ja';
-  return 'Nei';
-};
 
 const utfallTilVurdering = (utfall: string): Vurdering => {
   if (utfall === Utfall.OPPFYLT) return 'oppfylt';
@@ -70,6 +68,7 @@ export const Bosted = ({
   bostedAp,
   lokalkontorForeslårVilkårAp,
   isPermanentlyReadOnly,
+  bosattFakta,
 }: Props) => {
   const periods: VilkårSplittPanelPeriod[] = (bostedVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
@@ -118,7 +117,7 @@ export const Bosted = ({
   });
 
   const isAksjonspunktSolved = bostedAp?.status === AksjonspunktStatus.UTFØRT;
-  const selectedVilkårPeriode = bostedVilkår.perioder?.find(p => p.periode.fom === selectedId);
+  const selectedBosattFaktaPeriode = bosattFakta.perioder.find(p => p.fom === selectedId);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
@@ -180,14 +179,14 @@ export const Bosted = ({
               <Label size="small" as="p">
                 Bor søker i Trondheim kommune?
               </Label>
-              <HStack gap="space-8" align="center">
-                <BodyShort size="small">
-                  {selectedVilkårPeriode && getVilkårUtfall(selectedVilkårPeriode.vilkarStatus)}
-                </BodyShort>
-                <Tag variant="outline" size="small">
-                  Fra søknad
-                </Tag>
-              </HStack>
+              {selectedBosattFaktaPeriode && (
+                <HStack gap="space-8" align="center">
+                  <BodyShort size="small">{selectedBosattFaktaPeriode.erBosattITrondheim ? 'Ja' : 'Nei'}</BodyShort>
+                  <Tag variant="outline" size="small">
+                    {selectedBosattFaktaPeriode.kilde === Kilde.SØKNAD ? 'Fra søknad' : 'Saksbehandler'}
+                  </Tag>
+                </HStack>
+              )}
             </VStack>
             <RhfForm
               formMethods={formHook}

@@ -23,6 +23,7 @@ const rootFeatureToggles = {
   AKTIVITETSPENGER: false,
   REVURDERING_FRA_STEG_V2: false,
   SINGLE_AUTHFIXER: false,
+  VIS_INNLEGGELSE_FOR_PILS: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

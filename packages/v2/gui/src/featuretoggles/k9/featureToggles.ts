@@ -26,6 +26,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_AVREGNING: true,
   PROSESS_MENY_V2: true,
   REVURDERING_FRA_STEG_V2: true,
+  VIS_INNLEGGELSE_FOR_PILS: true,
 });
 
 /**
