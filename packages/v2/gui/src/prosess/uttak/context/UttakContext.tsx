@@ -28,6 +28,7 @@ export type UttakContextType = {
   uttakApi: BehandlingUttakBackendClient;
   perioderTilVurdering: string[];
   hentUttak?: () => Promise<any>;
+  onAksjonspunktBekreftet?: () => void;
   harEtUløstAksjonspunktIUttak: boolean;
   erOverstyrer: boolean;
   readOnly: boolean;
@@ -58,6 +59,7 @@ export interface UttakProviderProps {
     | 'erOverstyrer'
     | 'readOnly'
     | 'virkningsdatoUttakNyeRegler'
+    | 'onAksjonspunktBekreftet'
   > & { aksjonspunkter: Aksjonspunkt[] };
   children: ReactNode;
 }
@@ -122,6 +124,7 @@ export const UttakProvider = ({
     aksjonspunktVurderOverlappendeSaker: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER),
     aksjonspunktVentAnnenPSBSak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK),
     aksjonspunktVurderDatoNyRegelUttak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK),
+    onAksjonspunktBekreftet: value.onAksjonspunktBekreftet,
   };
 
   return <UttakContext.Provider value={contextValue}>{children}</UttakContext.Provider>;
@@ -129,7 +132,6 @@ export const UttakProvider = ({
 
 export const useUttakContext = () => {
   const uttakContext = useContext(UttakContext);
-
   if (uttakContext === undefined) {
     throw new Error('useUttakContext must be used within a UttakProvider');
   }
