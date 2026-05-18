@@ -26,4 +26,4 @@ jobs:
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on tcp:9001 && pnpm test-storybook"
+            "npx wait-on http://127.0.0.1:9001/iframe.html && pnpm test-storybook"

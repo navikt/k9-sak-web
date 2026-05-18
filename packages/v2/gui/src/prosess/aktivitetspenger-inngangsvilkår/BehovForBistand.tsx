@@ -1,4 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -9,7 +10,7 @@ import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-f
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
@@ -90,35 +91,29 @@ export const BehovForBistand = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
-      const erVurderBistandsvilkårApÅpent = vurderBistandsvilkårAp && aksjonspunktErÅpent(vurderBistandsvilkårAp);
-
       const vurdering = data.vurderinger[selectedId];
       if (!vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const vurdertePerioder = {
-        avslagsårsak: undefined,
+        avslagsårsak:
+          vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak
+            ? Avslagsårsak.IKKE_14A_VEDTAK
+            : undefined,
         begrunnelse: vurdering.begrunnelse ?? '',
         erVilkårOppfylt: vurdering.behovForBistand === 'oppfylt',
         periode: { fom: vurdering.bistandStart, tom: vurdering.bistandSlutt },
       };
 
-      const payload = erVurderBistandsvilkårApÅpent
-        ? {
-            '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-            begrunnelse: vurdering?.begrunnelse ?? '',
-            brevtekst:
-              vurdering.behovForBistand === 'ikkeOppfylt' && vurdering?.avslagsårsak === 'fritekst'
-                ? vurdering?.fritekst
-                : undefined,
-            vurdertePerioder: [vurdertePerioder],
-          }
-        : undefined;
-
-      if (!payload) {
-        await sendTilBeslutter(api, behandling);
-        return;
-      }
+      const payload = {
+        '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+        begrunnelse: vurdering?.begrunnelse ?? '',
+        brevtekst:
+          vurdering.behovForBistand === 'ikkeOppfylt' && vurdering?.avslagsårsak === 'fritekst'
+            ? vurdering?.fritekst
+            : undefined,
+        vurdertePerioder: [vurdertePerioder],
+      };
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -127,7 +122,13 @@ export const BehovForBistand = ({
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
+  const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
+    mutationFn: async () => sendTilBeslutter(api, behandling),
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
+
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
   const isVurderBistandsvilkårApSolved = vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp);
@@ -184,8 +185,8 @@ export const BehovForBistand = ({
                   data-color="accent"
                   size="small"
                   type="button"
-                  loading={isPending}
-                  onClick={() => void formHook.handleSubmit(onSubmit)()}
+                  loading={isSendingTilBeslutter}
+                  onClick={() => void sendTilBeslutterMutation()}
                 >
                   Send til beslutter
                 </Button>
@@ -267,6 +268,9 @@ export const BehovForBistand = ({
                     validate={[required]}
                     readOnly={isFormLocked}
                   >
+                    <Radio value={Avslagsårsak.IKKE_14A_VEDTAK}>
+                      Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.
+                    </Radio>
                     <Radio value="fritekst">Fritekst</Radio>
                   </RhfRadioGroup>
                 )}

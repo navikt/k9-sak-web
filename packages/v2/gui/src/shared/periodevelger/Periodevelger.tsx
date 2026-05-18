@@ -104,9 +104,7 @@ const Periodevelger = ({
             ...(toField.validate || []),
             (value: string) => {
               if (!value || !fraVerdi) return undefined;
-              return dayjs(value).isSameOrBefore(dayjs(fraVerdi), 'day')
-                ? `Kan ikke være før "${fromLabel}"`
-                : undefined;
+              return dayjs(value).isBefore(dayjs(fraVerdi), 'day') ? `Kan ikke være før "${fromLabel}"` : undefined;
             },
             value => maxDateValidator(value, maxDate),
             value => minDateValidator(value, minDate),

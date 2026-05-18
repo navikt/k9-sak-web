@@ -3,6 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, it, vi } from 'vitest';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import ContainerContract from '../../../../types/ContainerContract';
 import ContainerContext from '../../../context/ContainerContext';
 import queryClient from '../../../context/queryClient';
@@ -22,19 +23,21 @@ const vurderingsoversiktMock = {
 const httpErrorHandlerMock = () => null;
 const contextWrapper = (ui, contextValues?: Partial<ContainerContract>) =>
   render(
-    <QueryClientProvider client={queryClient}>
-      <ContainerContext.Provider
-        value={
-          {
-            httpErrorHandler: httpErrorHandlerMock,
-            endpoints: { status: statusEndpointMock },
-            ...contextValues,
-          } as any
-        }
-      >
-        {ui}
-      </ContainerContext.Provider>
-    </QueryClientProvider>,
+    <BehandlingProvider refetchBehandling={vi.fn()}>
+      <QueryClientProvider client={queryClient}>
+        <ContainerContext.Provider
+          value={
+            {
+              httpErrorHandler: httpErrorHandlerMock,
+              endpoints: { status: statusEndpointMock },
+              ...contextValues,
+            } as any
+          }
+        >
+          {ui}
+        </ContainerContext.Provider>
+      </QueryClientProvider>
+    </BehandlingProvider>,
   );
 
 const renderMedisinskVilkår = (contextValues?: Partial<ContainerContract>) =>

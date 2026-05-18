@@ -28,6 +28,7 @@ const meta = {
     onAksjonspunktBekreftet: () => {},
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
+    bosattFakta: { perioder: [] },
   },
 } satisfies Meta<typeof Bosted>;
 export default meta;
@@ -42,7 +43,7 @@ export const IkkeVurdert: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
     },
-    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
   },
 };
@@ -53,7 +54,7 @@ export const Oppfylt: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
     },
-    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
   },
 };
@@ -71,7 +72,7 @@ export const IkkeOppfylt: Story = {
         },
       ],
     },
-    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
   },
 };
@@ -83,7 +84,7 @@ export const ReadOnly: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
     },
-    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
   },
 };
@@ -97,7 +98,7 @@ export const FlerePerioder: Story = {
         { periode: { fom: '2024-07-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_VURDERT },
       ],
     },
-    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED, AksjonspunktStatus.UTFØRT),
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
   },
 };
@@ -108,7 +109,7 @@ export const ViserFritekstVedAvslag: Story = {
       vilkarType: vilkarType.BOSTEDSVILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
     },
-    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTED),
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
     isPermanentlyReadOnly: false,
   },
   play: async ({ canvasElement, step }) => {

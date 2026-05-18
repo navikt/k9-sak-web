@@ -9,7 +9,7 @@ import {
 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import { ung_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { FormkravProsessIndex } from './FormkravProsessIndex';
 
 const behandling = {
@@ -87,20 +87,23 @@ export const VisFormkravPanelForAksjonspunktNfp: Story = {
     await userEvent.type(canvas.getByLabelText('Vurdering'), 'test');
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Vedtaket som er påklagd' }), '456');
     await userEvent.click(
-      canvas
-        .getByRole('group', { name: /Er klager part og\/eller har rettslig klageinteresse/i })
-        .querySelector('input[value="true"]')!,
+      within(
+        canvas.getByRole('radiogroup', { name: /Er klager part og\/eller har rettslig klageinteresse/i }),
+      ).getByRole('radio', { name: 'Ja' }),
     );
     await userEvent.click(
-      canvas
-        .getByRole('group', { name: /Klages det på konkrete elementer i vedtaket/i })
-        .querySelector('input[value="true"]')!,
+      within(canvas.getByRole('radiogroup', { name: /Klages det på konkrete elementer i vedtaket/i })).getByRole(
+        'radio',
+        {
+          name: 'Ja',
+        },
+      ),
     );
     await userEvent.click(
-      canvas.getByRole('group', { name: /Er klagefristen overholdt/i }).querySelector('input[value="true"]')!,
+      within(canvas.getByRole('radiogroup', { name: /Er klagefristen overholdt/i })).getByRole('radio', { name: 'Ja' }),
     );
     await userEvent.click(
-      canvas.getByRole('group', { name: /Er klagen signert/i }).querySelector('input[value="true"]')!,
+      within(canvas.getByRole('radiogroup', { name: /Er klagen signert/i })).getByRole('radio', { name: 'Ja' }),
     );
 
     await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
@@ -163,20 +166,25 @@ export const VisFormkravPanelForAksjonspunktKa: Story = {
     await userEvent.type(canvas.getByLabelText('Vurdering'), 'test');
     await userEvent.selectOptions(canvas.getByRole('combobox', { name: 'Vedtaket som er påklagd' }), '456');
     await userEvent.click(
-      canvas
-        .getByRole('group', { name: /Er klager part og\/eller har rettslig klageinteresse/i })
-        .querySelector('input[value="false"]')!,
+      within(
+        canvas.getByRole('radiogroup', { name: /Er klager part og\/eller har rettslig klageinteresse/i }),
+      ).getByRole('radio', { name: 'Nei' }),
     );
     await userEvent.click(
-      canvas
-        .getByRole('group', { name: /Klages det på konkrete elementer i vedtaket/i })
-        .querySelector('input[value="false"]')!,
+      within(canvas.getByRole('radiogroup', { name: /Klages det på konkrete elementer i vedtaket/i })).getByRole(
+        'radio',
+        {
+          name: 'Nei',
+        },
+      ),
     );
     await userEvent.click(
-      canvas.getByRole('group', { name: /Er klagefristen overholdt/i }).querySelector('input[value="false"]')!,
+      within(canvas.getByRole('radiogroup', { name: /Er klagefristen overholdt/i })).getByRole('radio', {
+        name: 'Nei',
+      }),
     );
     await userEvent.click(
-      canvas.getByRole('group', { name: /Er klagen signert/i }).querySelector('input[value="false"]')!,
+      within(canvas.getByRole('radiogroup', { name: /Er klagen signert/i })).getByRole('radio', { name: 'Nei' }),
     );
 
     await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));

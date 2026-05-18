@@ -7,6 +7,7 @@ import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringU
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { useUttakContext } from '../context/UttakContext';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
@@ -26,8 +27,8 @@ interface OverstyrUttakProps {
 }
 
 const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
-  const { behandling, hentBehandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } =
-    useUttakContext();
+  const { behandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } = useUttakContext();
+  const hentBehandling = useRefetchBehandling();
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = useState<boolean>(false);
@@ -74,7 +75,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
     onMutate: () => setLoading(true),
     onSuccess: async () => {
       void hentUttak();
-      void hentBehandling?.({ behandlingId: behandling.uuid }, false);
+      void hentBehandling();
       window.scroll(0, 0);
     },
     onError: error => {

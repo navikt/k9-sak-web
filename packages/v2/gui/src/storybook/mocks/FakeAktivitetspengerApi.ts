@@ -37,6 +37,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     return {};
   }
 
+  async hentBosattFakta() {
+    return { perioder: [] };
+  }
+
   async getBeregningsgrunnlag(): Promise<never> {
     throw new Error('Not implemented');
   }
