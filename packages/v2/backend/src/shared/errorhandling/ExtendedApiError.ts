@@ -11,21 +11,22 @@ export class ExtendedApiError extends Error {
   public readonly url: string;
   public readonly status: number;
   public readonly statusText: string;
-  public readonly error: string | object;
   public readonly body: string | object;
   public readonly request: Request;
   public readonly location: string | null;
 
-  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
-    const errBody = typeof error === 'string' ? error : JSON.stringify(error);
-    const msg = `Forespørsel til ${req.url} feilet (${resp.status}): ${errBody}`;
+  constructor(req: Request, resp: Response, body: string | object, navCallid: string | null) {
+    let msg = `${req.method} Forespørsel til ${req.url} feilet (${resp.status})`;
+    const bodyFeilmelding = ExtendedApiError.resolveBodyFeilmelding(body);
+    if (bodyFeilmelding != null) {
+      msg = `${msg}: ${bodyFeilmelding}`;
+    }
     super(msg);
     this.url = req.url;
     this.status = resp.status;
     this.statusText = resp.statusText;
     this.location = resp.headers.get('Location');
-    this.error = error;
-    this.body = error;
+    this.body = body;
     this.request = req;
 
     this.name = this.constructor.name;
@@ -56,20 +57,16 @@ export class ExtendedApiError extends Error {
     return this.status >= 400 && this.status < 500;
   }
 
-  public get bodyFeilmelding(): string | null {
-    const { body } = this;
+  private static resolveBodyFeilmelding(body: string | object): string | null {
     if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
       return body.feilmelding;
     }
     return null;
   }
 
-  public override toString(): string {
-    let feilmelding = this.bodyFeilmelding;
-    if (feilmelding !== null) {
-      feilmelding = ' - ' + feilmelding;
-    }
-    return `${super.name} (${this.url}): ${super.message} ${feilmelding}`;
+  public get bodyFeilmelding(): string | null {
+    const { body } = this;
+    return ExtendedApiError.resolveBodyFeilmelding(body);
   }
 
   /**

@@ -104,9 +104,7 @@ export const Minimal: Story = {
 };
 
 export const BadRequest: Story = {
-  args: resolveErrorViewProps(
-    makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } }),
-  ),
+  args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 400, body: { feilmelding: 'Felt 1 må fylles ut.' } })),
 };
 export const Unauthorized: Story = {
   args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 401 })),

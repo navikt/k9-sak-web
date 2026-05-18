@@ -71,7 +71,7 @@ export const ShowApiError: Story = {
 };
 
 export const BadRequest: Story = {
-  args: resolvedArgs(makeFakeExtendedApiError({ status: 400, error: { feilmelding: 'Felt 1 må fylles ut.' } })),
+  args: resolvedArgs(makeFakeExtendedApiError({ status: 400, body: { feilmelding: 'Felt 1 må fylles ut.' } })),
 };
 export const Unauthorized: Story = {
   args: resolvedArgs(makeFakeExtendedApiError({ status: 401 })),
