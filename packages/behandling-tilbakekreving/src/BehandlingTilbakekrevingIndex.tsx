@@ -12,7 +12,7 @@ import {
   restApiTilbakekrevingHooks,
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
-import { FrontendError } from '@k9-sak-web/gui/app/errorhandling/FrontendError.js';
+import { AppError } from '@k9-sak-web/gui/app/errorhandling/AppError.js';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },
@@ -137,7 +137,7 @@ const BehandlingTilbakekrevingIndex = ({
     if (error instanceof Error) {
       throw error;
     } else {
-      throw new FrontendError('RestApi error', error);
+      throw new AppError('RestApi error', error);
     }
   }
 

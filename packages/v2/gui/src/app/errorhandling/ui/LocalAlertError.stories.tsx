@@ -8,7 +8,7 @@ import { LocalAlertError } from './LocalAlertError.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
-import { FrontendError } from '../FrontendError.js';
+import { AppError } from '../AppError.js';
 import { TimeoutError } from '../legacycompat/TimeoutError.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
 import { resolveErrorViewProps } from './resolveErrorViewProps.js';
@@ -63,7 +63,7 @@ type Story = StoryObj<typeof meta>;
 export const DefaultStory: Story = {
   args: {
     title: 'Eksempel-feil',
-    error: new FrontendError('Lorem ipsum error'),
+    error: new AppError('Lorem ipsum error'),
     errorInfo: <BodyLong>Lorem ipsum error</BodyLong>,
     fixAction: retryAction(action('fix problem')),
   },
@@ -84,7 +84,7 @@ export const MedErrorBoundary: StoryObj = {
 export const MedEgneChildren: Story = {
   args: {
     title: 'Eksempel-feil',
-    error: new FrontendError('Lorem ipsum error'),
+    error: new AppError('Lorem ipsum error'),
     errorInfo: 'Eigendefinert feilmelding som overstyrer error.message.',
     fixAction: retryAction(action('fix problem')),
   },
@@ -96,7 +96,7 @@ export const MedEgneChildren: Story = {
 };
 
 export const Minimal: Story = {
-  args: resolveErrorViewProps(new FrontendError('Lorem ipsum error')),
+  args: resolveErrorViewProps(new AppError('Lorem ipsum error')),
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
     await expect(canvas.queryByRole('button', { name: 'Last på nytt' })).toBeInTheDocument();

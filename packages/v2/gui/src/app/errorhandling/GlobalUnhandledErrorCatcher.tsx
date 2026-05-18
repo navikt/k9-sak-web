@@ -1,7 +1,7 @@
 import { createContext, type FC, type ReactNode, useEffect, useState, use, useCallback } from 'react';
 import { ensureError } from './ensureError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
-import { FrontendError } from './FrontendError.js';
+import { AppError } from './AppError.js';
 import { shouldReportToSentry } from './sentry.js';
 import { captureException, withScope } from '@sentry/browser';
 import { isAlertInfo } from './AlertInfo.js';
@@ -17,10 +17,10 @@ const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
   addGlobalError(error: Error) {
-    throw new FrontendError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
+    throw new AppError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
   },
   legacyErrorNotifier(error: Error) {
-    throw new FrontendError('legacyErrorNotifier called outside GlobalUnhandledErrorCatcher', error);
+    throw new AppError('legacyErrorNotifier called outside GlobalUnhandledErrorCatcher', error);
   },
 };
 
@@ -92,7 +92,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
 
   if (globalErrors.length > maxErrorCount) {
     const lastError = globalErrors.at(-1);
-    throw new FrontendError(
+    throw new AppError(
       'For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.',
       lastError,
     );

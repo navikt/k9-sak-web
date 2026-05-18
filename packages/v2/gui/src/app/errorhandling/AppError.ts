@@ -1,10 +1,9 @@
 import { type AlertInfo, makeErrorId } from './AlertInfo.js';
 
 /**
- * Viss gui kode kaster feil ønsker vi at den skal vere av denne type, eller ein subtype av denne. Får då med errorId
- * i visning i gui, og den blir sendt til Sentry, slik at vi kan korrelere feil brukere rapporterer med Sentry.
+ * Istadenfor å kaste rein Error skal denne, eller subtype brukast. Slik at vi får ein errorId på flest mulig feil.
  */
-export class FrontendError extends Error implements AlertInfo {
+export class AppError extends Error implements AlertInfo {
   public readonly errorId = makeErrorId();
 
   constructor(message: string, cause?: Error) {

@@ -1,5 +1,5 @@
 import { type Decorator, type Meta, type StoryObj } from '@storybook/react-vite';
-import { FrontendError } from '../FrontendError.js';
+import { AppError } from '../AppError.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
@@ -55,12 +55,12 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 };
 
 export const ShowError: Story = {
-  args: resolvedArgs(new FrontendError('Test error 1')),
+  args: resolvedArgs(new AppError('Test error 1')),
 };
 
-export const ShowFrontendError: Story = {
+export const ShowAppError: Story = {
   args: resolvedArgs(
-    new FrontendError(
+    new AppError(
       'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
     ),
   ),

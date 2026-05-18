@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
 import { CrashErrorView } from './CrashErrorView.js';
-import { FrontendError } from '../FrontendError.js';
+import { AppError } from '../AppError.js';
 
 const meta = {
   title: 'gui/app/errorhandling/boundary/CrashErrorView',
@@ -17,19 +17,19 @@ type Story = StoryObj<typeof meta>;
 
 export const MedEnkelError: Story = {
   args: {
-    error: new FrontendError('Noe gikk veldig galt'),
+    error: new AppError('Noe gikk veldig galt'),
     reset: fn(),
   },
 };
 
-const medFrontendErrorInstance = new FrontendError('Alvorleg feil i behandlinga');
+const medAppErrorInstance = new AppError('Alvorleg feil i behandlinga');
 
-export const MedFrontendError: Story = {
+export const MedAppError: Story = {
   args: {
-    error: medFrontendErrorInstance,
+    error: medAppErrorInstance,
     reset: fn(),
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText(new RegExp(`${medFrontendErrorInstance.errorId}`))).toBeInTheDocument();
+    await expect(canvas.getByText(new RegExp(`${medAppErrorInstance.errorId}`))).toBeInTheDocument();
   },
 };

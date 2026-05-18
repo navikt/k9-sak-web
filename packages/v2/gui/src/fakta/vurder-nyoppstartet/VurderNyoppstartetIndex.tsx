@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
-import { FrontendError } from '../../app/errorhandling/FrontendError.js';
+import { AppError } from '../../app/errorhandling/AppError.js';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;
@@ -58,7 +58,7 @@ export const VurderNyoppstartetIndex = ({
     if (error instanceof Error) {
       throw error;
     } else {
-      throw new FrontendError('serverforespørsel feila, men ikke med forventet AxiosError', error);
+      throw new AppError('serverforespørsel feila, men ikke med forventet AxiosError', error);
     }
   }
   return (

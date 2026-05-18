@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect } from 'react';
 import { expect, fn } from 'storybook/test';
 import ErrorBoundary, { type ErrorBoundaryFallbackProps } from './ErrorBoundary.js';
-import { FrontendError } from '../FrontendError.js';
+import { AppError } from '../AppError.js';
 
 const meta = {
   title: 'gui/app/errorhandling/boundary/ErrorBoundary',
@@ -17,7 +17,7 @@ const NonFailingChild = () => <p>Nothing to see here, move along.</p>;
 
 const AlwaysFailingChild = () => {
   useEffect(() => {
-    throw new FrontendError('TEST FAIL');
+    throw new AppError('TEST FAIL');
   }, []);
   return <p>Error boundary should be displayed instead of this</p>;
 };
@@ -89,11 +89,11 @@ export const AlwaysCrashingFallback: Story = {
   },
 };
 
-// Filter som berre fangar FrontendError — vanleg Error blir sendt vidare til ytre boundary
+// Filter som berre fangar AppError — vanleg Error blir sendt vidare til ytre boundary
 export const FilterCatchesMatching: Story = {
   args: {
     children: <AlwaysFailingChild />,
-    filter: (error: Error) => error instanceof FrontendError,
+    filter: (error: Error) => error instanceof AppError,
   },
   play: async ({ canvas }) => {
     await expect(await canvas.findByRole('heading')).toHaveTextContent('Uventet feil');
@@ -104,7 +104,7 @@ export const FilterCatchesMatching: Story = {
 export const FilterPropagatesNonMatching: StoryObj = {
   render: () => (
     <ErrorBoundary errorFallback={({ error }) => <p>Ytre boundary fanga: {error.message}</p>}>
-      <ErrorBoundary filter={(error: Error) => error instanceof FrontendError}>
+      <ErrorBoundary filter={(error: Error) => error instanceof AppError}>
         <BaseErrorChild />
       </ErrorBoundary>
     </ErrorBoundary>
