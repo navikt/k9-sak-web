@@ -22,7 +22,7 @@ const withSaksdataDecorator = (): Decorator => Story => {
 const resolvedArgs = (error: Error) => ({ errorProps: resolveErrorViewProps(error) });
 
 const meta = {
-  title: 'gui/app/errorhandling/ErrorModal',
+  title: 'gui/app/errorhandling/ui/ErrorModal',
   component: ErrorModal,
   parameters: {
     layout: 'fullscreen',
