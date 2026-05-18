@@ -133,10 +133,10 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   }
 
   if (state === RestApiState.ERROR) {
-    if (error instanceof Error) {
+    if (error != null) {
       throw error;
     } else {
-      throw new AppError('RestApi error', error);
+      throw new AppError('state == RestApiState.Error, men error var undefined');
     }
   }
 

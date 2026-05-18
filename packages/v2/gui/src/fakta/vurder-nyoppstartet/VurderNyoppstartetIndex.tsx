@@ -55,10 +55,10 @@ export const VurderNyoppstartetIndex = ({
     return <Loader />;
   }
   if (isError) {
-    if (error instanceof Error) {
+    if (error != null) {
       throw error;
     } else {
-      throw new AppError('serverforespørsel feila, men ikke med forventet AxiosError', error);
+      throw new AppError('isError var true, men error var undefined');
     }
   }
   return (
