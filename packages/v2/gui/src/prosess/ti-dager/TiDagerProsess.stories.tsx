@@ -1,7 +1,6 @@
 import type { k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto as RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { Decorator } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction.js';
 import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
@@ -55,16 +54,13 @@ const opplysningerAlleredeVurdert: RettFraDagEnVisningDto = {
 const aksjonspunkter = [{ definisjon: { kode: 'VURDER_RETT_FRA_DAG_EN' } }];
 
 const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const fakeApi: TiDagerBackendApiType = {
     hentRettFraDagEnOpplysninger: async () => opplysninger,
   };
   return Story => (
-    <QueryClientProvider client={queryClient}>
-      <TiDagerBackendClientContext value={fakeApi}>
-        <Story />
-      </TiDagerBackendClientContext>
-    </QueryClientProvider>
+    <TiDagerBackendClientContext value={fakeApi}>
+      <Story />
+    </TiDagerBackendClientContext>
   );
 };
 
