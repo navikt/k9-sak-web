@@ -95,7 +95,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
     await submitCallback(payload);
   };
 
-  if (isFetching) {
+  if (isFetching && !opplysninger) {
     return <Loader title="Laster opplysninger om rett fra dag én" />;
   }
 
