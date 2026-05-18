@@ -81,7 +81,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
       }));
       formMethods.reset({ vurderinger, begrunnelse: '' });
     }
-  }, [opplysninger]);
+  }, [opplysninger, formMethods]);
 
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = aksjonspunkter.map(ap => ({
@@ -157,7 +157,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                       rules={{ required: true }}
                       render={({ field: radioField, fieldState }) => (
                         <RadioGroup
-                          legend={`Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket? (${journalpost ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId) : field.journalpostId})`}
+                          legend={`Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket? (${journalpost ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId) : 'Ukjent arbeidsgiver'})`}
                           onChange={radioField.onChange}
                           value={radioField.value ?? ''}
                           error={fieldState.error ? 'Feltet er påkrevd' : undefined}
