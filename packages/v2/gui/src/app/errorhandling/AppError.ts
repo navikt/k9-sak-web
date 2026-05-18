@@ -1,11 +1,8 @@
-import { type AlertInfo, makeErrorId } from './AlertInfo.js';
-
 /**
- * Istadenfor å kaste rein Error skal denne, eller subtype brukast. Slik at vi får ein errorId på flest mulig feil.
+ * Istadenfor å kaste rein Error skal denne, eller subtype brukast. Sentry sin event_id blir
+ * brukt for å korrelere feil mellom brukerrapport og Sentry-rapport (sjå sentryReportedErrorIdLookup).
  */
-export class AppError extends Error implements AlertInfo {
-  public readonly errorId = makeErrorId();
-
+export class AppError extends Error {
   constructor(message: string, cause?: Error) {
     const options = cause !== undefined ? { cause } : undefined;
     super(message, options);

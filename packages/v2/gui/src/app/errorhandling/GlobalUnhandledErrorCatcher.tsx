@@ -3,8 +3,7 @@ import { ensureError } from './ensureError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { AppError } from './AppError.js';
 import { shouldReportToSentry } from './sentry.js';
-import { captureException, withScope } from '@sentry/browser';
-import { isAlertInfo } from './AlertInfo.js';
+import { captureException } from '@sentry/browser';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -78,12 +77,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
     (error: Error) => {
       // error som kjem inn her blir ikkje ellers rapportert, så logg den til Sentry her.
       if (shouldReportToSentry(error)) {
-        withScope(scope => {
-          if (isAlertInfo(error)) {
-            scope.setTag('errorId', error.errorId);
-          }
-          captureException(error);
-        });
+        captureException(error);
       }
       addGlobalError(error);
     },

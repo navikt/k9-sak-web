@@ -7,7 +7,6 @@ export const isNavCallid = (maybe: string): maybe is NavCallid => maybe.startsWi
 
 export class ExtendedApiError extends Error {
   public navCallid: NavCallid | null;
-  public readonly errorId: number = Math.floor(Math.random() * 1000000000);
   public readonly url: string;
   public readonly status: number;
   public readonly statusText: string;

@@ -22,14 +22,12 @@ export const MedEnkelError: Story = {
   },
 };
 
-const medAppErrorInstance = new AppError('Alvorleg feil i behandlinga');
-
 export const MedAppError: Story = {
   args: {
-    error: medAppErrorInstance,
+    error: new AppError('Alvorleg feil i behandlinga'),
     reset: fn(),
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText(new RegExp(`${medAppErrorInstance.errorId}`))).toBeInTheDocument();
+    await expect(canvas.getByText(/Alvorleg feil i behandlinga/)).toBeInTheDocument();
   },
 };

@@ -18,7 +18,6 @@ import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
-import { isAlertInfo } from '@k9-sak-web/gui/app/errorhandling/AlertInfo.js';
 import { AxiosError } from 'axios';
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
@@ -80,11 +79,6 @@ init({
         event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
         event.tags = event.tags ?? {};
         event.tags['callId'] = exception.navCallid;
-      }
-      // For alle Error typer som implementerer AlertInfo tek vi med errorId i sentry rapport.
-      if (isAlertInfo(exception)) {
-        event.tags = event.tags ?? {};
-        event.tags['errorId'] = `${exception.errorId}`;
       }
     } catch (e) {
       try {

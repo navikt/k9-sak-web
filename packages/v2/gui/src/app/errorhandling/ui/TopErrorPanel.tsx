@@ -1,7 +1,6 @@
 import { BodyLong, Button, GlobalAlert, HStack, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, ExpandIcon } from '@navikt/aksel-icons';
-import { isAlertInfo } from '../AlertInfo.js';
 
 import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
@@ -45,10 +44,9 @@ export const TopErrorPanelUI = ({ errors }: TopErrorPanelUIProps) => {
             <ErrorHandlingWizard errors={errors}>
               <VStack gap="space-8">
                 {errors.map((error, index) => {
-                  const key = isAlertInfo(error) ? error.errorId : index;
                   const errorProps = resolveErrorViewProps(error);
                   return (
-                    <ErrorHandlingWizard.ErrorBox key={key}>
+                    <ErrorHandlingWizard.ErrorBox key={index}>
                       <HStack gap="space-8" align="center" justify="space-between">
                         <BodyLong>{errorProps.title}</BodyLong>
                         <Button

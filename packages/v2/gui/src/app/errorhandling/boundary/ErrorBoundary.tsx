@@ -2,7 +2,6 @@ import { Component, type ErrorInfo, type FC, type ReactNode } from 'react';
 import { captureException, withScope } from '@sentry/browser';
 import { ensureError } from '../ensureError.js';
 import { shouldReportToSentry } from '../sentry.js';
-import { isAlertInfo } from '../AlertInfo.js';
 import { DefaultErrorView } from './DefaultErrorView.js';
 import { CrashErrorView } from './CrashErrorView.js';
 
@@ -63,9 +62,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
           }
           if (info.digest != null) {
             scope.setExtra('digest', info.digest);
-          }
-          if (isAlertInfo(error)) {
-            scope.setTag('errorId', error.errorId);
           }
           captureException(error);
         });
