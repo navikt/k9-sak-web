@@ -16,11 +16,15 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import {
+  getPeriodStatus,
+  VilkårSplittPanel,
+  type VilkårSplittPanelPeriod,
+} from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
 import { aksjonspunktErÅpent } from './utils/utils';
-import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
