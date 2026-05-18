@@ -13,6 +13,7 @@ const opplysningerEnArbeidsgiver: RettFraDagEnVisningDto = {
   journalposter: [
     {
       journalpostId: 'JP-001',
+      dokumentId: 'DOK-001',
       arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
       foersteOppgitteFravaersdag: '2024-03-01',
       harUtbetaltPliktigeDager: undefined,
@@ -24,12 +25,14 @@ const opplysningerFlereArbeidsgivere: RettFraDagEnVisningDto = {
   journalposter: [
     {
       journalpostId: 'JP-001',
+      dokumentId: 'DOK-001',
       arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
       foersteOppgitteFravaersdag: '2024-03-01',
       harUtbetaltPliktigeDager: undefined,
     },
     {
       journalpostId: 'JP-002',
+      dokumentId: 'DOK-002',
       arbeidsgiver: { arbeidsgiverOrgnr: '973861778' },
       foersteOppgitteFravaersdag: '2024-03-15',
       harUtbetaltPliktigeDager: true,
@@ -41,6 +44,7 @@ const opplysningerAlleredeVurdert: RettFraDagEnVisningDto = {
   journalposter: [
     {
       journalpostId: 'JP-001',
+      dokumentId: 'DOK-001',
       arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
       foersteOppgitteFravaersdag: '2024-03-01',
       harUtbetaltPliktigeDager: true,
@@ -71,6 +75,7 @@ const meta = {
     aksjonspunkter,
     isReadOnly: false,
     behandlingUUID: 'test-uuid',
+    saksnummer: '123456789',
     arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
     submitCallback: asyncAction('submitCallback'),
   },

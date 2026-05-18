@@ -3,7 +3,8 @@ import type {
   k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
-import { BodyLong, BodyShort, Box, Button, Heading, Label, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
+import { FileIcon } from '@navikt/aksel-icons';
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Link, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
@@ -33,6 +34,7 @@ interface TiDagerProsessIndexProps {
   aksjonspunkter: { definisjon: { kode: string } }[];
   isReadOnly: boolean;
   behandlingUUID: string;
+  saksnummer: string;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -53,7 +55,7 @@ function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | unde
   return value ? 'ja' : 'nei';
 }
 
-export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID, arbeidsgiverOpplysningerPerId }: TiDagerProsessIndexProps) => {
+export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID, saksnummer, arbeidsgiverOpplysningerPerId }: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
 
   const {
@@ -151,6 +153,19 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                       <Label size="small">Første fraværsdag</Label>
                       <BodyShort size="small">{journalpost?.foersteOppgitteFravaersdag ?? '–'}</BodyShort>
                     </VStack>
+                    {journalpost?.dokumentId && (
+                      <Link
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${journalpost.journalpostId}&dokumentId=${journalpost.dokumentId}`}
+                        data-color="accent"
+                      >
+                        <HStack align="center" gap="space-4">
+                          <FileIcon title="Inntektsmelding" width={24} height={24} />
+                          {`Inntektsmelding (${journalpost.journalpostId})`}
+                        </HStack>
+                      </Link>
+                    )}
                     <Controller
                       control={formMethods.control}
                       name={`vurderinger.${index}.harUtbetaltPliktigeDager`}
