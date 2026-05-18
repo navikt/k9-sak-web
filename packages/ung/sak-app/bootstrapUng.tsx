@@ -1,25 +1,13 @@
-import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import {
-  BrowserRouter,
-  createRoutesFromChildren,
-  matchRoutes,
-  Route,
-  Routes,
-  useLocation,
-  useNavigationType,
-} from 'react-router';
-
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
-import { AxiosError } from 'axios';
 import AppIndex from './app/AppIndex';
 import { configureUngSakClient } from '@k9-sak-web/backend/ungsak/configureUngSakClient.js';
 import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
@@ -30,71 +18,12 @@ import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOther
 import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { sentryReportedErrorIdLookup, sentryReportedIdList } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
+import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
 
-const environment = window.location.hostname;
-
-init({
-  environment,
+initSentry({
   dsn: 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
-  // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
-  tracesSampleRate: 1.0,
-  integrations: [
-    Sentry.breadcrumbsIntegration({ console: false }),
-    Sentry.reactRouterV6BrowserTracingIntegration({
-      useEffect: React.useEffect,
-      useLocation,
-      useNavigationType,
-      createRoutesFromChildren,
-      matchRoutes,
-    }),
-  ],
-  beforeSend: (event, hint) => {
-    try {
-      event.extra = event.extra || {};
-      const exception = hint.originalException;
-      // Slik at feilrapportering gui kan hente ut sentryId
-      if (event.event_id != null) {
-        sentryReportedIdList.push(event.event_id);
-        if (sentryReportedIdList.length > 50) {
-          sentryReportedIdList.shift(); // Veldig usansynleg, men unngå for stor array
-        }
-        if (exception instanceof Error) {
-          sentryReportedErrorIdLookup.set(exception, event.event_id);
-        }
-      }
-      if (exception instanceof AxiosError) {
-        let pathname = '';
-        const responseURL = exception.request?.responseURL ?? '';
-        if (responseURL.length > 0) {
-          const requestUrl = new URL(responseURL);
-          pathname = requestUrl.pathname;
-        }
-        event.fingerprint = ['{{ default }}', String(exception.name), String(exception.message), String(pathname)];
-        event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
-      } else if (exception instanceof ExtendedApiError) {
-        event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
-        event.tags = event.tags ?? {};
-        event.tags['callId'] = exception.navCallid;
-      }
-    } catch (e) {
-      try {
-        if (event.exception?.values != null) {
-          event.exception.values.push(e);
-        }
-        console.error('Sentry beforeSend failure. Will send the original event with extra error attached', e);
-      } catch (e2) {
-        console.error(
-          'Sentry beforeSend failure. Will send the original event. Attaching of extra error also failed',
-          e,
-          e2,
-        );
-      }
-    }
-    return event;
-  },
 });
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });

@@ -1,24 +1,13 @@
-import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import {
-  BrowserRouter,
-  createRoutesFromChildren,
-  matchRoutes,
-  Route,
-  Routes,
-  useLocation,
-  useNavigationType,
-} from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
-import { AxiosError } from 'axios';
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
 import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
@@ -30,72 +19,12 @@ import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
 import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
 import { resolveK9FeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/resolveK9FeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { sentryReportedErrorIdLookup, sentryReportedIdList } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
+import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
 
-const environment = window.location.hostname;
-
-init({
-  environment,
+initSentry({
   dsn: 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
-  // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
-  tracesSampleRate: 1.0,
-  enableLogs: true,
-  integrations: [
-    Sentry.breadcrumbsIntegration({ console: false }),
-    Sentry.reactRouterV6BrowserTracingIntegration({
-      useEffect: React.useEffect,
-      useLocation,
-      useNavigationType,
-      createRoutesFromChildren,
-      matchRoutes,
-    }),
-  ],
-  beforeSend: (event, hint) => {
-    try {
-      event.extra = event.extra || {};
-      const exception = hint.originalException;
-      // Slik at feilrapportering gui kan hente ut sentryId
-      if (event.event_id != null) {
-        sentryReportedIdList.push(event.event_id);
-        if (sentryReportedIdList.length > 50) {
-          sentryReportedIdList.shift(); // Veldig usansynleg, men unngå for stor array
-        }
-        if (exception instanceof Error) {
-          sentryReportedErrorIdLookup.set(exception, event.event_id);
-        }
-      }
-      if (exception instanceof AxiosError) {
-        let pathname = '';
-        const responseURL = exception.request?.responseURL ?? '';
-        if (responseURL.length > 0) {
-          const requestUrl = new URL(responseURL);
-          pathname = requestUrl.pathname;
-        }
-        event.fingerprint = ['{{ default }}', String(exception.name), String(exception.message), String(pathname)];
-        event.extra.callId = exception?.response?.config.headers['Nav-Callid'];
-      } else if (exception instanceof ExtendedApiError) {
-        event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
-        event.tags = event.tags ?? {};
-        event.tags['callId'] = exception.navCallid;
-      }
-    } catch (e) {
-      try {
-        if (event.exception?.values != null) {
-          event.exception.values.push(e);
-        }
-        console.error('Sentry beforeSend failure. Will send the original event with extra error attached', e);
-      } catch (e2) {
-        console.error(
-          'Sentry beforeSend failure. Will send the original event. Attaching of extra error also failed',
-          e,
-          e2,
-        );
-      }
-    }
-    return event;
-  },
 });
 
 const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() });
