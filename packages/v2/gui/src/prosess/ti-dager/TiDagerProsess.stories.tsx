@@ -97,10 +97,7 @@ export const VisValideringsfeil: Story = {
   play: async ({ canvas }) => {
     const button = await canvas.findByRole('button', { name: 'Bekreft' });
     await userEvent.click(button);
-    const radioGroup = await canvas.findByRole('group', {
-      name: 'Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket?',
-    });
-    await expect(radioGroup).toHaveTextContent('Feltet er påkrevd');
+    await expect(await canvas.findByText('Feltet er påkrevd')).toBeInTheDocument();
     await expect(await canvas.findByRole('textbox', { name: 'Begrunnelse' })).toBeInvalid();
   },
 };

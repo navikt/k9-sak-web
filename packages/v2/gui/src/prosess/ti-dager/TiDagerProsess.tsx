@@ -6,6 +6,7 @@ import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arb
 import { BodyLong, BodyShort, Box, Button, Heading, Label, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 
@@ -57,7 +58,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
 
   const {
     data: opplysninger,
-    isFetching,
+    isPending,
     isError,
   } = useQuery(
     queryOptions({
@@ -66,16 +67,21 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
     }),
   );
 
-  const defaultVurderinger = (opplysninger?.journalposter ?? []).map(jp => ({
-    journalpostId: jp.journalpostId,
-    harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
-  }));
-
   const formMethods = useForm<TiDagerFormData>({
-    defaultValues: { vurderinger: defaultVurderinger, begrunnelse: '' },
+    defaultValues: { vurderinger: [], begrunnelse: '' },
   });
 
   const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
+
+  useEffect(() => {
+    if (opplysninger) {
+      const vurderinger = opplysninger.journalposter.map(jp => ({
+        journalpostId: jp.journalpostId,
+        harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
+      }));
+      formMethods.reset({ vurderinger, begrunnelse: '' });
+    }
+  }, [opplysninger]);
 
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = aksjonspunkter.map(ap => ({
@@ -95,7 +101,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
     await submitCallback(payload);
   };
 
-  if (isFetching) {
+  if (isPending) {
     return <Loader title="Laster opplysninger om rett fra dag én" />;
   }
 
@@ -151,7 +157,7 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                       rules={{ required: true }}
                       render={({ field: radioField, fieldState }) => (
                         <RadioGroup
-                          legend="Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket?"
+                          legend={`Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket? (${journalpost ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId) : field.journalpostId})`}
                           onChange={radioField.onChange}
                           value={radioField.value ?? ''}
                           error={fieldState.error ? 'Feltet er påkrevd' : undefined}
