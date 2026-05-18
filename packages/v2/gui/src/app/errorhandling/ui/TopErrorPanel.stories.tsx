@@ -5,6 +5,7 @@ import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiE
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
+import { userEvent, within, expect } from 'storybook/test';
 
 const meta = {
   title: 'gui/app/errorhandling/ui/TopErrorPanel',
@@ -40,11 +41,31 @@ export const OneError: Story = {
   args: {
     errors: [new FrontendError('Test error 1')],
   },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText('Uventet feil')).toBeInTheDocument();
+    await expect(await canvas.findByRole('button', { name: 'Detaljer' })).toBeInTheDocument();
+  },
 };
 
 export const TwoErrors: Story = {
   args: {
     errors: [new FrontendError('Test error 1'), new FrontendError('Test error 2')],
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText('2 Uventede feil')).toBeInTheDocument();
+    const detaljsButtons = canvas.getAllByRole('button', { name: 'Detaljer' });
+    await expect(detaljsButtons).toHaveLength(2);
+  },
+};
+
+export const OpenDetailsModal: Story = {
+  args: {
+    errors: [new FrontendError('Test error 1')],
+  },
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Detaljer' }));
+    const dialog = within(document.body).getByRole('alertdialog');
+    await expect(within(dialog).getByText('Uventet feil')).toBeInTheDocument();
   },
 };
 
