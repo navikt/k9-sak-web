@@ -25,8 +25,6 @@ class RequestApiTestMock extends AbstractRequestApi {
 
   public isMock = () => false;
 
-  public setAddErrorMessageHandler = () => {};
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public setErrorNotifier(notifier: ErrorNotifier) {}
 

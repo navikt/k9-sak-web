@@ -33,8 +33,6 @@ class RequestApiMock extends AbstractRequestApi {
 
   public setRequestPendingHandler = () => {};
 
-  public setAddErrorMessageHandler = () => {};
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public setErrorNotifier(notifier: ErrorNotifier) {}
 

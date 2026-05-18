@@ -154,19 +154,7 @@ class RequestApi extends AbstractRequestApi {
   };
 
   /**
-   * NB: I motsetning til det ein skulle tru erstatter denne evt tidlegare tillagte request error handlers. Så den som
-   * blir lagt til ved kall til setRequestPendingHandler over blir overskrive av kall til denne metoden.
-   *
-   * @deprecated Etter overgang til ny feilhandtering (GlobalUnhandledErrorCatcher, GLOBAL_ERROR_CATCHER true) kan denne fjernast.
-   */
-  public setAddErrorMessageHandler = (addErrorMessage: (message: string) => void): void => {
-    this.notificationMapper.addRequestErrorEventHandlers((errorData, type) => {
-      addErrorMessage({ ...errorData, type });
-    });
-  };
-
-  /**
-   * Erstatter setAddErrorMessageHandler brukt tidlegare, for å få rapportert feil direkte ut og få vist dei i nytt feilhandteringsregime.
+   * Set handler for reporting errors to the global error UI.
    * @param notifier
    */
   public setErrorNotifier(notifier: ErrorNotifier) {
