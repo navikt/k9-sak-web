@@ -55,14 +55,15 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 };
 
 export const ShowError: Story = {
-  args: resolvedArgs(new AppError('Test error 1')),
+  args: resolvedArgs(new AppError({ message: 'Test error 1' })),
 };
 
 export const ShowAppError: Story = {
   args: resolvedArgs(
-    new AppError(
-      'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
-    ),
+    new AppError({
+      message:
+        'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
+    }),
   ),
 };
 

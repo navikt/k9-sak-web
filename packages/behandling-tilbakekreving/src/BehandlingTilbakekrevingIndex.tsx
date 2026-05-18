@@ -137,7 +137,7 @@ const BehandlingTilbakekrevingIndex = ({
     if (error != null) {
       throw error;
     } else {
-      throw new AppError('state == RestApiState.Error, men error var undefined');
+      throw new AppError({ message: 'state == RestApiState.Error, men error var undefined' });
     }
   }
 

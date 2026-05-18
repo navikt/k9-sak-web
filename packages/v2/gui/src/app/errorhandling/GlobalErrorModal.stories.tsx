@@ -4,8 +4,9 @@ import { GlobalUnhandledErrorCatcher } from './GlobalUnhandledErrorCatcher.js';
 import { GlobalErrorModal } from './GlobalErrorModal.js';
 import { expect, userEvent, within } from 'storybook/test';
 import { BodyShort, Button, Dialog } from '@navikt/ds-react';
+import { AppError } from './AppError.js';
 
-const errMsg = 'Test error ';
+const errMsg = 'Test error';
 
 const withGlobalUnhandledErrorCatcher =
   ({ maxErrorCount }: { maxErrorCount: number } = { maxErrorCount: 10 }): Decorator =>
@@ -17,7 +18,7 @@ const withGlobalUnhandledErrorCatcher =
           <p>
             <button
               onClick={() => {
-                throw new Error(errMsg + Date.now());
+                throw new AppError({ title: 'Uventet feil', message: errMsg });
               }}
             >
               Throw error
@@ -93,7 +94,7 @@ export const ErrorWhileDialogOpen: Story = {
               <Button
                 variant="secondary-neutral"
                 onClick={() => {
-                  throw new Error(errMsg + Date.now());
+                  throw new Error(errMsg);
                 }}
               >
                 Utløys feil
@@ -111,6 +112,6 @@ export const ErrorWhileDialogOpen: Story = {
     const alertDialog = await within(document.body).findByRole('alertdialog');
     await expect(alertDialog).toBeInTheDocument();
     await expect(alertDialog).toBeVisible();
-    await expect(within(alertDialog).getByText('Uventet feil', { exact: false })).toBeInTheDocument();
+    await expect(within(alertDialog).getAllByText(errMsg, { exact: false }).length).toBeGreaterThanOrEqual(2);
   },
 };

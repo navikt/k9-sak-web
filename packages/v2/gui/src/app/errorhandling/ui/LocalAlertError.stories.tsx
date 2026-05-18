@@ -19,7 +19,7 @@ import { resolveErrorViewProps } from './resolveErrorViewProps.js';
  */
 const ThrowingComponent = ({ shouldThrow }: { shouldThrow: boolean }) => {
   if (shouldThrow) {
-    throw new Error('Lorem ipsum error');
+    throw new AppError({ title: 'Uventet feil', message: 'Lorem ipsum error' });
   }
   return <div>Innhald utan feil.</div>;
 };
@@ -63,7 +63,7 @@ type Story = StoryObj<typeof meta>;
 export const DefaultStory: Story = {
   args: {
     title: 'Eksempel-feil',
-    error: new AppError('Lorem ipsum error'),
+    error: new AppError({ message: 'Lorem ipsum error' }),
     errorInfo: <BodyLong>Lorem ipsum error</BodyLong>,
     fixAction: retryAction(action('fix problem')),
   },
@@ -84,7 +84,7 @@ export const MedErrorBoundary: StoryObj = {
 export const MedEgneChildren: Story = {
   args: {
     title: 'Eksempel-feil',
-    error: new AppError('Lorem ipsum error'),
+    error: new AppError({ message: 'Lorem ipsum error' }),
     errorInfo: 'Eigendefinert feilmelding som overstyrer error.message.',
     fixAction: retryAction(action('fix problem')),
   },
@@ -96,9 +96,9 @@ export const MedEgneChildren: Story = {
 };
 
 export const Minimal: Story = {
-  args: resolveErrorViewProps(new AppError('Lorem ipsum error')),
+  args: resolveErrorViewProps(new AppError({ message: 'Uventet feil' })),
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
+    await expect(canvas.getAllByText('Uventet feil').length).toBeGreaterThanOrEqual(2);
     await expect(canvas.queryByRole('button', { name: 'Last på nytt' })).toBeInTheDocument();
   },
 };

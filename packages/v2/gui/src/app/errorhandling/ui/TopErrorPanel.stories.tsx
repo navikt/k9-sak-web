@@ -39,7 +39,7 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 
 export const OneError: Story = {
   args: {
-    errors: [new AppError('Test error 1')],
+    errors: [new AppError({ message: 'Test error 1' })],
   },
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Uventet feil')).toBeInTheDocument();
@@ -49,7 +49,7 @@ export const OneError: Story = {
 
 export const TwoErrors: Story = {
   args: {
-    errors: [new AppError('Test error 1'), new AppError('Test error 2')],
+    errors: [new AppError({ message: 'Test error 1' }), new AppError({ message: 'Test error 2' })],
   },
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('2 Uventede feil')).toBeInTheDocument();
@@ -60,23 +60,24 @@ export const TwoErrors: Story = {
 
 export const OpenDetailsModal: Story = {
   args: {
-    errors: [new AppError('Test error 1')],
+    errors: [new AppError({ title: 'Title 1', message: 'Test error 1' })],
   },
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Detaljer' }));
     const dialog = within(document.body).getByRole('alertdialog');
-    await expect(within(dialog).getByText('Uventet feil')).toBeInTheDocument();
+    await expect(within(dialog).getByText('Test error 1')).toBeInTheDocument();
   },
 };
 
 export const MoreThanThreeUniqueErrorTypes: Story = {
   args: {
     errors: [
-      new AppError('Testfeil 1'),
-      new AppError(
-        'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
-      ),
-      new AppError('Testfeil 3'),
+      new AppError({ message: 'Testfeil 1' }),
+      new AppError({
+        message:
+          'Testfeil 2. Har veldig lang tekst i feilmelding. Kanskje blir det faktisk flere linjer ut av det, hvis vinduet er smalt?. xyzxyz æøåæøå jepp jepp.',
+      }),
+      new AppError({ message: 'Testfeil 3' }),
       fakeK9SakApiError('/fake/url', 500, 'Testfeil 4 (api error)'),
     ],
   },

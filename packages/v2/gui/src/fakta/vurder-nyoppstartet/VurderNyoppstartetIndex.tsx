@@ -58,7 +58,7 @@ export const VurderNyoppstartetIndex = ({
     if (error != null) {
       throw error;
     } else {
-      throw new AppError('isError var true, men error var undefined');
+      throw new AppError({ message: 'isError var true, men error var undefined' });
     }
   }
   return (

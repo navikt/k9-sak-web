@@ -16,10 +16,10 @@ const empty: GlobalUnhandledErrors = {
   globalErrors: [],
   clearGlobalErrors() {},
   addGlobalError(error: Error) {
-    throw new AppError('addGlobalError called outside GlobalUnhandledErrorCatcher', error);
+    throw new AppError({ message: 'addGlobalError called outside GlobalUnhandledErrorCatcher', cause: error });
   },
   legacyErrorNotifier(error: Error) {
-    throw new AppError('legacyErrorNotifier called outside GlobalUnhandledErrorCatcher', error);
+    throw new AppError({ message: 'legacyErrorNotifier called outside GlobalUnhandledErrorCatcher', cause: error });
   },
 };
 
@@ -86,10 +86,10 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
 
   if (globalErrors.length > maxErrorCount) {
     const lastError = globalErrors.at(-1);
-    throw new AppError(
-      'For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.',
-      lastError,
-    );
+    throw new AppError({
+      message: 'For mange feil oppsto uten at system ble lastet på nytt. Kan tyde på rekursiv feil.',
+      cause: lastError,
+    });
   }
 
   return (

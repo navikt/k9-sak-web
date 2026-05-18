@@ -9,6 +9,7 @@ import { AxiosError } from 'axios';
 import { resolveAxiosErrorView } from './resolveAxiosErrorView.js';
 import TimeoutError from '../legacycompat/TimeoutError.js';
 import { resolveTimeoutErrorView } from './resolveTimeoutErrorView.js';
+import { AppError } from '../AppError.js';
 
 export type ErrorViewProps = Readonly<{
   error: Error;
@@ -67,7 +68,9 @@ export const resolveErrorViewProps = (error: Error): ErrorViewProps => {
     return authAbortedViewProps(error);
   }
   let title = 'Uventet feil';
-  if (error.message.length < 40) {
+  if (error instanceof AppError && error.title != null) {
+    title = error.title;
+  } else if (error.message.length < 40) {
     title = error.message;
   }
 

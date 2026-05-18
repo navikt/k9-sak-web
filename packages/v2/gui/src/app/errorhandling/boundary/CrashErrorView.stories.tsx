@@ -17,14 +17,14 @@ type Story = StoryObj<typeof meta>;
 
 export const MedEnkelError: Story = {
   args: {
-    error: new AppError('Noe gikk veldig galt'),
+    error: new AppError({ message: 'Noe gikk veldig galt' }),
     reset: fn(),
   },
 };
 
 export const MedAppError: Story = {
   args: {
-    error: new AppError('Alvorleg feil i behandlinga'),
+    error: new AppError({ message: 'Alvorleg feil i behandlinga' }),
     reset: fn(),
   },
   play: async ({ canvas }) => {
