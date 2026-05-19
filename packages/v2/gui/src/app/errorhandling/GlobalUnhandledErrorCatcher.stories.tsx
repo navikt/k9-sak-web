@@ -177,9 +177,9 @@ export const TooManyErrors: Story = {
     };
 
     // To vanlege feil via global error-listener
-    await userEvent.click(canvas.getByRole('button', { name: 'Throw error' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Throw error' }));
     await closeModal();
-    await userEvent.click(canvas.getByRole('button', { name: 'Throw error' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Throw error' }));
     await closeModal();
 
     await userEvent.click(await canvas.findByRole('button', { name: 'Throw render error' }));
@@ -189,7 +189,7 @@ export const TooManyErrors: Story = {
     await userEvent.click(await canvas.findByRole('button', { name: 'Throw render error' }));
 
     // Verifiser at "For mange feil" meldinga blir vist
-    await expect(canvas.getByText(`For mange feil oppsto`, { exact: false })).toBeInTheDocument();
+    await expect(await canvas.findByText(`For mange feil oppsto`, { exact: false })).toBeInTheDocument();
   },
 };
 
