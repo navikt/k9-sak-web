@@ -56,7 +56,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   );
   useEffect(() => {
     const errorListener = (ev: ErrorEvent) => {
-      const error = ensureError(ev.error);
+      const error = ensureError(ev.error ?? ev.message ?? undefined);
       addGlobalError(error);
     };
     addEventListener('error', errorListener);
