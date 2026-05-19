@@ -10,6 +10,9 @@ import { userEvent, within, expect } from 'storybook/test';
 const meta = {
   title: 'gui/app/errorhandling/ui/TopErrorPanel',
   component: TopErrorPanelUI,
+  args: {
+    defaultExpanded: true,
+  },
   parameters: {
     layout: 'fullscreen',
   },

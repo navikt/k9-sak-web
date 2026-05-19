@@ -37,6 +37,7 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
     return `${aaregPath}?saksnummer=${fagsakFraUrl}`;
   };
 
+  // Denne koden kan fjernast viss vi ikkje har fått advarsler i sentry ei stund etter utrulling.
   if (queryStrings.errorcode) {
     const msg = `Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`;
     console.warn(msg);
