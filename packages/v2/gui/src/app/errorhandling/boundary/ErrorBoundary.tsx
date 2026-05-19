@@ -82,6 +82,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
         throw error;
       }
       const reset = () => {
+        this.errorCount = 0;
         // Vurder å legge til tanstack query reset her
         this.setState(initialState);
       };
