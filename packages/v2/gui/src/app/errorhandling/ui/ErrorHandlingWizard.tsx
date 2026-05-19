@@ -79,10 +79,10 @@ export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction
   const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
   const { label: fixLabel, icon: fixIcon, info: fixInfo, callback: fixCallback, href: fixHref } = fixAction;
 
-  // Tilbakestill visningstilstand når antal feil endrar seg
+  // Tilbakestill visningstilstand når siste feil endrar seg
   useEffect(() => {
     setDisplay('error');
-  }, [errors.length]);
+  }, [errors[errors.length - 1]]);
 
   const fixButton =
     fixCallback != null ? (
