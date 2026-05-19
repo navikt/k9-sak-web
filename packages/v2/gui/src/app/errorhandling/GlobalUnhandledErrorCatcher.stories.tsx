@@ -170,16 +170,23 @@ export const TooManyErrors: Story = {
     maxErrorCount: 4, // Reduser denne for å forenkle testing av overskridelse
   },
   play: async ({ canvas }) => {
-    const throwErrorButton = canvas.getByRole('button', { name: 'Throw error' });
+    // Lukk ErrorModal mellom kvar feil-klikk, slik at modalen ikkje blokkerer neste klikk
+    const closeModal = async () => {
+      await within(document.body).findByRole('alertdialog');
+      await userEvent.keyboard('{Escape}');
+    };
 
-    // Klikk "Throw error" to gonger
-    await userEvent.click(throwErrorButton);
-    await userEvent.click(throwErrorButton);
+    // To vanlege feil via global error-listener
+    await userEvent.click(canvas.getByRole('button', { name: 'Throw error' }));
+    await closeModal();
+    await userEvent.click(canvas.getByRole('button', { name: 'Throw error' }));
+    await closeModal();
 
-    // Klikk "Throw render error" tre gonger
-    await userEvent.click(canvas.getByRole('button', { name: 'Throw render error' }));
-    await userEvent.click(canvas.getByRole('button', { name: 'Throw render error' }));
-    await userEvent.click(canvas.getByRole('button', { name: 'Throw render error' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Throw render error' }));
+    await closeModal();
+    await userEvent.click(await canvas.findByRole('button', { name: 'Throw render error' }));
+    await closeModal();
+    await userEvent.click(await canvas.findByRole('button', { name: 'Throw render error' }));
 
     // Verifiser at "For mange feil" meldinga blir vist
     await expect(canvas.getByText(`For mange feil oppsto`, { exact: false })).toBeInTheDocument();
