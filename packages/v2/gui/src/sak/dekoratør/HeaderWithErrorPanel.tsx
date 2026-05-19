@@ -82,8 +82,8 @@ const HeaderWithErrorPanel = ({
         </InternalHeader.Title>
         <Spacer />
         {skalViseEndringslogg && (
-          <div className={styles['endringsloggContainer']}>
-            <Theme theme="light">
+          <Theme theme="light">
+            <div className={styles['endringsloggContainer']}>
               <Endringslogg
                 userId={navBrukernavn}
                 appId="K9_SAK"
@@ -93,8 +93,8 @@ const HeaderWithErrorPanel = ({
                 alignLeft
                 maxEntries={150}
               />
-            </Theme>
-          </div>
+            </div>
+          </Theme>
         )}
         <Dropdown>
           <InternalHeader.Button
