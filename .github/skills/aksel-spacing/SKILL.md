@@ -115,9 +115,6 @@ import { VStack } from "@navikt/ds-react";
 
 // Responsiv gap
 <VStack gap={{ xs: "space-16", md: "space-32" }}>
-  <Section />
-  <Section />
-</VStack>
 ```
 
 ### Stack
@@ -135,7 +132,7 @@ import { Stack } from "@navikt/ds-react";
 >
   <LeftContent />
   <RightContent />
-</Stack>
+</Stack>;
 ```
 
 ### HGrid
@@ -175,7 +172,7 @@ import { Page } from "@navikt/ds-react";
   <Page.Block as="main" width="xl" gutters>
     {/* Innhold */}
   </Page.Block>
-</Page>
+</Page>;
 ```
 
 `Page.Block` widths: `"text"` (576px) | `"md"` (768px) | `"lg"` (1024px) | `"xl"` (1280px) | `"2xl"` (1440px)
@@ -214,7 +211,7 @@ import { Spacer } from "@navikt/ds-react";
   <Logo />
   <Spacer /> {/* Skyver resten til høyre */}
   <NavItems />
-</HStack>
+</HStack>;
 ```
 
 ### Show og Hide

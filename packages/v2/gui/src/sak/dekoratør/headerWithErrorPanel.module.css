@@ -1,5 +1,7 @@
 .endringsloggContainer {
-  display: grid;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .endringsloggContainer :global(.endringslogg) {
