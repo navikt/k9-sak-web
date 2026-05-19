@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useEffect } from 'react';
-import { expect, fn } from 'storybook/test';
+import { useEffect, useRef } from 'react';
+import { expect, fn, userEvent } from 'storybook/test';
 import ErrorBoundary, { type ErrorBoundaryFallbackProps } from './ErrorBoundary.js';
 import { AppError } from '../AppError.js';
 
@@ -111,5 +111,42 @@ export const FilterPropagatesNonMatching: StoryObj = {
   ),
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Ytre boundary fanga: BASE ERROR')).toBeInTheDocument();
+  },
+};
+
+// Demonstrerer at ein custom errorFallback kan kalle reset() for å fjerne feiltilstanden i ErrorBoundary.
+// Barnet kastar berre på første render — etter reset rendrast det normalt. Ref-en lever i foreldrekomponenten
+// (render-funksjonen til storyen) som ikkje blir avmontert, slik at verdien overlever remount av barnet.
+const FailOnceChild = ({ hasFailedRef }: { hasFailedRef: React.RefObject<boolean> }) => {
+  if (!hasFailedRef.current) {
+    hasFailedRef.current = true;
+    throw new AppError({ message: 'Feil på første render' });
+  }
+  return <p>Barn-komponent rendrar normalt etter reset</p>;
+};
+
+const ResetErrorFallback = ({ error, reset }: ErrorBoundaryFallbackProps) => (
+  <div>
+    <p>Det oppsto ein feil: {error.message}</p>
+    <button onClick={reset}>Nullstill</button>
+  </div>
+);
+
+export const ResetableErrorFallback: StoryObj = {
+  render: () => {
+    const hasFailedRef = useRef(false);
+    return (
+      <ErrorBoundary errorFallback={ResetErrorFallback}>
+        <FailOnceChild hasFailedRef={hasFailedRef} />
+      </ErrorBoundary>
+    );
+  },
+  play: async ({ canvas }) => {
+    // Først rendrast errorFallback med feilmelding
+    await expect(await canvas.findByText('Det oppsto ein feil: Feil på første render')).toBeInTheDocument();
+    // Klikk nullstill — kallar reset() i ErrorBoundary
+    await userEvent.click(canvas.getByRole('button', { name: 'Nullstill' }));
+    // Etter reset rendrast barnet normalt
+    await expect(await canvas.findByText('Barn-komponent rendrar normalt etter reset')).toBeInTheDocument();
   },
 };

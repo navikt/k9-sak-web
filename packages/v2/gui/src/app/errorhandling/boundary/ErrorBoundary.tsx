@@ -14,6 +14,7 @@ export interface ErrorBoundaryProps {
   children: ReactNode;
   maxErrorCount?: number;
   // If set, the ErrorBoundary will only report error to Sentry and this callback, not display error itself. May be combined with errorFallback.
+  // Only meant to be used in top level GlobalUnhandledErrorCatcher.
   errorCallback?: (error: Error) => void;
   // If set the component given will be rendered instead of children
   errorFallback?: FC<ErrorBoundaryFallbackProps>;
