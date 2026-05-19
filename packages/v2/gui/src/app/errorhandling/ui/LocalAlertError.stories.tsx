@@ -12,6 +12,7 @@ import { AppError } from '../AppError.js';
 import { TimeoutError } from '../legacycompat/TimeoutError.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
 import { resolveErrorViewProps } from './resolveErrorViewProps.js';
+import { RocketIcon } from '@navikt/aksel-icons';
 
 /**
  * Komponent som kastar ein feil når `shouldThrow` er true.
@@ -62,10 +63,22 @@ type Story = StoryObj<typeof meta>;
 /** Viser LocalAlertError direkte med faste props */
 export const DefaultStory: Story = {
   args: {
-    title: 'Eksempel-feil',
-    error: new AppError({ message: 'Lorem ipsum error' }),
-    errorInfo: <BodyLong>Lorem ipsum error</BodyLong>,
-    fixAction: retryAction(action('fix problem')),
+    title: 'Resolved title',
+    error: new AppError({ message: 'Error message' }),
+    errorInfo: (
+      <>
+        <BodyLong>
+          <b>errorInfo text.</b>
+        </BodyLong>
+        <BodyLong>Might be a long text about the problem.</BodyLong>
+      </>
+    ),
+    fixAction: {
+      label: 'Fix action label',
+      info: <BodyLong>Fix info. (More text about how to resolve problem)</BodyLong>,
+      icon: <RocketIcon />,
+      callback: action('Fix problem'),
+    },
   },
 };
 
