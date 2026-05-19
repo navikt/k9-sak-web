@@ -1,7 +1,7 @@
 import type {
-  k9_sak_kontrakt_inngangsvilkår_AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto,
-  k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+  AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto,
+} from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
+import type { RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
 import { FileIcon } from '@navikt/aksel-icons';
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Link, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';

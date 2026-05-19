@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_inngangsvilkår_RettFraDagEnVisningDto as RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
 
 export type { RettFraDagEnVisningDto };
 
