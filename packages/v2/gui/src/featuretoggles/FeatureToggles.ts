@@ -1,4 +1,4 @@
-import type {FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ} from './FeatureTogglesFor.js';
+import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } from './FeatureTogglesFor.js';
 
 /**
  * Alle feature toggles må leggast til her, med false som verdi. Må deretter i tillegg settast til true for den/dei
@@ -8,7 +8,6 @@ const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_UTENLANDSOPPHOLD: false,
-  BRUK_V2_VILKAR_OPPTJENING: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
   OVERSTYR_BEREGNING: false,
@@ -24,6 +23,7 @@ const rootFeatureToggles = {
   AKTIVITETSPENGER: false,
   REVURDERING_FRA_STEG_V2: false,
   SINGLE_AUTHFIXER: false,
+  VIS_INNLEGGELSE_FOR_PILS: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

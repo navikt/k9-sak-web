@@ -97,7 +97,6 @@ export const Aksjonspunkt: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -148,7 +147,6 @@ export const LøsAksjonspunkt: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -224,7 +222,6 @@ export const LøsAksjonspunktMedSplitt: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -320,7 +317,6 @@ export const LøstAksjonspunkt: Story = {
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -361,7 +357,6 @@ export const LøstAksjonspunktKanRedigeres: Story = {
         erAktivt: true, // Må være true for å kunne redigeres
       }),
     ],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -480,7 +475,6 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },

@@ -1,5 +1,6 @@
 import type { Decorator } from '@storybook/react';
 import { useEffect } from 'react';
+import { BehandlingProvider } from '../../context/BehandlingContext';
 
 /**
  *
@@ -10,7 +11,11 @@ import { useEffect } from 'react';
 
 const withStoryReload = (): Decorator => Story => {
   useEffect(() => () => window.location.reload(), []);
-  return <Story />;
+  return (
+    <BehandlingProvider refetchBehandling={() => Promise.resolve()}>
+      <Story />
+    </BehandlingProvider>
+  );
 };
 
 export default withStoryReload;

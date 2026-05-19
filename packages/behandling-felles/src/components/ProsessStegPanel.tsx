@@ -33,7 +33,6 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
   lagreOverstyringUttak?: (params: any) => void;
   erOverstyrer?: boolean;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 const ProsessStegPanel = ({
@@ -48,7 +47,6 @@ const ProsessStegPanel = ({
   lagreOverstyrteAksjonspunkter,
   useMultipleRestApi,
   featureToggles,
-  hentBehandling,
   erOverstyrer = false,
 }: OwnProps) => {
   const erHenlagtOgVedtakStegValgt =
@@ -128,7 +126,6 @@ const ProsessStegPanel = ({
                     formData,
                     setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
-                    hentBehandling,
                     erOverstyrer,
                     ...delPaneler[0].getKomponentData(),
                     ...data,
