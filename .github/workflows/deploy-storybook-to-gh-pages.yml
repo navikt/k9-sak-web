@@ -2,7 +2,7 @@ name: Build and Publish Storybook to GitHub Pages
 on:
   push:
     branches:
-      - master
+      - feature/errorhandling
   workflow_dispatch:
 
 permissions:
@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Hente kode
         uses: actions/checkout@v6
+        with:
+          ref: feature/errorhandling
 
       - name: Setup yarnrc
         uses: ./.github/actions/setup-yarnrc
