@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import { BigError } from './BigError.js';
 
 const meta = {
-  title: 'gui/app/errorhandling/feilmeldinger/BigError',
+  title: 'gui/app/errorhandling/pages/BigError',
   component: BigError,
 } satisfies Meta<typeof BigError>;
 
