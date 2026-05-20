@@ -6,6 +6,7 @@ import { shouldReportToSentry } from './sentry.js';
 import { captureException } from '@sentry/browser';
 import { ErrorModal } from './ui/ErrorModal.js';
 import { resolveErrorViewProps } from './ui/resolveErrorViewProps.js';
+import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -46,6 +47,7 @@ export interface GlobalUnhandledErrorCatcherProps {
  * </p>
  */
 export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> = ({ children, maxErrorCount = 50 }) => {
+  const { VIS_GLOBAL_ERRORMODAL } = use(FeatureTogglesContext);
   const [globalErrors, setGlobalErrors] = useState<Error[]>([]);
   const clearGlobalErrors = () => setGlobalErrors([]);
   const addGlobalError = useCallback(
@@ -110,7 +112,9 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   return (
     <GlobalUnhandledErrorsContext value={{ globalErrors, clearGlobalErrors, addGlobalError, legacyErrorNotifier }}>
       <ErrorBoundary errorCallback={addGlobalError}>{children}</ErrorBoundary>
-      <ErrorModal errorProps={lastErrorModalProps} onClose={() => setLastClosedError(modalError)} />
+      {VIS_GLOBAL_ERRORMODAL && (
+        <ErrorModal errorProps={lastErrorModalProps} onClose={() => setLastClosedError(modalError)} />
+      )}
     </GlobalUnhandledErrorsContext>
   );
 };

@@ -23,6 +23,7 @@ const rootFeatureToggles = {
   REVURDERING_FRA_STEG_V2: false,
   SINGLE_AUTHFIXER: false,
   VIS_INNLEGGELSE_FOR_PILS: false,
+  VIS_GLOBAL_ERRORMODAL: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
@@ -35,6 +36,7 @@ const baseQFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: true,
   UNNTAKSBEHANDLING: true,
   SINGLE_AUTHFIXER: true,
+  VIS_GLOBAL_ERRORMODAL: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 
 // Viss det trengs baseProdFeatureToggles kan det leggast til her på samme måte som baseQFeatureToggles.

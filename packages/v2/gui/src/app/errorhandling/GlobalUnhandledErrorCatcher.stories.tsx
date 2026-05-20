@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { withTopDekoratør } from '../../storybook/decorators/withTopDekoratør.js';
 import { TopErrorPanel } from './ui/TopErrorPanel.js';
 import withErrorBoundary from '../../storybook/decorators/withErrorBoundary.js';
+import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { BodyShort, Button, Dialog } from '@navikt/ds-react';
 
 interface ErrorThrowingComponentProps {
@@ -144,7 +145,7 @@ const meta = {
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
-  decorators: [withTopDekoratør(), withErrorBoundary()],
+  decorators: [withTopDekoratør(), withErrorBoundary(), withFeatureToggles({ VIS_GLOBAL_ERRORMODAL: true })],
 } satisfies Meta<typeof ErrorHandlingDemoApp>;
 
 export default meta;
