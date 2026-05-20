@@ -55,7 +55,7 @@ interface Props {
   isPermanentlyReadOnly: boolean;
 }
 
-export const ÅrsakOgVarsel = ({
+export const AarsakOgVarsel = ({
   varselAp,
   opphørVilkår,
   api,

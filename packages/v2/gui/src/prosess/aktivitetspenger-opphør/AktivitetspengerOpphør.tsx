@@ -12,7 +12,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BeslutterOpphør } from './BeslutterOpphør.js';
 import { OpphørTab } from './types.js';
-import { ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
+import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
   varselAp?: AksjonspunktDto;
