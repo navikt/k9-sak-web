@@ -212,7 +212,8 @@ export const ErrorWhileDialogOpen: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Open dialog' }));
     const dialog = await within(document.body).findByRole('dialog');
     const dialogInput = within(dialog).getByRole('textbox', { name: 'Dialog input:' });
-    await userEvent.type(dialogInput, 'Skjemadata');
+    await userEvent.click(dialogInput);
+    await userEvent.keyboard('Skjemadata');
     await userEvent.click(within(dialog).getByRole('button', { name: 'Utløys feil' }));
     const alertDialog = await within(document.body).findByRole('alertdialog');
     await expect(alertDialog).toBeInTheDocument();
