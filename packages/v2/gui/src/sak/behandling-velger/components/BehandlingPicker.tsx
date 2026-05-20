@@ -92,7 +92,7 @@ const BehandlingPicker = ({
       }
     };
     void effect();
-  }, [behandlingId, åpenBehandlingId]);
+  }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
   // Side-effekt-fri beregning av hvilke behandlinger som skal vises
   const getBehandlingerSomSkalVises = (
