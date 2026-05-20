@@ -152,7 +152,7 @@ const byggVilkårPanel = (
     type,
     label: panelKonfig.label,
     id: panelKonfig.id,
-    usePartialStatus: sjekkDelvisVilkårStatus(relevanteVilkår),
+    usePartialStatus: type === ProcessMenuStepType.success ? sjekkDelvisVilkårStatus(relevanteVilkår) : false,
     erVurdert: erPanelVurdert(type),
   };
 };
@@ -255,14 +255,19 @@ export const beregnVedtakType = (
     ap =>
       ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING && ap.status && isAksjonspunktOpen(ap.status),
   );
-  const harÅpneAksjonspunkter = aksjonspunkter?.some(
-    ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  const vedtakAksjonspunkterSet = new Set(vedtakAksjonspunkter);
+  const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => ap.definisjon && vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
-  if (harIkkeVurdertVilkar || harApenOverstyringBeregning) {
+  const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => ap.definisjon && !vedtakAksjonspunkterSet.has(ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  if (harIkkeVurdertVilkar || harApenOverstyringBeregning || harÅpneIkkeVedtakAksjonspunkter) {
     return ProcessMenuStepType.default;
   }
-  if (harÅpneAksjonspunkter) {
+  if (harÅpneVedtakAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {
@@ -327,7 +332,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     );
 
     const tilkjentYtelsePanel = byggPanelUtenVilkår(
-      uttakPanel.erVurdert,
+      uttakPanel.erVurdert && uttakPanel.type !== ProcessMenuStepType.danger,
       beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       PANEL_KONFIG.tilkjentYtelse.label,
       PANEL_KONFIG.tilkjentYtelse.id,

@@ -25,7 +25,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
@@ -153,7 +153,6 @@ interface BrevPanelProps {
   hentFritekstbrevHtmlCallback: (parameters: any) => any;
   informasjonsbehovValues: any[];
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  intl: IntlShape;
   lagreDokumentdata: (any) => void;
   overskrift: string;
   overstyrtMottaker?: Brevmottaker;
@@ -168,7 +167,6 @@ interface BrevPanelProps {
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const {
-    intl,
     readOnly,
     språkkode,
     personopplysninger,
@@ -190,6 +188,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
+  const intl = useIntl();
   const [forhaandsvisningKlart, setForhaandsvisningKlart] = useState(true);
   const [, meta] = useField({ name: 'overstyrtMottaker' });
 
@@ -320,4 +319,4 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   );
 };
 
-export default injectIntl(BrevPanel);
+export default BrevPanel;

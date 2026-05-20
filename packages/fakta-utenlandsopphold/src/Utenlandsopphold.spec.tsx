@@ -75,7 +75,7 @@ describe('Utenlandsopphold', () => {
     expect(screen.getByText('EØS')).toBeVisible();
     expect(screen.getByText('Nei')).toBeVisible();
     expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
-    expect(screen.getByText('Ingen av årsakene over (kan motta pleiepenger i 8 uker)')).toBeVisible();
+    expect(screen.getByText('Ingen årsak til utenlandsoppholdet er oppgitt, perioden telles i 8 uker')).toBeVisible();
   });
   // Egen test da det har mismatch mellom kodeverk og i18n-iso-countries
   test('Kosovo vises korrekt', () => {
@@ -106,7 +106,7 @@ describe('Utenlandsopphold', () => {
     expect(screen.getByText('EØS')).toBeVisible();
     expect(screen.getByText('Nei')).toBeVisible();
     expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
-    expect(screen.getByText('Ingen av årsakene over (kan motta pleiepenger i 8 uker)')).toBeVisible();
+    expect(screen.getByText('Ingen årsak til utenlandsoppholdet er oppgitt, perioden telles i 8 uker')).toBeVisible();
   });
 
   // Sveits vurderes på lik linje med EØS-land

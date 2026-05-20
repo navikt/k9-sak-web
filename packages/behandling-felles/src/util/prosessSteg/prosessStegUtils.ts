@@ -1,3 +1,4 @@
+import { addBreadcrumb } from '@sentry/browser';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { SetStateAction } from 'react';
 
@@ -10,6 +11,10 @@ import Rettigheter from '../../types/rettigheterTsType';
 import readOnlyUtils from '../readOnlyUtils';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
+import type {
+  LegacyBekreftAksjonspunktCallback,
+  LegacyBekreftAksjonspunktModell,
+} from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.ts';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
 
@@ -74,7 +79,7 @@ export const finnValgtPanel = (
   erBehandlingHenlagt: boolean,
   valgtProsessStegPanelKode?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string },
-): ProsessStegUtledet => {
+): ProsessStegUtledet | undefined => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
     if (erBehandlingHenlagt) {
       return prosessStegPaneler[prosessStegPaneler.length - 1];
@@ -129,12 +134,19 @@ export const getBekreftAksjonspunktCallback =
     aksjonspunkter: Aksjonspunkt[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
-  ) =>
-  async aksjonspunktModels => {
+  ): LegacyBekreftAksjonspunktCallback =>
+  async (aksjonspunktModels: LegacyBekreftAksjonspunktModell[]) => {
     const models = aksjonspunktModels.map(ap => ({
       '@type': ap.kode,
       ...ap,
     }));
+
+    addBreadcrumb({
+      category: 'aksjonspunkt',
+      message: 'Sender inn aksjonspunkt',
+      data: { koder: models.map(ap => ap.kode) },
+      level: 'info',
+    });
 
     const params = {
       saksnummer: fagsak.saksnummer,
@@ -151,8 +163,8 @@ export const getBekreftAksjonspunktCallback =
       );
       const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring.some(
         ap =>
-          ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING ||
-          ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+          ap.aksjonspunktType?.kode === aksjonspunktType.OVERSTYRING ||
+          ap.aksjonspunktType?.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
       );
 
       if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {

@@ -1,20 +1,15 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import BehandlingAvregningBackendClient from '../AvregningBackendClient';
 import KontrollerEtterbetaling from './KontrollerEtterbetaling';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 interface Props {
   behandling: BehandlingDto;
-  aksjonspunkt: AksjonspunktDto;
+  aksjonspunkt?: AksjonspunktDto;
   readOnly: boolean;
 }
 
 const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Props) => {
-  const behandlingAvregningBackendClient = new BehandlingAvregningBackendClient();
-
   /*
    * Kopierer props for å unngå at konverteringen av kodeverk endrer verdiene i props.
    * Dette er en midlertidig løsning inntil vi har fått oppdatert alle komponenter til å
@@ -33,18 +28,12 @@ const KontrollerEtterbetalingIndex = ({ aksjonspunkt, behandling, readOnly }: Pr
    * kodeverk-endringene kommer en context for behandlingsid og -versjon, denne kan nok
    * tilpasses til å kunne trigge oppdatering av behandling "on-demand"
    */
-  const oppdaterBehandling = () => {
-    // FIXME temp fiks for å håndtere oppdatering av behandling
-    window.location.reload();
-  };
 
   return (
     <KontrollerEtterbetaling
       behandling={deepCopyProps.behandling}
       aksjonspunkt={deepCopyProps.aksjonspunkt}
       readOnly={readOnly}
-      api={behandlingAvregningBackendClient}
-      oppdaterBehandling={oppdaterBehandling}
     />
   );
 };

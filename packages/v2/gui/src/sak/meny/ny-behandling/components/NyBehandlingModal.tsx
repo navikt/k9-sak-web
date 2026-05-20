@@ -9,13 +9,15 @@ import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsa
 import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
+import { Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
-import { RhfCheckbox, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { visnDato } from '../../../../utils/formatters';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObject[]) => {
@@ -40,10 +42,55 @@ export type FormValues = {
   behandlingType: string;
   nyBehandlingEtterKlage?: string;
   behandlingArsakType?: string;
-  steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
+  revurderingModus?: 'FULL' | 'DELVIS';
+  steg?: string;
   fom: string;
   tom: string;
   fomForPeriodeForInntektskontroll?: string;
+  valgtePerioder?: string[];
+};
+
+export type DelvisRevurderingÅrsakMapping = {
+  årsak: string;
+  vilkårType: string;
+  periodeType?: 'STP' | 'PERIODE';
+  valgbarePerioder?: Periode[];
+};
+
+const VILKÅR_TYPE_KODE_TIL_NAVN: Record<string, string> = {
+  FP_VK_41: 'Beregningsgrunnlagvilkåret',
+  FP_VK_2: 'Medlemskapsvilkåret',
+  K9_VK_1: 'Omsorgen for',
+  FP_VK_23: 'Opptjeningsvilkåret',
+  FP_VK_21: 'Opptjeningsperiodevilkåret',
+  FP_VK_3: 'Søknadsfristvilkåret',
+};
+
+const DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK: Record<string, string> = {
+  [BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRING_BEREGNINGSGRUNNLAG]: 'Beregningsgrunnlagvilkåret',
+  [BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRET_FORDELING]: 'Beregningsgrunnlagvilkåret',
+  [BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_MEDLEMSKAP]: 'Medlemskapsvilkåret',
+  [BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_SØKERS_REL]: 'Omsorgen for',
+  [BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_OPPTJENING]: 'Opptjeningsvilkåret',
+};
+
+const byggÅrsakTilVilkårMap = (backendData?: DelvisRevurderingÅrsakMapping[]): Record<string, string> => {
+  if (backendData && backendData.length > 0) {
+    return Object.fromEntries(backendData.map(d => [d.årsak, VILKÅR_TYPE_KODE_TIL_NAVN[d.vilkårType] ?? d.vilkårType]));
+  }
+  return DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK;
+};
+
+export const DELVIS_REVURDERING_ARSAKER_FALLBACK = new Set(Object.keys(DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK));
+
+const formaterPeriodeDato = (dato?: string) => (dato ? visnDato(dato) : '');
+const requiredValgtePerioder = (perioder?: string[]) =>
+  perioder && perioder.length > 0 ? undefined : 'Velg minst én periode for delvis revurdering';
+
+const resetRevurderingFelter = (setValue: ReturnType<typeof useForm<FormValues>>['setValue']) => {
+  setValue('steg', undefined);
+  setValue('fom', '');
+  setValue('tom', '');
 };
 
 interface NyBehandlingModalProps {
@@ -57,8 +104,9 @@ interface NyBehandlingModalProps {
       fagsakYtelseType: FagsakYtelsesType;
       periode?: Periode;
     } & FormValues,
-  ) => void;
+  ) => Promise<void>;
   behandlingOppretting: BehandlingOppretting[];
+  delvisRevurderingsårsaker?: DelvisRevurderingÅrsakMapping[];
   behandlingstyper: KodeverkObject[];
   tilbakekrevingRevurderingArsaker: KodeverkObject[];
   revurderingArsaker: KodeverkObject[];
@@ -102,6 +150,7 @@ export const NyBehandlingModal = ({
   ytelseType,
   behandlingstyper,
   behandlingOppretting,
+  delvisRevurderingsårsaker,
   kanTilbakekrevingOpprettes,
   revurderingArsaker,
   tilbakekrevingRevurderingArsaker,
@@ -136,18 +185,29 @@ export const NyBehandlingModal = ({
       behandlingType: '',
       nyBehandlingEtterKlage: '',
       behandlingArsakType: '',
+      revurderingModus: undefined,
       steg: undefined,
       fom: '',
       tom: '',
       fomForPeriodeForInntektskontroll: '',
+      valgtePerioder: [],
     },
   });
-  const [valgtBehandlingTypeKode, steg, fom, behandlingArsakType] = formMethods.watch([
+  const [valgtBehandlingTypeKode, steg, fom, behandlingArsakType, revurderingModus] = formMethods.watch([
     'behandlingType',
     'steg',
     'fom',
     'behandlingArsakType',
+    'revurderingModus',
   ]);
+
+  const { REVURDERING_FRA_STEG_V2 } = use(FeatureTogglesContext);
+
+  useEffect(() => {
+    if (REVURDERING_FRA_STEG_V2) {
+      resetRevurderingFelter(formMethods.setValue);
+    }
+  }, [revurderingModus, REVURDERING_FRA_STEG_V2, formMethods]);
   const behandlingTyper = getBehandlingTyper(behandlingstyper);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(
     behandlingstyper,
@@ -163,10 +223,33 @@ export const NyBehandlingModal = ({
     valgtBehandlingTypeKode,
     erUngdomsprogramytelse,
   );
+  const støttedeDelvisÅrsaker = new Set(delvisRevurderingsårsaker?.map(a => a.årsak) ?? []);
+  const delvisWhitelist = [...manuelleRevurderingsArsaker, BehandlingÅrsakDtoBehandlingArsakType.RE_ENDRET_FORDELING];
+  const delvisRevurderingÅrsaker = revurderingArsaker
+    .filter(a => delvisWhitelist.includes(a.kode) && støttedeDelvisÅrsaker.has(a.kode))
+    .sort((a, b) => a.navn.localeCompare(b.navn));
+  const kanVelgeDelvisRevurdering = delvisRevurderingÅrsaker.length > 0;
+  const effektivRevurderingModus = kanVelgeDelvisRevurdering ? revurderingModus : 'FULL';
   const visÅrsak =
-    (erRevurdering && steg === 'inngangsvilkår') ||
+    (erRevurdering && !REVURDERING_FRA_STEG_V2 && steg === 'inngangsvilkår') ||
+    (erRevurdering && REVURDERING_FRA_STEG_V2 && effektivRevurderingModus === 'FULL') ||
     (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0) ||
     (erRevurdering && erUngdomsprogramytelse);
+  const erDelvisRevurdering = REVURDERING_FRA_STEG_V2 && erRevurdering && effektivRevurderingModus === 'DELVIS';
+  const årsakTilVilkårMap = byggÅrsakTilVilkårMap(delvisRevurderingsårsaker);
+  const vilkårSomRevurderes = steg ? årsakTilVilkårMap[steg] : undefined;
+  const valgtDelvisÅrsak = delvisRevurderingsårsaker?.find(a => a.årsak === steg);
+  const valgbarePerioder = valgtDelvisÅrsak?.valgbarePerioder ?? [];
+  const enesteValgbarePeriode = valgbarePerioder.length === 1 ? valgbarePerioder[0] : undefined;
+  const harFlereValgbarePerioder = valgbarePerioder.length > 1;
+  const harEnValgbarPeriode = valgbarePerioder.length === 1 && !!enesteValgbarePeriode;
+  const harIngenValgbarePerioder = !harFlereValgbarePerioder && !harEnValgbarPeriode;
+  useEffect(() => {
+    if (REVURDERING_FRA_STEG_V2 && erRevurdering && !kanVelgeDelvisRevurdering) {
+      formMethods.setValue('revurderingModus', 'FULL');
+      resetRevurderingFelter(formMethods.setValue);
+    }
+  }, [REVURDERING_FRA_STEG_V2, erRevurdering, kanVelgeDelvisRevurdering, formMethods]);
   const getUngPerioderTilRevurdering = () => {
     const rettigheterForBehandling = behandlingOppretting.find(
       b => b.behandlingType === BehandlingTypeK9Klage.REVURDERING,
@@ -176,7 +259,12 @@ export const NyBehandlingModal = ({
     }
     return rettigheterForBehandling.gyldigePerioderPerÅrsak?.find(it => it.årsak === behandlingArsakType)?.perioder;
   };
-  const handleSubmit = (formValues: FormValues) => {
+  const handleSubmit = async (formValues: FormValues) => {
+    const automatiskValgtPeriode = enesteValgbarePeriode
+      ? [`${enesteValgbarePeriode.fom}/${enesteValgbarePeriode.tom}`]
+      : undefined;
+    const valgtePerioder = automatiskValgtPeriode ?? formValues.valgtePerioder;
+
     const klageOnlyValues =
       formValues?.behandlingType === BehandlingTypeK9Klage.KLAGE
         ? {
@@ -185,8 +273,9 @@ export const NyBehandlingModal = ({
             behandlingArsakType: ung_kodeverk_behandling_BehandlingÅrsakType.UDEFINERT,
           }
         : {};
-    submitCallback({
+    await submitCallback({
       ...formValues,
+      valgtePerioder,
       behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
       fagsakYtelseType: ytelseType,
@@ -218,23 +307,109 @@ export const NyBehandlingModal = ({
               validate={[required]}
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
-            {erRevurdering &&
-              !erUngdomsprogramytelse && ( // ungdomsprogramytelsen skal alltid ha full revurdering
-                <RhfSelect
-                  control={formMethods.control}
-                  name="steg"
-                  label="Hvor i prosessen vil du starte revurderingen?"
-                  validate={[required]}
-                  selectValues={[
-                    <option key="inngangsvilkår" value="inngangsvilkår">
-                      Fra inngangsvilkår (full revurdering)
-                    </option>,
-                    <option key="uttak" value="RE-ENDRET-FORDELING">
-                      Fra uttak, refusjon og fordeling-steget (delvis revurdering)
-                    </option>,
-                  ]}
-                />
-              )}
+            {erRevurdering && !erUngdomsprogramytelse && REVURDERING_FRA_STEG_V2 && kanVelgeDelvisRevurdering && (
+              <RhfSelect
+                control={formMethods.control}
+                name="revurderingModus"
+                label="Hvordan vil du opprette revurderingen?"
+                validate={[required]}
+                selectValues={[
+                  <option key="FULL" value="FULL">
+                    Full revurdering (alle vilkår)
+                  </option>,
+                  <option key="DELVIS" value="DELVIS">
+                    Delvis revurdering (velg vilkår)
+                  </option>,
+                ]}
+              />
+            )}
+            {erRevurdering && !erUngdomsprogramytelse && !REVURDERING_FRA_STEG_V2 && (
+              <RhfSelect
+                control={formMethods.control}
+                name="steg"
+                label="Hvor i prosessen vil du starte revurderingen?"
+                validate={[required]}
+                selectValues={[
+                  <option key="inngangsvilkår" value="inngangsvilkår">
+                    Fra inngangsvilkår (full revurdering)
+                  </option>,
+                  <option key="uttak" value="RE-ENDRET-FORDELING">
+                    Fra uttak, refusjon og fordeling-steget (delvis revurdering)
+                  </option>,
+                ]}
+              />
+            )}
+            {erDelvisRevurdering && (
+              <RhfSelect
+                control={formMethods.control}
+                name="steg"
+                label="Hva er årsaken til revurderingen?"
+                validate={[required]}
+                selectValues={delvisRevurderingÅrsaker.map(a => (
+                  <option key={a.kode} value={a.kode}>
+                    {a.navn}
+                  </option>
+                ))}
+              />
+            )}
+            {erDelvisRevurdering && vilkårSomRevurderes && (
+              <Alert variant="info" size="small">
+                Vilkår som revurderes: {vilkårSomRevurderes}
+              </Alert>
+            )}
+            {erDelvisRevurdering && steg && (
+              <>
+                {harFlereValgbarePerioder && (
+                  <RhfCheckboxGroup
+                    control={formMethods.control}
+                    name="valgtePerioder"
+                    legend="Hvilke perioder vil du revurdere?"
+                    validate={[requiredValgtePerioder]}
+                  >
+                    {valgbarePerioder.map(periode => {
+                      const value = `${periode.fom}/${periode.tom}`;
+                      const label =
+                        valgtDelvisÅrsak?.periodeType === 'STP'
+                          ? `Skjæringstidspunkt ${formaterPeriodeDato(periode.fom)}`
+                          : `${formaterPeriodeDato(periode.fom)} - ${formaterPeriodeDato(periode.tom)}`;
+
+                      return (
+                        <Checkbox key={value} value={value}>
+                          {label}
+                        </Checkbox>
+                      );
+                    })}
+                  </RhfCheckboxGroup>
+                )}
+                {harEnValgbarPeriode && enesteValgbarePeriode && (
+                  <Alert variant="info" size="small">
+                    {valgtDelvisÅrsak?.periodeType === 'STP' ? 'Skjæringstidspunkt' : 'Periode'} som revurderes:{' '}
+                    {valgtDelvisÅrsak?.periodeType === 'STP'
+                      ? `${formaterPeriodeDato(enesteValgbarePeriode.fom)}`
+                      : `${formaterPeriodeDato(enesteValgbarePeriode.fom)} - ${formaterPeriodeDato(enesteValgbarePeriode.tom)}`}
+                  </Alert>
+                )}
+                {harIngenValgbarePerioder && (
+                  <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
+                    <RhfDatepicker
+                      control={formMethods.control}
+                      name="fom"
+                      toDate={sisteDagISøknadsperiode ?? new Date()}
+                      label="Fra og med"
+                      validate={[required]}
+                    />
+                    <RhfDatepicker
+                      control={formMethods.control}
+                      name="tom"
+                      fromDate={fom ? new Date(fom) : undefined}
+                      toDate={sisteDagISøknadsperiode ?? new Date()}
+                      label="Til og med"
+                      validate={[required]}
+                    />
+                  </Fieldset>
+                )}
+              </>
+            )}
             {erFørstegangsbehandling && (
               <RhfCheckbox
                 control={formMethods.control}
@@ -255,7 +430,7 @@ export const NyBehandlingModal = ({
                 ))}
               />
             )}
-            {erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
+            {erRevurdering && !REVURDERING_FRA_STEG_V2 && steg === 'RE-ENDRET-FORDELING' && (
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
                 <RhfDatepicker
                   control={formMethods.control}
@@ -305,7 +480,7 @@ export const NyBehandlingModal = ({
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
               Opprett behandling
             </Button>
           </HStack>
@@ -315,7 +490,7 @@ export const NyBehandlingModal = ({
   );
 };
 
-const manuelleRevurderingsArsaker = [
+const manuelleRevurderingsArsaker: string[] = [
   BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
   BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_MEDLEMSKAP,
   BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_OPPTJENING,

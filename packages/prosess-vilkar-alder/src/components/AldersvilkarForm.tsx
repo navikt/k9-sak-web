@@ -1,6 +1,6 @@
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@k9-sak-web/types';
@@ -30,8 +30,8 @@ const AldersvilkarForm = ({
   erVilkaretOk,
   erVurdert,
   angitteBarn,
-  intl,
-}: Props & WrappedComponentProps) => {
+}: Props) => {
+  const intl = useIntl();
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
   const getErVilkaretOk = () => {
@@ -102,4 +102,4 @@ const AldersvilkarForm = ({
   );
 };
 
-export default injectIntl(AldersvilkarForm);
+export default AldersvilkarForm;

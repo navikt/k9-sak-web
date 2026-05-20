@@ -23,7 +23,7 @@ interface OwnProps {
   ytelseTypeKode: FagsakYtelsesType;
   behandlingresultat: BeregningResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
-  simuleringResultat: VedtakSimuleringResultat;
+  simuleringResultat: VedtakSimuleringResultat | null;
   bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
   vilkar: VilkårMedPerioderDto[];
   readOnly: boolean;

@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 
 import styles from './vedtakForm.module.css';
 
@@ -33,12 +33,12 @@ interface VedtakHelpTextPanelProps {
  * Det er i denne filen teksten vises ...
  */
 
-export const VedtakHelpTextPanelImpl = ({
-  intl,
+export const VedtakHelpTextPanel = ({
   readOnly,
   aksjonspunktKoder,
   viseFlereSjekkbokserForBrev,
-}: VedtakHelpTextPanelProps & WrappedComponentProps) => {
+}: VedtakHelpTextPanelProps) => {
+  const intl = useIntl();
   const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
   if (!readOnly && helpTexts.length > 0) {
     return (
@@ -69,4 +69,4 @@ export const VedtakHelpTextPanelImpl = ({
   return null;
 };
 
-export default injectIntl(VedtakHelpTextPanelImpl);
+export default VedtakHelpTextPanel;

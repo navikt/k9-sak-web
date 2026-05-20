@@ -1,7 +1,5 @@
-import {
-  ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  ung_sak_kontrakt_behandling_BehandlingDto,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungtilbake/kodeverk/AksjonspunktCodes.js';
 import SettPåVentModal from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
@@ -18,7 +16,7 @@ interface SettPaVentParams {
 
 interface BehandlingPaVentProps {
   behandling: Pick<
-    ung_sak_kontrakt_behandling_BehandlingDto,
+    BehandlingDto,
     'id' | 'versjon' | 'uuid' | 'fristBehandlingPåVent' | 'venteÅrsakKode' | 'behandlingPåVent'
   >;
   aksjonspunkter: ung_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];

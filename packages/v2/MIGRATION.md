@@ -35,7 +35,6 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `fakta-inntektsmelding` → `BRUK_V2_INNTEKTSMELDING`
 - [ ] `fakta-utenlandsopphold` → `BRUK_V2_UTENLANDSOPPHOLD`
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
-- [ ] `prosess-vilkar-opptjening` → `BRUK_V2_VILKAR_OPPTJENING`
 
 ---
 

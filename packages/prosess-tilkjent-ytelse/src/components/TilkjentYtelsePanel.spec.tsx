@@ -1,6 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { render, screen } from '@testing-library/react';
+import type {
+  k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {
+  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import {render, screen} from '@testing-library/react';
 import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 
 const tilbaketrekkAP = {
@@ -42,5 +47,45 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         'Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.',
       ),
     ).toBeInTheDocument();
+  });
+
+  const mockAndel: FeriepengegrunnlagAndel = {
+    aktivitetStatus: 'AT',
+    arbeidsgiverId: '123456789',
+    arbeidsforholdId: null,
+    opptjeningsår: 2024,
+    årsbeløp: 10000,
+    erBrukerMottaker: true,
+  };
+
+  it('skal vise Feriepenger-panel når data finnes', () => {
+    const feriepengerPrÅr = new Map([[2024, [mockAndel]]]);
+    render(
+        <TilkjentYtelsePanelImpl
+          readOnly
+          beregningsresultat={null}
+          submitCallback={vi.fn()}
+          readOnlySubmitButton
+          aksjonspunkter={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          feriepengerPrÅr={feriepengerPrÅr}
+        />
+    );
+    expect(screen.getByRole('heading', { name: 'Feriepenger' })).toBeInTheDocument();
+  });
+
+  it('skal ikke vise Feriepenger-panel når data er tom', () => {
+    render(
+        <TilkjentYtelsePanelImpl
+          readOnly
+          beregningsresultat={null}
+          submitCallback={vi.fn()}
+          readOnlySubmitButton
+          aksjonspunkter={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          feriepengerPrÅr={new Map()}
+        />
+    );
+    expect(screen.queryByRole('heading', { name: 'Feriepenger' })).not.toBeInTheDocument();
   });
 });

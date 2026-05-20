@@ -5,6 +5,7 @@ import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '
 import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 import AnkePaneler from './components/AnkePaneler';
 import FetchedData from './types/fetchedDataTsType';
@@ -122,21 +123,23 @@ const BehandlingAnkeIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <AnkePaneler
-        behandling={hasNotFinished ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        rettigheter={rettigheter}
-        alleKodeverk={kodeverk}
-        valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        opneSokeside={opneSokeside}
-        alleBehandlinger={alleBehandlinger}
-        setBehandling={setBehandling}
-      />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+        <AnkePaneler
+          behandling={hasNotFinished ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          rettigheter={rettigheter}
+          alleKodeverk={kodeverk}
+          valgtProsessSteg={valgtProsessSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          opneSokeside={opneSokeside}
+          alleBehandlinger={alleBehandlinger}
+          setBehandling={setBehandling}
+        />
+      </BehandlingProvider>
     </>
   );
 };

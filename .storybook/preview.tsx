@@ -2,9 +2,9 @@ import '@fpsak-frontend/assets/styles/global.css';
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
 import { configureK9TilbakeClient } from '@k9-sak-web/backend/k9tilbake/configureK9TilbakeClient.js';
+import { withQueryClientProvider } from '@k9-sak-web/gui/storybook/decorators/withQueryClientProvider.js';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
-import '@navikt/ds-css';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react-vite';
@@ -38,12 +38,6 @@ initialize({
   },
 });
 
-const queryClient = createQueryClient({
-  queries: {
-    retry: false,
-  },
-});
-
 const preview: Preview = {
   parameters: {
     margin: '40px',
@@ -55,16 +49,15 @@ const preview: Preview = {
     },
   },
   decorators: [
+    withQueryClientProvider,
     Story => {
       const store = configureStore();
       return (
         <Provider store={store}>
           <MemoryRouter>
-            <QueryClientProvider client={queryClient}>
-              <Theme theme="light">
-                <Story />
-              </Theme>
-            </QueryClientProvider>
+            <Theme theme="light">
+              <Story />
+            </Theme>
           </MemoryRouter>
         </Provider>
       );

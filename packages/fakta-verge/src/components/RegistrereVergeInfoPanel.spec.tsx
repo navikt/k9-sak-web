@@ -1,20 +1,16 @@
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
-
-const intlMock = intlWithMessages(messages);
+import { RegistrereVergeInfoPanel } from './RegistrereVergeInfoPanel';
 
 describe('<RegistrereVergeInfoPanel>', () => {
   it('skal vise faktapanel og form for registrere verge', () => {
     renderWithIntlAndReduxForm(
-      <RegistrereVergeInfoPanelImpl
+      <RegistrereVergeInfoPanel
         {...reduxFormPropsMock}
         submittable
-        intl={intlMock}
         openInfoPanels={['verge']}
         toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
@@ -32,6 +28,7 @@ describe('<RegistrereVergeInfoPanel>', () => {
         behandlingVersjon={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
     expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();

@@ -1,5 +1,6 @@
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Personopplysninger } from '@k9-sak-web/types';
+import Aksjonspunkt from '@k9-sak-web/types/src/aksjonspunktTsType';
 import BehandlingType from '../constants/BehandlingType';
 import { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
@@ -21,6 +22,7 @@ interface ContainerContract {
   onFinished: (...args: unknown[]) => void;
   errorNotifier: (error: Error) => void;
   visFortsettknapp: boolean;
+  medisinskVilkårAksjonspunkt?: Aksjonspunkt;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fagsakYtelseType?: FagsakYtelsesType;
   behandlingType?: BehandlingType;

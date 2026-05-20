@@ -82,16 +82,18 @@ export const VisVedtakspanelDerKlageErVurdertAvNk: Story = {
       sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
     },
   },
-  decorators: withFakeVedtakKlageApi({
-    klageVurderingResultatNK: {
-      klageVurdertAv: 'NK',
-      klageVurdering: ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE,
-      fritekstTilBrev: 'test',
-      klageMedholdArsakNavn: 'TEST',
-      godkjentAvMedunderskriver: false,
-    },
-    klageFormkravResultatKA: {
-      avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_KONKRET],
-    },
-  }),
+  decorators: [
+    withFakeVedtakKlageApi({
+      klageVurderingResultatNK: {
+        klageVurdertAv: 'NK',
+        klageVurdering: ung_kodeverk_klage_KlageVurderingType.AVVIS_KLAGE,
+        fritekstTilBrev: 'test',
+        klageMedholdArsakNavn: 'TEST',
+        godkjentAvMedunderskriver: false,
+      },
+      klageFormkravResultatKA: {
+        avvistArsaker: [ung_kodeverk_klage_KlageAvvistÅrsak.IKKE_KONKRET],
+      },
+    }),
+  ],
 };

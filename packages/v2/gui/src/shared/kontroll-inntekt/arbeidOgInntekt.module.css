@@ -1,0 +1,20 @@
+.firstHeaderCell {
+  padding-left: var(--ax-space-16);
+}
+
+.firstDataCell {
+  padding-left: var(--ax-space-8);
+}
+
+.lastRow > td {
+  border-bottom: none;
+}
+
+.exclamationmarkIcon {
+  color: var(--ax-text-warning-decoration);
+  font-size: var(--ax-font-size-heading-medium);
+}
+
+.checkmarkIcon {
+  color: var(--ax-bg-success-strong);
+}

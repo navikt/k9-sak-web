@@ -1,8 +1,7 @@
 import { BodyShort, Label, Skeleton } from '@navikt/ds-react';
 
 import { useContext } from 'react';
-import type { Period as PeriodType } from '@navikt/ft-utils';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { ICD10 } from '@navikt/diagnosekoder';
 import { SykdomOgOpplæringContext } from '../../FaktaSykdomOgOpplæringIndex';
 import {
@@ -11,7 +10,7 @@ import {
   useVurdertLangvarigSykdom,
 } from '../../SykdomOgOpplæringQueries';
 
-const InstitusjonOgSykdomInfo = ({ perioder }: { perioder: PeriodType[] }) => {
+const InstitusjonOgSykdomInfo = ({ perioder }: { perioder: Period[] }) => {
   const periode = perioder[0];
   const { behandlingUuid } = useContext(SykdomOgOpplæringContext);
   const { data: institusjonData, isLoading: isLoadingInstitusjon } = useInstitusjonInfo(behandlingUuid);

@@ -65,8 +65,8 @@ export const HeaderPanel = ({
         </InternalHeader.Title>
         <Spacer />
         {skalViseEndringslogg && (
-          <div className={styles['endringsloggContainer']}>
-            <Theme theme="light">
+          <Theme theme="light">
+            <div className={styles['endringsloggContainer']}>
               <Endringslogg
                 userId={navBrukernavn}
                 appId="K9_SAK"
@@ -76,8 +76,8 @@ export const HeaderPanel = ({
                 alignLeft
                 maxEntries={150}
               />
-            </Theme>
-          </div>
+            </div>
+          </Theme>
         )}
         <Dropdown>
           <InternalHeader.Button

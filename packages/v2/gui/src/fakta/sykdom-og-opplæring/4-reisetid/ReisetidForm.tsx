@@ -1,7 +1,7 @@
 import type { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_reisetid_ReisetidVurderingDto as ReisetidVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Button, Link, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import dayjs from 'dayjs';
 import { useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -52,8 +52,8 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
   }, [vurdering.perioder]);
   const oppgittReisedager = vurdering.informasjonFraSøker.reisetidPeriodeOppgittISøknad;
   const vurderingGjelderEnkeltdag = vurdering.perioder[0]?.asListOfDays().length === 1;
-  const submit = formMethods.handleSubmit(data => {
-    løsAksjonspunkt9303({
+  const submit = formMethods.handleSubmit(async data => {
+    await løsAksjonspunkt9303({
       begrunnelse: data.begrunnelse,
       godkjent: data.godkjent === 'ja',
       periode: {
@@ -134,7 +134,13 @@ const ReisetidForm = ({ vurdering, setRedigerer, redigerer }: ReisetidFormProps)
           )}
           {!lesemodus && (
             <div className="flex gap-4">
-              <Button variant="primary" onClick={submit} size="small">
+              <Button
+                variant="primary"
+                onClick={submit}
+                size="small"
+                loading={formMethods.formState.isSubmitting}
+                disabled={formMethods.formState.isSubmitting}
+              >
                 Bekreft og fortsett
               </Button>
               {redigerer && (

@@ -10,7 +10,7 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import { Fragment, useState } from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -28,12 +28,11 @@ const headerColumnContent = [
 
 interface OwnProps {
   alleArbeidsforhold: ArbeidsforholdV2[];
-  updateArbeidsforhold: (values: any) => void;
+  updateArbeidsforhold: (values: any) => void | Promise<void>;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   selectedId?: string;
   behandlingId: number;
   behandlingVersjon: number;
-  intl: IntlShape;
   harAksjonspunktAvklarArbeidsforhold: boolean;
 }
 
@@ -44,9 +43,9 @@ const PersonArbeidsforholdTable = ({
   behandlingId,
   behandlingVersjon,
   updateArbeidsforhold,
-  intl,
   harAksjonspunktAvklarArbeidsforhold,
 }: OwnProps) => {
+  const intl = useIntl();
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
 

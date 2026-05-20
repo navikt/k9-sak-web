@@ -10,7 +10,7 @@ import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 import { useContext } from 'react';
 import { Periodevisning } from '../../../shared/detailView/DetailView';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import InstitusjonOgSykdomInfo from './components/InstitusjonOgSykdomInfo';
 
 const NødvendigOpplæringFerdigvisning = ({

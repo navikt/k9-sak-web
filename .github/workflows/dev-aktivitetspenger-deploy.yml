@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - aktivitetspenger
+      - master
 
 jobs:
   build-deploy:
@@ -38,6 +38,7 @@ jobs:
         id: docker-push
         with:
           additional-tag: 'dev-aktivitetspenger'
+          image_base_name: 'ung-sak-web'
           without_navikt_prefix: true
           build-args: |
             featureToggles=ung.feature-toggles.json

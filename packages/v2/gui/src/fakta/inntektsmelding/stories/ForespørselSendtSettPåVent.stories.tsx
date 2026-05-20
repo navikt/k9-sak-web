@@ -21,7 +21,7 @@ const contextValue: InntektsmeldingContextType = {
   readOnly: false,
   arbeidsforhold: {},
   dokumenter: [],
-  onFinished: () => undefined,
+  onFinished: () => Promise.resolve(),
   aksjonspunkter: [],
 };
 

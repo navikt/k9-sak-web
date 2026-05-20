@@ -5,23 +5,41 @@ import type {
 import UngBeregning from './UngBeregning';
 import UngBeregningBackendClient from './UngBeregningBackendClient';
 import type { Barn } from './types/Barn';
+import type { LegacyBekreftAksjonspunktCallback } from '../../utils/typehelp/AksjonspunktSubmitCallbackArgumentType.ts';
+import type { ArbeidOgInntektProps } from '../../shared/kontroll-inntekt/ArbeidOgInntekt.tsx';
+import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.ts';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { useCallback } from 'react';
 
 interface Props {
   behandling: BehandlingDto;
   barn: Barn[];
-  submitCallback: (data: unknown) => Promise<any>;
+  submitCallback: LegacyBekreftAksjonspunktCallback;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
 }
 
 const UngBeregningIndex = ({ barn, behandling, submitCallback, aksjonspunkter, isReadOnly }: Props) => {
   const ungBeregningBackendClient = new UngBeregningBackendClient();
+  // Når UngBeregningIndex blir skrive om vekk frå å bruke legacy prosess steg panel, fjern denne wrapper og gjer ting
+  // på samme måte som i AktivitetspengerBeregning.tsx
+  const legacySubmitCallback: ArbeidOgInntektProps['inntektKontrollertCallback'] = useCallback(
+    async (data: FastsettInntektDto) => {
+      await submitCallback([
+        {
+          kode: AksjonspunktDefinisjon.KONTROLLER_INNTEKT,
+          ...data,
+        },
+      ]);
+    },
+    [submitCallback],
+  );
   return (
     <UngBeregning
       behandling={behandling}
       api={ungBeregningBackendClient}
       barn={barn}
-      submitCallback={submitCallback}
+      inntektKontrollertCallback={legacySubmitCallback}
       aksjonspunkter={aksjonspunkter}
       isReadOnly={isReadOnly}
     />

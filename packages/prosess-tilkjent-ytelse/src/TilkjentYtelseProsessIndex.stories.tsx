@@ -1,16 +1,18 @@
-import { action } from 'storybook/actions';
+import {action} from 'storybook/actions';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import {behandlingType} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import {fagsakYtelsesType} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import {KodeverkProvider} from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
+import {TilkjentYtelseV1ApiContext} from './api/TilkjentYtelseApiContext';
+import type {FeriepengerPrÅr} from './api/tilkjentYtelseApi';
 
 const fagsak = {
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
@@ -19,6 +21,7 @@ const fagsak = {
 const behandling = {
   id: 1,
   versjon: 1,
+  uuid: 'mock-treatment-uuid-12345',
 } as BehandlingDto;
 
 const beregningsresultat = {
@@ -156,15 +159,57 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
+const mockFeriepengerPrÅr: FeriepengerPrÅr = new Map([
+  [
+    2023,
+    [
+      {
+        aktivitetStatus: 'AT',
+        arbeidsgiverId: '123456789',
+        arbeidsforholdId: null,
+        opptjeningsår: 2023,
+        årsbeløp: 8000,
+        erBrukerMottaker: false,
+      },
+      {
+        aktivitetStatus: 'AT',
+        arbeidsgiverId: '123456789',
+        arbeidsforholdId: null,
+        opptjeningsår: 2023,
+        årsbeløp: 4500,
+        erBrukerMottaker: true,
+      },
+    ],
+  ],
+  [
+    2024,
+    [
+      {
+        aktivitetStatus: 'FL',
+        arbeidsgiverId: null,
+        arbeidsforholdId: null,
+        opptjeningsår: 2024,
+        årsbeløp: 6200,
+        erBrukerMottaker: true,
+      },
+    ],
+  ],
+]);
+
+const fakeFeriepengerApi = {
+  hentFeriepengegrunnlagPrÅr: async () => mockFeriepengerPrÅr,
+};
+
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
 };
 
-export const visUtenAksjonspunkt = args => (
+export const VisUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
     aksjonspunkter={[]}
+    behandlingUuid={behandling.uuid}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -173,13 +218,12 @@ export const visUtenAksjonspunkt = args => (
   />
 );
 
-visUtenAksjonspunkt.args = {
-  behandling,
+VisUtenAksjonspunkt.args = {
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunktTilbaketrekk = args => (
+export const VisÅpentAksjonspunktTilbaketrekk = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
     aksjonspunkter={
@@ -190,6 +234,7 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
         },
       ] as AksjonspunktDto[]
     }
+    behandlingUuid={behandling.uuid}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -198,13 +243,12 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
   />
 );
 
-visÅpentAksjonspunktTilbaketrekk.args = {
-  behandling,
+VisÅpentAksjonspunktTilbaketrekk.args = {
   isReadOnly: false,
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
+export const VisÅpentAksjonspunktManuellTilkjentYtelse = args => (
   <KodeverkProvider
     behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverk}
@@ -221,6 +265,7 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
           },
         ] as AksjonspunktDto[]
       }
+      behandlingUuid={behandling.uuid}
       submitCallback={action('button-click')}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       fagsak={fagsak}
@@ -229,8 +274,33 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
   </KodeverkProvider>
 );
 
-visÅpentAksjonspunktManuellTilkjentYtelse.args = {
-  behandling,
+VisÅpentAksjonspunktManuellTilkjentYtelse.args = {
   isReadOnly: false,
+  readOnlySubmitButton: true,
+};
+
+export const VisMedFeriepengerPanel = args => (
+  <KodeverkProvider
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+    kodeverk={alleKodeverk}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <TilkjentYtelseV1ApiContext.Provider value={fakeFeriepengerApi}>
+      <TilkjentYtelseProsessIndex
+        beregningsresultat={beregningsresultat}
+        aksjonspunkter={[]}
+        behandlingUuid={behandling.uuid}
+        submitCallback={action('button-click')}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        fagsak={fagsak}
+        {...args}
+      />
+    </TilkjentYtelseV1ApiContext.Provider>
+  </KodeverkProvider>
+);
+
+VisMedFeriepengerPanel.args = {
+  isReadOnly: true,
   readOnlySubmitButton: true,
 };

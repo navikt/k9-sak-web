@@ -21,7 +21,7 @@ import {
 } from '@navikt/ds-react';
 import { ListItem } from '@navikt/ds-react/List';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import dayjs from 'dayjs';
 import { useContext, useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
@@ -215,7 +215,7 @@ const NødvendigOpplæringForm = ({
     <>
       <RhfForm
         formMethods={formMethods}
-        onSubmit={data => løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
+        onSubmit={async data => await løsAksjonspunkt9302(onSubmit(data) as nødvendigOpplæringPayload)}
       >
         <div className="flex flex-col gap-6">
           <Controller
@@ -414,7 +414,7 @@ const NødvendigOpplæringForm = ({
           )}
           {!readOnly && (
             <div className="flex gap-4">
-              <Button variant="primary" type="submit" size="small">
+              <Button variant="primary" type="submit" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
                 Bekreft og fortsett
               </Button>
               {redigerer && (

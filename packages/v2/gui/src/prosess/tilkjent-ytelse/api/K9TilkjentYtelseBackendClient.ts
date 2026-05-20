@@ -9,7 +9,9 @@ export default class K9TilkjentYtelseBackendClient implements TilkjentYtelseApi 
   async hentFeriepengegrunnlagPrÅr(behandlingUuid: string): Promise<FeriepengerPrÅr> {
     const feriepengegrunnlag = (await beregningsresultat_hentFeriepengegrunnlag({ query: { behandlingUuid } })).data;
     if (feriepengegrunnlag != null) {
-      return Map.groupBy(feriepengegrunnlag.andeler, andel => andel.opptjeningsår);
+      const grense = new Date().getFullYear() - 2;
+      const filtrert = feriepengegrunnlag.andeler.filter(andel => andel.opptjeningsår >= grense);
+      return Map.groupBy(filtrert, andel => andel.opptjeningsår);
     } else {
       return new Map();
     }

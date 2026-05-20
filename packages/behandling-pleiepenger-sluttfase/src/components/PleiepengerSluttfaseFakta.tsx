@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
@@ -149,21 +149,23 @@ const PleiepengerSluttfaseFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              behandling,
-              alleKodeverk,
-              featureToggles,
-              formData,
-              setFormData,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
-              dokumenter,
-              beregningErBehandlet,
-            })}
-          </ErrorBoundary>
+          <Suspense fallback={<LoadingPanel />}>
+            <ErrorBoundary>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                ...faktaDataUtenCaching,
+                behandling,
+                alleKodeverk,
+                featureToggles,
+                formData,
+                setFormData,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+                dokumenter,
+                beregningErBehandlet,
+              })}
+            </ErrorBoundary>
+          </Suspense>
         )}
       </SideMenuWrapper>
     );

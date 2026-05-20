@@ -2,15 +2,13 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
-import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
+import { VedtakHelpTextPanel } from './VedtakHelpTextPanel';
 
 describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument når en har dette aksjonspunktet', () => {
     renderWithIntl(
-      <VedtakHelpTextPanelImpl
-        intl={intlMock}
+      <VedtakHelpTextPanel
         aksjonspunktKoder={[aksjonspunktCodes.VURDERE_DOKUMENT]}
         readOnly={false}
         viseFlereSjekkbokserForBrev={false}
@@ -23,8 +21,7 @@ describe('<VedtakHelpTextPanel>', () => {
 
   it('skal vise hjelpetekst for vurdering av dokument og vurdering av annen ytelse når en har disse aksjonspunktetene', () => {
     renderWithIntl(
-      <VedtakHelpTextPanelImpl
-        intl={intlMock}
+      <VedtakHelpTextPanel
         aksjonspunktKoder={[aksjonspunktCodes.VURDERE_ANNEN_YTELSE, aksjonspunktCodes.VURDERE_DOKUMENT]}
         readOnly={false}
         viseFlereSjekkbokserForBrev={false}
@@ -40,8 +37,7 @@ describe('<VedtakHelpTextPanel>', () => {
 
   it('skal ikke vise hjelpetekst når en ikke har gitte aksjonspunkter', () => {
     renderWithIntl(
-      <VedtakHelpTextPanelImpl
-        intl={intlMock}
+      <VedtakHelpTextPanel
         aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
         readOnly={false}
         viseFlereSjekkbokserForBrev={false}

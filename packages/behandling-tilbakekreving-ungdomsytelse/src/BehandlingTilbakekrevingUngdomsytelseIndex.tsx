@@ -4,6 +4,7 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import {
   requestTilbakekrevingApi,
@@ -146,24 +147,26 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <TilbakekrevingPaneler
-        behandling={hasNotFinished ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        kodeverk={tilbakekrevingKodeverk}
-        fpsakKodeverk={fpsakKodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        opneSokeside={opneSokeside}
-        harApenRevurdering={harApenRevurdering}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-      />
+      <BehandlingProvider refetchBehandling={() => hentBehandling(behandlingUuid, true)}>
+        <TilbakekrevingPaneler
+          behandling={hasNotFinished ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          kodeverk={tilbakekrevingKodeverk}
+          fpsakKodeverk={fpsakKodeverk}
+          rettigheter={rettigheter}
+          valgtProsessSteg={valgtProsessSteg}
+          valgtFaktaSteg={valgtFaktaSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          opneSokeside={opneSokeside}
+          harApenRevurdering={harApenRevurdering}
+          hasFetchError={behandlingState === RestApiState.ERROR}
+          setBehandling={setBehandling}
+        />
+      </BehandlingProvider>
     </>
   );
 };

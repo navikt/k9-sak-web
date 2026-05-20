@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { httpUtils } from '@fpsak-frontend/utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { dokumentSteg, toOmsorgspersonerSteg } from '../../../../types/Step';
 import Vurderingstype from '../../../../types/Vurderingstype';
 import ContainerContext from '../../../context/ContainerContext';
@@ -31,19 +33,21 @@ const vurderingsoversiktMock = {
 
 const contextWrapper = ui =>
   render(
-    <ContainerContext.Provider
-      value={
-        {
-          endpoints: { vurderingsoversiktKontinuerligTilsynOgPleie: vurderingsoversiktEndpoint },
-          errorNotifier: errorNotifierMock,
-          readOnly: false,
-        } as any
-      }
-    >
-      <VurderingContext.Provider value={{ vurderingstype: Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE }}>
-        {ui}
-      </VurderingContext.Provider>
-    </ContainerContext.Provider>,
+    <BehandlingProvider refetchBehandling={vi.fn()}>
+      <ContainerContext.Provider
+        value={
+          {
+            endpoints: { vurderingsoversiktKontinuerligTilsynOgPleie: vurderingsoversiktEndpoint },
+            errorNotifier: errorNotifierMock,
+            readOnly: false,
+          } as any
+        }
+      >
+        <VurderingContext.Provider value={{ vurderingstype: Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE }}>
+          {ui}
+        </VurderingContext.Provider>
+      </ContainerContext.Provider>
+    </BehandlingProvider>,
   );
 
 const navigerTilNesteStegMock = {

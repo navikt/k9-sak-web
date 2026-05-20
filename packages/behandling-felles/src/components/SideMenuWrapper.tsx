@@ -1,6 +1,6 @@
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { ReactNode } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
@@ -15,7 +15,9 @@ interface OwnProps {
   children?: ReactNode;
 }
 
-const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & WrappedComponentProps) => (
+const SideMenuWrapper = ({ paneler, onClick, children }: OwnProps) => {
+  const intl = useIntl();
+  return (
   <div className={styles.container}>
     <FlexContainer fullHeight>
       <FlexRow>
@@ -40,6 +42,7 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
       </FlexRow>
     </FlexContainer>
   </div>
-);
+  );
+};
 
-export default injectIntl(SideMenuWrapper);
+export default SideMenuWrapper;

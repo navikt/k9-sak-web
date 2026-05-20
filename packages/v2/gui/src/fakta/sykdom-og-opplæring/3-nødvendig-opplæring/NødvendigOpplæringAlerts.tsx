@@ -6,7 +6,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import { harÅpentAksjonspunkt } from '../../../utils/aksjonspunktUtils';
-import { Period } from '@navikt/ft-utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 
 interface OpplæringVurderingselement extends Omit<{ resultat: string }, 'resultat'>, OpplæringVurderingDto {

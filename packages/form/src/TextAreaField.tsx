@@ -1,6 +1,6 @@
 import { Tag, Textarea, TextareaProps } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
@@ -35,27 +35,25 @@ interface TextAreaFieldProps {
   placeholder?: string;
 }
 
-const TextAreaWithBadge = ({
-  badges,
-  intl,
-  dataId,
-  ...otherProps
-}: TextAreaWithBadgeProps & WrappedComponentProps & TextareaProps) => (
-  <div className={badges ? styles.textAreaFieldWithBadges : undefined}>
-    {badges && (
-      <div className={styles.etikettWrapper}>
-        {badges.map(({ textId, type, title }) => (
-          <Tag variant={type || 'warning'} key={textId} title={intl.formatMessage({ id: title })}>
-            <FormattedMessage id={textId} />
-          </Tag>
-        ))}
-      </div>
-    )}
-    <Textarea size="small" data-testid={dataId} {...otherProps} />
-  </div>
-);
+const TextAreaWithBadge = ({ badges, dataId, ...otherProps }: TextAreaWithBadgeProps & TextareaProps) => {
+  const intl = useIntl();
+  return (
+    <div className={badges ? styles.textAreaFieldWithBadges : undefined}>
+      {badges && (
+        <div className={styles.etikettWrapper}>
+          {badges.map(({ textId, type, title }) => (
+            <Tag variant={type || 'warning'} size="small" key={textId} title={intl.formatMessage({ id: title })}>
+              <FormattedMessage id={textId} />
+            </Tag>
+          ))}
+        </div>
+      )}
+      <Textarea size="small" data-testid={dataId} {...otherProps} />
+    </div>
+  );
+};
 
-const renderNavTextArea = renderNavField(injectIntl(TextAreaWithBadge));
+const renderNavTextArea = renderNavField(TextAreaWithBadge);
 
 const TextAreaField = ({ name, label, validate = undefined, readOnly = false, ...otherProps }: TextAreaFieldProps) => (
   <Field

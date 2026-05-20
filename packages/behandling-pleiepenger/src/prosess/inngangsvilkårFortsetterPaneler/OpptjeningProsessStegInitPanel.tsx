@@ -6,7 +6,7 @@ import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import OpptjeningVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndexV2.js';
+import OpptjeningVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndex.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -93,14 +93,13 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   }
   if (opptjeningV2) {
     return (
-      <OpptjeningVilkarProsessIndexV2
+      <OpptjeningVilkarProsessIndex
         submitCallback={handleSubmit}
         isReadOnly={props.isReadOnly}
         behandling={props.behandling}
         aksjonspunkter={relevanteAksjonspunkter}
         opptjening={opptjeningV2}
         visAllePerioder={props.visAllePerioder}
-        readOnlySubmitButton={false}
         vilkar={vilkårForSteg}
         lovReferanse={vilkårForSteg[0].lovReferanse}
         isAksjonspunktOpen={isAksjonspunktOpen}

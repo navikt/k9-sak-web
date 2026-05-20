@@ -19,6 +19,7 @@ import {
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import {
   getFaktaLocation,
@@ -171,41 +172,149 @@ const BehandlingIndex = ({
     return <LoadingPanel />;
   }
 
-  if (behandlingTypeKode === BehandlingType.KLAGE) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingKlageIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            alleBehandlinger={fagsakBehandlingerInfo}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
+  const renderContent = () => {
+    if (behandlingTypeKode === BehandlingType.KLAGE) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingKlageIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              alleBehandlinger={fagsakBehandlingerInfo}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
 
-  if (behandlingTypeKode === BehandlingType.ANKE) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingAnkeIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            alleBehandlinger={fagsakBehandlingerInfo}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
+    if (behandlingTypeKode === BehandlingType.ANKE) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingAnkeIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              alleBehandlinger={fagsakBehandlingerInfo}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
 
-  if (behandlingTypeKode === BehandlingType.UNNTAK) {
+    if (behandlingTypeKode === BehandlingType.UNNTAK) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingUnntakIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (erTilbakekreving(behandlingTypeKode)) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingTilbakekrevingIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              harApenRevurdering={fagsakBehandlingerInfo.some(
+                b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
+              )}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingOmsorgspengerIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingPleiepengerSluttfaseIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingUtvidetRettIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (fagsak.sakstype === fagsakYtelsesType.FRISINN) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingFrisinnIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (fagsak.sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary>
+            <BehandlingOpplaeringspengerIndex
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+              valgtFaktaSteg={query.fakta}
+              key={behandling.id}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary>
-          <BehandlingUnntakIndex
+          <BehandlingPleiepengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
             key={behandling.id}
@@ -214,113 +323,9 @@ const BehandlingIndex = ({
         </ErrorBoundary>
       </Suspense>
     );
-  }
+  };
 
-  if (erTilbakekreving(behandlingTypeKode)) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingTilbakekrevingIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            harApenRevurdering={fagsakBehandlingerInfo.some(
-              b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
-            )}
-            valgtFaktaSteg={query.fakta}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  if (fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingOmsorgspengerIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            valgtFaktaSteg={query.fakta}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  if (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingPleiepengerSluttfaseIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            valgtFaktaSteg={query.fakta}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingUtvidetRettIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            valgtFaktaSteg={query.fakta}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  if (fagsak.sakstype === fagsakYtelsesType.FRISINN) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingFrisinnIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            valgtFaktaSteg={query.fakta}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  if (fagsak.sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary>
-          <BehandlingOpplaeringspengerIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            valgtFaktaSteg={query.fakta}
-            key={behandling.id}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  return (
-    <Suspense fallback={<LoadingPanel />}>
-      <ErrorBoundary>
-        <BehandlingPleiepengerIndex
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          valgtFaktaSteg={query.fakta}
-          key={behandling.id}
-          {...defaultProps}
-        />
-      </ErrorBoundary>
-    </Suspense>
-  );
+  return <AvregningFormProvider behandlingId={behandling.id}>{renderContent()}</AvregningFormProvider>;
 };
 
 export default BehandlingIndex;

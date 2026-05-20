@@ -7,10 +7,10 @@ import {
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { Edit } from '@navikt/ds-icons';
+import { PencilIcon } from '@navikt/aksel-icons';
 import { Button, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
 import {
@@ -55,7 +55,7 @@ const FritekstRedigering = ({
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
   setForhaandsvisningKlart,
-}: ownProps & WrappedComponentProps) => {
+}: ownProps) => {
   useEffect(() => {
     setForhaandsvisningKlart(false);
   }, []);
@@ -169,7 +169,7 @@ const FritekstRedigering = ({
         onClick={() => setVisRedigering(true)}
         disabled={readOnly || !redigerbartInnholdKlart}
         loading={!redigerbartInnholdKlart}
-        icon={<Edit aria-hidden />}
+        icon={<PencilIcon aria-hidden />}
         size="small"
       >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
@@ -197,4 +197,4 @@ const FritekstRedigering = ({
   );
 };
 
-export default injectIntl(FritekstRedigering);
+export default FritekstRedigering;

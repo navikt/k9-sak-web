@@ -1,5 +1,5 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { Period } from '@navikt/ft-utils';
+import type { Period } from '@k9-sak-web/gui/utils/Period.js';
 import type { KompletthetsTilstandPåPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsTilstandPåPeriodeDto.js';
 import type { KompletthetsPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsPeriode.js';
 import type { ArbeidsgiverOpplysningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOpplysningerDto.js';
@@ -45,6 +45,6 @@ export interface InntektsmeldingContextType {
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysningerDto>;
   dokumenter?: DokumentDto[];
-  onFinished: (data: InntektsmeldingRequestPayload) => void;
+  onFinished: (data: InntektsmeldingRequestPayload) => Promise<void>;
   aksjonspunkter: AksjonspunktDto[];
 }

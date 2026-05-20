@@ -35,7 +35,7 @@ class Vurderingsoversikt {
       this.pleietrengendesFødselsdato = data.pleietrengendesFødselsdato;
       this.harPerioderDerPleietrengendeErOver18år = data.harPerioderDerPleietrengendeErOver18år;
     } catch (error) {
-      throw new Error(`Processing Vurderingsoversikt\n${error}`);
+      throw new Error(`Processing Vurderingsoversikt\n${error}`, { cause: error });
     }
   }
 
