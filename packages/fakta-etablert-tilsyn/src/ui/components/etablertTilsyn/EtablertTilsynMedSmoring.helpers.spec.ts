@@ -42,14 +42,30 @@ describe('EtablertTilsynMedSmoring helpers', () => {
     expect(enkeltdager.every(e => e.periode.fom === e.periode.tom)).toBe(true);
   });
 
-  it('finnUker returnerer unike uker i kronologisk rekkefølge', () => {
+  it('finnUker returnerer unike uke+år i kronologisk rekkefølge', () => {
     const tilsyn = [
       lagTilsyn('2024-01-02', '2024-01-02', 5, Kilde.SØKER), // uke 1 (antatt ISO)
       lagTilsyn('2024-01-10', '2024-01-10', 5, Kilde.SØKER), // uke 2
       lagTilsyn('2024-01-11', '2024-01-11', 5, Kilde.SØKER), // uke 2
     ];
     const uker = finnUker(tilsyn);
-    expect(uker).toEqual([1, 2]);
+    expect(uker).toEqual([
+      { uke: 1, år: 2024 },
+      { uke: 2, år: 2024 },
+    ]);
+  });
+
+  it('finnUker skiller like ukenummer på ulike år', () => {
+    const tilsyn = [
+      lagTilsyn('2022-08-15', '2022-08-15', 5, Kilde.SØKER),
+      lagTilsyn('2023-08-14', '2023-08-14', 5, Kilde.SØKER),
+    ];
+
+    const uker = finnUker(tilsyn);
+    expect(uker).toEqual([
+      { uke: 33, år: 2022 },
+      { uke: 33, år: 2023 },
+    ]);
   });
 
   it('grupperTilsynPerUke grupperer riktig', () => {
@@ -93,6 +109,7 @@ describe('EtablertTilsynMedSmoring helpers', () => {
           lagTilsyn('2024-05-03', '2024-05-03', 3, Kilde.SØKER), // hull -> ny gruppe
         ],
         uke: 18,
+        år: 2024,
       },
     ];
     const oppdelt = byggOppdeltSmoring(ukeGrupper);
@@ -100,26 +117,28 @@ describe('EtablertTilsynMedSmoring helpers', () => {
     expect(oppdelt.map(o => o.delAvUke)).toEqual([1, 2]);
   });
 
-  it('flettOgSorterTilsyn fletter og sorterer kronologisk', () => {
+  it('flettOgSorterTilsyn fletter og sorterer med nyeste først', () => {
     const perUke = [
       {
         etablertTilsyn: [lagTilsyn('2024-06-10', '2024-06-10', 5, Kilde.SØKER)],
         etablertTilsynSmurt: [lagTilsyn('2024-06-10', '2024-06-10', 3, Kilde.SØKER)],
         uke: 24,
+        år: 2024,
       },
       {
         etablertTilsyn: [lagTilsyn('2024-06-01', '2024-06-01', 5, Kilde.SØKER)],
         etablertTilsynSmurt: [lagTilsyn('2024-06-01', '2024-06-01', 3, Kilde.SØKER)],
         uke: 23,
+        år: 2024,
       },
     ];
     const oppdelt = byggOppdeltSmoring(perUke);
     const flettet = flettOgSorterTilsyn(perUke, oppdelt);
-    expect(flettet[0].etablertTilsynSmurt[0].periode.fom).toBe('2024-06-01');
-    expect(flettet[1].etablertTilsynSmurt[0].periode.fom).toBe('2024-06-10');
+    expect(flettet[0].etablertTilsynSmurt[0].periode.fom).toBe('2024-06-10');
+    expect(flettet[1].etablertTilsynSmurt[0].periode.fom).toBe('2024-06-01');
   });
 
-  it('flettOgSorterTilsyn håndterer oppdelt smøring og enkel uke etterpå', () => {
+  it('flettOgSorterTilsyn håndterer oppdelt smøring og enkel uke etterpå med nyeste først', () => {
     const perUke = [
       {
         etablertTilsyn: [lagTilsyn('2024-07-01', '2024-07-01', 5, Kilde.SØKER)],
@@ -128,19 +147,21 @@ describe('EtablertTilsynMedSmoring helpers', () => {
           lagTilsyn('2024-07-03', '2024-07-03', 3, Kilde.SØKER), // hull -> egen gruppe
         ],
         uke: 27,
+        år: 2024,
       },
       {
         etablertTilsyn: [lagTilsyn('2024-07-08', '2024-07-08', 5, Kilde.SØKER)],
         etablertTilsynSmurt: [lagTilsyn('2024-07-08', '2024-07-08', 3, Kilde.SØKER)],
         uke: 28,
+        år: 2024,
       },
     ];
     const oppdelt = byggOppdeltSmoring(perUke);
     const flettet = flettOgSorterTilsyn(perUke, oppdelt);
     const fomRekkefolge = flettet.map(f => f.etablertTilsynSmurt[0].periode.fom);
-    expect(fomRekkefolge).toEqual(['2024-07-01', '2024-07-03', '2024-07-08']);
-    expect(flettet[0].delAvUke).toBe(1);
+    expect(fomRekkefolge).toEqual(['2024-07-08', '2024-07-03', '2024-07-01']);
+    expect(flettet[0].delAvUke).toBeUndefined();
     expect(flettet[1].delAvUke).toBe(2);
-    expect(flettet[2].delAvUke).toBeUndefined();
+    expect(flettet[2].delAvUke).toBe(1);
   });
 });

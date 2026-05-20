@@ -18,6 +18,7 @@ export interface EtablertTilsynMappet {
   etablertTilsyn: EtablertTilsynType[];
   etablertTilsynSmurt: EtablertTilsynType[];
   uke: number;
+  år: number;
   delAvUke?: number;
 }
 
@@ -25,6 +26,12 @@ export interface TilsynPerUke {
   etablertTilsyn: EtablertTilsynType[];
   etablertTilsynSmurt: EtablertTilsynType[];
   uke: number;
+  år: number;
+}
+
+export interface UkeNøkkel {
+  uke: number;
+  år: number;
 }
 
 export const erHelg = (dag: string) => [6, 0].includes(dayjs(dag).day());
@@ -65,20 +72,27 @@ export const ekspanderTilEnkeltdager = (
   );
 
 // Henter uke-nummer for alle enkeltdager (unike)
-export const finnUker = (enkeltdager: EtablertTilsynType[]): number[] => [
-  ...new Set(enkeltdager.map(d => dayjs(d.periode.fom).week())),
-];
+export const finnUker = (enkeltdager: EtablertTilsynType[]): UkeNøkkel[] => {
+  const uker = new Map<string, UkeNøkkel>();
+  enkeltdager.forEach(d => {
+    const uke = dayjs(d.periode.fom).week();
+    const år = dayjs(d.periode.fom).year();
+    uker.set(`${år}-${uke}`, { uke, år });
+  });
+  return [...uker.values()];
+};
 
 // Grupperer tilsyn per uke
 export const grupperTilsynPerUke = (
-  uker: number[],
+  uker: UkeNøkkel[],
   etablerte: EtablertTilsynType[],
   smurte: EtablertTilsynType[],
 ): TilsynPerUke[] =>
-  uker.map(uke => ({
-    etablertTilsyn: etablerte.filter(v => dayjs(v.periode.fom).week() === uke),
-    etablertTilsynSmurt: smurte.filter(v => dayjs(v.periode.fom).week() === uke),
+  uker.map(({ uke, år }) => ({
+    etablertTilsyn: etablerte.filter(v => dayjs(v.periode.fom).week() === uke && dayjs(v.periode.fom).year() === år),
+    etablertTilsynSmurt: smurte.filter(v => dayjs(v.periode.fom).week() === uke && dayjs(v.periode.fom).year() === år),
     uke,
+    år,
   }));
 
 // Deler smurte perioder i sammenhengende blokker basert på tidPerDag og kronologi
@@ -107,6 +121,7 @@ export const byggOppdeltSmoring = (perUke: TilsynPerUke[]): EtablertTilsynMappet
         etablertTilsyn: v.etablertTilsyn,
         etablertTilsynSmurt: gruppe,
         uke: v.uke,
+        år: v.år,
         delAvUke: arr.length > 1 ? idx + 1 : undefined,
       });
     });
@@ -126,8 +141,8 @@ export const flettOgSorterTilsyn = (
   const samlet: EtablertTilsynMappet[] = [...utenOppdelt.map(v => ({ ...v })), ...oppdelt];
   return samlet.sort(
     (a, b) =>
-      new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
-      new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
+      new Date(b.etablertTilsynSmurt[0]?.periode?.fom).getTime() -
+      new Date(a.etablertTilsynSmurt[0]?.periode?.fom).getTime(),
   );
 };
 
@@ -203,7 +218,7 @@ const EtablertTilsyn = ({
             const parter = tilsyn.etablertTilsyn.map(v => v.kilde);
             return (
               <Table.ExpandableRow
-                key={ukeVisning(tilsyn.uke, tilsyn.delAvUke)}
+                key={`${tilsyn.år}-${ukeVisning(tilsyn.uke, tilsyn.delAvUke)}`}
                 content={
                   <EtablertTilsynRowContent
                     etablertTilsyn={tilsyn.etablertTilsyn}
