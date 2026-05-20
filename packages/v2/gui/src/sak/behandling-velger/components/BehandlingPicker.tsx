@@ -123,7 +123,7 @@ const BehandlingPicker = ({
     if (indexOfValgtBehandling > -1 && indexOfValgtBehandling + 1 > numberOfBehandlingperioderToFetch) {
       setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling + 1);
     }
-  }, [valgtBehandlingId, sorterteBehandlinger]);
+  }, [valgtBehandlingId, sorterteBehandlinger, numberOfBehandlingperioderToFetch]);
 
   const behandlingerSomSkalVises = useMemo(() => {
     return getBehandlingerSomSkalVises(
