@@ -3,7 +3,7 @@ import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBound
 import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { LocalAlertError } from '@k9-sak-web/gui/app/errorhandling/ui/LocalAlertError.js';
+import { ErrorAlert } from '@k9-sak-web/gui/app/errorhandling/ui/ErrorAlert.js';
 import { resolveErrorViewProps } from '@k9-sak-web/gui/app/errorhandling/ui/resolveErrorViewProps.js';
 
 interface OwnProps {
@@ -22,7 +22,7 @@ const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
   }
   return (
     <ErrorBoundary
-      errorFallback={({ error }) => <LocalAlertError {...resolveErrorViewProps(error)} title="Notatskjema feilet" />}
+      errorFallback={({ error }) => <ErrorAlert {...resolveErrorViewProps(error)} title="Notatskjema feilet" />}
     >
       <NotaterIndex
         fagsakId={fagsak.saksnummer}

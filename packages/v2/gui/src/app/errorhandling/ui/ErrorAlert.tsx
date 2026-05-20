@@ -2,9 +2,9 @@ import { LocalAlert } from '@navikt/ds-react';
 import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
 
-export type LocalAlertErrorProps = ErrorViewProps;
+export type ErrorAlertProps = ErrorViewProps;
 
-export const LocalAlertError = ({ error, title, errorInfo, fixAction }: LocalAlertErrorProps) => {
+export const ErrorAlert = ({ error, title, errorInfo, fixAction }: ErrorAlertProps) => {
   return (
     <LocalAlert status="error">
       <LocalAlert.Header>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BodyLong, Button, VStack } from '@navikt/ds-react';
 import { AxiosError, AxiosHeaders, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 import { ErrorBoundary } from '../boundary/ErrorBoundary.js';
-import { LocalAlertError } from './LocalAlertError.js';
+import { ErrorAlert } from './ErrorAlert.js';
 import { retryAction } from './ErrorHandlingWizard.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
@@ -37,7 +37,7 @@ const ErrorTriggerWrapper = () => {
       </Button>
       <ErrorBoundary
         errorFallback={({ error, reset }) => (
-          <LocalAlertError
+          <ErrorAlert
             {...resolveErrorViewProps(error)}
             fixAction={retryAction(() => {
               setShouldThrow(false);
@@ -53,14 +53,14 @@ const ErrorTriggerWrapper = () => {
 };
 
 const meta = {
-  title: 'gui/app/errorhandling/ui/LocalAlertError',
-  component: LocalAlertError,
-} satisfies Meta<typeof LocalAlertError>;
+  title: 'gui/app/errorhandling/ui/ErrorAlert',
+  component: ErrorAlert,
+} satisfies Meta<typeof ErrorAlert>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** Viser LocalAlertError direkte med faste props */
+/** Viser ErrorAlert direkte med faste props */
 export const DefaultStory: Story = {
   args: {
     title: 'Resolved title',
@@ -82,7 +82,7 @@ export const DefaultStory: Story = {
   },
 };
 
-/** Viser LocalAlertError trigga via ErrorBoundary */
+/** Viser ErrorAlert trigga via ErrorBoundary */
 export const MedErrorBoundary: StoryObj = {
   render: () => <ErrorTriggerWrapper />,
   play: async ({ canvas }) => {
@@ -93,7 +93,7 @@ export const MedErrorBoundary: StoryObj = {
   },
 };
 
-/** Viser LocalAlertError med eigendefinert errorInfo */
+/** Viser ErrorAlert med eigendefinert errorInfo */
 export const MedEgneChildren: Story = {
   args: {
     title: 'Eksempel-feil',
