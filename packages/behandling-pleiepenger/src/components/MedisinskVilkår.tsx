@@ -1,5 +1,4 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { MedisinskVilkår } from '@k9-sak-web/fakta-medisinsk-vilkar';
