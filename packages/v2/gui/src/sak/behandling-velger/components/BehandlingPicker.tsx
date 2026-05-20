@@ -1,130 +1,35 @@
-import { behandlingType as k9KlageBehandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
   k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
-import { type KodeverkNavnFraKodeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import { AddCircle } from '@navikt/ds-icons';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { ChevronLeftIcon, PlusCircleIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { type UseQueryResult, useQueries } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { type Location } from 'history';
-import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import type { BehandlingVelgerBackendApiType } from '../BehandlingVelgerBackendApiType';
 import type { Behandling } from '../types/Behandling';
-import type { PerioderMedBehandlingsId } from '../types/PerioderMedBehandlingsId';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
-import BehandlingPickerItemContent from './BehandlingPickerItemContent';
+import BehandlingListItems, {
+  erAutomatiskBehandlet,
+  getBehandlingNavn,
+  getSøknadsperioderForValgtBehandling,
+} from './BehandlingListItems';
 import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
-import {
-  filterPerioderForBarnetillegg,
-  filterPerioderForKontrollAvInntekt,
-  sortBehandlinger,
-} from './behandlingVelgerUtils';
-
-const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
-  switch (behandlingType) {
-    case BehandlingDtoType.FØRSTEGANGSSØKNAD:
-    case k9KlageBehandlingType.KLAGE:
-    case k9KlageBehandlingType.TILBAKEKREVING:
-    case k9KlageBehandlingType.REVURDERING_TILBAKEKREVING:
-      return kodeverkNavnFraKode(
-        behandlingType,
-        KodeverkType.BEHANDLING_TYPE,
-        finnKodeverkTypeForBehandlingType(behandlingType),
-      );
-    default:
-      return 'Viderebehandling';
-  }
-};
-
-const erAutomatiskBehandlet = (behandling: Behandling) =>
-  !behandling.ansvarligSaksbehandler && behandling.status === BehandlingDtoStatus.AVSLUTTET;
-
-/**
- * Henter søknadsperioder for valgt behandling.
- * For "Kontroll av inntekt" behandlinger filtreres kun perioder med KONTROLL_AV_INNTEKT som årsak.
- */
-const getSøknadsperioderForValgtBehandling = (
-  søknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[],
-  valgtBehandling?: Behandling,
-) => {
-  const dataForValgtBehandling = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
-  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT) {
-    return filterPerioderForKontrollAvInntekt(dataForValgtBehandling);
-  }
-  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG) {
-    return filterPerioderForBarnetillegg(dataForValgtBehandling);
-  }
-  return dataForValgtBehandling?.perioder ?? [];
-};
-
-const renderListItems = ({
-  behandlinger,
-  behandlingsnummerById,
-  getBehandlingLocation,
-  setValgtBehandlingId,
-  alleSøknadsperioder,
-  aktiveFilter,
-  kodeverkNavnFraKode,
-}: {
-  behandlinger: Behandling[];
-  behandlingsnummerById: Map<number, number>;
-  getBehandlingLocation: (behandlingId: number) => Location;
-  setValgtBehandlingId: React.Dispatch<React.SetStateAction<number | undefined>>;
-  alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
-  aktiveFilter: string[];
-  kodeverkNavnFraKode: KodeverkNavnFraKodeType;
-}): ReactElement<void>[] => {
-  const sorterteOgFiltrerteBehandlinger = behandlinger.filter(behandling => {
-    if (aktiveFilter.length === 0) {
-      return true;
-    }
-    if (aktiveFilter.includes(automatiskBehandling)) {
-      return erAutomatiskBehandlet(behandling);
-    }
-    return aktiveFilter.includes(behandling.type);
-  });
-
-  return sorterteOgFiltrerteBehandlinger.map(behandling => {
-    const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
-    const globalIndex = behandlingsnummerById.get(behandling.id) ?? 0;
-    return (
-      <li data-testid="BehandlingPickerItem" key={behandling.id}>
-        <NavLink
-          onClick={() => setValgtBehandlingId(behandling.id)}
-          className={styles.linkToBehandling}
-          to={getBehandlingLocation(behandling.id)}
-        >
-          <BehandlingPickerItemContent
-            behandling={behandling}
-            behandlingTypeNavn={
-              behandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD && visningsnavn
-                ? visningsnavn
-                : getBehandlingNavn(behandling.type, kodeverkNavnFraKode)
-            }
-            erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
-            søknadsperioder={getSøknadsperioderForValgtBehandling(alleSøknadsperioder, behandling)}
-            index={globalIndex}
-          />
-        </NavLink>
-      </li>
-    );
-  });
-};
+import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const usePrevious = (value: number | undefined): number | undefined => {
   const ref = useRef<number>(undefined);
   useEffect(() => {
     ref.current = value;
   });
-  return ref.current ?? undefined;
+  return ref.current;
 };
 
 const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
@@ -187,8 +92,9 @@ const BehandlingPicker = ({
       }
     };
     void effect();
-  }, [behandlingId, åpenBehandlingId, firstRender.current]);
+  }, [behandlingId, åpenBehandlingId]);
 
+  // Side-effekt-fri beregning av hvilke behandlinger som skal vises
   const getBehandlingerSomSkalVises = (
     sorterteBehandlinger: Behandling[],
     valgtBehandlingId: number | undefined,
@@ -198,9 +104,6 @@ const BehandlingPicker = ({
     const indexOfValgtBehandling = sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId);
     const valgtBehandlingFinnes = indexOfValgtBehandling > -1;
     if (valgtBehandlingFinnes) {
-      if (indexOfValgtBehandling + 1 > numberOfBehandlingperioderToFetch) {
-        setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling + 1);
-      }
       // Returner valgt behandling
       return sorterteBehandlinger.slice(indexOfValgtBehandling, indexOfValgtBehandling + 1);
     }
@@ -213,6 +116,14 @@ const BehandlingPicker = ({
   };
 
   const sorterteBehandlinger = useMemo(() => sortBehandlinger(behandlinger), [behandlinger]);
+
+  // Utvid grensen dersom valgt behandling er utenfor gjeldende vindu
+  useEffect(() => {
+    const indexOfValgtBehandling = sorterteBehandlinger.findIndex(b => b.id === valgtBehandlingId);
+    if (indexOfValgtBehandling > -1 && indexOfValgtBehandling + 1 > numberOfBehandlingperioderToFetch) {
+      setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling + 1);
+    }
+  }, [valgtBehandlingId, sorterteBehandlinger]);
 
   const behandlingerSomSkalVises = useMemo(() => {
     return getBehandlingerSomSkalVises(
@@ -262,48 +173,47 @@ const BehandlingPicker = ({
     }
   };
 
-  const getFilterListe = () => {
-    const filterListe: { value: string; label: string }[] = [];
+  const filterListe = useMemo(() => {
+    const result: { value: string; label: string }[] = [];
     behandlinger.forEach(behandling => {
-      if (!filterListe.some(filter => filter.value === behandling.type)) {
+      if (!result.some(filter => filter.value === behandling.type)) {
         const visningsnavn = formaterVisningsnavn(behandling.visningsnavn);
-        filterListe.push({
+        result.push({
           value: behandling.type,
           label: visningsnavn || getBehandlingNavn(behandling.type, kodeverkNavnFraKode),
         });
       }
-      if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
-        filterListe.push({
+      if (erAutomatiskBehandlet(behandling) && !result.some(filter => filter.value === automatiskBehandling)) {
+        result.push({
           value: automatiskBehandling,
           label: 'Automatisk behandling',
         });
       }
     });
-    return filterListe;
-  };
+    return result;
+  }, [behandlinger, kodeverkNavnFraKode]);
 
-  const getÅrsaksliste = (): string[] => {
-    const søknadsperiode = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id);
-    if (!søknadsperiode) {
+  const valgtSøknadsperiodeData = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
+
+  const årsaksliste = useMemo((): string[] => {
+    if (!valgtSøknadsperiodeData) {
       return [];
     }
     const årsaker: string[] = [];
-    if (søknadsperiode.data) {
-      søknadsperiode.data.perioderMedÅrsak.toReversed().forEach(periode =>
-        periode.årsaker
-          ?.filter(årsak => årsak !== null)
-          .forEach(årsak => {
-            // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
-            try {
-              årsaker.push(kodeverkNavnFraKode(årsak, KodeverkType.ÅRSAK_TIL_VURDERING));
-            } catch {
-              årsaker.push(årsak);
-            }
-          }),
-      );
-    }
+    valgtSøknadsperiodeData.perioderMedÅrsak.toReversed().forEach(periode =>
+      periode.årsaker
+        ?.filter(årsak => årsak !== null)
+        .forEach(årsak => {
+          // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
+          try {
+            årsaker.push(kodeverkNavnFraKode(årsak, KodeverkType.ÅRSAK_TIL_VURDERING));
+          } catch {
+            årsaker.push(årsak);
+          }
+        }),
+    );
     return årsaker;
-  };
+  }, [valgtSøknadsperiodeData, kodeverkNavnFraKode]);
 
   return (
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
@@ -327,7 +237,7 @@ const BehandlingPicker = ({
               {`Velg behandling (${behandlinger.length})`}
             </Heading>
             <BehandlingFilter
-              filters={getFilterListe()}
+              filters={filterListe}
               aktiveFilter={aktiveFilter}
               onFilterChange={updateFilter}
               text="Filtrer"
@@ -339,16 +249,17 @@ const BehandlingPicker = ({
                 Ingen behandlinger er opprettet
               </BodyShort>
             )}
-            {!noExistingBehandlinger &&
-              renderListItems({
-                behandlinger: behandlingerSomSkalVises,
-                behandlingsnummerById,
-                getBehandlingLocation,
-                setValgtBehandlingId,
-                alleSøknadsperioder: søknadsperioder,
-                aktiveFilter,
-                kodeverkNavnFraKode,
-              })}
+            {!noExistingBehandlinger && (
+              <BehandlingListItems
+                behandlinger={behandlingerSomSkalVises}
+                behandlingsnummerById={behandlingsnummerById}
+                getBehandlingLocation={getBehandlingLocation}
+                setValgtBehandlingId={setValgtBehandlingId}
+                alleSøknadsperioder={søknadsperioder}
+                aktiveFilter={aktiveFilter}
+                kodeverkNavnFraKode={kodeverkNavnFraKode}
+              />
+            )}
           </ul>
         </>
       )}
@@ -368,7 +279,7 @@ const BehandlingPicker = ({
           behandlingsresultatTypeKode={
             valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type : undefined
           }
-          behandlingsårsaker={getÅrsaksliste()}
+          behandlingsårsaker={årsaksliste}
           behandlingTypeNavn={
             valgtBehandling.type !== BehandlingDtoType.FØRSTEGANGSSØKNAD &&
             formaterVisningsnavn(valgtBehandling.visningsnavn)
@@ -385,7 +296,7 @@ const BehandlingPicker = ({
         <Button
           variant="tertiary"
           onClick={() => setNumberOfBehandlingPerioderToFetch(numberOfBehandlingperioderToFetch + 10)}
-          icon={<AddCircle />}
+          icon={<PlusCircleIcon aria-hidden />}
           size="small"
           className="mt-5"
         >

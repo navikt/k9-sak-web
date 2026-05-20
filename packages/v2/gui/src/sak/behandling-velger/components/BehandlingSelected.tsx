@@ -8,6 +8,7 @@ import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
 import { NavLink, useLocation } from 'react-router';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
 import {
@@ -16,7 +17,13 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
-import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
+
+const TILSTØTENDE_PERIODE = 'Tilstøtende periode';
+
+const ytelserMedFaktapanelSøknadsperioder = [
+  fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+  fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+];
 
 interface BehandlingSelectedProps {
   opprettetDato: string;
@@ -55,7 +62,7 @@ const BehandlingSelected = ({
     }
     const funnedeÅrsaker: string[] = [];
     const unikeÅrsaker = behandlingsårsaker.filter(årsak => {
-      if (årsak === 'Tilstøtende periode') {
+      if (årsak === TILSTØTENDE_PERIODE) {
         return false;
       }
       const erDuplikat = funnedeÅrsaker.includes(årsak);
@@ -79,11 +86,6 @@ const BehandlingSelected = ({
       </div>
     );
   };
-
-  const ytelserMedFaktapanelSøknadsperioder = [
-    fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
-    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
-  ];
 
   const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.some(ytelse => ytelse === sakstypeKode);
   const erEndringAvBarnetillegg =

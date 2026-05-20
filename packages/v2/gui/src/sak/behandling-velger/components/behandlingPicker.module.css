@@ -55,7 +55,7 @@
 
 .linkToBehandling:focus,
 .toggleShowAllButton:focus {
-  outline: none;
+  outline: revert;
 }
 
 .headerContainer {
