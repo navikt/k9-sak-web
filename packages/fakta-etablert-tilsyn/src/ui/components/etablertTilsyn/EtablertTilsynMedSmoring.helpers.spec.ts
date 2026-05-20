@@ -42,7 +42,7 @@ describe('EtablertTilsynMedSmoring helpers', () => {
     expect(enkeltdager.every(e => e.periode.fom === e.periode.tom)).toBe(true);
   });
 
-  it('finnUker returnerer unike uke+år i kronologisk rekkefølge', () => {
+  it('finnUker returnerer unike uke+år med nyeste først', () => {
     const tilsyn = [
       lagTilsyn('2024-01-02', '2024-01-02', 5, Kilde.SØKER), // uke 1 (antatt ISO)
       lagTilsyn('2024-01-10', '2024-01-10', 5, Kilde.SØKER), // uke 2
@@ -50,8 +50,8 @@ describe('EtablertTilsynMedSmoring helpers', () => {
     ];
     const uker = finnUker(tilsyn);
     expect(uker).toEqual([
-      { uke: 1, år: 2024 },
       { uke: 2, år: 2024 },
+      { uke: 1, år: 2024 },
     ]);
   });
 
@@ -63,8 +63,23 @@ describe('EtablertTilsynMedSmoring helpers', () => {
 
     const uker = finnUker(tilsyn);
     expect(uker).toEqual([
-      { uke: 33, år: 2022 },
       { uke: 33, år: 2023 },
+      { uke: 33, år: 2022 },
+    ]);
+  });
+
+  it('finnUker sorterer omvendt kronologisk uavhengig av inputrekkefølge', () => {
+    const tilsyn = [
+      lagTilsyn('2023-08-14', '2023-08-14', 5, Kilde.SØKER),
+      lagTilsyn('2022-08-15', '2022-08-15', 5, Kilde.SØKER),
+      lagTilsyn('2023-01-03', '2023-01-03', 5, Kilde.SØKER),
+    ];
+
+    const uker = finnUker(tilsyn);
+    expect(uker).toEqual([
+      { uke: 33, år: 2023 },
+      { uke: 1, år: 2023 },
+      { uke: 33, år: 2022 },
     ]);
   });
 
@@ -80,9 +95,9 @@ describe('EtablertTilsynMedSmoring helpers', () => {
     const uker = finnUker(etablert);
     const grupper = grupperTilsynPerUke(uker, etablert, smurt);
     expect(grupper.length).toBe(2);
-    expect(grupper[0].uke).toBe(1);
-    expect(grupper[0].etablertTilsyn[0].periode.fom).toBe('2024-01-02');
-    expect(grupper[1].uke).toBe(2);
+    expect(grupper[0].uke).toBe(2);
+    expect(grupper[0].etablertTilsyn[0].periode.fom).toBe('2024-01-10');
+    expect(grupper[1].uke).toBe(1);
   });
 
   it('splittSmurtePerioder deler i sammenhengende blokker og skiller på hull / tidPerDag', () => {

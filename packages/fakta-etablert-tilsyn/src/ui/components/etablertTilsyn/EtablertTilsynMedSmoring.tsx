@@ -71,7 +71,7 @@ export const ekspanderTilEnkeltdager = (
       .map(date => ({ ...v, periode: new Period(date, date) })),
   );
 
-// Henter uke-nummer for alle enkeltdager (unike)
+// Henter uke-nøkler for alle enkeltdager og sorterer dem omvendt kronologisk
 export const finnUker = (enkeltdager: EtablertTilsynType[]): UkeNøkkel[] => {
   const uker = new Map<string, UkeNøkkel>();
   enkeltdager.forEach(d => {
@@ -79,7 +79,8 @@ export const finnUker = (enkeltdager: EtablertTilsynType[]): UkeNøkkel[] => {
     const år = dayjs(d.periode.fom).year();
     uker.set(`${år}-${uke}`, { uke, år });
   });
-  return [...uker.values()];
+  // ukessammenligning skjer kun hvis år er lik, ellers sorteres på år først
+  return [...uker.values()].sort((a, b) => b.år - a.år || b.uke - a.uke);
 };
 
 // Grupperer tilsyn per uke
