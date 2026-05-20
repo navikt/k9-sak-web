@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { BodyLong } from '@navikt/ds-react';
 import { EnterIcon } from '@navikt/aksel-icons';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
-import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
 import { reloadAction, restartAction } from './ErrorHandlingWizard.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
