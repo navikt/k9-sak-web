@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import IngenBehandlingValgtPanel from './IngenBehandlingValgtPanel.js';
 
 const meta = {
-  title: 'gui/app/errorhandling/feilmeldinger',
+  title: 'gui/behandling/ingen/IngenBehandlingValgtPanel',
   component: IngenBehandlingValgtPanel,
 } satisfies Meta<typeof IngenBehandlingValgtPanel>;
 
