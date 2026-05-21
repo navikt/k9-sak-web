@@ -178,6 +178,15 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
     };
   }
 
+  if(status === 409) {
+    return {
+      error,
+      title: "Konflikt",
+      errorInfo: <BodyLong>{bodyMessage}</BodyLong>,
+      fixAction: reloadAction,
+    }
+  }
+
   // 418 — polling halted / delayed (NB: I AxiosError-konteksten er dette typisk berre relevant for polling-kall).
   if (status === 418) {
     const teapot = resolveTeapotProps(error);

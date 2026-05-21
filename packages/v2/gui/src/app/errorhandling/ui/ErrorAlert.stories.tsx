@@ -172,6 +172,15 @@ export const Axios404NotFound: Story = {
   args: resolveErrorViewProps(makeFakeAxiosError(404, undefined, '/api/k9-sak/behandling/123')),
 };
 
+export const Axios409Conflict: Story = {
+  args: resolveErrorViewProps(
+    makeFakeAxiosError(409, {
+      feilmelding:
+        'Behandlingen [1234567] har blitt oppdatert med ny informasjon av systemet, eller er endret av en annen saksbehandler. Prøv å laste inn behandlingen på nytt, hvis problemet vedvarer ta kontakt på teams. Fikk versjon [3], har versjon [5]',
+    }),
+  ),
+};
+
 export const Axios504GatewayTimeout: Story = {
   args: resolveErrorViewProps(makeFakeAxiosError(504, undefined, '/api/k9-sak/oppgave')),
 };
