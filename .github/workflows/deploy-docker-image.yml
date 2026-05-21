@@ -23,7 +23,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
@@ -42,7 +42,7 @@ jobs:
         uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
-        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
         id: docker-push
         with:
           without_navikt_prefix: true
@@ -95,8 +95,8 @@ jobs:
     environment: dev-fss:k9saksbehandling
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@v6
-      - uses: nais/deploy/actions/deploy@v2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
@@ -115,13 +115,13 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           # Ta med litt historie og tags for å finne latest_prod commit hash
           fetch-tags: true
           fetch-depth: 100
       - name: tag deployment image tag
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           TAG: prod_${{ needs.build-docker-image.outputs.tag }}
         with:
@@ -152,13 +152,13 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@v2
+      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
       - name: tag deployment done
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             try {
