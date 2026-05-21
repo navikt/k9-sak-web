@@ -71,10 +71,15 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
             <i>{error.bodyFeilmelding}</i>
           </BodyLong>
         ) : null}
+      </>
+    );
+    fixAction = {
+      ...reloadAction,
+      info: <>
         <BodyLong>Prøv å kontrollere og korriger evt skjemadata du forsøker å sende til server.</BodyLong>
         <BodyLong>Rapporter feil i porten hvis du ikke får korrigert problemet selv.</BodyLong>
       </>
-    );
+    }
   }
 
   return {

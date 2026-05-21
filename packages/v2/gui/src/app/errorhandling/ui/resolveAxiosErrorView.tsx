@@ -199,11 +199,15 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
               <i>{bodyMessage}</i>
             </BodyLong>
           ) : null}
+        </>
+      ),
+      fixAction: {
+        ...reloadAction,
+        info: <>
           <BodyLong>Prøv å kontrollere og korriger evt skjemadata du forsøker å sende til server.</BodyLong>
           <BodyLong>Rapporter feil i porten hvis du ikke får korrigert problemet selv.</BodyLong>
         </>
-      ),
-      fixAction: reloadAction,
+      },
     };
   }
 
