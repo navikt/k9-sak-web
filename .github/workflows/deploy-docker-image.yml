@@ -42,7 +42,7 @@ jobs:
         uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
-        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push
         with:
           without_navikt_prefix: true
