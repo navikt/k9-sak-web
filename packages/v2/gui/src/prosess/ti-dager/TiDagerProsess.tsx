@@ -1,14 +1,27 @@
-import type {
-  AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto,
-} from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
+import type { AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
 import type { RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
-import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
 import { FileIcon } from '@navikt/aksel-icons';
-import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Link, Loader, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
+import {
+  BodyLong,
+  BodyShort,
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Label,
+  Link,
+  Loader,
+  Radio,
+  RadioGroup,
+  ReadMore,
+  Textarea,
+  VStack,
+} from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 
 interface TiDagerVurderingFormData {
@@ -55,7 +68,14 @@ function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | unde
   return value ? 'ja' : 'nei';
 }
 
-export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly, behandlingUUID, saksnummer, arbeidsgiverOpplysningerPerId }: TiDagerProsessIndexProps) => {
+export const TiDagerProsessIndex = ({
+  aksjonspunkter,
+  submitCallback,
+  isReadOnly,
+  behandlingUUID,
+  saksnummer,
+  arbeidsgiverOpplysningerPerId,
+}: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
 
   const {
@@ -137,9 +157,23 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
           14 dager, og er tilbake i arbeid.
         </BodyLong>
       </ReadMore>
-      <Box marginBlock="space-8">
+      <Box marginBlock="space-16 space-8">
         <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
           <VStack gap="space-16">
+            <Controller
+              control={formMethods.control}
+              name="begrunnelse"
+              rules={{ required: true }}
+              render={({ field, fieldState }) => (
+                <Textarea
+                  {...field}
+                  label="Fyller den ansatte vilkår for å få omsorgspenger fra første dag?"
+                  size="small"
+                  error={fieldState.error ? 'Feltet er påkrevd' : undefined}
+                  readOnly={isReadOnly}
+                />
+              )}
+            />
             {fields.map((field, index) => {
               const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === field.journalpostId);
               return (
@@ -147,11 +181,11 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                   <VStack gap="space-8">
                     <VStack gap="space-4">
                       <Label size="small">Arbeidsgiver</Label>
-                      <BodyShort size="small">{journalpost ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId) : field.journalpostId}</BodyShort>
-                    </VStack>
-                    <VStack gap="space-4">
-                      <Label size="small">Første fraværsdag</Label>
-                      <BodyShort size="small">{journalpost?.foersteOppgitteFravaersdag ?? '–'}</BodyShort>
+                      <BodyShort size="small">
+                        {journalpost
+                          ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId)
+                          : field.journalpostId}
+                      </BodyShort>
                     </VStack>
                     {journalpost?.dokumentId && (
                       <Link
@@ -188,21 +222,6 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
                 </Box>
               );
             })}
-
-            <Controller
-              control={formMethods.control}
-              name="begrunnelse"
-              rules={{ required: true }}
-              render={({ field, fieldState }) => (
-                <Textarea
-                  {...field}
-                  label="Begrunnelse"
-                  size="small"
-                  error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  readOnly={isReadOnly}
-                />
-              )}
-            />
           </VStack>
           {!isReadOnly && (
             <Box marginBlock="space-16 space-0">
