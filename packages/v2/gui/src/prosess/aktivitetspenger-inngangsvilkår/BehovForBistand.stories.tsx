@@ -78,6 +78,37 @@ export const IkkeSaksbehandler: Story = {
   },
 };
 
+export const MedKunVilkårUtenAksjonspunkt: Story = {
+  args: {
+    vurderBistandsvilkårAp: undefined,
+    lokalkontorForeslårVilkårAp: undefined,
+    vurderBistandsvilkårVilkår: {
+      vilkarType: vilkarType.BISTANDSVILKÅR,
+      perioder: [
+        {
+          periode: { fom: '2024-01-01', tom: '2024-12-31' },
+          vilkarStatus: Utfall.OPPFYLT,
+          begrunnelse: 'Søker har behov for bistand.',
+        },
+      ],
+    },
+    isPermanentlyReadOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
+      await expect(
+        canvas.queryByText('Vurder behov for bistand på søknadstidspunktet.', { exact: false }),
+      ).not.toBeInTheDocument();
+    });
+
+    await step('viser ikke bekreft-knapp når panelet er permanent låst', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const ReadOnly: Story = {
   args: {
     readOnly: true,

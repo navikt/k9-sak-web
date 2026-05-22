@@ -131,7 +131,8 @@ export const BehovForBistand = ({
 
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const isVurderBistandsvilkårApSolved = vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp);
+  const isVurderBistandsvilkårApSolved =
+    !vurderBistandsvilkårAp || (vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp));
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -196,7 +197,7 @@ export const BehovForBistand = ({
         }
         lockedContent={
           isVurderBistandsvilkårApSolved ? (
-            <VurdertAv ident={vurderBistandsvilkårAp.ansvarligSaksbehandler} />
+            <VurdertAv ident={vurderBistandsvilkårAp?.ansvarligSaksbehandler} />
           ) : undefined
         }
       >
