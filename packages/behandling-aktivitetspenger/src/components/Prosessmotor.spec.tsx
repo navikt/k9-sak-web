@@ -153,6 +153,36 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('setter vedtak til success når behandling er FATTER_VEDTAK og resultat er innvilget', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            status: BehandlingStatus.FATTER_VEDTAK,
+            behandlingsresultat: { type: BehandlingResultatType.INNVILGET },
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current[4].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
   test('setter beregnet utbetaling til warning når panelet har åpent aksjonspunkt', async () => {
     const api = createApi({
       vilkår: [
