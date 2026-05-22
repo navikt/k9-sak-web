@@ -1,5 +1,7 @@
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
@@ -38,7 +40,8 @@ const createVilkår = (vilkarStatus: Utfall, type: ung_kodeverk_vilkår_VilkårT
 const createBehandling = (overrides = {}) => ({
   uuid: 'behandling-uuid',
   versjon: 1,
-  behandlingsresultat: { type: { kode: 'INNVILGET', kodeverk: 'BEHANDLING_RESULTAT_TYPE' } },
+  behandlingsresultat: { type: BehandlingResultatType.INNVILGET },
+  status: BehandlingStatus.OPPRETTET,
   ...overrides,
 });
 
