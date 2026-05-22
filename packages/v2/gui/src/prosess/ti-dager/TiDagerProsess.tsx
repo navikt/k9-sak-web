@@ -147,8 +147,8 @@ export const TiDagerProsessIndex = ({
           rett på flere enn 10 omsorgsdager.
         </BodyLong>
         <BodyLong size="small">
-          Fyller den ansatte vilkår for å få omsorgspenger fra første dag? Kronisk sykt barn: Ved kronisk sykt barn over
-          12, og ingen andre barn under 13 år, kan arbeidsgiver søke om refusjon fra første fraværsdag.
+          Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag Kronisk sykt barn: Ved kronisk sykt
+          barn over 12, og ingen andre barn under 13 år, kan arbeidsgiver søke om refusjon fra første fraværsdag.
         </BodyLong>
         <BodyLong size="small">
           Avbrudd i arbeidsforholdet: Dette kan være når arbeidstaker har vært i arbeid eller likestilte situasjoner i
@@ -167,7 +167,7 @@ export const TiDagerProsessIndex = ({
               render={({ field, fieldState }) => (
                 <Textarea
                   {...field}
-                  label="Fyller den ansatte vilkår for å få omsorgspenger fra første dag?"
+                  label="Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag"
                   size="small"
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
                   readOnly={isReadOnly}

@@ -101,7 +101,7 @@ export const VisValideringsfeil: Story = {
     await expect(valideringsfeilmeldinger).toHaveLength(2);
     await expect(
       await canvas.findByRole('textbox', {
-        name: 'Fyller den ansatte vilkår for å få omsorgspenger fra første dag?',
+        name: 'Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag',
       }),
     ).toBeInvalid();
   },
@@ -115,7 +115,7 @@ export const SendInnVurdering: Story = {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
       await userEvent.click(jaRadio);
       const begrunnelse = await canvas.findByRole('textbox', {
-        name: 'Fyller den ansatte vilkår for å få omsorgspenger fra første dag?',
+        name: 'Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag',
       });
       await userEvent.type(begrunnelse, 'Arbeidsgiver har rett fra første dag.');
     });
