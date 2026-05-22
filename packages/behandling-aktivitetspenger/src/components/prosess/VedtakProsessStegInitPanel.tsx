@@ -51,7 +51,8 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
     return (
       (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
         !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
-      behandling.status === BehandlingStatus.AVSLUTTET
+      behandling.status === BehandlingStatus.AVSLUTTET ||
+      behandling.status === BehandlingStatus.FATTER_VEDTAK
     );
   }, [innloggetBruker, behandling]);
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
