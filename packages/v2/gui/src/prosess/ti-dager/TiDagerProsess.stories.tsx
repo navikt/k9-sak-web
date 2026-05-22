@@ -1,7 +1,6 @@
 import type { RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
-import type { Decorator } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction.js';
 import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
@@ -100,7 +99,11 @@ export const VisValideringsfeil: Story = {
     await userEvent.click(button);
     const valideringsfeilmeldinger = await canvas.findAllByText('Feltet er påkrevd');
     await expect(valideringsfeilmeldinger).toHaveLength(2);
-    await expect(await canvas.findByRole('textbox', { name: 'Begrunnelse' })).toBeInvalid();
+    await expect(
+      await canvas.findByRole('textbox', {
+        name: 'Fyller den ansatte vilkår for å få omsorgspenger fra første dag?',
+      }),
+    ).toBeInvalid();
   },
 };
 
@@ -111,7 +114,9 @@ export const SendInnVurdering: Story = {
     await step('Velg Ja og fyll begrunnelse', async () => {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
       await userEvent.click(jaRadio);
-      const begrunnelse = await canvas.findByRole('textbox', { name: 'Begrunnelse' });
+      const begrunnelse = await canvas.findByRole('textbox', {
+        name: 'Fyller den ansatte vilkår for å få omsorgspenger fra første dag?',
+      });
       await userEvent.type(begrunnelse, 'Arbeidsgiver har rett fra første dag.');
     });
     await step('Klikk Bekreft og verifiser innsending', async () => {
