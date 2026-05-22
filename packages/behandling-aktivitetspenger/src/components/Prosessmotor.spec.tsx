@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import type { PropsWithChildren } from 'react';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { useProsessmotor } from './Prossesmotor';
+import { useProsessmotor } from './Prosessmotor';
 
 const createWrapper = (queryClient: QueryClient) => {
   return ({ children }: PropsWithChildren) => (
