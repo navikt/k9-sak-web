@@ -32,7 +32,7 @@ const createApi = (overrides?: ApiOverrides): AktivitetspengerApi =>
 
 const createVilkår = (vilkarStatus: Utfall, type: ung_kodeverk_vilkår_VilkårType) => ({
   vilkarType: type,
-  perioder: [{ vilkarStatus, periode: { fom: '2024-01-01', tom: '2024-01-31' } }],
+  perioder: [{ vilkarStatus, vurderesIBehandlingen: true, periode: { fom: '2024-01-01', tom: '2024-01-31' } }],
 });
 
 const createBehandling = (overrides = {}) => ({
@@ -147,6 +147,30 @@ describe('Prossesmotor', () => {
 
     await waitFor(() => {
       expect(result.current[4].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
+  test('setter beregnet utbetaling til warning når panelet har åpent aksjonspunkt', async () => {
+    const api = createApi({
+      vilkår: [
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+      ],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.KONTROLLER_INNTEKT,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[2].type).toBe(ProcessMenuStepType.success);
+      expect(result.current[3].type).toBe(ProcessMenuStepType.warning);
     });
   });
 
