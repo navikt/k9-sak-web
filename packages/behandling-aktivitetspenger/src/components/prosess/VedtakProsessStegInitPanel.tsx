@@ -87,6 +87,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
     <UngVedtakIndex
       behandling={behandling}
       aksjonspunkter={vedtakAksjonspunkter}
+      totrinnAksjonspunkter={aksjonspunkter}
       vilkar={vilkår}
       isReadOnly={isReadOnly}
       vedtakBekreftelseCallback={bekreftAksjonspunktMutation}
