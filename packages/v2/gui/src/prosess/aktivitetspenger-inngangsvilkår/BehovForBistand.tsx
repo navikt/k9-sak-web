@@ -16,7 +16,7 @@ import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErÅpent } from './utils/utils';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
@@ -131,8 +131,7 @@ export const BehovForBistand = ({
 
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const isVurderBistandsvilkårApSolved =
-    !vurderBistandsvilkårAp || (vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp));
+  const isVurderBistandsvilkårApSolved = aksjonspunktErLøst(vurderBistandsvilkårAp);
 
   if (!vurderBistandsvilkårVilkår) {
     return null;

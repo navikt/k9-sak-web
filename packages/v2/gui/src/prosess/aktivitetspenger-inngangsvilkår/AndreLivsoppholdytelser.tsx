@@ -16,7 +16,7 @@ import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErÅpent } from './utils/utils';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
@@ -74,8 +74,7 @@ export const AndreLivsoppholdytelser = ({
     periode: p.periode,
   }));
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
-  const isAndreLivsoppholdytelserApSolved =
-    !andreLivsoppholdytelserAp || (andreLivsoppholdytelserAp && !aksjonspunktErÅpent(andreLivsoppholdytelserAp));
+  const isAndreLivsoppholdytelserApSolved = aksjonspunktErLøst(andreLivsoppholdytelserAp);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår),
   });

@@ -2,3 +2,5 @@ import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandli
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 export const aksjonspunktErÅpent = (ap?: AksjonspunktDto) => (ap ? ap.status !== AksjonspunktStatus.UTFØRT : false);
+
+export const aksjonspunktErLøst = (ap?: AksjonspunktDto) => !aksjonspunktErÅpent(ap);
