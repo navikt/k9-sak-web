@@ -72,7 +72,7 @@ const PANEL_KONFIG = {
     vilkår: [vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET],
   },
   beregnetUtbetaling: {
-    aksjonspunkter: [],
+    aksjonspunkter: [AksjonspunktDefinisjon.KONTROLLER_INNTEKT],
     id: PROSESS_STEG_KODER.BEREGNET_UTBETALING,
     label: 'Beregnet utbetaling',
   },
@@ -145,14 +145,21 @@ const beregnVedtakType = (
     v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT),
   );
 
-  const harÅpneAksjonspunkter = aksjonspunkter?.some(
+  const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
     ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => !vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
   if (harIkkeVurdertVilkar) {
     return ProcessMenuStepType.default;
   }
-  if (harÅpneAksjonspunkter) {
+  if (harÅpneIkkeVedtakAksjonspunkter) {
+    return ProcessMenuStepType.default;
+  }
+  if (harÅpneVedtakAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {
