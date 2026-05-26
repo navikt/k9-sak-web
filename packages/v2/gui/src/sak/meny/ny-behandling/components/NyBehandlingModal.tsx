@@ -1,23 +1,29 @@
-import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import {
+  behandlingType as BehandlingTypeK9Klage
+} from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
   k9_kodeverk_behandling_FagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
-import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import {behandlingType as BehandlingTypeK9Sak} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type {FagsakYtelsesType} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import {
+  behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType
+} from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import {ung_kodeverk_behandling_BehandlingÅrsakType} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import {
+  sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType
+} from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import {erTilbakekreving} from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
-import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
-import { RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
-import { use, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { visnDato } from '../../../../utils/formatters';
+import type {KodeverkObject, Periode} from '@k9-sak-web/lib/kodeverk/types.js';
+import {Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack} from '@navikt/ds-react';
+import {ModalBody, ModalFooter} from '@navikt/ds-react/Modal';
+import {RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect} from '@navikt/ft-form-hooks';
+import {required} from '@navikt/ft-form-validators';
+import {use, useEffect} from 'react';
+import {useForm} from 'react-hook-form';
+import {visnDato} from '../../../../utils/formatters';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObject[]) => {
@@ -86,6 +92,7 @@ export const DELVIS_REVURDERING_ARSAKER_FALLBACK = new Set(Object.keys(DELVIS_RE
 const formaterPeriodeDato = (dato?: string) => (dato ? visnDato(dato) : '');
 const requiredValgtePerioder = (perioder?: string[]) =>
   perioder && perioder.length > 0 ? undefined : 'Velg minst én periode for delvis revurdering';
+const STØTTEDE_DATOFORMAT = ['DD.MM.YYYY', 'DD-MM-YYYY', 'DDMMYY'];
 
 const resetRevurderingFelter = (setValue: ReturnType<typeof useForm<FormValues>>['setValue']) => {
   setValue('steg', undefined);
@@ -394,6 +401,7 @@ export const NyBehandlingModal = ({
                     <RhfDatepicker
                       control={formMethods.control}
                       name="fom"
+                      inputFormats={STØTTEDE_DATOFORMAT}
                       toDate={sisteDagISøknadsperiode ?? new Date()}
                       label="Fra og med"
                       validate={[required]}
@@ -401,6 +409,7 @@ export const NyBehandlingModal = ({
                     <RhfDatepicker
                       control={formMethods.control}
                       name="tom"
+                      inputFormats={STØTTEDE_DATOFORMAT}
                       fromDate={fom ? new Date(fom) : undefined}
                       toDate={sisteDagISøknadsperiode ?? new Date()}
                       label="Til og med"
@@ -435,6 +444,7 @@ export const NyBehandlingModal = ({
                 <RhfDatepicker
                   control={formMethods.control}
                   name="fom"
+                  inputFormats={STØTTEDE_DATOFORMAT}
                   disabledDays={[{ before: undefined, after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Fra og med"
                   validate={[required]}
@@ -442,6 +452,7 @@ export const NyBehandlingModal = ({
                 <RhfDatepicker
                   control={formMethods.control}
                   name="tom"
+                  inputFormats={STØTTEDE_DATOFORMAT}
                   disabledDays={[{ before: new Date(fom), after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Til og med"
                   validate={[required]}
