@@ -22,7 +22,7 @@ import type { SubmitCallback } from './types/SubmitCallback';
 interface OpptjeningVilkarProsessIndexProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  opptjening: k9_sak_kontrakt_opptjening_OpptjeningerDto;
+  opptjening?: k9_sak_kontrakt_opptjening_OpptjeningerDto;
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
   vilkar: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   lovReferanse?: string;
@@ -36,7 +36,7 @@ const getIconForOpptjeningStatus = (
   vilkarStatus: VilkårPeriodeDtoVilkarStatus,
   isAksjonspunktOpen: boolean,
   periode: k9_sak_typer_Periode,
-  opptjeninger: k9_sak_kontrakt_opptjening_OpptjeningerDto['opptjeninger'],
+  opptjeninger?: k9_sak_kontrakt_opptjening_OpptjeningerDto['opptjeninger'],
 ) => {
   const vurderesIAksjonspunkt = opptjeninger && skalPeriodeVurderesIAksjonspunkt(periode, opptjeninger);
   if (vurderesIAksjonspunkt && isAksjonspunktOpen) {
@@ -87,7 +87,7 @@ const OpptjeningVilkarProsessIndex = ({
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-              icon: getIconForOpptjeningStatus(vilkarStatus, isAksjonspunktOpen, periode, opptjening.opptjeninger),
+              icon: getIconForOpptjeningStatus(vilkarStatus, isAksjonspunktOpen, periode, opptjening?.opptjeninger),
             }))}
             onClick={setActiveTab}
             heading="Perioder"

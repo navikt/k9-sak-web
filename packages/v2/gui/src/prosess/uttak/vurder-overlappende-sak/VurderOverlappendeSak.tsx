@@ -1,10 +1,14 @@
-import { Fragment, useEffect, useState, type FC } from 'react';
-import { format } from 'date-fns';
-import type { ObjectSchema } from 'yup';
-import * as yup from 'yup';
-import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useQuery } from '@tanstack/react-query';
+import {
+  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
+  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
+  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
+  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import {
   Alert,
   BodyShort,
@@ -19,17 +23,13 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
-  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { Fragment, useEffect, useState, type FC } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
 import { useUttakContext } from '../context/UttakContext';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
@@ -51,7 +51,13 @@ export interface VurderOverlappendeSakFormData {
 const gyldigAksjonspunktType = '9292' as const;
 
 const VurderOverlappendeSak: FC = () => {
-  const { behandling, aksjonspunktVurderOverlappendeSaker: aksjonspunkt, uttakApi, readOnly } = useUttakContext();
+  const {
+    behandling,
+    aksjonspunktVurderOverlappendeSaker: aksjonspunkt,
+    uttakApi,
+    readOnly,
+    onAksjonspunktBekreftet,
+  } = useUttakContext();
   const oppdaterBehandling = useRefetchBehandling();
 
   const { status, uuid, id, versjon } = behandling;
@@ -172,6 +178,7 @@ const VurderOverlappendeSak: FC = () => {
       try {
         await uttakApi.bekreftAksjonspunkt(requestBody);
         await oppdaterBehandling();
+        onAksjonspunktBekreftet?.();
       } finally {
         setLoading(false);
       }

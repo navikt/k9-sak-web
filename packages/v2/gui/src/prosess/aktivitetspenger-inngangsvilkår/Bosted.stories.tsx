@@ -28,6 +28,7 @@ const meta = {
     onAksjonspunktBekreftet: () => {},
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
+    bosattFakta: { perioder: [] },
   },
 } satisfies Meta<typeof Bosted>;
 export default meta;
@@ -99,6 +100,31 @@ export const FlerePerioder: Story = {
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
+  },
+};
+
+export const MedKunVilkårUtenAksjonspunkt: Story = {
+  args: {
+    bostedAp: undefined,
+    lokalkontorForeslårVilkårAp: undefined,
+    bostedVilkår: {
+      vilkarType: vilkarType.BOSTEDSVILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
+    },
+    isPermanentlyReadOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
+      await expect(
+        canvas.queryByText('Vurder om søker er bosatt i Trondheim kommune på søknadstidspunktet.', { exact: false }),
+      ).not.toBeInTheDocument();
+    });
+
+    await step('viser ikke bekreft-knapp når panelet er permanent låst', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
   },
 };
 

@@ -8,6 +8,7 @@ import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontra
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -116,6 +117,7 @@ interface Props {
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;
+  bosattFakta: BostedGrunnlagResponseDto;
 }
 
 export const AktivitetspengerInngangsvilkår = ({
@@ -127,6 +129,7 @@ export const AktivitetspengerInngangsvilkår = ({
   vilkår,
   totrinnskontrollSkjermlenkeContext,
   lovligeBehandlingsoperasjoner,
+  bosattFakta,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
@@ -204,7 +207,8 @@ export const AktivitetspengerInngangsvilkår = ({
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={!inngangsvilkårdata.bostedAp || !!inngangsvilkårdata.lokalkontorBeslutterAp}
+                bosattFakta={bosattFakta}
               />
             )}
           </Tabs.Panel>
@@ -218,7 +222,9 @@ export const AktivitetspengerInngangsvilkår = ({
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.andreLivsoppholdytelserAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
               />
             )}
           </Tabs.Panel>
@@ -232,7 +238,9 @@ export const AktivitetspengerInngangsvilkår = ({
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.vurderBistandsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
               />
             )}
           </Tabs.Panel>

@@ -8,6 +8,7 @@ import { type BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import { type InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 
@@ -20,6 +21,7 @@ export interface AktivitetspengerApi {
   hentLovligeBehandlingsoperasjoner(behandlingUuid: string): Promise<BehandlingOperasjonerDto>;
   hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal): Promise<AsyncPollingStatus>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
+  hentBosattFakta(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto>;
   getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
   getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<AktivitetspengerUtbetaltMånedDto[]>;

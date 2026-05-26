@@ -68,7 +68,9 @@ export const Mangler9069: Story = {
     });
 
     await step('Sjekker at knapp ikke vises når beslutning ikke er valgt', async () => {
-      const radioOption = await canvas.findByLabelText(/Nei, send purring med varsel om avslag/i);
+      const radioOption = await canvas.findByLabelText(
+        /Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker/i,
+      );
       await expect(radioOption).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
       await expect(
@@ -77,7 +79,9 @@ export const Mangler9069: Story = {
     });
 
     await step('Viser riktig knapp når purring er valgt', async () => {
-      const radioOption = await canvas.findByLabelText(/Nei, send purring med varsel om avslag/i);
+      const radioOption = await canvas.findByLabelText(
+        /Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker/i,
+      );
       await user.click(radioOption);
       await waitFor(async () => {
         await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
