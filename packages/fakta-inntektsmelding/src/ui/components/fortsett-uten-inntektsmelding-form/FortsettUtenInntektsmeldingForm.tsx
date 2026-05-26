@@ -116,7 +116,7 @@ const FortsettUtenInntektsmeldingForm = ({
       },
       {
         value: Kode.MANGLENDE_GRUNNLAG,
-        label: 'Nei, send purring med varsel om avslag',
+        label: 'Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker',
         id: `${beslutningId}${Kode.MANGLENDE_GRUNNLAG}`,
       },
     ],
