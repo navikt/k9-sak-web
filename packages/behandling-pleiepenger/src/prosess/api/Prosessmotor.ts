@@ -271,7 +271,9 @@ export const beregnVedtakType = (
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {
-    return isAvslag(behandling.behandlingsresultat.type) ? ProcessMenuStepType.danger : ProcessMenuStepType.success;
+    return isAvslag(behandling.behandlingsresultat.type.kode)
+      ? ProcessMenuStepType.danger
+      : ProcessMenuStepType.success;
   }
   return ProcessMenuStepType.default;
 };
