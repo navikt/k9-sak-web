@@ -18,7 +18,7 @@
     "react-redux": "9.2.0",
     "redux": "5.0.1",
     "redux-form": "8.3.10",
-    "reselect": "5.1.1"
+    "reselect": "5.2.0"
   },
   "devDependencies": {
     "@types/react": "19.2.14"
