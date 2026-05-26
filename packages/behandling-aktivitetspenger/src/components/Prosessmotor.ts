@@ -1,6 +1,7 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -134,7 +135,7 @@ const byggPanelUtenVilkår = (
 const beregnVedtakType = (
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat'>,
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat' | 'status'>,
   vedtakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   if (!vilkår || vilkår.length === 0) {
@@ -158,6 +159,9 @@ const beregnVedtakType = (
   }
   if (harÅpneIkkeVedtakAksjonspunkter) {
     return ProcessMenuStepType.default;
+  }
+  if (behandling?.status === BehandlingStatus.FATTER_VEDTAK && behandling?.behandlingsresultat?.type) {
+    return isAvslag(behandling.behandlingsresultat.type) ? ProcessMenuStepType.danger : ProcessMenuStepType.success;
   }
   if (harÅpneVedtakAksjonspunkter) {
     return ProcessMenuStepType.warning;
@@ -228,7 +232,7 @@ const byggInngangsvilkårPanel = (
 
 interface ProsessmotorProps {
   api: AktivitetspengerApi;
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat'>;
 }
 
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
