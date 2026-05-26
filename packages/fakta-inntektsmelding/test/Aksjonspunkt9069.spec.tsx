@@ -24,7 +24,9 @@ describe('9069 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ASSERT
-    expect(screen.getByLabelText(/Nei, send purring med varsel om avslag/i)).toBeDefined();
+    expect(
+      screen.getByLabelText(/Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker/i),
+    ).toBeDefined();
     expect(screen.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).toBeNull();
     expect(screen.queryByRole('button', { name: /Send purring med varsel om avslag/i })).toBeNull();
   });
@@ -35,7 +37,9 @@ describe('9069 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    await userEvent.click(screen.getByLabelText(/Nei, send purring med varsel om avslag/i));
+    await userEvent.click(
+      screen.getByLabelText(/Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker/i),
+    );
 
     // ASSERT
     await waitFor(() => {
