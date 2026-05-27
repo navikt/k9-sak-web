@@ -17,8 +17,8 @@ app.use(
         'img-src': ["'self'", 'data:'],
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'"],
-        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
-        'connect-src': ["'self'", 'https://sentry.gc.nav.no'],
+        'script-src': ["'self'", "'unsafe-inline'", 'https://umami.nav.no'],
+        'connect-src': ["'self'", 'https://sentry.gc.nav.no', 'https://umami.nav.no'],
       },
     },
     referrerPolicy: { policy: 'origin' },
@@ -63,17 +63,17 @@ app.get('{*path}', (_req, res) => {
 // --- Start ---
 const server = app.listen(config.port, () => log.info(`Listening on port ${config.port}`));
 
-process.on("SIGTERM", () => {
-  log.info("SIGTERM received.")
+process.on('SIGTERM', () => {
+  log.info('SIGTERM received.');
   setTimeout(() => {
-    log.info("SIGTERM stopping server.")
+    log.info('SIGTERM stopping server.');
     server.close(error => {
-      if(error != null) {
-        log.warn("SIGTERM received on non-open server.", {error})
+      if (error != null) {
+        log.warn('SIGTERM received on non-open server.', { error });
       } else {
-        log.info("SIGTERM stopped server.")
+        log.info('SIGTERM stopped server.');
       }
-      process.exit(0)
-    })
-  }, 2_000) // Vent 2 sekund før stopp starte, så kubernetes load balancer får tid til å rute nye requests til andre pods
-})
+      process.exit(0);
+    });
+  }, 2_000); // Vent 2 sekund før stopp starte, så kubernetes load balancer får tid til å rute nye requests til andre pods
+});
