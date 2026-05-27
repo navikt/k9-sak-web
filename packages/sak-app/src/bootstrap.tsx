@@ -1,6 +1,6 @@
 import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import {
@@ -91,6 +91,13 @@ init({
   },
 });
 
+const applyUmamiScript = () => {
+  const script = document.createElement('script');
+  script.setAttribute('src', 'https://umami.nav.no/umami.js');
+  script.setAttribute('data-website-id', 'd9b1c8e7-5a0c-4f1c-9a3b-2e5c6f8e9a0b');
+  document.head.appendChild(script);
+};
+
 const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() });
 
 const basePath = '/k9/web';
@@ -116,7 +123,13 @@ const store = configureStore();
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
-const renderFunc = () => {
+const RenderFunc = () => {
+  useEffect(() => {
+    if (isQ()) {
+      // Umami script for å se brukerinnsikt https://innblikk.ansatt.nav.no
+      applyUmamiScript();
+    }
+  }, []);
   /**
    * Redirecte til riktig basename om man kommer hit uten
    * Vil kunne forekomme lokalt og i tester
@@ -165,4 +178,4 @@ const renderFunc = () => {
     });
 };
 
-renderFunc();
+RenderFunc();
