@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
@@ -23,6 +23,7 @@ import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
+import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 const EMPTY_ARRAY = [];
 
@@ -36,6 +37,16 @@ const AppIndex = () => {
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
+
+  useEffect(() => {
+    if (isQ()) {
+      // Umami script for å se brukerinnsikt https://innblikk.ansatt.nav.no
+      const script = document.createElement('script');
+      script.setAttribute('src', 'https://umami.nav.no/umami.js');
+      script.setAttribute('data-website-id', 'd9b1c8e7-5a0c-4f1c-9a3b-2e5c6f8e9a0b');
+      document.head.appendChild(script);
+    }
+  }, []);
 
   const setSiteHeight = useCallback((newHeaderHeight): void => {
     document.documentElement.setAttribute('style', `height: calc(100% - ${newHeaderHeight}px)`);
