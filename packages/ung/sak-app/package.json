@@ -22,7 +22,7 @@
     "@navikt/ft-utils": "5.0.1",
     "@sentry/browser": "10.53.1",
     "@sentry/react": "10.53.1",
-    "@tanstack/react-query": "5.100.10",
+    "@tanstack/react-query": "5.100.11",
     "@types/react": "19.2.14",
     "axios": "1.16.1",
     "classnames": "2.5.1",
