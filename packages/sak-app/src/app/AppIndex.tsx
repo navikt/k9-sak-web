@@ -42,7 +42,7 @@ const AppIndex = () => {
     if (isQ()) {
       // Umami script for å se brukerinnsikt https://innblikk.ansatt.nav.no
       const script = document.createElement('script');
-      script.setAttribute('src', 'https://umami.nav.no/umami.js');
+      script.setAttribute('src', 'https://cdn.nav.no/team-researchops/sporing/sporing-dev.js');
       script.setAttribute('data-website-id', 'd9b1c8e7-5a0c-4f1c-9a3b-2e5c6f8e9a0b');
       document.head.appendChild(script);
     }

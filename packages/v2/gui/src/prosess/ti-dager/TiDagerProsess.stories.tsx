@@ -1,9 +1,9 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import type { RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent } from 'storybook/test';
-import type { Decorator } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction.js';
-import { mockArbeidsgiverOpplysninger } from '../../storybook/mocks/FakeTilkjentYtelseBackendApi.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
 import { TiDagerBackendClientContext } from './TiDagerBackendClientContext.js';
 import { TiDagerProsessIndex } from './TiDagerProsess.js';
@@ -51,7 +51,18 @@ const opplysningerAlleredeVurdert: RettFraDagEnVisningDto = {
   ],
 };
 
-const aksjonspunkter = [{ definisjon: { kode: 'VURDER_RETT_FRA_DAG_EN' } }];
+const aksjonspunkter = [
+  {
+    definisjon: AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN,
+    begrunnelse: '',
+    status: aksjonspunktStatus.OPPRETTET,
+  },
+];
+
+const arbeidsgiverOpplysningerPerId = {
+  '910909088': { navn: 'Arbeidsgiver AS' },
+  '973861778': { navn: 'Eksempelbedrift AS' },
+};
 
 const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator => {
   const fakeApi: TiDagerBackendApiType = {
@@ -72,7 +83,7 @@ const meta = {
     isReadOnly: false,
     behandlingUUID: 'test-uuid',
     saksnummer: '123456789',
-    arbeidsgiverOpplysningerPerId: mockArbeidsgiverOpplysninger,
+    arbeidsgiverOpplysningerPerId,
     submitCallback: asyncAction('submitCallback'),
   },
 } satisfies Meta<typeof TiDagerProsessIndex>;
@@ -100,7 +111,11 @@ export const VisValideringsfeil: Story = {
     await userEvent.click(button);
     const valideringsfeilmeldinger = await canvas.findAllByText('Feltet er påkrevd');
     await expect(valideringsfeilmeldinger).toHaveLength(2);
-    await expect(await canvas.findByRole('textbox', { name: 'Begrunnelse' })).toBeInvalid();
+    await expect(
+      await canvas.findByRole('textbox', {
+        name: 'Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag',
+      }),
+    ).toBeInvalid();
   },
 };
 
@@ -111,7 +126,9 @@ export const SendInnVurdering: Story = {
     await step('Velg Ja og fyll begrunnelse', async () => {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
       await userEvent.click(jaRadio);
-      const begrunnelse = await canvas.findByRole('textbox', { name: 'Begrunnelse' });
+      const begrunnelse = await canvas.findByRole('textbox', {
+        name: 'Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag',
+      });
       await userEvent.type(begrunnelse, 'Arbeidsgiver har rett fra første dag.');
     });
     await step('Klikk Bekreft og verifiser innsending', async () => {
