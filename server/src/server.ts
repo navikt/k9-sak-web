@@ -17,7 +17,7 @@ app.use(
         'img-src': ["'self'", 'data:'],
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'"],
-        'script-src': ["'self'", "'unsafe-inline'", 'https://umami.nav.no'],
+        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
         'connect-src': ["'self'", 'https://sentry.gc.nav.no', 'https://umami.nav.no'],
       },
     },
