@@ -141,7 +141,7 @@ const Dokumentnavigasjon = ({
                 <Table.HeaderCell textSize="small" scope="col">
                   Datert
                 </Table.HeaderCell>
-                <Table.HeaderCell textSize="small" scope="col" colSpan={2}>
+                <Table.HeaderCell textSize="small" scope="col" colSpan={3}>
                   Part
                 </Table.HeaderCell>
               </Table.Row>
@@ -167,17 +167,7 @@ const Dokumentnavigasjon = ({
                     </HStack>
                   </Table.DataCell>
                   <Table.DataCell>
-                    <BodyShort size="small">
-                      <HStack gap="space-8" align="center">
-                        {getDokumenttype(dokument)}
-                        {dokument.duplikater?.length > 0 && (
-                          <FilesFillIcon
-                            title="Det finnes ett eller flere duplikater av dette dokumentet"
-                            fontSize="1.5rem"
-                          />
-                        )}
-                      </HStack>
-                    </BodyShort>
+                    <BodyShort size="small">{getDokumenttype(dokument)}</BodyShort>
                   </Table.DataCell>
                   <Table.DataCell>
                     <BodyShort size="small">{getDatert(dokument)}</BodyShort>
@@ -185,6 +175,16 @@ const Dokumentnavigasjon = ({
                   <Table.DataCell>
                     <HStack align="center">
                       <PartIcon annenPartErKilde={dokument.annenPartErKilde} />
+                    </HStack>
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    <HStack gap="space-8" align="center">
+                      {dokument.duplikater?.length > 0 && (
+                        <FilesFillIcon
+                          title="Det finnes ett eller flere duplikater av dette dokumentet"
+                          fontSize="1.5rem"
+                        />
+                      )}
                     </HStack>
                   </Table.DataCell>
                   <Table.DataCell>
