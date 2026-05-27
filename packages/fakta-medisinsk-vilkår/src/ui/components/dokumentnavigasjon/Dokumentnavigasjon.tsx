@@ -7,7 +7,7 @@ import {
   PersonFillIcon,
   PersonIcon,
 } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Box, Heading, HStack, Table, Tooltip } from '@navikt/ds-react';
+import { Bleed, BodyShort, Box, Heading, HStack, Pagination, Table, Tooltip } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { Dokument, dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import Dokumentfilter from '../dokumentfilter/Dokumentfilter';
@@ -19,7 +19,10 @@ interface DokumentnavigasjonProps {
   onDokumentValgt: (dokument: Dokument) => void;
   valgtDokument: Dokument | null;
   displayFilterOption?: boolean;
+  usePagination?: boolean;
 }
+
+const ANTALL_DOKUMENTER_PER_SIDE = 5;
 
 const erIkkeDuplikat = (dokument: Dokument) => dokument.duplikatAvId === null;
 
@@ -73,8 +76,10 @@ const Dokumentnavigasjon = ({
   onDokumentValgt,
   valgtDokument,
   displayFilterOption,
+  usePagination = false,
 }: DokumentnavigasjonProps): JSX.Element => {
   const [dokumenttypeFilter, setDokumenttypeFilter] = React.useState([...Object.values(Dokumenttype)]);
+  const [aktivSide, setAktivSide] = React.useState(1);
   const updateDokumenttypeFilter = type =>
     dokumenttypeFilter.includes(type)
       ? setDokumenttypeFilter(dokumenttypeFilter.filter(v => v !== type))
@@ -83,6 +88,17 @@ const Dokumentnavigasjon = ({
   const filtrerteDokumenter = dokumenter.filter(
     dokument => dokumenttypeFilter.includes(dokument.type) && erIkkeDuplikat(dokument),
   );
+  const antallSider = Math.max(1, Math.ceil(filtrerteDokumenter.length / ANTALL_DOKUMENTER_PER_SIDE));
+
+  React.useEffect(() => {
+    if (aktivSide > antallSider) {
+      setAktivSide(antallSider);
+    }
+  }, [aktivSide, antallSider]);
+
+  const dokumenterSomVises = usePagination
+    ? filtrerteDokumenter.slice((aktivSide - 1) * ANTALL_DOKUMENTER_PER_SIDE, aktivSide * ANTALL_DOKUMENTER_PER_SIDE)
+    : filtrerteDokumenter;
   const alleRelevanteDokumentTyper = [...new Set(dokumenter.map(dokument => dokument.type))];
 
   return (
@@ -131,14 +147,14 @@ const Dokumentnavigasjon = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {filtrerteDokumenter.length === 0 && (
+              {dokumenterSomVises.length === 0 && (
                 <Table.Row>
                   <Table.DataCell colSpan={4}>
                     <BodyShort size="small">Ingen dokumenter å vise</BodyShort>
                   </Table.DataCell>
                 </Table.Row>
               )}
-              {filtrerteDokumenter.map(dokument => (
+              {dokumenterSomVises.map(dokument => (
                 <Table.Row
                   key={dokument.id}
                   onClick={() => onDokumentValgt(dokument)}
@@ -181,6 +197,11 @@ const Dokumentnavigasjon = ({
             </Table.Body>
           </Table>
         </Bleed>
+        {usePagination && antallSider > 1 && (
+          <Box paddingBlock="space-16">
+            <Pagination size="small" page={aktivSide} onPageChange={setAktivSide} count={antallSider} />
+          </Box>
+        )}
       </Box>
     </Box>
   );

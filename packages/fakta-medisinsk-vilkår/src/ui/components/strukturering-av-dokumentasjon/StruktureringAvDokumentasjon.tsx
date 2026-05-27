@@ -170,6 +170,7 @@ const StruktureringAvDokumentasjon = ({
                     onDokumentValgt={velgDokument}
                     valgtDokument={valgtDokument}
                     displayFilterOption
+                    usePagination
                   />
                 </Box>
               </>
