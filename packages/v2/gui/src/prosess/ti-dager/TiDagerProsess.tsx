@@ -1,3 +1,6 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
 import type { RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
 import { FileIcon } from '@navikt/aksel-icons';
@@ -21,7 +24,6 @@ import { RhfForm } from '@navikt/ft-form-hooks';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import type { ArbeidsgiverOpplysningerPerId } from '../tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 
 interface TiDagerVurderingFormData {
@@ -44,16 +46,16 @@ interface TiDagerSubmitModel {
 
 interface TiDagerProsessIndexProps {
   submitCallback: (data: TiDagerSubmitModel[]) => Promise<void>;
-  aksjonspunkter: { definisjon: { kode: string } }[];
+  aksjonspunkter: Pick<AksjonspunktDto, 'definisjon' | 'begrunnelse' | 'status'>[];
   isReadOnly: boolean;
   behandlingUUID: string;
   saksnummer: string;
-  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } };
 }
 
 function formatArbeidsgiverNavn(
   journalpost: JournalpostVisningDto,
-  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
+  arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } },
 ): string {
   const identifikator = journalpost.arbeidsgiver?.arbeidsgiverOrgnr ?? journalpost.arbeidsgiver?.arbeidsgiverAktørId;
   if (identifikator) {
@@ -77,7 +79,7 @@ export const TiDagerProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
 }: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
-
+  const readOnly = isReadOnly || aksjonspunkter.length === 0 || aksjonspunkter[0]?.status === aksjonspunktStatus.UTFØRT;
   const {
     data: opplysninger,
     isPending,
@@ -101,25 +103,28 @@ export const TiDagerProsessIndex = ({
         journalpostId: jp.journalpostId,
         harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
       }));
-      formMethods.reset({ vurderinger, begrunnelse: '' });
+      const begrunnelse = aksjonspunkter != undefined && aksjonspunkter[0] ? aksjonspunkter[0].begrunnelse : '';
+      formMethods.reset({ vurderinger, begrunnelse });
     }
-  }, [opplysninger, formMethods]);
+  }, [opplysninger, formMethods, aksjonspunkter]);
 
   const onSubmit = async (data: TiDagerFormData) => {
-    const payload = aksjonspunkter.map(ap => ({
-      kode: ap.definisjon.kode,
-      begrunnelse: data.begrunnelse,
-      avklarRettFraDagEn: {
-        vurderinger: data.vurderinger.map(v => {
-          const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === v.journalpostId);
-          return {
-            journalpostId: v.journalpostId,
-            harUtbetaltPliktigeDager: v.harUtbetaltPliktigeDager === 'ja',
-            arbeidsgiver: journalpost?.arbeidsgiver,
-          };
-        }),
+    const payload = [
+      {
+        kode: AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN,
+        begrunnelse: data.begrunnelse,
+        avklarRettFraDagEn: {
+          vurderinger: data.vurderinger.map(v => {
+            const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === v.journalpostId);
+            return {
+              journalpostId: v.journalpostId,
+              harUtbetaltPliktigeDager: v.harUtbetaltPliktigeDager === 'ja',
+              arbeidsgiver: journalpost?.arbeidsgiver,
+            };
+          }),
+        },
       },
-    }));
+    ];
     await submitCallback(payload);
   };
 
@@ -170,7 +175,7 @@ export const TiDagerProsessIndex = ({
                   label="Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag"
                   size="small"
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  readOnly={isReadOnly}
+                  readOnly={readOnly}
                 />
               )}
             />
@@ -211,7 +216,7 @@ export const TiDagerProsessIndex = ({
                           value={radioField.value ?? ''}
                           error={fieldState.error ? 'Feltet er påkrevd' : undefined}
                           size="small"
-                          readOnly={isReadOnly}
+                          readOnly={readOnly}
                         >
                           <Radio value="ja">Ja</Radio>
                           <Radio value="nei">Nei</Radio>
@@ -223,7 +228,7 @@ export const TiDagerProsessIndex = ({
               );
             })}
           </VStack>
-          {!isReadOnly && (
+          {!readOnly && (
             <Box marginBlock="space-16 space-0">
               <Button size="small" type="submit" loading={formMethods.formState.isSubmitting}>
                 Bekreft
