@@ -125,7 +125,7 @@ const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
 const RenderFunc = () => {
   useEffect(() => {
-    if (IS_DEV) {
+    if (isQ()) {
       // Umami script for å se brukerinnsikt https://innblikk.ansatt.nav.no
       applyUmamiScript();
     }
