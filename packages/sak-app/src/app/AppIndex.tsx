@@ -43,7 +43,7 @@ const AppIndex = () => {
       // Umami script for å se brukerinnsikt https://innblikk.ansatt.nav.no
       const script = document.createElement('script');
       script.setAttribute('src', 'https://cdn.nav.no/team-researchops/sporing/sporing-dev.js');
-      script.setAttribute('data-website-id', 'd9b1c8e7-5a0c-4f1c-9a3b-2e5c6f8e9a0b');
+      script.setAttribute('data-website-id', '63ae9445-82e4-47de-9fbe-89f0c252b154');
       document.head.appendChild(script);
     }
   }, []);
