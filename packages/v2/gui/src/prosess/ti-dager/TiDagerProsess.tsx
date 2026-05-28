@@ -3,8 +3,9 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
 import type { RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
-import { FileIcon } from '@navikt/aksel-icons';
+import { FileIcon, PencilIcon } from '@navikt/aksel-icons';
 import {
+  Bleed,
   BodyLong,
   BodyShort,
   Box,
@@ -22,7 +23,7 @@ import {
 } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 
@@ -79,7 +80,8 @@ export const TiDagerProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
 }: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
-  const readOnly = isReadOnly || aksjonspunkter.length === 0 || aksjonspunkter[0]?.status === aksjonspunktStatus.UTFØRT;
+  const hasSolvedAksjonspunkt = aksjonspunkter[0] && aksjonspunkter[0].status === aksjonspunktStatus.UTFØRT;
+  const readOnly = isReadOnly || aksjonspunkter.length === 0;
   const {
     data: opplysninger,
     isPending,
@@ -90,6 +92,15 @@ export const TiDagerProsessIndex = ({
       queryFn: () => api.hentRettFraDagEnOpplysninger(behandlingUUID),
     }),
   );
+  const [isFormLocked, setIsFormLocked] = useState(hasSolvedAksjonspunkt);
+
+  useEffect(() => {
+    if (hasSolvedAksjonspunkt) {
+      setIsFormLocked(true);
+    }
+  }, [hasSolvedAksjonspunkt]);
+
+  const formIsLockedOrReadOnly = isFormLocked || readOnly;
 
   const formMethods = useForm<TiDagerFormData>({
     defaultValues: { vurderinger: [], begrunnelse: '' },
@@ -162,7 +173,12 @@ export const TiDagerProsessIndex = ({
           14 dager, og er tilbake i arbeid.
         </BodyLong>
       </ReadMore>
-      <Box marginBlock="space-16 space-8">
+      <Box
+        marginBlock="space-16 space-8"
+        borderRadius="8"
+        padding={formIsLockedOrReadOnly ? 'space-16' : 'space-0'}
+        background={formIsLockedOrReadOnly ? 'info-softA' : undefined}
+      >
         <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
           <VStack gap="space-16">
             <Controller
@@ -175,7 +191,7 @@ export const TiDagerProsessIndex = ({
                   label="Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag"
                   size="small"
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  readOnly={readOnly}
+                  readOnly={formIsLockedOrReadOnly}
                 />
               )}
             />
@@ -216,7 +232,7 @@ export const TiDagerProsessIndex = ({
                           value={radioField.value ?? ''}
                           error={fieldState.error ? 'Feltet er påkrevd' : undefined}
                           size="small"
-                          readOnly={readOnly}
+                          readOnly={formIsLockedOrReadOnly}
                         >
                           <Radio value="ja">Ja</Radio>
                           <Radio value="nei">Nei</Radio>
@@ -227,8 +243,20 @@ export const TiDagerProsessIndex = ({
                 </Box>
               );
             })}
+            {isFormLocked && !readOnly && (
+              <Bleed marginInline="space-8">
+                <Button
+                  size="small"
+                  variant="tertiary"
+                  icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
+                  onClick={() => setIsFormLocked(false)}
+                >
+                  Rediger vurdering
+                </Button>
+              </Bleed>
+            )}
           </VStack>
-          {!readOnly && (
+          {!formIsLockedOrReadOnly && (
             <Box marginBlock="space-16 space-0">
               <Button size="small" type="submit" loading={formMethods.formState.isSubmitting}>
                 Bekreft

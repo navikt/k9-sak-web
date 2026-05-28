@@ -104,6 +104,20 @@ export const AlleredeVurdert: Story = {
   args: { isReadOnly: true },
 };
 
+export const UtførtAksjonspunkt: Story = {
+  decorators: [withFakeTiDagerBackend(opplysningerAlleredeVurdert)],
+  args: {
+    isReadOnly: false,
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN,
+        begrunnelse: 'Arbeidsgiver har rett fra første dag grunnet kronisk sykt barn.',
+        status: aksjonspunktStatus.UTFØRT,
+      },
+    ],
+  },
+};
+
 export const VisValideringsfeil: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
   play: async ({ canvas }) => {
