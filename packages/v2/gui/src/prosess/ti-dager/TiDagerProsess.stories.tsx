@@ -104,6 +104,28 @@ export const AlleredeVurdert: Story = {
   args: { isReadOnly: true },
 };
 
+export const UtførtAksjonspunkt: Story = {
+  decorators: [withFakeTiDagerBackend(opplysningerAlleredeVurdert)],
+  args: {
+    isReadOnly: false,
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN,
+        begrunnelse: 'Arbeidsgiver har rett fra første dag grunnet kronisk sykt barn.',
+        status: aksjonspunktStatus.UTFØRT,
+      },
+    ],
+  },
+  play: async ({ canvas, step }) => {
+    await step('Lås opp skjemaet og vis Bekreft', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Bekreft' })).toBeNull();
+      const redigerButton = await canvas.findByRole('button', { name: 'Rediger vurdering' });
+      await userEvent.click(redigerButton);
+      await expect(await canvas.findByRole('button', { name: 'Bekreft' })).toBeEnabled();
+    });
+  },
+};
+
 export const VisValideringsfeil: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
   play: async ({ canvas }) => {
