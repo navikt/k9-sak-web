@@ -1,11 +1,11 @@
 import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { Accordion, Alert, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
+import { Accordion, Alert, Bleed, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
 import { useMemo, useState } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
 import type { Tilstand, TilstandMedUiState } from '../../types';
+import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
 import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -32,11 +32,13 @@ const InntektsmeldingManglerInfo = () => (
       <Alert variant="info" size="small">
         <Accordion>
           <Accordion.Item>
-            <Accordion.Header className="before:hidden after:hidden">
-              <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
-                Når kan du gå videre uten inntektsmelding?
-              </Heading>
-            </Accordion.Header>
+            <Bleed marginBlock="space-12">
+              <Accordion.Header className="before:hidden after:hidden">
+                <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
+                  Når kan du gå videre uten inntektsmelding?
+                </Heading>
+              </Accordion.Header>
+            </Bleed>
             <Accordion.Content>
               Vurder om du kan gå videre uten alle inntektsmeldinger hvis:
               <ul className="m-0 pl-6">

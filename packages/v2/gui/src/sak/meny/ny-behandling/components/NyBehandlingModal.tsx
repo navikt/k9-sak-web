@@ -86,6 +86,7 @@ export const DELVIS_REVURDERING_ARSAKER_FALLBACK = new Set(Object.keys(DELVIS_RE
 const formaterPeriodeDato = (dato?: string) => (dato ? visnDato(dato) : '');
 const requiredValgtePerioder = (perioder?: string[]) =>
   perioder && perioder.length > 0 ? undefined : 'Velg minst én periode for delvis revurdering';
+const STØTTEDE_DATOFORMAT = ['DD.MM.YYYY', 'DD-MM-YYYY', 'DDMMYY'];
 
 const resetRevurderingFelter = (setValue: ReturnType<typeof useForm<FormValues>>['setValue']) => {
   setValue('steg', undefined);
@@ -394,6 +395,7 @@ export const NyBehandlingModal = ({
                     <RhfDatepicker
                       control={formMethods.control}
                       name="fom"
+                      inputFormats={STØTTEDE_DATOFORMAT}
                       toDate={sisteDagISøknadsperiode ?? new Date()}
                       label="Fra og med"
                       validate={[required]}
@@ -401,6 +403,7 @@ export const NyBehandlingModal = ({
                     <RhfDatepicker
                       control={formMethods.control}
                       name="tom"
+                      inputFormats={STØTTEDE_DATOFORMAT}
                       fromDate={fom ? new Date(fom) : undefined}
                       toDate={sisteDagISøknadsperiode ?? new Date()}
                       label="Til og med"
@@ -435,6 +438,7 @@ export const NyBehandlingModal = ({
                 <RhfDatepicker
                   control={formMethods.control}
                   name="fom"
+                  inputFormats={STØTTEDE_DATOFORMAT}
                   disabledDays={[{ before: undefined, after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Fra og med"
                   validate={[required]}
@@ -442,6 +446,7 @@ export const NyBehandlingModal = ({
                 <RhfDatepicker
                   control={formMethods.control}
                   name="tom"
+                  inputFormats={STØTTEDE_DATOFORMAT}
                   disabledDays={[{ before: new Date(fom), after: sisteDagISøknadsperiode ?? new Date() }]}
                   label="Til og med"
                   validate={[required]}
@@ -480,7 +485,12 @@ export const NyBehandlingModal = ({
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>
-            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+            <Button
+              variant="primary"
+              size="small"
+              loading={formMethods.formState.isSubmitting}
+              disabled={formMethods.formState.isSubmitting}
+            >
               Opprett behandling
             </Button>
           </HStack>

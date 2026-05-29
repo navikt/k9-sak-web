@@ -207,7 +207,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={!inngangsvilkårdata.bostedAp || !!inngangsvilkårdata.lokalkontorBeslutterAp}
                 bosattFakta={bosattFakta}
               />
             )}
@@ -222,7 +222,9 @@ export const AktivitetspengerInngangsvilkår = ({
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.andreLivsoppholdytelserAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
               />
             )}
           </Tabs.Panel>
@@ -236,7 +238,9 @@ export const AktivitetspengerInngangsvilkår = ({
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={!!inngangsvilkårdata.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.vurderBistandsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
               />
             )}
           </Tabs.Panel>

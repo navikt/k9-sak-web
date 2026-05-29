@@ -1,5 +1,4 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -24,7 +23,7 @@ import {
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErÅpent } from './utils/utils';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
@@ -120,7 +119,7 @@ export const Bosted = ({
     },
   });
 
-  const isAksjonspunktSolved = bostedAp?.status === AksjonspunktStatus.UTFØRT;
+  const isBostedApSolved = aksjonspunktErLøst(bostedAp);
   const selectedBosattFaktaPeriode = bosattFakta.perioder.find(p => p.fom === selectedId);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
@@ -140,7 +139,7 @@ export const Bosted = ({
 
   return (
     <VStack gap="space-20">
-      {!isAksjonspunktSolved && (
+      {!isBostedApSolved && (
         <Alert variant="warning" size="small">
           Vurder om søker er bosatt i Trondheim kommune på søknadstidspunktet.
         </Alert>
@@ -151,9 +150,9 @@ export const Bosted = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av bostedsvilkår"
         lovreferanse={bostedVilkår.lovReferanse}
-        defaultIsLocked={isAksjonspunktSolved}
+        defaultIsLocked={isBostedApSolved}
         readOnly={readOnly}
-        lockedContent={isAksjonspunktSolved ? <VurdertAv ident={bostedAp.ansvarligSaksbehandler} /> : undefined}
+        lockedContent={isBostedApSolved ? <VurdertAv ident={bostedAp?.ansvarligSaksbehandler} /> : undefined}
         afterEditButton={
           skalViseSendTilBeslutter ? (
             <VStack gap="space-20">

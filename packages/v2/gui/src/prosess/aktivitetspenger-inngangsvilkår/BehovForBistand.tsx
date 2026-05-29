@@ -21,7 +21,7 @@ import {
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErÅpent } from './utils/utils';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
@@ -135,7 +135,7 @@ export const BehovForBistand = ({
 
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const isVurderBistandsvilkårApSolved = vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp);
+  const isVurderBistandsvilkårApSolved = aksjonspunktErLøst(vurderBistandsvilkårAp);
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -200,7 +200,7 @@ export const BehovForBistand = ({
         }
         lockedContent={
           isVurderBistandsvilkårApSolved ? (
-            <VurdertAv ident={vurderBistandsvilkårAp.ansvarligSaksbehandler} />
+            <VurdertAv ident={vurderBistandsvilkårAp?.ansvarligSaksbehandler} />
           ) : undefined
         }
       >

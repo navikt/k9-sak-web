@@ -1,5 +1,4 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -22,7 +21,7 @@ import {
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErÅpent } from './utils/utils';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
@@ -79,7 +78,7 @@ export const AndreLivsoppholdytelser = ({
     periode: p.periode,
   }));
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
-  const isAksjonspunktSolved = andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT;
+  const isAndreLivsoppholdytelserApSolved = aksjonspunktErLøst(andreLivsoppholdytelserAp);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår),
   });
@@ -155,7 +154,7 @@ export const AndreLivsoppholdytelser = ({
 
   return (
     <VStack gap="space-20">
-      {!isAksjonspunktSolved && (
+      {!isAndreLivsoppholdytelserApSolved && (
         <Alert variant="warning" size="small">
           Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.
         </Alert>
@@ -166,7 +165,7 @@ export const AndreLivsoppholdytelser = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av andre livsoppholdytelser"
         lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
-        defaultIsLocked={isAksjonspunktSolved}
+        defaultIsLocked={isAndreLivsoppholdytelserApSolved}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
@@ -191,7 +190,9 @@ export const AndreLivsoppholdytelser = ({
           ) : null
         }
         lockedContent={
-          isAksjonspunktSolved ? <VurdertAv ident={andreLivsoppholdytelserAp.ansvarligSaksbehandler} /> : undefined
+          isAndreLivsoppholdytelserApSolved ? (
+            <VurdertAv ident={andreLivsoppholdytelserAp?.ansvarligSaksbehandler} />
+          ) : undefined
         }
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
