@@ -116,6 +116,14 @@ export const UtførtAksjonspunkt: Story = {
       },
     ],
   },
+  play: async ({ canvas, step }) => {
+    await step('Lås opp skjemaet og vis Bekreft', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Bekreft' })).toBeNull();
+      const redigerButton = await canvas.findByRole('button', { name: 'Rediger vurdering' });
+      await userEvent.click(redigerButton);
+      await expect(await canvas.findByRole('button', { name: 'Bekreft' })).toBeEnabled();
+    });
+  },
 };
 
 export const VisValideringsfeil: Story = {
