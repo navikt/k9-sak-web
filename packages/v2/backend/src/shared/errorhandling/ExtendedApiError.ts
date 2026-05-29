@@ -56,6 +56,14 @@ export class ExtendedApiError extends Error {
     return this.status >= 400 && this.status < 500;
   }
 
+  public get isGatewayTimeout(): boolean {
+    return this.status === 504;
+  }
+
+  public get isConflict() {
+    return this.status === 409;
+  }
+
   private static resolveBodyFeilmelding(body: string | object): string | null {
     if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
       return body.feilmelding;

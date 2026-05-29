@@ -4,22 +4,13 @@ import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/back
 import { EnterIcon } from '@navikt/aksel-icons';
 import { BodyLong } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { reloadAction, restartAction } from './ErrorHandlingWizard.js';
+import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorHandlingWizard.js';
 
 // Utleder feilmelding og anbefalt handling som blir vist for ulike ExtendedApiError varianter.
 // Slik at bruker forhåpentlegvis kan forstå kva som har gått gale og korrigere viss mulig.
 export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProps => {
-  let title = 'Server forespørsel feilet';
-  let errorInfo: ReactNode = (
-    <>
-      <BodyLong>Din forespørsel til serveren feilet.</BodyLong>
-      {error.bodyFeilmelding != null ? (
-        <BodyLong>
-          <i>{error.bodyFeilmelding}</i>
-        </BodyLong>
-      ) : null}
-    </>
-  );
+  let title = 'Oi! Noe gikk galt';
+  let errorInfo: ReactNode = 'Det oppsto en feil i systemet.';
   let fixAction = reloadAction;
 
   if (error.isUnauthorized) {
@@ -28,58 +19,59 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
       label: 'Logg inn',
       icon: <EnterIcon />,
       href: loginUrl,
-      info: 'Prøv å logge inn på nytt. Rapporter feil hvis det ikke løser problemet.',
+      info: 'Prøv å logge inn på nytt. Meld feil i Porten hvis du ikke får løst den selv.',
     };
     title = 'Ikke innlogget';
     errorInfo = <BodyLong>Du er ikke innlogget.</BodyLong>;
   } else if (error.isForbidden) {
-    title = 'Tilgang nektet';
-    errorInfo = (
-      <>
-        <BodyLong>Din forespørsel til server ble avvist av tilgangskontroll.</BodyLong>
-        <BodyLong>Kanskje du mangler rolletildeling for ressursen du prøvde å nå.</BodyLong>
-      </>
-    );
-    fixAction = {
-      ...reloadAction,
-      info: <BodyLong>Hvis du mener du har nødvendige tilganger, rapporter dette som en feil i porten.</BodyLong>,
-    };
-  } else if (error.isNotFound) {
-    title = 'Ikke funnet';
-    errorInfo = (
-      <>
-        <BodyLong>
-          Server svarte med <i>ikke funnet</i> på din forespørsel.
-        </BodyLong>
-        <BodyLong>
-          Dette kan bety at data du forsøkte å hente/søke frem ikke finnes, eventuelt at du har fyllt inn feil
-          oppslag/søkeinfo. Det kan også skyldes en teknisk feil.
-        </BodyLong>
-      </>
-    );
+    title = 'Ikke tilgang';
+    errorInfo = <BodyLong> Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen. </BodyLong>
     fixAction = {
       ...restartAction,
-      info: 'Prøv å starte på nytt fra startsiden. Rapporter feil hvis det feiler etter nytt forsøk, og du har dobbeltsjekket evt søkeparametre.',
-    };
+      info: <>
+        <BodyLong>
+          Hvis du mener at du skal ha rolle/rettighet til dette, tar du kontakt med din ident-ansvarlig.
+        </BodyLong>
+        <BodyLong>
+          Hvis du vet at du har den nødvendige tilgangen, melder du feilen i Porten.
+        </BodyLong>
+      </>,
+    }
+  } else if (error.isNotFound) {
+    title = 'Finner ikke det du spør om'
+    errorInfo = 'Systemet finner ikke det du ber om.'
+    fixAction = {
+      ...restartAction,
+      info: <>
+        <BodyLong>Prøv å starte på nytt fra forsiden.</BodyLong>
+        <BodyLong>Rapporter feil i Porten hvis du ikke får løst den selv.</BodyLong>
+      </>
+    }
   } else if (error.isBadRequest) {
-    title = 'Ugyldig forespørsel';
+    title = 'Feltene mangler eller har feil informasjon';
     errorInfo = (
       <>
-        <BodyLong>Noe var ugyldig med din forespørsel til serveren.</BodyLong>
-        {error.bodyFeilmelding != null ? (
-          <BodyLong>
-            <i>{error.bodyFeilmelding}</i>
-          </BodyLong>
-        ) : null}
+        <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
       </>
     );
     fixAction = {
       ...reloadAction,
       info: <>
-        <BodyLong>Prøv å kontrollere og korriger evt skjemadata du forsøker å sende til server.</BodyLong>
-        <BodyLong>Rapporter feil i porten hvis du ikke får korrigert problemet selv.</BodyLong>
+        <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
+        <BodyLong>Obs! Hvis du trykker på "Last på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
+        <BodyLong>Rapporter feil i porten hvis du ikke får løst den selv.</BodyLong>
       </>
     }
+  } else if (error.isConflict) {
+    title = "Saksinformasjonen er utdatert"
+    errorInfo = <BodyLong>
+      Saken har blitt oppdatert med ny informasjon av systemet eller av en annen saksbehandler mens du har jobbet med den.
+    </BodyLong>
+    fixAction = reloadActionWithFormResetWarning
+  } else if (error.isGatewayTimeout) {
+    title = 'Dette tok for lang tid'
+    errorInfo = 'Systemet har brukt for lang tid på å svare deg.'
+    fixAction = reloadAction
   }
 
   return {

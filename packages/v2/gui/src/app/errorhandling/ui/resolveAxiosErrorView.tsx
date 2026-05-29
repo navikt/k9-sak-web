@@ -4,34 +4,13 @@ import { EnterIcon } from '@navikt/aksel-icons';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { reloadAction, restartAction } from './ErrorHandlingWizard.js';
+import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorHandlingWizard.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
-
-// Henter første del av URL-stien som kontekstnavn (f.eks. "k9-sak" -> "K9-SAK")
-const findContextPath = (location: string): string => {
-  try {
-    const path = location.startsWith('http') ? new URL(location).pathname : location;
-    return path.split('/')[1]?.toUpperCase() ?? '';
-  } catch {
-    return location.split('/')[1]?.toUpperCase() ?? '';
-  }
-};
 
 // Sjekkar om data er eit objekt (ikkje null, ikkje array) og returnerer det som Record viss ja.
 const asRecord = (data: unknown): Record<string, unknown> | null => {
   if (data != null && typeof data === 'object' && !Array.isArray(data)) {
     return data as Record<string, unknown>;
-  }
-  return null;
-};
-
-// Plukk ut feilmelding frå response body viss det er eit objekt med feilmelding/message felt.
-const extractBodyMessage = (data: unknown): string | null => {
-  if (typeof data === 'string') return data;
-  const record = asRecord(data);
-  if (record != null) {
-    if (typeof record['feilmelding'] === 'string') return record['feilmelding'];
-    if (typeof record['message'] === 'string') return record['message'];
   }
   return null;
 };
@@ -54,51 +33,14 @@ const getEffectiveResponseData = (error: AxiosError): unknown => {
 };
 
 // Spesialhandtering for status 418 (polling halted/delayed). Tilsvarer legacy POLLING_HALTED_OR_DELAYED.
-const resolveTeapotProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction' | 'error'> | null => {
+const resolveTeapotProps = (error: AxiosError) => {
   const data = asRecord(getEffectiveResponseData(error));
   if (data == null) return null;
 
   const status = typeof data['status'] === 'string' ? data['status'] : undefined;
   const eta = typeof data['eta'] === 'string' ? data['eta'] : undefined;
   const systemMelding = typeof data['message'] === 'string' ? data['message'] : undefined;
-
-  if (status === 'HALTED') {
-    return {
-      title: 'Midlertidig feil',
-      errorInfo: (
-        <>
-          <BodyLong>
-            Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld
-            den inn via porten.
-          </BodyLong>
-          {systemMelding != null ? (
-            <BodyLong>
-              <i>{systemMelding}</i>
-            </BodyLong>
-          ) : null}
-        </>
-      ),
-    };
-  }
-  if (status === 'DELAYED') {
-    return {
-      title: 'Forsinket svar',
-      errorInfo: (
-        <>
-          <BodyLong>
-            Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil,
-            men prøv igjen {formatDate(eta ?? '')} kl. {timeFormat(eta ?? '')}.
-          </BodyLong>
-          {systemMelding != null ? (
-            <BodyLong>
-              <i>{systemMelding}</i>
-            </BodyLong>
-          ) : null}
-        </>
-      ),
-    };
-  }
-  return null;
+  return {status, eta, systemMelding}
 };
 
 /**
@@ -109,9 +51,6 @@ const resolveTeapotProps = (error: AxiosError): Omit<ErrorViewProps, 'fixAction'
  */
 export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   const status = error.response?.status;
-  const responseData = getEffectiveResponseData(error);
-  const requestUrl = error.config?.url ?? error.response?.config?.url ?? '';
-  const bodyMessage = extractBodyMessage(responseData);
 
   // 401 — Ikke innlogget. Bruk Location-header viss tilgjengeleg, elles standard login URL.
   if (status === 401) {
@@ -128,7 +67,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
         label: 'Logg inn',
         icon: <EnterIcon />,
         href: loginUrl,
-        info: 'Prøv å logge inn på nytt. Rapporter feil hvis det ikke løser problemet.',
+        info: 'Prøv å logge inn på nytt. Meld feil i Porten hvis du ikke får løst den selv.',
       },
     };
   }
@@ -137,61 +76,103 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   if (status === 403) {
     return {
       error,
-      title: 'Tilgang nektet',
-      errorInfo: (
-        <>
-          <BodyLong>Din forespørsel til server ble avvist av tilgangskontroll.</BodyLong>
-          <BodyLong>Kanskje du mangler rolletildeling for ressursen du prøvde å nå.</BodyLong>
-          {bodyMessage != null ? (
-            <BodyLong>
-              <i>{bodyMessage}</i>
-            </BodyLong>
-          ) : null}
-        </>
-      ),
+      title: 'Ikke tilgang',
+      errorInfo: <BodyLong> Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen. </BodyLong>,
       fixAction: {
-        ...reloadAction,
-        info: <BodyLong>Hvis du mener du har nødvendige tilganger, rapporter dette som en feil i porten.</BodyLong>,
+        ...restartAction,
+        info: <>
+          <BodyLong>
+            Hvis du mener at du skal ha rolle/rettighet til dette, tar du kontakt med din ident-ansvarlig.
+          </BodyLong>
+          <BodyLong>
+            Hvis du vet at du har den nødvendige tilgangen, melder du feilen i Porten.
+          </BodyLong>
+        </>,
       },
     };
   }
 
-  // 504 / 404 — gateway-timeout eller not-found. Tilsvarer legacy REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND.
-  if (status === 504 || status === 404) {
-    const contextPath = requestUrl ? findContextPath(requestUrl) : '';
+  // 404 — not-found. Tilsvarer (en av) legacy REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND.
+  if (status === 404) {
     return {
       error,
-      title: status === 404 ? 'Ikke funnet' : 'Tidsavbrudd mot server',
-      errorInfo: (
-        <>
-          <BodyLong>
-            Får ikke kontakt med {contextPath} ({requestUrl}).
-          </BodyLong>
-          {bodyMessage != null ? (
-            <BodyLong>
-              <i>{bodyMessage}</i>
-            </BodyLong>
-          ) : null}
+      title: 'Finner ikke det du spør om',
+      errorInfo: 'Systemet finner ikke det du ber om.',
+      fixAction: {
+        ...restartAction,
+        info: <>
+          <BodyLong>Prøv å starte på nytt fra forsiden.</BodyLong>
+          <BodyLong>Meld feil i Porten hvis du ikke får løst den selv.</BodyLong>
         </>
-      ),
-      fixAction: status === 404 ? { ...restartAction } : reloadAction,
+      }
+    };
+  }
+
+  // 504 — gateway-timeout eller not-found. Tilsvarer legacy REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND.
+  if (status === 504) {
+    return {
+      error,
+      title: 'Dette tok for lang tid',
+      errorInfo: 'Systemet har brukt for lang tid på å svare deg.',
+      fixAction: {
+        ...reloadAction,
+        info: <>
+          <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+          <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
+        </>
+      },
     };
   }
 
   if(status === 409) {
     return {
       error,
-      title: "Konflikt",
-      errorInfo: <BodyLong>{bodyMessage}</BodyLong>,
-      fixAction: reloadAction,
+      title: "Saksinformasjonen er utdatert",
+      errorInfo: <BodyLong>
+        Saken har blitt oppdatert med ny informasjon av systemet eller av en annen saksbehandler mens du har jobbet med den.
+      </BodyLong>,
+      fixAction: reloadActionWithFormResetWarning,
     }
   }
 
   // 418 — polling halted / delayed (NB: I AxiosError-konteksten er dette typisk berre relevant for polling-kall).
   if (status === 418) {
-    const teapot = resolveTeapotProps(error);
-    if (teapot != null) {
-      return { error, ...teapot, fixAction: reloadAction };
+    const {status, eta} = resolveTeapotProps(error) ?? {}
+    if(status === 'HALTED') {
+      return {
+        error,
+        title: "Oi! Noe gikk galt",
+        errorInfo: "Noe gikk galt, men feilen kan være midlertidig.",
+        fixAction: {
+          ...reloadAction,
+          info: <>
+            <BodyLong>Prøv å laste inn på nytt eller komme tilbake til saken litt senere.</BodyLong>
+            <BodyLong>Meld feilen i Porten hvis du ikke får løst den selv.</BodyLong>
+          </>
+        }
+      }
+    }
+    if(status === 'DELAYED') {
+      const tryAgainAfter = eta != null ? ` etter ${formatDate(eta)} kl. ${timeFormat(eta)}` : ` litt senere`
+      return {
+        error,
+        title: "Venter fortsatt på svar",
+        errorInfo: <>
+          <BodyLong>
+            Saksbehandlingssystemet venter på et annet system som ikke svarer akkurat nå.
+          </BodyLong>
+          <BodyLong>
+            Du trenger ikke melde inn en feil, men prøv igjen {tryAgainAfter}.
+          </BodyLong>
+        </>,
+        fixAction: {
+          ...reloadAction,
+          info: <>
+            <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+            <BodyLong>Sjekk driftsmeldinger eller rapporter feil i Porten, hvis den ikke løser seg etter hvert.</BodyLong>
+          </>
+        }
+      }
     }
   }
 
@@ -199,22 +180,18 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   if (status === 400) {
     return {
       error,
-      title: 'Ugyldig forespørsel',
+      title: 'Feltene mangler eller har feil informasjon',
       errorInfo: (
         <>
-          <BodyLong>Noe var ugyldig med din forespørsel til serveren.</BodyLong>
-          {bodyMessage != null ? (
-            <BodyLong>
-              <i>{bodyMessage}</i>
-            </BodyLong>
-          ) : null}
+          <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
         </>
       ),
       fixAction: {
         ...reloadAction,
         info: <>
-          <BodyLong>Prøv å kontrollere og korriger evt skjemadata du forsøker å sende til server.</BodyLong>
-          <BodyLong>Rapporter feil i porten hvis du ikke får korrigert problemet selv.</BodyLong>
+          <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
+          <BodyLong>Obs! Hvis du trykker på "Last på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
+          <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
         </>
       },
     };
@@ -224,34 +201,30 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
   if (error.response == null) {
     return {
       error,
-      title: 'Nettverksfeil',
-      errorInfo: (
+      title: 'Feil med nettverksforbindelse',
+      errorInfo: <>
         <BodyLong>
-          Klarte ikke nå serveren. <i>{error.message}</i>
+          Nettleseren din klarte ikke å få kontakt med systemet.
         </BodyLong>
-      ),
-      fixAction: reloadAction,
+        <BodyLong>
+          <i>{error.message}</i>
+        </BodyLong>
+      </>,
+      fixAction: {
+        ...reloadAction,
+        info: <>
+          <BodyLong>Prøv å laste på nytt.</BodyLong>
+          <BodyLong>Kontroller nettverksforbindelsen din eller sjekk driftsmeldinger.</BodyLong>
+        </>
+      },
     };
   }
 
   // Standard fallback: vis melding frå body eller error.message.
   return {
     error,
-    title: 'Server forespørsel feilet',
-    errorInfo: (
-      <>
-        <BodyLong>Din forespørsel til serveren feilet{status != null ? ` (${status})` : ''}.</BodyLong>
-        {bodyMessage != null ? (
-          <BodyLong>
-            <i>{bodyMessage}</i>
-          </BodyLong>
-        ) : (
-          <BodyLong>
-            <i>{error.message}</i>
-          </BodyLong>
-        )}
-      </>
-    ),
+    title: 'Oi! Noe gikk galt',
+    errorInfo: 'Det oppsto en feil i systemet.',
     fixAction: reloadAction,
   };
 };

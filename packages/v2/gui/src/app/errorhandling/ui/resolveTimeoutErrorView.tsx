@@ -9,16 +9,7 @@ import { reloadAction } from './ErrorHandlingWizard.js';
  */
 export const resolveTimeoutErrorView = (error: TimeoutError): ErrorViewProps => ({
   error,
-  title: 'Serverkall har gått ut på tid',
-  errorInfo: (
-    <>
-      <BodyLong>Serverkall har gått ut på tid: {error.location}</BodyLong>
-      {error.message ? (
-        <BodyLong>
-          <i>{error.message}</i>
-        </BodyLong>
-      ) : null}
-    </>
-  ),
+  title: 'Dette tok for lang tid',
+  errorInfo: <BodyLong>Systemet har brukt for lang tid på å svare deg.</BodyLong>,
   fixAction: reloadAction,
 });
