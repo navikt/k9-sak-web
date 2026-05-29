@@ -1,8 +1,8 @@
 {
   "collection": "frontend",
-  "version": "2026.05.19-124507-b57b838",
+  "version": "2026.05.28-224025-4579ee0",
   "scope": "repo",
-  "source_sha": "b57b838",
+  "source_sha": "4579ee0",
   "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
@@ -15,11 +15,11 @@
     },
     {
       "path": ".github/agents/forfatter.agent.md",
-      "hash": "6cc31221eab50d30"
+      "hash": "3dd47103e9bf04a8"
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "e50baf495f28613f"
+      "hash": "d04fd3fc8eef124b"
     },
     {
       "path": ".github/skills/aksel-spacing/",
@@ -35,7 +35,7 @@
     },
     {
       "path": ".github/skills/nav-plan/",
-      "hash": "0849265460ea23e2"
+      "hash": "0a160744cf2b4e82"
     },
     {
       "path": ".github/skills/nav-deep-interview/",
@@ -47,7 +47,7 @@
     },
     {
       "path": ".github/skills/nav-troubleshoot/",
-      "hash": "ce043cf29ce427b1"
+      "hash": "e9900d58d91ee0ee"
     },
     {
       "path": ".github/instructions/testing.instructions.md",
