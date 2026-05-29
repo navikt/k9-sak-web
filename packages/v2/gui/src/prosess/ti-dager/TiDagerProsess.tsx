@@ -248,7 +248,7 @@ export const TiDagerProsessIndex = ({
                 <Button
                   size="small"
                   variant="tertiary"
-                  icon={<PencilIcon title="Rediger vurdering" fontSize="1.5rem" />}
+                  icon={<PencilIcon aria-hidden="true" fontSize="1.5rem" />}
                   onClick={() => setIsFormLocked(false)}
                 >
                   Rediger vurdering
