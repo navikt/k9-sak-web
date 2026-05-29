@@ -58,7 +58,9 @@ describe('utledVedtakStatus', () => {
     const vilkar = lagVilkår(vilkarUtfallType.IKKE_OPPFYLT);
     const aksjonspunkter = [lagAksjonspunkt('ANNET_AP', aksjonspunktStatus.UTFORT)];
 
-    const status = utledVedtakStatus(vilkar, aksjonspunkter, vedtakAksjonspunkter, innvilgetResultat, false);
+    const status = utledVedtakStatus(vilkar, aksjonspunkter, vedtakAksjonspunkter, innvilgetResultat, {
+      skalSjekkeIkkeOppfyltVilkår: false,
+    });
 
     expect(status).toBe(vilkarUtfallType.OPPFYLT);
   });
@@ -73,6 +75,19 @@ describe('utledVedtakStatus', () => {
     const status = utledVedtakStatus(vilkar, aksjonspunkter, vedtakAksjonspunkter, innvilgetResultat);
 
     expect(status).toBe(vilkarUtfallType.IKKE_VURDERT);
+  });
+
+  it('kan slå av sjekk for åpent OVERSTYR_BEREGNING-aksjonspunkt', () => {
+    const vilkar = lagVilkår(vilkarUtfallType.OPPFYLT);
+    const aksjonspunkter = [lagAksjonspunkt(aksjonspunktCodes.OVERSTYR_BEREGNING, aksjonspunktStatus.OPPRETTET)];
+    const vedtakAksjonspunkter = [lagAksjonspunkt(aksjonspunktCodes.OVERSTYR_BEREGNING, aksjonspunktStatus.OPPRETTET)];
+
+    const status = utledVedtakStatus(vilkar, aksjonspunkter, vedtakAksjonspunkter, innvilgetResultat, {
+      skalSjekkeIkkeOppfyltVilkår: false,
+      skalSjekkeOverstyrBeregningAksjonspunkt: false,
+    });
+
+    expect(status).toBe(vilkarUtfallType.OPPFYLT);
   });
 
   it('returnerer IKKE_VURDERT når et ikke-vedtak-aksjonspunkt er åpent', () => {
