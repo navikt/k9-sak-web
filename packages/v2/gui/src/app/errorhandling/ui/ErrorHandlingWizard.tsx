@@ -35,9 +35,9 @@ export const reloadAction: ErrorHandlingWizardFixAction = {
 };
 
 export const restartAction: ErrorHandlingWizardFixAction = {
-  label: 'Start på nytt',
+  label: 'Tilbake til forsiden',
   icon: <ArrowCirclepathReverseIcon />,
-  info: 'Prøv å starte på nytt fra startsiden. Rapporter feil hvis det ikke hjelper.',
+  info: 'Prøv å starte på nytt fra forsiden. Rapporter feil i Porten hvis du ikke får løst den selv.',
   href: '/',
 };
 
