@@ -110,7 +110,7 @@ export const TiDagerProsessIndex = ({
 
   useEffect(() => {
     if (opplysninger) {
-      const vurderinger = opplysninger.journalposter.map(jp => ({
+      const vurderinger = opplysninger?.journalposter?.map(jp => ({
         journalpostId: jp.journalpostId,
         harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
       }));
@@ -143,7 +143,7 @@ export const TiDagerProsessIndex = ({
     return <Loader title="Laster opplysninger om rett fra dag én" />;
   }
 
-  if (isError) {
+  if (isError || !opplysninger.journalposter) {
     return (
       <Box paddingInline="space-16 space-32" paddingBlock="space-8">
         <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
