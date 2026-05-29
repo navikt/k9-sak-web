@@ -23,6 +23,13 @@ const createMockApi = (responseData: MatchFagsakerResponse = [], shouldFail = fa
   getUferdigePunsjoppgaver: () => {
     return Promise.resolve({ journalpostIder: [], journalpostIderBarn: [] });
   },
+  getMerknader: () => {
+    return Promise.resolve({
+      hastesak: { aktiv: false },
+      utenlandssak: { aktiv: false },
+      direkteutbetaling: { aktiv: false },
+    });
+  },
 });
 
 export const IngenAndreSaker: Story = {

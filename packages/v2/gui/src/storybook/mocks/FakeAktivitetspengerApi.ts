@@ -23,12 +23,22 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     throw new Error('Not implemented');
   }
 
+  async hentLovligeBehandlingsoperasjoner(behandlingUuid: string) {
+    return {
+      uuid: behandlingUuid,
+    };
+  }
+
   async hentBehandlingMidlertidigStatus(): Promise<never> {
     throw new Error('Not implemented');
   }
 
   async hentMedlemskapFraSøknad() {
     return {};
+  }
+
+  async hentBosattFakta() {
+    return { perioder: [] };
   }
 
   async getBeregningsgrunnlag(): Promise<never> {
@@ -44,6 +54,12 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   }
 
   async getSatsOgUtbetalingPerioder() {
+    return [];
+  }
+
+  async hentTotrinnskontrollSkjermlenkeContext(): ReturnType<
+    AktivitetspengerApi['hentTotrinnskontrollSkjermlenkeContext']
+  > {
     return [];
   }
 }

@@ -11,20 +11,20 @@
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ds-react": "8.9.1",
+    "@navikt/ds-react": "8.10.4",
     "classnames": "2.5.1",
-    "date-fns": "4.1.0",
+    "date-fns": "4.2.1",
     "date-fns-tz": "3.2.0",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "react-intl": "10.1.1",
-    "react-redux": "9.2.0",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "react-intl": "10.1.8",
+    "react-redux": "9.3.0",
     "redux": "5.0.1",
     "redux-form": "8.3.10"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
-    "@types/react": "19.2.14",
+    "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3"
   }
 }

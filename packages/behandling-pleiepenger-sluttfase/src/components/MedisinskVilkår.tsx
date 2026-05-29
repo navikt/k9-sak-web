@@ -48,6 +48,7 @@ export default ({
         onFinished: løsAksjonspunkt,
         readOnly: readOnly || !harAksjonspunkt,
         visFortsettknapp,
+        medisinskVilkårAksjonspunkt,
         fagsakYtelseType,
         behandlingType,
       }}

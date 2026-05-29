@@ -1,4 +1,5 @@
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { Button } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -20,8 +21,15 @@ interface Props {
 }
 
 const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
-  const { readOnly, behandling, uttakApi, oppdaterBehandling, setRedigervirkningsdato, virkningsdatoUttakNyeRegler } =
-    useUttakContext();
+  const {
+    readOnly,
+    behandling,
+    uttakApi,
+    setRedigervirkningsdato,
+    virkningsdatoUttakNyeRegler,
+    onAksjonspunktBekreftet,
+  } = useUttakContext();
+  const oppdaterBehandling = useRefetchBehandling();
 
   const formMethods = useForm<FormData>({
     defaultValues: initialValues,
@@ -43,8 +51,9 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
       };
       return uttakApi.bekreftAksjonspunkt(payload);
     },
-    onSuccess: () => {
-      oppdaterBehandling();
+    onSuccess: async () => {
+      await oppdaterBehandling();
+      onAksjonspunktBekreftet?.();
     },
   });
 

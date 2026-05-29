@@ -152,7 +152,7 @@ const byggVilkårPanel = (
     type,
     label: panelKonfig.label,
     id: panelKonfig.id,
-    usePartialStatus: sjekkDelvisVilkårStatus(relevanteVilkår),
+    usePartialStatus: type === ProcessMenuStepType.success ? sjekkDelvisVilkårStatus(relevanteVilkår) : false,
     erVurdert: erPanelVurdert(type),
   };
 };
@@ -271,7 +271,9 @@ export const beregnVedtakType = (
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {
-    return isAvslag(behandling.behandlingsresultat.type) ? ProcessMenuStepType.danger : ProcessMenuStepType.success;
+    return isAvslag(behandling.behandlingsresultat.type.kode)
+      ? ProcessMenuStepType.danger
+      : ProcessMenuStepType.success;
   }
   return ProcessMenuStepType.default;
 };
@@ -332,7 +334,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     );
 
     const tilkjentYtelsePanel = byggPanelUtenVilkår(
-      uttakPanel.erVurdert,
+      uttakPanel.erVurdert && uttakPanel.type !== ProcessMenuStepType.danger,
       beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       PANEL_KONFIG.tilkjentYtelse.label,
       PANEL_KONFIG.tilkjentYtelse.id,

@@ -1,4 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
@@ -45,10 +46,11 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const isReadOnly = useMemo(() => {
     return (
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
+      (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
+        !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
+      behandling.status === BehandlingStatus.AVSLUTTET
     );
-  }, [innloggetBruker]);
+  }, [innloggetBruker, behandling]);
 
   if (!erValgt || !vilkår) {
     return null;

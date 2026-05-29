@@ -27,12 +27,11 @@ export type UttakContextType = {
   uttak: UttaksplanMedUtsattePerioder;
   uttakApi: BehandlingUttakBackendClient;
   perioderTilVurdering: string[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   hentUttak?: () => Promise<any>;
+  onAksjonspunktBekreftet?: () => void;
   harEtUløstAksjonspunktIUttak: boolean;
   erOverstyrer: boolean;
   readOnly: boolean;
-  oppdaterBehandling: () => void;
   virkningsdatoUttakNyeRegler: string | undefined;
   redigerVirkningsdato: boolean;
   setRedigervirkningsdato: Dispatch<SetStateAction<boolean>>;
@@ -56,12 +55,11 @@ export interface UttakProviderProps {
     | 'uttak'
     | 'uttakApi'
     | 'perioderTilVurdering'
-    | 'hentBehandling'
     | 'harEtUløstAksjonspunktIUttak'
     | 'erOverstyrer'
     | 'readOnly'
-    | 'oppdaterBehandling'
     | 'virkningsdatoUttakNyeRegler'
+    | 'onAksjonspunktBekreftet'
   > & { aksjonspunkter: Aksjonspunkt[] };
   children: ReactNode;
 }
@@ -110,11 +108,9 @@ export const UttakProvider = ({
     uttak: value.uttak,
     uttakApi: value.uttakApi,
     perioderTilVurdering: value.perioderTilVurdering,
-    hentBehandling: value.hentBehandling,
     harEtUløstAksjonspunktIUttak: value.harEtUløstAksjonspunktIUttak,
     erOverstyrer: value.erOverstyrer,
     readOnly: value.readOnly,
-    oppdaterBehandling: value.oppdaterBehandling,
     virkningsdatoUttakNyeRegler: value.virkningsdatoUttakNyeRegler,
     redigerVirkningsdato,
     setRedigervirkningsdato,
@@ -128,6 +124,7 @@ export const UttakProvider = ({
     aksjonspunktVurderOverlappendeSaker: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER),
     aksjonspunktVentAnnenPSBSak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK),
     aksjonspunktVurderDatoNyRegelUttak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK),
+    onAksjonspunktBekreftet: value.onAksjonspunktBekreftet,
   };
 
   return <UttakContext.Provider value={contextValue}>{children}</UttakContext.Provider>;
@@ -135,7 +132,6 @@ export const UttakProvider = ({
 
 export const useUttakContext = () => {
   const uttakContext = useContext(UttakContext);
-
   if (uttakContext === undefined) {
     throw new Error('useUttakContext must be used within a UttakProvider');
   }

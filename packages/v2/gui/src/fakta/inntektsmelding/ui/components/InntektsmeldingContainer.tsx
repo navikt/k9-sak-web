@@ -1,11 +1,11 @@
 import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { Accordion, Alert, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
+import { Accordion, Alert, Bleed, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
 import { useMemo, useState } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
 import type { Tilstand, TilstandMedUiState } from '../../types';
+import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
 import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -32,11 +32,13 @@ const InntektsmeldingManglerInfo = () => (
       <Alert variant="info" size="small">
         <Accordion>
           <Accordion.Item>
-            <Accordion.Header className="before:hidden after:hidden">
-              <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
-                Når kan du gå videre uten inntektsmelding?
-              </Heading>
-            </Accordion.Header>
+            <Bleed marginBlock="space-12">
+              <Accordion.Header className="before:hidden after:hidden">
+                <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
+                  Når kan du gå videre uten inntektsmelding?
+                </Heading>
+              </Accordion.Header>
+            </Bleed>
             <Accordion.Content>
               Vurder om du kan gå videre uten alle inntektsmeldinger hvis:
               <ul className="m-0 pl-6">
@@ -125,7 +127,7 @@ const InntektsmeldingContainer = () => {
   const kanVurderes = harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderMedUiState);
   const kanSendeInn = !readOnly && kanVurderes && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
@@ -143,7 +145,7 @@ const InntektsmeldingContainer = () => {
       };
     });
 
-    onFinished({
+    await onFinished({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
       perioder,
@@ -162,7 +164,7 @@ const InntektsmeldingContainer = () => {
       <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
-          onFormSubmit={onFinished}
+          onFormSubmit={payload => Promise.resolve(onFinished(payload))}
           aksjonspunkt={gjeldeneAksjonspunkt}
           formMethods={formMethods}
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
@@ -171,7 +173,7 @@ const InntektsmeldingContainer = () => {
       {kanSendeInn && (
         <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" loading={formState.isSubmitting} disabled={formState.isSubmitting}>
               Send inn
             </Button>
           </form>

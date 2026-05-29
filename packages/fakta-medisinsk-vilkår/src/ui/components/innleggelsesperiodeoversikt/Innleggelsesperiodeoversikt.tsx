@@ -1,4 +1,5 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
 import React, { useEffect, useMemo, type JSX } from 'react';
@@ -20,6 +21,7 @@ const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
   const { endpoints, httpErrorHandler, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
@@ -76,6 +78,7 @@ const Innleggelsesperiodeoversikt = ({
       controller.signal,
     )
       .then(() => {
+        refetchBehandlingVedSykdomsendring();
         onInnleggelsesperioderUpdated();
         updateInnlegelsesperioder();
       })

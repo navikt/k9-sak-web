@@ -1,3 +1,4 @@
+import { addBreadcrumb } from '@sentry/browser';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
@@ -40,6 +41,13 @@ export const useBekreftAksjonspunkt = ({
         '@type': ap.kode,
         ...ap,
       }));
+
+      addBreadcrumb({
+        category: 'aksjonspunkt',
+        message: 'Sender inn aksjonspunkt',
+        data: { koder: models.map(ap => ap.kode) },
+        level: 'info',
+      });
 
       const params = {
         saksnummer: fagsak.saksnummer,

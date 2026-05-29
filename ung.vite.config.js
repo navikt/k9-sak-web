@@ -76,6 +76,9 @@ export default ({ mode }) => {
     },
     base: '/ung/web',
     publicDir: './public',
+    resolve: {
+      dedupe: ['react', 'react-dom'],
+    },
     plugins: [
       tailwindcss(),
       createHtmlPlugin({

@@ -14,7 +14,10 @@ type AksjonspunktKode = '9069' | '9071';
 const radioConfig: Record<AksjonspunktKode, Array<{ value: string; label: string }>> = {
   '9069': [
     { value: InntektsmeldingVurderingRequestKode.FORTSETT, label: 'Ja, bruk A-inntekt for {arbeidsgivere}' },
-    { value: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG, label: 'Nei, send purring med varsel om avslag' },
+    {
+      value: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
+      label: 'Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker',
+    },
   ],
   '9071': [
     { value: InntektsmeldingVurderingRequestKode.FORTSETT, label: 'Ja, bruk A-inntekt for {arbeidsgivere}' },
@@ -77,7 +80,7 @@ interface InntektsmeldingFormProps {
   tilstand: TilstandMedUiState;
   aksjonspunkt: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;
-  onSubmit: (payload: InntektsmeldingRequestPayload) => void;
+  onSubmit: (payload: InntektsmeldingRequestPayload) => Promise<void>;
   harFlereTilstanderTilVurdering: boolean;
 }
 
@@ -115,7 +118,7 @@ const InntektsmeldingAksjonspunktForm = ({
     label: r.label.replace('{arbeidsgivere}', arbeidsgivereString),
   }));
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const periode = {
       periode: tilstand.periodeOpprinneligFormat,
       fortsett: data[beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
@@ -123,7 +126,7 @@ const InntektsmeldingAksjonspunktForm = ({
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
     };
 
-    onSubmit({
+    await onSubmit({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
@@ -180,7 +183,12 @@ const InntektsmeldingAksjonspunktForm = ({
         <Box marginBlock="space-24 space-0">
           <div className="flex gap-4">
             {!harFlereTilstanderTilVurdering && beslutning && (
-              <Button variant="primary" size="small">
+              <Button
+                variant="primary"
+                size="small"
+                loading={formMethods.formState.isSubmitting}
+                disabled={formMethods.formState.isSubmitting}
+              >
                 {knappetekster[aksjonspunktKode][beslutning] ?? 'Send inn'}
               </Button>
             )}
