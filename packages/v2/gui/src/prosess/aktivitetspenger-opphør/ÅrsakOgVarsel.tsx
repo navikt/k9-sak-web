@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
@@ -46,8 +47,8 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
 });
 
 interface Props {
-  varselAp: AksjonspunktDto | undefined;
-  opphørVilkår: VilkårMedPerioderDto;
+  vurderBostedAp: AksjonspunktDto | undefined;
+  bostedVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -56,15 +57,15 @@ interface Props {
 }
 
 export const AarsakOgVarsel = ({
-  varselAp,
-  opphørVilkår,
+  vurderBostedAp,
+  bostedVilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (opphørVilkår.perioder ?? []).map(p => ({
+  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getPeriodStatus(p.vilkarStatus),
     label: formatDate(p.periode.fom),
@@ -74,25 +75,36 @@ export const AarsakOgVarsel = ({
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
 
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(opphørVilkår),
+    defaultValues: buildInitialValues(bostedVilkår),
   });
 
-  const isVarselApSolved = varselAp?.status === AksjonspunktStatus.UTFØRT;
+  const isVarselApSolved = vurderBostedAp?.status === AksjonspunktStatus.UTFØRT;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
       const periode = data.perioder[selectedId];
+      const selectedItem = periods.find(period => period.id === selectedId);
       if (!periode) {
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
-      const payload = {
-        '@type': AksjonspunktDefinisjon.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
+      if (!selectedItem) {
+        throw new Error('Kunne ikke finne valgt periode for opphør');
+      }
+
+      const payload: BekreftetAksjonspunktDto = {
+        '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
         begrunnelse: periode.begrunnelse,
-        sendVarsel: periode.åpenbarGrunnTilIkkeVarsle === 'nei',
-        fritekst: periode.begrunnelse,
-        aktivFom: selectedId,
-        opphørsdato: periode.opphørsdato,
-        opphørsårsak: periode.opphørsårsak,
+        avklaringer: [
+          {
+            periode: selectedItem.periode,
+            skalIkkeSendeVarsel: periode.åpenbarGrunnTilIkkeVarsle === 'ja',
+            vurdering: {
+              begrunnelse: periode.begrunnelse,
+              borITrondheimIHelePerioden: false,
+              fraflyttingsDato: periode.opphørsdato || undefined,
+            },
+          },
+        ],
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -103,7 +115,7 @@ export const AarsakOgVarsel = ({
 
   return (
     <VStack gap="space-20">
-      {!isVarselApSolved && varselAp && (
+      {!isVarselApSolved && vurderBostedAp && (
         <Alert variant="warning" size="small">
           Vurder årsak til opphør og om bruker skal varsles.
         </Alert>
@@ -113,11 +125,11 @@ export const AarsakOgVarsel = ({
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Årsak og varsel for opphør"
-        lovreferanse={opphørVilkår.lovReferanse}
+        lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isVarselApSolved}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
-        lockedContent={isVarselApSolved ? <VurdertAv ident={varselAp?.ansvarligSaksbehandler} /> : undefined}
+        lockedContent={isVarselApSolved ? <VurdertAv ident={vurderBostedAp?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
           <RhfForm

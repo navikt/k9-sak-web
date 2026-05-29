@@ -14,6 +14,7 @@ import { BeregnetUtbetalingStegInitPanel } from './prosess/BeregnetUtbetalingSte
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
+import { OpphørInitPanel } from './prosess/OpphørInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prosessmotor';
 
@@ -106,6 +107,16 @@ export const AktivitetspengerProsess = ({
               if (steg.id === prosessStegCodes.INNGANGSVILKAR) {
                 return (
                   <InngangsvilkårInitPanel
+                    key={steg.id}
+                    api={api}
+                    behandling={behandling}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  />
+                );
+              }
+              if (steg.id === prosessStegCodes.OPPHØR) {
+                return (
+                  <OpphørInitPanel
                     key={steg.id}
                     api={api}
                     behandling={behandling}
