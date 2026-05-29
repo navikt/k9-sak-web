@@ -26,7 +26,7 @@
     "@editorjs/list": "2.0.9",
     "@editorjs/paragraph": "2.11.7",
     "@hookform/error-message": "2.0.1",
-    "@hookform/resolvers": "5.2.2",
+    "@hookform/resolvers": "5.4.0",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "workspace:^",
     "@navikt/aksel-icons": "8.10.4",
