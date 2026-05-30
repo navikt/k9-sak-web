@@ -2,38 +2,61 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Aksjonspunkt, Behandlingsresultat, Vilkar } from '@k9-sak-web/types';
 
 import utledVedtakStatus from './utledVedtakStatus';
 
-const lagAksjonspunkt = (definisjonKode, statusKode) => ({
-  definisjon: {
-    kode: definisjonKode,
-  },
-  status: {
-    kode: statusKode,
-  },
-});
+const lagAksjonspunkt = (definisjonKode: string, statusKode: string): Aksjonspunkt => {
+  const aksjonspunkt: Aksjonspunkt = {
+    definisjon: {
+      kode: definisjonKode,
+      kodeverk: 'AKSJONSPUNKT_KODE',
+    },
+    status: {
+      kode: statusKode,
+      kodeverk: 'AKSJONSPUNKT_STATUS',
+    },
+    kanLoses: true,
+    erAktivt: true,
+  };
 
-const lagVilkår = vilkarStatusKode => [
-  {
+  return aksjonspunkt;
+};
+
+const lagVilkår = (vilkarStatusKode: string): Vilkar[] => {
+  const vilkar: Vilkar = {
+    vilkarType: {
+      kode: 'TEST_VILKAR',
+      kodeverk: 'VILKAR_TYPE',
+    },
+    overstyrbar: true,
+    relevanteInnvilgetMerknader: [],
     perioder: [
       {
         vilkarStatus: {
           kode: vilkarStatusKode,
+          kodeverk: 'VILKAR_UTFALL_TYPE',
+        },
+        merknadParametere: {},
+        periode: {
+          fom: '2024-01-01',
+          tom: '2024-01-02',
         },
       },
     ],
-  },
-];
+  };
+
+  return [vilkar];
+};
 
 describe('utledVedtakStatus', () => {
   const vedtakAksjonspunkter = [lagAksjonspunkt('VEDTAK_AP', aksjonspunktStatus.UTFORT)];
-  const innvilgetResultat = {
+  const innvilgetResultat: Behandlingsresultat = {
     type: {
       kode: behandlingResultatType.INNVILGET,
     },
   };
-  const avslagResultat = {
+  const avslagResultat: Behandlingsresultat = {
     type: {
       kode: behandlingResultatType.AVSLATT,
     },
