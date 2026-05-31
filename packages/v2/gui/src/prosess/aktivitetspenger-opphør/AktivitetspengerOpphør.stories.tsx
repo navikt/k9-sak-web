@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
@@ -8,6 +9,7 @@ import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrak
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
 import { AktivitetspengerOpphør } from './AktivitetspengerOpphør.js';
 
@@ -39,14 +41,18 @@ const fakeLovligeBehandlingsoperasjoner = {
 } satisfies BehandlingOperasjonerDto;
 
 const fakeOpphørVilkår = {
+  vilkarType: vilkarType.BOSTEDSVILKÅR,
+  lovReferanse: 'TODO AKT lovreferanse',
+  overstyrbar: true,
   perioder: [
     {
-      periode: {
-        fom: '2026-01-01',
-        tom: '2026-12-31',
-      },
-      vilkarStatus: Utfall.IKKE_OPPFYLT,
+      vilkarStatus: Utfall.OPPFYLT,
+      merknad: '-',
+      merknadParametere: {},
+      periode: { fom: '2026-01-29', tom: '2027-01-28' },
       begrunnelse: '',
+      fritekstVurderingBrev: '',
+      vurderesIBehandlingen: true,
     },
   ],
 } as unknown as VilkårMedPerioderDto;
@@ -61,11 +67,11 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultStory: Story = {
   args: {
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
     innloggetBruker: fakeInnloggetBruker,
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => undefined,
+    onAksjonspunktBekreftet: fn(),
     vilkår: [fakeOpphørVilkår],
     totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,

@@ -5,7 +5,8 @@ import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontra
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { FileSearchIcon, InformationSquareIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -73,10 +74,13 @@ export const AarsakOgVarsel = ({
   }));
 
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
+  const [pendingSubmitData, setPendingSubmitData] = useState<FormData | null>(null);
 
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedVilkår),
   });
+  const åpenbarGrunnTilIkkeVarsle = formHook.watch(`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`);
 
   const isVarselApSolved = vurderBostedAp?.status === AksjonspunktStatus.UTFØRT;
 
@@ -97,7 +101,7 @@ export const AarsakOgVarsel = ({
         avklaringer: [
           {
             periode: selectedItem.periode,
-            skalIkkeSendeVarsel: periode.åpenbarGrunnTilIkkeVarsle === 'ja',
+            skalIkkeSendeVarsel: åpenbarGrunnTilIkkeVarsle === 'ja',
             vurdering: {
               begrunnelse: periode.begrunnelse,
               borITrondheimIHelePerioden: false,
@@ -112,6 +116,8 @@ export const AarsakOgVarsel = ({
       onAksjonspunktBekreftet();
     },
   });
+
+  const skalSendeForhåndsvarsel = åpenbarGrunnTilIkkeVarsle === 'nei';
 
   return (
     <VStack gap="space-20">
@@ -132,63 +138,140 @@ export const AarsakOgVarsel = ({
         lockedContent={isVarselApSolved ? <VurdertAv ident={vurderBostedAp?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
-          <RhfForm
-            formMethods={formHook}
-            onSubmit={async data => {
-              await bekreftAksjonspunktMutation(data);
-              setIsFormLocked(true);
-            }}
-          >
-            <VStack gap="space-24" width="70ch">
-              <RhfDatepicker
-                control={formHook.control}
-                name={`perioder.${selectedId}.opphørsdato`}
-                label="Dato for opphør"
-                readOnly={isFormLocked}
-                validate={[required]}
-              />
-              <RhfSelect
-                control={formHook.control}
-                name={`perioder.${selectedId}.opphørsårsak`}
-                label="Opphørsårsak"
-                readOnly={isFormLocked}
-                validate={[required]}
-                selectValues={Object.values(Opphørsårsak).map(årsak => (
-                  <option key={årsak} value={årsak}>
-                    {opphørsårsakLabels[årsak]}
-                  </option>
-                ))}
-              />
-              <RhfTextarea
-                control={formHook.control}
-                name={`perioder.${selectedId}.begrunnelse`}
-                label="Begrunnelse for opphør"
-                readOnly={isFormLocked}
-                validate={[required]}
-              />
-              <RhfRadioGroup
-                key={`${selectedId}-varsle`}
-                control={formHook.control}
-                name={`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`}
-                legend="Er det åpenbar grunn til å ikke varsle bruker om opphør?"
-                validate={[required]}
-                readOnly={isFormLocked}
+          <>
+            <RhfForm
+              formMethods={formHook}
+              onSubmit={async data => {
+                if (skalSendeForhåndsvarsel) {
+                  setPendingSubmitData(data);
+                  setVisBekreftSubmitModal(true);
+                  return;
+                }
+
+                await bekreftAksjonspunktMutation(data);
+                setIsFormLocked(true);
+              }}
+            >
+              <VStack gap="space-24" width="70ch">
+                <RhfDatepicker
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.opphørsdato`}
+                  label="Dato for opphør"
+                  readOnly={isFormLocked}
+                  validate={[required]}
+                />
+                <RhfSelect
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.opphørsårsak`}
+                  label="Opphørsårsak"
+                  readOnly={isFormLocked}
+                  validate={[required]}
+                  selectValues={Object.values(Opphørsårsak).map(årsak => (
+                    <option key={årsak} value={årsak}>
+                      {opphørsårsakLabels[årsak]}
+                    </option>
+                  ))}
+                />
+                <RhfTextarea
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.begrunnelse`}
+                  label="Begrunnelse for opphør"
+                  readOnly={isFormLocked}
+                  validate={[required]}
+                />
+                <RhfRadioGroup
+                  key={`${selectedId}-varsle`}
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`}
+                  legend="Er det åpenbar grunn til å ikke varsle bruker om opphør?"
+                  validate={[required]}
+                  readOnly={isFormLocked}
+                >
+                  <Radio value="ja">Ja</Radio>
+                  <Radio value="nei">Nei</Radio>
+                </RhfRadioGroup>
+                {!isFormLocked && skalSendeForhåndsvarsel && (
+                  <InfoCard data-color="info" size="small">
+                    <InfoCard.Header icon={<InformationSquareIcon aria-hidden />}>
+                      <InfoCard.Title>Bruker vil få ett forhåndsvarsel om opphør</InfoCard.Title>
+                    </InfoCard.Header>
+                    <InfoCard.Content>
+                      <List size="small">
+                        <List.Item>
+                          Når du går videre sendes det ett forhåndsvarsel til bruker med dato og årsak for opphør.
+                        </List.Item>
+                        <List.Item>
+                          Saken settes på vent til bruker svarer på forhåndsvarsel eller det har gått 14 dager.
+                        </List.Item>
+                      </List>
+                    </InfoCard.Content>
+                  </InfoCard>
+                )}
+                {!isFormLocked && (
+                  <HStack gap="space-24">
+                    <Button type="submit" size="small" loading={isPending}>
+                      Bekreft og fortsett
+                    </Button>
+                    {skalSendeForhåndsvarsel && (
+                      <Button
+                        size="small"
+                        variant="secondary"
+                        type="button"
+                        icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
+                      >
+                        Forhåndsvis varsel
+                      </Button>
+                    )}
+                  </HStack>
+                )}
+              </VStack>
+            </RhfForm>
+            {visBekreftSubmitModal && (
+              <Modal
+                open
+                aria-label="Send forhåndsvarsel"
+                onClose={() => setVisBekreftSubmitModal(false)}
+                header={{ heading: 'Send forhåndsvarsel', size: 'small' }}
               >
-                <Radio value="ja">Ja</Radio>
-                <Radio value="nei">Nei</Radio>
-              </RhfRadioGroup>
-              {!isFormLocked && (
-                <HStack gap="space-8">
-                  <Button type="submit" size="small" loading={isPending}>
-                    Bekreft og fortsett
+                <Modal.Body>
+                  <VStack gap="space-16">
+                    <BodyShort size="small">
+                      Er du sikker på at du vil sende forhåndsvarsel? <br /> Dette kan ikke angres.
+                    </BodyShort>
+                  </VStack>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    size="small"
+                    loading={isPending}
+                    onClick={async () => {
+                      if (!pendingSubmitData) {
+                        return;
+                      }
+
+                      await bekreftAksjonspunktMutation(pendingSubmitData);
+                      setVisBekreftSubmitModal(false);
+                      setPendingSubmitData(null);
+                      setIsFormLocked(true);
+                    }}
+                  >
+                    Send forhåndsvarsel
                   </Button>
-                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
+                  <Button
+                    size="small"
+                    variant="secondary"
+                    type="button"
+                    onClick={() => {
+                      setVisBekreftSubmitModal(false);
+                      setPendingSubmitData(null);
+                    }}
+                  >
                     Avbryt
                   </Button>
-                </HStack>
-              )}
-            </VStack>
-          </RhfForm>
+                </Modal.Footer>
+              </Modal>
+            )}
+          </>
         )}
       </VilkårSplittPanel>
     </VStack>
