@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import { loadEnv } from 'vite';
+import { patchCssModules } from 'vite-css-modules';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
 
@@ -89,6 +90,9 @@ export default ({ mode }) => {
       dedupe: ['react', 'react-dom'],
     },
     plugins: [
+      patchCssModules({
+        generateSourceTypes: true
+      }),
       tailwindcss(),
       react({
         include: [/\.jsx$/, /\.tsx?$/],
@@ -139,6 +143,7 @@ export default ({ mode }) => {
       css: {
         modules: {
           classNameStrategy: 'non-scoped',
+          localsConvention: 'camelCase'
         },
       },
       globals: true,
