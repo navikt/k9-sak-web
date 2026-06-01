@@ -118,7 +118,7 @@ const TilkjentYtelseTimeLineData = ({
             <div>
               <div className="mt-6">
                 <BodyShort size="small">
-                  <BodyShort size="small">Total utbetalingsgrad av beregningsgrunnlag: </BodyShort>
+                  {`Total utbetalingsgrad av beregningsgrunnlag: `}
                   <span className="font-semibold inline-block">
                     {utbetalingsgradVedTilkommetInntektErMinst()
                       ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
