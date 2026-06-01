@@ -5,16 +5,16 @@ import type { PeriodeMedId } from './TilkjentYtelse.js';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData.js';
 
 const baseAndel = {
-  aktivitetStatus: 'AT',
-  inntektskategori: 'ARBEIDSTAKER',
-  aktørId: null,
-  arbeidsforholdId: null,
+  aktivitetStatus: 'AT' as const,
+  inntektskategori: 'ARBEIDSTAKER' as const,
+  aktørId: undefined,
+  arbeidsforholdId: undefined,
   arbeidsforholdType: '-',
   arbeidsgiverNavn: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
   arbeidsgiverOrgnr: '910909088',
-  eksternArbeidsforholdId: null,
+  eksternArbeidsforholdId: undefined,
   refusjon: 0,
-  sisteUtbetalingsdato: null,
+  sisteUtbetalingsdato: undefined,
   stillingsprosent: 100,
   uttak: [],
 };
