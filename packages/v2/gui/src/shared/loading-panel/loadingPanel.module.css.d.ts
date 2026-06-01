@@ -8,9 +8,11 @@
 
 declare const container: string;
 
-export { container };
+export {
+	container
+};
 
 declare const __default_export__: {
-  container: typeof container;
+	container: typeof container;
 };
 export default __default_export__;

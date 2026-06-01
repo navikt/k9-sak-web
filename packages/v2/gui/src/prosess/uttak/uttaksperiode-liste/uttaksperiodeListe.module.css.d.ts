@@ -12,13 +12,19 @@ declare const redigerDato: string;
 declare const oppholdRow: string;
 declare const tableContainer: string;
 
-export { headerColumn, alertRow, redigerDato, oppholdRow, tableContainer };
+export {
+	headerColumn,
+	alertRow,
+	redigerDato,
+	oppholdRow,
+	tableContainer
+};
 
 declare const __default_export__: {
-  headerColumn: typeof headerColumn;
-  alertRow: typeof alertRow;
-  redigerDato: typeof redigerDato;
-  oppholdRow: typeof oppholdRow;
-  tableContainer: typeof tableContainer;
+	headerColumn: typeof headerColumn;
+	alertRow: typeof alertRow;
+	redigerDato: typeof redigerDato;
+	oppholdRow: typeof oppholdRow;
+	tableContainer: typeof tableContainer;
 };
 export default __default_export__;

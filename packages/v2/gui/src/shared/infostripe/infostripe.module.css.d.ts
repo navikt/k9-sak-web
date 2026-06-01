@@ -9,10 +9,13 @@
 declare const infostripe: string;
 declare const iconContainer: string;
 
-export { infostripe, iconContainer };
+export {
+	infostripe,
+	iconContainer
+};
 
 declare const __default_export__: {
-  infostripe: typeof infostripe;
-  iconContainer: typeof iconContainer;
+	infostripe: typeof infostripe;
+	iconContainer: typeof iconContainer;
 };
 export default __default_export__;

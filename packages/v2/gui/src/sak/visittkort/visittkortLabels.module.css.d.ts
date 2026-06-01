@@ -8,9 +8,11 @@
 
 declare const etikett: string;
 
-export { etikett };
+export {
+	etikett
+};
 
 declare const __default_export__: {
-  etikett: typeof etikett;
+	etikett: typeof etikett;
 };
 export default __default_export__;

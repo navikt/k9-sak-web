@@ -12,13 +12,19 @@ declare const keyWithoutCursor: string;
 declare const aksjonspunkt: string;
 declare const apentAksjonspunkt: string;
 
-export { status, key, keyWithoutCursor, aksjonspunkt, apentAksjonspunkt };
+export {
+	status,
+	key,
+	keyWithoutCursor,
+	aksjonspunkt,
+	apentAksjonspunkt
+};
 
 declare const __default_export__: {
-  status: typeof status;
-  key: typeof key;
-  keyWithoutCursor: typeof keyWithoutCursor;
-  aksjonspunkt: typeof aksjonspunkt;
-  apentAksjonspunkt: typeof apentAksjonspunkt;
+	status: typeof status;
+	key: typeof key;
+	keyWithoutCursor: typeof keyWithoutCursor;
+	aksjonspunkt: typeof aksjonspunkt;
+	apentAksjonspunkt: typeof apentAksjonspunkt;
 };
 export default __default_export__;

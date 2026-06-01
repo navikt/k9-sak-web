@@ -12,13 +12,18 @@ declare const flexContainer: string;
 declare const label: string;
 declare const d_dsdatoLabel: string;
 
-export { container, pushRight, flexContainer, label };
+export {
+	container,
+	pushRight,
+	flexContainer,
+	label
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  pushRight: typeof pushRight;
-  flexContainer: typeof flexContainer;
-  label: typeof label;
-  dødsdatoLabel: typeof d_dsdatoLabel;
+	container: typeof container;
+	pushRight: typeof pushRight;
+	flexContainer: typeof flexContainer;
+	label: typeof label;
+	"dødsdatoLabel": typeof d_dsdatoLabel;
 };
 export default __default_export__;

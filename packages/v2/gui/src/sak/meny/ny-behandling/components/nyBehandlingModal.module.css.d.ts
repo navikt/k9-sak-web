@@ -14,15 +14,23 @@ declare const label: string;
 declare const right: string;
 declare const datePickerContainer: string;
 
-export { container, divider, image, modal, label, right, datePickerContainer };
+export {
+	container,
+	divider,
+	image,
+	modal,
+	label,
+	right,
+	datePickerContainer
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  divider: typeof divider;
-  image: typeof image;
-  modal: typeof modal;
-  label: typeof label;
-  right: typeof right;
-  datePickerContainer: typeof datePickerContainer;
+	container: typeof container;
+	divider: typeof divider;
+	image: typeof image;
+	modal: typeof modal;
+	label: typeof label;
+	right: typeof right;
+	datePickerContainer: typeof datePickerContainer;
 };
 export default __default_export__;

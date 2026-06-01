@@ -10,11 +10,15 @@ declare const tableStatusCell: string;
 declare const selectableRow: string;
 declare const selectedRow: string;
 
-export { tableStatusCell, selectableRow, selectedRow };
+export {
+	tableStatusCell,
+	selectableRow,
+	selectedRow
+};
 
 declare const __default_export__: {
-  tableStatusCell: typeof tableStatusCell;
-  selectableRow: typeof selectableRow;
-  selectedRow: typeof selectedRow;
+	tableStatusCell: typeof tableStatusCell;
+	selectableRow: typeof selectableRow;
+	selectedRow: typeof selectedRow;
 };
 export default __default_export__;

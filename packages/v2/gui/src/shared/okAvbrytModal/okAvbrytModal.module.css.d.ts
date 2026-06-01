@@ -8,9 +8,11 @@
 
 declare const modal: string;
 
-export { modal };
+export {
+	modal
+};
 
 declare const __default_export__: {
-  modal: typeof modal;
+	modal: typeof modal;
 };
 export default __default_export__;

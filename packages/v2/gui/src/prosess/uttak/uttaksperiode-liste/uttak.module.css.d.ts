@@ -29,49 +29,49 @@ declare const expandedRow: string;
 declare const uttakVilkarIconContainer: string;
 
 export {
-  expanded,
-  uttakExpandButton,
-  uttakExpandButtonExpanded,
-  uttakIndikator,
-  uttakIndikatorInnvilget,
-  uttakIndikatorInnvilgetDelvis,
-  uttakIndikatorInnvilgetDelvisInntekt,
-  uttakUttaksgrad,
-  uttakUttaksgradTekst,
-  uttakIconContainer,
-  uttakIconWide,
-  uttakExpandedRow,
-  uttakBehandlerIcon,
-  uttakLastColumn,
-  borderLeft,
-  borderRight,
-  borderTop,
-  collapseRow,
-  expandedRow,
-  uttakVilkarIconContainer,
+	expanded,
+	uttakExpandButton,
+	uttakExpandButtonExpanded,
+	uttakIndikator,
+	uttakIndikatorInnvilget,
+	uttakIndikatorInnvilgetDelvis,
+	uttakIndikatorInnvilgetDelvisInntekt,
+	uttakUttaksgrad,
+	uttakUttaksgradTekst,
+	uttakIconContainer,
+	uttakIconWide,
+	uttakExpandedRow,
+	uttakBehandlerIcon,
+	uttakLastColumn,
+	borderLeft,
+	borderRight,
+	borderTop,
+	collapseRow,
+	expandedRow,
+	uttakVilkarIconContainer
 };
 
 declare const __default_export__: {
-  expanded: typeof expanded;
-  uttakExpandButton: typeof uttakExpandButton;
-  uttakExpandButtonExpanded: typeof uttakExpandButtonExpanded;
-  uttakIndikator: typeof uttakIndikator;
-  uttakIndikatorAvslått: typeof uttakIndikatorAvsl_tt;
-  uttakIndikatorInnvilget: typeof uttakIndikatorInnvilget;
-  uttakIndikatorInnvilgetDelvis: typeof uttakIndikatorInnvilgetDelvis;
-  uttakIndikatorInnvilgetDelvisInntekt: typeof uttakIndikatorInnvilgetDelvisInntekt;
-  uttakUttaksgrad: typeof uttakUttaksgrad;
-  uttakUttaksgradTekst: typeof uttakUttaksgradTekst;
-  uttakIconContainer: typeof uttakIconContainer;
-  uttakIconWide: typeof uttakIconWide;
-  uttakExpandedRow: typeof uttakExpandedRow;
-  uttakBehandlerIcon: typeof uttakBehandlerIcon;
-  uttakLastColumn: typeof uttakLastColumn;
-  borderLeft: typeof borderLeft;
-  borderRight: typeof borderRight;
-  borderTop: typeof borderTop;
-  collapseRow: typeof collapseRow;
-  expandedRow: typeof expandedRow;
-  uttakVilkarIconContainer: typeof uttakVilkarIconContainer;
+	expanded: typeof expanded;
+	uttakExpandButton: typeof uttakExpandButton;
+	uttakExpandButtonExpanded: typeof uttakExpandButtonExpanded;
+	uttakIndikator: typeof uttakIndikator;
+	"uttakIndikatorAvslått": typeof uttakIndikatorAvsl_tt;
+	uttakIndikatorInnvilget: typeof uttakIndikatorInnvilget;
+	uttakIndikatorInnvilgetDelvis: typeof uttakIndikatorInnvilgetDelvis;
+	uttakIndikatorInnvilgetDelvisInntekt: typeof uttakIndikatorInnvilgetDelvisInntekt;
+	uttakUttaksgrad: typeof uttakUttaksgrad;
+	uttakUttaksgradTekst: typeof uttakUttaksgradTekst;
+	uttakIconContainer: typeof uttakIconContainer;
+	uttakIconWide: typeof uttakIconWide;
+	uttakExpandedRow: typeof uttakExpandedRow;
+	uttakBehandlerIcon: typeof uttakBehandlerIcon;
+	uttakLastColumn: typeof uttakLastColumn;
+	borderLeft: typeof borderLeft;
+	borderRight: typeof borderRight;
+	borderTop: typeof borderTop;
+	collapseRow: typeof collapseRow;
+	expandedRow: typeof expandedRow;
+	uttakVilkarIconContainer: typeof uttakVilkarIconContainer;
 };
 export default __default_export__;

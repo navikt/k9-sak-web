@@ -19,29 +19,29 @@ declare const relatertFagsakMarginLeft: string;
 declare const relatertFagsakLock: string;
 
 export {
-  relatertFagsak,
-  relatertFagsakNameGenderContainer,
-  relatertFagsakIcon,
-  relatertFagsakDescription,
-  relatertFagsakSelector,
-  relatertFagsakSelectorPushLeft,
-  relatertFagsakName,
-  relatertFagsakCenteredFlex,
-  relatertFagsakMarginLeft,
-  relatertFagsakLock,
+	relatertFagsak,
+	relatertFagsakNameGenderContainer,
+	relatertFagsakIcon,
+	relatertFagsakDescription,
+	relatertFagsakSelector,
+	relatertFagsakSelectorPushLeft,
+	relatertFagsakName,
+	relatertFagsakCenteredFlex,
+	relatertFagsakMarginLeft,
+	relatertFagsakLock
 };
 
 declare const __default_export__: {
-  relatertFagsak: typeof relatertFagsak;
-  relatertFagsakNameGenderContainer: typeof relatertFagsakNameGenderContainer;
-  relatertFagsakIcon: typeof relatertFagsakIcon;
-  relatertFagsakDescription: typeof relatertFagsakDescription;
-  relatertFagsakSelector: typeof relatertFagsakSelector;
-  relatertFagsakSelectorPushLeft: typeof relatertFagsakSelectorPushLeft;
-  relatertFagsakName: typeof relatertFagsakName;
-  relatertFagsakCenteredFlex: typeof relatertFagsakCenteredFlex;
-  relatertFagsakSøkerSelect: typeof relatertFagsakS_kerSelect;
-  relatertFagsakMarginLeft: typeof relatertFagsakMarginLeft;
-  relatertFagsakLock: typeof relatertFagsakLock;
+	relatertFagsak: typeof relatertFagsak;
+	relatertFagsakNameGenderContainer: typeof relatertFagsakNameGenderContainer;
+	relatertFagsakIcon: typeof relatertFagsakIcon;
+	relatertFagsakDescription: typeof relatertFagsakDescription;
+	relatertFagsakSelector: typeof relatertFagsakSelector;
+	relatertFagsakSelectorPushLeft: typeof relatertFagsakSelectorPushLeft;
+	relatertFagsakName: typeof relatertFagsakName;
+	relatertFagsakCenteredFlex: typeof relatertFagsakCenteredFlex;
+	"relatertFagsakSøkerSelect": typeof relatertFagsakS_kerSelect;
+	relatertFagsakMarginLeft: typeof relatertFagsakMarginLeft;
+	relatertFagsakLock: typeof relatertFagsakLock;
 };
 export default __default_export__;

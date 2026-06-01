@@ -14,20 +14,20 @@ declare const overstyringBegrunnelse: string;
 declare const overstyringAktivitetListe: string;
 
 export {
-  overstyringSkjemaWrapper,
-  overstyringDatoOgUttaksgrad,
-  overstyringDatoVelger,
-  overstyringKnapperad,
-  overstyringBegrunnelse,
-  overstyringAktivitetListe,
+	overstyringSkjemaWrapper,
+	overstyringDatoOgUttaksgrad,
+	overstyringDatoVelger,
+	overstyringKnapperad,
+	overstyringBegrunnelse,
+	overstyringAktivitetListe
 };
 
 declare const __default_export__: {
-  overstyringSkjemaWrapper: typeof overstyringSkjemaWrapper;
-  overstyringDatoOgUttaksgrad: typeof overstyringDatoOgUttaksgrad;
-  overstyringDatoVelger: typeof overstyringDatoVelger;
-  overstyringKnapperad: typeof overstyringKnapperad;
-  overstyringBegrunnelse: typeof overstyringBegrunnelse;
-  overstyringAktivitetListe: typeof overstyringAktivitetListe;
+	overstyringSkjemaWrapper: typeof overstyringSkjemaWrapper;
+	overstyringDatoOgUttaksgrad: typeof overstyringDatoOgUttaksgrad;
+	overstyringDatoVelger: typeof overstyringDatoVelger;
+	overstyringKnapperad: typeof overstyringKnapperad;
+	overstyringBegrunnelse: typeof overstyringBegrunnelse;
+	overstyringAktivitetListe: typeof overstyringAktivitetListe;
 };
 export default __default_export__;

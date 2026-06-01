@@ -17,26 +17,26 @@ declare const vurderOverlappendeSakAPListe: string;
 declare const noOverlappendeMargin: string;
 
 export {
-  vurderOverlappendeSak,
-  apContainer,
-  apActive,
-  apReadOnly,
-  uttaksgradField,
-  uttaksgradPeriode,
-  uttaksPeriodeEndret,
-  vurderOverlappendeSakAPListe,
-  noOverlappendeMargin,
+	vurderOverlappendeSak,
+	apContainer,
+	apActive,
+	apReadOnly,
+	uttaksgradField,
+	uttaksgradPeriode,
+	uttaksPeriodeEndret,
+	vurderOverlappendeSakAPListe,
+	noOverlappendeMargin
 };
 
 declare const __default_export__: {
-  vurderOverlappendeSak: typeof vurderOverlappendeSak;
-  apContainer: typeof apContainer;
-  apActive: typeof apActive;
-  apReadOnly: typeof apReadOnly;
-  uttaksgradField: typeof uttaksgradField;
-  uttaksgradPeriode: typeof uttaksgradPeriode;
-  uttaksPeriodeEndret: typeof uttaksPeriodeEndret;
-  vurderOverlappendeSakAPListe: typeof vurderOverlappendeSakAPListe;
-  noOverlappendeMargin: typeof noOverlappendeMargin;
+	vurderOverlappendeSak: typeof vurderOverlappendeSak;
+	apContainer: typeof apContainer;
+	apActive: typeof apActive;
+	apReadOnly: typeof apReadOnly;
+	uttaksgradField: typeof uttaksgradField;
+	uttaksgradPeriode: typeof uttaksgradPeriode;
+	uttaksPeriodeEndret: typeof uttaksPeriodeEndret;
+	vurderOverlappendeSakAPListe: typeof vurderOverlappendeSakAPListe;
+	noOverlappendeMargin: typeof noOverlappendeMargin;
 };
 export default __default_export__;

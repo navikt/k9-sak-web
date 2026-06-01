@@ -9,10 +9,13 @@
 declare const vilkar: string;
 declare const status: string;
 
-export { vilkar, status };
+export {
+	vilkar,
+	status
+};
 
 declare const __default_export__: {
-  vilkar: typeof vilkar;
-  status: typeof status;
+	vilkar: typeof vilkar;
+	status: typeof status;
 };
 export default __default_export__;

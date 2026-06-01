@@ -8,9 +8,11 @@
 
 declare const brevCheckboxContainer: string;
 
-export { brevCheckboxContainer };
+export {
+	brevCheckboxContainer
+};
 
 declare const __default_export__: {
-  brevCheckboxContainer: typeof brevCheckboxContainer;
+	brevCheckboxContainer: typeof brevCheckboxContainer;
 };
 export default __default_export__;

@@ -8,9 +8,11 @@
 
 declare const personIcon: string;
 
-export { personIcon };
+export {
+	personIcon
+};
 
 declare const __default_export__: {
-  personIcon: typeof personIcon;
+	personIcon: typeof personIcon;
 };
 export default __default_export__;

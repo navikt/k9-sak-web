@@ -8,9 +8,11 @@
 
 declare const selectReadOnly: string;
 
-export { selectReadOnly };
+export {
+	selectReadOnly
+};
 
 declare const __default_export__: {
-  selectReadOnly: typeof selectReadOnly;
+	selectReadOnly: typeof selectReadOnly;
 };
 export default __default_export__;

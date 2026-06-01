@@ -8,9 +8,11 @@
 
 declare const stepArrowContainer: string;
 
-export { stepArrowContainer };
+export {
+	stepArrowContainer
+};
 
 declare const __default_export__: {
-  stepArrowContainer: typeof stepArrowContainer;
+	stepArrowContainer: typeof stepArrowContainer;
 };
 export default __default_export__;

@@ -18,28 +18,28 @@ declare const alder: string;
 declare const barnTekst: string;
 
 export {
-  lesemodusboks,
-  text,
-  label,
-  fritekst,
-  aksjonspunktOgRedigerVurderingContainer,
-  redigerVurderingTekst,
-  opplysningerFraSoknad,
-  begrunnelseContainer,
-  alder,
-  barnTekst,
+	lesemodusboks,
+	text,
+	label,
+	fritekst,
+	aksjonspunktOgRedigerVurderingContainer,
+	redigerVurderingTekst,
+	opplysningerFraSoknad,
+	begrunnelseContainer,
+	alder,
+	barnTekst
 };
 
 declare const __default_export__: {
-  lesemodusboks: typeof lesemodusboks;
-  text: typeof text;
-  label: typeof label;
-  fritekst: typeof fritekst;
-  aksjonspunktOgRedigerVurderingContainer: typeof aksjonspunktOgRedigerVurderingContainer;
-  redigerVurderingTekst: typeof redigerVurderingTekst;
-  opplysningerFraSoknad: typeof opplysningerFraSoknad;
-  begrunnelseContainer: typeof begrunnelseContainer;
-  alder: typeof alder;
-  barnTekst: typeof barnTekst;
+	lesemodusboks: typeof lesemodusboks;
+	text: typeof text;
+	label: typeof label;
+	fritekst: typeof fritekst;
+	aksjonspunktOgRedigerVurderingContainer: typeof aksjonspunktOgRedigerVurderingContainer;
+	redigerVurderingTekst: typeof redigerVurderingTekst;
+	opplysningerFraSoknad: typeof opplysningerFraSoknad;
+	begrunnelseContainer: typeof begrunnelseContainer;
+	alder: typeof alder;
+	barnTekst: typeof barnTekst;
 };
 export default __default_export__;

@@ -10,11 +10,15 @@ declare const utsattePerioderStripe: string;
 declare const punktliste: string;
 declare const bodyText: string;
 
-export { utsattePerioderStripe, punktliste, bodyText };
+export {
+	utsattePerioderStripe,
+	punktliste,
+	bodyText
+};
 
 declare const __default_export__: {
-  utsattePerioderStripe: typeof utsattePerioderStripe;
-  punktliste: typeof punktliste;
-  bodyText: typeof bodyText;
+	utsattePerioderStripe: typeof utsattePerioderStripe;
+	punktliste: typeof punktliste;
+	bodyText: typeof bodyText;
 };
 export default __default_export__;

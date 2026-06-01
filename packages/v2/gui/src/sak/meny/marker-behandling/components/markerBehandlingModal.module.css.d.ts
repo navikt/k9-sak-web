@@ -10,11 +10,15 @@ declare const buttonContainer: string;
 declare const aksjonspunktHeading: string;
 declare const errorMessage: string;
 
-export { buttonContainer, aksjonspunktHeading, errorMessage };
+export {
+	buttonContainer,
+	aksjonspunktHeading,
+	errorMessage
+};
 
 declare const __default_export__: {
-  buttonContainer: typeof buttonContainer;
-  aksjonspunktHeading: typeof aksjonspunktHeading;
-  errorMessage: typeof errorMessage;
+	buttonContainer: typeof buttonContainer;
+	aksjonspunktHeading: typeof aksjonspunktHeading;
+	errorMessage: typeof errorMessage;
 };
 export default __default_export__;

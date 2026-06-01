@@ -10,11 +10,15 @@ declare const overstyringSkjemaAktiviteter: string;
 declare const overstyringSkjemaAktivitet: string;
 declare const aktiviteterTable: string;
 
-export { overstyringSkjemaAktiviteter, overstyringSkjemaAktivitet, aktiviteterTable };
+export {
+	overstyringSkjemaAktiviteter,
+	overstyringSkjemaAktivitet,
+	aktiviteterTable
+};
 
 declare const __default_export__: {
-  overstyringSkjemaAktiviteter: typeof overstyringSkjemaAktiviteter;
-  overstyringSkjemaAktivitet: typeof overstyringSkjemaAktivitet;
-  aktiviteterTable: typeof aktiviteterTable;
+	overstyringSkjemaAktiviteter: typeof overstyringSkjemaAktiviteter;
+	overstyringSkjemaAktivitet: typeof overstyringSkjemaAktivitet;
+	aktiviteterTable: typeof aktiviteterTable;
 };
 export default __default_export__;

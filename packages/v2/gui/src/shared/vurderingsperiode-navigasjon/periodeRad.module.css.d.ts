@@ -11,12 +11,17 @@ declare const interactiveListElement: string;
 declare const interactiveListElementInactive: string;
 declare const interactiveListElementActive: string;
 
-export { interactiveList, interactiveListElement, interactiveListElementInactive, interactiveListElementActive };
+export {
+	interactiveList,
+	interactiveListElement,
+	interactiveListElementInactive,
+	interactiveListElementActive
+};
 
 declare const __default_export__: {
-  interactiveList: typeof interactiveList;
-  interactiveListElement: typeof interactiveListElement;
-  interactiveListElementInactive: typeof interactiveListElementInactive;
-  interactiveListElementActive: typeof interactiveListElementActive;
+	interactiveList: typeof interactiveList;
+	interactiveListElement: typeof interactiveListElement;
+	interactiveListElementInactive: typeof interactiveListElementInactive;
+	interactiveListElementActive: typeof interactiveListElementActive;
 };
 export default __default_export__;

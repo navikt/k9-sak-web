@@ -29,50 +29,50 @@ declare const imageText: string;
 declare const addPeriode: string;
 
 export {
-  periodeContainer,
-  relative,
-  addArbeidsforhold,
-  oppdaterMargin,
-  suffix,
-  textAlignRight,
-  alignRightHorizontalBottom,
-  fieldHorizontal,
-  modalLabel,
-  iconContainer,
-  icon,
-  fullWidth,
-  modal,
-  textAreaStyle,
-  right,
-  button,
-  buttonRemove,
-  buttonAdd,
-  addCircleIcon,
-  imageText,
-  addPeriode,
+	periodeContainer,
+	relative,
+	addArbeidsforhold,
+	oppdaterMargin,
+	suffix,
+	textAlignRight,
+	alignRightHorizontalBottom,
+	fieldHorizontal,
+	modalLabel,
+	iconContainer,
+	icon,
+	fullWidth,
+	modal,
+	textAreaStyle,
+	right,
+	button,
+	buttonRemove,
+	buttonAdd,
+	addCircleIcon,
+	imageText,
+	addPeriode
 };
 
 declare const __default_export__: {
-  periodeContainer: typeof periodeContainer;
-  relative: typeof relative;
-  addArbeidsforhold: typeof addArbeidsforhold;
-  oppdaterMargin: typeof oppdaterMargin;
-  suffix: typeof suffix;
-  textAlignRight: typeof textAlignRight;
-  alignRightHorizontalBottom: typeof alignRightHorizontalBottom;
-  fieldHorizontal: typeof fieldHorizontal;
-  modalLabel: typeof modalLabel;
-  iconContainer: typeof iconContainer;
-  icon: typeof icon;
-  fullWidth: typeof fullWidth;
-  modal: typeof modal;
-  textAreaStyle: typeof textAreaStyle;
-  right: typeof right;
-  button: typeof button;
-  buttonRemove: typeof buttonRemove;
-  buttonAdd: typeof buttonAdd;
-  addCircleIcon: typeof addCircleIcon;
-  imageText: typeof imageText;
-  addPeriode: typeof addPeriode;
+	periodeContainer: typeof periodeContainer;
+	relative: typeof relative;
+	addArbeidsforhold: typeof addArbeidsforhold;
+	oppdaterMargin: typeof oppdaterMargin;
+	suffix: typeof suffix;
+	textAlignRight: typeof textAlignRight;
+	alignRightHorizontalBottom: typeof alignRightHorizontalBottom;
+	fieldHorizontal: typeof fieldHorizontal;
+	modalLabel: typeof modalLabel;
+	iconContainer: typeof iconContainer;
+	icon: typeof icon;
+	fullWidth: typeof fullWidth;
+	modal: typeof modal;
+	textAreaStyle: typeof textAreaStyle;
+	right: typeof right;
+	button: typeof button;
+	buttonRemove: typeof buttonRemove;
+	buttonAdd: typeof buttonAdd;
+	addCircleIcon: typeof addCircleIcon;
+	imageText: typeof imageText;
+	addPeriode: typeof addPeriode;
 };
 export default __default_export__;

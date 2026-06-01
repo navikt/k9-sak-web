@@ -9,10 +9,13 @@
 declare const sideMenuContainer: string;
 declare const mainContainerWithSideMenu: string;
 
-export { sideMenuContainer, mainContainerWithSideMenu };
+export {
+	sideMenuContainer,
+	mainContainerWithSideMenu
+};
 
 declare const __default_export__: {
-  sideMenuContainer: typeof sideMenuContainer;
-  mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
+	sideMenuContainer: typeof sideMenuContainer;
+	mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
 };
 export default __default_export__;

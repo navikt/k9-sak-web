@@ -10,11 +10,15 @@ declare const dataBox: string;
 declare const utbetalingText: string;
 declare const expandButton: string;
 
-export { dataBox, utbetalingText, expandButton };
+export {
+	dataBox,
+	utbetalingText,
+	expandButton
+};
 
 declare const __default_export__: {
-  dataBox: typeof dataBox;
-  utbetalingText: typeof utbetalingText;
-  expandButton: typeof expandButton;
+	dataBox: typeof dataBox;
+	utbetalingText: typeof utbetalingText;
+	expandButton: typeof expandButton;
 };
 export default __default_export__;

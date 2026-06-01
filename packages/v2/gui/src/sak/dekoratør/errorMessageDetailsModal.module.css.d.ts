@@ -13,14 +13,21 @@ declare const text: string;
 declare const detail: string;
 declare const cancelButton: string;
 
-export { divider, image, modal, text, detail, cancelButton };
+export {
+	divider,
+	image,
+	modal,
+	text,
+	detail,
+	cancelButton
+};
 
 declare const __default_export__: {
-  divider: typeof divider;
-  image: typeof image;
-  modal: typeof modal;
-  text: typeof text;
-  detail: typeof detail;
-  cancelButton: typeof cancelButton;
+	divider: typeof divider;
+	image: typeof image;
+	modal: typeof modal;
+	text: typeof text;
+	detail: typeof detail;
+	cancelButton: typeof cancelButton;
 };
 export default __default_export__;

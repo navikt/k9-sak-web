@@ -8,9 +8,11 @@
 
 declare const visuallyHidden: string;
 
-export { visuallyHidden };
+export {
+	visuallyHidden
+};
 
 declare const __default_export__: {
-  visuallyHidden: typeof visuallyHidden;
+	visuallyHidden: typeof visuallyHidden;
 };
 export default __default_export__;

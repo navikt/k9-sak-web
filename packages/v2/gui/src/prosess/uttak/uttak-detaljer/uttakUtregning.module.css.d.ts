@@ -11,12 +11,17 @@ declare const uttakUtregningHighlighted: string;
 declare const uttakUtregningHeadingContainer: string;
 declare const uttakUtregningHeadingIcon: string;
 
-export { uttakUtregning, uttakUtregningHighlighted, uttakUtregningHeadingContainer, uttakUtregningHeadingIcon };
+export {
+	uttakUtregning,
+	uttakUtregningHighlighted,
+	uttakUtregningHeadingContainer,
+	uttakUtregningHeadingIcon
+};
 
 declare const __default_export__: {
-  uttakUtregning: typeof uttakUtregning;
-  uttakUtregningHighlighted: typeof uttakUtregningHighlighted;
-  uttakUtregningHeadingContainer: typeof uttakUtregningHeadingContainer;
-  uttakUtregningHeadingIcon: typeof uttakUtregningHeadingIcon;
+	uttakUtregning: typeof uttakUtregning;
+	uttakUtregningHighlighted: typeof uttakUtregningHighlighted;
+	uttakUtregningHeadingContainer: typeof uttakUtregningHeadingContainer;
+	uttakUtregningHeadingIcon: typeof uttakUtregningHeadingIcon;
 };
 export default __default_export__;

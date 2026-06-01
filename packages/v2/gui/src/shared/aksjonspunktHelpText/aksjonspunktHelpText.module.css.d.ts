@@ -14,15 +14,23 @@ declare const severalElements: string;
 declare const aksjonspunktText: string;
 declare const wordwrap: string;
 
-export { container, divider, image, oneElement, severalElements, aksjonspunktText, wordwrap };
+export {
+	container,
+	divider,
+	image,
+	oneElement,
+	severalElements,
+	aksjonspunktText,
+	wordwrap
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  divider: typeof divider;
-  image: typeof image;
-  oneElement: typeof oneElement;
-  severalElements: typeof severalElements;
-  aksjonspunktText: typeof aksjonspunktText;
-  wordwrap: typeof wordwrap;
+	container: typeof container;
+	divider: typeof divider;
+	image: typeof image;
+	oneElement: typeof oneElement;
+	severalElements: typeof severalElements;
+	aksjonspunktText: typeof aksjonspunktText;
+	wordwrap: typeof wordwrap;
 };
 export default __default_export__;

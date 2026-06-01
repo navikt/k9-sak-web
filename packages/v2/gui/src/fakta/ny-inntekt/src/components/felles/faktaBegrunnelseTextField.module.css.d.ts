@@ -10,11 +10,15 @@ declare const begrunnelseTextField: string;
 declare const explanationTextarea: string;
 declare const explanationTextareaReadOnly: string;
 
-export { begrunnelseTextField, explanationTextarea, explanationTextareaReadOnly };
+export {
+	begrunnelseTextField,
+	explanationTextarea,
+	explanationTextareaReadOnly
+};
 
 declare const __default_export__: {
-  begrunnelseTextField: typeof begrunnelseTextField;
-  explanationTextarea: typeof explanationTextarea;
-  explanationTextareaReadOnly: typeof explanationTextareaReadOnly;
+	begrunnelseTextField: typeof begrunnelseTextField;
+	explanationTextarea: typeof explanationTextarea;
+	explanationTextareaReadOnly: typeof explanationTextareaReadOnly;
 };
 export default __default_export__;

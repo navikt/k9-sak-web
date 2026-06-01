@@ -11,12 +11,17 @@ declare const boks: string;
 declare const datoVelger: string;
 declare const periodeHeader: string;
 
-export { datoRad, boks, datoVelger, periodeHeader };
+export {
+	datoRad,
+	boks,
+	datoVelger,
+	periodeHeader
+};
 
 declare const __default_export__: {
-  datoRad: typeof datoRad;
-  boks: typeof boks;
-  datoVelger: typeof datoVelger;
-  periodeHeader: typeof periodeHeader;
+	datoRad: typeof datoRad;
+	boks: typeof boks;
+	datoVelger: typeof datoVelger;
+	periodeHeader: typeof periodeHeader;
 };
 export default __default_export__;

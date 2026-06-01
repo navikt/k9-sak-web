@@ -10,11 +10,15 @@ declare const buttonRow: string;
 declare const buttonLink: string;
 declare const infoIkkeVedtaksbrev: string;
 
-export { buttonRow, buttonLink, infoIkkeVedtaksbrev };
+export {
+	buttonRow,
+	buttonLink,
+	infoIkkeVedtaksbrev
+};
 
 declare const __default_export__: {
-  buttonRow: typeof buttonRow;
-  buttonLink: typeof buttonLink;
-  infoIkkeVedtaksbrev: typeof infoIkkeVedtaksbrev;
+	buttonRow: typeof buttonRow;
+	buttonLink: typeof buttonLink;
+	infoIkkeVedtaksbrev: typeof infoIkkeVedtaksbrev;
 };
 export default __default_export__;

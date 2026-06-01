@@ -8,9 +8,11 @@
 
 declare const confirmVilkarForm: string;
 
-export { confirmVilkarForm };
+export {
+	confirmVilkarForm
+};
 
 declare const __default_export__: {
-  confirmVilkarForm: typeof confirmVilkarForm;
+	confirmVilkarForm: typeof confirmVilkarForm;
 };
 export default __default_export__;

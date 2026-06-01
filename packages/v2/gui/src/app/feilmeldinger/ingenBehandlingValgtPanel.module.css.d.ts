@@ -8,9 +8,11 @@
 
 declare const noSelectedBehandlingPanel: string;
 
-export { noSelectedBehandlingPanel };
+export {
+	noSelectedBehandlingPanel
+};
 
 declare const __default_export__: {
-  noSelectedBehandlingPanel: typeof noSelectedBehandlingPanel;
+	noSelectedBehandlingPanel: typeof noSelectedBehandlingPanel;
 };
 export default __default_export__;

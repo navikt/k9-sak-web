@@ -8,9 +8,11 @@
 
 declare const tag: string;
 
-export { tag };
+export {
+	tag
+};
 
 declare const __default_export__: {
-  tag: typeof tag;
+	tag: typeof tag;
 };
 export default __default_export__;

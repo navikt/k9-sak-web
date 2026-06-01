@@ -10,11 +10,15 @@ declare const bottomCell: string;
 declare const rowWithSpacing: string;
 declare const selectedCell: string;
 
-export { bottomCell, rowWithSpacing, selectedCell };
+export {
+	bottomCell,
+	rowWithSpacing,
+	selectedCell
+};
 
 declare const __default_export__: {
-  bottomCell: typeof bottomCell;
-  rowWithSpacing: typeof rowWithSpacing;
-  selectedCell: typeof selectedCell;
+	bottomCell: typeof bottomCell;
+	rowWithSpacing: typeof rowWithSpacing;
+	selectedCell: typeof selectedCell;
 };
 export default __default_export__;

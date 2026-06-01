@@ -17,26 +17,26 @@ declare const rowBorderSolid: string;
 declare const rowBorderDashed: string;
 
 export {
-  tableWrapper,
-  tableTitle,
-  simuleringTable,
-  rodTekst,
-  lastColumn,
-  nextPeriod,
-  normalPeriod,
-  rowBorderSolid,
-  rowBorderDashed,
+	tableWrapper,
+	tableTitle,
+	simuleringTable,
+	rodTekst,
+	lastColumn,
+	nextPeriod,
+	normalPeriod,
+	rowBorderSolid,
+	rowBorderDashed
 };
 
 declare const __default_export__: {
-  tableWrapper: typeof tableWrapper;
-  tableTitle: typeof tableTitle;
-  simuleringTable: typeof simuleringTable;
-  rodTekst: typeof rodTekst;
-  lastColumn: typeof lastColumn;
-  nextPeriod: typeof nextPeriod;
-  normalPeriod: typeof normalPeriod;
-  rowBorderSolid: typeof rowBorderSolid;
-  rowBorderDashed: typeof rowBorderDashed;
+	tableWrapper: typeof tableWrapper;
+	tableTitle: typeof tableTitle;
+	simuleringTable: typeof simuleringTable;
+	rodTekst: typeof rodTekst;
+	lastColumn: typeof lastColumn;
+	nextPeriod: typeof nextPeriod;
+	normalPeriod: typeof normalPeriod;
+	rowBorderSolid: typeof rowBorderSolid;
+	rowBorderDashed: typeof rowBorderDashed;
 };
 export default __default_export__;

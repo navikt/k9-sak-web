@@ -8,9 +8,11 @@
 
 declare const vurdertIForrigeIcon: string;
 
-export { vurdertIForrigeIcon };
+export {
+	vurdertIForrigeIcon
+};
 
 declare const __default_export__: {
-  vurdertIForrigeIcon: typeof vurdertIForrigeIcon;
+	vurdertIForrigeIcon: typeof vurdertIForrigeIcon;
 };
 export default __default_export__;

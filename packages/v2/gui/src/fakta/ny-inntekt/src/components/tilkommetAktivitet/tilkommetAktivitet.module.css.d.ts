@@ -20,32 +20,32 @@ declare const inntektColumn: string;
 declare const modalKnapp: string;
 
 export {
-  tilkommetAktivitet,
-  aktivitetContainer,
-  aktivitetTable,
-  separator,
-  aksjonspunktContainer,
-  aksjonspunktContainerLukketAP,
-  bruttoInntektContainer,
-  bruttoInntektCurrency,
-  edited,
-  inntektsmeldingTag,
-  inntektColumn,
-  modalKnapp,
+	tilkommetAktivitet,
+	aktivitetContainer,
+	aktivitetTable,
+	separator,
+	aksjonspunktContainer,
+	aksjonspunktContainerLukketAP,
+	bruttoInntektContainer,
+	bruttoInntektCurrency,
+	edited,
+	inntektsmeldingTag,
+	inntektColumn,
+	modalKnapp
 };
 
 declare const __default_export__: {
-  tilkommetAktivitet: typeof tilkommetAktivitet;
-  aktivitetContainer: typeof aktivitetContainer;
-  aktivitetTable: typeof aktivitetTable;
-  separator: typeof separator;
-  aksjonspunktContainer: typeof aksjonspunktContainer;
-  aksjonspunktContainerLukketAP: typeof aksjonspunktContainerLukketAP;
-  bruttoInntektContainer: typeof bruttoInntektContainer;
-  bruttoInntektCurrency: typeof bruttoInntektCurrency;
-  edited: typeof edited;
-  inntektsmeldingTag: typeof inntektsmeldingTag;
-  inntektColumn: typeof inntektColumn;
-  modalKnapp: typeof modalKnapp;
+	tilkommetAktivitet: typeof tilkommetAktivitet;
+	aktivitetContainer: typeof aktivitetContainer;
+	aktivitetTable: typeof aktivitetTable;
+	separator: typeof separator;
+	aksjonspunktContainer: typeof aksjonspunktContainer;
+	aksjonspunktContainerLukketAP: typeof aksjonspunktContainerLukketAP;
+	bruttoInntektContainer: typeof bruttoInntektContainer;
+	bruttoInntektCurrency: typeof bruttoInntektCurrency;
+	edited: typeof edited;
+	inntektsmeldingTag: typeof inntektsmeldingTag;
+	inntektColumn: typeof inntektColumn;
+	modalKnapp: typeof modalKnapp;
 };
 export default __default_export__;

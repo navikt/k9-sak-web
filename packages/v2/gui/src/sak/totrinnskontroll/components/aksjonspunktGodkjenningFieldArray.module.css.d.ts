@@ -12,13 +12,19 @@ declare const approvalItemContainer: string;
 declare const aksjonspunktTextContainer: string;
 declare const lenke: string;
 
-export { halfColumn, fullWidth, approvalItemContainer, aksjonspunktTextContainer, lenke };
+export {
+	halfColumn,
+	fullWidth,
+	approvalItemContainer,
+	aksjonspunktTextContainer,
+	lenke
+};
 
 declare const __default_export__: {
-  halfColumn: typeof halfColumn;
-  fullWidth: typeof fullWidth;
-  approvalItemContainer: typeof approvalItemContainer;
-  aksjonspunktTextContainer: typeof aksjonspunktTextContainer;
-  lenke: typeof lenke;
+	halfColumn: typeof halfColumn;
+	fullWidth: typeof fullWidth;
+	approvalItemContainer: typeof approvalItemContainer;
+	aksjonspunktTextContainer: typeof aksjonspunktTextContainer;
+	lenke: typeof lenke;
 };
 export default __default_export__;

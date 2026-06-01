@@ -10,11 +10,15 @@ declare const indicatorWithOverlay: string;
 declare const indicator: string;
 declare const overlay: string;
 
-export { indicatorWithOverlay, indicator, overlay };
+export {
+	indicatorWithOverlay,
+	indicator,
+	overlay
+};
 
 declare const __default_export__: {
-  indicatorWithOverlay: typeof indicatorWithOverlay;
-  indicator: typeof indicator;
-  overlay: typeof overlay;
+	indicatorWithOverlay: typeof indicatorWithOverlay;
+	indicator: typeof indicator;
+	overlay: typeof overlay;
 };
 export default __default_export__;

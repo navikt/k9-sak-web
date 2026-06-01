@@ -8,9 +8,11 @@
 
 declare const begrunnelseWrapper: string;
 
-export { begrunnelseWrapper };
+export {
+	begrunnelseWrapper
+};
 
 declare const __default_export__: {
-  begrunnelseWrapper: typeof begrunnelseWrapper;
+	begrunnelseWrapper: typeof begrunnelseWrapper;
 };
 export default __default_export__;

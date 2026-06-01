@@ -28,46 +28,46 @@ declare const indent: string;
 declare const opprettetDatoContainer: string;
 
 export {
-  starImage,
-  resultatStatusImage,
-  pushRight,
-  pushRightCorner,
-  line,
-  arsakPadding,
-  timePadding,
-  resultatPadding,
-  inline,
-  firstColumnWidth,
-  behandlingPicker,
-  dateContainer,
-  resultContainer,
-  kalenderIcon,
-  smallerUndertittel,
-  utfallImage,
-  indent,
-  opprettetDatoContainer,
+	starImage,
+	resultatStatusImage,
+	pushRight,
+	pushRightCorner,
+	line,
+	arsakPadding,
+	timePadding,
+	resultatPadding,
+	inline,
+	firstColumnWidth,
+	behandlingPicker,
+	dateContainer,
+	resultContainer,
+	kalenderIcon,
+	smallerUndertittel,
+	utfallImage,
+	indent,
+	opprettetDatoContainer
 };
 
 declare const __default_export__: {
-  starImage: typeof starImage;
-  resultatStatusImage: typeof resultatStatusImage;
-  pushRight: typeof pushRight;
-  pushRightCorner: typeof pushRightCorner;
-  line: typeof line;
-  arsakPadding: typeof arsakPadding;
-  timePadding: typeof timePadding;
-  resultatPadding: typeof resultatPadding;
-  inline: typeof inline;
-  firstColumnWidth: typeof firstColumnWidth;
-  behandlingPicker: typeof behandlingPicker;
-  dateContainer: typeof dateContainer;
-  resultContainer: typeof resultContainer;
-  åpneText: typeof _pneText;
-  åpneChevron: typeof _pneChevron;
-  kalenderIcon: typeof kalenderIcon;
-  smallerUndertittel: typeof smallerUndertittel;
-  utfallImage: typeof utfallImage;
-  indent: typeof indent;
-  opprettetDatoContainer: typeof opprettetDatoContainer;
+	starImage: typeof starImage;
+	resultatStatusImage: typeof resultatStatusImage;
+	pushRight: typeof pushRight;
+	pushRightCorner: typeof pushRightCorner;
+	line: typeof line;
+	arsakPadding: typeof arsakPadding;
+	timePadding: typeof timePadding;
+	resultatPadding: typeof resultatPadding;
+	inline: typeof inline;
+	firstColumnWidth: typeof firstColumnWidth;
+	behandlingPicker: typeof behandlingPicker;
+	dateContainer: typeof dateContainer;
+	resultContainer: typeof resultContainer;
+	"åpneText": typeof _pneText;
+	"åpneChevron": typeof _pneChevron;
+	kalenderIcon: typeof kalenderIcon;
+	smallerUndertittel: typeof smallerUndertittel;
+	utfallImage: typeof utfallImage;
+	indent: typeof indent;
+	opprettetDatoContainer: typeof opprettetDatoContainer;
 };
 export default __default_export__;

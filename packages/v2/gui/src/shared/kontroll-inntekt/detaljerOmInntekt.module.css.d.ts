@@ -9,10 +9,13 @@
 declare const sum: string;
 declare const sumLabel: string;
 
-export { sum, sumLabel };
+export {
+	sum,
+	sumLabel
+};
 
 declare const __default_export__: {
-  sum: typeof sum;
-  sumLabel: typeof sumLabel;
+	sum: typeof sum;
+	sumLabel: typeof sumLabel;
 };
 export default __default_export__;

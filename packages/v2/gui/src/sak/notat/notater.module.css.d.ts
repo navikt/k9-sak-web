@@ -14,15 +14,23 @@ declare const nyttNotat: string;
 declare const visAlleNotater: string;
 declare const leggTilNotatKnapp: string;
 
-export { loader, heading, alert, notater, nyttNotat, visAlleNotater, leggTilNotatKnapp };
+export {
+	loader,
+	heading,
+	alert,
+	notater,
+	nyttNotat,
+	visAlleNotater,
+	leggTilNotatKnapp
+};
 
 declare const __default_export__: {
-  loader: typeof loader;
-  heading: typeof heading;
-  alert: typeof alert;
-  notater: typeof notater;
-  nyttNotat: typeof nyttNotat;
-  visAlleNotater: typeof visAlleNotater;
-  leggTilNotatKnapp: typeof leggTilNotatKnapp;
+	loader: typeof loader;
+	heading: typeof heading;
+	alert: typeof alert;
+	notater: typeof notater;
+	nyttNotat: typeof nyttNotat;
+	visAlleNotater: typeof visAlleNotater;
+	leggTilNotatKnapp: typeof leggTilNotatKnapp;
 };
 export default __default_export__;

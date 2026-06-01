@@ -9,10 +9,13 @@
 declare const dodEtikett: string;
 declare const ieFlex: string;
 
-export { dodEtikett, ieFlex };
+export {
+	dodEtikett,
+	ieFlex
+};
 
 declare const __default_export__: {
-  dodEtikett: typeof dodEtikett;
-  ieFlex: typeof ieFlex;
+	dodEtikett: typeof dodEtikett;
+	ieFlex: typeof ieFlex;
 };
 export default __default_export__;

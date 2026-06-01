@@ -18,28 +18,28 @@ declare const alertMeldinger: string;
 declare const skjulEditor: string;
 
 export {
-  alertModalInnehold,
-  knapper,
-  hoyere,
-  knapperHoyere,
-  nullstillCss,
-  papir,
-  ikkeRedigerbartInnhold,
-  redigerbartInnhold,
-  alertMeldinger,
-  skjulEditor,
+	alertModalInnehold,
+	knapper,
+	hoyere,
+	knapperHoyere,
+	nullstillCss,
+	papir,
+	ikkeRedigerbartInnhold,
+	redigerbartInnhold,
+	alertMeldinger,
+	skjulEditor
 };
 
 declare const __default_export__: {
-  alertModalInnehold: typeof alertModalInnehold;
-  knapper: typeof knapper;
-  hoyere: typeof hoyere;
-  knapperHoyere: typeof knapperHoyere;
-  nullstillCss: typeof nullstillCss;
-  papir: typeof papir;
-  ikkeRedigerbartInnhold: typeof ikkeRedigerbartInnhold;
-  redigerbartInnhold: typeof redigerbartInnhold;
-  alertMeldinger: typeof alertMeldinger;
-  skjulEditor: typeof skjulEditor;
+	alertModalInnehold: typeof alertModalInnehold;
+	knapper: typeof knapper;
+	hoyere: typeof hoyere;
+	knapperHoyere: typeof knapperHoyere;
+	nullstillCss: typeof nullstillCss;
+	papir: typeof papir;
+	ikkeRedigerbartInnhold: typeof ikkeRedigerbartInnhold;
+	redigerbartInnhold: typeof redigerbartInnhold;
+	alertMeldinger: typeof alertMeldinger;
+	skjulEditor: typeof skjulEditor;
 };
 export default __default_export__;

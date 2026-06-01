@@ -8,9 +8,11 @@
 
 declare const image: string;
 
-export { image };
+export {
+	image
+};
 
 declare const __default_export__: {
-  image: typeof image;
+	image: typeof image;
 };
 export default __default_export__;

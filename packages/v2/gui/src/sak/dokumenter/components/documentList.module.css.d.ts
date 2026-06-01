@@ -17,26 +17,26 @@ declare const documentAnchor: string;
 declare const documentAnchorPlain: string;
 
 export {
-  image,
-  starIcon,
-  noDocuments,
-  borderTop,
-  modiaLink,
-  externalIcon,
-  controlsContainer,
-  documentAnchor,
-  documentAnchorPlain,
+	image,
+	starIcon,
+	noDocuments,
+	borderTop,
+	modiaLink,
+	externalIcon,
+	controlsContainer,
+	documentAnchor,
+	documentAnchorPlain
 };
 
 declare const __default_export__: {
-  image: typeof image;
-  starIcon: typeof starIcon;
-  noDocuments: typeof noDocuments;
-  borderTop: typeof borderTop;
-  modiaLink: typeof modiaLink;
-  externalIcon: typeof externalIcon;
-  controlsContainer: typeof controlsContainer;
-  documentAnchor: typeof documentAnchor;
-  documentAnchorPlain: typeof documentAnchorPlain;
+	image: typeof image;
+	starIcon: typeof starIcon;
+	noDocuments: typeof noDocuments;
+	borderTop: typeof borderTop;
+	modiaLink: typeof modiaLink;
+	externalIcon: typeof externalIcon;
+	controlsContainer: typeof controlsContainer;
+	documentAnchor: typeof documentAnchor;
+	documentAnchorPlain: typeof documentAnchorPlain;
 };
 export default __default_export__;

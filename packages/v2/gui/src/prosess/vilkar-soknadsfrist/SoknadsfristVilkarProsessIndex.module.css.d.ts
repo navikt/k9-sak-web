@@ -11,12 +11,17 @@ declare const sideMenuContainer: string;
 declare const mainContainerWithSideMenu: string;
 declare const warningIcon: string;
 
-export { contentContainer, sideMenuContainer, mainContainerWithSideMenu, warningIcon };
+export {
+	contentContainer,
+	sideMenuContainer,
+	mainContainerWithSideMenu,
+	warningIcon
+};
 
 declare const __default_export__: {
-  contentContainer: typeof contentContainer;
-  sideMenuContainer: typeof sideMenuContainer;
-  mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
-  warningIcon: typeof warningIcon;
+	contentContainer: typeof contentContainer;
+	sideMenuContainer: typeof sideMenuContainer;
+	mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
+	warningIcon: typeof warningIcon;
 };
 export default __default_export__;

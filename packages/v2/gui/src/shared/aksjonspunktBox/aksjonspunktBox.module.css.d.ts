@@ -9,10 +9,13 @@
 declare const aksjonspunkt: string;
 declare const erAksjonspunktApent: string;
 
-export { aksjonspunkt, erAksjonspunktApent };
+export {
+	aksjonspunkt,
+	erAksjonspunktApent
+};
 
 declare const __default_export__: {
-  aksjonspunkt: typeof aksjonspunkt;
-  erAksjonspunktApent: typeof erAksjonspunktApent;
+	aksjonspunkt: typeof aksjonspunkt;
+	erAksjonspunktApent: typeof erAksjonspunktApent;
 };
 export default __default_export__;

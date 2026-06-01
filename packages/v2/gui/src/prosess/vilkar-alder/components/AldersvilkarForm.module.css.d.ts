@@ -11,12 +11,17 @@ declare const label: string;
 declare const barn: string;
 declare const vurdering: string;
 
-export { opplysninger, label, barn, vurdering };
+export {
+	opplysninger,
+	label,
+	barn,
+	vurdering
+};
 
 declare const __default_export__: {
-  opplysninger: typeof opplysninger;
-  label: typeof label;
-  barn: typeof barn;
-  vurdering: typeof vurdering;
+	opplysninger: typeof opplysninger;
+	label: typeof label;
+	barn: typeof barn;
+	vurdering: typeof vurdering;
 };
 export default __default_export__;

@@ -25,38 +25,38 @@ declare const showDataContainer: string;
 declare const fadeinContainer: string;
 
 export {
-  timelineContainer,
-  fadein,
-  timelineContainerExpanded,
-  open,
-  iconContainer,
-  image,
-  sokerContainer,
-  showDataPanel,
-  hiddenpast,
-  detailsPeriode,
-  tilkjentYtelseTag,
-  showDataContainer,
-  fadeinContainer,
+	timelineContainer,
+	fadein,
+	timelineContainerExpanded,
+	open,
+	iconContainer,
+	image,
+	sokerContainer,
+	showDataPanel,
+	hiddenpast,
+	detailsPeriode,
+	tilkjentYtelseTag,
+	showDataContainer,
+	fadeinContainer
 };
 
 declare const __default_export__: {
-  'vis-item': typeof visItem;
-  'vis-dot': typeof visDot;
-  'vis-selected': typeof visSelected;
-  'vis-timeline': typeof visTimeline;
-  timelineContainer: typeof timelineContainer;
-  fadein: typeof fadein;
-  timelineContainerExpanded: typeof timelineContainerExpanded;
-  open: typeof open;
-  iconContainer: typeof iconContainer;
-  image: typeof image;
-  sokerContainer: typeof sokerContainer;
-  showDataPanel: typeof showDataPanel;
-  hiddenpast: typeof hiddenpast;
-  detailsPeriode: typeof detailsPeriode;
-  tilkjentYtelseTag: typeof tilkjentYtelseTag;
-  showDataContainer: typeof showDataContainer;
-  fadeinContainer: typeof fadeinContainer;
+	"vis-item": typeof visItem;
+	"vis-dot": typeof visDot;
+	"vis-selected": typeof visSelected;
+	"vis-timeline": typeof visTimeline;
+	timelineContainer: typeof timelineContainer;
+	fadein: typeof fadein;
+	timelineContainerExpanded: typeof timelineContainerExpanded;
+	open: typeof open;
+	iconContainer: typeof iconContainer;
+	image: typeof image;
+	sokerContainer: typeof sokerContainer;
+	showDataPanel: typeof showDataPanel;
+	hiddenpast: typeof hiddenpast;
+	detailsPeriode: typeof detailsPeriode;
+	tilkjentYtelseTag: typeof tilkjentYtelseTag;
+	showDataContainer: typeof showDataContainer;
+	fadeinContainer: typeof fadeinContainer;
 };
 export default __default_export__;

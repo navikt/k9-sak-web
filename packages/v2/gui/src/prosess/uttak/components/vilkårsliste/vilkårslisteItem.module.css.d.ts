@@ -9,10 +9,13 @@
 declare const item: string;
 declare const itemText: string;
 
-export { item, itemText };
+export {
+	item,
+	itemText
+};
 
 declare const __default_export__: {
-  item: typeof item;
-  itemText: typeof itemText;
+	item: typeof item;
+	itemText: typeof itemText;
 };
 export default __default_export__;

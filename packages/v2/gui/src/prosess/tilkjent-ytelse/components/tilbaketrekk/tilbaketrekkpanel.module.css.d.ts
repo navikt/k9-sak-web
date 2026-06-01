@@ -13,14 +13,21 @@ declare const oneElement: string;
 declare const aksjonspunktText: string;
 declare const wordwrap: string;
 
-export { container, divider, image, oneElement, aksjonspunktText, wordwrap };
+export {
+	container,
+	divider,
+	image,
+	oneElement,
+	aksjonspunktText,
+	wordwrap
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  divider: typeof divider;
-  image: typeof image;
-  oneElement: typeof oneElement;
-  aksjonspunktText: typeof aksjonspunktText;
-  wordwrap: typeof wordwrap;
+	container: typeof container;
+	divider: typeof divider;
+	image: typeof image;
+	oneElement: typeof oneElement;
+	aksjonspunktText: typeof aksjonspunktText;
+	wordwrap: typeof wordwrap;
 };
 export default __default_export__;

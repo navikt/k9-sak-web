@@ -12,13 +12,19 @@ declare const lastRow: string;
 declare const exclamationmarkIcon: string;
 declare const checkmarkIcon: string;
 
-export { firstHeaderCell, firstDataCell, lastRow, exclamationmarkIcon, checkmarkIcon };
+export {
+	firstHeaderCell,
+	firstDataCell,
+	lastRow,
+	exclamationmarkIcon,
+	checkmarkIcon
+};
 
 declare const __default_export__: {
-  firstHeaderCell: typeof firstHeaderCell;
-  firstDataCell: typeof firstDataCell;
-  lastRow: typeof lastRow;
-  exclamationmarkIcon: typeof exclamationmarkIcon;
-  checkmarkIcon: typeof checkmarkIcon;
+	firstHeaderCell: typeof firstHeaderCell;
+	firstDataCell: typeof firstDataCell;
+	lastRow: typeof lastRow;
+	exclamationmarkIcon: typeof exclamationmarkIcon;
+	checkmarkIcon: typeof checkmarkIcon;
 };
 export default __default_export__;

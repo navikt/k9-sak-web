@@ -28,48 +28,48 @@ declare const uttakDetaljerNyTag: string;
 declare const uttakDetaljerDetailtext: string;
 
 export {
-  uttakDetaljer,
-  uttakDetaljerGraderingDetaljer,
-  uttakDetaljerGraderingDetaljerHighlighted,
-  uttakDetaljerGraderingDetaljerNotHighlighted,
-  uttakDetaljerDetailItem,
-  uttakDetaljerDetailSum,
-  uttakDetaljerDataQuestionMark,
-  uttakDetaljerExpandableDetailItem,
-  uttakDetaljerExpandableDetailItemHeader,
-  uttakDetaljerExpandableDetailItemContentCollapsed,
-  uttakDetaljerNyGradering,
-  uttakDetaljerTag,
-  uttakDetaljerBeregningFirma,
-  uttakDetaljerTaptInntektBeregning,
-  uttakDetaljerTaptInntektAnnotasjon,
-  uttakDetaljerBeregningStrek,
-  uttakDetaljerBeregningSum,
-  uttakDetaljerUtnullet,
-  uttakDetaljerNyTag,
-  uttakDetaljerDetailtext,
+	uttakDetaljer,
+	uttakDetaljerGraderingDetaljer,
+	uttakDetaljerGraderingDetaljerHighlighted,
+	uttakDetaljerGraderingDetaljerNotHighlighted,
+	uttakDetaljerDetailItem,
+	uttakDetaljerDetailSum,
+	uttakDetaljerDataQuestionMark,
+	uttakDetaljerExpandableDetailItem,
+	uttakDetaljerExpandableDetailItemHeader,
+	uttakDetaljerExpandableDetailItemContentCollapsed,
+	uttakDetaljerNyGradering,
+	uttakDetaljerTag,
+	uttakDetaljerBeregningFirma,
+	uttakDetaljerTaptInntektBeregning,
+	uttakDetaljerTaptInntektAnnotasjon,
+	uttakDetaljerBeregningStrek,
+	uttakDetaljerBeregningSum,
+	uttakDetaljerUtnullet,
+	uttakDetaljerNyTag,
+	uttakDetaljerDetailtext
 };
 
 declare const __default_export__: {
-  uttakDetaljer: typeof uttakDetaljer;
-  uttakDetaljerGraderingDetaljer: typeof uttakDetaljerGraderingDetaljer;
-  uttakDetaljerGraderingDetaljerHighlighted: typeof uttakDetaljerGraderingDetaljerHighlighted;
-  uttakDetaljerGraderingDetaljerNotHighlighted: typeof uttakDetaljerGraderingDetaljerNotHighlighted;
-  uttakDetaljerDetailItem: typeof uttakDetaljerDetailItem;
-  uttakDetaljerDetailSum: typeof uttakDetaljerDetailSum;
-  uttakDetaljerDataQuestionMark: typeof uttakDetaljerDataQuestionMark;
-  uttakDetaljerExpandableDetailItem: typeof uttakDetaljerExpandableDetailItem;
-  uttakDetaljerExpandableDetailItemHeader: typeof uttakDetaljerExpandableDetailItemHeader;
-  uttakDetaljerExpandableDetailItemContentCollapsed: typeof uttakDetaljerExpandableDetailItemContentCollapsed;
-  uttakDetaljerNyGradering: typeof uttakDetaljerNyGradering;
-  uttakDetaljerTag: typeof uttakDetaljerTag;
-  uttakDetaljerBeregningFirma: typeof uttakDetaljerBeregningFirma;
-  uttakDetaljerTaptInntektBeregning: typeof uttakDetaljerTaptInntektBeregning;
-  uttakDetaljerTaptInntektAnnotasjon: typeof uttakDetaljerTaptInntektAnnotasjon;
-  uttakDetaljerBeregningStrek: typeof uttakDetaljerBeregningStrek;
-  uttakDetaljerBeregningSum: typeof uttakDetaljerBeregningSum;
-  uttakDetaljerUtnullet: typeof uttakDetaljerUtnullet;
-  uttakDetaljerNyTag: typeof uttakDetaljerNyTag;
-  uttakDetaljerDetailtext: typeof uttakDetaljerDetailtext;
+	uttakDetaljer: typeof uttakDetaljer;
+	uttakDetaljerGraderingDetaljer: typeof uttakDetaljerGraderingDetaljer;
+	uttakDetaljerGraderingDetaljerHighlighted: typeof uttakDetaljerGraderingDetaljerHighlighted;
+	uttakDetaljerGraderingDetaljerNotHighlighted: typeof uttakDetaljerGraderingDetaljerNotHighlighted;
+	uttakDetaljerDetailItem: typeof uttakDetaljerDetailItem;
+	uttakDetaljerDetailSum: typeof uttakDetaljerDetailSum;
+	uttakDetaljerDataQuestionMark: typeof uttakDetaljerDataQuestionMark;
+	uttakDetaljerExpandableDetailItem: typeof uttakDetaljerExpandableDetailItem;
+	uttakDetaljerExpandableDetailItemHeader: typeof uttakDetaljerExpandableDetailItemHeader;
+	uttakDetaljerExpandableDetailItemContentCollapsed: typeof uttakDetaljerExpandableDetailItemContentCollapsed;
+	uttakDetaljerNyGradering: typeof uttakDetaljerNyGradering;
+	uttakDetaljerTag: typeof uttakDetaljerTag;
+	uttakDetaljerBeregningFirma: typeof uttakDetaljerBeregningFirma;
+	uttakDetaljerTaptInntektBeregning: typeof uttakDetaljerTaptInntektBeregning;
+	uttakDetaljerTaptInntektAnnotasjon: typeof uttakDetaljerTaptInntektAnnotasjon;
+	uttakDetaljerBeregningStrek: typeof uttakDetaljerBeregningStrek;
+	uttakDetaljerBeregningSum: typeof uttakDetaljerBeregningSum;
+	uttakDetaljerUtnullet: typeof uttakDetaljerUtnullet;
+	uttakDetaljerNyTag: typeof uttakDetaljerNyTag;
+	uttakDetaljerDetailtext: typeof uttakDetaljerDetailtext;
 };
 export default __default_export__;

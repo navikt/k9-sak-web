@@ -11,12 +11,17 @@ declare const image: string;
 declare const fullBreddeIE: string;
 declare const editButton: string;
 
-export { container, image, fullBreddeIE, editButton };
+export {
+	container,
+	image,
+	fullBreddeIE,
+	editButton
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  image: typeof image;
-  fullBreddeIE: typeof fullBreddeIE;
-  editButton: typeof editButton;
+	container: typeof container;
+	image: typeof image;
+	fullBreddeIE: typeof fullBreddeIE;
+	editButton: typeof editButton;
 };
 export default __default_export__;

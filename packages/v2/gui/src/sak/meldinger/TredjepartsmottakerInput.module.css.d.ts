@@ -11,12 +11,17 @@ declare const orgnumField: string;
 declare const orgnameField: string;
 declare const errorField: string;
 
-export { container, orgnumField, orgnameField, errorField };
+export {
+	container,
+	orgnumField,
+	orgnameField,
+	errorField
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  orgnumField: typeof orgnumField;
-  orgnameField: typeof orgnameField;
-  errorField: typeof errorField;
+	container: typeof container;
+	orgnumField: typeof orgnumField;
+	orgnameField: typeof orgnameField;
+	errorField: typeof errorField;
 };
 export default __default_export__;

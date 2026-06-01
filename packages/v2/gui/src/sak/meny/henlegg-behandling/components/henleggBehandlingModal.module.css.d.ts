@@ -10,11 +10,15 @@ declare const modal: string;
 declare const button: string;
 declare const forhandsvis: string;
 
-export { modal, button, forhandsvis };
+export {
+	modal,
+	button,
+	forhandsvis
+};
 
 declare const __default_export__: {
-  modal: typeof modal;
-  button: typeof button;
-  forhandsvis: typeof forhandsvis;
+	modal: typeof modal;
+	button: typeof button;
+	forhandsvis: typeof forhandsvis;
 };
 export default __default_export__;

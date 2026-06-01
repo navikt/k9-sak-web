@@ -11,12 +11,17 @@ declare const pillIconSuccess: string;
 declare const pillIconWarning: string;
 declare const pillIconInfo: string;
 
-export { pillIcon, pillIconSuccess, pillIconWarning, pillIconInfo };
+export {
+	pillIcon,
+	pillIconSuccess,
+	pillIconWarning,
+	pillIconInfo
+};
 
 declare const __default_export__: {
-  pillIcon: typeof pillIcon;
-  pillIconSuccess: typeof pillIconSuccess;
-  pillIconWarning: typeof pillIconWarning;
-  pillIconInfo: typeof pillIconInfo;
+	pillIcon: typeof pillIcon;
+	pillIconSuccess: typeof pillIconSuccess;
+	pillIconWarning: typeof pillIconWarning;
+	pillIconInfo: typeof pillIconInfo;
 };
 export default __default_export__;

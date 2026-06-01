@@ -13,14 +13,21 @@ declare const noBottomBorder: string;
 declare const utbetalingText: string;
 declare const sum: string;
 
-export { sats, dagsatsSection, firstHeaderCell, noBottomBorder, utbetalingText, sum };
+export {
+	sats,
+	dagsatsSection,
+	firstHeaderCell,
+	noBottomBorder,
+	utbetalingText,
+	sum
+};
 
 declare const __default_export__: {
-  sats: typeof sats;
-  dagsatsSection: typeof dagsatsSection;
-  firstHeaderCell: typeof firstHeaderCell;
-  noBottomBorder: typeof noBottomBorder;
-  utbetalingText: typeof utbetalingText;
-  sum: typeof sum;
+	sats: typeof sats;
+	dagsatsSection: typeof dagsatsSection;
+	firstHeaderCell: typeof firstHeaderCell;
+	noBottomBorder: typeof noBottomBorder;
+	utbetalingText: typeof utbetalingText;
+	sum: typeof sum;
 };
 export default __default_export__;

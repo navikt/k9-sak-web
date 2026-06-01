@@ -9,10 +9,13 @@
 declare const basicList: string;
 declare const element: string;
 
-export { basicList, element };
+export {
+	basicList,
+	element
+};
 
 declare const __default_export__: {
-  basicList: typeof basicList;
-  element: typeof element;
+	basicList: typeof basicList;
+	element: typeof element;
 };
 export default __default_export__;

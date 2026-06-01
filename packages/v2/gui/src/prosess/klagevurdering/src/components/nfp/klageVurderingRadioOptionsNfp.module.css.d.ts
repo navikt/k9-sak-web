@@ -13,14 +13,21 @@ declare const panel: string;
 declare const fritekstTilBrevTextArea: string;
 declare const explanationTextarea: string;
 
-export { previewLink, selectReadOnly, confirmVilkarForm, panel, fritekstTilBrevTextArea, explanationTextarea };
+export {
+	previewLink,
+	selectReadOnly,
+	confirmVilkarForm,
+	panel,
+	fritekstTilBrevTextArea,
+	explanationTextarea
+};
 
 declare const __default_export__: {
-  previewLink: typeof previewLink;
-  selectReadOnly: typeof selectReadOnly;
-  confirmVilkarForm: typeof confirmVilkarForm;
-  panel: typeof panel;
-  fritekstTilBrevTextArea: typeof fritekstTilBrevTextArea;
-  explanationTextarea: typeof explanationTextarea;
+	previewLink: typeof previewLink;
+	selectReadOnly: typeof selectReadOnly;
+	confirmVilkarForm: typeof confirmVilkarForm;
+	panel: typeof panel;
+	fritekstTilBrevTextArea: typeof fritekstTilBrevTextArea;
+	explanationTextarea: typeof explanationTextarea;
 };
 export default __default_export__;

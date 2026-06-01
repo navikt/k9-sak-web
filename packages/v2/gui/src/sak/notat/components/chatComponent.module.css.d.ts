@@ -17,26 +17,26 @@ declare const chatRight: string;
 declare const chatLeft: string;
 
 export {
-  nyttNotatTekst,
-  nyttNotatKnappContainer,
-  notatContainer,
-  labelTagContainer,
-  redigerSkjulNotatKnappContainer,
-  redigerSkjulKnapp,
-  navnTag,
-  chatRight,
-  chatLeft,
+	nyttNotatTekst,
+	nyttNotatKnappContainer,
+	notatContainer,
+	labelTagContainer,
+	redigerSkjulNotatKnappContainer,
+	redigerSkjulKnapp,
+	navnTag,
+	chatRight,
+	chatLeft
 };
 
 declare const __default_export__: {
-  nyttNotatTekst: typeof nyttNotatTekst;
-  nyttNotatKnappContainer: typeof nyttNotatKnappContainer;
-  notatContainer: typeof notatContainer;
-  labelTagContainer: typeof labelTagContainer;
-  redigerSkjulNotatKnappContainer: typeof redigerSkjulNotatKnappContainer;
-  redigerSkjulKnapp: typeof redigerSkjulKnapp;
-  navnTag: typeof navnTag;
-  chatRight: typeof chatRight;
-  chatLeft: typeof chatLeft;
+	nyttNotatTekst: typeof nyttNotatTekst;
+	nyttNotatKnappContainer: typeof nyttNotatKnappContainer;
+	notatContainer: typeof notatContainer;
+	labelTagContainer: typeof labelTagContainer;
+	redigerSkjulNotatKnappContainer: typeof redigerSkjulNotatKnappContainer;
+	redigerSkjulKnapp: typeof redigerSkjulKnapp;
+	navnTag: typeof navnTag;
+	chatRight: typeof chatRight;
+	chatLeft: typeof chatLeft;
 };
 export default __default_export__;

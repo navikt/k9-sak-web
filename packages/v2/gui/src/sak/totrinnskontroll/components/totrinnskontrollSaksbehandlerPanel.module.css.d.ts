@@ -14,20 +14,20 @@ declare const resultatFraGodkjenningTextContainer: string;
 declare const lenke: string;
 
 export {
-  image,
-  approvalItem,
-  approvalItemContainer,
-  aksjonspunktTextContainer,
-  resultatFraGodkjenningTextContainer,
-  lenke,
+	image,
+	approvalItem,
+	approvalItemContainer,
+	aksjonspunktTextContainer,
+	resultatFraGodkjenningTextContainer,
+	lenke
 };
 
 declare const __default_export__: {
-  image: typeof image;
-  approvalItem: typeof approvalItem;
-  approvalItemContainer: typeof approvalItemContainer;
-  aksjonspunktTextContainer: typeof aksjonspunktTextContainer;
-  resultatFraGodkjenningTextContainer: typeof resultatFraGodkjenningTextContainer;
-  lenke: typeof lenke;
+	image: typeof image;
+	approvalItem: typeof approvalItem;
+	approvalItemContainer: typeof approvalItemContainer;
+	aksjonspunktTextContainer: typeof aksjonspunktTextContainer;
+	resultatFraGodkjenningTextContainer: typeof resultatFraGodkjenningTextContainer;
+	lenke: typeof lenke;
 };
 export default __default_export__;

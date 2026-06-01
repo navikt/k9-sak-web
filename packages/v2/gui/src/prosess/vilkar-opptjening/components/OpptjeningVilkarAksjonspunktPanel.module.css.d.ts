@@ -8,9 +8,11 @@
 
 declare const titelOgHjelpetekstFlexbox: string;
 
-export { titelOgHjelpetekstFlexbox };
+export {
+	titelOgHjelpetekstFlexbox
+};
 
 declare const __default_export__: {
-  titelOgHjelpetekstFlexbox: typeof titelOgHjelpetekstFlexbox;
+	titelOgHjelpetekstFlexbox: typeof titelOgHjelpetekstFlexbox;
 };
 export default __default_export__;

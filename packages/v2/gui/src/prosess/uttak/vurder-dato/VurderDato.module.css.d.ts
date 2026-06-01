@@ -10,11 +10,15 @@ declare const vurderDatoContainer: string;
 declare const info: string;
 declare const alertAccordion: string;
 
-export { vurderDatoContainer, info, alertAccordion };
+export {
+	vurderDatoContainer,
+	info,
+	alertAccordion
+};
 
 declare const __default_export__: {
-  vurderDatoContainer: typeof vurderDatoContainer;
-  info: typeof info;
-  alertAccordion: typeof alertAccordion;
+	vurderDatoContainer: typeof vurderDatoContainer;
+	info: typeof info;
+	alertAccordion: typeof alertAccordion;
 };
 export default __default_export__;

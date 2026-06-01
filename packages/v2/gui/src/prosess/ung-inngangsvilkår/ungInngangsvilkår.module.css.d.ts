@@ -8,9 +8,11 @@
 
 declare const lovreferanse: string;
 
-export { lovreferanse };
+export {
+	lovreferanse
+};
 
 declare const __default_export__: {
-  lovreferanse: typeof lovreferanse;
+	lovreferanse: typeof lovreferanse;
 };
 export default __default_export__;

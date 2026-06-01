@@ -13,14 +13,21 @@ declare const vilkar: string;
 declare const aksjonspunktBox: string;
 declare const aksjonspunktBoxOpen: string;
 
-export { status, key, keyWithoutCursor, vilkar, aksjonspunktBox, aksjonspunktBoxOpen };
+export {
+	status,
+	key,
+	keyWithoutCursor,
+	vilkar,
+	aksjonspunktBox,
+	aksjonspunktBoxOpen
+};
 
 declare const __default_export__: {
-  status: typeof status;
-  key: typeof key;
-  keyWithoutCursor: typeof keyWithoutCursor;
-  vilkar: typeof vilkar;
-  aksjonspunktBox: typeof aksjonspunktBox;
-  aksjonspunktBoxOpen: typeof aksjonspunktBoxOpen;
+	status: typeof status;
+	key: typeof key;
+	keyWithoutCursor: typeof keyWithoutCursor;
+	vilkar: typeof vilkar;
+	aksjonspunktBox: typeof aksjonspunktBox;
+	aksjonspunktBoxOpen: typeof aksjonspunktBoxOpen;
 };
 export default __default_export__;

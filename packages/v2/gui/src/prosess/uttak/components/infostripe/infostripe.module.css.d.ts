@@ -9,10 +9,13 @@
 declare const infostripe: string;
 declare const infostripePunktliste: string;
 
-export { infostripe, infostripePunktliste };
+export {
+	infostripe,
+	infostripePunktliste
+};
 
 declare const __default_export__: {
-  infostripe: typeof infostripe;
-  infostripePunktliste: typeof infostripePunktliste;
+	infostripe: typeof infostripe;
+	infostripePunktliste: typeof infostripePunktliste;
 };
 export default __default_export__;

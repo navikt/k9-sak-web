@@ -12,13 +12,19 @@ declare const image: string;
 declare const divider: string;
 declare const floatButtons: string;
 
-export { modal, infotekstBeskrivelse, image, divider, floatButtons };
+export {
+	modal,
+	infotekstBeskrivelse,
+	image,
+	divider,
+	floatButtons
+};
 
 declare const __default_export__: {
-  modal: typeof modal;
-  infotekstBeskrivelse: typeof infotekstBeskrivelse;
-  image: typeof image;
-  divider: typeof divider;
-  floatButtons: typeof floatButtons;
+	modal: typeof modal;
+	infotekstBeskrivelse: typeof infotekstBeskrivelse;
+	image: typeof image;
+	divider: typeof divider;
+	floatButtons: typeof floatButtons;
 };
 export default __default_export__;

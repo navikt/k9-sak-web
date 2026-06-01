@@ -11,12 +11,17 @@ declare const element: string;
 declare const content: string;
 declare const item: string;
 
-export { periodList, element, content, item };
+export {
+	periodList,
+	element,
+	content,
+	item
+};
 
 declare const __default_export__: {
-  periodList: typeof periodList;
-  element: typeof element;
-  content: typeof content;
-  item: typeof item;
+	periodList: typeof periodList;
+	element: typeof element;
+	content: typeof content;
+	item: typeof item;
 };
 export default __default_export__;

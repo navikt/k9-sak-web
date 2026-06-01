@@ -9,6 +9,6 @@
 declare const vilk_rsliste: string;
 
 declare const __default_export__: {
-  vilkårsliste: typeof vilk_rsliste;
+	"vilkårsliste": typeof vilk_rsliste;
 };
 export default __default_export__;

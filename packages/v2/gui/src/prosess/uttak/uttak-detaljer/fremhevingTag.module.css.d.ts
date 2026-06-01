@@ -8,9 +8,11 @@
 
 declare const fremhevingTag: string;
 
-export { fremhevingTag };
+export {
+	fremhevingTag
+};
 
 declare const __default_export__: {
-  fremhevingTag: typeof fremhevingTag;
+	fremhevingTag: typeof fremhevingTag;
 };
 export default __default_export__;

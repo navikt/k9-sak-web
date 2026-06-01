@@ -10,11 +10,15 @@ declare const vurderDatoAksjonspunktContainer: string;
 declare const knapper: string;
 declare const bekreft: string;
 
-export { vurderDatoAksjonspunktContainer, knapper, bekreft };
+export {
+	vurderDatoAksjonspunktContainer,
+	knapper,
+	bekreft
+};
 
 declare const __default_export__: {
-  vurderDatoAksjonspunktContainer: typeof vurderDatoAksjonspunktContainer;
-  knapper: typeof knapper;
-  bekreft: typeof bekreft;
+	vurderDatoAksjonspunktContainer: typeof vurderDatoAksjonspunktContainer;
+	knapper: typeof knapper;
+	bekreft: typeof bekreft;
 };
 export default __default_export__;

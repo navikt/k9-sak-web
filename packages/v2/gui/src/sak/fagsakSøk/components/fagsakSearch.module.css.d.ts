@@ -9,10 +9,13 @@
 declare const container: string;
 declare const label: string;
 
-export { container, label };
+export {
+	container,
+	label
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  label: typeof label;
+	container: typeof container;
+	label: typeof label;
 };
 export default __default_export__;

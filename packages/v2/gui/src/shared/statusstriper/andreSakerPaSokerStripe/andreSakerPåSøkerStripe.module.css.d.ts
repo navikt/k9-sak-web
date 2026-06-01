@@ -9,10 +9,13 @@
 declare const fagsakLenke: string;
 declare const fagsakLenkeContainer: string;
 
-export { fagsakLenke, fagsakLenkeContainer };
+export {
+	fagsakLenke,
+	fagsakLenkeContainer
+};
 
 declare const __default_export__: {
-  fagsakLenke: typeof fagsakLenke;
-  fagsakLenkeContainer: typeof fagsakLenkeContainer;
+	fagsakLenke: typeof fagsakLenke;
+	fagsakLenkeContainer: typeof fagsakLenkeContainer;
 };
 export default __default_export__;

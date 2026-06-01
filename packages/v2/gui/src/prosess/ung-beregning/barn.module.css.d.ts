@@ -9,10 +9,13 @@
 declare const lastRow: string;
 declare const firstHeaderCell: string;
 
-export { lastRow, firstHeaderCell };
+export {
+	lastRow,
+	firstHeaderCell
+};
 
 declare const __default_export__: {
-  lastRow: typeof lastRow;
-  firstHeaderCell: typeof firstHeaderCell;
+	lastRow: typeof lastRow;
+	firstHeaderCell: typeof firstHeaderCell;
 };
 export default __default_export__;

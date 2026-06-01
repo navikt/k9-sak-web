@@ -13,14 +13,21 @@ declare const linkToBehandling: string;
 declare const toggleShowAllButton: string;
 declare const headerContainer: string;
 
-export { behandlingPicker, backButton, behandlingList, linkToBehandling, toggleShowAllButton, headerContainer };
+export {
+	behandlingPicker,
+	backButton,
+	behandlingList,
+	linkToBehandling,
+	toggleShowAllButton,
+	headerContainer
+};
 
 declare const __default_export__: {
-  behandlingPicker: typeof behandlingPicker;
-  backButton: typeof backButton;
-  behandlingList: typeof behandlingList;
-  linkToBehandling: typeof linkToBehandling;
-  toggleShowAllButton: typeof toggleShowAllButton;
-  headerContainer: typeof headerContainer;
+	behandlingPicker: typeof behandlingPicker;
+	backButton: typeof backButton;
+	behandlingList: typeof behandlingList;
+	linkToBehandling: typeof linkToBehandling;
+	toggleShowAllButton: typeof toggleShowAllButton;
+	headerContainer: typeof headerContainer;
 };
 export default __default_export__;

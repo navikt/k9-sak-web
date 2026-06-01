@@ -9,10 +9,13 @@
 declare const endringsloggContainer: string;
 declare const containerDev: string;
 
-export { endringsloggContainer, containerDev };
+export {
+	endringsloggContainer,
+	containerDev
+};
 
 declare const __default_export__: {
-  endringsloggContainer: typeof endringsloggContainer;
-  containerDev: typeof containerDev;
+	endringsloggContainer: typeof endringsloggContainer;
+	containerDev: typeof containerDev;
 };
 export default __default_export__;

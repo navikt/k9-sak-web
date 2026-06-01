@@ -11,12 +11,17 @@ declare const button: string;
 declare const advarselIcon: string;
 declare const feilmelding: string;
 
-export { container, button, advarselIcon, feilmelding };
+export {
+	container,
+	button,
+	advarselIcon,
+	feilmelding
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  button: typeof button;
-  advarselIcon: typeof advarselIcon;
-  feilmelding: typeof feilmelding;
+	container: typeof container;
+	button: typeof button;
+	advarselIcon: typeof advarselIcon;
+	feilmelding: typeof feilmelding;
 };
 export default __default_export__;

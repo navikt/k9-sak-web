@@ -11,12 +11,17 @@ declare const utenlandsopphold__info: string;
 declare const alertstripe: string;
 declare const alertstripe__tekst: string;
 
-export { utenlandsopphold, utenlandsopphold__info, alertstripe, alertstripe__tekst };
+export {
+	utenlandsopphold,
+	utenlandsopphold__info,
+	alertstripe,
+	alertstripe__tekst
+};
 
 declare const __default_export__: {
-  utenlandsopphold: typeof utenlandsopphold;
-  utenlandsopphold__info: typeof utenlandsopphold__info;
-  alertstripe: typeof alertstripe;
-  alertstripe__tekst: typeof alertstripe__tekst;
+	utenlandsopphold: typeof utenlandsopphold;
+	utenlandsopphold__info: typeof utenlandsopphold__info;
+	alertstripe: typeof alertstripe;
+	alertstripe__tekst: typeof alertstripe__tekst;
 };
 export default __default_export__;

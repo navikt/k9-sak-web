@@ -11,12 +11,17 @@ declare const link: string;
 declare const lukkContainer: string;
 declare const wordWrap: string;
 
-export { container, link, lukkContainer, wordWrap };
+export {
+	container,
+	link,
+	lukkContainer,
+	wordWrap
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  link: typeof link;
-  lukkContainer: typeof lukkContainer;
-  wordWrap: typeof wordWrap;
+	container: typeof container;
+	link: typeof link;
+	lukkContainer: typeof lukkContainer;
+	wordWrap: typeof wordWrap;
 };
 export default __default_export__;

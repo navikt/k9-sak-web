@@ -15,22 +15,22 @@ declare const utbetalingsgradProsent: string;
 declare const utbetalingsgradNavn: string;
 
 export {
-  begrunnelseBoks,
-  begrunnelseTekst,
-  begrunnelseFooter,
-  utbetalingsgrader,
-  utbetalingsgrad,
-  utbetalingsgradProsent,
-  utbetalingsgradNavn,
+	begrunnelseBoks,
+	begrunnelseTekst,
+	begrunnelseFooter,
+	utbetalingsgrader,
+	utbetalingsgrad,
+	utbetalingsgradProsent,
+	utbetalingsgradNavn
 };
 
 declare const __default_export__: {
-  begrunnelseBoks: typeof begrunnelseBoks;
-  begrunnelseTekst: typeof begrunnelseTekst;
-  begrunnelseFooter: typeof begrunnelseFooter;
-  utbetalingsgrader: typeof utbetalingsgrader;
-  utbetalingsgrad: typeof utbetalingsgrad;
-  utbetalingsgradProsent: typeof utbetalingsgradProsent;
-  utbetalingsgradNavn: typeof utbetalingsgradNavn;
+	begrunnelseBoks: typeof begrunnelseBoks;
+	begrunnelseTekst: typeof begrunnelseTekst;
+	begrunnelseFooter: typeof begrunnelseFooter;
+	utbetalingsgrader: typeof utbetalingsgrader;
+	utbetalingsgrad: typeof utbetalingsgrad;
+	utbetalingsgradProsent: typeof utbetalingsgradProsent;
+	utbetalingsgradNavn: typeof utbetalingsgradNavn;
 };
 export default __default_export__;

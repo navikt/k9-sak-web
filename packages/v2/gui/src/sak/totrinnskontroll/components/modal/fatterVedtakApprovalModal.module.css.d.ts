@@ -11,12 +11,17 @@ declare const divider: string;
 declare const image: string;
 declare const modal: string;
 
-export { button, divider, image, modal };
+export {
+	button,
+	divider,
+	image,
+	modal
+};
 
 declare const __default_export__: {
-  button: typeof button;
-  divider: typeof divider;
-  image: typeof image;
-  modal: typeof modal;
+	button: typeof button;
+	divider: typeof divider;
+	image: typeof image;
+	modal: typeof modal;
 };
 export default __default_export__;

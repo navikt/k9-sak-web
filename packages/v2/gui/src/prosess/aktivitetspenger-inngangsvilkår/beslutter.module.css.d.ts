@@ -8,9 +8,11 @@
 
 declare const buttonLink: string;
 
-export { buttonLink };
+export {
+	buttonLink
+};
 
 declare const __default_export__: {
-  buttonLink: typeof buttonLink;
+	buttonLink: typeof buttonLink;
 };
 export default __default_export__;

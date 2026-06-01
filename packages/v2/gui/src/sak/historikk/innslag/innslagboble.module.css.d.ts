@@ -8,9 +8,11 @@
 
 declare const chatRight: string;
 
-export { chatRight };
+export {
+	chatRight
+};
 
 declare const __default_export__: {
-  chatRight: typeof chatRight;
+	chatRight: typeof chatRight;
 };
 export default __default_export__;

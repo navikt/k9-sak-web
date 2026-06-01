@@ -29,47 +29,47 @@ declare const _rsakerList: string;
 declare const faktapanelLenke: string;
 
 export {
-  behandlingSelectedContainer,
-  aapen,
-  dateContainer,
-  resultContainer,
-  opprettet,
-  opprettetIcon,
-  opprettetTittel,
-  opprettetDetails,
-  timeline,
-  kalenderIcon,
-  utfallImage,
-  infoContainer,
-  flexContainer,
-  marginRight4,
-  marginTop8,
-  marginTop2,
-  font18,
-  faktapanelLenke,
+	behandlingSelectedContainer,
+	aapen,
+	dateContainer,
+	resultContainer,
+	opprettet,
+	opprettetIcon,
+	opprettetTittel,
+	opprettetDetails,
+	timeline,
+	kalenderIcon,
+	utfallImage,
+	infoContainer,
+	flexContainer,
+	marginRight4,
+	marginTop8,
+	marginTop2,
+	font18,
+	faktapanelLenke
 };
 
 declare const __default_export__: {
-  behandlingSelectedContainer: typeof behandlingSelectedContainer;
-  aapen: typeof aapen;
-  dateContainer: typeof dateContainer;
-  resultContainer: typeof resultContainer;
-  opprettet: typeof opprettet;
-  opprettetIcon: typeof opprettetIcon;
-  opprettetTittel: typeof opprettetTittel;
-  opprettetDetails: typeof opprettetDetails;
-  timeline: typeof timeline;
-  opprettetÅrsak: typeof opprettet_rsak;
-  kalenderIcon: typeof kalenderIcon;
-  utfallImage: typeof utfallImage;
-  infoContainer: typeof infoContainer;
-  flexContainer: typeof flexContainer;
-  marginRight4: typeof marginRight4;
-  marginTop8: typeof marginTop8;
-  marginTop2: typeof marginTop2;
-  font18: typeof font18;
-  årsakerContainer: typeof _rsakerContainer;
-  årsakerList: typeof _rsakerList;
-  faktapanelLenke: typeof faktapanelLenke;
+	behandlingSelectedContainer: typeof behandlingSelectedContainer;
+	aapen: typeof aapen;
+	dateContainer: typeof dateContainer;
+	resultContainer: typeof resultContainer;
+	opprettet: typeof opprettet;
+	opprettetIcon: typeof opprettetIcon;
+	opprettetTittel: typeof opprettetTittel;
+	opprettetDetails: typeof opprettetDetails;
+	timeline: typeof timeline;
+	"opprettetÅrsak": typeof opprettet_rsak;
+	kalenderIcon: typeof kalenderIcon;
+	utfallImage: typeof utfallImage;
+	infoContainer: typeof infoContainer;
+	flexContainer: typeof flexContainer;
+	marginRight4: typeof marginRight4;
+	marginTop8: typeof marginTop8;
+	marginTop2: typeof marginTop2;
+	font18: typeof font18;
+	"årsakerContainer": typeof _rsakerContainer;
+	"årsakerList": typeof _rsakerList;
+	faktapanelLenke: typeof faktapanelLenke;
 };
 export default __default_export__;

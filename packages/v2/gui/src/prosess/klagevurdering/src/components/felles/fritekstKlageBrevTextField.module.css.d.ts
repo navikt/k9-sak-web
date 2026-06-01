@@ -8,9 +8,11 @@
 
 declare const fritekstTilBrevTextArea: string;
 
-export { fritekstTilBrevTextArea };
+export {
+	fritekstTilBrevTextArea
+};
 
 declare const __default_export__: {
-  fritekstTilBrevTextArea: typeof fritekstTilBrevTextArea;
+	fritekstTilBrevTextArea: typeof fritekstTilBrevTextArea;
 };
 export default __default_export__;

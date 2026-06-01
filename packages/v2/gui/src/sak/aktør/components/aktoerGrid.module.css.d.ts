@@ -8,9 +8,11 @@
 
 declare const list: string;
 
-export { list };
+export {
+	list
+};
 
 declare const __default_export__: {
-  list: typeof list;
+	list: typeof list;
 };
 export default __default_export__;

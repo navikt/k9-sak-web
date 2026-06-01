@@ -11,12 +11,17 @@ declare const tooltipContent: string;
 declare const varsel: string;
 declare const bold: string;
 
-export { helpTextImage, tooltipContent, varsel, bold };
+export {
+	helpTextImage,
+	tooltipContent,
+	varsel,
+	bold
+};
 
 declare const __default_export__: {
-  helpTextImage: typeof helpTextImage;
-  tooltipContent: typeof tooltipContent;
-  varsel: typeof varsel;
-  bold: typeof bold;
+	helpTextImage: typeof helpTextImage;
+	tooltipContent: typeof tooltipContent;
+	varsel: typeof varsel;
+	bold: typeof bold;
 };
 export default __default_export__;

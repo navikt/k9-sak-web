@@ -11,12 +11,17 @@ declare const defaultBostedSoker: string;
 declare const etikettMargin: string;
 declare const paddingBottom: string;
 
-export { dodEtikett, defaultBostedSoker, etikettMargin, paddingBottom };
+export {
+	dodEtikett,
+	defaultBostedSoker,
+	etikettMargin,
+	paddingBottom
+};
 
 declare const __default_export__: {
-  dodEtikett: typeof dodEtikett;
-  defaultBostedSoker: typeof defaultBostedSoker;
-  etikettMargin: typeof etikettMargin;
-  paddingBottom: typeof paddingBottom;
+	dodEtikett: typeof dodEtikett;
+	defaultBostedSoker: typeof defaultBostedSoker;
+	etikettMargin: typeof etikettMargin;
+	paddingBottom: typeof paddingBottom;
 };
 export default __default_export__;

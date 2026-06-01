@@ -9,10 +9,13 @@
 declare const mainContainerWithSideMenu: string;
 declare const warningIcon: string;
 
-export { mainContainerWithSideMenu, warningIcon };
+export {
+	mainContainerWithSideMenu,
+	warningIcon
+};
 
 declare const __default_export__: {
-  mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
-  warningIcon: typeof warningIcon;
+	mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
+	warningIcon: typeof warningIcon;
 };
 export default __default_export__;

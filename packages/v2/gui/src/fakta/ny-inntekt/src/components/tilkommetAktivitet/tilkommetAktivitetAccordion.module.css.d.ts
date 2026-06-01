@@ -8,9 +8,11 @@
 
 declare const statusOk: string;
 
-export { statusOk };
+export {
+	statusOk
+};
 
 declare const __default_export__: {
-  statusOk: typeof statusOk;
+	statusOk: typeof statusOk;
 };
 export default __default_export__;

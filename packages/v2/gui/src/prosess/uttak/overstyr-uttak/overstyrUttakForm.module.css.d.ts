@@ -10,11 +10,15 @@ declare const leggTilOverstyringKnapp: string;
 declare const overstyrUttakFormFooter: string;
 declare const overstyringUttakTabell: string;
 
-export { leggTilOverstyringKnapp, overstyrUttakFormFooter, overstyringUttakTabell };
+export {
+	leggTilOverstyringKnapp,
+	overstyrUttakFormFooter,
+	overstyringUttakTabell
+};
 
 declare const __default_export__: {
-  leggTilOverstyringKnapp: typeof leggTilOverstyringKnapp;
-  overstyrUttakFormFooter: typeof overstyrUttakFormFooter;
-  overstyringUttakTabell: typeof overstyringUttakTabell;
+	leggTilOverstyringKnapp: typeof leggTilOverstyringKnapp;
+	overstyrUttakFormFooter: typeof overstyrUttakFormFooter;
+	overstyringUttakTabell: typeof overstyringUttakTabell;
 };
 export default __default_export__;

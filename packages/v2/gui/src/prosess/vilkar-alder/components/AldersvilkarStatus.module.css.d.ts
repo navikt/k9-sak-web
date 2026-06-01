@@ -14,15 +14,23 @@ declare const begrunnelseOverskrift: string;
 declare const fritekst: string;
 declare const begrunnelse: string;
 
-export { vilkarStatusOverskrift, aksjonspunktNavn, vilkar, vilkarStatus, begrunnelseOverskrift, fritekst, begrunnelse };
+export {
+	vilkarStatusOverskrift,
+	aksjonspunktNavn,
+	vilkar,
+	vilkarStatus,
+	begrunnelseOverskrift,
+	fritekst,
+	begrunnelse
+};
 
 declare const __default_export__: {
-  vilkarStatusOverskrift: typeof vilkarStatusOverskrift;
-  aksjonspunktNavn: typeof aksjonspunktNavn;
-  vilkar: typeof vilkar;
-  vilkarStatus: typeof vilkarStatus;
-  begrunnelseOverskrift: typeof begrunnelseOverskrift;
-  fritekst: typeof fritekst;
-  begrunnelse: typeof begrunnelse;
+	vilkarStatusOverskrift: typeof vilkarStatusOverskrift;
+	aksjonspunktNavn: typeof aksjonspunktNavn;
+	vilkar: typeof vilkar;
+	vilkarStatus: typeof vilkarStatus;
+	begrunnelseOverskrift: typeof begrunnelseOverskrift;
+	fritekst: typeof fritekst;
+	begrunnelse: typeof begrunnelse;
 };
 export default __default_export__;

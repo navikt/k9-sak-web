@@ -16,24 +16,24 @@ declare const popUnderContent: string;
 declare const timelineSokerContatiner: string;
 
 export {
-  timelineControlContatiner,
-  upperTimeLine,
-  scrollButtonContainer,
-  controlButtonsContainer,
-  buttonSpacing,
-  popUnder,
-  popUnderContent,
-  timelineSokerContatiner,
+	timelineControlContatiner,
+	upperTimeLine,
+	scrollButtonContainer,
+	controlButtonsContainer,
+	buttonSpacing,
+	popUnder,
+	popUnderContent,
+	timelineSokerContatiner
 };
 
 declare const __default_export__: {
-  timelineControlContatiner: typeof timelineControlContatiner;
-  upperTimeLine: typeof upperTimeLine;
-  scrollButtonContainer: typeof scrollButtonContainer;
-  controlButtonsContainer: typeof controlButtonsContainer;
-  buttonSpacing: typeof buttonSpacing;
-  popUnder: typeof popUnder;
-  popUnderContent: typeof popUnderContent;
-  timelineSokerContatiner: typeof timelineSokerContatiner;
+	timelineControlContatiner: typeof timelineControlContatiner;
+	upperTimeLine: typeof upperTimeLine;
+	scrollButtonContainer: typeof scrollButtonContainer;
+	controlButtonsContainer: typeof controlButtonsContainer;
+	buttonSpacing: typeof buttonSpacing;
+	popUnder: typeof popUnder;
+	popUnderContent: typeof popUnderContent;
+	timelineSokerContatiner: typeof timelineSokerContatiner;
 };
 export default __default_export__;

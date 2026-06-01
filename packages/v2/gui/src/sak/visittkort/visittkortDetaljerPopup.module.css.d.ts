@@ -10,11 +10,15 @@ declare const container: string;
 declare const labels: string;
 declare const etikett: string;
 
-export { container, labels, etikett };
+export {
+	container,
+	labels,
+	etikett
+};
 
 declare const __default_export__: {
-  container: typeof container;
-  labels: typeof labels;
-  etikett: typeof etikett;
+	container: typeof container;
+	labels: typeof labels;
+	etikett: typeof etikett;
 };
 export default __default_export__;

@@ -9,10 +9,13 @@
 declare const oppgaveLenke: string;
 declare const marginTop: string;
 
-export { oppgaveLenke, marginTop };
+export {
+	oppgaveLenke,
+	marginTop
+};
 
 declare const __default_export__: {
-  oppgaveLenke: typeof oppgaveLenke;
-  marginTop: typeof marginTop;
+	oppgaveLenke: typeof oppgaveLenke;
+	marginTop: typeof marginTop;
 };
 export default __default_export__;
