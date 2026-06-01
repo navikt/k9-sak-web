@@ -5,16 +5,16 @@ import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 import type { PeriodeMedId } from './TilkjentYtelse';
 
 const baseAndel = {
-  aktivitetStatus: 'AT',
-  inntektskategori: 'ARBEIDSTAKER',
-  aktørId: null,
-  arbeidsforholdId: null,
-  arbeidsforholdType: '-',
+  aktivitetStatus: 'AT' as const,
+  inntektskategori: 'ARBEIDSTAKER' as const,
+  aktørId: undefined,
+  arbeidsforholdId: undefined,
+  arbeidsforholdType: '-' as const,
   arbeidsgiverNavn: 'BEDRIFT1 AS',
   arbeidsgiverOrgnr: '123456789',
-  eksternArbeidsforholdId: null,
+  eksternArbeidsforholdId: undefined,
   refusjon: 0,
-  sisteUtbetalingsdato: null,
+  sisteUtbetalingsdato: undefined,
   stillingsprosent: 100,
   uttak: [],
 };
@@ -49,13 +49,18 @@ const meta = {
     callbackForward: () => {},
     callbackBackward: () => {},
     arbeidsgiverOpplysningerPerId: {
-      '123456789': { navn: 'BEDRIFT1 AS', erPrivatPerson: false, identifikator: '123456789' },
+      '123456789': { navn: 'BEDRIFT1 AS', identifikator: '123456789', arbeidsforholdreferanser: [] },
     },
     isUngdomsytelseFagsak: false,
   },
   decorators: [
     Story => (
-      <KodeverkProvider kodeverk={alleKodeverk as any} klageKodeverk={{} as any} tilbakeKodeverk={{} as any}>
+      <KodeverkProvider
+        behandlingType={undefined}
+        kodeverk={alleKodeverk as any}
+        klageKodeverk={{} as any}
+        tilbakeKodeverk={{} as any}
+      >
         <Story />
       </KodeverkProvider>
     ),
