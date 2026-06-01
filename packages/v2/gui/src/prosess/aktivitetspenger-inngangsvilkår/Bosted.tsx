@@ -36,7 +36,10 @@ interface Props {
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
 interface FormData {
-  vurderinger: Record<string, { begrunnelse: string; bosatt: Vurdering; avslagsårsak?: string; fritekst?: string }>;
+  vurderinger: Record<
+    string,
+    { begrunnelse: string; bosatt: Vurdering; avslagsårsak?: Avslagsårsak; fritekst?: string }
+  >;
 }
 
 const utfallTilVurdering = (utfall: string): Vurdering => {
@@ -52,7 +55,7 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
       {
         begrunnelse: p.begrunnelse ?? '',
         bosatt: utfallTilVurdering(p.vilkarStatus),
-        avslagsårsak: p.avslagKode,
+        avslagsårsak: p.avslagKode ? Avslagsårsak[p.avslagKode as keyof typeof Avslagsårsak] : undefined,
       },
     ]),
   ),
@@ -88,11 +91,11 @@ export const Bosted = ({
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const vurdertePerioder = {
-        avslagsårsak: vurdering?.bosatt !== 'oppfylt' ? Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED : undefined,
+        avslagsårsak: vurdering?.bosatt !== 'oppfylt' ? vurdering?.avslagsårsak : undefined,
         begrunnelse: vurdering?.begrunnelse ?? '',
         erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,
-        fritekstVurderingBrev: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
+        fritekstVurderingBrev: vurdering?.avslagsårsak === Avslagsårsak.ANNET ? vurdering?.fritekst : undefined,
       };
 
       const payload = {
@@ -227,12 +230,18 @@ export const Bosted = ({
                     readOnly={isFormLocked}
                   >
                     <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
-                      Ytelse ikke tilgjengelig på bosted
+                      Ikke bosattadresse i Trondheim
                     </Radio>
-                    <Radio value="fritekst">Fritekst</Radio>
+                    <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_FOLKEREGISTRERT_ELLER_BOSTEDSADRESSE}>
+                      Ikke bostedsadresse i Trondheim, og heller ikke folkeregistrert i Trondheim
+                    </Radio>
+                    <Radio value={Avslagsårsak.YTELSE_IKKE_PÅ_ARBEIDSSTED_STUDIESTED}>
+                      Har studie/arbeidssted utenfor Trondheim
+                    </Radio>
+                    <Radio value={Avslagsårsak.ANNET}>Fritekst</Radio>
                   </RhfRadioGroup>
                 )}
-                {avslagsårsak === 'fritekst' && (
+                {avslagsårsak === Avslagsårsak.ANNET && (
                   <RhfTextarea
                     key={`${selectedId}-fritekst`}
                     control={formHook.control}
