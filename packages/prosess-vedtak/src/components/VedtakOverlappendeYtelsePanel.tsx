@@ -17,13 +17,16 @@ import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
-
+  readOnly: boolean;
+  aksjonspunktetErUtfort: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
 
 const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
   overlappendeYtelser,
+  readOnly,
+  aksjonspunktetErUtfort,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
@@ -132,11 +135,13 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
           error={submitCount > 0 && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
         >
           <Checkbox
-            checked={harVurdertOverlappendeYtelse}
-            onChange={() => setHarVurdertOverlappendeYtelse(!harVurdertOverlappendeYtelse)}
+            checked={aksjonspunktetErUtfort || harVurdertOverlappendeYtelse}
+            onChange={() =>
+              !readOnly && !aksjonspunktetErUtfort && setHarVurdertOverlappendeYtelse(!harVurdertOverlappendeYtelse)
+            }
             size="small"
-            error={submitCount > 0 && !harVurdertOverlappendeYtelse}
             value="harVurdertOverlappendeYtelse"
+            disabled={readOnly || aksjonspunktetErUtfort}
           >
             Jeg bekrefter å ha sjekket og fulgt opp overlappende ytelser
           </Checkbox>
