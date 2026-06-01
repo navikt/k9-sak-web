@@ -38,4 +38,5 @@ public/client/src
 server/.yarn
 !/packages/v2/lib*
 /.run/
-
+packages/**/*.module.css.d.ts
+!packages/v2/**/*.module.css.d.ts
