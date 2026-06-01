@@ -4,6 +4,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ChevronLeftIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, HStack, Label, Tabs, Tag } from '@navikt/ds-react';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse.js';
 import React, { useEffect } from 'react';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
@@ -117,13 +118,16 @@ const TilkjentYtelseTimeLineData = ({
             <div>
               <div className="mt-6">
                 <BodyShort size="small">
-                  {`Total utbetalingsgrad av beregningsgrunnlag: `}
+                  <BodyShort size="small">Total utbetalingsgrad av beregningsgrunnlag: </BodyShort>
                   <span className="font-semibold inline-block">
                     {utbetalingsgradVedTilkommetInntektErMinst()
                       ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
                       : utbetalingsgradFraUttak}
                     %
                   </span>
+                  {selectedItemData?.reduksjonsfaktorInaktivTypeA != null && (
+                    <Lovreferanse> (beregnet etter § 8-47 bokstav A)</Lovreferanse>
+                  )}
                 </BodyShort>
               </div>
               {harTilkommetAktivitet && (
