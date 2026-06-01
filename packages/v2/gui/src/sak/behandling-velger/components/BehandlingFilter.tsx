@@ -40,28 +40,15 @@ const BehandlingFilter = ({ text, filters, aktiveFilter, onFilterChange }: Behan
       </Button>
     </ActionMenu.Trigger>
     <ActionMenu.Content>
-      {filters.toSorted(sortFilters).map(({ label, value }) => {
-        if (value === automatiskBehandling) {
-          return (
-            <ActionMenu.CheckboxItem
-              checked={aktiveFilter.includes(automatiskBehandling)}
-              onCheckedChange={() => onFilterChange(automatiskBehandling)}
-              key={value}
-            >
-              {label}
-            </ActionMenu.CheckboxItem>
-          );
-        }
-        return (
-          <ActionMenu.CheckboxItem
-            key={value}
-            checked={aktiveFilter.includes(value)}
-            onCheckedChange={() => onFilterChange(value)}
-          >
-            {label}
-          </ActionMenu.CheckboxItem>
-        );
-      })}
+      {filters.toSorted(sortFilters).map(({ label, value }) => (
+        <ActionMenu.CheckboxItem
+          key={value}
+          checked={aktiveFilter.includes(value)}
+          onCheckedChange={() => onFilterChange(value)}
+        >
+          {label}
+        </ActionMenu.CheckboxItem>
+      ))}
     </ActionMenu.Content>
   </ActionMenu>
 );

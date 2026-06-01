@@ -5,7 +5,7 @@ import {
   ung_sak_kontrakt_krav_ÅrsakTilVurdering as UngÅrsakTilVurdering,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import React from 'react';
+import { Fragment } from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import type { Behandling } from '../types/Behandling';
 import type { K9UngPeriode, PerioderMedBehandlingsId } from '../types/PerioderMedBehandlingsId';
@@ -20,19 +20,19 @@ export const getFormattedSøknadserioder = (søknadsperioder: K9UngPeriode[], vi
     }
     if (periode.fom === periode.tom) {
       return (
-        <React.Fragment key={periode.fom}>
+        <Fragment key={periode.fom}>
           {index > 0 && ', '}
           <DateLabel dateString={periode.fom} />
-        </React.Fragment>
+        </Fragment>
       );
     }
     return (
-      <React.Fragment key={`${periode.fom}_${periode.tom}`}>
+      <Fragment key={`${periode.fom}_${periode.tom}`}>
         {index > 0 && ', '}
         <DateLabel dateString={periode.fom} />
         {` - `}
         <DateLabel dateString={periode.tom} />
-      </React.Fragment>
+      </Fragment>
     );
   });
 
