@@ -8,6 +8,7 @@ import { prosessStegCodes } from './prosessStegCodes.js';
 const extraSkjermlenkeType = {
   FAKTA_OM_NY_INNTEKT: 'FAKTA_OM_NY_INNTEKT',
   FAKTA_OM_SOKNADSPERIODER: 'FAKTA_OM_SOKNADSPERIODER',
+  BEREGNET_UTBETALING: 'BEREGNET_UTBETALING',
 } as const;
 
 export type SkjermlenkeTypeWithExtraCodes =
@@ -272,6 +273,7 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.VURDER_RETT_FRA_DAG_EN,
   },
+  { kode: 'BEREGNET_UTBETALING', faktaNavn: faktaPanelCodes.DEFAULT, punktNavn: prosessStegCodes.BEREGNET_UTBETALING },
 ];
 
 let skjermlenkeCodeMap: Map<SkjermlenkeTypeWithExtraCodes, SkjermlenkeCode[]>;

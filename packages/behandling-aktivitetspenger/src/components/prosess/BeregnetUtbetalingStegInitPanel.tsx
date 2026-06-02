@@ -92,12 +92,13 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
   });
 
   const isReadOnly = useMemo(() => {
-    return (
-      (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-        !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
-      behandling.status === BehandlingStatus.AVSLUTTET
-    );
-  }, [innloggetBruker, behandling]);
+    const tilgang = innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang;
+    const manglerTilgang = !tilgang?.kanBeslutte && !tilgang?.kanSaksbehandle;
+    const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
+    const aksjonspunktErIkkeLøsbart = aksjonspunkt?.kanLoses === false;
+
+    return manglerTilgang || behandlingErAvsluttet || aksjonspunktErIkkeLøsbart;
+  }, [innloggetBruker, behandling, aksjonspunkt]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
