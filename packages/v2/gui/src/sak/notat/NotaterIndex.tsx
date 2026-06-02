@@ -30,13 +30,13 @@ interface endreNotatMutationVariables {
 }
 
 const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende, sakstype }) => {
-  const notatBackendClient = new NotatBackendClient(
+  const backend =
     sakstype === fagsakYtelsesType.UNGDOMSYTELSE || sakstype === fagsakYtelsesType.AKTIVITETSPENGER
       ? 'ungSak'
-      : 'k9Sak',
-  );
+      : 'k9Sak';
+  const notatBackendClient = new NotatBackendClient(backend);
 
-  const notaterQueryKey = ['notater', fagsakId];
+  const notaterQueryKey = ['notater', backend, fagsakId];
 
   const formMethods = useForm<FormState>({
     defaultValues: {
