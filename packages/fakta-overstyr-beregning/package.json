@@ -10,7 +10,7 @@
     "@fpsak-frontend/utils": "workspace:^",
     "@k9-sak-web/types": "workspace:^",
     "@navikt/ds-react": "8.10.4",
-    "date-fns": "4.2.1",
+    "date-fns": "4.3.0",
     "formik": "2.4.9",
     "react": "19.2.6",
     "react-dom": "19.2.6",
