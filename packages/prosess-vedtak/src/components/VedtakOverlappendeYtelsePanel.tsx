@@ -132,7 +132,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
         <CheckboxGroup
           legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
           hideLegend
-          error={submitCount > 0 && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
+          error={submitCount > 0 && !aksjonspunktetErUtfort && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
         >
           <Checkbox
             checked={aksjonspunktetErUtfort || harVurdertOverlappendeYtelse}
