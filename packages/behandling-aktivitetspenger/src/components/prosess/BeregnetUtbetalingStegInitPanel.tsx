@@ -21,7 +21,7 @@ import { Alert, Box, Heading, Loader, Tabs, VStack } from '@navikt/ds-react';
 import { useMutation, useQuery, useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 
-const PANEL_ID = prosessStegCodes.BEREGNET_UTBETALING;
+const PANEL_ID = prosessStegCodes.KONTROLL_AV_INNTEKT;
 
 const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   const { kontrollperioder } = data;

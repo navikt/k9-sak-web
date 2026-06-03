@@ -6,10 +6,9 @@ import { RhfCheckbox, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useContext } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import { NavLink, useLocation, type Location } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
-import { isAktivitetspenger } from '../../../utils/urlUtils.js';
 import type { TotrinnskontrollData } from '../api/TotrinnskontrollApi.js';
 import { type TotrinnskontrollBehandling } from '../types/TotrinnskontrollBehandling.js';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
@@ -68,31 +67,22 @@ export const AksjonspunktGodkjenningFieldArray = ({
           data?.skjermlenke?.kilde === SkjermlenkeType.FAKTA_OM_FORDELING &&
           aksjonspunktKode === AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD;
 
-        const isKontrollerInntektAktivitetspenger =
-          isAktivitetspenger() && aksjonspunktKode === AksjonspunktDefinisjon.KONTROLLER_INNTEKT;
-
         const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
         const checkboxValidationError = error?.message; // formState.errors.aksjonspunktGodkjenning?.[index]?.message
         const reValidateAksjonspunktGodkjenning = () => trigger(`aksjonspunktGodkjenning.${index}`);
 
-        let skjermlenkePath: string | Location = '';
-        if (isNyInntektEgetPanel) {
-          skjermlenkePath = createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT');
-        } else if (isKontrollerInntektAktivitetspenger) {
-          skjermlenkePath = createPathForSkjermlenke(location, 'BEREGNET_UTBETALING');
-        } else if (data != null) {
-          skjermlenkePath = createPathForSkjermlenke(location, data.skjermlenke.kilde);
-        }
+        const skjermlenkePath = isNyInntektEgetPanel
+          ? createPathForSkjermlenke(location, 'FAKTA_OM_NY_INNTEKT')
+          : data != null
+            ? createPathForSkjermlenke(location, data.skjermlenke.kilde)
+            : '';
 
-        let skjermlenkeTekst = data?.skjermlenke?.navn;
-
-        if (data?.skjermlenke?.kilde === SkjermlenkeType.VEDTAK) {
-          skjermlenkeTekst = 'Brev';
-        } else if (isNyInntektEgetPanel) {
-          skjermlenkeTekst = 'Ny inntekt';
-        } else if (isKontrollerInntektAktivitetspenger) {
-          skjermlenkeTekst = 'Beregnet utbetaling';
-        }
+        const skjermlenkeTekst =
+          data?.skjermlenke?.kilde === SkjermlenkeType.VEDTAK
+            ? 'Brev'
+            : isNyInntektEgetPanel
+              ? 'Ny inntekt'
+              : data?.skjermlenke?.navn;
 
         return (
           <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
