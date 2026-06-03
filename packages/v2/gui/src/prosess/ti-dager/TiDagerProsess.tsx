@@ -1,5 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
 import type { RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
@@ -52,6 +54,7 @@ interface TiDagerProsessIndexProps {
   behandlingUUID: string;
   saksnummer: string;
   arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } };
+  vilkar: VilkårMedPerioderDto[];
 }
 
 function formatArbeidsgiverNavn(
@@ -78,6 +81,7 @@ export const TiDagerProsessIndex = ({
   behandlingUUID,
   saksnummer,
   arbeidsgiverOpplysningerPerId,
+  vilkar,
 }: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
   const hasSolvedAksjonspunkt = aksjonspunkter[0] && aksjonspunkter[0].status === aksjonspunktStatus.UTFØRT;
@@ -93,6 +97,8 @@ export const TiDagerProsessIndex = ({
     }),
   );
   const [isFormLocked, setIsFormLocked] = useState(hasSolvedAksjonspunkt);
+  const vilkår = vilkar?.[0];
+  const harJournalposter = opplysninger?.journalposter && opplysninger.journalposter.length > 0;
 
   useEffect(() => {
     if (hasSolvedAksjonspunkt) {
@@ -109,7 +115,7 @@ export const TiDagerProsessIndex = ({
   const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
 
   useEffect(() => {
-    if (opplysninger) {
+    if (opplysninger && opplysninger.journalposter) {
       const vurderinger = opplysninger.journalposter.map(jp => ({
         journalpostId: jp.journalpostId,
         harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
@@ -147,6 +153,19 @@ export const TiDagerProsessIndex = ({
     return (
       <Box paddingInline="space-16 space-32" paddingBlock="space-8">
         <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
+      </Box>
+    );
+  }
+  if (
+    vilkår != undefined &&
+    vilkår.perioder != undefined &&
+    vilkår.perioder.length > 0 &&
+    vilkår.perioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT) &&
+    !harJournalposter
+  ) {
+    return (
+      <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+        <BodyShort>10 dager har blitt dekket - ref 9-8 3.ledd</BodyShort>
       </Box>
     );
   }
