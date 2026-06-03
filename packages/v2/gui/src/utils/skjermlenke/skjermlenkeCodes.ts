@@ -273,7 +273,6 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.VURDER_RETT_FRA_DAG_EN,
   },
-  { kode: 'BEREGNET_UTBETALING', faktaNavn: faktaPanelCodes.DEFAULT, punktNavn: prosessStegCodes.BEREGNET_UTBETALING },
 ];
 
 let skjermlenkeCodeMap: Map<SkjermlenkeTypeWithExtraCodes, SkjermlenkeCode[]>;
