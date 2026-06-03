@@ -8,12 +8,13 @@ import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js'
 import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
 import { UngTilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/UngTilbakeMeldingerBackendClient.js';
 import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
-import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngSakTotrinnskontrollBackendClient.js';
 import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngTilbakeTotrinnskontrollBackendClient.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import {
@@ -158,13 +159,13 @@ const BehandlingSupportIndex = ({
 
   const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const historikkBackendClient = new UngHistorikkBackendClient(kodeverkoppslag);
-  const notatBackendClient = new NotatBackendClient('ungSak');
+  const notatBackendClient = assertDefined(useContext(NotatBackendClientContext));
 
-  const notaterQueryKey = ['notater', 'ungSak', fagsak?.saksnummer];
+  const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer, notatBackendClient];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
-    queryFn: () => notatBackendClient.getNotater(fagsak.saksnummer),
-    enabled: !!fagsak,
+    queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
+    enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
   });
 

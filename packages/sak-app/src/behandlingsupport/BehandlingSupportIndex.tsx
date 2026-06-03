@@ -12,12 +12,13 @@ import { K9KlageMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/api
 import K9SakMeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/api/K9SakMeldingerBackendClient.js';
 import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
 import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
-import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
 import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
 import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9KlageTotrinnskontrollBackendClient.js';
 import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9SakTotrinnskontrollBackendClient.js';
 import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -173,13 +174,13 @@ const BehandlingSupportIndex = ({
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const historikkBackendClient = new K9HistorikkBackendClient(kodeverkoppslag);
-  const notatBackendClient = new NotatBackendClient('k9Sak');
+  const notatBackendClient = assertDefined(useContext(NotatBackendClientContext));
 
-  const notaterQueryKey = ['notater', 'k9Sak', fagsak?.saksnummer];
+  const notaterQueryKey = ['notater', notatBackendClient.backend, fagsak?.saksnummer, notatBackendClient];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient.getNotater(fagsak.saksnummer),
-    enabled: !!fagsak,
+    enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
   });
 
