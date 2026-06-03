@@ -8,7 +8,6 @@ import { prosessStegCodes } from './prosessStegCodes.js';
 const extraSkjermlenkeType = {
   FAKTA_OM_NY_INNTEKT: 'FAKTA_OM_NY_INNTEKT',
   FAKTA_OM_SOKNADSPERIODER: 'FAKTA_OM_SOKNADSPERIODER',
-  BEREGNET_UTBETALING: 'BEREGNET_UTBETALING',
 } as const;
 
 export type SkjermlenkeTypeWithExtraCodes =
