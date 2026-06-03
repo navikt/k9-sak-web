@@ -36,7 +36,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
@@ -131,14 +131,22 @@ export const VedtakForm: React.FC<Props> = ({
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
   const intl = useIntl();
 
-  const harVurdertOverlappendeSøskensaker = aksjonspunktErUtført(
+  const harVurdertOverlappendeYtelserFørVedtak = aksjonspunktErUtført(
     aksjonspunkter,
-    AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
+    AksjonspunktDefinisjon.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
   );
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
-  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(harVurdertOverlappendeSøskensaker);
+  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(
+    harVurdertOverlappendeYtelserFørVedtak,
+  );
+
+  useEffect(() => {
+    if (harVurdertOverlappendeYtelserFørVedtak) {
+      setHarVurdertOverlappendeYtelse(true);
+    }
+  }, [harVurdertOverlappendeYtelserFørVedtak]);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
