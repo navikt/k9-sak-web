@@ -12,6 +12,7 @@ import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './Tilkjent
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
 import UtbetalingsgradDetaljer from './UtbetalingsgradDetaljer';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface OwnProps {
   selectedItemStartDate: string;
@@ -99,12 +100,16 @@ const TilkjentYtelseTimeLineData = ({
             <div className="mt-6">
               <BodyShort size="small">
                 {`Total utbetalingsgrad av beregningsgrunnlag: `}
+
                 <span className="font-semibold inline-block">
                   {utbetalingsgradVedTilkommetInntektErMinst()
                     ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
                     : utbetalingsgradFraUttak}
                   %
                 </span>
+                {selectedItemData?.reduksjonsfaktorInaktivTypeA != null && (
+                  <Lovreferanse> (beregnet etter § 8-47 bokstav A)</Lovreferanse>
+                )}
               </BodyShort>
             </div>
             {harTilkommetAktivitet && (
