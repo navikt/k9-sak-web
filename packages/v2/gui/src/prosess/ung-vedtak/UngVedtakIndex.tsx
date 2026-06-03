@@ -8,6 +8,7 @@ import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 export interface UngVedtakIndexProps {
   aksjonspunkter: UngVedtakProps['aksjonspunkter'];
+  totrinnAksjonspunkter?: UngVedtakProps['totrinnAksjonspunkter'];
   behandling: UngVedtakBehandlingDto;
   vedtakBekreftelseCallback: UngVedtakProps['vedtakBekreftelseCallback'];
   vilkar: UngVedtakVilkårDto[];
@@ -17,6 +18,7 @@ export interface UngVedtakIndexProps {
 
 export const UngVedtakIndex = ({
   aksjonspunkter,
+  totrinnAksjonspunkter,
   behandling,
   vedtakBekreftelseCallback,
   vilkar,
@@ -44,6 +46,7 @@ export const UngVedtakIndex = ({
       {!isLoading && (
         <UngVedtak
           aksjonspunkter={aksjonspunkter}
+          totrinnAksjonspunkter={totrinnAksjonspunkter}
           api={api}
           behandling={behandling}
           vedtakBekreftelseCallback={vedtakBekreftelseCallback}

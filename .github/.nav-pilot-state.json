@@ -1,25 +1,25 @@
 {
   "collection": "frontend",
-  "version": "2026.04.30-090824-bb25c0e",
+  "version": "2026.05.28-224025-4579ee0",
   "scope": "repo",
-  "source_sha": "bb25c0e",
+  "source_sha": "4579ee0",
   "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
       "path": ".github/agents/accessibility.agent.md",
-      "hash": "98867df3e31b8cd4"
+      "hash": "243143499e16befb"
     },
     {
       "path": ".github/agents/aksel.agent.md",
-      "hash": "f3f31e695bc1df0f"
+      "hash": "7103fb8df66fb0b1"
     },
     {
       "path": ".github/agents/forfatter.agent.md",
-      "hash": "4e55f4d189619dcb"
+      "hash": "3dd47103e9bf04a8"
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "8384742b958b4b84"
+      "hash": "d04fd3fc8eef124b"
     },
     {
       "path": ".github/skills/aksel-spacing/",
@@ -35,11 +35,11 @@
     },
     {
       "path": ".github/skills/nav-plan/",
-      "hash": "0849265460ea23e2"
+      "hash": "0a160744cf2b4e82"
     },
     {
       "path": ".github/skills/nav-deep-interview/",
-      "hash": "42e9aab52e591ef0"
+      "hash": "eeb3399ecd4e352c"
     },
     {
       "path": ".github/skills/nav-architecture-review/",
@@ -47,7 +47,7 @@
     },
     {
       "path": ".github/skills/nav-troubleshoot/",
-      "hash": "ce043cf29ce427b1"
+      "hash": "e9900d58d91ee0ee"
     },
     {
       "path": ".github/instructions/testing.instructions.md",
@@ -71,11 +71,11 @@
     },
     {
       "path": ".github/prompts/aksel-component.prompt.md",
-      "hash": "9119d15db318622d"
+      "hash": "dbeb27a9cad0e768"
     },
     {
       "path": ".github/prompts/nais-manifest.prompt.md",
-      "hash": "a7564098ae008cce"
+      "hash": "8576571223ffef8a"
     }
   ]
 }

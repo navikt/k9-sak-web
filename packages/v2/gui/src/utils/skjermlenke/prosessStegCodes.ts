@@ -34,6 +34,6 @@ export const prosessStegCodes = {
   OPPLAERING: 'opplaering',
   KONTROLL_AV_INNTEKT: 'kontroll_av_inntekt',
   FORUTGAENDE_MEDLEMSKAP: 'forutgaende_medlemskap',
-  TI_DAGER: 'ti_dager',
+  VURDER_RETT_FRA_DAG_EN: 'vurder_rett_fra_dag_en',
   BEREGNET_UTBETALING: 'beregnet_utbetaling',
 };

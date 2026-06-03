@@ -5,6 +5,7 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, within } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
 
@@ -117,5 +118,30 @@ export const FlerePerioder: Story = {
       AksjonspunktStatus.UTFØRT,
     ),
     isPermanentlyReadOnly: false,
+  },
+};
+
+export const MedKunVilkårUtenAksjonspunkt: Story = {
+  args: {
+    andreLivsoppholdytelserAp: undefined,
+    lokalkontorForeslårVilkårAp: undefined,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
+    },
+    isPermanentlyReadOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
+      await expect(
+        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.', { exact: false }),
+      ).not.toBeInTheDocument();
+    });
+
+    await step('viser ikke bekreft-knapp når panelet er permanent låst', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
   },
 };
