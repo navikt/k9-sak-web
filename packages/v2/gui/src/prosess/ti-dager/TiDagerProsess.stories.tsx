@@ -85,6 +85,29 @@ const meta = {
     saksnummer: '123456789',
     arbeidsgiverOpplysningerPerId,
     submitCallback: asyncAction('submitCallback'),
+    vilkar: [
+      {
+        vilkarType: 'K9_VK_9_8',
+        lovReferanse: '9-8 tredje ledd',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: undefined,
+            merknadParametere: {},
+            vilkarStatus: 'IKKE_VURDERT',
+            periode: {
+              fom: '2026-04-06',
+              tom: '2026-04-10',
+            },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            vurdersIBehandlingen: true,
+            merknad: '-',
+          },
+        ],
+        relevanteInnvilgetMerknader: [],
+      },
+    ],
   },
 } satisfies Meta<typeof TiDagerProsessIndex>;
 
