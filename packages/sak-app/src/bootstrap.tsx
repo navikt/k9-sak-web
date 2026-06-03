@@ -116,7 +116,7 @@ const store = configureStore();
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
-const renderFunc = () => {
+const RenderFunc = () => {
   /**
    * Redirecte til riktig basename om man kommer hit uten
    * Vil kunne forekomme lokalt og i tester
@@ -165,4 +165,4 @@ const renderFunc = () => {
     });
 };
 
-renderFunc();
+RenderFunc();
