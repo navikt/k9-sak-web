@@ -36,7 +36,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
@@ -142,11 +142,6 @@ export const VedtakForm: React.FC<Props> = ({
     harVurdertOverlappendeYtelserFørVedtak,
   );
 
-  useEffect(() => {
-    if (harVurdertOverlappendeYtelserFørVedtak) {
-      setHarVurdertOverlappendeYtelse(true);
-    }
-  }, [harVurdertOverlappendeYtelserFørVedtak]);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
