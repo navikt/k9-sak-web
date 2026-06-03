@@ -159,7 +159,7 @@ const Dokumentnavigasjon = ({
                   key={dokument.id}
                   onClick={() => onDokumentValgt(dokument)}
                   selected={dokument === valgtDokument}
-                  className={`${styles.selectableRow} ${dokument === valgtDokument ? styles.selectedRow : ''}`}
+                  className={`${styles.selectableRow} ${dokument === valgtDokument ? styles.selectedRow : styles.row}`}
                 >
                   <Table.DataCell>
                     <HStack align="center" justify="center">

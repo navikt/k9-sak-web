@@ -15,6 +15,10 @@
   border-left: 5px solid var(--ax-text-accent-decoration);
 }
 
+.row {
+  border-left: 5px solid transparent;
+}
+
 .dokumentnavigasjon :global(.aksel-expansioncard__content) {
   overflow: visible;
   padding-inline: 0;
