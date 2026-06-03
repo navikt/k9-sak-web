@@ -115,7 +115,7 @@ export const TiDagerProsessIndex = ({
   const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
 
   useEffect(() => {
-    if (opplysninger && opplysninger.journalposter) {
+    if (opplysninger && harJournalposter) {
       const vurderinger = opplysninger.journalposter.map(jp => ({
         journalpostId: jp.journalpostId,
         harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
@@ -123,7 +123,7 @@ export const TiDagerProsessIndex = ({
       const begrunnelse = aksjonspunkter != undefined && aksjonspunkter[0] ? aksjonspunkter[0].begrunnelse : '';
       formMethods.reset({ vurderinger, begrunnelse });
     }
-  }, [opplysninger, formMethods, aksjonspunkter]);
+  }, [opplysninger, formMethods, aksjonspunkter, harJournalposter]);
 
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = [
@@ -157,8 +157,7 @@ export const TiDagerProsessIndex = ({
     );
   }
   if (
-    vilkår != undefined &&
-    vilkår.perioder != undefined &&
+    vilkår?.perioder != undefined &&
     vilkår.perioder.length > 0 &&
     vilkår.perioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT) &&
     !harJournalposter
