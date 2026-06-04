@@ -9,4 +9,4 @@ packages
 eslint
 travis
 # Assets serveres fra CDN — skal ikke med i Docker-imaget
-dist/*/web/assets/
+dist/k9/web/assets/
