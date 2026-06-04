@@ -16,21 +16,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Css modules typegenerator
+        run: yarn css:modules:typegen
+
       - name: Typescript-sjekk
         run: yarn ts-check
 
       - name: Eslint
         run: yarn lint
-
-      - name: Css modules typegenerator check
-        run: yarn css:modules:typegen:check
 
       - name: CSS-lint
         run: yarn css:lint
