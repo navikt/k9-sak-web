@@ -22,7 +22,8 @@ updates:
           - 'patch'
           - 'minor'
         exclude-patterns:
-          - 'react*'
+          - 'react'
+          - 'react-dom'
           - '@types/react'
           - '@navikt*'
       react:
