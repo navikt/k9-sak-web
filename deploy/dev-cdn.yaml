@@ -5,4 +5,3 @@ ingress: "https://k9-cdn.dev.intern.nav.no/"
 replicas:
   min: 1
   max: 2
-ttl: 7d
