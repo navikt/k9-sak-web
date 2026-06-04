@@ -160,7 +160,7 @@ const BehandlingSupportIndex = ({
   const historikkBackendClient = new UngHistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = useContext(NotatBackendClientContext);
 
-  const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer, notatBackendClient];
+  const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
