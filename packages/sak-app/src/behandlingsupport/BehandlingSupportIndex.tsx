@@ -18,7 +18,6 @@ import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrin
 import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9SakTotrinnskontrollBackendClient.js';
 import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
-import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -174,12 +173,12 @@ const BehandlingSupportIndex = ({
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const historikkBackendClient = new K9HistorikkBackendClient(kodeverkoppslag);
-  const notatBackendClient = assertDefined(useContext(NotatBackendClientContext));
+  const notatBackendClient = useContext(NotatBackendClientContext);
 
-  const notaterQueryKey = ['notater', notatBackendClient.backend, fagsak?.saksnummer, notatBackendClient];
+  const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer, notatBackendClient];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
-    queryFn: () => notatBackendClient.getNotater(fagsak.saksnummer),
+    queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
     enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
   });

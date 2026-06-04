@@ -14,7 +14,6 @@ import { UngSakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinn
 import { UngTilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/ung/UngTilbakeTotrinnskontrollBackendClient.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
-import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { BehandlingAppKontekst, Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import {
@@ -159,7 +158,7 @@ const BehandlingSupportIndex = ({
 
   const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const historikkBackendClient = new UngHistorikkBackendClient(kodeverkoppslag);
-  const notatBackendClient = assertDefined(useContext(NotatBackendClientContext));
+  const notatBackendClient = useContext(NotatBackendClientContext);
 
   const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer, notatBackendClient];
   const { data: notater } = useQuery({
