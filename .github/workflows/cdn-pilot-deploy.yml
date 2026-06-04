@@ -1,8 +1,7 @@
 name: CDN-pilot — deploy til dev
 
-# Manuelt trigget — kjøres kun når teamet eksplisitt vil teste CDN-varianten.
 # Deployer k9-sak-web-cdn parallelt med eksisterende k9-sak-web i dev-fss.
-# 🔴 TODO: Verifiser CDN upload-action mot https://docs.nais.io/services/cdn/
+# Trigges på push til cdn-branch.
 on:
   push:
       branches: [cdn]
@@ -44,6 +43,7 @@ jobs:
           source: dist/k9/web/
           destination: k9-sak-web/
           team: k9saksbehandling
+          source_keep_parent_name: false
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
