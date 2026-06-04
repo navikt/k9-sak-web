@@ -19,3 +19,4 @@ declare const __default_export__: {
 	label: typeof label;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmFnc2FrU2VhcmNoLm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsiZmFnc2FrU2VhcmNoLm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTtjQVlBOzs7Q0FaQTtDQVlBOzs7O0NBWkE7Q0FZQTs7In0=

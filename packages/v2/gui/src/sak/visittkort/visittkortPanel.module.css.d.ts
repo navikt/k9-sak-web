@@ -27,3 +27,4 @@ declare const __default_export__: {
 	"dødsdatoLabel": typeof d_dsdatoLabel;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmlzaXR0a29ydFBhbmVsLm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsidmlzaXR0a29ydFBhbmVsLm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTtjQUtBO2NBTUE7Y0FJQTtjQUNBOzs7Q0FoQkE7Q0FLQTtDQU1BO0NBSUE7Ozs7Q0FmQTtDQUtBO0NBTUE7Q0FJQTs7OyJ9

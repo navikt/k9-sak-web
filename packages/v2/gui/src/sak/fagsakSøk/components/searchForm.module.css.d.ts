@@ -25,3 +25,4 @@ declare const __default_export__: {
 	feilmelding: typeof feilmelding;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VhcmNoRm9ybS5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbInNlYXJjaEZvcm0ubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBS007Y0FJTjtjQUNBOzs7Q0FWQTtDQUtNO0NBSU47Q0FDQTs7OztDQVZBO0NBS007Q0FJTjtDQUNBOzsifQ==

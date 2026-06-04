@@ -22,3 +22,4 @@ declare const __default_export__: {
 	overstyringUttakTabell: typeof overstyringUttakTabell;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3ZlcnN0eXJVdHRha0Zvcm0ubW9kdWxlLmNzcy5kLnRzIiwic291cmNlcyI6WyJvdmVyc3R5clV0dGFrRm9ybS5tb2R1bGUuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7O2NBQUE7Y0FLQTtjQUtBOzs7Q0FWQTtDQUtBO0NBS0E7Ozs7Q0FWQTtDQUtBO0NBS0E7OyJ9

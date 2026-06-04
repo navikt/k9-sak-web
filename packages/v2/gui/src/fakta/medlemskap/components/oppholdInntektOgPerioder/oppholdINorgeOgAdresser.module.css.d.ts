@@ -19,3 +19,4 @@ declare const __default_export__: {
 	ieFlex: typeof ieFlex;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3BwaG9sZElOb3JnZU9nQWRyZXNzZXIubW9kdWxlLmNzcy5kLnRzIiwic291cmNlcyI6WyJvcHBob2xkSU5vcmdlT2dBZHJlc3Nlci5tb2R1bGUuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7O2NBQUE7Y0FNRTs7O0NBTkY7Q0FNRTs7OztDQU5GO0NBTUU7OyJ9

@@ -16,3 +16,4 @@ declare const __default_export__: {
 	personIcon: typeof personIcon;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWtzam9uc3B1bmt0QXJiZWlkT2dJbm50ZWt0Lm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsiYWtzam9uc3B1bmt0QXJiZWlkT2dJbm50ZWt0Lm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTs7O0NBQUE7Ozs7Q0FBQTs7In0=

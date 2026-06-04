@@ -16,3 +16,4 @@ declare const __default_export__: {
 	confirmVilkarForm: typeof confirmVilkarForm;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmVoYW5kbGVLbGFnZUZvcm1OZnAubW9kdWxlLmNzcy5kLnRzIiwic291cmNlcyI6WyJiZWhhbmRsZUtsYWdlRm9ybU5mcC5tb2R1bGUuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7O2NBQUE7OztDQUFBOzs7O0NBQUE7OyJ9

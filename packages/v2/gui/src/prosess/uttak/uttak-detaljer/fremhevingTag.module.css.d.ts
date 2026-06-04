@@ -16,3 +16,4 @@ declare const __default_export__: {
 	fremhevingTag: typeof fremhevingTag;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZnJlbWhldmluZ1RhZy5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbImZyZW1oZXZpbmdUYWcubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBOzs7Q0FBQTs7OztDQUFBOzsifQ==

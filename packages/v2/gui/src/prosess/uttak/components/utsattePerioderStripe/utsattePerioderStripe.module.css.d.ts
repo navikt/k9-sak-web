@@ -22,3 +22,4 @@ declare const __default_export__: {
 	bodyText: typeof bodyText;
 };
 export default __default_export__;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidXRzYXR0ZVBlcmlvZGVyU3RyaXBlLm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsidXRzYXR0ZVBlcmlvZGVyU3RyaXBlLm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTtjQVN1QjtjQUtBOzs7Q0FkdkI7Q0FTdUI7Q0FLQTs7OztDQWR2QjtDQVN1QjtDQUtBOzsifQ==
