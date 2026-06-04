@@ -163,7 +163,10 @@ export const TiDagerProsessIndex = ({
     !harJournalposter
   ) {
     return (
-      <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+      <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
+        <Heading size="medium" level="2" spacing>
+          Ti dager
+        </Heading>
         <BodyShort>10 dager har blitt dekket - ref 9-8 3.ledd</BodyShort>
       </Box>
     );
