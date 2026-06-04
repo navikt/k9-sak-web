@@ -16,7 +16,7 @@ import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErÅpent } from './utils/utils';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
@@ -131,7 +131,7 @@ export const BehovForBistand = ({
 
   const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const isVurderBistandsvilkårApSolved = vurderBistandsvilkårAp && !aksjonspunktErÅpent(vurderBistandsvilkårAp);
+  const isVurderBistandsvilkårApSolved = aksjonspunktErLøst(vurderBistandsvilkårAp);
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -177,7 +177,7 @@ export const BehovForBistand = ({
           !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
             <VStack gap="space-20">
               <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav lokalt er ferdig vurdert.
+                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
               </Alert>
               <Box>
                 <Button
@@ -196,7 +196,7 @@ export const BehovForBistand = ({
         }
         lockedContent={
           isVurderBistandsvilkårApSolved ? (
-            <VurdertAv ident={vurderBistandsvilkårAp.ansvarligSaksbehandler} />
+            <VurdertAv ident={vurderBistandsvilkårAp?.ansvarligSaksbehandler} />
           ) : undefined
         }
       >

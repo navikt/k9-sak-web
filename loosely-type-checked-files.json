@@ -8,7 +8,6 @@
   "packages/behandling-felles/src/components/ProsessStegPanel.spec.tsx",
   "packages/behandling-felles/src/components/ProsessStegPanel.tsx",
   "packages/behandling-felles/src/components/ReduxFormStateCleaner.tsx",
-  "packages/behandling-felles/src/components/SideMenuWrapper.tsx",
   "packages/behandling-felles/src/components/paVent/BehandlingPaVent.spec.tsx",
   "packages/behandling-felles/src/util/fakta/faktaHooks.spec.tsx",
   "packages/behandling-felles/src/util/fakta/faktaHooks.ts",

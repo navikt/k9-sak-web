@@ -1,6 +1,7 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -24,7 +25,7 @@ const PROSESS_STEG_KODER = {
   MEDLEMSKAP: prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
   VEDTAK: prosessStegCodes.VEDTAK,
   BEREGNING: prosessStegCodes.BEREGNING,
-  BEREGNET_UTBETALING: prosessStegCodes.BEREGNET_UTBETALING,
+  BEREGNET_UTBETALING: prosessStegCodes.KONTROLL_AV_INNTEKT,
 } as const;
 
 const PANEL_KONFIG = {
@@ -72,7 +73,7 @@ const PANEL_KONFIG = {
     vilkår: [vilkarType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET],
   },
   beregnetUtbetaling: {
-    aksjonspunkter: [],
+    aksjonspunkter: [AksjonspunktDefinisjon.KONTROLLER_INNTEKT],
     id: PROSESS_STEG_KODER.BEREGNET_UTBETALING,
     label: 'Beregnet utbetaling',
   },
@@ -134,7 +135,7 @@ const byggPanelUtenVilkår = (
 const beregnVedtakType = (
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat'>,
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'behandlingsresultat' | 'status'>,
   vedtakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   if (!vilkår || vilkår.length === 0) {
@@ -145,14 +146,24 @@ const beregnVedtakType = (
     v.perioder?.some(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT),
   );
 
-  const harÅpneAksjonspunkter = aksjonspunkter?.some(
+  const harÅpneVedtakAksjonspunkter = aksjonspunkter?.some(
     ap => vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  const harÅpneIkkeVedtakAksjonspunkter = aksjonspunkter?.some(
+    ap => !vedtakAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
 
   if (harIkkeVurdertVilkar) {
     return ProcessMenuStepType.default;
   }
-  if (harÅpneAksjonspunkter) {
+  if (harÅpneIkkeVedtakAksjonspunkter) {
+    return ProcessMenuStepType.default;
+  }
+  if (behandling?.status === BehandlingStatus.FATTER_VEDTAK && behandling?.behandlingsresultat?.type) {
+    return isAvslag(behandling.behandlingsresultat.type) ? ProcessMenuStepType.danger : ProcessMenuStepType.success;
+  }
+  if (harÅpneVedtakAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
   if (behandling?.behandlingsresultat?.type) {
@@ -185,6 +196,23 @@ const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[], vilkår: V
   return ProcessMenuStepType.success;
 };
 
+const beregnBeregnetUtbetalingType = (
+  beregningPanelType: ProcessMenuStepType,
+  aksjonspunkter: AksjonspunktDto[],
+  beregnetUtbetalingAksjonspunkter: readonly string[],
+): ProcessMenuStepType => {
+  if (beregningPanelType !== ProcessMenuStepType.success) {
+    return ProcessMenuStepType.default;
+  }
+
+  const harÅpentAksjonspunkt = aksjonspunkter?.some(
+    ap =>
+      beregnetUtbetalingAksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  return harÅpentAksjonspunkt ? ProcessMenuStepType.warning : ProcessMenuStepType.success;
+};
+
 const byggInngangsvilkårPanel = (
   aksjonspunkter: AksjonspunktDto[],
   vilkår: VilkårMedPerioderDto[],
@@ -204,7 +232,7 @@ const byggInngangsvilkårPanel = (
 
 interface ProsessmotorProps {
   api: AktivitetspengerApi;
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat'>;
 }
 
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
@@ -234,8 +262,11 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     const beregnetUtbetalingPanel = {
       id: PANEL_KONFIG.beregnetUtbetaling.id,
       label: PANEL_KONFIG.beregnetUtbetaling.label,
-      type:
-        beregningPanel.type === ProcessMenuStepType.success ? ProcessMenuStepType.success : ProcessMenuStepType.default,
+      type: beregnBeregnetUtbetalingType(
+        beregningPanel.type,
+        aksjonspunkter,
+        PANEL_KONFIG.beregnetUtbetaling.aksjonspunkter,
+      ),
     };
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {

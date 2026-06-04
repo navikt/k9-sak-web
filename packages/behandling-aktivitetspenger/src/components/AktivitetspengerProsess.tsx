@@ -15,7 +15,7 @@ import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegIni
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
-import { useProsessmotor } from './Prossesmotor';
+import { useProsessmotor } from './Prosessmotor';
 
 interface OwnProps {
   api: AktivitetspengerApi;
@@ -123,7 +123,7 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (steg.id === prosessStegCodes.BEREGNET_UTBETALING) {
+              if (steg.id === prosessStegCodes.KONTROLL_AV_INNTEKT) {
                 return (
                   <BeregnetUtbetalingStegInitPanel
                     key={steg.id}

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
@@ -23,6 +24,7 @@ import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
+import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 const isForbidden = (e: Error) =>
   (e instanceof AxiosError && e.response?.status === 403) || ('type' in e && e.type === EventType.REQUEST_FORBIDDEN);
@@ -38,6 +40,17 @@ const isUnauthorized = (e: Error) =>
  */
 const AppIndex = () => {
   const location = useLocation();
+
+  useEffect(() => {
+    if (isQ()) {
+      // Umami script for å se brukerinnsikt https://innblikk.ansatt.nav.no
+      const script = document.createElement('script');
+      script.setAttribute('src', 'https://cdn.nav.no/team-researchops/sporing/sporing-dev.js');
+      script.setAttribute('data-website-id', '63ae9445-82e4-47de-9fbe-89f0c252b154');
+      document.head.appendChild(script);
+    }
+  }, []);
+
 
   const { globalErrors } = useGlobalUnhandledErrors();
   const queryStrings = parseQueryString(location.search);

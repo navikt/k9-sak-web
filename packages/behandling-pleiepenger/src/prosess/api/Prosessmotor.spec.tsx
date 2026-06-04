@@ -611,7 +611,7 @@ describe('Prosessmotor', () => {
           relevanteInnvilgetMerknader: [],
         },
       ];
-      const behandling = createMockBehandling({ behandlingsresultat: { type: 'INNVILGET' } });
+      const behandling = createMockBehandling({ behandlingsresultat: { type: { kode: 'INNVILGET', kodeverk: '' } } });
 
       const result = beregnVedtakType(vilkår, [], behandling, []);
 
@@ -626,7 +626,7 @@ describe('Prosessmotor', () => {
           relevanteInnvilgetMerknader: [],
         },
       ];
-      const behandling = createMockBehandling({ behandlingsresultat: { type: 'AVSLÅTT' } });
+      const behandling = createMockBehandling({ behandlingsresultat: { type: { kode: 'AVSLÅTT', kodeverk: '' } } });
 
       const result = beregnVedtakType(vilkår, [], behandling, []);
 

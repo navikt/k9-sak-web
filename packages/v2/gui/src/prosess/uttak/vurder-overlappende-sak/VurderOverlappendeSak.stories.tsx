@@ -158,12 +158,12 @@ export const LøsAksjonspunkt: Story = {
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
       const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
-      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
 
-      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
       await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
 
-      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
       const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
       if (felt2) {
         await user.type(felt2, '60');
@@ -233,11 +233,12 @@ export const LøsAksjonspunktMedSplitt: Story = {
       const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
       const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
 
-      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
       await fireEvent.change(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), {
         target: { value: '40' },
       });
-      await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
+      const gruppeEnOppdatert = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+      await user.click(await gruppeEnOppdatert.findByRole('button', { name: 'Splitt periode' }));
       await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
     });
 
@@ -391,17 +392,17 @@ export const LøstAksjonspunktKanRedigeres: Story = {
           'i',
         ),
       });
-      const gruppeTo = await canvas.findByRole('radiogroup', {
+
+      const begrunnelseFelt = await canvas.findByLabelText('Begrunnelse');
+
+      await user.click(within(gruppeEn).getByRole('radio', { name: 'Vanlig uttak i perioden' }));
+      const gruppeToOppdatert = await canvas.findByRole('radiogroup', {
         name: new RegExp(
           `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`,
           'i',
         ),
       });
-
-      const begrunnelseFelt = await canvas.findByLabelText('Begrunnelse');
-
-      await user.click(within(gruppeEn).getByRole('radio', { name: 'Vanlig uttak i perioden' }));
-      await user.click(within(gruppeTo).getByRole('radio', { name: 'Ingen uttak i perioden' }));
+      await user.click(within(gruppeToOppdatert).getByRole('radio', { name: 'Ingen uttak i perioden' }));
 
       await user.clear(begrunnelseFelt);
       await user.type(begrunnelseFelt, 'Dette er en modifisert begrunnelse');

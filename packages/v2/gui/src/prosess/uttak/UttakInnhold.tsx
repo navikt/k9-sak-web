@@ -1,15 +1,15 @@
-import { useEffect, useState, type JSX } from 'react';
-import { useUttakContext } from './context/UttakContext';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
-import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
-import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
-import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
-import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
+import { useEffect, useState, type JSX } from 'react';
+import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 import Infostripe from './components/infostripe/Infostripe';
+import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
+import { useUttakContext } from './context/UttakContext';
+import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
+import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
 import VurderDato from './vurder-dato/VurderDato';
+import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
 
 const UttakInnhold = (): JSX.Element => {
   const {
@@ -51,16 +51,18 @@ const UttakInnhold = (): JSX.Element => {
           </Alert>
         </ContentMaxWidth>
       )}
-      {!harEtUløstAksjonspunktIUttak && <OverstyrUttak overstyringAktiv={overstyringAktiv} />}
-      {aksjonspunktVurderOverlappendeSaker && <VurderOverlappendeSak />}
-      <UtsattePerioderStripe />
-      {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && <VurderDato />}
-      {!aksjonspunktVentAnnenPSBSak && (
-        <UttaksperiodeListe
-          redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
-          redigerVirkningsdato={redigerVirkningsdato}
-        />
-      )}
+      <VStack gap="space-32">
+        {aksjonspunktVurderOverlappendeSaker && <VurderOverlappendeSak />}
+        <UtsattePerioderStripe />
+        {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && <VurderDato />}
+        {!harEtUløstAksjonspunktIUttak && <OverstyrUttak overstyringAktiv={overstyringAktiv} />}
+        {!aksjonspunktVentAnnenPSBSak && (
+          <UttaksperiodeListe
+            redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
+            redigerVirkningsdato={redigerVirkningsdato}
+          />
+        )}
+      </VStack>
     </VStack>
   );
 };
