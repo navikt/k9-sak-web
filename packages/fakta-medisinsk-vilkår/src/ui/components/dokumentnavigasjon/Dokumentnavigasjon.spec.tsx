@@ -36,8 +36,8 @@ describe('Dokumentnavigasjon', () => {
     expect(screen.getByText(/ikke med. oppl./i)).toBeInTheDocument();
   });
 
-  it('should show no documents when not expanded by default', async () => {
-    const { container } = render(
+  it('should render documents without expandedByDefault', async () => {
+    render(
       <Dokumentnavigasjon
         tittel="something"
         valgtDokument={dokumenter[0]}
@@ -45,7 +45,7 @@ describe('Dokumentnavigasjon', () => {
         onDokumentValgt={() => null}
       />,
     );
-    expect(container.querySelector('.aksel-expansioncard__content[data-open="false"]')).toBeTruthy();
+    expect(screen.getByText(/andre med. oppl./i)).toBeInTheDocument();
   });
 
   test('documents are filtered correctly', async () => {
@@ -75,7 +75,7 @@ describe('Dokumentnavigasjon', () => {
       <Dokumentnavigasjon
         tittel="something"
         valgtDokument={dokumenter[0]}
-        dokumenter={[dokumenter[0], dokumenter[1]]}
+        dokumenter={[dokumenter[0], dokumenter[2]]}
         expandedByDefault
         displayFilterOption
         onDokumentValgt={() => null}
