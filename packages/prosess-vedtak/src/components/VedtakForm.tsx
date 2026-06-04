@@ -60,6 +60,8 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import styles from './vedtakForm.module.css';
+import { aksjonspunktErUtført } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 const isVedtakSubmission = true;
 
@@ -129,9 +131,17 @@ export const VedtakForm: React.FC<Props> = ({
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
   const intl = useIntl();
 
+  const harVurdertOverlappendeYtelserFørVedtak = aksjonspunktErUtført(
+    aksjonspunkter,
+    AksjonspunktDefinisjon.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+  );
+
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
-  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
+  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(
+    harVurdertOverlappendeYtelserFørVedtak,
+  );
+
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
@@ -495,7 +505,7 @@ export const VedtakForm: React.FC<Props> = ({
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus}
-              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
+              aksjonspunkter={aksjonspunkter}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               viseFlereSjekkbokserForBrev={

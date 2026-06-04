@@ -51,6 +51,10 @@ const opplysningerAlleredeVurdert: RettFraDagEnVisningDto = {
   ],
 };
 
+const opplysningerIngenJournalposter: RettFraDagEnVisningDto = {
+  journalposter: [],
+};
+
 const aksjonspunkter = [
   {
     definisjon: AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN,
@@ -85,6 +89,29 @@ const meta = {
     saksnummer: '123456789',
     arbeidsgiverOpplysningerPerId,
     submitCallback: asyncAction('submitCallback'),
+    vilkar: [
+      {
+        vilkarType: 'K9_VK_9_8',
+        lovReferanse: '9-8 tredje ledd',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: undefined,
+            merknadParametere: {},
+            vilkarStatus: 'IKKE_VURDERT',
+            periode: {
+              fom: '2026-04-06',
+              tom: '2026-04-10',
+            },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            vurdersIBehandlingen: true,
+            merknad: '-',
+          },
+        ],
+        relevanteInnvilgetMerknader: [],
+      },
+    ],
   },
 } satisfies Meta<typeof TiDagerProsessIndex>;
 
@@ -158,5 +185,39 @@ export const SendInnVurdering: Story = {
       await userEvent.click(button);
       await expect(args.submitCallback).toHaveBeenCalledOnce();
     });
+  },
+};
+
+export const OppfyltVilkårUtenJournalposter: Story = {
+  decorators: [withFakeTiDagerBackend(opplysningerIngenJournalposter)],
+  args: {
+    vilkar: [
+      {
+        vilkarType: 'K9_VK_9_8',
+        lovReferanse: '9-8 tredje ledd',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: undefined,
+            merknadParametere: {},
+            vilkarStatus: 'OPPFYLT',
+            periode: {
+              fom: '2026-04-06',
+              tom: '2026-04-10',
+            },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            vurdersIBehandlingen: true,
+            merknad: '-',
+          },
+        ],
+        relevanteInnvilgetMerknader: [],
+      },
+    ],
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole('heading', { name: 'Ti dager' })).toBeVisible();
+    await expect(await canvas.findByText('10 dager har blitt dekket - ref 9-8 3.ledd')).toBeVisible();
+    await expect(canvas.queryByRole('button', { name: 'Bekreft' })).toBeNull();
   },
 };
