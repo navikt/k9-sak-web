@@ -10,7 +10,7 @@ import { reloadAction, reloadActionWithFormResetWarning, restartAction } from '.
 // Slik at bruker forhåpentlegvis kan forstå kva som har gått gale og korrigere viss mulig.
 export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProps => {
   let title = 'Oi! Noe gikk galt';
-  let errorInfo: ReactNode = 'Det oppsto en feil i systemet.';
+  let errorInfo: ReactNode = <BodyLong>Det oppsto en feil i systemet.</BodyLong>;
   let fixAction = reloadAction;
 
   if (error.isUnauthorized) {
