@@ -4,12 +4,8 @@ name: CDN-pilot — deploy til dev
 # Deployer k9-sak-web-cdn parallelt med eksisterende k9-sak-web i dev-fss.
 # 🔴 TODO: Verifiser CDN upload-action mot https://docs.nais.io/services/cdn/
 on:
-  workflow_dispatch:
-    inputs:
-      ref:
-        description: "Branch eller commit-SHA å deploye"
-        default: cdn
-        required: false
+  push:
+      branches: [cdn]
 
 jobs:
   build-and-deploy-cdn-dev:
