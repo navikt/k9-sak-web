@@ -2,13 +2,13 @@ import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js'
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AxiosError } from 'axios';
 
-export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
+const makeErrorReportLines = (errors: ReadonlyArray<Error>): ReadonlyArray<string> => {
   const errLines: string[] = [];
-  const allSentryIds = `==== Rapportert Sentry: (${sentryReportedIdList.join(', ')}) ====`;
-  errLines.push(allSentryIds);
+  errLines.push(`----`)
+  errLines.push(`Teknisk info om feil (ref: ${sentryReportedIdList.join(', ')})`)
   for (const error of errors) {
     const sentryId = `sentry:${sentryReportedErrorIdLookup.get(error)}`;
-    errLines.push(`**** ${error.name} (${sentryId}) ****`);
+    errLines.push(`*${error.name}* (${sentryId})`);
     errLines.push(`${error.message}`);
     if (error instanceof ExtendedApiError) {
       errLines.push(`NavCallid:${error.navCallid}`);
@@ -19,7 +19,24 @@ export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
         errLines.push(`NavCallid:${callId}`);
       }
     }
-    errLines.push('/');
+    errLines.push('----');
   }
-  return errLines.join('\n');
+  return errLines
+}
+
+export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
+  return makeErrorReportLines(errors).join("\n")
+}
+
+const makeErrorReportTextForJira = (errors: ReadonlyArray<Error>): string => {
+  const errLines = [
+    "", // Tom linje slik at ein enkelt kan fylle inn eigen info over forhåndsutfyllt teknisk info i jira feltet
+    ...makeErrorReportLines(errors),
+  ]
+  return errLines.join('\\\\');
 };
+
+export const makeErrorReportLinkForJira = (errors: ReadonlyArray<Error>): string => {
+  const reportText = makeErrorReportTextForJira(errors)
+  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158&summary=Feilrapport+k9-sak-web&description=${encodeURIComponent(reportText)}`
+}

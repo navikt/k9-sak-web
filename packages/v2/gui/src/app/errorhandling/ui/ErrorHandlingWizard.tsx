@@ -1,14 +1,13 @@
 import { BodyLong, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ArrowsCirclepathIcon,
   ArrowCirclepathIcon,
   ArrowCirclepathReverseIcon,
+  ArrowsCirclepathIcon,
+  ExternalLinkIcon,
 } from '@navikt/aksel-icons';
-import { ErrorInfoCopy } from './ErrorInfoCopy.js';
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode } from 'react';
 import { ErrorReportPopover } from './ErrorReportPopover.js';
+import { makeErrorReportLinkForJira } from "./makeErrorReportText.js";
 
 // Felles props for alle knappane i ErrorHandlingWizard
 const btnProps = {
@@ -93,14 +92,7 @@ const ErrorContentBox = ({ children }: { children: ReactNode }) => (
 );
 
 export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction }: ErrorHandlingWizardProps) => {
-  const [display, setDisplay] = useState<'error' | 'report' | 'copied'>('error');
   const { label: fixLabel, icon: fixIcon, info: fixInfo, callback: fixCallback, href: fixHref } = fixAction;
-
-  const lastError = errors[errors.length - 1]
-  // Tilbakestill visningstilstand når siste feil endrar seg
-  useEffect(() => {
-    setDisplay('error');
-  }, [lastError]);
 
   const fixButton =
     fixCallback != null ? (
@@ -113,48 +105,22 @@ export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction
       </Button>
     );
 
+  const reportLink = makeErrorReportLinkForJira(errors)
+
   return (
     <VStack gap="space-8">
-      {display == 'report' ? (
-        <>
-          <BodyLong>
-            For å melde feil, trykk <i>Kopier feilinformasjon</i>. Du kopierer da teknisk informasjon om feilen til
-            din utklipsstavle.
-          </BodyLong>
-          <BodyLong>Lim deretter denne info inn i porten sak for å melde feil til oss.</BodyLong>
-          <HStack gap="space-4">
-            <Button {...btnProps} onClick={() => setDisplay('error')} icon={<ArrowLeftIcon />} iconPosition="left">
-              Tilbake
-            </Button>
-            <ErrorInfoCopy {...btnProps} errors={errors} onCopied={() => setDisplay('copied')} />
-          </HStack>
-        </>
-      ) : display == 'copied' ? (
-        <>
-          <BodyLong>Feilinformasjon er kopiert. Lim den inn i porten sak for å melde feil til oss.</BodyLong>
-          <HStack gap="space-4">
-            <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowLeftIcon />} iconPosition="left">
-              Tilbake
-            </Button>
-            <ErrorReportPopover errors={errors} {...btnProps}>
-              Vis kopiert
-            </ErrorReportPopover>
-            {fixButton}
-          </HStack>
-        </>
-      ) : (
-        <>
-          {children}
-          {fixInfo}
-          <HStack gap="space-4">
-            {fixButton}
-            <Button {...btnProps} onClick={() => setDisplay('report')} icon={<ArrowRightIcon />} iconPosition="right">
-              Meld feil
-            </Button>
-          </HStack>
-        </>
-      )}
-    </VStack>
+      {children}
+      {fixInfo}
+      <HStack gap="space-4">
+        {fixButton}
+        <Button {...btnProps} as="a" href={reportLink} target="_blank" icon={<ExternalLinkIcon />} iconPosition="right">
+          Meld feil
+        </Button>
+        <ErrorReportPopover errors={errors} {...btnProps}>
+          Vis teknisk info
+        </ErrorReportPopover>
+      </HStack>
+</VStack>
   );
 };
 
