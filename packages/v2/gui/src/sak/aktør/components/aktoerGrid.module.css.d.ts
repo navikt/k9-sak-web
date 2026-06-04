@@ -16,4 +16,3 @@ declare const __default_export__: {
 	list: typeof list;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWt0b2VyR3JpZC5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbImFrdG9lckdyaWQubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBOzs7Q0FBQTs7OztDQUFBOzsifQ==

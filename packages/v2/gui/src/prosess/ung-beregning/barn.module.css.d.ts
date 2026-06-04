@@ -19,4 +19,3 @@ declare const __default_export__: {
 	firstHeaderCell: typeof firstHeaderCell;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmFybi5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbImJhcm4ubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBSUE7OztDQUpBO0NBSUE7Ozs7Q0FKQTtDQUlBOzsifQ==

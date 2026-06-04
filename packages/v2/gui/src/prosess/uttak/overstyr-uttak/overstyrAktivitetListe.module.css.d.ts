@@ -22,4 +22,3 @@ declare const __default_export__: {
 	aktiviteterTable: typeof aktiviteterTable;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3ZlcnN0eXJBa3Rpdml0ZXRMaXN0ZS5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbIm92ZXJzdHlyQWt0aXZpdGV0TGlzdGUubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBS0E7Y0FzQkE7OztDQTNCQTtDQUtBO0NBc0JBOzs7O0NBM0JBO0NBS0E7Q0FzQkE7OyJ9

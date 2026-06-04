@@ -25,4 +25,3 @@ declare const __default_export__: {
 	vurdering: typeof vurdering;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQWxkZXJzdmlsa2FyRm9ybS5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbIkFsZGVyc3ZpbGthckZvcm0ubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBTWM7Y0FJZDtjQUlBOzs7Q0FkQTtDQU1jO0NBSWQ7Q0FJQTs7OztDQWRBO0NBTWM7Q0FJZDtDQUlBOzsifQ==

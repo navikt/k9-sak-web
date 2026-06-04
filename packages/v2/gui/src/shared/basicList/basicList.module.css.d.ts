@@ -19,4 +19,3 @@ declare const __default_export__: {
 	element: typeof element;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmFzaWNMaXN0Lm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsiYmFzaWNMaXN0Lm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTtjQU1BOzs7Q0FOQTtDQU1BOzs7O0NBTkE7Q0FNQTs7In0=

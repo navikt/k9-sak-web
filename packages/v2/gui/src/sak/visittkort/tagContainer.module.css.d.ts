@@ -16,4 +16,3 @@ declare const __default_export__: {
 	tag: typeof tag;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGFnQ29udGFpbmVyLm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsidGFnQ29udGFpbmVyLm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTs7O0NBQUE7Ozs7Q0FBQTs7In0=

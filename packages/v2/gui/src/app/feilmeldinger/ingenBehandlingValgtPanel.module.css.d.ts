@@ -16,4 +16,3 @@ declare const __default_export__: {
 	noSelectedBehandlingPanel: typeof noSelectedBehandlingPanel;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5nZW5CZWhhbmRsaW5nVmFsZ3RQYW5lbC5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbImluZ2VuQmVoYW5kbGluZ1ZhbGd0UGFuZWwubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBOzs7Q0FBQTs7OztDQUFBOzsifQ==

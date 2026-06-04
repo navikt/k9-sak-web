@@ -22,4 +22,3 @@ declare const __default_export__: {
 	forhandsvis: typeof forhandsvis;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaGVubGVnZ0JlaGFuZGxpbmdNb2RhbC5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbImhlbmxlZ2dCZWhhbmRsaW5nTW9kYWwubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBZU07Y0FJTjs7O0NBbkJBO0NBZU07Q0FJTjs7OztDQW5CQTtDQWVNO0NBSU47OyJ9

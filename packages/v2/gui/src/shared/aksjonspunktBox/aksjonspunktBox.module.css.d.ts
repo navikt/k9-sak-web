@@ -19,4 +19,3 @@ declare const __default_export__: {
 	erAksjonspunktApent: typeof erAksjonspunktApent;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWtzam9uc3B1bmt0Qm94Lm1vZHVsZS5jc3MuZC50cyIsInNvdXJjZXMiOlsiYWtzam9uc3B1bmt0Qm94Lm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Y0FBQTtjQUFhOzs7Q0FBYjtDQUFhOzs7O0NBQWI7Q0FBYTs7In0=

@@ -25,4 +25,3 @@ declare const __default_export__: {
 	pillIconInfo: typeof pillIconInfo;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGlsbEljb24ubW9kdWxlLmNzcy5kLnRzIiwic291cmNlcyI6WyJQaWxsSWNvbi5tb2R1bGUuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7O2NBQUE7Y0FDQTtjQUNBO2NBQ0E7OztDQUhBO0NBQ0E7Q0FDQTtDQUNBOzs7O0NBSEE7Q0FDQTtDQUNBO0NBQ0E7OyJ9

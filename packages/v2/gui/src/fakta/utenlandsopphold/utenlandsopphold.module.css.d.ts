@@ -25,4 +25,3 @@ declare const __default_export__: {
 	alertstripe__tekst: typeof alertstripe__tekst;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidXRlbmxhbmRzb3BwaG9sZC5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbInV0ZW5sYW5kc29wcGhvbGQubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBSUE7Y0FVQTtjQUFhOzs7Q0FkYjtDQUlBO0NBVUE7Q0FBYTs7OztDQWRiO0NBSUE7Q0FVQTtDQUFhOzsifQ==

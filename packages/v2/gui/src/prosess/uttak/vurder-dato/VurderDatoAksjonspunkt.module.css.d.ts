@@ -22,4 +22,3 @@ declare const __default_export__: {
 	bekreft: typeof bekreft;
 };
 export default __default_export__;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVnVyZGVyRGF0b0Frc2pvbnNwdW5rdC5tb2R1bGUuY3NzLmQudHMiLCJzb3VyY2VzIjpbIlZ1cmRlckRhdG9Ba3Nqb25zcHVua3QubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztjQUFBO2NBU0E7Y0FLQTs7O0NBZEE7Q0FTQTtDQUtBOzs7O0NBZEE7Q0FTQTtDQUtBOzsifQ==

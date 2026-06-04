@@ -5,7 +5,6 @@ export default defineConfig({
   plugins: [
     patchCssModules({
       generateSourceTypes: true,
-      declarationMap: true,
     }),
   ],
 });
