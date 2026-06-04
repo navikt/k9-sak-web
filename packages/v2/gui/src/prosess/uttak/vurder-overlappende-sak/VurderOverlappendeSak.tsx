@@ -210,7 +210,7 @@ const VurderOverlappendeSak: FC = () => {
           <Heading spacing size="xsmall" level="3">
             Søker har overlappende perioder med en annen sak
           </Heading>
-          <div className={styles['vurderOverlappendeSakApListe']}>
+          <div className={styles['vurderOverlappendeSakAPListe']}>
             <Box marginBlock="space-12" asChild>
               <List data-aksel-migrated-v8 size="small" as="ol">
                 <List.Item>Reserver den tilhørende saken</List.Item>
