@@ -2908,6 +2908,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
+    "@k9-sak-web/gui": "workspace:^"
     axios: "npm:1.16.1"
   languageName: unknown
   linkType: soft
