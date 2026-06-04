@@ -83,7 +83,7 @@ export default ({ mode }) => {
         ),
       },
     },
-    base: '/k9/web',
+    base: process.env.VITE_CDN_BASE_URL ?? '/k9/web',
     publicDir: './public',
     resolve: {
       dedupe: ['react', 'react-dom'],

@@ -1,0 +1,8 @@
+# Vars for CDN-pilot i dev-fss (parallell med eksisterende k9-sak-web)
+
+name: k9-sak-web-cdn
+ingress: "https://k9-cdn.dev.intern.nav.no/"
+replicas:
+  min: 1
+  max: 2
+ttl: 7d
