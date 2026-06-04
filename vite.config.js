@@ -139,6 +139,7 @@ export default ({ mode }) => {
       css: {
         modules: {
           classNameStrategy: 'non-scoped',
+          localsConvention: 'camelCase'
         },
       },
       globals: true,

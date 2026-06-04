@@ -23,14 +23,14 @@ jobs:
         with:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Css modules typegenerator
+        run: yarn css:modules:typegen
+
       - name: Typescript-sjekk
         run: yarn ts-check
 
       - name: Eslint
         run: yarn lint
-
-      - name: Css modules typegenerator check
-        run: yarn css:modules:typegen:check
 
       - name: CSS-lint
         run: yarn css:lint
