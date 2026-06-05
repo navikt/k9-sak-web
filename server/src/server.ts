@@ -14,9 +14,9 @@ app.use(
       useDefaults: false,
       directives: {
         'default-src': ["'self'"],
-        'img-src': ["'self'", 'data:'],
+        'img-src': ["'self'", 'data:', 'https://cdn.nav.no'],
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
-        'style-src': ["'self'", "'unsafe-inline'"],
+        'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
         'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
         'connect-src': ["'self'", 'https://sentry.gc.nav.no', 'https://reops-event-proxy.ekstern.dev.nav.no'],
       },
