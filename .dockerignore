@@ -8,3 +8,5 @@ coverage
 packages
 eslint
 travis
+# Assets serveres fra CDN — skal ikke med i Docker-imaget
+dist/k9/web/assets/
