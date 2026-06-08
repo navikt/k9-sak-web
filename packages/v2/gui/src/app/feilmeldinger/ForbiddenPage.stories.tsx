@@ -25,9 +25,9 @@ export const FeilmeldingIkkeTilgangMedÅrsaker: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('heading', { name: 'Du har ikke tilgang til denne saken' })).toBeInTheDocument();
     await expect(
-      canvas.getByText('Saken gjelder en person med strengt fortrolig adresse (kode 6)'),
+      canvas.getByText('Du mangler tilgang til saker med strengt fortrolig adresse (kode 6)'),
     ).toBeInTheDocument();
-    await expect(canvas.getByText('Saken er en historisk sak')).toBeInTheDocument();
+    await expect(canvas.getByText('Du mangler tilgang til historiske saker')).toBeInTheDocument();
   },
 };
 
