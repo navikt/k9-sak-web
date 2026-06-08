@@ -13,9 +13,32 @@ type Story = StoryObj<typeof meta>;
 
 export const FeilmeldingIkkeTilgang: Story = {
   play: async ({ canvas }) => {
-    await expect(
-      canvas.getByRole('heading', { name: 'Du har ikke tilgang til å slå opp denne personen' }),
-    ).toBeInTheDocument();
+    await expect(canvas.getByRole('heading', { name: 'Du har ikke tilgang til denne saken' })).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: 'Gå til forsiden' })).toBeInTheDocument();
+  },
+};
+
+export const FeilmeldingIkkeTilgangMedÅrsaker: Story = {
+  args: {
+    ikkeTilgangÅrsaker: ['HAR_IKKE_TILGANG_TIL_KODE6_PERSON', 'HAR_IKKE_TILGANG_TIL_HISTORISK_SAK'],
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Du har ikke tilgang til denne saken' })).toBeInTheDocument();
+    await expect(
+      canvas.getByText('Saken gjelder en person med strengt fortrolig adresse (kode 6)'),
+    ).toBeInTheDocument();
+    await expect(canvas.getByText('Saken er en historisk sak')).toBeInTheDocument();
+  },
+};
+
+export const FeilmeldingFortrolig: Story = {
+  args: {
+    ikkeTilgangÅrsaker: ['HAR_IKKE_TILGANG_TIL_KODE7_PERSON'],
+  },
+};
+
+export const FeilmeldingHistoriskSak: Story = {
+  args: {
+    ikkeTilgangÅrsaker: ['HAR_IKKE_TILGANG_TIL_HISTORISK_SAK'],
   },
 };
