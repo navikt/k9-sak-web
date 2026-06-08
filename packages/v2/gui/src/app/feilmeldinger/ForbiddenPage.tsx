@@ -32,7 +32,7 @@ interface ForbiddenPageProps {
   ikkeTilgangÅrsaker?: IkkeTilgangÅrsak[];
 }
 
-const årsakerViØnskerÅVise = [
+const årsakerViØnskerÅVise: IkkeTilgangÅrsak[] = [
   'HAR_IKKE_TILGANG_TIL_KODE6_PERSON',
   'HAR_IKKE_TILGANG_TIL_KODE7_PERSON',
   'HAR_IKKE_TILGANG_TIL_EGEN_ANSATT',
