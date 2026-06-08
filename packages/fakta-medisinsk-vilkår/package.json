@@ -22,8 +22,8 @@
     "dayjs": "1.11.21",
     "react": "19.2.6",
     "react-dom": "19.2.6",
-    "react-hook-form": "7.76.0",
-    "react-intl": "10.1.8",
+    "react-hook-form": "7.77.0",
+    "react-intl": "10.1.11",
     "react-outside-click-handler": "1.3.0"
   },
   "devDependencies": {

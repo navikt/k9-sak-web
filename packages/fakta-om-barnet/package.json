@@ -10,7 +10,7 @@
     "@navikt/ds-react": "8.10.4",
     "react": "19.2.6",
     "react-dom": "19.2.6",
-    "react-hook-form": "7.76.0",
+    "react-hook-form": "7.77.0",
     "tailwindcss": "4.3.0"
   },
   "devDependencies": {
