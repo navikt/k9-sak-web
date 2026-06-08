@@ -7,7 +7,7 @@ import {
   PersonFillIcon,
   PersonIcon,
 } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Box, Heading, HStack, Pagination, Table, Tooltip } from '@navikt/ds-react';
+import { Bleed, BodyShort, Box, Button, Heading, HStack, Pagination, Table, Tooltip } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { Dokument, dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import Dokumentfilter from '../dokumentfilter/Dokumentfilter';
@@ -104,7 +104,7 @@ const Dokumentnavigasjon = ({
   return (
     <Box className={styles.dokumentnavigasjon}>
       <Box
-        width="456px"
+        maxWidth="456px"
         borderColor="neutral-subtle"
         borderRadius="8"
         borderWidth="1"
@@ -157,7 +157,7 @@ const Dokumentnavigasjon = ({
               {dokumenterSomVises.map(dokument => (
                 <Table.Row
                   key={dokument.id}
-                  onClick={() => onDokumentValgt(dokument)}
+                  onRowClick={() => onDokumentValgt(dokument)}
                   selected={dokument === valgtDokument}
                   className={`${styles.selectableRow} ${dokument === valgtDokument ? styles.selectedRow : styles.row}`}
                 >
@@ -189,7 +189,13 @@ const Dokumentnavigasjon = ({
                   </Table.DataCell>
                   <Table.DataCell>
                     <HStack align="center" justify="end">
-                      <ChevronRightIcon title="Åpne" fontSize="1.5rem" />
+                      <Button
+                        type="button"
+                        variant="tertiary"
+                        size="small"
+                        onClick={() => onDokumentValgt(dokument)}
+                        icon={<ChevronRightIcon title="Åpne" fontSize="1.5rem" />}
+                      />
                     </HStack>
                   </Table.DataCell>
                 </Table.Row>
