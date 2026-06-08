@@ -85,7 +85,9 @@ const AppIndex = () => {
             pathname={location.pathname}
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
-          {forbiddenErrors.length > 0 && <ForbiddenPage />}
+          {forbiddenErrors.length > 0 && (
+            <ForbiddenPage ikkeTilgangÅrsaker={forbiddenErrors.flatMap(e => e.ikkeTilgangÅrsaker ?? [])} />
+          )}
           {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={k9LoginResourcePath} />}
         </ErrorBoundary>
       </AppConfigResolver>
