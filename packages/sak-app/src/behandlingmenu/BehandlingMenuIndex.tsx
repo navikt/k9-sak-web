@@ -184,9 +184,10 @@ export const BehandlingMenuIndex = ({
       (Array.isArray(params.perioder) || (!!params.fom && !!params.tom));
 
     if (erRevurderingFraStegPayload) {
-      lagNy = Array.isArray(params.perioder) && params.perioder.length > 0
-        ? lagRevurderingFlerePerioderFraStegK9Sak
-        : lagRevurderingFraStegK9Sak;
+      lagNy =
+        Array.isArray(params.perioder) && params.perioder.length > 0
+          ? lagRevurderingFlerePerioderFraStegK9Sak
+          : lagRevurderingFraStegK9Sak;
     }
     if (bTypeKode === BehandlingType.KLAGE) {
       lagNy = lagNyBehandlingKlage;
