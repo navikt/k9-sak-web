@@ -18,7 +18,12 @@ app.use(
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
         'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
-        'connect-src': ["'self'", 'https://sentry.gc.nav.no', 'https://reops-event-proxy.ekstern.dev.nav.no'],
+        'connect-src': [
+          "'self'",
+          'https://sentry.gc.nav.no',
+          'https://reops-event-proxy.ekstern.dev.nav.no',
+          'https://cdn.nav.no',
+        ],
       },
     },
     referrerPolicy: { policy: 'origin' },

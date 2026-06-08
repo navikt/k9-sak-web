@@ -1,7 +1,7 @@
 import { Collapse, Expand, FilterFilled } from '@navikt/ds-icons';
-import { Button, Checkbox, Label } from '@navikt/ds-react';
+import { Button, Checkbox, Label, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useState, type JSX } from 'react';
+import { useState, type JSX } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { Dokumenttype, dokumentLabel } from '../../../types/Dokument';
 import styles from './dokumentfilter.module.css';
@@ -16,6 +16,7 @@ interface DokumentfilterProps {
   className: string;
   filters: Array<Dokumenttype>;
   onFilterChange: (value: string) => void;
+  alleRelevanteDokumentTyper: Array<Dokumenttype>;
 }
 
 const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element => (
@@ -38,10 +39,10 @@ const Dokumentfilter = ({
   className,
   filters,
   onFilterChange: filtrerDokumenttype,
+  alleRelevanteDokumentTyper,
 }: DokumentfilterProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const chevronDirection = open ? 'opp' : 'ned';
-  const dokumenttypeListe = [...Object.values(Dokumenttype)];
   const listeErFiltrert = filters.length < 4;
   return (
     <div className={styles.dokumentfilter}>
@@ -55,8 +56,9 @@ const Dokumentfilter = ({
             <span className={classNames(styles.chevronDropdown)}>
               <ChevronWithText chevronDirection={chevronDirection} onClick={() => setOpen(!open)} text={text} />
               <FilterFilled className={listeErFiltrert ? '' : styles.chevronDropdown__hidden} />
-              <div className={styles.chevronDropdown__dropdown__checkbox}>
-                {dokumenttypeListe.map(type => (
+
+              <VStack gap="space-16" marginBlock="space-8 space-0">
+                {alleRelevanteDokumentTyper.map(type => (
                   <Checkbox
                     key={type}
                     size="small"
@@ -66,7 +68,7 @@ const Dokumentfilter = ({
                     {dokumentLabel[type]}
                   </Checkbox>
                 ))}
-              </div>
+              </VStack>
             </span>
           </div>
         </OutsideClickHandler>
