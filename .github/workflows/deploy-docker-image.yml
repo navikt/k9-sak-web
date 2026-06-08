@@ -35,8 +35,19 @@ jobs:
       - name: Bygge dist
         run: yarn build
         env:
+          VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/k9-sak-web/"
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_SENTRY_RELEASE: ${{ github.sha }}
+
+      - name: Last opp assets til CDN
+        uses: nais/deploy/actions/cdn-upload/v2@65d1b089882173f50fd51161b1a5b6ef3a18b9ea
+        with:
+          source: dist/k9/web/
+          destination: k9-sak-web/
+          team: k9saksbehandling
+          source_keep_parent_name: false
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
       - name: Bygg server
         uses: ./.github/actions/build-server

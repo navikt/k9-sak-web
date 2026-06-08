@@ -2,12 +2,11 @@ import {
   type sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto,
   type k9_sak_kontrakt_notat_NotatDto as NotatDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { assertDefined } from '@k9-sak-web/gui/utils/validation/assertDefined.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { use } from 'react';
 import { useForm } from 'react-hook-form';
-import type { Fagsak } from '../Fagsak.js';
-import NotatBackendClient from './NotatBackendClient';
+import { NotatBackendClientContext } from './NotatBackendClientContext.js';
 import Notater, { type skjulNotatMutationVariables } from './Notater.js';
 import { type FormState } from './types/FormState';
 
@@ -15,7 +14,6 @@ interface NotaterIndexProps {
   fagsakId: string;
   navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
   fagsakHarPleietrengende: boolean;
-  sakstype: Fagsak['sakstype'];
 }
 
 interface opprettNotatMutationVariables {
@@ -29,10 +27,10 @@ interface endreNotatMutationVariables {
   versjon: number;
 }
 
-const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende, sakstype }) => {
-  const notatBackendClient = new NotatBackendClient(sakstype === fagsakYtelsesType.UNGDOMSYTELSE ? 'ungSak' : 'k9Sak');
+const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende }) => {
+  const notatBackendClient = assertDefined(use(NotatBackendClientContext));
 
-  const notaterQueryKey = ['notater', fagsakId];
+  const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsakId];
 
   const formMethods = useForm<FormState>({
     defaultValues: {
@@ -48,12 +46,12 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     refetch: refetchNotater,
   } = useQuery<NotatDto[]>({
     queryKey: notaterQueryKey,
-    queryFn: () => notatBackendClient.getNotater(fagsakId),
-    enabled: !!fagsakId,
+    queryFn: () => notatBackendClient!.getNotater(fagsakId),
+    enabled: !!fagsakId && !!notatBackendClient,
   });
 
   const opprettNotatMutation = useMutation({
-    mutationFn: ({ data }: opprettNotatMutationVariables) => notatBackendClient.opprettNotat(data, fagsakId),
+    mutationFn: ({ data }: opprettNotatMutationVariables) => notatBackendClient!.opprettNotat(data, fagsakId),
     onSuccess: async () => {
       formMethods.reset();
       await refetchNotater();
@@ -62,7 +60,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
 
   const endreNotatMutation = useMutation({
     mutationFn: ({ data, id, fagsakIdFraRedigertNotat, versjon }: endreNotatMutationVariables) =>
-      notatBackendClient.endreNotat(data, id, fagsakIdFraRedigertNotat, versjon),
+      notatBackendClient!.endreNotat(data, id, fagsakIdFraRedigertNotat, versjon),
     onSuccess: async () => {
       formMethods.reset();
       await refetchNotater();
@@ -71,7 +69,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
 
   const skjulNotatMutation = useMutation({
     mutationFn: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) =>
-      notatBackendClient.skjulNotat(id, saksnummer, skjul, versjon),
+      notatBackendClient!.skjulNotat(id, saksnummer, skjul, versjon),
     onSuccess: async () => {
       await refetchNotater();
     },
