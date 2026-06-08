@@ -1,4 +1,4 @@
-import { BodyLong, Box, Button, HStack, VStack } from '@navikt/ds-react';
+import { BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import {
   ArrowCirclepathIcon,
   ArrowCirclepathReverseIcon,
@@ -86,7 +86,7 @@ export type ErrorHandlingWizardProps = Readonly<{
 }>;
 
 const ErrorContentBox = ({ children }: { children: ReactNode }) => (
-  <Box paddingBlock="space-0 space-8" borderColor="neutral-subtleA" borderWidth="0 0 4">
+  <Box paddingBlock="space-0">
     {children}
   </Box>
 );
@@ -110,6 +110,7 @@ export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction
   return (
     <VStack gap="space-8">
       {children}
+      <Heading size="xsmall">Hva kan du gjøre?</Heading>
       {fixInfo}
       <HStack gap="space-4">
         {fixButton}
