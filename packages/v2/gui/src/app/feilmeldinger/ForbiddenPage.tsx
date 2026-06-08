@@ -16,13 +16,13 @@ export type IkkeTilgangÅrsak =
   | 'TEKNISK_FEIL';
 
 const årsak_tekst: Record<IkkeTilgangÅrsak, string> = {
-  HAR_IKKE_TILGANG_TIL_KODE6_PERSON: 'Saken gjelder en person med strengt fortrolig adresse (kode 6)',
-  HAR_IKKE_TILGANG_TIL_KODE7_PERSON: 'Saken gjelder en person med fortrolig adresse (kode 7)',
-  HAR_IKKE_TILGANG_TIL_EGEN_ANSATT: 'Saken gjelder en NAV-ansatt (skjermet)',
-  HAR_IKKE_TILGANG_TIL_HISTORISK_SAK: 'Saken er en historisk sak',
-  HAR_IKKE_TILGANG_TIL_APPLIKASJONEN: 'Du har ikke tilgang til applikasjonen',
+  HAR_IKKE_TILGANG_TIL_KODE6_PERSON: 'Du mangler tilgang til saker med strengt fortrolig adresse (kode 6)',
+  HAR_IKKE_TILGANG_TIL_KODE7_PERSON: 'Du mangler tilgang til saker med fortrolig adresse (kode 7)',
+  HAR_IKKE_TILGANG_TIL_EGEN_ANSATT: 'Du mangler tilgang til saker som gjelder Nav-ansatte',
+  HAR_IKKE_TILGANG_TIL_HISTORISK_SAK: 'Du mangler tilgang til historiske saker',
+  HAR_IKKE_TILGANG_TIL_APPLIKASJONEN: 'Du er ikke tildelt en rolle som gir tilgang til k9-sak',
   HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_BORGER: 'Tjenesten er ikke tilgjengelig for borgere',
-  HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_DRIFT: 'Tjenesten krever driftsrettigheter',
+  HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_DRIFT: 'Du mangler driftsrettigheter',
   HAR_IKKE_TILGANG_TIL_PIP_TJENESTE: 'Feil ved tilgangskontrolltjenesten',
   HAR_IKKE_TILGANG_ANNEN_GRUNN: 'Tilgang avslått av annen grunn',
   TEKNISK_FEIL: 'Teknisk feil ved tilgangskontroll',
