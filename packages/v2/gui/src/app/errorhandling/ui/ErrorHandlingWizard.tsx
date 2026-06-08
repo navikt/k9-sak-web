@@ -96,11 +96,11 @@ export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction
 
   const fixButton =
     fixCallback != null ? (
-      <Button {...btnProps} onClick={fixCallback} icon={fixIcon} iconPosition="right">
+      <Button {...btnProps} variant="primary" onClick={fixCallback} icon={fixIcon} iconPosition="right">
         {fixLabel}
       </Button>
     ) : (
-      <Button {...btnProps} as="a" href={fixHref} icon={fixIcon} iconPosition="right">
+      <Button {...btnProps} variant="primary" as="a" href={fixHref} icon={fixIcon} iconPosition="right">
         {fixLabel}
       </Button>
     );
