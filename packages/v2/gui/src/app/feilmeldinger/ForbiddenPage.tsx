@@ -2,20 +2,10 @@ import { List, VStack } from '@navikt/ds-react';
 import { Link } from 'react-router';
 
 import { BigError } from '@k9-sak-web/gui/app/feilmeldinger/BigError.js';
+import type { ÅrsakIkkeTilgang } from "@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js";
 
-export type IkkeTilgangÅrsak =
-  | 'HAR_IKKE_TILGANG_TIL_KODE6_PERSON'
-  | 'HAR_IKKE_TILGANG_TIL_KODE7_PERSON'
-  | 'HAR_IKKE_TILGANG_TIL_EGEN_ANSATT'
-  | 'HAR_IKKE_TILGANG_TIL_HISTORISK_SAK'
-  | 'HAR_IKKE_TILGANG_TIL_APPLIKASJONEN'
-  | 'HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_BORGER'
-  | 'HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_DRIFT'
-  | 'HAR_IKKE_TILGANG_TIL_PIP_TJENESTE'
-  | 'HAR_IKKE_TILGANG_ANNEN_GRUNN'
-  | 'TEKNISK_FEIL';
 
-const årsak_tekst: Record<IkkeTilgangÅrsak, string> = {
+const årsak_tekst: Record<ÅrsakIkkeTilgang, string> = {
   HAR_IKKE_TILGANG_TIL_KODE6_PERSON: 'Du mangler tilgang til saker med strengt fortrolig adresse (kode 6)',
   HAR_IKKE_TILGANG_TIL_KODE7_PERSON: 'Du mangler tilgang til saker med fortrolig adresse (kode 7)',
   HAR_IKKE_TILGANG_TIL_EGEN_ANSATT: 'Du mangler tilgang til saker som gjelder Nav-ansatte',
@@ -29,10 +19,10 @@ const årsak_tekst: Record<IkkeTilgangÅrsak, string> = {
 };
 
 interface ForbiddenPageProps {
-  ikkeTilgangÅrsaker?: IkkeTilgangÅrsak[];
+  ikkeTilgangÅrsaker?: ÅrsakIkkeTilgang[];
 }
 
-const årsakerViØnskerÅVise: IkkeTilgangÅrsak[] = [
+const årsakerViØnskerÅVise: ÅrsakIkkeTilgang[] = [
   'HAR_IKKE_TILGANG_TIL_KODE6_PERSON',
   'HAR_IKKE_TILGANG_TIL_KODE7_PERSON',
   'HAR_IKKE_TILGANG_TIL_EGEN_ANSATT',
