@@ -10,7 +10,7 @@
   "dependencies": {
     "@tanstack/react-query": "5.100.14",
     "react": "19.2.6",
-    "react-intl": "10.1.8"
+    "react-intl": "10.1.11"
   },
   "devDependencies": {
     "@types/react": "19.2.15"
