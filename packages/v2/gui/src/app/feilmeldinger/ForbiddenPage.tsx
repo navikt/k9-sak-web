@@ -54,7 +54,7 @@ const ForbiddenPage = ({ ikkeTilgangÅrsaker }: ForbiddenPageProps) => {
         {unikeÅrsaker && unikeÅrsaker.length > 0 ? (
           <>
             <List>
-              {filtrerteÅrsaker.map(årsak => (
+              {unikeÅrsaker.map(årsak => (
                 <List.Item key={årsak}>{årsak_tekst[årsak] ?? årsak}</List.Item>
               ))}
             </List>
