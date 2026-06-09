@@ -52,7 +52,7 @@ const FagsakSearchIndex = () => {
   const searchResultAccessDenied = useMemo(
     () =>
       error && typeof error.error === 'object' && errorOfType(error.error, ErrorTypes.MANGLER_TILGANG_FEIL)
-        ? getErrorResponseData(error)
+        ? getErrorResponseData(error.error)
         : undefined,
     [error],
   );
