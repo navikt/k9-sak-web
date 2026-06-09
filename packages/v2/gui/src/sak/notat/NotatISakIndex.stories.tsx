@@ -4,11 +4,10 @@ import type {
   OpprettResponse,
   SkjulResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
-  k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { k9_kodeverk_notat_NotatGjelderType as OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { HttpResponse, delay, http, type PathParams } from 'msw';
+import NotatBackendClient from './NotatBackendClient.js';
+import { NotatBackendClientContext } from './NotatBackendClientContext.js';
 import NotatISakIndex from './NotaterIndex';
 
 export default {
@@ -17,23 +16,24 @@ export default {
 };
 
 export const VisNotatISakPanel = () => (
-  <div
-    style={{
-      width: '700px',
-      margin: '50px',
-      padding: '20px',
-      backgroundColor: 'white',
-    }}
-  >
-    <NotatISakIndex
-      fagsakId="1"
-      fagsakHarPleietrengende
-      navAnsatt={{
-        brukernavn: 'saksbeh',
+  <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
+    <div
+      style={{
+        width: '700px',
+        margin: '50px',
+        padding: '20px',
+        backgroundColor: 'white',
       }}
-      sakstype={BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN}
-    />
-  </div>
+    >
+      <NotatISakIndex
+        fagsakId="1"
+        fagsakHarPleietrengende
+        navAnsatt={{
+          brukernavn: 'saksbeh',
+        }}
+      />
+    </div>
+  </NotatBackendClientContext>
 );
 
 const notater: NotatDto[] = [

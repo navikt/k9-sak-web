@@ -1,8 +1,8 @@
 {
   "collection": "frontend",
-  "version": "2026.05.28-224025-4579ee0",
+  "version": "2026.06.05-082958-add16ce",
   "scope": "repo",
-  "source_sha": "4579ee0",
+  "source_sha": "7f41e92",
   "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
@@ -19,7 +19,7 @@
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "d04fd3fc8eef124b"
+      "hash": "1a77f9c4ecf37af8"
     },
     {
       "path": ".github/skills/aksel-spacing/",
@@ -71,7 +71,7 @@
     },
     {
       "path": ".github/prompts/aksel-component.prompt.md",
-      "hash": "dbeb27a9cad0e768"
+      "hash": "8f6e07fff457bc3d"
     },
     {
       "path": ".github/prompts/nais-manifest.prompt.md",

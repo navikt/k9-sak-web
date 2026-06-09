@@ -73,7 +73,9 @@ const AppIndex = () => {
         <ErrorBoundary>
           <Dekorator queryStrings={queryStrings} pathname={location.pathname} />
           {shouldRenderHome && <Home />}
-          {forbiddenErrors.length > 0 && <ForbiddenPage />}
+          {forbiddenErrors.length > 0 && (
+            <ForbiddenPage ikkeTilgangÅrsaker={forbiddenErrors.flatMap(e => e.ikkeTilgangÅrsaker ?? [])} />
+          )}
           {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={k9LoginResourcePath} />}
         </ErrorBoundary>
       </AppConfigResolver>

@@ -1,15 +1,16 @@
-import {get} from '@fpsak-frontend/utils';
-import {fagsakYtelsesType} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { get } from '@fpsak-frontend/utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import axios from 'axios';
-import React, {type JSX, useMemo} from 'react';
+import React, { type JSX, useMemo } from 'react';
 
-import {NavigationWithDetailView} from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
-import {PageContainer} from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
-import {Box} from '@navikt/ds-react';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
+import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
+import { Box } from '@navikt/ds-react';
 import Dokument from '../../../types/Dokument';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
-import {DokumentoversiktResponse} from '../../../types/DokumentoversiktResponse';
-import {StepId} from '../../../types/Step';
+import { DokumentoversiktResponse } from '../../../types/DokumentoversiktResponse';
+import { StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
 import {
   nesteStegErLivetssluttfase,
@@ -26,7 +27,6 @@ import Innleggelsesperiodeoversikt from '../innleggelsesperiodeoversikt/Innlegge
 import SignertSeksjon from '../signert-seksjon/SignertSeksjon';
 import ActionType from './actionTypes';
 import dokumentReducer from './reducer';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 interface StruktureringAvDokumentasjonProps {
   navigerTilNesteSteg: () => void;
@@ -41,7 +41,7 @@ const StruktureringAvDokumentasjon = ({
 }: StruktureringAvDokumentasjonProps): JSX.Element => {
   const { endpoints, errorNotifier, fagsakYtelseType } = React.useContext(ContainerContext);
 
-  const {VIS_INNLEGGELSE_FOR_PILS} = React.useContext(FeatureTogglesContext)
+  const {VIS_INNLEGGELSE_FOR_PILS} = React.useContext(FeatureTogglesContext);
   const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
 
   const [state, dispatch] = React.useReducer(dokumentReducer, {
@@ -146,9 +146,7 @@ const StruktureringAvDokumentasjon = ({
     <PageContainer isLoading={isLoading} hasError={dokumentoversiktFeilet} key={StepId.Dokument} preventUnmount>
       <DokumentoversiktMessages
         dokumentoversikt={dokumentoversikt}
-        harRegistrertDiagnosekode={
-          !skalViseDiagnosekoder || !sykdomsstegStatus?.manglerDiagnosekode
-        }
+        harRegistrertDiagnosekode={!skalViseDiagnosekoder || !sykdomsstegStatus?.manglerDiagnosekode}
         kanNavigereVidere={sykdomsstegStatus ? nesteStegErVurderingFn(sykdomsstegStatus) : false}
         navigerTilNesteSteg={navigerTilNesteSteg}
       />
@@ -163,7 +161,6 @@ const StruktureringAvDokumentasjon = ({
                   dokumenter={dokumentoversikt.ustrukturerteDokumenter}
                   onDokumentValgt={velgDokument}
                   valgtDokument={valgtDokument}
-                  expandedByDefault
                 />
                 <Box marginBlock="space-24 space-0">
                   <Dokumentnavigasjon
@@ -172,6 +169,7 @@ const StruktureringAvDokumentasjon = ({
                     onDokumentValgt={velgDokument}
                     valgtDokument={valgtDokument}
                     displayFilterOption
+                    usePagination
                   />
                 </Box>
               </>
@@ -201,7 +199,9 @@ const StruktureringAvDokumentasjon = ({
                     : undefined
                 }
                 secondSectionRenderer={
-                  skalViseDiagnosekoder ? () => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} /> : undefined
+                  skalViseDiagnosekoder
+                    ? () => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} />
+                    : undefined
                 }
                 thirdSectionRenderer={() => <SignertSeksjon harGyldigSignatur={dokumentoversikt.harGyldigSignatur()} />}
               />

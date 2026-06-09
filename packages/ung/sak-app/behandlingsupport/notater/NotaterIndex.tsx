@@ -1,8 +1,8 @@
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Fagsak } from '@k9-sak-web/types';
-import { sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ErrorAlert } from '@k9-sak-web/gui/app/errorhandling/ui/ErrorAlert.js';
 import { resolveErrorViewProps } from '@k9-sak-web/gui/app/errorhandling/ui/resolveErrorViewProps.js';
 
@@ -28,7 +28,6 @@ const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
         fagsakId={fagsak.saksnummer}
         navAnsatt={navAnsatt}
         fagsakHarPleietrengende={!!fagsak.pleietrengendeAktørId}
-        sakstype={fagsak.sakstype}
       />
     </ErrorBoundary>
   );
