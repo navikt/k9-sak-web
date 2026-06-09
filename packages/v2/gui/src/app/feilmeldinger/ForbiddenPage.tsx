@@ -45,6 +45,7 @@ const ForbiddenPage = ({ ikkeTilgangÅrsaker }: ForbiddenPageProps) => {
     ? ikkeTilgangÅrsaker.filter(årsak => årsakerViØnskerÅVise.includes(årsak))
     : [];
 
+  // Fjern duplikater i tilfelle samme årsak oppgis flere ganger
   const unikeÅrsaker = Array.from(new Set(filtrerteÅrsaker));
 
   return (
