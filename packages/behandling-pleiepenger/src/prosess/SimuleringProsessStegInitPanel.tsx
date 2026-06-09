@@ -37,7 +37,6 @@ interface Props {
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   isReadOnly: boolean;
   api: K9SakProsessApi;
-  saksnummer: string;
 }
 
 export function SimuleringProsessStegInitPanel(props: Props) {
@@ -53,7 +52,7 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(props.api, props.behandling),
-      fagsakQueryOptions(props.api, props.saksnummer, props.behandling),
+      fagsakQueryOptions(props.api, props.fagsak.saksnummer, props.behandling),
       behandlingQueryOptions(props.api, props.behandling),
       tilbakekrevingvalgQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
       simuleringResultatQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
