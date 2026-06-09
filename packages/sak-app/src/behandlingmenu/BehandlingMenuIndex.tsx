@@ -9,7 +9,6 @@ import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enh
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/MenyNyBehandlingIndex.js';
-import { DELVIS_REVURDERING_ARSAKER_FALLBACK } from '@k9-sak-web/gui/sak/meny/ny-behandling/components/NyBehandlingModal.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyVergeIndexV2 from '@k9-sak-web/gui/sak/meny/verge/MenyVergeIndex.js';
@@ -174,19 +173,21 @@ export const BehandlingMenuIndex = ({
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
 
-  const delvisÅrsaker = sakRettigheter.delvisRevurderingsårsaker
-    ? new Set(sakRettigheter.delvisRevurderingsårsaker.map(d => d.årsak.kode))
-    : DELVIS_REVURDERING_ARSAKER_FALLBACK;
-
   const lagNyBehandling = useCallback(async (bTypeKode: string, params: any) => {
     let lagNy = lagNyBehandlingK9Sak;
     if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
       lagNy = lagNyBehandlingTilbake;
     }
-    if (bTypeKode === BehandlingType.REVURDERING && typeof params.steg === 'string' && delvisÅrsaker.has(params.steg)) {
-      lagNy = Array.isArray(params.perioder) && params.perioder.length > 0
-        ? lagRevurderingFlerePerioderFraStegK9Sak
-        : lagRevurderingFraStegK9Sak;
+    const erRevurderingFraStegPayload =
+      bTypeKode === BehandlingType.REVURDERING &&
+      typeof params.steg === 'string' &&
+      (Array.isArray(params.perioder) || (!!params.fom && !!params.tom));
+
+    if (erRevurderingFraStegPayload) {
+      lagNy =
+        Array.isArray(params.perioder) && params.perioder.length > 0
+          ? lagRevurderingFlerePerioderFraStegK9Sak
+          : lagRevurderingFraStegK9Sak;
     }
     if (bTypeKode === BehandlingType.KLAGE) {
       lagNy = lagNyBehandlingKlage;

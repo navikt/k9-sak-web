@@ -20,7 +20,7 @@ jobs:
       CLUSTER: dev-gcp
     steps:
       - name: Hente kode
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -34,7 +34,7 @@ jobs:
         uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
-        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
         id: docker-push
         with:
           additional-tag: 'dev-aktivitetspenger'
@@ -47,7 +47,7 @@ jobs:
             port=9005
           push-image: true
       - name: Deploy to nais
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/dev-gcp.yml

@@ -5,29 +5,29 @@ import { useState } from 'react';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import type { SimuleringDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringDto.js';
-import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/combined/kontrakt/fagsak/FagsakDto.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { VurderFeilutbetaling } from '../vurder-feilutbetaling/VurderFeilutbetaling';
-import { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 interface AvregningPanelProps {
-  simuleringResultat: SimuleringDto;
+  simuleringResultat: SimuleringDto | null;
   readOnly: boolean;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
   behandling: BehandlingDto;
   fagsak: FagsakDto;
-  tilbakekrevingvalg?: TilbakekrevingValgDto;
+  tilbakekrevingvalg?: TilbakekrevingValgDto | null;
 }
 export function AvregningPanel(props: AvregningPanelProps) {
   const [showDetails, setShowDetails] = useState<Array<{ id: number; show: boolean }>>([]);
   const { simuleringResultat, readOnly, aksjonspunkter, behandling, fagsak, tilbakekrevingvalg } = props;
   const hasOpenTilbakekrevingsbehandling =
-    tilbakekrevingvalg !== undefined &&
+    tilbakekrevingvalg != undefined &&
     tilbakekrevingvalg.videreBehandling === TilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
   const harVurderFeilutbetalingAP = aksjonspunkter.some(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FEILUTBETALING,

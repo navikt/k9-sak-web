@@ -328,7 +328,7 @@ Språkmodeller trener på bokmål, nynorsk og svensk samtidig og blander formene
 - **å** der bokmål har **a** → sjekk om det er svensk (engangs-, ikke engångs-)
 - **-ar/-ane** bestemtform flertall → skal være **-er/-ene** (brukerne, tjenestene)
 
-**Obs:** A-endelser i verb og substantiv (oppdaga, fila, sida) er *gyldig bokmål* og skal beholdes hvis teksten er konsekvent. Forskjellen er at "oppdaga" er bokmål valgfritt, mens "oppdateringar" alltid er nynorsk.
+**Obs:** A-endelser i verb og substantiv (oppdaga, fila, sida) er *gyldig ledig bokmål* og skal beholdes hvis teksten er konsekvent. Forskjellen er at "oppdaga" er bokmål valgfritt, mens "oppdateringar" alltid er nynorsk.
 
 **Kilde:** [Språkrådets KI-rapport (2025)](https://sprakradet.no/aktuelt/ki-sprakets-fallgruver/) bekrefter at språkmodeller blander formene og har inkonsekvent formvalg. Rapporten fant 2,6 feil/side på bokmål, primært tegnsetting — men i praksis ser vi at nynorsk-innblanding er mer subtil og vanskelig å oppdage for ikke-lingvister.
 

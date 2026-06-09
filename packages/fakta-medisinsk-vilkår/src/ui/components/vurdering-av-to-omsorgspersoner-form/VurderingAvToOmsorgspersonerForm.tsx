@@ -3,8 +3,9 @@ import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
-import { Alert, Box, Link } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
+import { Close } from '@navikt/ds-icons';
+import { Alert, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
+import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';
@@ -22,6 +23,8 @@ import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
+import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
+import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -84,6 +87,51 @@ const VurderingAvToOmsorgspersonerForm = ({
   const formMethods = useForm({
     defaultValues,
   });
+  const [visAlleDokumenter, setVisAlleDokumenter] = useState(false);
+  const [dokumentFilter, setDokumentFilter] = useState<string[]>([]);
+
+  const updateDokumentFilter = (valgtFilter: string) => {
+    if (dokumentFilter.includes(valgtFilter)) {
+      if (dokumentFilter.length === 1) {
+        setVisAlleDokumenter(false);
+      }
+      setDokumentFilter(dokumentFilter.filter(v => v !== valgtFilter));
+    } else {
+      setDokumentFilter(dokumentFilter.concat([valgtFilter]));
+      setVisAlleDokumenter(true);
+    }
+  };
+
+  const getDokumenterSomSkalVises = () => {
+    const filtrerteDokumenter = dokumenter.filter(dokument => {
+      if (!dokumentFilter.length) {
+        return true;
+      }
+      return dokumentFilter.some(filter => dokument[filter] === true);
+    });
+
+    return filtrerteDokumenter.filter((dokument, index) => {
+      if (dokumentFilter.length === 0) {
+        if (dokumenter.length < 6) {
+          return true;
+        }
+        if (!visAlleDokumenter && index > 4) {
+          return false;
+        }
+      }
+      return true;
+    });
+  };
+
+  const visFlereDokumenterKnapp = () => {
+    if (dokumentFilter.length > 0) {
+      return false;
+    }
+    if (dokumenter.length < 6) {
+      return false;
+    }
+    return true;
+  };
 
   const perioderSomBlirVurdert: Period[] | undefined = useWatch({
     control: formMethods.control,
@@ -137,25 +185,68 @@ const VurderingAvToOmsorgspersonerForm = ({
         >
           {dokumenter?.length > 0 && (
             <Box marginBlock="space-24 space-0">
-              <CheckboxGroupRHF
-                question="Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?"
-                name={FieldName.DOKUMENTER}
-                checkboxes={dokumenter.map(dokument => ({
-                  value: dokument.id,
-                  label: (
-                    <DokumentLink
-                      dokument={dokument}
-                      etikett={
-                        dokument.annenPartErKilde && <PersonIcon fontSize="1.5rem" title="Dokument fra annen part" />
-                      }
-                    />
-                  ),
-                }))}
-                validators={{
-                  harBruktDokumentasjon,
-                }}
-                disabled={readOnly}
-              />
+              <Label size="small" aria-hidden="true">
+                Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?
+              </Label>
+              <div className={styles.filterContainer}>
+                <VurderingDokumentfilter text="Filter" filters={dokumentFilter} onFilterChange={updateDokumentFilter} />
+              </div>
+              {dokumentFilter.length > 0 && (
+                <div className={styles.filterKnappContainer}>
+                  {dokumentFilter.map(filter => {
+                    const option = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
+                    const label = option ? option.label : filter;
+                    return (
+                      <button
+                        key={filter}
+                        onClick={() => updateDokumentFilter(filter)}
+                        className={styles.fjernFilterKnapp}
+                        type="button"
+                      >
+                        {label}
+                        <Close />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <div className={styles.checkboxGroupWrapper}>
+                <CheckboxGroupRHF
+                  question="Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?"
+                  name={FieldName.DOKUMENTER}
+                  checkboxes={getDokumenterSomSkalVises().map(dokument => ({
+                    value: dokument.id,
+                    label: (
+                      <DokumentLink
+                        dokument={dokument}
+                        etikett={
+                          dokument.annenPartErKilde && (
+                            <Tooltip content="Dokument fra annen part" placement="right">
+                              <PersonIcon fontSize="1.5rem" />
+                            </Tooltip>
+                          )
+                        }
+                      />
+                    ),
+                  }))}
+                  validators={{
+                    harBruktDokumentasjon,
+                  }}
+                  disabled={readOnly}
+                />
+              </div>
+              {visFlereDokumenterKnapp() && (
+                <Box marginBlock="space-8 space-0" marginInline="space-0 space-0">
+                  <Button
+                    onClick={() => setVisAlleDokumenter(!visAlleDokumenter)}
+                    size="small"
+                    type="button"
+                    variant="secondary"
+                  >
+                    {visAlleDokumenter ? `Vis færre dokumenter` : `Vis alle dokumenter (${dokumenter.length})`}
+                  </Button>
+                </Box>
+              )}
             </Box>
           )}
           <Box marginBlock="space-32 space-0">

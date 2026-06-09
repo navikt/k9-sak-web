@@ -17,7 +17,7 @@
     "@k9-sak-web/types": "1.0.0",
     "classnames": "2.5.1",
     "css-tree": "3.2.1",
-    "date-fns": "4.2.1",
+    "date-fns": "4.3.0",
     "editorjs-html": "3.4.3",
     "formik": "2.4.9",
     "moment": "2.30.1",
