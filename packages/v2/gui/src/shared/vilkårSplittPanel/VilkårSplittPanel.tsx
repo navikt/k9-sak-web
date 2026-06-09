@@ -10,7 +10,7 @@ import {
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
 export interface VilkårSplittPanelPeriod {

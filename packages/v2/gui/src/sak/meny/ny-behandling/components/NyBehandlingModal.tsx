@@ -1,29 +1,23 @@
-import {
-  behandlingType as BehandlingTypeK9Klage
-} from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
   k9_kodeverk_behandling_FagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {behandlingType as BehandlingTypeK9Sak} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import type {FagsakYtelsesType} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import {
-  behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType
-} from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import {ung_kodeverk_behandling_BehandlingÅrsakType} from '@k9-sak-web/backend/ungsak/generated/types.js';
-import {
-  sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType
-} from '@k9-sak-web/backend/ungtilbake/generated/types.js';
-import {erTilbakekreving} from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import type {KodeverkObject, Periode} from '@k9-sak-web/lib/kodeverk/types.js';
-import {Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack} from '@navikt/ds-react';
-import {ModalBody, ModalFooter} from '@navikt/ds-react/Modal';
-import {RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect} from '@navikt/ft-form-hooks';
-import {required} from '@navikt/ft-form-validators';
-import {use, useEffect} from 'react';
-import {useForm} from 'react-hook-form';
-import {visnDato} from '../../../../utils/formatters';
+import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
+import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
+import { RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
+import { required } from '@navikt/ft-form-validators';
+import { use, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { visnDato } from '../../../../utils/formatters';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObject[]) => {
@@ -491,7 +485,12 @@ export const NyBehandlingModal = ({
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
               Avbryt
             </Button>
-            <Button variant="primary" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+            <Button
+              variant="primary"
+              size="small"
+              loading={formMethods.formState.isSubmitting}
+              disabled={formMethods.formState.isSubmitting}
+            >
               Opprett behandling
             </Button>
           </HStack>
