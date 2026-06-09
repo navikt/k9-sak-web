@@ -44,13 +44,17 @@ const ForbiddenPage = ({ ikkeTilgangÅrsaker }: ForbiddenPageProps) => {
   const filtrerteÅrsaker = ikkeTilgangÅrsaker
     ? ikkeTilgangÅrsaker.filter(årsak => årsakerViØnskerÅVise.includes(årsak))
     : [];
+
+  // Fjern duplikater i tilfelle samme årsak oppgis flere ganger
+  const unikeÅrsaker = Array.from(new Set(filtrerteÅrsaker));
+
   return (
     <BigError title="Du har ikke tilgang til denne saken">
       <VStack gap="space-32" className="mt-4">
-        {filtrerteÅrsaker && filtrerteÅrsaker.length > 0 ? (
+        {unikeÅrsaker.length > 0 ? (
           <>
             <List>
-              {filtrerteÅrsaker.map(årsak => (
+              {unikeÅrsaker.map(årsak => (
                 <List.Item key={årsak}>{årsak_tekst[årsak] ?? årsak}</List.Item>
               ))}
             </List>
