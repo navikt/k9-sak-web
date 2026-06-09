@@ -44,10 +44,13 @@ const ForbiddenPage = ({ ikkeTilgangÅrsaker }: ForbiddenPageProps) => {
   const filtrerteÅrsaker = ikkeTilgangÅrsaker
     ? ikkeTilgangÅrsaker.filter(årsak => årsakerViØnskerÅVise.includes(årsak))
     : [];
+
+  const unikeÅrsaker = Array.from(new Set(filtrerteÅrsaker));
+
   return (
     <BigError title="Du har ikke tilgang til denne saken">
       <VStack gap="space-32" className="mt-4">
-        {filtrerteÅrsaker && filtrerteÅrsaker.length > 0 ? (
+        {unikeÅrsaker && unikeÅrsaker.length > 0 ? (
           <>
             <List>
               {filtrerteÅrsaker.map(årsak => (
