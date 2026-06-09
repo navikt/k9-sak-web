@@ -6,6 +6,7 @@ import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -39,7 +40,7 @@ const FagsakSearchIndex = () => {
     isPending,
     isSuccess,
     error,
-  } = useMutation({
+  } = useMutation<Awaited<ReturnType<typeof api.fagsakSøk>>, ExtendedApiError, { searchString?: string }>({
     mutationFn: ({ searchString }: { searchString?: string }) => api.fagsakSøk(searchString ?? ''),
     onSuccess: results => {
       if (results.length === 1) {
@@ -49,7 +50,10 @@ const FagsakSearchIndex = () => {
   });
 
   const searchResultAccessDenied = useMemo(
-    () => (error && errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
+    () =>
+      error && typeof error.error === 'object' && errorOfType(error.error, ErrorTypes.MANGLER_TILGANG_FEIL)
+        ? getErrorResponseData(error)
+        : undefined,
     [error],
   );
 
