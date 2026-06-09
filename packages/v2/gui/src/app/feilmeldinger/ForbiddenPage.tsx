@@ -2,7 +2,7 @@ import { List, VStack } from '@navikt/ds-react';
 import { Link } from 'react-router';
 
 import { BigError } from '@k9-sak-web/gui/app/feilmeldinger/BigError.js';
-import type { ÅrsakIkkeTilgang } from "@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js";
+import type { ÅrsakIkkeTilgang } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
 
 
 const årsak_tekst: Record<ÅrsakIkkeTilgang, string> = {

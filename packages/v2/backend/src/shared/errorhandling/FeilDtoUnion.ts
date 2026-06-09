@@ -39,7 +39,7 @@ const bodyPropnames: Record<keyof FeilDtoUnion, keyof FeilDtoUnion> = {
   type: 'type',
   feilkode: 'feilkode',
   feltFeil: 'feltFeil',
-  ikkeTilgangÅrsaker: "ikkeTilgangÅrsaker",
+  ikkeTilgangÅrsaker: 'ikkeTilgangÅrsaker',
 };
 
 const feltFeilPropnames: Record<keyof FeltFeilDtoUnion, keyof FeltFeilDtoUnion> = {
