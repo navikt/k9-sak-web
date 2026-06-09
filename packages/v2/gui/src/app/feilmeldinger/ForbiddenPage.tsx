@@ -51,7 +51,7 @@ const ForbiddenPage = ({ ikkeTilgangÅrsaker }: ForbiddenPageProps) => {
   return (
     <BigError title="Du har ikke tilgang til denne saken">
       <VStack gap="space-32" className="mt-4">
-        {unikeÅrsaker && unikeÅrsaker.length > 0 ? (
+        {unikeÅrsaker.length > 0 ? (
           <>
             <List>
               {filtrerteÅrsaker.map(årsak => (
