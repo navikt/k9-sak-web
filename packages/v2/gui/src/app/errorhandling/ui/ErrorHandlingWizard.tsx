@@ -1,4 +1,4 @@
-import { BodyLong, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { BodyLong, Box, Button, Heading, HStack, Spacer, VStack } from '@navikt/ds-react';
 import {
   ArrowCirclepathIcon,
   ArrowCirclepathReverseIcon,
@@ -117,9 +117,8 @@ export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction
         <Button {...btnProps} as="a" href={reportLink} target="_blank" icon={<ExternalLinkIcon />} iconPosition="right">
           Meld feil
         </Button>
-        <ErrorReportPopover errors={errors} {...btnProps}>
-          Vis teknisk info
-        </ErrorReportPopover>
+        <Spacer/>
+        <ErrorReportPopover errors={errors} {...btnProps} variant="tertiary" />
       </HStack>
 </VStack>
   );
