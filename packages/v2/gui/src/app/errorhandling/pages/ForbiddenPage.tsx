@@ -1,7 +1,7 @@
 import { List, VStack } from '@navikt/ds-react';
 import { Link } from 'react-router';
 
-import { BigError } from '@k9-sak-web/gui/app/feilmeldinger/BigError.js';
+import { BigError } from '@k9-sak-web/gui/app/errorhandling/pages/BigError.js';
 
 export type IkkeTilgangÅrsak =
   | 'HAR_IKKE_TILGANG_TIL_KODE6_PERSON'
