@@ -149,6 +149,11 @@ describe('useProsessmotor', () => {
         },
         simulertUttaksplan: {},
       },
+      simuleringResultat: {
+        simuleringResultat: { periode: { fom: '', tom: '' } },
+        simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
+        slåttAvInntrekk: false,
+      },
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
