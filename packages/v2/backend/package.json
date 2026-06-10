@@ -16,10 +16,10 @@
     "./typecheck/*": "./src/typecheck/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "3.1.20260423083332",
-    "@navikt/k9-sak-typescript-client": "3.0.20260518064635",
-    "@navikt/k9-tilbake-typescript-client": "1.1.20260326182543",
-    "@navikt/ung-sak-typescript-client": "2.0.20260520093047",
-    "@navikt/ung-tilbake-typescript-client": "3.0.20260504091647"
+    "@navikt/k9-klage-typescript-client": "3.1.20260529100435",
+    "@navikt/k9-sak-typescript-client": "3.0.20260605142157",
+    "@navikt/k9-tilbake-typescript-client": "1.1.20260510232128",
+    "@navikt/ung-sak-typescript-client": "2.0.20260529122719",
+    "@navikt/ung-tilbake-typescript-client": "3.0.20260519143823"
   }
 }
