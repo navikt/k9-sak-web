@@ -6,6 +6,10 @@ import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
 import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorHandlingWizard.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
+import {
+  isÅrsakIkkeTilgangArray,
+  type ÅrsakIkkeTilgang,
+} from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
 
 // Sjekkar om data er eit objekt (ikkje null, ikkje array) og returnerer det som Record viss ja.
 const asRecord = (data: unknown): Record<string, unknown> | null => {
@@ -40,7 +44,17 @@ const resolveTeapotProps = (error: AxiosError) => {
   const status = typeof data['status'] === 'string' ? data['status'] : undefined;
   const eta = typeof data['eta'] === 'string' ? data['eta'] : undefined;
   const systemMelding = typeof data['message'] === 'string' ? data['message'] : undefined;
-  return {status, eta, systemMelding}
+  return { status, eta, systemMelding };
+};
+
+export const resolveAxiosErrorÅrsakIkkeTilgang = (error: AxiosError): ReadonlyArray<ÅrsakIkkeTilgang> => {
+  if (error.status === 403) {
+    const data = asRecord(getEffectiveResponseData(error));
+    if (data != null && isÅrsakIkkeTilgangArray(data['ikkeTilgangÅrsaker'])) {
+      return data['ikkeTilgangÅrsaker'];
+    }
+  }
+  return [];
 };
 
 /**
@@ -80,14 +94,14 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       errorInfo: <BodyLong> Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen. </BodyLong>,
       fixAction: {
         ...restartAction,
-        info: <>
-          <BodyLong>
-            Hvis du mener at du skal ha rolle/rettighet til dette, tar du kontakt med din ident-ansvarlig.
-          </BodyLong>
-          <BodyLong>
-            Hvis du vet at du har den nødvendige tilgangen, melder du feilen i Porten.
-          </BodyLong>
-        </>,
+        info: (
+          <>
+            <BodyLong>
+              Hvis du mener at du skal ha rolle/rettighet til dette, tar du kontakt med din ident-ansvarlig.
+            </BodyLong>
+            <BodyLong>Hvis du vet at du har den nødvendige tilgangen, melder du feilen i Porten.</BodyLong>
+          </>
+        ),
       },
     };
   }
@@ -100,11 +114,13 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       errorInfo: 'Systemet finner ikke det du ber om.',
       fixAction: {
         ...restartAction,
-        info: <>
-          <BodyLong>Prøv å starte på nytt fra forsiden.</BodyLong>
-          <BodyLong>Meld feil i Porten hvis du ikke får løst den selv.</BodyLong>
-        </>
-      }
+        info: (
+          <>
+            <BodyLong>Prøv å starte på nytt fra forsiden.</BodyLong>
+            <BodyLong>Meld feil i Porten hvis du ikke får løst den selv.</BodyLong>
+          </>
+        ),
+      },
     };
   }
 
@@ -116,63 +132,72 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       errorInfo: 'Systemet har brukt for lang tid på å svare deg.',
       fixAction: {
         ...reloadAction,
-        info: <>
-          <BodyLong>Prøv å laste inn på nytt.</BodyLong>
-          <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
-        </>
+        info: (
+          <>
+            <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+            <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
+          </>
+        ),
       },
     };
   }
 
-  if(status === 409) {
+  if (status === 409) {
     return {
       error,
-      title: "Saksinformasjonen er utdatert",
-      errorInfo: <BodyLong>
-        Saken har blitt oppdatert med ny informasjon av systemet eller av en annen saksbehandler mens du har jobbet med den.
-      </BodyLong>,
+      title: 'Saksinformasjonen er utdatert',
+      errorInfo: (
+        <BodyLong>
+          Saken har blitt oppdatert med ny informasjon av systemet eller av en annen saksbehandler mens du har jobbet
+          med den.
+        </BodyLong>
+      ),
       fixAction: reloadActionWithFormResetWarning,
-    }
+    };
   }
 
   // 418 — polling halted / delayed (NB: I AxiosError-konteksten er dette typisk berre relevant for polling-kall).
   if (status === 418) {
-    const {status, eta} = resolveTeapotProps(error) ?? {}
-    if(status === 'HALTED') {
+    const { status, eta } = resolveTeapotProps(error) ?? {};
+    if (status === 'HALTED') {
       return {
         error,
-        title: "Oi! Noe gikk galt",
-        errorInfo: "Noe gikk galt, men feilen kan være midlertidig.",
+        title: 'Oi! Noe gikk galt',
+        errorInfo: 'Noe gikk galt, men feilen kan være midlertidig.',
         fixAction: {
           ...reloadAction,
-          info: <>
-            <BodyLong>Prøv å laste inn på nytt eller komme tilbake til saken litt senere.</BodyLong>
-            <BodyLong>Meld feilen i Porten hvis du ikke får løst den selv.</BodyLong>
-          </>
-        }
-      }
+          info: (
+            <>
+              <BodyLong>Prøv å laste inn på nytt eller komme tilbake til saken litt senere.</BodyLong>
+              <BodyLong>Meld feilen i Porten hvis du ikke får løst den selv.</BodyLong>
+            </>
+          ),
+        },
+      };
     }
-    if(status === 'DELAYED') {
-      const tryAgainAfter = eta != null ? ` etter ${formatDate(eta)} kl. ${timeFormat(eta)}` : ` litt senere`
+    if (status === 'DELAYED') {
+      const tryAgainAfter = eta != null ? ` etter ${formatDate(eta)} kl. ${timeFormat(eta)}` : ` litt senere`;
       return {
         error,
-        title: "Venter fortsatt på svar",
-        errorInfo: <>
-          <BodyLong>
-            Saksbehandlingssystemet venter på et annet system som ikke svarer akkurat nå.
-          </BodyLong>
-          <BodyLong>
-            Du trenger ikke melde inn en feil, men prøv igjen {tryAgainAfter}.
-          </BodyLong>
-        </>,
+        title: 'Venter fortsatt på svar',
+        errorInfo: (
+          <>
+            <BodyLong>Saksbehandlingssystemet venter på et annet system som ikke svarer akkurat nå.</BodyLong>
+            <BodyLong>Du trenger ikke melde inn en feil, men prøv igjen {tryAgainAfter}.</BodyLong>
+          </>
+        ),
         fixAction: {
           ...reloadAction,
-          info: <>
-            <BodyLong>Prøv å laste inn på nytt.</BodyLong>
-            <BodyLong>Sjekk driftsmeldinger eller rapporter feil i Porten, hvis den ikke løser seg etter hvert.</BodyLong>
-          </>
-        }
-      }
+          info: (
+            <>
+              <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+              <BodyLong>
+                Sjekk driftsmeldinger eller rapporter feil i Porten, hvis den ikke løser seg etter hvert.
+              </BodyLong>
+            </>
+          ),
+        },
+      };
     }
   }
 
@@ -188,11 +213,13 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       ),
       fixAction: {
         ...reloadAction,
-        info: <>
-          <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
-          <BodyLong>Obs! Hvis du trykker på "Last på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
-          <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
-        </>
+        info: (
+          <>
+            <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
+            <BodyLong>Obs! Hvis du trykker på "Last på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
+            <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
+          </>
+        ),
       },
     };
   }
@@ -202,20 +229,22 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
     return {
       error,
       title: 'Feil med nettverksforbindelse',
-      errorInfo: <>
-        <BodyLong>
-          Nettleseren din klarte ikke å få kontakt med systemet.
-        </BodyLong>
-        <BodyLong>
-          <i>{error.message}</i>
-        </BodyLong>
-      </>,
+      errorInfo: (
+        <>
+          <BodyLong>Nettleseren din klarte ikke å få kontakt med systemet.</BodyLong>
+          <BodyLong>
+            <i>{error.message}</i>
+          </BodyLong>
+        </>
+      ),
       fixAction: {
         ...reloadAction,
-        info: <>
-          <BodyLong>Prøv å laste på nytt.</BodyLong>
-          <BodyLong>Kontroller nettverksforbindelsen din eller sjekk driftsmeldinger.</BodyLong>
-        </>
+        info: (
+          <>
+            <BodyLong>Prøv å laste på nytt.</BodyLong>
+            <BodyLong>Kontroller nettverksforbindelsen din eller sjekk driftsmeldinger.</BodyLong>
+          </>
+        ),
       },
     };
   }

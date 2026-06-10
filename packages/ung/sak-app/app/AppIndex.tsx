@@ -22,6 +22,7 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
+import { resolveAxiosErrorÅrsakIkkeTilgang } from '@k9-sak-web/gui/app/errorhandling/ui/resolveAxiosErrorView.js';
 
 const isForbidden = (e: Error) =>
   (e instanceof AxiosError && e.response?.status === 403) || ('type' in e && e.type === EventType.REQUEST_FORBIDDEN);
@@ -60,7 +61,11 @@ const AppIndex = () => {
           <Dekorator queryStrings={queryStrings} pathname={location.pathname} />
           {shouldRenderHome && <Home />}
           {forbiddenErrors.length > 0 && (
-            <ForbiddenPage ikkeTilgangÅrsaker={forbiddenErrors.flatMap(e => e.ikkeTilgangÅrsaker ?? [])} />
+            <ForbiddenPage
+              ikkeTilgangÅrsaker={forbiddenErrors.flatMap(e =>
+                e instanceof AxiosError ? resolveAxiosErrorÅrsakIkkeTilgang(e) : [],
+              )}
+            />
           )}
           {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={ungLoginResourcePath} />}
         </ErrorBoundary>

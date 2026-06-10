@@ -25,6 +25,7 @@ import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
+import { resolveAxiosErrorÅrsakIkkeTilgang } from '@k9-sak-web/gui/app/errorhandling/ui/resolveAxiosErrorView.js';
 
 const isForbidden = (e: Error) =>
   (e instanceof AxiosError && e.response?.status === 403) || ('type' in e && e.type === EventType.REQUEST_FORBIDDEN);
@@ -51,7 +52,6 @@ const AppIndex = () => {
     }
   }, []);
 
-
   const { globalErrors } = useGlobalUnhandledErrors();
   const queryStrings = parseQueryString(location.search);
   const forbiddenErrors = globalErrors.filter(isForbidden);
@@ -74,7 +74,11 @@ const AppIndex = () => {
           <Dekorator queryStrings={queryStrings} pathname={location.pathname} />
           {shouldRenderHome && <Home />}
           {forbiddenErrors.length > 0 && (
-            <ForbiddenPage ikkeTilgangÅrsaker={forbiddenErrors.flatMap(e => e.ikkeTilgangÅrsaker ?? [])} />
+            <ForbiddenPage
+              ikkeTilgangÅrsaker={forbiddenErrors.flatMap(e =>
+                e instanceof AxiosError ? resolveAxiosErrorÅrsakIkkeTilgang(e) : [],
+              )}
+            />
           )}
           {unauthorizedErrors.length > 0 && <UnauthorizedPage loginUrl={k9LoginResourcePath} />}
         </ErrorBoundary>
