@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
@@ -36,13 +35,7 @@ const FagsakSearchIndex = () => {
     startRequest: searchFagsaker,
     data: fagsaker = EMPTY_ARRAY,
     state: sokeStatus,
-    error,
   } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.SEARCH_FAGSAK);
-
-  const searchResultAccessDenied = useMemo(
-    () => (error && errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
-    [error],
-  );
 
   const sokFerdig = sokeStatus === RestApiState.SUCCESS;
 
@@ -62,7 +55,6 @@ const FagsakSearchIndex = () => {
         searchResultReceived={sokFerdig}
         selectFagsakCallback={(e, saksnummer: string) => goToFagsak(saksnummer)}
         searchStarted={sokeStatus === RestApiState.LOADING}
-        searchResultAccessDenied={searchResultAccessDenied}
       />
     </KodeverkProvider>
   );
