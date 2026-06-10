@@ -2,20 +2,10 @@ import { List, VStack } from '@navikt/ds-react';
 import { Link } from 'react-router';
 
 import { BigError } from '@k9-sak-web/gui/app/feilmeldinger/BigError.js';
+import type { ÅrsakIkkeTilgang } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
 
-export type IkkeTilgangÅrsak =
-  | 'HAR_IKKE_TILGANG_TIL_KODE6_PERSON'
-  | 'HAR_IKKE_TILGANG_TIL_KODE7_PERSON'
-  | 'HAR_IKKE_TILGANG_TIL_EGEN_ANSATT'
-  | 'HAR_IKKE_TILGANG_TIL_HISTORISK_SAK'
-  | 'HAR_IKKE_TILGANG_TIL_APPLIKASJONEN'
-  | 'HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_BORGER'
-  | 'HAR_IKKE_TILGANG_TIL_TJENESTE_FOR_DRIFT'
-  | 'HAR_IKKE_TILGANG_TIL_PIP_TJENESTE'
-  | 'HAR_IKKE_TILGANG_ANNEN_GRUNN'
-  | 'TEKNISK_FEIL';
 
-const årsak_tekst: Record<IkkeTilgangÅrsak, string> = {
+const årsak_tekst: Record<ÅrsakIkkeTilgang, string> = {
   HAR_IKKE_TILGANG_TIL_KODE6_PERSON: 'Du mangler tilgang til saker med strengt fortrolig adresse (kode 6)',
   HAR_IKKE_TILGANG_TIL_KODE7_PERSON: 'Du mangler tilgang til saker med fortrolig adresse (kode 7)',
   HAR_IKKE_TILGANG_TIL_EGEN_ANSATT: 'Du mangler tilgang til saker som gjelder Nav-ansatte',
@@ -29,10 +19,10 @@ const årsak_tekst: Record<IkkeTilgangÅrsak, string> = {
 };
 
 interface ForbiddenPageProps {
-  ikkeTilgangÅrsaker?: IkkeTilgangÅrsak[];
+  ikkeTilgangÅrsaker?: ÅrsakIkkeTilgang[];
 }
 
-const årsakerViØnskerÅVise: IkkeTilgangÅrsak[] = [
+const årsakerViØnskerÅVise: ÅrsakIkkeTilgang[] = [
   'HAR_IKKE_TILGANG_TIL_KODE6_PERSON',
   'HAR_IKKE_TILGANG_TIL_KODE7_PERSON',
   'HAR_IKKE_TILGANG_TIL_EGEN_ANSATT',
@@ -44,13 +34,17 @@ const ForbiddenPage = ({ ikkeTilgangÅrsaker }: ForbiddenPageProps) => {
   const filtrerteÅrsaker = ikkeTilgangÅrsaker
     ? ikkeTilgangÅrsaker.filter(årsak => årsakerViØnskerÅVise.includes(årsak))
     : [];
+
+  // Fjern duplikater i tilfelle samme årsak oppgis flere ganger
+  const unikeÅrsaker = Array.from(new Set(filtrerteÅrsaker));
+
   return (
     <BigError title="Du har ikke tilgang til denne saken">
       <VStack gap="space-32" className="mt-4">
-        {filtrerteÅrsaker && filtrerteÅrsaker.length > 0 ? (
+        {unikeÅrsaker.length > 0 ? (
           <>
             <List>
-              {filtrerteÅrsaker.map(årsak => (
+              {unikeÅrsaker.map(årsak => (
                 <List.Item key={årsak}>{årsak_tekst[årsak] ?? årsak}</List.Item>
               ))}
             </List>
