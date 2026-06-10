@@ -1,5 +1,5 @@
 import { BodyLong, Button, GlobalAlert, HStack, VStack } from '@navikt/ds-react';
-import { useState } from 'react';
+import { type FC, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, ExpandIcon } from '@navikt/aksel-icons';
 
 import css from './handCursor.module.css';
@@ -10,11 +10,12 @@ import { ErrorModal } from './ErrorModal.js';
 
 interface TopErrorPanelUIProps {
   readonly errors: ReadonlyArray<Error>;
+  readonly aktivFagsakId?: string;
   readonly defaultExpanded?: boolean;
 }
 
 /** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
-export const TopErrorPanelUI = ({ errors, defaultExpanded = false }: TopErrorPanelUIProps) => {
+export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = false }: TopErrorPanelUIProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [selectedError, setSelectedError] = useState<ErrorViewProps | null>(null);
 
@@ -42,7 +43,7 @@ export const TopErrorPanelUI = ({ errors, defaultExpanded = false }: TopErrorPan
             </Button>
           </GlobalAlert.Header>
           <GlobalAlert.Content hidden={!expanded}>
-            <ErrorHandlingWizard errors={errors}>
+            <ErrorHandlingWizard errors={errors} aktivFagsakId={aktivFagsakId}>
               <VStack gap="space-8">
                 {errors.map((error, index) => {
                   const errorProps = resolveErrorViewProps(error);
@@ -76,7 +77,7 @@ export const TopErrorPanelUI = ({ errors, defaultExpanded = false }: TopErrorPan
   }
 };
 
-export const TopErrorPanel = () => {
+export const TopErrorPanel: FC<Pick<TopErrorPanelUIProps, 'aktivFagsakId'>> = ({aktivFagsakId}) => {
   const { globalErrors } = useGlobalUnhandledErrors();
-  return <TopErrorPanelUI errors={globalErrors} />;
+  return <TopErrorPanelUI errors={globalErrors} aktivFagsakId={aktivFagsakId} />;
 };

@@ -12,6 +12,7 @@ const meta = {
   component: TopErrorPanelUI,
   args: {
     defaultExpanded: true,
+    aktivFagsakId: "TEST_SAKID",
   },
   parameters: {
     layout: 'fullscreen',

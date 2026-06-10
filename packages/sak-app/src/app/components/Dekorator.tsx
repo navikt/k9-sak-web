@@ -61,7 +61,7 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
         ytelse="Pleiepenger, Omsorgspenger og Opplæringspenger"
         headerTitleHref="/k9/web"
       />
-      <TopErrorPanel />
+      <TopErrorPanel aktivFagsakId={fagsakFraUrl} />
     </>
   );
 };

@@ -58,7 +58,7 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
         headerTitleHref="/ung/web"
         showEndringslogg={false}
       />
-      <TopErrorPanel />
+      <TopErrorPanel aktivFagsakId={fagsakFraUrl} />
     </>
   );
 };

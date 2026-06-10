@@ -83,6 +83,7 @@ export type ErrorHandlingWizardProps = Readonly<{
   errors: ReadonlyArray<Error>;
   // Spesifiserer tekst, ikon og handling for "fikseknappen" i wizard og tilhøyrande veiledning. Vanlegvis "prøv på nytt". Standardverdi viss ikkje spesifisert er "Last på nytt" med full reload av sida.
   fixAction?: ErrorHandlingWizardFixAction;
+  aktivFagsakId?: string; // Fyller ut felt for dette i jira sak, viss satt her
 }>;
 
 const ErrorContentBox = ({ children }: { children: ReactNode }) => (
@@ -91,7 +92,7 @@ const ErrorContentBox = ({ children }: { children: ReactNode }) => (
   </Box>
 );
 
-export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction }: ErrorHandlingWizardProps) => {
+export const ErrorHandlingWizard = ({ children, errors, aktivFagsakId, fixAction = reloadAction }: ErrorHandlingWizardProps) => {
   const { label: fixLabel, icon: fixIcon, info: fixInfo, callback: fixCallback, href: fixHref } = fixAction;
 
   const fixButton =
@@ -105,7 +106,7 @@ export const ErrorHandlingWizard = ({ children, errors, fixAction = reloadAction
       </Button>
     );
 
-  const reportLink = makeErrorReportLinkForJira(errors)
+  const reportLink = makeErrorReportLinkForJira(errors, aktivFagsakId)
 
   return (
     <VStack gap="space-8">
