@@ -18,11 +18,21 @@ interface TopErrorPanelUIProps {
 }
 
 /** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
-export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = false }: TopErrorPanelUIProps) => {
+export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = true }: TopErrorPanelUIProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
   // Side i paginering er 1-basert. Standard er siste side, slik at nyaste feil blir vist først.
   const [page, setPage] = useState(errors.length);
+  const [forrigeAntallFeil, setForrigeAntallFeil] = useState(errors.length);
+
+  // Når nye feil kjem til, hopp til siste side slik at nyaste feil blir vist. Reduser viss talet på feil minkar, slik
+  // at vald side held seg innanfor gyldig område.
+  if (errors.length !== forrigeAntallFeil) {
+    setForrigeAntallFeil(errors.length);
+    if (errors.length > forrigeAntallFeil || page > errors.length) {
+      setPage(errors.length);
+    }
+  }
 
   const currentIndex = Math.min(Math.max(page, 1), errors.length) - 1;
   const currentError = errors[currentIndex];
@@ -34,7 +44,7 @@ export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = false
   const reportLink = makeErrorReportLinkForJira(errors, aktivFagsakId);
 
   if (errors.length > 0) {
-    const extraHeaderTxt = errors.length > 1 ? `(${currentIndex + 1} av ${errors.length})` : ``;
+    const extraHeaderTxt = errors.length > 1 ? `(${page} av ${errors.length})` : ``;
     return (
       <>
         <GlobalAlert status="error" centered={false} size="small">
