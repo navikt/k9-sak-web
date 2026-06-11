@@ -2,11 +2,12 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import type { RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { Suspense } from 'react';
 import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
 import { TiDagerBackendClientContext } from './TiDagerBackendClientContext.js';
-import { TiDagerProsessIndex } from './TiDagerProsess.js';
+import { TiDagerProsessIndex } from './TiDagerProsessIndex.js';
 
 const opplysningerEnArbeidsgiver: RettFraDagEnVisningDto = {
   journalposter: [
@@ -74,7 +75,9 @@ const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator
   };
   return Story => (
     <TiDagerBackendClientContext value={fakeApi}>
-      <Story />
+      <Suspense>
+        <Story />
+      </Suspense>
     </TiDagerBackendClientContext>
   );
 };
