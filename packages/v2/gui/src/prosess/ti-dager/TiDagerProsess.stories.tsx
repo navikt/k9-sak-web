@@ -157,6 +157,9 @@ export const UtførtAksjonspunkt: Story = {
 };
 
 export const VisValideringsfeil: Story = {
+  args: {
+    behandlingUUID: 'vis-valideringsfeil-uuid',
+  },
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
   play: async ({ canvas }) => {
     const button = await canvas.findByRole('button', { name: 'Bekreft' });
@@ -173,7 +176,10 @@ export const VisValideringsfeil: Story = {
 
 export const SendInnVurdering: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
-  args: { submitCallback: fn() },
+  args: {
+    submitCallback: fn(),
+    behandlingUUID: 'send-inn-vurdering-uuid',
+  },
   play: async ({ canvas, args, step }) => {
     await step('Velg Ja og fyll begrunnelse', async () => {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
@@ -194,6 +200,7 @@ export const SendInnVurdering: Story = {
 export const OppfyltVilkårUtenJournalposter: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerIngenJournalposter)],
   args: {
+    behandlingUUID: 'oppfylt-vilkar-uten-journalposter-uuid',
     vilkar: [
       {
         vilkarType: 'K9_VK_9_8',
