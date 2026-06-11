@@ -13,11 +13,11 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ds-react": "8.10.4",
     "classnames": "2.5.1",
-    "date-fns": "4.3.0",
+    "date-fns": "4.4.0",
     "date-fns-tz": "3.2.0",
     "react": "19.2.6",
     "react-dom": "19.2.6",
-    "react-intl": "10.1.8",
+    "react-intl": "10.1.11",
     "react-redux": "9.3.0",
     "redux": "5.0.1",
     "redux-form": "8.3.10"
