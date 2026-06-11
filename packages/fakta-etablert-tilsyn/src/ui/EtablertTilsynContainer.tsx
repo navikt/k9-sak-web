@@ -110,6 +110,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['innleggelsesperioder', endpoints.sykdomInnleggelse],
     queryFn: ({ signal }) =>
       getInnleggelser(signal).then(response => response.perioder.map(v => new Period(v.fom, v.tom))),
+    throwOnError: false,
   });
 
   const {
@@ -120,6 +121,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['etablertTilsyn', endpoints.tilsyn],
     queryFn: ({ signal }) => getTilsyn(signal),
     select: transformEtablertTilsynResponse,
+    throwOnError: false,
   });
 
   const {
@@ -130,6 +132,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['sykdomsperioderIkkeOppfylt', endpoints.sykdom],
     queryFn: ({ signal }) => getSykdom(signal),
     select: transformSykdomResponse,
+    throwOnError: false,
   });
 
   const { etablertTilsyn = [], smurtEtablertTilsynPerioder = [], beredskap, nattevåk } = tilsyn || {};

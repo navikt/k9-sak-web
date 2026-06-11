@@ -43,6 +43,7 @@ export const VurderNyoppstartetIndex = ({
           addLegacySerializerOption({ params: { behandlingUuid: behandlingUUID } }),
         )
         .then(({ data }) => data),
+    throwOnError: false,
   });
 
   const formDefaultValues = {
