@@ -20,7 +20,7 @@ jobs:
       CLUSTER: dev-gcp
     steps:
       - name: Hente kode
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -47,7 +47,7 @@ jobs:
             port=9005
           push-image: true
       - name: Deploy to nais
-        uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+        uses: nais/deploy/actions/deploy@8a6fb62e73f837af6287d5db84a46ea96aa6c30d # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/dev-gcp.yml
