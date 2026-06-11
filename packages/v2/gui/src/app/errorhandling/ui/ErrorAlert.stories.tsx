@@ -5,7 +5,7 @@ import { BodyLong, Button, VStack } from '@navikt/ds-react';
 import { AxiosError, AxiosHeaders, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 import { ErrorBoundary } from '../boundary/ErrorBoundary.js';
 import { ErrorAlert } from './ErrorAlert.js';
-import { retryAction } from './ErrorHandlingWizard.js';
+import { retryAction } from './ErrorFixAction.js';
 import { action } from 'storybook/actions';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
 import { AppError } from '../AppError.js';

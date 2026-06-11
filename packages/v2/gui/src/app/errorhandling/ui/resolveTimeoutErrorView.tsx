@@ -1,7 +1,7 @@
 import { TimeoutError } from '@k9-sak-web/gui/app/errorhandling/legacycompat/TimeoutError.js';
 import { BodyLong } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { reloadAction } from './ErrorHandlingWizard.js';
+import { reloadAction } from './ErrorFixAction.js';
 
 /**
  * Utled visningstekst for TimeoutError frå rest-api (polling som har overskrede maks tal forsøk).

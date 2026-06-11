@@ -4,7 +4,7 @@ import { EnterIcon } from '@navikt/aksel-icons';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorHandlingWizard.js';
+import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorFixAction.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
 import {
   isÅrsakIkkeTilgangArray,

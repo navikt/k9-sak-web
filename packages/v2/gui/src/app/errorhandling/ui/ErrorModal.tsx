@@ -1,6 +1,10 @@
-import { Dialog, LocalAlert } from '@navikt/ds-react';
-import { ErrorHandlingWizard } from './ErrorHandlingWizard.js';
+import { Dialog, HStack, LocalAlert, Spacer, VStack } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
+import { ErrorReportPopover } from "./ErrorReportPopover.js";
+import { FixButton } from "./FixButton.js"
+import { ErrorReportButton } from "./ErrorReportButton.js";
+import { makeErrorReportLinkForJira } from "./makeErrorReportText.js";
+import { ErrorPanel } from "./ErrorPanel.js";
 
 export type ErrorModalProps = Readonly<{
   errorProps?: ErrorViewProps;
@@ -13,7 +17,8 @@ const ErrorDialogContent = (
     onClose,
   }: Required<ErrorModalProps> /* errorProps er alltid sett her */,
 ) => {
-  // Vurder å legge inn noko slikt: const fixAction = {...fa, info: <>{fa.info}<BodyLong>Hvis du har fylt ut viktig, ulagret informasjon i skjermbildet kan du lukke denne dialog og ta vare på informasjonen først.</BodyLong></>}
+
+  const reportLink = makeErrorReportLinkForJira([error]);
   return (
     <LocalAlert status="error">
       <LocalAlert.Header>
@@ -21,9 +26,15 @@ const ErrorDialogContent = (
         <LocalAlert.CloseButton onClick={onClose} />
       </LocalAlert.Header>
       <LocalAlert.Content>
-        <ErrorHandlingWizard errors={[error]} fixAction={fixAction}>
-          <ErrorHandlingWizard.ErrorBox>{errorInfo}</ErrorHandlingWizard.ErrorBox>
-        </ErrorHandlingWizard>
+        <VStack gap="space-8">
+          <ErrorPanel errorInfo={errorInfo} fixAction={fixAction} />
+          <HStack gap="space-4" align="center">
+            <FixButton fixAction={fixAction} />
+            <ErrorReportButton reportLink={reportLink} />
+            <Spacer />
+            <ErrorReportPopover errors={[error]} />
+          </HStack>
+        </VStack>
       </LocalAlert.Content>
     </LocalAlert>
   );

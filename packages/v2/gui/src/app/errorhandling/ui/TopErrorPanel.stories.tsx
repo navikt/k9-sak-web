@@ -5,7 +5,7 @@ import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiE
 import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 import { withContentBelowStory, withTopDekoratør } from '../../../storybook/decorators/withTopDekoratør.js';
-import { userEvent, within, expect } from 'storybook/test';
+import { expect } from 'storybook/test';
 
 const meta = {
   title: 'gui/app/errorhandling/ui/TopErrorPanel',
@@ -43,11 +43,13 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 
 export const OneError: Story = {
   args: {
-    errors: [new AppError({ message: 'Test error 1' })],
+    errors: [new AppError({title: "apperror1",  message: 'Test error 1' })],
   },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText('Uventet feil')).toBeInTheDocument();
-    await expect(await canvas.findByRole('button', { name: 'Detaljer' })).toBeInTheDocument();
+    await expect(await canvas.findByText('apperror1')).toBeInTheDocument();
+    await expect(await canvas.findByText('Test error 1')).toBeInTheDocument();
+    await expect(await canvas.findByRole('button', { name: 'Last på nytt' })).toBeInTheDocument();
+    await expect(await canvas.findByRole('button', { name: 'Meld feil' })).toBeInTheDocument();
   },
 };
 
@@ -56,20 +58,7 @@ export const TwoErrors: Story = {
     errors: [new AppError({ message: 'Test error 1' }), new AppError({ message: 'Test error 2' })],
   },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText('2 Uventede feil')).toBeInTheDocument();
-    const detaljsButtons = canvas.getAllByRole('button', { name: 'Detaljer' });
-    await expect(detaljsButtons).toHaveLength(2);
-  },
-};
-
-export const OpenDetailsModal: Story = {
-  args: {
-    errors: [new AppError({ title: 'Title 1', message: 'Test error 1' })],
-  },
-  play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Detaljer' }));
-    const dialog = within(document.body).getByRole('alertdialog');
-    await expect(within(dialog).getByText('Test error 1')).toBeInTheDocument();
+    await expect(await canvas.findByText('(2 av 2)', {exact: false})).toBeInTheDocument();
   },
 };
 

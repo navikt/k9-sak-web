@@ -4,7 +4,7 @@ import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/back
 import { EnterIcon } from '@navikt/aksel-icons';
 import { BodyLong } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorHandlingWizard.js';
+import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorFixAction.js';
 
 // Utleder feilmelding og anbefalt handling som blir vist for ulike ExtendedApiError varianter.
 // Slik at bruker forhåpentlegvis kan forstå kva som har gått gale og korrigere viss mulig.

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { type ErrorHandlingWizardFixAction, reloadAction } from './ErrorHandlingWizard.js';
+import { type ErrorFixAction, reloadAction } from './ErrorFixAction.js';
 import { BodyLong, BodyShort } from '@navikt/ds-react';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { resolveApiErrorViewProps } from './resolveApiErrorViewProps.js';
@@ -15,7 +15,7 @@ export type ErrorViewProps = Readonly<{
   error: Error;
   title: string;
   errorInfo: ReactNode; // Element returnert her må ikkje vere for avansert. (Skal passe inn i LocalAlert, etc)
-  fixAction: ErrorHandlingWizardFixAction;
+  fixAction: ErrorFixAction;
 }>;
 
 const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
