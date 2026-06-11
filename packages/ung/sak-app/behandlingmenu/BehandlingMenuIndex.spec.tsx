@@ -75,6 +75,7 @@ vi.mock('react-router', async () => {
 
 const queryClient = createQueryClient({
   queries: {
+    throwOnError: false,
     retry: false,
   },
 });
