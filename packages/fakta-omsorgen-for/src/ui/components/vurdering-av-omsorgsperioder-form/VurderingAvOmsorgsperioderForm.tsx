@@ -6,7 +6,7 @@ import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-fro
 import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { Alert, BodyShort, Box, HStack, Label, Tag } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, HStack, Label, List, ReadMore, Tag, VStack } from '@navikt/ds-react';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
@@ -162,7 +162,29 @@ const VurderingAvOmsorgsperioderForm = ({
                 {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
                 <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
               </Label>
-              {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
+              <VStack gap="space-16">
+                <ReadMore header="Har søker omsorg for barn?" size="small">
+                  <BodyShort size="small" spacing>
+                    Saksbehandler må utrede hva manglende registrering skyldes. Dersom det ikke foreligger informasjon i
+                    Gosys, må søker kontaktes for avklaring av forholdene.
+                  </BodyShort>
+                  <BodyShort size="small" spacing>
+                    Manglende registrering av barn kan komme av ulike grunner:
+                  </BodyShort>
+                  <List as="ul" size="small">
+                    <List.Item>fosterbarn, med og uten vedtak om ekstra omsorgsdager.</List.Item>
+                    <List.Item>vedtak fra Infotrygd. Sjekk derfor alltid Gosys for historikk i saken.</List.Item>
+                    <List.Item>manglende barn i Gosys kan bety at bruker har barn i andre land.</List.Item>
+                    <List.Item>
+                      manglende barn i Gosys kan bety at bruker har fått overført omsorgsdager fra samboer eller
+                      ektefelle på grunn av aleneomsorg for barn, eller overføring til ny samboer/ektefelle.
+                    </List.Item>
+                  </List>
+                </ReadMore>
+                {erOMP && (
+                  <BodyShort size="small">{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</BodyShort>
+                )}
+              </VStack>
               <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
             </Box>
             <Box marginBlock="space-32 space-0">
