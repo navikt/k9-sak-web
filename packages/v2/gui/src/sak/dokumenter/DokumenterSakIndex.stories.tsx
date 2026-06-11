@@ -3,7 +3,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
-import { withQueryClientProvider } from "../../storybook/decorators/withQueryClientProvider.tsx";
+import { withQueryClientProvider } from "../../storybook/decorators/withQueryClientProvider.js";
 
 const behandlingId = 1;
 
