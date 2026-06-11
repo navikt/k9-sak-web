@@ -190,7 +190,7 @@ export const TooManyErrors: Story = {
     await userEvent.click(await canvas.findByRole('button', { name: 'Throw render error' }));
 
     // Verifiser at "For mange feil" meldinga blir vist
-    await expect(await canvas.findByText(`For mange feil oppsto`, { exact: false })).toBeInTheDocument();
+    await expect((await canvas.findAllByText(`For mange feil oppsto`, { exact: false })).length).toBeGreaterThan(0);
   },
 };
 

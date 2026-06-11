@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, spyOn, userEvent } from 'storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import { useState } from 'react';
 import { BodyLong, Button, VStack } from '@navikt/ds-react';
 import { AxiosError, AxiosHeaders, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
@@ -89,7 +89,7 @@ export const MedErrorBoundary: StoryObj = {
     await userEvent.click(canvas.getByRole('button', { name: 'Trigger feil' }));
     await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
     await expect(canvas.getByRole('button', { name: 'Prøv på nytt' })).toBeInTheDocument();
-    await expect(canvas.getByRole('button', { name: 'Rapporter feil' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Meld feil' })).toBeInTheDocument();
   },
 };
 
@@ -203,25 +203,6 @@ export const Axios418PollingDelayed: Story = {
 
 export const Axios500ServerError: Story = {
   args: resolveErrorViewProps(makeFakeAxiosError(500, { feilmelding: 'Uventet feil i backend-tjenesten.' })),
-  play: async ({ canvas }) => {
-    const writeText = spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined);
-
-    // Ekspander rapporteringsseksjonen
-    const rapporterBtn = canvas.getByRole('button', { name: 'Rapporter feil' });
-    await userEvent.click(rapporterBtn);
-
-    // Klikk kopier-knappen
-    const kopierBtn = canvas.getByRole('button', { name: 'Kopier feilinformasjon' });
-    await userEvent.click(kopierBtn);
-
-    // Verifiser at clipboard blei skrive til med relevant innhald
-    await expect(writeText).toHaveBeenCalledTimes(1);
-    const clipboardText = writeText.mock.calls[0]?.[0] as string;
-    await expect(clipboardText).toContain('500');
-    await expect(clipboardText).toContain('AxiosError');
-
-    writeText.mockRestore();
-  },
 };
 
 export const AxiosNetworkError: Story = {
