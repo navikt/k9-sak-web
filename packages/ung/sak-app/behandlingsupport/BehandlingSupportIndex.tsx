@@ -66,7 +66,7 @@ export const hentValgbarePaneler = (
 
 interface GetSvgProps {
   tooltip: string;
-  antallUlesteNotater: number;
+  antallUlesteNotater: string | undefined;
   isActive: boolean;
 }
 
@@ -116,7 +116,7 @@ const TABS = {
   [SupportTabs.NOTATER]: {
     getSvg: ({ antallUlesteNotater, isActive }: GetSvgProps) => (
       <div className={styles.pencilSvgContainer}>
-        {antallUlesteNotater > 0 && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
+        {antallUlesteNotater != null && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
         {isActive ? (
           <PencilWritingFillIcon title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
         ) : (
@@ -154,35 +154,48 @@ const BehandlingSupportIndex = ({
   navAnsatt,
   featureToggles,
 }: OwnProps) => {
-  const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
+  const [antallUlesteNotater, setAntallUlesteNotater] = useState<undefined | string>();
 
   const kodeverkoppslag = useContext(UngKodeverkoppslagContext);
   const historikkBackendClient = new UngHistorikkBackendClient(kodeverkoppslag);
   const notatBackendClient = useContext(NotatBackendClientContext);
 
   const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer];
-  const { data: notater } = useQuery({
+  const {
+    data: notater,
+    isError: notaterFetchFailed,
+    isLoading: notaterIsLoading,
+  } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
     enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
+    throwOnError: false,
   });
 
-  const lagTabs = (tilgjengeligeTabs: string[], valgtIndex?: number) =>
-    Object.keys(TABS)
-      .filter(key => tilgjengeligeTabs.includes(key))
-      .map((key, index) => ({
-        getSvg: TABS[key].getSvg,
-        tooltip: TABS[key].tooltipTextCode,
-        isActive: index === valgtIndex,
-        antallUlesteNotater,
-        tabKey: TABS[key].tabKey,
-      }));
+  const lagTabs = useCallback(
+    (tilgjengeligeTabs: string[], valgtIndex?: number) =>
+      Object.keys(TABS)
+        .filter(key => tilgjengeligeTabs.includes(key))
+        .map((key, index) => ({
+          getSvg: TABS[key].getSvg,
+          tooltip: TABS[key].tooltipTextCode,
+          isActive: index === valgtIndex,
+          antallUlesteNotater,
+          tabKey: TABS[key].tabKey,
+        })),
+    [antallUlesteNotater],
+  );
 
   useEffect(() => {
-    const ulesteNotater = (notater || []).filter(notat => !notat.skjult);
-    setAntallUlesteNotater(ulesteNotater?.length);
-  }, [notater]);
+    if (notaterIsLoading) {
+      setAntallUlesteNotater(undefined);
+    } else if (!notaterFetchFailed && notater != null) {
+      setAntallUlesteNotater('' + notater.filter(notat => !notat.skjult).length);
+    } else {
+      setAntallUlesteNotater('?');
+    }
+  }, [notater, notaterIsLoading, notaterFetchFailed]);
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
@@ -210,14 +223,14 @@ const BehandlingSupportIndex = ({
       const getSupportPanelLocation = getSupportPanelLocationCreator(location);
       await navigate(getSupportPanelLocation(supportPanel));
     },
-    [location, synligeSupportPaneler],
+    [location, synligeSupportPaneler, navigate],
   );
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
   const tabs = useMemo(
     () => lagTabs(synligeSupportPaneler, valgtIndex),
-    [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
+    [synligeSupportPaneler, valgtIndex, lagTabs],
   );
 
   const behandlingTypeKode = behandling?.type.kode;
