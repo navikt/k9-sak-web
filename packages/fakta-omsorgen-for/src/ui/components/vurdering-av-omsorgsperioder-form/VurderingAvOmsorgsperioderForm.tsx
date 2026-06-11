@@ -162,29 +162,29 @@ const VurderingAvOmsorgsperioderForm = ({
                 {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
                 <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
               </Label>
-              <VStack gap="space-16">
-                <ReadMore header="Har søker omsorg for barn?" size="small">
-                  <BodyShort size="small" spacing>
-                    Saksbehandler må utrede hva manglende registrering skyldes. Dersom det ikke foreligger informasjon i
-                    Gosys, må søker kontaktes for avklaring av forholdene.
-                  </BodyShort>
-                  <BodyShort size="small" spacing>
-                    Manglende registrering av barn kan komme av ulike grunner:
-                  </BodyShort>
-                  <List as="ul" size="small">
-                    <List.Item>fosterbarn, med og uten vedtak om ekstra omsorgsdager.</List.Item>
-                    <List.Item>vedtak fra Infotrygd. Sjekk derfor alltid Gosys for historikk i saken.</List.Item>
-                    <List.Item>manglende barn i Gosys kan bety at bruker har barn i andre land.</List.Item>
-                    <List.Item>
-                      manglende barn i Gosys kan bety at bruker har fått overført omsorgsdager fra samboer eller
-                      ektefelle på grunn av aleneomsorg for barn, eller overføring til ny samboer/ektefelle.
-                    </List.Item>
-                  </List>
-                </ReadMore>
-                {erOMP && (
+              {erOMP && (
+                <VStack gap="space-16">
+                  <ReadMore header="Har søker omsorg for barn?" size="small">
+                    <BodyShort size="small" spacing>
+                      Saksbehandler må utrede hva manglende registrering skyldes. Dersom det ikke foreligger informasjon
+                      i Gosys, må søker kontaktes for avklaring av forholdene.
+                    </BodyShort>
+                    <BodyShort size="small" spacing>
+                      Manglende registrering av barn kan komme av ulike grunner:
+                    </BodyShort>
+                    <List as="ul" size="small">
+                      <List.Item>Fosterbarn, med og uten vedtak om ekstra omsorgsdager.</List.Item>
+                      <List.Item>Vedtak fra Infotrygd. Sjekk derfor alltid Gosys for historikk i saken.</List.Item>
+                      <List.Item>Manglende barn i Gosys kan bety at bruker har barn i andre land.</List.Item>
+                      <List.Item>
+                        Manglende barn i Gosys kan bety at bruker har fått overført omsorgsdager fra samboer eller
+                        ektefelle på grunn av aleneomsorg for barn, eller overføring til ny samboer/ektefelle.
+                      </List.Item>
+                    </List>
+                  </ReadMore>
                   <BodyShort size="small">{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</BodyShort>
-                )}
-              </VStack>
+                </VStack>
+              )}
               <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
             </Box>
             <Box marginBlock="space-32 space-0">
