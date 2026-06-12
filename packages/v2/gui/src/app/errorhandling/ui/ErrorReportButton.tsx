@@ -4,6 +4,6 @@ import type { FC } from "react";
 
 export const ErrorReportButton: FC<{reportLink: string}> = ({reportLink}) => {
   return <Button variant="secondary" data-color="neutral" size="small" as="a" href={reportLink} target="_blank" icon={<ExternalLinkIcon />} iconPosition="right">
-    Meld feil
+    Meld feil i porten
   </Button>
 }
