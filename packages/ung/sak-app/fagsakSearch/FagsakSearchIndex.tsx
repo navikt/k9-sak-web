@@ -2,8 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
@@ -28,9 +26,7 @@ const FagsakSearchIndex = () => {
   );
 
   const navigate = useNavigate();
-  const { removeErrorMessages } = useRestApiErrorDispatcher();
   const goToFagsak = async (saksnummer: string) => {
-    removeErrorMessages();
     await navigate(pathToFagsak(saksnummer));
   };
 
@@ -40,22 +36,30 @@ const FagsakSearchIndex = () => {
     isPending,
     isSuccess,
     error,
-  } = useMutation<Awaited<ReturnType<typeof api.fagsakSøk>>, ExtendedApiError, { searchString?: string }>({
+  } = useMutation({
     mutationFn: ({ searchString }: { searchString?: string }) => api.fagsakSøk(searchString ?? ''),
     onSuccess: results => {
       if (results.length === 1) {
         void goToFagsak(results[0].saksnummer);
       }
     },
+    // Sidan forbidden feil er handtert eksplisitt ønsker vi ikkje å kaste den vidare
+    onError: err => {
+      if(!(err instanceof ExtendedApiError && err.isForbidden)) {
+        throw err
+      }
+    },
   });
 
-  const searchResultAccessDenied = useMemo(
-    () =>
-      error && typeof error.error === 'object' && errorOfType(error.error, ErrorTypes.MANGLER_TILGANG_FEIL)
-        ? getErrorResponseData(error.error)
-        : undefined,
-    [error],
-  );
+  const searchResultAccessDenied = useMemo(() => {
+    // I ung sak backend blir det levert tilbake eigendefinert ManglerTilgangException for søkFagsaker endepunktet.
+    if (error instanceof ExtendedApiError && error.isForbidden) {
+      return {
+        feilmelding: error.bodyFeilmelding ?? error.message,
+      };
+    }
+    return undefined;
+  }, [error]);
 
   const fagsakerV2 = JSON.parse(JSON.stringify(fagsaker));
   konverterKodeverkTilKode(fagsakerV2, false);

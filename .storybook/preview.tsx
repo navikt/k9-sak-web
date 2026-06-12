@@ -8,9 +8,11 @@ import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react-vite';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import { createQueryClient } from "@k9-sak-web/gui/shared/query/queryClient.js";
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
@@ -47,7 +49,7 @@ const preview: Preview = {
     },
   },
   decorators: [
-    withQueryClientProvider,
+    withQueryClientProvider(),
     Story => {
       const store = configureStore();
       return (

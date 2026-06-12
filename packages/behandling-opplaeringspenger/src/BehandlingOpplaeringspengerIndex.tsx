@@ -3,7 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
@@ -108,7 +109,7 @@ const BehandlingOpplaeringspengerIndex = ({
   } = restApiOpplaeringspengerHooks.useRestApiRunner<Behandling>(OpplaeringspengerBehandlingApiKeys.BEHANDLING_PP);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const { startRequest: nyBehandlendeEnhet } = restApiOpplaeringspengerHooks.useRestApiRunner(
     OpplaeringspengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -145,14 +146,14 @@ const BehandlingOpplaeringspengerIndex = ({
     });
 
     requestOpplaeringspengerApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestOpplaeringspengerApi.setAddErrorMessageHandler(addErrorMessage);
+    requestOpplaeringspengerApi.setErrorNotifier(legacyErrorNotifier);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, []);
+  }, [legacyErrorNotifier]);
 
   const { data, state } = restApiOpplaeringspengerHooks.useMultipleRestApi<FetchedData>(opplaeringspengerData, {
     keepData: true,

@@ -4,7 +4,7 @@ import { RequestPayload } from '../types/RequestPayload';
 import { Vurderingsversjon } from '../types/Vurdering';
 import Vurderingstype from '../types/Vurderingstype';
 
-type HttpErrorHandler = (statusCode: number, locationHeader?: string) => void;
+type HttpErrorHandler = (error: Error) => void;
 
 type VurderingsversjonMedType = Partial<Vurderingsversjon> & {
   type: Vurderingstype;
@@ -17,7 +17,7 @@ export async function postNyVurdering(
   href: string,
   behandlingUuid: string,
   vurderingsversjonMedType: VurderingsversjonMedType,
-  httpErrorHandler: HttpErrorHandler,
+  errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
   dryRun?: boolean,
 ): Promise<AnyType> {
@@ -35,7 +35,7 @@ export async function postNyVurdering(
         dryRun: dryRun || false,
         manglerLegeerklæring: manglerLegeerklæring || false,
       },
-      httpErrorHandler,
+      errorNotifier,
       { signal },
     );
   } catch (error) {
@@ -47,10 +47,10 @@ export async function postNyVurderingDryRun(
   href: string,
   behandlingUuid: string,
   vurderingsversjonMedType: VurderingsversjonMedType,
-  httpErrorHandler: HttpErrorHandler,
+  errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
 ): Promise<PerioderMedEndringResponse> {
-  return postNyVurdering(href, behandlingUuid, vurderingsversjonMedType, httpErrorHandler, signal, true);
+  return postNyVurdering(href, behandlingUuid, vurderingsversjonMedType, errorNotifier, signal, true);
 }
 
 export async function postEndreVurdering(
@@ -58,7 +58,7 @@ export async function postEndreVurdering(
   behandlingUuid: string,
   vurderingsid: string,
   vurderingsversjon: Partial<Vurderingsversjon>,
-  httpErrorHandler: HttpErrorHandler,
+  errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
   dryRun?: boolean,
 ): Promise<AnyType> {
@@ -77,7 +77,7 @@ export async function postEndreVurdering(
         dryRun: dryRun || false,
         manglerLegeerklæring: manglerLegeerklæring || false,
       },
-      httpErrorHandler,
+      errorNotifier,
       { signal },
     );
   } catch (error) {
@@ -90,10 +90,10 @@ export async function postEndreVurderingDryRun(
   behandlingUuid: string,
   vurderingsid: string,
   vurderingsversjon: Vurderingsversjon,
-  httpErrorHandler: HttpErrorHandler,
+  errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
 ): Promise<PerioderMedEndringResponse> {
-  return postEndreVurdering(href, behandlingUuid, vurderingsid, vurderingsversjon, httpErrorHandler, signal, true);
+  return postEndreVurdering(href, behandlingUuid, vurderingsid, vurderingsversjon, errorNotifier, signal, true);
 }
 
 interface InnleggelsesperioderRequestBody extends RequestPayload {
@@ -107,18 +107,18 @@ export interface InnleggelsesperiodeDryRunResponse {
 export async function postInnleggelsesperioder(
   href: string,
   body: InnleggelsesperioderRequestBody,
-  httpErrorHandler: HttpErrorHandler,
+  errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
   dryRun?: boolean,
 ): Promise<AnyType> {
-  return httpUtils.post(href, { ...body, dryRun: dryRun || false }, httpErrorHandler, { signal });
+  return httpUtils.post(href, { ...body, dryRun: dryRun || false }, errorNotifier, { signal });
 }
 
 export async function postInnleggelsesperioderDryRun(
   href: string,
   body: InnleggelsesperioderRequestBody,
-  httpErrorHandler: HttpErrorHandler,
+  errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
 ): Promise<InnleggelsesperiodeDryRunResponse> {
-  return postInnleggelsesperioder(href, body, httpErrorHandler, signal, true);
+  return postInnleggelsesperioder(href, body, errorNotifier, signal, true);
 }

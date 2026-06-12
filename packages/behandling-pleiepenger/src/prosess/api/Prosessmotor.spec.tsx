@@ -16,6 +16,7 @@ import {
   beregnVedtakType,
   useProsessmotor,
 } from './Prosessmotor';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const createWrapper = (queryClient: QueryClient) => {
   return ({ children }: { children: React.ReactNode }) => (
@@ -36,10 +37,8 @@ describe('Prosessmotor', () => {
     let queryClient: QueryClient;
 
     beforeEach(() => {
-      queryClient = new QueryClient({
-        defaultOptions: {
-          queries: { retry: false },
-        },
+      queryClient = createQueryClient({
+        queries: { retry: false },
       });
     });
 

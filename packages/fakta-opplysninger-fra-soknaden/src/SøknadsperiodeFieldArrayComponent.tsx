@@ -115,7 +115,7 @@ const SøknadsperiodeFieldArrayComponent = (
     måneder,
   } = props;
   const formSelector = `${behandlingFormPrefix}.${formName}`;
-  const { harSøktSomSSN, harSøktSomFrilanser } = søknadsperiodeFormValues;
+  const { harSøktSomSSN, harSøktSomFrilanser } = søknadsperiodeFormValues ?? {};
   const resetFormField = field => {
     formChange(formSelector, field, null);
     formUntouch(formSelector, field);

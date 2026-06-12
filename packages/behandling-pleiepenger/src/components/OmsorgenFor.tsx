@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
 import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 interface OmsorgenForProps {
   behandling: BehandlingAppKontekst;
@@ -16,9 +16,7 @@ interface OmsorgenForProps {
 }
 
 export default ({ behandling: { links, sakstype }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
-    httpErrorHandler(status, addErrorMessage, locationHeader);
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.AVKLAR_OMSORGEN_FOR);
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
@@ -30,8 +28,8 @@ export default ({ behandling: { links, sakstype }, readOnly, aksjonspunkter, sub
   return (
     <OmsorgenFor
       data={{
-        omsorgenForAksjonspunkt: omsorgenForAksjonspunkt,
-        httpErrorHandler: httpErrorHandlerCaller,
+        omsorgenForAksjonspunkt,
+        errorNotifier: legacyErrorNotifier,
         endpoints: findEndpointsFromRels(links, [
           {
             rel: 'omsorgen-for',
