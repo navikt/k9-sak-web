@@ -9,8 +9,8 @@ export type ErrorPanelProps = Readonly<{
 }>
 
 export const ErrorPanel: FC<ErrorPanelProps> = ({errorInfo, fixAction}) => {
-  return <VStack gap="space-8">
-    <Box paddingBlock="space-0">
+  return <VStack>
+    <Box paddingBlock="space-0 space-16">
       {errorInfo}
     </Box>
     <Heading size="xsmall">Hva kan du gjøre?</Heading>
