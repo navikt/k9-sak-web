@@ -1,8 +1,8 @@
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { BodyShort, Box, Heading } from '@navikt/ds-react';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
+import { BodyShort, Box, Heading, Loader } from '@navikt/ds-react';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 import { TiDagerProsess, type TiDagerSubmitModel } from './TiDagerProsess.js';
 
@@ -26,7 +26,11 @@ export const TiDagerProsessIndex = ({
   vilkar,
 }: TiDagerProsessIndexProps) => {
   const api = useTiDagerBackendClient();
-  const { data: opplysninger } = useSuspenseQuery(
+  const {
+    data: opplysninger,
+    isPending,
+    isError,
+  } = useQuery(
     queryOptions({
       queryKey: ['rettFraDagEn', behandlingUUID],
       queryFn: () => api.hentRettFraDagEnOpplysninger(behandlingUUID),
@@ -34,7 +38,19 @@ export const TiDagerProsessIndex = ({
   );
 
   const vilkår = vilkar?.[0];
-  const harJournalposter = opplysninger.journalposter && opplysninger.journalposter.length > 0;
+  const harJournalposter = opplysninger?.journalposter && opplysninger.journalposter.length > 0;
+
+  if (isPending) {
+    return <Loader title="Laster opplysninger om rett fra dag én" />;
+  }
+
+  if (isError) {
+    return (
+      <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+        <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
+      </Box>
+    );
+  }
 
   if (
     vilkår?.perioder != undefined &&
