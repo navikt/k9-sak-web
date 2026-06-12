@@ -1,12 +1,14 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import type { RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
+import { Loader } from '@navikt/ds-react';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { Suspense } from 'react';
 import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
 import { TiDagerBackendClientContext } from './TiDagerBackendClientContext.js';
-import { TiDagerProsessIndex } from './TiDagerProsess.js';
+import { TiDagerProsessIndex } from './TiDagerProsessIndex.js';
 
 const opplysningerEnArbeidsgiver: RettFraDagEnVisningDto = {
   journalposter: [
@@ -74,7 +76,9 @@ const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator
   };
   return Story => (
     <TiDagerBackendClientContext value={fakeApi}>
-      <Story />
+      <Suspense fallback={<Loader title="Laster opplysninger om rett fra dag én" />}>
+        <Story />
+      </Suspense>
     </TiDagerBackendClientContext>
   );
 };
@@ -154,6 +158,9 @@ export const UtførtAksjonspunkt: Story = {
 };
 
 export const VisValideringsfeil: Story = {
+  args: {
+    behandlingUUID: 'vis-valideringsfeil-uuid',
+  },
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
   play: async ({ canvas }) => {
     const button = await canvas.findByRole('button', { name: 'Bekreft' });
@@ -170,7 +177,10 @@ export const VisValideringsfeil: Story = {
 
 export const SendInnVurdering: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
-  args: { submitCallback: fn() },
+  args: {
+    submitCallback: fn(),
+    behandlingUUID: 'send-inn-vurdering-uuid',
+  },
   play: async ({ canvas, args, step }) => {
     await step('Velg Ja og fyll begrunnelse', async () => {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
@@ -191,6 +201,7 @@ export const SendInnVurdering: Story = {
 export const OppfyltVilkårUtenJournalposter: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerIngenJournalposter)],
   args: {
+    behandlingUUID: 'oppfylt-vilkar-uten-journalposter-uuid',
     vilkar: [
       {
         vilkarType: 'K9_VK_9_8',
