@@ -18,83 +18,103 @@ import InntektsmeldingListe from './InntektsmeldingListe';
 
 interface InntektsmeldingAlertsProps {
   ferdigVurdert: boolean;
+  kanFortsetteUtenEndring: boolean;
   isSubmitting: boolean;
   onSubmit: () => void;
 }
 
-const InntektsmeldingAlerts = ({ ferdigVurdert, isSubmitting, onSubmit }: InntektsmeldingAlertsProps) => (
-  <>
-    {!ferdigVurdert ? (
-      <Box marginBlock="space-0 space-24">
-        <Alert variant="warning" size="small">
-          <Heading spacing size="xsmall" level="3">
-            Vurder om du kan fortsette behandlingen uten inntektsmelding.
-          </Heading>
-          <BodyLong>
-            Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
-            arbeidsgiver.
-          </BodyLong>
-        </Alert>
+const ManglendeInntektsmeldingAlert = () => (
+  <Box marginBlock="space-0 space-24">
+    <Alert variant="warning" size="small">
+      <Heading spacing size="xsmall" level="3">
+        Vurder om du kan fortsette behandlingen uten inntektsmelding.
+      </Heading>
+      <BodyLong>
+        Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
+        arbeidsgiver.
+      </BodyLong>
+    </Alert>
+  </Box>
+);
+
+interface FerdigVurdertAlertProps {
+  isSubmitting: boolean;
+  onSubmit: () => void;
+}
+
+const FerdigVurdertAlert = ({ isSubmitting, onSubmit }: FerdigVurdertAlertProps) => (
+  <Box marginBlock="space-0 space-24">
+    <Alert variant="info" size="small">
+      Inntektsmelding er ferdig vurdert og du kan gå videre i behandlingen.
+      <Box marginBlock="space-8 space-0">
+        <form onSubmit={onSubmit}>
+          <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
+            Fortsett uten endring
+          </Button>
+        </form>
       </Box>
-    ) : (
-      <Box marginBlock="space-0 space-24">
-        <Alert variant="info" size="small">
-          Inntektsmelding er ferdig vurdert og du kan gå videre i behandlingen.
-          <Box marginBlock="space-8 space-0">
-            <form onSubmit={onSubmit}>
-              <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
-                Fortsett uten endring
-              </Button>
-            </form>
-          </Box>
-        </Alert>
-      </Box>
-    )}
-    <Box marginBlock="space-0 space-24">
-      <Alert variant="info" size="small">
-        <Accordion>
-          <Accordion.Item>
-            <Bleed marginBlock="space-12">
-              <Accordion.Header className="before:hidden after:hidden">
-                <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
-                  Når kan du gå videre uten inntektsmelding?
-                </Heading>
-              </Accordion.Header>
-            </Bleed>
-            <Accordion.Content>
-              Vurder om du kan gå videre uten alle inntektsmeldinger hvis:
+    </Alert>
+  </Box>
+);
+
+const InntektsmeldingVeiledningAlert = () => (
+  <Box marginBlock="space-0 space-24">
+    <Alert variant="info" size="small">
+      <Accordion>
+        <Accordion.Item>
+          <Bleed marginBlock="space-12">
+            <Accordion.Header className="before:hidden after:hidden">
+              <Heading className="!mb-0 font-normal" spacing size="xsmall" level="3">
+                Når kan du gå videre uten inntektsmelding?
+              </Heading>
+            </Accordion.Header>
+          </Bleed>
+          <Accordion.Content>
+            Vurder om du kan gå videre uten alle inntektsmeldinger hvis:
+            <ul className="m-0 pl-6">
+              <li>Det er rapportert fast og regelmessig lønn de siste 3 månedene før skjæringstidspunktet.</li>
+              <li>
+                Det ikke er rapportert lønn hos arbeidsforholdet de siste 3 månedene før skjæringstidspunktet.
+                Beregningsgrunnlaget for denne arbeidsgiveren vil settes til 0,-.
+              </li>
+              <li>
+                Måneden for skjæringstidspunktet er innrapportert til A-ordningen. Hvis det er innrapportert lavere lønn
+                enn foregående måneder kan det tyde på at arbeidsgiver ikke lenger utbetaler lønn. Det er dermed lavere
+                risiko for at arbeidsgiver vil kreve refusjon.
+              </li>
+            </ul>
+            <Box marginBlock="space-24 space-0">
+              Du bør ikke gå videre uten inntektsmelding hvis:
               <ul className="m-0 pl-6">
-                <li>Det er rapportert fast og regelmessig lønn de siste 3 månedene før skjæringstidspunktet.</li>
                 <li>
-                  Det ikke er rapportert lønn hos arbeidsforholdet de siste 3 månedene før skjæringstidspunktet.
-                  Beregningsgrunnlaget for denne arbeidsgiveren vil settes til 0,-.
+                  Det er arbeidsforhold og frilansoppdrag i samme organisasjon (sjekk i Aa-registeret). I disse
+                  tilfellene trenger vi inntektsmelding for å skille hva som er arbeidsinntekt og frilansinntekt i samme
+                  organisasjon.
                 </li>
                 <li>
-                  Måneden for skjæringstidspunktet er innrapportert til A-ordningen. Hvis det er innrapportert lavere
-                  lønn enn foregående måneder kan det tyde på at arbeidsgiver ikke lenger utbetaler lønn. Det er dermed
-                  lavere risiko for at arbeidsgiver vil kreve refusjon.
+                  Måneden for skjæringstidspunktet er innrapportert til A-ordningen, og det er utbetalt full lønn. Dette
+                  tyder på at arbeidsgiver forskutterer lønn og vil kreve refusjon. I disse tilfellene bør vi ikke
+                  utbetale til bruker, men vente på inntektsmelding.
                 </li>
               </ul>
-              <Box marginBlock="space-24 space-0">
-                Du bør ikke gå videre uten inntektsmelding hvis:
-                <ul className="m-0 pl-6">
-                  <li>
-                    Det er arbeidsforhold og frilansoppdrag i samme organisasjon (sjekk i Aa-registeret). I disse
-                    tilfellene trenger vi inntektsmelding for å skille hva som er arbeidsinntekt og frilansinntekt i
-                    samme organisasjon.
-                  </li>
-                  <li>
-                    Måneden for skjæringstidspunktet er innrapportert til A-ordningen, og det er utbetalt full lønn.
-                    Dette tyder på at arbeidsgiver forskutterer lønn og vil kreve refusjon. I disse tilfellene bør vi
-                    ikke utbetale til bruker, men vente på inntektsmelding.
-                  </li>
-                </ul>
-              </Box>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion>
-      </Alert>
-    </Box>
+            </Box>
+          </Accordion.Content>
+        </Accordion.Item>
+      </Accordion>
+    </Alert>
+  </Box>
+);
+
+const InntektsmeldingAlerts = ({
+  ferdigVurdert,
+  kanFortsetteUtenEndring,
+  isSubmitting,
+  onSubmit,
+}: InntektsmeldingAlertsProps) => (
+  <>
+    {kanFortsetteUtenEndring && <FerdigVurdertAlert isSubmitting={isSubmitting} onSubmit={onSubmit} />}
+    {!ferdigVurdert && <ManglendeInntektsmeldingAlert />}
+    <InntektsmeldingVeiledningAlert />
   </>
 );
 
@@ -148,10 +168,10 @@ const InntektsmeldingContainer = () => {
   const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
   const harEndretTidligereVurdering = !aktivtAksjonspunkt && sisteAksjonspunkt && formState.isDirty;
   const ingenTilstanderMangler = ingenTilstanderHarMangler(tilstanderMedUiState);
+  const ferdigVurdert = harIngenTilstanderTilVurdering && ingenTilstanderMangler;
   const kanSendeInnFlereVurderinger =
     !readOnly && harFlereTilstanderTilVurdering && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
-  const kanFortsetteUtenEndring =
-    !readOnly && harAktivtAksjonspunkt && harIngenTilstanderTilVurdering && ingenTilstanderMangler;
+  const kanFortsetteUtenEndring = !readOnly && harAktivtAksjonspunkt && ferdigVurdert;
 
   const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
@@ -205,7 +225,8 @@ const InntektsmeldingContainer = () => {
       </Heading>
       {harAktivtAksjonspunkt && (
         <InntektsmeldingAlerts
-          ferdigVurdert={kanFortsetteUtenEndring}
+          ferdigVurdert={ferdigVurdert}
+          kanFortsetteUtenEndring={kanFortsetteUtenEndring}
           isSubmitting={formState.isSubmitting}
           onSubmit={handleSubmit(onSubmitUtenEndring)}
         />
