@@ -16,3 +16,7 @@
   border-radius: 8px;
   overflow: hidden;
 }
+
+.noDocuments {
+  padding-left: 0.5rem;
+}
