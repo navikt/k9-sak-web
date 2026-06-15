@@ -21,7 +21,12 @@ const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
   Object.fromEntries(
     tilstander.flatMap(t => [
       [`${FieldName.BEGRUNNELSE}${t.periodeOpprinneligFormat}`, t.begrunnelse || ''],
-      [`${FieldName.BESLUTNING}${t.periodeOpprinneligFormat}`, t.vurdering ?? null],
+      [
+        `${FieldName.BESLUTNING}${t.periodeOpprinneligFormat}`,
+        t.vurdering === InntektsmeldingVurderingResponseKode.KAN_FORTSETTE
+          ? InntektsmeldingVurderingRequestKode.FORTSETT
+          : (t.vurdering ?? null),
+      ],
     ]),
   );
 
