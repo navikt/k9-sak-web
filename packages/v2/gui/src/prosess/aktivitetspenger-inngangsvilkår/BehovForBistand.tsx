@@ -181,7 +181,7 @@ export const BehovForBistand = ({
           !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
             <VStack gap="space-20">
               <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav lokalt er ferdig vurdert.
+                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
               </Alert>
               <Box>
                 <Button

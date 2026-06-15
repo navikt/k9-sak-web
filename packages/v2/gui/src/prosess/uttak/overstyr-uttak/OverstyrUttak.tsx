@@ -1,19 +1,19 @@
-import { useState, type FC } from 'react';
-import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
-import AktivitetRad from './AktivitetRad';
-import OverstyringUttakForm from './OverstyringUttakForm';
-import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { useUttakContext } from '../context/UttakContext';
 import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
   type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState, type FC } from 'react';
+import { useUttakContext } from '../context/UttakContext';
+import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
+import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
+import AktivitetRad from './AktivitetRad';
+import OverstyringUttakForm from './OverstyringUttakForm';
 import styles from './overstyrUttakForm.module.css';
 
 export enum OverstyrUttakHandling {
@@ -133,7 +133,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
 
   if (harNoeÅVise) {
     return (
-      <div className="mt-4 mb-8">
+      <div>
         {harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">

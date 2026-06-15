@@ -134,7 +134,7 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (steg.id === prosessStegCodes.BEREGNET_UTBETALING) {
+              if (steg.id === prosessStegCodes.KONTROLL_AV_INNTEKT) {
                 return (
                   <BeregnetUtbetalingStegInitPanel
                     key={steg.id}

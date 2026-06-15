@@ -4,19 +4,19 @@ import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 
-import { isUngWeb } from '../../../utils/urlUtils';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
+import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
+import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { useContext, useEffect } from 'react';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import ArrowBox from '../../../shared/arrowBox/ArrowBox';
-import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { isUngWeb } from '../../../utils/urlUtils';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext.js';
-import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
-import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
-import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
 import { useAvregningFormState } from '../AvregningContext.js';
 
 const OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL =
@@ -30,14 +30,14 @@ export interface VurderFeilutbetalingFormValues {
 interface VurderFeilutbetalingProps {
   readOnly: boolean;
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[];
-  tilbakekrevingvalg: TilbakekrevingValgDto | undefined;
+  tilbakekrevingvalg?: TilbakekrevingValgDto | null;
   behandling: BehandlingDto;
   fagsakYtelseType: FagsakYtelseType;
 }
 
 const buildInitialValues = (
   aksjonspunkter: K9SakAksjonspunktDto[] | UngSakAksjonspunktDto[],
-  tilbakekrevingvalg: TilbakekrevingValgDto | undefined,
+  tilbakekrevingvalg: TilbakekrevingValgDto | null | undefined,
 ) => {
   if (!tilbakekrevingvalg || !aksjonspunkter) {
     return undefined;

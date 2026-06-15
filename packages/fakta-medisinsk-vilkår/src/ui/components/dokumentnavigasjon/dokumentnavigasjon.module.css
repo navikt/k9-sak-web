@@ -1,44 +1,22 @@
-.dokumentnavigasjon {
-  min-width: 28.5rem;
+.statusCell {
+  width: 2rem;
+  padding-left: 0.875rem;
 }
 
-.dokumentnavigasjon__heading {
-  padding: 1.25rem 0.9375rem 0;
+.selectableRow {
+  cursor: pointer;
 }
 
-.dokumentnavigasjon__container {
-  flex-grow: 1;
+.selectedRow {
+  /* stylelint-disable-next-line custom-property-pattern */
+  background-color: var(--ax-bg-accent-moderateA);
 }
 
-.dokumentnavigasjon__columnHeadings {
-  position: relative;
-  display: flex;
-  margin-bottom: 0.75rem;
+.table {
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.dokumentnavigasjon__columnHeading--first {
-  margin-left: 0.875rem;
-}
-
-.dokumentnavigasjon__columnHeading--second {
-  margin-left: 1.375rem;
-}
-
-.dokumentnavigasjon__columnHeading--third {
-  margin-left: 9.5rem;
-}
-
-.dokumentnavigasjon__columnHeading--fourth {
-  margin-left: 3.125rem;
-}
-
-.dokumentnavigasjon :global(.aksel-expansioncard__content) {
-  overflow: visible;
-  padding-inline: 0;
-  padding-block: 0;
-}
-
-.dokumentnavigasjon :global(.aksel-expansioncard__content-inner) {
-  padding: 0;
-  overflow: visible;
+.noDocuments {
+  padding-left: 0.5rem;
 }
