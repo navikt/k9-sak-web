@@ -136,7 +136,9 @@ const Dokumentnavigasjon = ({
             {dokumenterSomVises.length === 0 && (
               <Table.Row>
                 <Table.DataCell colSpan={4}>
-                  <BodyShort size="small">Ingen dokumenter å vise</BodyShort>
+                  <BodyShort size="small" className={styles.noDocuments}>
+                    Ingen dokumenter å vise
+                  </BodyShort>
                 </Table.DataCell>
               </Table.Row>
             )}
