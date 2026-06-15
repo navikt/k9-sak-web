@@ -6,7 +6,7 @@ import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
 import { TiDagerBackendClientContext } from './TiDagerBackendClientContext.js';
-import { TiDagerProsessIndex } from './TiDagerProsess.js';
+import { TiDagerProsessIndex } from './TiDagerProsessIndex.js';
 
 const opplysningerEnArbeidsgiver: RettFraDagEnVisningDto = {
   journalposter: [
@@ -80,7 +80,7 @@ const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator
 };
 
 const meta = {
-  title: 'gui/prosess/ti-dager/TiDagerProsess',
+  title: 'gui/prosess/ti-dager/TiDagerProsessIndex',
   component: TiDagerProsessIndex,
   args: {
     aksjonspunkter,
@@ -154,6 +154,9 @@ export const UtførtAksjonspunkt: Story = {
 };
 
 export const VisValideringsfeil: Story = {
+  args: {
+    behandlingUUID: 'vis-valideringsfeil-uuid',
+  },
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
   play: async ({ canvas }) => {
     const button = await canvas.findByRole('button', { name: 'Bekreft' });
@@ -170,7 +173,10 @@ export const VisValideringsfeil: Story = {
 
 export const SendInnVurdering: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerEnArbeidsgiver)],
-  args: { submitCallback: fn() },
+  args: {
+    submitCallback: fn(),
+    behandlingUUID: 'send-inn-vurdering-uuid',
+  },
   play: async ({ canvas, args, step }) => {
     await step('Velg Ja og fyll begrunnelse', async () => {
       const jaRadio = await canvas.findByRole('radio', { name: 'Ja' });
@@ -191,6 +197,7 @@ export const SendInnVurdering: Story = {
 export const OppfyltVilkårUtenJournalposter: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerIngenJournalposter)],
   args: {
+    behandlingUUID: 'oppfylt-vilkar-uten-journalposter-uuid',
     vilkar: [
       {
         vilkarType: 'K9_VK_9_8',
