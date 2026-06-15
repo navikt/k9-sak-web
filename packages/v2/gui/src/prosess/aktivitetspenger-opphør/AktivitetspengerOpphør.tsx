@@ -13,6 +13,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BeslutterOpphør } from './BeslutterOpphør.js';
 import { OpphørTab } from './types.js';
+import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
 import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
@@ -136,11 +137,16 @@ export const AktivitetspengerOpphør = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
-            <Box padding="space-16">
-              <Heading size="small" level="3">
-                Vilkårsvurdering
-              </Heading>
-            </Box>
+            {opphørData.bostedVilkår && (
+              <Vilkårsvurdering
+                bostedVilkår={opphørData.bostedVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={!!opphørData.lokalkontorBeslutterAp}
+              />
+            )}
           </Tabs.Panel>
           {opphørData.lokalkontorBeslutterAp && (
             <Tabs.Panel value={OpphørTab.BESLUTTER}>

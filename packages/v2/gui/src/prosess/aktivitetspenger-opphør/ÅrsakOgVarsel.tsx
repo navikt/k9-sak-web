@@ -104,7 +104,7 @@ export const AarsakOgVarsel = ({
         avklaringer: [
           {
             periode: selectedItem.periode,
-            skalIkkeSendeVarsel: åpenbarGrunnTilIkkeVarsle === 'ja',
+            skalIkkeSendeVarsel: !!periode.åpenbarGrunnTilIkkeVarsle,
             vurdering: {
               begrunnelse: periode.begrunnelse,
               borITrondheimIHelePerioden: false,
