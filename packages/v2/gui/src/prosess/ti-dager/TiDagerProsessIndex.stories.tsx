@@ -1,9 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import type { RettFraDagEnVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
-import { Loader } from '@navikt/ds-react';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { Suspense } from 'react';
 import { expect, fn, userEvent } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
@@ -76,15 +74,13 @@ const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator
   };
   return Story => (
     <TiDagerBackendClientContext value={fakeApi}>
-      <Suspense fallback={<Loader title="Laster opplysninger om rett fra dag én" />}>
-        <Story />
-      </Suspense>
+      <Story />
     </TiDagerBackendClientContext>
   );
 };
 
 const meta = {
-  title: 'gui/prosess/ti-dager/TiDagerProsess',
+  title: 'gui/prosess/ti-dager/TiDagerProsessIndex',
   component: TiDagerProsessIndex,
   args: {
     aksjonspunkter,

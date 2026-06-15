@@ -34,6 +34,7 @@ export const TiDagerProsessIndex = ({
     queryOptions({
       queryKey: ['rettFraDagEn', behandlingUUID],
       queryFn: () => api.hentRettFraDagEnOpplysninger(behandlingUUID),
+      throwOnError: false,
     }),
   );
 
