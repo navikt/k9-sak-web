@@ -35,6 +35,7 @@ interface VilkårSplittPanelProps {
   afterEditButton?: ReactNode;
   lockedContent?: ReactNode;
   isPermanentlyReadOnly?: boolean;
+  periodListLabel?: string;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
@@ -73,6 +74,7 @@ export const VilkårSplittPanel = ({
   lockedContent,
   lovreferanse,
   isPermanentlyReadOnly,
+  periodListLabel = 'Alle søknader',
 }: VilkårSplittPanelProps) => {
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
@@ -98,7 +100,7 @@ export const VilkårSplittPanel = ({
         style={{ alignSelf: 'start' }}
       >
         <Heading size="small" level="2">
-          Alle søknader
+          {periodListLabel}
         </Heading>
         <Bleed marginInline="space-16">
           <Table size="medium">

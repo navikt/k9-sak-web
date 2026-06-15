@@ -7,17 +7,19 @@ export const OpphørTab = {
 export type OpphørTab = (typeof OpphørTab)[keyof typeof OpphørTab];
 
 export const Opphørsårsak = {
-  IKKE_LENGER_BEHOV_FOR_BISTAND: 'IKKE_LENGER_BEHOV_FOR_BISTAND',
-  IKKE_LENGER_BOSATT: 'IKKE_LENGER_BOSATT',
-  MOTTAR_ANDRE_LIVSOPPHOLDYTELSER: 'MOTTAR_ANDRE_LIVSOPPHOLDYTELSER',
-  ANNET: 'ANNET',
+  IKKE_BOSATTADRESSE_I_TRONDHEIM: 'IKKE_BOSATTADRESSE_I_TRONDHEIM',
+  IKKE_BOSTEDSADRESSE_I_TRONDHEIM_OG_IKKE_FOLKETREGISTRERT_I_TRONDHEIM:
+    'IKKE_BOSTEDSADRESSE_I_TRONDHEIM_OG_IKKE_FOLKETREGISTRERT_I_TRONDHEIM',
+  HAR_STUDIE_ARBEIDSSTED_UTENFOR_TRONDHEIM: 'HAR_STUDIE_ARBEIDSSTED_UTENFOR_TRONDHEIM',
+  ANNEN_ÅRSAK: 'ANNEN_ÅRSAK',
 } as const;
 
 export type Opphørsårsak = (typeof Opphørsårsak)[keyof typeof Opphørsårsak];
 
 export const opphørsårsakLabels: Record<Opphørsårsak, string> = {
-  [Opphørsårsak.IKKE_LENGER_BEHOV_FOR_BISTAND]: 'Ikke lenger behov for bistand',
-  [Opphørsårsak.IKKE_LENGER_BOSATT]: 'Ikke lenger bosatt i Trondheim',
-  [Opphørsårsak.MOTTAR_ANDRE_LIVSOPPHOLDYTELSER]: 'Mottar andre livsoppholdytelser',
-  [Opphørsårsak.ANNET]: 'Annet',
+  [Opphørsårsak.IKKE_BOSATTADRESSE_I_TRONDHEIM]: 'Ikke bosatt adresse i Trondheim',
+  [Opphørsårsak.IKKE_BOSTEDSADRESSE_I_TRONDHEIM_OG_IKKE_FOLKETREGISTRERT_I_TRONDHEIM]:
+    'Ikke bostedsadresse i Trondheim, og heller ikke folkeregistrert i Trondheim',
+  [Opphørsårsak.HAR_STUDIE_ARBEIDSSTED_UTENFOR_TRONDHEIM]: 'Har studie/arbeidssted utenfor Trondheim',
+  [Opphørsårsak.ANNEN_ÅRSAK]: 'Annet',
 };

@@ -46,7 +46,7 @@ const fakeOpphørVilkår = {
   overstyrbar: true,
   perioder: [
     {
-      vilkarStatus: Utfall.OPPFYLT,
+      vilkarStatus: Utfall.IKKE_VURDERT,
       merknad: '-',
       merknadParametere: {},
       periode: { fom: '2026-01-29', tom: '2027-01-28' },

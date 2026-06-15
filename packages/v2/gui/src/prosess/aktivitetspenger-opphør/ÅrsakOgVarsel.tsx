@@ -26,7 +26,7 @@ interface FormData {
     string,
     {
       opphørsdato: string;
-      opphørsårsak: string;
+      årsak: string;
       begrunnelse: string;
       åpenbarGrunnTilIkkeVarsle: 'ja' | 'nei' | '';
     }
@@ -39,7 +39,7 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
       p.periode.fom,
       {
         opphørsdato: p.periode.tom ?? '',
-        opphørsårsak: '',
+        årsak: '',
         begrunnelse: p.begrunnelse ?? '',
         åpenbarGrunnTilIkkeVarsle: '',
       },
@@ -69,7 +69,7 @@ export const AarsakOgVarsel = ({
   const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getPeriodStatus(p.vilkarStatus),
-    label: formatDate(p.periode.fom),
+    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
     periode: p.periode,
   }));
 
@@ -81,6 +81,9 @@ export const AarsakOgVarsel = ({
     defaultValues: buildInitialValues(bostedVilkår),
   });
   const åpenbarGrunnTilIkkeVarsle = formHook.watch(`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`);
+  const opphøreEllerAvslå = formHook.watch(`perioder.${selectedId}.opphøreEllerAvslå`);
+  const valgtÅrsak = formHook.watch(`perioder.${selectedId}.årsak`);
+  const valgtÅrsakErAnnet = valgtÅrsak === Opphørsårsak.ANNEN_ÅRSAK;
 
   const isVarselApSolved = vurderBostedAp?.status === AksjonspunktStatus.UTFØRT;
 
@@ -130,7 +133,8 @@ export const AarsakOgVarsel = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Årsak og varsel for opphør"
+        detailHeading="Ikke lenger bosatt i Trondheim"
+        periodListLabel="Alle perioder"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isVarselApSolved}
         readOnly={readOnly}
@@ -153,17 +157,30 @@ export const AarsakOgVarsel = ({
               }}
             >
               <VStack gap="space-24" width="70ch">
-                <RhfDatepicker
+                <RhfRadioGroup
+                  key={`${selectedId}-opphørsdato`}
                   control={formHook.control}
-                  name={`perioder.${selectedId}.opphørsdato`}
-                  label="Dato for opphør"
-                  readOnly={isFormLocked}
+                  name={`perioder.${selectedId}.opphøreEllerAvslå`}
+                  legend="Hva skal du gjøre?"
                   validate={[required]}
-                />
+                  readOnly={isFormLocked}
+                >
+                  <Radio value="opphøre">Opphøre fra en dato</Radio>
+                  <Radio value="avslå">Avslå en innvilget periode</Radio>
+                </RhfRadioGroup>
+                {opphøreEllerAvslå === 'opphøre' && (
+                  <RhfDatepicker
+                    control={formHook.control}
+                    name={`perioder.${selectedId}.opphørsdato`}
+                    label="Opphøre fra og med"
+                    readOnly={isFormLocked}
+                    validate={[required]}
+                  />
+                )}
                 <RhfSelect
                   control={formHook.control}
-                  name={`perioder.${selectedId}.opphørsårsak`}
-                  label="Opphørsårsak"
+                  name={`perioder.${selectedId}.årsak`}
+                  label="Årsak"
                   readOnly={isFormLocked}
                   validate={[required]}
                   selectValues={Object.values(Opphørsårsak).map(årsak => (
@@ -175,25 +192,48 @@ export const AarsakOgVarsel = ({
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.begrunnelse`}
-                  label="Begrunnelse for opphør"
+                  label="Begrunnelse"
                   readOnly={isFormLocked}
                   validate={[required]}
+                  resize
                 />
                 <RhfRadioGroup
                   key={`${selectedId}-varsle`}
                   control={formHook.control}
                   name={`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`}
-                  legend="Er det åpenbar grunn til å ikke varsle bruker om opphør?"
+                  legend="Er det åpenbar grunn til å ikke varsle bruker?"
+                  description="For eksempel at bruker har varslet flytting selv."
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
                   <Radio value="ja">Ja</Radio>
                   <Radio value="nei">Nei</Radio>
                 </RhfRadioGroup>
+                {valgtÅrsakErAnnet && skalSendeForhåndsvarsel && (
+                  <RhfTextarea
+                    control={formHook.control}
+                    name={`perioder.${selectedId}.forhåndsvarselTekst`}
+                    label="Tekst i forhåndsvarsel (vises til bruker)"
+                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim."
+                    readOnly={isFormLocked}
+                    validate={[required]}
+                    resize
+                  />
+                )}
+                {åpenbarGrunnTilIkkeVarsle === 'ja' && (
+                  <RhfTextarea
+                    control={formHook.control}
+                    name={`perioder.${selectedId}.begrunnelseForIkkeVarsle`}
+                    label="Begrunnelse for hvorfor det ikke er behov for varsel"
+                    readOnly={isFormLocked}
+                    validate={[required]}
+                    resize
+                  />
+                )}
                 {!isFormLocked && skalSendeForhåndsvarsel && (
                   <InfoCard data-color="info" size="small">
                     <InfoCard.Header icon={<InformationSquareIcon aria-hidden />}>
-                      <InfoCard.Title>Bruker vil få ett forhåndsvarsel om opphør</InfoCard.Title>
+                      <InfoCard.Title>Bruker vil få ett varsel om opphør på min side</InfoCard.Title>
                     </InfoCard.Header>
                     <InfoCard.Content>
                       <List size="small">
