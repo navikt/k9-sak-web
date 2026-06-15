@@ -89,7 +89,7 @@ export const MedErrorBoundary: StoryObj = {
     await userEvent.click(canvas.getByRole('button', { name: 'Trigger feil' }));
     await expect(canvas.getByText('Uventet feil')).toBeInTheDocument();
     await expect(canvas.getByRole('button', { name: 'Prøv på nytt' })).toBeInTheDocument();
-    await expect(canvas.getByRole('button', { name: 'Meld feil' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Meld feil i porten' })).toBeInTheDocument();
   },
 };
 

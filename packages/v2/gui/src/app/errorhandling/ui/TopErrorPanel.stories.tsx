@@ -49,7 +49,7 @@ export const OneError: Story = {
     await expect(await canvas.findByText('apperror1')).toBeInTheDocument();
     await expect(await canvas.findByText('Test error 1')).toBeInTheDocument();
     await expect(await canvas.findByRole('button', { name: 'Last på nytt' })).toBeInTheDocument();
-    await expect(await canvas.findByRole('button', { name: 'Meld feil' })).toBeInTheDocument();
+    await expect(await canvas.findByRole('button', { name: 'Meld feil i porten' })).toBeInTheDocument();
   },
 };
 
