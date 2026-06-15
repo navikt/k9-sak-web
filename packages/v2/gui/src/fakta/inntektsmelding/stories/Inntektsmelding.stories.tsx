@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
   aksjonspunkt9071Props,
@@ -204,9 +204,9 @@ export const FerdigVisning9071: Story = {
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
-  args: createProps(alleErMottatt.behandlingUuid, aksjonspunkt9071Props),
+  args: createProps(alleErMottatt.behandlingUuid, { ...aksjonspunkt9071Props, submitCallback: fn() }),
   decorators: [withFakeInntektsmeldingApi(alleErMottatt.behandlingUuid, alleErMottatt.vurdering)],
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
@@ -217,8 +217,23 @@ export const AlleInntektsmeldingerMottatt: Story = {
     await step(
       'Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet',
       async () => {
-        const sendInnButton = await canvas.findByRole('button', { name: /Send inn/i });
+        const sendInnButton = await canvas.findByRole('button', { name: /Fortsett uten endring/i });
         await user.click(sendInnButton);
+        await waitFor(() =>
+          expect(args.submitCallback).toHaveBeenCalledWith([
+            expect.objectContaining({
+              '@type': '9071',
+              kode: '9071',
+              perioder: [
+                expect.objectContaining({
+                  periode: '2022-08-01/2022-08-04',
+                  fortsett: false,
+                  vurdering: 'UDEFINERT',
+                }),
+              ],
+            }),
+          ]),
+        );
       },
     );
   },

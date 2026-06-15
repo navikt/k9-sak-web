@@ -1,4 +1,5 @@
 import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { Vurdering as InntektsmeldingVurderingResponseKode } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
 import { Accordion, Alert, Bleed, BodyLong, Box, Button, Heading } from '@navikt/ds-react';
 import { useMemo, useState } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
@@ -15,19 +16,40 @@ import {
 } from '../../util/utils';
 import InntektsmeldingListe from './InntektsmeldingListe';
 
-const InntektsmeldingManglerInfo = () => (
+interface InntektsmeldingAlertsProps {
+  ferdigVurdert: boolean;
+  isSubmitting: boolean;
+  onSubmit: () => void;
+}
+
+const InntektsmeldingAlerts = ({ ferdigVurdert, isSubmitting, onSubmit }: InntektsmeldingAlertsProps) => (
   <>
-    <Box marginBlock="space-0 space-24">
-      <Alert variant="warning" size="small">
-        <Heading spacing size="xsmall" level="3">
-          Vurder om du kan fortsette behandlingen uten inntektsmelding.
-        </Heading>
-        <BodyLong>
-          Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
-          arbeidsgiver.
-        </BodyLong>
-      </Alert>
-    </Box>
+    {!ferdigVurdert ? (
+      <Box marginBlock="space-0 space-24">
+        <Alert variant="warning" size="small">
+          <Heading spacing size="xsmall" level="3">
+            Vurder om du kan fortsette behandlingen uten inntektsmelding.
+          </Heading>
+          <BodyLong>
+            Inntektsmelding mangler for en eller flere arbeidsgivere, eller for ett eller flere arbeidsforhold hos samme
+            arbeidsgiver.
+          </BodyLong>
+        </Alert>
+      </Box>
+    ) : (
+      <Box marginBlock="space-0 space-24">
+        <Alert variant="info" size="small">
+          Inntektsmelding er ferdig vurdert og du kan gå videre i behandlingen.
+          <Box marginBlock="space-8 space-0">
+            <form onSubmit={onSubmit}>
+              <Button variant="primary" size="small" loading={isSubmitting} disabled={isSubmitting}>
+                Fortsett uten endring
+              </Button>
+            </form>
+          </Box>
+        </Alert>
+      </Box>
+    )}
     <Box marginBlock="space-0 space-24">
       <Alert variant="info" size="small">
         <Accordion>
@@ -121,11 +143,15 @@ const InntektsmeldingContainer = () => {
     ...finnTilstanderSomRedigeres(tilstanderMedUiState),
   ];
   const harFlereTilstanderTilVurdering = tilstanderTilVurdering.length > 1;
+  const harIngenTilstanderTilVurdering = tilstanderTilVurdering.length === 0;
 
   const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
   const harEndretTidligereVurdering = !aktivtAksjonspunkt && sisteAksjonspunkt && formState.isDirty;
-  const kanVurderes = harFlereTilstanderTilVurdering || ingenTilstanderHarMangler(tilstanderMedUiState);
-  const kanSendeInn = !readOnly && kanVurderes && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
+  const ingenTilstanderMangler = ingenTilstanderHarMangler(tilstanderMedUiState);
+  const kanSendeInnFlereVurderinger =
+    !readOnly && harFlereTilstanderTilVurdering && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
+  const kanFortsetteUtenEndring =
+    !readOnly && harAktivtAksjonspunkt && harIngenTilstanderTilVurdering && ingenTilstanderMangler;
 
   const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
@@ -152,6 +178,23 @@ const InntektsmeldingContainer = () => {
     });
   };
 
+  const onSubmitUtenEndring = async () => {
+    if (!aksjonspunktKode) {
+      throw new Error('AksjonspunktKode er ikke satt');
+    }
+
+    await onFinished({
+      '@type': aksjonspunktKode,
+      kode: aksjonspunktKode,
+      perioder: tilstanderMedUiState.map(tilstand => ({
+        periode: tilstand.periodeOpprinneligFormat,
+        fortsett: tilstand.vurdering === InntektsmeldingVurderingResponseKode.KAN_FORTSETTE,
+        vurdering: tilstand.vurdering ?? InntektsmeldingVurderingResponseKode.UDEFINERT,
+        begrunnelse: tilstand.begrunnelse || undefined,
+      })),
+    });
+  };
+
   return (
     <div>
       <Heading size="small" level="1">
@@ -160,7 +203,13 @@ const InntektsmeldingContainer = () => {
       <Heading size="xsmall" level="2" className="my-[0.625rem] mt-5">
         Opplysninger til beregning
       </Heading>
-      {harAktivtAksjonspunkt && <InntektsmeldingManglerInfo />}
+      {harAktivtAksjonspunkt && (
+        <InntektsmeldingAlerts
+          ferdigVurdert={kanFortsetteUtenEndring}
+          isSubmitting={formState.isSubmitting}
+          onSubmit={handleSubmit(onSubmitUtenEndring)}
+        />
+      )}
       <Box>
         <InntektsmeldingListe
           tilstander={tilstanderMedUiState}
@@ -170,7 +219,7 @@ const InntektsmeldingContainer = () => {
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />
       </Box>
-      {kanSendeInn && (
+      {kanSendeInnFlereVurderinger && (
         <Box marginBlock="space-24 space-0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Button variant="primary" size="small" loading={formState.isSubmitting} disabled={formState.isSubmitting}>
