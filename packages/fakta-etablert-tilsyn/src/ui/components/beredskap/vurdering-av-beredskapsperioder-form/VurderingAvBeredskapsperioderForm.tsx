@@ -54,7 +54,12 @@ const VurderingAvBeredskapsperioderForm = ({
   onCancelClick,
   beskrivelser,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  const { lagreBeredskapvurdering, readOnly } = React.useContext(ContainerContext) || {};
+  const {
+    lagreBeredskapvurdering,
+    readOnly,
+    harAksjonspunktForBeredskap = false,
+  } = React.useContext(ContainerContext) || {};
+  const disabled = readOnly || !harAksjonspunktForBeredskap;
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForBeredeskap = () => {
     if (beredskapsperiode.resultat === Vurderingsresultat.OPPFYLT) {
@@ -136,7 +141,7 @@ const VurderingAvBeredskapsperioderForm = ({
           onAvbryt={onCancelClick}
           cancelButtonDisabled={isSubmitting}
           submitButtonDisabled={isSubmitting}
-          shouldShowSubmitButton={!readOnly}
+          shouldShowSubmitButton={!disabled}
           smallButtons
         >
           <Box marginBlock="space-24 space-0">
@@ -147,7 +152,7 @@ const VurderingAvBeredskapsperioderForm = ({
               label="Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd."
               name={FieldName.BEGRUNNELSE}
               validators={{ required }}
-              disabled={readOnly}
+              disabled={disabled}
             />
           </Box>
           <Box marginBlock="space-32 space-0">
@@ -160,7 +165,7 @@ const VurderingAvBeredskapsperioderForm = ({
               ]}
               name={FieldName.HAR_BEHOV_FOR_BEREDSKAP}
               validators={{ required }}
-              disabled={readOnly}
+              disabled={disabled}
             />
           </Box>
           {erDetBehovForBeredskap === RadioOptions.JA_DELER && (
@@ -170,7 +175,7 @@ const VurderingAvBeredskapsperioderForm = ({
                 legend="I hvilke perioder er det behov for beredskap?"
                 fromDatepickerProps={{ label: 'Fra', ariaLabel: 'Fra' }}
                 toDatepickerProps={{ label: 'Til', ariaLabel: 'Til' }}
-                disabled={readOnly}
+                disabled={disabled}
                 defaultValues={[new Period(beredskapsperiode.periode.fom, beredskapsperiode.periode.tom)]}
                 renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
                   numberOfItems > 1 ? (

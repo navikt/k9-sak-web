@@ -57,7 +57,8 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await aktivitetspenger_hentBosattFakta({ query: { behandlingUuid } })).data;
   }
   async getBeregningsgrunnlag(behandlingUuid: string) {
-    return (await avp_getBeregningsgrunnlag({ query: { behandlingUuid } })).data;
+    const { data } = await avp_getBeregningsgrunnlag({ query: { behandlingUuid } });
+    return data ?? null;
   }
 
   async getSatsOgUtbetalingPerioder(behandlingUuid: string) {

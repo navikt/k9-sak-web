@@ -53,7 +53,12 @@ const VurderingAvNattevåksperioderForm = ({
   onCancelClick,
   beskrivelser,
 }: VurderingAvNattevåksperioderFormProps): JSX.Element => {
-  const { lagreNattevåkvurdering, readOnly } = React.useContext(ContainerContext) || {};
+  const {
+    lagreNattevåkvurdering,
+    readOnly,
+    harAksjonspunktForNattevåk = false,
+  } = React.useContext(ContainerContext) || {};
+  const disabled = readOnly || !harAksjonspunktForNattevåk;
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForNattevåk = () => {
     if (nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT) {
@@ -129,7 +134,7 @@ const VurderingAvNattevåksperioderForm = ({
           onAvbryt={onCancelClick}
           cancelButtonDisabled={isSubmitting}
           submitButtonDisabled={isSubmitting}
-          shouldShowSubmitButton={!readOnly}
+          shouldShowSubmitButton={!disabled}
           smallButtons
         >
           <Box marginBlock="space-24 space-0">
@@ -139,7 +144,7 @@ const VurderingAvNattevåksperioderForm = ({
             <TextAreaRHF
               label="Gjør en vurdering av om det er behov for nattevåk etter § 9-11, tredje ledd."
               name={FieldName.BEGRUNNELSE}
-              disabled={readOnly}
+              disabled={disabled}
             />
           </Box>
           <Box marginBlock="space-32 space-0">
@@ -151,7 +156,7 @@ const VurderingAvNattevåksperioderForm = ({
                 { value: RadioOptions.NEI, label: 'Nei' },
               ]}
               name={FieldName.HAR_BEHOV_FOR_NATTEVÅK}
-              disabled={readOnly}
+              disabled={disabled}
             />
           </Box>
           {erDetBehovForNattevåk === RadioOptions.JA_DELER && (
@@ -162,7 +167,7 @@ const VurderingAvNattevåksperioderForm = ({
                 fromDatepickerProps={{ label: 'Fra', ariaLabel: 'Fra' }}
                 toDatepickerProps={{ label: 'Til', ariaLabel: 'Til' }}
                 defaultValues={[new Period(nattevåksperiode.periode.fom, nattevåksperiode.periode.tom)]}
-                disabled={readOnly}
+                disabled={disabled}
                 renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) =>
                   numberOfItems > 1 ? (
                     <DeleteButton

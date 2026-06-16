@@ -7,14 +7,13 @@ import {
   PersonFillIcon,
   PersonIcon,
 } from '@navikt/aksel-icons';
-import { Bleed, BodyShort, Box, Button, Heading, HStack, Pagination, Table, Tooltip } from '@navikt/ds-react';
+import { BodyShort, Box, Button, HStack, Pagination, Table, Tooltip } from '@navikt/ds-react';
 import React, { type JSX } from 'react';
 import { Dokument, dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import Dokumentfilter from '../dokumentfilter/Dokumentfilter';
 import styles from './dokumentnavigasjon.module.css';
 
 interface DokumentnavigasjonProps {
-  tittel: string;
   dokumenter: Dokument[];
   onDokumentValgt: (dokument: Dokument) => void;
   valgtDokument: Dokument | null;
@@ -71,7 +70,6 @@ const getDatert = (dokument: Dokument) => {
 };
 
 const Dokumentnavigasjon = ({
-  tittel,
   dokumenter,
   onDokumentValgt,
   valgtDokument,
@@ -102,114 +100,103 @@ const Dokumentnavigasjon = ({
   const alleRelevanteDokumentTyper = [...new Set(dokumenter.map(dokument => dokument.type))];
 
   return (
-    <Box className={styles.dokumentnavigasjon}>
-      <Box
-        maxWidth="456px"
-        borderColor="neutral-subtle"
-        borderRadius="8"
-        borderWidth="1"
-        paddingBlock="space-16 space-0"
-        paddingInline="space-16"
-        style={{ alignSelf: 'start' }}
-      >
-        <Heading size="small" level="2">
-          {tittel}
-        </Heading>
-        <Bleed marginInline="space-16">
-          <Table size="medium">
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell textSize="small" scope="col" className={styles.statusCell}>
-                  Status
-                </Table.HeaderCell>
-                {!displayFilterOption && (
-                  <Table.HeaderCell textSize="small" scope="col">
-                    Type
-                  </Table.HeaderCell>
-                )}
-                {displayFilterOption && (
-                  <Table.HeaderCell textSize="small" scope="col">
-                    <Dokumentfilter
-                      className=""
-                      text="Type"
-                      filters={dokumenttypeFilter}
-                      onFilterChange={updateDokumenttypeFilter}
-                      alleRelevanteDokumentTyper={alleRelevanteDokumentTyper}
-                    />
-                  </Table.HeaderCell>
-                )}
+    <>
+      <Box paddingBlock="space-0">
+        <Table size="medium" className={styles.table}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell textSize="small" scope="col" className={styles.statusCell}>
+                Status
+              </Table.HeaderCell>
+              {!displayFilterOption && (
                 <Table.HeaderCell textSize="small" scope="col">
-                  Datert
+                  Type
                 </Table.HeaderCell>
-                <Table.HeaderCell textSize="small" scope="col" colSpan={3}>
-                  Part
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {dokumenterSomVises.length === 0 && (
-                <Table.Row>
-                  <Table.DataCell colSpan={4}>
-                    <BodyShort size="small">Ingen dokumenter å vise</BodyShort>
-                  </Table.DataCell>
-                </Table.Row>
               )}
-              {dokumenterSomVises.map(dokument => (
-                <Table.Row
-                  key={dokument.id}
-                  onRowClick={() => onDokumentValgt(dokument)}
-                  selected={dokument === valgtDokument}
-                  className={`${styles.selectableRow} ${dokument === valgtDokument ? styles.selectedRow : styles.row}`}
-                >
-                  <Table.DataCell>
-                    <HStack align="center" justify="center">
-                      <StatusIcon dokument={dokument} />
-                    </HStack>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <BodyShort size="small">{getDokumenttype(dokument)}</BodyShort>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <BodyShort size="small">{getDatert(dokument)}</BodyShort>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <HStack align="center">
-                      <PartIcon annenPartErKilde={dokument.annenPartErKilde} />
-                    </HStack>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <HStack gap="space-8" align="center">
-                      {dokument.duplikater?.length > 0 && (
-                        <FilesFillIcon
-                          title="Det finnes ett eller flere duplikater av dette dokumentet"
-                          fontSize="1.5rem"
-                        />
-                      )}
-                    </HStack>
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    <HStack align="center" justify="end">
-                      <Button
-                        type="button"
-                        variant="tertiary"
-                        size="small"
-                        onClick={() => onDokumentValgt(dokument)}
-                        icon={<ChevronRightIcon title="Åpne" fontSize="1.5rem" />}
+              {displayFilterOption && (
+                <Table.HeaderCell textSize="small" scope="col">
+                  <Dokumentfilter
+                    className=""
+                    text="Type"
+                    filters={dokumenttypeFilter}
+                    onFilterChange={updateDokumenttypeFilter}
+                    alleRelevanteDokumentTyper={alleRelevanteDokumentTyper}
+                  />
+                </Table.HeaderCell>
+              )}
+              <Table.HeaderCell textSize="small" scope="col">
+                Datert
+              </Table.HeaderCell>
+              <Table.HeaderCell textSize="small" scope="col" colSpan={3}>
+                Part
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {dokumenterSomVises.length === 0 && (
+              <Table.Row>
+                <Table.DataCell colSpan={4}>
+                  <BodyShort size="small" className={styles.noDocuments}>
+                    Ingen dokumenter å vise
+                  </BodyShort>
+                </Table.DataCell>
+              </Table.Row>
+            )}
+            {dokumenterSomVises.map(dokument => (
+              <Table.Row
+                key={dokument.id}
+                onRowClick={() => onDokumentValgt(dokument)}
+                selected={dokument === valgtDokument}
+                className={`${styles.selectableRow} ${dokument === valgtDokument ? styles.selectedRow : styles.row}`}
+              >
+                <Table.DataCell>
+                  <HStack align="center" justify="center">
+                    <StatusIcon dokument={dokument} />
+                  </HStack>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{getDokumenttype(dokument)}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{getDatert(dokument)}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <HStack align="center">
+                    <PartIcon annenPartErKilde={dokument.annenPartErKilde} />
+                  </HStack>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <HStack gap="space-8" align="center">
+                    {dokument.duplikater?.length > 0 && (
+                      <FilesFillIcon
+                        title="Det finnes ett eller flere duplikater av dette dokumentet"
+                        fontSize="1.5rem"
                       />
-                    </HStack>
-                  </Table.DataCell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </Bleed>
-        {usePagination && antallSider > 1 && (
-          <Box paddingBlock="space-16">
-            <Pagination size="small" page={aktivSide} onPageChange={setAktivSide} count={antallSider} />
-          </Box>
-        )}
+                    )}
+                  </HStack>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <HStack align="center" justify="end">
+                    <Button
+                      type="button"
+                      variant="tertiary"
+                      size="small"
+                      onClick={() => onDokumentValgt(dokument)}
+                      icon={<ChevronRightIcon title="Åpne" fontSize="1.5rem" />}
+                    />
+                  </HStack>
+                </Table.DataCell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
       </Box>
-    </Box>
+      {usePagination && antallSider > 1 && (
+        <Box paddingBlock="space-16">
+          <Pagination size="small" page={aktivSide} onPageChange={setAktivSide} count={antallSider} />
+        </Box>
+      )}
+    </>
   );
 };
 
