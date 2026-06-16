@@ -72,7 +72,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
     kode => kode === AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET,
   );
 
-  if (erAlleVilkårVurdert) {
+  if (erAlleVilkårVurdert && !isAksjonspunktOpen) {
     return (
       <VilkarresultatMedOverstyringProsessIndex
         aksjonspunkter={[]}
