@@ -235,7 +235,7 @@ const byggSimuleringPanel = (
   uttakErAvslått: boolean,
   type: ProcessMenuStepType,
 ): ProcessMenuStep => {
-  const skalVises = forrigeVurdert || (uttakErAvslått && type === ProcessMenuStepType.warning);
+  const skalVises = forrigeVurdert || (uttakErAvslått && type !== ProcessMenuStepType.default);
   return {
     type: skalVises ? type : ProcessMenuStepType.default,
     label: PANEL_KONFIG.simulering.label,

@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -102,7 +103,7 @@ export const BehovForBistand = ({
       const vurdertePerioder = {
         avslagsårsak:
           vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak
-            ? Avslagsårsak.IKKE_14A_VEDTAK
+            ? BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK
             : undefined,
         begrunnelse: vurdering.begrunnelse ?? '',
         erVilkårOppfylt: vurdering.behovForBistand === 'oppfylt',

@@ -1,7 +1,6 @@
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
@@ -104,9 +103,8 @@ const InntektsmeldingAksjonspunktForm = ({
     aksjonspunktKode !== '9069' || beslutning === InntektsmeldingVurderingRequestKode.FORTSETT;
 
   // Formater arbeidsgiverliste
-  const arbeidsgivereMedMangler = tilstand.status.filter(s => s.status === InntektsmeldingStatus.MANGLER);
   const arbeidsgivereString = formatListeMedOg(
-    arbeidsgivereMedMangler.map(
+    tilstand.status.map(
       ({ arbeidsgiver: ag }) =>
         `${arbeidsforhold[ag.arbeidsgiver]?.navn ?? ag.arbeidsgiver} (${ag.arbeidsforhold ?? 'ukjent'})`,
     ),
