@@ -44,7 +44,7 @@ const DagerNavKanUtbetale = ({
           overskrifttekstId: 'Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet',
           infotekstContent: <FormattedMessage id="Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet.InfoText" />,
         },
-      ]}
+      ].filter(v => !!v)}
       viserDetaljer={viserDetaljer}
       visDetaljer={visDetaljer}
       className={styles.dagerNavKanUtbetale}
