@@ -33,22 +33,22 @@ export const retryAction = (callback: () => void): ErrorFixAction => {
 };
 
 export const reloadAction: ErrorFixAction = {
-  label: 'Last på nytt',
+  label: 'Last siden på nytt',
   icon: <ArrowCirclepathIcon />,
   info: <>
-    <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+    <BodyLong>Prøv å laste siden på nytt.</BodyLong>
     <BodyLong> Meld feil i porten hvis den ikke løser seg etter hvert.</BodyLong>
     </>,
   callback: () => window.location.reload(),
 };
 
 export const reloadActionWithFormResetWarning: ErrorFixAction = {
-  label: 'Last på nytt',
+  label: 'Last siden på nytt',
   icon: <ArrowCirclepathIcon />,
   info: <>
-    <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+    <BodyLong>Prøv å laste siden på nytt.</BodyLong>
     <BodyLong>
-    Obs! Hvis du trykker på "Last på nytt", forsvinner teksten du har skrevet inn i feltene. Du kan kopiere teksten
+    Obs! Hvis du trykker på "Last siden på nytt", forsvinner teksten du har skrevet inn i feltene. Du kan kopiere teksten
   før du laster inn på nytt.
     </BodyLong>
     <BodyLong>Meld feilen i Porten hvis du ikke får løst den selv.</BodyLong>

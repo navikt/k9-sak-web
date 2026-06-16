@@ -134,8 +134,8 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
         ...reloadAction,
         info: (
           <>
-            <BodyLong>Prøv å laste inn på nytt.</BodyLong>
-            <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
+            <BodyLong>Prøv å laste siden på nytt.</BodyLong>
+            <BodyLong>Meld feil i porten hvis du ikke får løst den.</BodyLong>
           </>
         ),
       },
@@ -168,8 +168,8 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
           ...reloadAction,
           info: (
             <>
-              <BodyLong>Prøv å laste inn på nytt eller komme tilbake til saken litt senere.</BodyLong>
-              <BodyLong>Meld feilen i Porten hvis du ikke får løst den selv.</BodyLong>
+              <BodyLong>Prøv å laste siden på nytt eller komme tilbake til saken litt senere.</BodyLong>
+              <BodyLong>Meld feilen i Porten hvis du ikke får løst det.</BodyLong>
             </>
           ),
         },
@@ -190,7 +190,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
           ...reloadAction,
           info: (
             <>
-              <BodyLong>Prøv å laste inn på nytt.</BodyLong>
+              <BodyLong>Prøv å laste siden på nytt.</BodyLong>
               <BodyLong>
                 Sjekk driftsmeldinger eller rapporter feil i Porten, hvis den ikke løser seg etter hvert.
               </BodyLong>
@@ -217,7 +217,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
           <>
             <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
             <BodyLong>Obs! Hvis du trykker på "Last på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
-            <BodyLong>Meld feil i porten hvis du ikke får løst den selv.</BodyLong>
+            <BodyLong>Meld feil i porten hvis du ikke får løst det.</BodyLong>
           </>
         ),
       },
@@ -241,7 +241,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
         ...reloadAction,
         info: (
           <>
-            <BodyLong>Prøv å laste på nytt.</BodyLong>
+            <BodyLong>Prøv å laste siden på nytt.</BodyLong>
             <BodyLong>Kontroller nettverksforbindelsen din eller sjekk driftsmeldinger.</BodyLong>
           </>
         ),
