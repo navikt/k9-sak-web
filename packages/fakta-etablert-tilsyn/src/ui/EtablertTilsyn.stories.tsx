@@ -120,6 +120,156 @@ EtablertTilsyn.parameters = {
   },
 };
 
+export const UtenAksjonspunkter: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      httpErrorHandler: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harAksjonspunktForBeredskap: false,
+      harAksjonspunktForNattevåk: false,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal ikke vise submit-knapp for beredskap uten aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('textbox', {
+            name: 'Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd.',
+          }),
+        ).toBeDisabled();
+      });
+      await expect(canvas.queryByText('Bekreft og fortsett')).not.toBeInTheDocument();
+    });
+
+    await step('skal ikke vise submit-knapp for nattevåk uten aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Nattevåk' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('textbox', {
+            name: 'Gjør en vurdering av om det er behov for nattevåk etter § 9-11, tredje ledd.',
+          }),
+        ).toBeDisabled();
+      });
+      await expect(canvas.queryByText('Bekreft og fortsett')).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const BareNattevåkAksjonspunkt: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      httpErrorHandler: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harAksjonspunktForBeredskap: false,
+      harAksjonspunktForNattevåk: true,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal ikke vise submit-knapp for beredskap uten aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('textbox', {
+            name: 'Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd.',
+          }),
+        ).toBeDisabled();
+      });
+      await expect(canvas.queryByText('Bekreft og fortsett')).not.toBeInTheDocument();
+    });
+
+    await step('skal vise submit-knapp for nattevåk med aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Nattevåk' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('textbox', {
+            name: 'Gjør en vurdering av om det er behov for nattevåk etter § 9-11, tredje ledd.',
+          }),
+        ).not.toBeDisabled();
+      });
+      await expect(canvas.getByText('Bekreft og fortsett')).toBeInTheDocument();
+    });
+  },
+};
+
+export const BareBeredskapAksjonspunkt: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      httpErrorHandler: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harAksjonspunktForBeredskap: true,
+      harAksjonspunktForNattevåk: false,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal vise submit-knapp for beredskap med aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('textbox', {
+            name: 'Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd.',
+          }),
+        ).not.toBeDisabled();
+      });
+      await expect(canvas.getByText('Bekreft og fortsett')).toBeInTheDocument();
+    });
+
+    await step('skal ikke vise submit-knapp for nattevåk uten aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Nattevåk' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByRole('textbox', {
+            name: 'Gjør en vurdering av om det er behov for nattevåk etter § 9-11, tredje ledd.',
+          }),
+        ).toBeDisabled();
+      });
+      await expect(canvas.queryByText('Bekreft og fortsett')).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const BeredskapFerdigVurdert: Story = {
   args: {
     data: {
