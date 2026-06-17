@@ -177,11 +177,7 @@ export const BeslutterOpphør = ({
 
                   return (
                     <Box key={field.id}>
-                      <button
-                        type="button"
-                        onClick={() => tab && onTabChange(tab)}
-                        className={styles.buttonLink}
-                      >
+                      <button type="button" onClick={() => tab && onTabChange(tab)} className={styles.buttonLink}>
                         <Link as={BodyShort} weight="semibold" size="small">
                           {formaterSkjermlenkeType(item?.skjermlenkeType)}
                         </Link>
@@ -238,7 +234,7 @@ export const BeslutterOpphør = ({
                                 </Fieldset>
                               </VStack>
                             )}
-                            <Box marginBlock="space-16 space-0" width="70ch">
+                            <Box marginBlock="space-16 space-0" maxWidth="70ch" width="100%">
                               <RhfTextarea
                                 control={control}
                                 name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}

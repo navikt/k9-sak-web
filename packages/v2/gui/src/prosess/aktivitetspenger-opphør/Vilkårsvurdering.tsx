@@ -97,7 +97,7 @@ export const Vilkaarsvurdering = ({
                 setIsFormLocked(true);
               }}
             >
-              <VStack gap="space-24" width="70ch">
+              <VStack gap="space-24" maxWidth="70ch" width="100%">
                 <Box borderRadius="8" padding={'space-16'} background={'info-softA'}>
                   <VStack gap="space-20">
                     <VStack gap="space-8">

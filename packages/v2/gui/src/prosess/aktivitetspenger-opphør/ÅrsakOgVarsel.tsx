@@ -156,7 +156,7 @@ export const AarsakOgVarsel = ({
                 setIsFormLocked(true);
               }}
             >
-              <VStack gap="space-24" width="70ch">
+              <VStack gap="space-24" maxWidth="70ch" width="100%">
                 <RhfRadioGroup
                   key={`${selectedId}-opphørsdato`}
                   control={formHook.control}
