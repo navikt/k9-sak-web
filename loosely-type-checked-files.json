@@ -210,7 +210,6 @@
   "packages/modal-sett-pa-vent/src/components/SettPaVentModal.tsx",
   "packages/prosess-aarskvantum-oms/src/components/AksjonspunktForm9014.tsx",
   "packages/prosess-aarskvantum-oms/src/components/AktivitetTabell.tsx",
-  "packages/prosess-aarskvantum-oms/src/components/nokkeltall/DagerNavKanUtbetale.tsx",
   "packages/prosess-aarskvantum-oms/src/components/nokkeltall/NokkeltallContainer.tsx",
   "packages/prosess-aarskvantum-oms/src/components/nokkeltall/Restdager.tsx",
   "packages/prosess-aarskvantum-oms/src/components/nokkeltall/durationUtils.ts",

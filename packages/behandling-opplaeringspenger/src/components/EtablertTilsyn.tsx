@@ -19,13 +19,12 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
 
   const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
-  const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
   return (
     <EtablertTilsynContainer
       data={{
         errorNotifier: legacyErrorNotifier,
-        readOnly: readOnly || !harAksjonspunkt,
+        readOnly,
         endpoints: findEndpointsFromRels(behandling.links, [
           { rel: 'opplaeringspenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
           { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },

@@ -1,10 +1,11 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
-import type { RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
+import type {
+  RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
+  RettFraDagEnVisningDto,
+} from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
 import { FileIcon, PencilIcon } from '@navikt/aksel-icons';
 import {
   Bleed,
@@ -16,7 +17,6 @@ import {
   HStack,
   Label,
   Link,
-  Loader,
   Radio,
   RadioGroup,
   ReadMore,
@@ -24,10 +24,8 @@ import {
   VStack,
 } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 
 interface TiDagerVurderingFormData {
   journalpostId: string;
@@ -39,7 +37,7 @@ interface TiDagerFormData {
   begrunnelse: string;
 }
 
-interface TiDagerSubmitModel {
+export interface TiDagerSubmitModel {
   kode: string;
   begrunnelse: string;
   avklarRettFraDagEn: {
@@ -47,14 +45,13 @@ interface TiDagerSubmitModel {
   };
 }
 
-interface TiDagerProsessIndexProps {
+interface TiDagerProsessProps {
   submitCallback: (data: TiDagerSubmitModel[]) => Promise<void>;
   aksjonspunkter: Pick<AksjonspunktDto, 'definisjon' | 'begrunnelse' | 'status'>[];
   isReadOnly: boolean;
-  behandlingUUID: string;
   saksnummer: string;
   arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } };
-  vilkar: VilkårMedPerioderDto[];
+  opplysninger: RettFraDagEnVisningDto;
 }
 
 function formatArbeidsgiverNavn(
@@ -74,32 +71,17 @@ function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | unde
   return value ? 'ja' : 'nei';
 }
 
-export const TiDagerProsessIndex = ({
+export const TiDagerProsess = ({
   aksjonspunkter,
   submitCallback,
   isReadOnly,
-  behandlingUUID,
   saksnummer,
   arbeidsgiverOpplysningerPerId,
-  vilkar,
-}: TiDagerProsessIndexProps) => {
-  const api = useTiDagerBackendClient();
+  opplysninger,
+}: TiDagerProsessProps) => {
   const hasSolvedAksjonspunkt = aksjonspunkter[0] && aksjonspunkter[0].status === aksjonspunktStatus.UTFØRT;
   const readOnly = isReadOnly || aksjonspunkter.length === 0;
-  const {
-    data: opplysninger,
-    isPending,
-    isError,
-  } = useQuery(
-    queryOptions({
-      queryKey: ['rettFraDagEn', behandlingUUID],
-      queryFn: () => api.hentRettFraDagEnOpplysninger(behandlingUUID),
-      throwOnError: false,
-    }),
-  );
   const [isFormLocked, setIsFormLocked] = useState(hasSolvedAksjonspunkt);
-  const vilkår = vilkar?.[0];
-  const harJournalposter = opplysninger?.journalposter && opplysninger.journalposter.length > 0;
 
   useEffect(() => {
     if (hasSolvedAksjonspunkt) {
@@ -110,21 +92,16 @@ export const TiDagerProsessIndex = ({
   const formIsLockedOrReadOnly = isFormLocked || readOnly;
 
   const formMethods = useForm<TiDagerFormData>({
-    defaultValues: { vurderinger: [], begrunnelse: '' },
+    defaultValues: {
+      vurderinger: opplysninger.journalposter.map(jp => ({
+        journalpostId: jp.journalpostId,
+        harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
+      })),
+      begrunnelse: aksjonspunkter[0]?.begrunnelse ?? '',
+    },
   });
 
   const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
-
-  useEffect(() => {
-    if (opplysninger && harJournalposter) {
-      const vurderinger = opplysninger.journalposter.map(jp => ({
-        journalpostId: jp.journalpostId,
-        harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
-      }));
-      const begrunnelse = aksjonspunkter != undefined && aksjonspunkter[0] ? aksjonspunkter[0].begrunnelse : '';
-      formMethods.reset({ vurderinger, begrunnelse });
-    }
-  }, [opplysninger, formMethods, aksjonspunkter, harJournalposter]);
 
   const onSubmit = async (data: TiDagerFormData) => {
     const payload = [
@@ -133,7 +110,7 @@ export const TiDagerProsessIndex = ({
         begrunnelse: data.begrunnelse,
         avklarRettFraDagEn: {
           vurderinger: data.vurderinger.map(v => {
-            const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === v.journalpostId);
+            const journalpost = opplysninger.journalposter.find(jp => jp.journalpostId === v.journalpostId);
             return {
               journalpostId: v.journalpostId,
               harUtbetaltPliktigeDager: v.harUtbetaltPliktigeDager === 'ja',
@@ -145,33 +122,6 @@ export const TiDagerProsessIndex = ({
     ];
     await submitCallback(payload);
   };
-
-  if (isPending) {
-    return <Loader title="Laster opplysninger om rett fra dag én" />;
-  }
-
-  if (isError) {
-    return (
-      <Box paddingInline="space-16 space-32" paddingBlock="space-8">
-        <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
-      </Box>
-    );
-  }
-  if (
-    vilkår?.perioder != undefined &&
-    vilkår.perioder.length > 0 &&
-    vilkår.perioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT) &&
-    !harJournalposter
-  ) {
-    return (
-      <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
-        <Heading size="medium" level="2" spacing>
-          Ti dager
-        </Heading>
-        <BodyShort>10 dager har blitt dekket - ref 9-8 3.ledd</BodyShort>
-      </Box>
-    );
-  }
 
   return (
     <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
@@ -218,7 +168,7 @@ export const TiDagerProsessIndex = ({
               )}
             />
             {fields.map((field, index) => {
-              const journalpost = opplysninger?.journalposter.find(jp => jp.journalpostId === field.journalpostId);
+              const journalpost = opplysninger.journalposter.find(jp => jp.journalpostId === field.journalpostId);
               return (
                 <Box key={field.id} borderWidth="1" borderRadius="8" padding="space-12">
                   <VStack gap="space-8">
