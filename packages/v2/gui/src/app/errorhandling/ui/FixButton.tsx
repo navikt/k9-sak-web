@@ -1,4 +1,4 @@
-import type { ErrorFixAction } from "./ErrorFixAction.ts";
+import type { ErrorFixAction } from "./ErrorFixAction.js";
 import type { FC } from "react";
 import { Button } from "@navikt/ds-react";
 

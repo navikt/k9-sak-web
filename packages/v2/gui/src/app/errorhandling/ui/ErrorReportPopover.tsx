@@ -34,6 +34,7 @@ export const ErrorReportPopover: FC<ErrorReportPopoverProps> = ({ errors }) => {
           size="small"
           data-color="neutral"
           ref={setShowReportBtn}
+          aria-label="Vis teknisk info om feil"
           aria-expanded={reportShowing}
           aria-controls={reportShowing ? popoverId : undefined}
           onClick={() => setReportShowing(showing => !showing)}
