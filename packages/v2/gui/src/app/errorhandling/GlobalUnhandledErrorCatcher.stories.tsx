@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { useState } from 'react';
 import {
   GlobalUnhandledErrorCatcher,
@@ -212,8 +212,14 @@ export const ErrorWhileDialogOpen: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Open dialog' }));
     const dialog = await within(document.body).findByRole('dialog');
     const dialogInput = within(dialog).getByRole('textbox', { name: 'Dialog input:' });
-    await userEvent.type(dialogInput, 'Skjemadata');
-    await expect(dialogInput).toHaveValue('Skjemadata');
+    // Aksel-dialogen flyttar fokus asynkront når han opnar. Skriv vi for tidleg, kan dei første
+    // tastetrykka gå tapt når fokushandtering skjer. Vi prøver derfor på nytt til heile
+    // verdien er skriven inn, slik at testen ikkje blir flaky.
+    await waitFor(async () => {
+      await userEvent.clear(dialogInput);
+      await userEvent.type(dialogInput, 'Skjemadata');
+      await expect(dialogInput).toHaveValue('Skjemadata');
+    });
     await userEvent.click(within(dialog).getByRole('button', { name: 'Utløys feil' }));
     const alertDialog = await within(document.body).findByRole('alertdialog');
     await expect(alertDialog).toBeInTheDocument();
