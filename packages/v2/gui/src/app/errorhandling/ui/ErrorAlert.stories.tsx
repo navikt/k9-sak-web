@@ -112,7 +112,7 @@ export const Minimal: Story = {
   args: resolveErrorViewProps(new AppError({ message: 'Uventet feil' })),
   play: async ({ canvas }) => {
     await expect(canvas.getAllByText('Uventet feil').length).toBeGreaterThanOrEqual(2);
-    await expect(canvas.queryByRole('button', { name: 'Last på nytt' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: 'Last siden på nytt' })).toBeInTheDocument();
   },
 };
 
