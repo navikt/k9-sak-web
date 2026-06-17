@@ -58,7 +58,7 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
       ...reloadAction,
       info: <>
         <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
-        <BodyLong>Obs! Hvis du trykker på "Last på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
+        <BodyLong>Obs! Hvis du trykker på "Last siden på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
         <BodyLong>Rapporter feil i porten hvis du ikke får løst det.</BodyLong>
       </>
     }
