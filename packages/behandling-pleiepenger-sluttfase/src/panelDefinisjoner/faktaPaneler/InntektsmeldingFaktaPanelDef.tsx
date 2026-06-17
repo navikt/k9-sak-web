@@ -9,7 +9,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
-import Inntektsmelding from '../../components/Inntektsmelding';
 import InntektsmeldingIndex from '@k9-sak-web/gui/fakta/inntektsmelding/ui/InntektsmeldingIndex.js';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
@@ -25,12 +24,9 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getKomponent = props => {
-    if (props.featureToggles?.BRUK_V2_INNTEKTSMELDING) {
-      const deepCopyProps = JSON.parse(JSON.stringify(props));
-      konverterKodeverkTilKode(deepCopyProps, false);
-      return <InntektsmeldingIndex {...props} {...deepCopyProps} />;
-    }
-    return <Inntektsmelding {...props} />;
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <InntektsmeldingIndex {...props} {...deepCopyProps} />;
   };
 
   getData = ({ arbeidsgiverOpplysningerPerId, dokumenter }) => ({
