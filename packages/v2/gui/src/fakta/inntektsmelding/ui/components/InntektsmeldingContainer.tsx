@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { Tilstand, TilstandMedUiState } from '../../types';
+import type { Tilstand, TilstandMedUiState, InntektsmeldingVurdering } from '../../types';
 import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
 import {
   finnSisteAksjonspunkt,
@@ -17,15 +17,21 @@ import {
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
 import InntektsmeldingListe from './InntektsmeldingListe';
 
+// Dette er nødvendig for å mappe vurdering fra backend til det formatet som forventes i requesten, da KompletthetsPeriode.vurdering bruker en generert enum (KAN_FORTSETTE), mens backend forventer FORTSETT
+const responseToRequestVurdering: Record<string, InntektsmeldingVurdering> = {
+  [InntektsmeldingVurderingResponseKode.KAN_FORTSETTE]: InntektsmeldingVurderingRequestKode.FORTSETT,
+  [InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG]: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
+  [InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP]: InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP,
+  [InntektsmeldingVurderingResponseKode.UAVKLART]: InntektsmeldingVurderingRequestKode.UAVKLART,
+};
+
 const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
   Object.fromEntries(
     tilstander.flatMap(t => [
       [`${FieldName.BEGRUNNELSE}${t.periodeOpprinneligFormat}`, t.begrunnelse || ''],
       [
         `${FieldName.BESLUTNING}${t.periodeOpprinneligFormat}`,
-        t.vurdering === InntektsmeldingVurderingResponseKode.KAN_FORTSETTE
-          ? InntektsmeldingVurderingRequestKode.FORTSETT
-          : (t.vurdering ?? null),
+        (t.vurdering ? responseToRequestVurdering[t.vurdering] : null) ?? null,
       ],
     ]),
   );
@@ -110,12 +116,15 @@ const InntektsmeldingContainer = () => {
     await onFinished({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
-      perioder: tilstanderMedUiState.map(tilstand => ({
-        periode: tilstand.periodeOpprinneligFormat,
-        fortsett: tilstand.vurdering === InntektsmeldingVurderingResponseKode.KAN_FORTSETTE,
-        vurdering: tilstand.vurdering ?? InntektsmeldingVurderingResponseKode.UDEFINERT,
-        begrunnelse: tilstand.begrunnelse || undefined,
-      })),
+      perioder: tilstanderMedUiState.map(tilstand => {
+        const vurdering = tilstand.vurdering ? responseToRequestVurdering[tilstand.vurdering] : undefined;
+        return {
+          periode: tilstand.periodeOpprinneligFormat,
+          fortsett: vurdering === InntektsmeldingVurderingRequestKode.FORTSETT,
+          vurdering,
+          begrunnelse: tilstand.begrunnelse || undefined,
+        };
+      }),
     });
   };
 

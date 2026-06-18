@@ -10,7 +10,7 @@ export const InntektsmeldingVurderingRequestKode = {
   FORTSETT: 'FORTSETT',
   MANGLENDE_GRUNNLAG: 'MANGLENDE_GRUNNLAG',
   IKKE_INNTEKTSTAP: 'IKKE_INNTEKTSTAP',
-  UDEFINERT: 'UDEFINERT',
+  UAVKLART: 'UAVKLART',
 } as const;
 
 // Feltnavn for skjema
@@ -31,10 +31,19 @@ export interface TilstandMedUiState extends Tilstand {
   beslutningFieldName: `beslutning${string}`;
 }
 
+export type InntektsmeldingVurdering =
+  (typeof InntektsmeldingVurderingRequestKode)[keyof typeof InntektsmeldingVurderingRequestKode];
+
 // API request/response typer
+// KompletthetsPeriode.vurdering bruker generert enum (KAN_FORTSETTE), men backend forventer FORTSETT
+export type InntektsmeldingPeriode = Omit<KompletthetsPeriode, 'vurdering'> & {
+  vurdering?: InntektsmeldingVurdering;
+  fortsett?: boolean;
+};
+
 export interface InntektsmeldingRequestPayload {
   begrunnelse?: string;
-  perioder: KompletthetsPeriode[];
+  perioder: InntektsmeldingPeriode[];
   kode: string;
   '@type': string;
 }
