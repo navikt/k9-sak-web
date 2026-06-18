@@ -11,7 +11,6 @@ export const InntektsmeldingVurderingRequestKode = {
   MANGLENDE_GRUNNLAG: 'MANGLENDE_GRUNNLAG',
   IKKE_INNTEKTSTAP: 'IKKE_INNTEKTSTAP',
   UAVKLART: 'UAVKLART',
-  UDEFINERT: '-',
 } as const;
 
 // Feltnavn for skjema
@@ -38,7 +37,7 @@ export type InntektsmeldingVurdering =
 // API request/response typer
 // KompletthetsPeriode.vurdering bruker generert enum (KAN_FORTSETTE), men backend forventer FORTSETT
 export type InntektsmeldingPeriode = Omit<KompletthetsPeriode, 'vurdering'> & {
-  vurdering: InntektsmeldingVurdering;
+  vurdering?: InntektsmeldingVurdering;
   fortsett?: boolean;
 };
 

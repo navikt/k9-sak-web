@@ -177,7 +177,7 @@ export const alleErMottatt = behandlingUuidOgVurdering('1-1-6', {
           journalpostId: '573777857',
         },
       ],
-      vurdering: 'UDEFINERT',
+      vurdering: 'KAN_FORTSETTE',
       tilVurdering: true,
       begrunnelse: '',
     },

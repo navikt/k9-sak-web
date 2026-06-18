@@ -23,7 +23,6 @@ const responseToRequestVurdering: Record<string, InntektsmeldingVurdering> = {
   [InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG]: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
   [InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP]: InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP,
   [InntektsmeldingVurderingResponseKode.UAVKLART]: InntektsmeldingVurderingRequestKode.UAVKLART,
-  [InntektsmeldingVurderingResponseKode.UDEFINERT]: InntektsmeldingVurderingRequestKode.UDEFINERT,
 };
 
 const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
@@ -118,9 +117,7 @@ const InntektsmeldingContainer = () => {
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
       perioder: tilstanderMedUiState.map(tilstand => {
-        const vurdering =
-          (tilstand.vurdering ? responseToRequestVurdering[tilstand.vurdering] : null) ??
-          InntektsmeldingVurderingRequestKode.UDEFINERT;
+        const vurdering = tilstand.vurdering ? responseToRequestVurdering[tilstand.vurdering] : undefined;
         return {
           periode: tilstand.periodeOpprinneligFormat,
           fortsett: vurdering === InntektsmeldingVurderingRequestKode.FORTSETT,
