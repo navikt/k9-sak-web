@@ -1,12 +1,12 @@
 import { finnAktivtAksjonspunkt } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { Vurdering as InntektsmeldingVurderingResponseKode } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
-import { Box, Button, Heading } from '@navikt/ds-react';
+import { Vurdering } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
+import { Box, Heading } from '@navikt/ds-react';
 import { useMemo, useState } from 'react';
 import { useForm, type FieldValues } from 'react-hook-form';
 import { useKompletthetsoversikt } from '../../api/inntektsmeldingQueries';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
-import type { Tilstand, TilstandMedUiState, InntektsmeldingVurdering } from '../../types';
-import { FieldName, InntektsmeldingVurderingRequestKode } from '../../types';
+import type { Tilstand, TilstandMedUiState } from '../../types';
+import { FieldName } from '../../types';
 import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
@@ -17,22 +17,11 @@ import {
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
 import InntektsmeldingListe from './InntektsmeldingListe';
 
-// Dette er nødvendig for å mappe vurdering fra backend til det formatet som forventes i requesten, da KompletthetsPeriode.vurdering bruker en generert enum (KAN_FORTSETTE), mens backend forventer FORTSETT
-const responseToRequestVurdering: Record<string, InntektsmeldingVurdering> = {
-  [InntektsmeldingVurderingResponseKode.KAN_FORTSETTE]: InntektsmeldingVurderingRequestKode.FORTSETT,
-  [InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG]: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
-  [InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP]: InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP,
-  [InntektsmeldingVurderingResponseKode.UAVKLART]: InntektsmeldingVurderingRequestKode.UAVKLART,
-};
-
 const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
   Object.fromEntries(
     tilstander.flatMap(t => [
       [`${FieldName.BEGRUNNELSE}${t.periodeOpprinneligFormat}`, t.begrunnelse || ''],
-      [
-        `${FieldName.BESLUTNING}${t.periodeOpprinneligFormat}`,
-        (t.vurdering ? responseToRequestVurdering[t.vurdering] : null) ?? null,
-      ],
+      [`${FieldName.BESLUTNING}${t.periodeOpprinneligFormat}`, t.vurdering || undefined],
     ]),
   );
 
@@ -76,55 +65,31 @@ const InntektsmeldingContainer = () => {
   const harIngenTilstanderTilVurdering = tilstanderTilVurdering.length === 0;
 
   const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
-  const harEndretTidligereVurdering = !aktivtAksjonspunkt && sisteAksjonspunkt && formState.isDirty;
   const ingenTilstanderMangler = ingenTilstanderHarMangler(tilstanderMedUiState);
   const ferdigVurdert = harIngenTilstanderTilVurdering && ingenTilstanderMangler;
-  const kanSendeInnFlereVurderinger =
-    !readOnly && harFlereTilstanderTilVurdering && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
   const kanFortsetteUtenEndring = !readOnly && harAktivtAksjonspunkt && ferdigVurdert;
-
-  const onSubmit = async (data: FieldValues) => {
-    if (!aksjonspunktKode) {
-      throw new Error('AksjonspunktKode er ikke satt');
-    }
-
-    const perioder = tilstanderTilVurdering.map(tilstand => {
-      const beslutning = data[tilstand.beslutningFieldName];
-      const skalInkludereBegrunnelse =
-        aksjonspunktKode !== '9069' || beslutning === InntektsmeldingVurderingRequestKode.FORTSETT;
-
-      return {
-        periode: tilstand.periodeOpprinneligFormat,
-        fortsett: beslutning === InntektsmeldingVurderingRequestKode.FORTSETT,
-        vurdering: beslutning,
-        begrunnelse: skalInkludereBegrunnelse ? data[tilstand.begrunnelseFieldName] : undefined,
-      };
-    });
-
-    await onFinished({
-      '@type': aksjonspunktKode,
-      kode: aksjonspunktKode,
-      perioder,
-    });
-  };
 
   const onSubmitUtenEndring = async () => {
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
 
+    const tilstanderMedVurdering = tilstanderMedUiState.filter(
+      (tilstand): tilstand is TilstandMedUiState & { vurdering: Vurdering } => tilstand.vurdering != null,
+    );
+    if (tilstanderMedVurdering.length !== tilstanderMedUiState.length) {
+      throw new Error('Alle tilstander må ha en vurdering for å kunne fortsette uten endring');
+    }
+
     await onFinished({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
-      perioder: tilstanderMedUiState.map(tilstand => {
-        const vurdering = tilstand.vurdering ? responseToRequestVurdering[tilstand.vurdering] : undefined;
-        return {
-          periode: tilstand.periodeOpprinneligFormat,
-          fortsett: vurdering === InntektsmeldingVurderingRequestKode.FORTSETT,
-          vurdering,
-          begrunnelse: tilstand.begrunnelse || undefined,
-        };
-      }),
+      perioder: tilstanderMedVurdering.map(tilstand => ({
+        periode: tilstand.periodeOpprinneligFormat,
+        fortsett: tilstand.vurdering === Vurdering.KAN_FORTSETTE,
+        vurdering: tilstand.vurdering,
+        begrunnelse: tilstand.begrunnelse || undefined,
+      })),
     });
   };
 
@@ -153,15 +118,6 @@ const InntektsmeldingContainer = () => {
           harFlereTilstanderTilVurdering={harFlereTilstanderTilVurdering}
         />
       </Box>
-      {kanSendeInnFlereVurderinger && (
-        <Box marginBlock="space-24 space-0">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Button variant="primary" size="small" loading={formState.isSubmitting} disabled={formState.isSubmitting}>
-              Send inn
-            </Button>
-          </form>
-        </Box>
-      )}
     </div>
   );
 };

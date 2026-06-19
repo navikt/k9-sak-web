@@ -10,12 +10,13 @@ import { type Tilstand, type TilstandMedUiState } from '../types';
 export const transformKompletthetsdata = (response: KompletthetsVurdering): Tilstand[] =>
   response.tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
     const [fom = '', tom = ''] = periode.split('/');
+    const mappetVurdering = vurdering === InntektsmeldingVurderingResponseKode.UDEFINERT ? undefined : vurdering;
     return {
       periode: new Period(fom, tom),
       status,
       begrunnelse,
       tilVurdering,
-      vurdering,
+      vurdering: mappetVurdering,
       periodeOpprinneligFormat: periode,
       vurdertAv,
       vurdertTidspunkt,
