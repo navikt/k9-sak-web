@@ -219,7 +219,21 @@ export const AlleInntektsmeldingerMottatt: Story = {
       async () => {
         const sendInnButton = await canvas.findByRole('button', { name: /Fortsett uten endring/i });
         await user.click(sendInnButton);
-        await waitFor(() => expect(args.submitCallback).toHaveBeenCalled());
+        await waitFor(() =>
+          expect(args.submitCallback).toHaveBeenCalledWith([
+            expect.objectContaining({
+              '@type': '9071',
+              kode: '9071',
+              perioder: [
+                expect.objectContaining({
+                  periode: '2022-08-01/2022-08-04',
+                  fortsett: false,
+                  vurdering: 'UDEFINERT',
+                }),
+              ],
+            }),
+          ]),
+        );
       },
     );
   },
