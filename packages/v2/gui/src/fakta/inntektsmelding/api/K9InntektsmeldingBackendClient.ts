@@ -4,6 +4,7 @@ import {
   behandlinger_settBehandlingPaVent,
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
+import { Vurdering } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
 import type { EtterspørInntektsmeldingRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/inntektsmelding/EtterspørInntektsmeldingRequest.js';
 import type { SettBehandlingPaVentDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/SettBehandlingPaVentDto.js';
 import type { InntektsmeldingApi } from './InntektsmeldingApi.ts';
@@ -14,7 +15,26 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
       query: { behandlingUuid },
     });
 
-    return response.data;
+    return {
+      ...response.data,
+      tilstand: response.data.tilstand.map(tilstand => ({
+        ...tilstand,
+        vurdering: this.mapVurdering(tilstand.vurdering),
+      })),
+    };
+  }
+
+  // Backend kan returnere feil vurderingsverdi: 'KAN_FORTSETTE'/'FORTSETTE' skal tolkes som Vurdering.KAN_FORTSETTE ('FORTSETT').
+  private mapVurdering(vurdering: string | undefined): Vurdering | undefined {
+    if (vurdering === undefined) {
+      return undefined;
+    }
+
+    if (vurdering === 'KAN_FORTSETTE') {
+      return Vurdering.KAN_FORTSETTE;
+    }
+
+    return vurdering as Vurdering;
   }
 
   async etterspørInntektsmelding({
