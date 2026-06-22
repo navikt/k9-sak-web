@@ -5,13 +5,7 @@ import type { KompletthetsPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kom
 import type { ArbeidsgiverOpplysningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOpplysningerDto.js';
 import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
-
-export const InntektsmeldingVurderingRequestKode = {
-  FORTSETT: 'FORTSETT',
-  MANGLENDE_GRUNNLAG: 'MANGLENDE_GRUNNLAG',
-  IKKE_INNTEKTSTAP: 'IKKE_INNTEKTSTAP',
-  UAVKLART: 'UAVKLART',
-} as const;
+import type { Vurdering } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
 
 // Feltnavn for skjema
 export const FieldName = {
@@ -22,6 +16,7 @@ export const FieldName = {
 export interface Tilstand extends Omit<KompletthetsTilstandPåPeriodeDto, 'periode'> {
   periode: Period;
   periodeOpprinneligFormat: string;
+  vurdering?: Vurdering;
 }
 
 export interface TilstandMedUiState extends Tilstand {
@@ -31,13 +26,8 @@ export interface TilstandMedUiState extends Tilstand {
   beslutningFieldName: `beslutning${string}`;
 }
 
-export type InntektsmeldingVurdering =
-  (typeof InntektsmeldingVurderingRequestKode)[keyof typeof InntektsmeldingVurderingRequestKode];
-
-// API request/response typer
-// KompletthetsPeriode.vurdering bruker generert enum (KAN_FORTSETTE), men backend forventer FORTSETT
-export type InntektsmeldingPeriode = Omit<KompletthetsPeriode, 'vurdering'> & {
-  vurdering?: InntektsmeldingVurdering;
+export type InntektsmeldingPeriode = KompletthetsPeriode & {
+  vurdering?: Vurdering;
   fortsett?: boolean;
 };
 
