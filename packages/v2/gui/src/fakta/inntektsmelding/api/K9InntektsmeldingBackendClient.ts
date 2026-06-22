@@ -24,7 +24,7 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
     };
   }
 
-  // Backend kan returnere feil vurderingsverdi: 'KAN_FORTSETTE'/'FORTSETTE' skal tolkes som Vurdering.KAN_FORTSETTE ('FORTSETT').
+  // TODO Fjern så snart fiks for Vurdering enum i k9-sak er rulla ut i prod. (Mapper KAN_FORTSETTE til FORTSETT som snart skal returnerast direkte frå backend.)
   private mapVurdering(vurdering: string | undefined): Vurdering | undefined {
     if (vurdering === undefined) {
       return undefined;
