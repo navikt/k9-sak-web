@@ -26,8 +26,6 @@ export interface TilstandMedUiState extends Tilstand {
   beslutningFieldName: `beslutning${string}`;
 }
 
-// API request/response typer
-// KompletthetsPeriode.vurdering bruker generert enum (KAN_FORTSETTE), men backend forventer FORTSETT
 export type InntektsmeldingPeriode = KompletthetsPeriode & {
   vurdering?: Vurdering;
   fortsett?: boolean;

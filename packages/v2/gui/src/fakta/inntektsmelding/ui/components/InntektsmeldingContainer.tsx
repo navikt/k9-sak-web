@@ -17,8 +17,6 @@ import {
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
 import InntektsmeldingListe from './InntektsmeldingListe';
 
-// Dette er nødvendig for å mappe vurdering fra backend til det formatet som forventes i requesten, da KompletthetsPeriode.vurdering bruker en generert enum (KAN_FORTSETTE), mens backend forventer FORTSETT
-
 const buildFormDefaultValues = (tilstander: Tilstand[]): FieldValues =>
   Object.fromEntries(
     tilstander.flatMap(t => [
