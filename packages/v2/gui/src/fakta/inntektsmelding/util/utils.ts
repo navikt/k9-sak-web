@@ -1,7 +1,7 @@
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { KompletthetsVurderingDto as KompletthetsVurdering } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsVurderingDto.js';
 import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
-import { Vurdering as InntektsmeldingVurderingResponseKode } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
+import { Vurdering } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
 import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { type Tilstand, type TilstandMedUiState } from '../types';
@@ -16,7 +16,7 @@ export const transformKompletthetsdata = (response: KompletthetsVurdering): Tils
       status,
       begrunnelse,
       tilVurdering,
-      vurdering: vurdering && vurdering !== InntektsmeldingVurderingResponseKode.UDEFINERT ? vurdering : undefined,
+      vurdering: vurdering && vurdering !== Vurdering.UDEFINERT ? vurdering : undefined,
       periodeOpprinneligFormat: periode,
       vurdertAv,
       vurdertTidspunkt,
@@ -32,7 +32,7 @@ export const skalVurderes = (tilstand: TilstandMedUiState): boolean =>
   (tilstand?.tilVurdering &&
     tilstand?.status.some(status => status.status === InntektsmeldingStatus.MANGLER) &&
     tilstand?.vurdering == null) ||
-  tilstand?.vurdering === InntektsmeldingVurderingResponseKode.UDEFINERT;
+  tilstand?.vurdering === Vurdering.UDEFINERT;
 
 export const ikkePaakrevd = (tilstand: TilstandMedUiState): boolean =>
   tilstand?.status.some(status => status.status === InntektsmeldingStatus.IKKE_PÅKREVD);
