@@ -12,7 +12,6 @@ import {
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
-  responseToRequestVurdering,
   transformKompletthetsdata,
 } from '../../util/utils';
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
@@ -66,7 +65,7 @@ const InntektsmeldingContainer = () => {
 
   const alleTilstanderHarVurdering = tilstanderMedUiState
     .filter(t => t.tilVurdering)
-    .map(t => (t.vurdering ? responseToRequestVurdering[t.vurdering] : undefined))
+    .map(t => t.vurdering)
     .every(vurdering => vurdering !== undefined);
 
   const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
@@ -108,7 +107,7 @@ const InntektsmeldingContainer = () => {
     const mappetVurdering = tilstanderMedUiState
       .filter(tilstand => tilstand.tilVurdering)
       .map(tilstand => {
-        const vurdering = tilstand.vurdering ? responseToRequestVurdering[tilstand.vurdering] : undefined;
+        const { vurdering } = tilstand;
 
         if (!vurdering) {
           // Hvis dette er tilfellet, så er det en feil i logikken for når "send inn uten endring" rendres

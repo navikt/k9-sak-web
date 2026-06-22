@@ -6,29 +6,17 @@ import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { type Tilstand, type TilstandMedUiState } from '../types';
 
-// Backend sender i dag enumnavn i responsen for kompletthetsvurdering
-// vi går over til å bruke enumverdi, og må støtte begge i en liten overgangsperiode
-export const responseToRequestVurdering: Record<string, InntektsmeldingVurderingResponseKode | undefined> = {
-  [InntektsmeldingVurderingResponseKode.KAN_FORTSETTE]: InntektsmeldingVurderingResponseKode.KAN_FORTSETTE,
-  [InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG]: InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG,
-  [InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP]: InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP,
-  [InntektsmeldingVurderingResponseKode.UAVKLART]: InntektsmeldingVurderingResponseKode.UAVKLART,
-  [InntektsmeldingVurderingResponseKode.UDEFINERT]: undefined,
-  KAN_FORTSETTE: InntektsmeldingVurderingResponseKode.KAN_FORTSETTE,
-  UDEFINERT: undefined,
-};
 /** Transforms backend response to domain model with Period objects */
 export const transformKompletthetsdata = (response: KompletthetsVurdering): Tilstand[] =>
   response.tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
     const [fom = '', tom = ''] = periode.split('/');
 
-    const mappetVurdering = vurdering ? responseToRequestVurdering[vurdering] : undefined;
     return {
       periode: new Period(fom, tom),
       status,
       begrunnelse,
       tilVurdering,
-      vurdering: mappetVurdering,
+      vurdering: vurdering && vurdering !== InntektsmeldingVurderingResponseKode.UDEFINERT ? vurdering : undefined,
       periodeOpprinneligFormat: periode,
       vurdertAv,
       vurdertTidspunkt,
