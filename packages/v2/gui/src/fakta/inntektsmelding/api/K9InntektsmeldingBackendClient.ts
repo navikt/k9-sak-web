@@ -34,6 +34,10 @@ export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
       return Vurdering.KAN_FORTSETTE;
     }
 
+    if (vurdering === 'UDEFINERT') {
+      return Vurdering.UDEFINERT;
+    }
+
     return vurdering as Vurdering;
   }
 

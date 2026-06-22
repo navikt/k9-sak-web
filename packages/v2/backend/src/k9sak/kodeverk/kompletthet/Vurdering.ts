@@ -6,6 +6,7 @@ import { k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering } from '@k9-sak-we
 export const Vurdering = {
   ...k9_kodeverk_beregningsgrunnlag_kompletthet_Vurdering,
   KAN_FORTSETTE: 'FORTSETT',
+  UDEFINERT: '-',
 } as const;
 
 // TODO Dette er kun midlertidig til backend fiks er rulla ut i prod. Fjern når det er gjort.
