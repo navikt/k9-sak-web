@@ -12,6 +12,7 @@ import {
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
+  responseToRequestVurdering,
   transformKompletthetsdata,
 } from '../../util/utils';
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
@@ -62,12 +63,16 @@ const InntektsmeldingContainer = () => {
     ...finnTilstanderSomRedigeres(tilstanderMedUiState),
   ];
   const harFlereTilstanderTilVurdering = tilstanderTilVurdering.length > 1;
-  const harIngenTilstanderTilVurdering = tilstanderTilVurdering.length === 0;
+
+  const alleTilstanderHarVurdering = tilstanderMedUiState
+    .filter(t => t.tilVurdering)
+    .map(t => (t.vurdering ? responseToRequestVurdering[t.vurdering] : undefined))
+    .every(vurdering => vurdering !== undefined);
 
   const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
   const harEndretTidligereVurdering = !aktivtAksjonspunkt && sisteAksjonspunkt && formState.isDirty;
   const ingenTilstanderMangler = ingenTilstanderHarMangler(tilstanderMedUiState);
-  const ferdigVurdert = harIngenTilstanderTilVurdering && ingenTilstanderMangler;
+  const ferdigVurdert = alleTilstanderHarVurdering && ingenTilstanderMangler;
   const kanSendeInnFlereVurderinger =
     !readOnly && harFlereTilstanderTilVurdering && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
   const kanFortsetteUtenEndring = !readOnly && harAktivtAksjonspunkt && ferdigVurdert;
@@ -100,17 +105,27 @@ const InntektsmeldingContainer = () => {
     if (!aksjonspunktKode) {
       throw new Error('AksjonspunktKode er ikke satt');
     }
+    const mappetVurdering = tilstanderMedUiState
+      .filter(tilstand => tilstand.tilVurdering)
+      .map(tilstand => {
+        const vurdering = tilstand.vurdering ? responseToRequestVurdering[tilstand.vurdering] : undefined;
+
+        if (!vurdering) {
+          // Hvis dette er tilfellet, så er det en feil i logikken for når "send inn uten endring" rendres
+          throw new Error(`Vurdering mangler for periode ${tilstand.periode.prettifyPeriod()}`);
+        }
+
+        return {
+          periode: tilstand.periodeOpprinneligFormat,
+          fortsett: vurdering === Vurdering.KAN_FORTSETTE,
+          vurdering,
+          begrunnelse: tilstand.begrunnelse || undefined,
+        };
+      });
     await onFinished({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
-      perioder: tilstanderMedUiState
-        .filter((tilstand): tilstand is TilstandMedUiState & { vurdering: Vurdering } => tilstand.vurdering != null)
-        .map(tilstand => ({
-          periode: tilstand.periodeOpprinneligFormat,
-          fortsett: tilstand.vurdering === Vurdering.KAN_FORTSETTE,
-          vurdering: tilstand.vurdering,
-          begrunnelse: tilstand.begrunnelse || undefined,
-        })),
+      perioder: mappetVurdering,
     });
   };
 

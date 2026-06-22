@@ -8,7 +8,7 @@ import { type Tilstand, type TilstandMedUiState } from '../types';
 
 // Backend sender i dag enumnavn i responsen for kompletthetsvurdering
 // vi går over til å bruke enumverdi, og må støtte begge i en liten overgangsperiode
-const responseToRequestVurdering: Record<string, InntektsmeldingVurderingResponseKode | undefined> = {
+export const responseToRequestVurdering: Record<string, InntektsmeldingVurderingResponseKode | undefined> = {
   [InntektsmeldingVurderingResponseKode.KAN_FORTSETTE]: InntektsmeldingVurderingResponseKode.KAN_FORTSETTE,
   [InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG]: InntektsmeldingVurderingResponseKode.MANGLENDE_GRUNNLAG,
   [InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP]: InntektsmeldingVurderingResponseKode.IKKE_INNTEKTSTAP,
