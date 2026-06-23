@@ -97,7 +97,8 @@ export const Bosted = ({
         begrunnelse: vurdering?.begrunnelse ?? '',
         erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,
-        fritekstVurderingBrev: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
+        fritekstVurderingBrev:
+          vurdering?.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering?.fritekst : undefined,
       };
 
       const payload = {
@@ -239,14 +240,11 @@ export const Bosted = ({
                             {opphørsårsakLabels[årsak]}
                           </Radio>
                         ))}
-                      {/* <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
-                      Ytelse ikke tilgjengelig på bosted
-                      </Radio> */}
-                      <Radio value="fritekst">Fritekst</Radio>
+                      <Radio value={BostedsvilkårIkkeOppfyltÅrsak.ANNET}>Fritekst</Radio>
                     </>
                   </RhfRadioGroup>
                 )}
-                {avslagsårsak === 'fritekst' && (
+                {avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET && (
                   <RhfTextarea
                     key={`${selectedId}-fritekst`}
                     control={formHook.control}
