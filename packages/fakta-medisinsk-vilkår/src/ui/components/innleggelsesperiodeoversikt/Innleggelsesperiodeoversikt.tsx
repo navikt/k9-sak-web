@@ -7,6 +7,7 @@ import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../
 import LinkRel from '../../../constants/LinkRel';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
 import { findLinkByRel } from '../../../util/linkUtils';
+import { finnMaksavgrensningerForPerioder } from '../../../util/periodUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -24,6 +25,7 @@ const Innleggelsesperiodeoversikt = ({
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [søknadsperiode, setSøknadsperiode] = React.useState<Period | undefined>(undefined);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
@@ -100,6 +102,23 @@ const Innleggelsesperiodeoversikt = ({
       .catch(() => {
         setHentInnleggelsesperioderFeilet(true);
       });
+
+    const vurderingsoversiktEndpoint = endpoints.vurderingsoversiktLivetsSluttfase;
+    if (vurderingsoversiktEndpoint) {
+      httpUtils
+        .get(vurderingsoversiktEndpoint, httpErrorHandler, { signal: controller.signal })
+        .then((response: { perioderSomKanVurderes?: { fom: string; tom: string }[] }) => {
+          const vurderingsperioder = response?.perioderSomKanVurderes;
+          if (isMounted && vurderingsperioder && vurderingsperioder.length > 0) {
+            const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
+            setSøknadsperiode(finnMaksavgrensningerForPerioder(perioder));
+          }
+        })
+        .catch(() => {
+          setHentInnleggelsesperioderFeilet(true);
+        });
+    }
+
     return () => {
       isMounted = false;
       controller.abort();
@@ -160,6 +179,7 @@ const Innleggelsesperiodeoversikt = ({
           onSubmit={lagreInnleggelsesperioder}
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
+          søknadsperiode={søknadsperiode}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,

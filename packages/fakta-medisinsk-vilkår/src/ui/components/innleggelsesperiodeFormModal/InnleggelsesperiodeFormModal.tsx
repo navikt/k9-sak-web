@@ -27,6 +27,7 @@ interface InnleggelsesperiodeFormModal {
   isLoading: boolean;
   endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
   pleietrengendePart: Personopplysninger['pleietrengendePart'];
+  søknadsperiode?: Period;
 }
 
 const InnleggelsesperiodeFormModal = ({
@@ -36,6 +37,7 @@ const InnleggelsesperiodeFormModal = ({
   isLoading,
   endringerPåvirkerAndreBehandlinger,
   pleietrengendePart,
+  søknadsperiode,
 }: InnleggelsesperiodeFormModal): JSX.Element => {
   const formMethods = useForm({
     defaultValues: {
@@ -91,10 +93,14 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
+                  ...(søknadsperiode?.fom && { fromDate: new Date(søknadsperiode.fom) }),
+                  ...(søknadsperiode?.tom && { toDate: new Date(søknadsperiode.tom) }),
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
+                  ...(søknadsperiode?.fom && { fromDate: new Date(søknadsperiode.fom) }),
+                  ...(søknadsperiode?.tom && { toDate: new Date(søknadsperiode.tom) }),
                 }}
                 afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
@@ -149,6 +155,17 @@ const InnleggelsesperiodeFormModal = ({
                       if (fødselsdato && dayjs(fom).isBefore(fødselsdato)) {
                         return 'Fra-dato kan ikke være før fødselsdato';
                       }
+                    }
+                    return null;
+                  },
+                  innenforSøknadsperiode: (periodValue: Period) => {
+                    if (!søknadsperiode) return null;
+                    const { fom, tom } = periodValue;
+                    if (fom && dayjs(fom).isBefore(søknadsperiode.fom)) {
+                      return 'Fra-dato må være innenfor søknadsperioden';
+                    }
+                    if (tom && dayjs(tom).isAfter(søknadsperiode.tom)) {
+                      return 'Til-dato må være innenfor søknadsperioden';
                     }
                     return null;
                   },
