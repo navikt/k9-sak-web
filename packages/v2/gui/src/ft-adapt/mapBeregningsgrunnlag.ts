@@ -1,16 +1,14 @@
-import type {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagArbeidsforholdDto as BeregningsgrunnlagArbeidsforholdDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto as BeregningsgrunnlagDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPeriodeDto as BeregningsgrunnlagPeriodeDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagPrStatusOgAndelDto as BeregningsgrunnlagPrStatusOgAndelDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_EgenNæringDto as EgenNæringDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_FaktaOmBeregningDto as FaktaOmBeregningDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_FordelingDto as FordelingDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_inntektsgrunnlag_InntektsgrunnlagDto as InntektsgrunnlagDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_PgiDto as PgiDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_refusjon_RefusjonTilVurderingDto as RefusjonTilVurderingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { folketrygdloven_kalkulus_kodeverk_VirksomhetType as VirksomhetType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BeregningsgrunnlagArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagArbeidsforholdDto.js';
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagDto.js';
+import type { BeregningsgrunnlagPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagPeriodeDto.js';
+import type { BeregningsgrunnlagPrStatusOgAndelDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagPrStatusOgAndelDto.js';
+import type { EgenNæringDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/EgenNæringDto.js';
+import type { FaktaOmBeregningDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/FaktaOmBeregningDto.js';
+import type { FordelingDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/FordelingDto.js';
+import type { InntektsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/InntektsgrunnlagDto.js';
+import type { PgiDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/PgiDto.js';
+import type { RefusjonTilVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/RefusjonTilVurderingDto.js';
+import { VirksomhetType } from '@k9-sak-web/backend/k9sak/kodeverk/VirksomhetType.js';
 import type {
   Beregningsgrunnlag as FPBeregningsgrunnlag,
   BeregningsgrunnlagAndel as FPBeregningsgrunnlagAndel,

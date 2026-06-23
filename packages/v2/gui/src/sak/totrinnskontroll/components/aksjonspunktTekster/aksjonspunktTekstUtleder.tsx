@@ -8,8 +8,8 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import { Label } from '@navikt/ds-react';
 
 import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/klage/KlagebehandlingDto.js';
+import { ArbeidsforholdHandlingType as HandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/ArbeidsforholdHandlingType.js';
 import {
-  folketrygdloven_kalkulus_kodeverk_ArbeidsforholdHandlingType as HandlingType,
   k9_kodeverk_behandling_BehandlingStatus as BehandlingStatus,
   type k9_sak_kontrakt_vedtak_TotrinnsArbeidsforholdDto as TotrinnsArbeidsforholdDto,
   type k9_sak_kontrakt_vedtak_TotrinnsBeregningDto as TotrinnsBeregningDto,
