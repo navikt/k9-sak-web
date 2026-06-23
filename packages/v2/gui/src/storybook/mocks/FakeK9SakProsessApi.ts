@@ -1,5 +1,5 @@
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagDto.js';
 import type {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto,
   k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
@@ -27,7 +27,7 @@ interface FakeK9SakProsessApiOptions {
   personopplysninger?: k9_sak_kontrakt_person_PersonopplysningDto;
   arbeidsgiverOpplysninger?: k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto;
   beregningreferanser?: k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto[];
-  beregningsgrunnlag?: folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto[];
+  beregningsgrunnlag?: BeregningsgrunnlagDto[];
   behandling?: k9_sak_kontrakt_behandling_BehandlingDto;
   tilbakekrevingValg?: k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto;
   medlemskap?: k9_sak_kontrakt_medlem_MedlemV2Dto;
@@ -81,9 +81,7 @@ export class FakeK9SakProsessApi {
     return this.options.beregningreferanser ?? [];
   }
 
-  async getAlleBeregningsgrunnlag(): Promise<
-    folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto[]
-  > {
+  async getAlleBeregningsgrunnlag(): Promise<BeregningsgrunnlagDto[]> {
     return this.options.beregningsgrunnlag ?? [];
   }
 
