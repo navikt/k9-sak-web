@@ -6,6 +6,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
@@ -17,14 +18,16 @@ import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
 import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
-  vurderBostedAp?: AksjonspunktDto;
+  vurderBostedFaktaAp?: AksjonspunktDto;
+  vurderBostedVilkårAp?: AksjonspunktDto;
   lokalkontorForeslårVilkårAp?: AksjonspunktDto;
   lokalkontorBeslutterAp?: AksjonspunktDto;
   bostedVilkår?: VilkårMedPerioderDto;
 }
 
 const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
-  vurderBostedAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+  vurderBostedFaktaAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+  vurderBostedVilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
   lokalkontorForeslårVilkårAp: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),
@@ -57,8 +60,11 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
 };
 
 const utledAktivTab = (data: OpphørData): OpphørTab => {
-  if (data.vurderBostedAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.vurderBostedFaktaAp?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
+  }
+  if (data.vurderBostedVilkårAp?.status === AksjonspunktStatus.OPPRETTET) {
+    return OpphørTab.VILKÅRSVURDERING;
   }
   if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.BESLUTTER;
@@ -75,6 +81,7 @@ interface Props {
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 export const AktivitetspengerOpphør = ({
@@ -86,6 +93,7 @@ export const AktivitetspengerOpphør = ({
   vilkår,
   totrinnskontrollSkjermlenkeContext,
   lovligeBehandlingsoperasjoner,
+  bostedGrunnlag,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
@@ -110,9 +118,13 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Tab
             value={OpphørTab.ÅRSAK_OG_VARSEL}
             label="Årsak og varsel"
-            icon={tabIcon(opphørData.vurderBostedAp, opphørData.bostedVilkår)}
+            icon={tabIcon(opphørData.vurderBostedFaktaAp, opphørData.bostedVilkår)}
           />
-          <Tabs.Tab value={OpphørTab.VILKÅRSVURDERING} label="Vilkårsvurdering" />
+          <Tabs.Tab
+            value={OpphørTab.VILKÅRSVURDERING}
+            label="Vilkårsvurdering"
+            icon={tabIcon(opphørData.vurderBostedVilkårAp, opphørData.bostedVilkår)}
+          />
           {opphørData.lokalkontorBeslutterAp &&
             opphørData.lokalkontorBeslutterAp.status === AksjonspunktStatus.OPPRETTET && (
               <Tabs.Tab
@@ -126,25 +138,28 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Panel value={OpphørTab.ÅRSAK_OG_VARSEL}>
             {opphørData.bostedVilkår && (
               <ÅrsakOgVarsel
-                vurderBostedAp={opphørData.vurderBostedAp}
+                vurderBostedAp={opphørData.vurderBostedFaktaAp}
                 bostedVilkår={opphørData.bostedVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={!!opphørData.lokalkontorBeslutterAp}
+                bostedGrunnlag={bostedGrunnlag}
               />
             )}
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
             {opphørData.bostedVilkår && (
               <Vilkårsvurdering
+                vurderBostedVilkårAp={opphørData.vurderBostedVilkårAp}
                 bostedVilkår={opphørData.bostedVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={!!opphørData.lokalkontorBeslutterAp}
+                bostedGrunnlag={bostedGrunnlag}
               />
             )}
           </Tabs.Panel>

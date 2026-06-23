@@ -3,6 +3,7 @@ import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandli
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { FileSearchIcon, InformationSquareIcon } from '@navikt/aksel-icons';
@@ -10,16 +11,13 @@ import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack 
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  getPeriodStatus,
-  VilkårSplittPanel,
-  type VilkårSplittPanelPeriod,
-} from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VilkårSplittPanel, type VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { Opphørsårsak, opphørsårsakLabels } from './types.js';
+import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
 interface FormData {
   perioder: Record<
@@ -33,14 +31,14 @@ interface FormData {
   >;
 }
 
-const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
+const buildInitialValues = (periods: VilkårSplittPanelPeriod[]): FormData => ({
   perioder: Object.fromEntries(
-    (vilkår.perioder ?? []).map(p => [
-      p.periode.fom,
+    (periods ?? []).map(p => [
+      p.id,
       {
-        opphørsdato: p.periode.tom ?? '',
+        opphørsdato: '',
         årsak: '',
-        begrunnelse: p.begrunnelse ?? '',
+        begrunnelse: '',
         åpenbarGrunnTilIkkeVarsle: '',
       },
     ]),
@@ -55,6 +53,7 @@ interface Props {
   onAksjonspunktBekreftet: () => void;
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 export const AarsakOgVarsel = ({
@@ -65,50 +64,67 @@ export const AarsakOgVarsel = ({
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
+  bostedGrunnlag,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? []).map(p => ({
-    id: p.periode.fom,
-    status: getPeriodStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
-    periode: p.periode,
-  }));
+  const isVurderBostedApOpen = vurderBostedAp !== undefined && vurderBostedAp.status !== AksjonspunktStatus.UTFØRT;
+
+  const periods: VilkårSplittPanelPeriod[] = [
+    ...(isVurderBostedApOpen
+      ? [
+          {
+            id: 'ikke-satt',
+            status: 'warning' as const,
+            label: 'Ikke satt',
+          },
+        ]
+      : []),
+    ...(bostedGrunnlag.perioder ?? []).map(p => ({
+      id: p.fom,
+      status: p.resultat?.erBosatt ? ('success' as const) : ('error' as const),
+      label: p.tom ? `${formatDate(p.fom)} - ${formatDate(p.tom)}` : formatDate(p.fom),
+      periode: p.tom
+        ? {
+            fom: p.fom,
+            tom: p.tom,
+          }
+        : undefined,
+    })),
+  ];
 
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<FormData | null>(null);
 
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(bostedVilkår),
+    defaultValues: buildInitialValues(periods),
   });
   const åpenbarGrunnTilIkkeVarsle = formHook.watch(`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`);
   const opphøreEllerAvslå = formHook.watch(`perioder.${selectedId}.opphøreEllerAvslå`);
   const valgtÅrsak = formHook.watch(`perioder.${selectedId}.årsak`);
-  const valgtÅrsakErAnnet = valgtÅrsak === Opphørsårsak.ANNEN_ÅRSAK;
+  const valgtÅrsakErAnnet = valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
 
   const isVarselApSolved = vurderBostedAp?.status === AksjonspunktStatus.UTFØRT;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (data: FormData) => {
-      const periode = data.perioder[selectedId];
-      const selectedItem = periods.find(period => period.id === selectedId);
-      if (!periode) {
-        throw new Error('Kunne ikke finne valgt periode for opphør');
-      }
-      if (!selectedItem) {
+    mutationFn: async (formData: FormData) => {
+      const selectedFormPeriod = formData.perioder[selectedId];
+      if (!selectedFormPeriod) {
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
 
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
-        begrunnelse: periode.begrunnelse,
+        begrunnelse: selectedFormPeriod.begrunnelse,
         avklaringer: [
           {
-            periode: selectedItem.periode,
-            skalIkkeSendeVarsel: !!periode.åpenbarGrunnTilIkkeVarsle,
+            periode: {
+              fom: selectedFormPeriod.opphørsdato,
+              tom: dayjs(selectedFormPeriod.opphørsdato).add(1, 'year').subtract(1, 'day').format('YYYY-MM-DD'),
+            },
+            skalIkkeSendeVarsel: !!selectedFormPeriod.åpenbarGrunnTilIkkeVarsle,
             vurdering: {
-              begrunnelse: periode.begrunnelse,
-              borITrondheimIHelePerioden: false,
-              fraflyttingsDato: periode.opphørsdato || undefined,
+              begrunnelse: selectedFormPeriod.begrunnelse,
+              fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
             },
           },
         ],
@@ -135,6 +151,7 @@ export const AarsakOgVarsel = ({
         onItemSelect={setSelectedId}
         detailHeading="Ikke lenger bosatt i Trondheim"
         periodListLabel="Alle perioder"
+        periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isVarselApSolved}
         readOnly={readOnly}
@@ -183,7 +200,7 @@ export const AarsakOgVarsel = ({
                   label="Årsak"
                   readOnly={isFormLocked}
                   validate={[required]}
-                  selectValues={Object.values(Opphørsårsak).map(årsak => (
+                  selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak).map(årsak => (
                     <option key={årsak} value={årsak}>
                       {opphørsårsakLabels[årsak]}
                     </option>

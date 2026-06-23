@@ -21,7 +21,8 @@ export interface AktivitetspengerApi {
   hentLovligeBehandlingsoperasjoner(behandlingUuid: string): Promise<BehandlingOperasjonerDto>;
   hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal): Promise<AsyncPollingStatus>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
-  hentBosattFakta(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
+  hentBostedGrunnlag(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
+  // hentBosattFakta(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto | null>;
   getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
   getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<AktivitetspengerUtbetaltMånedDto[]>;

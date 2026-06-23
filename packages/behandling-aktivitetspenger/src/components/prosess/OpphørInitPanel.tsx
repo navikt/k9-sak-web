@@ -4,6 +4,7 @@ import { AktivitetspengerOpphør } from '@k9-sak-web/gui/prosess/aktivitetspenge
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
+  bostedGrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
   lovligeBehandlingsoperasjonerQueryOptions,
   totrinnskontrollSkjermlenkeContextQueryOptions,
@@ -29,6 +30,7 @@ export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: P
     { data: vilkår },
     { data: totrinnskontrollSkjermlenkeContext },
     { data: lovligeBehandlingsoperasjoner },
+    { data: bostedGrunnlag },
   ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(api, behandling),
@@ -36,6 +38,7 @@ export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: P
       vilkårQueryOptions(api, behandling),
       totrinnskontrollSkjermlenkeContextQueryOptions(api, behandling),
       lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
+      bostedGrunnlagQueryOptions(api, behandling),
     ],
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
@@ -53,6 +56,7 @@ export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: P
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
       lovligeBehandlingsoperasjoner={lovligeBehandlingsoperasjoner}
+      bostedGrunnlag={bostedGrunnlag}
     />
   );
 };

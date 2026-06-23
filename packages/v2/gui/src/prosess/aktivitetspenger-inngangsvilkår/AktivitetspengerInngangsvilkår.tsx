@@ -117,7 +117,7 @@ interface Props {
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;
-  bosattFakta: BostedGrunnlagResponseDto;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 export const AktivitetspengerInngangsvilkår = ({
@@ -129,7 +129,7 @@ export const AktivitetspengerInngangsvilkår = ({
   vilkår,
   totrinnskontrollSkjermlenkeContext,
   lovligeBehandlingsoperasjoner,
-  bosattFakta,
+  bostedGrunnlag,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
@@ -208,7 +208,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 isPermanentlyReadOnly={!inngangsvilkårdata.bostedAp || !!inngangsvilkårdata.lokalkontorBeslutterAp}
-                bosattFakta={bosattFakta}
+                bostedGrunnlag={bostedGrunnlag}
               />
             )}
           </Tabs.Panel>

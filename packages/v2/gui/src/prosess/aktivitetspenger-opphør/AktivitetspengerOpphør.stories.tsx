@@ -75,5 +75,6 @@ export const DefaultStory: Story = {
     vilkår: [fakeOpphørVilkår],
     totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
+    bostedGrunnlag: { perioder: [] },
   },
 };

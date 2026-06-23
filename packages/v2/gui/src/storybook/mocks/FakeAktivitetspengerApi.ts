@@ -37,7 +37,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     return {};
   }
 
-  async hentBosattFakta() {
+  async hentBostedGrunnlag() {
     return { perioder: [] };
   }
 

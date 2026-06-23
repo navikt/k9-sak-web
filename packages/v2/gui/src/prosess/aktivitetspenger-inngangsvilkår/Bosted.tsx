@@ -1,6 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -22,6 +21,7 @@ import {
 } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 
@@ -34,7 +34,7 @@ interface Props {
   api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
   isPermanentlyReadOnly: boolean;
-  bosattFakta: BostedGrunnlagResponseDto;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -71,7 +71,7 @@ export const Bosted = ({
   bostedAp,
   lokalkontorForeslårVilkårAp,
   isPermanentlyReadOnly,
-  bosattFakta,
+  bostedGrunnlag,
 }: Props) => {
   const periods: VilkårSplittPanelPeriod[] = (bostedVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
@@ -88,11 +88,12 @@ export const Bosted = ({
     mutationFn: async (data: FormData) => {
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem) {
+      if (!selectedItem || selectedItem.periode === undefined) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const vurdertePerioder = {
-        avslagsårsak: vurdering?.bosatt !== 'oppfylt' ? Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED : undefined,
+        avslagsårsak:
+          vurdering?.bosatt !== 'oppfylt' ? (vurdering?.avslagsårsak as BostedsvilkårIkkeOppfyltÅrsak) : undefined,
         begrunnelse: vurdering?.begrunnelse ?? '',
         erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,
@@ -120,7 +121,7 @@ export const Bosted = ({
   });
 
   const isBostedApSolved = aksjonspunktErLøst(bostedAp);
-  const selectedBosattFaktaPeriode = bosattFakta.perioder.find(p => p.fom === selectedId);
+  const selectedBostedGrunnlagPeriode = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
@@ -182,11 +183,11 @@ export const Bosted = ({
               <Label size="small" as="p">
                 Bor søker i Trondheim kommune?
               </Label>
-              {selectedBosattFaktaPeriode && (
+              {selectedBostedGrunnlagPeriode && (
                 <HStack gap="space-8" align="center">
-                  <BodyShort size="small">{selectedBosattFaktaPeriode.erBosattITrondheim ? 'Ja' : 'Nei'}</BodyShort>
+                  <BodyShort size="small">{selectedBostedGrunnlagPeriode.erBosattITrondheim ? 'Ja' : 'Nei'}</BodyShort>
                   <Tag variant="outline" size="small">
-                    {selectedBosattFaktaPeriode.kilde === Kilde.SØKNAD ? 'Fra søknad' : 'Saksbehandler'}
+                    {selectedBostedGrunnlagPeriode.kilde === Kilde.SØKNAD ? 'Fra søknad' : 'Saksbehandler'}
                   </Tag>
                 </HStack>
               )}
@@ -230,10 +231,19 @@ export const Bosted = ({
                     validate={[required]}
                     readOnly={isFormLocked}
                   >
-                    <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
+                    <>
+                      {Object.values(BostedsvilkårIkkeOppfyltÅrsak)
+                        .filter(årsak => årsak !== '-' && årsak !== 'ANNET')
+                        .map(årsak => (
+                          <Radio key={årsak} value={årsak}>
+                            {opphørsårsakLabels[årsak]}
+                          </Radio>
+                        ))}
+                      {/* <Radio value={Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED}>
                       Ytelse ikke tilgjengelig på bosted
-                    </Radio>
-                    <Radio value="fritekst">Fritekst</Radio>
+                      </Radio> */}
+                      <Radio value="fritekst">Fritekst</Radio>
+                    </>
                   </RhfRadioGroup>
                 )}
                 {avslagsårsak === 'fritekst' && (

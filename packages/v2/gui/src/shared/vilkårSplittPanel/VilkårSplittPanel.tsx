@@ -1,4 +1,5 @@
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {
   CalendarIcon,
   CheckmarkCircleFillIcon,
@@ -10,6 +11,7 @@ import {
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
+import { AksjonspunktStatus } from '../../storybook/mocks/uttak/uttakStoryMocks';
 import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
@@ -17,7 +19,7 @@ export interface VilkårSplittPanelPeriod {
   id: string;
   status: 'success' | 'warning' | 'error';
   label: string;
-  periode: {
+  periode?: {
     fom: string;
     tom: string;
   };
@@ -36,6 +38,7 @@ interface VilkårSplittPanelProps {
   lockedContent?: ReactNode;
   isPermanentlyReadOnly?: boolean;
   periodListLabel?: string;
+  periodColumnHeader?: string;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
@@ -51,7 +54,10 @@ const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) 
   }
 };
 
-export const getPeriodStatus = (status: Utfall): VilkårSplittPanelPeriod['status'] => {
+export const getPeriodStatus = (status: Utfall, aksjonspunkt?: AksjonspunktDto): VilkårSplittPanelPeriod['status'] => {
+  if (aksjonspunkt?.status === AksjonspunktStatus.OPPRETTET) {
+    return 'warning';
+  }
   switch (status) {
     case Utfall.OPPFYLT:
       return 'success';
@@ -75,6 +81,7 @@ export const VilkårSplittPanel = ({
   lovreferanse,
   isPermanentlyReadOnly,
   periodListLabel = 'Alle søknader',
+  periodColumnHeader = 'Søknadstidspunkt',
 }: VilkårSplittPanelProps) => {
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
@@ -110,7 +117,7 @@ export const VilkårSplittPanel = ({
                   Status
                 </Table.HeaderCell>
                 <Table.HeaderCell textSize="small" scope="col" colSpan={2}>
-                  Søknadstidspunkt
+                  {periodColumnHeader}
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>

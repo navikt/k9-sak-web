@@ -258,8 +258,8 @@ export const BehovForBistand = ({
                         label="Til"
                         readOnly={isFormLocked}
                         validate={[required]}
-                        fromDate={selectedItem?.periode.fom ? new Date(selectedItem?.periode.fom) : undefined}
-                        toDate={selectedItem?.periode.tom ? new Date(selectedItem?.periode.tom) : undefined}
+                        fromDate={selectedItem?.periode?.fom ? new Date(selectedItem?.periode.fom) : undefined}
+                        toDate={selectedItem?.periode?.tom ? new Date(selectedItem?.periode.tom) : undefined}
                       />
                     </HStack>
                   </VStack>

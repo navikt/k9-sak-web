@@ -1,4 +1,9 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { ung_kodeverk_vilkår_BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
@@ -14,7 +19,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { Opphørsårsak, opphørsårsakLabels } from './types.js';
+import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
 interface FormData {
   perioder: Record<
@@ -23,6 +28,7 @@ interface FormData {
       årsak: string;
       begrunnelse: string;
       flyttetFraTrondheim: string;
+      opphørsdato: string;
     }
   >;
 }
@@ -33,33 +39,38 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
       p.periode.fom,
       {
         årsak: '',
-        begrunnelse: p.begrunnelse ?? '',
+        begrunnelse: '',
         flyttetFraTrondheim: '',
+        opphørsdato: '',
       },
     ]),
   ),
 });
 
 interface Props {
+  vurderBostedVilkårAp?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 export const Vilkaarsvurdering = ({
+  vurderBostedVilkårAp,
   bostedVilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
+  bostedGrunnlag,
 }: Props) => {
   const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? []).map(p => ({
     id: p.periode.fom,
-    status: getPeriodStatus(p.vilkarStatus),
+    status: getPeriodStatus(p.vilkarStatus, vurderBostedVilkårAp),
     label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
     periode: p.periode,
   }));
@@ -67,9 +78,34 @@ export const Vilkaarsvurdering = ({
     defaultValues: buildInitialValues(bostedVilkår),
   });
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
-
+  const selectedFakta = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (data: FormData) => {},
+    mutationFn: async (formData: FormData) => {
+      const selectedFormPeriod = formData.perioder[selectedId];
+      if (!selectedFormPeriod) {
+        throw new Error('Kunne ikke finne valgt periode for opphør');
+      }
+      const selectedPeriod = periods.find(p => p.id === selectedId);
+      const payload: BekreftetAksjonspunktDto = {
+        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
+        begrunnelse: selectedFormPeriod.begrunnelse,
+        vurdertePerioder: [
+          {
+            avslagsårsak: selectedFormPeriod.årsak as ung_kodeverk_vilkår_BostedsvilkårIkkeOppfyltÅrsak,
+            begrunnelse: selectedFormPeriod.begrunnelse,
+            erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
+            periode: {
+              fom: selectedFormPeriod.opphørsdato || selectedPeriod?.periode?.fom || '',
+              tom: selectedFormPeriod.opphørsdato ? null : (selectedPeriod?.periode?.tom ?? ''),
+            },
+          },
+        ],
+      };
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    },
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
   });
 
   const flyttetFraTrondheim = formHook.watch(`perioder.${selectedId}.flyttetFraTrondheim`);
@@ -98,41 +134,45 @@ export const Vilkaarsvurdering = ({
               }}
             >
               <VStack gap="space-24" maxWidth="70ch" width="100%">
-                <Box borderRadius="8" padding={'space-16'} background={'info-softA'}>
-                  <VStack gap="space-20">
-                    <VStack gap="space-8">
-                      <HStack justify="space-between">
-                        <BodyShort size="small" weight="semibold">
-                          Stemmer opplysningene om opphør?
-                        </BodyShort>
-                        <Tag variant="outline" data-color="info" size="small">
-                          Fra bruker
-                        </Tag>
-                      </HStack>
-                      <BodyShort size="small">Nei</BodyShort>
-                    </VStack>
-                    <HStack gap="space-4">
-                      <PersonFillIcon title="Bruker" fontSize="1.5rem" />
-                      <VStack gap="space-6" marginBlock="space-2 space-0">
-                        <BodyShort size="small" weight="semibold">
-                          Tilbakemelding fra bruker om opphør 30.03.2027
-                        </BodyShort>
-                        <BodyLong size="small">XXX XXX XXX</BodyLong>
+                {selectedFakta?.harUttalelse && (
+                  <Box borderRadius="8" padding={'space-16'} background={'info-softA'}>
+                    <VStack gap="space-20">
+                      <VStack gap="space-8">
+                        <HStack justify="space-between">
+                          <BodyShort size="small" weight="semibold">
+                            Stemmer opplysningene om opphør?
+                          </BodyShort>
+                          <Tag variant="outline" data-color="info" size="small">
+                            Fra bruker
+                          </Tag>
+                        </HStack>
+                        <BodyShort size="small">Nei</BodyShort>
                       </VStack>
-                    </HStack>
-                  </VStack>
-                </Box>
+                      <HStack gap="space-4">
+                        <PersonFillIcon title="Bruker" fontSize="1.5rem" />
+                        <VStack gap="space-6" marginBlock="space-2 space-0">
+                          <BodyShort size="small" weight="semibold">
+                            Tilbakemelding fra bruker om opphør xx.xx.xxxx
+                          </BodyShort>
+                          <BodyLong size="small">{selectedFakta.uttalelseTekst}</BodyLong>
+                        </VStack>
+                      </HStack>
+                    </VStack>
+                  </Box>
+                )}
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
                   label="Opphørsårsak"
                   readOnly={isFormLocked}
                   validate={[required]}
-                  selectValues={Object.values(Opphørsårsak).map(årsak => (
-                    <option key={årsak} value={årsak}>
-                      {opphørsårsakLabels[årsak]}
-                    </option>
-                  ))}
+                  selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak)
+                    .filter(årsak => årsak !== '-')
+                    .map(årsak => (
+                      <option key={årsak} value={årsak}>
+                        {opphørsårsakLabels[årsak]}
+                      </option>
+                    ))}
                 />
                 <RhfTextarea
                   control={formHook.control}

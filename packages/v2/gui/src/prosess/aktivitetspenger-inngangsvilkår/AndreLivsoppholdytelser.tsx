@@ -88,7 +88,7 @@ export const AndreLivsoppholdytelser = ({
     mutationFn: async (data: FormData) => {
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem) {
+      if (!selectedItem || selectedItem.periode === undefined) {
         throw new Error('Kunne ikke finne valgt periode for andre livsoppholdytelser vilkår');
       }
       const vurdertePerioder = {
