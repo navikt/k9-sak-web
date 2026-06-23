@@ -93,14 +93,22 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
-                  ...(søknadsperiode?.fom && { fromDate: new Date(søknadsperiode.fom) }),
-                  ...(søknadsperiode?.tom && { toDate: new Date(søknadsperiode.tom) }),
+                  ...(søknadsperiode && {
+                    limitations: {
+                      minDate: søknadsperiode.fom,
+                      maxDate: søknadsperiode.tom,
+                    },
+                  }),
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
-                  ...(søknadsperiode?.fom && { fromDate: new Date(søknadsperiode.fom) }),
-                  ...(søknadsperiode?.tom && { toDate: new Date(søknadsperiode.tom) }),
+                  ...(søknadsperiode && {
+                    limitations: {
+                      minDate: søknadsperiode.fom,
+                      maxDate: søknadsperiode.tom,
+                    },
+                  }),
                 }}
                 afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
