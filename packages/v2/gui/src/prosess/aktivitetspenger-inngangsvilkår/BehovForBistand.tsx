@@ -20,9 +20,9 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;

@@ -1,5 +1,4 @@
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import {
   CalendarIcon,
   CheckmarkCircleFillIcon,
@@ -11,7 +10,6 @@ import {
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { AksjonspunktStatus } from '../../storybook/mocks/uttak/uttakStoryMocks';
 import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
@@ -54,10 +52,7 @@ const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) 
   }
 };
 
-export const getPeriodStatus = (status: Utfall, aksjonspunkt?: AksjonspunktDto): VilkårSplittPanelPeriod['status'] => {
-  if (aksjonspunkt?.status === AksjonspunktStatus.OPPRETTET) {
-    return 'warning';
-  }
+export const getPeriodStatus = (status: Utfall): VilkårSplittPanelPeriod['status'] => {
   switch (status) {
     case Utfall.OPPFYLT:
       return 'success';

@@ -1,4 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { ung_kodeverk_vilkår_BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
@@ -7,7 +8,7 @@ import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontr
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
-import { BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -18,6 +19,9 @@ import {
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
 } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
@@ -56,10 +60,12 @@ interface Props {
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
   bostedGrunnlag: BostedGrunnlagResponseDto;
+  lokalkontorForeslårVilkårAp?: AksjonspunktDto;
 }
 
 export const Vilkaarsvurdering = ({
   vurderBostedVilkårAp,
+  lokalkontorForeslårVilkårAp,
   bostedVilkår,
   api,
   behandling,
@@ -68,17 +74,20 @@ export const Vilkaarsvurdering = ({
   isPermanentlyReadOnly,
   bostedGrunnlag,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? []).map(p => ({
-    id: p.periode.fom,
-    status: getPeriodStatus(p.vilkarStatus, vurderBostedVilkårAp),
-    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
-    periode: p.periode,
-  }));
+  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? [])
+    .toSorted((a, b) => b.periode.fom.localeCompare(a.periode.fom))
+    .map(p => ({
+      id: p.periode.fom,
+      status: getPeriodStatus(p.vilkarStatus),
+      label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+      periode: p.periode,
+    }));
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedVilkår),
   });
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const selectedFakta = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
+  const selectedPeriod = periods.find(p => p.id === selectedId);
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
       const selectedFormPeriod = formData.perioder[selectedId];
@@ -108,7 +117,15 @@ export const Vilkaarsvurdering = ({
     },
   });
 
+  const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
+    mutationFn: async () => sendTilBeslutter(api, behandling),
+    onSuccess: () => {
+      onAksjonspunktBekreftet();
+    },
+  });
+
   const flyttetFraTrondheim = formHook.watch(`perioder.${selectedId}.flyttetFraTrondheim`);
+  const isVurderBostedvilkårApSolved = vurderBostedVilkårAp?.status === AksjonspunktStatus.UTFØRT;
 
   return (
     <VStack gap="space-20">
@@ -119,10 +136,36 @@ export const Vilkaarsvurdering = ({
         detailHeading="Vurdering av ikke lenger bosatt i Trondheim"
         periodListLabel="Alle perioder"
         lovreferanse={bostedVilkår.lovReferanse}
-        // defaultIsLocked={isVarselApSolved}
-        readOnly={readOnly}
+        defaultIsLocked={
+          isVurderBostedvilkårApSolved ||
+          (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp))
+        }
+        readOnly={selectedPeriod?.status === 'success' || readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
-        // lockedContent={isVarselApSolved ? <VurdertAv ident={vurderBostedAp?.ansvarligSaksbehandler} /> : undefined}
+        afterEditButton={
+          !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
+            <VStack gap="space-20">
+              <Alert variant="success" size="small">
+                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+              </Alert>
+              <Box>
+                <Button
+                  variant="primary"
+                  data-color="accent"
+                  size="small"
+                  type="button"
+                  loading={isSendingTilBeslutter}
+                  onClick={() => void sendTilBeslutterMutation()}
+                >
+                  Send til beslutter
+                </Button>
+              </Box>
+            </VStack>
+          ) : null
+        }
+        lockedContent={
+          isVurderBostedvilkårApSolved ? <VurdertAv ident={vurderBostedVilkårAp?.ansvarligSaksbehandler} /> : undefined
+        }
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
           <>

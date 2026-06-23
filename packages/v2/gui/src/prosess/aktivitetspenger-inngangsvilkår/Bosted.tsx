@@ -20,10 +20,10 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
-import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;

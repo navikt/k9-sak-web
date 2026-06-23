@@ -69,7 +69,12 @@ const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.BESLUTTER;
   }
-  return OpphørTab.ÅRSAK_OG_VARSEL;
+  if (data.lokalkontorForeslårVilkårAp) {
+    if (data.vurderBostedFaktaAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBostedVilkårAp) {
+      return OpphørTab.ÅRSAK_OG_VARSEL;
+    }
+  }
+  return OpphørTab.VILKÅRSVURDERING;
 };
 
 interface Props {
@@ -160,6 +165,7 @@ export const AktivitetspengerOpphør = ({
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={!!opphørData.lokalkontorBeslutterAp}
                 bostedGrunnlag={bostedGrunnlag}
+                lokalkontorForeslårVilkårAp={opphørData.lokalkontorForeslårVilkårAp}
               />
             )}
           </Tabs.Panel>

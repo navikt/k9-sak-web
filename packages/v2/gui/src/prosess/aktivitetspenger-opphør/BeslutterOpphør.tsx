@@ -40,27 +40,27 @@ interface FormValues {
   aksjonspunktGodkjenning: AksjonspunktGodkjenningItem[];
 }
 
-const skjermlenkeTypeToTab: Record<string, OpphørTab | undefined> = {
-  KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST: OpphørTab.ÅRSAK_OG_VARSEL,
-  OPPHØR_VILKÅR: OpphørTab.VILKÅRSVURDERING,
+const aksjonspunktKodeToTab: Record<string, OpphørTab | undefined> = {
+  [AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED]: OpphørTab.ÅRSAK_OG_VARSEL,
+  [AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR]: OpphørTab.VILKÅRSVURDERING,
 };
 
 const tabSortOrder: OpphørTab[] = [OpphørTab.ÅRSAK_OG_VARSEL, OpphørTab.VILKÅRSVURDERING];
 
-const getTabOrderIndex = (skjermlenkeType: string): number => {
-  const tab = skjermlenkeTypeToTab[skjermlenkeType];
+const getTabOrderIndex = (aksjonspunktKode: string): number => {
+  const tab = aksjonspunktKodeToTab[aksjonspunktKode];
   const index = tab ? tabSortOrder.indexOf(tab) : -1;
   return index === -1 ? Number.POSITIVE_INFINITY : index;
 };
 
-const formaterSkjermlenkeType = (skjermlenkeType?: string): string => {
-  switch (skjermlenkeType) {
-    case 'KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST':
+const formaterSkjermlenkeType = (aksjonspunktKode?: string): string => {
+  switch (aksjonspunktKode) {
+    case AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED:
       return 'Årsak og varsel';
-    case 'OPPHØR_VILKÅR':
+    case AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR:
       return 'Vilkårsvurdering';
     default:
-      return skjermlenkeType ?? '';
+      return aksjonspunktKode ?? '';
   }
 };
 
@@ -173,13 +173,13 @@ export const BeslutterOpphør = ({
                   const checkboxValidationError = error?.message;
                   const reValidate = () => trigger(`aksjonspunktGodkjenning.${index}`);
 
-                  const tab = skjermlenkeTypeToTab[item?.skjermlenkeType ?? ''];
+                  const tab = aksjonspunktKodeToTab[item?.aksjonspunktKode ?? ''];
 
                   return (
                     <Box key={field.id}>
                       <button type="button" onClick={() => tab && onTabChange(tab)} className={styles.buttonLink}>
                         <Link as={BodyShort} weight="semibold" size="small">
-                          {formaterSkjermlenkeType(item?.skjermlenkeType)}
+                          {formaterSkjermlenkeType(item?.aksjonspunktKode)}
                         </Link>
                       </button>
                       <Fieldset legend="" hideLegend>
