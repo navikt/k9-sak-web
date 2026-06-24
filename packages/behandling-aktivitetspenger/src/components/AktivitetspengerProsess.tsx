@@ -37,7 +37,6 @@ export const AktivitetspengerProsess = ({
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
   const { pollTilBehandlingErKlar, isPolling } = usePollBehandlingStatus(api, behandling, setBehandling);
-
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );

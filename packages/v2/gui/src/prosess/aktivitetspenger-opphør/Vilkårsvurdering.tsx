@@ -37,15 +37,15 @@ interface FormData {
   >;
 }
 
-const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
+const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData => ({
   perioder: Object.fromEntries(
-    (vilkår.perioder ?? []).map(p => [
-      p.periode.fom,
+    (bostedGrunnlag.perioder ?? []).map(p => [
+      p.fom,
       {
-        årsak: '',
-        begrunnelse: '',
-        flyttetFraTrondheim: '',
-        opphørsdato: '',
+        årsak: p.resultat?.ikkeOppfyltÅrsak ?? '',
+        begrunnelse: p.resultat?.begrunnelse ?? '',
+        flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : 'nei',
+        opphørsdato: p.fom,
       },
     ]),
   ),
@@ -83,7 +83,7 @@ export const Vilkaarsvurdering = ({
       periode: p.periode,
     }));
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(bostedVilkår),
+    defaultValues: buildInitialValues(bostedGrunnlag),
   });
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const selectedFakta = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
@@ -126,7 +126,9 @@ export const Vilkaarsvurdering = ({
 
   const flyttetFraTrondheim = formHook.watch(`perioder.${selectedId}.flyttetFraTrondheim`);
   const isVurderBostedvilkårApSolved = vurderBostedVilkårAp?.status === AksjonspunktStatus.UTFØRT;
-
+  const defaultIsLocked =
+    isVurderBostedvilkårApSolved ||
+    (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp));
   return (
     <VStack gap="space-20">
       <VilkårSplittPanel
@@ -136,10 +138,7 @@ export const Vilkaarsvurdering = ({
         detailHeading="Vurdering av ikke lenger bosatt i Trondheim"
         periodListLabel="Alle perioder"
         lovreferanse={bostedVilkår.lovReferanse}
-        defaultIsLocked={
-          isVurderBostedvilkårApSolved ||
-          (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp))
-        }
+        defaultIsLocked={defaultIsLocked}
         readOnly={selectedPeriod?.status === 'success' || readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
@@ -232,7 +231,9 @@ export const Vilkaarsvurdering = ({
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
-                  <Radio value="ja">Ja, fra og med 30.03.2027</Radio>
+                  <Radio value="ja">
+                    Ja, fra og med {selectedPeriod?.periode?.fom ? formatDate(selectedPeriod?.periode?.fom) : ''}
+                  </Radio>
                   <Radio value="jaMedAnnenDato">Ja, fra en annen dato</Radio>
                   <Radio value="nei">Nei, bruker bor fortsatt i Trondheim</Radio>
                 </RhfRadioGroup>
@@ -246,10 +247,15 @@ export const Vilkaarsvurdering = ({
                   />
                 )}
                 {!isFormLocked && (
-                  <HStack gap="space-24">
+                  <HStack gap="space-16">
                     <Button type="submit" size="small" loading={isPending}>
                       Send til beslutter
                     </Button>
+                    {defaultIsLocked && (
+                      <Button type="button" size="small" variant="secondary" onClick={() => setIsFormLocked(true)}>
+                        Avbryt
+                      </Button>
+                    )}
                   </HStack>
                 )}
               </VStack>

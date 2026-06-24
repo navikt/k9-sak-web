@@ -33,18 +33,18 @@ interface FormData {
   >;
 }
 
-const buildInitialValues = (periods: VilkårSplittPanelPeriod[]): FormData => ({
+const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData => ({
   perioder: Object.fromEntries(
-    (periods ?? []).map(p => [
-      p.id,
+    (bostedGrunnlag.perioder ?? []).map(p => [
+      p.fom,
       {
-        opphørsdato: '',
-        årsak: '',
+        opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
+        årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
         begrunnelse: '',
         åpenbarGrunnTilIkkeVarsle: '',
         opphøreEllerAvslå: '',
-        avslagFom: '',
-        avslagTom: '',
+        avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
+        avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
       },
     ]),
   ),
@@ -100,17 +100,19 @@ export const AarsakOgVarsel = ({
           },
         ]
       : []),
-    ...(bostedGrunnlag.perioder ?? []).map(p => ({
-      id: p.fom,
-      status: p.resultat?.erBosatt ? ('success' as const) : ('error' as const),
-      label: p.tom ? `${formatDate(p.fom)} - ${formatDate(p.tom)}` : formatDate(p.fom),
-      periode: p.tom
-        ? {
-            fom: p.fom,
-            tom: p.tom,
-          }
-        : undefined,
-    })),
+    ...(bostedGrunnlag.perioder ?? [])
+      .toSorted((a, b) => b.fom.localeCompare(a.fom))
+      .map(p => ({
+        id: p.fom,
+        status: p.resultat?.erBosatt ? ('success' as const) : ('error' as const),
+        label: p.tom ? `${formatDate(p.fom)} - ${formatDate(p.tom)}` : formatDate(p.fom),
+        periode: p.tom
+          ? {
+              fom: p.fom,
+              tom: p.tom,
+            }
+          : undefined,
+      })),
   ];
 
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
@@ -118,7 +120,7 @@ export const AarsakOgVarsel = ({
   const [pendingSubmitData, setPendingSubmitData] = useState<FormData | null>(null);
 
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(periods),
+    defaultValues: buildInitialValues(bostedGrunnlag),
   });
   const åpenbarGrunnTilIkkeVarsle = formHook.watch(`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`);
   const opphøreEllerAvslå = formHook.watch(`perioder.${selectedId}.opphøreEllerAvslå`);
@@ -159,7 +161,7 @@ export const AarsakOgVarsel = ({
   });
 
   const skalSendeForhåndsvarsel = åpenbarGrunnTilIkkeVarsle === 'nei';
-
+  const valgtPeriode = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
   return (
     <VStack gap="space-20">
       {!isVarselApSolved && vurderBostedAp && (
@@ -176,7 +178,7 @@ export const AarsakOgVarsel = ({
         periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isVarselApSolved}
-        readOnly={readOnly}
+        readOnly={readOnly || !valgtPeriode?.avklaring}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={isVarselApSolved ? <VurdertAv ident={vurderBostedAp?.ansvarligSaksbehandler} /> : undefined}
       >

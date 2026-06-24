@@ -43,7 +43,7 @@ const CustomWarningIcon = () => (
 );
 
 const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
-  if (!ap && !vilkår) return undefined;
+  if (!ap) return undefined;
   if (ap?.status === AksjonspunktStatus.OPPRETTET) {
     return <CustomWarningIcon />;
   }
@@ -70,9 +70,7 @@ const utledAktivTab = (data: OpphørData): OpphørTab => {
     return OpphørTab.BESLUTTER;
   }
   if (data.lokalkontorForeslårVilkårAp) {
-    if (data.vurderBostedFaktaAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBostedVilkårAp) {
-      return OpphørTab.VILKÅRSVURDERING;
-    }
+    return OpphørTab.VILKÅRSVURDERING;
   }
   return OpphørTab.ÅRSAK_OG_VARSEL;
 };
