@@ -28,6 +28,8 @@ interface InnleggelsesperiodeFormModal {
   endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
   pleietrengendePart: Personopplysninger['pleietrengendePart'];
   søknadsperiode?: Period;
+  hullISøknadsperiodene?: { from: string; to: string }[];
+  sammenhengendeSøknadsperioder?: Period[];
 }
 
 const InnleggelsesperiodeFormModal = ({
@@ -38,6 +40,8 @@ const InnleggelsesperiodeFormModal = ({
   endringerPåvirkerAndreBehandlinger,
   pleietrengendePart,
   søknadsperiode,
+  hullISøknadsperiodene,
+  sammenhengendeSøknadsperioder,
 }: InnleggelsesperiodeFormModal): JSX.Element => {
   const formMethods = useForm({
     defaultValues: {
@@ -97,6 +101,7 @@ const InnleggelsesperiodeFormModal = ({
                     limitations: {
                       minDate: søknadsperiode.fom,
                       maxDate: søknadsperiode.tom,
+                      invalidDateRanges: hullISøknadsperiodene,
                     },
                   }),
                 }}
@@ -107,6 +112,7 @@ const InnleggelsesperiodeFormModal = ({
                     limitations: {
                       minDate: søknadsperiode.fom,
                       maxDate: søknadsperiode.tom,
+                      invalidDateRanges: hullISøknadsperiodene,
                     },
                   }),
                 }}
@@ -167,13 +173,13 @@ const InnleggelsesperiodeFormModal = ({
                     return null;
                   },
                   innenforSøknadsperiode: (periodValue: Period) => {
-                    if (!søknadsperiode) return null;
+                    if (!sammenhengendeSøknadsperioder || sammenhengendeSøknadsperioder.length === 0) return null;
                     const { fom, tom } = periodValue;
-                    if (fom && dayjs(fom).isBefore(søknadsperiode.fom)) {
-                      return 'Fra-dato må være innenfor søknadsperioden';
-                    }
-                    if (tom && dayjs(tom).isAfter(søknadsperiode.tom)) {
-                      return 'Til-dato må være innenfor søknadsperioden';
+                    if (!fom || !tom) return null;
+                    const period = new Period(fom, tom);
+                    const erInnenfor = sammenhengendeSøknadsperioder.some(sp => sp.covers(period));
+                    if (!erInnenfor) {
+                      return 'Innleggelsesperioden må være innenfor en søknadsperiode';
                     }
                     return null;
                   },

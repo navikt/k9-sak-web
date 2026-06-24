@@ -1,4 +1,5 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
@@ -7,7 +8,7 @@ import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../
 import LinkRel from '../../../constants/LinkRel';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
 import { findLinkByRel } from '../../../util/linkUtils';
-import { finnMaksavgrensningerForPerioder } from '../../../util/periodUtils';
+import { finnHullIPerioder, finnMaksavgrensningerForPerioder, slåSammenSammenhengendePerioder } from '../../../util/periodUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -21,11 +22,13 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, errorNotifier, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, pleietrengendePart, readOnly, fagsakYtelseType } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [søknadsperiode, setSøknadsperiode] = React.useState<Period | undefined>(undefined);
+  const [hullISøknadsperiodene, setHullISøknadsperiodene] = React.useState<{ from: string; to: string }[]>([]);
+  const [sammenhengendeSøknadsperioder, setSammenhengendeSøknadsperioder] = React.useState<Period[]>([]);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
@@ -104,14 +107,16 @@ const Innleggelsesperiodeoversikt = ({
       });
 
     const vurderingsoversiktEndpoint = endpoints.vurderingsoversiktLivetsSluttfase;
-    if (vurderingsoversiktEndpoint) {
+    if (vurderingsoversiktEndpoint && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       httpUtils
-        .get(vurderingsoversiktEndpoint, httpErrorHandler, { signal: controller.signal })
+        .get(vurderingsoversiktEndpoint, errorNotifier, { signal: controller.signal })
         .then((response: { perioderSomKanVurderes?: { fom: string; tom: string }[] }) => {
           const vurderingsperioder = response?.perioderSomKanVurderes;
           if (isMounted && vurderingsperioder && vurderingsperioder.length > 0) {
             const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
             setSøknadsperiode(finnMaksavgrensningerForPerioder(perioder));
+            setHullISøknadsperiodene(finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })));
+            setSammenhengendeSøknadsperioder(slåSammenSammenhengendePerioder(perioder));
           }
         })
         .catch(() => {
@@ -180,6 +185,8 @@ const Innleggelsesperiodeoversikt = ({
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
           søknadsperiode={søknadsperiode}
+          hullISøknadsperiodene={hullISøknadsperiodene}
+          sammenhengendeSøknadsperioder={sammenhengendeSøknadsperioder}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,
