@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: daily
     cooldown:
-      default-days: 7
+      default-days: 3
     open-pull-requests-limit: 30
     registries:
       - npm-github
@@ -44,7 +44,7 @@ updates:
     schedule:
       interval: daily
     cooldown:
-      default-days: 7
+      default-days: 3
     registries:
       - npm-github
     groups:
