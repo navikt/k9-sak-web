@@ -15,6 +15,7 @@ import {
   beregnVedtakType,
   useProsessmotor,
 } from './Prosessmotor';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const createWrapper =
   (queryClient: QueryClient) =>
@@ -38,7 +39,9 @@ describe('useProsessmotor', () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
-    queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    queryClient = createQueryClient({
+      queries: { retry: false },
+    });
   });
 
   test('returnerer alle 8 paneler med korrekte id-er', async () => {

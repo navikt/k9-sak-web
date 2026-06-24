@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
@@ -13,8 +13,7 @@ import {
   restApiTilbakekrevingHooks,
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
-import NetworkErrorPage from '@k9-sak-web/gui/app/feilmeldinger/NetworkErrorPage.js';
-import { extractErrorInfo } from '../../rest-api-hooks/src/error/extractErrorInfo.js';
+import { AppError } from '@k9-sak-web/gui/app/errorhandling/AppError.js';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },
@@ -81,8 +80,6 @@ const BehandlingTilbakekrevingIndex = ({
   } = restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-
   const { startRequest: nyBehandlendeEnhet } = restApiTilbakekrevingHooks.useRestApiRunner(
     TilbakekrevingBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
   );
@@ -118,7 +115,6 @@ const BehandlingTilbakekrevingIndex = ({
     });
 
     requestTilbakekrevingApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestTilbakekrevingApi.setAddErrorMessageHandler(addErrorMessage);
 
     void hentBehandling({ behandlingId }, false);
 
@@ -139,7 +135,11 @@ const BehandlingTilbakekrevingIndex = ({
   }
 
   if (state === RestApiState.ERROR) {
-    return <NetworkErrorPage {...extractErrorInfo(error)} />;
+    if (error != null) {
+      throw error;
+    } else {
+      throw new AppError({ message: 'state == RestApiState.Error, men error var undefined' });
+    }
   }
 
   return (

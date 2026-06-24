@@ -5,7 +5,7 @@ import {
   behandlingQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
@@ -54,7 +54,7 @@ const BehandlingAktivitetspengerIndex = ({
 
   useSetBehandlingVedEndring(behandling, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const { startRequest: nyBehandlendeEnhet } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -82,12 +82,12 @@ const BehandlingAktivitetspengerIndex = ({
     });
 
     requestUngdomsytelseApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestUngdomsytelseApi.setAddErrorMessageHandler(addErrorMessage);
+    requestUngdomsytelseApi.setErrorNotifier(legacyErrorNotifier);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, []);
+  }, [legacyErrorNotifier]);
 
   if (!behandling) {
     return <LoadingPanel />;

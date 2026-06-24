@@ -15,7 +15,6 @@ const rootFeatureToggles = {
   UNG_KLAGE: false,
   UNNTAKSBEHANDLING: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
-  VIS_ALLE_ASYNC_ERRORS: false,
   BRUK_V2_AVREGNING: false,
   PROSESS_MENY_V2: false,
   SKJUL_PROSESS_MENY_V2_VELGER: false,
@@ -24,6 +23,7 @@ const rootFeatureToggles = {
   REVURDERING_FRA_STEG_V2: false,
   SINGLE_AUTHFIXER: false,
   VIS_INNLEGGELSE_FOR_PILS: false,
+  VIS_GLOBAL_ERRORMODAL: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
@@ -35,7 +35,6 @@ const baseQFeatureToggles = {
   isFor: 'Q',
   BRUK_V2_TILKJENT_YTELSE: true,
   UNNTAKSBEHANDLING: true,
-  VIS_ALLE_ASYNC_ERRORS: true,
   SINGLE_AUTHFIXER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 

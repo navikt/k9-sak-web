@@ -136,7 +136,6 @@ export const MedFeil: Story = {
     api: createMockApi({}, true),
   },
   play: async ({ canvas }) => {
-    await delay(100);
-    await expect(canvas.getByText('Får ikke kontakt med K9-Punsj')).toBeInTheDocument();
+    await expect(await canvas.findByText('Får ikke kontakt med K9-Punsj')).toBeInTheDocument();
   },
 };
