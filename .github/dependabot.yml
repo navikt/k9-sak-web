@@ -25,16 +25,12 @@ updates:
           - 'react'
           - 'react-dom'
           - '@types/react'
-          - '@navikt*'
+          - '@navikt/ft-*'
       react:
         patterns:
           - 'react'
           - 'react-dom'
           - '@types/react'
-      designsystem:
-        patterns:
-          - '@navikt/aksel-icons'
-          - '@navikt/ds-*'
       ft-frontend:
         patterns:
           - '@navikt/ft-*'
