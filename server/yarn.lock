@@ -11,7 +11,7 @@ __metadata:
   dependencies:
     "@types/express": "npm:5.0.6"
     "@types/express-http-proxy": "npm:1.6.7"
-    "@types/node": "npm:22.15.33"
+    "@types/node": "npm:26.0.0"
     express: "npm:5.2.1"
     express-http-proxy: "npm:2.1.2"
     express-rate-limit: "npm:8.5.2"
@@ -87,12 +87,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.15.33":
-  version: 22.15.33
-  resolution: "@types/node@npm:22.15.33"
+"@types/node@npm:26.0.0":
+  version: 26.0.0
+  resolution: "@types/node@npm:26.0.0"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10/5734cbca7fc363f3d6ad191e1be645cc9885d642e9f90688892459f10629cf663d2206e7ed7b255dd476baaa86fb011aa09647e77520958b5993b391f793856f
+    undici-types: "npm:~8.3.0"
+  checksum: 10/ed23034d159b58541de1f59d2ae3988d64124f94a50fb9f1825a217b38f034fc9846e2117770a2bc9372e87de1b0d2b3c6f5ec953b4da4ac943b9a6008b2cc2b
   languageName: node
   linkType: hard
 
@@ -833,17 +833,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10/ec8f41aa4359d50f9b59fa61fe3efce3477cc681908c8f84354d8567bb3701fafdddf36ef6bff307024d3feb42c837cf6f670314ba37fc8145e219560e473d14
-  languageName: node
-  linkType: hard
-
 "undici-types@npm:~7.16.0":
   version: 7.16.0
   resolution: "undici-types@npm:7.16.0"
   checksum: 10/db43439f69c2d94cc29f75cbfe9de86df87061d6b0c577ebe9bb3255f49b22c50162a7d7eb413b0458b6510b8ca299ac7cff38c3a29fbd31af9f504bcf7fbc0d
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~8.3.0":
+  version: 8.3.0
+  resolution: "undici-types@npm:8.3.0"
+  checksum: 10/6681d2837ac75a75ac1cc46090aa2b8ddc7c6b8ecc295a6cdb06838752a730da3d8afeecf05e5ab7903160eafad3a8b6ffa1927e5ded260590f4d4fef18646d5
   languageName: node
   linkType: hard
 
