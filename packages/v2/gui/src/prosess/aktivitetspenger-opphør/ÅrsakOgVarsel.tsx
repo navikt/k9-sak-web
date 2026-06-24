@@ -11,7 +11,6 @@ import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack 
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { VilkårSplittPanel, type VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
@@ -27,6 +26,9 @@ interface FormData {
       årsak: string;
       begrunnelse: string;
       åpenbarGrunnTilIkkeVarsle: 'ja' | 'nei' | '';
+      opphøreEllerAvslå: 'opphøre' | 'avslå' | '';
+      avslagFom: string;
+      avslagTom: string;
     }
   >;
 }
@@ -40,6 +42,9 @@ const buildInitialValues = (periods: VilkårSplittPanelPeriod[]): FormData => ({
         årsak: '',
         begrunnelse: '',
         åpenbarGrunnTilIkkeVarsle: '',
+        opphøreEllerAvslå: '',
+        avslagFom: '',
+        avslagTom: '',
       },
     ]),
   ),
@@ -56,6 +61,22 @@ interface Props {
   bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
+const getBostedDateRange = (
+  perioder: VilkårMedPerioderDto['perioder'],
+): { fromDate: Date; toDate: Date } | undefined => {
+  if (!perioder?.length) return undefined;
+  const foms = perioder.map(p => p.periode.fom).sort();
+  const toms = perioder
+    .map(p => p.periode.tom)
+    .filter(Boolean)
+    .sort();
+  if (!foms[0] || !toms[toms.length - 1]) return undefined;
+  return {
+    fromDate: new Date(foms[0]),
+    toDate: new Date(toms[toms.length - 1]!),
+  };
+};
+
 export const AarsakOgVarsel = ({
   vurderBostedAp,
   bostedVilkår,
@@ -67,6 +88,7 @@ export const AarsakOgVarsel = ({
   bostedGrunnlag,
 }: Props) => {
   const isVurderBostedApOpen = vurderBostedAp !== undefined && vurderBostedAp.status !== AksjonspunktStatus.UTFØRT;
+  const dateRange = getBostedDateRange(bostedVilkår.perioder);
 
   const periods: VilkårSplittPanelPeriod[] = [
     ...(isVurderBostedApOpen
@@ -111,17 +133,17 @@ export const AarsakOgVarsel = ({
       if (!selectedFormPeriod) {
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
-
+      const isOpphør = selectedFormPeriod.opphøreEllerAvslå === 'opphøre';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
         begrunnelse: selectedFormPeriod.begrunnelse,
         avklaringer: [
           {
             periode: {
-              fom: selectedFormPeriod.opphørsdato,
-              tom: dayjs(selectedFormPeriod.opphørsdato).add(1, 'year').subtract(1, 'day').format('YYYY-MM-DD'),
+              fom: isOpphør ? selectedFormPeriod.opphørsdato : selectedFormPeriod.avslagFom,
+              tom: isOpphør ? undefined : selectedFormPeriod.avslagTom,
             },
-            skalIkkeSendeVarsel: !!selectedFormPeriod.åpenbarGrunnTilIkkeVarsle,
+            skalIkkeSendeVarsel: selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'ja',
             vurdering: {
               begrunnelse: selectedFormPeriod.begrunnelse,
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
@@ -193,6 +215,28 @@ export const AarsakOgVarsel = ({
                     readOnly={isFormLocked}
                     validate={[required]}
                   />
+                )}
+                {opphøreEllerAvslå === 'avslå' && (
+                  <HStack gap="space-8">
+                    <RhfDatepicker
+                      control={formHook.control}
+                      name={`perioder.${selectedId}.avslagFom`}
+                      label="Fra og med"
+                      readOnly={isFormLocked}
+                      validate={[required]}
+                      fromDate={dateRange?.fromDate}
+                      toDate={dateRange?.toDate}
+                    />
+                    <RhfDatepicker
+                      control={formHook.control}
+                      name={`perioder.${selectedId}.avslagTom`}
+                      label="Til og med"
+                      readOnly={isFormLocked}
+                      validate={[required]}
+                      fromDate={dateRange?.fromDate}
+                      toDate={dateRange?.toDate}
+                    />
+                  </HStack>
                 )}
                 <RhfSelect
                   control={formHook.control}

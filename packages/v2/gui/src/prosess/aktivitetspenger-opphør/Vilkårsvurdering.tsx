@@ -105,7 +105,7 @@ export const Vilkaarsvurdering = ({
             erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
             periode: {
               fom: selectedFormPeriod.opphørsdato || selectedPeriod?.periode?.fom || '',
-              tom: selectedFormPeriod.opphørsdato ? null : (selectedPeriod?.periode?.tom ?? ''),
+              tom: selectedFormPeriod.opphørsdato ? undefined : (selectedPeriod?.periode?.tom ?? ''),
             },
           },
         ],

@@ -85,6 +85,7 @@ const PANEL_KONFIG = {
       AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
       AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
       AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+      AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_BOSTEDUTTALELSE,
     ],
     id: prosessStegCodes.OPPHØR,
     label: 'Opphør',

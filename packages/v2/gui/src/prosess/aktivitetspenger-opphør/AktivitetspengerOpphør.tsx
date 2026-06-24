@@ -71,10 +71,10 @@ const utledAktivTab = (data: OpphørData): OpphørTab => {
   }
   if (data.lokalkontorForeslårVilkårAp) {
     if (data.vurderBostedFaktaAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBostedVilkårAp) {
-      return OpphørTab.ÅRSAK_OG_VARSEL;
+      return OpphørTab.VILKÅRSVURDERING;
     }
   }
-  return OpphørTab.VILKÅRSVURDERING;
+  return OpphørTab.ÅRSAK_OG_VARSEL;
 };
 
 interface Props {
@@ -128,7 +128,10 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Tab
             value={OpphørTab.VILKÅRSVURDERING}
             label="Vilkårsvurdering"
-            icon={tabIcon(opphørData.vurderBostedVilkårAp, opphørData.bostedVilkår)}
+            icon={tabIcon(
+              opphørData.lokalkontorForeslårVilkårAp ?? opphørData.vurderBostedVilkårAp,
+              opphørData.bostedVilkår,
+            )}
           />
           {opphørData.lokalkontorBeslutterAp &&
             opphørData.lokalkontorBeslutterAp.status === AksjonspunktStatus.OPPRETTET && (
