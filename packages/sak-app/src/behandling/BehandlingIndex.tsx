@@ -7,7 +7,6 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -21,7 +20,7 @@ import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepen
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import {
   getFaktaLocation,
   getLocationWithDefaultProsessStegAndFakta,
@@ -106,8 +105,6 @@ const BehandlingIndex = ({
     }
   }, [behandling]);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-
   const oppdaterBehandlingVersjon = useCallback(
     versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
     [behandling?.id],
@@ -179,7 +176,7 @@ const BehandlingIndex = ({
     if (behandlingTypeKode === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingKlageIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -194,7 +191,7 @@ const BehandlingIndex = ({
     if (behandlingTypeKode === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingAnkeIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -209,7 +206,7 @@ const BehandlingIndex = ({
     if (behandlingTypeKode === BehandlingType.UNNTAK) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingUnntakIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={query.fakta}
@@ -224,7 +221,7 @@ const BehandlingIndex = ({
     if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingTilbakekrevingIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               harApenRevurdering={fagsakBehandlingerInfo.some(
@@ -242,7 +239,7 @@ const BehandlingIndex = ({
     if (fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingOmsorgspengerIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={query.fakta}
@@ -257,7 +254,7 @@ const BehandlingIndex = ({
     if (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingPleiepengerSluttfaseIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={query.fakta}
@@ -272,7 +269,7 @@ const BehandlingIndex = ({
     if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingUtvidetRettIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={query.fakta}
@@ -287,7 +284,7 @@ const BehandlingIndex = ({
     if (fagsak.sakstype === fagsakYtelsesType.FRISINN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingFrisinnIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={query.fakta}
@@ -302,7 +299,7 @@ const BehandlingIndex = ({
     if (fagsak.sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingOpplaeringspengerIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={query.fakta}
@@ -316,7 +313,7 @@ const BehandlingIndex = ({
 
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+        <ErrorBoundary>
           <BehandlingPleiepengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}

@@ -236,7 +236,6 @@ const FritekstEditor = ({
                   <FormattedMessage id="VedtakForm.ForhandvisBrev" />
                 </PreviewLink>
               </div>
-              <FritekstFeilmeldinger />
             </div>
             <VerticalSpacer thirtyTwoPx />
             <HGrid gap="space-4" columns={{ xs: '6fr 6fr' }}>

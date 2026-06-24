@@ -30,7 +30,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingAvLivetsSluttfaseProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
@@ -57,7 +57,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
 
   const getVurderingsoversikt = () =>
     endpoints.vurderingsoversiktLivetsSluttfase
-      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLivetsSluttfase, httpErrorHandler, {
+      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLivetsSluttfase, errorNotifier, {
           signal: controller.signal,
         })
       : Promise.resolve(null);

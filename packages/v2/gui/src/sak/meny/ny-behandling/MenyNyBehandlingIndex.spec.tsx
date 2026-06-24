@@ -1,20 +1,18 @@
 import {
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {behandlingType as BehandlingTypeK9Sak} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { QueryClientProvider} from '@tanstack/react-query';
 import {act, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
-import {qFeatureToggles} from '../../../featuretoggles/k9/featureToggles';
+import { qFeatureToggles } from '../../../featuretoggles/k9/featureToggles';
 import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
+import { createQueryClient } from '../../../shared/query/queryClient.js';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
+const queryClient = createQueryClient({
+  queries: {
+    retry: false,
   },
 });
 

@@ -1,16 +1,21 @@
 import type { Decorator } from '@storybook/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { type DefaultOptions, QueryClientProvider } from '@tanstack/react-query';
+import { createQueryClient } from '../../shared/query/queryClient.js';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
+type DefaultOptionsOverride = Pick<DefaultOptions, 'queries' | 'mutations'>;
+
+export const withQueryClientProvider = (defaultOptionsOverride?: DefaultOptionsOverride): Decorator => {
+  const queryClient = createQueryClient({
+    ...defaultOptionsOverride,
     queries: {
       retry: false,
+      ...defaultOptionsOverride?.queries,
     },
-  },
-});
+  });
 
-export const withQueryClientProvider: Decorator = Story => (
-  <QueryClientProvider client={queryClient}>
-    <Story />
-  </QueryClientProvider>
-);
+  return Story => (
+    <QueryClientProvider client={queryClient}>
+      <Story />
+    </QueryClientProvider>
+  );
+};

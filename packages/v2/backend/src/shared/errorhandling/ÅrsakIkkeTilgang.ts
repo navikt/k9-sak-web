@@ -7,3 +7,9 @@ import { safeConstCombine } from '@k9-sak-web/backend/typecheck/safeConstCombine
 export const ÅrsakIkkeTilgang = safeConstCombine(ÅIT1, ÅIT2, ÅIT3)
 
 export type ÅrsakIkkeTilgang = ÅIT1 | ÅIT2 | ÅIT3
+
+export const isÅrsakIkkeTilgang = (maybe: unknown): maybe is ÅrsakIkkeTilgang =>
+  typeof maybe === 'string' && Object.values(ÅrsakIkkeTilgang).some(v => v === maybe)
+
+export const isÅrsakIkkeTilgangArray = (maybe: unknown): maybe is ReadonlyArray<ÅrsakIkkeTilgang> =>
+  maybe instanceof Array && maybe.every(v => isÅrsakIkkeTilgang(v))

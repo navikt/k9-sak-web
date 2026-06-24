@@ -30,7 +30,9 @@ const meta: Meta<typeof MedisinskVilkårContainer> = {
       visFortsettknapp: true,
       fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
       behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
-      httpErrorHandler: undefined,
+      errorNotifier: error => {
+        throw error;
+      },
     },
   },
   parameters: {

@@ -15,6 +15,7 @@ import {
   beregnVedtakType,
   useProsessmotor,
 } from './Prosessmotor';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const createWrapper =
   (queryClient: QueryClient) =>
@@ -37,9 +38,11 @@ const lagAksjonspunkt = (
 describe('useProsessmotor', () => {
   let queryClient: QueryClient;
 
-  beforeEach(() => {
-    queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  });
+    beforeEach(() => {
+      queryClient = createQueryClient({
+        queries: { retry: false },
+      });
+    });
 
   test('returnerer alle 8 paneler med korrekte id-er', async () => {
     const api = new FakeK9SakProsessApi();

@@ -20,7 +20,7 @@ interface ContainerContract {
   behandlingUuid: string;
   readOnly: boolean;
   onFinished: (...args: unknown[]) => void;
-  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
+  errorNotifier: (error: Error) => void;
   visFortsettknapp: boolean;
   medisinskVilkårAksjonspunkt?: Aksjonspunkt;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
