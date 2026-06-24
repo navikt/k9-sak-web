@@ -1,4 +1,5 @@
 import Link from './LinkTsType';
+import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 /**
  * AbstractRequestApi
@@ -15,7 +16,11 @@ abstract class AbstractRequestApi {
 
   public abstract setRequestPendingHandler(requestPendingHandler): void;
 
-  public abstract setAddErrorMessageHandler(addErrorMessage): void;
+  /**
+   * Set handler for reporting errors to the global error UI.
+   * @param notifier
+   */
+  public abstract setErrorNotifier(notifier: ErrorNotifier): void;
 
   public abstract resetCache(): void;
 

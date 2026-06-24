@@ -18,6 +18,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
     queryKey: ['andreFagsaker', { saksnummer }],
     queryFn: () => api.getAndreSakerPåSøker(saksnummer),
     initialData: [],
+    throwOnError: false,
   });
 
   if (error) {

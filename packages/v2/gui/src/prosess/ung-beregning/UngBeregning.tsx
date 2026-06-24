@@ -45,6 +45,7 @@ const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjo
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
     select: sortSatser,
+    throwOnError: false,
   });
 
   const {
@@ -55,6 +56,7 @@ const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjo
     queryKey: ['kontrollInntekt', behandling.uuid, behandling.versjon],
     queryFn: () => api.getKontrollerInntekt(behandling.uuid),
     select: sortInntekt,
+    throwOnError: false,
   });
 
   const {
@@ -64,6 +66,7 @@ const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjo
   } = useQuery({
     queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
+    throwOnError: false,
   });
 
   const { data: arbeidsgivere } = useQuery({

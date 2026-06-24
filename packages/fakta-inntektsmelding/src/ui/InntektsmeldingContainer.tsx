@@ -28,16 +28,12 @@ function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetDat
 }
 
 export interface InntektsmeldingApi {
-  getKompletthetsoversikt: (
-    endpoint: string,
-    httpErrorHandler: any,
-    signal?: AbortSignal,
-  ) => Promise<KompletthetResponse>;
+  getKompletthetsoversikt: (endpoint: string, errorNotifier: any, signal?: AbortSignal) => Promise<KompletthetResponse>;
 }
 
 const defaultApi: InntektsmeldingApi = {
-  getKompletthetsoversikt: (endpoint, httpErrorHandler, signal) =>
-    get<KompletthetResponse>(endpoint, httpErrorHandler, {
+  getKompletthetsoversikt: (endpoint, errorNotifier, signal) =>
+    get<KompletthetResponse>(endpoint, errorNotifier, {
       signal,
     }),
 };
@@ -55,10 +51,10 @@ const InntektsmeldingContainer = ({ data, requestApi = defaultApi }: MainCompone
   });
 
   const controller = React.useMemo(() => new AbortController(), []);
-  const { endpoints, onFinished, httpErrorHandler } = data;
+  const { endpoints, onFinished, errorNotifier } = data;
 
   const getKompletthetsoversikt = () =>
-    requestApi.getKompletthetsoversikt(endpoints.kompletthetBeregning, httpErrorHandler, controller.signal);
+    requestApi.getKompletthetsoversikt(endpoints.kompletthetBeregning, errorNotifier, controller.signal);
 
   const handleError = () => {
     dispatch({ type: ActionType.FAILED });

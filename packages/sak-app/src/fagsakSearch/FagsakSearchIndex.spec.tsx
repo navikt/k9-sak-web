@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 
-import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak } from '@k9-sak-web/types';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -72,9 +71,7 @@ describe('<FagsakSearchIndex>', () => {
 
     render(
       <MemoryRouter>
-        <RestApiErrorProvider>
-          <FagsakSearchIndex />
-        </RestApiErrorProvider>
+        <FagsakSearchIndex />
       </MemoryRouter>,
     );
 
