@@ -178,7 +178,7 @@ export const AarsakOgVarsel = ({
         periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isVarselApSolved}
-        readOnly={readOnly || !valgtPeriode?.avklaring}
+        readOnly={readOnly || (valgtPeriode && !valgtPeriode.avklaring)}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={isVarselApSolved ? <VurdertAv ident={vurderBostedAp?.ansvarligSaksbehandler} /> : undefined}
       >
