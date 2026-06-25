@@ -28,7 +28,7 @@ yarn add -D @playwright/test
 yarn playwright install --with-deps chromium
 
 # Create configuration
-yarn playwright init
+yarn create playwright
 ```
 
 ### playwright.config.ts
