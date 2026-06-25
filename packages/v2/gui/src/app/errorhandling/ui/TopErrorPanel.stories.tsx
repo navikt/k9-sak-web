@@ -30,6 +30,22 @@ export const NoError: Story = {
   },
 };
 
+export const DuplicateConsecutiveErrors: Story = {
+  args: {
+    errors: [
+      new AppError({ message: 'Testfeil A' }),
+      new AppError({ message: 'Duplikatfeil' }),
+      new AppError({ message: 'Duplikatfeil' }),
+      new AppError({ message: 'Duplikatfeil' }),
+      new AppError({ message: 'Testfeil B' }),
+    ],
+  },
+  play: async ({ canvas }) => {
+    // 5 feil inn, men 3 påfølgjande duplikat blir kollapsa til 1 → 3 feil vist totalt.
+    await expect(await canvas.findByText('(3 av 3)', { exact: false })).toBeInTheDocument();
+  },
+};
+
 const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9SakApiError => {
   const req: Request = new Request(url);
   const responseBody: FeilDtoUnion = {

@@ -1,15 +1,16 @@
-import { Button, GlobalAlert, HStack, Pagination, Spacer, Tooltip, VStack } from '@navikt/ds-react';
-import { type FC, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button, GlobalAlert, HStack, Pagination, Spacer, Tooltip, VStack } from '@navikt/ds-react';
+import { type FC, useMemo, useState } from 'react';
 
-import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
-import { resolveErrorViewProps } from './resolveErrorViewProps.js';
-import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
+import { ErrorPanel } from './ErrorPanel.js';
+import { ErrorReportButton } from './ErrorReportButton.js';
 import { ErrorReportPopover } from './ErrorReportPopover.js';
 import { FixButton } from './FixButton.js';
-import { ErrorReportButton } from './ErrorReportButton.js';
-import { ErrorPanel } from './ErrorPanel.js';
+import { deduplicateConsecutiveErrors } from './deduplicateConsecutiveErrors.js';
+import css from './handCursor.module.css';
+import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
+import { resolveErrorViewProps } from './resolveErrorViewProps.js';
 
 interface TopErrorPanelUIProps {
   readonly errors: ReadonlyArray<Error>;
@@ -18,8 +19,11 @@ interface TopErrorPanelUIProps {
 }
 
 /** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
-export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = true }: TopErrorPanelUIProps) => {
+export const TopErrorPanelUI = ({ errors: allErrors, aktivFagsakId, defaultExpanded = true }: TopErrorPanelUIProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
+
+  // Fjern påfølgjande duplikatfeil slik at brukar berre ser den siste i kvar gruppe av like feil.
+  const errors = useMemo(() => deduplicateConsecutiveErrors(allErrors), [allErrors]);
 
   // Side i paginering er 1-basert. Standard er siste side, slik at nyaste feil blir vist først.
   const [page, setPage] = useState(errors.length);
@@ -41,7 +45,7 @@ export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = true 
   }
   const { title, errorInfo, fixAction } = resolveErrorViewProps(currentError);
 
-  const reportLink = makeErrorReportLinkForJira(errors, aktivFagsakId);
+  const reportLink = makeErrorReportLinkForJira(allErrors, aktivFagsakId);
 
   if (errors.length > 0) {
     const extraHeaderTxt = errors.length > 1 ? `(${page} av ${errors.length})` : ``;
@@ -88,7 +92,7 @@ export const TopErrorPanelUI = ({ errors, aktivFagsakId, defaultExpanded = true 
                     />
                   </Tooltip>
                 ) : null}
-                <ErrorReportPopover errors={errors} />
+                <ErrorReportPopover errors={allErrors} />
               </HStack>
             </VStack>
           </GlobalAlert.Content>
