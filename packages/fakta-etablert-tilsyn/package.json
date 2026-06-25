@@ -16,8 +16,8 @@
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.21",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
     "react-hook-form": "7.80.0",
     "react-intl": "10.1.13"
   },
