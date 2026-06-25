@@ -77,10 +77,9 @@ export const KunVurderHenvendelse: Story = {
   },
   play: async ({ canvas }) => {
     await delay(100);
-    await expect(canvas.getByText(/Det ligger åpne Gosys-oppgaver på søker/)).toBeInTheDocument();
-    await expect(canvas.getByRole('link', { name: 'Gå til Gosys' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/Det ligger åpne Gosys-oppgaver på søker/)).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('link', { name: 'Gå til Gosys' })).not.toBeInTheDocument();
   },
-};
 
 export const EnOppgavetype: Story = {
   args: {
