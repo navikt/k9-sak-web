@@ -63,7 +63,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
           </BodyShort>
         </div>
 
-        <Link href={getGosysUrl()} target="_blank">
+        <Link href={getGosysUrl()} target="_blank" rel="noopener noreferrer">
           Gå til Gosys
         </Link>
       </VStack>
