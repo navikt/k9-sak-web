@@ -51,7 +51,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
             <Label>{oppgaveÅrsakNavn[oppgavetype] ?? oppgavetype}</Label>
             {index < arr.length - 1 ? ', ' : '.'}
           </React.Fragment>
-        ))}{' '}
+        ))}
       </BodyShort>
     </Alert>
   );
