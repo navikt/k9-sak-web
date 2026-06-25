@@ -23,7 +23,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
@@ -40,7 +40,7 @@ jobs:
           VITE_SENTRY_RELEASE: ${{ github.sha }}
 
       - name: Last opp assets til CDN
-        uses: nais/deploy/actions/cdn-upload/v2@65d1b089882173f50fd51161b1a5b6ef3a18b9ea
+        uses: nais/deploy/actions/cdn-upload/v2@2d18f050f07b6a007864c6a57070ed915d571beb
         with:
           source: dist/k9/web/
           destination: k9-sak-web/
@@ -106,8 +106,8 @@ jobs:
     environment: dev-fss:k9saksbehandling
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
@@ -126,7 +126,7 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           # Ta med litt historie og tags for å finne latest_prod commit hash
           fetch-tags: true
@@ -163,7 +163,7 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+      - uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
