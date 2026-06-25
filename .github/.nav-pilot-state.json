@@ -2,7 +2,7 @@
   "collection": "frontend",
   "version": "2026.06.25-072030-1ae3959",
   "scope": "repo",
-  "source_sha": "1ae3959",
+  "source_sha": "6fe66fd",
   "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
@@ -76,6 +76,10 @@
     {
       "path": ".github/prompts/nais-manifest.prompt.md",
       "hash": "8576571223ffef8a"
+    },
+    {
+      "path": ".github/skills/aksel-builder/",
+      "hash": "8093294c605378e1"
     }
   ]
 }
