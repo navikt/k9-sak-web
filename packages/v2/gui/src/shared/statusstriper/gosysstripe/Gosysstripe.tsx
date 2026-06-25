@@ -49,7 +49,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
     return null;
   }
   return (
-    <Alert size="small" variant="info">
+    <Alert size="small" variant="info" className="mt-4">
       <VStack gap="space-6">
         <div>
           <BodyShort size="small">Det ligger åpne Gosys-oppgaver på søker.</BodyShort>
