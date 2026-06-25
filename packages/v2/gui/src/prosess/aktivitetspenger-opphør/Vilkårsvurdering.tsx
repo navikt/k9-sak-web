@@ -44,7 +44,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
       {
         årsak: p.resultat?.ikkeOppfyltÅrsak ?? '',
         begrunnelse: p.resultat?.begrunnelse ?? '',
-        flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : 'nei',
+        flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : p.resultat?.erBosatt === true ? 'nei' : '',
         opphørsdato: p.fom,
       },
     ]),
@@ -52,7 +52,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
 });
 
 interface Props {
-  vurderBostedVilkårAp?: AksjonspunktDto;
+  vurderBostedVilkårAP?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
@@ -60,12 +60,12 @@ interface Props {
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
   bostedGrunnlag: BostedGrunnlagResponseDto;
-  lokalkontorForeslårVilkårAp?: AksjonspunktDto;
+  lokalkontorForeslårVilkårAP?: AksjonspunktDto;
 }
 
 export const Vilkaarsvurdering = ({
-  vurderBostedVilkårAp,
-  lokalkontorForeslårVilkårAp,
+  vurderBostedVilkårAP,
+  lokalkontorForeslårVilkårAP,
   bostedVilkår,
   api,
   behandling,
@@ -88,13 +88,14 @@ export const Vilkaarsvurdering = ({
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const selectedFakta = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
   const selectedPeriod = periods.find(p => p.id === selectedId);
+
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
       const selectedFormPeriod = formData.perioder[selectedId];
       if (!selectedFormPeriod) {
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
-      const selectedPeriod = periods.find(p => p.id === selectedId);
+      const valgtPeriode = periods.find(p => p.id === selectedId);
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
         begrunnelse: selectedFormPeriod.begrunnelse,
@@ -104,8 +105,8 @@ export const Vilkaarsvurdering = ({
             begrunnelse: selectedFormPeriod.begrunnelse,
             erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
             periode: {
-              fom: selectedFormPeriod.opphørsdato || selectedPeriod?.periode?.fom || '',
-              tom: selectedFormPeriod.opphørsdato ? undefined : (selectedPeriod?.periode?.tom ?? ''),
+              fom: selectedFormPeriod.opphørsdato || valgtPeriode?.periode?.fom || '',
+              tom: selectedFormPeriod.opphørsdato ? undefined : (valgtPeriode?.periode?.tom ?? ''),
             },
           },
         ],
@@ -125,10 +126,11 @@ export const Vilkaarsvurdering = ({
   });
 
   const flyttetFraTrondheim = formHook.watch(`perioder.${selectedId}.flyttetFraTrondheim`);
-  const isVurderBostedvilkårApSolved = vurderBostedVilkårAp?.status === AksjonspunktStatus.UTFØRT;
-  const defaultIsLocked =
-    isVurderBostedvilkårApSolved ||
-    (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp));
+  const isVurderBostedvilkårAPSolved = vurderBostedVilkårAP?.status === AksjonspunktStatus.UTFØRT;
+  const erLokalkontorForeslårAPÅpent =
+    !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
+  const defaultIsLocked = isVurderBostedvilkårAPSolved || erLokalkontorForeslårAPÅpent;
+
   return (
     <VStack gap="space-20">
       <VilkårSplittPanel
@@ -142,7 +144,7 @@ export const Vilkaarsvurdering = ({
         readOnly={selectedPeriod?.status === 'success' || readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
-          !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
+          erLokalkontorForeslårAPÅpent ? (
             <VStack gap="space-20">
               <Alert variant="success" size="small">
                 Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
@@ -163,104 +165,102 @@ export const Vilkaarsvurdering = ({
           ) : null
         }
         lockedContent={
-          isVurderBostedvilkårApSolved ? <VurdertAv ident={vurderBostedVilkårAp?.ansvarligSaksbehandler} /> : undefined
+          isVurderBostedvilkårAPSolved ? <VurdertAv ident={vurderBostedVilkårAP?.ansvarligSaksbehandler} /> : undefined
         }
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
-          <>
-            <RhfForm
-              formMethods={formHook}
-              onSubmit={async data => {
-                await bekreftAksjonspunktMutation(data);
-                setIsFormLocked(true);
-              }}
-            >
-              <VStack gap="space-24" maxWidth="70ch" width="100%">
-                {selectedFakta?.harUttalelse && (
-                  <Box borderRadius="8" padding={'space-16'} background={'info-softA'}>
-                    <VStack gap="space-20">
-                      <VStack gap="space-8">
-                        <HStack justify="space-between">
-                          <BodyShort size="small" weight="semibold">
-                            Stemmer opplysningene om opphør?
-                          </BodyShort>
-                          <Tag variant="outline" data-color="info" size="small">
-                            Fra bruker
-                          </Tag>
-                        </HStack>
-                        <BodyShort size="small">Nei</BodyShort>
-                      </VStack>
-                      <HStack gap="space-4">
-                        <PersonFillIcon title="Bruker" fontSize="1.5rem" />
-                        <VStack gap="space-6" marginBlock="space-2 space-0">
-                          <BodyShort size="small" weight="semibold">
-                            Tilbakemelding fra bruker om opphør xx.xx.xxxx
-                          </BodyShort>
-                          <BodyLong size="small">{selectedFakta.uttalelseTekst}</BodyLong>
-                        </VStack>
+          <RhfForm
+            formMethods={formHook}
+            onSubmit={async data => {
+              await bekreftAksjonspunktMutation(data);
+              setIsFormLocked(true);
+            }}
+          >
+            <VStack gap="space-24" maxWidth="70ch" width="100%">
+              {selectedFakta?.harUttalelse && (
+                <Box borderRadius="8" padding="space-16" background="info-softA">
+                  <VStack gap="space-20">
+                    <VStack gap="space-8">
+                      <HStack justify="space-between">
+                        <BodyShort size="small" weight="semibold">
+                          Stemmer opplysningene om opphør?
+                        </BodyShort>
+                        <Tag variant="outline" data-color="info" size="small">
+                          Fra bruker
+                        </Tag>
                       </HStack>
+                      <BodyShort size="small">Nei</BodyShort>
                     </VStack>
-                  </Box>
-                )}
-                <RhfSelect
+                    <HStack gap="space-4">
+                      <PersonFillIcon title="Bruker" fontSize="1.5rem" />
+                      <VStack gap="space-6" marginBlock="space-2 space-0">
+                        <BodyShort size="small" weight="semibold">
+                          Tilbakemelding fra bruker om opphør xx.xx.xxxx
+                        </BodyShort>
+                        <BodyLong size="small">{selectedFakta.uttalelseTekst}</BodyLong>
+                      </VStack>
+                    </HStack>
+                  </VStack>
+                </Box>
+              )}
+              <RhfSelect
+                control={formHook.control}
+                name={`perioder.${selectedId}.årsak`}
+                label="Opphørsårsak"
+                readOnly={isFormLocked}
+                validate={[required]}
+                selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak)
+                  .filter(årsak => årsak !== '-')
+                  .map(årsak => (
+                    <option key={årsak} value={årsak}>
+                      {opphørsårsakLabels[årsak]}
+                    </option>
+                  ))}
+              />
+              <RhfTextarea
+                control={formHook.control}
+                name={`perioder.${selectedId}.begrunnelse`}
+                label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
+                readOnly={isFormLocked}
+                validate={[required]}
+                resize
+              />
+              <RhfRadioGroup
+                control={formHook.control}
+                legend="Har bruker flyttet fra Trondheim kommune?"
+                name={`perioder.${selectedId}.flyttetFraTrondheim`}
+                validate={[required]}
+                readOnly={isFormLocked}
+              >
+                <Radio value="ja">
+                  Ja, fra og med {selectedPeriod?.periode?.fom ? formatDate(selectedPeriod?.periode?.fom) : ''}
+                </Radio>
+                <Radio value="jaMedAnnenDato">Ja, fra en annen dato</Radio>
+                <Radio value="nei">Nei, bruker bor fortsatt i Trondheim</Radio>
+              </RhfRadioGroup>
+              {flyttetFraTrondheim === 'jaMedAnnenDato' && (
+                <RhfDatepicker
                   control={formHook.control}
-                  name={`perioder.${selectedId}.årsak`}
-                  label="Opphørsårsak"
+                  name={`perioder.${selectedId}.opphørsdato`}
+                  label="Dato for opphør"
                   readOnly={isFormLocked}
                   validate={[required]}
-                  selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak)
-                    .filter(årsak => årsak !== '-')
-                    .map(årsak => (
-                      <option key={årsak} value={årsak}>
-                        {opphørsårsakLabels[årsak]}
-                      </option>
-                    ))}
                 />
-                <RhfTextarea
-                  control={formHook.control}
-                  name={`perioder.${selectedId}.begrunnelse`}
-                  label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
-                  readOnly={isFormLocked}
-                  validate={[required]}
-                  resize
-                />
-                <RhfRadioGroup
-                  control={formHook.control}
-                  legend="Har bruker flyttet fra Trondheim kommune?"
-                  name={`perioder.${selectedId}.flyttetFraTrondheim`}
-                  validate={[required]}
-                  readOnly={isFormLocked}
-                >
-                  <Radio value="ja">
-                    Ja, fra og med {selectedPeriod?.periode?.fom ? formatDate(selectedPeriod?.periode?.fom) : ''}
-                  </Radio>
-                  <Radio value="jaMedAnnenDato">Ja, fra en annen dato</Radio>
-                  <Radio value="nei">Nei, bruker bor fortsatt i Trondheim</Radio>
-                </RhfRadioGroup>
-                {flyttetFraTrondheim === 'jaMedAnnenDato' && (
-                  <RhfDatepicker
-                    control={formHook.control}
-                    name={`perioder.${selectedId}.opphørsdato`}
-                    label="Dato for opphør"
-                    readOnly={isFormLocked}
-                    validate={[required]}
-                  />
-                )}
-                {!isFormLocked && (
-                  <HStack gap="space-16">
-                    <Button type="submit" size="small" loading={isPending}>
-                      Send til beslutter
+              )}
+              {!isFormLocked && (
+                <HStack gap="space-16">
+                  <Button type="submit" size="small" loading={isPending}>
+                    Send til beslutter
+                  </Button>
+                  {defaultIsLocked && (
+                    <Button type="button" size="small" variant="secondary" onClick={() => setIsFormLocked(true)}>
+                      Avbryt
                     </Button>
-                    {defaultIsLocked && (
-                      <Button type="button" size="small" variant="secondary" onClick={() => setIsFormLocked(true)}>
-                        Avbryt
-                      </Button>
-                    )}
-                  </HStack>
-                )}
-              </VStack>
-            </RhfForm>
-          </>
+                  )}
+                </HStack>
+              )}
+            </VStack>
+          </RhfForm>
         )}
       </VilkårSplittPanel>
     </VStack>

@@ -51,7 +51,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
 });
 
 interface Props {
-  vurderBostedAp: AksjonspunktDto | undefined;
+  vurderBostedAP: AksjonspunktDto | undefined;
   bostedVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
@@ -78,7 +78,7 @@ const getBostedDateRange = (
 };
 
 export const AarsakOgVarsel = ({
-  vurderBostedAp,
+  vurderBostedAP,
   bostedVilkår,
   api,
   behandling,
@@ -87,11 +87,11 @@ export const AarsakOgVarsel = ({
   isPermanentlyReadOnly,
   bostedGrunnlag,
 }: Props) => {
-  const isVurderBostedApOpen = vurderBostedAp !== undefined && vurderBostedAp.status !== AksjonspunktStatus.UTFØRT;
+  const isVurderBostedAPOpen = vurderBostedAP !== undefined && vurderBostedAP.status !== AksjonspunktStatus.UTFØRT;
   const dateRange = getBostedDateRange(bostedVilkår.perioder);
 
   const periods: VilkårSplittPanelPeriod[] = [
-    ...(isVurderBostedApOpen
+    ...(isVurderBostedAPOpen
       ? [
           {
             id: 'ikke-satt',
@@ -127,7 +127,7 @@ export const AarsakOgVarsel = ({
   const valgtÅrsak = formHook.watch(`perioder.${selectedId}.årsak`);
   const valgtÅrsakErAnnet = valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
 
-  const isVarselApSolved = vurderBostedAp?.status === AksjonspunktStatus.UTFØRT;
+  const isVarselAPSolved = vurderBostedAP?.status === AksjonspunktStatus.UTFØRT;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -162,9 +162,37 @@ export const AarsakOgVarsel = ({
 
   const skalSendeForhåndsvarsel = åpenbarGrunnTilIkkeVarsle === 'nei';
   const valgtPeriode = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
+  const readOnlyForValgtPeriode = !!valgtPeriode && !valgtPeriode.avklaring;
+  const panelReadOnly = readOnly || readOnlyForValgtPeriode;
+  const relevanteBostedsvilkårIkkeOppfyltÅrsaker = Object.values(BostedsvilkårIkkeOppfyltÅrsak).filter(
+    årsak => årsak !== BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT,
+  );
+
+  const handleSubmit = async (data: FormData, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
+    if (skalSendeForhåndsvarsel) {
+      setPendingSubmitData(data);
+      setVisBekreftSubmitModal(true);
+      return;
+    }
+
+    await bekreftAksjonspunktMutation(data);
+    setIsFormLocked(true);
+  };
+
+  const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
+    if (!pendingSubmitData) {
+      return;
+    }
+
+    await bekreftAksjonspunktMutation(pendingSubmitData);
+    setVisBekreftSubmitModal(false);
+    setPendingSubmitData(null);
+    setIsFormLocked(true);
+  };
+
   return (
     <VStack gap="space-20">
-      {!isVarselApSolved && vurderBostedAp && (
+      {!isVarselAPSolved && vurderBostedAP && (
         <Alert variant="warning" size="small">
           Vurder årsak til opphør og om bruker skal varsles.
         </Alert>
@@ -177,26 +205,14 @@ export const AarsakOgVarsel = ({
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
-        defaultIsLocked={isVarselApSolved}
-        readOnly={readOnly || (valgtPeriode && !valgtPeriode.avklaring)}
+        defaultIsLocked={isVarselAPSolved}
+        readOnly={panelReadOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
-        lockedContent={isVarselApSolved ? <VurdertAv ident={vurderBostedAp?.ansvarligSaksbehandler} /> : undefined}
+        lockedContent={isVarselAPSolved ? <VurdertAv ident={vurderBostedAP?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
           <>
-            <RhfForm
-              formMethods={formHook}
-              onSubmit={async data => {
-                if (skalSendeForhåndsvarsel) {
-                  setPendingSubmitData(data);
-                  setVisBekreftSubmitModal(true);
-                  return;
-                }
-
-                await bekreftAksjonspunktMutation(data);
-                setIsFormLocked(true);
-              }}
-            >
+            <RhfForm formMethods={formHook} onSubmit={data => handleSubmit(data, setIsFormLocked)}>
               <VStack gap="space-24" maxWidth="70ch" width="100%">
                 <RhfRadioGroup
                   key={`${selectedId}-opphørsdato`}
@@ -246,7 +262,7 @@ export const AarsakOgVarsel = ({
                   label="Årsak"
                   readOnly={isFormLocked}
                   validate={[required]}
-                  selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak).map(årsak => (
+                  selectValues={relevanteBostedsvilkårIkkeOppfyltÅrsaker.map(årsak => (
                     <option key={årsak} value={årsak}>
                       {opphørsårsakLabels[årsak]}
                     </option>
@@ -347,16 +363,7 @@ export const AarsakOgVarsel = ({
                   <Button
                     size="small"
                     loading={isPending}
-                    onClick={async () => {
-                      if (!pendingSubmitData) {
-                        return;
-                      }
-
-                      await bekreftAksjonspunktMutation(pendingSubmitData);
-                      setVisBekreftSubmitModal(false);
-                      setPendingSubmitData(null);
-                      setIsFormLocked(true);
-                    }}
+                    onClick={() => void bekreftOgSendForhåndsvarsel(setIsFormLocked)}
                   >
                     Send forhåndsvarsel
                   </Button>

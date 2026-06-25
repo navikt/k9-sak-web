@@ -18,20 +18,20 @@ import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
 import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
-  vurderBostedFaktaAp?: AksjonspunktDto;
-  vurderBostedVilkårAp?: AksjonspunktDto;
-  lokalkontorForeslårVilkårAp?: AksjonspunktDto;
-  lokalkontorBeslutterAp?: AksjonspunktDto;
+  vurderBostedFaktaAP?: AksjonspunktDto;
+  vurderBostedVilkårAP?: AksjonspunktDto;
+  lokalkontorForeslårVilkårAP?: AksjonspunktDto;
+  lokalkontorBeslutterAP?: AksjonspunktDto;
   bostedVilkår?: VilkårMedPerioderDto;
 }
 
 const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
-  vurderBostedFaktaAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-  vurderBostedVilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
-  lokalkontorForeslårVilkårAp: aksjonspunkter.find(
+  vurderBostedFaktaAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+  vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+  lokalkontorForeslårVilkårAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),
-  lokalkontorBeslutterAp: aksjonspunkter.find(
+  lokalkontorBeslutterAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   ),
   bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
@@ -44,10 +44,10 @@ const CustomWarningIcon = () => (
 
 const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
   if (!ap) return undefined;
-  if (ap?.status === AksjonspunktStatus.OPPRETTET) {
+  if (ap.status === AksjonspunktStatus.OPPRETTET) {
     return <CustomWarningIcon />;
   }
-  if (ap?.status === AksjonspunktStatus.UTFØRT) {
+  if (ap.status === AksjonspunktStatus.UTFØRT) {
     return <CustomCheckmarkIcon />;
   }
   if (vilkår?.perioder?.every(p => p.vilkarStatus === 'OPPFYLT')) {
@@ -60,16 +60,16 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
 };
 
 const utledAktivTab = (data: OpphørData): OpphørTab => {
-  if (data.vurderBostedFaktaAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.vurderBostedFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
   }
-  if (data.vurderBostedVilkårAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.vurderBostedVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.VILKÅRSVURDERING;
   }
-  if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.BESLUTTER;
   }
-  if (data.lokalkontorForeslårVilkårAp) {
+  if (data.lokalkontorForeslårVilkårAP) {
     return OpphørTab.VILKÅRSVURDERING;
   }
   return OpphørTab.ÅRSAK_OG_VARSEL;
@@ -105,6 +105,17 @@ export const AktivitetspengerOpphør = ({
 
   const opphørData = useMemo(() => samleOpphørData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
 
+  const {
+    vurderBostedFaktaAP,
+    vurderBostedVilkårAP,
+    lokalkontorForeslårVilkårAP,
+    lokalkontorBeslutterAP,
+    bostedVilkår,
+  } = opphørData;
+  const vilkårsvurderingAPForTab = lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP;
+  const harBeslutterAP = !!lokalkontorBeslutterAP;
+  const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
+
   const [aktivTab, setAktivTab] = useState<OpphørTab>(utledAktivTab(opphørData));
 
   useEffect(() => {
@@ -121,59 +132,55 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Tab
             value={OpphørTab.ÅRSAK_OG_VARSEL}
             label="Årsak og varsel"
-            icon={tabIcon(opphørData.vurderBostedFaktaAp, opphørData.bostedVilkår)}
+            icon={tabIcon(vurderBostedFaktaAP, bostedVilkår)}
           />
           <Tabs.Tab
             value={OpphørTab.VILKÅRSVURDERING}
             label="Vilkårsvurdering"
-            icon={tabIcon(
-              opphørData.lokalkontorForeslårVilkårAp ?? opphørData.vurderBostedVilkårAp,
-              opphørData.bostedVilkår,
-            )}
+            icon={tabIcon(vilkårsvurderingAPForTab, bostedVilkår)}
           />
-          {opphørData.lokalkontorBeslutterAp &&
-            opphørData.lokalkontorBeslutterAp.status === AksjonspunktStatus.OPPRETTET && (
-              <Tabs.Tab
-                value={OpphørTab.BESLUTTER}
-                label="Beslutter"
-                icon={kanBeslutte ? tabIcon(opphørData.lokalkontorBeslutterAp) : undefined}
-              />
-            )}
+          {visBeslutterTab && (
+            <Tabs.Tab
+              value={OpphørTab.BESLUTTER}
+              label="Beslutter"
+              icon={kanBeslutte ? tabIcon(lokalkontorBeslutterAP) : undefined}
+            />
+          )}
         </Tabs.List>
         <Box marginBlock="space-20 space-0">
           <Tabs.Panel value={OpphørTab.ÅRSAK_OG_VARSEL}>
-            {opphørData.bostedVilkår && (
+            {bostedVilkår && (
               <ÅrsakOgVarsel
-                vurderBostedAp={opphørData.vurderBostedFaktaAp}
-                bostedVilkår={opphørData.bostedVilkår}
+                vurderBostedAP={vurderBostedFaktaAP}
+                bostedVilkår={bostedVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={!!opphørData.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
               />
             )}
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
-            {opphørData.bostedVilkår && (
+            {bostedVilkår && (
               <Vilkårsvurdering
-                vurderBostedVilkårAp={opphørData.vurderBostedVilkårAp}
-                bostedVilkår={opphørData.bostedVilkår}
+                vurderBostedVilkårAP={vurderBostedVilkårAP}
+                bostedVilkår={bostedVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={!!opphørData.lokalkontorBeslutterAp}
+                isPermanentlyReadOnly={harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
-                lokalkontorForeslårVilkårAp={opphørData.lokalkontorForeslårVilkårAp}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
               />
             )}
           </Tabs.Panel>
-          {opphørData.lokalkontorBeslutterAp && (
+          {lokalkontorBeslutterAP && (
             <Tabs.Panel value={OpphørTab.BESLUTTER}>
               <BeslutterOpphør
-                lokalkontorBeslutterAp={opphørData.lokalkontorBeslutterAp}
+                lokalkontorBeslutterAP={lokalkontorBeslutterAP}
                 api={api}
                 behandling={behandling}
                 onTabChange={setAktivTab}

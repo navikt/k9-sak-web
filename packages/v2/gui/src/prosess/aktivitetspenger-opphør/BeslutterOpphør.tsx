@@ -40,6 +40,8 @@ interface FormValues {
   aksjonspunktGodkjenning: AksjonspunktGodkjenningItem[];
 }
 
+const AKSJONSPUNKT_GODKJENNING_FIELD = 'aksjonspunktGodkjenning' as const;
+
 const aksjonspunktKodeToTab: Record<string, OpphørTab | undefined> = {
   [AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED]: OpphørTab.ÅRSAK_OG_VARSEL,
   [AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR]: OpphørTab.VILKÅRSVURDERING,
@@ -85,8 +87,22 @@ const buildDefaultValues = (
   return { aksjonspunktGodkjenning };
 };
 
+const hentVurderPaNyttArsaker = (apGodkjenning: AksjonspunktGodkjenningItem): VurderÅrsak[] => {
+  if (apGodkjenning.totrinnskontrollGodkjent) {
+    return [];
+  }
+
+  const arsaker: VurderÅrsak[] = [];
+  if (apGodkjenning.feilFakta) arsaker.push(VurderÅrsak.FEIL_FAKTA);
+  if (apGodkjenning.feilLov) arsaker.push(VurderÅrsak.FEIL_LOV);
+  if (apGodkjenning.feilRegel) arsaker.push(VurderÅrsak.FEIL_REGEL);
+  if (apGodkjenning.annet) arsaker.push(VurderÅrsak.ANNET);
+
+  return arsaker;
+};
+
 interface Props {
-  lokalkontorBeslutterAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAP: AksjonspunktDto | undefined;
   onTabChange: React.Dispatch<React.SetStateAction<OpphørTab>>;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
@@ -96,7 +112,7 @@ interface Props {
 }
 
 export const BeslutterOpphør = ({
-  lokalkontorBeslutterAp,
+  lokalkontorBeslutterAP,
   onTabChange,
   api,
   behandling,
@@ -109,30 +125,23 @@ export const BeslutterOpphør = ({
   });
 
   const { control, getFieldState, trigger } = formHook;
-  const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
-  const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
-  const isAksjonspunktSolved = lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT;
+  const { fields } = useFieldArray({ control, name: AKSJONSPUNKT_GODKJENNING_FIELD });
+  const aksjonspunktGodkjenning = useWatch({ control, name: AKSJONSPUNKT_GODKJENNING_FIELD });
+  const isAksjonspunktSolved = lokalkontorBeslutterAP?.status === AksjonspunktStatus.UTFØRT;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormValues) => {
-      if (!lokalkontorBeslutterAp?.definisjon) {
+      if (!lokalkontorBeslutterAP?.definisjon) {
         return;
       }
       const payload = {
         '@type': AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
         aksjonspunktGodkjenningDtos: data.aksjonspunktGodkjenning.map(apGodkjenning => {
-          const arsaker: VurderÅrsak[] = [];
-          if (!apGodkjenning.totrinnskontrollGodkjent) {
-            if (apGodkjenning.feilFakta) arsaker.push(VurderÅrsak.FEIL_FAKTA);
-            if (apGodkjenning.feilLov) arsaker.push(VurderÅrsak.FEIL_LOV);
-            if (apGodkjenning.feilRegel) arsaker.push(VurderÅrsak.FEIL_REGEL);
-            if (apGodkjenning.annet) arsaker.push(VurderÅrsak.ANNET);
-          }
           return {
             aksjonspunktKode: apGodkjenning.aksjonspunktKode,
             godkjent: apGodkjenning.totrinnskontrollGodkjent ?? false,
             begrunnelse: apGodkjenning.besluttersBegrunnelse,
-            arsaker,
+            arsaker: hentVurderPaNyttArsaker(apGodkjenning),
           };
         }),
       };
@@ -166,12 +175,11 @@ export const BeslutterOpphør = ({
               <VStack gap="space-28">
                 {fields.map((field, index) => {
                   const item = aksjonspunktGodkjenning?.[index];
-                  const visAvslagsårsakKryssbokser = item?.totrinnskontrollGodkjent === false;
-                  const visBegrunnelseTekstfelt = item?.totrinnskontrollGodkjent === false;
-
-                  const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
+                  const isVurderPaNytt = item?.totrinnskontrollGodkjent === false;
+                  const fieldPath = `${AKSJONSPUNKT_GODKJENNING_FIELD}.${index}` as const;
+                  const { error } = getFieldState(fieldPath);
                   const checkboxValidationError = error?.message;
-                  const reValidate = () => trigger(`aksjonspunktGodkjenning.${index}`);
+                  const reValidate = () => trigger(fieldPath);
 
                   const tab = aksjonspunktKodeToTab[item?.aksjonspunktKode ?? ''];
 
@@ -185,7 +193,7 @@ export const BeslutterOpphør = ({
                       <Fieldset legend="" hideLegend>
                         <RhfRadioGroup
                           control={control}
-                          name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
+                          name={`${fieldPath}.totrinnskontrollGodkjent`}
                           legend="Vurder om vilkåret er godkjent"
                           hideLegend
                         >
@@ -194,9 +202,9 @@ export const BeslutterOpphør = ({
                             <Radio value={false}>Vurder på nytt</Radio>
                           </HStack>
                         </RhfRadioGroup>
-                        {visBegrunnelseTekstfelt && (
+                        {isVurderPaNytt && (
                           <ArrowBox alignOffset={110}>
-                            {visAvslagsårsakKryssbokser && (
+                            {isVurderPaNytt && (
                               <VStack gap="space-8">
                                 <Detail>Årsak</Detail>
                                 <Fieldset legend="" hideLegend>
@@ -204,13 +212,13 @@ export const BeslutterOpphør = ({
                                     <div>
                                       <RhfCheckbox
                                         control={control}
-                                        name={`aksjonspunktGodkjenning.${index}.feilFakta`}
+                                        name={`${fieldPath}.feilFakta`}
                                         label="Feil fakta"
                                         onChange={reValidate}
                                       />
                                       <RhfCheckbox
                                         control={control}
-                                        name={`aksjonspunktGodkjenning.${index}.feilRegel`}
+                                        name={`${fieldPath}.feilRegel`}
                                         label="Feil regelforståelse"
                                         onChange={reValidate}
                                       />
@@ -218,13 +226,13 @@ export const BeslutterOpphør = ({
                                     <div>
                                       <RhfCheckbox
                                         control={control}
-                                        name={`aksjonspunktGodkjenning.${index}.feilLov`}
+                                        name={`${fieldPath}.feilLov`}
                                         label="Feil lovanvendelse"
                                         onChange={reValidate}
                                       />
                                       <RhfCheckbox
                                         control={control}
-                                        name={`aksjonspunktGodkjenning.${index}.annet`}
+                                        name={`${fieldPath}.annet`}
                                         label="Annet"
                                         onChange={reValidate}
                                       />
@@ -237,7 +245,7 @@ export const BeslutterOpphør = ({
                             <Box marginBlock="space-16 space-0" maxWidth="70ch" width="100%">
                               <RhfTextarea
                                 control={control}
-                                name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
+                                name={`${fieldPath}.besluttersBegrunnelse`}
                                 label="Begrunnelse"
                               />
                             </Box>
