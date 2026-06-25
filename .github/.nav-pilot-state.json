@@ -1,17 +1,17 @@
 {
   "collection": "frontend",
-  "version": "2026.06.05-082958-add16ce",
+  "version": "2026.06.25-072030-1ae3959",
   "scope": "repo",
-  "source_sha": "7f41e92",
+  "source_sha": "1ae3959",
   "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
       "path": ".github/agents/accessibility.agent.md",
-      "hash": "243143499e16befb"
+      "hash": "c35b6db4d15e6f9f"
     },
     {
       "path": ".github/agents/aksel.agent.md",
-      "hash": "7103fb8df66fb0b1"
+      "hash": "d190246642818387"
     },
     {
       "path": ".github/agents/forfatter.agent.md",
@@ -19,15 +19,15 @@
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "1a77f9c4ecf37af8"
+      "hash": "f490eb3f9ca1e9a3"
     },
     {
       "path": ".github/skills/aksel-spacing/",
-      "hash": "690f23009e204e36"
+      "hash": "177594fc5ae8d7e3"
     },
     {
       "path": ".github/skills/playwright-testing/",
-      "hash": "d8991a8ed8a5e0b5"
+      "hash": "5c618cd99c79df64"
     },
     {
       "path": ".github/skills/web-design-reviewer/",
@@ -71,7 +71,7 @@
     },
     {
       "path": ".github/prompts/aksel-component.prompt.md",
-      "hash": "8f6e07fff457bc3d"
+      "hash": "68c1da8a387cdffe"
     },
     {
       "path": ".github/prompts/nais-manifest.prompt.md",

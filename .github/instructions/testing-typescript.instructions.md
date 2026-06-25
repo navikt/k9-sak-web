@@ -1,5 +1,5 @@
 ---
-applyTo: "**/*.{test,spec}.{ts,tsx}"
+applyTo: "**/*.test.{ts,tsx}"
 ---
 
 # TypeScript Testing (Vitest)
