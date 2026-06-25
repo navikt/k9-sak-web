@@ -64,9 +64,7 @@ export const EnOppgavetype: Story = {
   },
   play: async ({ canvas }) => {
     await delay(100);
-    await expect(
-      canvas.getByText('Det ligger åpne Gosys-oppgaver på denne saken. Sjekk Gosys før du fatter vedtak.'),
-    ).toBeInTheDocument();
+    await expect(canvas.getByText('Det ligger åpne Gosys-oppgaver på denne saken.')).toBeInTheDocument();
     await expect(canvas.getByText('Vurder konsekvens for ytelse')).toBeInTheDocument();
   },
 };
