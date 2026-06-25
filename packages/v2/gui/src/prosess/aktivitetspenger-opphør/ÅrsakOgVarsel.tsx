@@ -38,13 +38,16 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
     (bostedGrunnlag.perioder ?? []).map(p => [
       p.fom,
       {
-        opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
-        årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
-        begrunnelse: '',
-        åpenbarGrunnTilIkkeVarsle: '',
-        opphøreEllerAvslå: '',
         avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
         avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
+        begrunnelse: p.avklaring?.begrunnelse ?? '',
+        begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
+        forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
+        opphøreEllerAvslå: '',
+        opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
+        årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
+        åpenbarGrunnTilIkkeVarsle:
+          p.avklaring?.skalSendeVarsel === true ? 'nei' : p.avklaring?.skalSendeVarsel === false ? 'ja' : '',
       },
     ]),
   ),
@@ -89,9 +92,9 @@ export const AarsakOgVarsel = ({
 }: Props) => {
   const isVurderBostedAPOpen = vurderBostedAP !== undefined && vurderBostedAP.status !== AksjonspunktStatus.UTFØRT;
   const dateRange = getBostedDateRange(bostedVilkår.perioder);
-
+  const erSendtTilbakeFraBeslutter = vurderBostedAP?.toTrinnsBehandlingGodkjent === false;
   const periods: VilkårSplittPanelPeriod[] = [
-    ...(isVurderBostedAPOpen
+    ...(isVurderBostedAPOpen && !erSendtTilbakeFraBeslutter
       ? [
           {
             id: 'ikke-satt',
@@ -209,6 +212,15 @@ export const AarsakOgVarsel = ({
         readOnly={panelReadOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={isVarselAPSolved ? <VurdertAv ident={vurderBostedAP?.ansvarligSaksbehandler} /> : undefined}
+        beforeDetailContent={
+          readOnlyForValgtPeriode && valgtPeriode?.resultat?.erBosatt ? (
+            <InfoCard data-color="info">
+              <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+                Alle vilkår er innvilget i perioden.
+              </InfoCard.Message>
+            </InfoCard>
+          ) : undefined
+        }
       >
         {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
           <>

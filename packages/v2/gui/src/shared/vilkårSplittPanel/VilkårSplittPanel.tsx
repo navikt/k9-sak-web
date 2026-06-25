@@ -37,6 +37,7 @@ interface VilkårSplittPanelProps {
   isPermanentlyReadOnly?: boolean;
   periodListLabel?: string;
   periodColumnHeader?: string;
+  beforeDetailContent?: ReactNode;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
@@ -77,6 +78,7 @@ export const VilkårSplittPanel = ({
   isPermanentlyReadOnly,
   periodListLabel = 'Alle søknader',
   periodColumnHeader = 'Søknadstidspunkt',
+  beforeDetailContent,
 }: VilkårSplittPanelProps) => {
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
@@ -168,7 +170,9 @@ export const VilkårSplittPanel = ({
             </HStack>
           )}
           <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
-          {isRenderProp ? (
+          {beforeDetailContent ? (
+            beforeDetailContent
+          ) : isRenderProp ? (
             <>
               <Box
                 borderRadius="8"
