@@ -7,10 +7,10 @@
   "author": "NAV IT",
   "license": "MIT",
   "dependencies": {
-    "@navikt/aksel-icons": "8.10.4",
-    "@navikt/ds-css": "8.10.4",
+    "@navikt/aksel-icons": "8.13.1",
+    "@navikt/ds-css": "8.13.1",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "8.10.4",
+    "@navikt/ds-react": "8.13.1",
     "@navikt/ft-form-hooks": "12.3.1",
     "@navikt/ft-ui-komponenter": "8.0.11",
     "@navikt/ft-utils": "5.0.8",
