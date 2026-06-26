@@ -47,6 +47,15 @@ const resolveTeapotProps = (error: AxiosError) => {
   return { status, eta, systemMelding };
 };
 
+// Hent ut "feilmelding" frå server-responsen (t.d. ved BadRequestException). Returnerer null viss den ikkje finst.
+const getBodyFeilmelding = (error: AxiosError): string | null => {
+  const data = asRecord(getEffectiveResponseData(error));
+  if (data != null && typeof data['feilmelding'] === 'string') {
+    return data['feilmelding'];
+  }
+  return null;
+};
+
 export const resolveAxiosErrorÅrsakIkkeTilgang = (error: AxiosError): ReadonlyArray<ÅrsakIkkeTilgang> => {
   if (error.status === 403) {
     const data = asRecord(getEffectiveResponseData(error));
@@ -203,13 +212,15 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
 
   // 400 — ugyldig forespørsel. Speglar resolveApiErrorViewProps.
   if (status === 400) {
+    const feilmelding = getBodyFeilmelding(error);
+    const harFeilmelding = feilmelding != null && feilmelding.trim().length > 5;
     return {
       error,
-      title: 'Feltene mangler eller har feil informasjon',
-      errorInfo: (
-        <>
-          <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
-        </>
+      title: 'Innsendt forespørsel var ugyldig',
+      errorInfo: harFeilmelding ? (
+        <BodyLong weight="semibold">{feilmelding}</BodyLong>
+      ) : (
+        <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
       ),
       fixAction: {
         ...reloadAction,
