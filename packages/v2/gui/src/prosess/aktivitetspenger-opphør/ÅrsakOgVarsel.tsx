@@ -141,6 +141,7 @@ export const AarsakOgVarsel = ({
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
       const isOpphør = selectedFormPeriod.opphøreEllerAvslå === 'opphøre';
+      const skalSendeVarsel = selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'nei';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
         begrunnelse: selectedFormPeriod.begrunnelse,
@@ -150,18 +151,12 @@ export const AarsakOgVarsel = ({
               fom: isOpphør ? selectedFormPeriod.opphørsdato : selectedFormPeriod.avslagFom,
               tom: isOpphør ? undefined : selectedFormPeriod.avslagTom,
             },
-            skalIkkeSendeVarsel: selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'ja',
+            skalIkkeSendeVarsel: !skalSendeVarsel,
             vurdering: {
               begrunnelse: selectedFormPeriod.begrunnelse,
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
-              begrunnelseIkkeVarsel:
-                selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'ja'
-                  ? selectedFormPeriod.begrunnelseForIkkeVarsle
-                  : undefined,
-              fritekstTilVarsel:
-                selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'nei'
-                  ? selectedFormPeriod.forhåndsvarselTekst
-                  : undefined,
+              begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
+              fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
             },
           },
         ],
