@@ -100,8 +100,9 @@ export const TiDagerProsessIndex = ({
     );
   }
 
-  const vilkårErFerdigVurdert = vilkår?.perioder?.every(p => p.vilkarStatus !== vilkårStatus.IKKE_VURDERT);
-  const vilkårErOppfylt = vilkår?.perioder?.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
+  const vilkårPerioder = vilkår?.perioder ?? [];
+  const vilkårErFerdigVurdert = vilkårPerioder.length > 0 && vilkårPerioder.every(p => p.vilkarStatus !== vilkårStatus.IKKE_VURDERT);
+  const vilkårErOppfylt = vilkårPerioder.length > 0 && vilkårPerioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
 
   return (
     <>
