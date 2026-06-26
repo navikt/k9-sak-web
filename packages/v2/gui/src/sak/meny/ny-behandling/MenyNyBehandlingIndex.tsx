@@ -83,7 +83,9 @@ const MenyNyBehandlingIndexV2 = ({
   gjeldendeVedtakBehandlendeEnhetId,
 }: OwnProps) => {
   const vilkårBackendClient = new VilkårBackendClient(
-    ytelseType === fagsakYtelsesType.UNGDOMSYTELSE ? 'ungSak' : 'k9Sak',
+    ytelseType === fagsakYtelsesType.UNGDOMSYTELSE || ytelseType === fagsakYtelsesType.AKTIVITETSPENGER
+      ? 'ungSak'
+      : 'k9Sak',
   );
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
