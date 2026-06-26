@@ -29,6 +29,8 @@ interface FormData {
       opphøreEllerAvslå: 'opphøre' | 'avslå' | '';
       avslagFom: string;
       avslagTom: string;
+      begrunnelseForIkkeVarsle: string;
+      forhåndsvarselTekst: string;
     }
   >;
 }
@@ -152,6 +154,14 @@ export const AarsakOgVarsel = ({
             vurdering: {
               begrunnelse: selectedFormPeriod.begrunnelse,
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
+              begrunnelseIkkeVarsel:
+                selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'ja'
+                  ? selectedFormPeriod.begrunnelseForIkkeVarsle
+                  : undefined,
+              fritekstTilVarsel:
+                selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'nei'
+                  ? selectedFormPeriod.forhåndsvarselTekst
+                  : undefined,
             },
           },
         ],
