@@ -80,6 +80,7 @@ export const KunVurderHenvendelse: Story = {
     await expect(canvas.queryByText(/Det ligger åpne Gosys-oppgaver på søker/)).not.toBeInTheDocument();
     await expect(canvas.queryByRole('link', { name: 'Gå til Gosys' })).not.toBeInTheDocument();
   },
+};
 
 export const EnOppgavetype: Story = {
   args: {
