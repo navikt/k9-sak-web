@@ -16,10 +16,12 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
   if (error.isUnauthorized) {
     const loginUrl = withRedirectToCurrentLocation(resolveLoginURL(error.location))?.toString() ?? '/';
     fixAction = {
-      label: 'Logg inn',
-      icon: <EnterIcon />,
-      href: loginUrl,
       info: 'Prøv å logge inn på nytt. Meld feil i Porten hvis du ikke får løst den selv.',
+      button: {
+        label: 'Logg inn',
+        icon: <EnterIcon />,
+        href: loginUrl,
+      },
     };
     title = 'Ikke innlogget';
     errorInfo = <BodyLong>Du er ikke innlogget.</BodyLong>;

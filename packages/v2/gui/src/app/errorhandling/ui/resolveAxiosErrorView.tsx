@@ -87,10 +87,12 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       title: 'Ikke innlogget',
       errorInfo: <BodyLong>Du er ikke innlogget.</BodyLong>,
       fixAction: {
-        label: 'Logg inn',
-        icon: <EnterIcon />,
-        href: loginUrl,
         info: 'Prøv å logge inn på nytt. Meld feil i Porten hvis du ikke får løst den selv.',
+        button: {
+          label: 'Logg inn',
+          icon: <EnterIcon />,
+          href: loginUrl,
+        },
       },
     };
   }
