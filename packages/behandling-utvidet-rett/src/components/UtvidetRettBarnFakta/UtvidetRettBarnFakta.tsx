@@ -22,7 +22,7 @@ const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: 
   const formateradeBarn: BarnDto[] = barn.map(
     ({ fnr, fodselsdato }) =>
       ({
-        personIdent: fnr.substr(0, 6),
+        personIdent: fnr,
         fødselsdato: fodselsdato,
         harSammeBosted: undefined,
         barnType: BarnType.VANLIG,
