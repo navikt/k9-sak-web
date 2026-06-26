@@ -38,22 +38,47 @@ export const IngenOppgaver: Story = {
   },
 };
 
-export const AlleFireOppgavetyper: Story = {
+export const AlleOppgavetyperViViser: Story = {
   args: {
     saksnummer: '123456789',
     api: createMockApi([
       OppgaveÅrsak.VURDER_KONSEKVENS_YTELSE,
-      OppgaveÅrsak.VURDER_HENVENDELSE,
       OppgaveÅrsak.KONTAKT_BRUKER,
       OppgaveÅrsak.VURDER_DOKUMENT,
     ]),
   },
   play: async ({ canvas }) => {
     await delay(100);
+    await expect(canvas.getByText(/Det ligger åpne Gosys-oppgaver på søker/)).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: 'Gå til Gosys' })).toBeInTheDocument();
     await expect(canvas.getByText(/Vurder konsekvens for ytelse/)).toBeInTheDocument();
-    await expect(canvas.getByText(/Vurder henvendelse/)).toBeInTheDocument();
     await expect(canvas.getByText(/Kontakt bruker/)).toBeInTheDocument();
     await expect(canvas.getByText(/Vurder dokument/)).toBeInTheDocument();
+  },
+};
+
+export const MedVurderHenvendelse: Story = {
+  args: {
+    saksnummer: '123456789',
+    api: createMockApi([OppgaveÅrsak.VURDER_HENVENDELSE, OppgaveÅrsak.KONTAKT_BRUKER]),
+  },
+  play: async ({ canvas }) => {
+    await delay(100);
+    await expect(canvas.getByText(/Det ligger åpne Gosys-oppgaver på søker/)).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: 'Gå til Gosys' })).toBeInTheDocument();
+    await expect(canvas.getByText(/Kontakt bruker/)).toBeInTheDocument();
+  },
+};
+
+export const KunVurderHenvendelse: Story = {
+  args: {
+    saksnummer: '123456789',
+    api: createMockApi([OppgaveÅrsak.VURDER_HENVENDELSE]),
+  },
+  play: async ({ canvas }) => {
+    await delay(100);
+    await expect(canvas.queryByText(/Det ligger åpne Gosys-oppgaver på søker/)).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('link', { name: 'Gå til Gosys' })).not.toBeInTheDocument();
   },
 };
 
@@ -64,7 +89,8 @@ export const EnOppgavetype: Story = {
   },
   play: async ({ canvas }) => {
     await delay(100);
-    await expect(canvas.getByText('Det ligger åpne Gosys-oppgaver på denne saken.')).toBeInTheDocument();
+    await expect(canvas.getByText(/Det ligger åpne Gosys-oppgaver på søker/)).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: 'Gå til Gosys' })).toBeInTheDocument();
     await expect(canvas.getByText('Vurder konsekvens for ytelse')).toBeInTheDocument();
   },
 };
