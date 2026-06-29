@@ -191,6 +191,7 @@ const FagsakIndex = () => {
       const data = await k9StatusBackendClient.getMerknader(behandling?.uuid);
       return data ?? null;
     },
+    throwOnError: false,
     enabled: !!behandling?.uuid,
   });
 
