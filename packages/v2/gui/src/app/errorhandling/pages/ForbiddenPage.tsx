@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import { BigError } from '@k9-sak-web/gui/app/errorhandling/pages/BigError.js';
 import type { ÅrsakIkkeTilgang } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
 
-
 const årsak_tekst: Record<ÅrsakIkkeTilgang, string> = {
   HAR_IKKE_TILGANG_TIL_KODE6_PERSON: 'Du mangler tilgang til saker med strengt fortrolig adresse (kode 6)',
   HAR_IKKE_TILGANG_TIL_KODE7_PERSON: 'Du mangler tilgang til saker med fortrolig adresse (kode 7)',

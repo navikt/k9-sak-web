@@ -2257,7 +2257,6 @@ __metadata:
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "npm:1.0.0"
     "@k9-sak-web/fakta-barn-oms": "npm:1.0.0"
-    "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
@@ -2306,7 +2305,6 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-etablert-tilsyn": "npm:1.0.0"
-    "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
@@ -2354,7 +2352,6 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
-    "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-utenlandsopphold": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
@@ -2405,7 +2402,6 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-etablert-tilsyn": "npm:1.0.0"
-    "@k9-sak-web/fakta-inntektsmelding": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
@@ -2623,27 +2619,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:12.0.11"
     "@navikt/ft-utils": "npm:5.0.9"
     "@popperjs/core": "npm:2.11.8"
-    "@types/react": "npm:19.2.15"
-    classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
-    react: "npm:19.2.7"
-    react-dom: "npm:19.2.7"
-    react-hook-form: "npm:7.80.0"
-    react-intl: "npm:10.1.13"
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-inntektsmelding@npm:1.0.0, @k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding"
-  dependencies:
-    "@navikt/aksel-icons": "npm:8.13.1"
-    "@navikt/ds-css": "npm:8.13.1"
-    "@navikt/ds-icons": "npm:3.4.3"
-    "@navikt/ds-react": "npm:8.13.1"
-    "@navikt/ft-form-hooks": "npm:12.3.2"
-    "@navikt/ft-ui-komponenter": "npm:8.0.12"
-    "@navikt/ft-utils": "npm:5.0.9"
     "@types/react": "npm:19.2.15"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.21"
@@ -14460,9 +14435,9 @@ __metadata:
   linkType: hard
 
 "undici@npm:^6.25.0":
-  version: 6.27.0
-  resolution: "undici@npm:6.27.0"
-  checksum: 10/30c18cdb235edf4dd36f8aa3ace1ffaf44060289a7d62ad44c33180d2d74a224015d25574812f62ce9c625b5beb1b0b766495b650fedf356aca11eed7ce2c816
+  version: 6.26.0
+  resolution: "undici@npm:6.26.0"
+  checksum: 10/a1715ee4304f58fecd61e0a8c3bd7064435cfbc98b3ec1414dba5e89de97d436b7e88dd094b06ff8440428bf36b56163fc88972118890826039865edf58bdfcf
   languageName: node
   linkType: hard
 

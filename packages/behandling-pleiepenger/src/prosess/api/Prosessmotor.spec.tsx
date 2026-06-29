@@ -38,11 +38,11 @@ const lagAksjonspunkt = (
 describe('useProsessmotor', () => {
   let queryClient: QueryClient;
 
-    beforeEach(() => {
-      queryClient = createQueryClient({
-        queries: { retry: false },
-      });
+  beforeEach(() => {
+    queryClient = createQueryClient({
+      queries: { retry: false },
     });
+  });
 
   test('returnerer alle 8 paneler med korrekte id-er', async () => {
     const api = new FakeK9SakProsessApi();

@@ -228,10 +228,7 @@ const BehandlingSupportIndex = ({
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
-  const tabs = useMemo(
-    () => lagTabs(synligeSupportPaneler, valgtIndex),
-    [synligeSupportPaneler, valgtIndex, lagTabs],
-  );
+  const tabs = useMemo(() => lagTabs(synligeSupportPaneler, valgtIndex), [synligeSupportPaneler, valgtIndex, lagTabs]);
 
   const behandlingTypeKode = behandling?.type.kode;
   const erTilbakekreving =

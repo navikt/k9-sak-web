@@ -176,7 +176,11 @@ const BehandlingSupportIndex = ({
   const notatBackendClient = useContext(NotatBackendClientContext);
 
   const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer];
-  const { data: notater, isError: notaterFetchFailed, isLoading: notaterIsLoading } = useQuery({
+  const {
+    data: notater,
+    isError: notaterFetchFailed,
+    isLoading: notaterIsLoading,
+  } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
     enabled: !!fagsak && !!notatBackendClient,
@@ -184,24 +188,27 @@ const BehandlingSupportIndex = ({
     throwOnError: false,
   });
 
-  const lagTabs = useCallback((tilgjengeligeTabs: string[], valgtIndex?: number) =>
-    Object.keys(TABS)
-      .filter(key => tilgjengeligeTabs.includes(key))
-      .map((key, index) => ({
-        getSvg: TABS[key].getSvg,
-        tooltip: TABS[key].tooltipTextCode,
-        isActive: index === valgtIndex,
-        antallUlesteNotater,
-        tabKey: TABS[key].tabKey,
-      })), [antallUlesteNotater]);
+  const lagTabs = useCallback(
+    (tilgjengeligeTabs: string[], valgtIndex?: number) =>
+      Object.keys(TABS)
+        .filter(key => tilgjengeligeTabs.includes(key))
+        .map((key, index) => ({
+          getSvg: TABS[key].getSvg,
+          tooltip: TABS[key].tooltipTextCode,
+          isActive: index === valgtIndex,
+          antallUlesteNotater,
+          tabKey: TABS[key].tabKey,
+        })),
+    [antallUlesteNotater],
+  );
 
   useEffect(() => {
-    if(notaterIsLoading) {
-      setAntallUlesteNotater(undefined)
-    } else if(!notaterFetchFailed && notater != null) {
-      setAntallUlesteNotater("" + notater.filter(notat => !notat.skjult).length);
+    if (notaterIsLoading) {
+      setAntallUlesteNotater(undefined);
+    } else if (!notaterFetchFailed && notater != null) {
+      setAntallUlesteNotater('' + notater.filter(notat => !notat.skjult).length);
     } else {
-      setAntallUlesteNotater("?")
+      setAntallUlesteNotater('?');
     }
   }, [notater, notaterIsLoading, notaterFetchFailed]);
 
@@ -236,10 +243,7 @@ const BehandlingSupportIndex = ({
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
-  const tabs = useMemo(
-    () => lagTabs(synligeSupportPaneler, valgtIndex),
-    [synligeSupportPaneler, valgtIndex, lagTabs],
-  );
+  const tabs = useMemo(() => lagTabs(synligeSupportPaneler, valgtIndex), [synligeSupportPaneler, valgtIndex, lagTabs]);
 
   const behandlingTypeKode = behandling?.type.kode;
   const erTilbakekreving =

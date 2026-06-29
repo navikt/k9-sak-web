@@ -1,19 +1,19 @@
-import {action} from 'storybook/actions';
+import { action } from 'storybook/actions';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {behandlingType} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import {fagsakYtelsesType} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import {KodeverkProvider} from '@k9-sak-web/gui/kodeverk/index.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
-import {TilkjentYtelseV1ApiContext} from './api/TilkjentYtelseApiContext';
-import type {FeriepengerPrÅr} from './api/tilkjentYtelseApi';
-import { withQueryClientProvider } from "@k9-sak-web/gui/storybook/decorators/withQueryClientProvider.js";
+import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext';
+import type { FeriepengerPrÅr } from './api/tilkjentYtelseApi';
+import { withQueryClientProvider } from '@k9-sak-web/gui/storybook/decorators/withQueryClientProvider.js';
 
 const fagsak = {
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
@@ -204,7 +204,7 @@ const fakeFeriepengerApi = {
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
-  decorators: [withQueryClientProvider({queries: {throwOnError: false}})]
+  decorators: [withQueryClientProvider({ queries: { throwOnError: false } })],
 };
 
 export const VisUtenAksjonspunkt = args => (
