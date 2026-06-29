@@ -1,15 +1,33 @@
 const { DEV: IS_DEV } = import.meta.env;
 export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
+const devHosts = ['k9.dev.intern.nav.no', 'ung.intern.dev.nav.no'];
+const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no'];
+
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no' || host === 'ung.intern.dev.nav.no') {
-    return 'https://k9-los-web.intern.dev.nav.no';
+  const devUrl = 'https://k9-los-web.intern.dev.nav.no';
+  const prodUrl = 'https://k9-los-web.intern.nav.no';
+  if (devHosts.includes(host)) {
+    return devUrl;
   }
-  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
-    return 'https://k9-los-web.intern.nav.no';
+  if (prodHosts.includes(host)) {
+    return prodUrl;
   }
   return null;
+};
+
+export const getGosysUrl = (): string => {
+  const { host } = window.location;
+  const devUrl = 'https://gosys-q2.dev.intern.nav.no/gosys/bruker/brukeroversikt.jsf';
+  const prodUrl = 'https://gosys.intern.nav.no/gosys/bruker/brukeroversikt.jsf';
+  if (devHosts.includes(host)) {
+    return devUrl;
+  }
+  if (prodHosts.includes(host)) {
+    return prodUrl;
+  }
+  return prodUrl;
 };
 
 export const goToLos = () => {

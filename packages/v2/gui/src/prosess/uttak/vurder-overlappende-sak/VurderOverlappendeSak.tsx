@@ -77,6 +77,7 @@ const VurderOverlappendeSak: FC = () => {
     queryFn: async () => {
       return await uttakApi.getEgneOverlappendeSaker(uuid);
     },
+    throwOnError: false,
   });
 
   const vurderOverlappendeSakFormSchema: ObjectSchema<VurderOverlappendeSakFormData> = yup.object({

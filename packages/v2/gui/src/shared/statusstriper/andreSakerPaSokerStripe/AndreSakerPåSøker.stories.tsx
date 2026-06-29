@@ -30,6 +30,9 @@ const createMockApi = (responseData: MatchFagsakerResponse = [], shouldFail = fa
       direkteutbetaling: { aktiv: false },
     });
   },
+  getÅpneGosysOppgaver: () => {
+    return Promise.resolve([]);
+  },
 });
 
 export const IngenAndreSaker: Story = {

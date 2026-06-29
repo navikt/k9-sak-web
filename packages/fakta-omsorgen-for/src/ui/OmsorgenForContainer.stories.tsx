@@ -15,7 +15,7 @@ const meta = {
       endpoints: {
         omsorgsperioder: `${mockUrlPrepend}/mock/omsorgsperioder`,
       },
-      httpErrorHandler: fn(),
+      errorNotifier: fn(),
       onFinished: fn(),
     },
   },
@@ -44,7 +44,7 @@ export const Pleiepenger: Story = {
       endpoints: {
         omsorgsperioder: `${mockUrlPrepend}/mock/omsorgsperioder`,
       },
-      httpErrorHandler: fn(),
+      errorNotifier: fn(),
       onFinished: fn(),
     },
   },
@@ -61,7 +61,7 @@ export const ReadOnly: Story = {
       endpoints: {
         omsorgsperioder: `${mockUrlPrepend}/mock/omsorgsperioder`,
       },
-      httpErrorHandler: fn(),
+      errorNotifier: fn(),
       onFinished: fn(),
     },
   },

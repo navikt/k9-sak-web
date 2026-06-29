@@ -1,20 +1,19 @@
 import {
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakType,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType
+  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {behandlingType as BehandlingTypeK9Sak} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {act, render, screen} from '@testing-library/react';
+import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
-import {qFeatureToggles} from '../../../featuretoggles/k9/featureToggles';
+import { qFeatureToggles } from '../../../featuretoggles/k9/featureToggles';
 import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
+import { createQueryClient } from '../../../shared/query/queryClient.js';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
+const queryClient = createQueryClient({
+  queries: {
+    retry: false,
   },
 });
 
@@ -293,7 +292,10 @@ describe('<MenyNyBehandlingIndex>', () => {
         screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
         BehandlingTypeK9Sak.REVURDERING,
       );
-      await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }), 'DELVIS');
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+        'DELVIS',
+      );
       await userEvent.selectOptions(
         screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' }),
         BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
@@ -388,7 +390,10 @@ describe('<MenyNyBehandlingIndex>', () => {
         screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
         BehandlingTypeK9Sak.REVURDERING,
       );
-      await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }), 'DELVIS');
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+        'DELVIS',
+      );
       await userEvent.selectOptions(
         screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' }),
         BehandlingÅrsakType.RE_ENDRET_FORDELING,
@@ -437,7 +442,7 @@ describe('<MenyNyBehandlingIndex>', () => {
                 årsak: BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG,
                 vilkårType: 'FP_VK_41',
                 periodeType: 'STP',
-                valgbarePerioder: [{fom: '2026-03-01', tom: '2026-03-01'}],
+                valgbarePerioder: [{ fom: '2026-03-01', tom: '2026-03-01' }],
               },
               {
                 årsak: BehandlingÅrsakType.RE_ENDRET_FORDELING,
@@ -482,17 +487,20 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     await act(async () => {
       await userEvent.selectOptions(
-        screen.getByRole('combobox', {name: 'Hva slags behandling ønsker du å opprette?'}),
+        screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
         BehandlingTypeK9Sak.REVURDERING,
       );
-      await userEvent.selectOptions(screen.getByRole('combobox', {name: 'Hvordan vil du opprette revurderingen?'}), 'DELVIS');
       await userEvent.selectOptions(
-        screen.getByRole('combobox', {name: 'Hva er årsaken til revurderingen?'}),
+        screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+        'DELVIS',
+      );
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' }),
         BehandlingÅrsakType.RE_ENDRET_FORDELING,
       );
-      await userEvent.type(screen.getByRole('textbox', {name: 'Fra og med'}), '010326');
-      await userEvent.type(screen.getByRole('textbox', {name: 'Til og med'}), '100326');
-      await userEvent.click(screen.getByRole('button', {name: 'Opprett behandling'}));
+      await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '010326');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '100326');
+      await userEvent.click(screen.getByRole('button', { name: 'Opprett behandling' }));
     });
 
     const kall = lagNyBehandlingCallback.mock.calls;
@@ -581,7 +589,10 @@ describe('<MenyNyBehandlingIndex>', () => {
         screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
         BehandlingTypeK9Sak.REVURDERING,
       );
-      await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }), 'DELVIS');
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+        'DELVIS',
+      );
     });
 
     const årsakSelect = screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' });

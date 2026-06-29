@@ -20,7 +20,7 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
@@ -39,7 +39,7 @@ const Innleggelsesperiodeoversikt = ({
   const innleggelsesperioderDefault = innleggelsesperioder?.length > 0 ? innleggelsesperioder : [new Period('', '')];
 
   const hentInnleggelsesperioder = () =>
-    httpUtils.get(`${endpoints.innleggelsesperioder}`, httpErrorHandler, {
+    httpUtils.get(`${endpoints.innleggelsesperioder}`, errorNotifier, {
       signal: controller.signal,
     });
 
@@ -74,7 +74,7 @@ const Innleggelsesperiodeoversikt = ({
     postInnleggelsesperioder(
       href,
       { behandlingUuid, versjon, perioder: nyeInnleggelsesperioder },
-      httpErrorHandler,
+      errorNotifier,
       controller.signal,
     )
       .then(() => {
@@ -168,7 +168,7 @@ const Innleggelsesperiodeoversikt = ({
             return postInnleggelsesperioderDryRun(
               href,
               { ...requestPayload, perioder: nyeInnleggelsesperioder },
-              httpErrorHandler,
+              errorNotifier,
               controller.signal,
             );
           }}

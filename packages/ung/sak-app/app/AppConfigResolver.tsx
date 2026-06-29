@@ -1,7 +1,8 @@
 import { ReactElement, useEffect } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
@@ -33,10 +34,10 @@ const NO_PARAMS = {};
  * Komponent som henter backend-data som skal kunne aksesseres globalt i applikasjonen. Denne dataen blir kun hentet en gang.
  */
 const AppConfigResolver = ({ children }: OwnProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
   useEffect(() => {
-    requestApi.setAddErrorMessageHandler(addErrorMessage);
-  }, []);
+    requestApi.setErrorNotifier(legacyErrorNotifier);
+  }, [legacyErrorNotifier]);
 
   const [harHentetFerdigInitLenker, harK9sakInitKallFeilet] = useHentInitLenker();
 

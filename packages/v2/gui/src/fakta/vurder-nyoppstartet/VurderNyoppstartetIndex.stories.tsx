@@ -2,10 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { http, HttpResponse } from 'msw';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { VurderNyoppstartetIndex } from './VurderNyoppstartetIndex';
+import withErrorBoundary from '../../storybook/decorators/withErrorBoundary.js';
 
 const meta = {
   title: 'gui/fakta/vurder-nyoppstartet/VurderNyoppstartetIndex',
   component: VurderNyoppstartetIndex,
+  decorators: [withErrorBoundary()],
 } satisfies Meta<typeof VurderNyoppstartetIndex>;
 
 export default meta;

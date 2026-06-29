@@ -1,1 +1,7 @@
-export type { k9_sak_kontrakt_kompletthet_KompletthetsVurderingDto as KompletthetsVurderingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { KompletthetsTilstandPåPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/KompletthetsTilstandPåPeriodeDto.js';
+
+// Bruker den overstyrte tilstand-typen slik at vurdering får den korrekte KAN_FORTSETTE-verdien ('FORTSETT').
+// TODO: Kun midlertidig, fjern når endring i Vurdering type er rulla ut til prod i backend
+export type KompletthetsVurderingDto = {
+  tilstand: KompletthetsTilstandPåPeriodeDto[];
+};
