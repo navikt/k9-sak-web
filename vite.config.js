@@ -125,7 +125,6 @@ export default ({ mode }) => {
         release: {
           name: process.env.VITE_SENTRY_RELEASE,
         },
-        debug: true,
       }),
     ],
     build: {
