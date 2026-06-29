@@ -19,8 +19,10 @@ const meta = {
       errorNotifier: () => {},
       lagreBeredskapvurdering: fn(),
       lagreNattevåkvurdering: fn(),
-      harAksjonspunktForBeredskap: true,
-      harAksjonspunktForNattevåk: true,
+      harUløstAksjonspunktForBeredskap: true,
+      harUløstAksjonspunktForNattevåk: true,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
     },
   },
   parameters: {
@@ -132,8 +134,10 @@ export const UtenAksjonspunkter: Story = {
       errorNotifier: () => {},
       lagreBeredskapvurdering: fn(),
       lagreNattevåkvurdering: fn(),
-      harAksjonspunktForBeredskap: false,
-      harAksjonspunktForNattevåk: false,
+      harUløstAksjonspunktForBeredskap: false,
+      harUløstAksjonspunktForNattevåk: false,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
     },
   },
   parameters: {
@@ -182,8 +186,10 @@ export const BareNattevåkAksjonspunkt: Story = {
       errorNotifier: () => {},
       lagreBeredskapvurdering: fn(),
       lagreNattevåkvurdering: fn(),
-      harAksjonspunktForBeredskap: false,
-      harAksjonspunktForNattevåk: true,
+      harUløstAksjonspunktForBeredskap: false,
+      harUløstAksjonspunktForNattevåk: true,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
     },
   },
   parameters: {
@@ -232,8 +238,10 @@ export const BareBeredskapAksjonspunkt: Story = {
       errorNotifier: () => {},
       lagreBeredskapvurdering: fn(),
       lagreNattevåkvurdering: fn(),
-      harAksjonspunktForBeredskap: true,
-      harAksjonspunktForNattevåk: false,
+      harUløstAksjonspunktForBeredskap: true,
+      harUløstAksjonspunktForNattevåk: false,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
     },
   },
   parameters: {
@@ -282,8 +290,10 @@ export const BeredskapFerdigVurdert: Story = {
       errorNotifier: () => {},
       lagreBeredskapvurdering: data => console.log('Lagrer beredskap:', data),
       lagreNattevåkvurdering: data => console.log('Lagrer nattevåk:', data),
-      harAksjonspunktForBeredskap: true,
-      harAksjonspunktForNattevåk: false,
+      harUløstAksjonspunktForBeredskap: true,
+      harUløstAksjonspunktForNattevåk: false,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
     },
   },
   parameters: {
@@ -302,6 +312,175 @@ export const BeredskapFerdigVurdert: Story = {
         ).toBeInTheDocument();
       });
       await expect(canvas.getByRole('button', { name: 'Fortsett' })).toBeInTheDocument();
+    });
+  },
+};
+
+export const LøstAksjonspunktBeredskap: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn-ferdig-vurdert`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      errorNotifier: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harUløstAksjonspunktForBeredskap: false,
+      harUløstAksjonspunktForNattevåk: false,
+      harLøstAksjonspunktForBeredskap: true,
+      harLøstAksjonspunktForNattevåk: false,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal starte på tilsyn-fanen (ikke beredskap) når aksjonspunkt er løst', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('tab', { name: 'Tilsyn' })).toHaveAttribute('aria-selected', 'true');
+      });
+    });
+
+    await step('skal vise rediger-knapp for ferdig vurderte perioder', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Vurdering av beredskap')).toBeInTheDocument();
+      });
+      await expect(canvas.getByRole('button', { name: 'Rediger vurdering' })).toBeInTheDocument();
+    });
+
+    await step('skal ikke vise fortsett-knapp når aksjonspunkt er løst', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const LøstAksjonspunktNattevåk: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn-ferdig-vurdert`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      errorNotifier: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harUløstAksjonspunktForBeredskap: false,
+      harUløstAksjonspunktForNattevåk: false,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: true,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal starte på tilsyn-fanen (ikke nattevåk) når aksjonspunkt er løst', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('tab', { name: 'Tilsyn' })).toHaveAttribute('aria-selected', 'true');
+      });
+    });
+
+    await step('skal ikke vise varselikon på nattevåk-fane når aksjonspunkt er løst', async () => {
+      const nattevåkTab = canvas.getByRole('tab', { name: 'Nattevåk' });
+      await expect(nattevåkTab.querySelector('svg')).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const VarseltrekantVedUløstAksjonspunkt: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      errorNotifier: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harUløstAksjonspunktForBeredskap: true,
+      harUløstAksjonspunktForNattevåk: true,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal vise varselikon på beredskap-fane ved uløst aksjonspunkt', async () => {
+      await waitFor(async () => {
+        const beredskapTab = canvas.getByRole('tab', { name: 'Beredskap' });
+        await expect(beredskapTab.querySelector('svg')).toBeInTheDocument();
+      });
+    });
+
+    await step('skal vise varselikon på nattevåk-fane ved uløst aksjonspunkt', async () => {
+      const nattevåkTab = canvas.getByRole('tab', { name: 'Nattevåk' });
+      await expect(nattevåkTab.querySelector('svg')).toBeInTheDocument();
+    });
+
+    await step('skal auto-velge beredskap-fane som default ved uløst aksjonspunkt', async () => {
+      await expect(canvas.getByRole('tab', { name: 'Beredskap' })).toHaveAttribute('aria-selected', 'true');
+    });
+  },
+};
+
+export const IngenRedigeringUtenAksjonspunkt: Story = {
+  args: {
+    data: {
+      readOnly: false,
+      endpoints: {
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn-ferdig-vurdert`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+      },
+      errorNotifier: () => {},
+      lagreBeredskapvurdering: fn(),
+      lagreNattevåkvurdering: fn(),
+      harUløstAksjonspunktForBeredskap: false,
+      harUløstAksjonspunktForNattevåk: false,
+      harLøstAksjonspunktForBeredskap: false,
+      harLøstAksjonspunktForNattevåk: false,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal ikke vise rediger-knapp for beredskap uten aksjonspunkt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Vurdering av beredskap')).toBeInTheDocument();
+      });
+      await expect(canvas.queryByRole('button', { name: 'Rediger vurdering' })).not.toBeInTheDocument();
+    });
+
+    await step('skal ikke vise fortsett-knapp for beredskap uten aksjonspunkt', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Fortsett' })).not.toBeInTheDocument();
     });
   },
 };

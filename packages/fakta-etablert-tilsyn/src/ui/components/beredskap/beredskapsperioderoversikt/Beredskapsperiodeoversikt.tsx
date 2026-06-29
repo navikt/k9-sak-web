@@ -20,7 +20,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
   const {
     lagreBeredskapvurdering = () => {},
     readOnly = false,
-    harAksjonspunktForBeredskap = false,
+    harUløstAksjonspunktForBeredskap = false,
   } = React.useContext(ContainerContext) || {};
 
   const perioderTilVurdering = beredskapData.finnPerioderTilVurdering();
@@ -41,7 +41,7 @@ const Beredskapsperiodeoversikt = ({ beredskapData }: BeredskapsperiodeoversiktP
     <VStack gap="space-24">
       <BeredskapsperiodeoversiktMessages
         beredskapData={beredskapData}
-        skalViseFortsettUtenEndring={!readOnly && harAksjonspunktForBeredskap}
+        skalViseFortsettUtenEndring={!readOnly && harUløstAksjonspunktForBeredskap}
         fortsettUtenEndring={() => lagreBeredskapvurdering(beredskapData.vurderinger)}
       />
       <NavigationWithDetailView
