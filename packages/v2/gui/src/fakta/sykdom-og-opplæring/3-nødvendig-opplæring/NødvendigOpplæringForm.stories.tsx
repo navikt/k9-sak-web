@@ -1,5 +1,7 @@
 import {
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Period } from '@k9-sak-web/gui/utils/Period.js';
@@ -10,6 +12,7 @@ import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKo
 import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -36,10 +39,56 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
 
 const sakKodeverkOppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
 
+const withMockData: Decorator = Story => {
+  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async () => ({
+    perioder: [
+      {
+        institusjon: 'St. Olavs hospital',
+        periode: { fom: '2025-02-01', tom: '2025-12-31' },
+        journalpostId: { journalpostId: 'jp-1' },
+      },
+    ],
+    vurderinger: [
+      {
+        journalpostId: { journalpostId: 'jp-1' },
+        resultat: InstitusjonResultat.MÅ_VURDERES,
+        begrunnelse: '',
+        organisasjonsnummer: undefined,
+        vurdertAv: '',
+        vurdertTidspunkt: '',
+        erTilVurdering: true,
+        redigertInstitusjonNavn: 'St. Olavs hospital',
+        perioder: [{ fom: '2025-02-01', tom: '2025-12-31' }],
+      },
+    ],
+  });
+  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => [
+    {
+      uuid: 'v1',
+      vurdertTidspunkt: '2025-01-15T10:00:00Z',
+      godkjent: true,
+      vurderingFraAnnenpart: false,
+      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+      kanOppdateres: true,
+      diagnosekoder: ['A000'],
+      avslagsårsak: undefined,
+      behandlingUuid: '333-4444',
+      saksnummer: { saksnummer: '12345' },
+      vurdertAv: 'Z123456',
+    },
+  ];
+  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => ({
+    vurderingUuid: 'v1',
+    resultat: LangvarigSykdomResultat.GODKJENT,
+  });
+
+  return <Story />;
+};
+
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/3-nødvendig-opplæring',
   component: NødvendigOpplæringForm,
-  decorators: [withK9Kodeverkoppslag(), withSykdomOgOpplæringContext()],
+  decorators: [withK9Kodeverkoppslag(), withSykdomOgOpplæringContext(), withMockData],
 } satisfies Meta<typeof NødvendigOpplæringForm>;
 
 export default meta;
