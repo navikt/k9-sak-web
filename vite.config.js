@@ -30,6 +30,26 @@ const createProxy = (target, pathRewrite) => ({
   },
 });
 
+function nodeSourcemapsPlugin({ exclude } = {}) {
+  return {
+    name: 'node-sourcemaps',
+    async transform(code, id) {
+      if (!id.includes('node_modules')) return null;
+      if (exclude?.test(id)) return null;
+      if (!/\.[cm]?[jt]sx?$/.test(id)) return null;
+      const match = code.match(/\/\/[#@] sourceMappingURL=(\S+)/m);
+      if (!match || match[1].startsWith('data:')) return null;
+      try {
+        const mapPath = path.resolve(path.dirname(id), match[1]);
+        const map = JSON.parse(await fs.promises.readFile(mapPath, 'utf-8'));
+        return { code, map };
+      } catch {
+        return null;
+      }
+    },
+  };
+}
+
 function excludeMsw() {
   return {
     name: 'exclude-msw',
@@ -104,6 +124,7 @@ export default ({ mode }) => {
         release: {
           name: process.env.VITE_SENTRY_RELEASE,
         },
+        debug: true,
       }),
     ],
     build: {
@@ -114,6 +135,7 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
+        plugins: [nodeSourcemapsPlugin({ exclude: /@sentry/ })],
         output: {
           manualChunks(id) {
             if (id.includes('@navikt/diagnosekoder')) {
