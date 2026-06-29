@@ -29,6 +29,9 @@ const createMockApi = (responseData = {}, shouldFail = false) => ({
       direkteutbetaling: { aktiv: false },
     });
   },
+  getÅpneGosysOppgaver: () => {
+    return Promise.resolve([]);
+  },
 });
 
 export const IngenOppgaver: Story = {
