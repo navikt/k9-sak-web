@@ -11,7 +11,7 @@ export const ErrorReportButton: FC<{ reportLink: string }> = ({ reportLink }) =>
       as="a"
       href={reportLink}
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       icon={<ExternalLinkIcon />}
       iconPosition="right"
     >
