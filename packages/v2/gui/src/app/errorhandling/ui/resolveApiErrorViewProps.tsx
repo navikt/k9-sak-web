@@ -62,11 +62,16 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
       <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
     );
     fixAction = {
-      ...reloadAction,
-      info: (
+      info: harFeilmelding ? (
+        <>
+          <BodyLong>
+            Korriger feil rapportert i feilmeldingen over. Prøv deretter å utføre handlingen som feilet på nytt.
+          </BodyLong>
+          <BodyLong>Meld feil i porten hvis du ikke får løst det.</BodyLong>
+        </>
+      ) : (
         <>
           <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
-          <BodyLong>Obs! Hvis du trykker på "Last siden på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
           <BodyLong>Meld feil i porten hvis du ikke får løst det.</BodyLong>
         </>
       ),
