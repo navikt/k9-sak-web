@@ -30,6 +30,7 @@ import {
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
@@ -166,6 +167,7 @@ export const BehandlingMenuIndex = ({
   const menyEndreFristClient = useMemo(() => new MenyEndreFristBackendClient(), []);
   const { data: etterlysninger = [] } = useQuery({
     queryKey: ['etterlysninger', behandling?.uuid],
+    throwOnError: ignore404Errors,
     queryFn: () => menyEndreFristClient.hentEtterlysninger(behandling?.uuid ?? ''),
     enabled: !!behandling?.uuid,
     select: etterlysninger =>

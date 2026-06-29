@@ -1,5 +1,6 @@
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useState } from 'react';
 import { MenyEndreFrist } from './MenyEndreFrist';
 import type { MenyEndreFristApi } from './MenyEndreFristApi';
@@ -22,6 +23,7 @@ export const MenyEndreFristIndex = ({
   const [nyFrist, setNyFrist] = useState<string | undefined>(undefined);
   const { data: etterlysninger = [], isLoading } = useQuery({
     queryKey: ['etterlysninger', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => api.hentEtterlysninger(behandlingUuid),
     select: etterlysninger =>
       etterlysninger.filter(etterlysning => etterlysning.status === ung_kodeverk_varsel_EtterlysningStatus.VENTER),

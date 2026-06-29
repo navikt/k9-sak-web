@@ -8,6 +8,7 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",
+    "@k9-sak-web/gui": "workspace:^",
     "@navikt/aksel-icons": "8.13.1",
     "@navikt/diagnosekoder": "1.2026.0",
     "@navikt/ds-css": "8.13.1",
