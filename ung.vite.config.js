@@ -31,6 +31,27 @@ const createProxy = (target, pathRewrite) => ({
   },
 });
 
+function nodeSourcemapsPlugin({ exclude } = {}) {
+  return {
+    name: 'node-sourcemaps',
+    async transform(code, id) {
+      const cleanId = id.replace(/^\0/, '').split('?')[0].split('#')[0];
+      if (!/(^|[\\/])node_modules([\\/]|$)/.test(cleanId)) return null;
+      if (exclude?.test(cleanId)) return null;
+      if (!/\.[cm]?[jt]sx?$/.test(cleanId)) return null;
+      const match = code.match(/\/\/[#@] sourceMappingURL=(\S+)/m);
+      if (!match || match[1].startsWith('data:')) return null;
+      try {
+        const mapPath = path.resolve(path.dirname(cleanId), match[1]);
+        const map = JSON.parse(await fs.readFile(mapPath, 'utf-8'));
+        return { code, map };
+      } catch {
+        return null;
+      }
+    },
+  };
+}
+
 function excludeMsw() {
   return {
     name: "exclude-msw",
@@ -120,6 +141,7 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
+        plugins: [nodeSourcemapsPlugin({ exclude: /@sentry/ })],
       },
     },
   });
