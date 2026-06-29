@@ -342,14 +342,18 @@ export const LøstAksjonspunktBeredskap: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('skal starte på tilsyn-fanen (ikke beredskap) når aksjonspunkt er løst', async () => {
+    await step('skal starte på Etablert tilsyn-fanen (ikke beredskap) når aksjonspunkt er løst', async () => {
       await waitFor(async () => {
-        await expect(canvas.getByRole('tab', { name: 'Tilsyn' })).toHaveAttribute('aria-selected', 'true');
+        await expect(canvas.getByRole('tab', { name: 'Etablert tilsyn' })).toHaveAttribute('aria-selected', 'true');
       });
     });
 
     await step('skal vise rediger-knapp for ferdig vurderte perioder', async () => {
       await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Alle perioder')).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getAllByRole('button')[0]);
       await waitFor(async () => {
         await expect(canvas.getByText('Vurdering av beredskap')).toBeInTheDocument();
       });
@@ -388,15 +392,15 @@ export const LøstAksjonspunktNattevåk: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('skal starte på tilsyn-fanen (ikke nattevåk) når aksjonspunkt er løst', async () => {
+    await step('skal starte på Etablert tilsyn-fanen (ikke nattevåk) når aksjonspunkt er løst', async () => {
       await waitFor(async () => {
-        await expect(canvas.getByRole('tab', { name: 'Tilsyn' })).toHaveAttribute('aria-selected', 'true');
+        await expect(canvas.getByRole('tab', { name: 'Etablert tilsyn' })).toHaveAttribute('aria-selected', 'true');
       });
     });
 
     await step('skal ikke vise varselikon på nattevåk-fane når aksjonspunkt er løst', async () => {
       const nattevåkTab = canvas.getByRole('tab', { name: 'Nattevåk' });
-      await expect(nattevåkTab.querySelector('svg')).not.toBeInTheDocument();
+      void expect(nattevåkTab.querySelector('svg')).toBeNull();
     });
   },
 };
@@ -473,6 +477,10 @@ export const IngenRedigeringUtenAksjonspunkt: Story = {
 
     await step('skal ikke vise rediger-knapp for beredskap uten aksjonspunkt', async () => {
       await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Alle perioder')).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getAllByRole('button')[0]);
       await waitFor(async () => {
         await expect(canvas.getByText('Vurdering av beredskap')).toBeInTheDocument();
       });
