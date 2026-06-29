@@ -52,7 +52,12 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
     <Alert size="small" variant="info" className="mt-4">
       <VStack gap="space-6">
         <div>
-          <BodyShort size="small">Det ligger åpne Gosys-oppgaver på søker.</BodyShort>
+          <BodyShort size="small">
+            Det ligger åpne Gosys-oppgaver på søker.{' '}
+            <Link href={getGosysUrl()} target="_blank" rel="noopener noreferrer" className="ml-0.5">
+              Gå til Gosys
+            </Link>
+          </BodyShort>
           <BodyShort size="small">
             {visibleOppgavetyper.map((oppgavetype, index, arr) => (
               <span key={oppgavetype}>
@@ -62,10 +67,6 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
             ))}
           </BodyShort>
         </div>
-
-        <Link href={getGosysUrl()} target="_blank" rel="noopener noreferrer">
-          Gå til Gosys
-        </Link>
       </VStack>
     </Alert>
   );
