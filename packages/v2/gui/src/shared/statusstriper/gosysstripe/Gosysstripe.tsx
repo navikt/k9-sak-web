@@ -12,11 +12,11 @@ interface GosysstripeProps {
 
 // Endepunktet (k9-sak OppgaveRestTjeneste) filtrerer til kun disse fire oppgavetypene,
 // og returnerer de av dem som er åpne. Øvrige OppgaveÅrsak-verdier kan ikke forekomme her.
-// VURDER_HENVENDELSE vises ikke i stripa.
 const oppgaveÅrsakNavn: Partial<Record<OppgaveÅrsak, string>> = {
   [OppgaveÅrsak.KONTAKT_BRUKER]: 'Kontakt bruker',
   [OppgaveÅrsak.VURDER_KONSEKVENS_YTELSE]: 'Vurder konsekvens for ytelse',
   [OppgaveÅrsak.VURDER_DOKUMENT]: 'Vurder dokument',
+  [OppgaveÅrsak.VURDER_HENVENDELSE]: 'Vurder henvendelse',
 };
 
 const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
