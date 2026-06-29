@@ -9,6 +9,7 @@ import LinkRel from '../../../constants/LinkRel';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
 import { findLinkByRel } from '../../../util/linkUtils';
 import { finnHullIPerioder, finnMaksavgrensningerForPerioder, slåSammenSammenhengendePerioder } from '../../../util/periodUtils';
+import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -26,11 +27,8 @@ const Innleggelsesperiodeoversikt = ({
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const [søknadsperiodeBegrensning, setSøknadsperiodeBegrensning] = React.useState<{
-    søknadsperiode: Period;
-    hull: { from: string; to: string }[];
-    sammenhengendePerioder: Period[];
-  } | null>(null);
+  const [innleggelsesperiodeBegrensning, setInnleggelsesperiodeBegrensning] =
+    React.useState<InnleggelsesperiodeBegrensning | null>(null);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
@@ -116,9 +114,9 @@ const Innleggelsesperiodeoversikt = ({
           const vurderingsperioder = response?.perioderSomKanVurderes;
           if (isMounted && vurderingsperioder && vurderingsperioder.length > 0) {
             const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
-            setSøknadsperiodeBegrensning({
+            setInnleggelsesperiodeBegrensning({
               søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
-              hull: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
+              hullIPeriode: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
               sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
             });
           }
@@ -188,9 +186,7 @@ const Innleggelsesperiodeoversikt = ({
           onSubmit={lagreInnleggelsesperioder}
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
-          søknadsperiode={søknadsperiodeBegrensning?.søknadsperiode}
-          hullISøknadsperiodene={søknadsperiodeBegrensning?.hull}
-          sammenhengendeSøknadsperioder={søknadsperiodeBegrensning?.sammenhengendePerioder}
+          innleggelsesperiodeBegrensning={innleggelsesperiodeBegrensning}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,

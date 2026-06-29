@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
+import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './innleggelsesperiodeFormModal.module.css';
@@ -27,9 +28,7 @@ interface InnleggelsesperiodeFormModal {
   isLoading: boolean;
   endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
   pleietrengendePart: Personopplysninger['pleietrengendePart'];
-  søknadsperiode?: Period;
-  hullISøknadsperiodene?: { from: string; to: string }[];
-  sammenhengendeSøknadsperioder?: Period[];
+  innleggelsesperiodeBegrensning?: InnleggelsesperiodeBegrensning | null;
 }
 
 const InnleggelsesperiodeFormModal = ({
@@ -39,9 +38,7 @@ const InnleggelsesperiodeFormModal = ({
   isLoading,
   endringerPåvirkerAndreBehandlinger,
   pleietrengendePart,
-  søknadsperiode,
-  hullISøknadsperiodene,
-  sammenhengendeSøknadsperioder,
+  innleggelsesperiodeBegrensning,
 }: InnleggelsesperiodeFormModal): JSX.Element => {
   const formMethods = useForm({
     defaultValues: {
@@ -97,22 +94,22 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
-                  ...(søknadsperiode && {
+                  ...(innleggelsesperiodeBegrensning && {
                     limitations: {
-                      minDate: søknadsperiode.fom,
-                      maxDate: søknadsperiode.tom,
-                      invalidDateRanges: hullISøknadsperiodene,
+                      minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
+                      maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
+                      invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
                     },
                   }),
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
-                  ...(søknadsperiode && {
+                  ...(innleggelsesperiodeBegrensning && {
                     limitations: {
-                      minDate: søknadsperiode.fom,
-                      maxDate: søknadsperiode.tom,
-                      invalidDateRanges: hullISøknadsperiodene,
+                      minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
+                      maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
+                      invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
                     },
                   }),
                 }}
@@ -173,13 +170,13 @@ const InnleggelsesperiodeFormModal = ({
                     return null;
                   },
                   innenforSøknadsperiode: (periodValue: Period) => {
-                    if (!sammenhengendeSøknadsperioder || sammenhengendeSøknadsperioder.length === 0) return null;
+                    if (!innleggelsesperiodeBegrensning?.sammenhengendePerioder?.length) return null;
                     const { fom, tom } = periodValue;
                     if (!fom || !tom) return null;
                     const period = new Period(fom, tom);
-                    const erInnenfor = sammenhengendeSøknadsperioder.some(sp => sp.covers(period));
+                    const erInnenfor = innleggelsesperiodeBegrensning.sammenhengendePerioder.some(sp => sp.covers(period));
                     if (!erInnenfor) {
-                      return 'Innleggelsesperioden må være innenfor en søknadsperiode';
+                      return 'Innleggelsesperioden må være innenfor søknadsperioden';
                     }
                     return null;
                   },
