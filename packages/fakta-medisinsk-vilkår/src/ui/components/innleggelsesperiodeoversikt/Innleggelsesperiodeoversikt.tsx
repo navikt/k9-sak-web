@@ -26,9 +26,11 @@ const Innleggelsesperiodeoversikt = ({
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const [søknadsperiode, setSøknadsperiode] = React.useState<Period | undefined>(undefined);
-  const [hullISøknadsperiodene, setHullISøknadsperiodene] = React.useState<{ from: string; to: string }[]>([]);
-  const [sammenhengendeSøknadsperioder, setSammenhengendeSøknadsperioder] = React.useState<Period[]>([]);
+  const [søknadsperiodeBegrensning, setSøknadsperiodeBegrensning] = React.useState<{
+    søknadsperiode: Period;
+    hull: { from: string; to: string }[];
+    sammenhengendePerioder: Period[];
+  } | null>(null);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
@@ -114,9 +116,11 @@ const Innleggelsesperiodeoversikt = ({
           const vurderingsperioder = response?.perioderSomKanVurderes;
           if (isMounted && vurderingsperioder && vurderingsperioder.length > 0) {
             const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
-            setSøknadsperiode(finnMaksavgrensningerForPerioder(perioder));
-            setHullISøknadsperiodene(finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })));
-            setSammenhengendeSøknadsperioder(slåSammenSammenhengendePerioder(perioder));
+            setSøknadsperiodeBegrensning({
+              søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
+              hull: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
+              sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
+            });
           }
         })
         .catch(() => {
@@ -184,9 +188,9 @@ const Innleggelsesperiodeoversikt = ({
           onSubmit={lagreInnleggelsesperioder}
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
-          søknadsperiode={søknadsperiode}
-          hullISøknadsperiodene={hullISøknadsperiodene}
-          sammenhengendeSøknadsperioder={sammenhengendeSøknadsperioder}
+          søknadsperiode={søknadsperiodeBegrensning?.søknadsperiode}
+          hullISøknadsperiodene={søknadsperiodeBegrensning?.hull}
+          sammenhengendeSøknadsperioder={søknadsperiodeBegrensning?.sammenhengendePerioder}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,
