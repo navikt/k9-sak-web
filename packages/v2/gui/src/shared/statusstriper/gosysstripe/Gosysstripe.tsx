@@ -49,7 +49,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
     return null;
   }
   return (
-    <Alert size="small" variant="info" className="mt-4">
+    <Alert size="small" variant="info" className="mt-2">
       <VStack gap="space-6">
         <div>
           <BodyShort size="small">
