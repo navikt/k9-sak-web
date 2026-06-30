@@ -25,5 +25,5 @@ jobs:
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on http://127.0.0.1:9001/iframe.html && yarn test-storybook"
+            "npx http-server .static_storybook --port 9001 --silent -c-1" \
+            "npx wait-on http://127.0.0.1:9001/iframe.html && yarn test-storybook --maxWorkers=2 --no-cache"
