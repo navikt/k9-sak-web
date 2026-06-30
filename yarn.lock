@@ -1368,6 +1368,7 @@ __metadata:
     "@fpsak-frontend/tidslinje": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/types": "npm:1.0.0"
     "@types/react": "npm:19.2.15"
     moment: "npm:2.30.1"
@@ -2107,6 +2108,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
@@ -2659,6 +2661,7 @@ __metadata:
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@navikt/aksel-icons": "npm:8.13.1"
     "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ds-css": "npm:8.13.1"
@@ -10567,14 +10570,14 @@ __metadata:
   linkType: hard
 
 "js-yaml@npm:^3.13.1":
-  version: 3.14.2
-  resolution: "js-yaml@npm:3.14.2"
+  version: 3.15.0
+  resolution: "js-yaml@npm:3.15.0"
   dependencies:
     argparse: "npm:^1.0.7"
     esprima: "npm:^4.0.0"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10/172e0b6007b0bf0fc8d2469c94424f7dd765c64a047d2b790831fecef2204a4054eabf4d911eb73ab8c9a3256ab8ba1ee8d655b789bf24bf059c772acc2075a1
+  checksum: 10/2fdf3a1453ed93a8e06d6ca8054c0bec145cf40ab51f305d1071736a03668b95e40f47cfd0239d7d50019b4780a18cdaca3c935def935594c9876964c49f1185
   languageName: node
   linkType: hard
 
