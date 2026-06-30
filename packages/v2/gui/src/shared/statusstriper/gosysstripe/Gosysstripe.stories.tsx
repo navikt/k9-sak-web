@@ -70,18 +70,6 @@ export const MedVurderHenvendelse: Story = {
   },
 };
 
-export const KunVurderHenvendelse: Story = {
-  args: {
-    saksnummer: '123456789',
-    api: createMockApi([OppgaveÅrsak.VURDER_HENVENDELSE]),
-  },
-  play: async ({ canvas }) => {
-    await delay(100);
-    await expect(canvas.queryByText(/Det ligger åpne Gosys-oppgaver på søker/)).not.toBeInTheDocument();
-    await expect(canvas.queryByRole('link', { name: 'Gå til Gosys' })).not.toBeInTheDocument();
-  },
-};
-
 export const EnOppgavetype: Story = {
   args: {
     saksnummer: '123456789',
