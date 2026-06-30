@@ -1368,6 +1368,7 @@ __metadata:
     "@fpsak-frontend/tidslinje": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/types": "npm:1.0.0"
     "@types/react": "npm:19.2.15"
     moment: "npm:2.30.1"
@@ -2107,6 +2108,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
@@ -2659,6 +2661,7 @@ __metadata:
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@navikt/aksel-icons": "npm:8.13.1"
     "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ds-css": "npm:8.13.1"
