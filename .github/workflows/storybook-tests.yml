@@ -23,4 +23,4 @@ jobs:
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "yarn storybook --ci --no-open" \
-            "npx wait-on http://127.0.0.1:9001/iframe.html && yarn test-storybook --url http://127.0.0.1:9001 --maxWorkers=2 --no-cache"
+            "npx wait-on http://127.0.0.1:9001/iframe.html && yarn test-storybook --url http://127.0.0.1:9001 --maxWorkers=4"
