@@ -1,10 +1,10 @@
 import { Dialog, HStack, LocalAlert, Spacer, VStack } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { ErrorReportPopover } from "./ErrorReportPopover.js";
-import { FixButton } from "./FixButton.js"
-import { ErrorReportButton } from "./ErrorReportButton.js";
-import { makeErrorReportLinkForJira } from "./makeErrorReportText.js";
-import { ErrorPanel } from "./ErrorPanel.js";
+import { ErrorReportPopover } from './ErrorReportPopover.js';
+import { FixButton } from './FixButton.js';
+import { ErrorReportButton } from './ErrorReportButton.js';
+import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
+import { ErrorPanel } from './ErrorPanel.js';
 
 export type ErrorModalProps = Readonly<{
   errorProps?: ErrorViewProps;
@@ -17,7 +17,6 @@ const ErrorDialogContent = (
     onClose,
   }: Required<ErrorModalProps> /* errorProps er alltid sett her */,
 ) => {
-
   const reportLink = makeErrorReportLinkForJira([error]);
   return (
     <LocalAlert status="error">

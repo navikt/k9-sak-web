@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
-import type { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
+import type { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { EnterIcon } from '@navikt/aksel-icons';
 import { BodyLong } from '@navikt/ds-react';
-import type { ErrorViewProps } from './resolveErrorViewProps.js';
+import type { ReactNode } from 'react';
 import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorFixAction.js';
+import type { ErrorViewProps } from './resolveErrorViewProps.js';
 
 // Utleder feilmelding og anbefalt handling som blir vist for ulike ExtendedApiError varianter.
 // Slik at bruker forhåpentlegvis kan forstå kva som har gått gale og korrigere viss mulig.

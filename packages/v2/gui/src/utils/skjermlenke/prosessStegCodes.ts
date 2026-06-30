@@ -36,4 +36,5 @@ export const prosessStegCodes = {
   FORUTGAENDE_MEDLEMSKAP: 'forutgaende_medlemskap',
   VURDER_RETT_FRA_DAG_EN: 'vurder_rett_fra_dag_en',
   BEREGNET_UTBETALING: 'beregnet_utbetaling',
+  OPPHØR: 'opphoer',
 };

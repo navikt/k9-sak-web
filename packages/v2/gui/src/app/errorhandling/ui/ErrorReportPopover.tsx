@@ -2,7 +2,7 @@ import { useState, useId, type FC } from 'react';
 import { Button, Popover, Tooltip } from '@navikt/ds-react';
 import { makeErrorReportText } from './makeErrorReportText.js';
 import css from './errorReportPopover.module.css';
-import { InformationSquareIcon } from "@navikt/aksel-icons";
+import { InformationSquareIcon } from '@navikt/aksel-icons';
 
 type ErrorReportPopoverProps = Readonly<{
   errors: ReadonlyArray<Error>;

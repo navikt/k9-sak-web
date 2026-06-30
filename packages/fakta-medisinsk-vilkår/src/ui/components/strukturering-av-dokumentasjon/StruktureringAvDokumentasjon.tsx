@@ -42,7 +42,7 @@ const StruktureringAvDokumentasjon = ({
 }: StruktureringAvDokumentasjonProps): JSX.Element => {
   const { endpoints, errorNotifier, fagsakYtelseType } = React.useContext(ContainerContext);
 
-  const {VIS_INNLEGGELSE_FOR_PILS} = React.useContext(FeatureTogglesContext);
+  const { VIS_INNLEGGELSE_FOR_PILS } = React.useContext(FeatureTogglesContext);
   const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
 
   const [state, dispatch] = React.useReducer(dokumentReducer, {
