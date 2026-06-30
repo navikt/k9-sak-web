@@ -8,8 +8,10 @@ interface ContainerContract {
   errorNotifier: (error: Error) => void;
   lagreBeredskapvurdering: (data: any) => void;
   lagreNattevåkvurdering: (data: any) => void;
-  harAksjonspunktForBeredskap: boolean;
-  harAksjonspunktForNattevåk: boolean;
+  harUløstAksjonspunktForBeredskap: boolean;
+  harUløstAksjonspunktForNattevåk: boolean;
+  harLøstAksjonspunktForBeredskap: boolean;
+  harLøstAksjonspunktForNattevåk: boolean;
 }
 
 export default ContainerContract;
