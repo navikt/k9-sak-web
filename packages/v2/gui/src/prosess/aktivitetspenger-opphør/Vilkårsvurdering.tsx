@@ -10,7 +10,7 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
-import { minLength, required } from '@navikt/ft-form-validators';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -222,7 +222,7 @@ export const Vilkaarsvurdering = ({
                 name={`perioder.${selectedId}.begrunnelse`}
                 label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
                 readOnly={isFormLocked}
-                validate={[required, minLength(3)]}
+                validate={[required, minLength(3), maxLength(4000)]}
                 resize
               />
               <RhfRadioGroup
