@@ -9,7 +9,7 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { FileSearchIcon, InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import { minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -290,7 +290,7 @@ export const AarsakOgVarsel = ({
                   name={`perioder.${selectedId}.begrunnelse`}
                   label="Begrunnelse"
                   readOnly={isFormLocked}
-                  validate={[required]}
+                  validate={[required, minLength(3)]}
                   resize
                 />
                 <RhfRadioGroup
@@ -312,7 +312,7 @@ export const AarsakOgVarsel = ({
                     label="Tekst i forhåndsvarsel (vises til bruker)"
                     description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim."
                     readOnly={isFormLocked}
-                    validate={[required]}
+                    validate={[required, minLength(3)]}
                     resize
                   />
                 )}
@@ -322,7 +322,7 @@ export const AarsakOgVarsel = ({
                     name={`perioder.${selectedId}.begrunnelseForIkkeVarsle`}
                     label="Begrunnelse for hvorfor det ikke er behov for varsel"
                     readOnly={isFormLocked}
-                    validate={[required]}
+                    validate={[required, minLength(3)]}
                     resize
                   />
                 )}

@@ -19,6 +19,7 @@ import {
   VStack,
 } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useMutation } from '@tanstack/react-query';
 import { useFieldArray, useForm, useWatch, type SubmitHandler } from 'react-hook-form';
@@ -255,6 +256,7 @@ export const Beslutter = ({
                                   control={control}
                                   name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                                   label="Begrunnelse"
+                                  validate={[required, minLength(3)]}
                                 />
                               </Box>
                             </ArrowBox>

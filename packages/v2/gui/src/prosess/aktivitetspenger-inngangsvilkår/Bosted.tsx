@@ -8,7 +8,7 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import { minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -211,6 +211,7 @@ export const Bosted = ({
                       {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
                     </span>
                   }
+                  validate={[required, minLength(3)]}
                 />
                 <RhfRadioGroup
                   key={`${selectedId}-bosatt`}
@@ -251,7 +252,7 @@ export const Bosted = ({
                     name={`vurderinger.${selectedId}.fritekst`}
                     label="Fritekst avslagsbrev"
                     description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                    validate={[required]}
+                    validate={[required, minLength(3)]}
                     readOnly={isFormLocked}
                   />
                 )}
