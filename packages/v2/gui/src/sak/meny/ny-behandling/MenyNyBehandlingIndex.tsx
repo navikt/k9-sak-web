@@ -6,6 +6,7 @@ import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureToggles
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import dayjs from 'dayjs';
 import { use, useCallback } from 'react';
 import NyBehandlingModal, {
@@ -89,6 +90,7 @@ const MenyNyBehandlingIndexV2 = ({
   );
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),
     enabled: !!behandlingUuid && !erTilbakekreving(behandlingType),
   });

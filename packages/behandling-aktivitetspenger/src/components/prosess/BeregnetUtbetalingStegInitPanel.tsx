@@ -15,6 +15,7 @@ import {
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { DagsatsOgUtbetaling, sortSatser } from '@k9-sak-web/gui/shared/dagsats-og-utbetaling/DagsatsOgUtbetaling.js';
 import { ArbeidOgInntekt } from '@k9-sak-web/gui/shared/kontroll-inntekt/ArbeidOgInntekt.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs, VStack } from '@navikt/ds-react';
@@ -71,6 +72,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
 
   const { data: arbeidsgivere } = useQuery({
     queryKey: ['aktivitetspenger-arbeidsgivere', behandling.uuid],
+    throwOnError: ignore404Errors,
     queryFn: () => aktivitetspengerBeregningApi.getArbeidsgiverOpplysninger(behandling.uuid),
   });
 
