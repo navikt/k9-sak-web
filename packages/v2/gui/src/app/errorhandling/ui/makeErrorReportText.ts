@@ -39,5 +39,5 @@ export const makeErrorReportLinkForJira = (errors: ReadonlyArray<Error>, fagsakI
     fagsakId != null && fagsakId.length > 2 && fagsakId.length <= 10
       ? `&customfield_21428=${encodeURIComponent(fagsakId)}`
       : ``;
-  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158${saksIdUrlArgument}&summary=Feilrapport+k9-sak-web&description=${encodeURIComponent(reportText)}`;
+  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158${saksIdUrlArgument}&description=${encodeURIComponent(reportText)}`;
 };
