@@ -6,13 +6,14 @@ import type {
   RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
   RettFraDagEnVisningDto,
 } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
-import { FileIcon, PencilIcon } from '@navikt/aksel-icons';
+import { CheckmarkCircleFillIcon, FileIcon, PencilIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import {
   Bleed,
   BodyLong,
   BodyShort,
   Box,
   Button,
+  Detail,
   Heading,
   HStack,
   Label,
@@ -26,6 +27,8 @@ import {
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import styles from './tiDagerProsessIndex.module.css';
 
 interface TiDagerVurderingFormData {
   journalpostId: string;
@@ -52,6 +55,8 @@ interface TiDagerProsessProps {
   saksnummer: string;
   arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } };
   opplysninger: RettFraDagEnVisningDto;
+  vilkårErOppfylt: boolean;
+  vilkårErFerdigVurdert: boolean;
 }
 
 function formatArbeidsgiverNavn(
@@ -78,6 +83,8 @@ export const TiDagerProsess = ({
   saksnummer,
   arbeidsgiverOpplysningerPerId,
   opplysninger,
+  vilkårErOppfylt,
+  vilkårErFerdigVurdert,
 }: TiDagerProsessProps) => {
   const hasSolvedAksjonspunkt = aksjonspunkter[0] && aksjonspunkter[0].status === aksjonspunktStatus.UTFØRT;
   const readOnly = isReadOnly || aksjonspunkter.length === 0;
@@ -124,10 +131,22 @@ export const TiDagerProsess = ({
   };
 
   return (
-    <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
-      <Heading size="medium" level="2" spacing>
-        Ti dager
-      </Heading>
+    <Box paddingInline="space-8" paddingBlock="space-8" width="fit-content">
+      <HStack gap="space-16">
+        {vilkårErFerdigVurdert ? (
+          vilkårErOppfylt ? (
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
+          ) : (
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
+          )
+        ) : null}
+        <Heading size="small" level="2" spacing>
+          Ti dager
+        </Heading>
+        <Detail className={styles.vilkar}>
+          <Lovreferanse>§ 9-8 tredje ledd</Lovreferanse>
+        </Detail>
+      </HStack>
       <ReadMore header="Hvordan går jeg frem?" size="small">
         <BodyLong size="small">
           Arbeidsgiver må dekke de første 10 omsorgsdagene hvert kalenderår for ansatte som har barn under 12 år, eller
