@@ -176,11 +176,7 @@ const BehandlingSupportIndex = ({
   const notatBackendClient = useContext(NotatBackendClientContext);
 
   const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer];
-  const {
-    data: notater,
-    isError: notaterFetchFailed,
-    isLoading: notaterIsLoading,
-  } = useQuery({
+  const { data: notater, isError: notaterFetchFailed } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
     enabled: !!fagsak && !!notatBackendClient,
@@ -211,7 +207,7 @@ const BehandlingSupportIndex = ({
     } else {
       setAntallUlesteNotater('');
     }
-  }, [notater, notaterIsLoading, notaterFetchFailed]);
+  }, [notater, notaterFetchFailed]);
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
