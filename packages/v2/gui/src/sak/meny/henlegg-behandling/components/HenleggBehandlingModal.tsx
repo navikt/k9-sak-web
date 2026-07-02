@@ -193,18 +193,15 @@ export const HenleggBehandlingModal = ({
   const valgtMottakerObjekt = brevmottakere?.find(mottaker => mottaker.identifikasjon.id === valgtMottaker);
 
   const submitWrapper: typeof handleSubmit = async formValues => {
+    setSubmitErrorMsg('');
     try {
       await handleSubmit(formValues);
     } catch (e) {
-      if (e instanceof AxiosError && e.status == 500) {
+      if (e instanceof AxiosError) {
         const msg = getBodyFeilmelding(e);
-        if (msg != null) {
-          setSubmitErrorMsg(msg);
-        } else {
-          setSubmitErrorMsg('');
-        }
+        setSubmitErrorMsg(msg ?? '');
       } else {
-        setSubmitErrorMsg('');
+        throw e;
       }
     }
   };
