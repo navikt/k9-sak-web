@@ -56,6 +56,16 @@ const InnleggelsesperiodeFormModal = ({
 
   const [showWarningMessage, setShowWarningMessage] = React.useState(false);
 
+  const datoBegrensninger = innleggelsesperiodeBegrensning
+    ? {
+        limitations: {
+          minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
+          maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
+          invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
+        },
+      }
+    : {};
+
   const handleSubmit = formState => {
     onSubmit(formState);
     setModalIsOpen(false);
@@ -94,24 +104,12 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
-                  ...(innleggelsesperiodeBegrensning && {
-                    limitations: {
-                      minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
-                      maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
-                      invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
-                    },
-                  }),
+                  ...datoBegrensninger,
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
-                  ...(innleggelsesperiodeBegrensning && {
-                    limitations: {
-                      minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
-                      maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
-                      invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
-                    },
-                  }),
+                  ...datoBegrensninger,
                 }}
                 afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(

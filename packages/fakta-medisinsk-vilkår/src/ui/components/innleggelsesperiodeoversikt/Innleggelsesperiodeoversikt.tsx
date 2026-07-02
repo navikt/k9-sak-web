@@ -10,6 +10,7 @@ import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeR
 import { findLinkByRel } from '../../../util/linkUtils';
 import { finnHullIPerioder, finnMaksavgrensningerForPerioder, slåSammenSammenhengendePerioder } from '../../../util/periodUtils';
 import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
+import { PerioderMedVilkarResponse } from '../../../types/PerioderMedVilkarResponse';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -106,20 +107,20 @@ const Innleggelsesperiodeoversikt = ({
         setHentInnleggelsesperioderFeilet(true);
       });
 
-    const vurderingsoversiktEndpoint = endpoints.vurderingsoversiktLivetsSluttfase;
-    if (vurderingsoversiktEndpoint && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+    const perioderMedVilkarEndpoint = endpoints.perioderMedVilkar;
+    if (perioderMedVilkarEndpoint && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       httpUtils
-        .get(vurderingsoversiktEndpoint, errorNotifier, { signal: controller.signal })
-        .then((response: { perioderSomKanVurderes?: { fom: string; tom: string }[] }) => {
-          const vurderingsperioder = response?.perioderSomKanVurderes;
-          if (isMounted && vurderingsperioder && vurderingsperioder.length > 0) {
-            const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
-            setInnleggelsesperiodeBegrensning({
-              søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
-              hullIPeriode: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
-              sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
-            });
-          }
+        .get<PerioderMedVilkarResponse>(perioderMedVilkarEndpoint, errorNotifier, { signal: controller.signal })
+        .then(response => {
+          const vurderingsperioder = response?.perioderMedÅrsak?.perioderTilVurdering;
+          if (!isMounted || !vurderingsperioder?.length) return;
+
+          const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
+          setInnleggelsesperiodeBegrensning({
+            søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
+            hullIPeriode: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
+            sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
+          });
         })
         .catch(() => {
           setHentInnleggelsesperioderFeilet(true);

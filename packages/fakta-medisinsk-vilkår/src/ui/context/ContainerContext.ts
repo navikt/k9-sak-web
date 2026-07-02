@@ -13,6 +13,7 @@ const ContainerContext = React.createContext<ContainerContract>({
     dataTilVurdering: '',
     status: '',
     nyeDokumenter: '',
+    perioderMedVilkar: undefined,
   },
   behandlingUuid: '',
   readOnly: false,
