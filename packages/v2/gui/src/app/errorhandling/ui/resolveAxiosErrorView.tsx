@@ -47,6 +47,15 @@ const resolveTeapotProps = (error: AxiosError) => {
   return { status, eta, systemMelding };
 };
 
+// Hent ut "feilmelding" frå server-responsen (t.d. ved BadRequestException). Returnerer null viss den ikkje finst.
+const getBodyFeilmelding = (error: AxiosError): string | null => {
+  const data = asRecord(getEffectiveResponseData(error));
+  if (data != null && typeof data['feilmelding'] === 'string') {
+    return data['feilmelding'];
+  }
+  return null;
+};
+
 export const resolveAxiosErrorÅrsakIkkeTilgang = (error: AxiosError): ReadonlyArray<ÅrsakIkkeTilgang> => {
   if (error.status === 403) {
     const data = asRecord(getEffectiveResponseData(error));
@@ -78,10 +87,12 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       title: 'Ikke innlogget',
       errorInfo: <BodyLong>Du er ikke innlogget.</BodyLong>,
       fixAction: {
-        label: 'Logg inn',
-        icon: <EnterIcon />,
-        href: loginUrl,
         info: 'Prøv å logge inn på nytt. Meld feil i Porten hvis du ikke får løst den selv.',
+        button: {
+          label: 'Logg inn',
+          icon: <EnterIcon />,
+          href: loginUrl,
+        },
       },
     };
   }
@@ -203,24 +214,34 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
 
   // 400 — ugyldig forespørsel. Speglar resolveApiErrorViewProps.
   if (status === 400) {
-    return {
-      error,
-      title: 'Feltene mangler eller har feil informasjon',
-      errorInfo: (
+    const feilmelding = getBodyFeilmelding(error);
+    const harFeilmelding = feilmelding != null && feilmelding.trim().length > 5;
+
+    const errorInfo = harFeilmelding ? (
+      <BodyLong weight="semibold">{feilmelding}</BodyLong>
+    ) : (
+      <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
+    );
+    const fixAction = {
+      info: harFeilmelding ? (
         <>
-          <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>
+          <BodyLong>
+            Korriger feil rapportert i feilmeldingen over. Prøv deretter å utføre handlingen som feilet på nytt.
+          </BodyLong>
+          <BodyLong>Meld feil i porten hvis du ikke får løst det.</BodyLong>
+        </>
+      ) : (
+        <>
+          <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
+          <BodyLong>Meld feil i porten hvis du ikke får løst det.</BodyLong>
         </>
       ),
-      fixAction: {
-        ...reloadAction,
-        info: (
-          <>
-            <BodyLong>Se over feltene og vær sikker på at du har fylt dem inn riktig, før du prøver på nytt.</BodyLong>
-            <BodyLong>Obs! Hvis du trykker på "Last siden på nytt", må du fylle inn alle feltene på nytt.</BodyLong>
-            <BodyLong>Meld feil i porten hvis du ikke får løst det.</BodyLong>
-          </>
-        ),
-      },
+    };
+    return {
+      error,
+      title: 'Innsendt forespørsel var ugyldig',
+      errorInfo,
+      fixAction,
     };
   }
 

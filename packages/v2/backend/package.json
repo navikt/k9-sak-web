@@ -19,7 +19,7 @@
     "@navikt/k9-klage-typescript-client": "3.1.20260529100435",
     "@navikt/k9-sak-typescript-client": "3.0.20260625090030",
     "@navikt/k9-tilbake-typescript-client": "1.1.20260510232128",
-    "@navikt/ung-sak-typescript-client": "2.0.20260622090510",
+    "@navikt/ung-sak-typescript-client": "2.0.20260626070830",
     "@navikt/ung-tilbake-typescript-client": "3.0.20260519143823"
   }
 }
