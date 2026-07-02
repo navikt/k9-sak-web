@@ -56,7 +56,7 @@ const InnleggelsesperiodeFormModal = ({
 
   const [showWarningMessage, setShowWarningMessage] = React.useState(false);
 
-  const datoBegrensninger = innleggelsesperiodeBegrensning
+  const datobegrensning = innleggelsesperiodeBegrensning
     ? {
         limitations: {
           minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
@@ -104,12 +104,12 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
-                  ...datoBegrensninger,
+                  ...datobegrensning,
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
-                  ...datoBegrensninger,
+                  ...datobegrensning,
                 }}
                 afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(

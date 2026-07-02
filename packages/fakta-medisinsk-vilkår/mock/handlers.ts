@@ -55,8 +55,7 @@ export const handlers = [
       mockedTilsynsbehovVurderingsoversikt.resterendeVurderingsperioder.length > 0;
     const manglerVurderingAvToOmsorgspersoner =
       mockedToOmsorgspersonerVurderingsoversikt.resterendeVurderingsperioder.length > 0;
-    const nyttDokumentHarIkkekontrollertEksisterendeVurderinger =
-      mockedSluttfaseVurderinger.length === 0 && mockedNyeDokumenter.length > 0;
+    const nyttDokumentHarIkkekontrollertEksisterendeVurderinger = mockedNyeDokumenter.length > 0;
     const manglerVurderingAvILivetsSluttfase = mockedSluttfaseVurderinger.length === 0;
     const harDataSomIkkeHarBlittTattMedIBehandling = true;
 
@@ -120,6 +119,7 @@ export const handlers = [
       createKontinuerligTilsynVurdering(body);
     } else if (body.type === Vurderingstype.LIVETS_SLUTTFASE) {
       mockedSluttfaseVurderinger.push(body);
+      mockedNyeDokumenter = [];
     } else {
       createToOmsorgspersonerVurdering(body);
     }
