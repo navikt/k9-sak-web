@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { BodyLong } from '@navikt/ds-react';
+import { BodyLong, List } from '@navikt/ds-react';
 import { EnterIcon } from '@navikt/aksel-icons';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
@@ -10,6 +10,7 @@ import {
   isÅrsakIkkeTilgangArray,
   type ÅrsakIkkeTilgang,
 } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
+import { resolveÅrsakIkkeTilgangTekster } from '../resolveÅrsakIkkeTilgang.js';
 
 // Sjekkar om data er eit objekt (ikkje null, ikkje array) og returnerer det som Record viss ja.
 const asRecord = (data: unknown): Record<string, unknown> | null => {
@@ -99,10 +100,20 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
 
   // 403 — Tilgang nektet.
   if (status === 403) {
+    const årsakstekster = resolveÅrsakIkkeTilgangTekster(resolveAxiosErrorÅrsakIkkeTilgang(error));
     return {
       error,
       title: 'Ikke tilgang',
-      errorInfo: <BodyLong> Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen. </BodyLong>,
+      errorInfo:
+        årsakstekster.length > 0 ? (
+          <List>
+            {årsakstekster.map(tekst => (
+              <List.Item key={tekst}>{tekst}</List.Item>
+            ))}
+          </List>
+        ) : (
+          <BodyLong>Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen.</BodyLong>
+        ),
       fixAction: {
         ...restartAction,
         info: (
