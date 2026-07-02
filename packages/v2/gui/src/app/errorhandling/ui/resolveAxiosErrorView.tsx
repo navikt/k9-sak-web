@@ -8,9 +8,9 @@ import { reloadAction, reloadActionWithFormResetWarning, restartAction } from '.
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
 import {
   isÅrsakIkkeTilgangArray,
+  resolveÅrsakIkkeTilgangTekster,
   type ÅrsakIkkeTilgang,
 } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
-import { resolveÅrsakIkkeTilgangTekster } from '../resolveÅrsakIkkeTilgang.js';
 
 // Sjekkar om data er eit objekt (ikkje null, ikkje array) og returnerer det som Record viss ja.
 const asRecord = (data: unknown): Record<string, unknown> | null => {

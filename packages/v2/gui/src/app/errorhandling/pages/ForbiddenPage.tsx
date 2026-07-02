@@ -2,8 +2,10 @@ import { List, VStack } from '@navikt/ds-react';
 import { Link } from 'react-router';
 
 import { BigError } from '@k9-sak-web/gui/app/errorhandling/pages/BigError.js';
-import type { ÅrsakIkkeTilgang } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
-import { resolveÅrsakIkkeTilgangTekster } from '../resolveÅrsakIkkeTilgang.js';
+import {
+  resolveÅrsakIkkeTilgangTekster,
+  type ÅrsakIkkeTilgang,
+} from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
 
 interface ForbiddenPageProps {
   ikkeTilgangÅrsaker?: ÅrsakIkkeTilgang[];
