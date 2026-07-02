@@ -199,10 +199,12 @@ export const HenleggBehandlingModal = ({
     } catch (e) {
       if (e instanceof AxiosError) {
         const msg = getBodyFeilmelding(e);
-        setSubmitErrorMsg(msg ?? '');
-      } else {
-        throw e;
+        if (msg != null) {
+          setSubmitErrorMsg(msg);
+          return;
+        }
       }
+      throw e;
     }
   };
 
