@@ -29,7 +29,7 @@ export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
 };
 
 const makeErrorReportTextForJira = (errors: ReadonlyArray<Error>): string => {
-  const errLines = ['*Sett inn feilmelding/beskrivelse av problem her*', ...makeErrorReportLines(errors)];
+  const errLines = ['*Sett inn feilmelding/beskrivelse av problem her*', '->', ...makeErrorReportLines(errors)];
   return errLines.join('\\\\');
 };
 
