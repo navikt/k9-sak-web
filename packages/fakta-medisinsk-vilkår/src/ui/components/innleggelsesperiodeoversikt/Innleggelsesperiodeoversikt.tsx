@@ -103,14 +103,23 @@ const Innleggelsesperiodeoversikt = ({
       .then((response: InnleggelsesperiodeResponse) => {
         if (isMounted) {
           setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
+          if (!skalHenteBegrensning) {
+            setIsLoading(false);
+          }
         }
-        if (!skalHenteBegrensning) return null;
-        return httpUtils.get<PerioderMedVilkarResponse>(perioderMedVilkarEndpoint, errorNotifier, { signal: controller.signal });
       })
-      .then(response => {
-        if (!isMounted) return;
-        if (response) {
-          const vurderingsperioder = response.perioderMedÅrsak?.perioderTilVurdering;
+      .catch(() => {
+        if (isMounted) {
+          setHentInnleggelsesperioderFeilet(true);
+        }
+      });
+
+    if (skalHenteBegrensning) {
+      httpUtils
+        .get<PerioderMedVilkarResponse>(perioderMedVilkarEndpoint, errorNotifier, { signal: controller.signal })
+        .then(response => {
+          if (!isMounted) return;
+          const vurderingsperioder = response?.perioderMedÅrsak?.perioderTilVurdering;
           if (vurderingsperioder?.length) {
             const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
             setInnleggelsesperiodeBegrensning({
@@ -119,15 +128,15 @@ const Innleggelsesperiodeoversikt = ({
               sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
             });
           }
-        }
-        setIsLoading(false);
-      })
-      .catch(() => {
-        if (isMounted) {
-          setHentInnleggelsesperioderFeilet(true);
           setIsLoading(false);
-        }
-      });
+        })
+        .catch(() => {
+          if (isMounted) {
+            setHentInnleggelsesperioderFeilet(true);
+            setIsLoading(false);
+          }
+        });
+    }
 
     return () => {
       isMounted = false;
