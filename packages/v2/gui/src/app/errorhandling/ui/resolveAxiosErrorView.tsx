@@ -173,8 +173,8 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
     if (status === 'HALTED') {
       return {
         error,
-        title: 'Oi! Noe gikk galt',
-        errorInfo: 'Noe gikk galt, men feilen kan være midlertidig.',
+        title: 'Bakgrunnsprosess feilet',
+        errorInfo: 'Noe gikk galt i bakgrunnsprosess knyttet til saken. Feilen kan være midlertidig.',
         fixAction: {
           ...reloadAction,
           info: (
