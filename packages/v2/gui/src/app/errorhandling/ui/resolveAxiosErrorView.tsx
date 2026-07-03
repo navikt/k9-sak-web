@@ -254,6 +254,24 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
     };
   }
 
+  // 500 — intern serverfeil. Vis feilmelding frå server-responsen viss tilgjengeleg.
+  if (status === 500) {
+    const feilmelding = getBodyFeilmelding(error);
+    const harFeilmelding = feilmelding != null && feilmelding.trim().length > 5;
+
+    const errorInfo = harFeilmelding ? (
+      <BodyLong>{feilmelding}</BodyLong>
+    ) : (
+      <BodyLong>Systemet feilet ved behandling av forespørsel</BodyLong>
+    );
+    return {
+      error,
+      title: 'Forespørsel feilet',
+      errorInfo,
+      fixAction: reloadAction,
+    };
+  }
+
   // Ingen response (typisk nettverksfeil / CORS / avbrutt).
   if (error.response == null) {
     return {
