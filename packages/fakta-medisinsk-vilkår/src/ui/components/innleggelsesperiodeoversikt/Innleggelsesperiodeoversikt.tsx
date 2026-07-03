@@ -1,4 +1,5 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Button, Heading, HStack, Loader } from '@navikt/ds-react';
@@ -7,6 +8,9 @@ import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../
 import LinkRel from '../../../constants/LinkRel';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';
 import { findLinkByRel } from '../../../util/linkUtils';
+import { finnHullIPerioder, finnMaksavgrensningerForPerioder, slåSammenSammenhengendePerioder } from '../../../util/periodUtils';
+import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
+import { PerioderMedVilkarResponse } from '../../../types/PerioderMedVilkarResponse';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
@@ -20,10 +24,12 @@ interface InnleggelsesperiodeoversiktProps {
 const Innleggelsesperiodeoversikt = ({
   onInnleggelsesperioderUpdated,
 }: InnleggelsesperiodeoversiktProps): JSX.Element => {
-  const { endpoints, errorNotifier, pleietrengendePart, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, pleietrengendePart, readOnly, fagsakYtelseType } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
 
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [innleggelsesperiodeBegrensning, setInnleggelsesperiodeBegrensning] =
+    React.useState<InnleggelsesperiodeBegrensning | null>(null);
   const [innleggelsesperioderResponse, setInnleggelsesperioderResponse] = React.useState<InnleggelsesperiodeResponse>({
     perioder: [],
     links: [],
@@ -90,16 +96,48 @@ const Innleggelsesperiodeoversikt = ({
 
   useEffect(() => {
     let isMounted = true;
+    const perioderMedVilkarEndpoint = endpoints.perioderMedVilkar;
+    const skalHenteBegrensning = perioderMedVilkarEndpoint && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
+
     hentInnleggelsesperioder()
       .then((response: InnleggelsesperiodeResponse) => {
         if (isMounted) {
           setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
-          setIsLoading(false);
+          if (!skalHenteBegrensning) {
+            setIsLoading(false);
+          }
         }
       })
       .catch(() => {
-        setHentInnleggelsesperioderFeilet(true);
+        if (isMounted) {
+          setHentInnleggelsesperioderFeilet(true);
+        }
       });
+
+    if (skalHenteBegrensning) {
+      httpUtils
+        .get<PerioderMedVilkarResponse>(perioderMedVilkarEndpoint, errorNotifier, { signal: controller.signal })
+        .then(response => {
+          if (!isMounted) return;
+          const vurderingsperioder = response?.perioderMedÅrsak?.perioderTilVurdering;
+          if (vurderingsperioder?.length) {
+            const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
+            setInnleggelsesperiodeBegrensning({
+              søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
+              hullIPeriode: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
+              sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
+            });
+          }
+          setIsLoading(false);
+        })
+        .catch(() => {
+          if (isMounted) {
+            setHentInnleggelsesperioderFeilet(true);
+            setIsLoading(false);
+          }
+        });
+    }
+
     return () => {
       isMounted = false;
       controller.abort();
@@ -160,6 +198,7 @@ const Innleggelsesperiodeoversikt = ({
           onSubmit={lagreInnleggelsesperioder}
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
+          innleggelsesperiodeBegrensning={innleggelsesperiodeBegrensning}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,
