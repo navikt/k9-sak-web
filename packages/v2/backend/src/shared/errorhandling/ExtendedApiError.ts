@@ -1,5 +1,6 @@
 import { isObject } from '../../typecheck/isObject.js';
 import { isString } from '../../typecheck/isString.js';
+import { isÅrsakIkkeTilgangArray, resolveÅrsakIkkeTilgangTekster } from './ÅrsakIkkeTilgang.js';
 
 export type NavCallid = `CallId_${string}`;
 
@@ -74,6 +75,21 @@ export class ExtendedApiError extends Error {
   public get bodyFeilmelding(): string | null {
     const { body } = this;
     return ExtendedApiError.resolveBodyFeilmelding(body);
+  }
+
+  /**
+   * Utled visningstekster for årsaker til manglande tilgang når feilen er en 403 (isForbidden).
+   * Returnerer tom liste viss feilen ikkje er en 403, eller viss ingen årsaker kan utledast frå body.
+   */
+  public resolveÅrsakIkkeTilgangTekster(): string[] {
+    if (!this.isForbidden) {
+      return [];
+    }
+    const { body } = this;
+    if (isObject(body) && 'ikkeTilgangÅrsaker' in body && isÅrsakIkkeTilgangArray(body.ikkeTilgangÅrsaker)) {
+      return resolveÅrsakIkkeTilgangTekster(body.ikkeTilgangÅrsaker);
+    }
+    return [];
   }
 
   /**
