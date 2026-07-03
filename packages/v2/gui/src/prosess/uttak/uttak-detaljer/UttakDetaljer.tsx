@@ -41,7 +41,7 @@ const getTekstVedBarnetsDødsfall = (årsaker: UttaksperiodeInfoÅrsakerType[]) 
 const getSluttfaseÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[], ytelse: FagsakYtelsesType) => {
   return ytelse === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE
     ? getÅrsaksetiketter(årsaker, SluttfaseÅrsakerMedTekst)
-    : null;
+    : [];
 };
 
 const getÅrsaksetiketter = (

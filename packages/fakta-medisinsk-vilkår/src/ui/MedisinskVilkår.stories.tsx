@@ -144,9 +144,9 @@ MedisinskVilkår.parameters = {
 export const MedisinskVilkårPleiepengerNærstående: Story = {
   decorators: [
     Story => (
-      <FeatureTogglesContext value={qFeatureToggles}>
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
         <Story />
-      </FeatureTogglesContext>
+      </FeatureTogglesContext.Provider>
     ),
     withStoryReload(),
   ],
@@ -183,7 +183,7 @@ export const MedisinskVilkårPleiepengerNærstående: Story = {
       });
 
       await userEvent.click(canvas.getByLabelText('Ja, dokumentet inneholder medisinske opplysninger'));
-      await userEvent.type(canvas.getByText('Hvilken dato er dokumentet datert?'), '101021');
+      await userEvent.type(canvas.getByLabelText('Hvilken dato er dokumentet datert?'), '101021');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
     });
 

@@ -96,36 +96,38 @@ const Innleggelsesperiodeoversikt = ({
 
   useEffect(() => {
     let isMounted = true;
+    const perioderMedVilkarEndpoint = endpoints.perioderMedVilkar;
+    const skalHenteBegrensning = perioderMedVilkarEndpoint && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
+
     hentInnleggelsesperioder()
       .then((response: InnleggelsesperiodeResponse) => {
         if (isMounted) {
           setInnleggelsesperioderResponse(initializeInnleggelsesperiodeData(response));
-          setIsLoading(false);
         }
+        if (!skalHenteBegrensning) return null;
+        return httpUtils.get<PerioderMedVilkarResponse>(perioderMedVilkarEndpoint, errorNotifier, { signal: controller.signal });
+      })
+      .then(response => {
+        if (!isMounted) return;
+        if (response) {
+          const vurderingsperioder = response.perioderMedÅrsak?.perioderTilVurdering;
+          if (vurderingsperioder?.length) {
+            const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
+            setInnleggelsesperiodeBegrensning({
+              søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
+              hullIPeriode: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
+              sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
+            });
+          }
+        }
+        setIsLoading(false);
       })
       .catch(() => {
-        setHentInnleggelsesperioderFeilet(true);
-      });
-
-    const perioderMedVilkarEndpoint = endpoints.perioderMedVilkar;
-    if (perioderMedVilkarEndpoint && fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
-      httpUtils
-        .get<PerioderMedVilkarResponse>(perioderMedVilkarEndpoint, errorNotifier, { signal: controller.signal })
-        .then(response => {
-          const vurderingsperioder = response?.perioderMedÅrsak?.perioderTilVurdering;
-          if (!isMounted || !vurderingsperioder?.length) return;
-
-          const perioder = vurderingsperioder.map(({ fom, tom }) => new Period(fom, tom));
-          setInnleggelsesperiodeBegrensning({
-            søknadsperiode: finnMaksavgrensningerForPerioder(perioder),
-            hullIPeriode: finnHullIPerioder(perioder).map(p => ({ from: p.fom, to: p.tom })),
-            sammenhengendePerioder: slåSammenSammenhengendePerioder(perioder),
-          });
-        })
-        .catch(() => {
+        if (isMounted) {
           setHentInnleggelsesperioderFeilet(true);
-        });
-    }
+          setIsLoading(false);
+        }
+      });
 
     return () => {
       isMounted = false;
