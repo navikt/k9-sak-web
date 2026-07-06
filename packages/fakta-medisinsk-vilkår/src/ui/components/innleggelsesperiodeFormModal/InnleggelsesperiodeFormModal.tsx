@@ -171,6 +171,10 @@ const InnleggelsesperiodeFormModal = ({
                     if (!innleggelsesperiodeBegrensning?.sammenhengendePerioder?.length) return null;
                     const { fom, tom } = periodValue;
                     if (!fom || !tom) return null;
+                    const erEksisterendePeriode = defaultValues[FieldName.INNLEGGELSESPERIODER].some(
+                      eksisterende => eksisterende.fom === fom && eksisterende.tom === tom,
+                    );
+                    if (erEksisterendePeriode) return null;
                     const period = new Period(fom, tom);
                     const erInnenfor = innleggelsesperiodeBegrensning.sammenhengendePerioder.some(sp => sp.covers(period));
                     if (!erInnenfor) {
