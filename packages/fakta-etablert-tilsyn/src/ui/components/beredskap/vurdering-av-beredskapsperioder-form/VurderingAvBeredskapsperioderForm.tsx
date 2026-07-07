@@ -57,9 +57,10 @@ const VurderingAvBeredskapsperioderForm = ({
   const {
     lagreBeredskapvurdering,
     readOnly,
-    harAksjonspunktForBeredskap = false,
+    harUløstAksjonspunktForBeredskap = false,
+    harLøstAksjonspunktForBeredskap = false,
   } = React.useContext(ContainerContext) || {};
-  const disabled = readOnly || !harAksjonspunktForBeredskap;
+  const disabled = readOnly || (!harUløstAksjonspunktForBeredskap && !harLøstAksjonspunktForBeredskap);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForBeredeskap = () => {
     if (beredskapsperiode.resultat === Vurderingsresultat.OPPFYLT) {

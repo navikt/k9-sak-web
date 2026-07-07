@@ -4,8 +4,8 @@ import { AxiosError } from 'axios';
 
 const makeErrorReportLines = (errors: ReadonlyArray<Error>): ReadonlyArray<string> => {
   const errLines: string[] = [];
-  errLines.push(`----`)
-  errLines.push(`Teknisk info om feil (ref: ${sentryReportedIdList.join(', ')})`)
+  errLines.push(`----`);
+  errLines.push(`Teknisk info om feil (ref: ${sentryReportedIdList.join(', ')})`);
   for (const error of errors) {
     const sentryId = `sentry:${sentryReportedErrorIdLookup.get(error)}`;
     errLines.push(`*${error.name}* (${sentryId})`);
@@ -21,23 +21,23 @@ const makeErrorReportLines = (errors: ReadonlyArray<Error>): ReadonlyArray<strin
     }
     errLines.push('----');
   }
-  return errLines
-}
+  return errLines;
+};
 
 export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
-  return makeErrorReportLines(errors).join("\n")
-}
+  return makeErrorReportLines(errors).join('\n');
+};
 
 const makeErrorReportTextForJira = (errors: ReadonlyArray<Error>): string => {
-  const errLines = [
-    "", // Tom linje slik at ein enkelt kan fylle inn eigen info over forhåndsutfyllt teknisk info i jira feltet
-    ...makeErrorReportLines(errors),
-  ]
+  const errLines = ['*Sett inn feilmelding/beskrivelse av problem her*', '->', ...makeErrorReportLines(errors)];
   return errLines.join('\\\\');
 };
 
 export const makeErrorReportLinkForJira = (errors: ReadonlyArray<Error>, fagsakId?: string): string => {
-  const reportText = makeErrorReportTextForJira(errors)
-  const saksIdUrlArgument = fagsakId != null && fagsakId.length > 2 && fagsakId.length <= 10 ? `&customfield_21428=${encodeURIComponent(fagsakId)}` : ``
-  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158${saksIdUrlArgument}&summary=Feilrapport+k9-sak-web&description=${encodeURIComponent(reportText)}`
-}
+  const reportText = makeErrorReportTextForJira(errors);
+  const saksIdUrlArgument =
+    fagsakId != null && fagsakId.length > 2 && fagsakId.length <= 10
+      ? `&customfield_21428=${encodeURIComponent(fagsakId)}`
+      : ``;
+  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158${saksIdUrlArgument}&description=${encodeURIComponent(reportText)}`;
+};

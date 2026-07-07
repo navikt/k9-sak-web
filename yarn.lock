@@ -1368,6 +1368,7 @@ __metadata:
     "@fpsak-frontend/tidslinje": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/types": "npm:1.0.0"
     "@types/react": "npm:19.2.15"
     moment: "npm:2.30.1"
@@ -2095,7 +2096,7 @@ __metadata:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20260529100435"
     "@navikt/k9-sak-typescript-client": "npm:3.0.20260625090030"
     "@navikt/k9-tilbake-typescript-client": "npm:1.1.20260510232128"
-    "@navikt/ung-sak-typescript-client": "npm:2.0.20260622090510"
+    "@navikt/ung-sak-typescript-client": "npm:2.0.20260626070830"
     "@navikt/ung-tilbake-typescript-client": "npm:3.0.20260519143823"
   languageName: unknown
   linkType: soft
@@ -2107,6 +2108,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
@@ -2659,6 +2661,7 @@ __metadata:
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
+    "@k9-sak-web/gui": "workspace:^"
     "@navikt/aksel-icons": "npm:8.13.1"
     "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ds-css": "npm:8.13.1"
@@ -3439,10 +3442,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ung-sak-typescript-client@npm:2.0.20260622090510":
-  version: 2.0.20260622090510
-  resolution: "@navikt/ung-sak-typescript-client@npm:2.0.20260622090510::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F2.0.20260622090510%2F9848f7f3fca0be05edb1233d39c0777ea9a359a5"
-  checksum: 10/37f32174cd87cf2d948c1015a5b4db0c6733f33b2197d4bff3ec3fb2d76063cfb510f90f2d09d975764392cafa563da0f759b0d496902f3bede21206f71ffb08
+"@navikt/ung-sak-typescript-client@npm:2.0.20260626070830":
+  version: 2.0.20260626070830
+  resolution: "@navikt/ung-sak-typescript-client@npm:2.0.20260626070830::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fung-sak-typescript-client%2F2.0.20260626070830%2Faefebe7af4495dd21cb98c10473db5341e7f4812"
+  checksum: 10/8d47614f94bb8c79cb2cb0d716170594b1ae4ce639c00fc9f66171137fc7b08589f411129e66f74ddaa61ec90fcb9405c3ec06aab3337f5e28eb8aa21d522c3a
   languageName: node
   linkType: hard
 
@@ -10567,14 +10570,14 @@ __metadata:
   linkType: hard
 
 "js-yaml@npm:^3.13.1":
-  version: 3.14.2
-  resolution: "js-yaml@npm:3.14.2"
+  version: 3.15.0
+  resolution: "js-yaml@npm:3.15.0"
   dependencies:
     argparse: "npm:^1.0.7"
     esprima: "npm:^4.0.0"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10/172e0b6007b0bf0fc8d2469c94424f7dd765c64a047d2b790831fecef2204a4054eabf4d911eb73ab8c9a3256ab8ba1ee8d655b789bf24bf059c772acc2075a1
+  checksum: 10/2fdf3a1453ed93a8e06d6ca8054c0bec145cf40ab51f305d1071736a03668b95e40f47cfd0239d7d50019b4780a18cdaca3c935def935594c9876964c49f1185
   languageName: node
   linkType: hard
 

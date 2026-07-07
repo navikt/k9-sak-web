@@ -20,6 +20,8 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
 
   const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
+  const harLøstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
+  const harLøstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
 
   return (
     <EtablertTilsynContainer
@@ -33,8 +35,10 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
         ]),
         lagreBeredskapvurdering: løsBeredskapAksjonspunkt,
         lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
-        harAksjonspunktForBeredskap: harUløstAksjonspunktForBeredskap,
-        harAksjonspunktForNattevåk: harUløstAksjonspunktForNattevåk,
+        harUløstAksjonspunktForBeredskap,
+        harUløstAksjonspunktForNattevåk,
+        harLøstAksjonspunktForBeredskap,
+        harLøstAksjonspunktForNattevåk,
       }}
     />
   );
