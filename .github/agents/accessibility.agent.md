@@ -204,7 +204,7 @@ test("page should be accessible", async ({ page }) => {
 ### Lighthouse CI
 
 ```bash
-pnpm dlx lighthouse http://localhost:3000 \
+yarn dlx lighthouse http://localhost:3000 \
   --only-categories=accessibility \
   --output=json \
   --chrome-flags="--headless"
