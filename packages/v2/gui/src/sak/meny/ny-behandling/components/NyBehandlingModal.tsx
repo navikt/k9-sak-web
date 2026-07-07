@@ -5,25 +5,25 @@ import {
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
   k9_kodeverk_behandling_FagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {behandlingType as BehandlingTypeK9Sak} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import type {FagsakYtelsesType} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType
 } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
-import {ung_kodeverk_behandling_BehandlingÅrsakType} from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import {
   sif_tilbakekreving_behandlingslager_behandling_BehandlingÅrsakType as ungTilbakeBehandlingÅrsakType
 } from '@k9-sak-web/backend/ungtilbake/generated/types.js';
-import {erTilbakekreving} from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import type {KodeverkObject, Periode} from '@k9-sak-web/lib/kodeverk/types.js';
-import {Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack} from '@navikt/ds-react';
-import {ModalBody, ModalFooter} from '@navikt/ds-react/Modal';
-import {RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect} from '@navikt/ft-form-hooks';
-import {required} from '@navikt/ft-form-validators';
-import {use, useEffect} from 'react';
-import {useForm} from 'react-hook-form';
-import {visnDato} from '../../../../utils/formatters';
+import type { KodeverkObject, Periode } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Alert, Button, Checkbox, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
+import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
+import { RhfCheckbox, RhfCheckboxGroup, RhfDatepicker, RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
+import { required } from '@navikt/ft-form-validators';
+import { use, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { visnDato } from '../../../../utils/formatters';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObject[]) => {
@@ -58,7 +58,7 @@ export type FormValues = {
 
 export type DelvisRevurderingÅrsakMapping = {
   årsak: string;
-  vilkårType: string;
+  vilkårType?: string;
   periodeType?: 'STP' | 'PERIODE';
   valgbarePerioder?: Periode[];
 };
@@ -80,9 +80,16 @@ const DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK: Record<string, string> = {
   [BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_OPPTJENING]: 'Opptjeningsvilkåret',
 };
 
-const byggÅrsakTilVilkårMap = (backendData?: DelvisRevurderingÅrsakMapping[]): Record<string, string> => {
+type ÅrsakTilVilkårMap = Record<string, string | undefined>;
+
+const byggÅrsakTilVilkårMap = (backendData?: DelvisRevurderingÅrsakMapping[]): ÅrsakTilVilkårMap => {
   if (backendData && backendData.length > 0) {
-    return Object.fromEntries(backendData.map(d => [d.årsak, VILKÅR_TYPE_KODE_TIL_NAVN[d.vilkårType] ?? d.vilkårType]));
+    return Object.fromEntries(
+      backendData.map(d => [
+        d.årsak,
+        d.vilkårType ? (VILKÅR_TYPE_KODE_TIL_NAVN[d.vilkårType] ?? d.vilkårType) : undefined,
+      ]),
+    );
   }
   return DELVIS_REVURDERING_ARSAK_TIL_VILKAR_FALLBACK;
 };
@@ -244,7 +251,7 @@ export const NyBehandlingModal = ({
     (erRevurdering && erUngdomsprogramytelse);
   const erDelvisRevurdering = REVURDERING_FRA_STEG_V2 && erRevurdering && effektivRevurderingModus === 'DELVIS';
   const årsakTilVilkårMap = byggÅrsakTilVilkårMap(delvisRevurderingsårsaker);
-  const vilkårSomRevurderes = steg ? årsakTilVilkårMap[steg] : undefined;
+  const vilkårSomRevurderes: string | undefined = steg ? årsakTilVilkårMap[steg] : undefined;
   const valgtDelvisÅrsak = delvisRevurderingsårsaker?.find(a => a.årsak === steg);
   const valgbarePerioder = valgtDelvisÅrsak?.valgbarePerioder ?? [];
   const enesteValgbarePeriode = valgbarePerioder.length === 1 ? valgbarePerioder[0] : undefined;
