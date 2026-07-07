@@ -298,7 +298,7 @@ export const BehandlingMenuIndex = ({
             }))}
             delvisRevurderingsårsaker={sakRettigheter.delvisRevurderingsårsaker?.map(d => ({
               årsak: d.årsak.kode,
-              vilkårType: d.vilkårType.kode,
+              vilkårType: d.vilkårType?.kode,
               periodeType: d.periodeType,
               valgbarePerioder: d.valgbarePerioder,
             }))}
