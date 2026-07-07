@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -26,9 +25,7 @@ initSentry({
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
 });
-if (!IS_DEV) {
-  initApm();
-}
+initApm();
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 
