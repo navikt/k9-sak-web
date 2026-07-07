@@ -4,7 +4,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
-import {MenySakIndex as MenySakIndexV2} from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
+import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
@@ -12,7 +12,7 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyVergeIndexV2 from '@k9-sak-web/gui/sak/meny/verge/MenyVergeIndex.js';
-import {goToLos} from '@k9-sak-web/lib/paths/paths.js';
+import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -23,14 +23,14 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import {useCallback, useContext, useEffect, useMemo, useRef} from 'react';
-import {useLocation, useNavigate} from 'react-router';
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import ApplicationContextPath from '../app/ApplicationContextPath';
-import {getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling} from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
-import BehandlingRettigheter, {VergeBehandlingmenyValg} from '../behandling/behandlingRettigheterTsType';
-import {K9sakApiKeys, restApiHooks} from '../data/k9sakApi';
-import {useVisForhandsvisningAvMelding} from '../data/useVisForhandsvisningAvMelding';
+import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
+import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
 import MenyKodeverk from './MenyKodeverk';
