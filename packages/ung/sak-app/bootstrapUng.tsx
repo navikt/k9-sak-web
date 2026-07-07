@@ -19,12 +19,16 @@ import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/config
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
+import { init as initApm } from '@nais/apm';
 
 initSentry({
   dsn: 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
 });
+if (!IS_DEV) {
+  initApm();
+}
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 
