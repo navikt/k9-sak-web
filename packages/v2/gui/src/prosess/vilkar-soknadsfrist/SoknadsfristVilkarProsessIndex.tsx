@@ -2,6 +2,7 @@ import type { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/b
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import type { VilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -21,7 +22,7 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 const lovReferanse = '§ 22-13';
 
 export const skalViseAksjonspunktIkonForPeriode = (
-  vilkarStatus: string,
+  vilkarStatus: VilkårStatus,
   vurderesIBehandlingen: boolean | undefined,
   erOverstyrt: boolean,
   harÅpentUløstAksjonspunkt: boolean,
@@ -30,7 +31,7 @@ export const skalViseAksjonspunktIkonForPeriode = (
   (vurderesIBehandlingen === true && harÅpentUløstAksjonspunkt && vilkarStatus === vilkårStatus.IKKE_VURDERT);
 
 const getIconForPeriode = (
-  vilkarStatus: string,
+  vilkarStatus: VilkårStatus,
   vurderesIBehandlingen: boolean | undefined,
   erOverstyrt: boolean,
   harÅpentUløstAksjonspunkt: boolean,
