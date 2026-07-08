@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -20,12 +19,15 @@ import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOther
 import { resolveK9FeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/resolveK9FeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
+import { init as initApm } from '@nais/apm';
 
 initSentry({
   dsn: 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
 });
+
+initApm();
 
 const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() });
 

@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -19,12 +18,14 @@ import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/config
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
+import { init as initApm } from '@nais/apm';
 
 initSentry({
   dsn: 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
 });
+initApm();
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 

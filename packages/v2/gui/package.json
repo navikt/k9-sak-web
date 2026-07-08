@@ -29,6 +29,7 @@
     "@hookform/resolvers": "5.4.0",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "workspace:^",
+    "@nais/apm": "0.4.0",
     "@navikt/aksel-icons": "8.14.0",
     "@navikt/diagnosekoder": "1.2026.0",
     "@navikt/ds-react": "8.14.0",
