@@ -75,12 +75,12 @@ describe('formaterVisningsnavn', () => {
     });
   });
   describe('når visningsnavn er ukjent', () => {
-    it('skal returnere verdien som streng', () => {
+    it('skal returnere verdien som nytt behandlingsårsak streng', () => {
       const originalWarn = console.warn;
       try {
         console.warn = () => {};
         const result = formaterVisningsnavn('UKJENT' as unknown as ung_sak_kontrakt_behandling_BehandlingVisningsnavn);
-        expect(result).toBe('UKJENT');
+        expect(result).toBe('Nytt behandlingsårsak (UKJENT)');
       } finally {
         console.warn = originalWarn;
       }

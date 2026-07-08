@@ -28,7 +28,7 @@ export const formaterVisningsnavn = (
       return 'Flere behandlingsårsaker';
     default: {
       console.warn('Ukjent behandlingsvisningsnavn:', visningsnavn);
-      return String(visningsnavn);
+      return `Nytt behandlingsårsak (${String(visningsnavn)})`;
     }
   }
 };
