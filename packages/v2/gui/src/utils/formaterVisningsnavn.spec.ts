@@ -74,5 +74,17 @@ describe('formaterVisningsnavn', () => {
       expect(result).toBe('Flere behandlingsårsaker');
     });
   });
+  describe('når visningsnavn er ukjent', () => {
+    it('skal returnere verdien som streng', () => {
+      const originalWarn = console.warn;
+      try {
+        console.warn = () => {};
+        const result = formaterVisningsnavn('UKJENT' as unknown as ung_sak_kontrakt_behandling_BehandlingVisningsnavn);
+        expect(result).toBe('UKJENT');
+      } finally {
+        console.warn = originalWarn;
+      }
+    });
+  });
 });
 
