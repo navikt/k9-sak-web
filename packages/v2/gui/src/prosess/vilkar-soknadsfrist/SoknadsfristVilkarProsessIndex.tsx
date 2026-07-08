@@ -20,8 +20,29 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 
 const lovReferanse = '§ 22-13';
 
-const getIconForPeriode = (vilkarStatus: string, erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
-  if (erOverstyrt || harÅpentUløstAksjonspunkt) {
+export const skalViseAksjonspunktIkonForPeriode = (
+  vilkarStatus: string,
+  vurderesIBehandlingen: boolean | undefined,
+  erOverstyrt: boolean,
+  harÅpentUløstAksjonspunkt: boolean,
+) =>
+  erOverstyrt ||
+  (vurderesIBehandlingen === true && harÅpentUløstAksjonspunkt && vilkarStatus === vilkårStatus.IKKE_VURDERT);
+
+const getIconForPeriode = (
+  vilkarStatus: string,
+  vurderesIBehandlingen: boolean | undefined,
+  erOverstyrt: boolean,
+  harÅpentUløstAksjonspunkt: boolean,
+) => {
+  const skalViseAksjonspunktIkon = skalViseAksjonspunktIkonForPeriode(
+    vilkarStatus,
+    vurderesIBehandlingen,
+    erOverstyrt,
+    harÅpentUløstAksjonspunkt,
+  );
+
+  if (skalViseAksjonspunktIkon) {
     return <AksjonspunktIkon size="small" />;
   }
   if (vilkarStatus === vilkårStatus.OPPFYLT) {
@@ -162,13 +183,13 @@ const SoknadsfristVilkarProsessIndex = ({
     <div className={styles.mainContainerWithSideMenu}>
       <div className={styles.sideMenuContainer}>
         <SideMenu
-          links={perioder.map(({ periode, vilkarStatus }, index) => ({
+          links={perioder.map(({ periode, vilkarStatus, vurderesIBehandlingen }, index) => ({
             active: activeTab === index,
             label:
               periode.fom && periode.tom
                 ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`
                 : `Periode ${index + 1}`,
-            icon: getIconForPeriode(vilkarStatus, erOverstyrt, harÅpentUløstAksjonspunkt),
+            icon: getIconForPeriode(vilkarStatus, vurderesIBehandlingen, erOverstyrt, harÅpentUløstAksjonspunkt),
           }))}
           onClick={setActiveTab}
           heading="Perioder"
