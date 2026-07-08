@@ -25,7 +25,10 @@ initSentry({
   enabled: !IS_DEV,
   release: VITE_SENTRY_RELEASE || 'unknown',
 });
-initApm();
+initApm({
+  namespace: 'k9saksbehandling',
+  app: 'ung-sak-web',
+});
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
 
