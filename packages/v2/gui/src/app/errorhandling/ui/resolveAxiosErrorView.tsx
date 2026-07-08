@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { BodyLong } from '@navikt/ds-react';
+import { BodyLong, List } from '@navikt/ds-react';
 import { EnterIcon } from '@navikt/aksel-icons';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
@@ -8,6 +8,7 @@ import { reloadAction, reloadActionWithFormResetWarning, restartAction } from '.
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
 import {
   isÅrsakIkkeTilgangArray,
+  resolveÅrsakIkkeTilgangTekster,
   type ÅrsakIkkeTilgang,
 } from '@k9-sak-web/backend/shared/errorhandling/ÅrsakIkkeTilgang.js';
 
@@ -48,7 +49,7 @@ const resolveTeapotProps = (error: AxiosError) => {
 };
 
 // Hent ut "feilmelding" frå server-responsen (t.d. ved BadRequestException). Returnerer null viss den ikkje finst.
-const getBodyFeilmelding = (error: AxiosError): string | null => {
+export const getBodyFeilmelding = (error: AxiosError): string | null => {
   const data = asRecord(getEffectiveResponseData(error));
   if (data != null && typeof data['feilmelding'] === 'string') {
     return data['feilmelding'];
@@ -99,10 +100,20 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
 
   // 403 — Tilgang nektet.
   if (status === 403) {
+    const årsakstekster = resolveÅrsakIkkeTilgangTekster(resolveAxiosErrorÅrsakIkkeTilgang(error));
     return {
       error,
       title: 'Ikke tilgang',
-      errorInfo: <BodyLong> Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen. </BodyLong>,
+      errorInfo:
+        årsakstekster.length > 0 ? (
+          <List>
+            {årsakstekster.map(tekst => (
+              <List.Item key={tekst}>{tekst}</List.Item>
+            ))}
+          </List>
+        ) : (
+          <BodyLong>Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen.</BodyLong>
+        ),
       fixAction: {
         ...restartAction,
         info: (
@@ -173,8 +184,8 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
     if (status === 'HALTED') {
       return {
         error,
-        title: 'Oi! Noe gikk galt',
-        errorInfo: 'Noe gikk galt, men feilen kan være midlertidig.',
+        title: 'Bakgrunnsprosess feilet',
+        errorInfo: 'Noe gikk galt i bakgrunnsprosess knyttet til saken. Feilen kan være midlertidig.',
         fixAction: {
           ...reloadAction,
           info: (
@@ -202,9 +213,7 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
           info: (
             <>
               <BodyLong>Prøv å laste siden på nytt.</BodyLong>
-              <BodyLong>
-                Sjekk driftsmeldinger eller rapporter feil i Porten, hvis den ikke løser seg etter hvert.
-              </BodyLong>
+              <BodyLong>Sjekk driftsmeldinger eller meld feil i Porten, hvis den ikke løser seg etter hvert.</BodyLong>
             </>
           ),
         },
@@ -242,6 +251,24 @@ export const resolveAxiosErrorView = (error: AxiosError): ErrorViewProps => {
       title: 'Innsendt forespørsel var ugyldig',
       errorInfo,
       fixAction,
+    };
+  }
+
+  // 500 — intern serverfeil. Vis feilmelding frå server-responsen viss tilgjengeleg.
+  if (status === 500) {
+    const feilmelding = getBodyFeilmelding(error);
+    const harFeilmelding = feilmelding != null && feilmelding.trim().length > 5;
+
+    const errorInfo = harFeilmelding ? (
+      <BodyLong>{feilmelding}</BodyLong>
+    ) : (
+      <BodyLong>Systemet feilet ved behandling av forespørsel</BodyLong>
+    );
+    return {
+      error,
+      title: 'Forespørsel feilet',
+      errorInfo,
+      fixAction: reloadAction,
     };
   }
 

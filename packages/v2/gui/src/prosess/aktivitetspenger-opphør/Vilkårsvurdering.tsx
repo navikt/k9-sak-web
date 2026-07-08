@@ -1,6 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import type { ung_kodeverk_vilkår_BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -101,7 +100,7 @@ export const Vilkaarsvurdering = ({
         begrunnelse: selectedFormPeriod.begrunnelse,
         vurdertePerioder: [
           {
-            avslagsårsak: selectedFormPeriod.årsak as ung_kodeverk_vilkår_BostedsvilkårIkkeOppfyltÅrsak,
+            avslagsårsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
             begrunnelse: selectedFormPeriod.begrunnelse,
             erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
             periode: {

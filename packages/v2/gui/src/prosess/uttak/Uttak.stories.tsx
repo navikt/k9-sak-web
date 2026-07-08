@@ -3,6 +3,7 @@ import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withF
 import {
   arbeidsgivereWithTilkommet,
   Endringsstatus,
+  FagsakYtelseType,
   inntektsgraderingFlereArbeidsgivere,
   lagAvsluttetBehandling,
   lagIkkeOppfyltPeriode,
@@ -450,5 +451,40 @@ export const UttakMedOpphold: Story = {
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
+  },
+};
+
+/**
+ * UttakPleiepengerNærstående
+ *
+ * Viser at avslagsårsaken UTENOM_PLEIEBEHOV gir teksten "Årsak for avslag: Pleietrengende er innlagt." for
+ * pleiepenger i livets sluttfase.
+ */
+export const UttakPleiepengerNærstående: Story = {
+  decorators: [withFakeUttakBackend()],
+  args: {
+    behandling: lagUtredBehandling({ sakstype: FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE }),
+    uttak: lagUttak([
+      lagOppfyltPeriode('2024-01-01/2024-01-15'),
+      lagIkkeOppfyltPeriode('2024-01-16/2024-01-31', [Årsak.UTENOM_PLEIEBEHOV]),
+    ]),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await step('Viser årsak for innleggelse på pleiepenger i livets sluttfase', async () => {
+      const knapper = canvas.getAllByRole('button', { name: 'Åpne' });
+      for (const knapp of knapper) {
+        await user.click(knapp);
+      }
+      await waitFor(async () => {
+        await expect(canvas.getByText('Årsak for avslag: Pleietrengende er innlagt.')).toBeInTheDocument();
+      });
+    });
   },
 };

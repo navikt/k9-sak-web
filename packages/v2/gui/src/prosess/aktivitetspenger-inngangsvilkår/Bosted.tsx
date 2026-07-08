@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -23,7 +24,7 @@ import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
+import { opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
@@ -93,7 +94,7 @@ export const Bosted = ({
       }
       const vurdertePerioder = {
         avslagsårsak:
-          vurdering?.bosatt !== 'oppfylt' ? (vurdering?.avslagsårsak as BostedsvilkårIkkeOppfyltÅrsak) : undefined,
+          vurdering?.bosatt !== 'oppfylt' ? BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM : undefined,
         begrunnelse: vurdering?.begrunnelse ?? '',
         erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,

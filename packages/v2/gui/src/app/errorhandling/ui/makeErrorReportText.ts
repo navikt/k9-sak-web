@@ -1,6 +1,6 @@
-import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AxiosError } from 'axios';
+import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js';
 
 const makeErrorReportLines = (errors: ReadonlyArray<Error>): ReadonlyArray<string> => {
   const errLines: string[] = [];
@@ -29,10 +29,7 @@ export const makeErrorReportText = (errors: ReadonlyArray<Error>): string => {
 };
 
 const makeErrorReportTextForJira = (errors: ReadonlyArray<Error>): string => {
-  const errLines = [
-    '', // Tom linje slik at ein enkelt kan fylle inn eigen info over forhåndsutfyllt teknisk info i jira feltet
-    ...makeErrorReportLines(errors),
-  ];
+  const errLines = ['*Sett inn feilmelding/beskrivelse av problem her*', '->', ...makeErrorReportLines(errors)];
   return errLines.join('\\\\');
 };
 
@@ -42,5 +39,5 @@ export const makeErrorReportLinkForJira = (errors: ReadonlyArray<Error>, fagsakI
     fagsakId != null && fagsakId.length > 2 && fagsakId.length <= 10
       ? `&customfield_21428=${encodeURIComponent(fagsakId)}`
       : ``;
-  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158${saksIdUrlArgument}&summary=Feilrapport+k9-sak-web&description=${encodeURIComponent(reportText)}`;
+  return `https://jira.adeo.no/plugins/servlet/desk/portal/541/create/3142?customfield_24712=30158${saksIdUrlArgument}&description=${encodeURIComponent(reportText)}`;
 };
