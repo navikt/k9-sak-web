@@ -20,9 +20,16 @@ export const formaterVisningsnavn = (
       return 'Brukers dødsfall';
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAMENDRING:
       return 'Ungdomsprogramendring';
+    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_VED_MAKSDATO:
+      return 'Opphør ved maksdato';
+    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_OPPHEVET:
+      return 'Opphør opphevet';
+    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.FLERE_BEHANDLINGÅRSAKER:
+      return 'Flere behandlingsårsaker';
     default: {
       console.warn('Ukjent behandlingsvisningsnavn:', visningsnavn);
-      return 'Flere behandlingsårsaker';
+      return `Nytt behandlingsårsak (${String(visningsnavn)})`;
     }
   }
 };
+
