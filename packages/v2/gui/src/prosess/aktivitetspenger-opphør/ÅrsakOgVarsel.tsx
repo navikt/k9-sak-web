@@ -249,6 +249,9 @@ export const AarsakOgVarsel = ({
                     label="Opphøre fra og med"
                     readOnly={isFormLocked}
                     validate={[required]}
+                    defaultMonth={dateRange?.fromDate}
+                    fromDate={dateRange?.fromDate}
+                    toDate={dateRange?.toDate}
                   />
                 )}
                 {opphøreEllerAvslå === 'avslå' && (
@@ -261,6 +264,7 @@ export const AarsakOgVarsel = ({
                       validate={[required]}
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
+                      defaultMonth={dateRange?.fromDate}
                     />
                     <RhfDatepicker
                       control={formHook.control}
@@ -270,6 +274,7 @@ export const AarsakOgVarsel = ({
                       validate={[required]}
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
+                      defaultMonth={dateRange?.fromDate}
                     />
                   </HStack>
                 )}

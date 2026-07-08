@@ -244,6 +244,9 @@ export const Vilkaarsvurdering = ({
                   label="Dato for opphør"
                   readOnly={isFormLocked}
                   validate={[required]}
+                  fromDate={selectedPeriod?.periode?.fom ? new Date(selectedPeriod?.periode?.fom) : undefined}
+                  toDate={selectedPeriod?.periode?.tom ? new Date(selectedPeriod?.periode?.tom) : undefined}
+                  defaultMonth={selectedPeriod?.periode?.fom ? new Date(selectedPeriod.periode.fom) : undefined}
                 />
               )}
               {!isFormLocked && (
