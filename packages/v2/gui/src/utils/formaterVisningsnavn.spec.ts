@@ -53,4 +53,26 @@ describe('formaterVisningsnavn', () => {
       expect(result).toBe('Ungdomsprogramendring');
     });
   });
+
+  describe('når visningsnavn er OPPHØR_VED_MAKSDATO', () => {
+    it('skal returnere "Opphør ved maksdato"', () => {
+      const result = formaterVisningsnavn(ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_VED_MAKSDATO);
+      expect(result).toBe('Opphør ved maksdato');
+    });
+  });
+
+  describe('når visningsnavn er OPPHØR_OPPHEVET', () => {
+    it('skal returnere "Opphør opphevet"', () => {
+      const result = formaterVisningsnavn(ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_OPPHEVET);
+      expect(result).toBe('Opphør opphevet');
+    });
+  });
+
+  describe('når visningsnavn er FLERE_BEHANDLINGÅRSAKER', () => {
+    it('skal returnere "Flere behandlingsårsaker"', () => {
+      const result = formaterVisningsnavn(ung_sak_kontrakt_behandling_BehandlingVisningsnavn.FLERE_BEHANDLINGÅRSAKER);
+      expect(result).toBe('Flere behandlingsårsaker');
+    });
+  });
 });
+
