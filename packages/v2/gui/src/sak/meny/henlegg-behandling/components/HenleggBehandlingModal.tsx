@@ -6,7 +6,7 @@ import {
   type k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { Bleed, Button, Detail, Fieldset, HGrid, LocalAlert, Modal, VStack } from '@navikt/ds-react';
+import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
 import { useMemo, useState } from 'react';
@@ -17,8 +17,6 @@ import Brevmottakere from './Brevmottakere';
 import dokumentMalType from './dokumentMalType';
 import styles from './henleggBehandlingModal.module.css';
 import type { HenleggBehandlingFormvalues } from './formValues';
-import { AxiosError } from 'axios';
-import { getBodyFeilmelding } from '../../../../app/errorhandling/ui/resolveAxiosErrorView.js';
 
 const maxLength1500 = maxLength(1500);
 
@@ -140,7 +138,6 @@ export const HenleggBehandlingModal = ({
   brevmottakere,
 }: HenleggBehandlingModalProps) => {
   const [isFetchingPreview, setIsFetchingPreview] = useState<boolean>(false);
-  const [submitErrorMsg, setSubmitErrorMsg] = useState<string>('');
 
   const previewHenleggBehandlingDoc =
     (
@@ -192,22 +189,6 @@ export const HenleggBehandlingModal = ({
 
   const valgtMottakerObjekt = brevmottakere?.find(mottaker => mottaker.identifikasjon.id === valgtMottaker);
 
-  const submitWrapper: typeof handleSubmit = async formValues => {
-    setSubmitErrorMsg('');
-    try {
-      await handleSubmit(formValues);
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        const msg = getBodyFeilmelding(e);
-        if (msg != null) {
-          setSubmitErrorMsg(msg);
-          return;
-        }
-      }
-      throw e;
-    }
-  };
-
   return (
     <Modal
       className={styles.modal}
@@ -221,15 +202,7 @@ export const HenleggBehandlingModal = ({
       }}
     >
       <Modal.Body>
-        {submitErrorMsg.length > 0 && (
-          <LocalAlert status="error">
-            <LocalAlert.Header>
-              <LocalAlert.Title>Henleggelse feilet</LocalAlert.Title>
-            </LocalAlert.Header>
-            <LocalAlert.Content>{submitErrorMsg}</LocalAlert.Content>
-          </LocalAlert>
-        )}
-        <RhfForm<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={submitWrapper}>
+        <RhfForm<HenleggBehandlingFormvalues> formMethods={formMethods} onSubmit={handleSubmit}>
           <div>
             <Fieldset legend="Henlegg behandling" hideLegend>
               <VStack gap="space-16">

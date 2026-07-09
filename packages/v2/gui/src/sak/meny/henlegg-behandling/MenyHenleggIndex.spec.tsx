@@ -11,6 +11,7 @@ import { createQueryClient } from '../../../shared/query/queryClient.js';
 
 const queryClient = createQueryClient({
   queries: {
+    throwOnError: false,
     retry: false,
   },
 });

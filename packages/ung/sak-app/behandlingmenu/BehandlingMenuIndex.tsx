@@ -161,7 +161,7 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagNyBehandlingKlage } = restApiHooks.useRestApiRunner<boolean>(
     UngSakApiKeys.NEW_BEHANDLING_KLAGE,
   );
-  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[] | undefined | null>(
+  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
   const menyEndreFristClient = use(MenyEndreFristApiContext);
