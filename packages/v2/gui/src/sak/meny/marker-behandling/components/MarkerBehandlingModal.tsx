@@ -73,7 +73,6 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
     refetch: hentMerknader,
     isFetching,
   } = useQuery({
-    throwOnError: false, // Denne feiler med 404 for klage/tilbake behandlinger
     queryKey: ['merknader', behandlingUuid],
     queryFn: async () => {
       const data = await api.getMerknader(behandlingUuid);
