@@ -26,23 +26,6 @@ const empty: GlobalUnhandledErrors = {
   },
 };
 
-// Kopiert frå Sentry sin EventFilters-integrasjon (DEFAULT_IGNORE_ERRORS). Desse feila blir filtrert vekk av Sentry
-// før dei blir rapportert, så vi filtrerer dei òg vekk her slik at dei ikkje blir lagt til i globalErrors-lista.
-// Sentry har fleire utelatelser i si liste som nok ikkje er relevante i k9-sak-web. Dei er derfor ikkje tatt med her.
-const DEFAULT_IGNORE_ERRORS = [
-  /^Script error\.?$/,
-  /^Javascript error: Script error\.? on line 0$/,
-  /^ResizeObserver loop completed with undelivered notifications\.$/,
-  // The browser logs this when a ResizeObserver handler takes a bit longer. Usually this is not an actual issue though. It indicates slowness.
-  /^undefined is not an object \(evaluating 'a\.[A-Z]'\)$/,
-  // Random error that happens but not actionable or noticeable to end-users.
-];
-
-// Returnerer true dersom feilmeldinga ikkje matcher nokon av mønstera i DEFAULT_IGNORE_ERRORS, og feilen derfor skal handterast.
-const dontIgnoreError = (error: Error): boolean => {
-  return !DEFAULT_IGNORE_ERRORS.some(pattern => pattern.test(error.message));
-};
-
 const GlobalUnhandledErrorsContext = createContext<GlobalUnhandledErrors>(empty);
 
 export const useGlobalUnhandledErrors = () => {
@@ -76,9 +59,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   useEffect(() => {
     const errorListener = (ev: ErrorEvent) => {
       const error = ensureError(ev.error ?? ev.message ?? undefined);
-      if (dontIgnoreError(error)) {
-        addGlobalError(error);
-      }
+      addGlobalError(error);
     };
     addEventListener('error', errorListener);
     return () => {
@@ -88,9 +69,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   useEffect(() => {
     const promiseRejectionListener = (ev: PromiseRejectionEvent) => {
       const error = ensureError(ev.reason);
-      if (dontIgnoreError(error)) {
-        addGlobalError(error);
-      }
+      addGlobalError(error);
     };
     addEventListener('unhandledrejection', promiseRejectionListener);
     return () => {
