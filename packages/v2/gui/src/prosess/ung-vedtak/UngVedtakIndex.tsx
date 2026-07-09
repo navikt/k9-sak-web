@@ -1,6 +1,5 @@
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { UngVedtak, type UngVedtakProps } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -33,7 +32,6 @@ export const UngVedtakIndex = ({
     refetch: refetchVedtaksbrevValg,
   } = useQuery({
     queryKey: ['vedtaksbrevValg', behandling.id, api.backend],
-    throwOnError: ignore404Errors,
     queryFn: async () => {
       const response = await api.vedtaksbrevValg(behandling.id!);
       return response;

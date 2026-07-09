@@ -5,7 +5,6 @@ import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVel
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Heading, HStack, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
@@ -47,7 +46,6 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
 
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['diagnosekodeResponse'],
-    throwOnError: ignore404Errors,
     queryFn: hentDiagnosekoder,
     placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: null },
     staleTime: 10000,

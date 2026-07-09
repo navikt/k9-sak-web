@@ -8,7 +8,6 @@ import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useState, type FC } from 'react';
 import { useUttakContext } from '../context/UttakContext';
 import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
@@ -38,7 +37,6 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
 
   const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery({
     queryKey: ['overstyrte', behandling.uuid],
-    throwOnError: ignore404Errors,
     queryFn: () => uttakApi.hentOverstyringUttak(behandling.uuid),
   });
 

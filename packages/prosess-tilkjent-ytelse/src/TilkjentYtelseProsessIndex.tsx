@@ -6,7 +6,6 @@ import {
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Fagsak } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useContext } from 'react';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
@@ -48,7 +47,6 @@ const TilkjentYtelseProsessIndex = ({
 
   const { data: feriepengerPrÅr = EMPTY_FERIEPENGER_MAP } = useQuery({
     queryKey: ['feriepengegrunnlag', behandlingUuid],
-    throwOnError: ignore404Errors,
     queryFn: () => fetchFn(behandlingUuid!),
     enabled: !!behandlingUuid,
   });

@@ -22,7 +22,6 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
@@ -159,7 +158,6 @@ const FagsakIndex = () => {
 
   const { data: saksbehandlereSomHarGjortEndringerIBehandlingen } = useQuery({
     queryKey: ['saksbehandlere', api.backend, behandling?.uuid, behandling?.versjon],
-    throwOnError: ignore404Errors,
     queryFn: () => api.hentSaksbehandlere(behandling?.uuid ?? ''),
     enabled: !!behandling?.uuid && !skalIkkeHenteData,
   });
