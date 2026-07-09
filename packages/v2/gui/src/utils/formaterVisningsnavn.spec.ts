@@ -62,20 +62,20 @@ describe('formaterVisningsnavn', () => {
   });
 
   describe('når visningsnavn er UNGDOMSPROGRAM_OPPHØR_OPPHEVET', () => {
-    it('skal returnere "Opphør opphevet"', () => {
+    it('skal returnere "Ungdomsprogramopphør opphevet"', () => {
       const result = formaterVisningsnavn(
         ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAM_OPPHØR_OPPHEVET,
       );
-      expect(result).toBe('Opphør opphevet');
+      expect(result).toBe('Ungdomsprogramopphør opphevet');
     });
   });
 
   describe('når visningsnavn er UNGDOMSPROGRAM_OPPHØR_MOTTATT_OG_AVBRUTT_I_SAMME_BEHANDLING', () => {
-    it('skal returnere "Ungdomsprogram opphør mottatt og avbrutt i samme behandling"', () => {
+    it('skal returnere "Ungdomsprogramopphør avbrutt"', () => {
       const result = formaterVisningsnavn(
         ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAM_OPPHØR_MOTTATT_OG_AVBRUTT_I_SAMME_BEHANDLING,
       );
-      expect(result).toBe('Ungdomsprogram opphør mottatt og avbrutt i samme behandling');
+      expect(result).toBe('Ungdomsprogramopphør avbrutt');
     });
   });
 
