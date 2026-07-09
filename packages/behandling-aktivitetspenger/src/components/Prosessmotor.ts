@@ -193,12 +193,7 @@ const beregnInngangsvilkårType = (
 ) => {
   const config = erOpphør ? PANEL_KONFIG.opphør : PANEL_KONFIG.inngangsvilkår;
   const harÅpneAksjonspunkter = aksjonspunkter?.some(
-    ap =>
-      (erOpphør
-        ? config.aksjonspunkter.some(vap => vap === ap.definisjon)
-        : config.aksjonspunkter.some(vap => vap === ap.definisjon)) &&
-      ap.status &&
-      isAksjonspunktOpen(ap.status),
+    ap => config.aksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
   if (harÅpneAksjonspunkter) {
     return ProcessMenuStepType.warning;
