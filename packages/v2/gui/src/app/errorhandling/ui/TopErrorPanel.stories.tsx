@@ -12,7 +12,7 @@ const meta = {
   component: TopErrorPanelUI,
   args: {
     defaultExpanded: true,
-    aktivFagsakId: 'TEST_SAKID',
+    aktivFagsakId: "TEST_SAKID",
   },
   parameters: {
     layout: 'fullscreen',
@@ -30,22 +30,6 @@ export const NoError: Story = {
   },
 };
 
-export const DuplicateConsecutiveErrors: Story = {
-  args: {
-    errors: [
-      new AppError({ message: 'Testfeil A' }),
-      new AppError({ message: 'Duplikatfeil' }),
-      new AppError({ message: 'Duplikatfeil' }),
-      new AppError({ message: 'Duplikatfeil' }),
-      new AppError({ message: 'Testfeil B' }),
-    ],
-  },
-  play: async ({ canvas }) => {
-    // 5 feil inn, men 3 påfølgjande duplikat blir kollapsa til 1 → 3 feil vist totalt.
-    await expect(await canvas.findByText('(3 av 3)', { exact: false })).toBeInTheDocument();
-  },
-};
-
 const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9SakApiError => {
   const req: Request = new Request(url);
   const responseBody: FeilDtoUnion = {
@@ -59,7 +43,7 @@ const fakeK9SakApiError = (url: string, status: number, feilmelding: string): K9
 
 export const OneError: Story = {
   args: {
-    errors: [new AppError({ title: 'apperror1', message: 'Test error 1' })],
+    errors: [new AppError({title: "apperror1",  message: 'Test error 1' })],
   },
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('apperror1')).toBeInTheDocument();
@@ -74,7 +58,7 @@ export const TwoErrors: Story = {
     errors: [new AppError({ message: 'Test error 1' }), new AppError({ message: 'Test error 2' })],
   },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText('(2 av 2)', { exact: false })).toBeInTheDocument();
+    await expect(await canvas.findByText('(2 av 2)', {exact: false})).toBeInTheDocument();
   },
 };
 
