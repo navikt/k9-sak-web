@@ -5,8 +5,6 @@ import RequestErrorEventHandler from './error/RequestErrorEventHandler';
 import TimeoutError from './error/TimeoutError';
 import EventType from './eventType';
 import { Response } from './ResponseTsType';
-import { NotificationEmitter } from './NotificationEmitter.js';
-import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
@@ -18,6 +16,9 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const hasLocationAndStatusDelayedOrHalted = (responseData): boolean =>
   responseData.location &&
   (responseData.status === AsyncPollingStatus.DELAYED || responseData.status === AsyncPollingStatus.HALTED);
+
+type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void;
+type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void;
 
 let popupWindow = null;
 
@@ -39,8 +40,7 @@ class RequestRunner {
 
   maxPollingLimit: number = MAX_POLLING_ATTEMPTS;
 
-  notify: NotificationEmitter = () => undefined;
-  errorNotifier: ErrorNotifier | undefined;
+  notify: Notify = () => undefined;
 
   isCancelled = false;
 
@@ -62,9 +62,6 @@ class RequestRunner {
   setNotificationEmitter = (notificationEmitter: NotificationEmitter): void => {
     this.notify = notificationEmitter;
   };
-  setErrorNotifier(errorNotifier: ErrorNotifier) {
-    this.errorNotifier = errorNotifier;
-  }
 
   execLongPolling = async (location: string, pollingInterval = 0, pollingCounter = 0): Promise<Response> => {
     if (pollingCounter === this.maxPollingLimit) {
@@ -153,7 +150,7 @@ class RequestRunner {
           resolve(retryResponse);
           popupWindow = null;
         } catch (error2) {
-          void new RequestErrorEventHandler(this.notify, this.isPollingRequest, this.errorNotifier).handleError(error2);
+          void new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error2);
           reject(error2);
         }
       }, 500);
@@ -169,7 +166,7 @@ class RequestRunner {
       if (response && response.status === 401 && response.headers && response.headers.location) {
         return this.retryStart(response, params);
       }
-      void new RequestErrorEventHandler(this.notify, this.isPollingRequest, this.errorNotifier).handleError(error);
+      void new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
     }
   };

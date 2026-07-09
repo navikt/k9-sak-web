@@ -189,10 +189,9 @@ import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MyFeatureApiContext } from './api/MyFeatureApiContext.js';
 import type { MyDataDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { createQueryClient } from "@k9-sak-web/gui/shared/query/queryClient.js";
 
 const withFakeApi = (data: MyDataDto): Decorator => {
-  const queryClient = createQueryClient({  queries: { retry: false } });
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return Story => (
     <QueryClientProvider client={queryClient}>
       <MyFeatureApiContext value={{ getMyData: async () => data }}>

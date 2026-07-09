@@ -16,7 +16,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
   dokumenter,
   afterEndringerRegistrert,
 }: NyeDokumenterSomKanPåvirkeEksisterendeVurderingerControllerProps): JSX.Element => {
-  const { endpoints, errorNotifier, behandlingUuid } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, behandlingUuid } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -28,7 +28,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
   });
 
   const bekreftAtEndringerErRegistrert = () =>
-    httpUtils.post(endpoints.nyeDokumenter, createRegistrerNyeDokumenterRequestPayload(), errorNotifier, {
+    httpUtils.post(endpoints.nyeDokumenter, createRegistrerNyeDokumenterRequestPayload(), httpErrorHandler, {
       signal: controller.signal,
     });
 

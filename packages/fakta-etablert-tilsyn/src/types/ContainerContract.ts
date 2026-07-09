@@ -5,7 +5,7 @@ interface ContainerContract {
     sykdom: string;
     sykdomInnleggelse: string;
   };
-  errorNotifier: (error: Error) => void;
+  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   lagreBeredskapvurdering: (data: any) => void;
   lagreNattevåkvurdering: (data: any) => void;
   harUløstAksjonspunktForBeredskap: boolean;

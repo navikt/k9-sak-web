@@ -66,7 +66,6 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     queryKey: ['aktivitetspenger-kontrollInntekt', behandling.uuid, behandling.versjon],
     queryFn: () => aktivitetspengerBeregningApi.getKontrollerInntekt(behandling.uuid),
     select: sortInntekt,
-    throwOnError: false,
   });
 
   const { data: arbeidsgivere } = useQuery({

@@ -8,11 +8,10 @@ import {
   ung_kodeverk_behandling_FagsakStatus,
   ung_kodeverk_behandling_FagsakYtelseType,
 } from '@navikt/ung-sak-typescript-client/types';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 import { FakeUngSakBackendClient } from './mocks/FakeUngSakBackendClient';
-import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const { mockNavigate, mockFagsakSøk } = vi.hoisted(() => ({
   mockNavigate: vi.fn(),
@@ -45,7 +44,7 @@ const fagsak2 = {
 
 const renderComponent = (fakeClient = new FakeUngSakBackendClient()) => {
   mockFagsakSøk.mockImplementation((searchString: string) => fakeClient.fagsakSøk(searchString));
-  const queryClient = createQueryClient({ queries: { retry: false } });
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter>

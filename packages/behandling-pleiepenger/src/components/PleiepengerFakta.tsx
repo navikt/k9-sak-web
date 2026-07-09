@@ -3,8 +3,8 @@ import { Suspense, useEffect, useState } from 'react';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -59,6 +59,7 @@ const PleiepengerFakta = ({
   beregningErBehandlet,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -143,7 +144,7 @@ const PleiepengerFakta = ({
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
           <Suspense fallback={<LoadingPanel />}>
-            <ErrorBoundary>
+            <ErrorBoundary errorMessageCallback={addErrorMessage}>
               {valgtPanel.getPanelDef().getKomponent({
                 ...faktaData,
                 ...faktaDataUtenCaching,

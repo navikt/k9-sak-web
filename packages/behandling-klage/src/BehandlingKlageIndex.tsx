@@ -11,8 +11,7 @@ import {
 } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 import FetchedData from './types/fetchedDataTsType';
@@ -87,7 +86,7 @@ const BehandlingKlageIndex = ({
   );
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: nyBehandlendeEnhet } = restApiKlageHooks.useRestApiRunner(
     KlageBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -113,14 +112,14 @@ const BehandlingKlageIndex = ({
     });
 
     requestKlageApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestKlageApi.setErrorNotifier(legacyErrorNotifier);
+    requestKlageApi.setAddErrorMessageHandler(addErrorMessage);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, [legacyErrorNotifier]);
+  }, []);
 
   const { data, state } = restApiKlageHooks.useMultipleRestApi<FetchedData>(klageData, {
     keepData: true,

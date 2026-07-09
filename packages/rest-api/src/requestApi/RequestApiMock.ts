@@ -1,6 +1,5 @@
 import AbstractRequestApi from './AbstractRequestApi';
 import RequestRunner from './RequestRunner';
-import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 /**
  * RequestApi
@@ -33,8 +32,7 @@ class RequestApiMock extends AbstractRequestApi {
 
   public setRequestPendingHandler = () => {};
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public setErrorNotifier(notifier: ErrorNotifier) {}
+  public setAddErrorMessageHandler = () => {};
 
   public resetCache = () => {};
 

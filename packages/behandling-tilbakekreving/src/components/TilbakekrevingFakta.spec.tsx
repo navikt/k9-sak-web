@@ -4,6 +4,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -13,7 +14,6 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
-import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 describe('<TilbakekrevingFakta>', () => {
   const fagsak = {
@@ -110,7 +110,7 @@ describe('<TilbakekrevingFakta>', () => {
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     renderWithIntlAndReduxForm(
-      <GlobalUnhandledErrorCatcher>
+      <RestApiErrorProvider>
         <TilbakekrevingFakta
           data={{
             aksjonspunkter,
@@ -127,7 +127,7 @@ describe('<TilbakekrevingFakta>', () => {
           hasFetchError={false}
           setBehandling={vi.fn()}
         />
-      </GlobalUnhandledErrorCatcher>,
+      </RestApiErrorProvider>,
     );
 
     expect(screen.getByRole('button', { name: /Feilutbetaling/i })).toBeInTheDocument();
@@ -137,7 +137,7 @@ describe('<TilbakekrevingFakta>', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
-      <GlobalUnhandledErrorCatcher>
+      <RestApiErrorProvider>
         <TilbakekrevingFakta
           data={{
             aksjonspunkter,
@@ -154,7 +154,7 @@ describe('<TilbakekrevingFakta>', () => {
           hasFetchError={false}
           setBehandling={vi.fn()}
         />
-      </GlobalUnhandledErrorCatcher>,
+      </RestApiErrorProvider>,
     );
 
     await act(async () => {

@@ -31,17 +31,16 @@ class NotificationHelper {
   }
 }
 
-import HttpClientApi from '../HttpClientApiTsType';
-
-const httpClientGeneralMock: HttpClientApi = {
-  get: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  post: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  put: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  getBlob: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  postBlob: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  getAsync: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  postAsync: () => Promise.reject(new Error('Ikkje implementert i mock')),
-  putAsync: () => Promise.reject(new Error('Ikkje implementert i mock')),
+const httpClientGeneralMock = {
+  get: () => undefined,
+  post: () => undefined,
+  put: () => undefined,
+  getBlob: () => undefined,
+  postBlob: () => undefined,
+  postAndOpenBlob: () => undefined,
+  getAsync: () => undefined,
+  postAsync: () => undefined,
+  putAsync: () => undefined,
 };
 
 describe('RequestRunner', () => {
@@ -117,7 +116,7 @@ describe('RequestRunner', () => {
             location: 'http://polling.url',
           },
         }),
-      get: () => Promise.resolve(allGetResults.shift()!),
+      get: () => Promise.resolve(allGetResults.shift()),
     };
 
     const params = {

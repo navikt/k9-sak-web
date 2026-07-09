@@ -6,14 +6,14 @@ import PleietrengendeResponse from '../../types/PleietrengendeResponse';
 import ContainerContext from '../context/ContainerContext';
 
 const OmPleietrengende = (): JSX.Element => {
-  const { endpoints, errorNotifier } = useContext(ContainerContext);
+  const { endpoints, httpErrorHandler } = useContext(ContainerContext);
   const [isLoading, setIsLoading] = useState(true);
   const [hasFailed, setHasFailed] = useState(false);
   const [pleietrengende, setPleietrengende] = useState<Pleietrengende>(null);
   const controller = useMemo(() => new AbortController(), []);
 
   const getOmPleietrengende = () =>
-    get<PleietrengendeResponse>(endpoints.omPleietrengende, errorNotifier, {
+    get<PleietrengendeResponse>(endpoints.omPleietrengende, httpErrorHandler, {
       signal: controller.signal,
     });
 

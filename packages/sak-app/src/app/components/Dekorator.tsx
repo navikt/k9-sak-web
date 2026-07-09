@@ -1,22 +1,68 @@
-import { HeaderPanel } from '@k9-sak-web/gui/sak/dekoratør/HeaderPanel.js';
+import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
+import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
 import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
-import { use } from 'react';
+import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { use, useMemo } from 'react';
+import ErrorFormatter from '../feilhandtering/ErrorFormatter';
+import ErrorMessage from '../feilhandtering/ErrorMessage';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
-import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
-import * as Sentry from '@sentry/react';
 
 type QueryStrings = {
   errorcode?: string;
   errormessage?: string;
 };
 
+// Feilmeldingsmaler som tidligere lå i public/sprak/nb_NO.json
+const feilmeldingsmaler: Record<string, (params?: Record<string, string>) => string> = {
+  'Rest.ErrorMessage.General': () =>
+    'Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.',
+  'Rest.ErrorMessage.DownTime': p =>
+    `Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen ${p?.date ?? ''} kl. ${p?.time ?? ''}.\n${p?.message ?? ''}`,
+  'Rest.ErrorMessage.PollingTimeout': p => `Serverkall har gått ut på tid: ${p?.location ?? ''}`,
+  'Rest.ErrorMessage.GatewayTimeoutOrNotFound': p =>
+    `Får ikke kontakt med ${p?.contextPath ?? ''} (${p?.location ?? ''})`,
+};
+
+const formaterFeilmelding = (code: string, params?: Record<string, string>): string => {
+  const mal = feilmeldingsmaler[code];
+  return mal ? mal(params) : code;
+};
+
+const lagFeilmeldinger = (errorMessages: ErrorMessage[], queryStrings: QueryStrings): Feilmelding[] => {
+  const resolvedErrorMessages: Feilmelding[] = [];
+  if (queryStrings.errorcode) {
+    resolvedErrorMessages.push({ message: formaterFeilmelding(queryStrings.errorcode) });
+  }
+  if (queryStrings.errormessage) {
+    resolvedErrorMessages.push({ message: queryStrings.errormessage });
+  }
+  errorMessages.forEach(message => {
+    let msg = {
+      message: message.code ? formaterFeilmelding(message.code, message.params) : message.text,
+      additionalInfo: undefined,
+    };
+    if (message.params && message.params.errorDetails) {
+      msg = {
+        ...msg,
+        additionalInfo: JSON.parse(message.params.errorDetails),
+      };
+    }
+    resolvedErrorMessages.push(msg);
+  });
+  return resolvedErrorMessages;
+};
+
+const EMPTY_ARRAY = [];
+
 interface OwnProps {
   queryStrings: QueryStrings;
+  hideErrorMessages?: boolean;
+  setSiteHeight: (headerHeight: number) => void;
   pathname: string;
 }
 
-const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
+const Dekorator = ({ queryStrings, setSiteHeight, pathname, hideErrorMessages = false }: OwnProps) => {
   const navAnsatt = use(InnloggetAnsattContext);
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
@@ -37,32 +83,30 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
     return `${aaregPath}?saksnummer=${fagsakFraUrl}`;
   };
 
-  // Denne koden kan fjernast viss vi ikkje har fått advarsler i sentry ei stund etter utrulling.
-  if (queryStrings.errorcode) {
-    const msg = `Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`;
-    console.warn(msg);
-    Sentry.logger.warn(msg);
-  }
-  if (queryStrings.errormessage) {
-    const msg = `Dekorator queryString.errormessage satt (${queryStrings.errormessage}). Ikke støttet lenger`;
-    console.warn(msg);
-    Sentry.logger.warn(msg);
-  }
+  const errorMessages = useRestApiError() || EMPTY_ARRAY;
+  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages), [errorMessages]);
+
+  const resolvedErrorMessages = useMemo(
+    () => lagFeilmeldinger(formaterteFeilmeldinger, queryStrings),
+    [formaterteFeilmeldinger, queryStrings],
+  );
+
+  const { removeErrorMessages } = useRestApiErrorDispatcher();
 
   return (
-    <>
-      <HeaderPanel
-        navAnsattName={navAnsatt?.navn}
-        navBrukernavn={navAnsatt?.brukernavn}
-        getPathToLos={getPathToK9Los}
-        getPathToK9Punsj={getPathToK9Punsj}
-        ainntektPath={getAinntektPath()}
-        aaregPath={getAaregPath()}
-        ytelse="Pleiepenger, Omsorgspenger og Opplæringspenger"
-        headerTitleHref="/k9/web"
-      />
-      <TopErrorPanel aktivFagsakId={fagsakFraUrl} />
-    </>
+    <HeaderWithErrorPanel
+      navAnsattName={navAnsatt?.navn}
+      navBrukernavn={navAnsatt?.brukernavn}
+      removeErrorMessage={removeErrorMessages}
+      errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
+      setSiteHeight={setSiteHeight}
+      getPathToLos={getPathToK9Los}
+      getPathToK9Punsj={getPathToK9Punsj}
+      ainntektPath={getAinntektPath()}
+      aaregPath={getAaregPath()}
+      ytelse="Pleiepenger, Omsorgspenger og Opplæringspenger"
+      headerTitleHref="/k9/web"
+    />
   );
 };
 

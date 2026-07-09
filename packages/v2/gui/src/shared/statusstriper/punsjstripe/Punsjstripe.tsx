@@ -18,7 +18,6 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos, api })
       const data = await api.getUferdigePunsjoppgaver(saksnummer);
       return data || {};
     },
-    throwOnError: false,
   });
 
   const harPunsjoppgaver =

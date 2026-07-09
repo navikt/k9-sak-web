@@ -1,11 +1,11 @@
-import { AxiosError, AxiosHeaders } from 'axios';
 import { vi } from 'vitest';
 import * as httpUtils from '../axiosHttpUtils';
+import * as responseHelpers from '../responseHelpers';
 
 vi.mock('httpUtils');
 
 describe.skip('httpUtils', () => {
-  const mockedErrorNotifier = vi.fn();
+  const mockedErrorHandler = () => null;
 
   beforeEach(() => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
@@ -20,63 +20,90 @@ describe.skip('httpUtils', () => {
       vi.mocked(httpUtils.get).mockClear();
     });
     const goodResponseMock = { data: 'mockedData' };
+    const badRequestResponseMock = { response: { status: 400, headers: {} } };
 
     it('should return the data-property from the response when the promise resolved', async () => {
       vi.mocked(httpUtils.get<typeof goodResponseMock>).mockImplementation(() => Promise.resolve(goodResponseMock));
-      const data = await httpUtils.get('', mockedErrorNotifier);
+      const data = await httpUtils.get('', () => null);
       expect(data).toEqual(goodResponseMock.data);
     });
 
-    it('should throw and call errorNotifier when the promise is rejected with AxiosError', async () => {
-      const axiosError = new AxiosError('Request failed', '400', undefined, undefined, {
-        status: 400,
-        statusText: 'Bad Request',
-        data: {},
-        headers: {},
-        config: { headers: new AxiosHeaders() },
-      });
-      vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(axiosError));
-      await expect(httpUtils.get('', mockedErrorNotifier)).rejects.toThrow();
-      expect(mockedErrorNotifier).toHaveBeenCalledWith(axiosError);
+    it('should throw an error and console.error when the promise is rejected', async () => {
+      vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(badRequestResponseMock));
+      const error = httpUtils.get('', () => null);
+      await expect(error).rejects.toThrow();
+      expect(console.error).toHaveBeenCalledWith(badRequestResponseMock);
     });
 
-    it('should not call errorNotifier on 401 with location header (redirect)', async () => {
-      const axiosError = new AxiosError('Unauthorized', '401', undefined, undefined, {
-        status: 401,
-        statusText: 'Unauthorized',
-        data: {},
-        headers: { location: 'https://login.example.com' },
-        config: { headers: new AxiosHeaders() },
-      });
-      vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(axiosError));
-      await expect(httpUtils.get('', mockedErrorNotifier)).rejects.toThrow();
-      expect(mockedErrorNotifier).not.toHaveBeenCalled();
+    it('should call function triggering the provided httpErrorHandler when required', async () => {
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      checkerFn.mockReturnValueOnce(true);
+
+      vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(badRequestResponseMock));
+
+      const error = httpUtils.get('', mockedErrorHandler);
+      await expect(error).rejects.toThrow('');
+      expect(httpErrorHandlerCaller).toHaveBeenCalledWith(badRequestResponseMock, mockedErrorHandler);
+    });
+
+    it('should avoid calling function triggering httpErrorHandler when unneccessary', async () => {
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      checkerFn.mockReturnValueOnce(false);
+
+      vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(badRequestResponseMock));
+
+      await expect(httpUtils.get('', mockedErrorHandler)).rejects.toThrow('');
+      expect(httpErrorHandlerCaller).not.toHaveBeenCalled();
     });
   });
+
+  const httpErrorHandler = () => {
+    throw new Error('http error in test');
+  };
 
   describe('post', () => {
     afterEach(() => {
       vi.mocked(httpUtils.post).mockClear();
     });
     const goodResponseMock = { data: 'mockedData' };
+    const badRequestResponseMock = { response: { status: 400, headers: {} } };
 
     it('should return the data-property from the response when the promise resolved', async () => {
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.resolve(goodResponseMock));
-      const data = await httpUtils.post('', null, mockedErrorNotifier);
+      const data = await httpUtils.post('', null, httpErrorHandler);
       expect(data).toEqual(goodResponseMock.data);
     });
 
-    it('should throw and call errorNotifier when the promise is rejected with AxiosError', async () => {
-      const axiosError = new AxiosError('Request failed', '403', undefined, undefined, {
-        status: 403,
-        statusText: 'Forbidden',
-        data: {},
-        headers: {},
-        config: { headers: new AxiosHeaders() },
-      });
-      vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(axiosError));
-      await expect(httpUtils.post('', null, mockedErrorNotifier)).rejects.toThrow();
-      expect(mockedErrorNotifier).toHaveBeenCalledWith(axiosError);
+    it('should throw an error and console.error when the promise is rejected', async () => {
+      vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
+      const error = httpUtils.post('', null, httpErrorHandler);
+      await expect(error).rejects.toEqual(badRequestResponseMock);
+      expect(console.error).toHaveBeenCalledWith(badRequestResponseMock);
+    });
+
+    it('should call function triggering the provided httpErrorHandler when required', async () => {
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      checkerFn.mockReturnValueOnce(true);
+
+      vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
+
+      const error = httpUtils.post('', null, mockedErrorHandler);
+      await expect(error).rejects.toEqual(badRequestResponseMock);
+      expect(httpErrorHandlerCaller).toHaveBeenCalledWith(badRequestResponseMock, mockedErrorHandler);
+    });
+
+    it('should avoid calling function triggering httpErrorHandler when unneccessary', async () => {
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      checkerFn.mockReturnValueOnce(false);
+
+      vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
+
+      await expect(httpUtils.post('', null, mockedErrorHandler)).rejects.toEqual(badRequestResponseMock);
+      expect(httpErrorHandlerCaller).not.toHaveBeenCalled();
     });
   });
 });

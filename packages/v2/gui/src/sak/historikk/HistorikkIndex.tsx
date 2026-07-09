@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { InnslagBoble } from '@k9-sak-web/gui/sak/historikk/innslag/InnslagBoble.js';
 import { HistorikkBackendApiContext } from './api/HistorikkBackendApiContext.js';
 import { pathToBehandling } from '../../utils/paths.js';
-import { queryKeys } from '../../shared/query/queryKeys.js';
+import { queryKeys } from '../../shared/query-keys/queryKeys.js';
 
 interface OwnProps {
   saksnummer: string;

@@ -48,7 +48,6 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient!.getNotater(fagsakId),
     enabled: !!fagsakId && !!notatBackendClient,
-    throwOnError: false,
   });
 
   const opprettNotatMutation = useMutation({

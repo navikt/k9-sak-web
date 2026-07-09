@@ -23,7 +23,6 @@ export const UngMessagesIndex = (props: UngMessagesProps) => {
     queryKey: ['brevmaler', behandlingId],
     queryFn: () => api.hentMaler(behandlingId),
     select: data => data?.informasjonbrevValg ?? [],
-    throwOnError: false,
   });
   if (brevmalerIsLoading || !brevmaler) {
     return <Loader size="large" />;

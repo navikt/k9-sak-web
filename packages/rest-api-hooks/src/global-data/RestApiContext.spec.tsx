@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import { AbstractRequestApi, type ErrorNotifier } from '@k9-sak-web/rest-api';
+import { AbstractRequestApi } from '@k9-sak-web/rest-api';
 import { render } from '@testing-library/react';
 import React, { useEffect, act } from 'react';
+import { RestApiErrorProvider } from '../error/RestApiErrorContext';
 import { RestApiProvider } from './RestApiContext';
 import getUseGlobalStateRestApi from './useGlobalStateRestApi';
 import useGlobalStateRestApiData from './useGlobalStateRestApiData';
-import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 class RequestApiTestMock extends AbstractRequestApi {
   data: any;
@@ -25,8 +25,7 @@ class RequestApiTestMock extends AbstractRequestApi {
 
   public isMock = () => false;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public setErrorNotifier(notifier: ErrorNotifier) {}
+  public setAddErrorMessageHandler = () => {};
 
   public setRequestPendingHandler = () => {};
 
@@ -74,9 +73,9 @@ describe('<RestApiContext>', () => {
     await act(async () => {
       render(
         <RestApiProvider>
-          <GlobalUnhandledErrorCatcher>
+          <RestApiErrorProvider>
             <TestGlobalData setValue={setValue} />
-          </GlobalUnhandledErrorCatcher>
+          </RestApiErrorProvider>
         </RestApiProvider>,
       );
     });

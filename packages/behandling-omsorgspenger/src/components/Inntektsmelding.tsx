@@ -1,6 +1,6 @@
-import { findEndpointsFromRels } from '@fpsak-frontend/utils';
+import { findEndpointsFromRels, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
 import { InntektsmeldingContainer } from '@k9-sak-web/fakta-inntektsmelding';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 export default ({
   behandling,
@@ -10,14 +10,16 @@ export default ({
   aksjonspunkter,
   submitCallback,
 }) => {
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
+    httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
   const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
 
   return (
     <InntektsmeldingContainer
       data={{
-        errorNotifier: legacyErrorNotifier,
+        httpErrorHandler: httpErrorHandlerCaller,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         dokumenter,
         readOnly,

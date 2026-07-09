@@ -6,8 +6,9 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { ArbeidsforholdV2, Behandling, Fagsak } from '@k9-sak-web/types';
+import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -20,7 +21,6 @@ import {
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
-import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
@@ -72,7 +72,11 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     },
   ];
   const vilkar = [];
-  const arbeidsforhold: ArbeidsforholdV2[] = [];
+  const arbeidsforhold = {
+    skalKunneLeggeTilNyeArbeidsforhold: true,
+    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
+    relatertTilgrensendeYtelserForAnnenForelder: [],
+  };
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -151,7 +155,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <GlobalUnhandledErrorCatcher>
+      <RestApiErrorProvider>
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -169,7 +173,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
           dokumenter={[]}
           featureToggles={qFeatureToggles}
         />
-      </GlobalUnhandledErrorCatcher>,
+      </RestApiErrorProvider>,
       { messages },
     );
 
@@ -189,8 +193,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       vilkar,
     };
 
-    renderWithIntlAndReduxForm(
-      <GlobalUnhandledErrorCatcher>
+    renderWithIntl(
+      <RestApiErrorProvider>
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -208,7 +212,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
           dokumenter={[]}
           featureToggles={qFeatureToggles}
         />
-      </GlobalUnhandledErrorCatcher>,
+      </RestApiErrorProvider>,
       { messages },
     );
 

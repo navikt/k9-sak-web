@@ -57,6 +57,7 @@ export {
 
 export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
 export { findEndpointsFromRels } from './src/micro-frontends/findEndpointsFromRels';
+export { httpErrorHandler } from './src/micro-frontends/httpErrorHandler';
 
 export { default as transformBeregningValues } from './src/beregning/transformValuesBeregning';
 export { default as mapVilkar } from './src/beregning/VilkarMapper';
@@ -67,6 +68,12 @@ export { prettifyDate, prettifyDateString } from './src/date-utils/format';
 export { dateStringSorter } from './src/date-utils/sort';
 export type { Adresser } from './src/getAddresses';
 export { get, post } from './src/http-utils/axiosHttpUtils';
+export {
+  handleErrorExternally,
+  httpErrorShouldBeHandledExternally,
+  isForbidden,
+  isUnauthorized,
+} from './src/http-utils/responseHelpers';
 export { getKodeverknavnFn, konverterKodeverkTilKode } from './src/kodeverkUtils';
 export { default as findHolesInPeriods } from './src/period-utils/findHolesInPeriods';
 export { default as getHumanReadablePeriodString } from './src/period-utils/getHumanReadablePeriodString';

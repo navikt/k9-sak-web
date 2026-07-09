@@ -9,10 +9,9 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
-import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const navAnsatt = {
   brukernavn: 'Test',
@@ -73,10 +72,11 @@ vi.mock('react-router', async () => {
   };
 });
 
-const queryClient = createQueryClient({
-  queries: {
-    throwOnError: false,
-    retry: false,
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
   },
 });
 

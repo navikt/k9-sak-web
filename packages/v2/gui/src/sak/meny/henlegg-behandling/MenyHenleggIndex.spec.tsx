@@ -3,16 +3,16 @@ import {
   k9_kodeverk_behandling_BehandlingResultatType as behandlingResultatType,
   k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
-import { createQueryClient } from '../../../shared/query/queryClient.js';
 
-const queryClient = createQueryClient({
-  queries: {
-    throwOnError: false,
-    retry: false,
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
   },
 });
 

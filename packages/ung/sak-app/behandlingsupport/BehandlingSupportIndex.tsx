@@ -1,5 +1,5 @@
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
@@ -166,22 +166,18 @@ const BehandlingSupportIndex = ({
     queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
     enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
-    throwOnError: false,
   });
 
-  const lagTabs = useCallback(
-    (tilgjengeligeTabs: string[], valgtIndex?: number) =>
-      Object.keys(TABS)
-        .filter(key => tilgjengeligeTabs.includes(key))
-        .map((key, index) => ({
-          getSvg: TABS[key].getSvg,
-          tooltip: TABS[key].tooltipTextCode,
-          isActive: index === valgtIndex,
-          antallUlesteNotater,
-          tabKey: TABS[key].tabKey,
-        })),
-    [antallUlesteNotater],
-  );
+  const lagTabs = (tilgjengeligeTabs: string[], valgtIndex?: number) =>
+    Object.keys(TABS)
+      .filter(key => tilgjengeligeTabs.includes(key))
+      .map((key, index) => ({
+        getSvg: TABS[key].getSvg,
+        tooltip: TABS[key].tooltipTextCode,
+        isActive: index === valgtIndex,
+        antallUlesteNotater,
+        tabKey: TABS[key].tabKey,
+      }));
 
   useEffect(() => {
     if (notaterFetchFailed) {
@@ -220,7 +216,7 @@ const BehandlingSupportIndex = ({
       const getSupportPanelLocation = getSupportPanelLocationCreator(location);
       await navigate(getSupportPanelLocation(supportPanel));
     },
-    [location, synligeSupportPaneler, navigate],
+    [location, synligeSupportPaneler],
   );
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);

@@ -20,7 +20,7 @@ const ContainerContext = React.createContext<ContainerContract>({
   onFinished: () => {
     throw new Error('Function not implemented.');
   },
-  errorNotifier: () => {
+  httpErrorHandler: () => {
     throw new Error('Function not implemented.');
   },
   visFortsettknapp: false,

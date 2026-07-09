@@ -5,7 +5,6 @@ import Link from './LinkTsType';
 import NotificationMapper from './NotificationMapper';
 import RequestRunner from './RequestRunner';
 import ResponseCache from './ResponseCache';
-import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 const DEFAULT_CATEGORY = 'DEFAULT_CATEGORY';
 
@@ -58,7 +57,6 @@ class RequestApi extends AbstractRequestApi {
   links: { [key: string]: Link[] } = {};
 
   notificationMapper: NotificationMapper = new NotificationMapper();
-  errorNotifier: ErrorNotifier | undefined;
 
   cache: ResponseCache = new ResponseCache();
 
@@ -80,7 +78,7 @@ class RequestApi extends AbstractRequestApi {
     return undefined;
   };
 
-  private findLinks = (rel: string): Link | undefined =>
+  private findLinks = (rel: string): Link =>
     Object.values(this.links)
       .flat()
       .find(link => link.rel === rel);
@@ -90,9 +88,9 @@ class RequestApi extends AbstractRequestApi {
     if (!endpointConfig) {
       throw new Error(`Mangler konfig for endepunkt ${endpointName}`);
     }
-    const link = endpointConfig.rel ? this.findLinks(endpointConfig.rel) : undefined;
-    const restMethod = link?.type ?? endpointConfig.restMethod ?? '';
-    const href = link?.href ?? endpointConfig.path ?? '';
+    const link = this.findLinks(endpointConfig.rel);
+    const restMethod = link ? link.type : endpointConfig.restMethod;
+    const href = link ? link.href : endpointConfig.path;
 
     const useCaching = isCachingOn && isGetRequest(restMethod);
     if (useCaching) {
@@ -102,13 +100,10 @@ class RequestApi extends AbstractRequestApi {
       }
     }
 
-    const apiRestMethod = getMethod(this.httpClientApi, restMethod, endpointConfig.config?.isResponseBlob ?? false);
-    const runner = new RequestRunner(this.httpClientApi, apiRestMethod, href, endpointConfig.config ?? {});
+    const apiRestMethod = getMethod(this.httpClientApi, restMethod, endpointConfig.config.isResponseBlob);
+    const runner = new RequestRunner(this.httpClientApi, apiRestMethod, href, endpointConfig.config);
     if (this.notificationMapper) {
       runner.setNotificationEmitter(this.notificationMapper.getNotificationEmitter());
-    }
-    if (this.errorNotifier != null) {
-      runner.setErrorNotifier(this.errorNotifier);
     }
 
     if (!useCaching) {
@@ -130,7 +125,7 @@ class RequestApi extends AbstractRequestApi {
     if (!endpointConfig) {
       throw new Error(`Mangler konfig for endepunkt ${endpointName}`);
     }
-    const link = endpointConfig.rel ? this.findLinks(endpointConfig.rel) : undefined;
+    const link = this.findLinks(endpointConfig.rel);
     return !!link?.href || !!endpointConfig?.path;
   };
 
@@ -153,13 +148,11 @@ class RequestApi extends AbstractRequestApi {
     });
   };
 
-  /**
-   * Set handler for reporting errors to the global error UI.
-   * @param notifier
-   */
-  public setErrorNotifier(notifier: ErrorNotifier) {
-    this.errorNotifier = notifier;
-  }
+  public setAddErrorMessageHandler = (addErrorMessage: (message: string) => void): void => {
+    this.notificationMapper.addRequestErrorEventHandlers((errorData, type) => {
+      addErrorMessage({ ...errorData, type });
+    });
+  };
 
   public resetCache = (): void => {
     this.cache = new ResponseCache();

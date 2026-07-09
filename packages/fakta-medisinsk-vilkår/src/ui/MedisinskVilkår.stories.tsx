@@ -32,9 +32,7 @@ const meta: Meta<typeof MedisinskVilkårContainer> = {
       visFortsettknapp: true,
       fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
       behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
-      errorNotifier: error => {
-        throw error;
-      },
+      httpErrorHandler: undefined,
     },
   },
   parameters: {
@@ -203,9 +201,7 @@ export const MedisinskVilkårPleiepengerNærstående: Story = {
       await userEvent.type(canvas.getAllByRole('textbox', { name: 'Til' })[3], '100221');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
       await waitFor(async () => {
-        await expect(
-          canvas.getByText('Innleggelsesperioden må være innenfor søknadsperioden'),
-        ).toBeInTheDocument();
+        await expect(canvas.getByText('Innleggelsesperioden må være innenfor søknadsperioden')).toBeInTheDocument();
       });
     });
 
@@ -255,4 +251,3 @@ MedisinskVilkårPleiepengerNærstående.parameters = {
     handlers,
   },
 };
-

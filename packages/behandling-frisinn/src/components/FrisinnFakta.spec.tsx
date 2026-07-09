@@ -6,8 +6,9 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Behandling, Fagsak, OpplysningerFraSøknaden } from '@k9-sak-web/types';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -16,7 +17,6 @@ import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBeha
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnFakta from './FrisinnFakta';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
-import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {
@@ -63,15 +63,6 @@ describe('<FrisinnFakta>', () => {
     },
   ];
   const vilkar = [];
-
-  const oppgittOpptjening: OpplysningerFraSøknaden = {
-    måneder: [],
-    førSøkerPerioden: {
-      oppgittEgenNæring: [],
-      oppgittFrilans: { oppgittFrilansoppdrag: [] },
-      oppgittArbeidsforhold: [],
-    },
-  };
 
   const soker = {
     navn: 'Espen Utvikler',
@@ -146,7 +137,7 @@ describe('<FrisinnFakta>', () => {
       personopplysninger: soker,
     };
     renderWithIntl(
-      <GlobalUnhandledErrorCatcher>
+      <RestApiErrorProvider>
         <FrisinnFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -163,7 +154,7 @@ describe('<FrisinnFakta>', () => {
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={qFeatureToggles}
         />
-      </GlobalUnhandledErrorCatcher>,
+      </RestApiErrorProvider>,
     );
 
     expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
@@ -171,15 +162,15 @@ describe('<FrisinnFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, oppgittOpptjening);
+    requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, undefined);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
     };
 
-    renderWithIntlAndReduxForm(
-      <GlobalUnhandledErrorCatcher>
+    renderWithIntl(
+      <RestApiErrorProvider>
         <FrisinnFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
@@ -196,7 +187,7 @@ describe('<FrisinnFakta>', () => {
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={qFeatureToggles}
         />
-      </GlobalUnhandledErrorCatcher>,
+      </RestApiErrorProvider>,
     );
 
     await act(async () => {

@@ -90,7 +90,8 @@ const MedisinskVilkår = (): JSX.Element => {
   });
 
   const { isLoading, hasError, activeStep, markedStep, sykdomsstegStatus, nyeDokumenterSomIkkeErVurdert } = state;
-  const { endpoints, errorNotifier, visFortsettknapp, fagsakYtelseType, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, visFortsettknapp, fagsakYtelseType, readOnly } =
+    React.useContext(ContainerContext);
 
   const dokumentStegForSakstype = stegForSakstype(fagsakYtelseType).find(stepObj => stepObj.id === StepId.Dokument);
 
@@ -109,7 +110,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const hentDiagnosekoder = () =>
     httpUtils
-      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, errorNotifier)
+      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
       .then((response: DiagnosekodeResponse) => response);
 
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery({
@@ -126,7 +127,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const hentSykdomsstegStatus = async () => {
     try {
-      const status = await httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, errorNotifier, {
+      const status = await httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
         signal: controller.signal,
       });
       const nesteSteg = finnNesteStegFn(status);
@@ -149,7 +150,7 @@ const MedisinskVilkår = (): JSX.Element => {
     new Promise((resolve, reject) => {
       if (status.nyttDokumentHarIkkekontrollertEksisterendeVurderinger) {
         httpUtils
-          .get<NyeDokumenterResponse>(endpoints.nyeDokumenter, errorNotifier, {
+          .get<NyeDokumenterResponse>(endpoints.nyeDokumenter, httpErrorHandler, {
             signal: controller.signal,
           })
           .then(
