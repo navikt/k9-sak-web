@@ -11,14 +11,13 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { BehandlingUttakBackendApiType } from '../../prosess/uttak/BehandlingUttakBackendApiType.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
-import { defaultArbeidsgivere, lagUttak } from './uttak/uttakStoryMocks.js';
+import { defaultArbeidsgivere } from './uttak/uttakStoryMocks.js';
 
 export interface FakeUttakBackendConfig {
   arbeidsgivere?: ArbeidsgiverOversiktDto['arbeidsgivere'];
   inntektsgraderinger?: InntektgraderingDto;
   overstyringer?: OverstyrtUttakDto['overstyringer'];
   egneOverlappendeSaker?: EgneOverlappendeSakerDto;
-  uttak?: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
   allowedRanges?: Array<{ fom: string; tom: string }>;
   onBekreftAksjonspunkt?: (requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => void;
   onOverstyringUttak?: (requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void;
@@ -29,11 +28,9 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
   #inntektsgraderinger: InntektgraderingDto;
   #overstyringer: OverstyrtUttakDto['overstyringer'];
   #egneOverlappendeSaker: EgneOverlappendeSakerDto;
-  #uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
   #onBekreftAksjonspunkt: ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => void) | undefined;
   #onOverstyringUttak:
-    | ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void)
-    | undefined;
+    ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void) | undefined;
   #allowedRanges: Array<{ fom: string; tom: string }> | undefined;
 
   constructor(config?: FakeUttakBackendConfig) {
@@ -41,7 +38,6 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
     this.#inntektsgraderinger = config?.inntektsgraderinger ?? { perioder: [] };
     this.#overstyringer = config?.overstyringer ?? [];
     this.#egneOverlappendeSaker = config?.egneOverlappendeSaker ?? { perioderMedOverlapp: [] };
-    this.#uttak = config?.uttak ?? lagUttak([]);
     this.#onBekreftAksjonspunkt = config?.onBekreftAksjonspunkt;
     this.#onOverstyringUttak = config?.onOverstyringUttak;
     this.#allowedRanges = config?.allowedRanges;
@@ -51,7 +47,7 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
     behandlingUuid: string,
   ): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder> {
     ignoreUnusedDeclared(behandlingUuid);
-    return this.#uttak;
+    throw new Error('hentUttak er ikke implementert i FakeUttakBackendApi');
   }
 
   async getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto> {

@@ -6,7 +6,6 @@ import type {
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Button, Heading, Modal, VStack } from '@navikt/ds-react';
 import { useQuery, type UseMutateFunction } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { type FormData } from '../FormData';
@@ -67,7 +66,6 @@ export const FritekstBrevpanel = ({
 
   const { data: fritekstEditorData } = useQuery({
     queryKey: ['fritekstEditorData', behandlingId, vedtaksbrevValg?.dokumentMalType],
-    throwOnError: ignore404Errors,
     queryFn: async () => {
       if (vedtaksbrevValg?.dokumentMalType) {
         const response = await api.formidling_editor(`${behandlingId}`, vedtaksbrevValg.dokumentMalType.kilde);

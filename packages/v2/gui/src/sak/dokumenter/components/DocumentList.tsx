@@ -17,7 +17,6 @@ import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 
 const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
@@ -115,7 +114,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     queryKey: ['kompletthet'],
     queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
     enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
-    throwOnError: ignore404Errors, // k9-sak kaster 404 på dette kallet av og til. Uvisst når pr no
+    throwOnError: false, // k9-sak kaster 404 på dette kallet av og til. Uvisst når pr no
   });
 
   const ModiaLenke = () => (
