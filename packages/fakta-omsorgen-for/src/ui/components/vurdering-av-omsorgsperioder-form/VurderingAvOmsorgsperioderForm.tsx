@@ -187,7 +187,8 @@ const VurderingAvOmsorgsperioderForm = ({
                         </List.Item>
                       </List>
                       <BodyShort size="small" spacing>
-                        {intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}
+                        Hvis søker ikke oppfyller vilkåret etter § 9-5, så skal vilkåret likevel settes oppfylt dersom
+                        søker kan ha fått fordelt eller overført dager etter § 9-6, femte og sjette ledd.
                       </BodyShort>
                     </VStack>
                   </ReadMore>
