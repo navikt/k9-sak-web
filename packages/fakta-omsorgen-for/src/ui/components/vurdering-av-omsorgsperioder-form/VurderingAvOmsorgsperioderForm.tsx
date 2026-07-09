@@ -164,7 +164,7 @@ const VurderingAvOmsorgsperioderForm = ({
               </Label>
               {erOMP && (
                 <VStack gap="space-16">
-                  <ReadMore header="Har søker omsorg for barn?" size="small">
+                  <ReadMore header="Har søker omsorg for barn?" size="small" defaultOpen>
                     <BodyShort size="small" spacing>
                       Saksbehandler må utrede hva manglende registrering skyldes. Dersom det ikke foreligger informasjon
                       i Gosys, må søker kontaktes for avklaring av forholdene.
@@ -172,17 +172,26 @@ const VurderingAvOmsorgsperioderForm = ({
                     <BodyShort size="small" spacing>
                       Manglende registrering av barn kan komme av ulike grunner:
                     </BodyShort>
-                    <List as="ul" size="small">
-                      <List.Item>Fosterbarn, med og uten vedtak om ekstra omsorgsdager.</List.Item>
-                      <List.Item>Vedtak fra Infotrygd. Sjekk derfor alltid Gosys for historikk i saken.</List.Item>
-                      <List.Item>Manglende barn i Gosys kan bety at bruker har barn i andre land.</List.Item>
-                      <List.Item>
-                        Manglende barn i Gosys kan bety at bruker har fått overført omsorgsdager fra samboer eller
-                        ektefelle på grunn av aleneomsorg for barn, eller overføring til ny samboer/ektefelle.
-                      </List.Item>
-                    </List>
+                    <VStack gap="space-8">
+                      <List as="ul" size="small">
+                        <List.Item>Fosterbarn, med og uten vedtak om ekstra omsorgsdager.</List.Item>
+                        <List.Item>Vedtak fra Infotrygd. Sjekk derfor alltid Gosys for historikk i saken.</List.Item>
+                        <List.Item>
+                          Avtale om bosted for barn er ikke registrert gjennom Folkeregisteret. Dokumentasjon kan
+                          foreligge i Gosys.
+                        </List.Item>
+                        <List.Item>Manglende barn i Gosys kan bety at bruker har barn i andre land.</List.Item>
+                        <List.Item>
+                          Manglende barn i Gosys kan bety at bruker har fått overført omsorgsdager fra samboer eller
+                          ektefelle på grunn av aleneomsorg for barn, eller overføring til ny samboer/ektefelle.
+                        </List.Item>
+                      </List>
+                      <BodyShort size="small" spacing>
+                        Hvis søker ikke oppfyller vilkåret etter § 9-5, så skal vilkåret likevel settes oppfylt dersom
+                        søker kan ha fått fordelt eller overført dager etter § 9-6, femte og sjette ledd.
+                      </BodyShort>
+                    </VStack>
                   </ReadMore>
-                  <BodyShort size="small">{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</BodyShort>
                 </VStack>
               )}
               <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
