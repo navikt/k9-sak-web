@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import type { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { resolveLoginURL, withRedirectToCurrentLocation } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import { EnterIcon } from '@navikt/aksel-icons';
-import { BodyLong, List } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
 import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorFixAction.js';
 
@@ -26,18 +26,8 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
     title = 'Ikke innlogget';
     errorInfo = <BodyLong>Du er ikke innlogget.</BodyLong>;
   } else if (error.isForbidden) {
-    const årsakstekster = error.resolveÅrsakIkkeTilgangTekster();
     title = 'Ikke tilgang';
-    errorInfo =
-      årsakstekster.length > 0 ? (
-        <List>
-          {årsakstekster.map(tekst => (
-            <List.Item key={tekst}>{tekst}</List.Item>
-          ))}
-        </List>
-      ) : (
-        <BodyLong>Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen.</BodyLong>
-      );
+    errorInfo = <BodyLong> Du har ikke tilgang til å gjøre denne handlingen eller se denne informasjonen. </BodyLong>;
     fixAction = {
       ...restartAction,
       info: (
