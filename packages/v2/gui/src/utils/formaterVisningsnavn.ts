@@ -22,8 +22,10 @@ export const formaterVisningsnavn = (
       return 'Ungdomsprogramendring';
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_VED_MAKSDATO:
       return 'Opphør ved maksdato';
-    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_OPPHEVET:
+    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAM_OPPHØR_OPPHEVET:
       return 'Opphør opphevet';
+    case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAM_OPPHØR_MOTTATT_OG_AVBRUTT_I_SAMME_BEHANDLING:
+      return 'Opphør avbrutt';
     case ung_sak_kontrakt_behandling_BehandlingVisningsnavn.FLERE_BEHANDLINGÅRSAKER:
       return 'Flere behandlingsårsaker';
     default: {
