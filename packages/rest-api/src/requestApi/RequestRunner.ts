@@ -107,13 +107,7 @@ class RequestRunner {
       } catch (error) {
         const responseData = error.response ? error.response.data : undefined;
         if (responseData && hasLocationAndStatusDelayedOrHalted(responseData)) {
-          // Oppgåva er halted/delayed. Hent behandlinga frå location likevel, slik at den kan visast
           response = await this.httpClientApi.get(responseData.location);
-          // Rapporter i tillegg 418-feilen til den nye feilhandteringa (errorNotifier ->
-          // resolveErrorViewProps/resolveAxiosErrorView) slik at brukar får melding om halted/delayed.
-          // Den gamle POLLING_HALTED_OR_DELAYED-notifikasjonen under har ikkje lenger nokon konsument som viser
-          // melding til brukar, berre ein som skjuler «ventar»-indikatoren.
-          this.errorNotifier?.(error);
           if ('data' in response) {
             this.notify(EventType.POLLING_HALTED_OR_DELAYED, response.data.taskStatus);
           }
