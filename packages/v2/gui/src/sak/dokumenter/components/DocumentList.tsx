@@ -114,7 +114,6 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     queryKey: ['kompletthet'],
     queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
     enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
-    throwOnError: false, // k9-sak kaster 404 på dette kallet av og til. Uvisst når pr no
   });
 
   const ModiaLenke = () => (
