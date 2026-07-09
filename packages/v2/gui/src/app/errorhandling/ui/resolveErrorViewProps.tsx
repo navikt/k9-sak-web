@@ -34,16 +34,14 @@ const authAbortedViewProps = (error: AuthAbortedError): ErrorViewProps => {
       </>
     ),
     fixAction: {
+      label: 'Logg inn',
+      icon: <EnterIcon />,
       info: (
         <BodyShort>
           Hvis du ønsker å logge inn, prøv på nytt med <i>Logg inn</i> knappen.
         </BodyShort>
       ),
-      button: {
-        label: 'Logg inn',
-        icon: <EnterIcon />,
-        href: `${error.retryURL ?? '/'}`,
-      },
+      href: `${error.retryURL ?? '/'}`,
     },
   };
 };
