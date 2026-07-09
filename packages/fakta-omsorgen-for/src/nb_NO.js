@@ -6,8 +6,6 @@ export const omsorgspenger = {
   'vurdering.harOmsorgenFor': 'Er vilkåret oppfylt for denne perioden?',
   'vurdering.hjemmel': 'Vurder om søker har omsorg for barn, jf',
   'vurdering.paragraf': '§ 9-5',
-  'vurdering.hjemmel.hjelpetekst':
-    'Hvis søker ikke oppfyller vilkåret etter § 9-5, så skal vilkåret likevel settes oppfylt dersom søker kan ha fått fordelt eller overført dager etter § 9-6, femte og sjette ledd',
   'vurdering.advarsel': 'Vurder om søker har omsorgen for barn i perioden.',
 };
 
