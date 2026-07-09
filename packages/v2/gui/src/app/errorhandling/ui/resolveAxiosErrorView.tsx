@@ -48,7 +48,7 @@ const resolveTeapotProps = (error: AxiosError) => {
 };
 
 // Hent ut "feilmelding" frå server-responsen (t.d. ved BadRequestException). Returnerer null viss den ikkje finst.
-export const getBodyFeilmelding = (error: AxiosError): string | null => {
+const getBodyFeilmelding = (error: AxiosError): string | null => {
   const data = asRecord(getEffectiveResponseData(error));
   if (data != null && typeof data['feilmelding'] === 'string') {
     return data['feilmelding'];
