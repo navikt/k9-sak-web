@@ -47,7 +47,7 @@ const preview: Preview = {
     },
   },
   decorators: [
-    withQueryClientProvider(),
+    withQueryClientProvider,
     Story => {
       const store = configureStore();
       return (

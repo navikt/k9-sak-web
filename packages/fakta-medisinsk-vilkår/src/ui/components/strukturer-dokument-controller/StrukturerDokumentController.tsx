@@ -27,7 +27,7 @@ const StrukturerDokumentController = ({
   editMode,
   strukturerteDokumenter,
 }: StrukturerDokumentControllerProps): JSX.Element => {
-  const { errorNotifier, fagsakYtelseType } = React.useContext(ContainerContext);
+  const { httpErrorHandler, fagsakYtelseType } = React.useContext(ContainerContext);
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const controller = useMemo(() => new AbortController(), []);
   const [submitDocumentError, setSubmitDocumentError] = React.useState(null);
@@ -43,7 +43,7 @@ const StrukturerDokumentController = ({
     setIsSubmitting(true);
     setSubmitDocumentError(null);
     httpUtils
-      .post(href, { ...requestPayload, ...strukturertDokument }, errorNotifier, {
+      .post(href, { ...requestPayload, ...strukturertDokument }, httpErrorHandler, {
         signal: controller.signal,
       })
       .then(

@@ -18,11 +18,11 @@ const RettVedDødController = (): JSX.Element => {
     editMode: false,
   });
   const { rettVedDød, editMode, isLoading, hasFailed } = state;
-  const { readOnly, endpoints, errorNotifier } = useContext(ContainerContext);
+  const { readOnly, endpoints, httpErrorHandler } = useContext(ContainerContext);
   const controller = useMemo(() => new AbortController(), []);
 
   const getRettVedDød = () =>
-    get<RettVedDød>(endpoints.rettVedDod, errorNotifier, {
+    get<RettVedDød>(endpoints.rettVedDod, httpErrorHandler, {
       signal: controller.signal,
     });
 

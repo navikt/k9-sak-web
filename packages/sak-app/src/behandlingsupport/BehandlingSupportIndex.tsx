@@ -1,6 +1,6 @@
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
@@ -181,7 +181,6 @@ const BehandlingSupportIndex = ({
     queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
     enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
-    throwOnError: false,
   });
 
   const lagTabs = useCallback(
@@ -235,7 +234,7 @@ const BehandlingSupportIndex = ({
       const getSupportPanelLocation = getSupportPanelLocationCreator(location);
       await navigate(getSupportPanelLocation(supportPanel));
     },
-    [location, synligeSupportPaneler, navigate],
+    [location, synligeSupportPaneler],
   );
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);

@@ -3,7 +3,6 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { VurderNyoppstartetIndex } from '@k9-sak-web/gui/fakta/vurder-nyoppstartet/VurderNyoppstartetIndex.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 
 class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.NYOPPSTARTET;
@@ -17,11 +16,7 @@ class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return (
-      <ErrorBoundary>
-        <VurderNyoppstartetIndex {...props} {...deepCopyProps} behandlingUUID={props.behandling.uuid} />
-      </ErrorBoundary>
-    );
+    return <VurderNyoppstartetIndex {...props} {...deepCopyProps} behandlingUUID={props.behandling.uuid} />;
   };
 }
 

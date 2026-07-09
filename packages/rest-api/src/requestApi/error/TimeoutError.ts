@@ -1,1 +1,10 @@
-export { TimeoutError as default } from '@k9-sak-web/gui/app/errorhandling/legacycompat/TimeoutError.js';
+class TimeoutError extends Error {
+  location: string;
+
+  constructor(location: string) {
+    super('Maximum polling attempts exceeded');
+    this.location = location;
+  }
+}
+
+export default TimeoutError;

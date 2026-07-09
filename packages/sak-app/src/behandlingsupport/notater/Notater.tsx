@@ -1,10 +1,9 @@
 import { sif_abac_kontrakt_abac_InnloggetAnsattDto as InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
 import NotaterIndex from '@k9-sak-web/gui/sak/notat/NotaterIndex.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak } from '@k9-sak-web/types';
-import { ErrorAlert } from '@k9-sak-web/gui/app/errorhandling/ui/ErrorAlert.js';
-import { resolveErrorViewProps } from '@k9-sak-web/gui/app/errorhandling/ui/resolveErrorViewProps.js';
 
 interface OwnProps {
   navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
@@ -17,13 +16,12 @@ interface OwnProps {
  * Container komponent. Har ansvar for å vise notater i saken.
  */
 const Notater = ({ fagsak, navAnsatt }: OwnProps) => {
+  const { addErrorMessage } = useRestApiErrorDispatcher();
   if (!fagsak) {
     return <LoadingPanel />;
   }
   return (
-    <ErrorBoundary
-      errorFallback={({ error }) => <ErrorAlert {...resolveErrorViewProps(error)} title="Notatskjema feilet" />}
-    >
+    <ErrorBoundary errorMessageCallback={addErrorMessage}>
       <NotaterIndex
         fagsakId={fagsak.saksnummer}
         navAnsatt={navAnsatt}

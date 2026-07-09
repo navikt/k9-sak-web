@@ -9,7 +9,7 @@ import { useSettPåVent } from '../../../api/inntektsmeldingQueries';
 import { Venteårsak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/Venteårsak.js';
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../../../../../shared/query/queryKeys.js';
+import { queryKeys } from '../../../../../shared/query-keys/queryKeys.js';
 
 interface FormData {
   frist: string;

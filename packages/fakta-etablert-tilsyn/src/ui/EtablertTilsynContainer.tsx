@@ -90,18 +90,18 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
-  const { endpoints, errorNotifier, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
+  const { endpoints, httpErrorHandler, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
 
   const getTilsyn = (signal: AbortSignal) =>
-    get<TilsynResponse>(endpoints.tilsyn, errorNotifier, {
+    get<TilsynResponse>(endpoints.tilsyn, httpErrorHandler, {
       signal: signal,
     });
   const getSykdom = (signal: AbortSignal) =>
-    get<SykdomResponse>(endpoints.sykdom, errorNotifier, {
+    get<SykdomResponse>(endpoints.sykdom, httpErrorHandler, {
       signal: signal,
     });
   const getInnleggelser = (signal: AbortSignal) =>
-    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, errorNotifier, {
+    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, httpErrorHandler, {
       signal: signal,
     });
 
@@ -113,7 +113,6 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['innleggelsesperioder', endpoints.sykdomInnleggelse],
     queryFn: ({ signal }) =>
       getInnleggelser(signal).then(response => response.perioder.map(v => new Period(v.fom, v.tom))),
-    throwOnError: false,
   });
 
   const {
@@ -124,7 +123,6 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['etablertTilsyn', endpoints.tilsyn],
     queryFn: ({ signal }) => getTilsyn(signal),
     select: transformEtablertTilsynResponse,
-    throwOnError: false,
   });
 
   const {
@@ -135,7 +133,6 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['sykdomsperioderIkkeOppfylt', endpoints.sykdom],
     queryFn: ({ signal }) => getSykdom(signal),
     select: transformSykdomResponse,
-    throwOnError: false,
   });
 
   const { etablertTilsyn = [], smurtEtablertTilsynPerioder = [], beredskap, nattevåk } = tilsyn || {};

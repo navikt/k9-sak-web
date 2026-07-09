@@ -7,25 +7,25 @@ export const isNavCallid = (maybe: string): maybe is NavCallid => maybe.startsWi
 
 export class ExtendedApiError extends Error {
   public navCallid: NavCallid | null;
+  public readonly errorId: number = Math.floor(Math.random() * 1000000000);
   public readonly url: string;
   public readonly status: number;
   public readonly statusText: string;
+  public readonly error: string | object;
   public readonly body: string | object;
   public readonly request: Request;
   public readonly location: string | null;
 
-  constructor(req: Request, resp: Response, body: string | object, navCallid: string | null) {
-    let msg = `${req.method} Forespørsel til ${req.url} feilet (${resp.status})`;
-    const bodyFeilmelding = ExtendedApiError.resolveBodyFeilmelding(body);
-    if (bodyFeilmelding != null) {
-      msg = `${msg}: ${bodyFeilmelding}`;
-    }
+  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
+    const errBody = typeof error === 'string' ? error : JSON.stringify(error);
+    const msg = `Forespørsel til ${req.url} feilet (${resp.status}): ${errBody}`;
     super(msg);
     this.url = req.url;
     this.status = resp.status;
     this.statusText = resp.statusText;
     this.location = resp.headers.get('Location');
-    this.body = body;
+    this.error = error;
+    this.body = error;
     this.request = req;
 
     this.name = this.constructor.name;
@@ -56,24 +56,20 @@ export class ExtendedApiError extends Error {
     return this.status >= 400 && this.status < 500;
   }
 
-  public get isGatewayTimeout(): boolean {
-    return this.status === 504;
-  }
-
-  public get isConflict() {
-    return this.status === 409;
-  }
-
-  private static resolveBodyFeilmelding(body: string | object): string | null {
+  public get bodyFeilmelding(): string | null {
+    const { body } = this;
     if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
       return body.feilmelding;
     }
     return null;
   }
 
-  public get bodyFeilmelding(): string | null {
-    const { body } = this;
-    return ExtendedApiError.resolveBodyFeilmelding(body);
+  public override toString(): string {
+    let feilmelding = this.bodyFeilmelding;
+    if (feilmelding !== null) {
+      feilmelding = ' - ' + feilmelding;
+    }
+    return `${super.name} (${this.url}): ${super.message} ${feilmelding}`;
   }
 
   /**

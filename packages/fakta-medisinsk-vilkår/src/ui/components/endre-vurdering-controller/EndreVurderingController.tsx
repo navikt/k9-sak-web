@@ -35,7 +35,7 @@ const EndreVurderingController = ({
   vurderingsid,
   vurderingsversjonId,
 }: EndreVurderingControllerProps): JSX.Element => {
-  const { errorNotifier } = React.useContext(ContainerContext);
+  const { httpErrorHandler } = React.useContext(ContainerContext);
 
   const [state, dispatch] = React.useReducer(vurderingControllerReducer, {
     sjekkForEksisterendeVurderingerPågår: false,
@@ -70,7 +70,7 @@ const EndreVurderingController = ({
       endreVurderingLink.requestPayload.behandlingUuid,
       vurderingsid,
       nyVurderingsversjon,
-      errorNotifier,
+      httpErrorHandler,
       controller.signal,
     ).then(
       () => {
@@ -93,7 +93,7 @@ const EndreVurderingController = ({
       endreVurderingLink.requestPayload.behandlingUuid,
       vurderingsid,
       nyVurderingsversjon,
-      errorNotifier,
+      httpErrorHandler,
       controller.signal,
     );
 
@@ -137,7 +137,7 @@ const EndreVurderingController = ({
         resolve([]);
       });
     }
-    return httpUtils.get(dataTilVurderingUrl, errorNotifier, { signal: controller.signal });
+    return httpUtils.get(dataTilVurderingUrl, httpErrorHandler, { signal: controller.signal });
   }
 
   const handleHentDataTilVurderingError = () => {

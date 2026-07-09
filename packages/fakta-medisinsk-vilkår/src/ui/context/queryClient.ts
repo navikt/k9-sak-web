@@ -1,6 +1,6 @@
-import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
+import { QueryClient } from '@tanstack/react-query';
 
-const queryClient = createQueryClient();
+const queryClient = new QueryClient();
 queryClient.setQueryDefaults(['diagnosekodeResponse'], {
   placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: null },
   staleTime: 10000,

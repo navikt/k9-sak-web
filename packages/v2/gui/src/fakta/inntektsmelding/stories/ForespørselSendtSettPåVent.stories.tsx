@@ -2,15 +2,14 @@ import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandlin
 import { Dialog } from '@navikt/ds-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { expect, userEvent, within } from 'storybook/test';
 import { InntektsmeldingApiContext } from '../api/InntektsmeldingApiContext.js';
 import InntektsmeldingContext from '../context/InntektsmeldingContext.js';
 import type { InntektsmeldingContextType } from '../types.js';
 import { ForespørselSendtSettPåVent } from '../ui/components/NyInntektsmeldingDialog/ForespørselSendtSettPåVent.js';
-import { createQueryClient } from '../../../shared/query/queryClient.js';
 
-const queryClient = createQueryClient();
+const queryClient = new QueryClient();
 
 const contextValue: InntektsmeldingContextType = {
   behandling: {

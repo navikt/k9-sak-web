@@ -4,7 +4,7 @@ interface ContainerContract {
     rettVedDod: string;
     omPleietrengende: string;
   };
-  errorNotifier: (error: Error) => void;
+  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   onFinished: (vurdering) => void;
 }
 

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
@@ -24,7 +24,6 @@ import {
 } from './data/pleiepengerBehandlingApi';
 import { FetchedData } from './types';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },
@@ -109,7 +108,7 @@ const BehandlingPleiepengerIndex = ({
   } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.BEHANDLING_PP);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: nyBehandlendeEnhet } = restApiPleiepengerHooks.useRestApiRunner(
     PleiepengerBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -146,14 +145,14 @@ const BehandlingPleiepengerIndex = ({
     });
 
     requestPleiepengerApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestPleiepengerApi.setErrorNotifier(legacyErrorNotifier);
+    requestPleiepengerApi.setAddErrorMessageHandler(addErrorMessage);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, [legacyErrorNotifier]);
+  }, []);
 
   const { data, state } = restApiPleiepengerHooks.useMultipleRestApi<FetchedData>(pleiepengerData, {
     keepData: true,

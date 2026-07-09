@@ -2,8 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
@@ -80,7 +79,7 @@ const BehandlingUtvidetRettIndex = ({
   } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.BEHANDLING_UTVIDET_RETT);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: settBehandlingPaVent } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.BEHANDLING_ON_HOLD,
@@ -118,14 +117,14 @@ const BehandlingUtvidetRettIndex = ({
     });
 
     requestUtvidetRettApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestUtvidetRettApi.setErrorNotifier(legacyErrorNotifier);
+    requestUtvidetRettApi.setAddErrorMessageHandler(addErrorMessage);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, [legacyErrorNotifier]);
+  }, []);
 
   const { data, state } = restApiUtvidetRettHooks.useMultipleRestApi<FetchedData>(utvidetRettData, {
     keepData: true,

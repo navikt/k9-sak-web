@@ -31,7 +31,7 @@ const OmsorgenForContainer = ({ data }: MainComponentProps): JSX.Element => {
   const controller = React.useMemo(() => new AbortController(), []);
 
   const getOmsorgsperioder = () =>
-    get<OmsorgsperioderResponse>(data.endpoints.omsorgsperioder, data.errorNotifier, {
+    get<OmsorgsperioderResponse>(data.endpoints.omsorgsperioder, data.httpErrorHandler, {
       signal: controller.signal,
     });
 

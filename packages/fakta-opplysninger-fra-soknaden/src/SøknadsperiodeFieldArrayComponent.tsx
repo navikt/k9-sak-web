@@ -115,7 +115,7 @@ const SøknadsperiodeFieldArrayComponent = (
     måneder,
   } = props;
   const formSelector = `${behandlingFormPrefix}.${formName}`;
-  const { harSøktSomSSN, harSøktSomFrilanser } = søknadsperiodeFormValues ?? {};
+  const { harSøktSomSSN, harSøktSomFrilanser } = søknadsperiodeFormValues;
   const resetFormField = field => {
     formChange(formSelector, field, null);
     formUntouch(formSelector, field);
@@ -152,7 +152,8 @@ const SøknadsperiodeFieldArrayComponent = (
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
-                  typographyElement={DSLabel}/>
+                  typographyElement={DSLabel}
+                />
               }
               name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_SSN}`}
             />
@@ -180,9 +181,7 @@ const SøknadsperiodeFieldArrayComponent = (
           {!formIsEditable && (
             <CheckboxField
               label={
-                <Label
-                  input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
-                  typographyElement={DSLabel}/>
+                <Label input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }} typographyElement={DSLabel} />
               }
               name={`${field}.${SøknadFormValue.HAR_SØKT_SOM_FRILANSER}`}
             />

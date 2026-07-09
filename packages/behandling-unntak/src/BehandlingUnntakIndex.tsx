@@ -2,8 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
@@ -78,7 +77,7 @@ const BehandlingUnntakIndex = ({
   } = restApiUnntakHooks.useRestApiRunner<Behandling>(UnntakBehandlingApiKeys.BEHANDLING_UNNTAK);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: nyBehandlendeEnhet } = restApiUnntakHooks.useRestApiRunner(
     UnntakBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -109,14 +108,14 @@ const BehandlingUnntakIndex = ({
     });
 
     requestUnntakApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestUnntakApi.setErrorNotifier(legacyErrorNotifier);
+    requestUnntakApi.setAddErrorMessageHandler(addErrorMessage);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, [legacyErrorNotifier]);
+  }, []);
 
   const { data, state } = restApiUnntakHooks.useMultipleRestApi<FetchedData>(unntakData, {
     keepData: true,

@@ -1,12 +1,14 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
+import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
+    httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
   const beredskapAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.BEREDSKAP);
   const beredskapAksjonspunktkode = beredskapAksjonspunkt?.definisjon.kode;
@@ -26,7 +28,7 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   return (
     <EtablertTilsynContainer
       data={{
-        errorNotifier: legacyErrorNotifier,
+        httpErrorHandler: httpErrorHandlerCaller,
         readOnly,
         endpoints: findEndpointsFromRels(behandling.links, [
           { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },

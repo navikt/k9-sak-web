@@ -7,7 +7,7 @@ describe('<Home>', () => {
   it('skal rendre komponent', async () => {
     render(
       <MemoryRouter initialEntries={['/test']}>
-        <Home />
+        <Home headerHeight={48} />
       </MemoryRouter>,
     );
 

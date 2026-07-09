@@ -8,6 +8,6 @@ export interface ContainerContract {
   };
   readOnly: boolean;
   onFinished: (vurdering, fosterbarnForOmsorgspenger) => void;
-  errorNotifier: (error: Error) => void;
+  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   sakstype?: FagsakYtelsesType;
 }

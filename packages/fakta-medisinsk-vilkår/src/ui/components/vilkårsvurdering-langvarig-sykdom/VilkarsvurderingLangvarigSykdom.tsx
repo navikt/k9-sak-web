@@ -30,7 +30,7 @@ const VilkårsvurderingLangvarigSykdom = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingLangvarigSykdomProps): JSX.Element => {
-  const { endpoints, errorNotifier, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const { endpoints, httpErrorHandler, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
@@ -57,7 +57,7 @@ const VilkårsvurderingLangvarigSykdom = ({
 
   const getVurderingsoversikt = () =>
     endpoints.vurderingsoversiktLangvarigSykdom
-      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLangvarigSykdom, errorNotifier, {
+      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLangvarigSykdom, httpErrorHandler, {
           signal: controller.signal,
         })
       : Promise.resolve(null);

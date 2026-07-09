@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { REQUEST_POLLING_CANCELLED, AbstractRequestApi } from '@k9-sak-web/rest-api';
+import { REQUEST_POLLING_CANCELLED, ErrorType, AbstractRequestApi } from '@k9-sak-web/rest-api';
 
 import RestApiState from '../RestApiState';
 
@@ -8,7 +8,7 @@ interface RestApiData<T> {
   startRequest: (params?: any, keepData?: boolean) => Promise<T>;
   resetRequestData: () => void;
   state: RestApiState;
-  error?: Error;
+  error?: ErrorType;
   data?: T;
 }
 
