@@ -59,7 +59,7 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
   return undefined;
 };
 
-const utledAktivTab = (data: OpphørData): OpphørTab => {
+export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.vurderBostedFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
   }

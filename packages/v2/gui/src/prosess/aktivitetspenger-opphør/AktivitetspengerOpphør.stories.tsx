@@ -221,3 +221,195 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
     });
   },
 };
+
+const fakeInnloggetBrukerSomKanBeslutte = {
+  aktivitetspengerDel1SaksbehandlerTilgang: {
+    kanSaksbehandle: false,
+    kanBeslutte: true,
+  },
+} satisfies InnloggetAnsattUngV2Dto;
+
+const fakeLovligeBehandlingsoperasjonerTilGodkjenning = {
+  uuid: 'fake-behandling-uuid',
+  behandlingTilGodkjenningVedLokalkontor: true,
+} satisfies BehandlingOperasjonerDto;
+
+const fakeTotrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[] = [
+  {
+    skjermlenkeType: 'OPPHØR',
+    totrinnskontrollAksjonspunkter: [
+      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED },
+      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR },
+    ],
+  },
+];
+
+const fakeBeslutterArgsBase = {
+  ...fakeArgsBase,
+  innloggetBruker: fakeInnloggetBrukerSomKanBeslutte,
+  lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjonerTilGodkjenning,
+  totrinnskontrollSkjermlenkeContext: fakeTotrinnskontrollContext,
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR)],
+};
+
+export const BeslutterGodkjennerAlle: Story = {
+  args: {
+    ...fakeBeslutterArgsBase,
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Godkjenn Årsak og varsel', async () => {
+      const godkjentRadioer = canvas.getAllByRole('radio', { name: 'Godkjent' });
+      await userEvent.click(godkjentRadioer[0]!);
+    });
+
+    await step('Godkjenn Vilkårsvurdering', async () => {
+      const godkjentRadioer = canvas.getAllByRole('radio', { name: 'Godkjent' });
+      await userEvent.click(godkjentRadioer[1]!);
+    });
+
+    await step('Send inn skjema', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft/i }));
+    });
+
+    await step('Callback er kalt etter godkjenning', async () => {
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+export const BeslutterSenderTilbake: Story = {
+  args: {
+    ...fakeBeslutterArgsBase,
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Velg "Vurder på nytt" for Årsak og varsel', async () => {
+      const vurderPaNyttRadioer = canvas.getAllByRole('radio', { name: 'Vurder på nytt' });
+      await userEvent.click(vurderPaNyttRadioer[0]!);
+    });
+
+    await step('Merk årsak "Feil fakta"', async () => {
+      await userEvent.click(canvas.getByRole('checkbox', { name: 'Feil fakta' }));
+    });
+
+    await step('Fyll inn begrunnelse for Årsak og varsel', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Begrunnelse' }),
+        'Fakta om bosted er ikke riktig vurdert.',
+      );
+    });
+
+    await step('Godkjenn Vilkårsvurdering', async () => {
+      const godkjentRadioer = canvas.getAllByRole('radio', { name: 'Godkjent' });
+      await userEvent.click(godkjentRadioer[1]!);
+    });
+
+    await step('Send inn skjema', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft/i }));
+    });
+
+    await step('Callback er kalt etter innsending', async () => {
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+export const SaksbehandlerSerBeslutterFanen: Story = {
+  args: {
+    ...fakeArgsBase,
+    innloggetBruker: fakeInnloggetBruker,
+    lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjonerTilGodkjenning,
+    totrinnskontrollSkjermlenkeContext: fakeTotrinnskontrollContext,
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR)],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step }) => {
+    await step('Beslutter-fanen er aktiv', async () => {
+      await expect(canvas.findByRole('tab', { name: 'Beslutter', selected: true })).resolves.toBeInTheDocument();
+    });
+
+    await step('Informasjonsmelding om at saken er sendt til beslutter vises', async () => {
+      await expect(canvas.findByText('Saken er sendt til beslutter.')).resolves.toBeInTheDocument();
+    });
+  },
+};
+
+export const ÅrsakOgVarselAvslå: Story = {
+  args: {
+    ...fakeArgsBase,
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Velg "Avslå en innvilget periode"', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Avslå en innvilget periode' }));
+    });
+
+    await step('Fyll inn Fra og med dato', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fra og med' }), '01.03.2026');
+    });
+
+    await step('Fyll inn Til og med dato', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Til og med' }), '30.04.2026');
+    });
+
+    await step('Velg årsak', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /årsak/i }),
+        'Ikke bosatt adresse i Trondheim',
+      );
+    });
+
+    await step('Fyll inn begrunnelse', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for avslag');
+    });
+
+    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
+      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    });
+
+    await step('Fyll inn begrunnelse for å ikke varsle', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        'Bruker ble varslet på annen måte',
+      );
+    });
+
+    await step('Send skjema', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+    });
+
+    await step('Callback er kalt etter innsending', async () => {
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+export const LokalkontorForeslårVilkår: Story = {
+  args: {
+    ...fakeArgsBase,
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Vilkårsvurdering-fanen er aktiv', async () => {
+      await expect(canvas.findByRole('tab', { name: 'Vilkårsvurdering', selected: true })).resolves.toBeInTheDocument();
+    });
+
+    await step('Alert om at inngangsvilkår er ferdig vurdert vises', async () => {
+      await expect(
+        canvas.findByText(/Alle inngangsvilkår for Nav-kontor er ferdig vurdert/i),
+      ).resolves.toBeInTheDocument();
+    });
+
+    await step('Klikk "Send til beslutter"', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    });
+
+    await step('Callback er kalt etter sending', async () => {
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
