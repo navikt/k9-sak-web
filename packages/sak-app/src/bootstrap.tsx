@@ -1,5 +1,8 @@
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 import { init } from '@sentry/browser';
 import * as Sentry from '@sentry/react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import {
@@ -11,9 +14,6 @@ import {
   useLocation,
   useNavigationType,
 } from 'react-router';
-
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
-import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
