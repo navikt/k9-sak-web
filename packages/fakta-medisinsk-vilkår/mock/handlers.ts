@@ -59,11 +59,13 @@ export const handlers = [
     const manglerVurderingAvILivetsSluttfase = mockedSluttfaseVurderinger.length === 0;
     const harDataSomIkkeHarBlittTattMedIBehandling = true;
 
-    const sluttfaseErFerdig = !harUklassifiserteDokumenter &&
+    const sluttfaseErFerdig =
+      !harUklassifiserteDokumenter &&
       !manglerGodkjentLegeerklæring &&
       !manglerVurderingAvILivetsSluttfase &&
       !nyttDokumentHarIkkekontrollertEksisterendeVurderinger;
-    const psbVilkårErFerdig = !harUklassifiserteDokumenter &&
+    const psbVilkårErFerdig =
+      !harUklassifiserteDokumenter &&
       !manglerDiagnosekode &&
       !manglerGodkjentLegeerklæring &&
       !manglerVurderingAvKontinuerligTilsynOgPleie &&

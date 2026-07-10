@@ -8,17 +8,21 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import {
+  getPeriodStatus,
+  VilkårSplittPanel,
+  type VilkårSplittPanelPeriod,
+} from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
-import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
   andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
@@ -84,7 +88,7 @@ export const AndreLivsoppholdytelser = ({
     mutationFn: async (data: FormData) => {
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem) {
+      if (!selectedItem || selectedItem.periode === undefined) {
         throw new Error('Kunne ikke finne valgt periode for andre livsoppholdytelser vilkår');
       }
       const vurdertePerioder = {
@@ -200,7 +204,7 @@ export const AndreLivsoppholdytelser = ({
               setIsFormLocked(true);
             }}
           >
-            <VStack gap="space-24" width="70ch">
+            <VStack gap="space-24" maxWidth="70ch" width="100%">
               <RhfTextarea
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelse`}
@@ -213,6 +217,7 @@ export const AndreLivsoppholdytelser = ({
                     )}
                   </span>
                 }
+                validate={[required, minLength(3), maxLength(4000)]}
               />
               <RhfRadioGroup
                 key={`${selectedId}-andreLivsoppholdytelser`}
@@ -247,7 +252,7 @@ export const AndreLivsoppholdytelser = ({
                   name={`vurderinger.${selectedId}.fritekst`}
                   label="Fritekst avslagsbrev"
                   description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                  validate={[required]}
+                  validate={[required, minLength(3), maxLength(4000)]}
                   readOnly={isFormLocked}
                 />
               )}

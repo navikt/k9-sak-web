@@ -17,7 +17,7 @@ const NonFailingChild = () => <p>Nothing to see here, move along.</p>;
 
 const AlwaysFailingChild = () => {
   useEffect(() => {
-    throw new AppError({ title: "Failed", message: 'TEST FAIL' });
+    throw new AppError({ title: 'Failed', message: 'TEST FAIL' });
   }, []);
   return <p>Error boundary should be displayed instead of this</p>;
 };
@@ -44,7 +44,7 @@ export const DefaultFallback: Story = {
     children: <AlwaysFailingChild />,
   },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText("Failed")).toBeVisible()
+    await expect(await canvas.findByText('Failed')).toBeVisible();
   },
 };
 
@@ -96,7 +96,7 @@ export const FilterCatchesMatching: Story = {
     filter: (error: Error) => error instanceof AppError,
   },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText("Failed")).toBeVisible()
+    await expect(await canvas.findByText('Failed')).toBeVisible();
   },
 };
 

@@ -12,8 +12,8 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
 import { withQueryClientProvider } from '../../../storybook/decorators/withQueryClientProvider.js';
+import Uttak from '../Uttak';
 
 /**
  * OverstyrUttak-komponenten lar saksbehandlere med overstyrerrolle manuelt overstyre

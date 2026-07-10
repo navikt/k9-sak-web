@@ -1,7 +1,9 @@
 import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { behandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
@@ -40,6 +42,8 @@ const createVilkår = (vilkarStatus: Utfall, type: ung_kodeverk_vilkår_VilkårT
 const createBehandling = (overrides = {}) => ({
   uuid: 'behandling-uuid',
   versjon: 1,
+  type: BehandlingType.FØRSTEGANGSSØKNAD,
+  behandlingÅrsaker: [],
   behandlingsresultat: { type: BehandlingResultatType.INNVILGET },
   status: BehandlingStatus.OPPRETTET,
   ...overrides,
@@ -224,6 +228,28 @@ describe('Prossesmotor', () => {
 
     await waitFor(() => {
       expect(result.current[4].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('viser opphørspanel som første panel ved revurdering med endret bosted', async () => {
+    const api = createApi();
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingÅrsakType: behandlingÅrsakType.ENDRET_BOSTED }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current[0].label).toBe('Opphør');
     });
   });
 });

@@ -45,8 +45,8 @@ const FagsakSearchIndex = () => {
     },
     // Sidan forbidden feil er handtert eksplisitt ønsker vi ikkje å kaste den vidare
     onError: err => {
-      if(!(err instanceof ExtendedApiError && err.isForbidden)) {
-        throw err
+      if (!(err instanceof ExtendedApiError && err.isForbidden)) {
+        throw err;
       }
     },
   });
