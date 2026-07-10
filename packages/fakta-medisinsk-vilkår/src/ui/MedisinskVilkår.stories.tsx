@@ -32,7 +32,7 @@ const meta: Meta<typeof MedisinskVilkårContainer> = {
       visFortsettknapp: true,
       fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
       behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
-      httpErrorHandler: undefined,
+      httpErrorHandler: () => {},
     },
   },
   parameters: {
@@ -168,9 +168,7 @@ export const MedisinskVilkårPleiepengerNærstående: Story = {
       visFortsettknapp: true,
       fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
       behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
-      errorNotifier: error => {
-        throw error;
-      },
+      httpErrorHandler: () => {},
     },
   },
   play: async ({ canvasElement, step }) => {
