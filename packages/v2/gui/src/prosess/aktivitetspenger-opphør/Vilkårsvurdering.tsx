@@ -24,6 +24,8 @@ import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js'
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
+const dagensDato = new Date();
+
 interface FormData {
   perioder: Record<
     string,
@@ -246,7 +248,7 @@ export const Vilkaarsvurdering = ({
                   validate={[required]}
                   fromDate={selectedPeriod?.periode?.fom ? new Date(selectedPeriod?.periode?.fom) : undefined}
                   toDate={selectedPeriod?.periode?.tom ? new Date(selectedPeriod?.periode?.tom) : undefined}
-                  defaultMonth={selectedPeriod?.periode?.fom ? new Date(selectedPeriod.periode.fom) : undefined}
+                  defaultMonth={dagensDato}
                 />
               )}
               {!isFormLocked && (

@@ -18,6 +18,8 @@ import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
+const dagensDato = new Date();
+
 interface FormData {
   perioder: Record<
     string,
@@ -249,7 +251,7 @@ export const AarsakOgVarsel = ({
                     label="Opphøre fra og med"
                     readOnly={isFormLocked}
                     validate={[required]}
-                    defaultMonth={dateRange?.fromDate}
+                    defaultMonth={dagensDato}
                     fromDate={dateRange?.fromDate}
                     toDate={dateRange?.toDate}
                   />
@@ -264,7 +266,7 @@ export const AarsakOgVarsel = ({
                       validate={[required]}
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
-                      defaultMonth={dateRange?.fromDate}
+                      defaultMonth={dagensDato}
                     />
                     <RhfDatepicker
                       control={formHook.control}
@@ -274,7 +276,7 @@ export const AarsakOgVarsel = ({
                       validate={[required]}
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
-                      defaultMonth={dateRange?.fromDate}
+                      defaultMonth={dagensDato}
                     />
                   </HStack>
                 )}
