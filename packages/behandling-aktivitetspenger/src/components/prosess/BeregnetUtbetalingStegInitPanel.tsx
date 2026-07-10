@@ -4,6 +4,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.js';
 import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
@@ -15,7 +16,6 @@ import {
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { DagsatsOgUtbetaling, sortSatser } from '@k9-sak-web/gui/shared/dagsats-og-utbetaling/DagsatsOgUtbetaling.js';
 import { ArbeidOgInntekt } from '@k9-sak-web/gui/shared/kontroll-inntekt/ArbeidOgInntekt.js';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs, VStack } from '@navikt/ds-react';
@@ -98,7 +98,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     const tilgang = innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang;
     const manglerTilgang = !tilgang?.kanBeslutte && !tilgang?.kanSaksbehandle;
     const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
-    const aksjonspunktErIkkeLøsbart = aksjonspunkt?.kanLoses === false;
+    const aksjonspunktErIkkeLøsbart = aksjonspunkt == undefined || aksjonspunkt.kanLoses === false;
 
     return manglerTilgang || behandlingErAvsluttet || aksjonspunktErIkkeLøsbart;
   }, [innloggetBruker, behandling, aksjonspunkt]);
