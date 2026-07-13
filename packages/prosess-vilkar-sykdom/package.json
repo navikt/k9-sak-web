@@ -7,8 +7,8 @@
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/aksel-icons": "8.14.0",
-    "@navikt/ds-react": "8.14.0",
+    "@navikt/aksel-icons": "8.15.0",
+    "@navikt/ds-react": "8.15.0",
     "@navikt/ft-plattform-komponenter": "12.1.0",
     "@navikt/ft-utils": "5.1.0",
     "classnames": "2.5.1",
@@ -16,7 +16,7 @@
     "lodash": "4.18.1",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "react-intl": "10.1.14"
+    "react-intl": "10.1.15"
   },
   "devDependencies": {
     "@types/react": "19.2.15",
