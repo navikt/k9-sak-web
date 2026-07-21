@@ -7,7 +7,7 @@
   "author": "NAV IT",
   "license": "MIT",
   "dependencies": {
-    "@navikt/aksel-icons": "8.14.0",
+    "@navikt/aksel-icons": "8.15.0",
     "@navikt/ds-css": "8.14.0",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "8.14.0",
@@ -18,8 +18,8 @@
     "dayjs": "1.11.21",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "react-hook-form": "7.80.0",
-    "react-intl": "10.1.14"
+    "react-hook-form": "7.82.0",
+    "react-intl": "10.1.18"
   },
   "devDependencies": {
     "@types/react": "19.2.15"
