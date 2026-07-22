@@ -1,13 +1,12 @@
 import type { FC } from 'react';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_UttakArbeidType as UttakArbeidsforholdType,
-  type pleiepengerbarn_uttak_kontrakter_Utbetalingsgrader as Utbetalingsgrader,
-  type pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo as UttaksperiodeInfo,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { UttakArbeidType as UttakArbeidsforholdType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
+import type { Utbetalingsgrader } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utbetalingsgrader.js';
+import type { UttaksperiodeInfo } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UttaksperiodeInfo.js';
 import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
 import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 import { useUttakContext } from '../context/UttakContext';
+import { utledArbeidsgiverNavn } from '../utils/aktivitetVisning';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {
@@ -34,7 +33,6 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem?.arbeidsforhold?.aktørId || utbetalingsgradItem?.arbeidsforhold?.organisasjonsnummer;
-          const arbeidsforholdData = arbeidsgiverIdentifikator ? arbeidsgivere?.[arbeidsgiverIdentifikator] : undefined;
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = normalArbeidstid ? beregnDagerTimer(normalArbeidstid) : '-';
           const beregnetFaktiskArbeidstid = faktiskArbeidstid ? beregnDagerTimer(faktiskArbeidstid) : '-';
@@ -47,10 +45,11 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
           const arbeidstype = arbeidsforhold?.type
             ? arbeidstypeTilVisning[arbeidsforhold?.type as UttakArbeidsforholdType]
             : undefined;
+          const arbeidsgiverNavn = utledArbeidsgiverNavn(arbeidsgiverIdentifikator, arbeidsgivere);
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 
           return (
-            <Box key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
+            <Box key={`${arbeidsforhold?.type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_arbeidstid`}>
               <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (
@@ -59,10 +58,9 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
                   </Tag>
                 )}
               </BodyShort>
-              {arbeidsforhold?.type !== UttakArbeidsforholdType.FRILANSER && (
+              {arbeidsgiverNavn && (
                 <BodyShort size="small" weight="semibold" className="leading-6">
-                  {arbeidsforholdData?.navn || 'Mangler navn'} (
-                  {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
+                  {arbeidsgiverNavn}
                 </BodyShort>
               )}
               <BodyShort size="small" className="leading-6">
