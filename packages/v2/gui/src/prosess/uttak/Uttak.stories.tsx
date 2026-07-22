@@ -1,10 +1,12 @@
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
+  defaultArbeidsgivere,
   arbeidsgivereWithTilkommet,
   Endringsstatus,
   FagsakYtelseType,
   inntektsgraderingFlereArbeidsgivere,
+  lagInntektgraderingPeriodeDto,
   lagAvsluttetBehandling,
   lagIkkeOppfyltPeriode,
   lagInntektsgraderingPeriode,
@@ -279,6 +281,91 @@ export const UttakGradertMotInntekt: Story = {
 };
 
 /**
+ * UttakGradertMedUlikeAktivitetstyper
+ *
+ * Viser at aktivitetstyper uten arbeidsgiver vises med navn i stedet for fallback-tekst.
+ */
+export const UttakGradertMedUlikeAktivitetstyper: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      arbeidsgivere: defaultArbeidsgivere,
+      inntektsgraderinger: {
+        perioder: [
+          lagInntektgraderingPeriodeDto(
+            '2024-03-01/2024-03-15',
+            [
+              {
+                arbeidsgiverIdentifikator: '123456789',
+                arbeidstidprosent: 0,
+                bruttoInntekt: 500000,
+                erNytt: false,
+                type: 'AT',
+              },
+              {
+                arbeidstidprosent: 100,
+                bruttoInntekt: 200000,
+                erNytt: false,
+                type: 'SN',
+              },
+              {
+                arbeidstidprosent: 50,
+                bruttoInntekt: 100000,
+                erNytt: false,
+                type: 'FL',
+              },
+              {
+                arbeidstidprosent: 100,
+                bruttoInntekt: 150000,
+                erNytt: false,
+                type: 'DP',
+              },
+            ],
+            950000,
+          ),
+        ],
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([
+      lagOppfyltPeriode('2024-03-01/2024-03-15', {
+        uttaksgrad: 58,
+        søkersTapteArbeidstid: 52,
+        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+        utbetalingsgrader: [
+          {
+            arbeidsforhold: { type: 'AT', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT0S',
+            utbetalingsgrad: 100,
+            tilkommet: false,
+          },
+          {
+            arbeidsforhold: { type: 'SN' },
+            normalArbeidstid: 'PT7H30M',
+            faktiskArbeidstid: 'PT7H30M',
+            utbetalingsgrad: 0,
+            tilkommet: false,
+          },
+          {
+            arbeidsforhold: { type: 'FL' },
+            normalArbeidstid: 'PT5H',
+            faktiskArbeidstid: 'PT2H30M',
+            utbetalingsgrad: 50,
+            tilkommet: false,
+          },
+        ],
+      }),
+    ]),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+};
+
+/**
  * UttakGradertMotTilsyn
  *
  * Viser perioder med gradering mot tilsyn
@@ -490,4 +577,3 @@ export const UttakPleiepengerNærstående: Story = {
     });
   },
 };
-
