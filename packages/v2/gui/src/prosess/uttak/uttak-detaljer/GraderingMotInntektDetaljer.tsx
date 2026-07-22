@@ -35,11 +35,10 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
     const aktivitetVisningsnavn = utledAktivitetVisningsnavn(type, arbeidsgiverIdentifikator, arbeidsgivere);
     const arbeidsgiverNavn = utledArbeidsgiverNavn(arbeidsgiverIdentifikator, arbeidsgivere);
     const arbeidstype = utledArbeidstypeVisningsnavn(type);
-    const visArbeidstypeOverArbeidsgiver = !!arbeidsgiverNavn && !!arbeidstype && type !== 'AT';
 
-    if (visArbeidstypeOverArbeidsgiver) {
-      return (
-        <>
+    return (
+      <>
+        {arbeidstype && (
           <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
             {arbeidstype}{' '}
             {erNytt && (
@@ -48,22 +47,24 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
               </Tag>
             )}
           </BodyShort>
+        )}
+        {arbeidsgiverNavn ? (
           <BodyShort size="small" weight="semibold" className="leading-6">
             {arbeidsgiverNavn}
           </BodyShort>
-        </>
-      );
-    }
-
-    return (
-      <BodyShort size="small" weight="semibold" className="leading-6">
-        {aktivitetVisningsnavn}{' '}
-        {erNytt && (
-          <Tag data-color="info" size="small" variant="outline">
-            Ny
-          </Tag>
+        ) : (
+          !arbeidstype && (
+            <BodyShort size="small" weight="semibold" className="leading-6">
+              {aktivitetVisningsnavn}{' '}
+              {erNytt && (
+                <Tag data-color="info" size="small" variant="outline">
+                  Ny
+                </Tag>
+              )}
+            </BodyShort>
+          )
         )}
-      </BodyShort>
+      </>
     );
   };
 
