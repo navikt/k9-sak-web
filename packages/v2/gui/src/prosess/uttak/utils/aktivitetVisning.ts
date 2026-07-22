@@ -3,7 +3,8 @@ import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
 
 type UttakArbeidType = keyof typeof arbeidstypeTilVisning;
 
-const erKjentArbeidstype = (type: string): type is UttakArbeidType => type in arbeidstypeTilVisning;
+const erKjentArbeidstype = (type: string): type is UttakArbeidType =>
+  Object.prototype.hasOwnProperty.call(arbeidstypeTilVisning, type);
 
 const formatArbeidsgiverNavn = (navn?: string, identifikator?: string): string | undefined => {
   if (navn && identifikator) {

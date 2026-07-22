@@ -19,6 +19,10 @@ describe('aktivitetVisning', () => {
     await expect(utledAktivitetVisningsnavn('DP', undefined, arbeidsgivere)).toBe('Dagpenger');
   });
 
+  it('behandler ikke prototype-egenskaper som gyldige aktivitetstyper', async () => {
+    await expect(utledAktivitetVisningsnavn('toString', undefined, arbeidsgivere)).toBe('Mangler navn');
+  });
+
   it('viser arbeidsgivernavn for arbeidstaker', async () => {
     await expect(utledAktivitetVisningsnavn('AT', '123', arbeidsgivere)).toBe('BEDRIFT AS (123)');
   });
