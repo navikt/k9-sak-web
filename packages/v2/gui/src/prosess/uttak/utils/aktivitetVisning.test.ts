@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
-import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn } from './aktivitetVisning';
+import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn, utledArbeidstypeVisningsnavn } from './aktivitetVisning';
 
 const arbeidsgivere = {
   '123': {
@@ -17,6 +17,10 @@ describe('aktivitetVisning', () => {
 
   it('viser aktivitetstype for dagpenger uten arbeidsgiver', async () => {
     await expect(utledAktivitetVisningsnavn('DP', undefined, arbeidsgivere)).toBe('Dagpenger');
+  });
+
+  it('viser aktivitetstype for ikke yrkesaktiv', async () => {
+    await expect(utledArbeidstypeVisningsnavn('IKKE_YRKESAKTIV')).toBe('Ikke yrkesaktiv');
   });
 
   it('behandler ikke prototype-egenskaper som gyldige aktivitetstyper', async () => {

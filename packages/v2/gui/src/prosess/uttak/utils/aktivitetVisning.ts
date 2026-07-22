@@ -50,3 +50,11 @@ export const utledAktivitetVisningsnavn = (
 
   return 'Mangler navn';
 };
+
+export const utledArbeidstypeVisningsnavn = (type: string | null | undefined): string | undefined => {
+  if (type && erKjentArbeidstype(type)) {
+    return arbeidstypeTilVisning[type];
+  }
+
+  return undefined;
+};

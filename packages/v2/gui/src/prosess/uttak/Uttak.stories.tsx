@@ -302,6 +302,13 @@ export const UttakGradertMedUlikeAktivitetstyper: Story = {
                 type: 'AT',
               },
               {
+                arbeidsgiverIdentifikator: '123456789',
+                arbeidstidprosent: 100,
+                bruttoInntekt: 175000,
+                erNytt: false,
+                type: 'IKKE_YRKESAKTIV',
+              },
+              {
                 arbeidstidprosent: 100,
                 bruttoInntekt: 200000,
                 erNytt: false,
@@ -346,6 +353,13 @@ export const UttakGradertMedUlikeAktivitetstyper: Story = {
             normalArbeidstid: 'PT7H30M',
             faktiskArbeidstid: 'PT7H30M',
             utbetalingsgrad: 0,
+            tilkommet: false,
+          },
+          {
+            arbeidsforhold: { type: 'IKKE_YRKESAKTIV', organisasjonsnummer: '123456789' },
+            normalArbeidstid: 'PT8H',
+            faktiskArbeidstid: 'PT0S',
+            utbetalingsgrad: 100,
             tilkommet: false,
           },
           {

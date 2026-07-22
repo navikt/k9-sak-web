@@ -4,7 +4,7 @@ import type { InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/kontr
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { useUttakContext } from '../context/UttakContext';
-import { utledAktivitetVisningsnavn } from '../utils/aktivitetVisning';
+import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn, utledArbeidstypeVisningsnavn } from '../utils/aktivitetVisning';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {
@@ -27,6 +27,46 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
   const løpendeInntekt = formatNOK(inntektsgradering.løpendeInntekt);
   const bortfaltInntekt = formatNOK(inntektsgradering.bortfaltInntekt);
 
+  const renderAktivitetHeader = (
+    type: string | null | undefined,
+    arbeidsgiverIdentifikator: string | null | undefined,
+    erNytt: boolean,
+  ) => {
+    const aktivitetVisningsnavn = utledAktivitetVisningsnavn(type, arbeidsgiverIdentifikator, arbeidsgivere);
+    const arbeidsgiverNavn = utledArbeidsgiverNavn(arbeidsgiverIdentifikator, arbeidsgivere);
+    const arbeidstype = utledArbeidstypeVisningsnavn(type);
+    const visArbeidstypeOverArbeidsgiver = !!arbeidsgiverNavn && !!arbeidstype && type !== 'AT';
+
+    if (visArbeidstypeOverArbeidsgiver) {
+      return (
+        <>
+          <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
+            {arbeidstype}{' '}
+            {erNytt && (
+              <Tag data-color="info" size="small" variant="outline">
+                Ny
+              </Tag>
+            )}
+          </BodyShort>
+          <BodyShort size="small" weight="semibold" className="leading-6">
+            {arbeidsgiverNavn}
+          </BodyShort>
+        </>
+      );
+    }
+
+    return (
+      <BodyShort size="small" weight="semibold" className="leading-6">
+        {aktivitetVisningsnavn}{' '}
+        {erNytt && (
+          <Tag data-color="info" size="small" variant="outline">
+            Ny
+          </Tag>
+        )}
+      </BodyShort>
+    );
+  };
+
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
@@ -40,14 +80,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
                 key={`${type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_inntekt_grunnlag`}
                 className={styles.uttakDetaljerBeregningFirma}
               >
-                <BodyShort size="small" weight="semibold" className="leading-6">
-                  {utledAktivitetVisningsnavn(type, arbeidsgiverIdentifikator, arbeidsgivere)}{' '}
-                  {inntForhold.erNytt && (
-                    <Tag data-color="info" size="small" variant="outline">
-                      Ny
-                    </Tag>
-                  )}
-                </BodyShort>
+                {renderAktivitetHeader(type, arbeidsgiverIdentifikator, inntForhold.erNytt)}
                 <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
               </Box>
             );
@@ -59,14 +92,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
           return (
             <Fragment key={`${type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_inntekt_utbetalt`}>
               <Box className={styles.uttakDetaljerBeregningFirma}>
-                <BodyShort size="small" weight="semibold">
-                  {utledAktivitetVisningsnavn(type, arbeidsgiverIdentifikator, arbeidsgivere)}{' '}
-                  {inntForhold.erNytt && (
-                    <Tag data-color="info" size="small" variant="outline">
-                      Ny
-                    </Tag>
-                  )}
-                </BodyShort>
+                {renderAktivitetHeader(type, arbeidsgiverIdentifikator, inntForhold.erNytt)}
                 <BodyShort className="leading-6" size="small">
                   Inntekt: {formatNOK(inntForhold.bruttoInntekt)}
                 </BodyShort>
