@@ -1,12 +1,10 @@
 import { Fragment, type FC } from 'react';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_UttakArbeidType as InntektsforholdDtoType,
-  type k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingPeriodeDto as InntektgraderingPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/InntektgraderingPeriodeDto.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { useUttakContext } from '../context/UttakContext';
+import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn, utledArbeidstypeVisningsnavn } from '../utils/aktivitetVisning';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {
@@ -29,6 +27,47 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
   const løpendeInntekt = formatNOK(inntektsgradering.løpendeInntekt);
   const bortfaltInntekt = formatNOK(inntektsgradering.bortfaltInntekt);
 
+  const renderAktivitetHeader = (
+    type: string | null | undefined,
+    arbeidsgiverIdentifikator: string | null | undefined,
+    erNytt: boolean,
+  ) => {
+    const aktivitetVisningsnavn = utledAktivitetVisningsnavn(type, arbeidsgiverIdentifikator, arbeidsgivere);
+    const arbeidsgiverNavn = utledArbeidsgiverNavn(arbeidsgiverIdentifikator, arbeidsgivere);
+    const arbeidstype = utledArbeidstypeVisningsnavn(type);
+
+    return (
+      <>
+        {arbeidstype && (
+          <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
+            {arbeidstype}{' '}
+            {erNytt && (
+              <Tag data-color="info" size="small" variant="outline">
+                Ny
+              </Tag>
+            )}
+          </BodyShort>
+        )}
+        {arbeidsgiverNavn ? (
+          <BodyShort size="small" weight="semibold" className="leading-6">
+            {arbeidsgiverNavn}
+          </BodyShort>
+        ) : (
+          !arbeidstype && (
+            <BodyShort size="small" weight="semibold" className="leading-6">
+              {aktivitetVisningsnavn}{' '}
+              {erNytt && (
+                <Tag data-color="info" size="small" variant="outline">
+                  Ny
+                </Tag>
+              )}
+            </BodyShort>
+          )
+        )}
+      </>
+    );
+  };
+
   return (
     <VStack className={`${styles.uttakDetaljerDetailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
@@ -36,26 +75,13 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
           // Ikke vise tilkommende inntekstforhold i beregningsgrunnlag
           .filter(inntForhold => !inntForhold.erNytt)
           .map(inntForhold => {
-            const { arbeidsgiverIdentifikator } = inntForhold;
-            const arbeidsforholdData =
-              arbeidsgiverIdentifikator && arbeidsgivere && !Array.isArray(arbeidsgivere)
-                ? arbeidsgivere[arbeidsgiverIdentifikator]
-                : undefined;
+            const { arbeidsgiverIdentifikator, type } = inntForhold;
             return (
               <Box
-                key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
+                key={`${type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_inntekt_grunnlag`}
                 className={styles.uttakDetaljerBeregningFirma}
               >
-                <BodyShort size="small" weight="semibold" className="leading-6">
-                  {inntForhold.type !== InntektsforholdDtoType.FRILANSER
-                    ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
-                    : 'Frilanser'}{' '}
-                  {inntForhold.erNytt && (
-                    <Tag data-color="info" size="small" variant="outline">
-                      Ny
-                    </Tag>
-                  )}
-                </BodyShort>
+                {renderAktivitetHeader(type, arbeidsgiverIdentifikator, inntForhold.erNytt)}
                 <BodyShort size="small">Inntekt: {formatNOK(inntForhold.bruttoInntekt)}</BodyShort>
               </Box>
             );
@@ -63,24 +89,11 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
       </UttakDetaljerEkspanderbar>
       <UttakDetaljerEkspanderbar title={`Utbetalt lønn: ${løpendeInntekt}`}>
         {inntektsforhold.map(inntForhold => {
-          const { arbeidsgiverIdentifikator } = inntForhold;
-          const arbeidsforholdData =
-            arbeidsgiverIdentifikator && arbeidsgivere && !Array.isArray(arbeidsgivere)
-              ? arbeidsgivere[arbeidsgiverIdentifikator]
-              : undefined;
+          const { arbeidsgiverIdentifikator, type } = inntForhold;
           return (
-            <Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
+            <Fragment key={`${type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_inntekt_utbetalt`}>
               <Box className={styles.uttakDetaljerBeregningFirma}>
-                <BodyShort size="small" weight="semibold">
-                  {inntForhold.type !== InntektsforholdDtoType.FRILANSER
-                    ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
-                    : 'Frilanser'}{' '}
-                  {inntForhold.erNytt && (
-                    <Tag data-color="info" size="small" variant="outline">
-                      Ny
-                    </Tag>
-                  )}
-                </BodyShort>
+                {renderAktivitetHeader(type, arbeidsgiverIdentifikator, inntForhold.erNytt)}
                 <BodyShort className="leading-6" size="small">
                   Inntekt: {formatNOK(inntForhold.bruttoInntekt)}
                 </BodyShort>
