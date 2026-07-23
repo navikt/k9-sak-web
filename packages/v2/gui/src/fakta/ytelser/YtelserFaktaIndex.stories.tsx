@@ -89,9 +89,7 @@ export const MedDetaljer: Story = {
   },
 };
 
-export const FlereYtelseTyper: Story = {
-  decorators: [withFakeApi(ytelserFlereTyper)],
-};
+export const FlereYtelseTyper: Story = {};
 
 export const FlerePerioder: Story = {
   decorators: [withFakeApi(ytelserFlerePerioder)],
