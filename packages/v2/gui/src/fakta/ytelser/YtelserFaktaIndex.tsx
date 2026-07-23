@@ -2,15 +2,13 @@ import type {
   RelatertYtelseData,
   RelatertYtelseResponse,
 } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
+import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { BodyShort, Heading, ReadMore, Table, Tag, Timeline, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useContext } from 'react';
 import { formatDate } from '../../utils/formatters.js';
-import { K9YtelserBackendClient } from './api/K9YtelserBackendClient.js';
-import { YtelserApiContext } from './api/YtelserApiContext.js';
 import { useYtelserOptions } from './api/YtelserQueries.js';
 
 type FlatYtelseRad = RelatertYtelseData & {
@@ -25,7 +23,6 @@ interface YtelserFaktaIndexProps {
 const sortByFom = <T extends { fom: string }>(a: T, b: T) => a.fom.localeCompare(b.fom);
 
 const formatSaksnummer = (saksnummer?: string) => saksnummer ?? '-';
-const defaultYtelserApi = new K9YtelserBackendClient();
 
 const lagTooltipTekst = (
   rad: FlatYtelseRad,
@@ -41,20 +38,22 @@ const lagTooltipTekst = (
     .filter(Boolean)
     .join('\n');
 
-const YtelserFaktaInnhold = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
+const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
   const { data } = useSuspenseQuery(useYtelserOptions(behandlingUuid));
-  const { kodeverkNavnFraKode } = useKodeverkContext();
+  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
+
+  const formatYtelseType = (ytelseType: FlatYtelseRad['ytelseType']) =>
+    kodeverkoppslag.k9sak.fagsakYtelseTyper(ytelseType, OrUndefined)?.navn ?? ytelseType;
+
+  const formatStatus = (status: FlatYtelseRad['status']) =>
+    kodeverkoppslag.k9sak.relatertYtelseTilstander(status, OrUndefined)?.navn ?? status;
 
   const grupperteYtelser = data
     .map(ytelse => ({
       ...ytelse,
       data: [...ytelse.data].sort(sortByFom),
     }))
-    .sort((a, b) =>
-      kodeverkNavnFraKode(a.ytelseType, KodeverkType.FAGSAK_YTELSE).localeCompare(
-        kodeverkNavnFraKode(b.ytelseType, KodeverkType.FAGSAK_YTELSE),
-      ),
-    );
+    .sort((a, b) => formatYtelseType(a.ytelseType).localeCompare(formatYtelseType(b.ytelseType)));
 
   const rader = grupperteYtelser
     .flatMap(ytelse =>
@@ -65,12 +64,6 @@ const YtelserFaktaInnhold = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
       })),
     )
     .sort(sortByFom);
-
-  const formatYtelseType = (ytelseType: FlatYtelseRad['ytelseType']) =>
-    kodeverkNavnFraKode(ytelseType, KodeverkType.FAGSAK_YTELSE);
-
-  const formatStatus = (status: FlatYtelseRad['status']) =>
-    kodeverkNavnFraKode(status, KodeverkType.RELATERT_YTELSE_TILSTAND);
 
   if (rader.length === 0) {
     return (
@@ -132,7 +125,9 @@ const YtelserFaktaInnhold = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                 <Table.DataCell>{formatYtelseType(rad.ytelseType)}</Table.DataCell>
                 <Table.DataCell>{`${formatDate(rad.fom)} - ${formatDate(rad.tom)}`}</Table.DataCell>
                 <Table.DataCell>
-                  <Tag size="small">{formatStatus(rad.status)}</Tag>
+                  <Tag size="small" variant="neutral">
+                    {formatStatus(rad.status)}
+                  </Tag>
                 </Table.DataCell>
                 <Table.DataCell>{formatSaksnummer(rad.relatertSaksnummer)}</Table.DataCell>
               </Table.Row>
@@ -141,16 +136,6 @@ const YtelserFaktaInnhold = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
         </Table>
       </ReadMore>
     </VStack>
-  );
-};
-
-const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
-  const api = useContext(YtelserApiContext);
-
-  return (
-    <YtelserApiContext value={api ?? defaultYtelserApi}>
-      <YtelserFaktaInnhold behandlingUuid={behandlingUuid} />
-    </YtelserApiContext>
   );
 };
 

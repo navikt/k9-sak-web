@@ -1,9 +1,9 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { Suspense } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { RelatertYtelseResponse } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
-import { expect } from 'storybook/test';
-import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Suspense } from 'react';
+import { expect, userEvent, within } from 'storybook/test';
 import { YtelserApiContext } from './api/YtelserApiContext.js';
 import YtelserFaktaIndex from './YtelserFaktaIndex.js';
 
@@ -21,7 +21,7 @@ const withFakeApi = (data: RelatertYtelseResponse[]): Decorator => {
   );
 };
 
-const ytelserMock: RelatertYtelseResponse[] = [
+const ytelserFlereTyper: RelatertYtelseResponse[] = [
   {
     ytelseType: 'PSB',
     data: [
@@ -52,10 +52,22 @@ const ytelserMock: RelatertYtelseResponse[] = [
   },
 ];
 
+const ytelserFlerePerioder: RelatertYtelseResponse[] = [
+  {
+    ytelseType: 'PSB',
+    data: [
+      { fom: '2025-01-01', tom: '2025-03-31', status: 'AVSLUTTET', relatertSaksnummer: 'PSB001' },
+      { fom: '2025-06-01', tom: '2025-08-31', status: 'AVSLUTTET', relatertSaksnummer: 'PSB002' },
+      { fom: '2025-10-01', tom: '2025-12-31', status: 'AVSLUTTET', relatertSaksnummer: 'PSB003' },
+      { fom: '2026-01-01', tom: '2026-06-30', status: 'LØPENDE', relatertSaksnummer: 'PSB004' },
+    ],
+  },
+];
+
 const meta = {
   title: 'gui/fakta/ytelser/YtelserFaktaIndex',
   component: YtelserFaktaIndex,
-  decorators: [withKodeverkContext(), withFakeApi(ytelserMock)],
+  decorators: [withK9Kodeverkoppslag(), withFakeApi(ytelserFlereTyper)],
   args: {
     behandlingUuid: 'test-behandling-uuid',
   },
@@ -68,15 +80,27 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const MedDetaljer: Story = {
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('Pleiepenger sykt barn')).toBeVisible();
-    await expect(canvas.getByRole('button', { name: 'Vis detaljer', expanded: false })).toBeVisible();
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const knapp = await canvas.findByRole('button', { name: 'Vis detaljer' });
+    await expect(knapp).toBeVisible();
+    await userEvent.click(knapp);
+    await expect(await canvas.findByRole('table')).toBeVisible();
   },
+};
+
+export const FlereYtelseTyper: Story = {
+  decorators: [withFakeApi(ytelserFlereTyper)],
+};
+
+export const FlerePerioder: Story = {
+  decorators: [withFakeApi(ytelserFlerePerioder)],
 };
 
 export const IngenYtelser: Story = {
   decorators: [withFakeApi([])],
-  play: async ({ canvas }) => {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
     await expect(await canvas.findByText('Søker har ingen relaterte ytelser å vise.')).toBeVisible();
   },
 };
