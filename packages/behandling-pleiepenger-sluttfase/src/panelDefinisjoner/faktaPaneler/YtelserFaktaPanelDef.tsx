@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import YtelserFaktaIndex from '@k9-sak-web/gui/fakta/ytelser/YtelserFaktaIndex.js';
 import { faktaPanelCodes } from '@k9-sak-web/gui/utils/skjermlenke/faktaPanelCodes.js';
