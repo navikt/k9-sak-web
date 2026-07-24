@@ -166,6 +166,7 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                   data-color="neutral"
                   size="xsmall"
                   className={styles['controlsIconButton']}
+                  aria-label="Forrige periode"
                   icon={<ChevronLeftIcon aria-hidden />}
                   onClick={() => setWindowEnd(prev => dayjs(prev).subtract(monthsToShow, 'month').toDate())}
                 />
@@ -177,6 +178,7 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                   data-color="neutral"
                   size="xsmall"
                   className={styles['controlsIconButton']}
+                  aria-label="Neste periode"
                   icon={<ChevronRightIcon aria-hidden />}
                   onClick={() => setWindowEnd(prev => dayjs(prev).add(monthsToShow, 'month').toDate())}
                 />
