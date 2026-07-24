@@ -7,6 +7,7 @@ const mockedOmsorgsperioder = {
       resultat: 'IKKE_VURDERT',
       resultatEtterAutomatikk: 'IKKE_VURDERT',
       begrunnelse: '',
+      readOnly: false,
     },
     {
       periode: { fom: '2023-07-01', tom: '2023-12-31' },
@@ -15,6 +16,7 @@ const mockedOmsorgsperioder = {
       resultat: 'IKKE_VURDERT',
       resultatEtterAutomatikk: 'IKKE_VURDERT',
       begrunnelse: '',
+      readOnly: false,
     },
   ],
   registrertSammeBosted: true,
@@ -33,6 +35,7 @@ export const mockedOmsorgsperioderVurdert = {
       begrunnelse: 'Bekreftet omsorgsrelasjon.',
       vurdertAv: 'Z123456',
       vurdertTidspunkt: '2023-07-01T10:00:00',
+      readOnly: true,
     },
   ],
   registrertSammeBosted: true,
