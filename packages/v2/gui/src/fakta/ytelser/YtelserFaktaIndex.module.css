@@ -7,6 +7,10 @@
   padding: 12px 10px;
 }
 
+.tabellPanel {
+  padding: 12px 0 0;
+}
+
 .timelinePanelContent {
   padding: 20px 0 40px 32px;
   width: 100%;
@@ -31,19 +35,62 @@
 }
 
 .kolonneYtelse {
-  width: 38%;
+  width: 40%;
 }
 
 .kolonnePeriode {
-  width: 32%;
+  width: 28%;
 }
 
 .kolonneStatus {
-  width: 15%;
+  width: 20%;
 }
 
 .kolonneSaksnr {
-  width: 15%;
+  width: 12%;
+}
+
+.tableWrapper {
+  width: 100%;
+  border: 1px solid var(--ax-border-neutral-subtleA);
+  border-radius: var(--ax-radius-12);
+  overflow: hidden;
+  background-color: var(--ax-bg-default);
+}
+
+.tabell {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.tabell :global(.aksel-table__header .aksel-table__header-cell) {
+  background-color: var(--ax-bg-neutral-softA);
+  border-bottom-width: 1px;
+}
+
+.tabell :global(.aksel-table__body .aksel-table__header-cell) {
+  background-color: transparent;
+  font-size: var(--ax-font-size-medium);
+  font-weight: var(--ax-font-weight-regular);
+  letter-spacing: normal;
+  line-height: var(--ax-font-line-height-medium);
+}
+
+.tabell :global(.aksel-table__header-cell),
+.tabell :global(.aksel-table__data-cell) {
+  padding: var(--ax-space-16) var(--ax-space-20);
+}
+
+.tabell :global(.aksel-table__header-cell:not(:last-child)),
+.tabell :global(.aksel-table__data-cell:not(:last-child)) {
+  border-inline-end: 1px solid var(--ax-border-neutral-subtleA);
+}
+
+.tabell
+  :global(.aksel-table__body .aksel-table__row:last-child :is(.aksel-table__header-cell, .aksel-table__data-cell)) {
+  border-bottom: none;
 }
 
 .tidslinje {

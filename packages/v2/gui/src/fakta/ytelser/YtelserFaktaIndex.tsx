@@ -232,39 +232,41 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
             Her vises kun ytelser som er relevante for opptjeningsperioden og søknadsperioden.
           </Alert>
         </Tabs.Panel>
-        <Tabs.Panel value="tabell" className={styles['tabPanel']}>
-          <Table size="small">
-            <colgroup>
-              <col className={styles['kolonneYtelse']} />
-              <col className={styles['kolonnePeriode']} />
-              <col className={styles['kolonneStatus']} />
-              <col className={styles['kolonneSaksnr']} />
-            </colgroup>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell scope="col">Ytelse</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Saksnr.</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {rader.map(rad => (
-                <Table.Row key={rad.rowId}>
-                  <Table.DataCell>{formatYtelseType(rad.ytelseType)}</Table.DataCell>
-                  <Table.DataCell>{`${formatDate(rad.fom)} - ${formatDate(rad.tom)}`}</Table.DataCell>
-                  <Table.DataCell>{formatStatus(rad.status)}</Table.DataCell>
-                  <Table.DataCell>
-                    {rad.relatertSaksnummer ? (
-                      <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
-                    ) : (
-                      '-'
-                    )}
-                  </Table.DataCell>
+        <Tabs.Panel value="tabell" className={styles['tabellPanel']}>
+          <div className={styles['tableWrapper']}>
+            <Table size="small" className={styles['tabell']}>
+              <colgroup>
+                <col className={styles['kolonneYtelse']} />
+                <col className={styles['kolonnePeriode']} />
+                <col className={styles['kolonneStatus']} />
+                <col className={styles['kolonneSaksnr']} />
+              </colgroup>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Ytelse</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Saksnr.</Table.HeaderCell>
                 </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+              </Table.Header>
+              <Table.Body>
+                {rader.map(rad => (
+                  <Table.Row key={rad.rowId}>
+                    <Table.HeaderCell scope="row">{formatYtelseType(rad.ytelseType)}</Table.HeaderCell>
+                    <Table.DataCell>{`${formatDate(rad.fom)} – ${formatDate(rad.tom)}`}</Table.DataCell>
+                    <Table.DataCell>{formatStatus(rad.status)}</Table.DataCell>
+                    <Table.DataCell>
+                      {rad.relatertSaksnummer ? (
+                        <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
+                      ) : (
+                        '-'
+                      )}
+                    </Table.DataCell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
         </Tabs.Panel>
       </Tabs>
     </VStack>
