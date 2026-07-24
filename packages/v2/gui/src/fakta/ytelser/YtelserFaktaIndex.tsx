@@ -24,6 +24,7 @@ import {
   Tabs,
   Timeline,
   ToggleGroup,
+  Tooltip,
   VStack,
 } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -38,11 +39,15 @@ type FlatYtelseRad = RelatertYtelseData & {
   ytelseType: RelatertYtelseResponse['ytelseType'];
 };
 
+type ZoomLevel = '2' | '4' | '8';
+
 interface YtelserFaktaIndexProps {
   behandlingUuid: string;
 }
 
 const sortByFom = <T extends { fom: string }>(a: T, b: T) => a.fom.localeCompare(b.fom);
+
+const monthsForZoom = (zoom: ZoomLevel) => Number(zoom);
 
 const statusTilTimelineStatus = (status: RelatertYtelseData['status']): 'success' | 'warning' | 'neutral' => {
   switch (status) {
@@ -118,8 +123,9 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
       ? rader.reduce((max, r) => (r.tom > max ? r.tom : max), rader[0]!.tom)
       : dayjs().format('YYYY-MM-DD');
 
-  const [zoom, setZoom] = useState<'2' | '4' | '8'>('8');
+  const [zoom, setZoom] = useState<ZoomLevel>('8');
   const [windowEnd, setWindowEnd] = useState<Date>(() => dayjs(latestTom).add(1, 'month').toDate());
+  const monthsToShow = monthsForZoom(zoom);
 
   if (rader.length === 0) {
     return (
@@ -139,37 +145,42 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
       </Heading>
 
       <Tabs defaultValue="tidslinje">
-        <Tabs.List className={styles['tabsList']}>
+        <Tabs.List className={styles['tabsList']} aria-label="Visning av ytelser">
           <Tabs.Tab value="tidslinje" label="Tidslinje" icon={<Density2Icon aria-hidden />} />
           <Tabs.Tab value="tabell" label="Tabell" icon={<TableIcon aria-hidden />} />
         </Tabs.List>
         <Tabs.Panel value="tidslinje" className={styles['tabPanel']}>
           <HStack justify="end" className={styles['controlsRow']}>
             <HStack className={styles['controlsButtonGroup']}>
-              <Button
-                variant="secondary"
-                data-color="neutral"
-                size="xsmall"
-                className={styles['controlsIconButton']}
-                icon={<ChevronLeftIcon aria-hidden />}
-                title="Forrige periode"
-                onClick={() => setWindowEnd(prev => dayjs(prev).subtract(parseInt(zoom, 10), 'month').toDate())}
-              />
-              <Button
-                variant="secondary"
-                data-color="neutral"
-                size="xsmall"
-                className={styles['controlsIconButton']}
-                icon={<ChevronRightIcon aria-hidden />}
-                title="Neste periode"
-                onClick={() => setWindowEnd(prev => dayjs(prev).add(parseInt(zoom, 10), 'month').toDate())}
-              />
+              <Tooltip content="Forrige periode">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  data-color="neutral"
+                  size="xsmall"
+                  className={styles['controlsIconButton']}
+                  icon={<ChevronLeftIcon aria-hidden />}
+                  onClick={() => setWindowEnd(prev => dayjs(prev).subtract(monthsToShow, 'month').toDate())}
+                />
+              </Tooltip>
+              <Tooltip content="Neste periode">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  data-color="neutral"
+                  size="xsmall"
+                  className={styles['controlsIconButton']}
+                  icon={<ChevronRightIcon aria-hidden />}
+                  onClick={() => setWindowEnd(prev => dayjs(prev).add(monthsToShow, 'month').toDate())}
+                />
+              </Tooltip>
             </HStack>
             <ToggleGroup
               value={zoom}
-              onChange={v => setZoom(v as '2' | '4' | '8')}
+              onChange={v => setZoom(v as ZoomLevel)}
               size="small"
               data-color="neutral"
+              aria-label="Velg antall måneder som skal vises"
             >
               <ToggleGroup.Item value="2">2 mnd</ToggleGroup.Item>
               <ToggleGroup.Item value="4">4 mnd</ToggleGroup.Item>
@@ -178,7 +189,7 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
           </HStack>
           <div className={styles['timelinePanelContent']}>
             <Timeline
-              startDate={dayjs(windowEnd).subtract(parseInt(zoom, 10), 'month').toDate()}
+              startDate={dayjs(windowEnd).subtract(monthsToShow, 'month').toDate()}
               endDate={windowEnd}
               className={styles['tidslinje']}
             >
@@ -222,40 +233,38 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
           </Alert>
         </Tabs.Panel>
         <Tabs.Panel value="tabell" className={styles['tabPanel']}>
-          <div className={styles['tablePanelContent']}>
-            <Table size="small">
-              <colgroup>
-                <col className={styles['kolonneYtelse']} />
-                <col className={styles['kolonnePeriode']} />
-                <col className={styles['kolonneStatus']} />
-                <col className={styles['kolonneSaksnr']} />
-              </colgroup>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell scope="col">Ytelse</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Saksnr.</Table.HeaderCell>
+          <Table size="small">
+            <colgroup>
+              <col className={styles['kolonneYtelse']} />
+              <col className={styles['kolonnePeriode']} />
+              <col className={styles['kolonneStatus']} />
+              <col className={styles['kolonneSaksnr']} />
+            </colgroup>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell scope="col">Ytelse</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Status</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Saksnr.</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {rader.map(rad => (
+                <Table.Row key={rad.rowId}>
+                  <Table.DataCell>{formatYtelseType(rad.ytelseType)}</Table.DataCell>
+                  <Table.DataCell>{`${formatDate(rad.fom)} - ${formatDate(rad.tom)}`}</Table.DataCell>
+                  <Table.DataCell>{formatStatus(rad.status)}</Table.DataCell>
+                  <Table.DataCell>
+                    {rad.relatertSaksnummer ? (
+                      <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
+                    ) : (
+                      '-'
+                    )}
+                  </Table.DataCell>
                 </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {rader.map(rad => (
-                  <Table.Row key={rad.rowId}>
-                    <Table.DataCell>{formatYtelseType(rad.ytelseType)}</Table.DataCell>
-                    <Table.DataCell>{`${formatDate(rad.fom)} - ${formatDate(rad.tom)}`}</Table.DataCell>
-                    <Table.DataCell>{formatStatus(rad.status)}</Table.DataCell>
-                    <Table.DataCell>
-                      {rad.relatertSaksnummer ? (
-                        <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
-                      ) : (
-                        '-'
-                      )}
-                    </Table.DataCell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </div>
+              ))}
+            </Table.Body>
+          </Table>
         </Tabs.Panel>
       </Tabs>
     </VStack>
