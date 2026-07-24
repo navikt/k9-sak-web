@@ -12,7 +12,7 @@ class YtelserFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <YtelserFaktaIndex behandlingUuid={props.behandling.uuid} />;
 
   skalVisePanel = (_apCodes, { personopplysninger }, featureToggles) =>
-    Boolean(featureToggles?.BRUK_V2_YTELSER && personopplysninger);
+    Boolean(featureToggles?.VIS_YTELSER_PANEL && personopplysninger);
 }
 
 export default YtelserFaktaPanelDef;
