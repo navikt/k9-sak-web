@@ -25,30 +25,24 @@ const ytelserFlereTyper: RelatertYtelseResponse[] = [
   {
     ytelseType: 'PSB',
     data: [
-      {
-        fom: '2026-01-01',
-        tom: '2026-01-31',
-        status: 'LØPENDE',
-        relatertSaksnummer: 'ABC123',
-      },
-      {
-        fom: '2026-03-01',
-        tom: '2026-03-31',
-        status: 'AVSLUTTET',
-        relatertSaksnummer: 'ABC124',
-      },
+      { fom: '2026-01-15', tom: '2026-02-28', status: 'AVSLUTTET', relatertSaksnummer: 'PSB001' },
+      { fom: '2026-06-01', tom: '2026-10-31', status: 'LØPENDE', relatertSaksnummer: 'PSB002' },
     ],
   },
   {
-    ytelseType: 'OMP',
+    ytelseType: 'OLP',
     data: [
-      {
-        fom: '2026-02-10',
-        tom: '2026-02-20',
-        status: 'ÅPEN',
-        relatertSaksnummer: 'XYZ999',
-      },
+      { fom: '2026-01-15', tom: '2026-04-15', status: 'AVSLUTTET', relatertSaksnummer: 'OLP001' },
+      { fom: '2026-06-01', tom: '2026-10-15', status: 'AVSLUTTET', relatertSaksnummer: 'OLP002' },
     ],
+  },
+  {
+    ytelseType: 'FP',
+    data: [{ fom: '2026-01-01', tom: '2026-09-30', status: 'AVSLUTTET', relatertSaksnummer: 'FP001' }],
+  },
+  {
+    ytelseType: 'SP',
+    data: [{ fom: '2026-05-15', tom: '2026-09-15', status: 'AVSLUTTET', relatertSaksnummer: 'SP001' }],
   },
 ];
 
@@ -59,7 +53,7 @@ const ytelserFlerePerioder: RelatertYtelseResponse[] = [
       { fom: '2025-01-01', tom: '2025-03-31', status: 'AVSLUTTET', relatertSaksnummer: 'PSB001' },
       { fom: '2025-06-01', tom: '2025-08-31', status: 'AVSLUTTET', relatertSaksnummer: 'PSB002' },
       { fom: '2025-10-01', tom: '2025-12-31', status: 'AVSLUTTET', relatertSaksnummer: 'PSB003' },
-      { fom: '2026-01-01', tom: '2026-06-30', status: 'LØPENDE', relatertSaksnummer: 'PSB004' },
+      { fom: '2026-01-01', tom: '2026-09-30', status: 'LØPENDE', relatertSaksnummer: 'PSB004' },
     ],
   },
 ];
@@ -79,12 +73,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const MedDetaljer: Story = {
+export const TabellfaneÅpen: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const knapp = await canvas.findByRole('button', { name: 'Vis detaljer' });
-    await expect(knapp).toBeVisible();
-    await userEvent.click(knapp);
+    await userEvent.click(await canvas.findByRole('tab', { name: 'Tabell' }));
     await expect(await canvas.findByRole('table')).toBeVisible();
   },
 };

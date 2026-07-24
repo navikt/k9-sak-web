@@ -1,0 +1,99 @@
+.tabsList {
+  width: 100%;
+  border-bottom: 1px solid var(--ax-border-neutral-subtleA);
+}
+
+.tabPanel {
+  padding: 12px 10px;
+}
+
+.timelinePanelContent {
+  padding: 20px 0 40px 32px;
+  width: 100%;
+}
+
+.tablePanelContent {
+  width: 100%;
+}
+
+.controlsRow {
+  width: 100%;
+  padding: 10px;
+  gap: 10px;
+}
+
+.controlsButtonGroup {
+  gap: 10px;
+}
+
+.controlsIconButton {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: var(--ax-radius-8);
+}
+
+.kolonneYtelse {
+  width: 38%;
+}
+
+.kolonnePeriode {
+  width: 32%;
+}
+
+.kolonneStatus {
+  width: 15%;
+}
+
+.kolonneSaksnr {
+  width: 15%;
+}
+
+.tidslinje {
+  width: 100%;
+}
+
+.tidslinje :global(.aksel-timeline__row-label) {
+  align-self: center;
+}
+
+.tidslinje :global(.aksel-timeline__row) {
+  margin-block: var(--ax-space-20);
+}
+
+.tidslinje :global(.aksel-timeline__period[data-color='success']) {
+  background: var(--ax-bg-success-soft);
+  color: var(--ax-text-success-decoration);
+  border-color: currentColor;
+}
+
+.tidslinje :global(.aksel-timeline__period[data-color='warning']) {
+  background: var(--ax-bg-warning-soft);
+  color: var(--ax-text-warning-decoration);
+  border-color: currentColor;
+}
+
+.tidslinje :global(.aksel-timeline__period--inner svg) {
+  font-size: 0.95rem;
+}
+
+.tidslinje :global(.aksel-timeline__pin-wrapper) {
+  z-index: 3;
+}
+
+.tidslinje :global(.aksel-timeline__pin-button) {
+  z-index: 2;
+}
+
+.infoAlert {
+  width: 100%;
+}
+
+.rowLabelBold {
+  display: inline-block;
+  font-size: var(--ax-font-size-medium);
+  font-weight: var(--ax-font-weight-bold);
+  letter-spacing: 0.002em;
+  line-height: var(--ax-font-line-height-medium);
+}
