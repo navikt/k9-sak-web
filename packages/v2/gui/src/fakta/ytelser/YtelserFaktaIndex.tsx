@@ -19,6 +19,7 @@ import {
   Button,
   Heading,
   HStack,
+  Label,
   Link,
   Table,
   Tabs,
@@ -73,19 +74,25 @@ const statusTilPeriodeIkon = (status: RelatertYtelseData['status']): ReactNode =
   }
 };
 
-const lagTooltipTekst = (
+const lagDetaljinnhold = (
   rad: FlatYtelseRad,
   formatYtelseType: (ytelseType: FlatYtelseRad['ytelseType']) => string,
   formatStatus: (status: FlatYtelseRad['status']) => string,
-) =>
-  [
-    formatYtelseType(rad.ytelseType),
-    `${formatDate(rad.fom)} - ${formatDate(rad.tom)}`,
-    `Status: ${formatStatus(rad.status)}`,
-    rad.relatertSaksnummer ? `Saksnummer: ${rad.relatertSaksnummer}` : undefined,
-  ]
-    .filter(Boolean)
-    .join('\n');
+) => (
+  <VStack gap="space-4" className={styles['detaljerPopover']}>
+    <Label size="small" as="p">
+      {formatYtelseType(rad.ytelseType)}
+    </Label>
+    <BodyShort size="small">{`Periode: ${formatDate(rad.fom)} – ${formatDate(rad.tom)}`}</BodyShort>
+    <BodyShort size="small">{`Status: ${formatStatus(rad.status)}`}</BodyShort>
+    {rad.relatertSaksnummer && (
+      <BodyShort size="small">
+        Saksnr.{' '}
+        <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
+      </BodyShort>
+    )}
+  </VStack>
+);
 
 const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
   const { data } = useSuspenseQuery(useYtelserOptions(behandlingUuid));
@@ -219,9 +226,11 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                         start={dayjs(rad.fom).toDate()}
                         end={dayjs(rad.tom).add(1, 'day').toDate()}
                         status={statusTilTimelineStatus(rad.status)}
-                        title={lagTooltipTekst(rad, formatYtelseType, formatStatus)}
+                        statusLabel={formatStatus(rad.status)}
                         icon={statusTilPeriodeIkon(rad.status)}
-                      />
+                      >
+                        {lagDetaljinnhold(rad, formatYtelseType, formatStatus)}
+                      </Timeline.Period>
                     );
                   })}
                 </Timeline.Row>

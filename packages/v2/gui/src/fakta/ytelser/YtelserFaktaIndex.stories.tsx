@@ -73,6 +73,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const DetaljerÅpne: Story = {
+  play: async ({ canvasElement }) => {
+    const firstPeriod = canvasElement.querySelector('[data-timeline-period="true"]');
+    if (!(firstPeriod instanceof HTMLElement)) {
+      throw new Error('Fant ikke noen tidslinjeperiode');
+    }
+
+    await userEvent.click(firstPeriod);
+
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByText('Periode: 15.01.2026 – 28.02.2026')).toBeVisible();
+    await expect(await canvas.findByRole('link', { name: 'PSB001' })).toBeVisible();
+  },
+};
+
 export const TabellfaneÅpen: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

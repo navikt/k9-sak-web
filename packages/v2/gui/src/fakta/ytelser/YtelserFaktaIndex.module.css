@@ -93,6 +93,10 @@
   border-bottom: none;
 }
 
+.detaljerPopover {
+  min-width: 14rem;
+}
+
 .tidslinje {
   width: 100%;
 }
