@@ -1,5 +1,6 @@
 .tabsList {
   width: 100%;
+  /* stylelint-disable-next-line custom-property-pattern */
   border-bottom: 1px solid var(--ax-border-neutral-subtleA);
 }
 
@@ -52,6 +53,7 @@
 
 .tableWrapper {
   width: 100%;
+  /* stylelint-disable-next-line custom-property-pattern */
   border: 1px solid var(--ax-border-neutral-subtleA);
   border-radius: var(--ax-radius-12);
   overflow: hidden;
@@ -66,6 +68,7 @@
 }
 
 .tabell :global(.aksel-table__header .aksel-table__header-cell) {
+  /* stylelint-disable-next-line custom-property-pattern */
   background-color: var(--ax-bg-neutral-softA);
   border-bottom-width: 1px;
 }
@@ -85,6 +88,7 @@
 
 .tabell :global(.aksel-table__header-cell:not(:last-child)),
 .tabell :global(.aksel-table__data-cell:not(:last-child)) {
+  /* stylelint-disable-next-line custom-property-pattern */
   border-inline-end: 1px solid var(--ax-border-neutral-subtleA);
 }
 
@@ -112,13 +116,13 @@
 .tidslinje :global(.aksel-timeline__period[data-color='success']) {
   background: var(--ax-bg-success-soft);
   color: var(--ax-text-success-decoration);
-  border-color: currentColor;
+  border-color: currentcolor;
 }
 
 .tidslinje :global(.aksel-timeline__period[data-color='warning']) {
   background: var(--ax-bg-warning-soft);
   color: var(--ax-text-warning-decoration);
-  border-color: currentColor;
+  border-color: currentcolor;
 }
 
 .tidslinje :global(.aksel-timeline__period--inner svg) {
