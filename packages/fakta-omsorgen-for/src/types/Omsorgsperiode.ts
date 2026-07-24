@@ -18,8 +18,6 @@ class Omsorgsperiode {
 
   vurdertTidspunkt?: string;
 
-  readOnly?: boolean;
-
   skalTvingesTilManuellVurdering?: boolean;
 
   constructor({
@@ -31,7 +29,6 @@ class Omsorgsperiode {
     relasjon,
     vurdertAv,
     vurdertTidspunkt,
-    readOnly,
     skalTvingesTilManuellVurdering,
   }: Partial<Omsorgsperiode>) {
     this.periode = new Period(periode.fom, periode.tom);
@@ -42,7 +39,6 @@ class Omsorgsperiode {
     this.relasjon = relasjon ? relasjon[0].toUpperCase() + relasjon.slice(1).toLowerCase() : '';
     this.vurdertAv = vurdertAv;
     this.vurdertTidspunkt = vurdertTidspunkt;
-    this.readOnly = readOnly;
     this.skalTvingesTilManuellVurdering = skalTvingesTilManuellVurdering;
   }
 
