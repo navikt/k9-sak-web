@@ -3,7 +3,7 @@ import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Ko
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, screen, userEvent, within } from 'storybook/test';
 import { YtelserApiContext } from './api/YtelserApiContext.js';
 import YtelserFaktaIndex from './YtelserFaktaIndex.js';
 
@@ -58,6 +58,13 @@ const ytelserFlerePerioder: RelatertYtelseResponse[] = [
   },
 ];
 
+const ytelserDetaljerAapne: RelatertYtelseResponse[] = [
+  {
+    ytelseType: 'PSB',
+    data: [{ fom: '2026-06-01', tom: '2026-10-31', status: 'LØPENDE', relatertSaksnummer: 'PSB002' }],
+  },
+];
+
 const meta = {
   title: 'gui/fakta/ytelser/YtelserFaktaIndex',
   component: YtelserFaktaIndex,
@@ -74,6 +81,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const DetaljerÅpne: Story = {
+  decorators: [withFakeApi(ytelserDetaljerAapne)],
   play: async ({ canvasElement }) => {
     const firstPeriod = canvasElement.querySelector('[data-timeline-period="true"]');
     if (!(firstPeriod instanceof HTMLElement)) {
@@ -82,9 +90,8 @@ export const DetaljerÅpne: Story = {
 
     await userEvent.click(firstPeriod);
 
-    const canvas = within(canvasElement);
-    await expect(await canvas.findByText('Periode: 15.01.2026 – 28.02.2026')).toBeVisible();
-    await expect(await canvas.findByRole('link', { name: 'PSB001' })).toBeVisible();
+    await expect(await screen.findByText('Periode: 01.06.2026 – 31.10.2026')).toBeVisible();
+    await expect(await screen.findByRole('link', { name: 'PSB002' })).toBeVisible();
   },
 };
 
