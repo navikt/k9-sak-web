@@ -8,8 +8,8 @@
   "private": true,
   "dependencies": {
     "@navikt/ds-react": "8.14.0",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "react-hook-form": "7.80.0",
     "tailwindcss": "4.3.2"
   },

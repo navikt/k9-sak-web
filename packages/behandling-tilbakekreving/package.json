@@ -27,8 +27,8 @@
     "@navikt/ft-ui-komponenter": "8.1.1",
     "@navikt/ft-utils": "5.1.0",
     "dayjs": "1.11.21",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "react-hook-form": "7.80.0",
     "react-intl": "10.1.14"
   },
