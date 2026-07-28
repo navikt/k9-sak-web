@@ -23,6 +23,7 @@ app.use(
           'https://sentry.gc.nav.no',
           'https://reops-event-proxy.ekstern.dev.nav.no',
           'https://cdn.nav.no',
+          'https://telemetry.nav.no',
         ],
       },
     },
