@@ -1,7 +1,7 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import hash from 'object-hash';
-import React, { useEffect, type JSX } from 'react';
+import React, { type JSX, useEffect } from 'react';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
 import { useOmsorgenForContext } from '../../context/ContainerContext';
@@ -30,8 +30,9 @@ const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: Omsorgsperiodeoversi
   };
 
   useEffect(() => {
-    if (omsorgsperiodeoversikt.harPerioderTilVurdering()) {
-      setValgtPeriode(perioderTilVurdering[0]);
+    const [førstePeriodeTilRedigering] = omsorgsperiodeoversikt.finnRedigerbarePerioder();
+    if (førstePeriodeTilRedigering) {
+      setValgtPeriode(førstePeriodeTilRedigering);
     }
   }, []);
 
@@ -45,12 +46,12 @@ const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: Omsorgsperiodeoversi
             perioderTilVurdering={perioderTilVurdering}
             vurdertePerioder={vurderteOmsorgsperioder}
             onPeriodeValgt={velgPeriode}
-            harValgtPeriode={valgtPeriode !== null}
+            valgtPeriode={valgtPeriode}
           />
         )}
         showDetailSection={!!valgtPeriode}
         detailSection={() => {
-          if (perioderTilVurdering.includes(valgtPeriode) || erRedigeringsmodus) {
+          if (valgtPeriode?.skalVisesIRedigeringsmodus() || erRedigeringsmodus) {
             return (
               <VurderingAvOmsorgsperioderForm
                 key={hash(valgtPeriode)}
