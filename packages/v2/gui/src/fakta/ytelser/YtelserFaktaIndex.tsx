@@ -30,7 +30,7 @@ import {
 } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { type ReactNode, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatters.js';
 import { useYtelserOptions } from './api/YtelserQueries.js';
 import { kanÅpneRelatertSak } from './relatertSakUtils.js';
@@ -51,7 +51,7 @@ const sortByFom = <T extends { fom: string }>(a: T, b: T) => a.fom.localeCompare
 
 const monthsForZoom = (zoom: ZoomLevel) => Number(zoom);
 
-const statusTilTimelineStatus = (status: RelatertYtelseData['status']): 'success' | 'warning' | 'neutral' => {
+const statusTilTimelineStatus = (status: RelatertYtelseData['status']) => {
   switch (status) {
     case 'AVSLUTTET':
       return 'success';
@@ -63,7 +63,7 @@ const statusTilTimelineStatus = (status: RelatertYtelseData['status']): 'success
   }
 };
 
-const statusTilPeriodeIkon = (status: RelatertYtelseData['status']): ReactNode => {
+const statusTilPeriodeIkon = (status: RelatertYtelseData['status']) => {
   switch (status) {
     case 'AVSLUTTET':
       return <CheckmarkCircleFillIcon aria-hidden />;
@@ -134,11 +134,11 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
 
   const latestTom =
     rader.length > 0
-      ? rader.reduce((max, r) => (r.tom > max ? r.tom : max), rader[0]!.tom)
-      : dayjs().format('YYYY-MM-DD');
+      ? rader.reduce((max, r) => (dayjs(r.tom).isAfter(max) ? dayjs(r.tom) : max), dayjs(rader[0]!.tom))
+      : dayjs();
 
   const [zoom, setZoom] = useState<ZoomLevel>('8');
-  const [windowEnd, setWindowEnd] = useState<Date>(() => dayjs(latestTom).add(1, 'month').toDate());
+  const [windowEnd, setWindowEnd] = useState<Date>(() => latestTom.add(1, 'month').toDate());
   const monthsToShow = monthsForZoom(zoom);
 
   if (rader.length === 0) {
@@ -222,7 +222,7 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                   }
                 >
                   {ytelse.data.map((periode, index) => {
-                    const rad: FlatYtelseRad = {
+                    const rad = {
                       ...periode,
                       rowId: `${ytelse.ytelseType}-${periode.fom}-${periode.tom}-${index}`,
                       ytelseType: ytelse.ytelseType,
