@@ -33,6 +33,7 @@ import dayjs from 'dayjs';
 import { type ReactNode, useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatters.js';
 import { useYtelserOptions } from './api/YtelserQueries.js';
+import { kanÅpneRelatertSak } from './relatertSakUtils.js';
 import styles from './YtelserFaktaIndex.module.css';
 
 type FlatYtelseRad = RelatertYtelseData & {
@@ -88,7 +89,13 @@ const lagDetaljinnhold = (
     {rad.relatertSaksnummer && (
       <BodyShort size="small">
         Saksnr.{' '}
-        <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
+        {kanÅpneRelatertSak(rad.ytelseType) ? (
+          <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`} target="_blank" rel="noreferrer">
+            {rad.relatertSaksnummer}
+          </Link>
+        ) : (
+          rad.relatertSaksnummer
+        )}
       </BodyShort>
     )}
   </VStack>
@@ -268,7 +275,17 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                     <Table.DataCell>{formatStatus(rad.status)}</Table.DataCell>
                     <Table.DataCell>
                       {rad.relatertSaksnummer ? (
-                        <Link href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}>{rad.relatertSaksnummer}</Link>
+                        kanÅpneRelatertSak(rad.ytelseType) ? (
+                          <Link
+                            href={`/k9/web${pathToFagsak(rad.relatertSaksnummer)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {rad.relatertSaksnummer}
+                          </Link>
+                        ) : (
+                          rad.relatertSaksnummer
+                        )
                       ) : (
                         '-'
                       )}
