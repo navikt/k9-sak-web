@@ -1,5 +1,5 @@
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
-import { BodyShort, Button, Dialog, HStack, Label, VStack } from '@navikt/ds-react';
+import { BodyShort, Button, Dialog, HStack, Label, LocalAlert, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
@@ -48,6 +48,17 @@ export const SendForespørselContent = ({ førsteFraværsdag, arbeidsgiver }: Se
     <RhfForm formMethods={formMethods} onSubmit={handleSubmit}>
       <Dialog.Body>
         <VStack gap="space-24">
+          {etterspørInntektsmeldingMutation.isError ? (
+            <LocalAlert status="error">
+              <LocalAlert.Header>
+                <LocalAlert.Title>Feil ved sending av forespørsel</LocalAlert.Title>
+              </LocalAlert.Header>
+              <LocalAlert.Content>
+                <p>{etterspørInntektsmeldingMutation.error?.message}</p>
+                <p>Du kan forsøke på nytt. Hvis feil vedvarer forsøk å laste siden på nytt og prøv igjen.</p>
+              </LocalAlert.Content>
+            </LocalAlert>
+          ) : null}
           <div>
             <Label size="small" as="div" className="mb-1">
               For første fraværsdag
