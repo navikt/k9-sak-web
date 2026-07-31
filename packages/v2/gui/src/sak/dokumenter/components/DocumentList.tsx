@@ -2,12 +2,18 @@ import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } f
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
+import { BodyShort, Checkbox, HStack, Label, Link, Table, Tooltip, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
+import {
+  brevkoder,
+  dokumentTypeFilter,
+  isDokumentTypeFilter,
+  type DokumentTypeFilter,
+} from '../constants/brevkodeFilterGrupper.js';
 import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
@@ -23,11 +29,16 @@ const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
-const alleBehandlinger = 'ALLE';
-
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
 
 const inntektsmeldingBrevkode = '4936';
+
+const brevkodeMap: Partial<Record<DokumentTypeFilter, readonly string[]>> = {
+  [dokumentTypeFilter.INNTEKTSMELDINGER]: brevkoder.INNTEKTSMELDING,
+  [dokumentTypeFilter.SØKNADER]: brevkoder.SØKNAD,
+  [dokumentTypeFilter.ETTERSENDELSER]: brevkoder.ETTERSENDELSE,
+  [dokumentTypeFilter.PUNSJ]: brevkoder.PUNSJ,
+};
 
 const isVedtaksdokument = (document: Document) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
@@ -84,7 +95,25 @@ interface OwnProps {
  * som viser at ingen dokumenter finnes på fagsak.
  */
 const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
-  const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
+  const [kunDenneBehandlingen, setKunDenneBehandlingen] = useState(true);
+  const [valgteDokumentTyper, setValgteDokumentTyper] = useState<Set<DokumentTypeFilter>>(new Set());
+
+  const dokumentTypeAlternativer = [
+    { label: 'Inntektsmeldinger', value: dokumentTypeFilter.INNTEKTSMELDINGER },
+    { label: 'Søknader', value: dokumentTypeFilter.SØKNADER },
+    { label: 'Ettersendelser', value: dokumentTypeFilter.ETTERSENDELSER },
+    { label: 'Punsj', value: dokumentTypeFilter.PUNSJ },
+  ];
+
+  const onToggleDokumentType = (value: string, isSelected: boolean) => {
+    if (!isDokumentTypeFilter(value)) return;
+    setValgteDokumentTyper(prev => {
+      const next = new Set(prev);
+      if (isSelected) next.add(value);
+      else next.delete(value);
+      return next;
+    });
+  };
 
   const erStøttetFagsakYtelseType = [
     fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
@@ -150,18 +179,29 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   return (
     <>
       <div className={styles.controlsContainer}>
-        <Select
-          size="small"
-          onChange={event => setSelectedFilter(event.target.value)}
-          label="Hvilke behandlinger skal vises?"
-          hideLabel
-        >
-          <option value={alleBehandlinger}>Alle behandlinger</option>
-          <option value={behandlingId}>Denne behandlingen</option>
-        </Select>
+        <HStack gap="space-16" align="end">
+          <UNSAFE_Combobox
+            size="small"
+            label="Dokumenttype"
+            className={styles.dokumenttypeFilter}
+            options={dokumentTypeAlternativer}
+            selectedOptions={dokumentTypeAlternativer.filter(a => valgteDokumentTyper.has(a.value))}
+            onToggleSelected={onToggleDokumentType}
+            isMultiSelect
+            shouldAutocomplete
+            placeholder="Alle dokumenttyper"
+          />
+          <Checkbox
+            size="small"
+            checked={!kunDenneBehandlingen}
+            onChange={e => setKunDenneBehandlingen(!e.target.checked)}
+          >
+            Alle behandlinger
+          </Checkbox>
+        </HStack>
         <ModiaLenke />
       </div>
-      <Table>
+      <Table style={{ width: '100%' }}>
         <Table.Header>
           <Table.Row>
             {headerTexts.map(text => (
@@ -173,11 +213,16 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
         </Table.Header>
         <Table.Body>
           {documents
-            .filter(document =>
-              `${behandlingId}` === selectedFilter
-                ? document.behandlinger?.some(behandling => behandling === behandlingId)
-                : true,
-            )
+            .filter(document => {
+              if (kunDenneBehandlingen && !document.behandlinger?.some(b => b === behandlingId)) {
+                return false;
+              }
+              if (valgteDokumentTyper.size === 0) {
+                return true;
+              }
+              const { brevkode } = document;
+              return brevkode != null && [...valgteDokumentTyper].some(type => brevkodeMap[type]?.includes(brevkode));
+            })
             .map(document => {
               const directionImage = getDirectionImage(document);
               const directionText = getDirectionText(document);

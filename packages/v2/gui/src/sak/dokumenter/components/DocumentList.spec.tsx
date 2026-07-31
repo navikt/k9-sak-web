@@ -28,6 +28,7 @@ describe('<DocumentList>', () => {
       tittel: 'Terminbekreftelse',
       tidspunkt: new Date().toDateString(),
       kommunikasjonsretning: Kommunikasjonsretning.INN,
+      behandlinger: [1],
     };
 
     const anotherDocument = {
@@ -36,6 +37,7 @@ describe('<DocumentList>', () => {
       tittel: 'Førstegangssøknad',
       tidspunkt: new Date().toDateString(),
       kommunikasjonsretning: Kommunikasjonsretning.UT,
+      behandlinger: [1],
     };
 
     render(
@@ -62,6 +64,7 @@ describe('<DocumentList>', () => {
       tittel: 'Terminbekreftelse',
       tidspunkt: '',
       kommunikasjonsretning: Kommunikasjonsretning.INN,
+      behandlinger: [1],
     };
 
     render(
