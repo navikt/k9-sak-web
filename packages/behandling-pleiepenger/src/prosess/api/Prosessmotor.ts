@@ -162,7 +162,7 @@ const byggInngangsvilkårFortsetterPanel = (
 ): ProcessMenuStep => {
   const panel = byggVilkårPanel(skalVisePanel, vilkår, PANEL_KONFIG.opptjening, aksjonspunkter);
   if (panel.usePartialStatus) {
-    return { ...panel, type: ProcessMenuStepType.danger, erVurdert: true };
+    return { ...panel, type: ProcessMenuStepType.danger, usePartialStatus: false };
   }
   return panel;
 };
