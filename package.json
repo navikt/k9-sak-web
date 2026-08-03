@@ -102,7 +102,7 @@
     "eslint-plugin-storybook": "10.5.5",
     "globals": "17.8.0",
     "happy-dom": "20.11.1",
-    "knip": "6.29.0",
+    "knip": "6.30.0",
     "lefthook": "2.1.10",
     "loose-ts-check": "2.0.0",
     "msw": "2.15.0",
