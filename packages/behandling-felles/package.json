@@ -16,8 +16,8 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "8.16.1",
     "@navikt/ds-react": "8.16.1",
-    "@navikt/ft-plattform-komponenter": "12.1.0",
-    "@navikt/ft-utils": "5.1.0",
+    "@navikt/ft-plattform-komponenter": "12.1.2",
+    "@navikt/ft-utils": "5.1.2",
     "@sentry/browser": "10.69.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.21",
@@ -29,7 +29,7 @@
     "redux-form": "8.3.10"
   },
   "devDependencies": {
-    "@types/react": "19.2.17",
-    "@types/react-dom": "19.2.3"
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4"
   }
 }
