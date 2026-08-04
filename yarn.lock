@@ -417,13 +417,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codexteam/icons@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@codexteam/icons@npm:0.0.4"
-  checksum: 10/877eeb3e62ddb907120234a93bde35902b493c49cf8795b4504db0467474f9de024ef1050ed10ac1bcfef6a5d95cf1e5a47668160729b79cba45aa088eeff0e6
-  languageName: node
-  linkType: hard
-
 "@codexteam/icons@npm:^0.0.5":
   version: 0.0.5
   resolution: "@codexteam/icons@npm:0.0.5"
@@ -431,7 +424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codexteam/icons@npm:^0.3.2":
+"@codexteam/icons@npm:^0.3.2, @codexteam/icons@npm:^0.3.3":
   version: 0.3.3
   resolution: "@codexteam/icons@npm:0.3.3"
   checksum: 10/aed3a41811f4f043cf8a71b9eb35b17b0bacf0f8073b2bc3abd52b85388fb099163257be9d5519ea13f945b40a21ece825b772f875b1cbaafd4ef7058361b9a2
@@ -520,6 +513,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@editorjs/dom-adapters@npm:^0.0.0":
+  version: 0.0.0
+  resolution: "@editorjs/dom-adapters@npm:0.0.0"
+  dependencies:
+    "@editorjs/dom": "npm:^1.0.0"
+    "@editorjs/model": "npm:^0.0.0"
+    "@editorjs/sdk": "npm:^0.0.0"
+  checksum: 10/559beef7ad4060ee73bc51f129281700adb0668f279eeb47e04078d65e4886b0a16849c4ba004e5958bc8c3c090bf1a78fd9c009e80536b3a0df2c14f6c981f2
+  languageName: node
+  linkType: hard
+
+"@editorjs/dom@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@editorjs/dom@npm:1.1.0"
+  dependencies:
+    "@editorjs/helpers": "npm:^1.2.0"
+  checksum: 10/0d468d99eede9d98e2fac518cf38528f9f427a8607c80631f12e0ae3eaaa19f77e86f5b01a1ff0c51f1e85bea84b3682f8634affc327edcc2409104da086188a
+  languageName: node
+  linkType: hard
+
 "@editorjs/dom@npm:^1.0.1":
   version: 1.0.1
   resolution: "@editorjs/dom@npm:1.0.1"
@@ -529,7 +542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/editorjs@npm:2.31.6, @editorjs/editorjs@npm:^2.30.7":
+"@editorjs/editorjs@npm:2.31.6, @editorjs/editorjs@npm:^2.30.5, @editorjs/editorjs@npm:^2.30.7, @editorjs/editorjs@npm:^2.30.8":
   version: 2.31.6
   resolution: "@editorjs/editorjs@npm:2.31.6"
   dependencies:
@@ -557,6 +570,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@editorjs/helpers@npm:^1.1.0, @editorjs/helpers@npm:^1.2.0":
+  version: 1.2.2
+  resolution: "@editorjs/helpers@npm:1.2.2"
+  dependencies:
+    codex-tooltip: "npm:^1.0.6"
+  checksum: 10/bec78e033c77e1e887d4f1a235d7548623df239bc2755bd8f8dc1d1acddb400a7c77eb82a07e6b47ac578cbf841858fbf84889990026500da2de375f3bdcc166
+  languageName: node
+  linkType: hard
+
 "@editorjs/list@npm:2.0.9":
   version: 2.0.9
   resolution: "@editorjs/list@npm:2.0.9"
@@ -566,12 +588,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/paragraph@npm:2.11.7":
-  version: 2.11.7
-  resolution: "@editorjs/paragraph@npm:2.11.7"
+"@editorjs/model@npm:^0.0.0":
+  version: 0.0.0
+  resolution: "@editorjs/model@npm:0.0.0"
+  checksum: 10/4fa549bf5293d6e9824a210c100571185b0ff811ef005989a5ef47d877030c700f855687a33cd419e135e01a93374c3e4aec1c69a4bebd927c22abe8e181a19e
+  languageName: node
+  linkType: hard
+
+"@editorjs/paragraph@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@editorjs/paragraph@npm:3.0.0"
   dependencies:
-    "@codexteam/icons": "npm:^0.0.4"
-  checksum: 10/06f7f6ed3c162be011c2ca0e0a2e9d8f712779c1532dab65f43f81f53c02060af324948884ad62d6ea4d577e7c538280ddb100b49a68726d81c74d779248ea71
+    "@codexteam/icons": "npm:^0.3.3"
+    "@editorjs/dom-adapters": "npm:^0.0.0"
+    "@editorjs/editorjs": "npm:^2.30.5"
+    "@editorjs/sdk": "npm:^0.0.0"
+  checksum: 10/8aee4b9f8cd22b075a3eaef30591e27534c10f4d158678cd8f1c24ff57641e32f34bd8745ecaf858cb0b35f4c79428377f196e5a8c813da301dea3de9f33505e
+  languageName: node
+  linkType: hard
+
+"@editorjs/sdk@npm:^0.0.0":
+  version: 0.0.0
+  resolution: "@editorjs/sdk@npm:0.0.0"
+  dependencies:
+    "@editorjs/editorjs": "npm:^2.30.8"
+    "@editorjs/helpers": "npm:^1.1.0"
+    "@editorjs/model": "npm:^0.0.0"
+  checksum: 10/7aaa84a0e1fc6228746c657260edecc59373eb90a47f42b43df90ebc3e61dc3db095d6251d04e0af128a046c9b2d693f9043f4d6969dbacd13ef7b53ad54e9d5
   languageName: node
   linkType: hard
 
@@ -1430,7 +1473,7 @@ __metadata:
     "@editorjs/editorjs": "npm:2.31.6"
     "@editorjs/header": "npm:2.8.9"
     "@editorjs/list": "npm:2.0.9"
-    "@editorjs/paragraph": "npm:2.11.7"
+    "@editorjs/paragraph": "npm:3.0.0"
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
@@ -2909,7 +2952,7 @@ __metadata:
     "@editorjs/editorjs": "npm:2.31.6"
     "@editorjs/header": "npm:2.8.9"
     "@editorjs/list": "npm:2.0.9"
-    "@editorjs/paragraph": "npm:2.11.7"
+    "@editorjs/paragraph": "npm:3.0.0"
     "@hookform/error-message": "npm:2.0.1"
     "@hookform/resolvers": "npm:5.6.0"
     "@k9-sak-web/backend": "workspace:^"
@@ -7567,6 +7610,13 @@ __metadata:
   version: 1.0.5
   resolution: "codex-tooltip@npm:1.0.5"
   checksum: 10/adb4cc8a9a26de3eb39d22b9a2c0ca57ef387d5d4a52c0a978a0a13ba0ea53dc6603604702f005fa42fd074db936742e1a1094d59debb7f987dc096849e818dd
+  languageName: node
+  linkType: hard
+
+"codex-tooltip@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "codex-tooltip@npm:1.0.6"
+  checksum: 10/167dd431fb9801528947e5a0cae154b11131ef6d2cfb638a4bf005a9175c2f7a175648cac24b5ff6abbb98398f2fcb1408461d3def85575008adb30aefa4ff65
   languageName: node
   linkType: hard
 
