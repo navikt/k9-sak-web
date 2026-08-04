@@ -127,6 +127,9 @@ export default ({ mode }) => {
         },
       }),
     ],
+    esbuild: {
+      charset: 'utf8',
+    },
     build: {
       // Relative to the root
       outDir: './dist/k9/web',

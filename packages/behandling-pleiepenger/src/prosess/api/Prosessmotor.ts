@@ -155,6 +155,18 @@ const byggVilkårPanel = (
   };
 };
 
+const byggInngangsvilkårFortsetterPanel = (
+  skalVisePanel: boolean | undefined,
+  vilkår: VilkårMedPerioderDto[],
+  aksjonspunkter: AksjonspunktDto[],
+): ProcessMenuStep => {
+  const panel = byggVilkårPanel(skalVisePanel, vilkår, PANEL_KONFIG.opptjening, aksjonspunkter);
+  if (panel.usePartialStatus) {
+    return { ...panel, type: ProcessMenuStepType.danger, usePartialStatus: false };
+  }
+  return panel;
+};
+
 // Hjelpefunksjon for å beregne uttak-status
 export const beregnUttakType = (
   aksjonspunkter: AksjonspunktDto[],
@@ -315,15 +327,14 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
 
     const sykdomPanel = byggVilkårPanel(inngangsvilkårPanel.erVurdert, vilkår, PANEL_KONFIG.sykdom, aksjonspunkter);
 
-    const inngangsvilkårFortsetterPanel = byggVilkårPanel(
+    const inngangsvilkårFortsetterPanel = byggInngangsvilkårFortsetterPanel(
       sykdomPanel.erVurdert,
       vilkår,
-      PANEL_KONFIG.opptjening,
       aksjonspunkter,
     );
 
     const beregningPanel = byggVilkårPanel(
-      inngangsvilkårFortsetterPanel.erVurdert,
+      inngangsvilkårFortsetterPanel.type === ProcessMenuStepType.success,
       vilkår,
       PANEL_KONFIG.beregning,
       aksjonspunkter,
@@ -338,7 +349,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     );
 
     const tilkjentYtelsePanel = byggPanelUtenVilkår(
-      uttakPanel.erVurdert && uttakPanel.type !== ProcessMenuStepType.danger,
+      beregningsresultatUtbetaling != null && uttakPanel.erVurdert && uttakPanel.type !== ProcessMenuStepType.danger,
       beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       PANEL_KONFIG.tilkjentYtelse.label,
       PANEL_KONFIG.tilkjentYtelse.id,
@@ -356,7 +367,8 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       id: PANEL_KONFIG.vedtak.id,
       label: PANEL_KONFIG.vedtak.label,
       type: vedtakType,
-      usePartialStatus: skalViseDelvisVedtakStatus(vedtakType, vilkår),
+      usePartialStatus:
+        vedtakType === ProcessMenuStepType.success ? skalViseDelvisVedtakStatus(vedtakType, vilkår) : false,
     };
 
     return [
