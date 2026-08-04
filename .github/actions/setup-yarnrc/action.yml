@@ -17,4 +17,4 @@ runs:
         yarn config set --home npmScopes.navikt.npmAuthToken "${{ inputs.npmAuthToken }}"
         yarn config set --home npmScopes.nais.npmRegistryServer "https://npm.pkg.github.com"
         yarn config set --home npmScopes.nais.npmAlwaysAuth true
-        yarn config set --home npmScopes.nais.npmAuthToken ${{ inputs.npmAuthToken }}
+        yarn config set --home npmScopes.nais.npmAuthToken "${{ inputs.npmAuthToken }}"
