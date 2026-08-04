@@ -141,7 +141,7 @@ describe('useProsessmotor', () => {
     });
   });
 
-  test('tilkjentYtelse er default og simulering er success når uttak er danger og simuleringData finnes', async () => {
+  test('tilkjent ytelse er default og simulering er success når uttak er avslått', async () => {
     const api = new FakeK9SakProsessApi({
       uttak: {
         uttaksplan: {
@@ -253,8 +253,23 @@ describe('useProsessmotor', () => {
     });
   });
 
-  test('viser simulering når tilkjent ytelse ikke er vurdert og uttak ikke er avslått', async () => {
+  test('viser simulering når beregning ikke er vurdert men simuleringResultat finnes', async () => {
     const api = new FakeK9SakProsessApi({
+      beregningsresultatUtbetaling: {
+        perioder: [
+          {
+            andeler: [
+              {
+                uttak: [{ utfall: 'INNVILGET', periode: { fom: '', tom: '' }, utbetalingsgrad: 100 }],
+                inntektskategori: '-',
+              },
+            ],
+            dagsats: 0,
+            fom: '',
+            tom: '',
+          },
+        ],
+      },
       uttak: {
         uttaksplan: {
           perioder: {
