@@ -43,11 +43,14 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   );
 };
 
-const getDefaultActiveTab = ({ harAksjonspunktForBeredskap, harAksjonspunktForNattevåk }: ContainerContract) => {
-  if (harAksjonspunktForBeredskap) {
+const getDefaultActiveTab = ({
+  harUløstAksjonspunktForBeredskap,
+  harUløstAksjonspunktForNattevåk,
+}: ContainerContract) => {
+  if (harUløstAksjonspunktForBeredskap) {
     return tabs[1];
   }
-  if (harAksjonspunktForNattevåk) {
+  if (harUløstAksjonspunktForNattevåk) {
     return tabs[2];
   }
   return tabs[0];
@@ -87,7 +90,7 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
-  const { endpoints, errorNotifier, harAksjonspunktForBeredskap, harAksjonspunktForNattevåk } = data;
+  const { endpoints, errorNotifier, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
 
   const getTilsyn = (signal: AbortSignal) =>
     get<TilsynResponse>(endpoints.tilsyn, errorNotifier, {
@@ -186,7 +189,8 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
                   <TabItem
                     label={tabName}
                     showWarningIcon={
-                      (index === 1 && harAksjonspunktForBeredskap) || (index === 2 && harAksjonspunktForNattevåk)
+                      (index === 1 && harUløstAksjonspunktForBeredskap) ||
+                      (index === 2 && harUløstAksjonspunktForNattevåk)
                     }
                   />
                 }

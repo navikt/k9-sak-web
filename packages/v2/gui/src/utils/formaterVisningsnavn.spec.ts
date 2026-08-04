@@ -53,4 +53,49 @@ describe('formaterVisningsnavn', () => {
       expect(result).toBe('Ungdomsprogramendring');
     });
   });
+
+  describe('når visningsnavn er OPPHØR_VED_MAKSDATO', () => {
+    it('skal returnere "Opphør ved maksdato"', () => {
+      const result = formaterVisningsnavn(ung_sak_kontrakt_behandling_BehandlingVisningsnavn.OPPHØR_VED_MAKSDATO);
+      expect(result).toBe('Opphør ved maksdato');
+    });
+  });
+
+  describe('når visningsnavn er UNGDOMSPROGRAM_OPPHØR_OPPHEVET', () => {
+    it('skal returnere "Ungdomsprogramopphør opphevet"', () => {
+      const result = formaterVisningsnavn(
+        ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAM_OPPHØR_OPPHEVET,
+      );
+      expect(result).toBe('Ungdomsprogramopphør opphevet');
+    });
+  });
+
+  describe('når visningsnavn er UNGDOMSPROGRAM_OPPHØR_MOTTATT_OG_AVBRUTT_I_SAMME_BEHANDLING', () => {
+    it('skal returnere "Ungdomsprogramopphør avbrutt"', () => {
+      const result = formaterVisningsnavn(
+        ung_sak_kontrakt_behandling_BehandlingVisningsnavn.UNGDOMSPROGRAM_OPPHØR_MOTTATT_OG_AVBRUTT_I_SAMME_BEHANDLING,
+      );
+      expect(result).toBe('Ungdomsprogramopphør avbrutt');
+    });
+  });
+
+  describe('når visningsnavn er FLERE_BEHANDLINGÅRSAKER', () => {
+    it('skal returnere "Flere behandlingsårsaker"', () => {
+      const result = formaterVisningsnavn(ung_sak_kontrakt_behandling_BehandlingVisningsnavn.FLERE_BEHANDLINGÅRSAKER);
+      expect(result).toBe('Flere behandlingsårsaker');
+    });
+  });
+  describe('når visningsnavn er ukjent', () => {
+    it('skal returnere verdien som nytt behandlingsårsak streng', () => {
+      const originalWarn = console.warn;
+      try {
+        console.warn = () => {};
+        const result = formaterVisningsnavn('UKJENT' as unknown as ung_sak_kontrakt_behandling_BehandlingVisningsnavn);
+        expect(result).toBe('Nytt behandlingsårsak (UKJENT)');
+      } finally {
+        console.warn = originalWarn;
+      }
+    });
+  });
 });
+

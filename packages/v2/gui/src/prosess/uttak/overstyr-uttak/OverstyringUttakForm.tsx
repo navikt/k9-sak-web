@@ -21,6 +21,7 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
 import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
 import {
@@ -111,6 +112,7 @@ const OverstyringUttakForm: FC<OwnProps> = ({
 
   const { isLoading: lasterAktiviteter } = useQuery({
     queryKey: ['overstyrte', behandling.uuid, watchFraDato, watchTilDato],
+    throwOnError: ignore404Errors,
     enabled: beggeDatoerValgt && erNyOverstyring, // Kun hent aktiviteter for nye overstyringer
     queryFn: async () => {
       const aktuelleAktiviteter = await api.hentAktuelleAktiviteter(

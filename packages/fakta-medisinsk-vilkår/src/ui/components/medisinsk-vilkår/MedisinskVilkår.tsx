@@ -3,6 +3,7 @@ import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 import { ChildEyesFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Tabs, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import classnames from 'classnames';
 import React, { useMemo, type JSX } from 'react';
 
@@ -114,6 +115,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery({
     queryKey: ['diagnosekodeResponse'],
+    throwOnError: ignore404Errors,
     queryFn: hentDiagnosekoder,
     enabled: !erFagsakOLPEllerPLS(fagsakYtelseType),
     placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: '' },

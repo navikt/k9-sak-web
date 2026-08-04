@@ -33,6 +33,10 @@ class Omsorgsperiodeoversikt {
   finnPerioderTilVurdering(): Omsorgsperiode[] {
     return this.perioder.filter(omsorgsperiode => omsorgsperiode.manglerVurdering());
   }
+
+  finnRedigerbarePerioder(): Omsorgsperiode[] {
+    return this.perioder.filter(omsorgsperiode => omsorgsperiode.skalVisesIRedigeringsmodus());
+  }
 }
 
 export default Omsorgsperiodeoversikt;

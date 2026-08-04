@@ -1,4 +1,5 @@
 import { useMutation, useQuery, type UseQueryOptions } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import {
   type GetBrevMottakerinfoEregData,
   type GetBrevMottakerinfoEregResponse,
@@ -29,6 +30,7 @@ export const useVilkår = (behandlingUuid: string) => {
 
   return useQuery({
     queryKey: ['vilkår', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.getVilkår(behandlingUuid),
     retry: MAX_RETRIES,
   });
@@ -39,6 +41,7 @@ export const useLangvarigSykVurderingerFagsak = (behandlingUuid: string) => {
 
   return useQuery({
     queryKey: ['langvarigSykVurderingerFagsak', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.hentLangvarigSykVurderingerFagsak(behandlingUuid),
     enabled: !!behandlingUuid,
     retry: MAX_RETRIES,
@@ -50,6 +53,7 @@ export const useVurdertLangvarigSykdom = (behandlingUuid: string) => {
 
   return useQuery({
     queryKey: ['vurdertLangvarigSykdom', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.hentVurdertLangvarigSykdom(behandlingUuid),
     retry: MAX_RETRIES,
   });
@@ -61,6 +65,7 @@ export const useInstitusjonInfo = (behandlingUuid: string) => {
 
   return useQuery({
     queryKey: ['institusjonInfo', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.getInstitusjonInfo(behandlingUuid),
     enabled: !!behandlingUuid,
     retry: MAX_RETRIES,
@@ -72,6 +77,7 @@ export const useAlleInstitusjoner = () => {
 
   return useQuery({
     queryKey: ['alleInstitusjoner'],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.hentAlleInstitusjoner(),
     retry: MAX_RETRIES,
   });
@@ -97,6 +103,7 @@ export const useVurdertOpplæring = (
 
   return useQuery({
     queryKey: ['vurdertOpplæring', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.getVurdertOpplæring(behandlingUuid),
     retry: MAX_RETRIES,
     ...options,
@@ -113,6 +120,7 @@ export const useVurdertReisetid = (
 
   return useQuery({
     queryKey: ['vurdertReisetid', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => backendClient.getVurdertReisetid(behandlingUuid),
     retry: MAX_RETRIES,
     ...options,

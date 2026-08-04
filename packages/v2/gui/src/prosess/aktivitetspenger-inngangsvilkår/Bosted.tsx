@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -88,7 +89,8 @@ export const Bosted = ({
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const vurdertePerioder = {
-        avslagsårsak: vurdering?.bosatt !== 'oppfylt' ? Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED : undefined,
+        avslagsårsak:
+          vurdering?.bosatt !== 'oppfylt' ? BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM : undefined,
         begrunnelse: vurdering?.begrunnelse ?? '',
         erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
         periode: selectedItem.periode,

@@ -24,9 +24,15 @@ interface InntektsmeldingFerdigvisningProps {
   tilstand: TilstandMedUiState;
   onEdit: () => void;
   readOnly: boolean;
+  harAksjonspunkt: boolean;
 }
 
-const InntektsmeldingFerdigvisning = ({ tilstand, onEdit, readOnly }: InntektsmeldingFerdigvisningProps) => {
+const InntektsmeldingFerdigvisning = ({
+  tilstand,
+  onEdit,
+  readOnly,
+  harAksjonspunkt,
+}: InntektsmeldingFerdigvisningProps) => {
   const config = tilstand.vurdering ? vurderingConfig[tilstand.vurdering] : null;
   if (!config) return null;
 
@@ -35,7 +41,7 @@ const InntektsmeldingFerdigvisning = ({ tilstand, onEdit, readOnly }: Inntektsme
       <Alert variant={config.variant} size="medium" className="mt-2">
         <div className="flex flex-col gap-4">
           <BodyShort>{config.melding}</BodyShort>
-          {!readOnly && (
+          {!readOnly && harAksjonspunkt && (
             <div>
               <Button variant="secondary" size="small" onClick={onEdit} icon={<PencilIcon />}>
                 Rediger vurdering

@@ -1,13 +1,13 @@
 {
   "collection": "frontend",
-  "version": "2026.06.25-072030-1ae3959",
+  "version": "2026.07.05-165716-b264d34",
   "scope": "repo",
-  "source_sha": "6fe66fd",
+  "source_sha": "b264d34",
   "installed_at": "2026-05-06T12:03:10Z",
   "files": [
     {
       "path": ".github/agents/accessibility.agent.md",
-      "hash": "c35b6db4d15e6f9f"
+      "hash": "67b453f152c4f663"
     },
     {
       "path": ".github/agents/aksel.agent.md",
@@ -19,7 +19,7 @@
     },
     {
       "path": ".github/agents/nav-pilot.agent.md",
-      "hash": "f490eb3f9ca1e9a3"
+      "hash": "09c7351bf3ceb03b"
     },
     {
       "path": ".github/skills/aksel-spacing/",
@@ -51,15 +51,15 @@
     },
     {
       "path": ".github/instructions/testing.instructions.md",
-      "hash": "4a6a7547a3701ce1"
+      "hash": "ca2a23744bef3a2c"
     },
     {
       "path": ".github/instructions/testing-typescript.instructions.md",
-      "hash": "d3fd7e7d5f2ee256"
+      "hash": "6c6055340a9d075c"
     },
     {
       "path": ".github/instructions/accessibility.instructions.md",
-      "hash": "3f682e93474bfdd8"
+      "hash": "986ef7aa27d8a1d9"
     },
     {
       "path": ".github/instructions/github-actions.instructions.md",

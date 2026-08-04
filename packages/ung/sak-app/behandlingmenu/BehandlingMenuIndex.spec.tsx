@@ -9,6 +9,8 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import { MenyEndreFristApiContext } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristApiContext.js';
+import { FakeMenyEndreFristApi } from '@k9-sak-web/gui/storybook/mocks/FakeMenyEndreFristApi.js';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
@@ -57,6 +59,8 @@ const alleBehandlinger = [
   },
 ];
 
+const menyEndreFristApi = new FakeMenyEndreFristApi();
+
 vi.mock('react-router', async () => {
   const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
@@ -75,7 +79,6 @@ vi.mock('react-router', async () => {
 
 const queryClient = createQueryClient({
   queries: {
-    throwOnError: false,
     retry: false,
   },
 });
@@ -118,22 +121,24 @@ describe('BehandlingMenuIndex', () => {
     render(
       <MemoryRouter>
         <QueryClientProvider client={queryClient}>
-          <BehandlingMenuIndex
-            fagsak={fagsak as Fagsak}
-            // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
-            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-            behandlingId={1}
-            behandlingVersjon={2}
-            oppfriskBehandlinger={vi.fn()}
-            behandlingRettigheter={behandlingRettigheter}
-            sakRettigheter={sakRettigheter}
-            behandlendeEnheter={[
-              {
-                enhetId: 'TEST',
-                enhetNavn: 'TEST',
-              },
-            ]}
-          />
+          <MenyEndreFristApiContext value={menyEndreFristApi}>
+            <BehandlingMenuIndex
+              fagsak={fagsak as Fagsak}
+              // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
+              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+              behandlingId={1}
+              behandlingVersjon={2}
+              oppfriskBehandlinger={vi.fn()}
+              behandlingRettigheter={behandlingRettigheter}
+              sakRettigheter={sakRettigheter}
+              behandlendeEnheter={[
+                {
+                  enhetId: 'TEST',
+                  enhetNavn: 'TEST',
+                },
+              ]}
+            />
+          </MenyEndreFristApiContext>
         </QueryClientProvider>
       </MemoryRouter>,
     );

@@ -8,6 +8,7 @@ const rootFeatureToggles = {
   BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
   BRUK_V2_UTENLANDSOPPHOLD: false,
+  VIS_YTELSER_PANEL: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
   OVERSTYR_BEREGNING: false,

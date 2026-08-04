@@ -74,11 +74,31 @@ export const DefaultStory: Story = {
       </>
     ),
     fixAction: {
-      label: 'Fix action label',
       info: <BodyLong>Fix info. (More text about how to resolve problem)</BodyLong>,
-      icon: <RocketIcon />,
-      callback: action('Fix problem'),
+      button: {
+        label: 'Fix action label',
+        icon: <RocketIcon />,
+        callback: action('Fix problem'),
+      },
     },
+  },
+};
+
+/** Viser ErrorAlert med fixAction som berre har info (ingen knapp) */
+export const UtenFikseknapp: Story = {
+  args: {
+    title: 'Innsendt forespørsel var ugyldig',
+    error: new AppError({ message: 'Lorem ipsum error' }),
+    errorInfo: <BodyLong>Et eller flere av feltene er enten fylt inn feil eller mangler utfylling.</BodyLong>,
+    fixAction: {
+      info: <BodyLong>Se over feltene og prøv på nytt. Meld feil i porten hvis du ikke får løst det.</BodyLong>,
+    },
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Innsendt forespørsel var ugyldig')).toBeInTheDocument();
+    // Ingen fikseknapp skal visast, men "Meld feil i porten" skal framleis finnast
+    await expect(canvas.queryByRole('button', { name: 'Fix action label' })).not.toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Meld feil i porten' })).toBeInTheDocument();
   },
 };
 

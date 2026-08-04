@@ -41,6 +41,7 @@ export default ({
           { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
           { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
           { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' },
+          { rel: 'behandling-perioder-årsak-med-vilkår', desiredName: 'perioderMedVilkar' },
         ]),
         behandlingUuid: uuid,
         onFinished: løsAksjonspunkt,

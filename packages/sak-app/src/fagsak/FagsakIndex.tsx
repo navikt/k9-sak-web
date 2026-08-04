@@ -44,6 +44,7 @@ import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -191,6 +192,7 @@ const FagsakIndex = () => {
       const data = await k9StatusBackendClient.getMerknader(behandling?.uuid);
       return data ?? null;
     },
+    throwOnError: ignore404Errors, // Denne feiler med 404 for klage/tilbake behandlinger
     enabled: !!behandling?.uuid,
   });
 

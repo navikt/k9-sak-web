@@ -2,6 +2,7 @@ import { aksjonspunktStatus, AksjonspunktStatus } from '@k9-sak-web/backend/k9sa
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { FakeK9SakProsessApi } from '@k9-sak-web/gui/storybook/mocks/FakeK9SakProsessApi.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -15,7 +16,6 @@ import {
   beregnVedtakType,
   useProsessmotor,
 } from './Prosessmotor';
-import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
 const createWrapper =
   (queryClient: QueryClient) =>
@@ -38,11 +38,11 @@ const lagAksjonspunkt = (
 describe('useProsessmotor', () => {
   let queryClient: QueryClient;
 
-    beforeEach(() => {
-      queryClient = createQueryClient({
-        queries: { retry: false },
-      });
+  beforeEach(() => {
+    queryClient = createQueryClient({
+      queries: { retry: false },
     });
+  });
 
   test('returnerer alle 8 paneler med korrekte id-er', async () => {
     const api = new FakeK9SakProsessApi();
@@ -196,6 +196,116 @@ describe('useProsessmotor', () => {
     await waitFor(() => {
       expect(result.current[4].type).toBe(ProcessMenuStepType.danger);
       expect(result.current[6].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
+  test('setter opptjening til danger når vilkår er delvis oppfylt', async () => {
+    const api = new FakeK9SakProsessApi({
+      vilkår: [
+        {
+          vilkarType: vilkarType.SØKNADSFRIST,
+          perioder: [
+            { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
+          ],
+          relevanteInnvilgetMerknader: [],
+        },
+        {
+          vilkarType: vilkarType.ALDERSVILKÅR,
+          perioder: [
+            { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
+          ],
+          relevanteInnvilgetMerknader: [],
+        },
+        {
+          vilkarType: vilkarType.OMSORGEN_FOR,
+          perioder: [
+            { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
+          ],
+          relevanteInnvilgetMerknader: [],
+        },
+        {
+          vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+          perioder: [
+            { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
+          ],
+          relevanteInnvilgetMerknader: [],
+        },
+        {
+          vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+          perioder: [
+            { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
+            { vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
+          ],
+          relevanteInnvilgetMerknader: [],
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[2].id).toBe('opptjening');
+      expect(result.current[2].type).toBe(ProcessMenuStepType.danger);
+      expect(result.current[2]).toHaveProperty('erVurdert', true);
+      expect(result.current[2].usePartialStatus).toBe(false);
+    });
+  });
+
+  test('skjuler simulering når tilkjent ytelse ikke er vurdert og uttak ikke er avslått', async () => {
+    const api = new FakeK9SakProsessApi({
+      uttak: {
+        uttaksplan: {
+          perioder: {
+            '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT },
+          },
+        },
+        simulertUttaksplan: {},
+      },
+      simuleringResultat: {
+        simuleringResultat: { periode: { fom: '', tom: '' } },
+        simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
+        slåttAvInntrekk: false,
+      },
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[4].type).toBe(ProcessMenuStepType.success);
+      expect(result.current[5].type).toBe(ProcessMenuStepType.default);
+      expect(result.current[5]).toHaveProperty('erVurdert', false);
+      expect(result.current[6].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('viser delvis vedtak-status når resultat er innvilget og vilkår er både oppfylt og ikke oppfylt', async () => {
+    const api = new FakeK9SakProsessApi({
+      vilkår: [
+        {
+          vilkarType: vilkarType.SØKNADSFRIST,
+          perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
+          relevanteInnvilgetMerknader: [],
+        },
+        {
+          vilkarType: vilkarType.ALDERSVILKÅR,
+          perioder: [{ vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' } }],
+          relevanteInnvilgetMerknader: [],
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[7].id).toBe('vedtak');
+      expect(result.current[7].type).toBe(ProcessMenuStepType.success);
+      expect(result.current[7].usePartialStatus).toBe(true);
     });
   });
 });
@@ -474,6 +584,17 @@ describe('beregnVedtakType', () => {
   test('returnerer default når behandlingsresultat mangler type', () => {
     expect(
       beregnVedtakType([lagVilkår(vilkårStatus.OPPFYLT)] as any, [], lagBehandling() as any, vedtakAksjonspunkter),
+    ).toBe(ProcessMenuStepType.default);
+  });
+
+  test('returnerer default når overstyring av beregning er åpent', () => {
+    expect(
+      beregnVedtakType(
+        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING)],
+        lagBehandling('INNVILGET') as any,
+        vedtakAksjonspunkter,
+      ),
     ).toBe(ProcessMenuStepType.default);
   });
 });

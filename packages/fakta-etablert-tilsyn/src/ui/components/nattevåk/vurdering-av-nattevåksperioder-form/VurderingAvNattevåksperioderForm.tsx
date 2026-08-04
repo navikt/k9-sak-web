@@ -56,9 +56,10 @@ const VurderingAvNattevåksperioderForm = ({
   const {
     lagreNattevåkvurdering,
     readOnly,
-    harAksjonspunktForNattevåk = false,
+    harUløstAksjonspunktForNattevåk = false,
+    harLøstAksjonspunktForNattevåk = false,
   } = React.useContext(ContainerContext) || {};
-  const disabled = readOnly || !harAksjonspunktForNattevåk;
+  const disabled = readOnly || (!harUløstAksjonspunktForNattevåk && !harLøstAksjonspunktForNattevåk);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForNattevåk = () => {
     if (nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT) {
