@@ -90,18 +90,24 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
-  const { endpoints, errorNotifier, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
-
+  const { endpoints, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
+  // Sidan requests som blir gjort printer lokal feilmelding når request feiler sender vi inn errorNotifier som berre
+  // logger feil til konsoll. Rapporterer ikkje feil globalt når den blir handtert lokalt.
+  // Det skjer i nokre tilfelle feil her pga at kall blir gjort før registerdata er innhenta.
+  // Ideellt sett bør vi skrive om slik at disse feil ikkje skjer og så justere feilrapportering her.
+  const errorInfoLogger = (error: Error) => {
+    console.info(`http request in EtablertTilsynContainer failed: ${error}`);
+  };
   const getTilsyn = (signal: AbortSignal) =>
-    get<TilsynResponse>(endpoints.tilsyn, errorNotifier, {
+    get<TilsynResponse>(endpoints.tilsyn, errorInfoLogger, {
       signal: signal,
     });
   const getSykdom = (signal: AbortSignal) =>
-    get<SykdomResponse>(endpoints.sykdom, errorNotifier, {
+    get<SykdomResponse>(endpoints.sykdom, errorInfoLogger, {
       signal: signal,
     });
   const getInnleggelser = (signal: AbortSignal) =>
-    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, errorNotifier, {
+    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, errorInfoLogger, {
       signal: signal,
     });
 
