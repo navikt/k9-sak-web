@@ -21,6 +21,6 @@
     "reselect": "5.2.0"
   },
   "devDependencies": {
-    "@types/react": "19.2.17"
+    "@types/react": "19.2.18"
   }
 }
