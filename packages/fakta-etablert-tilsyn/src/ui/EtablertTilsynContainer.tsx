@@ -92,9 +92,9 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   const { endpoints, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
   // Forespørslene viser en lokal feilmelding når de feiler, så feilene logges bare til konsollen.
-  // Feil som håndteres lokalt, rapporteres ikke globalt.
-  // Det skjer i nokre tilfelle feil her pga at kall blir gjort før registerdata er innhenta.
-  // Ideellt sett bør vi skrive om slik at disse feil ikkje skjer og så justere feilrapportering her.
+  // Feil som håndteres lokalt, rapporteres derfor ikke globalt.
+  // I noen tilfeller skjer dette fordi kall blir gjort før registerdata er innhentet.
+  // Ideelt sett bør vi skrive om slik at disse feilene ikke skjer, og deretter justere feilrapportering her.
   const errorInfoLogger = (error: Error) => {
     console.info(`http request in EtablertTilsynContainer failed: ${error}`);
   };
