@@ -349,14 +349,17 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     );
 
     const tilkjentYtelsePanel = byggPanelUtenVilkår(
-      beregningsresultatUtbetaling != null && uttakPanel.erVurdert && uttakPanel.type !== ProcessMenuStepType.danger,
+      beregningPanel.erVurdert &&
+        beregningsresultatUtbetaling != null &&
+        uttakPanel.erVurdert &&
+        uttakPanel.type !== ProcessMenuStepType.danger,
       beregnTilkjentYtelseType(beregningsresultatUtbetaling, PANEL_KONFIG.tilkjentYtelse, aksjonspunkter),
       PANEL_KONFIG.tilkjentYtelse.label,
       PANEL_KONFIG.tilkjentYtelse.id,
     );
 
     const simuleringPanel = byggSimuleringPanel(
-      tilkjentYtelsePanel.erVurdert,
+      true,
       uttakPanel.type === ProcessMenuStepType.danger,
       beregnSimuleringType(aksjonspunkter, simuleringResultat, PANEL_KONFIG.simulering.aksjonspunkter),
     );

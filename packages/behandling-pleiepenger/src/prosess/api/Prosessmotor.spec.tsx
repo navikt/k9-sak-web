@@ -253,7 +253,7 @@ describe('useProsessmotor', () => {
     });
   });
 
-  test('skjuler simulering når tilkjent ytelse ikke er vurdert og uttak ikke er avslått', async () => {
+  test('viser simulering når tilkjent ytelse ikke er vurdert og uttak ikke er avslått', async () => {
     const api = new FakeK9SakProsessApi({
       uttak: {
         uttaksplan: {
@@ -278,7 +278,7 @@ describe('useProsessmotor', () => {
       expect(result.current[4].type).toBe(ProcessMenuStepType.success);
       expect(result.current[5].type).toBe(ProcessMenuStepType.default);
       expect(result.current[5]).toHaveProperty('erVurdert', false);
-      expect(result.current[6].type).toBe(ProcessMenuStepType.default);
+      expect(result.current[6].type).toBe(ProcessMenuStepType.success);
     });
   });
 
