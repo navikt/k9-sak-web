@@ -14,7 +14,7 @@ const opplysningerEnArbeidsgiver: RettFraDagEnVisningDto = {
       journalpostId: 'JP-001',
       dokumentId: 'DOK-001',
       arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
-      foersteOppgitteFravaersdag: '2024-03-01',
+      foersteOppgitteFravaersdag: '2026-04-07',
       harUtbetaltPliktigeDager: undefined,
     },
   ],
@@ -26,14 +26,14 @@ const opplysningerFlereArbeidsgivere: RettFraDagEnVisningDto = {
       journalpostId: 'JP-001',
       dokumentId: 'DOK-001',
       arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
-      foersteOppgitteFravaersdag: '2024-03-01',
+      foersteOppgitteFravaersdag: '2026-04-07',
       harUtbetaltPliktigeDager: undefined,
     },
     {
       journalpostId: 'JP-002',
       dokumentId: 'DOK-002',
       arbeidsgiver: { arbeidsgiverOrgnr: '973861778' },
-      foersteOppgitteFravaersdag: '2024-03-15',
+      foersteOppgitteFravaersdag: '2026-04-08',
       harUtbetaltPliktigeDager: true,
     },
   ],
@@ -45,8 +45,27 @@ const opplysningerAlleredeVurdert: RettFraDagEnVisningDto = {
       journalpostId: 'JP-001',
       dokumentId: 'DOK-001',
       arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
-      foersteOppgitteFravaersdag: '2024-03-01',
+      foersteOppgitteFravaersdag: '2026-04-07',
       harUtbetaltPliktigeDager: true,
+    },
+  ],
+};
+
+const opplysningerToPerioder: RettFraDagEnVisningDto = {
+  journalposter: [
+    {
+      journalpostId: 'JP-101',
+      dokumentId: 'DOK-101',
+      arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
+      foersteOppgitteFravaersdag: '2026-04-07',
+      harUtbetaltPliktigeDager: undefined,
+    },
+    {
+      journalpostId: 'JP-202',
+      dokumentId: 'DOK-202',
+      arbeidsgiver: { arbeidsgiverOrgnr: '973861778' },
+      foersteOppgitteFravaersdag: '2026-04-15',
+      harUtbetaltPliktigeDager: undefined,
     },
   ],
 };
@@ -226,5 +245,64 @@ export const OppfyltVilkårUtenJournalposter: Story = {
     await expect(await canvas.findByRole('heading', { name: 'Ti dager' })).toBeVisible();
     await expect(await canvas.findByText('10 dager har blitt dekket - ref 9-8 3.ledd')).toBeVisible();
     await expect(canvas.queryByRole('button', { name: 'Bekreft' })).toBeNull();
+  },
+};
+
+export const ByttPeriodeOppdatererInnhold: Story = {
+  decorators: [withFakeTiDagerBackend(opplysningerToPerioder)],
+  args: {
+    behandlingUUID: 'bytt-periode-uuid',
+    vilkar: [
+      {
+        vilkarType: 'K9_VK_9_8',
+        lovReferanse: '9-8 tredje ledd',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: undefined,
+            merknadParametere: {},
+            vilkarStatus: 'IKKE_VURDERT',
+            periode: {
+              fom: '2026-04-06',
+              tom: '2026-04-10',
+            },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            vurdersIBehandlingen: true,
+            merknad: '-',
+          },
+          {
+            avslagKode: undefined,
+            merknadParametere: {},
+            vilkarStatus: 'IKKE_VURDERT',
+            periode: {
+              fom: '2026-04-14',
+              tom: '2026-04-18',
+            },
+            begrunnelse: undefined,
+            vurderesIBehandlingen: true,
+            vurdersIBehandlingen: true,
+            merknad: '-',
+          },
+        ],
+        relevanteInnvilgetMerknader: [],
+      },
+    ],
+  },
+  play: async ({ canvas, step }) => {
+    await step('Første periode viser Arbeidsgiver AS', async () => {
+      await expect(await canvas.findByText('Arbeidsgiver AS')).toBeVisible();
+      await expect(canvas.queryByText('Eksempelbedrift AS')).toBeNull();
+    });
+
+    await step('Bytt til andre periode i sidemenyen', async () => {
+      const andrePeriode = await canvas.findByRole('button', { name: '14.04.2026 - 18.04.2026' });
+      await userEvent.click(andrePeriode);
+    });
+
+    await step('Andre periode viser Eksempelbedrift AS', async () => {
+      await expect(await canvas.findByText('Eksempelbedrift AS')).toBeVisible();
+      await expect(canvas.queryByText('Arbeidsgiver AS')).toBeNull();
+    });
   },
 };

@@ -48,9 +48,7 @@ export const TiDagerProsessIndex = ({
 }: TiDagerProsessIndexProps) => {
   const isAksjonspunktOpen = aksjonspunkter.some(ap => ap.status === aksjonspunktStatus.OPPRETTET);
   const [activeTab, setActiveTab] = useState(0);
-
   const perioder = hentAktivePerioderFraVilkar(vilkar, false);
-
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   const api = useTiDagerBackendClient();
@@ -100,35 +98,46 @@ export const TiDagerProsessIndex = ({
     );
   }
 
-  const vilkårPerioder = vilkår?.perioder ?? [];
-  const vilkårErFerdigVurdert = vilkårPerioder.length > 0 && vilkårPerioder.every(p => p.vilkarStatus !== vilkårStatus.IKKE_VURDERT);
-  const vilkårErOppfylt = vilkårPerioder.length > 0 && vilkårPerioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
+  const activePeriodeStatus = activePeriode.vilkarStatus;
+  const vilkårErFerdigVurdert = activePeriodeStatus !== vilkårStatus.IKKE_VURDERT;
+  const vilkårErOppfylt = activePeriodeStatus === vilkårStatus.OPPFYLT;
+
+  const opplysningerForAktivPeriode =
+    opplysninger && activePeriode.periode.fom && activePeriode.periode.tom
+      ? {
+          ...opplysninger,
+          journalposter: opplysninger.journalposter.filter(
+            jp =>
+              jp.foersteOppgitteFravaersdag != undefined &&
+              jp.foersteOppgitteFravaersdag >= activePeriode.periode.fom &&
+              jp.foersteOppgitteFravaersdag <= activePeriode.periode.tom,
+          ),
+        }
+      : opplysninger;
 
   return (
-    <>
-      <div className={styles.mainContainerWithSideMenu}>
-        <div className="flex-shrink-0">
-          <SideMenu
-            links={perioder.map(({ periode, vilkarStatus }, index) => ({
-              active: activeTab === index,
-              label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-              icon: getIconForPeriode(vilkarStatus, false, isAksjonspunktOpen),
-            }))}
-            onClick={setActiveTab}
-            heading="Perioder"
-          />
-        </div>
-        <TiDagerProsess
-          opplysninger={opplysninger}
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          isReadOnly={isReadOnly}
-          saksnummer={saksnummer}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          vilkårErFerdigVurdert={!!vilkårErFerdigVurdert}
-          vilkårErOppfylt={!!vilkårErOppfylt}
+    <div className={styles.mainContainerWithSideMenu}>
+      <div className="flex-shrink-0">
+        <SideMenu
+          links={perioder.map(({ periode, vilkarStatus }, index) => ({
+            active: activeTab === index,
+            label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
+            icon: getIconForPeriode(vilkarStatus, false, isAksjonspunktOpen),
+          }))}
+          onClick={setActiveTab}
+          heading="Perioder"
         />
       </div>
-    </>
+      <TiDagerProsess
+        opplysninger={opplysningerForAktivPeriode}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        isReadOnly={isReadOnly}
+        saksnummer={saksnummer}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        vilkårErFerdigVurdert={vilkårErFerdigVurdert}
+        vilkårErOppfylt={vilkårErOppfylt}
+      />
+    </div>
   );
 };
