@@ -91,8 +91,8 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   const { endpoints, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
-  // Sidan requests som blir gjort printer lokal feilmelding når request feiler sender vi inn errorNotifier som berre
-  // logger feil til konsoll. Rapporterer ikkje feil globalt når den blir handtert lokalt.
+  // Forespørslene viser en lokal feilmelding når de feiler, så feilene logges bare til konsollen.
+  // Feil som håndteres lokalt, rapporteres ikke globalt.
   // Det skjer i nokre tilfelle feil her pga at kall blir gjort før registerdata er innhenta.
   // Ideellt sett bør vi skrive om slik at disse feil ikkje skjer og så justere feilrapportering her.
   const errorInfoLogger = (error: Error) => {
