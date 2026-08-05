@@ -12,23 +12,24 @@ const erForlengelse = (beregningreferanserTilVurdering: BeregningReferanse[], pe
   return undefined;
 };
 
-const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurdering: BeregningReferanse[]): FtVilkar => {
-  if (vilkar.perioder == null) {
-    throw new Error(`vilkar.perioder must be defined.`);
-  }
+const mapVilkar = (
+  vilkar: VilkårMedPerioderDto | null | undefined,
+  beregningreferanserTilVurdering: BeregningReferanse[],
+): FtVilkar => {
   return {
-    vilkarType: vilkar?.vilkarType,
+    vilkarType: vilkar?.vilkarType ?? '',
     overstyrbar: vilkar?.overstyrbar ?? false,
-    perioder: vilkar?.perioder?.map(p => ({
-      avslagKode: p.avslagKode,
-      begrunnelse: p.begrunnelse,
-      vurderesIBehandlingen: p.vurderesIBehandlingen ?? false,
-      merknad: p.merknad,
-      merknadParametere: p.merknadParametere ?? {},
-      periode: p.periode,
-      vilkarStatus: p.vilkarStatus,
-      erForlengelse: erForlengelse(beregningreferanserTilVurdering, p.periode),
-    })),
+    perioder:
+      vilkar?.perioder?.map(p => ({
+        avslagKode: p.avslagKode,
+        begrunnelse: p.begrunnelse,
+        vurderesIBehandlingen: p.vurderesIBehandlingen ?? false,
+        merknad: p.merknad,
+        merknadParametere: p.merknadParametere ?? {},
+        periode: p.periode,
+        vilkarStatus: p.vilkarStatus,
+        erForlengelse: erForlengelse(beregningreferanserTilVurdering, p.periode),
+      })) ?? [],
   };
 };
 
