@@ -6,7 +6,7 @@
 export class TimeoutError extends Error {
   readonly location: string;
 
-  constructor(location: string, message = 'Maximum polling attempts exceeded') {
+  constructor(location: string, message = 'Systemet har brukt for mange forsøk på å hente informasjon') {
     super(message);
     this.location = location;
     this.name = this.constructor.name;
