@@ -23,7 +23,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -38,7 +38,7 @@ jobs:
           VITE_SENTRY_RELEASE: ${{ github.sha }}
 
       - name: Last opp assets til CDN
-        uses: nais/deploy/actions/cdn-upload/v2@65d1b089882173f50fd51161b1a5b6ef3a18b9ea
+        uses: nais/deploy/actions/cdn-upload/v2@fc3eae3edebabdf67f7592102ae16176d5ba3b5f
         with:
           source: dist/ung/web/
           destination: ung-sak-web/
@@ -85,8 +85,8 @@ jobs:
     environment: test
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: nais/deploy/actions/deploy@fc3eae3edebabdf67f7592102ae16176d5ba3b5f # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
@@ -105,7 +105,7 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev]
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Ta med litt historie og tags for å finne latest_prod_ung commit hash
           fetch-tags: true
@@ -142,7 +142,7 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+      - uses: nais/deploy/actions/deploy@fc3eae3edebabdf67f7592102ae16176d5ba3b5f # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
