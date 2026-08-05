@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import withStoryReload from '@k9-sak-web/gui/storybook/decorators/withStoryReload.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
@@ -134,6 +136,119 @@ export const MedisinskVilkår: Story = {
 };
 
 MedisinskVilkår.parameters = {
+  msw: {
+    handlers,
+  },
+};
+
+export const MedisinskVilkårPleiepengerNærstående: Story = {
+  decorators: [
+    Story => (
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
+        <Story />
+      </FeatureTogglesContext.Provider>
+    ),
+    withStoryReload(),
+  ],
+  args: {
+    data: {
+      endpoints: {
+        vurderingsoversiktKontinuerligTilsynOgPleie: `${mockUrlPrepend}/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt`,
+        vurderingsoversiktBehovForToOmsorgspersoner: `${mockUrlPrepend}/mock/to-omsorgspersoner/vurderingsoversikt`,
+        dokumentoversikt: `${mockUrlPrepend}/mock/dokumentoversikt`,
+        dataTilVurdering: `${mockUrlPrepend}/mock/data-til-vurdering`,
+        innleggelsesperioder: `${mockUrlPrepend}/mock/innleggelsesperioder`,
+        diagnosekoder: `${mockUrlPrepend}/mock/diagnosekoder`,
+        status: `${mockUrlPrepend}/mock/status`,
+        nyeDokumenter: `${mockUrlPrepend}/mock/nye-dokumenter`,
+        vurderingsoversiktLivetsSluttfase: `${mockUrlPrepend}/mock/livets-sluttfase/vurderingsoversikt`,
+        perioderMedVilkar: `${mockUrlPrepend}/mock/perioder-med-vilkar`,
+      },
+      behandlingUuid: '456',
+      readOnly: false,
+      onFinished: () => console.log('Aksjonspunkt løst'),
+      visFortsettknapp: true,
+      fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+      behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
+      errorNotifier: error => {
+        throw error;
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('skal kunne bekrefte at dokumentet inneholder medisinske opplysninger', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByText('Ja, dokumentet inneholder medisinske opplysninger')).toBeInTheDocument();
+      });
+
+      await userEvent.click(canvas.getByLabelText('Ja, dokumentet inneholder medisinske opplysninger'));
+      await userEvent.type(canvas.getByLabelText('Hvilken dato er dokumentet datert?'), '101021');
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
+    });
+
+    await step('skal kunne åpne innleggelsesperiode-modalen', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('button', { name: 'Rediger liste' })).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getByRole('button', { name: 'Rediger liste' }));
+      await waitFor(async () => {
+        await expect(canvas.getByRole('button', { name: 'Legg til innleggelsesperiode' })).toBeInTheDocument();
+      });
+    });
+
+    await step('skal gi valideringsfeil når innleggelsesperiode er utenfor søknadsperioden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Legg til innleggelsesperiode' }));
+      await userEvent.type(canvas.getAllByRole('textbox', { name: 'Fra' })[3], '050221');
+      await userEvent.type(canvas.getAllByRole('textbox', { name: 'Til' })[3], '100221');
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Innleggelsesperioden må være innenfor søknadsperioden')).toBeInTheDocument();
+      });
+    });
+
+    await step('skal kunne legge til innleggelsesperiode innenfor søknadsperioden', async () => {
+      const fraFelt = canvas.getAllByRole('textbox', { name: 'Fra' })[3];
+      const tilFelt = canvas.getAllByRole('textbox', { name: 'Til' })[3];
+      await userEvent.clear(fraFelt);
+      await userEvent.type(fraFelt, '010221');
+      await userEvent.clear(tilFelt);
+      await userEvent.type(tilFelt, '030221');
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.queryByText('Innleggelsesperioden må være innenfor søknadsperioden'),
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    await step('skal kunne fortsette til vurdering av livets sluttfase', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('button', { name: 'Fortsett' })).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getByRole('button', { name: 'Fortsett' }));
+    });
+
+    await step('skal kunne fylle ut vurdering av livets sluttfase', async () => {
+      await waitFor(async () => {
+        await expect(
+          canvas.getAllByText('Hvilke dokumenter er brukt i vurderingen av livets sluttfase?')[0],
+        ).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getByText('Sykehus/spesialist. 16.01.2020'));
+      await userEvent.type(canvas.getAllByRole('textbox')[0], 'Pasienten er i livets sluttfase');
+      await userEvent.click(canvas.getByLabelText('Ja'));
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
+      await waitFor(async () => {
+        await expect(
+          canvas.getByText('Vilkåret er ferdig vurdert og du kan gå videre i behandlingen.'),
+        ).toBeInTheDocument();
+      });
+    });
+  },
+};
+
+MedisinskVilkårPleiepengerNærstående.parameters = {
   msw: {
     handlers,
   },

@@ -319,8 +319,7 @@ Props: `above` | `below` (breakpoint-nøkkel: `sm` | `md` | `lg` | `xl` | `2xl`)
 Tokens er ikke bakoverkompatible. Bruk codemod:
 
 ```bash
-npx @navikt/aksel codemod v8-spacing-tokens ./src
-```
+yarn dlx @navikt/aksel codemod v8-spacing-tokens ./src
 
 | v7 (feil i v8) | v8 (korrekt) | px   |
 | -------------- | ------------ | ---- |

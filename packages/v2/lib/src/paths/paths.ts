@@ -19,8 +19,8 @@ export const getPathToK9Los = (): string | null => {
 
 export const getGosysUrl = (): string => {
   const { host } = window.location;
-  const devUrl = 'https://gosys-q2.dev.intern.nav.no/gosys/bruker/brukeroversikt.jsf';
-  const prodUrl = 'https://gosys.intern.nav.no/gosys/bruker/brukeroversikt.jsf';
+  const devUrl = 'https://gosys-q2.dev.intern.nav.no/gosys/oppgavebehandling/oppgaver/mine';
+  const prodUrl = 'https://gosys.intern.nav.no/gosys/oppgavebehandling/oppgaver/mine';
   if (devHosts.includes(host)) {
     return devUrl;
   }

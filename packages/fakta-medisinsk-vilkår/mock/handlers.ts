@@ -16,8 +16,15 @@ import mockedTilsynsbehovVurderinger from './mocked-data/mockedTilsynsbehovVurde
 import mockedTilsynsbehovVurderingsoversikt from './mocked-data/mockedTilsynsbehovVurderingsoversikt';
 import mockedToOmsorgspersonerVurderinger from './mocked-data/mockedToOmsorgspersonerVurderinger';
 import mockedToOmsorgspersonerVurderingsoversikt from './mocked-data/mockedToOmsorgspersonerVurderingsoversikt';
+import mockedVurderingsoversiktLinks from './mocked-data/mockedVurderingsoversiktLinks';
 
 let mockedNyeDokumenter = [...mockedNyeDokumenterList];
+const mockedSluttfaseVurderinger = [];
+
+const søknadsperioder = [
+  { fom: '2021-01-01', tom: '2021-02-05' },
+  { fom: '2021-02-10', tom: '2021-02-14' },
+];
 
 type EndreVurderingRequestBody = NyVurderingsversjon & {
   endretAv: string;
@@ -49,22 +56,30 @@ export const handlers = [
     const manglerVurderingAvToOmsorgspersoner =
       mockedToOmsorgspersonerVurderingsoversikt.resterendeVurderingsperioder.length > 0;
     const nyttDokumentHarIkkekontrollertEksisterendeVurderinger = mockedNyeDokumenter.length > 0;
+    const manglerVurderingAvILivetsSluttfase = mockedSluttfaseVurderinger.length === 0;
     const harDataSomIkkeHarBlittTattMedIBehandling = true;
 
+    const sluttfaseErFerdig =
+      !harUklassifiserteDokumenter &&
+      !manglerGodkjentLegeerklæring &&
+      !manglerVurderingAvILivetsSluttfase &&
+      !nyttDokumentHarIkkekontrollertEksisterendeVurderinger;
+    const psbVilkårErFerdig =
+      !harUklassifiserteDokumenter &&
+      !manglerDiagnosekode &&
+      !manglerGodkjentLegeerklæring &&
+      !manglerVurderingAvKontinuerligTilsynOgPleie &&
+      !manglerVurderingAvToOmsorgspersoner &&
+      !nyttDokumentHarIkkekontrollertEksisterendeVurderinger;
     return HttpResponse.json(
       {
-        kanLøseAksjonspunkt:
-          !harUklassifiserteDokumenter &&
-          !manglerDiagnosekode &&
-          !manglerGodkjentLegeerklæring &&
-          !manglerVurderingAvKontinuerligTilsynOgPleie &&
-          !manglerVurderingAvToOmsorgspersoner &&
-          !nyttDokumentHarIkkekontrollertEksisterendeVurderinger,
+        kanLøseAksjonspunkt: sluttfaseErFerdig || psbVilkårErFerdig,
         harUklassifiserteDokumenter,
         manglerDiagnosekode,
         manglerGodkjentLegeerklæring,
         manglerVurderingAvKontinuerligTilsynOgPleie,
         manglerVurderingAvToOmsorgspersoner,
+        manglerVurderingAvILivetsSluttfase,
         harDataSomIkkeHarBlittTattMedIBehandling,
         nyttDokumentHarIkkekontrollertEksisterendeVurderinger,
       },
@@ -83,6 +98,9 @@ export const handlers = [
   http.post<undefined, NyVurderingsversjon>(`${mockUrlPrepend}/mock/opprett-vurdering`, async ({ request }) => {
     const body = await request.json();
     if (body.dryRun === true) {
+      if (body.type === Vurderingstype.LIVETS_SLUTTFASE) {
+        return HttpResponse.json({ perioderMedEndringer: [] }, { status: 200 });
+      }
       return HttpResponse.json(
         {
           perioderMedEndringer: [
@@ -101,6 +119,9 @@ export const handlers = [
     }
     if (body.type === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
       createKontinuerligTilsynVurdering(body);
+    } else if (body.type === Vurderingstype.LIVETS_SLUTTFASE) {
+      mockedSluttfaseVurderinger.push(body);
+      mockedNyeDokumenter = [];
     } else {
       createToOmsorgspersonerVurdering(body);
     }
@@ -185,6 +206,21 @@ export const handlers = [
     );
   }),
 
+  http.get(`${mockUrlPrepend}/mock/livets-sluttfase/vurderingsoversikt`, () =>
+    HttpResponse.json(
+      {
+        perioderSomKanVurderes: søknadsperioder,
+        resterendeVurderingsperioder: mockedSluttfaseVurderinger.length > 0 ? [] : [søknadsperioder[0]],
+        resterendeValgfrieVurderingsperioder: [],
+        søknadsperioderTilBehandling: [],
+        vurderingselementer: [],
+        harGyldigSignatur: true,
+        links: mockedVurderingsoversiktLinks,
+      },
+      { status: 200 },
+    ),
+  ),
+
   http.get(`${mockUrlPrepend}/mock/dokumentoversikt`, () => HttpResponse.json(mockedDokumentoversikt, { status: 200 })),
 
   http.post<undefined, Dokument>(`${mockUrlPrepend}/mock/endre-dokument`, async ({ request }) => {
@@ -230,6 +266,22 @@ export const handlers = [
     mockedNyeDokumenter = [];
     return HttpResponse.json({}, { status: 201 });
   }),
+
+  http.get(`${mockUrlPrepend}/mock/perioder-med-vilkar`, () =>
+    HttpResponse.json(
+      {
+        perioderMedÅrsak: {
+          perioderTilVurdering: søknadsperioder,
+          perioderMedÅrsak: [],
+          årsakMedPerioder: [],
+          dokumenterTilBehandling: [],
+        },
+        periodeMedUtfall: [],
+        forrigeVedtak: [],
+      },
+      { status: 200 },
+    ),
+  ),
 
   http.get('/', () => HttpResponse.json(null, { status: 200 })),
 ];

@@ -7,6 +7,7 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import {
   createContext,
   useCallback,
@@ -163,6 +164,7 @@ export const useUttakContext = () => {
    */
   const { refetch: hentUttak } = useQuery({
     queryKey: ['uttak', behandling.uuid],
+    throwOnError: ignore404Errors,
     queryFn: async () => {
       const hentetUttak = await uttakApi.hentUttak(behandling.uuid);
       return hentetUttak;

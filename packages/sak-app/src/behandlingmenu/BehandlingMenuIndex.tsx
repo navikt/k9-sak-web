@@ -163,7 +163,9 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagNyBehandlingUnntak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_UNNTAK,
   );
-  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(K9sakApiKeys.PARTER_MED_KLAGERETT);
+  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[] | undefined | null>(
+    K9sakApiKeys.PARTER_MED_KLAGERETT,
+  );
 
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -296,7 +298,7 @@ export const BehandlingMenuIndex = ({
             }))}
             delvisRevurderingsårsaker={sakRettigheter.delvisRevurderingsårsaker?.map(d => ({
               årsak: d.årsak.kode,
-              vilkårType: d.vilkårType.kode,
+              vilkårType: d.vilkårType?.kode,
               periodeType: d.periodeType,
               valgbarePerioder: d.valgbarePerioder,
             }))}

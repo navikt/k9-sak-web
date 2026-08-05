@@ -2,11 +2,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
 import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
-  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
-
   const beredskapAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.BEREDSKAP);
   const beredskapAksjonspunktkode = beredskapAksjonspunkt?.definisjon.kode;
   const løsBeredskapAksjonspunkt = beredskapsperioder =>
@@ -19,11 +16,12 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
 
   const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
+  const harLøstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
+  const harLøstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
 
   return (
     <EtablertTilsynContainer
       data={{
-        errorNotifier: legacyErrorNotifier,
         readOnly,
         endpoints: findEndpointsFromRels(behandling.links, [
           { rel: 'opplaeringspenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
@@ -32,8 +30,10 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
         ]),
         lagreBeredskapvurdering: løsBeredskapAksjonspunkt,
         lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
-        harAksjonspunktForBeredskap: harUløstAksjonspunktForBeredskap,
-        harAksjonspunktForNattevåk: harUløstAksjonspunktForNattevåk,
+        harUløstAksjonspunktForBeredskap,
+        harUløstAksjonspunktForNattevåk,
+        harLøstAksjonspunktForBeredskap,
+        harLøstAksjonspunktForNattevåk,
       }}
     />
   );

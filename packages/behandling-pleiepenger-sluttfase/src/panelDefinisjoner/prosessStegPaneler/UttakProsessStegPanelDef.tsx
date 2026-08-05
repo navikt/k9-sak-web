@@ -56,6 +56,7 @@ class PanelDef extends ProsessStegPanelDef {
   getData = ({ uttak }) => ({
     uttak,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
+    uttaksperioder: uttak?.uttaksplan?.perioder,
     relevanteAksjonspunkter: this.getAksjonspunktKoder(),
   });
 }

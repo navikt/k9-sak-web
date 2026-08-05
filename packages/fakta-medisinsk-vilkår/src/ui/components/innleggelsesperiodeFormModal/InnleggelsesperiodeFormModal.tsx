@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
+import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './innleggelsesperiodeFormModal.module.css';
@@ -27,6 +28,7 @@ interface InnleggelsesperiodeFormModal {
   isLoading: boolean;
   endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
   pleietrengendePart: Personopplysninger['pleietrengendePart'];
+  innleggelsesperiodeBegrensning?: InnleggelsesperiodeBegrensning | null;
 }
 
 const InnleggelsesperiodeFormModal = ({
@@ -36,6 +38,7 @@ const InnleggelsesperiodeFormModal = ({
   isLoading,
   endringerPåvirkerAndreBehandlinger,
   pleietrengendePart,
+  innleggelsesperiodeBegrensning,
 }: InnleggelsesperiodeFormModal): JSX.Element => {
   const formMethods = useForm({
     defaultValues: {
@@ -52,6 +55,16 @@ const InnleggelsesperiodeFormModal = ({
   } = formMethods;
 
   const [showWarningMessage, setShowWarningMessage] = React.useState(false);
+
+  const datobegrensning = innleggelsesperiodeBegrensning
+    ? {
+        limitations: {
+          minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
+          maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
+          invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
+        },
+      }
+    : {};
 
   const handleSubmit = formState => {
     onSubmit(formState);
@@ -91,10 +104,12 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
+                  ...datobegrensning,
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
+                  ...datobegrensning,
                 }}
                 afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
@@ -149,6 +164,23 @@ const InnleggelsesperiodeFormModal = ({
                       if (fødselsdato && dayjs(fom).isBefore(fødselsdato)) {
                         return 'Fra-dato kan ikke være før fødselsdato';
                       }
+                    }
+                    return null;
+                  },
+                  innenforSøknadsperiode: (periodValue: Period) => {
+                    if (!innleggelsesperiodeBegrensning?.sammenhengendePerioder?.length) return null;
+                    const { fom, tom } = periodValue;
+                    if (!fom || !tom) return null;
+                    const erEksisterendePeriode = defaultValues[FieldName.INNLEGGELSESPERIODER].some(
+                      eksisterende => eksisterende.fom === fom && eksisterende.tom === tom,
+                    );
+                    if (erEksisterendePeriode) return null;
+                    const period = new Period(fom, tom);
+                    const erInnenfor = innleggelsesperiodeBegrensning.sammenhengendePerioder.some(sp =>
+                      sp.covers(period),
+                    );
+                    if (!erInnenfor) {
+                      return 'Innleggelsesperioden må være innenfor søknadsperioden';
                     }
                     return null;
                   },

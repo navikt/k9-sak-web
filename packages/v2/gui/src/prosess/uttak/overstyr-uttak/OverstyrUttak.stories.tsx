@@ -35,7 +35,7 @@ const meta = {
     },
   },
   decorators: [
-    withQueryClientProvider({ queries: { throwOnError: false } }),
+    withQueryClientProvider(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />

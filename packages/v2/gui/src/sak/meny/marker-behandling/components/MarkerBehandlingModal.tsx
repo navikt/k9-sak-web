@@ -10,6 +10,7 @@ import React from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
 import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';
 import styles from './markerBehandlingModal.module.css';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 
 const minLength3 = minLength(3);
 const maxLength100000 = maxLength(100000);
@@ -73,7 +74,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
     refetch: hentMerknader,
     isFetching,
   } = useQuery({
-    throwOnError: false, // Denne feiler med 404 for klage/tilbake behandlinger
+    throwOnError: ignore404Errors, // Denne feiler med 404 for klage/tilbake behandlinger
     queryKey: ['merknader', behandlingUuid],
     queryFn: async () => {
       const data = await api.getMerknader(behandlingUuid);
