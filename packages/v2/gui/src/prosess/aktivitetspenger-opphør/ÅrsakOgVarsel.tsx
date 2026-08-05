@@ -6,7 +6,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { FileSearchIcon, InformationSquareIcon } from '@navikt/aksel-icons';
+import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -319,8 +319,9 @@ export const AarsakOgVarsel = ({
                     label="Tekst i forhåndsvarsel (vises til bruker)"
                     description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim."
                     readOnly={isFormLocked}
-                    validate={[required, minLength(3), maxLength(4000)]}
+                    validate={[required, minLength(3), maxLength(1000)]}
                     resize
+                    maxLength={1000}
                   />
                 )}
                 {åpenbarGrunnTilIkkeVarsle === 'ja' && (
@@ -355,16 +356,6 @@ export const AarsakOgVarsel = ({
                     <Button type="submit" size="small" loading={isPending}>
                       Bekreft og fortsett
                     </Button>
-                    {skalSendeForhåndsvarsel && (
-                      <Button
-                        size="small"
-                        variant="secondary"
-                        type="button"
-                        icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
-                      >
-                        Forhåndsvis varsel
-                      </Button>
-                    )}
                   </HStack>
                 )}
               </VStack>
