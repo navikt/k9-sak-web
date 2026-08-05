@@ -12,9 +12,12 @@ const erForlengelse = (beregningreferanserTilVurdering: BeregningReferanse[], pe
   return undefined;
 };
 
-const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurdering: BeregningReferanse[]): FtVilkar => {
+const mapVilkar = (
+  vilkar: VilkårMedPerioderDto | null | undefined,
+  beregningreferanserTilVurdering: BeregningReferanse[],
+): FtVilkar => {
   return {
-    vilkarType: vilkar?.vilkarType,
+    vilkarType: vilkar?.vilkarType ?? '',
     overstyrbar: vilkar?.overstyrbar ?? false,
     perioder:
       vilkar?.perioder?.map(p => ({
