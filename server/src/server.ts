@@ -13,7 +13,7 @@ app.use(
     contentSecurityPolicy: {
       useDefaults: false,
       directives: {
-        'default-src': ["'self'"],
+        'default-src': ["'self'", 'https://cdn.nav.no'],
         'img-src': ["'self'", 'data:', 'https://cdn.nav.no'],
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
@@ -24,6 +24,7 @@ app.use(
           'https://reops-event-proxy.ekstern.dev.nav.no',
           'https://cdn.nav.no',
           'https://telemetry.nav.no',
+          'https://telemetry.ekstern.dev.nav.no',
         ],
       },
     },
