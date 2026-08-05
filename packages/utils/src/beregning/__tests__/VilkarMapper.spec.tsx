@@ -383,7 +383,7 @@ describe('VilkarMapper', () => {
   });
 
   describe('edge cases', () => {
-    it('handles vilkar with undefined properties', () => {
+    it('uses default values when optional vilkar properties are undefined', () => {
       const beregningreferanser: BeregningReferanse[] = [];
 
       const vilkar: VilkårMedPerioderDto = {
@@ -391,7 +391,11 @@ describe('VilkarMapper', () => {
         vilkarType: 'K9_VK_1',
       };
 
-      expect(() => mapVilkar(vilkar, beregningreferanser)).toThrow();
+      expect(mapVilkar(vilkar, beregningreferanser)).toEqual({
+        vilkarType: 'K9_VK_1',
+        overstyrbar: false,
+        perioder: [],
+      });
     });
 
     it('handles large number of periods and references', () => {
