@@ -28,6 +28,7 @@ initSentry({
 initApm({
   namespace: 'k9saksbehandling',
   app: 'ung-sak-web',
+  tracing: true,
 });
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });

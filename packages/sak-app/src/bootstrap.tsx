@@ -27,7 +27,7 @@ initSentry({
   release: VITE_SENTRY_RELEASE || 'unknown',
 });
 
-initApm({ namespace: 'k9saksbehandling', app: 'k9-sak-web' });
+initApm({ namespace: 'k9saksbehandling', app: 'k9-sak-web', tracing: true });
 
 const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() });
 
