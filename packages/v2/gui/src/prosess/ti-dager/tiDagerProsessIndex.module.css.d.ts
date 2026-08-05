@@ -9,16 +9,19 @@
 declare const mainContainerWithSideMenu: string;
 declare const warningIcon: string;
 declare const vilkar: string;
+declare const innholdUtenSidemeny: string;
 
 export {
 	mainContainerWithSideMenu,
 	warningIcon,
-	vilkar
+	vilkar,
+	innholdUtenSidemeny
 };
 
 declare const __default_export__: {
 	mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
 	warningIcon: typeof warningIcon;
 	vilkar: typeof vilkar;
+	innholdUtenSidemeny: typeof innholdUtenSidemeny;
 };
 export default __default_export__;

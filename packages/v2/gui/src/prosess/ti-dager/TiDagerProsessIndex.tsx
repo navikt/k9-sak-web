@@ -4,11 +4,12 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, Heading, Loader } from '@navikt/ds-react';
+import { BodyShort, Box, Detail, Heading, HStack, Loader } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
+import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse.js';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar.js';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 import { TiDagerProsess, type TiDagerSubmitModel } from './TiDagerProsess.js';
@@ -113,11 +114,24 @@ export const TiDagerProsessIndex = ({
     !harJournalposter
   ) {
     return (
-      <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
-        <Heading size="medium" level="2" spacing>
-          Ti dager
-        </Heading>
-        <BodyShort>10 dager har blitt dekket - ref 9-8 3.ledd</BodyShort>
+      <Box
+        className={styles.innholdUtenSidemeny}
+        paddingInline="space-16 space-32"
+        paddingBlock="space-8"
+        width="fit-content"
+      >
+        <HStack gap="space-16">
+          <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
+          <Heading size="small" level="2" spacing>
+            Ti dager
+          </Heading>
+          <Detail className={styles.vilkar}>
+            <Lovreferanse>§ 9-8 tredje ledd</Lovreferanse>
+          </Detail>
+        </HStack>
+        <BodyShort size="small" weight="semibold">
+          10 dager har blitt dekket
+        </BodyShort>
       </Box>
     );
   }
