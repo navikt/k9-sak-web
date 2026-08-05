@@ -8,12 +8,10 @@ import {
   type OpprettLangvarigSykdomsVurderingData,
   type OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import SykdomOgOpplæringBackendClient from './SykdomOgOpplæringBackendClient';
 import type { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
+import { useSykdomOgOpplæringBackendClient } from './SykdomOgOpplæringBackendClientContext.js';
 
-export const useSykdomBackendClient = () => {
-  return new SykdomOgOpplæringBackendClient();
-};
+export const useSykdomBackendClient = useSykdomOgOpplæringBackendClient;
 const MAX_RETRIES = 3;
 export const useOpprettSykdomsvurdering = ({ onSuccess }: { onSuccess?: () => void }) => {
   const backendClient = useSykdomBackendClient();

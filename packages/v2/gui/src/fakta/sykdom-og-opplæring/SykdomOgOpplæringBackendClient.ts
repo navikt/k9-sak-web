@@ -1,3 +1,4 @@
+import type { SykdomOgOpplæringApi } from './api/SykdomOgOpplæringApi.js';
 import { type OpprettLangvarigSykdomsVurderingData } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {
   brev_getBrevMottakerinfoEreg,
@@ -11,7 +12,7 @@ import {
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
-export default class SykdomOgOpplæringBackendClient {
+export default class SykdomOgOpplæringBackendClient implements SykdomOgOpplæringApi {
   async getVilkår(behandlingUuid: string) {
     return (await vilkår_getVilkårV3({ query: { behandlingUuid } })).data;
   }
