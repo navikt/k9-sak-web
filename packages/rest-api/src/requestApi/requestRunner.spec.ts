@@ -101,7 +101,7 @@ describe('RequestRunner', () => {
         ...response,
         data: {
           status: AsyncPollingStatus.PENDING,
-          message: 'Polling continues',
+          message: 'Polling reached the maximum wait time',
           pollIntervalMillis: 0,
         },
       },
@@ -126,7 +126,7 @@ describe('RequestRunner', () => {
 
     const config = {
       ...defaultConfig,
-      maxPollingLimit: 1, // Vil nå taket etter første førsøk
+      maxPollingLimit: 2,
     };
 
     const process = new RequestRunner(httpClientMock, httpClientMock.getAsync, 'behandling', config);
@@ -134,14 +134,16 @@ describe('RequestRunner', () => {
     process.setNotificationEmitter(notificationHelper.mapper.getNotificationEmitter());
 
     await expect(process.start(params)).rejects.toMatchObject({
-      message: 'Maximum polling attempts exceeded',
+      message: 'Polling reached the maximum wait time',
     });
 
     expect(notificationHelper.requestStartedCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.statusRequestStartedCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.statusRequestFinishedCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.updatePollingMessageCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.updatePollingMessageCallback.mock.calls[0][0]).toBe('Polling continues');
+    expect(notificationHelper.statusRequestStartedCallback.mock.calls.length).toBe(2);
+    expect(notificationHelper.statusRequestFinishedCallback.mock.calls.length).toBe(2);
+    expect(notificationHelper.updatePollingMessageCallback.mock.calls.length).toBe(2);
+    expect(notificationHelper.updatePollingMessageCallback.mock.calls[1][0]).toBe(
+      'Polling reached the maximum wait time',
+    );
   });
 
   it('skal utføre long-polling request som en så avbryter manuelt', async () => {
