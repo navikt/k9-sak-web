@@ -11,6 +11,7 @@ import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/Opptjeningsvilkaret
 import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import VurderNyoppstartetFaktaPanelDef from './faktaPaneler/VurderNyoppstartetFaktaPanelDef';
+import YtelserFaktaPanelDef from './faktaPaneler/YtelserFaktaPanelDef';
 
 export const faktaPanelDefinisjonerUtenOmsorgenFor = [
   new ArbeidsforholdFaktaPanelDef(),
@@ -24,6 +25,7 @@ export const faktaPanelDefinisjonerUtenOmsorgenFor = [
   new NyInntektPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
+  new YtelserFaktaPanelDef(),
   new VurderNyoppstartetFaktaPanelDef(),
 ];
 

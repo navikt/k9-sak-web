@@ -1,10 +1,12 @@
 ---
-applyTo: "**/*.test.{ts,tsx,kt,kts}"
+name: Testing Standards
+description: "Felles testprinsipper for Nav. Språkspesifikke eksempler finnes i egne instruksjoner for Kotlin og TypeScript."
+applyTo: "**/*.{test,spec}.{ts,tsx,kt,kts}"
 ---
 
 # Testing Standards
 
-Felles testprinsipper for Nav. Språkspesifikke eksempler finnes i egne instruksjoner for [Kotlin](testing-kotlin.instructions.md) og [TypeScript](testing-typescript.instructions.md).
+Common testing principles for Nav. Language-specific examples can be found in separate instructions for [Kotlin](testing-kotlin.instructions.md) and [TypeScript](testing-typescript.instructions.md).
 
 ## Test Coverage
 
