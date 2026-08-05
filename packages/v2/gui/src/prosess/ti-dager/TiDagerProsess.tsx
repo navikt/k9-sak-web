@@ -40,6 +40,17 @@ interface TiDagerFormData {
   begrunnelse: string;
 }
 
+const lagDefaultValues = (
+  opplysninger: RettFraDagEnVisningDto,
+  aksjonspunkter: Pick<AksjonspunktDto, 'definisjon' | 'begrunnelse' | 'status'>[],
+): TiDagerFormData => ({
+  vurderinger: opplysninger.journalposter.map(jp => ({
+    journalpostId: jp.journalpostId,
+    harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
+  })),
+  begrunnelse: aksjonspunkter[0]?.begrunnelse ?? '',
+});
+
 export interface TiDagerSubmitModel {
   kode: string;
   begrunnelse: string;
@@ -99,14 +110,12 @@ export const TiDagerProsess = ({
   const formIsLockedOrReadOnly = isFormLocked || readOnly;
 
   const formMethods = useForm<TiDagerFormData>({
-    defaultValues: {
-      vurderinger: opplysninger.journalposter.map(jp => ({
-        journalpostId: jp.journalpostId,
-        harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
-      })),
-      begrunnelse: aksjonspunkter[0]?.begrunnelse ?? '',
-    },
+    defaultValues: lagDefaultValues(opplysninger, aksjonspunkter),
   });
+
+  useEffect(() => {
+    formMethods.reset(lagDefaultValues(opplysninger, aksjonspunkter));
+  }, [formMethods, opplysninger, aksjonspunkter]);
 
   const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
 

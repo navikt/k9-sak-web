@@ -56,14 +56,14 @@ const opplysningerToPerioder: RettFraDagEnVisningDto = {
     {
       journalpostId: 'JP-101',
       dokumentId: 'DOK-101',
-      arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
+      arbeidsgiver: { arbeidsgiverOrgnr: '973861778' },
       foersteOppgitteFravaersdag: '2026-04-07',
       harUtbetaltPliktigeDager: undefined,
     },
     {
       journalpostId: 'JP-202',
       dokumentId: 'DOK-202',
-      arbeidsgiver: { arbeidsgiverOrgnr: '973861778' },
+      arbeidsgiver: { arbeidsgiverOrgnr: '910909088' },
       foersteOppgitteFravaersdag: '2026-04-15',
       harUtbetaltPliktigeDager: undefined,
     },
@@ -86,6 +86,9 @@ const arbeidsgiverOpplysningerPerId = {
   '910909088': { navn: 'Arbeidsgiver AS' },
   '973861778': { navn: 'Eksempelbedrift AS' },
 };
+
+const tekstMatcher = (tekst: string) => (_: string, element: Element | null) =>
+  element?.textContent?.replace(/\s+/g, ' ').trim() === tekst;
 
 const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator => {
   const fakeApi: TiDagerBackendApiType = {
@@ -290,19 +293,19 @@ export const ByttPeriodeOppdatererInnhold: Story = {
     ],
   },
   play: async ({ canvas, step }) => {
-    await step('Første periode viser Arbeidsgiver AS', async () => {
-      await expect(await canvas.findByText('Arbeidsgiver AS')).toBeVisible();
-      await expect(canvas.queryByText('Eksempelbedrift AS')).toBeNull();
+    await step('Nyeste periode er aktiv og viser Arbeidsgiver AS', async () => {
+      await expect(await canvas.findByText(tekstMatcher('Arbeidsgiver AS'))).toBeVisible();
+      await expect(canvas.queryByText(tekstMatcher('Eksempelbedrift AS'))).toBeNull();
     });
 
-    await step('Bytt til andre periode i sidemenyen', async () => {
-      const andrePeriode = await canvas.findByRole('button', { name: '14.04.2026 - 18.04.2026' });
-      await userEvent.click(andrePeriode);
+    await step('Bytt til eldre periode i sidemenyen', async () => {
+      const eldrePeriode = await canvas.findByRole('button', { name: '06.04.2026 - 10.04.2026' });
+      await userEvent.click(eldrePeriode);
     });
 
-    await step('Andre periode viser Eksempelbedrift AS', async () => {
-      await expect(await canvas.findByText('Eksempelbedrift AS')).toBeVisible();
-      await expect(canvas.queryByText('Arbeidsgiver AS')).toBeNull();
+    await step('Eldre periode viser Eksempelbedrift AS', async () => {
+      await expect(await canvas.findByText(tekstMatcher('Eksempelbedrift AS'))).toBeVisible();
+      await expect(canvas.queryByText(tekstMatcher('Arbeidsgiver AS'))).toBeNull();
     });
   },
 };

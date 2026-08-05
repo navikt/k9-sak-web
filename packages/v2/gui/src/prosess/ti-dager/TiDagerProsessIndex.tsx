@@ -7,7 +7,7 @@ import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-ico
 import { BodyShort, Box, Heading, Loader } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar.js';
 import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
@@ -66,6 +66,22 @@ export const TiDagerProsessIndex = ({
 
   const vilkår = vilkar?.[0];
   const harJournalposter = opplysninger?.journalposter && opplysninger.journalposter.length > 0;
+  const opplysningerForAktivPeriode = useMemo(
+    () =>
+      opplysninger && activePeriode?.periode.fom && activePeriode?.periode.tom
+        ? {
+            ...opplysninger,
+            journalposter: opplysninger.journalposter.filter(
+              jp =>
+                jp.foersteOppgitteFravaersdag != undefined &&
+                jp.foersteOppgitteFravaersdag >= activePeriode.periode.fom &&
+                jp.foersteOppgitteFravaersdag <= activePeriode.periode.tom,
+            ),
+          }
+        : opplysninger,
+    [opplysninger, activePeriode?.periode.fom, activePeriode?.periode.tom],
+  );
+
   if (!activePeriode) {
     return null;
   }
@@ -75,6 +91,14 @@ export const TiDagerProsessIndex = ({
   }
 
   if (isError) {
+    return (
+      <Box paddingInline="space-16 space-32" paddingBlock="space-8">
+        <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
+      </Box>
+    );
+  }
+
+  if (!opplysningerForAktivPeriode) {
     return (
       <Box paddingInline="space-16 space-32" paddingBlock="space-8">
         <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
@@ -101,19 +125,6 @@ export const TiDagerProsessIndex = ({
   const activePeriodeStatus = activePeriode.vilkarStatus;
   const vilkårErFerdigVurdert = activePeriodeStatus !== vilkårStatus.IKKE_VURDERT;
   const vilkårErOppfylt = activePeriodeStatus === vilkårStatus.OPPFYLT;
-
-  const opplysningerForAktivPeriode =
-    opplysninger && activePeriode.periode.fom && activePeriode.periode.tom
-      ? {
-          ...opplysninger,
-          journalposter: opplysninger.journalposter.filter(
-            jp =>
-              jp.foersteOppgitteFravaersdag != undefined &&
-              jp.foersteOppgitteFravaersdag >= activePeriode.periode.fom &&
-              jp.foersteOppgitteFravaersdag <= activePeriode.periode.tom,
-          ),
-        }
-      : opplysninger;
 
   return (
     <div className={styles.mainContainerWithSideMenu}>
