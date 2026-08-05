@@ -95,7 +95,7 @@ export default ({ mode }) => {
         '/ung/tilbake': createProxy(process.env.APP_URL_UNG_TILBAKE || 'http://localhost:8903'),
       },
     },
-    base: '/ung/web',
+    base: process.env.VITE_CDN_BASE_URL ?? '/ung/web',
     publicDir: './public',
     resolve: {
       dedupe: ['react', 'react-dom'],
