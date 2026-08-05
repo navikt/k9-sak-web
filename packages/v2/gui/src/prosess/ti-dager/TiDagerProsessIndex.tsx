@@ -71,7 +71,7 @@ export const TiDagerProsessIndex = ({
       opplysninger && activePeriode?.periode.fom && activePeriode?.periode.tom
         ? {
             ...opplysninger,
-            journalposter: opplysninger.journalposter.filter(
+            journalposter: opplysninger.journalposter?.filter(
               jp =>
                 jp.foersteOppgitteFravaersdag != undefined &&
                 jp.foersteOppgitteFravaersdag >= activePeriode.periode.fom &&
