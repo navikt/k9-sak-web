@@ -29,6 +29,8 @@ jobs:
 
       - name: Bygge dist
         run: yarn build:ung
+        env:
+          VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/ung-sak-web/"
 
       - name: Bygg server
         uses: ./.github/actions/build-server
