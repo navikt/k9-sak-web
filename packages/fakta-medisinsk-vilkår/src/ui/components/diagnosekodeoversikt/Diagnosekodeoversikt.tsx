@@ -27,10 +27,10 @@ const fetchDiagnosekoderByQuery = (queryString: string): Diagnosekode => {
   if (searchResult.diagnosekoder.length === 1 && !searchResult.hasMore) {
     return toLegacyDiagnosekode(searchResult.diagnosekoder[0]);
   }
-  // If there are multiple diagnosecodes found, we check if there is a perfect match for the queryString, and return that if it exists.
-  const perfectMatch = searchResult.diagnosekoder.find(d => d.code === queryString);
-  if (perfectMatch) {
-    return toLegacyDiagnosekode(perfectMatch);
+  // If there are multiple diagnosecodes found, we check if there is a exact match for the queryString, and return that if it exists.
+  const exactMatch = searchResult.diagnosekoder.find(d => d.code === queryString);
+  if (exactMatch) {
+    return toLegacyDiagnosekode(exactMatch);
   }
   return { kode: queryString, beskrivelse: '' };
 };
