@@ -6,7 +6,8 @@ import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
+import { SykdomOgOpplæringBackendClientContext } from '../SykdomOgOpplæringBackendClientContext.js';
+import { FakeSykdomOgOpplæringApi } from '../storybook/FakeSykdomOgOpplæringApi.js';
 import ReisetidIndex from './ReisetidIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -82,9 +83,13 @@ const withMockData: Decorator = Story => {
     ],
   };
 
-  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async () => vurdertReisetidMock;
-
-  return <Story />;
+  return (
+    <SykdomOgOpplæringBackendClientContext
+      value={new FakeSykdomOgOpplæringApi({ vurdertReisetid: vurdertReisetidMock })}
+    >
+      <Story />
+    </SykdomOgOpplæringBackendClientContext>
+  );
 };
 
 const withMockDataMåVurderes: Decorator = Story => {
@@ -108,9 +113,13 @@ const withMockDataMåVurderes: Decorator = Story => {
     ],
   };
 
-  SykdomOgOpplæringBackendClient.prototype.getVurdertReisetid = async () => vurdertReisetidMock;
-
-  return <Story />;
+  return (
+    <SykdomOgOpplæringBackendClientContext
+      value={new FakeSykdomOgOpplæringApi({ vurdertReisetid: vurdertReisetidMock })}
+    >
+      <Story />
+    </SykdomOgOpplæringBackendClientContext>
+  );
 };
 
 const meta = {
