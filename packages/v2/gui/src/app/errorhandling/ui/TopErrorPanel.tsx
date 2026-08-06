@@ -19,7 +19,11 @@ interface TopErrorPanelUIProps {
 }
 
 /** Eksponert her kun for testing/storybook. Bruk TopErrorPanel direkte i app */
-export const TopErrorPanelUI = ({ errors: allErrors, aktivFagsakId, defaultExpanded = true }: TopErrorPanelUIProps) => {
+export const TopErrorPanelUI = ({
+  errors: allErrors,
+  aktivFagsakId,
+  defaultExpanded = false,
+}: TopErrorPanelUIProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
   // Fjern påfølgjande duplikatfeil slik at brukar berre ser den siste i kvar gruppe av like feil.
