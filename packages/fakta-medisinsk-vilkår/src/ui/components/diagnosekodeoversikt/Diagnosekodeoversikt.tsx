@@ -1,11 +1,11 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Heading, HStack, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
@@ -21,11 +21,16 @@ import Diagnosekodeliste from '../diagnosekodeliste/Diagnosekodeliste';
 // This reuse is possible since we don't use the paging functionality in the instance anyways.
 const diagnosekodeSearcher = initDiagnosekodeSearcher(8);
 
-const fetchDiagnosekoderByQuery = async (queryString: string): Promise<Diagnosekode> => {
+const fetchDiagnosekoderByQuery = (queryString: string): Diagnosekode => {
   const searchResult = diagnosekodeSearcher.search(queryString, 1);
   // This function only returns the found diagnosecode if there is exactly one diagnosecode found.
   if (searchResult.diagnosekoder.length === 1 && !searchResult.hasMore) {
     return toLegacyDiagnosekode(searchResult.diagnosekoder[0]);
+  }
+  // If there are multiple diagnosecodes found, we check if there is a perfect match for the queryString, and return that if it exists.
+  const perfectMatch = searchResult.diagnosekoder.find(d => d.code === queryString);
+  if (perfectMatch) {
+    return toLegacyDiagnosekode(perfectMatch);
   }
   return { kode: queryString, beskrivelse: '' };
 };
