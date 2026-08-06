@@ -49,9 +49,7 @@ export const goToSearch = () => {
 
 export const isDev = () => IS_DEV;
 
-export const isQ = (): boolean =>
-  window.location.hostname.toLowerCase().endsWith('.dev.intern.nav.no') ||
-  window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
+export const isQ = (): boolean => window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
 
 export const isProd = () => {
   const { host } = window.location;
