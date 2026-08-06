@@ -29,6 +29,7 @@ initApm({
   namespace: 'k9saksbehandling',
   app: 'ung-sak-web',
   tracing: true,
+  devConsoleEcho: false,
 });
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });

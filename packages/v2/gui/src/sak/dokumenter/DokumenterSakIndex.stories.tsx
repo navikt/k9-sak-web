@@ -3,7 +3,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
-import { withQueryClientProvider } from "../../storybook/decorators/withQueryClientProvider.js";
+import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 
 const behandlingId = 1;
 
@@ -47,7 +47,7 @@ const fagsak = {
 const meta = {
   title: 'gui/sak/dokumenter/DokumenterSakIndex.tsx',
   component: DokumenterSakIndex,
-  decorators: [withQueryClientProvider({queries: {throwOnError: false}})]
+  decorators: [withQueryClientProvider({ queries: { throwOnError: false } })],
 } satisfies Meta<typeof DokumenterSakIndex>;
 
 export default meta;

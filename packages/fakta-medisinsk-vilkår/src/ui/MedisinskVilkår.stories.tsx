@@ -203,9 +203,7 @@ export const MedisinskVilkårPleiepengerNærstående: Story = {
       await userEvent.type(canvas.getAllByRole('textbox', { name: 'Til' })[3], '100221');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
       await waitFor(async () => {
-        await expect(
-          canvas.getByText('Innleggelsesperioden må være innenfor søknadsperioden'),
-        ).toBeInTheDocument();
+        await expect(canvas.getByText('Innleggelsesperioden må være innenfor søknadsperioden')).toBeInTheDocument();
       });
     });
 
@@ -255,4 +253,3 @@ MedisinskVilkårPleiepengerNærstående.parameters = {
     handlers,
   },
 };
-

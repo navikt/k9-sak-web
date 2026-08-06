@@ -176,7 +176,9 @@ const InnleggelsesperiodeFormModal = ({
                     );
                     if (erEksisterendePeriode) return null;
                     const period = new Period(fom, tom);
-                    const erInnenfor = innleggelsesperiodeBegrensning.sammenhengendePerioder.some(sp => sp.covers(period));
+                    const erInnenfor = innleggelsesperiodeBegrensning.sammenhengendePerioder.some(sp =>
+                      sp.covers(period),
+                    );
                     if (!erInnenfor) {
                       return 'Innleggelsesperioden må være innenfor søknadsperioden';
                     }

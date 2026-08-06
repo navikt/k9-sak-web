@@ -3,4 +3,3 @@ export interface PerioderMedVilkarResponse {
     perioderTilVurdering?: { fom: string; tom: string }[];
   };
 }
-
