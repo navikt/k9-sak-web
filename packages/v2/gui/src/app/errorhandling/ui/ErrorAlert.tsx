@@ -1,10 +1,10 @@
 import { HStack, LocalAlert, Spacer, VStack } from '@navikt/ds-react';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
-import { FixButton } from "./FixButton.js";
-import { ErrorReportButton } from "./ErrorReportButton.js";
-import { ErrorReportPopover } from "./ErrorReportPopover.js";
-import { makeErrorReportLinkForJira } from "./makeErrorReportText.js";
-import { ErrorPanel } from "./ErrorPanel.js";
+import { FixButton } from './FixButton.js';
+import { ErrorReportButton } from './ErrorReportButton.js';
+import { ErrorReportPopover } from './ErrorReportPopover.js';
+import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
+import { ErrorPanel } from './ErrorPanel.js';
 
 export type ErrorAlertProps = ErrorViewProps;
 

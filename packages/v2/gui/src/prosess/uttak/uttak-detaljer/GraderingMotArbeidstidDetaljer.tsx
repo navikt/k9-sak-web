@@ -49,7 +49,9 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 
           return (
-            <Box key={`${arbeidsforhold?.type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_arbeidstid`}>
+            <Box
+              key={`${arbeidsforhold?.type ?? 'ukjent'}_${arbeidsgiverIdentifikator ?? 'uten-id'}_avkorting_arbeidstid`}
+            >
               <BodyShort size="small" className="text-ax-text-neutral-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (

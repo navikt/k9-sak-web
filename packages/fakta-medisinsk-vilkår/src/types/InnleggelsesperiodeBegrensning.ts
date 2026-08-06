@@ -5,4 +5,3 @@ export interface InnleggelsesperiodeBegrensning {
   hullIPeriode: { from: string; to: string }[];
   sammenhengendePerioder: Period[];
 }
-
