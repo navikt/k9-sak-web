@@ -10,6 +10,6 @@ import { reloadAction } from './ErrorFixAction.js';
 export const resolveTimeoutErrorView = (error: TimeoutError): ErrorViewProps => ({
   error,
   title: 'Dette tok for lang tid',
-  errorInfo: <BodyLong>Systemet har brukt for lang tid på å svare deg.</BodyLong>,
+  errorInfo: <BodyLong>{error.message}</BodyLong>,
   fixAction: reloadAction,
 });
