@@ -246,7 +246,7 @@ export const OppfyltVilkårUtenJournalposter: Story = {
   },
   play: async ({ canvas }) => {
     await expect(await canvas.findByRole('heading', { name: 'Ti dager' })).toBeVisible();
-    await expect(await canvas.findByText('10 dager har blitt dekket - ref 9-8 3.ledd')).toBeVisible();
+    await expect(await canvas.findByText('10 dager har blitt dekket')).toBeVisible();
     await expect(canvas.queryByRole('button', { name: 'Bekreft' })).toBeNull();
   },
 };
