@@ -252,7 +252,7 @@ export const OppfyltVilkårUtenJournalposter: Story = {
   },
 };
 
-export const ToPerioderKombineresISidemeny: Story = {
+export const ToPerioderVisesSeparatISidemeny: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerToPerioder)],
   args: {
     behandlingUUID: 'bytt-periode-uuid',
@@ -294,8 +294,13 @@ export const ToPerioderKombineresISidemeny: Story = {
     ],
   },
   play: async ({ canvas, step }) => {
-    await step('Sidemeny viser kombinert periode fra tidligste til seneste dato', async () => {
-      await expect(await canvas.findByRole('button', { name: '06.04.2026 - 18.04.2026' })).toBeVisible();
+    await step('Sidemeny viser to separate perioder — nyeste først med komma', async () => {
+      const button1 = await canvas.findByRole('button', { name: /14\.04\.2026 - 18\.04\.2026/ });
+      const button2 = await canvas.findByRole('button', { name: /06\.04\.2026 - 10\.04\.2026/ });
+      await expect(button1).toBeVisible();
+      await expect(button2).toBeVisible();
+      await expect(button1.textContent).toContain('14.04.2026 - 18.04.2026,');
+      await expect(button2.textContent).not.toContain(',');
     });
 
     await step('Begge arbeidsgivere er synlige samtidig', async () => {

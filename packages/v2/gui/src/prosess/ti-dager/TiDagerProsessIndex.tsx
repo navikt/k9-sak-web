@@ -49,14 +49,6 @@ export const TiDagerProsessIndex = ({
 }: TiDagerProsessIndexProps) => {
   const isAksjonspunktOpen = aksjonspunkter.some(ap => ap.status === aksjonspunktStatus.OPPRETTET);
   const perioder = hentAktivePerioderFraVilkar(vilkar, false);
-  const tidligsteFom = perioder.reduce(
-    (min, p) => (p.periode.fom < (min ?? '') ? p.periode.fom : min),
-    perioder[0]?.periode.fom,
-  );
-  const senesteTom = perioder.reduce(
-    (max, p) => (p.periode.tom > (max ?? '') ? p.periode.tom : max),
-    perioder[0]?.periode.tom,
-  );
 
   const api = useTiDagerBackendClient();
   const {
@@ -112,13 +104,11 @@ export const TiDagerProsessIndex = ({
     <div className={styles.mainContainerWithSideMenu}>
       <div className="flex-shrink-0">
         <SideMenu
-          links={[
-            {
-              active: true,
-              label: `${tidligsteFom ? formatDate(tidligsteFom) : ''} - ${senesteTom ? formatDate(senesteTom) : ''}`,
-              icon: getIconForPeriode(activePeriodeStatus, false, isAksjonspunktOpen),
-            },
-          ]}
+          links={perioder.map((p, i) => ({
+            active: true,
+            label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}${i < perioder.length - 1 ? ',' : ''}`,
+            icon: i === perioder.length - 1 ? getIconForPeriode(p.vilkarStatus, false, isAksjonspunktOpen) : undefined,
+          }))}
           onClick={() => {
             return;
           }}
