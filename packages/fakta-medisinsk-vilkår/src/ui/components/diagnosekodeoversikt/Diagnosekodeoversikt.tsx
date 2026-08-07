@@ -1,14 +1,13 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { initDiagnosekodeSearcher } from '@k9-sak-web/gui/shared/diagnosekodeVelger/diagnosekodeSearcher.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { Alert, Box, Heading, HStack, Loader } from '@navikt/ds-react';
-import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
-import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import { findLinkByRel } from '../../../util/linkUtils';
 import { toLegacyDiagnosekode } from '../../../util/toLegacyDiagnosekode.js';
@@ -20,15 +19,6 @@ import Diagnosekodeliste from '../diagnosekodeliste/Diagnosekodeliste';
 // initialize diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
 // This reuse is possible since we don't use the paging functionality in the instance anyways.
 const diagnosekodeSearcher = initDiagnosekodeSearcher(8);
-
-const fetchDiagnosekoderByQuery = async (queryString: string): Promise<Diagnosekode> => {
-  const searchResult = diagnosekodeSearcher.search(queryString, 1);
-  // This function only returns the found diagnosecode if there is exactly one diagnosecode found.
-  if (searchResult.diagnosekoder.length === 1 && !searchResult.hasMore) {
-    return toLegacyDiagnosekode(searchResult.diagnosekoder[0]);
-  }
-  return { kode: queryString, beskrivelse: '' };
-};
 
 interface DiagnosekodeoversiktProps {
   onDiagnosekoderUpdated: () => void;
@@ -49,26 +39,33 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
     queryKey: ['diagnosekodeResponse'],
     throwOnError: ignore404Errors,
     queryFn: hentDiagnosekoder,
-    placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: null },
+    placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: '' },
     staleTime: 10000,
   });
 
-  const { diagnosekoder, links, behandlingUuid, versjon } = data;
+  const {
+    diagnosekoder,
+    links = [],
+    behandlingUuid,
+    versjon,
+  } = data || {
+    diagnosekoder: [],
+    links: [],
+    behandlingUuid: '',
+    versjon: '',
+  };
   const endreDiagnosekoderLink = findLinkByRel(LinkRel.ENDRE_DIAGNOSEKODER, links);
 
-  const { diagnosekodeObjekter, diagnosekodeObjekterLaster } = useQueries({
-    queries: diagnosekoder.map(diagnosekode => ({
-      queryKey: ['diagnosekode', diagnosekode],
-      queryFn: () => fetchDiagnosekoderByQuery(diagnosekode),
-      refetchOnWindowFocus: false,
-    })),
-    combine: results => {
-      return {
-        diagnosekodeObjekter: results.map(r => r.data).filter(d => d != null),
-        diagnosekodeObjekterLaster: results.some(r => r.isPending),
-      };
-    },
-  });
+  const diagnosekodeObjekter = React.useMemo(
+    () =>
+      diagnosekoder.map(kode => {
+        const match = diagnosekodeSearcher.diagnosekoderAndUppercased.find(
+          dk => dk.uppercased.code === kode.trim().toUpperCase(),
+        );
+        return match ? toLegacyDiagnosekode(match.diagnosekode) : { kode, beskrivelse: '' };
+      }),
+    [diagnosekoder],
+  );
 
   const focusAddButton = () => {
     if (addButtonRef.current) {
@@ -149,7 +146,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
               Ingen diagnosekode registrert.
             </Alert>
           )}
-          {diagnosekoder.length >= 1 && !diagnosekodeObjekterLaster && (
+          {diagnosekoder.length >= 1 && (
             <Diagnosekodeliste diagnosekoder={diagnosekodeObjekter} onDeleteClick={slettDiagnosekodeMutation.mutate} />
           )}
         </Box>
