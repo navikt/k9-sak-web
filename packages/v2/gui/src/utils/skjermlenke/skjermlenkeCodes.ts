@@ -11,8 +11,7 @@ const extraSkjermlenkeType = {
 } as const;
 
 export type SkjermlenkeTypeWithExtraCodes =
-  | SkjermlenkeType
-  | (typeof extraSkjermlenkeType)[keyof typeof extraSkjermlenkeType];
+  SkjermlenkeType | (typeof extraSkjermlenkeType)[keyof typeof extraSkjermlenkeType];
 
 type SkjermlenkeCode = Readonly<{
   kode: SkjermlenkeTypeWithExtraCodes;
@@ -270,7 +269,7 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
   {
     kode: 'VURDER_RETT_FRA_DAG_EN',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.VURDER_RETT_FRA_DAG_EN,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
 ];
 

@@ -219,6 +219,7 @@ export const SendInnVurdering: Story = {
 export const OppfyltVilkårUtenJournalposter: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerIngenJournalposter)],
   args: {
+    aksjonspunkter: [],
     behandlingUUID: 'oppfylt-vilkar-uten-journalposter-uuid',
     vilkar: [
       {
@@ -251,7 +252,7 @@ export const OppfyltVilkårUtenJournalposter: Story = {
   },
 };
 
-export const ByttPeriodeOppdatererInnhold: Story = {
+export const ToPerioderKombineresISidemeny: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerToPerioder)],
   args: {
     behandlingUUID: 'bytt-periode-uuid',
@@ -293,19 +294,13 @@ export const ByttPeriodeOppdatererInnhold: Story = {
     ],
   },
   play: async ({ canvas, step }) => {
-    await step('Nyeste periode er aktiv og viser Arbeidsgiver AS', async () => {
-      await expect(await canvas.findByText(tekstMatcher('Arbeidsgiver AS'))).toBeVisible();
-      await expect(canvas.queryByText(tekstMatcher('Eksempelbedrift AS'))).toBeNull();
+    await step('Sidemeny viser kombinert periode fra tidligste til seneste dato', async () => {
+      await expect(await canvas.findByRole('button', { name: '06.04.2026 - 18.04.2026' })).toBeVisible();
     });
 
-    await step('Bytt til eldre periode i sidemenyen', async () => {
-      const eldrePeriode = await canvas.findByRole('button', { name: '06.04.2026 - 10.04.2026' });
-      await userEvent.click(eldrePeriode);
-    });
-
-    await step('Eldre periode viser Eksempelbedrift AS', async () => {
+    await step('Begge arbeidsgivere er synlige samtidig', async () => {
       await expect(await canvas.findByText(tekstMatcher('Eksempelbedrift AS'))).toBeVisible();
-      await expect(canvas.queryByText(tekstMatcher('Arbeidsgiver AS'))).toBeNull();
+      await expect(await canvas.findByText(tekstMatcher('Arbeidsgiver AS'))).toBeVisible();
     });
   },
 };
