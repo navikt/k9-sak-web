@@ -6,13 +6,11 @@ import { prosessStegCodes } from './prosessStegCodes.js';
 // Pga midlertidig workaround for manglande SkjermlenkeType definisjon i backend legger vi til denne her.
 // Skal fjernast igjen når backend implementerer disse koder.
 const extraSkjermlenkeType = {
-  FAKTA_OM_NY_INNTEKT: 'FAKTA_OM_NY_INNTEKT',
   FAKTA_OM_SOKNADSPERIODER: 'FAKTA_OM_SOKNADSPERIODER',
 } as const;
 
 export type SkjermlenkeTypeWithExtraCodes =
-  | SkjermlenkeType
-  | (typeof extraSkjermlenkeType)[keyof typeof extraSkjermlenkeType];
+  SkjermlenkeType | (typeof extraSkjermlenkeType)[keyof typeof extraSkjermlenkeType];
 
 type SkjermlenkeCode = Readonly<{
   kode: SkjermlenkeTypeWithExtraCodes;
@@ -22,11 +20,6 @@ type SkjermlenkeCode = Readonly<{
 }>;
 
 const skjermlenkeCodes: SkjermlenkeCode[] = [
-  {
-    kode: extraSkjermlenkeType.FAKTA_OM_NY_INNTEKT,
-    faktaNavn: faktaPanelCodes.NY_INNTEKT,
-    punktNavn: '',
-  },
   {
     kode: extraSkjermlenkeType.FAKTA_OM_SOKNADSPERIODER,
     faktaNavn: faktaPanelCodes.SOKNADSPERIODER,
