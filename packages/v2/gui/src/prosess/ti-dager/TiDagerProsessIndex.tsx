@@ -72,7 +72,7 @@ export const TiDagerProsessIndex = ({
   );
 
   const vilkår = vilkar?.[0];
-  const harJournalposter = opplysninger?.journalposter && opplysninger.journalposter.length > 0;
+  const harJournalposter = (opplysninger?.journalposter?.length ?? 0) > 0;
 
   if (perioder.length === 0) {
     return null;
@@ -119,7 +119,9 @@ export const TiDagerProsessIndex = ({
               icon: getIconForPeriode(activePeriodeStatus, false, isAksjonspunktOpen),
             },
           ]}
-          onClick={() => {}}
+          onClick={() => {
+            return;
+          }}
           heading="Perioder"
         />
       </div>
