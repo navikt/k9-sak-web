@@ -1,6 +1,6 @@
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivitetspenger-inngangsvilkår/AktivitetspengerInngangsvilkår.js';
+import { AktivitetspengerOpphør } from '@k9-sak-web/gui/prosess/aktivitetspenger-opphør/AktivitetspengerOpphør.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
@@ -10,12 +10,11 @@ import {
   totrinnskontrollSkjermlenkeContextQueryOptions,
   vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
-
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 
-const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
+const PANEL_ID = prosessStegCodes.OPPHØR;
 
 interface Props {
   api: AktivitetspengerApi;
@@ -23,7 +22,7 @@ interface Props {
   onAksjonspunktBekreftet: () => void;
 }
 
-export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
+export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const [
     { data: aksjonspunkter = [] },
@@ -43,13 +42,12 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
     ],
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-
   if (!erValgt) {
     return null;
   }
 
   return (
-    <AktivitetspengerInngangsvilkår
+    <AktivitetspengerOpphør
       aksjonspunkter={aksjonspunkter}
       innloggetBruker={innloggetBruker}
       vilkår={vilkår}

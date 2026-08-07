@@ -1,7 +1,9 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { behandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -76,6 +78,18 @@ const PANEL_KONFIG = {
     aksjonspunkter: [AksjonspunktDefinisjon.KONTROLLER_INNTEKT],
     id: PROSESS_STEG_KODER.BEREGNET_UTBETALING,
     label: 'Beregnet utbetaling',
+  },
+  opphør: {
+    aksjonspunkter: [
+      AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
+      AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
+      AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+      AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+      AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_BOSTEDUTTALELSE,
+    ],
+    id: prosessStegCodes.OPPHØR,
+    label: 'Opphør',
+    vilkår: [],
   },
 } as const;
 
@@ -172,19 +186,19 @@ const beregnVedtakType = (
   return ProcessMenuStepType.default;
 };
 
-const beregnInngangsvilkårType = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]) => {
+const beregnInngangsvilkårType = (
+  aksjonspunkter: AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
+  erOpphør?: boolean,
+) => {
+  const config = erOpphør ? PANEL_KONFIG.opphør : PANEL_KONFIG.inngangsvilkår;
   const harÅpneAksjonspunkter = aksjonspunkter?.some(
-    ap =>
-      PANEL_KONFIG.inngangsvilkår.aksjonspunkter.some(vap => vap === ap.definisjon) &&
-      ap.status &&
-      isAksjonspunktOpen(ap.status),
+    ap => config.aksjonspunkter.some(vap => vap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
   );
   if (harÅpneAksjonspunkter) {
     return ProcessMenuStepType.warning;
   }
-  const relevanteVilkår = vilkår.filter(v =>
-    PANEL_KONFIG.inngangsvilkår.vilkår.some(vilkårType => vilkårType === v.vilkarType),
-  );
+  const relevanteVilkår = vilkår.filter(v => config.vilkår.some(vilkårType => vilkårType === v.vilkarType));
 
   // Dersom et vilkår bare har en periode og denne er avslått, skal panelet vises som avslag.
   const harAvslag = relevanteVilkår.some(
@@ -230,9 +244,26 @@ const byggInngangsvilkårPanel = (
   };
 };
 
+const byggOpphørPanel = (
+  aksjonspunkter: AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
+  innloggetBruker: InnloggetAnsattUngV2Dto,
+): ProcessMenuStep => {
+  const type = beregnInngangsvilkårType(aksjonspunkter, vilkår, true);
+  const isLocked =
+    type === ProcessMenuStepType.success &&
+    !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
+    !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
+
+  return {
+    ...byggPanelUtenVilkår(true, type, PANEL_KONFIG.opphør),
+    locked: isLocked,
+  };
+};
+
 interface ProsessmotorProps {
   api: AktivitetspengerApi;
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat'>;
+  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat' | 'type' | 'behandlingÅrsaker'>;
 }
 
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
@@ -241,7 +272,16 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
 
   return useMemo(() => {
-    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
+    const erRevurderingMedEndretBosted =
+      behandling.type === BehandlingType.REVURDERING &&
+      behandling.behandlingÅrsaker?.some(årsak => {
+        const årsakType = 'behandlingÅrsakType' in årsak ? årsak.behandlingÅrsakType : årsak.behandlingArsakType;
+        return årsakType === behandlingÅrsakType.ENDRET_BOSTED;
+      });
+
+    const inngangsvilkårPanel = erRevurderingMedEndretBosted
+      ? byggOpphørPanel(aksjonspunkter, vilkår, innloggetBruker)
+      : byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
     const medlemskapPanel = byggVilkårPanel(
       inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
       vilkår,

@@ -28,7 +28,7 @@ const meta = {
     onAksjonspunktBekreftet: () => {},
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
-    bosattFakta: { perioder: [] },
+    bostedGrunnlag: { perioder: [] },
   },
 } satisfies Meta<typeof Bosted>;
 export default meta;

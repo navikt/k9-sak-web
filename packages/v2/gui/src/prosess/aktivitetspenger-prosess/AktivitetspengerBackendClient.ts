@@ -4,7 +4,7 @@ import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
-  aktivitetspenger_hentBosattFakta,
+  aktivitetspenger_hentBostedGrunnlag,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   behandlinger_hentBehandlingData1,
@@ -53,9 +53,10 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } })).data;
   }
 
-  async hentBosattFakta(behandlingUuid: string) {
-    return (await aktivitetspenger_hentBosattFakta({ query: { behandlingUuid } })).data;
+  async hentBostedGrunnlag(behandlingUuid: string) {
+    return (await aktivitetspenger_hentBostedGrunnlag({ query: { behandlingUuid } })).data;
   }
+
   async getBeregningsgrunnlag(behandlingUuid: string) {
     const { data } = await avp_getBeregningsgrunnlag({ query: { behandlingUuid } });
     return data ?? null;

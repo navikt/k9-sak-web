@@ -12,6 +12,7 @@ import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontr
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
+import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { Alder } from './Alder';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
@@ -20,7 +21,6 @@ import { Beslutter } from './Beslutter';
 import { Bosted } from './Bosted';
 import { Søknadsfrist } from './Søknadsfrist';
 import { InngangsvilkårTab } from './types';
-import { aksjonspunktErÅpent } from './utils/utils';
 
 interface InngangsvilkårData {
   søknadsfristAp?: AksjonspunktDto;
@@ -117,7 +117,7 @@ interface Props {
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;
-  bosattFakta: BostedGrunnlagResponseDto;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 export const AktivitetspengerInngangsvilkår = ({
@@ -129,7 +129,7 @@ export const AktivitetspengerInngangsvilkår = ({
   vilkår,
   totrinnskontrollSkjermlenkeContext,
   lovligeBehandlingsoperasjoner,
-  bosattFakta,
+  bostedGrunnlag,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
@@ -208,7 +208,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 isPermanentlyReadOnly={!inngangsvilkårdata.bostedAp || !!inngangsvilkårdata.lokalkontorBeslutterAp}
-                bosattFakta={bosattFakta}
+                bostedGrunnlag={bostedGrunnlag}
               />
             )}
           </Tabs.Panel>

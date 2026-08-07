@@ -21,7 +21,7 @@ const meta = {
       uuid: 'fake-uuid',
       behandlingTilGodkjenningVedLokalkontor: true,
     },
-    bosattFakta: {
+    bostedGrunnlag: {
       perioder: [],
     },
     vilkår: [],

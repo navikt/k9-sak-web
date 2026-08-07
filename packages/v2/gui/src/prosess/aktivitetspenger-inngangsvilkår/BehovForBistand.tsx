@@ -8,17 +8,21 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import {
+  getPeriodStatus,
+  VilkårSplittPanel,
+  type VilkårSplittPanelPeriod,
+} from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { sendTilBeslutter } from './utils/sendTilBeslutter';
-import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
-import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
 
 interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
@@ -210,7 +214,7 @@ export const BehovForBistand = ({
             }}
           >
             <VStack gap="space-24">
-              <VStack gap="space-24" width="70ch">
+              <VStack gap="space-24" maxWidth="70ch" width="100%">
                 <RhfTextarea
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.begrunnelse`}
@@ -223,6 +227,7 @@ export const BehovForBistand = ({
                       )}
                     </span>
                   }
+                  validate={[required, minLength(3), maxLength(4000)]}
                 />
                 <RhfRadioGroup
                   key={`${selectedId}-behovForBistand`}
@@ -254,8 +259,8 @@ export const BehovForBistand = ({
                         label="Til"
                         readOnly={isFormLocked}
                         validate={[required]}
-                        fromDate={selectedItem?.periode.fom ? new Date(selectedItem?.periode.fom) : undefined}
-                        toDate={selectedItem?.periode.tom ? new Date(selectedItem?.periode.tom) : undefined}
+                        fromDate={selectedItem?.periode?.fom ? new Date(selectedItem?.periode.fom) : undefined}
+                        toDate={selectedItem?.periode?.tom ? new Date(selectedItem?.periode.tom) : undefined}
                       />
                     </HStack>
                   </VStack>
@@ -282,7 +287,7 @@ export const BehovForBistand = ({
                     name={`vurderinger.${selectedId}.fritekst`}
                     label="Fritekst avslagsbrev"
                     description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                    validate={[required]}
+                    validate={[required, minLength(3), maxLength(4000)]}
                     readOnly={isFormLocked}
                   />
                 )}
