@@ -263,7 +263,7 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
   {
     kode: 'VURDER_RETT_FRA_DAG_EN',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.VURDER_RETT_FRA_DAG_EN,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
 ];
 

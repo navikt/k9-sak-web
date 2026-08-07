@@ -7,7 +7,7 @@ import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-ico
 import { BodyShort, Box, Detail, Heading, HStack, Loader } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import { useMemo, useState } from 'react';
+
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse.js';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar.js';
@@ -48,9 +48,7 @@ export const TiDagerProsessIndex = ({
   vilkar,
 }: TiDagerProsessIndexProps) => {
   const isAksjonspunktOpen = aksjonspunkter.some(ap => ap.status === aksjonspunktStatus.OPPRETTET);
-  const [activeTab, setActiveTab] = useState(0);
   const perioder = hentAktivePerioderFraVilkar(vilkar, false);
-  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   const api = useTiDagerBackendClient();
   const {
@@ -66,24 +64,9 @@ export const TiDagerProsessIndex = ({
   );
 
   const vilkår = vilkar?.[0];
-  const harJournalposter = opplysninger?.journalposter && opplysninger.journalposter.length > 0;
-  const opplysningerForAktivPeriode = useMemo(
-    () =>
-      opplysninger && activePeriode?.periode.fom && activePeriode?.periode.tom
-        ? {
-            ...opplysninger,
-            journalposter: opplysninger.journalposter?.filter(
-              jp =>
-                jp.foersteOppgitteFravaersdag != undefined &&
-                jp.foersteOppgitteFravaersdag >= activePeriode.periode.fom &&
-                jp.foersteOppgitteFravaersdag <= activePeriode.periode.tom,
-            ),
-          }
-        : opplysninger,
-    [opplysninger, activePeriode?.periode.fom, activePeriode?.periode.tom],
-  );
+  const harJournalposter = (opplysninger?.journalposter?.length ?? 0) > 0;
 
-  if (!activePeriode) {
+  if (perioder.length === 0) {
     return null;
   }
 
@@ -99,7 +82,7 @@ export const TiDagerProsessIndex = ({
     );
   }
 
-  if (!opplysningerForAktivPeriode) {
+  if (!opplysninger) {
     return (
       <Box paddingInline="space-16 space-32" paddingBlock="space-8">
         <BodyShort>Kunne ikke hente opplysninger om rett fra dag én.</BodyShort>
@@ -107,36 +90,13 @@ export const TiDagerProsessIndex = ({
     );
   }
 
-  if (
+  const allePerioderOppfyltUtenJournalposter =
     vilkår?.perioder != undefined &&
     vilkår.perioder.length > 0 &&
     vilkår.perioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT) &&
-    !harJournalposter
-  ) {
-    return (
-      <Box
-        className={styles.innholdUtenSidemeny}
-        paddingInline="space-16 space-32"
-        paddingBlock="space-8"
-        width="fit-content"
-      >
-        <HStack gap="space-16">
-          <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
-          <Heading size="small" level="2" spacing>
-            Ti dager
-          </Heading>
-          <Detail className={styles.vilkar}>
-            <Lovreferanse>§ 9-8 tredje ledd</Lovreferanse>
-          </Detail>
-        </HStack>
-        <BodyShort size="small" weight="semibold">
-          10 dager har blitt dekket
-        </BodyShort>
-      </Box>
-    );
-  }
+    !harJournalposter;
 
-  const activePeriodeStatus = activePeriode.vilkarStatus;
+  const activePeriodeStatus = perioder[0]!.vilkarStatus;
   const vilkårErFerdigVurdert = activePeriodeStatus !== vilkårStatus.IKKE_VURDERT;
   const vilkårErOppfylt = activePeriodeStatus === vilkårStatus.OPPFYLT;
 
@@ -144,25 +104,45 @@ export const TiDagerProsessIndex = ({
     <div className={styles.mainContainerWithSideMenu}>
       <div className="flex-shrink-0">
         <SideMenu
-          links={perioder.map(({ periode, vilkarStatus }, index) => ({
-            active: activeTab === index,
-            label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
-            icon: getIconForPeriode(vilkarStatus, false, isAksjonspunktOpen),
+          links={perioder.map((p, i) => ({
+            active: true,
+            label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}${i < perioder.length - 1 ? ',' : ''}`,
+            icon: i === perioder.length - 1 ? getIconForPeriode(p.vilkarStatus, false, isAksjonspunktOpen) : undefined,
           }))}
-          onClick={setActiveTab}
+          onClick={() => {
+            return;
+          }}
           heading="Perioder"
         />
       </div>
-      <TiDagerProsess
-        opplysninger={opplysningerForAktivPeriode}
-        aksjonspunkter={aksjonspunkter}
-        submitCallback={submitCallback}
-        isReadOnly={isReadOnly}
-        saksnummer={saksnummer}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        vilkårErFerdigVurdert={vilkårErFerdigVurdert}
-        vilkårErOppfylt={vilkårErOppfylt}
-      />
+      {allePerioderOppfyltUtenJournalposter && (
+        <Box paddingInline="space-8" paddingBlock="space-8" width="fit-content">
+          <HStack gap="space-16">
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
+            <Heading size="small" level="2" spacing>
+              Ti dager
+            </Heading>
+            <Detail className={styles.vilkar}>
+              <Lovreferanse>§ 9-8 tredje ledd</Lovreferanse>
+            </Detail>
+          </HStack>
+          <BodyShort size="small" weight="semibold">
+            10 dager har blitt dekket
+          </BodyShort>
+        </Box>
+      )}
+      {!allePerioderOppfyltUtenJournalposter && (
+        <TiDagerProsess
+          opplysninger={opplysninger}
+          aksjonspunkter={aksjonspunkter}
+          submitCallback={submitCallback}
+          isReadOnly={isReadOnly}
+          saksnummer={saksnummer}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          vilkårErFerdigVurdert={vilkårErFerdigVurdert}
+          vilkårErOppfylt={vilkårErOppfylt}
+        />
+      )}
     </div>
   );
 };
