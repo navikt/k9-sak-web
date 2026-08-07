@@ -1,6 +1,6 @@
 # Verdier for dev-fss.k9saksbehandling.yml ved utrulling frå master til Q
 name: k9-sak-web
-ingress: "https://k9.dev.intern.nav.no/"
+ingress: "https://k9.intern.dev.nav.no/"
 replicas:
   min: 2
   max: 3
