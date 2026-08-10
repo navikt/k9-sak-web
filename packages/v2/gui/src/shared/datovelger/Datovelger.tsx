@@ -1,5 +1,6 @@
 // react hook form wrapper for datovelger
 
+import type { DatePickerProps } from '@navikt/ds-react';
 import { useController, useFormContext } from 'react-hook-form';
 import DatovelgerPlain from './DatovelgerPlain';
 
@@ -7,22 +8,26 @@ const Datovelger = ({
   name,
   label,
   hideLabel,
-  disabled,
+  readOnly,
   fromDate,
   toDate,
   size,
   validate,
+  disabledDays,
   showErrorMessage = true,
+  defaultMonth,
 }: {
   name: string;
   label: string;
   hideLabel?: boolean;
-  disabled?: boolean;
+  readOnly?: boolean;
   fromDate?: Date;
   toDate?: Date;
   size?: 'small' | 'medium';
   validate?: ((value: string) => string | null | undefined)[];
+  disabledDays?: DatePickerProps['disabled'];
   showErrorMessage?: boolean;
+  defaultMonth?: Date;
 }) => {
   const formMethods = useFormContext();
   const controller = useController({
@@ -45,7 +50,8 @@ const Datovelger = ({
       hideLabel={hideLabel}
       value={value}
       onChange={onChange}
-      disabled={disabled}
+      readOnly={readOnly}
+      disabled={disabledDays}
       errorMessage={showErrorMessage ? error : !!error}
       selectedDay={value}
       onBlur={() => {
@@ -54,6 +60,7 @@ const Datovelger = ({
       fromDate={fromDate}
       toDate={toDate}
       size={size}
+      defaultMonth={defaultMonth}
     />
   );
 };
