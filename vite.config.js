@@ -140,6 +140,7 @@ export default ({ mode }) => {
         ],
         plugins: [nodeSourcemapsPlugin({ exclude: /@sentry/ })],
         output: {
+          sourcemapBaseUrl: process.env.VITE_CDN_BASE_URL,
           manualChunks(id) {
             if (id.includes('@navikt/diagnosekoder')) {
               return 'diagnosekoder';
