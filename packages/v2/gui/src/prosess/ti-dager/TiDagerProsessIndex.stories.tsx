@@ -219,6 +219,7 @@ export const SendInnVurdering: Story = {
 export const OppfyltVilkårUtenJournalposter: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerIngenJournalposter)],
   args: {
+    aksjonspunkter: [],
     behandlingUUID: 'oppfylt-vilkar-uten-journalposter-uuid',
     vilkar: [
       {
@@ -251,7 +252,7 @@ export const OppfyltVilkårUtenJournalposter: Story = {
   },
 };
 
-export const ByttPeriodeOppdatererInnhold: Story = {
+export const ToPerioderVisesSeparatISidemeny: Story = {
   decorators: [withFakeTiDagerBackend(opplysningerToPerioder)],
   args: {
     behandlingUUID: 'bytt-periode-uuid',
@@ -293,19 +294,18 @@ export const ByttPeriodeOppdatererInnhold: Story = {
     ],
   },
   play: async ({ canvas, step }) => {
-    await step('Nyeste periode er aktiv og viser Arbeidsgiver AS', async () => {
-      await expect(await canvas.findByText(tekstMatcher('Arbeidsgiver AS'))).toBeVisible();
-      await expect(canvas.queryByText(tekstMatcher('Eksempelbedrift AS'))).toBeNull();
+    await step('Sidemeny viser to separate perioder — nyeste først med komma', async () => {
+      const button1 = await canvas.findByRole('button', { name: /14\.04\.2026 - 18\.04\.2026/ });
+      const button2 = await canvas.findByRole('button', { name: /06\.04\.2026 - 10\.04\.2026/ });
+      await expect(button1).toBeVisible();
+      await expect(button2).toBeVisible();
+      await expect(button1.textContent).toContain('14.04.2026 - 18.04.2026,');
+      await expect(button2.textContent).not.toContain(',');
     });
 
-    await step('Bytt til eldre periode i sidemenyen', async () => {
-      const eldrePeriode = await canvas.findByRole('button', { name: '06.04.2026 - 10.04.2026' });
-      await userEvent.click(eldrePeriode);
-    });
-
-    await step('Eldre periode viser Eksempelbedrift AS', async () => {
+    await step('Begge arbeidsgivere er synlige samtidig', async () => {
       await expect(await canvas.findByText(tekstMatcher('Eksempelbedrift AS'))).toBeVisible();
-      await expect(canvas.queryByText(tekstMatcher('Arbeidsgiver AS'))).toBeNull();
+      await expect(await canvas.findByText(tekstMatcher('Arbeidsgiver AS'))).toBeVisible();
     });
   },
 };
