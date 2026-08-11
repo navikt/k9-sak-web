@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 import DatovelgerPlain from './DatovelgerPlain.js';
 
 const meta = {
@@ -7,8 +7,8 @@ const meta = {
   component: DatovelgerPlain,
   args: {
     label: 'Velg dato',
-    onChange: () => {},
-    onBlur: () => {},
+    onChange: fn(),
+    onBlur: fn(),
     value: '',
     selectedDay: '',
   },
@@ -42,4 +42,35 @@ export const ReadOnly: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByLabelText('Velg dato')).toBeDisabled();
   },
+};
+
+// Tester at ulike datoformater tolkes riktig til ISO-format
+const inputFormatPlay =
+  (input: string): Story['play'] =>
+  async ({ canvas, args }) => {
+    const inputEl = canvas.getByLabelText('Velg dato');
+    await userEvent.clear(inputEl);
+    await userEvent.type(inputEl, input);
+    await userEvent.tab();
+    await expect(args.onChange).toHaveBeenCalledWith('2026-08-11');
+  };
+
+export const FormatDDMMYY: Story = {
+  play: inputFormatPlay('110826'),
+};
+
+export const FormatDDMMYYYY: Story = {
+  play: inputFormatPlay('11.08.2026'),
+};
+
+export const FormatDDMMYYYYUtenPunktum: Story = {
+  play: inputFormatPlay('11082026'),
+};
+
+export const FormatDDSlashMMSlashYYYY: Story = {
+  play: inputFormatPlay('11/08/2026'),
+};
+
+export const FormatDDDashMMDashYYYY: Story = {
+  play: inputFormatPlay('11-08-2026'),
 };
