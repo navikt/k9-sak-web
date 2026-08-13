@@ -2,11 +2,11 @@ import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9k
 import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import dayjs from 'dayjs';
 import { use, useCallback } from 'react';
 import NyBehandlingModal, {
@@ -164,8 +164,16 @@ const MenyNyBehandlingIndexV2 = ({
       <NyBehandlingModalAktivitetspenger
         behandlingstyper={behandlingstyper}
         behandlingOppretting={behandlingOppretting}
+        tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
         cancelEvent={lukkModal}
         kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
+        saksnummer={saksnummer}
+        behandlingType={behandlingType}
+        behandlingUuid={behandlingUuid}
+        uuidForSistLukkede={uuidForSistLukkede}
+        erTilbakekrevingAktivert={erTilbakekrevingAktivert}
+        sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
         submitCallback={submit}
       />
     );
