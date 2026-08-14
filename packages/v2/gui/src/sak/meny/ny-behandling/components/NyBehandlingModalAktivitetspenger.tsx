@@ -1,4 +1,5 @@
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Box, Button, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -38,6 +39,7 @@ interface Props {
     behandlingType: string;
     behandlingUuid?: string;
     eksternUuid?: string;
+    fagsakYtelseType: FagsakYtelseType;
   }) => Promise<void>;
 }
 
@@ -99,6 +101,7 @@ export const NyBehandlingModalAktivitetspenger = ({
       behandlingType: formValues.behandlingType,
       behandlingUuid: kanTilbakekrevingOpprettes.kanRevurderingOpprettes ? behandlingUuid : undefined,
       eksternUuid: uuidForSistLukkede,
+      fagsakYtelseType: FagsakYtelseType.AKTIVITETSPENGER,
     });
   };
   const formMethods = useForm<FormValues>({
