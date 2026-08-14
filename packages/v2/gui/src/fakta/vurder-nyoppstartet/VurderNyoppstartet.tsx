@@ -1,6 +1,7 @@
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Alert, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, minLength, required } from '@navikt/ft-form-validators';
 import { useForm, useWatch } from 'react-hook-form';
 
@@ -71,8 +72,7 @@ export const VurderNyoppstartet = ({
             <Radio value={false}>Nei</Radio>
           </RhfRadioGroup>
           {erNyoppstartet && (
-            <RhfDatepicker
-              control={formMethods.control}
+            <Datovelger
               name="fom"
               label="Dato for nyoppstartet"
               validate={[required, hasValidDate]}
@@ -91,7 +91,12 @@ export const VurderNyoppstartet = ({
           </Box>
           {!readOnly && (
             <HStack>
-              <Button type="submit" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+              <Button
+                type="submit"
+                size="small"
+                loading={formMethods.formState.isSubmitting}
+                disabled={formMethods.formState.isSubmitting}
+              >
                 Bekreft
               </Button>
             </HStack>

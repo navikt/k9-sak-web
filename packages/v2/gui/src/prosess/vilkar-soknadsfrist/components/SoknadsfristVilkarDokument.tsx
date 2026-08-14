@@ -1,9 +1,10 @@
 import type { k9_sak_kontrakt_vilkår_VilkårPeriodeDto as VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
-import { RhfDatepicker, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfTextarea } from '@navikt/ft-form-hooks';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -146,8 +147,7 @@ export const SoknadsfristVilkarDokument = ({
               label: 'Vilkåret er oppfylt for deler av perioden',
               element: (
                 <div className="my-2">
-                  <RhfDatepicker
-                    control={control}
+                  <Datovelger
                     name={`avklarteKrav.${dokumentIndex}.fraDato`}
                     label="Oppgi dato søknadsfristvilkåret er oppfylt fra"
                     validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}

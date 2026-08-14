@@ -6,7 +6,7 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Label, Modal, Select } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import {
   dateAfterOrEqualToToday,
   dateBeforeToday,
@@ -17,6 +17,7 @@ import {
 } from '@navikt/ft-form-validators';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import Datovelger from '../datovelger/Datovelger';
 import styles from './settPåVentModal.module.css';
 
 const initFrist = (): string => {
@@ -219,13 +220,12 @@ export const SettPåVentModal = ({
               </BodyShort>
               {showEndreFrist && (
                 <div className={styles.datePicker}>
-                  <RhfDatepicker
-                    control={formMethods.control}
+                  <Datovelger
                     name="frist"
                     validate={[required, hasValidDate, dateAfterOrEqualToToday]}
                     data-testid="datofelt"
                     label={getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
-                    disabled={disableEndreFrist}
+                    readOnly={disableEndreFrist}
                   />
                 </div>
               )}
@@ -321,13 +321,7 @@ export const SettPåVentModal = ({
                 loading={formMethods.formState.isSubmitting}
                 disabled={
                   formMethods.formState.isSubmitting ||
-                  isButtonDisabled(
-                    frist,
-                    showAvbryt,
-                    hasManualPaVent,
-                    erVenterEtterlysInntektsmelding,
-                    formHasChanges,
-                  )
+                  isButtonDisabled(frist, showAvbryt, hasManualPaVent, erVenterEtterlysInntektsmelding, formHasChanges)
                 }
               >
                 {getHovedknappTekst()}
