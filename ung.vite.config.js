@@ -145,6 +145,9 @@ export default ({ mode }) => {
           "mockServiceWorker.js"
         ],
         plugins: [nodeSourcemapsPlugin({ exclude: /@sentry/ })],
+        output: {
+          sourcemapBaseUrl: process.env.VITE_CDN_BASE_URL,
+        },
       },
     },
   });
