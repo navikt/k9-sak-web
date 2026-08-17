@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -47,7 +48,12 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
         begrunnelse: p.avklaring?.begrunnelse ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
         forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
-        opphøreEllerAvslå: '',
+        opphøreEllerAvslå:
+          p.avklaring?.avklaringtype === Avklaringtype.OPPHØR
+            ? 'opphøre'
+            : p.avklaring?.avklaringtype === Avklaringtype.AVSLAG
+              ? 'avslå'
+              : '',
         opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
         årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
         åpenbarGrunnTilIkkeVarsle:
@@ -172,7 +178,8 @@ export const AarsakOgVarsel = ({
 
   const skalSendeForhåndsvarsel = åpenbarGrunnTilIkkeVarsle === 'nei';
   const valgtPeriode = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
-  const readOnlyForValgtPeriode = !!valgtPeriode && !valgtPeriode.avklaring;
+  const readOnlyForValgtPeriode =
+    !!valgtPeriode && (!valgtPeriode.avklaring || valgtPeriode.avklaring?.kanRedigeres !== true);
   const panelReadOnly = readOnly || readOnlyForValgtPeriode;
   const relevanteBostedsvilkårIkkeOppfyltÅrsaker = Object.values(BostedsvilkårIkkeOppfyltÅrsak).filter(
     årsak => årsak !== BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT,
