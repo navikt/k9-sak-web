@@ -9,8 +9,8 @@ import BehandlingAktivitetspengerIndex from '@k9-sak-web/behandling-aktivitetspe
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
-import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
@@ -20,11 +20,11 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  NavAnsatt,
 } from '@k9-sak-web/types';
 import { ung_kodeverk_behandling_BehandlingType } from '@navikt/ung-sak-typescript-client/types';
 import { getFaktaLocation, getLocationWithDefaultProsessStegAndFakta, getProsessStegLocation } from '../app/paths';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import { useNavAnsattForYtelse } from '../data/useNavAnsattForYtelse.js';
 import behandlingEventHandler from './BehandlingEventHandler';
 
 const BehandlingTilbakekrevingUngdomsytelseIndex = lazy(
@@ -103,7 +103,7 @@ const BehandlingIndex = ({
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
+  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype as string);
   const rettigheter = useMemo(
     () => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type),
     [fagsak.status, behandling?.id, behandling?.status, behandling?.type],

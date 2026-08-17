@@ -1,10 +1,9 @@
+import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
 import { HeaderPanel } from '@k9-sak-web/gui/sak/dekoratør/HeaderPanel.js';
-import { InnloggetAnsattContext } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattContext.js';
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
-import { use } from 'react';
-import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
 import * as Sentry from '@sentry/react';
+import { useInnloggetBrukerNavn } from '../../data/useNavAnsattForYtelse.js';
 
 const getYtelseNavn = (): string => {
   if (isAktivitetspenger()) {
@@ -24,7 +23,7 @@ interface OwnProps {
 }
 
 const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
-  const navAnsatt = use(InnloggetAnsattContext);
+  const { brukernavn, navn } = useInnloggetBrukerNavn();
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
 
@@ -51,8 +50,8 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
   return (
     <>
       <HeaderPanel
-        navAnsattName={navAnsatt.navn ?? navAnsatt?.brukernavn}
-        navBrukernavn={navAnsatt.brukernavn}
+        navAnsattName={navn ?? brukernavn}
+        navBrukernavn={brukernavn}
         aaregPath={getAaregPath()}
         ytelse={ytelse}
         headerTitleHref="/ung/web"
