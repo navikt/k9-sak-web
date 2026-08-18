@@ -4,6 +4,32 @@ import type { AlleKodeverdierSomObjektResponse } from '@k9-sak-web/backend/k9sak
 // Brukast for å kunne gjere kodeverk oppslag i test/stories.
 // Oppdater med ny kopi frå nevnte endepunkt (feks via swagger) når kodeverk definisjoner blir endra i k9-sak kode.
 export const oppslagKodeverkSomObjektK9Sak = {
+  dokumentFilterGrupper: [
+    {
+      kode: 'ETTERSENDELSE',
+      kodeverk: 'DOKUMENTFILTER_GRUPPE',
+      navn: 'Ettersendelse',
+      kilde: 'ETTERSENDELSE',
+    },
+    {
+      kode: 'INNTEKTSMELDING',
+      kodeverk: 'DOKUMENTFILTER_GRUPPE',
+      navn: 'Inntektsmelding',
+      kilde: 'INNTEKTSMELDING',
+    },
+    {
+      kode: 'PUNSJ',
+      kodeverk: 'DOKUMENTFILTER_GRUPPE',
+      navn: 'Punsj',
+      kilde: 'PUNSJ',
+    },
+    {
+      kode: 'SØKNAD',
+      kodeverk: 'DOKUMENTFILTER_GRUPPE',
+      navn: 'Søknad',
+      kilde: 'SØKNAD',
+    },
+  ],
   relatertYtelseTilstander: [
     {
       kode: 'AVSLUTTET',
