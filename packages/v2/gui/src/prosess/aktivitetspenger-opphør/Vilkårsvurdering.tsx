@@ -142,7 +142,7 @@ export const Vilkaarsvurdering = ({
         periodListLabel="Alle perioder"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={defaultIsLocked}
-        readOnly={selectedPeriod?.status === 'success' || readOnly}
+        readOnly={selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error' || readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
           erLokalkontorForeslårAPÅpent ? (
