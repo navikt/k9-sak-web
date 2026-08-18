@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -115,7 +116,7 @@ export const AktivitetspengerOpphør = ({
   const vilkårsvurderingAPForTab = lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP;
   const harBeslutterAP = !!lokalkontorBeslutterAP;
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
-
+  const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
   const [aktivTab, setAktivTab] = useState<OpphørTab>(utledAktivTab(opphørData));
 
   useEffect(() => {
@@ -157,7 +158,7 @@ export const AktivitetspengerOpphør = ({
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={harBeslutterAP}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
               />
             )}
@@ -171,7 +172,7 @@ export const AktivitetspengerOpphør = ({
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
-                isPermanentlyReadOnly={harBeslutterAP}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
               />
