@@ -8,12 +8,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
-import {
-  brevkoder,
-  dokumentTypeFilter,
-  isDokumentTypeFilter,
-  type DokumentTypeFilter,
-} from '../constants/brevkodeFilterGrupper.js';
 import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
@@ -32,13 +26,6 @@ const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
 
 const inntektsmeldingBrevkode = '4936';
-
-const brevkodeMap: Partial<Record<DokumentTypeFilter, readonly string[]>> = {
-  [dokumentTypeFilter.INNTEKTSMELDINGER]: brevkoder.INNTEKTSMELDING,
-  [dokumentTypeFilter.SØKNADER]: brevkoder.SØKNAD,
-  [dokumentTypeFilter.ETTERSENDELSER]: brevkoder.ETTERSENDELSE,
-  [dokumentTypeFilter.PUNSJ]: brevkoder.PUNSJ,
-};
 
 const isVedtaksdokument = (document: Document) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
