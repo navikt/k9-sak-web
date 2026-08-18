@@ -1751,9 +1751,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:5.8.0":
-  version: 5.8.0
-  resolution: "@hookform/resolvers@npm:5.8.0"
+"@hookform/resolvers@npm:5.9.0":
+  version: 5.9.0
+  resolution: "@hookform/resolvers@npm:5.9.0"
   dependencies:
     "@standard-schema/utils": "npm:^0.3.0"
   peerDependencies:
@@ -1773,7 +1773,7 @@ __metadata:
     fluentvalidation-ts: ^3.0.0
     fp-ts: ^2.7.0
     io-ts: ^2.0.0
-    joi: ^17.0.0
+    joi: ^17.0.0 || ^18.0.0
     nope-validator: ">=0.12.0"
     react-hook-form: ^7.55.0
     superstruct: ">=0.12.0"
@@ -1831,7 +1831,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10/7a989772ad2d3afccfaa77b5fb294ca2cdb89195a9977a345644fe8f0c72367f010df5c35a90fcc616fef2e4c0bbd43e54be497f3420eea5fa2857db4d1f5830
+  checksum: 10/7a74221cc5d14459389f64788b71971e98386ed1d25addad25cf4c1b5f32a25ea1f1b9864cf63cc37c5eb66439bba0ad386075088c305d76c308fcc26ebb41f6
   languageName: node
   linkType: hard
 
@@ -2959,7 +2959,7 @@ __metadata:
     "@editorjs/list": "npm:2.0.9"
     "@editorjs/paragraph": "npm:2.11.7"
     "@hookform/error-message": "npm:2.0.1"
-    "@hookform/resolvers": "npm:5.8.0"
+    "@hookform/resolvers": "npm:5.9.0"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "workspace:^"
     "@nais/apm": "npm:0.6.0"
