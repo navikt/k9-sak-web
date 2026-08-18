@@ -32,8 +32,7 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
   #uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
   #onBekreftAksjonspunkt: ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => void) | undefined;
   #onOverstyringUttak:
-    | ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void)
-    | undefined;
+    ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void) | undefined;
   #allowedRanges: Array<{ fom: string; tom: string }> | undefined;
 
   constructor(config?: FakeUttakBackendConfig) {

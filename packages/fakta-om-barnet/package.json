@@ -7,13 +7,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/ds-react": "8.15.0",
+    "@navikt/ds-react": "8.16.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-hook-form": "7.83.0",
+    "react-hook-form": "7.85.0",
     "tailwindcss": "4.3.3"
   },
   "devDependencies": {
-    "@types/react": "19.2.17"
+    "@types/react": "19.2.18"
   }
 }

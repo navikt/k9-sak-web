@@ -5,9 +5,10 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -241,15 +242,8 @@ export const BehovForBistand = ({
                       I hvilken periode er det behov for bistand?
                     </Label>
                     <HStack gap="space-24">
-                      <RhfDatepicker
-                        control={formHook.control}
-                        name={`vurderinger.${selectedId}.bistandStart`}
-                        label="Fra"
-                        disabled={!isFormLocked}
-                        readOnly={isFormLocked}
-                      />
-                      <RhfDatepicker
-                        control={formHook.control}
+                      <Datovelger name={`vurderinger.${selectedId}.bistandStart`} label="Fra" readOnly />
+                      <Datovelger
                         name={`vurderinger.${selectedId}.bistandSlutt`}
                         label="Til"
                         readOnly={isFormLocked}

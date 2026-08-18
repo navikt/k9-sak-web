@@ -66,9 +66,14 @@ class RequestRunner {
     this.errorNotifier = errorNotifier;
   }
 
-  execLongPolling = async (location: string, pollingInterval = 0, pollingCounter = 0): Promise<Response> => {
+  execLongPolling = async (
+    location: string,
+    pollingInterval = 0,
+    pollingCounter = 0,
+    message?: string,
+  ): Promise<Response> => {
     if (pollingCounter === this.maxPollingLimit) {
-      throw new TimeoutError(location);
+      throw new TimeoutError(location, message);
     }
 
     await wait(pollingInterval);
@@ -88,7 +93,7 @@ class RequestRunner {
     if (responseData && responseData.status === AsyncPollingStatus.PENDING) {
       const { pollIntervalMillis, message } = responseData;
       this.notify(EventType.UPDATE_POLLING_MESSAGE, message);
-      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1);
+      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1, message);
     }
 
     return statusOrResultResponse;

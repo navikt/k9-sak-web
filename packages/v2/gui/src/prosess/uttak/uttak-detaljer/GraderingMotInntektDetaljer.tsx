@@ -4,7 +4,11 @@ import type { InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/kontr
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { useUttakContext } from '../context/UttakContext';
-import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn, utledArbeidstypeVisningsnavn } from '../utils/aktivitetVisning';
+import {
+  utledAktivitetVisningsnavn,
+  utledArbeidsgiverNavn,
+  utledArbeidstypeVisningsnavn,
+} from '../utils/aktivitetVisning';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {

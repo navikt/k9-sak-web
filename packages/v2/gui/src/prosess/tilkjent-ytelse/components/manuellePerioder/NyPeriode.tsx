@@ -1,7 +1,7 @@
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Button, ErrorMessage, HStack, Label, VStack } from '@navikt/ds-react';
-import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { guid } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
@@ -82,14 +82,8 @@ export const TilkjentYtelseNyPeriode = ({
             Ny periode
           </Label>
           <HStack gap="space-8">
-            <RhfDatepicker
-              control={formMethods.control}
-              name="nyPeriodeForm.fom"
-              label="Fra"
-              validate={[required, hasValidDate]}
-            />
-            <RhfDatepicker
-              control={formMethods.control}
+            <Datovelger name="nyPeriodeForm.fom" label="Fra" validate={[required, hasValidDate]} />
+            <Datovelger
               name="nyPeriodeForm.tom"
               label="Til"
               validate={[required, hasValidDate, dateAfterOrEqual(formState?.fom ?? '')]}

@@ -13,6 +13,7 @@ import {
 type EnumKodeverdierOppslag = Omit<
   AlleKodeverdierSomObjektResponse,
   | 'avslagårsakerPrVilkårTypeKode'
+  | 'dokumentFilterGrupper'
   | 'landkoder'
   | 'språkkoder'
   // Midlertidig utelatt inntil dei er fjerna frå serverdefinisjon:

@@ -1,7 +1,7 @@
 const { DEV: IS_DEV } = import.meta.env;
 export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
-const devHosts = ['k9.dev.intern.nav.no', 'ung.intern.dev.nav.no'];
+const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no'];
 const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no'];
 
 export const getPathToK9Los = (): string | null => {
@@ -49,9 +49,7 @@ export const goToSearch = () => {
 
 export const isDev = () => IS_DEV;
 
-export const isQ = (): boolean =>
-  window.location.hostname.toLowerCase().endsWith('.dev.intern.nav.no') ||
-  window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
+export const isQ = (): boolean => window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
 
 export const isProd = () => {
   const { host } = window.location;

@@ -23,7 +23,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -33,8 +33,19 @@ jobs:
       - name: Bygge dist
         run: yarn build:ung
         env:
+          VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/ung-sak-web/"
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_SENTRY_RELEASE: ${{ github.sha }}
+
+      - name: Last opp assets til CDN
+        uses: nais/deploy/actions/cdn-upload/v2@849e900e3cfa7faf7ad1532bb3a3e6499c932199
+        with:
+          source: dist/ung/web/
+          destination: ung-sak-web/
+          team: k9saksbehandling
+          source_keep_parent_name: false
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
       - name: Bygg server
         uses: ./.github/actions/build-server
@@ -74,8 +85,8 @@ jobs:
     environment: test
     needs: [build-docker-image]
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: nais/deploy/actions/deploy@849e900e3cfa7faf7ad1532bb3a3e6499c932199 # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
@@ -94,7 +105,7 @@ jobs:
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev]
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Ta med litt historie og tags for å finne latest_prod_ung commit hash
           fetch-tags: true
@@ -131,7 +142,7 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+      - uses: nais/deploy/actions/deploy@849e900e3cfa7faf7ad1532bb3a3e6499c932199 # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml

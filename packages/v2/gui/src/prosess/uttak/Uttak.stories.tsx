@@ -584,9 +584,7 @@ export const UttakPleiepengerNærstående: Story = {
         await user.click(knapp);
       }
       await waitFor(async () => {
-        await expect(
-          canvas.getByText('Årsak for avslag: Pleietrengende er innlagt.'),
-        ).toBeInTheDocument();
+        await expect(canvas.getByText('Årsak for avslag: Pleietrengende er innlagt.')).toBeInTheDocument();
       });
     });
   },
