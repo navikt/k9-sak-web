@@ -12,7 +12,7 @@
     "react": "19.2.8",
     "react-intl": "10.1.20",
     "vis-data": "8.0.5",
-    "vis-timeline": "8.5.3"
+    "vis-timeline": "8.5.4"
   },
   "devDependencies": {
     "@types/react": "19.2.18"
