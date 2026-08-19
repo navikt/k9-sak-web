@@ -3,7 +3,7 @@ import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling
 import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
-import { behandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -276,7 +276,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       behandling.type === BehandlingType.REVURDERING &&
       behandling.behandlingÅrsaker?.some(årsak => {
         const årsakType = årsak.behandlingArsakType;
-        return årsakType === behandlingÅrsakType.ENDRET_BOSTED;
+        return årsakType === BehandlingÅrsakType.ENDRET_BOSTED;
       });
 
     const inngangsvilkårPanel = erRevurderingMedEndretBosted
