@@ -15,7 +15,7 @@ import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 import { TiDagerProsess, type TiDagerSubmitModel } from './TiDagerProsess.js';
 import styles from './tiDagerProsessIndex.module.css';
 
-const getIconForPeriode = (perioder: VilkårPeriodeDto[], erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
+const getIconForPerioder = (perioder: VilkårPeriodeDto[], erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
   const harOppfyltPeriode = perioder.some(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
   const harBareAvslåttePerioder = perioder.every(p => p.vilkarStatus === vilkårStatus.IKKE_OPPFYLT);
   if (erOverstyrt || harÅpentUløstAksjonspunkt) {
@@ -98,8 +98,7 @@ export const TiDagerProsessIndex = ({
     vilkår.perioder.every(p => p.vilkarStatus === vilkårStatus.OPPFYLT) &&
     !harJournalposter;
 
-  const activePeriodeStatus = perioder[0]!.vilkarStatus;
-  const vilkårErFerdigVurdert = activePeriodeStatus !== vilkårStatus.IKKE_VURDERT;
+  const vilkårErFerdigVurdert = perioder.every(p => p.vilkarStatus !== vilkårStatus.IKKE_VURDERT);
   const vilkårErOppfylt = perioder.some(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
 
   return (
@@ -109,7 +108,7 @@ export const TiDagerProsessIndex = ({
           links={perioder.map((p, i) => ({
             active: true,
             label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}${i < perioder.length - 1 ? ',' : ''}`,
-            icon: i === perioder.length - 1 ? getIconForPeriode(perioder, false, isAksjonspunktOpen) : undefined,
+            icon: i === perioder.length - 1 ? getIconForPerioder(perioder, false, isAksjonspunktOpen) : undefined,
           }))}
           onClick={() => {
             return;
