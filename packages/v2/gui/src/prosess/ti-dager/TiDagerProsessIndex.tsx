@@ -2,12 +2,12 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Detail, Heading, HStack, Loader } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon.js';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse.js';
 import { hentAktivePerioderFraVilkar } from '../../utils/hentAktivePerioderFraVilkar.js';
@@ -15,14 +15,16 @@ import { useTiDagerBackendClient } from './TiDagerBackendClientContext.js';
 import { TiDagerProsess, type TiDagerSubmitModel } from './TiDagerProsess.js';
 import styles from './tiDagerProsessIndex.module.css';
 
-const getIconForPeriode = (vilkarStatus: string, erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
+const getIconForPeriode = (perioder: VilkårPeriodeDto[], erOverstyrt: boolean, harÅpentUløstAksjonspunkt: boolean) => {
+  const harOppfyltPeriode = perioder.some(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
+  const harBareAvslåttePerioder = perioder.every(p => p.vilkarStatus === vilkårStatus.IKKE_OPPFYLT);
   if (erOverstyrt || harÅpentUløstAksjonspunkt) {
     return <AksjonspunktIkon size="small" />;
   }
-  if (vilkarStatus === vilkårStatus.OPPFYLT) {
+  if (harOppfyltPeriode) {
     return <CheckmarkCircleFillIcon style={{ color: 'var(--ax-bg-success-strong)' }} />;
   }
-  if (vilkarStatus === vilkårStatus.IKKE_OPPFYLT) {
+  if (harBareAvslåttePerioder) {
     return <XMarkOctagonFillIcon style={{ color: 'var(--ax-bg-danger-strong)' }} />;
   }
   return null;
@@ -98,7 +100,7 @@ export const TiDagerProsessIndex = ({
 
   const activePeriodeStatus = perioder[0]!.vilkarStatus;
   const vilkårErFerdigVurdert = activePeriodeStatus !== vilkårStatus.IKKE_VURDERT;
-  const vilkårErOppfylt = activePeriodeStatus === vilkårStatus.OPPFYLT;
+  const vilkårErOppfylt = perioder.some(p => p.vilkarStatus === vilkårStatus.OPPFYLT);
 
   return (
     <div className={styles.mainContainerWithSideMenu}>
@@ -107,7 +109,7 @@ export const TiDagerProsessIndex = ({
           links={perioder.map((p, i) => ({
             active: true,
             label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}${i < perioder.length - 1 ? ',' : ''}`,
-            icon: i === perioder.length - 1 ? getIconForPeriode(p.vilkarStatus, false, isAksjonspunktOpen) : undefined,
+            icon: i === perioder.length - 1 ? getIconForPeriode(perioder, false, isAksjonspunktOpen) : undefined,
           }))}
           onClick={() => {
             return;
