@@ -265,6 +265,11 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
+  {
+    kode: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
 ];
 
 let skjermlenkeCodeMap: Map<SkjermlenkeTypeWithExtraCodes, SkjermlenkeCode[]>;
