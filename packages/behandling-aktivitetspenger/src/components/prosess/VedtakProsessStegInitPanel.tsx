@@ -16,6 +16,7 @@ import {
   VedtakBekreftetAksjonspunktDto,
 } from '@k9-sak-web/gui/prosess/ung-vedtak/ungVedtakAksjonspunktAvgrensing.js';
 import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
+import { erAktivitetspengerOpphørsbehandling } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { useMutation, useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
@@ -25,6 +26,11 @@ const PANEL_ID = prosessStegCodes.VEDTAK;
 const vedtakPanelTekster = {
   innvilget: 'Aktivitetspenger er innvilget',
   avslått: 'Aktivitetspenger er avslått',
+};
+
+const vedtakOpphørPanelTekster = {
+  innvilget: 'Opphør',
+  avslått: 'Opphør',
 };
 
 interface Props {
@@ -92,7 +98,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
       vilkar={vilkår}
       isReadOnly={isReadOnly}
       vedtakBekreftelseCallback={bekreftAksjonspunktMutation}
-      tekster={vedtakPanelTekster}
+      tekster={erAktivitetspengerOpphørsbehandling(behandling) ? vedtakOpphørPanelTekster : vedtakPanelTekster}
     />
   );
 }

@@ -3,7 +3,7 @@ import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
-import { behandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
@@ -240,7 +240,7 @@ describe('Prossesmotor', () => {
           api,
           behandling: createBehandling({
             type: BehandlingType.REVURDERING,
-            behandlingÅrsaker: [{ behandlingÅrsakType: behandlingÅrsakType.ENDRET_BOSTED }],
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
           }),
         }),
       {
@@ -250,6 +250,28 @@ describe('Prossesmotor', () => {
 
     await waitFor(() => {
       expect(result.current[0].label).toBe('Opphør');
+    });
+  });
+
+  test('viser inngangsvilkårpanel ved revurdering uten endret bosted-årsak', async () => {
+    const api = createApi();
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.RE_ANNET }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current[0].label).toBe('Inngangsvilkår');
     });
   });
 });

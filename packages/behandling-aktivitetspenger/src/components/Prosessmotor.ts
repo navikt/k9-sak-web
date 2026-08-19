@@ -1,9 +1,7 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
-import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -17,6 +15,7 @@ import {
   vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { erAktivitetspengerOpphørsbehandling } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -272,14 +271,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
 
   return useMemo(() => {
-    const erRevurderingMedEndretBosted =
-      behandling.type === BehandlingType.REVURDERING &&
-      behandling.behandlingÅrsaker?.some(årsak => {
-        const årsakType = årsak.behandlingArsakType;
-        return årsakType === BehandlingÅrsakType.ENDRET_BOSTED;
-      });
-
-    const inngangsvilkårPanel = erRevurderingMedEndretBosted
+    const inngangsvilkårPanel = erAktivitetspengerOpphørsbehandling(behandling)
       ? byggOpphørPanel(aksjonspunkter, vilkår, innloggetBruker)
       : byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
     const medlemskapPanel = byggVilkårPanel(
