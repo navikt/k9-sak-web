@@ -133,7 +133,7 @@ export const BeslutterOpphør = ({
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormValues) => {
       if (!lokalkontorBeslutterAP?.definisjon) {
-        return;
+        throw new Error('Fant ikke aksjonspunkt for beslutter');
       }
       const payload = {
         '@type': AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
@@ -205,44 +205,42 @@ export const BeslutterOpphør = ({
                         </RhfRadioGroup>
                         {isVurderPaNytt && (
                           <ArrowBox alignOffset={110}>
-                            {isVurderPaNytt && (
-                              <VStack gap="space-8">
-                                <Detail>Årsak</Detail>
-                                <Fieldset legend="" hideLegend>
-                                  <HStack gap="space-80">
-                                    <div>
-                                      <RhfCheckbox
-                                        control={control}
-                                        name={`${fieldPath}.feilFakta`}
-                                        label="Feil fakta"
-                                        onChange={reValidate}
-                                      />
-                                      <RhfCheckbox
-                                        control={control}
-                                        name={`${fieldPath}.feilRegel`}
-                                        label="Feil regelforståelse"
-                                        onChange={reValidate}
-                                      />
-                                    </div>
-                                    <div>
-                                      <RhfCheckbox
-                                        control={control}
-                                        name={`${fieldPath}.feilLov`}
-                                        label="Feil lovanvendelse"
-                                        onChange={reValidate}
-                                      />
-                                      <RhfCheckbox
-                                        control={control}
-                                        name={`${fieldPath}.annet`}
-                                        label="Annet"
-                                        onChange={reValidate}
-                                      />
-                                    </div>
-                                  </HStack>
-                                  {checkboxValidationError && <ErrorMessage>{checkboxValidationError}</ErrorMessage>}
-                                </Fieldset>
-                              </VStack>
-                            )}
+                            <VStack gap="space-8">
+                              <Detail>Årsak</Detail>
+                              <Fieldset legend="" hideLegend>
+                                <HStack gap="space-80">
+                                  <div>
+                                    <RhfCheckbox
+                                      control={control}
+                                      name={`${fieldPath}.feilFakta`}
+                                      label="Feil fakta"
+                                      onChange={reValidate}
+                                    />
+                                    <RhfCheckbox
+                                      control={control}
+                                      name={`${fieldPath}.feilRegel`}
+                                      label="Feil regelforståelse"
+                                      onChange={reValidate}
+                                    />
+                                  </div>
+                                  <div>
+                                    <RhfCheckbox
+                                      control={control}
+                                      name={`${fieldPath}.feilLov`}
+                                      label="Feil lovanvendelse"
+                                      onChange={reValidate}
+                                    />
+                                    <RhfCheckbox
+                                      control={control}
+                                      name={`${fieldPath}.annet`}
+                                      label="Annet"
+                                      onChange={reValidate}
+                                    />
+                                  </div>
+                                </HStack>
+                                {checkboxValidationError && <ErrorMessage>{checkboxValidationError}</ErrorMessage>}
+                              </Fieldset>
+                            </VStack>
                             <Box marginBlock="space-16 space-0" maxWidth="70ch" width="100%">
                               <RhfTextarea
                                 control={control}

@@ -1,5 +1,6 @@
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Box, Button, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -51,7 +52,7 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
 };
 
 const getÅrsakLabel = (årsak: string) => {
-  if (årsak === 'ENDRET-BOSTED') {
+  if (årsak === BehandlingÅrsakType.ENDRET_BOSTED) {
     return '§2 - Ikke bosatt i Trondheim';
   }
   return årsak;

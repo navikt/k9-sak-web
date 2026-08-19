@@ -9,9 +9,11 @@ import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrak
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
-import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
+import { CustomCheckmarkIcon } from '../../shared/icons/CustomCheckmarkIcon.js';
+import { CustomErrorIcon } from '../../shared/icons/CustomErrorIcon.js';
+import { CustomWarningIcon } from '../../shared/icons/CustomWarningIcon.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BeslutterOpphør } from './BeslutterOpphør.js';
 import { OpphørTab } from './types.js';
@@ -38,11 +40,6 @@ const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMed
   bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
 });
 
-const CustomCheckmarkIcon = () => <CheckmarkIcon style={{ color: 'var(--ax-text-accent-subtle)' }} />;
-const CustomWarningIcon = () => (
-  <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />
-);
-
 const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
   if (!ap) return undefined;
   if (ap.status === AksjonspunktStatus.OPPRETTET) {
@@ -55,7 +52,7 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
     return <CustomCheckmarkIcon />;
   }
   if (vilkår?.perioder?.every(p => p.vilkarStatus === 'IKKE_OPPFYLT')) {
-    return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
+    return <CustomErrorIcon />;
   }
   return undefined;
 };

@@ -28,7 +28,7 @@ export const BehandlingPåVent = ({ behandling, aksjonspunkter, settPaVent }: Be
   const skjulModal = useCallback(() => setVisModal(false), []);
 
   useEffect(() => {
-    if (behandling.behandlingPåVent) {
+    if (behandling.behandlingPåVent && skalViseModal === false) {
       setVisModal(true);
     }
   }, [behandling.behandlingPåVent]);

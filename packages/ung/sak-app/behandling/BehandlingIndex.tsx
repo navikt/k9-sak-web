@@ -103,7 +103,7 @@ const BehandlingIndex = ({
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype as string);
+  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype);
   const rettigheter = useMemo(
     () => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type),
     [fagsak.status, behandling?.id, behandling?.status, behandling?.type],

@@ -166,7 +166,7 @@ const FagsakIndex = () => {
 
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const navAnsatt = useNavAnsattForYtelse((fagsak?.sakstype as string) ?? '');
+  const navAnsatt = useNavAnsattForYtelse(fagsak?.sakstype ?? '-');
 
   if (!fagsak) {
     if (isRequestNotDone(fagsakState)) {

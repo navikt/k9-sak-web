@@ -275,7 +275,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     const erRevurderingMedEndretBosted =
       behandling.type === BehandlingType.REVURDERING &&
       behandling.behandlingÅrsaker?.some(årsak => {
-        const årsakType = 'behandlingÅrsakType' in årsak ? årsak.behandlingÅrsakType : årsak.behandlingArsakType;
+        const årsakType = årsak.behandlingArsakType;
         return årsakType === behandlingÅrsakType.ENDRET_BOSTED;
       });
 

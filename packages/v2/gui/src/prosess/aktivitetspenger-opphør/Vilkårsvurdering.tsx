@@ -30,7 +30,7 @@ interface FormData {
   perioder: Record<
     string,
     {
-      årsak: string;
+      årsak: BostedsvilkårIkkeOppfyltÅrsak | '';
       begrunnelse: string;
       flyttetFraTrondheim: string;
       opphørsdato: string;

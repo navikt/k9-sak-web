@@ -91,6 +91,7 @@ export const VilkårSplittPanel = ({
   }, [defaultIsLocked]);
 
   const effectiveLocked = isFormLocked || readOnly;
+  const canEdit = !readOnly && !isPermanentlyReadOnly;
 
   return (
     <HGrid columns="400px 1fr" gap="space-32">
@@ -170,19 +171,18 @@ export const VilkårSplittPanel = ({
             </HStack>
           )}
           <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
-          {beforeDetailContent ? (
-            beforeDetailContent
-          ) : isRenderProp ? (
+          {beforeDetailContent}
+          {!beforeDetailContent && isRenderProp && (
             <>
               <Box
                 borderRadius="8"
                 padding={effectiveLocked ? 'space-16' : 'space-0'}
                 background={effectiveLocked ? 'info-softA' : undefined}
               >
-                <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-12' : 'space-0'}>
+                <VStack gap={canEdit ? 'space-12' : 'space-0'}>
                   {children(effectiveLocked, setIsFormLocked)}
                   {isFormLocked && lockedContent}
-                  {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
+                  {isFormLocked && canEdit && (
                     <Bleed marginInline="space-8">
                       <Button
                         size="small"
@@ -198,9 +198,8 @@ export const VilkårSplittPanel = ({
               </Box>
               {isFormLocked && afterEditButton}
             </>
-          ) : (
-            children
           )}
+          {!beforeDetailContent && !isRenderProp && children}
         </VStack>
       </Box>
     </HGrid>

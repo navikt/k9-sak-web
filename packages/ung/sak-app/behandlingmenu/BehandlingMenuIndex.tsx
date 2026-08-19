@@ -131,7 +131,7 @@ export const BehandlingMenuIndex = ({
   const { startRequest: sjekkTilbakeRevurdKanOpprettes, data: kanRevurderingOpprettes = false } =
     restApiHooks.useRestApiRunner<boolean>(UngSakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
 
-  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype as string);
+  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype);
 
   const erTilbakekrevingAktivert = useGetEnabledApplikasjonContext().includes(ApplicationContextPath.TILBAKE);
 

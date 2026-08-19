@@ -56,7 +56,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, api, ur
     [behandling],
   );
 
-  const { brukernavn, kanVeilede } = useNavAnsattForYtelse(fagsak.sakstype as string);
+  const { brukernavn, kanVeilede } = useNavAnsattForYtelse(fagsak.sakstype);
 
   const totrinnsÅrsakerQuery = useQuery({
     queryKey: ['totrinnskontroll', 'årsaker', behandling.uuid, behandling.status.kode, api.backend],
