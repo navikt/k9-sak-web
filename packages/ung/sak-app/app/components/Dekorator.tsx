@@ -50,7 +50,7 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
   return (
     <>
       <HeaderPanel
-        navAnsattName={navn ?? brukernavn}
+        navAnsattName={navn || brukernavn}
         navBrukernavn={brukernavn}
         aaregPath={getAaregPath()}
         ytelse={ytelse}

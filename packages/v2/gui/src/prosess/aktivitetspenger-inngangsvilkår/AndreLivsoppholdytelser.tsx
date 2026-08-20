@@ -31,7 +31,7 @@ interface Props {
   readOnly: boolean;
   behandling: BehandlingDto;
   api: AktivitetspengerApi;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
   isPermanentlyReadOnly: boolean;
 }
 
@@ -110,15 +110,15 @@ export const AndreLivsoppholdytelser = ({
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
     },
   });
 
   const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
     mutationFn: async () => sendTilBeslutter(api, behandling),
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
     },
   });
 

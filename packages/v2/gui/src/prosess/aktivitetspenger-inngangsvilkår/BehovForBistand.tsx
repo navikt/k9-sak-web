@@ -31,7 +31,7 @@ interface Props {
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
 }
@@ -123,15 +123,15 @@ export const BehovForBistand = ({
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
     },
   });
 
   const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
     mutationFn: async () => sendTilBeslutter(api, behandling),
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
     },
   });
 

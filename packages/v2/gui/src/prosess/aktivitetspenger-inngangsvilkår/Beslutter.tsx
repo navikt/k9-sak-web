@@ -91,7 +91,7 @@ interface Props {
   onTabChange: React.Dispatch<React.SetStateAction<InngangsvilkårTab>>;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   kanBeslutte: boolean;
 }
@@ -141,8 +141,8 @@ export const Beslutter = ({
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
     },
   });
 

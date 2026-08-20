@@ -113,7 +113,7 @@ interface Props {
   innloggetBruker: InnloggetAnsattUngV2Dto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;

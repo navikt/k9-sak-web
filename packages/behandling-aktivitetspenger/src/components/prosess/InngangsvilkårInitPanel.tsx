@@ -20,7 +20,7 @@ const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
 interface Props {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
 }
 
 export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
