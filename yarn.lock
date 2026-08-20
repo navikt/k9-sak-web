@@ -1288,7 +1288,7 @@ __metadata:
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     formik: "npm:2.4.9"
     moment: "npm:2.30.1"
     react: "npm:19.2.8"
@@ -1543,7 +1543,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     lodash: "npm:4.18.1"
     prop-types: "npm:15.8.1"
     react: "npm:19.2.8"
@@ -1627,7 +1627,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     moment: "npm:2.30.1"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
@@ -1751,9 +1751,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:5.8.0":
-  version: 5.8.0
-  resolution: "@hookform/resolvers@npm:5.8.0"
+"@hookform/resolvers@npm:5.9.1":
+  version: 5.9.1
+  resolution: "@hookform/resolvers@npm:5.9.1"
   dependencies:
     "@standard-schema/utils": "npm:^0.3.0"
   peerDependencies:
@@ -1773,7 +1773,7 @@ __metadata:
     fluentvalidation-ts: ^3.0.0
     fp-ts: ^2.7.0
     io-ts: ^2.0.0
-    joi: ^17.0.0
+    joi: ^17.0.0 || ^18.0.0
     nope-validator: ">=0.12.0"
     react-hook-form: ^7.55.0
     superstruct: ">=0.12.0"
@@ -1831,7 +1831,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10/7a989772ad2d3afccfaa77b5fb294ca2cdb89195a9977a345644fe8f0c72367f010df5c35a90fcc616fef2e4c0bbd43e54be497f3420eea5fa2857db4d1f5830
+  checksum: 10/b334b50a9d6d915ae52e6a636aabe1f800d41889856f1978c34528d0871332a9a59a19ef666a60b59ffd4cd515aceac84155595ecda0ba79f4357a04c002e363
   languageName: node
   linkType: hard
 
@@ -2391,7 +2391,7 @@ __metadata:
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-intl: "npm:10.1.20"
@@ -2431,7 +2431,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2514,7 +2514,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2563,7 +2563,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2611,7 +2611,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2664,7 +2664,7 @@ __metadata:
     "@sentry/browser": "npm:10.70.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2699,7 +2699,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2734,7 +2734,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2856,7 +2856,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2882,7 +2882,7 @@ __metadata:
     "@types/react": "npm:19.2.18"
     axios: "npm:1.19.0"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -2918,7 +2918,7 @@ __metadata:
     "@popperjs/core": "npm:2.11.8"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
@@ -2959,7 +2959,7 @@ __metadata:
     "@editorjs/list": "npm:2.0.9"
     "@editorjs/paragraph": "npm:2.11.7"
     "@hookform/error-message": "npm:2.0.1"
-    "@hookform/resolvers": "npm:5.8.0"
+    "@hookform/resolvers": "npm:5.9.1"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "workspace:^"
     "@nais/apm": "npm:0.6.0"
@@ -2978,7 +2978,7 @@ __metadata:
     "@types/react-dom": "npm:19.2.4"
     axios: "npm:1.19.0"
     css-tree: "npm:3.2.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     editorjs-html: "npm:3.4.3"
     object-hash: "npm:3.0.0"
     react: "npm:19.2.8"
@@ -3076,7 +3076,7 @@ __metadata:
     "@navikt/ds-react": "npm:8.16.1"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     lodash: "npm:4.18.1"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
@@ -3133,7 +3133,7 @@ __metadata:
     "@navikt/ft-utils": "npm:5.1.5"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-hook-form: "npm:7.85.0"
@@ -3154,7 +3154,7 @@ __metadata:
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     lodash: "npm:4.18.1"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
@@ -3221,7 +3221,7 @@ __metadata:
     "@types/react": "npm:19.2.18"
     axios: "npm:1.19.0"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     history: "npm:5.3.0"
     moment: "npm:2.30.1"
     prop-types: "npm:15.8.1"
@@ -3269,7 +3269,7 @@ __metadata:
     "@types/react": "npm:19.2.18"
     axios: "npm:1.19.0"
     classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     history: "npm:5.3.0"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
@@ -8059,10 +8059,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.21":
-  version: 1.11.21
-  resolution: "dayjs@npm:1.11.21"
-  checksum: 10/dd16f9f2706b61b90e3c346a3211ac3afd9e26193136ce0e87f70bf74d1c17a447bceb230a88b175467fc9f5e3243d8c1544b9897092a12d9c80ee44d338dcb6
+"dayjs@npm:1.11.23":
+  version: 1.11.23
+  resolution: "dayjs@npm:1.11.23"
+  checksum: 10/61d29544ca1553369f75541b5abf9c1bb6a978991498923a2d5721c9df3eca513b2c15ff5534de6930dc553de5d6f2b8f8047149f3528df906b21f51df637463
   languageName: node
   linkType: hard
 
@@ -11345,7 +11345,7 @@ __metadata:
     axios-mock-adapter: "npm:2.1.0"
     cross-env: "npm:10.1.0"
     date-fns: "npm:4.4.0"
-    dayjs: "npm:1.11.21"
+    dayjs: "npm:1.11.23"
     eslint: "npm:10.8.1"
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
