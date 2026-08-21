@@ -1,9 +1,9 @@
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import DocumentList from './components/DocumentList';
-import type { Document } from './types/Document';
 import type { Fagsak } from './types/Fagsak';
 
 interface OwnProps {
-  documents: Document[];
+  documents: DokumentDto[];
   behandlingId?: number;
   fagsak: Fagsak;
   saksnummer: number;

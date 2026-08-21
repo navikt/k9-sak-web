@@ -24,6 +24,7 @@ const rootFeatureToggles = {
   SINGLE_AUTHFIXER: false,
   VIS_INNLEGGELSE_FOR_PILS: false,
   VIS_GLOBAL_ERRORMODAL: false,
+  DOKUMENTFILTER: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
