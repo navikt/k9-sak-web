@@ -108,7 +108,7 @@ export const PleiepengerProsessV2 = ({
 
   const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
   const prosessteg = useProsessmotor({ api: k9SakProsessApi, behandling });
-  const { isFetching: aksjonspunkterIkkeLastet } = useQuery(aksjonspunkterQueryOptions(k9SakProsessApi, behandling));
+  const { isFetching: aksjonspunkterLaster } = useQuery(aksjonspunkterQueryOptions(k9SakProsessApi, behandling));
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
@@ -168,7 +168,7 @@ export const PleiepengerProsessV2 = ({
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
 
-      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterIkkeLastet}>
+      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterLaster}>
         <Bleed marginInline="space-24">
           <Box padding="space-16" className={styles.prosessmenyWrapper}>
             {prosessStegPanelDefinisjoner.map(panelDef => {
