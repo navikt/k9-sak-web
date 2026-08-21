@@ -108,7 +108,7 @@ export const PleiepengerProsessV2 = ({
 
   const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
   const prosessteg = useProsessmotor({ api: k9SakProsessApi, behandling });
-  const { isPending: aksjonspunkterIkkeLastet } = useQuery(aksjonspunkterQueryOptions(k9SakProsessApi, behandling));
+  const { isFetching: aksjonspunkterIkkeLastet } = useQuery(aksjonspunkterQueryOptions(k9SakProsessApi, behandling));
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
