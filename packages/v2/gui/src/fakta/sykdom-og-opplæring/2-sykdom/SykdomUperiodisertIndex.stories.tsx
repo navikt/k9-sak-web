@@ -9,7 +9,8 @@ import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
+import { SykdomOgOpplæringBackendClientContext } from '../SykdomOgOpplæringBackendClientContext.js';
+import { FakeSykdomOgOpplæringApi } from '../storybook/FakeSykdomOgOpplæringApi.js';
 import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -42,15 +43,21 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
   );
 };
 const withMockDataIkkeVurdert: Decorator = Story => {
-  // Mock list of uperiodiserte sykdomsvurderinger
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => [];
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => ({
-    vurderingUuid: '',
-    resultat: LangvarigSykdomResultat.MÅ_VURDERES,
-  });
-
-  return <Story />;
+  return (
+    <SykdomOgOpplæringBackendClientContext
+      value={
+        new FakeSykdomOgOpplæringApi({
+          langvarigSykVurderinger: [],
+          vurdertLangvarigSykdom: {
+            vurderingUuid: '',
+            resultat: LangvarigSykdomResultat.MÅ_VURDERES,
+          },
+        })
+      }
+    >
+      <Story />
+    </SykdomOgOpplæringBackendClientContext>
+  );
 };
 const withMockData: Decorator = Story => {
   // Mock list of uperiodiserte sykdomsvurderinger
@@ -89,10 +96,18 @@ const withMockData: Decorator = Story => {
     resultat: LangvarigSykdomResultat.GODKJENT,
   };
 
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => langvarigSykVurderingerMock;
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => vurdertLangvarigSykdomMock;
-
-  return <Story />;
+  return (
+    <SykdomOgOpplæringBackendClientContext
+      value={
+        new FakeSykdomOgOpplæringApi({
+          langvarigSykVurderinger: langvarigSykVurderingerMock,
+          vurdertLangvarigSykdom: vurdertLangvarigSykdomMock,
+        })
+      }
+    >
+      <Story />
+    </SykdomOgOpplæringBackendClientContext>
+  );
 };
 
 const meta = {

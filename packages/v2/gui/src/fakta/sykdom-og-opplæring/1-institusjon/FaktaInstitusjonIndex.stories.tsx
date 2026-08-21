@@ -4,7 +4,8 @@ import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
+import { SykdomOgOpplæringBackendClientContext } from '../SykdomOgOpplæringBackendClientContext.js';
+import { FakeSykdomOgOpplæringApi } from '../storybook/FakeSykdomOgOpplæringApi.js';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -84,10 +85,18 @@ const withMockData: Decorator = Story => {
     { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
   ];
 
-  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async () => institusjonInfoMock;
-  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async () => alleInstitusjonerMock;
-
-  return <Story />;
+  return (
+    <SykdomOgOpplæringBackendClientContext
+      value={
+        new FakeSykdomOgOpplæringApi({
+          institusjonInfo: institusjonInfoMock,
+          alleInstitusjoner: alleInstitusjonerMock,
+        })
+      }
+    >
+      <Story />
+    </SykdomOgOpplæringBackendClientContext>
+  );
 };
 
 const meta = {
