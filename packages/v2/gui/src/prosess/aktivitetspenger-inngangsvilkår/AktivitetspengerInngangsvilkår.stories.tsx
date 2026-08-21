@@ -61,7 +61,7 @@ export const MedÅpentBistandsvilkår: Story = {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [],
   },
 };
@@ -71,7 +71,7 @@ export const MedUtførtBistandsvilkår: Story = {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [],
   },
 };
@@ -81,7 +81,7 @@ export const MedÅpentLokalkontorForeslårVilkår: Story = {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [],
   },
 };
@@ -97,7 +97,7 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     } satisfies InnloggetAnsattUngV2Dto,
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [
       {
         skjermlenkeType: 'BOSATT_I_TRONDHEIM',
@@ -119,7 +119,7 @@ export const MedÅpentBostedVilkår: Story = {
     vilkår: [fakeBostedVilkår],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [],
   },
 };
@@ -130,7 +130,7 @@ export const MedUtførtBostedVilkår: Story = {
     vilkår: [{ ...fakeBostedVilkår, perioder: [{ ...fakeBostedVilkårPeriode, vilkarStatus: Utfall.OPPFYLT }] }],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [],
   },
 };
