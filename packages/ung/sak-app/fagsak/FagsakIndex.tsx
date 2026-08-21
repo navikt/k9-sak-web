@@ -249,10 +249,6 @@ const FagsakIndex = () => {
                 return null;
               }
 
-              if (isRequestNotDone(personopplysningerState)) {
-                return <LoadingPanel />;
-              }
-
               return (
                 <div style={{ overflow: 'hidden' }}>
                   <VisittkortPanel

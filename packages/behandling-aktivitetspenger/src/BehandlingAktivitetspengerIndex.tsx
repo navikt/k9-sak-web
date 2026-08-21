@@ -1,17 +1,17 @@
 import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { AktivitetspengerBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerBackendClient.js';
 import {
   aksjonspunkterQueryOptions,
   behandlingQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { Behandling } from '@k9-sak-web/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
 import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
-import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import {
   UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
@@ -47,10 +47,10 @@ const BehandlingAktivitetspengerIndex = ({
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
   }, []);
 
-  const { data: behandling, refetch: refetchBehandling } = useSuspenseQuery(
+  const { data: behandling, refetch: refetchBehandling } = useQuery(
     behandlingQueryOptions(ungSakProsessApi, { uuid: behandlingUuid, versjon: behandlingVersjon }),
   );
-  const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(ungSakProsessApi, behandling));
+  const { data: aksjonspunkter } = useQuery(aksjonspunkterQueryOptions(ungSakProsessApi, behandling));
 
   useSetBehandlingVedEndring(behandling, setBehandling);
 

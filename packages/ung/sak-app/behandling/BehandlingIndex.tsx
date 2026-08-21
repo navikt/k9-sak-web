@@ -197,17 +197,15 @@ const BehandlingIndex = ({
 
     if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
       return (
-        <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary>
-            <BehandlingAktivitetspengerIndex
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              valgtFaktaSteg={query.fakta}
-              key={behandling.id}
-              behandlingVersjon={behandling.versjon}
-              {...defaultProps}
-            />
-          </ErrorBoundary>
-        </Suspense>
+        <ErrorBoundary>
+          <BehandlingAktivitetspengerIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            key={behandling.id}
+            behandlingVersjon={behandling.versjon}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
       );
     }
 

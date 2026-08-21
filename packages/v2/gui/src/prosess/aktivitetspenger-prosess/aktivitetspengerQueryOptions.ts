@@ -12,10 +12,11 @@ export const vilkårQueryOptions = (api: AktivitetspengerApi, behandling: Behand
     queryFn: () => api.getVilkår(behandling.uuid),
   });
 
-export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling?: Behandling) =>
   queryOptions({
-    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon, api.backend],
-    queryFn: () => api.getAksjonspunkter(behandling.uuid),
+    queryKey: ['aksjonspunkter', behandling?.uuid, behandling?.versjon, api.backend],
+    queryFn: () => api.getAksjonspunkter(behandling!.uuid),
+    enabled: !!behandling,
   });
 
 export const behandlingQueryOptions = (api: AktivitetspengerApi, behandling: Pick<Behandling, 'uuid' | 'versjon'>) =>

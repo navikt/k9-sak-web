@@ -18,7 +18,7 @@ import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { erAktivitetspengerOpphørsbehandling } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 const PROSESS_STEG_KODER = {
@@ -229,7 +229,7 @@ const beregnBeregnetUtbetalingType = (
 const byggInngangsvilkårPanel = (
   aksjonspunkter: AksjonspunktDto[],
   vilkår: VilkårMedPerioderDto[],
-  innloggetBruker: InnloggetAnsattUngV2Dto,
+  innloggetBruker: InnloggetAnsattUngV2Dto | undefined,
 ): ProcessMenuStep => {
   const type = beregnInngangsvilkårType(aksjonspunkter, vilkår);
   const isLocked =
@@ -246,7 +246,7 @@ const byggInngangsvilkårPanel = (
 const byggOpphørPanel = (
   aksjonspunkter: AksjonspunktDto[],
   vilkår: VilkårMedPerioderDto[],
-  innloggetBruker: InnloggetAnsattUngV2Dto,
+  innloggetBruker: InnloggetAnsattUngV2Dto | undefined,
 ): ProcessMenuStep => {
   const type = beregnInngangsvilkårType(aksjonspunkter, vilkår, true);
   const isLocked =
@@ -266,9 +266,9 @@ interface ProsessmotorProps {
 }
 
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
-  const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
-  const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const { data: innloggetBruker } = useSuspenseQuery(innloggetBrukerQueryOptions(api));
+  const { data: vilkår = [] } = useQuery(vilkårQueryOptions(api, behandling));
+  const { data: aksjonspunkter = [] } = useQuery(aksjonspunkterQueryOptions(api, behandling));
+  const { data: innloggetBruker } = useQuery(innloggetBrukerQueryOptions(api));
 
   return useMemo(() => {
     const inngangsvilkårPanel = erAktivitetspengerOpphørsbehandling(behandling)
