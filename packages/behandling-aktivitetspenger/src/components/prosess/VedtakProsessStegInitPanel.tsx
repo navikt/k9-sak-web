@@ -28,10 +28,10 @@ const vedtakPanelTekster = {
   avslått: 'Aktivitetspenger er avslått',
 };
 
-const vedtakOpphørPanelTekster = {
-  innvilget: 'Opphør',
-  avslått: 'Opphør',
-};
+// const vedtakOpphørPanelTekster = {
+//   innvilget: 'Opphør',
+//   avslått: 'Opphør',
+// };
 
 interface Props {
   api: AktivitetspengerApi;
@@ -98,7 +98,7 @@ export function VedtakProsessStegInitPanel({ api, behandling, onVedtakAksjonspun
       vilkar={vilkår}
       isReadOnly={isReadOnly}
       vedtakBekreftelseCallback={bekreftAksjonspunktMutation}
-      tekster={erAktivitetspengerOpphørsbehandling(behandling) ? vedtakOpphørPanelTekster : vedtakPanelTekster}
+      tekster={erAktivitetspengerOpphørsbehandling(behandling) ? vedtakPanelTekster : vedtakPanelTekster}
     />
   );
 }
