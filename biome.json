@@ -67,6 +67,7 @@
         "useExhaustiveDependencies": "warn",
         "useHookAtTopLevel": "warn",
         "noUnknownMediaFeatureName": "off",
+        "noUnknownPseudoElement": "off",
         "useJsxKeyInIterable": "warn",
         "noChildrenProp": "warn",
         "noUnusedImports": "warn",
@@ -96,6 +97,10 @@
     }
   },
   "css": {
+    "parser": {
+      "tailwindDirectives": true,
+      "cssModules": true
+    },
     "formatter": {
       "quoteStyle": "single"
     }

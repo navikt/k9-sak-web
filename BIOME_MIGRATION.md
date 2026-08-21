@@ -68,6 +68,7 @@ Some rules were disabled to match the previous ESLint/Prettier setup:
 - `noAutofocus`: Accessibility rule (disabled to match ESLint)
 - `useValidAnchor`: Accessibility rule (disabled to match ESLint)
 - `noUnknownMediaFeatureName`: Allows old browser hacks (e.g., `-ms-high-contrast`)
+- `noUnknownPseudoElement`: Allows vendor-prefixed pseudo-elements (e.g., `-webkit-outer-spin-button`)
 - `useImportType`: Disabled to preserve original import style (no auto-conversion to `import type`)
 
 ### Import Organization
