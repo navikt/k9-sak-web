@@ -1,4 +1,4 @@
-@config "../tailwind.config.cjs";
+@config '../tailwind.config.cjs';
 
 .hide-legend legend {
   position: absolute;

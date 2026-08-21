@@ -180,120 +180,120 @@ export const ActivityPanel = ({
 }: Partial<ActivityPanelProps> & StateProps & InjectedFormProps) => {
   const intl = useIntl();
   return (
-  <FaktaGruppe
-    className={styles.panel}
-    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
-  >
-    <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
-      <Label size="small" as="p">
-        <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
-      </Label>
-      <div>
-        <TimeLineButton
-          text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
-          type="prev"
-          callback={selectPrevPeriod}
-        />
-        <TimeLineButton
-          text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
-          type="next"
-          callback={selectNextPeriod}
-        />
-      </div>
-    </HGrid>
-    <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <PeriodpickerField
-              key={activityId}
-              names={['opptjeningFom', 'opptjeningTom']}
-              label={{ id: 'ActivityPanel.Period' }}
-              readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
-              disabledDays={{ before: moment(opptjeningFomDato).toDate(), after: moment(opptjeningTomDato).toDate() }}
-            />
-          </FlexColumn>
-
-          <FlexColumn>
-            <BodyShort size="small" className={styles.period}>
-              <FlexRow>
-                <FlexColumn className="mt-1.5">{findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}</FlexColumn>
-                <FlexColumn className="mt-1.5">{findApproverDeclinedText(erGodkjent)}</FlexColumn>
-              </FlexRow>
-            </BodyShort>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-      <SelectField
-        name="aktivitetType.kode"
-        label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
-        validate={[required]}
-        placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
-        selectValues={opptjeningAktivitetTypes.map(oat => (
-          <option key={oat.kode} value={oat.kode}>
-            {oat.navn}
-          </option>
-        ))}
-        readOnly={readOnly || !initialValues.erManueltOpprettet}
-      />
-    </HGrid>
-    <ActivityDataSubPanel
-      initialValues={initialValues}
-      readOnly={readOnly}
-      isManuallyAdded={initialValues.erManueltOpprettet}
-      selectedActivityType={selectedActivityType}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    />
-    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
-      <>
-        <VerticalSpacer eightPx />
-        {!initialValues.erManueltOpprettet && (
-          <RadioGroupField
-            name="erGodkjent"
-            validate={[required]}
-            readOnly={readOnly}
-            isEdited={initialValues.erEndret}
-            radios={[
-              {
-                value: true,
-                label: <FormattedMessage id="ActivityPanel.Godkjent" />,
-              },
-              {
-                value: false,
-                label: <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />,
-              },
-            ]}
+    <FaktaGruppe
+      className={styles.panel}
+      merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
+    >
+      <HGrid gap="space-4" columns={{ xs: '10fr 2fr' }}>
+        <Label size="small" as="p">
+          <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
+        </Label>
+        <div>
+          <TimeLineButton
+            text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+            type="prev"
+            callback={selectPrevPeriod}
           />
-        )}
-      </>
-    )}
-    <>
-      <VerticalSpacer fourPx />
-      <TextAreaField
-        name="begrunnelse"
-        label={<FormattedMessage id={finnBegrunnelseLabel(initialValues, readOnly, hasAksjonspunkt)} />}
-        validate={[requiredCustom, minLength3, maxLength1500, hasValidText]}
-        maxLength={1500}
-        readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
+          <TimeLineButton
+            text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+            type="next"
+            callback={selectNextPeriod}
+          />
+        </div>
+      </HGrid>
+      <HGrid gap="space-4" columns={{ xs: '7fr 5fr' }}>
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <PeriodpickerField
+                key={activityId}
+                names={['opptjeningFom', 'opptjeningTom']}
+                label={{ id: 'ActivityPanel.Period' }}
+                readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
+                disabledDays={{ before: moment(opptjeningFomDato).toDate(), after: moment(opptjeningTomDato).toDate() }}
+              />
+            </FlexColumn>
+
+            <FlexColumn>
+              <BodyShort size="small" className={styles.period}>
+                <FlexRow>
+                  <FlexColumn className="mt-1.5">{findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}</FlexColumn>
+                  <FlexColumn className="mt-1.5">{findApproverDeclinedText(erGodkjent)}</FlexColumn>
+                </FlexRow>
+              </BodyShort>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+        <SelectField
+          name="aktivitetType.kode"
+          label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
+          validate={[required]}
+          placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
+          selectValues={opptjeningAktivitetTypes.map(oat => (
+            <option key={oat.kode} value={oat.kode}>
+              {oat.navn}
+            </option>
+          ))}
+          readOnly={readOnly || !initialValues.erManueltOpprettet}
+        />
+      </HGrid>
+      <ActivityDataSubPanel
+        initialValues={initialValues}
+        readOnly={readOnly}
+        isManuallyAdded={initialValues.erManueltOpprettet}
+        selectedActivityType={selectedActivityType}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
-    </>
-    {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
-      <FlexContainer>
-        <FlexRow className={styles.buttonContainer}>
-          <FlexColumn>
-            <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={pristine}>
-              <FormattedMessage id="ActivityPanel.Oppdater" />
-            </Button>
-          </FlexColumn>
-          <FlexColumn>
-            <Button variant="secondary" size="small" type="button" onClick={cancelSelectedOpptjeningActivity}>
-              <FormattedMessage id="ActivityPanel.Avbryt" />
-            </Button>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    )}
-  </FaktaGruppe>
+      {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+        <>
+          <VerticalSpacer eightPx />
+          {!initialValues.erManueltOpprettet && (
+            <RadioGroupField
+              name="erGodkjent"
+              validate={[required]}
+              readOnly={readOnly}
+              isEdited={initialValues.erEndret}
+              radios={[
+                {
+                  value: true,
+                  label: <FormattedMessage id="ActivityPanel.Godkjent" />,
+                },
+                {
+                  value: false,
+                  label: <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />,
+                },
+              ]}
+            />
+          )}
+        </>
+      )}
+      <>
+        <VerticalSpacer fourPx />
+        <TextAreaField
+          name="begrunnelse"
+          label={<FormattedMessage id={finnBegrunnelseLabel(initialValues, readOnly, hasAksjonspunkt)} />}
+          validate={[requiredCustom, minLength3, maxLength1500, hasValidText]}
+          maxLength={1500}
+          readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
+        />
+      </>
+      {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
+        <FlexContainer>
+          <FlexRow className={styles.buttonContainer}>
+            <FlexColumn>
+              <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={pristine}>
+                <FormattedMessage id="ActivityPanel.Oppdater" />
+              </Button>
+            </FlexColumn>
+            <FlexColumn>
+              <Button variant="secondary" size="small" type="button" onClick={cancelSelectedOpptjeningActivity}>
+                <FormattedMessage id="ActivityPanel.Avbryt" />
+              </Button>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      )}
+    </FaktaGruppe>
   );
 };
 

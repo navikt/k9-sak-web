@@ -18,30 +18,30 @@ interface OwnProps {
 const SideMenuWrapper = ({ paneler, onClick, children }: OwnProps) => {
   const intl = useIntl();
   return (
-  <div className={styles.container}>
-    <FlexContainer fullHeight>
-      <FlexRow>
-        <FlexColumn className={styles.sideMenu}>
-          <SideMenu
-            heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
-            links={paneler.map(panel => ({
-              label: intl.formatMessage({ id: panel.tekstKode }),
-              active: panel.erAktiv,
-              icon: panel.harAksjonspunkt ? (
-                <ExclamationmarkTriangleFillIcon
-                  fontSize="1.25rem"
-                  data-testid="sidemenu-aksjonspunkt-icon"
-                  style={{ color: 'var(--ax-text-warning-decoration)', fontSize: '1.25rem' }}
-                />
-              ) : undefined,
-            }))}
-            onClick={onClick}
-          />
-        </FlexColumn>
-        <FlexColumn className={styles.content}>{children}</FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-  </div>
+    <div className={styles.container}>
+      <FlexContainer fullHeight>
+        <FlexRow>
+          <FlexColumn className={styles.sideMenu}>
+            <SideMenu
+              heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
+              links={paneler.map(panel => ({
+                label: intl.formatMessage({ id: panel.tekstKode }),
+                active: panel.erAktiv,
+                icon: panel.harAksjonspunkt ? (
+                  <ExclamationmarkTriangleFillIcon
+                    fontSize="1.25rem"
+                    data-testid="sidemenu-aksjonspunkt-icon"
+                    style={{ color: 'var(--ax-text-warning-decoration)', fontSize: '1.25rem' }}
+                  />
+                ) : undefined,
+              }))}
+              onClick={onClick}
+            />
+          </FlexColumn>
+          <FlexColumn className={styles.content}>{children}</FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </div>
   );
 };
 

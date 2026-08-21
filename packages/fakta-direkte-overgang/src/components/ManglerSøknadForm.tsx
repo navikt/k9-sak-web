@@ -27,12 +27,7 @@ export type ManglerSøknadDto = {
 /**
  * ManglerSøknadForm
  */
-const ManglerSøknadForm = ({
-  submitCallback,
-  readOnly,
-  submittable,
-  aksjonspunkter,
-}: Props) => {
+const ManglerSøknadForm = ({ submitCallback, readOnly, submittable, aksjonspunkter }: Props) => {
   const intl = useIntl();
   const validationSchema = Yup.object().shape({
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'ManglerSøknadForm.BegrunnelseErPåkrevd' })),

@@ -83,68 +83,68 @@ const TilbakekrevingVedtakFormImpl = ({
 }: OwnProps & InjectedFormProps) => {
   const intl = useIntl();
   return (
-  <form aria-label="form" onSubmit={formProps.handleSubmit} data-testid="tilbakekrevingvedtakform">
-    <VerticalSpacer twentyPx />
-    <TilbakekrevingEditerVedtaksbrevPanel
-      vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
-      formName={formName}
-      readOnly={readOnly}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      perioderSomIkkeHarUtfyltObligatoriskVerdi={perioderSomIkkeHarUtfyltObligatoriskVerdi}
-      fritekstOppsummeringPakrevdMenIkkeUtfylt={fritekstOppsummeringPakrevdMenIkkeUtfylt}
-      erRevurderingTilbakekrevingFeilBeløpBortfalt={erRevurderingTilbakekrevingFeilBeløpBortfalt}
-    />
-    <VerticalSpacer twentyPx />
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn>
-          <ProsessStegSubmitButton
-            text={intl.formatMessage({ id: 'TilbakekrevingVedtakForm.TilGodkjenning' })}
-            formName={formName}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isReadOnly={readOnly}
-            isSubmittable={
-              perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && !fritekstOppsummeringPakrevdMenIkkeUtfylt
-            }
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-          />
-        </FlexColumn>
-        {(perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 || erBehandlingBehandlet) && (
+    <form aria-label="form" onSubmit={formProps.handleSubmit} data-testid="tilbakekrevingvedtakform">
+      <VerticalSpacer twentyPx />
+      <TilbakekrevingEditerVedtaksbrevPanel
+        vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
+        formName={formName}
+        readOnly={readOnly}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={perioderSomIkkeHarUtfyltObligatoriskVerdi}
+        fritekstOppsummeringPakrevdMenIkkeUtfylt={fritekstOppsummeringPakrevdMenIkkeUtfylt}
+        erRevurderingTilbakekrevingFeilBeløpBortfalt={erRevurderingTilbakekrevingFeilBeløpBortfalt}
+      />
+      <VerticalSpacer twentyPx />
+      <FlexContainer>
+        <FlexRow>
           <FlexColumn>
-            <div className={styles.padding}>
-              <Link
-                href=""
-                onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)}
-                onKeyDown={e =>
-                  e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)(e) : null
-                }
-                className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
-                data-testid="previewLink"
-              >
-                <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
-              </Link>
-            </div>
+            <ProsessStegSubmitButton
+              text={intl.formatMessage({ id: 'TilbakekrevingVedtakForm.TilGodkjenning' })}
+              formName={formName}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              isReadOnly={readOnly}
+              isSubmittable={
+                perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && !fritekstOppsummeringPakrevdMenIkkeUtfylt
+              }
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
           </FlexColumn>
-        )}
-        {erRevurderingTilbakekrevingKlage && (
-          <FlexColumn className={classNames(styles.infoTextContainer)}>
-            <FlexRow>
-              <FlexColumn className={classNames(styles.padding, styles.infoTextIconColumn)}>
-                <Image className={styles.infoTextIcon} src={advarselIcon} />
-              </FlexColumn>
-              <FlexColumn className={classNames(styles.infotextColumn)}>
-                <FormattedMessage id="TilbakekrevingVedtakForm.Infotekst.Klage" />
-              </FlexColumn>
-            </FlexRow>
-          </FlexColumn>
-        )}
-      </FlexRow>
-    </FlexContainer>
-  </form>
+          {(perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 || erBehandlingBehandlet) && (
+            <FlexColumn>
+              <div className={styles.padding}>
+                <Link
+                  href=""
+                  onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)}
+                  onKeyDown={e =>
+                    e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)(e) : null
+                  }
+                  className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
+                  data-testid="previewLink"
+                >
+                  <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
+                </Link>
+              </div>
+            </FlexColumn>
+          )}
+          {erRevurderingTilbakekrevingKlage && (
+            <FlexColumn className={classNames(styles.infoTextContainer)}>
+              <FlexRow>
+                <FlexColumn className={classNames(styles.padding, styles.infoTextIconColumn)}>
+                  <Image className={styles.infoTextIcon} src={advarselIcon} />
+                </FlexColumn>
+                <FlexColumn className={classNames(styles.infotextColumn)}>
+                  <FormattedMessage id="TilbakekrevingVedtakForm.Infotekst.Klage" />
+                </FlexColumn>
+              </FlexRow>
+            </FlexColumn>
+          )}
+        </FlexRow>
+      </FlexContainer>
+    </form>
   );
 };
 

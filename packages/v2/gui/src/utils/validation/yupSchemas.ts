@@ -51,7 +51,7 @@ yup.addMethod(yup.string, 'validChars', function (validationRegex: RegExp, messa
  *  yup.string().isChangedComparedTo(initialValues.begrunnelse)
  */
 yup.addMethod(yup.string, 'isChangedComparedTo', function (compareTo: string) {
-  return this.test('is-changed', 'Innholdet er ikke endret fra tidligere.', function (value) {
+  return this.test('is-changed', 'Innholdet er ikke endret fra tidligere.', value => {
     if (!value) return true; // La tomme verdier gå til andre valideringer (kanskje ikke nødvendig?)
     return value.toLowerCase() !== compareTo.toLowerCase();
   });

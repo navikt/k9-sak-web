@@ -195,51 +195,51 @@ const AnkeResultatForm = ({
 }) => {
   const intl = useIntl();
   return (
-  <form onSubmit={handleSubmit}>
-    <FadingPanel>
-      <Heading size="small" level="2">
-        <FormattedMessage id="Ankebehandling.Resultat.Title" />
-      </Heading>
-      <VerticalSpacer fourPx />
-      <Detail>
-        <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
-      </Detail>
-      <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
-      <VerticalSpacer sixteenPx />
-      <ProsessStegSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-        hasEmptyRequiredFields={false}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-        text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
-      />
-      <span>&nbsp;</span>
-      <ProsessStegSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-        hasEmptyRequiredFields={false}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-        text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
-      />
-      <span>&nbsp;</span>
-      <PreviewAnkeLink
-        previewCallback={previewCallback}
-        fritekstTilBrev={formValues.fritekstTilBrev}
-        ankeVurdering={formValues.ankeVurdering}
-        aksjonspunktCode={aksjonspunktCode}
-      />
-    </FadingPanel>
-  </form>
+    <form onSubmit={handleSubmit}>
+      <FadingPanel>
+        <Heading size="small" level="2">
+          <FormattedMessage id="Ankebehandling.Resultat.Title" />
+        </Heading>
+        <VerticalSpacer fourPx />
+        <Detail>
+          <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
+        </Detail>
+        <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
+        <VerticalSpacer sixteenPx />
+        <ProsessStegSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+          hasEmptyRequiredFields={false}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
+        />
+        <span>&nbsp;</span>
+        <ProsessStegSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+          hasEmptyRequiredFields={false}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
+        />
+        <span>&nbsp;</span>
+        <PreviewAnkeLink
+          previewCallback={previewCallback}
+          fritekstTilBrev={formValues.fritekstTilBrev}
+          ankeVurdering={formValues.ankeVurdering}
+          aksjonspunktCode={aksjonspunktCode}
+        />
+      </FadingPanel>
+    </form>
   );
 };
 

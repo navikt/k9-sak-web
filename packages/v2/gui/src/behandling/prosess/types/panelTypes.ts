@@ -3,7 +3,7 @@ import type { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 /**
  * Panelregistreringsdata.
  * Hvert panel registrerer seg med denne informasjonen.
- * 
+ *
  * Merk: Paneler definerer selv sin id og tekst som konstanter.
  * Denne interfacen inneholder kun data som sendes til menyen under registrering.
  */
@@ -17,31 +17,31 @@ export interface PanelRegistrering {
 
 /**
  * Props-interface for alle prosesspaneler.
- * 
+ *
  * Paneler definerer selv sin identitet via konstanter:
  * ```typescript
  * const PANEL_ID = 'beregning';
  * const PANEL_TEKST = 'Beregning.Title';
  * ```
- * 
+ *
  * ProsessMeny injiserer automatisk callbacks og erValgt-status til alle children.
  * Paneler bruker usePanelRegistrering hook for å håndtere registreringslogikk.
- * 
+ *
  * @example
  * ```typescript
  * export function BeregningProsessStegInitPanel(props: ProsessPanelProps) {
  *   const PANEL_ID = 'beregning';
  *   const PANEL_TEKST = 'Beregning.Title';
- *   
+ *
  *   const panelType = useMemo(() => {
  *     // Beregn type fra data
  *     return 'warning';
  *   }, [data]);
- *   
+ *
  *   usePanelRegistrering(props, PANEL_ID, PANEL_TEKST, panelType);
- *   
+ *
  *   if (!props.erValgt) return null;
- *   
+ *
  *   return <BeregningUI />;
  * }
  * ```
@@ -63,7 +63,7 @@ export interface ProsessPanelProps {
 /**
  * Re-eksporterer ProcessMenuStepType for bekvemmelighet.
  * Brukes til å indikere status på et panel i menyen.
- * 
+ *
  * - warning: Panel har åpent aksjonspunkt som krever oppmerksomhet
  * - success: Panel er fullført (vilkår oppfylt)
  * - danger: Panel har problemer (vilkår ikke oppfylt)

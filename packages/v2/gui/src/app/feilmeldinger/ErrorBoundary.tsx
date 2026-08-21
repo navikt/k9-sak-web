@@ -66,7 +66,7 @@ export class ErrorBoundary extends Component<OwnProps, State> {
   override componentDidCatch(anyError: any, info: ErrorInfo): void {
     const { errorMessageCallback } = this.props;
     const error = ErrorBoundary.ensureError(anyError);
-    let sentryId: string | undefined = undefined;
+    let sentryId: string | undefined;
     if (ErrorBoundary.shouldReportToSentry(error)) {
       withScope(scope => {
         if (info.componentStack != null) {

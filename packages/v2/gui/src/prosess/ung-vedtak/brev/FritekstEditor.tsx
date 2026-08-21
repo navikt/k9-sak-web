@@ -23,7 +23,7 @@ interface OwnProps {
   htmlSeksjoner: ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevSeksjon[];
 }
 
-type DebouncedFunction<T extends (...args: any[]) => any> = (...args: Parameters<T>) => void
+type DebouncedFunction<T extends (...args: any[]) => any> = (...args: Parameters<T>) => void;
 
 const debounce = <T extends (...args: any[]) => any>(funksjon: T): DebouncedFunction<T> => {
   let teller: ReturnType<typeof setTimeout> | null = null;

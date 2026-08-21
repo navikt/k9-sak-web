@@ -1,12 +1,11 @@
 {
-    "HelpText.Aksjonspunkt": "Kontroller perioder ved direkte overgang fra infotrygd. Dette aksjonspunktet krever spesielle rettigheter.",
-    "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
-    "ManglerSøknadForm.Begrunnelse": "Begrunnelse",
-    "ManglerSøknadForm.ManglerKomplettSøknad": "Søker har perioder for 2022 i infotrygd. Disse periodene må tas inn før saken kan behandles videre.",
-    "ManglerSøknadForm.ManglerKomplettSøknadAnnenPart": "Søknadsperioden overlapper med periode for berørt sak i infotrygd. Disse periodene må tas inn før saken kan behandles videre.",
-    "ManglerSøknadForm.LagreAksjonspunkt": "Bekreft og fortsett",
-    "ManglerSøknadForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
-    "ManglerSøknadForm.OppgiBegrunnelse": "Dersom du likevel ønsker å gå videre må det oppgis en begrunnelse.",
-    "ManglerSøknadForm.BegrunnelseErPåkrevd": "Begrunnelse er påkrevd."
-
+  "HelpText.Aksjonspunkt": "Kontroller perioder ved direkte overgang fra infotrygd. Dette aksjonspunktet krever spesielle rettigheter.",
+  "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
+  "ManglerSøknadForm.Begrunnelse": "Begrunnelse",
+  "ManglerSøknadForm.ManglerKomplettSøknad": "Søker har perioder for 2022 i infotrygd. Disse periodene må tas inn før saken kan behandles videre.",
+  "ManglerSøknadForm.ManglerKomplettSøknadAnnenPart": "Søknadsperioden overlapper med periode for berørt sak i infotrygd. Disse periodene må tas inn før saken kan behandles videre.",
+  "ManglerSøknadForm.LagreAksjonspunkt": "Bekreft og fortsett",
+  "ManglerSøknadForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
+  "ManglerSøknadForm.OppgiBegrunnelse": "Dersom du likevel ønsker å gå videre må det oppgis en begrunnelse.",
+  "ManglerSøknadForm.BegrunnelseErPåkrevd": "Begrunnelse er påkrevd."
 }

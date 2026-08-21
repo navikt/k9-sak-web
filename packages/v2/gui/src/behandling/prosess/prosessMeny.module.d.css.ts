@@ -1,5 +1,4 @@
 declare const styles: {
-  readonly "stepArrowContainer": string;
+  readonly stepArrowContainer: string;
 };
 export = styles;
-

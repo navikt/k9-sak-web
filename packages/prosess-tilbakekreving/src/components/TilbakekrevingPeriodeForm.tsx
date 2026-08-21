@@ -122,9 +122,7 @@ interface DispatchProps {
   change: (form: string, field: string, value: any, touch?: boolean, persistentSubmitErrors?: boolean) => void;
 }
 
-export const TilbakekrevingPeriodeFormImpl = (
-  props: OwnProps & DispatchProps & InjectedFormProps,
-) => {
+export const TilbakekrevingPeriodeFormImpl = (props: OwnProps & DispatchProps & InjectedFormProps) => {
   const [showModal, setShowModal] = useState(false);
   const intl = useIntl();
   const {

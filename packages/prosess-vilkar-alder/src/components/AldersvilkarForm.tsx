@@ -24,13 +24,7 @@ type Props = {
   angitteBarn: { personIdent: string }[];
 };
 
-const AldersvilkarForm = ({
-  submitCallback,
-  begrunnelseTekst,
-  erVilkaretOk,
-  erVurdert,
-  angitteBarn,
-}: Props) => {
+const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVurdert, angitteBarn }: Props) => {
   const intl = useIntl();
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);

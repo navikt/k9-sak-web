@@ -5,7 +5,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import '@navikt/ds-css' layer(components);
 
-@config "../../../tailwind.config.cjs";
+@config '../../../tailwind.config.cjs';
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
 html {

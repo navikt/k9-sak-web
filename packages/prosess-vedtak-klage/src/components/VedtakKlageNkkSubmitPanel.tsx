@@ -25,29 +25,24 @@ interface Props {
  * @param klageResultat
  * @param formProps - Handle submit funksjonen fra Redux Forms, fullfører aksjonspunktet
  */
-const VedtakKlageNkkSubmitPanel = ({
-  klageResultat,
-  formProps,
-  readOnly,
-  behandlingPåVent,
-}: Props) => {
+const VedtakKlageNkkSubmitPanel = ({ klageResultat, formProps, readOnly, behandlingPåVent }: Props) => {
   const intl = useIntl();
   return (
-  <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
-    <div>
-      {!readOnly && (
-        <Button
-          variant="primary"
-          size="small"
-          className={styles.mainButton}
-          onClick={formProps.handleSubmit}
-          disabled={behandlingPåVent || klageResultat.godkjentAvMedunderskriver}
-        >
-          {intl.formatMessage({ id: 'VedtakKlageForm.FattVedtak' })}
-        </Button>
-      )}
-    </div>
-  </HGrid>
+    <HGrid gap="space-4" columns={{ xs: '8fr 4fr' }}>
+      <div>
+        {!readOnly && (
+          <Button
+            variant="primary"
+            size="small"
+            className={styles.mainButton}
+            onClick={formProps.handleSubmit}
+            disabled={behandlingPåVent || klageResultat.godkjentAvMedunderskriver}
+          >
+            {intl.formatMessage({ id: 'VedtakKlageForm.FattVedtak' })}
+          </Button>
+        )}
+      </div>
+    </HGrid>
   );
 };
 

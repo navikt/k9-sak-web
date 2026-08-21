@@ -33,7 +33,7 @@ export const buildInitialValues = (
   vurderTilbaketrekkAP?: AksjonspunktDto,
   beregningsresultat?: BeregningsresultatFp | BeregningsresultatMedUtbetaltePeriodeDto,
 ) => {
-  let tidligereValgt: boolean | undefined = undefined;
+  let tidligereValgt: boolean | undefined;
   if (beregningsresultat && 'skalHindreTilbaketrekk' in beregningsresultat) {
     tidligereValgt = beregningsresultat.skalHindreTilbaketrekk;
   }

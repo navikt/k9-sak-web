@@ -9,7 +9,7 @@ import { ValidationReturnType } from '@fpsak-frontend/utils/src/validation/valid
 
 type Direction = 'horizontal' | 'vertical';
 
-type RenderProp<TChildrenProps, TElement = any> = (props: TChildrenProps) => React.ReactElement<TElement>
+type RenderProp<TChildrenProps, TElement = any> = (props: TChildrenProps) => React.ReactElement<TElement>;
 
 interface RadioProps {
   value: string | boolean;

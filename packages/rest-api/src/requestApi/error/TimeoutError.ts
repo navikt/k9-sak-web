@@ -1,5 +1,5 @@
 class TimeoutError extends Error {
-  location: string
+  location: string;
 
   constructor(location: string) {
     super('Maximum polling attempts exceeded');

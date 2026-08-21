@@ -1,5 +1,4 @@
 declare const styles: {
-  readonly "titelOgHjelpetekstFlexbox": string;
+  readonly titelOgHjelpetekstFlexbox: string;
 };
 export = styles;
-

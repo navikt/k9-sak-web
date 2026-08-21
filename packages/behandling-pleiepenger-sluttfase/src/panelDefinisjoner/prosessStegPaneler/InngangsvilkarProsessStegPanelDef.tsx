@@ -9,9 +9,7 @@ class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
 
   getTekstKode = () => 'Behandlingspunkt.Inngangsvilkar';
 
-  getPanelDefinisjoner = () => [
-    new SoknadsfristPanelDef(),
-    new AlderPanelDef()];
+  getPanelDefinisjoner = () => [new SoknadsfristPanelDef(), new AlderPanelDef()];
 }
 
 export default InngangsvilkarProsessStegPanelDef;

@@ -4,10 +4,6 @@ enum Aktsomhet {
   SIMPEL_UAKTSOM = 'SIMPEL_UAKTSOM',
 }
 
-export const AKTSOMHET_REKKEFØLGE = [
-  Aktsomhet.SIMPEL_UAKTSOM,
-  Aktsomhet.GROVT_UAKTSOM,
-  Aktsomhet.FORSETT,
-];
+export const AKTSOMHET_REKKEFØLGE = [Aktsomhet.SIMPEL_UAKTSOM, Aktsomhet.GROVT_UAKTSOM, Aktsomhet.FORSETT];
 
 export default Aktsomhet;

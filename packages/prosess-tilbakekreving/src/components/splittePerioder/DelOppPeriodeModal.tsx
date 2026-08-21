@@ -29,61 +29,61 @@ export const DelOppPeriodeModalImpl = ({
 }: OwnProps & InjectedFormProps) => {
   const intl = useIntl();
   return (
-  <Modal
-    open={showModal}
-    aria-label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
-    onClose={cancelEvent}
-    className={styles.modal}
-  >
-    <Modal.Header closeButton={false}>
-      <Label size="small" as="p">
-        <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
-      </Label>
-    </Modal.Header>
-    <Modal.Body>
-      <Detail>
-        <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
-      </Detail>
-      <BodyShort size="small">
-        {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
-          periodeData.tom.toString(),
-        ).format(DDMMYYYY_DATE_FORMAT)}`}
-      </BodyShort>
-      <div className={styles.marginTop}>
+    <Modal
+      open={showModal}
+      aria-label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
+      onClose={cancelEvent}
+      className={styles.modal}
+    >
+      <Modal.Header closeButton={false}>
+        <Label size="small" as="p">
+          <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
+        </Label>
+      </Modal.Header>
+      <Modal.Body>
         <Detail>
-          <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
+          <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
         </Detail>
-        <DatepickerField
-          name="ForstePeriodeTomDato"
-          // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
-          className={styles.datePicker}
-          validate={[required, hasValidDate]}
-          disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
-          initialMonth={moment(periodeData.tom).toDate()}
-        />
-      </div>
-      {finnesBelopMed0Verdi && (
-        <Alert size="small" variant="error">
-          <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
-        </Alert>
-      )}
-      <div className={styles.marginTop}>
-        <Button
-          variant="primary"
-          size="small"
-          type="button"
-          className={styles.button}
-          onClick={formProps.handleSubmit}
-          disabled={formProps.pristine}
-        >
-          <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
-        </Button>
-        <Button variant="secondary" type="button" size="small" onClick={cancelEvent} className={styles.cancelButton}>
-          <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
-        </Button>
-      </div>
-    </Modal.Body>
-  </Modal>
+        <BodyShort size="small">
+          {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
+            periodeData.tom.toString(),
+          ).format(DDMMYYYY_DATE_FORMAT)}`}
+        </BodyShort>
+        <div className={styles.marginTop}>
+          <Detail>
+            <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
+          </Detail>
+          <DatepickerField
+            name="ForstePeriodeTomDato"
+            // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+            className={styles.datePicker}
+            validate={[required, hasValidDate]}
+            disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
+            initialMonth={moment(periodeData.tom).toDate()}
+          />
+        </div>
+        {finnesBelopMed0Verdi && (
+          <Alert size="small" variant="error">
+            <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
+          </Alert>
+        )}
+        <div className={styles.marginTop}>
+          <Button
+            variant="primary"
+            size="small"
+            type="button"
+            className={styles.button}
+            onClick={formProps.handleSubmit}
+            disabled={formProps.pristine}
+          >
+            <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
+          </Button>
+          <Button variant="secondary" type="button" size="small" onClick={cancelEvent} className={styles.cancelButton}>
+            <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
+          </Button>
+        </div>
+      </Modal.Body>
+    </Modal>
   );
 };
 

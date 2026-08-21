@@ -18,7 +18,7 @@ const tekst = {
   feilIngenÅrsak: 'Årsak må oppgis.',
   foreldreBorSammen: 'Foreldre bor sammen',
   avltaleOmDeltBosted: 'Avtale om delt bosted gjelder barnet',
-  annet: 'Annet'
+  annet: 'Annet',
 };
 
 export default tekst;

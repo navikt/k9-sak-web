@@ -6,12 +6,7 @@ import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakU
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
     renderWithIntlAndReactQueryClient(
-      <TilbakekrevingVedtakUtdypendeTekstPanel
-        isEmpty
-        type="OPPSUMMERING"
-        readOnly={false}
-        fritekstPakrevet={false}
-      />,
+      <TilbakekrevingVedtakUtdypendeTekstPanel isEmpty type="OPPSUMMERING" readOnly={false} fritekstPakrevet={false} />,
       { messages },
     );
 
@@ -36,12 +31,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
 
   it('skal vise textarea når fritekst er påkrevet', () => {
     renderWithIntlAndReduxForm(
-      <TilbakekrevingVedtakUtdypendeTekstPanel
-        isEmpty
-        type="OPPSUMMERING"
-        readOnly={false}
-        fritekstPakrevet
-      />,
+      <TilbakekrevingVedtakUtdypendeTekstPanel isEmpty type="OPPSUMMERING" readOnly={false} fritekstPakrevet />,
       { messages },
     );
 
@@ -51,12 +41,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
 
   it('skal ikke vise lenke eller textarea når verdi ikke finnes og en er i readonly-modus', () => {
     renderWithIntlAndReactQueryClient(
-      <TilbakekrevingVedtakUtdypendeTekstPanel
-        isEmpty
-        type="OPPSUMMERING"
-        readOnly
-        fritekstPakrevet={false}
-      />,
+      <TilbakekrevingVedtakUtdypendeTekstPanel isEmpty type="OPPSUMMERING" readOnly fritekstPakrevet={false} />,
       { messages },
     );
 

@@ -13,4 +13,4 @@ export interface ErrorResponse {
   };
 }
 
-export type Response = SuccessResponse | ErrorResponse
+export type Response = SuccessResponse | ErrorResponse;

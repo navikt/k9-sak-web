@@ -1,6 +1,5 @@
 declare const styles: {
-  readonly "fagsakLenke": string;
-  readonly "fagsakLenkeContainer": string;
+  readonly fagsakLenke: string;
+  readonly fagsakLenkeContainer: string;
 };
 export = styles;
-

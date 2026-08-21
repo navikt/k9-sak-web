@@ -1,5 +1,4 @@
 declare const styles: {
-  readonly "fremhevingTag": string;
+  readonly fremhevingTag: string;
 };
 export = styles;
-

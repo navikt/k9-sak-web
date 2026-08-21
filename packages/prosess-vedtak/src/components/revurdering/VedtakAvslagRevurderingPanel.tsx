@@ -32,29 +32,31 @@ const VedtakAvslagRevurderingPanelImpl = ({
 }: VedtakAvslagRevurderingPanelProps & OwnState) => {
   const intl = useIntl();
   return (
-  <div>
-    <Label size="small" as="p">
-      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-    </Label>
-    {(ytelseTypeKode === fagsakYtelsesType.FRISINN || ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER) && (
-      <BodyShort size="small">
-        {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </BodyShort>
-    )}
-    {ytelseTypeKode !== fagsakYtelsesType.FRISINN && ytelseTypeKode !== fagsakYtelsesType.OMSORGSPENGER && (
-      <BodyShort size="small">{tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}</BodyShort>
-    )}
     <div>
-      <VerticalSpacer sixteenPx />
       <Label size="small" as="p">
-        {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
+        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
       </Label>
-      <AvslagsårsakListe vilkar={vilkar} />
+      {(ytelseTypeKode === fagsakYtelsesType.FRISINN || ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER) && (
+        <BodyShort size="small">
+          {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
+          {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+        </BodyShort>
+      )}
+      {ytelseTypeKode !== fagsakYtelsesType.FRISINN && ytelseTypeKode !== fagsakYtelsesType.OMSORGSPENGER && (
+        <BodyShort size="small">
+          {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+        </BodyShort>
+      )}
+      <div>
+        <VerticalSpacer sixteenPx />
+        <Label size="small" as="p">
+          {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
+        </Label>
+        <AvslagsårsakListe vilkar={vilkar} />
+        <VerticalSpacer sixteenPx />
+      </div>
       <VerticalSpacer sixteenPx />
     </div>
-    <VerticalSpacer sixteenPx />
-  </div>
   );
 };
 

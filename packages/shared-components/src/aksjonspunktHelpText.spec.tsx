@@ -16,11 +16,7 @@ describe('<AksjonspunktHelpText>', () => {
     expect(screen.getAllByRole('img')).toHaveLength(1);
   });
   it('Skal teste at aksjonspunkt hjelp ikke vises når ikke aksjonspunkt', () => {
-    renderWithIntl(
-      <AksjonspunktHelpText isAksjonspunktOpen={false}>
-        {[]}
-      </AksjonspunktHelpText>,
-    );
+    renderWithIntl(<AksjonspunktHelpText isAksjonspunktOpen={false}>{[]}</AksjonspunktHelpText>);
     expect(screen.queryByRole('img')).not.toBeInTheDocument();
   });
 

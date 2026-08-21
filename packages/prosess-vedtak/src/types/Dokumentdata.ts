@@ -13,4 +13,4 @@ type DokumentDataType = {
   };
 };
 
-export { DokumentDataType, LagreDokumentdataType };
+export type { DokumentDataType, LagreDokumentdataType };

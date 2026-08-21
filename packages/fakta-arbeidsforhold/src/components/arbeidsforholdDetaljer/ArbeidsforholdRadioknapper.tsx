@@ -17,11 +17,7 @@ interface OwnProps {
  * Ansvarlig for å håndtere visning av RadioKnapper for arbeidsforhold
  * som står i aksjonspunktet 5080 i fakta om arbeidsforhold.
  */
-const ArbeidsforholdRadioknapper = ({
-  behandlingId,
-  behandlingVersjon,
-  formName,
-}: OwnProps) => (
+const ArbeidsforholdRadioknapper = ({ behandlingId, behandlingVersjon, formName }: OwnProps) => (
   <RadioGroupField
     name="arbeidsforholdHandlingField"
     validate={[required]}

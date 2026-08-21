@@ -71,15 +71,9 @@ const renderReadOnly =
     return null;
   };
 
-const renderPeriodpicker = (hideLabel?: boolean) =>
-  ({
-    label,
-    names,
-    ...otherProps
-  }: {
-    label: LabelType;
-    names: string[];
-  }) => {
+const renderPeriodpicker =
+  (hideLabel?: boolean) =>
+  ({ label, names, ...otherProps }: { label: LabelType; names: string[] }) => {
     const intl = useIntl();
     const fieldProps = {
       id: `${names[0]}-${names[1]}`,

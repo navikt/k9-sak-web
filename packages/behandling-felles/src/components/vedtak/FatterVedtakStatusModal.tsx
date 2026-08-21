@@ -16,11 +16,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen viser en lightbox etter at en saksbehandler har sendt et forslag på vedtak til beslutter
  * ved totrinnskontroll. Ved å trykke på knapp blir saksbehandler tatt tilbake til søkesiden.
  */
-const FatterVedtakStatusModal = ({
-  visModal = false,
-  lukkModal,
-  tekstkode,
-}: OwnProps) => {
+const FatterVedtakStatusModal = ({ visModal = false, lukkModal, tekstkode }: OwnProps) => {
   const intl = useIntl();
   const modalLabel = intl.messages[tekstkode] ? intl.formatMessage({ id: tekstkode }) : tekstkode;
   return (

@@ -5,10 +5,9 @@ import messages from '../../../i18n/nb_NO.json';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 
 it('skal vise to radioknapper', () => {
-  renderWithIntlAndReduxForm(
-    <ArbeidsforholdRadioknapper formName="" behandlingId={1} behandlingVersjon={1} />,
-    { messages },
-  );
+  renderWithIntlAndReduxForm(<ArbeidsforholdRadioknapper formName="" behandlingId={1} behandlingVersjon={1} />, {
+    messages,
+  });
 
   expect(screen.getByRole('radio', { name: 'Ja' })).not.toBeDisabled();
   expect(screen.getByRole('radio', { name: 'Nei, fortsett behandling' })).not.toBeDisabled();

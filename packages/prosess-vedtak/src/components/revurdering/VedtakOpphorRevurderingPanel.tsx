@@ -37,32 +37,32 @@ export const VedtakOpphorRevurderingPanel = ({
 }: VedtakOpphorRevurderingPanelProps & OwnState) => {
   const intl = useIntl();
   return (
-  <div data-testid="opphorRevurdering">
-    <Label size="small" as="p">
-      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-    </Label>
-    {opphoersdato && (
-      <BodyShort size="small">
-        {intl.formatMessage(
-          {
-            id: 'VedtakForm.Revurdering.OpphoererDato',
-          },
-          { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
-        )}
-      </BodyShort>
-    )}
-    {!opphoersdato && (
-      <BodyShort size="small">
-        {intl.formatMessage(
-          {
-            id: 'VedtakForm.Revurdering.Opphoerer',
-          },
-          { ytelse: ytelseNavnMap(ytelseTypeKode) },
-        )}
-      </BodyShort>
-    )}
-    <VerticalSpacer sixteenPx />
-  </div>
+    <div data-testid="opphorRevurdering">
+      <Label size="small" as="p">
+        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+      </Label>
+      {opphoersdato && (
+        <BodyShort size="small">
+          {intl.formatMessage(
+            {
+              id: 'VedtakForm.Revurdering.OpphoererDato',
+            },
+            { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
+          )}
+        </BodyShort>
+      )}
+      {!opphoersdato && (
+        <BodyShort size="small">
+          {intl.formatMessage(
+            {
+              id: 'VedtakForm.Revurdering.Opphoerer',
+            },
+            { ytelse: ytelseNavnMap(ytelseTypeKode) },
+          )}
+        </BodyShort>
+      )}
+      <VerticalSpacer sixteenPx />
+    </div>
   );
 };
 
