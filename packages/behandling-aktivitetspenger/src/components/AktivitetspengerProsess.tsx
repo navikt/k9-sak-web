@@ -5,8 +5,10 @@ import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { aksjonspunkterQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Bleed, Box } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
@@ -51,6 +53,7 @@ export const AktivitetspengerProsess = ({
   );
 
   const prosessteg = useProsessmotor({ api, behandling });
+  const { isPending: aksjonspunkterIkkeLastet } = useQuery(aksjonspunkterQueryOptions(api, behandling));
 
   const lukkModalOgGåTilSøk = useCallback(() => {
     toggleIverksetterVedtakModal(false);
@@ -85,7 +88,7 @@ export const AktivitetspengerProsess = ({
         lukkModal={lukkModalOgGåTilSøk}
         tekstkode="Behandlingen er sendt til godkjenning."
       />
-      <ProsessMeny steg={prosessteg}>
+      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterIkkeLastet}>
         <Bleed marginInline="space-20">
           <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
             {prosessteg.map(steg => {
