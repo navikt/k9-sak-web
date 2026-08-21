@@ -61,5 +61,5 @@ export const lovligeBehandlingsoperasjonerQueryOptions = (api: AktivitetspengerA
 export const bosattFaktaQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
   queryOptions({
     queryKey: ['bosatt-fakta', behandling.uuid, behandling.versjon, api.backend],
-    queryFn: () => api.hentBosattFakta(behandling.uuid),
+    queryFn: () => api.hentBostedGrunnlag(behandling.uuid),
   });
