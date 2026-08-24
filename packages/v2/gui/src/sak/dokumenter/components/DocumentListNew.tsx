@@ -4,11 +4,10 @@ import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/Do
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Checkbox, HStack, Label, Link, Table, Tooltip, UNSAFE_Combobox } from '@navikt/ds-react';
+import { BodyShort, HStack, Label, Link, Table, Tooltip, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
 import type { FagsakPerson } from '../types/FagsakPerson';
@@ -29,6 +28,8 @@ const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
 
 const inntektsmeldingBrevkode = '4936';
+
+const KUN_DENNE_BEHANDLINGEN = 'KUN_DENNE_BEHANDLINGEN';
 
 const isVedtaksdokument = (document: DokumentDto) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
@@ -79,37 +80,43 @@ interface OwnProps {
 }
 
 /**
- * DocumentList
+ * DocumentListNew
  *
  * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
-  const { DOKUMENTFILTER } = useContext(FeatureTogglesContext);
+const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
   const kv = useContext(K9KodeverkoppslagContext);
   const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
 
-  const dokumentTypeAlternativer = DOKUMENTFILTER
-    ? dokumentFilterGrupper
-        .sort((a, b) => a.navn.localeCompare(b.navn))
-        .map(gruppe => ({
-          label: gruppe.navn,
-          value: gruppe.kilde,
-        }))
-    : [];
+  const dokumentTypeAlternativer = [
+    { label: 'Vis kun dokumenter fra denne behandlingen', value: KUN_DENNE_BEHANDLINGEN },
+    ...dokumentFilterGrupper
+      .sort((a, b) => a.navn.localeCompare(b.navn))
+      .map(gruppe => ({
+        label: gruppe.navn,
+        value: gruppe.kilde as string,
+      })),
+  ];
 
   const [kunDenneBehandlingen, setKunDenneBehandlingen] = useState(false);
   const [valgteDokumentTyper, setValgteDokumentTyper] = useState<Set<DokumentfilterGruppeType>>(new Set());
 
-  const onToggleDokumentType = (option: string) => {
-    const gruppe = option as DokumentfilterGruppeType;
-    const newSet = new Set(valgteDokumentTyper);
-    if (newSet.has(gruppe)) {
-      newSet.delete(gruppe);
-    } else {
-      newSet.add(gruppe);
+  const onToggleDokumentType = (option: string, isSelected: boolean) => {
+    if (option === KUN_DENNE_BEHANDLINGEN) {
+      setKunDenneBehandlingen(isSelected);
+      return;
     }
-    setValgteDokumentTyper(newSet);
+    const gruppe = option as DokumentfilterGruppeType;
+    setValgteDokumentTyper(prev => {
+      const newSet = new Set(prev);
+      if (isSelected) {
+        newSet.add(gruppe);
+      } else {
+        newSet.delete(gruppe);
+      }
+      return newSet;
+    });
   };
 
   const erStøttetFagsakYtelseType = [
@@ -177,28 +184,22 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     <>
       <div className={styles.controlsContainer}>
         <HStack gap="space-16" align="end">
-          {DOKUMENTFILTER && (
-            <UNSAFE_Combobox
-              size="small"
-              label="Dokumenttype"
-              hideLabel
-              className={styles.dokumenttypeFilter}
-              options={dokumentTypeAlternativer}
-              selectedOptions={dokumentTypeAlternativer.filter(a => valgteDokumentTyper.has(a.value))}
-              onToggleSelected={onToggleDokumentType}
-              isMultiSelect
-              shouldAutocomplete
-
-              placeholder="Alle dokumenttyper"
-            />
-          )}
-          <Checkbox
+          <UNSAFE_Combobox
             size="small"
-            checked={kunDenneBehandlingen}
-            onChange={e => setKunDenneBehandlingen(e.target.checked)}
-          >
-            Vis kun dokumenter fra denne behandlingen
-          </Checkbox>
+            label="Dokumenttype"
+            hideLabel
+            className={styles.dokumenttypeFilter}
+            options={dokumentTypeAlternativer}
+            selectedOptions={dokumentTypeAlternativer.filter(a =>
+              a.value === KUN_DENNE_BEHANDLINGEN
+                ? kunDenneBehandlingen
+                : valgteDokumentTyper.has(a.value as DokumentfilterGruppeType),
+            )}
+            onToggleSelected={onToggleDokumentType}
+            isMultiSelect
+            shouldAutocomplete
+            placeholder="Alle dokumenttyper"
+          />
         </HStack>
         <ModiaLenke />
       </div>
@@ -218,7 +219,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
               if (kunDenneBehandlingen && !document.behandlinger?.some(b => b === behandlingId)) {
                 return false;
               }
-              if (!DOKUMENTFILTER || valgteDokumentTyper.size === 0) {
+              if (valgteDokumentTyper.size === 0) {
                 return true;
               }
               const { dokumentgruppe } = document;
@@ -315,4 +316,4 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   );
 };
 
-export default DocumentList;
+export default DocumentListNew;

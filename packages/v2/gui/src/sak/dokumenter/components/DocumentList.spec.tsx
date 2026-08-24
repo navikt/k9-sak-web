@@ -2,7 +2,7 @@
 import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import DocumentList from './DocumentList';
+import DocumentListContainer from './DocumentListContainer.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { createQueryClient } from '../../../shared/query/queryClient.js';
 
@@ -42,7 +42,7 @@ describe('<DocumentList>', () => {
 
     render(
       wrapper(
-        <DocumentList
+        <DocumentListContainer
           documents={[document, anotherDocument]}
           behandlingId={1}
           saksnummer={1}
@@ -69,7 +69,7 @@ describe('<DocumentList>', () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <DocumentList
+        <DocumentListContainer
           documents={[document]}
           behandlingId={1}
           saksnummer={1}
@@ -86,7 +86,7 @@ describe('<DocumentList>', () => {
   it('skal ikke vise tabell når det ikke finnes dokumenter', async () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <DocumentList
+        <DocumentListContainer
           documents={[]}
           behandlingId={1}
           saksnummer={1}
