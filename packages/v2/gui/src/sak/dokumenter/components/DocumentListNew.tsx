@@ -79,6 +79,11 @@ interface OwnProps {
   sakstype: FagsakYtelsesType;
 }
 
+interface DokumentTypeOption {
+  label: string;
+  value: typeof KUN_DENNE_BEHANDLINGEN | DokumentfilterGruppeType;
+}
+
 /**
  * DocumentListNew
  *
@@ -89,31 +94,36 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   const kv = useContext(K9KodeverkoppslagContext);
   const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
 
-  const dokumentTypeAlternativer = [
+  const dokumentTypeAlternativer: DokumentTypeOption[] = [
     { label: 'Vis kun dokumenter fra denne behandlingen', value: KUN_DENNE_BEHANDLINGEN },
     ...dokumentFilterGrupper
       .sort((a, b) => a.navn.localeCompare(b.navn))
       .map(gruppe => ({
         label: gruppe.navn,
-        value: gruppe.kilde as string,
+        value: gruppe.kilde,
       })),
   ];
 
   const [kunDenneBehandlingen, setKunDenneBehandlingen] = useState(false);
   const [valgteDokumentTyper, setValgteDokumentTyper] = useState<Set<DokumentfilterGruppeType>>(new Set());
 
+  const erDokumentfilterGruppeType = (value: string): value is DokumentfilterGruppeType =>
+    dokumentFilterGrupper.some(gruppe => gruppe.kilde === value);
+
   const onToggleDokumentType = (option: string, isSelected: boolean) => {
     if (option === KUN_DENNE_BEHANDLINGEN) {
       setKunDenneBehandlingen(isSelected);
       return;
     }
-    const gruppe = option as DokumentfilterGruppeType;
+    if (!erDokumentfilterGruppeType(option)) {
+      throw new Error(`Ugyldig dokumentfiltergruppe type: ${option}`);
+    }
     setValgteDokumentTyper(prev => {
       const newSet = new Set(prev);
       if (isSelected) {
-        newSet.add(gruppe);
+        newSet.add(option);
       } else {
-        newSet.delete(gruppe);
+        newSet.delete(option);
       }
       return newSet;
     });
@@ -191,9 +201,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
             className={styles.dokumenttypeFilter}
             options={dokumentTypeAlternativer}
             selectedOptions={dokumentTypeAlternativer.filter(a =>
-              a.value === KUN_DENNE_BEHANDLINGEN
-                ? kunDenneBehandlingen
-                : valgteDokumentTyper.has(a.value as DokumentfilterGruppeType),
+              a.value === KUN_DENNE_BEHANDLINGEN ? kunDenneBehandlingen : valgteDokumentTyper.has(a.value),
             )}
             onToggleSelected={onToggleDokumentType}
             isMultiSelect
