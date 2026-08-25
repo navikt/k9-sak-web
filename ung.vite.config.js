@@ -115,7 +115,7 @@ export default ({ mode }) => {
         // Endre namn på bygd entrypoint html frå ung.html til index.html
         name: "rename-html-entry",
         closeBundle: async () => {
-          const buildDir = path.join(__dirname, "dist/ung/web")
+          const buildDir = path.join(import.meta.dirname, "dist/ung/web")
           const oldPath = path.join(buildDir, "ung.html")
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
