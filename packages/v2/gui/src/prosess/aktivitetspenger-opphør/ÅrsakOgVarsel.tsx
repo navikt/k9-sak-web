@@ -182,7 +182,7 @@ export const AarsakOgVarsel = ({
     !!valgtPeriode && (!valgtPeriode.avklaring || valgtPeriode.avklaring?.kanRedigeres !== true);
   const panelReadOnly = readOnly || readOnlyForValgtPeriode;
   const relevanteBostedsvilkårIkkeOppfyltÅrsaker = Object.values(BostedsvilkårIkkeOppfyltÅrsak).filter(
-    årsak => årsak !== BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT,
+    årsak => årsak !== BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT && årsak !== BostedsvilkårIkkeOppfyltÅrsak.AVKORTET,
   );
 
   const handleSubmit = async (data: FormData, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {

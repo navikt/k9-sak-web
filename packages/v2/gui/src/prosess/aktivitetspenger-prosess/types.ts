@@ -9,4 +9,5 @@ export const opphørsårsakLabels: Record<BostedsvilkårIkkeOppfyltÅrsak, strin
     'Har studie/arbeidssted utenfor Trondheim',
   [BostedsvilkårIkkeOppfyltÅrsak.ANNET]: 'Annet',
   [BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT]: '-',
+  [BostedsvilkårIkkeOppfyltÅrsak.AVKORTET]: 'Avkortet',
 };
