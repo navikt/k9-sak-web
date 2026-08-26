@@ -64,6 +64,11 @@ export const usePollBehandlingStatus = (
         }),
       );
       if (!controller.signal.aborted && nyBehandling) {
+        // Forhåndsutfyller cache for ny versjon så behandling ikke er undefined i mellomtiden
+        queryClient.setQueryData(
+          behandlingQueryOptions(api, { uuid: nyBehandling.uuid, versjon: nyBehandling.versjon }).queryKey,
+          nyBehandling,
+        );
         setBehandling(nyBehandling);
       }
     } finally {

@@ -4,7 +4,11 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CogIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
-import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
+import {
+  getPeriodStatus,
+  VilkårSplittPanel,
+  type VilkårSplittPanelPeriod,
+} from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 interface Props {
   alderVilkår: VilkårMedPerioderDto;
 }

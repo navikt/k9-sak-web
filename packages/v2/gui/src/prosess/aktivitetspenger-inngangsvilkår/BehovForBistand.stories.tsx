@@ -15,7 +15,7 @@ const meta = {
   args: {
     api: fakeAktivitetspengerApi,
     behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     readOnly: false,
     vurderBistandsvilkårAp: undefined,
     lokalkontorForeslårVilkårAp: undefined,
