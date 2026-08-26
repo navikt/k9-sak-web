@@ -4,7 +4,7 @@ import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivit
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
-  bosattFaktaQueryOptions,
+  bostedGrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
   lovligeBehandlingsoperasjonerQueryOptions,
   perioderSomKanAvkortesQueryOptions,
@@ -21,7 +21,7 @@ const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
 interface Props {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
 }
 
 export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
@@ -32,7 +32,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
     { data: vilkår },
     { data: totrinnskontrollSkjermlenkeContext },
     { data: lovligeBehandlingsoperasjoner },
-    { data: bosattFakta },
+    { data: bostedGrunnlag },
   ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(api, behandling),
@@ -40,7 +40,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       vilkårQueryOptions(api, behandling),
       totrinnskontrollSkjermlenkeContextQueryOptions(api, behandling),
       lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
-      bosattFaktaQueryOptions(api, behandling),
+      bostedGrunnlagQueryOptions(api, behandling),
       perioderSomKanAvkortesQueryOptions(api, behandling),
     ],
   });
@@ -60,7 +60,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
       lovligeBehandlingsoperasjoner={lovligeBehandlingsoperasjoner}
-      bosattFakta={bosattFakta}
+      bostedGrunnlag={bostedGrunnlag}
     />
   );
 };

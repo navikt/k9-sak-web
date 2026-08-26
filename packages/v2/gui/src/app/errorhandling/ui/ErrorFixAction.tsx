@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
 import { ArrowCirclepathIcon, ArrowCirclepathReverseIcon, ArrowsCirclepathIcon } from '@navikt/aksel-icons';
 import { BodyLong } from '@navikt/ds-react';
+import type { ReactNode } from 'react';
 
 export type ErrorFixButton = Readonly<
   {

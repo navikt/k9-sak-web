@@ -1,16 +1,16 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, GlobalAlert, HStack, Pagination, Spacer, Tooltip, VStack } from '@navikt/ds-react';
 import { type FC, useMemo, useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 
-import css from './handCursor.module.css';
 import { useGlobalUnhandledErrors } from '../GlobalUnhandledErrorCatcher.js';
-import { resolveErrorViewProps } from './resolveErrorViewProps.js';
-import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
+import { ErrorPanel } from './ErrorPanel.js';
+import { ErrorReportButton } from './ErrorReportButton.js';
 import { ErrorReportPopover } from './ErrorReportPopover.js';
 import { FixButton } from './FixButton.js';
-import { ErrorReportButton } from './ErrorReportButton.js';
-import { ErrorPanel } from './ErrorPanel.js';
 import { deduplicateConsecutiveErrors } from './deduplicateConsecutiveErrors.js';
+import css from './handCursor.module.css';
+import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
+import { resolveErrorViewProps } from './resolveErrorViewProps.js';
 
 interface TopErrorPanelUIProps {
   readonly errors: ReadonlyArray<Error>;

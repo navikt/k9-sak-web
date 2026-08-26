@@ -13,9 +13,34 @@ import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
+import { innloggetAnsattUngV2QueryOptions } from '../data/useNavAnsattForYtelse.js';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
+
+const navAnsattV2 = {
+  brukernavn: 'Test',
+  navn: 'Test',
+  kanBehandleKode6: false,
+  kanBehandleKode7: false,
+  kanBehandleKodeEgenAnsatt: false,
+  erUngdomsprogramveileder: false,
+  kanVeiledeAktivitetspenger: false,
+  kanVeiledeUngdomsprogramytelse: false,
+  kanDrifte: false,
+  skalViseDetaljerteFeilmeldinger: false,
+  ungdomsprogramytelseSaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel2SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+};
+
+const createQueryClientMedNavAnsatt = () => {
+  const qc = createQueryClient({ queries: { retry: false } });
+  qc.setQueryData(innloggetAnsattUngV2QueryOptions.queryKey, navAnsattV2);
+  return qc;
+};
 
 vi.mock('react-router', async () => {
   const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
@@ -160,30 +185,31 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
 
     renderWithIntlAndReactQueryClient(
-      <MemoryRouter>
-        <IntlProvider locale="nb-NO">
-          <KodeverkProvider
-            behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
-            kodeverk={alleKodeverkV2}
-            klageKodeverk={{}}
-            tilbakeKodeverk={{}}
-          >
-            <FagsakProfileIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-              harHentetBehandlinger
-              oppfriskBehandlinger={vi.fn()}
-              fagsakRettigheter={fagsakRettigheter}
-            />
-          </KodeverkProvider>
-        </IntlProvider>
-      </MemoryRouter>,
+      <QueryClientProvider client={createQueryClientMedNavAnsatt()}>
+        <MemoryRouter>
+          <IntlProvider locale="nb-NO">
+            <KodeverkProvider
+              behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+              kodeverk={alleKodeverkV2}
+              klageKodeverk={{}}
+              tilbakeKodeverk={{}}
+            >
+              <FagsakProfileIndex
+                fagsak={fagsak as Fagsak}
+                alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+                harHentetBehandlinger
+                oppfriskBehandlinger={vi.fn()}
+                fagsakRettigheter={fagsakRettigheter}
+              />
+            </KodeverkProvider>
+          </IntlProvider>
+        </MemoryRouter>
+      </QueryClientProvider>,
     );
 
     expect(screen.queryAllByTestId('BehandlingPickerItem').length).toBe(2);
@@ -199,31 +225,32 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
 
     renderWithIntlAndReactQueryClient(
-      <MemoryRouter>
-        <IntlProvider locale="nb-NO">
-          <KodeverkProvider
-            behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
-            kodeverk={alleKodeverkV2}
-            klageKodeverk={{}}
-            tilbakeKodeverk={{}}
-          >
-            <FagsakProfileIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-              harHentetBehandlinger
-              oppfriskBehandlinger={vi.fn()}
-              behandlingId={1}
-              fagsakRettigheter={fagsakRettigheter}
-            />
-          </KodeverkProvider>
-        </IntlProvider>
-      </MemoryRouter>,
+      <QueryClientProvider client={createQueryClientMedNavAnsatt()}>
+        <MemoryRouter>
+          <IntlProvider locale="nb-NO">
+            <KodeverkProvider
+              behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+              kodeverk={alleKodeverkV2}
+              klageKodeverk={{}}
+              tilbakeKodeverk={{}}
+            >
+              <FagsakProfileIndex
+                fagsak={fagsak as Fagsak}
+                alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+                harHentetBehandlinger
+                oppfriskBehandlinger={vi.fn()}
+                behandlingId={1}
+                fagsakRettigheter={fagsakRettigheter}
+              />
+            </KodeverkProvider>
+          </IntlProvider>
+        </MemoryRouter>
+      </QueryClientProvider>,
     );
 
     expect(screen.queryAllByTestId('behandlingSelected').length).toBe(1);
