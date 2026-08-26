@@ -57,6 +57,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     return [];
   }
 
+  async hentPerioderSomKanAvkortes() {
+    return { resultat: [] };
+  }
+
   async hentTotrinnskontrollSkjermlenkeContext(): ReturnType<
     AktivitetspengerApi['hentTotrinnskontrollSkjermlenkeContext']
   > {

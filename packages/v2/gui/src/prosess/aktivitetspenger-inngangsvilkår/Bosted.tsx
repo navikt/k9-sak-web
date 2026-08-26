@@ -3,24 +3,35 @@ import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import type {
+  BostedGrunnlagResponseDto,
+  VilkårBostedPeriodeVurderingDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
+import Datovelger from '../../shared/datovelger/Datovelger';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { perioderSomKanAvkortesQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 import { sendTilBeslutter } from './utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from './utils/utils';
 import { getPeriodStatus, VilkårSplittPanel, type VilkårSplittPanelPeriod } from './VilkårSplittPanel';
+import { checkIfPeriodsAreEdgeToEdge, isPeriodCoveredByPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
+import type { ung_sak_kontrakt_vilkår_VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
@@ -37,7 +48,20 @@ interface Props {
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
 interface FormData {
-  vurderinger: Record<string, { begrunnelse: string; bosatt: Vurdering; avslagsårsak?: string; fritekst?: string }>;
+  vurderinger: Record<
+    string,
+    {
+      begrunnelse: string;
+      bosatt: Vurdering;
+      avslagsårsak?: string;
+      fritekst?: string;
+      fom: string;
+      tom: string;
+      maksdatoØvreGrense: string;
+      redigerMaksdato: boolean;
+      begrunnelseKortereMaksdato?: string;
+    }
+  >;
 }
 
 const utfallTilVurdering = (utfall: string): Vurdering => {
@@ -46,14 +70,76 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
+type VilkårPeriodeVisning = ung_sak_kontrakt_vilkår_VilkårPeriodeDto & {
+  muligAvkortingPeriode: MuligAvkortingPeriode;
+  avkortetPeriodeInfo?: {
+    begrunnelse: string;
+    periode: {
+      fom: string;
+      tom: string;
+    };
+  };
+};
+
+const slåSammenPerioder = (vilkårMedPerioder: VilkårMedPerioderDto, avkortingsperioder: MuligAvkortingPeriode[]) => {
+  const perioderFraVilkår = vilkårMedPerioder.perioder ?? [];
+  const visningsperioder: VilkårPeriodeVisning[] = [];
+  avkortingsperioder
+    .map(avkortingsperiode => ({
+      fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
+      tom: avkortingsperiode.tom,
+    }))
+    .forEach(avkortingsperiode => {
+      console.log('avkortingsperiode', avkortingsperiode);
+      console.log('perioderFraVilkår', perioderFraVilkår);
+
+      const vilkårISammePeriode = perioderFraVilkår
+        .filter(vilkårPeriode => isPeriodCoveredByPeriod(avkortingsperiode, vilkårPeriode.periode))
+        .toSorted((a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime())
+        .map(vilkårPeriode => ({ ...vilkårPeriode, muligAvkortingPeriode: avkortingsperiode }));
+      console.log('vilkårISammePeriode', vilkårISammePeriode);
+      if (vilkårISammePeriode.length > 1) {
+        const førstePeriode = vilkårISammePeriode[0];
+        const avkortetPeriodeKantIKant = [...vilkårISammePeriode]
+          .slice(1)
+          .find(p => førstePeriode && checkIfPeriodsAreEdgeToEdge(førstePeriode.periode, p.periode));
+        if (førstePeriode?.vilkarStatus === Utfall.OPPFYLT && avkortetPeriodeKantIKant) {
+          const rest = vilkårISammePeriode.filter(p => p !== førstePeriode && p !== avkortetPeriodeKantIKant);
+          return visningsperioder.push(
+            {
+              ...førstePeriode,
+              avkortetPeriodeInfo: {
+                begrunnelse: avkortetPeriodeKantIKant.begrunnelse ?? '',
+                periode: {
+                  fom: avkortetPeriodeKantIKant.periode.fom,
+                  tom: avkortetPeriodeKantIKant.periode.tom,
+                },
+              },
+            },
+            ...rest,
+          );
+        }
+        return visningsperioder.push(...vilkårISammePeriode);
+      }
+      return visningsperioder.push(...vilkårISammePeriode);
+    });
+  return visningsperioder;
+};
+
+const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): FormData => ({
   vurderinger: Object.fromEntries(
-    (vilkår.perioder ?? []).map(p => [
+    vilkår.map(p => [
       p.periode.fom,
       {
         begrunnelse: p.begrunnelse ?? '',
         bosatt: utfallTilVurdering(p.vilkarStatus),
         avslagsårsak: p.avslagKode,
+        fritekst: p.fritekstVurderingBrev,
+        fom: p.periode.fom,
+        tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,
+        redigerMaksdato: false,
+        begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
+        maksdatoØvreGrense: p.muligAvkortingPeriode.tom,
       },
     ]),
   ),
@@ -70,37 +156,72 @@ export const Bosted = ({
   isPermanentlyReadOnly,
   bosattFakta,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår?.perioder ?? []).map(p => ({
-    id: p.periode.fom,
-    status: getPeriodStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)}`,
-    periode: p.periode,
-  }));
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
+  const avkortingsperiodeBosted = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BOSTEDSVILKÅR);
+  const søknadsperioder = slåSammenPerioder(bostedVilkår, avkortingsperiodeBosted?.perioder ?? []);
+  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => {
+    return {
+      id: periode.periode.fom,
+      status: getPeriodStatus(periode.vilkarStatus),
+      label: `${formatDate(periode.periode.fom)}`,
+      periode: {
+        fom: periode.periode.fom,
+        tom: periode.periode.tom,
+      },
+    };
+  });
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(bostedVilkår),
+    defaultValues: buildInitialValues(søknadsperioder),
   });
 
+  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  useEffect(() => {
+    if (!periods.some(period => period.id === selectedId)) {
+      setSelectedId(periods[0]?.id ?? '');
+    }
+  }, [periods, selectedId]);
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem) {
+      if (!selectedItem || !vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
-      const vurdertePerioder = {
-        avslagsårsak:
-          vurdering?.bosatt !== 'oppfylt' ? BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM : undefined,
-        begrunnelse: vurdering?.begrunnelse ?? '',
-        erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
-        periode: selectedItem.periode,
-        fritekstVurderingBrev: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
-      };
+      const redigerMaksdatoAktiv = vurdering?.bosatt === 'oppfylt' && vurdering?.redigerMaksdato;
+      const begrunnelseInnvilget = vurdering?.begrunnelse ?? '';
+      const begrunnelseAvkortet = vurdering?.begrunnelseKortereMaksdato ?? '';
+      const vurdertePerioder: VilkårBostedPeriodeVurderingDto[] = [
+        {
+          avslagsårsak:
+            vurdering?.bosatt !== 'oppfylt' ? BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM : undefined,
+          begrunnelse: begrunnelseInnvilget,
+          erVilkårOppfylt: vurdering?.bosatt === 'oppfylt',
+          periode: {
+            fom: vurdering.fom,
+            tom: redigerMaksdatoAktiv ? vurdering.tom : vurdering.maksdatoØvreGrense,
+          },
+          fritekstVurderingBrev: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
+        },
+      ];
+      if (redigerMaksdatoAktiv) {
+        vurdertePerioder.push({
+          avslagsårsak: BostedsvilkårIkkeOppfyltÅrsak.AVKORTET,
+          begrunnelse: begrunnelseAvkortet,
+          erVilkårOppfylt: false,
+          periode: {
+            fom: dayjs(vurdering.tom).add(1, 'day').format(ISO_DATE_FORMAT),
+            tom: vurdering.maksdatoØvreGrense,
+          },
+          fritekstVurderingBrev: undefined,
+        });
+      }
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
-        begrunnelse: vurdering?.begrunnelse ?? '',
-        vurdertePerioder: [vurdertePerioder],
+        begrunnelse: redigerMaksdatoAktiv
+          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`.trim()
+          : begrunnelseInnvilget,
+        vurdertePerioder,
       };
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
@@ -117,11 +238,17 @@ export const Bosted = ({
     },
   });
 
+  // hold valgt periode gyldig hvis grupperingen endrer seg etter en refetch
+
   const isBostedApSolved = aksjonspunktErLøst(bostedAp);
   const selectedBosattFaktaPeriode = bosattFakta.perioder.find(p => p.fom === selectedId);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
+  const redigerMaksdato = formHook.watch(`vurderinger.${selectedId}.redigerMaksdato`);
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
+
+  const selectedItem = periods.find(period => period.id === selectedId);
+  // finner avkortingsperioden som overlapper valgt periode
   const skalViseSendTilBeslutter =
     !!harAvslagIBosted &&
     !!lokalkontorForeslårVilkårAp &&
@@ -135,6 +262,7 @@ export const Bosted = ({
     return <ProsessStegIkkeBehandlet />;
   }
 
+  const maksdatoØvreGrense = formHook.watch(`vurderinger.${selectedId}.maksdatoØvreGrense`);
   return (
     <VStack gap="space-20">
       {!isBostedApSolved && (
@@ -200,6 +328,7 @@ export const Bosted = ({
                 <RhfTextarea
                   control={formHook.control}
                   name={`vurderinger.${selectedId}.begrunnelse`}
+                  validate={[required]}
                   readOnly={isFormLocked}
                   label={
                     <span>
@@ -244,6 +373,53 @@ export const Bosted = ({
                     validate={[required]}
                     readOnly={isFormLocked}
                   />
+                )}
+                {bosatt === 'oppfylt' && (
+                  <VStack gap="space-8">
+                    <Label size="small" as="p">
+                      Bosatt i Trondheim kommune:
+                    </Label>
+                    <HStack gap="space-20" align="end">
+                      <Datovelger
+                        key={`${selectedId}-fra`}
+                        name={`vurderinger.${selectedId}.fom`}
+                        label="Fra"
+                        size="small"
+                        readOnly
+                      />
+                      <Datovelger
+                        key={`${selectedId}-maksdato`}
+                        name={`vurderinger.${selectedId}.tom`}
+                        label="Maksdato"
+                        size="small"
+                        readOnly={isFormLocked || !redigerMaksdato}
+                        validate={[required]}
+                        fromDate={selectedItem ? new Date(selectedItem.periode.fom) : undefined}
+                        toDate={selectedItem ? new Date(maksdatoØvreGrense) : undefined}
+                      />
+                      <RhfCheckbox
+                        control={formHook.control}
+                        name={`vurderinger.${selectedId}.redigerMaksdato`}
+                        label="Rediger maksdato"
+                        readOnly={isFormLocked}
+                      />
+                    </HStack>
+                    {redigerMaksdato && (
+                      <VStack gap="space-8">
+                        <Label size="small" as="p">
+                          Vurdering av avkortet periode
+                        </Label>
+                        <RhfTextarea
+                          key={`${selectedId}-begrunnelseKortereMaksdato`}
+                          control={formHook.control}
+                          name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
+                          label="Begrunn kortere periode enn 260 dager"
+                          validate={[required]}
+                          readOnly={isFormLocked}
+                        />
+                      </VStack>
+                    )}
+                  </VStack>
                 )}
                 {!isFormLocked && (
                   <HStack gap="space-8">

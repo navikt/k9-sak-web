@@ -7,6 +7,7 @@ import {
   bosattFaktaQueryOptions,
   innloggetBrukerQueryOptions,
   lovligeBehandlingsoperasjonerQueryOptions,
+  perioderSomKanAvkortesQueryOptions,
   totrinnskontrollSkjermlenkeContextQueryOptions,
   vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -40,6 +41,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       totrinnskontrollSkjermlenkeContextQueryOptions(api, behandling),
       lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
       bosattFaktaQueryOptions(api, behandling),
+      perioderSomKanAvkortesQueryOptions(api, behandling),
     ],
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
