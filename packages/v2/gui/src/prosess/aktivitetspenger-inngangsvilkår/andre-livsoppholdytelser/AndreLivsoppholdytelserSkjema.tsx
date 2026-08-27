@@ -1,4 +1,4 @@
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -58,7 +58,9 @@ export const AndreLivsoppholdytelserSkjema = ({
             legend="Avslagsårsak"
             validate={[required]}
           >
-            <Radio value={Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE}>Søker har annen livsoppholdytelse</Radio>
+            <Radio value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE}>
+              Søker har annen livsoppholdytelse
+            </Radio>
             <Radio value="fritekst">Fritekst</Radio>
           </RhfRadioGroup>
         )}

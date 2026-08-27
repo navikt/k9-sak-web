@@ -95,8 +95,7 @@ export const Bosted = ({
       const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
       const vurdertePerioder: VilkårBostedPeriodeVurderingDto[] = [
         {
-          avslagsårsak:
-            vurdering.bosatt !== 'oppfylt' ? BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM : undefined,
+          avslagsårsak: vurdering.bosatt !== 'oppfylt' ? vurdering.avslagsårsak : undefined,
           begrunnelse: begrunnelseInnvilget,
           erVilkårOppfylt: vurdering.bosatt === 'oppfylt',
           periode: {

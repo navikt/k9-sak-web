@@ -1,4 +1,4 @@
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyLong, BodyShort, Label, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
@@ -6,7 +6,7 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 
 const avslagsårsakLabels: Record<string, string> = {
-  [Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE]: 'Søker har annen livsoppholdytelse',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE]: 'Søker har annen livsoppholdytelse',
   fritekst: 'Fritekst',
 };
 

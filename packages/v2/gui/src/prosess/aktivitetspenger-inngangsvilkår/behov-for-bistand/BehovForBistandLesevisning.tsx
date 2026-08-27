@@ -1,4 +1,4 @@
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyLong, BodyShort, Label, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
@@ -6,7 +6,7 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { BehovForBistandFormData } from './behovForBistandFormData.js';
 
 const avslagsårsakLabels: Record<string, string> = {
-  [Avslagsårsak.IKKE_14A_VEDTAK]: 'Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.',
+  [BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK]: 'Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.',
   fritekst: 'Fritekst',
 };
 

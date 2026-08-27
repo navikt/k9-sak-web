@@ -5,9 +5,6 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import { opphørsårsakLabels } from '../../aktivitetspenger-prosess/types.js';
 import type { BostedFormData } from './bostedFormData.js';
 
-const finnOpphørsårsakLabel = (kode: string | undefined): string | undefined =>
-  Object.entries(opphørsårsakLabels).find(([årsak]) => årsak === kode)?.[1];
-
 interface Props {
   begrunnelseLabel: ReactNode;
   vurdering: BostedFormData['vurderinger'][string];
@@ -35,7 +32,7 @@ export const BostedLesevisning = ({ begrunnelseLabel, vurdering }: Props) => (
         <Label size="small" as="p">
           Avslagsårsak
         </Label>
-        <BodyShort size="small">{finnOpphørsårsakLabel(vurdering.avslagsårsak)}</BodyShort>
+        <BodyShort size="small">{opphørsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
       </VStack>
     )}
     {vurdering.bosatt === 'ikkeOppfylt' && vurdering.fritekst && (

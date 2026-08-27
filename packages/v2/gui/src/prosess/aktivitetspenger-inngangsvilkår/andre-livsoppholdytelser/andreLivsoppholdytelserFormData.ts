@@ -1,3 +1,5 @@
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
 import type { VilkårPeriodeVisning } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -10,7 +12,7 @@ export interface AndreLivsoppholdytelserFormData {
     {
       begrunnelse: string;
       andreLivsoppholdytelser: Vurdering;
-      avslagsårsak?: string;
+      avslagsårsak?: AndreLivsoppholdsytelserIkkeOppfyltÅrsak | 'fritekst';
       fritekst?: string;
       fom: string;
       tom: string;
@@ -27,6 +29,13 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
+// Backend returnerer Avslagsårsak-koder ved lesing, men forventer AndreLivsoppholdsytelserIkkeOppfyltÅrsak ved innsending.
+const avslagKodeTilÅrsak: Record<string, AndreLivsoppholdsytelserIkkeOppfyltÅrsak> = {
+  [Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE]:
+    AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE,
+  [Avslagsårsak.AVKORTET]: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
+};
+
 export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): AndreLivsoppholdytelserFormData => ({
   vurderinger: Object.fromEntries(
     vilkår.map(p => [
@@ -34,7 +43,7 @@ export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): AndreLivso
       {
         begrunnelse: p.begrunnelse ?? '',
         andreLivsoppholdytelser: utfallTilVurdering(p.vilkarStatus),
-        avslagsårsak: p.avslagKode,
+        avslagsårsak: p.avslagKode ? avslagKodeTilÅrsak[p.avslagKode] : undefined,
         fritekst: p.fritekstVurderingBrev,
         fom: p.periode.fom,
         tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,

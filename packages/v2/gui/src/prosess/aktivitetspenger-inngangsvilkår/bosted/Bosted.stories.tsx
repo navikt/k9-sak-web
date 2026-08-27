@@ -1,6 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -104,12 +104,19 @@ export const IkkeOppfylt: Story = {
           periode,
           vilkarStatus: Utfall.IKKE_OPPFYLT,
           begrunnelse: 'Søker er ikke bosatt i Trondheim kommune.',
-          avslagKode: BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
+          avslagKode: Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED,
         },
       ],
     },
     bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
     isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser avslagsårsaken fra backend', async () => {
+      await expect(await canvas.findByText('Ikke bosatt adresse i Trondheim')).toBeInTheDocument();
+    });
   },
 };
 

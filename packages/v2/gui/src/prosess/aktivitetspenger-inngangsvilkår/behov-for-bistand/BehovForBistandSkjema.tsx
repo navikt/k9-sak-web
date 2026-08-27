@@ -1,4 +1,4 @@
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -106,7 +106,9 @@ export const BehovForBistandSkjema = ({
             legend="Avslagsårsak"
             validate={[required]}
           >
-            <Radio value={Avslagsårsak.IKKE_14A_VEDTAK}>Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.</Radio>
+            <Radio value={BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK}>
+              Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.
+            </Radio>
             <Radio value="fritekst">Fritekst</Radio>
           </RhfRadioGroup>
         )}

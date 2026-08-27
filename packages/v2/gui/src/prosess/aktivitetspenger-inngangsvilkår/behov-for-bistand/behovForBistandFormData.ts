@@ -1,3 +1,5 @@
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
 import type { VilkårPeriodeVisning } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -10,7 +12,7 @@ export interface BehovForBistandFormData {
     {
       begrunnelse: string;
       behovForBistand: Vurdering;
-      avslagsårsak?: string;
+      avslagsårsak?: BistandsvilkårIkkeOppfyltÅrsak | 'fritekst';
       fritekst?: string;
       fom: string;
       tom: string;
@@ -27,6 +29,12 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
+// Backend returnerer Avslagsårsak-koder ved lesing, men forventer BistandsvilkårIkkeOppfyltÅrsak ved innsending.
+const avslagKodeTilÅrsak: Record<string, BistandsvilkårIkkeOppfyltÅrsak> = {
+  [Avslagsårsak.IKKE_14A_VEDTAK]: BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK,
+  [Avslagsårsak.AVKORTET]: BistandsvilkårIkkeOppfyltÅrsak.AVKORTET,
+};
+
 export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): BehovForBistandFormData => ({
   vurderinger: Object.fromEntries(
     vilkår.map(p => [
@@ -34,7 +42,7 @@ export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): BehovForBi
       {
         begrunnelse: p.begrunnelse ?? '',
         behovForBistand: utfallTilVurdering(p.vilkarStatus),
-        avslagsårsak: p.avslagKode,
+        avslagsårsak: p.avslagKode ? avslagKodeTilÅrsak[p.avslagKode] : undefined,
         fritekst: p.fritekstVurderingBrev,
         fom: p.periode.fom,
         tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,
