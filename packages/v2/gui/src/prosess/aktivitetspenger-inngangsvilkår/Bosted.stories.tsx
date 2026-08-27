@@ -73,6 +73,28 @@ export const Oppfylt: Story = {
   },
 };
 
+export const LesevisningViserTekst: Story = {
+  args: {
+    bostedVilkår: {
+      vilkarType: vilkarType.BOSTEDSVILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker er bosatt i Trondheim kommune.' }],
+    },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser vurderingen som tekst, ikke som skjemafelter', async () => {
+      await expect(await canvas.findByText('Søker er bosatt i Trondheim kommune.')).toBeInTheDocument();
+      await expect(canvas.getByText('Bosatt i Trondheim kommune:')).toBeInTheDocument();
+      await expect(canvas.getByText('01.01.2024 – 31.12.2024')).toBeInTheDocument();
+      await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const IkkeOppfylt: Story = {
   args: {
     bostedVilkår: {

@@ -11,7 +11,7 @@ import type {
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
@@ -22,6 +22,7 @@ import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import Datovelger from '../../shared/datovelger/Datovelger';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -49,6 +50,9 @@ interface Props {
 }
 
 type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
+
+const finnOpphørsårsakLabel = (kode: string | undefined): string | undefined =>
+  Object.entries(opphørsårsakLabels).find(([årsak]) => årsak === kode)?.[1];
 
 interface FormData {
   vurderinger: Record<
@@ -213,6 +217,12 @@ export const Bosted = ({
   }
 
   const vurdering = formHook.watch(`vurderinger.${selectedId}`);
+  const begrunnelseLabel = (
+    <span>
+      Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
+      {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
+    </span>
+  );
   return (
     <VStack gap="space-20">
       {!isBostedApSolved && (
@@ -271,145 +281,198 @@ export const Bosted = ({
                 </HStack>
               )}
             </VStack>
-            <RhfForm
-              formMethods={formHook}
-              onSubmit={async data => {
-                await bekreftAksjonspunktMutation(data);
-                setIsFormLocked(true);
-              }}
-            >
+            {isFormLocked && vurdering ? (
               <VStack gap="space-24" maxWidth="70ch" width="100%">
-                <RhfTextarea
-                  control={formHook.control}
-                  name={`vurderinger.${selectedId}.begrunnelse`}
-                  readOnly={isFormLocked}
-                  label={
-                    <span>
-                      Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
-                      {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
-                    </span>
+                <LabelledContent
+                  label={begrunnelseLabel}
+                  indentContent
+                  content={
+                    <BodyLong size="small" className="whitespace-pre-wrap">
+                      {vurdering.begrunnelse}
+                    </BodyLong>
                   }
-                  validate={[required, minLength(3), maxLength(4000)]}
                 />
-                <RhfRadioGroup
-                  key={`${selectedId}-bosatt`}
-                  control={formHook.control}
-                  name={`vurderinger.${selectedId}.bosatt`}
-                  legend="Er søker bosatt i Trondheim kommune?"
-                  validate={[required]}
-                  readOnly={isFormLocked}
-                >
-                  <Radio value="oppfylt">Ja</Radio>
-                  <Radio value="ikkeOppfylt">Nei</Radio>
-                </RhfRadioGroup>
-                {bosatt === 'ikkeOppfylt' && (
-                  <RhfRadioGroup
-                    key={`${selectedId}-avslagsårsak`}
-                    control={formHook.control}
-                    name={`vurderinger.${selectedId}.avslagsårsak`}
-                    legend="Avslagsårsak"
-                    validate={[required]}
-                    readOnly={isFormLocked}
-                  >
-                    <>
-                      {Object.values(BostedsvilkårIkkeOppfyltÅrsak)
-                        .filter(
-                          årsak =>
-                            årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
-                            årsak ===
-                              BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSTEDSADRESSE_OG_IKKE_FOLKEREGISTRERT_I_TRONDHEIM ||
-                            årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
-                            årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
-                        )
-                        .map(årsak => (
-                          <Radio key={årsak} value={årsak}>
-                            {opphørsårsakLabels[årsak]}
-                          </Radio>
-                        ))}
-                    </>
-                  </RhfRadioGroup>
+                <VStack gap="space-8">
+                  <Label size="small" as="p">
+                    Er søker bosatt i Trondheim kommune?
+                  </Label>
+                  <BodyShort size="small">{vurdering.bosatt === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
+                </VStack>
+                {vurdering.bosatt === 'ikkeOppfylt' && vurdering.avslagsårsak && (
+                  <VStack gap="space-8">
+                    <Label size="small" as="p">
+                      Avslagsårsak
+                    </Label>
+                    <BodyShort size="small">{finnOpphørsårsakLabel(vurdering.avslagsårsak)}</BodyShort>
+                  </VStack>
                 )}
-                {avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET && (
-                  <RhfTextarea
-                    key={`${selectedId}-fritekst`}
-                    control={formHook.control}
-                    name={`vurderinger.${selectedId}.fritekst`}
+                {vurdering.bosatt === 'ikkeOppfylt' && vurdering.fritekst && (
+                  <LabelledContent
                     label="Fritekst avslagsbrev"
-                    description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                    validate={[required, minLength(3), maxLength(4000)]}
-                    readOnly={isFormLocked}
+                    indentContent
+                    content={
+                      <BodyLong size="small" className="whitespace-pre-wrap">
+                        {vurdering.fritekst}
+                      </BodyLong>
+                    }
                   />
                 )}
-                {bosatt === 'oppfylt' && (
+                {vurdering.bosatt === 'oppfylt' && (
                   <VStack gap="space-8">
                     <Label size="small" as="p">
                       Bosatt i Trondheim kommune:
                     </Label>
-                    <HStack gap="space-20" align="end">
-                      <Datovelger
-                        key={`${selectedId}-fra`}
-                        name={`vurderinger.${selectedId}.fom`}
-                        label="Fra"
-                        size="small"
-                        readOnly
-                      />
-                      <Datovelger
-                        key={`${selectedId}-maksdato`}
-                        name={`vurderinger.${selectedId}.tom`}
-                        label="Maksdato"
-                        size="small"
-                        readOnly={isFormLocked || !redigerMaksdato}
-                        validate={[
-                          required,
-                          value =>
-                            redigerMaksdato && value === vurdering?.muligAvkortingPeriode.tom
-                              ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
-                              : undefined,
-                        ]}
-                        fromDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.fom) : undefined}
-                        toDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.tom) : undefined}
-                      />
-                      <RhfCheckbox
-                        control={formHook.control}
-                        name={`vurderinger.${selectedId}.redigerMaksdato`}
-                        label="Rediger maksdato"
-                        readOnly={isFormLocked}
-                      />
-                    </HStack>
-                    {redigerMaksdato && (
-                      <RhfTextarea
-                        key={`${selectedId}-begrunnelseKortereMaksdato`}
-                        control={formHook.control}
-                        name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
-                        label="Begrunn kortere periode enn 260 dager"
-                        validate={[required]}
-                        readOnly={isFormLocked}
-                      />
-                    )}
+                    <BodyShort size="small">{`${formatDate(vurdering.fom)} – ${formatDate(vurdering.tom)}`}</BodyShort>
                   </VStack>
                 )}
-                {!isFormLocked && (
-                  <HStack gap="space-8">
-                    <Button type="submit" size="small" loading={isPending}>
-                      Bekreft og fortsett
-                    </Button>
-                    {isDefaultLocked && (
-                      <Button
-                        size="small"
-                        variant="tertiary"
-                        type="button"
-                        onClick={() => {
-                          formHook.reset(buildInitialValues(søknadsperioder));
-                          setIsFormLocked(true);
-                        }}
-                      >
-                        Avbryt
-                      </Button>
-                    )}
-                  </HStack>
+                {vurdering.bosatt === 'oppfylt' && vurdering.redigerMaksdato && (
+                  <LabelledContent
+                    label="Begrunn kortere periode enn 260 dager"
+                    indentContent
+                    content={
+                      <BodyLong size="small" className="whitespace-pre-wrap">
+                        {vurdering.begrunnelseKortereMaksdato}
+                      </BodyLong>
+                    }
+                  />
                 )}
               </VStack>
-            </RhfForm>
+            ) : (
+              <RhfForm
+                formMethods={formHook}
+                onSubmit={async data => {
+                  await bekreftAksjonspunktMutation(data);
+                  setIsFormLocked(true);
+                }}
+              >
+                <VStack gap="space-24" maxWidth="70ch" width="100%">
+                  <RhfTextarea
+                    control={formHook.control}
+                    name={`vurderinger.${selectedId}.begrunnelse`}
+                    readOnly={isFormLocked}
+                    label={begrunnelseLabel}
+                    validate={[required, minLength(3), maxLength(4000)]}
+                  />
+                  <RhfRadioGroup
+                    key={`${selectedId}-bosatt`}
+                    control={formHook.control}
+                    name={`vurderinger.${selectedId}.bosatt`}
+                    legend="Er søker bosatt i Trondheim kommune?"
+                    validate={[required]}
+                    readOnly={isFormLocked}
+                  >
+                    <Radio value="oppfylt">Ja</Radio>
+                    <Radio value="ikkeOppfylt">Nei</Radio>
+                  </RhfRadioGroup>
+                  {bosatt === 'ikkeOppfylt' && (
+                    <RhfRadioGroup
+                      key={`${selectedId}-avslagsårsak`}
+                      control={formHook.control}
+                      name={`vurderinger.${selectedId}.avslagsårsak`}
+                      legend="Avslagsårsak"
+                      validate={[required]}
+                      readOnly={isFormLocked}
+                    >
+                      <>
+                        {Object.values(BostedsvilkårIkkeOppfyltÅrsak)
+                          .filter(
+                            årsak =>
+                              årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
+                              årsak ===
+                                BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSTEDSADRESSE_OG_IKKE_FOLKEREGISTRERT_I_TRONDHEIM ||
+                              årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
+                              årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
+                          )
+                          .map(årsak => (
+                            <Radio key={årsak} value={årsak}>
+                              {opphørsårsakLabels[årsak]}
+                            </Radio>
+                          ))}
+                      </>
+                    </RhfRadioGroup>
+                  )}
+                  {avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET && (
+                    <RhfTextarea
+                      key={`${selectedId}-fritekst`}
+                      control={formHook.control}
+                      name={`vurderinger.${selectedId}.fritekst`}
+                      label="Fritekst avslagsbrev"
+                      description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+                      validate={[required, minLength(3), maxLength(4000)]}
+                      readOnly={isFormLocked}
+                    />
+                  )}
+                  {bosatt === 'oppfylt' && (
+                    <VStack gap="space-8">
+                      <Label size="small" as="p">
+                        Bosatt i Trondheim kommune:
+                      </Label>
+                      <HStack gap="space-20" align="end">
+                        <Datovelger
+                          key={`${selectedId}-fra`}
+                          name={`vurderinger.${selectedId}.fom`}
+                          label="Fra"
+                          size="small"
+                          readOnly
+                        />
+                        <Datovelger
+                          key={`${selectedId}-maksdato`}
+                          name={`vurderinger.${selectedId}.tom`}
+                          label="Maksdato"
+                          size="small"
+                          readOnly={isFormLocked || !redigerMaksdato}
+                          validate={[
+                            required,
+                            value =>
+                              redigerMaksdato && value === vurdering?.muligAvkortingPeriode.tom
+                                ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
+                                : undefined,
+                          ]}
+                          fromDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.fom) : undefined}
+                          toDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.tom) : undefined}
+                        />
+                        <RhfCheckbox
+                          control={formHook.control}
+                          name={`vurderinger.${selectedId}.redigerMaksdato`}
+                          label="Rediger maksdato"
+                          readOnly={isFormLocked}
+                        />
+                      </HStack>
+                      {redigerMaksdato && (
+                        <RhfTextarea
+                          key={`${selectedId}-begrunnelseKortereMaksdato`}
+                          control={formHook.control}
+                          name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
+                          label="Begrunn kortere periode enn 260 dager"
+                          validate={[required]}
+                          readOnly={isFormLocked}
+                        />
+                      )}
+                    </VStack>
+                  )}
+                  {!isFormLocked && (
+                    <HStack gap="space-8">
+                      <Button type="submit" size="small" loading={isPending}>
+                        Bekreft og fortsett
+                      </Button>
+                      {isDefaultLocked && (
+                        <Button
+                          size="small"
+                          variant="tertiary"
+                          type="button"
+                          onClick={() => {
+                            formHook.reset(buildInitialValues(søknadsperioder));
+                            setIsFormLocked(true);
+                          }}
+                        >
+                          Avbryt
+                        </Button>
+                      )}
+                    </HStack>
+                  )}
+                </VStack>
+              </RhfForm>
+            )}
           </VStack>
         )}
       </VilkårSplittPanel>

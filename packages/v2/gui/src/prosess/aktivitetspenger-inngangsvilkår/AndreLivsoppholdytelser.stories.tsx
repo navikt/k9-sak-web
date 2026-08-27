@@ -306,8 +306,33 @@ export const MaksdatoMåVæreKortere: Story = {
       await userEvent.click(await canvas.findByLabelText('Rediger maksdato'));
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
       await expect(
-        canvas.getByText('Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke mulig maksdato.'),
+        canvas.getByText('Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'),
       ).toBeInTheDocument();
+    });
+  },
+};
+
+export const LesevisningViserTekst: Story = {
+  args: {
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser vurderingen som tekst, ikke som skjemafelter', async () => {
+      await expect(await canvas.findByText('Søker har ingen andre livsoppholdytelser.')).toBeInTheDocument();
+      await expect(canvas.getByText('Uten andre livsoppholdsytelser:')).toBeInTheDocument();
+      await expect(canvas.getByText('01.01.2024 – 31.12.2024')).toBeInTheDocument();
+      await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
     });
   },
 };
