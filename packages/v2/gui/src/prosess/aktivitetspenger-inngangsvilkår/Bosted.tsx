@@ -34,7 +34,8 @@ import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/Aktivitets
 import { perioderSomKanAvkortesQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 import { checkIfPeriodsAreEdgeToEdge, isPeriodCoveredByPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
-import type { ung_sak_kontrakt_vilkår_VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
+import type { VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårPeriodeDto.js';
 import { opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
 interface Props {
@@ -74,7 +75,7 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-type VilkårPeriodeVisning = ung_sak_kontrakt_vilkår_VilkårPeriodeDto & {
+type VilkårPeriodeVisning = VilkårPeriodeDto & {
   muligAvkortingPeriode: MuligAvkortingPeriode;
   avkortetPeriodeInfo?: {
     begrunnelse: string;
@@ -94,38 +95,37 @@ const slåSammenPerioder = (vilkårMedPerioder: VilkårMedPerioderDto, avkorting
       tom: avkortingsperiode.tom,
     }))
     .forEach(avkortingsperiode => {
-      console.log('avkortingsperiode', avkortingsperiode);
-      console.log('perioderFraVilkår', perioderFraVilkår);
-
       const vilkårISammePeriode = perioderFraVilkår
-        .filter(vilkårPeriode => isPeriodCoveredByPeriod(avkortingsperiode, vilkårPeriode.periode))
+        .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
         .toSorted((a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime())
         .map(vilkårPeriode => ({ ...vilkårPeriode, muligAvkortingPeriode: avkortingsperiode }));
-      console.log('vilkårISammePeriode', vilkårISammePeriode);
-      if (vilkårISammePeriode.length > 1) {
-        const førstePeriode = vilkårISammePeriode[0];
-        const avkortetPeriodeKantIKant = [...vilkårISammePeriode]
-          .slice(1)
-          .find(p => førstePeriode && checkIfPeriodsAreEdgeToEdge(førstePeriode.periode, p.periode));
-        if (førstePeriode?.vilkarStatus === Utfall.OPPFYLT && avkortetPeriodeKantIKant) {
-          const rest = vilkårISammePeriode.filter(p => p !== førstePeriode && p !== avkortetPeriodeKantIKant);
-          return visningsperioder.push(
-            {
-              ...førstePeriode,
-              avkortetPeriodeInfo: {
-                begrunnelse: avkortetPeriodeKantIKant.begrunnelse ?? '',
-                periode: {
-                  fom: avkortetPeriodeKantIKant.periode.fom,
-                  tom: avkortetPeriodeKantIKant.periode.tom,
-                },
+      for (let periodeIndex = 0; periodeIndex < vilkårISammePeriode.length; periodeIndex += 1) {
+        const periode = vilkårISammePeriode[periodeIndex];
+        const nestePeriode = vilkårISammePeriode[periodeIndex + 1];
+        const erAvkortetNestePeriode =
+          nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
+
+        if (
+          periode &&
+          erAvkortetNestePeriode &&
+          periode.vilkarStatus === Utfall.OPPFYLT &&
+          checkIfPeriodsAreEdgeToEdge(periode.periode, nestePeriode.periode)
+        ) {
+          visningsperioder.push({
+            ...periode,
+            avkortetPeriodeInfo: {
+              begrunnelse: nestePeriode.begrunnelse ?? '',
+              periode: {
+                fom: nestePeriode.periode.fom,
+                tom: nestePeriode.periode.tom,
               },
             },
-            ...rest,
-          );
+          });
+          periodeIndex += 1;
+        } else if (periode) {
+          visningsperioder.push(periode);
         }
-        return visningsperioder.push(...vilkårISammePeriode);
       }
-      return visningsperioder.push(...vilkårISammePeriode);
     });
   return visningsperioder;
 };
@@ -141,7 +141,7 @@ const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): FormData => ({
         fritekst: p.fritekstVurderingBrev,
         fom: p.periode.fom,
         tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,
-        redigerMaksdato: false,
+        redigerMaksdato: p.avkortetPeriodeInfo ? true : false,
         begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
         muligAvkortingPeriode: p.muligAvkortingPeriode,
       },
@@ -167,7 +167,7 @@ export const Bosted = ({
     return {
       id: periode.periode.fom,
       status: getPeriodStatus(periode.vilkarStatus),
-      label: `${formatDate(periode.periode.fom)}`,
+      label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.avkortetPeriodeInfo.periode.tom)}` : ''}`,
       periode: {
         fom: periode.periode.fom,
         tom: periode.periode.tom,
@@ -181,7 +181,7 @@ export const Bosted = ({
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   useEffect(() => {
     if (!periods.some(period => period.id === selectedId)) {
-      setSelectedId(periods[0]?.id ?? '');
+      setSelectedId('');
     }
   }, [periods, selectedId]);
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
@@ -315,7 +315,7 @@ export const Bosted = ({
               {selectedBostedGrunnlagPeriode && (
                 <HStack gap="space-8" align="center">
                   <BodyShort size="small">{selectedBostedGrunnlagPeriode.erBosattITrondheim ? 'Ja' : 'Nei'}</BodyShort>
-                  <Tag variant="outline" size="small">
+                  <Tag variant="outline" size="small" data-color={!isFormLocked ? 'info' : undefined}>
                     {selectedBostedGrunnlagPeriode.kilde === Kilde.SØKNAD ? 'Fra søknad' : 'Saksbehandler'}
                   </Tag>
                 </HStack>
@@ -363,13 +363,19 @@ export const Bosted = ({
                   >
                     <>
                       {Object.values(BostedsvilkårIkkeOppfyltÅrsak)
-                        .filter(årsak => årsak !== '-' && årsak !== 'ANNET')
+                        .filter(
+                          årsak =>
+                            årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
+                            årsak ===
+                              BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSTEDSADRESSE_OG_IKKE_FOLKEREGISTRERT_I_TRONDHEIM ||
+                            årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
+                            årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
+                        )
                         .map(årsak => (
                           <Radio key={årsak} value={årsak}>
                             {opphørsårsakLabels[årsak]}
                           </Radio>
                         ))}
-                      <Radio value={BostedsvilkårIkkeOppfyltÅrsak.ANNET}>Fritekst</Radio>
                     </>
                   </RhfRadioGroup>
                 )}

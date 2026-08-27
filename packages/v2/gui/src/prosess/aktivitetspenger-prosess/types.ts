@@ -7,7 +7,7 @@ export const opphørsårsakLabels: Record<BostedsvilkårIkkeOppfyltÅrsak, strin
     'Ikke bostedsadresse i Trondheim, og heller ikke folkeregistrert i Trondheim',
   [BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM]:
     'Har studie/arbeidssted utenfor Trondheim',
-  [BostedsvilkårIkkeOppfyltÅrsak.ANNET]: 'Annet',
+  [BostedsvilkårIkkeOppfyltÅrsak.ANNET]: 'Annen årsak',
   [BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT]: '-',
   [BostedsvilkårIkkeOppfyltÅrsak.AVKORTET]: 'Avkortet',
 };

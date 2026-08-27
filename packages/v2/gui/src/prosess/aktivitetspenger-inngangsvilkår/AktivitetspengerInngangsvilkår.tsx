@@ -73,7 +73,7 @@ const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderD
       return <CustomWarningIcon />;
     }
   }
-  if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.OPPFYLT)) {
+  if (vilkår?.perioder?.some(p => p.vilkarStatus === Utfall.OPPFYLT)) {
     return <CustomCheckmarkIcon />;
   }
   if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
