@@ -5,7 +5,7 @@ import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-for
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
-import { opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
+import { opphørsårsakLabels } from '../../aktivitetspenger-prosess/types.js';
 import type { BostedFormData } from './bostedFormData.js';
 
 const valgbareAvslagsårsaker = [

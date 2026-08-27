@@ -17,19 +17,19 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
+import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
-import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
-import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
-import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
-import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { perioderSomKanAvkortesQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
+import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi';
+import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 import { buildInitialValues, type BostedFormData } from './bostedFormData.js';
 import { BostedLesevisning } from './BostedLesevisning';
 import { BostedSkjema } from './BostedSkjema';

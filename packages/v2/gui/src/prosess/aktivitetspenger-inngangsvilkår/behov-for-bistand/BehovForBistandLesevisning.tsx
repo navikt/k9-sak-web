@@ -1,19 +1,21 @@
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyLong, BodyShort, Label, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
-import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
-import { opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
-import type { BostedFormData } from './bostedFormData.js';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
+import type { BehovForBistandFormData } from './behovForBistandFormData.js';
 
-const finnOpphørsårsakLabel = (kode: string | undefined): string | undefined =>
-  Object.entries(opphørsårsakLabels).find(([årsak]) => årsak === kode)?.[1];
+const avslagsårsakLabels: Record<string, string> = {
+  [Avslagsårsak.IKKE_14A_VEDTAK]: 'Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.',
+  fritekst: 'Fritekst',
+};
 
 interface Props {
   begrunnelseLabel: ReactNode;
-  vurdering: BostedFormData['vurderinger'][string];
+  vurdering: BehovForBistandFormData['vurderinger'][string];
 }
 
-export const BostedLesevisning = ({ begrunnelseLabel, vurdering }: Props) => (
+export const BehovForBistandLesevisning = ({ begrunnelseLabel, vurdering }: Props) => (
   <VStack gap="space-24" maxWidth="70ch" width="100%">
     <LabelledContent
       label={begrunnelseLabel}
@@ -26,19 +28,19 @@ export const BostedLesevisning = ({ begrunnelseLabel, vurdering }: Props) => (
     />
     <VStack gap="space-8">
       <Label size="small" as="p">
-        Er søker bosatt i Trondheim kommune?
+        Har søker behov for bistand?
       </Label>
-      <BodyShort size="small">{vurdering.bosatt === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
+      <BodyShort size="small">{vurdering.behovForBistand === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
     </VStack>
-    {vurdering.bosatt === 'ikkeOppfylt' && vurdering.avslagsårsak && (
+    {vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak && (
       <VStack gap="space-8">
         <Label size="small" as="p">
           Avslagsårsak
         </Label>
-        <BodyShort size="small">{finnOpphørsårsakLabel(vurdering.avslagsårsak)}</BodyShort>
+        <BodyShort size="small">{avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
       </VStack>
     )}
-    {vurdering.bosatt === 'ikkeOppfylt' && vurdering.fritekst && (
+    {vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.fritekst && (
       <LabelledContent
         label="Fritekst avslagsbrev"
         indentContent
@@ -49,15 +51,15 @@ export const BostedLesevisning = ({ begrunnelseLabel, vurdering }: Props) => (
         }
       />
     )}
-    {vurdering.bosatt === 'oppfylt' && (
+    {vurdering.behovForBistand === 'oppfylt' && (
       <VStack gap="space-8">
         <Label size="small" as="p">
-          Bosatt i Trondheim kommune:
+          Behov for bistand:
         </Label>
         <BodyShort size="small">{`${formatDate(vurdering.fom)} – ${formatDate(vurdering.tom)}`}</BodyShort>
       </VStack>
     )}
-    {vurdering.bosatt === 'oppfylt' && vurdering.redigerMaksdato && (
+    {vurdering.behovForBistand === 'oppfylt' && vurdering.redigerMaksdato && (
       <LabelledContent
         label="Begrunn kortere periode enn 260 dager"
         indentContent

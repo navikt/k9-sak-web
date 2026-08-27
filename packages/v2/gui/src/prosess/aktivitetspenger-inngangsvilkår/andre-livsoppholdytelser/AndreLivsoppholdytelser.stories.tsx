@@ -8,7 +8,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
-import { FakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
+import { FakeAktivitetspengerApi } from '../../../storybook/mocks/FakeAktivitetspengerApi';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
 
 const lagAksjonspunkt = (

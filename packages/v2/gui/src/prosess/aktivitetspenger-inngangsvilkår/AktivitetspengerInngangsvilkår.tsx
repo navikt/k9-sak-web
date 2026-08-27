@@ -14,12 +14,12 @@ import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
 import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { Alder } from './Alder';
-import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
-import { BehovForBistand } from './BehovForBistand';
+import { Alder } from './alder/Alder';
+import { AndreLivsoppholdytelser } from './andre-livsoppholdytelser/AndreLivsoppholdytelser';
+import { BehovForBistand } from './behov-for-bistand/BehovForBistand';
 import { Beslutter } from './Beslutter';
-import { Bosted } from './Bosted';
-import { Søknadsfrist } from './Søknadsfrist';
+import { Bosted } from './bosted/Bosted';
+import { Søknadsfrist } from './søknadsfrist/Søknadsfrist';
 import { InngangsvilkårTab } from './types';
 
 interface InngangsvilkårData {
