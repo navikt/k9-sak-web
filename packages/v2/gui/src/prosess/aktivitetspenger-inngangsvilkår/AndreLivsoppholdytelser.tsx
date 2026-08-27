@@ -2,17 +2,23 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { VilkårLivsoppholdsytelserPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { Alert, Box, Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
+import Datovelger from '../../shared/datovelger/Datovelger';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
@@ -20,9 +26,11 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
+import { byggVisningsperioder, type VilkårPeriodeVisning } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { perioderSomKanAvkortesQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 
 interface Props {
   andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
@@ -40,7 +48,17 @@ type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 interface FormData {
   vurderinger: Record<
     string,
-    { begrunnelse: string; andreLivsoppholdytelser: Vurdering; avslagsårsak?: string; fritekst?: string }
+    {
+      begrunnelse: string;
+      andreLivsoppholdytelser: Vurdering;
+      avslagsårsak?: string;
+      fritekst?: string;
+      fom: string;
+      tom: string;
+      muligAvkortingPeriode: MuligAvkortingPeriode;
+      redigerMaksdato: boolean;
+      begrunnelseKortereMaksdato?: string;
+    }
   >;
 }
 
@@ -50,14 +68,20 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
+const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): FormData => ({
   vurderinger: Object.fromEntries(
-    (vilkår.perioder ?? []).map(p => [
+    vilkår.map(p => [
       p.periode.fom,
       {
         begrunnelse: p.begrunnelse ?? '',
         andreLivsoppholdytelser: utfallTilVurdering(p.vilkarStatus),
         avslagsårsak: p.avslagKode,
+        fritekst: p.fritekstVurderingBrev,
+        fom: p.periode.fom,
+        tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,
+        redigerMaksdato: p.avkortetPeriodeInfo ? true : false,
+        begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
+        muligAvkortingPeriode: p.muligAvkortingPeriode,
       },
     ]),
   ),
@@ -72,40 +96,78 @@ export const AndreLivsoppholdytelser = ({
   onAksjonspunktBekreftet,
   isPermanentlyReadOnly,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (andreLivsoppholdytelserVilkår?.perioder ?? []).map(p => ({
-    id: p.periode.fom,
-    status: getPeriodStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)}`,
-    periode: p.periode,
+  const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
+  const avkortingsperiodeLivsopphold = avkortingsperioder?.resultat.find(
+    v => v.vilkårType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  );
+  const søknadsperioder = byggVisningsperioder(
+    andreLivsoppholdytelserVilkår,
+    avkortingsperiodeLivsopphold?.perioder ?? [],
+  );
+  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+    id: periode.periode.fom,
+    status: getPeriodStatus(periode.vilkarStatus),
+    label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.avkortetPeriodeInfo.periode.tom)}` : ''}`,
+    periode: periode.periode,
   }));
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  useEffect(() => {
+    if (!periods.some(period => period.id === selectedId)) {
+      setSelectedId('');
+    }
+  }, [periods, selectedId]);
   const isAndreLivsoppholdytelserApSolved = aksjonspunktErLøst(andreLivsoppholdytelserAp);
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår),
+    defaultValues: buildInitialValues(søknadsperioder),
   });
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
       const vurdering = data.vurderinger[selectedId];
       const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem || selectedItem.periode === undefined) {
+      if (!selectedItem || selectedItem.periode === undefined || !vurdering) {
         throw new Error('Kunne ikke finne valgt periode for andre livsoppholdytelser vilkår');
       }
-      const vurdertePerioder = {
-        avslagsårsak:
-          vurdering?.andreLivsoppholdytelser !== 'oppfylt'
-            ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE
-            : undefined,
-        begrunnelse: vurdering?.begrunnelse ?? '',
-        erVilkårOppfylt: vurdering?.andreLivsoppholdytelser === 'oppfylt',
-        periode: selectedItem.periode,
-      };
+      const redigerMaksdatoAktiv =
+        vurdering.andreLivsoppholdytelser === 'oppfylt' &&
+        vurdering.redigerMaksdato &&
+        vurdering.tom !== vurdering.muligAvkortingPeriode.tom;
+      const begrunnelseInnvilget = vurdering.begrunnelse ?? '';
+      const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
+      const vurdertePerioder: VilkårLivsoppholdsytelserPeriodeVurderingDto[] = [
+        {
+          avslagsårsak:
+            vurdering.andreLivsoppholdytelser !== 'oppfylt'
+              ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE
+              : undefined,
+          begrunnelse: begrunnelseInnvilget,
+          erVilkårOppfylt: vurdering.andreLivsoppholdytelser === 'oppfylt',
+          periode: {
+            fom: vurdering.fom,
+            tom: redigerMaksdatoAktiv ? vurdering.tom : vurdering.muligAvkortingPeriode.tom,
+          },
+          fritekstVurderingBrev: vurdering.avslagsårsak === 'fritekst' ? vurdering.fritekst : undefined,
+        },
+      ];
+      if (redigerMaksdatoAktiv) {
+        vurdertePerioder.push({
+          avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
+          begrunnelse: begrunnelseAvkortet,
+          erVilkårOppfylt: false,
+          periode: {
+            fom: dayjs(vurdering.tom).add(1, 'day').format(ISO_DATE_FORMAT),
+            tom: vurdering.muligAvkortingPeriode.tom,
+          },
+          fritekstVurderingBrev: undefined,
+        });
+      }
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-        begrunnelse: vurdering?.begrunnelse ?? '',
-        brevtekst: vurdering?.avslagsårsak === 'fritekst' ? vurdering?.fritekst : undefined,
-        vurdertePerioder: [vurdertePerioder],
+        begrunnelse: redigerMaksdatoAktiv
+          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`.trim()
+          : begrunnelseInnvilget,
+        vurdertePerioder,
       };
 
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
@@ -124,6 +186,8 @@ export const AndreLivsoppholdytelser = ({
 
   const andreLivsoppholdytelser = formHook.watch(`vurderinger.${selectedId}.andreLivsoppholdytelser`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
+  const redigerMaksdato = formHook.watch(`vurderinger.${selectedId}.redigerMaksdato`);
+  const vurdering = formHook.watch(`vurderinger.${selectedId}`);
   const harAvslagIAndreLivsoppholdytelser = andreLivsoppholdytelserVilkår.perioder?.some(
     p => p.vilkarStatus === Utfall.IKKE_OPPFYLT,
   );
@@ -164,7 +228,7 @@ export const AndreLivsoppholdytelser = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Vurdering av andre livsoppholdytelser"
+        detailHeading="Vurdering av andre livsoppholdsytelser"
         lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
         defaultIsLocked={isAndreLivsoppholdytelserApSolved}
         readOnly={readOnly}
@@ -196,7 +260,11 @@ export const AndreLivsoppholdytelser = ({
           ) : undefined
         }
       >
-        {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
+        {(
+          isFormLocked: boolean,
+          setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>,
+          isDefaultLocked: boolean,
+        ) => (
           <RhfForm
             formMethods={formHook}
             onSubmit={async data => {
@@ -211,7 +279,7 @@ export const AndreLivsoppholdytelser = ({
                 readOnly={isFormLocked}
                 label={
                   <span>
-                    Vurder om søker har andre livsoppholdytelser, jmf.{' '}
+                    Vurder om søker mottar andre livsoppholdsytelser, jf.{' '}
                     {andreLivsoppholdytelserVilkår.lovReferanse && (
                       <Lovreferanse isUng>{andreLivsoppholdytelserVilkår.lovReferanse}</Lovreferanse>
                     )}
@@ -256,14 +324,74 @@ export const AndreLivsoppholdytelser = ({
                   readOnly={isFormLocked}
                 />
               )}
+              {andreLivsoppholdytelser === 'oppfylt' && (
+                <VStack gap="space-16">
+                  <VStack gap="space-8">
+                    <Label size="small" as="p">
+                      Uten andre livsoppholdsytelser:
+                    </Label>
+                    <HStack gap="space-20" align="end">
+                      <Datovelger
+                        key={`${selectedId}-fra`}
+                        name={`vurderinger.${selectedId}.fom`}
+                        label="Fra"
+                        size="small"
+                        readOnly
+                      />
+                      <Datovelger
+                        key={`${selectedId}-maksdato`}
+                        name={`vurderinger.${selectedId}.tom`}
+                        label="Maksdato"
+                        size="small"
+                        readOnly={isFormLocked || !redigerMaksdato}
+                        validate={[
+                          required,
+                          value =>
+                            redigerMaksdato && value === vurdering?.muligAvkortingPeriode.tom
+                              ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
+                              : undefined,
+                        ]}
+                        fromDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.fom) : undefined}
+                        toDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.tom) : undefined}
+                      />
+                      <RhfCheckbox
+                        control={formHook.control}
+                        name={`vurderinger.${selectedId}.redigerMaksdato`}
+                        label="Rediger maksdato"
+                        readOnly={isFormLocked}
+                      />
+                    </HStack>
+                  </VStack>
+                  {redigerMaksdato && (
+                    <RhfTextarea
+                      key={`${selectedId}-begrunnelseKortereMaksdato`}
+                      control={formHook.control}
+                      name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
+                      label="Begrunn kortere periode enn 260 dager"
+                      validate={[required]}
+                      readOnly={isFormLocked}
+                    />
+                  )}
+                </VStack>
+              )}
               {!isFormLocked && (
                 <HStack gap="space-8">
                   <Button type="submit" size="small" loading={isPending}>
                     Bekreft og fortsett
                   </Button>
-                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
-                    Avbryt
-                  </Button>
+                  {isDefaultLocked && (
+                    <Button
+                      size="small"
+                      variant="tertiary"
+                      type="button"
+                      onClick={() => {
+                        formHook.reset(buildInitialValues(søknadsperioder));
+                        setIsFormLocked(true);
+                      }}
+                    >
+                      Avbryt
+                    </Button>
+                  )}
                 </HStack>
               )}
             </VStack>

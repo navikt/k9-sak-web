@@ -138,12 +138,12 @@ export const BeholderVerdierVedPeriodebytte: Story = {
     });
 
     await step('bytter periode og viser egne verdier', async () => {
-      await userEvent.click(canvas.getByText('01.07.2024 - 31.12.2024'));
+      await userEvent.click(canvas.getByText('01.07.2024'));
       await expect(canvas.getByRole('textbox', { name: /Vurder om søker er bosatt/ })).toHaveValue('');
     });
 
     await step('beholder verdiene ved retur til første periode', async () => {
-      await userEvent.click(canvas.getByText('01.01.2024 - 30.06.2024'));
+      await userEvent.click(canvas.getByText('01.01.2024'));
       await expect(canvas.getByRole('textbox', { name: /Vurder om søker er bosatt/ })).toHaveValue(
         'Begrunnelse for første periode',
       );
@@ -191,11 +191,11 @@ export const ViserFritekstVedAvslag: Story = {
     await step('viser avslagsårsak ved negativ vurdering', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
       await expect(canvas.getByText('Avslagsårsak')).toBeInTheDocument();
-      await expect(canvas.getByRole('radio', { name: 'Fritekst' })).toBeInTheDocument();
+      await expect(canvas.getByRole('radio', { name: 'Annen årsak' })).toBeInTheDocument();
     });
 
-    await step('viser fritekstfelt når fritekst velges', async () => {
-      await userEvent.click(canvas.getByRole('radio', { name: 'Fritekst' }));
+    await step('viser fritekstfelt når annen årsak velges', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Annen årsak' }));
       await expect(canvas.getByLabelText('Fritekst avslagsbrev')).toBeInTheDocument();
     });
   },

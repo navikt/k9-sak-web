@@ -32,11 +32,9 @@ import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslut
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { perioderSomKanAvkortesQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
-import { checkIfPeriodsAreEdgeToEdge, isPeriodCoveredByPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
-import type { VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårPeriodeDto.js';
 import { opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
+import { byggVisningsperioder, type VilkårPeriodeVisning } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
@@ -75,61 +73,6 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-type VilkårPeriodeVisning = VilkårPeriodeDto & {
-  muligAvkortingPeriode: MuligAvkortingPeriode;
-  avkortetPeriodeInfo?: {
-    begrunnelse: string;
-    periode: {
-      fom: string;
-      tom: string;
-    };
-  };
-};
-
-const slåSammenPerioder = (vilkårMedPerioder: VilkårMedPerioderDto, avkortingsperioder: MuligAvkortingPeriode[]) => {
-  const perioderFraVilkår = vilkårMedPerioder.perioder ?? [];
-  const visningsperioder: VilkårPeriodeVisning[] = [];
-  avkortingsperioder
-    .map(avkortingsperiode => ({
-      fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
-      tom: avkortingsperiode.tom,
-    }))
-    .forEach(avkortingsperiode => {
-      const vilkårISammePeriode = perioderFraVilkår
-        .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
-        .toSorted((a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime())
-        .map(vilkårPeriode => ({ ...vilkårPeriode, muligAvkortingPeriode: avkortingsperiode }));
-      for (let periodeIndex = 0; periodeIndex < vilkårISammePeriode.length; periodeIndex += 1) {
-        const periode = vilkårISammePeriode[periodeIndex];
-        const nestePeriode = vilkårISammePeriode[periodeIndex + 1];
-        const erAvkortetNestePeriode =
-          nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
-
-        if (
-          periode &&
-          erAvkortetNestePeriode &&
-          periode.vilkarStatus === Utfall.OPPFYLT &&
-          checkIfPeriodsAreEdgeToEdge(periode.periode, nestePeriode.periode)
-        ) {
-          visningsperioder.push({
-            ...periode,
-            avkortetPeriodeInfo: {
-              begrunnelse: nestePeriode.begrunnelse ?? '',
-              periode: {
-                fom: nestePeriode.periode.fom,
-                tom: nestePeriode.periode.tom,
-              },
-            },
-          });
-          periodeIndex += 1;
-        } else if (periode) {
-          visningsperioder.push(periode);
-        }
-      }
-    });
-  return visningsperioder;
-};
-
 const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): FormData => ({
   vurderinger: Object.fromEntries(
     vilkår.map(p => [
@@ -162,7 +105,7 @@ export const Bosted = ({
 }: Props) => {
   const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
   const avkortingsperiodeBosted = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BOSTEDSVILKÅR);
-  const søknadsperioder = slåSammenPerioder(bostedVilkår, avkortingsperiodeBosted?.perioder ?? []);
+  const søknadsperioder = byggVisningsperioder(bostedVilkår, avkortingsperiodeBosted?.perioder ?? []);
   const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => {
     return {
       id: periode.periode.fom,
@@ -191,7 +134,10 @@ export const Bosted = ({
       if (!selectedItem || !vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
-      const redigerMaksdatoAktiv = vurdering?.bosatt === 'oppfylt' && vurdering?.redigerMaksdato;
+      const redigerMaksdatoAktiv =
+        vurdering?.bosatt === 'oppfylt' &&
+        vurdering?.redigerMaksdato &&
+        vurdering.tom !== vurdering.muligAvkortingPeriode.tom;
       const begrunnelseInnvilget = vurdering?.begrunnelse ?? '';
       const begrunnelseAvkortet = vurdering?.begrunnelseKortereMaksdato ?? '';
       const vurdertePerioder: VilkårBostedPeriodeVurderingDto[] = [
@@ -278,7 +224,7 @@ export const Bosted = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Vurdering av bostedsvilkår"
+        detailHeading="Vurdering av bosatt i Trondheim kommune"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={isBostedApSolved}
         readOnly={readOnly}
@@ -306,7 +252,11 @@ export const Bosted = ({
         }
         isPermanentlyReadOnly={isPermanentlyReadOnly}
       >
-        {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
+        {(
+          isFormLocked: boolean,
+          setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>,
+          isDefaultLocked: boolean,
+        ) => (
           <VStack gap="space-24">
             <VStack gap="space-8">
               <Label size="small" as="p">
@@ -335,7 +285,7 @@ export const Bosted = ({
                   readOnly={isFormLocked}
                   label={
                     <span>
-                      Vurder om søker er bosatt i Trondheim kommune, jmf.{' '}
+                      Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
                       {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
                     </span>
                   }
@@ -409,7 +359,13 @@ export const Bosted = ({
                         label="Maksdato"
                         size="small"
                         readOnly={isFormLocked || !redigerMaksdato}
-                        validate={[required]}
+                        validate={[
+                          required,
+                          value =>
+                            redigerMaksdato && value === vurdering?.muligAvkortingPeriode.tom
+                              ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
+                              : undefined,
+                        ]}
                         fromDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.fom) : undefined}
                         toDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.tom) : undefined}
                       />
@@ -421,19 +377,14 @@ export const Bosted = ({
                       />
                     </HStack>
                     {redigerMaksdato && (
-                      <VStack gap="space-8">
-                        <Label size="small" as="p">
-                          Vurdering av avkortet periode
-                        </Label>
-                        <RhfTextarea
-                          key={`${selectedId}-begrunnelseKortereMaksdato`}
-                          control={formHook.control}
-                          name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
-                          label="Begrunn kortere periode enn 260 dager"
-                          validate={[required]}
-                          readOnly={isFormLocked}
-                        />
-                      </VStack>
+                      <RhfTextarea
+                        key={`${selectedId}-begrunnelseKortereMaksdato`}
+                        control={formHook.control}
+                        name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
+                        label="Begrunn kortere periode enn 260 dager"
+                        validate={[required]}
+                        readOnly={isFormLocked}
+                      />
                     )}
                   </VStack>
                 )}
@@ -442,9 +393,19 @@ export const Bosted = ({
                     <Button type="submit" size="small" loading={isPending}>
                       Bekreft og fortsett
                     </Button>
-                    <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
-                      Avbryt
-                    </Button>
+                    {isDefaultLocked && (
+                      <Button
+                        size="small"
+                        variant="tertiary"
+                        type="button"
+                        onClick={() => {
+                          formHook.reset(buildInitialValues(søknadsperioder));
+                          setIsFormLocked(true);
+                        }}
+                      >
+                        Avbryt
+                      </Button>
+                    )}
                   </HStack>
                 )}
               </VStack>

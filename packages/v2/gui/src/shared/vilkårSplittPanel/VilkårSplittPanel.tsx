@@ -31,7 +31,13 @@ interface VilkårSplittPanelProps {
   lovreferanse?: string;
   defaultIsLocked?: boolean;
   readOnly?: boolean;
-  children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
+  children:
+    | ReactNode
+    | ((
+        isLocked: boolean,
+        setIsLocked: React.Dispatch<React.SetStateAction<boolean>>,
+        isDefaultLocked: boolean,
+      ) => ReactNode);
   afterEditButton?: ReactNode;
   lockedContent?: ReactNode;
   isPermanentlyReadOnly?: boolean;
@@ -180,7 +186,7 @@ export const VilkårSplittPanel = ({
                 background={effectiveLocked ? 'info-softA' : undefined}
               >
                 <VStack gap={canEdit ? 'space-12' : 'space-0'}>
-                  {children(effectiveLocked, setIsFormLocked)}
+                  {children(effectiveLocked, setIsFormLocked, defaultIsLocked)}
                   {isFormLocked && lockedContent}
                   {isFormLocked && canEdit && (
                     <Bleed marginInline="space-8">

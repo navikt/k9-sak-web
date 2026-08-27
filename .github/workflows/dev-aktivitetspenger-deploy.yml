@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - copilot/implementer-aktivitetspenger-opphor
+      - aktivitetspenger-kort-ned-maksperiode
 
 jobs:
   build-deploy:
