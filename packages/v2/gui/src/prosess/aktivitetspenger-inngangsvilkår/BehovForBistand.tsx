@@ -1,18 +1,13 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårBistandPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bistand/VilkårBistandPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
-import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyLong, BodyShort, Box, Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
-import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
-import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { Alert, Box, Button, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -20,7 +15,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
-import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -29,9 +23,12 @@ import {
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv';
 import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
-import { byggVisningsperioder, type VilkårPeriodeVisning } from '../aktivitetspenger-felles/utils/visningsperioder.js';
+import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import { perioderSomKanAvkortesQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
+import { buildInitialValues, type BehovForBistandFormData } from './behovForBistandFormData.js';
+import { BehovForBistandLesevisning } from './BehovForBistandLesevisning';
+import { BehovForBistandSkjema } from './BehovForBistandSkjema';
 
 interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
@@ -43,55 +40,6 @@ interface Props {
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
 }
-
-type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
-
-const avslagsårsakLabels: Record<string, string> = {
-  [Avslagsårsak.IKKE_14A_VEDTAK]: 'Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.',
-  fritekst: 'Fritekst',
-};
-
-interface FormData {
-  vurderinger: Record<
-    string,
-    {
-      begrunnelse: string;
-      behovForBistand: Vurdering;
-      avslagsårsak?: string;
-      fritekst?: string;
-      fom: string;
-      tom: string;
-      muligAvkortingPeriode: MuligAvkortingPeriode;
-      redigerMaksdato: boolean;
-      begrunnelseKortereMaksdato?: string;
-    }
-  >;
-}
-
-const utfallTilVurdering = (utfall: string): Vurdering => {
-  if (utfall === Utfall.OPPFYLT) return 'oppfylt';
-  if (utfall === Utfall.IKKE_OPPFYLT) return 'ikkeOppfylt';
-  return '';
-};
-
-const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): FormData => ({
-  vurderinger: Object.fromEntries(
-    vilkår.map(p => [
-      p.periode.fom,
-      {
-        begrunnelse: p.begrunnelse ?? '',
-        behovForBistand: utfallTilVurdering(p.vilkarStatus),
-        avslagsårsak: p.avslagKode,
-        fritekst: p.fritekstVurderingBrev,
-        fom: p.periode.fom,
-        tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,
-        redigerMaksdato: p.avkortetPeriodeInfo ? true : false,
-        begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
-        muligAvkortingPeriode: p.muligAvkortingPeriode,
-      },
-    ]),
-  ),
-});
 
 export const BehovForBistand = ({
   vurderBistandsvilkårVilkår,
@@ -118,12 +66,12 @@ export const BehovForBistand = ({
       setSelectedId('');
     }
   }, [periods, selectedId]);
-  const formHook = useForm<FormData>({
+  const formHook = useForm<BehovForBistandFormData>({
     defaultValues: buildInitialValues(søknadsperioder),
   });
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (data: FormData) => {
+    mutationFn: async (data: BehovForBistandFormData) => {
       const vurdering = data.vurderinger[selectedId];
       if (!vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bistandsvilkår');
@@ -184,9 +132,6 @@ export const BehovForBistand = ({
     },
   });
 
-  const behovForBistand = formHook.watch(`vurderinger.${selectedId}.behovForBistand`);
-  const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
-  const redigerMaksdato = formHook.watch(`vurderinger.${selectedId}.redigerMaksdato`);
   const vurdering = formHook.watch(`vurderinger.${selectedId}`);
   const isVurderBistandsvilkårApSolved = aksjonspunktErLøst(vurderBistandsvilkårAp);
   const begrunnelseLabel = (
@@ -197,6 +142,8 @@ export const BehovForBistand = ({
       )}
     </span>
   );
+  const lokalkontorKanSendeTilBeslutter =
+    !readOnly && !!lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp);
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -232,14 +179,11 @@ export const BehovForBistand = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av behov for bistand"
         lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
-        defaultIsLocked={
-          isVurderBistandsvilkårApSolved ||
-          (!readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp))
-        }
+        defaultIsLocked={isVurderBistandsvilkårApSolved || lokalkontorKanSendeTilBeslutter}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
-          !readOnly && lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) ? (
+          lokalkontorKanSendeTilBeslutter ? (
             <VStack gap="space-20">
               <Alert variant="success" size="small">
                 Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
@@ -265,194 +209,25 @@ export const BehovForBistand = ({
           ) : undefined
         }
       >
-        {(
-          isFormLocked: boolean,
-          setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>,
-          isDefaultLocked: boolean,
-        ) =>
+        {(isFormLocked, setIsFormLocked, isDefaultLocked) =>
           isFormLocked && vurdering ? (
-            <VStack gap="space-24" maxWidth="70ch" width="100%">
-              <LabelledContent
-                label={begrunnelseLabel}
-                indentContent
-                content={
-                  <BodyLong size="small" className="whitespace-pre-wrap">
-                    {vurdering.begrunnelse}
-                  </BodyLong>
-                }
-              />
-              <VStack gap="space-8">
-                <Label size="small" as="p">
-                  Har søker behov for bistand?
-                </Label>
-                <BodyShort size="small">{vurdering.behovForBistand === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
-              </VStack>
-              {vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak && (
-                <VStack gap="space-8">
-                  <Label size="small" as="p">
-                    Avslagsårsak
-                  </Label>
-                  <BodyShort size="small">{avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
-                </VStack>
-              )}
-              {vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.fritekst && (
-                <LabelledContent
-                  label="Fritekst avslagsbrev"
-                  indentContent
-                  content={
-                    <BodyLong size="small" className="whitespace-pre-wrap">
-                      {vurdering.fritekst}
-                    </BodyLong>
-                  }
-                />
-              )}
-              {vurdering.behovForBistand === 'oppfylt' && (
-                <VStack gap="space-8">
-                  <Label size="small" as="p">
-                    Behov for bistand:
-                  </Label>
-                  <BodyShort size="small">{`${formatDate(vurdering.fom)} – ${formatDate(vurdering.tom)}`}</BodyShort>
-                </VStack>
-              )}
-              {vurdering.behovForBistand === 'oppfylt' && vurdering.redigerMaksdato && (
-                <LabelledContent
-                  label="Begrunn kortere periode enn 260 dager"
-                  indentContent
-                  content={
-                    <BodyLong size="small" className="whitespace-pre-wrap">
-                      {vurdering.begrunnelseKortereMaksdato}
-                    </BodyLong>
-                  }
-                />
-              )}
-            </VStack>
+            <BehovForBistandLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
           ) : (
-            <RhfForm
-              formMethods={formHook}
+            <BehovForBistandSkjema
+              formHook={formHook}
+              selectedId={selectedId}
+              begrunnelseLabel={begrunnelseLabel}
+              isPending={isPending}
+              visAvbryt={isDefaultLocked}
               onSubmit={async data => {
                 await bekreftAksjonspunktMutation(data);
                 setIsFormLocked(true);
               }}
-            >
-              <VStack gap="space-24">
-                <VStack gap="space-24" maxWidth="70ch" width="100%">
-                  <RhfTextarea
-                    control={formHook.control}
-                    name={`vurderinger.${selectedId}.begrunnelse`}
-                    readOnly={isFormLocked}
-                    label={begrunnelseLabel}
-                    validate={[required, minLength(3), maxLength(4000)]}
-                  />
-                  <RhfRadioGroup
-                    key={`${selectedId}-behovForBistand`}
-                    control={formHook.control}
-                    name={`vurderinger.${selectedId}.behovForBistand`}
-                    legend="Har søker behov for bistand?"
-                    validate={[required]}
-                    readOnly={isFormLocked}
-                  >
-                    <Radio value="oppfylt">Ja</Radio>
-                    <Radio value="ikkeOppfylt">Nei</Radio>
-                  </RhfRadioGroup>
-                  {behovForBistand === 'oppfylt' && (
-                    <VStack gap="space-16">
-                      <VStack gap="space-8">
-                        <Label size="small" as="p">
-                          Behov for bistand:
-                        </Label>
-                        <HStack gap="space-20" align="end">
-                          <Datovelger
-                            key={`${selectedId}-fra`}
-                            name={`vurderinger.${selectedId}.fom`}
-                            label="Fra"
-                            size="small"
-                            readOnly
-                          />
-                          <Datovelger
-                            key={`${selectedId}-maksdato`}
-                            name={`vurderinger.${selectedId}.tom`}
-                            label="Maksdato"
-                            size="small"
-                            readOnly={isFormLocked || !redigerMaksdato}
-                            validate={[
-                              required,
-                              value =>
-                                redigerMaksdato && value === vurdering?.muligAvkortingPeriode.tom
-                                  ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
-                                  : undefined,
-                            ]}
-                            fromDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.fom) : undefined}
-                            toDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.tom) : undefined}
-                          />
-                          <RhfCheckbox
-                            control={formHook.control}
-                            name={`vurderinger.${selectedId}.redigerMaksdato`}
-                            label="Rediger maksdato"
-                            readOnly={isFormLocked}
-                          />
-                        </HStack>
-                      </VStack>
-                      {redigerMaksdato && (
-                        <RhfTextarea
-                          key={`${selectedId}-begrunnelseKortereMaksdato`}
-                          control={formHook.control}
-                          name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
-                          label="Begrunn kortere periode enn 260 dager"
-                          validate={[required]}
-                          readOnly={isFormLocked}
-                        />
-                      )}
-                    </VStack>
-                  )}
-                  {behovForBistand === 'ikkeOppfylt' && (
-                    <RhfRadioGroup
-                      key={`${selectedId}-avslagsårsak`}
-                      control={formHook.control}
-                      name={`vurderinger.${selectedId}.avslagsårsak`}
-                      legend="Avslagsårsak"
-                      validate={[required]}
-                      readOnly={isFormLocked}
-                    >
-                      <Radio value={Avslagsårsak.IKKE_14A_VEDTAK}>
-                        Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.
-                      </Radio>
-                      <Radio value="fritekst">Fritekst</Radio>
-                    </RhfRadioGroup>
-                  )}
-                  {behovForBistand === 'ikkeOppfylt' && avslagsårsak === 'fritekst' && (
-                    <RhfTextarea
-                      key={`${selectedId}-fritekst`}
-                      control={formHook.control}
-                      name={`vurderinger.${selectedId}.fritekst`}
-                      label="Fritekst avslagsbrev"
-                      description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-                      validate={[required, minLength(3), maxLength(4000)]}
-                      readOnly={isFormLocked}
-                    />
-                  )}
-                  {!isFormLocked && (
-                    <HStack gap="space-8">
-                      <Button type="submit" size="small" loading={isPending}>
-                        Bekreft og fortsett
-                      </Button>
-                      {isDefaultLocked && (
-                        <Button
-                          size="small"
-                          variant="tertiary"
-                          type="button"
-                          onClick={() => {
-                            formHook.reset(buildInitialValues(søknadsperioder));
-                            setIsFormLocked(true);
-                          }}
-                        >
-                          Avbryt
-                        </Button>
-                      )}
-                    </HStack>
-                  )}
-                </VStack>
-              </VStack>
-            </RhfForm>
+              onAvbryt={() => {
+                formHook.reset(buildInitialValues(søknadsperioder));
+                setIsFormLocked(true);
+              }}
+            />
           )
         }
       </VilkårSplittPanel>

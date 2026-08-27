@@ -203,7 +203,7 @@ export const AlleredeAvkortet: Story = {
       const rader = await canvas.findAllByRole('row');
       // én header-rad + én periode-rad
       await expect(rader).toHaveLength(2);
-      await expect(await canvas.findAllByText('01.01.2024 - 31.12.2024')).not.toHaveLength(0);
+      await expect(await canvas.findAllByText('01.01.2024 - 30.06.2024')).not.toHaveLength(0);
     });
 
     await step('forhåndsutfyller avkortingen fra eksisterende vurdering', async () => {

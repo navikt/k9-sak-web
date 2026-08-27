@@ -207,7 +207,7 @@ export const AlleredeAvkortet: Story = {
     const canvas = within(canvasElement);
 
     await step('slår sammen oppfylt og avkortet periode til én rad', async () => {
-      await expect(await canvas.findAllByText('01.01.2024 - 31.12.2024')).not.toHaveLength(0);
+      await expect(await canvas.findAllByText('01.01.2024 - 30.06.2024')).not.toHaveLength(0);
     });
 
     await step('forhåndsutfyller avkortingen fra eksisterende vurdering', async () => {
