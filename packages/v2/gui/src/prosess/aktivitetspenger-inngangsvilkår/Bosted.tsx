@@ -114,7 +114,7 @@ export const Bosted = ({
     return {
       id: periode.periode.fom,
       status: getPeriodStatus(periode.vilkarStatus),
-      label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.avkortetPeriodeInfo.periode.tom)}` : ''}`,
+      label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
       periode: {
         fom: periode.periode.fom,
         tom: periode.periode.tom,

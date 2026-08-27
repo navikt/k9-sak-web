@@ -113,7 +113,7 @@ export const AndreLivsoppholdytelser = ({
   const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
-    label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.avkortetPeriodeInfo.periode.tom)}` : ''}`,
+    label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
     periode: periode.periode,
   }));
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
