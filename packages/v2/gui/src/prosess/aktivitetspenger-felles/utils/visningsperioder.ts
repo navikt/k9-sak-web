@@ -8,7 +8,7 @@ import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 
 export type VilkårPeriodeVisning = VilkårPeriodeDto & {
-  muligAvkortingPeriode: MuligAvkortingPeriode;
+  muligAvkortingPeriode?: MuligAvkortingPeriode;
   avkortetPeriodeInfo?: {
     begrunnelse: string;
     periode: {
@@ -30,6 +30,9 @@ export const byggVisningsperioder = (
 ): VilkårPeriodeVisning[] => {
   const perioderFraVilkår = vilkårMedPerioder.perioder ?? [];
   const visningsperioder: VilkårPeriodeVisning[] = [];
+  const perioderSomFallerUtenforAvkortingsperioder = perioderFraVilkår.filter(vilkårPeriode =>
+    avkortingsperioder.every(avkortingsperiode => !isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode)),
+  );
   avkortingsperioder
     .map(avkortingsperiode => ({
       fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
@@ -68,5 +71,6 @@ export const byggVisningsperioder = (
         }
       }
     });
+  visningsperioder.push(...perioderSomFallerUtenforAvkortingsperioder);
   return visningsperioder;
 };
