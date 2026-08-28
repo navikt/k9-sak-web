@@ -87,10 +87,12 @@ export const Bosted = ({
       if (!selectedItem || !vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
+      const muligAvkorting = vurdering.muligAvkortingPeriode;
       const redigerMaksdatoAktiv =
         vurdering.bosatt === 'oppfylt' &&
         vurdering.redigerMaksdato &&
-        vurdering.tom !== vurdering.muligAvkortingPeriode.tom;
+        muligAvkorting !== undefined &&
+        vurdering.tom !== muligAvkorting.tom;
       const begrunnelseInnvilget = vurdering.begrunnelse ?? '';
       const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
       const vurdertePerioder: VilkårBostedPeriodeVurderingDto[] = [
@@ -100,20 +102,20 @@ export const Bosted = ({
           erVilkårOppfylt: vurdering.bosatt === 'oppfylt',
           periode: {
             fom: vurdering.fom,
-            tom: redigerMaksdatoAktiv ? vurdering.tom : vurdering.muligAvkortingPeriode.tom,
+            tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
           fritekstVurderingBrev:
             vurdering.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering.fritekst : undefined,
         },
       ];
-      if (redigerMaksdatoAktiv) {
+      if (redigerMaksdatoAktiv && muligAvkorting) {
         vurdertePerioder.push({
           avslagsårsak: BostedsvilkårIkkeOppfyltÅrsak.AVKORTET,
           begrunnelse: begrunnelseAvkortet,
           erVilkårOppfylt: false,
           periode: {
             fom: dayjs(vurdering.tom).add(1, 'day').format(ISO_DATE_FORMAT),
-            tom: vurdering.muligAvkortingPeriode.tom,
+            tom: muligAvkorting.tom,
           },
           fritekstVurderingBrev: undefined,
         });

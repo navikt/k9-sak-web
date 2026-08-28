@@ -10,11 +10,15 @@ const lagVilkår = (perioder: VilkårMedPerioderDto['perioder']): VilkårMedPeri
   perioder,
 });
 
-describe('slåSammenPerioder', () => {
-  it('returnerer tom liste når det ikke finnes avkortingsperioder', () => {
+describe('byggVisningsperioder', () => {
+  it('tar med vilkårsperioden uten avkortingsperiode når ingen avkorting er mulig', () => {
     const vilkår = lagVilkår([{ periode: { fom: '2024-01-01', tom: '2024-12-31' }, vilkarStatus: Utfall.OPPFYLT }]);
 
-    expect(byggVisningsperioder(vilkår, [])).toEqual([]);
+    const resultat = byggVisningsperioder(vilkår, []);
+
+    expect(resultat).toHaveLength(1);
+    expect(resultat[0]?.periode).toEqual({ fom: '2024-01-01', tom: '2024-12-31' });
+    expect(resultat[0]?.muligAvkortingPeriode).toBeUndefined();
   });
 
   it('knytter mulig avkortingsperiode til vilkårsperioden den dekker', () => {
@@ -23,7 +27,7 @@ describe('slåSammenPerioder', () => {
     const resultat = byggVisningsperioder(vilkår, [{ fom: '2024-01-02', tom: '2024-12-31' }]);
 
     expect(resultat).toHaveLength(1);
-    expect(resultat[0]?.muligAvkortingPeriode).toEqual({ fom: '2024-01-01', tom: '2024-12-31' });
+    expect(resultat[0]?.muligAvkortingPeriode).toEqual({ fom: '2024-01-02', tom: '2024-12-31' });
     expect(resultat[0]?.avkortetPeriodeInfo).toBeUndefined();
   });
 
@@ -76,5 +80,21 @@ describe('slåSammenPerioder', () => {
     const resultat = byggVisningsperioder(vilkår, [{ fom: '2024-01-02', tom: '2024-12-31' }]);
 
     expect(resultat).toHaveLength(2);
+  });
+
+  it('tar med perioder utenfor avkortingsperiodene uten å duplisere de som dekkes', () => {
+    const vilkår = lagVilkår([
+      { periode: { fom: '2024-01-01', tom: '2024-06-30' }, vilkarStatus: Utfall.OPPFYLT },
+      { periode: { fom: '2025-01-01', tom: '2025-06-30' }, vilkarStatus: Utfall.IKKE_VURDERT },
+    ]);
+
+    const resultat = byggVisningsperioder(vilkår, [
+      { fom: '2024-01-02', tom: '2024-06-30' },
+      { fom: '2024-08-02', tom: '2024-12-31' },
+    ]);
+
+    expect(resultat.map(p => p.periode.fom)).toEqual(['2024-01-01', '2025-01-01']);
+    expect(resultat[0]?.muligAvkortingPeriode).toEqual({ fom: '2024-01-02', tom: '2024-06-30' });
+    expect(resultat[1]?.muligAvkortingPeriode).toBeUndefined();
   });
 });

@@ -76,10 +76,12 @@ export const BehovForBistand = ({
       if (!vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bistandsvilkår');
       }
+      const muligAvkorting = vurdering.muligAvkortingPeriode;
       const redigerMaksdatoAktiv =
         vurdering.behovForBistand === 'oppfylt' &&
         vurdering.redigerMaksdato &&
-        vurdering.tom !== vurdering.muligAvkortingPeriode.tom;
+        muligAvkorting !== undefined &&
+        vurdering.tom !== muligAvkorting.tom;
       const begrunnelseInnvilget = vurdering.begrunnelse ?? '';
       const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
       const vurdertePerioder: VilkårBistandPeriodeVurderingDto[] = [
@@ -92,19 +94,19 @@ export const BehovForBistand = ({
           erVilkårOppfylt: vurdering.behovForBistand === 'oppfylt',
           periode: {
             fom: vurdering.fom,
-            tom: redigerMaksdatoAktiv ? vurdering.tom : vurdering.muligAvkortingPeriode.tom,
+            tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
           fritekstVurderingBrev: vurdering.avslagsårsak === 'fritekst' ? vurdering.fritekst : undefined,
         },
       ];
-      if (redigerMaksdatoAktiv) {
+      if (redigerMaksdatoAktiv && muligAvkorting) {
         vurdertePerioder.push({
           avslagsårsak: BistandsvilkårIkkeOppfyltÅrsak.AVKORTET,
           begrunnelse: begrunnelseAvkortet,
           erVilkårOppfylt: false,
           periode: {
             fom: dayjs(vurdering.tom).add(1, 'day').format(ISO_DATE_FORMAT),
-            tom: vurdering.muligAvkortingPeriode.tom,
+            tom: muligAvkorting.tom,
           },
           fritekstVurderingBrev: undefined,
         });

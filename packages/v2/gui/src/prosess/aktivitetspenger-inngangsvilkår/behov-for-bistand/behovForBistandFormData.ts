@@ -16,7 +16,7 @@ export interface BehovForBistandFormData {
       fritekst?: string;
       fom: string;
       tom: string;
-      muligAvkortingPeriode: MuligAvkortingPeriode;
+      muligAvkortingPeriode?: MuligAvkortingPeriode;
       redigerMaksdato: boolean;
       begrunnelseKortereMaksdato?: string;
     }
@@ -45,7 +45,7 @@ export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): BehovForBi
         avslagsårsak: p.avslagKode ? avslagKodeTilÅrsak[p.avslagKode] : undefined,
         fritekst: p.fritekstVurderingBrev,
         fom: p.periode.fom,
-        tom: p.periode.tom ?? p.muligAvkortingPeriode.tom,
+        tom: p.periode.tom,
         redigerMaksdato: p.avkortetPeriodeInfo ? true : false,
         begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
         muligAvkortingPeriode: p.muligAvkortingPeriode,

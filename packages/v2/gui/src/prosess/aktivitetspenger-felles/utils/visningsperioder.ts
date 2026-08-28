@@ -34,10 +34,11 @@ export const byggVisningsperioder = (
     fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
     tom: avkortingsperiode.tom,
   }));
-  const perioderSomFallerUtenforAvkortingsperioder = perioderFraVilkår.filter(vilkårPeriode =>
-    justerteAvkortingsperioder.some(
-      avkortingsperiode => !isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode),
-    ),
+  const perioderSomFallerUtenforAvkortingsperioder = perioderFraVilkår.filter(
+    vilkårPeriode =>
+      !justerteAvkortingsperioder.some(avkortingsperiode =>
+        isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode),
+      ),
   );
   justerteAvkortingsperioder.forEach(avkortingsperiode => {
     const vilkårISammePeriode = perioderFraVilkår

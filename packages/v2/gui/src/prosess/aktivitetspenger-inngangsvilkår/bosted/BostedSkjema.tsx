@@ -34,10 +34,10 @@ export const BostedSkjema = ({
   onSubmit,
   onAvbryt,
 }: Props) => {
-  const vurdering = formHook.watch(`vurderinger.${selectedId}`);
   const bosatt = formHook.watch(`vurderinger.${selectedId}.bosatt`);
   const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
   const redigerMaksdato = formHook.watch(`vurderinger.${selectedId}.redigerMaksdato`);
+  const muligAvkortingPeriode = formHook.watch(`vurderinger.${selectedId}.muligAvkortingPeriode`);
 
   return (
     <RhfForm formMethods={formHook} onSubmit={onSubmit}>
@@ -107,18 +107,20 @@ export const BostedSkjema = ({
                 validate={[
                   required,
                   value =>
-                    redigerMaksdato && value === vurdering?.muligAvkortingPeriode.tom
+                    redigerMaksdato && value === muligAvkortingPeriode?.tom
                       ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
                       : undefined,
                 ]}
-                fromDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.fom) : undefined}
-                toDate={vurdering ? new Date(vurdering.muligAvkortingPeriode.tom) : undefined}
+                fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
+                toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
               />
-              <RhfCheckbox
-                control={formHook.control}
-                name={`vurderinger.${selectedId}.redigerMaksdato`}
-                label="Rediger maksdato"
-              />
+              {muligAvkortingPeriode && (
+                <RhfCheckbox
+                  control={formHook.control}
+                  name={`vurderinger.${selectedId}.redigerMaksdato`}
+                  label="Rediger maksdato"
+                />
+              )}
             </HStack>
             {redigerMaksdato && (
               <RhfTextarea
