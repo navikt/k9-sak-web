@@ -8,7 +8,7 @@ import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 
 export type VilkårPeriodeVisning = VilkårPeriodeDto & {
-  muligAvkortingPeriode: MuligAvkortingPeriode;
+  muligAvkortingPeriode?: MuligAvkortingPeriode;
   avkortetPeriodeInfo?: {
     begrunnelse: string;
     periode: {
@@ -30,43 +30,54 @@ export const byggVisningsperioder = (
 ): VilkårPeriodeVisning[] => {
   const perioderFraVilkår = vilkårMedPerioder.perioder ?? [];
   const visningsperioder: VilkårPeriodeVisning[] = [];
-  avkortingsperioder
-    .map(avkortingsperiode => ({
-      fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
-      tom: avkortingsperiode.tom,
-    }))
-    .forEach(avkortingsperiode => {
-      const vilkårISammePeriode = perioderFraVilkår
-        .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
-        .toSorted((a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime())
-        .map(vilkårPeriode => ({ ...vilkårPeriode, muligAvkortingPeriode: avkortingsperiode }));
-      for (let periodeIndex = 0; periodeIndex < vilkårISammePeriode.length; periodeIndex += 1) {
-        const periode = vilkårISammePeriode[periodeIndex];
-        const nestePeriode = vilkårISammePeriode[periodeIndex + 1];
-        const erAvkortetNestePeriode =
-          nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
+  const justerteAvkortingsperioder = avkortingsperioder.map(avkortingsperiode => ({
+    fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
+    tom: avkortingsperiode.tom,
+  }));
+  const perioderSomFallerUtenforAvkortingsperioder = perioderFraVilkår.filter(vilkårPeriode =>
+    justerteAvkortingsperioder.some(
+      avkortingsperiode => !isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode),
+    ),
+  );
+  justerteAvkortingsperioder.forEach(avkortingsperiode => {
+    const vilkårISammePeriode = perioderFraVilkår
+      .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
+      .toSorted((a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime())
+      .map(vilkårPeriode => ({
+        ...vilkårPeriode,
+        muligAvkortingPeriode: {
+          fom: dayjs(avkortingsperiode.fom).add(1, 'day').format(ISO_DATE_FORMAT),
+          tom: avkortingsperiode.tom,
+        },
+      }));
+    for (let periodeIndex = 0; periodeIndex < vilkårISammePeriode.length; periodeIndex += 1) {
+      const periode = vilkårISammePeriode[periodeIndex];
+      const nestePeriode = vilkårISammePeriode[periodeIndex + 1];
+      const erAvkortetNestePeriode =
+        nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
 
-        if (
-          periode &&
-          erAvkortetNestePeriode &&
-          periode.vilkarStatus === Utfall.OPPFYLT &&
-          checkIfPeriodsAreEdgeToEdge(periode.periode, nestePeriode.periode)
-        ) {
-          visningsperioder.push({
-            ...periode,
-            avkortetPeriodeInfo: {
-              begrunnelse: nestePeriode.begrunnelse ?? '',
-              periode: {
-                fom: nestePeriode.periode.fom,
-                tom: nestePeriode.periode.tom,
-              },
+      if (
+        periode &&
+        erAvkortetNestePeriode &&
+        periode.vilkarStatus === Utfall.OPPFYLT &&
+        checkIfPeriodsAreEdgeToEdge(periode.periode, nestePeriode.periode)
+      ) {
+        visningsperioder.push({
+          ...periode,
+          avkortetPeriodeInfo: {
+            begrunnelse: nestePeriode.begrunnelse ?? '',
+            periode: {
+              fom: nestePeriode.periode.fom,
+              tom: nestePeriode.periode.tom,
             },
-          });
-          periodeIndex += 1;
-        } else if (periode) {
-          visningsperioder.push(periode);
-        }
+          },
+        });
+        periodeIndex += 1;
+      } else if (periode) {
+        visningsperioder.push(periode);
       }
-    });
+    }
+  });
+  visningsperioder.push(...perioderSomFallerUtenforAvkortingsperioder);
   return visningsperioder;
 };
