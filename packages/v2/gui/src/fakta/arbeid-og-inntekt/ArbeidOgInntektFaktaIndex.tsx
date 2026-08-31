@@ -8,11 +8,10 @@ import { ArbeidsforholdAktivitetStatus } from '@k9-sak-web/backend/k9sak/kodever
 import type { K9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
-import { BodyShort, Heading, Label, Select, Table } from '@navikt/ds-react';
+import { BodyShort, Detail, Heading, Label, Select, Table, Tag } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
-import { formatCurrencyWithoutKr } from '../../utils/formatters.js';
-import { formatDate } from '../../utils/formatters.js';
+import { formatCurrencyWithoutKr, formatDate, timeFormat } from '../../utils/formatters.js';
 import { useArbeidOgInntektOptions } from './api/ArbeidOgInntektQueries.js';
 import styles from './arbeidOgInntektFakta.module.css';
 
@@ -85,25 +84,27 @@ const ARegisterDetaljer = ({ aRegister }: { aRegister: ARegisterOpplysningerDto 
       )}
     </div>
     {aRegister.sistEndret && (
-      <BodyShort size="small" className={styles['sistEndret']}>
-        Sist endret {formatDate(aRegister.sistEndret)}
-      </BodyShort>
+      <Detail className={styles['sistEndret']}>
+        Sist endret {formatDate(aRegister.sistEndret)} kl. {timeFormat(aRegister.sistEndret)}
+      </Detail>
     )}
   </div>
 );
 
-const AktivitetStatusBadge = ({ status }: { status?: string }) => {
+const BeregningsgrunnlagKildeTag = ({ status }: { status?: string }) => {
   if (!status) return null;
-  const kort =
-    status === ArbeidsforholdAktivitetStatus.ARBEIDSTAKER
-      ? 'IM'
-      : status === ArbeidsforholdAktivitetStatus.SELVSTENDIG_NÆRINGSDRIVENDE
-        ? 'SIG'
-        : status === ArbeidsforholdAktivitetStatus.FRILANSER
-          ? 'AO'
-          : null;
-  if (!kort) return null;
-  return <span className={styles['aktivitetStatusBadge']}>{kort}</span>;
+  const config: Record<string, { label: string; color: 'warning' | 'neutral' | 'info' | 'meta-purple' }> = {
+    [ArbeidsforholdAktivitetStatus.ARBEIDSTAKER]: { label: 'IM', color: 'warning' },
+    [ArbeidsforholdAktivitetStatus.FRILANSER]: { label: 'AO', color: 'info' },
+    [ArbeidsforholdAktivitetStatus.SELVSTENDIG_NÆRINGSDRIVENDE]: { label: 'SIG', color: 'meta-purple' },
+  };
+  const entry = config[status];
+  if (!entry) return null;
+  return (
+    <Tag size="small" variant="outline" data-color={entry.color}>
+      {entry.label}
+    </Tag>
+  );
 };
 
 const AktivitetTabell = ({
@@ -128,7 +129,7 @@ const AktivitetTabell = ({
             <Label size="small">Virksomhetsnavn</Label>
           </Table.HeaderCell>
           <Table.HeaderCell scope="col">
-            <Label size="small">Ansettelsesperiode</Label>
+            <BodyShort size="small">Ansettelsesperiode</BodyShort>
           </Table.HeaderCell>
           <Table.HeaderCell scope="col" align="right">
             <Label size="small">Normalarbeidstid</Label>
@@ -179,7 +180,7 @@ const AktivitetTabell = ({
                   {aktivitet.beregningsgrunnlagPrÅr != null
                     ? formatCurrencyWithoutKr(aktivitet.beregningsgrunnlagPrÅr)
                     : '-'}{' '}
-                  <AktivitetStatusBadge status={aktivitet.arbeidsstatus} />
+                  <BeregningsgrunnlagKildeTag status={aktivitet.arbeidsstatus} />
                 </BodyShort>
               </Table.DataCell>
               <Table.DataCell align="right">
