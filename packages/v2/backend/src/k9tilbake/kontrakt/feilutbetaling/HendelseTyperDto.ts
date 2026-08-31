@@ -1,0 +1,5 @@
+export type {
+  foreldrepenger_tilbakekreving_feilutbetalingårsak_dto_HendelseTypeMedUndertypeDto as HendelseTypeMedUndertypeDto,
+  foreldrepenger_tilbakekreving_feilutbetalingårsak_dto_HendelseTypeMedUndertyperDto as HendelseTypeMedUndertyperDto,
+  foreldrepenger_tilbakekreving_feilutbetalingårsak_dto_HendelseTyperPrYtelseTypeDto as HendelseTyperPrYtelseTypeDto,
+} from '@k9-sak-web/backend/k9tilbake/generated/types.js';
