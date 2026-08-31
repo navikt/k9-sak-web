@@ -26,12 +26,6 @@ import {
 
 const dagensDato = new Date();
 
-/**
- * TODO(TSFF-2990): fjern når ny ts-client med `kilde`/`kildeFritekst` er publisert.
- * Feltene finnes i ung-sak, men ikke i den genererte klienten ennå.
- */
-type MedKilde = { kilde?: BostedsavklaringKildeType; kildeFritekst?: string };
-
 interface FormData {
   perioder: Record<
     string,
@@ -61,8 +55,8 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
         begrunnelse: p.avklaring?.begrunnelse ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
         forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
-        kilde: (p.avklaring as MedKilde | undefined)?.kilde ?? '',
-        kildeFritekst: (p.avklaring as MedKilde | undefined)?.kildeFritekst ?? '',
+        kilde: p.avklaring?.kilde ?? '',
+        kildeFritekst: p.avklaring?.kildeFritekst ?? '',
         opphøreEllerAvslå:
           p.avklaring?.avklaringtype === Avklaringtype.OPPHØR
             ? 'opphøre'
@@ -182,14 +176,11 @@ export const AarsakOgVarsel = ({
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
               begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
               fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
-              // TODO(TSFF-2990): fjern casten når ny ts-client er publisert
-              ...({
-                kilde: selectedFormPeriod.kilde as BostedsavklaringKildeType,
-                kildeFritekst:
-                  selectedFormPeriod.kilde === BostedsavklaringKildeType.ANNET
-                    ? selectedFormPeriod.kildeFritekst
-                    : undefined,
-              } satisfies MedKilde),
+              kilde: selectedFormPeriod.kilde as BostedsavklaringKildeType,
+              kildeFritekst:
+                selectedFormPeriod.kilde === BostedsavklaringKildeType.ANNET
+                  ? selectedFormPeriod.kildeFritekst
+                  : undefined,
             },
           },
         ],
