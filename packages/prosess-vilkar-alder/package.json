@@ -14,11 +14,11 @@
     "@navikt/ft-form-validators": "6.1.5",
     "@navikt/ft-ui-komponenter": "8.2.1",
     "@navikt/ft-utils": "5.1.5",
-    "dayjs": "1.11.21",
+    "dayjs": "1.11.23",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-hook-form": "7.85.0",
-    "react-intl": "10.1.20"
+    "react-hook-form": "7.86.0",
+    "react-intl": "10.1.23"
   },
   "devDependencies": {
     "@types/react": "19.2.18",
