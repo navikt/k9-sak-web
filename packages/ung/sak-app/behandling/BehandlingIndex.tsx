@@ -195,7 +195,7 @@ const BehandlingIndex = ({
       );
     }
 
-    if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
+    if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER) {
       return (
         <ErrorBoundary>
           <BehandlingAktivitetspengerIndex
