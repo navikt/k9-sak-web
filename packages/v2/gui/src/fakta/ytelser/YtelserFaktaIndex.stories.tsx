@@ -26,6 +26,7 @@ const ytelserFlereTyper: RelatertYtelseResponse[] = [
     ytelseType: 'PSB',
     data: [
       { fom: '2026-01-15', tom: '2026-02-28', status: 'AVSLUTTET', relatertSaksnummer: 'PSB001' },
+      { fom: '2026-03-01', tom: '2026-04-30', status: 'IKKESTARTET', relatertSaksnummer: 'PSB002' },
       { fom: '2026-06-01', tom: '2026-10-31', status: 'LØPENDE', relatertSaksnummer: 'PSB002' },
     ],
   },
@@ -71,6 +72,7 @@ const meta = {
   decorators: [withK9Kodeverkoppslag(), withFakeApi(ytelserFlereTyper)],
   args: {
     behandlingUuid: 'test-behandling-uuid',
+    gjeldendeSaksnummer: 'PSB002',
   },
 } satisfies Meta<typeof YtelserFaktaIndex>;
 
@@ -90,6 +92,7 @@ export const DetaljerÅpne: Story = {
 
     await userEvent.click(firstPeriod);
 
+    await expect(firstPeriod).toHaveClass('aksel-timeline__period--selected');
     await expect(await screen.findByText('Periode: 01.06.2026 – 31.10.2026')).toBeVisible();
     await expect(await screen.findByRole('link', { name: 'PSB002' })).toBeVisible();
   },
@@ -100,6 +103,13 @@ export const TabellfaneÅpen: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(await canvas.findByRole('tab', { name: 'Tabell' }));
     await expect(await canvas.findByRole('table')).toBeVisible();
+  },
+};
+
+export const GjeldendeSakFørst: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByText('Pleiepenger sykt barn (denne saken)')).toBeVisible();
   },
 };
 

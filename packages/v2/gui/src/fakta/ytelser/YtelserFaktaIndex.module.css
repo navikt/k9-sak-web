@@ -113,16 +113,21 @@
   margin-block: var(--ax-space-20);
 }
 
-.tidslinje :global(.aksel-timeline__period[data-color='success']) {
+.tidslinje :global(.aksel-timeline__period[data-color='success']:not(.aksel-timeline__period--selected)) {
   background: var(--ax-bg-success-soft);
   color: var(--ax-text-success-decoration);
   border-color: currentcolor;
 }
 
-.tidslinje :global(.aksel-timeline__period[data-color='warning']) {
+.tidslinje :global(.aksel-timeline__period[data-color='warning']:not(.aksel-timeline__period--selected)) {
   background: var(--ax-bg-warning-soft);
   color: var(--ax-text-warning-decoration);
   border-color: currentcolor;
+}
+
+.tidslinje :global(.aksel-timeline__row--active) {
+  /* stylelint-disable-next-line custom-property-pattern */
+  background: var(--ax-bg-neutral-softA);
 }
 
 .tidslinje :global(.aksel-timeline__period--inner svg) {
