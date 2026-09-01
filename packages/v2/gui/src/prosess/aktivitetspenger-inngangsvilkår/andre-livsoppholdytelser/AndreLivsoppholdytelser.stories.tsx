@@ -208,7 +208,7 @@ export const AlleredeAvkortet: Story = {
 
     await step('forhåndsutfyller avkortingen fra eksisterende vurdering', async () => {
       await expect(await canvas.findByLabelText('Rediger maksdato')).toBeChecked();
-      await expect(await canvas.findByLabelText('Maksdato')).toHaveValue('30.06.2024');
+      await expect(await canvas.findByLabelText('Til og med')).toHaveValue('30.06.2024');
       await expect(await canvas.findByLabelText('Begrunn kortere periode enn 260 dager')).toHaveValue(
         'Perioden er avkortet etter avtale med søker.',
       );
@@ -237,7 +237,7 @@ export const RedigererMaksdato: Story = {
     apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
 
     await step('maksdato er låst før avkorting er slått på', async () => {
-      await expect(await canvas.findByLabelText('Maksdato')).toBeDisabled();
+      await expect(await canvas.findByLabelText('Til og med')).toBeDisabled();
     });
 
     await step('avkortingsbegrunnelse vises først etter at maksdato kan redigeres', async () => {
@@ -245,12 +245,12 @@ export const RedigererMaksdato: Story = {
 
       await userEvent.click(await canvas.findByLabelText('Rediger maksdato'));
 
-      await expect(await canvas.findByLabelText('Maksdato')).toBeEnabled();
+      await expect(await canvas.findByLabelText('Til og med')).toBeEnabled();
       await expect(await canvas.findByLabelText('Begrunn kortere periode enn 260 dager')).toBeInTheDocument();
     });
 
     await step('sender avkortet periode med årsak AVKORTET', async () => {
-      const maksdato = await canvas.findByLabelText('Maksdato');
+      const maksdato = await canvas.findByLabelText('Til og med');
       await userEvent.clear(maksdato);
       await userEvent.type(maksdato, '30.06.2024');
       await userEvent.type(

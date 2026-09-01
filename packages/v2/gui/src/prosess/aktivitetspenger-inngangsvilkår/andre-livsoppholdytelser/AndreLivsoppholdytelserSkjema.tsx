@@ -91,7 +91,7 @@ export const AndreLivsoppholdytelserSkjema = ({
                 <Datovelger
                   key={`${selectedId}-maksdato`}
                   name={`vurderinger.${selectedId}.tom`}
-                  label="Maksdato"
+                  label="Til og med"
                   size="small"
                   readOnly={!redigerMaksdato}
                   validate={[
