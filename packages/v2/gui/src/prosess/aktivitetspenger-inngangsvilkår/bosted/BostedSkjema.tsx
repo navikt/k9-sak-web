@@ -10,7 +10,6 @@ import type { BostedFormData } from './bostedFormData.js';
 
 const valgbareAvslagsårsaker = [
   BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
-  BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSTEDSADRESSE_OG_IKKE_FOLKEREGISTRERT_I_TRONDHEIM,
   BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM,
   BostedsvilkårIkkeOppfyltÅrsak.ANNET,
 ];

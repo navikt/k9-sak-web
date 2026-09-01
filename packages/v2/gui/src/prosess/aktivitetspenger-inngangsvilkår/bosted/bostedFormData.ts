@@ -32,6 +32,7 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
 // Backend returnerer Avslagsårsak-koder ved lesing, men forventer BostedsvilkårIkkeOppfyltÅrsak ved innsending.
 const avslagKodeTilÅrsak: Record<string, BostedsvilkårIkkeOppfyltÅrsak> = {
   [Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_BOSTED]: BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
+  // Denne avslagsårsaken skal fjernes, men beholder håndtering i frontend til den er borte i stedet for å ekskludere den i alle typer
   [Avslagsårsak.YTELSE_IKKE_TILGJENGELIG_PÅ_FOLKEREGISTRERT_ELLER_BOSTEDSADRESSE]:
     BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSTEDSADRESSE_OG_IKKE_FOLKEREGISTRERT_I_TRONDHEIM,
   [Avslagsårsak.YTELSE_IKKE_PÅ_ARBEIDSSTED_STUDIESTED]:
