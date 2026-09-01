@@ -111,6 +111,10 @@ export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
       );
     });
 
+    await step('Velg kilde til opplysningene', async () => {
+      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Bruker');
+    });
+
     await step('Fyll inn begrunnelse', async () => {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
     });
@@ -159,6 +163,10 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
       );
     });
 
+    await step('Velg kilde til opplysningene', async () => {
+      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Bruker');
+    });
+
     await step('Fyll inn begrunnelse', async () => {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
     });
@@ -182,6 +190,69 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
     });
 
     await step('Callback er kalt etter bekreftelse', async () => {
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
+  args: {
+    ...fakeArgsBase,
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Velg "Opphøre fra en dato"', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Opphøre fra en dato' }));
+    });
+
+    await step('Fyll inn opphørsdato', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: /opphøre fra og med/i }), '01.05.2026');
+    });
+
+    await step('Velg årsak', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /årsak/i }),
+        'Ikke bosatt adresse i Trondheim',
+      );
+    });
+
+    await step('Fritekstfeltet er skjult før "Annet" er valgt', async () => {
+      await expect(canvas.queryByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i })).toBeNull();
+    });
+
+    await step('Velg kilde "Annet"', async () => {
+      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Annet');
+    });
+
+    await step('Fyll inn hvor opplysningene kommer fra', async () => {
+      await userEvent.type(
+        await canvas.findByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i }),
+        'Opplyst av veileder ved lokalkontoret',
+      );
+    });
+
+    await step('Fyll inn begrunnelse', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
+    });
+
+    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
+      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    });
+
+    await step('Fyll inn begrunnelse for å ikke varsle', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        'Bruker varslet om flytting selv',
+      );
+    });
+
+    await step('Send skjema', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+    });
+
+    await step('Callback er kalt etter innsending', async () => {
       await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
     });
   },
@@ -358,6 +429,13 @@ export const ÅrsakOgVarselAvslå: Story = {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /årsak/i }),
         'Ikke bosatt adresse i Trondheim',
+      );
+    });
+
+    await step('Velg kilde til opplysningene', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Folkeregisteret',
       );
     });
 

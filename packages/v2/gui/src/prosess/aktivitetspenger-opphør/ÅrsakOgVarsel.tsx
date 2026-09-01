@@ -9,7 +9,7 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -17,7 +17,12 @@ import { useForm } from 'react-hook-form';
 import { VilkårSplittPanel, type VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
+import {
+  BostedsavklaringKildeType,
+  BostedsvilkårIkkeOppfyltÅrsak,
+  kildeLabels,
+  opphørsårsakLabels,
+} from '../aktivitetspenger-prosess/types.js';
 
 const dagensDato = new Date();
 
@@ -34,6 +39,8 @@ interface FormData {
       avslagTom: string;
       begrunnelseForIkkeVarsle: string;
       forhåndsvarselTekst: string;
+      kilde: string;
+      kildeFritekst: string;
     }
   >;
 }
@@ -48,6 +55,8 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
         begrunnelse: p.avklaring?.begrunnelse ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
         forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
+        kilde: p.avklaring?.kilde ?? '',
+        kildeFritekst: p.avklaring?.kildeFritekst ?? '',
         opphøreEllerAvslå:
           p.avklaring?.avklaringtype === Avklaringtype.OPPHØR
             ? 'opphøre'
@@ -139,6 +148,8 @@ export const AarsakOgVarsel = ({
   const opphøreEllerAvslå = formHook.watch(`perioder.${selectedId}.opphøreEllerAvslå`);
   const valgtÅrsak = formHook.watch(`perioder.${selectedId}.årsak`);
   const valgtÅrsakErAnnet = valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
+  const valgtKilde = formHook.watch(`perioder.${selectedId}.kilde`);
+  const valgtKildeErAnnet = valgtKilde === BostedsavklaringKildeType.ANNET;
 
   const isVarselAPSolved = vurderBostedAP?.status === AksjonspunktStatus.UTFØRT;
 
@@ -165,6 +176,11 @@ export const AarsakOgVarsel = ({
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
               begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
               fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
+              kilde: selectedFormPeriod.kilde as BostedsavklaringKildeType,
+              kildeFritekst:
+                selectedFormPeriod.kilde === BostedsavklaringKildeType.ANNET
+                  ? selectedFormPeriod.kildeFritekst
+                  : undefined,
             },
           },
         ],
@@ -303,6 +319,29 @@ export const AarsakOgVarsel = ({
                     </option>
                   ))}
                 />
+                <RhfSelect
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.kilde`}
+                  label="Hvor har du fått opplysningene fra (vises til bruker)"
+                  readOnly={isFormLocked}
+                  validate={[required]}
+                  selectValues={Object.values(BostedsavklaringKildeType).map(kilde => (
+                    <option key={kilde} value={kilde}>
+                      {kildeLabels[kilde]}
+                    </option>
+                  ))}
+                />
+                {valgtKildeErAnnet && (
+                  <RhfTextField
+                    control={formHook.control}
+                    name={`perioder.${selectedId}.kildeFritekst`}
+                    label="Beskriv hvor opplysningene kommer fra"
+                    description="Teksten vises til bruker i varsel og vedtaksbrev."
+                    readOnly={isFormLocked}
+                    validate={[required, minLength(3), maxLength(1000)]}
+                    maxLength={1000}
+                  />
+                )}
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.begrunnelse`}
