@@ -10,18 +10,18 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "8.16.1",
     "@navikt/ds-react": "8.16.1",
-    "@navikt/ft-form-hooks": "12.4.6",
-    "@navikt/ft-form-validators": "6.1.5",
-    "@navikt/ft-ui-komponenter": "8.2.1",
-    "@navikt/ft-utils": "5.1.5",
-    "dayjs": "1.11.21",
+    "@navikt/ft-form-hooks": "12.4.10",
+    "@navikt/ft-form-validators": "6.1.9",
+    "@navikt/ft-ui-komponenter": "8.2.5",
+    "@navikt/ft-utils": "5.1.9",
+    "dayjs": "1.11.23",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-hook-form": "7.85.0",
-    "react-intl": "10.1.20"
+    "react-hook-form": "7.86.0",
+    "react-intl": "10.1.24"
   },
   "devDependencies": {
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4"
+    "@types/react-dom": "19.2.5"
   }
 }
