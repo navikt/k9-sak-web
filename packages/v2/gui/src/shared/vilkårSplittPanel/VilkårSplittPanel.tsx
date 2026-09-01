@@ -88,13 +88,14 @@ export const VilkårSplittPanel = ({
 }: VilkårSplittPanelProps) => {
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
-  const [isFormLocked, setIsFormLocked] = useState(defaultIsLocked);
+  // En periode som allerede har en vurdering (f.eks. fra tidligere behandling) skal starte i lesevisning,
+  // selv om aksjonspunktet er gjenåpnet fordi en annen periode trenger vurdering.
+  const shouldStartLocked = defaultIsLocked || selectedItem?.status !== 'warning';
+  const [isFormLocked, setIsFormLocked] = useState(shouldStartLocked);
 
   useEffect(() => {
-    if (defaultIsLocked) {
-      setIsFormLocked(true);
-    }
-  }, [defaultIsLocked]);
+    setIsFormLocked(shouldStartLocked);
+  }, [selectedItemId, defaultIsLocked, shouldStartLocked]);
 
   const effectiveLocked = isFormLocked || readOnly;
   const canEdit = !readOnly && !isPermanentlyReadOnly;

@@ -14,6 +14,7 @@ import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
 import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import { Aktivitet } from './aktivitet/Aktivitet';
 import { Alder } from './alder/Alder';
 import { AndreLivsoppholdytelser } from './andre-livsoppholdytelser/AndreLivsoppholdytelser';
 import { BehovForBistand } from './behov-for-bistand/BehovForBistand';
@@ -28,6 +29,8 @@ interface InngangsvilkårData {
   alderVilkår?: VilkårMedPerioderDto;
   vurderBistandsvilkårAp?: AksjonspunktDto;
   vurderBistandsvilkårVilkår?: VilkårMedPerioderDto;
+  vurderAktivitetsvilkårAp?: AksjonspunktDto;
+  vurderAktivitetsvilkårVilkår?: VilkårMedPerioderDto;
   lokalkontorForeslårVilkårAp?: AksjonspunktDto;
   lokalkontorBeslutterAp?: AksjonspunktDto;
   bostedAp?: AksjonspunktDto;
@@ -47,6 +50,8 @@ const samleInngangsvilkårData = (
   alderVilkår: vilkår.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR),
   vurderBistandsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
   vurderBistandsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.BISTANDSVILKÅR),
+  vurderAktivitetsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR),
+  vurderAktivitetsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.AKTIVITETSVILKÅR),
   lokalkontorForeslårVilkårAp: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),
@@ -90,6 +95,9 @@ const utledAktivTab = (data: InngangsvilkårData) => {
   if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
   }
+  if (data.vurderAktivitetsvilkårAp?.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.AKTIVITET;
+  }
   if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BESLUTTER;
   }
@@ -103,9 +111,12 @@ const utledAktivTab = (data: InngangsvilkårData) => {
     if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBistandsvilkårAp) {
       return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
     }
+    if (data.vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderAktivitetsvilkårAp) {
+      return InngangsvilkårTab.BEHOV_FOR_BISTAND;
+    }
   }
 
-  return InngangsvilkårTab.BEHOV_FOR_BISTAND;
+  return InngangsvilkårTab.AKTIVITET;
 };
 
 interface Props {
@@ -179,6 +190,11 @@ export const AktivitetspengerInngangsvilkår = ({
             label="Behov for bistand"
             icon={tabIcon(inngangsvilkårdata.vurderBistandsvilkårAp, inngangsvilkårdata.vurderBistandsvilkårVilkår)}
           />
+          <Tabs.Tab
+            value={InngangsvilkårTab.AKTIVITET}
+            label="Aktivitet"
+            icon={tabIcon(inngangsvilkårdata.vurderAktivitetsvilkårAp, inngangsvilkårdata.vurderAktivitetsvilkårVilkår)}
+          />
           {inngangsvilkårdata.lokalkontorBeslutterAp &&
             aksjonspunktErÅpent(inngangsvilkårdata.lokalkontorBeslutterAp) && (
               <Tabs.Tab
@@ -240,6 +256,22 @@ export const AktivitetspengerInngangsvilkår = ({
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={
                   !inngangsvilkårdata.vurderBistandsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
+              />
+            )}
+          </Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.AKTIVITET}>
+            {inngangsvilkårdata.vurderAktivitetsvilkårVilkår && (
+              <Aktivitet
+                vurderAktivitetsvilkårVilkår={inngangsvilkårdata.vurderAktivitetsvilkårVilkår}
+                vurderAktivitetsvilkårAp={inngangsvilkårdata.vurderAktivitetsvilkårAp}
+                lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.vurderAktivitetsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
                 }
               />
             )}

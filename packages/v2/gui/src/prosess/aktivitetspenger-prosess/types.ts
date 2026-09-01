@@ -4,6 +4,7 @@ export { BostedsvilkårIkkeOppfyltÅrsak, BostedsavklaringKildeType };
 
 export const opphørsårsakLabels: Record<BostedsvilkårIkkeOppfyltÅrsak, string> = {
   [BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM]: 'Ikke bosatt adresse i Trondheim',
+  // denne skal ikke brukes, men vi beholder den inntil videre for å slippe å tilpasse typer frem til den er fjernet
   [BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSTEDSADRESSE_OG_IKKE_FOLKEREGISTRERT_I_TRONDHEIM]:
     'Ikke bostedsadresse i Trondheim, og heller ikke folkeregistrert i Trondheim',
   [BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM]:
