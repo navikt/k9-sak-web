@@ -106,7 +106,7 @@
     "lefthook": "2.1.12",
     "loose-ts-check": "2.0.0",
     "msw": "2.15.0",
-    "msw-storybook-addon": "2.0.7",
+    "msw-storybook-addon": "3.0.0",
     "prettier": "3.9.6",
     "storybook": "10.5.10",
     "stylelint": "17.14.1",
