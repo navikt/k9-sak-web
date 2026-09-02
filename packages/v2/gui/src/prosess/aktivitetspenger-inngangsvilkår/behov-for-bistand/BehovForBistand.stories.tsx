@@ -211,6 +211,7 @@ export const AlleredeAvkortet: Story = {
     });
 
     await step('forhåndsutfyller avkortingen fra eksisterende vurdering', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: /Rediger vurdering/ }));
       await expect(await canvas.findByLabelText('Rediger maksdato')).toBeChecked();
       await expect(await canvas.findByLabelText('Til og med')).toHaveValue('30.06.2024');
       await expect(await canvas.findByLabelText('Begrunn kortere periode enn 260 dager')).toHaveValue(
