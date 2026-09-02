@@ -283,7 +283,7 @@ const AktivitetTabell = ({
               <Label size="small">{totaltNormalarbeidstid || ''}</Label>
             </Table.DataCell>
             <Table.DataCell align="right">
-              <Label size="small">{formatCurrencyWithoutKr(totaltBeregningsgrunnlag)}</Label>
+              <Label size="small">{beregningIkkeGjennomført ? '' : formatCurrencyWithoutKr(totaltBeregningsgrunnlag)}</Label>
             </Table.DataCell>
             <Table.DataCell align="right">
               <Label size="small">{totaltFordeling ? `${totaltFordeling} %` : ''}</Label>
