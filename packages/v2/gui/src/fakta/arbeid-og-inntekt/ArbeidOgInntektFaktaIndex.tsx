@@ -234,7 +234,7 @@ const AktivitetTabell = ({
 
             return (
               <Table.ExpandableRow
-                key={index}
+                key={`${aktivitet.arbeidsstatus ?? 'ukjent'}-${aktivitet.arbeidsgiverNavn ?? 'ukjent'}-${aktivitet.ansettelsesperiode?.fom ?? ''}-${aktivitet.ansettelsesperiode?.tom ?? ''}`}
                 content={aktivitet.aRegister ? <ARegisterDetaljer aRegister={aktivitet.aRegister} /> : undefined}
                 expansionDisabled={!aktivitet.aRegister}
                 expandOnRowClick
