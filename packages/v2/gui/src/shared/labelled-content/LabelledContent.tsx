@@ -34,7 +34,7 @@ export const LabelledContent = ({
       )}
       {description && typeof description === 'string' && <Detail className="mt-1">{description}</Detail>}
       {description && typeof description !== 'string' && description}
-      <div className={cl}>{content}</div>
+      {content && <div className={cl}>{content}</div>}
     </div>
   );
 };
