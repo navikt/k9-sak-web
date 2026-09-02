@@ -169,6 +169,9 @@ const BeregningsgrunnlagKildeTag = ({ status }: { status?: string }) => {
   );
 };
 
+const lagKeyForAktivitet = (aktivitet: AktivitetDto) =>
+  `${aktivitet.arbeidsstatus ?? 'ukjent'}-${aktivitet.arbeidsgiverNavn ?? 'ukjent'}-${aktivitet.ansettelsesperiode?.fom ?? ''}-${aktivitet.ansettelsesperiode?.tom ?? ''}`;
+
 const AktivitetTabell = ({
   aktiviteter,
   kodeverkoppslag,
@@ -226,7 +229,7 @@ const AktivitetTabell = ({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {aktiviteter.map((aktivitet, index) => {
+          {aktiviteter.map(aktivitet => {
             const statusNavn = aktivitet.arbeidsstatus
               ? (kodeverkoppslag.k9sak.aktivitetStatuser(aktivitet.arbeidsstatus, OrUndefined)?.navn ??
                 aktivitetStatusNavn(aktivitet.arbeidsstatus))
@@ -234,7 +237,7 @@ const AktivitetTabell = ({
 
             return (
               <Table.ExpandableRow
-                key={`${aktivitet.arbeidsstatus ?? 'ukjent'}-${aktivitet.arbeidsgiverNavn ?? 'ukjent'}-${aktivitet.ansettelsesperiode?.fom ?? ''}-${aktivitet.ansettelsesperiode?.tom ?? ''}`}
+                key={lagKeyForAktivitet(aktivitet)}
                 content={aktivitet.aRegister ? <ARegisterDetaljer aRegister={aktivitet.aRegister} /> : undefined}
                 expansionDisabled={!aktivitet.aRegister}
                 expandOnRowClick
@@ -283,7 +286,9 @@ const AktivitetTabell = ({
               <Label size="small">{totaltNormalarbeidstid || ''}</Label>
             </Table.DataCell>
             <Table.DataCell align="right">
-              <Label size="small">{beregningIkkeGjennomført ? '' : formatCurrencyWithoutKr(totaltBeregningsgrunnlag)}</Label>
+              <Label size="small">
+                {beregningIkkeGjennomført ? '' : formatCurrencyWithoutKr(totaltBeregningsgrunnlag)}
+              </Label>
             </Table.DataCell>
             <Table.DataCell align="right">
               <Label size="small">{totaltFordeling ? `${totaltFordeling} %` : ''}</Label>
@@ -334,7 +339,7 @@ const NyInntektTabell = ({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {senereInnslag.map((aktivitet, index) => {
+          {senereInnslag.map(aktivitet => {
             const statusNavn = aktivitet.arbeidsstatus
               ? (kodeverkoppslag.k9sak.aktivitetStatuser(aktivitet.arbeidsstatus, OrUndefined)?.navn ??
                 aktivitetStatusNavn(aktivitet.arbeidsstatus))
@@ -342,7 +347,7 @@ const NyInntektTabell = ({
 
             return (
               <Table.ExpandableRow
-                key={index}
+                key={lagKeyForAktivitet(aktivitet)}
                 content={aktivitet.aRegister ? <ARegisterDetaljer aRegister={aktivitet.aRegister} /> : undefined}
                 expansionDisabled={!aktivitet.aRegister}
                 expandOnRowClick
