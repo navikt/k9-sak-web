@@ -424,7 +424,7 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       await userEvent.click(canvas.getByText('09.11.2022 - 13.11.2022'));
 
       await expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
-      await expect(canvas.getAllByText('450 000 kr')).toHaveLength(3);
+      await expect(canvas.getAllByText(/450\s000 kr/)).toHaveLength(3);
 
       await expect(canvas.getAllByText('Reduserer inntektstap')).toHaveLength(2);
 
