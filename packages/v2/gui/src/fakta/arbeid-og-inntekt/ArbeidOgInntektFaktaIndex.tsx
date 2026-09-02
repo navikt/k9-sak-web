@@ -208,7 +208,7 @@ const AktivitetTabell = ({
             </Table.HeaderCell>
             <Table.HeaderCell scope="col" align="right">
               <Label size="small">Beregningsgrunnlag</Label>
-              <BodyShort size="small">beregnet årsinnntekt</BodyShort>
+              <BodyShort size="small">beregnet årsinntekt</BodyShort>
             </Table.HeaderCell>
             <Table.HeaderCell scope="col" align="right">
               <HStack align="center" justify="end" gap="space-4" wrap={false}>
