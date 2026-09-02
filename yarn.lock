@@ -2611,7 +2611,7 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:12.4.9"
     "@navikt/ft-form-validators": "npm:6.1.8"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:10.2.6"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:10.2.3"
     "@navikt/ft-types": "npm:6.3.6"
     "@navikt/ft-ui-komponenter": "npm:8.2.4"
     "@navikt/ft-utils": "npm:5.1.8"
@@ -2646,7 +2646,7 @@ __metadata:
     "@navikt/ft-form-hooks": "npm:12.4.9"
     "@navikt/ft-form-validators": "npm:6.1.8"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:10.2.6"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:10.2.3"
     "@navikt/ft-types": "npm:6.3.6"
     "@navikt/ft-ui-komponenter": "npm:8.2.4"
     "@navikt/ft-utils": "npm:5.1.8"
@@ -3513,9 +3513,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:10.2.6":
-  version: 10.2.6
-  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:10.2.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F10.2.6%2F2bc1fc0ffd290d34a889be50b1a36300e163104d"
+"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:10.2.3":
+  version: 10.2.3
+  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:10.2.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F10.2.3%2F92a9d845bf044fc62806fe1680c5ecb0d00b2121"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-css": 8.x
@@ -3531,7 +3531,7 @@ __metadata:
     react-dom: 19.x
     react-hook-form: 7.x
     react-intl: 10.x
-  checksum: 10/031d67b7013f9b308bd650b1821b321b868b5050a4e4dc6342f66ea016606e4f05d8f150ccc6a9d2275927d8eadaf2c263ef702abd38edfd409f7cd8c1c64fc0
+  checksum: 10/b549d0309d5f27d97265d78ba81fa88474e26851ab581c03dd7d406efa56b8918abba4f9620b5e79ad8e71e0779c2d2f9d9feb08bff32c9d49f264341bc1cbb3
   languageName: node
   linkType: hard
 
