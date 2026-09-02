@@ -238,12 +238,12 @@ export const RedigererMaksdato: Story = {
     apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
 
     await step('maksdato er låst før avkorting er slått på', async () => {
+      await userEvent.click(await canvas.findByLabelText('Rediger vurdering'));
       await expect(await canvas.findByLabelText('Til og med')).toBeDisabled();
     });
 
     await step('avkortingsbegrunnelse vises først etter at maksdato kan redigeres', async () => {
       await expect(canvas.queryByLabelText('Begrunn kortere periode enn 260 dager')).not.toBeInTheDocument();
-
       await userEvent.click(await canvas.findByLabelText('Rediger til og med'));
 
       await expect(await canvas.findByLabelText('Til og med')).toBeEnabled();
