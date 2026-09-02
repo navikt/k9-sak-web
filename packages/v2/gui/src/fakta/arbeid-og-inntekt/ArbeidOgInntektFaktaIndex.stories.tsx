@@ -80,6 +80,13 @@ const mockData: ArbeidOgInntektResponse[] = [
         arbeidsgiverNavn: 'Det andre Kostebinderi AS',
         ansettelsesperiode: { fom: '2021-07-13', tom: '2023-01-31' },
         harRefusjonskrav: false,
+        aRegister: {
+          organisasjonsnummer: '123456789',
+          ansettelsesperiode: { fom: '2021-07-13', tom: '2023-01-31' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2023-01-15T10:00:00',
+        },
       },
       {
         arbeidsstatus: 'AT',
@@ -99,6 +106,13 @@ const mockData: ArbeidOgInntektResponse[] = [
         arbeidsgiverNavn: 'En arbeidsplass til AS',
         ansettelsesperiode: { fom: '2020-07-13', tom: '2020-08-31' },
         harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '123456789',
+          ansettelsesperiode: { fom: '2020-07-13', tom: '2020-08-31' },
+          stillingsprosent: 50,
+          permisjoner: [],
+          sistEndret: '2020-09-01T08:00:00',
+        },
       },
       {
         arbeidsstatus: 'AT',
@@ -148,6 +162,13 @@ export const FlereSkjæringstidspunkt: Story = {
             beregningsgrunnlagPrÅr: 500000,
             fordelingsprosent: 100,
             harRefusjonskrav: true,
+            aRegister: {
+              organisasjonsnummer: '923456789',
+              ansettelsesperiode: { fom: '2020-01-01', tom: '' },
+              stillingsprosent: 100,
+              permisjoner: [],
+              sistEndret: '2020-01-10T12:00:00',
+            },
           },
         ],
         senereInnslag: [],
@@ -159,8 +180,208 @@ export const FlereSkjæringstidspunkt: Story = {
   },
 };
 
-export const IngenData: Story = {
-  decorators: [withFakeApi([])],
+const enkeltCaseData = [
+  {
+    skjæringstidspunkt: '2024-03-01',
+    aktiviteter: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Kremmerhuset AS',
+        ansettelsesperiode: { fom: '2015-06-01', tom: '' },
+        normalarbeidstidTimerPerUke: 37.5,
+        beregningsgrunnlagPrÅr: 450000,
+        fordelingsprosent: 100,
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '987654321',
+          ansettelsesperiode: { fom: '2015-06-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-02-15T09:30:00',
+        },
+      },
+    ],
+    senereInnslag: [],
+  },
+] satisfies ArbeidOgInntektResponse[];
+
+export const EnkeltCaseEnArbeidsgiver: Story = {
+  decorators: [withFakeApi(enkeltCaseData)],
+  args: {
+    behandlingUuid: 'test-uuid',
+  },
+};
+
+const nyInntektEtterSkjæringstidspunktData = [
+  {
+    skjæringstidspunkt: '2024-03-01',
+    aktiviteter: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Kremmerhuset AS',
+        ansettelsesperiode: { fom: '2015-06-01', tom: '' },
+        normalarbeidstidTimerPerUke: 37.5,
+        beregningsgrunnlagPrÅr: 450000,
+        fordelingsprosent: 100,
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '987654321',
+          ansettelsesperiode: { fom: '2015-06-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-02-15T09:30:00',
+        },
+      },
+    ],
+    senereInnslag: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Ny Arbeidsplass AS',
+        ansettelsesperiode: { fom: '2024-04-15', tom: '' },
+        harRefusjonskrav: false,
+        aRegister: {
+          organisasjonsnummer: '912345678',
+          ansettelsesperiode: { fom: '2024-04-15', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-04-20T11:00:00',
+        },
+      },
+    ],
+  },
+] satisfies ArbeidOgInntektResponse[];
+
+export const NyInntektEtterSkjæringstidspunkt: Story = {
+  decorators: [withFakeApi(nyInntektEtterSkjæringstidspunktData)],
+  args: {
+    behandlingUuid: 'test-uuid',
+  },
+};
+
+const toSkjæringstidspunktFlereArbeidsgivereData = [
+  {
+    skjæringstidspunkt: '2023-01-10',
+    aktiviteter: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Nordlys Handel AS',
+        ansettelsesperiode: { fom: '2018-03-01', tom: '' },
+        normalarbeidstidTimerPerUke: 37.5,
+        beregningsgrunnlagPrÅr: 380000,
+        fordelingsprosent: 80,
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '934567890',
+          ansettelsesperiode: { fom: '2018-03-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2023-01-05T09:00:00',
+        },
+      },
+      {
+        arbeidsstatus: 'FL',
+        arbeidsgiverNavn: undefined,
+        ansettelsesperiode: { fom: '2020-09-01', tom: '' },
+        normalarbeidstidTimerPerUke: 5,
+        beregningsgrunnlagPrÅr: 60000,
+        fordelingsprosent: 20,
+        harRefusjonskrav: undefined,
+      },
+    ],
+    senereInnslag: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Sørvest Bygg AS',
+        ansettelsesperiode: { fom: '2023-06-01', tom: '' },
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '945678901',
+          ansettelsesperiode: { fom: '2023-06-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2023-06-10T13:00:00',
+        },
+      },
+    ],
+  },
+  {
+    skjæringstidspunkt: '2024-05-20',
+    aktiviteter: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Nordlys Handel AS',
+        ansettelsesperiode: { fom: '2018-03-01', tom: '' },
+        normalarbeidstidTimerPerUke: 37.5,
+        beregningsgrunnlagPrÅr: 390000,
+        fordelingsprosent: 75,
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '934567890',
+          ansettelsesperiode: { fom: '2018-03-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-05-05T09:00:00',
+        },
+      },
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Sørvest Bygg AS',
+        ansettelsesperiode: { fom: '2023-06-01', tom: '' },
+        normalarbeidstidTimerPerUke: 20,
+        beregningsgrunnlagPrÅr: 210000,
+        fordelingsprosent: 25,
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '945678901',
+          ansettelsesperiode: { fom: '2023-06-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-05-05T09:00:00',
+        },
+      },
+      {
+        arbeidsstatus: 'SN',
+        arbeidsgiverNavn: undefined,
+        ansettelsesperiode: { fom: '2021-01-01', tom: '' },
+        normalarbeidstidTimerPerUke: 8,
+        beregningsgrunnlagPrÅr: 90000,
+        fordelingsprosent: 0,
+        harRefusjonskrav: undefined,
+      },
+    ],
+    senereInnslag: [
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Fjelltind Transport AS',
+        ansettelsesperiode: { fom: '2024-08-01', tom: '' },
+        harRefusjonskrav: false,
+        aRegister: {
+          organisasjonsnummer: '956789012',
+          ansettelsesperiode: { fom: '2024-08-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-08-10T10:00:00',
+        },
+      },
+      {
+        arbeidsstatus: 'AT',
+        arbeidsgiverNavn: 'Fjelltind Transport AS',
+        ansettelsesperiode: { fom: '2024-11-01', tom: '' },
+        harRefusjonskrav: true,
+        aRegister: {
+          organisasjonsnummer: '956789012',
+          ansettelsesperiode: { fom: '2024-11-01', tom: '' },
+          stillingsprosent: 100,
+          permisjoner: [],
+          sistEndret: '2024-11-05T10:00:00',
+        },
+      },
+    ],
+  },
+] satisfies ArbeidOgInntektResponse[];
+
+export const ToSkjæringstidspunktFlereArbeidsgivere: Story = {
+  decorators: [withFakeApi(toSkjæringstidspunktFlereArbeidsgivereData)],
   args: {
     behandlingUuid: 'test-uuid',
   },

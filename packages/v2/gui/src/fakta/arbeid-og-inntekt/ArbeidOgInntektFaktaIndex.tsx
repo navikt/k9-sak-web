@@ -236,6 +236,7 @@ const AktivitetTabell = ({
               <Table.ExpandableRow
                 key={index}
                 content={aktivitet.aRegister ? <ARegisterDetaljer aRegister={aktivitet.aRegister} /> : undefined}
+                expansionDisabled={!aktivitet.aRegister}
                 expandOnRowClick
                 togglePlacement="right"
               >
@@ -255,7 +256,7 @@ const AktivitetTabell = ({
                 </Table.DataCell>
                 <Table.DataCell align="right">
                   {aktivitet.beregningsgrunnlagPrÅr != null ? (
-                    <HStack gap="space-8" justify="end">
+                    <HStack gap="space-8" justify="end" align="center">
                       <BodyShort size="small">{formatCurrencyWithoutKr(aktivitet.beregningsgrunnlagPrÅr)}</BodyShort>
                       <BeregningsgrunnlagKildeTag status={aktivitet.arbeidsstatus} />
                     </HStack>
@@ -343,6 +344,7 @@ const NyInntektTabell = ({
               <Table.ExpandableRow
                 key={index}
                 content={aktivitet.aRegister ? <ARegisterDetaljer aRegister={aktivitet.aRegister} /> : undefined}
+                expansionDisabled={!aktivitet.aRegister}
                 expandOnRowClick
                 togglePlacement="right"
               >
@@ -395,25 +397,28 @@ const ArbeidOgInntektFaktaIndex = ({ behandlingUuid }: ArbeidOgInntektFaktaIndex
         Arbeid og inntekt
       </Heading>
 
-      <Label size="small" spacing>
-        Skjæringstidspunkt
-      </Label>
       {arbeidOgInntektListe.length > 1 ? (
-        <Select
-          label="Skjæringstidspunkt"
-          hideLabel
-          size="small"
-          value={valgtIndex}
-          onChange={e => setValgtIndex(Number(e.target.value))}
-        >
-          {arbeidOgInntektListe.map((stp, i) => (
-            <option key={stp.skjæringstidspunkt} value={i}>
-              {formatDate(stp.skjæringstidspunkt)}
-            </option>
-          ))}
-        </Select>
+        <HStack>
+          <Select
+            label="Skjæringstidspunkt"
+            size="small"
+            value={valgtIndex}
+            onChange={e => setValgtIndex(Number(e.target.value))}
+          >
+            {arbeidOgInntektListe.map((stp, i) => (
+              <option key={stp.skjæringstidspunkt} value={i}>
+                {formatDate(stp.skjæringstidspunkt)}
+              </option>
+            ))}
+          </Select>
+        </HStack>
       ) : (
-        <BodyShort size="small">{formatDate(arbeidOgInntektListe[0]!.skjæringstidspunkt)}</BodyShort>
+        <>
+          <Label size="small" spacing>
+            Skjæringstidspunkt
+          </Label>
+          <BodyShort size="small">{formatDate(arbeidOgInntektListe[0]!.skjæringstidspunkt)}</BodyShort>
+        </>
       )}
 
       {valgtSkjæringstidspunkt && (
