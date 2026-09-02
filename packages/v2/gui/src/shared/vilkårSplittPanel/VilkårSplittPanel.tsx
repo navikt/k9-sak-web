@@ -86,6 +86,7 @@ export const VilkårSplittPanel = ({
   periodColumnHeader = 'Søknadstidspunkt',
   beforeDetailContent,
 }: VilkårSplittPanelProps) => {
+  const sortertePerioder = [...periods].sort((a, b) => (b.periode?.fom ?? b.id).localeCompare(a.periode?.fom ?? a.id));
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
   // En periode som allerede har en vurdering (f.eks. fra tidligere behandling) skal starte i lesevisning,
@@ -127,7 +128,7 @@ export const VilkårSplittPanel = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {periods.map(period => (
+              {sortertePerioder.map(period => (
                 <Table.Row
                   key={period.id}
                   onClick={() => onItemSelect(period.id)}

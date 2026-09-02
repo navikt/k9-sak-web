@@ -73,7 +73,12 @@ export const Bosted = ({
     defaultValues: buildInitialValues(søknadsperioder),
   });
 
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(
+    () =>
+      søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
+      periods[0]?.id ??
+      '',
+  );
   useEffect(() => {
     if (!periods.some(period => period.id === selectedId)) {
       setSelectedId('');
