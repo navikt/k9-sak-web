@@ -424,7 +424,11 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       await userEvent.click(canvas.getByText('09.11.2022 - 13.11.2022'));
 
       await expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
-      await expect(canvas.getAllByText(/450\s000 kr/)).toHaveLength(3);
+      await expect(
+        canvas
+          .getAllByLabelText('kroner')
+          .filter(element => element.parentElement?.textContent?.replace(/\s/g, ' ') === '450 000 kr'),
+      ).toHaveLength(3);
 
       await expect(canvas.getAllByText('Reduserer inntektstap')).toHaveLength(2);
 
@@ -434,7 +438,11 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       await expect(canvas.getAllByText('Nav Troms og Finnmark (974652293)...456')).toHaveLength(2);
       await expect(canvas.getAllByText('Ja')).toHaveLength(3);
 
-      await expect(canvas.getByText('300 000 kr')).toBeInTheDocument();
+      await expect(
+        canvas
+          .getAllByLabelText('kroner')
+          .filter(element => element.parentElement?.textContent?.replace(/\s/g, ' ') === '300 000 kr'),
+      ).toHaveLength(1);
       await expect(canvas.getByText('16.11.2022 - 20.11.2022')).toBeInTheDocument();
       await expect(
         canvas.getByText(
