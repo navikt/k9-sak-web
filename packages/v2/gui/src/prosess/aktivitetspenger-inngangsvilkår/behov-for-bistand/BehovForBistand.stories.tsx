@@ -166,7 +166,7 @@ export const BytterFelterBasertPåVurdering: Story = {
       await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
       await expect(canvas.getByLabelText('Fra')).toBeInTheDocument();
       await expect(canvas.getByLabelText('Til og med')).toBeInTheDocument();
-      await expect(canvas.getByRole('checkbox', { name: 'Rediger maksdato' })).toBeInTheDocument();
+      await expect(canvas.getByRole('checkbox', { name: 'Rediger til og med' })).toBeInTheDocument();
     });
 
     await step('viser avslagsårsak når bruker velger ikke oppfylt', async () => {
@@ -212,7 +212,7 @@ export const AlleredeAvkortet: Story = {
 
     await step('forhåndsutfyller avkortingen fra eksisterende vurdering', async () => {
       await userEvent.click(await canvas.findByRole('button', { name: /Rediger vurdering/ }));
-      await expect(await canvas.findByLabelText('Rediger maksdato')).toBeChecked();
+      await expect(await canvas.findByLabelText('Rediger til og med')).toBeChecked();
       await expect(await canvas.findByLabelText('Til og med')).toHaveValue('30.06.2024');
       await expect(await canvas.findByLabelText('Begrunn kortere periode enn 260 dager')).toHaveValue(
         'Perioden er avkortet etter avtale med søker.',
@@ -247,7 +247,7 @@ export const RedigererMaksdato: Story = {
     });
 
     await step('sender avkortet periode med årsak AVKORTET', async () => {
-      await userEvent.click(await canvas.findByLabelText('Rediger maksdato'));
+      await userEvent.click(await canvas.findByLabelText('Rediger til og med'));
 
       const maksdato = await canvas.findByLabelText('Til og med');
       await userEvent.clear(maksdato);
@@ -323,7 +323,7 @@ export const MaksdatoMåVæreKortere: Story = {
 
     await step('viser valideringsfeil når maksdato ikke faktisk redigeres', async () => {
       await userEvent.click(await canvas.findByRole('button', { name: /Rediger vurdering/ }));
-      await userEvent.click(await canvas.findByLabelText('Rediger maksdato'));
+      await userEvent.click(await canvas.findByLabelText('Rediger til og med'));
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
       await expect(
         canvas.getByText('Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'),

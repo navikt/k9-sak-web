@@ -108,7 +108,7 @@ export const AndreLivsoppholdytelserSkjema = ({
                   <RhfCheckbox
                     control={formHook.control}
                     name={`vurderinger.${selectedId}.redigerMaksdato`}
-                    label="Rediger maksdato"
+                    label="Rediger til og med"
                   />
                 )}
               </HStack>
