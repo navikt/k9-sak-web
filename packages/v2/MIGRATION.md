@@ -96,7 +96,7 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                    | ~Linjer | Konsumenter           | Merknad                                                                        |
 | ------------------------ | ------- | --------------------- | ------------------------------------------------------------------------------ |
-| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks peridetidslinje for foreldelsevurdering               |
+| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering               |
 | `fakta-arbeidsforhold`   | 2664    | 5                     | Skjemadrevet, kryssreferanser mot arbeidsgiverOpplysninger                     |
 | `fakta-opptjening-oms`   | 2815    | 4                     | Store individuelle filer, kompleks periodebasert opptjeningsredigering         |
 | `fakta-etablert-tilsyn`  | 2907    | 2 (opl, psb)          | Dobble flyter for Nattevåk+Beredskap, periodenavigering, egendefinert kontekst |
