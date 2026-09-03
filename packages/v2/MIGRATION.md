@@ -1,6 +1,6 @@
 # V2 migrering – arbeidsliste
 
-Dette dokumentet viser hva som er ferdig migrert, hva som pågår og hva som gjenstår. 
+Dette dokumentet viser hva som er ferdig migrert, hva som pågår og hva som gjenstår.
 Alle panelene tilknyttet tilbakekreving og beregning har store implementasjoner delt med foreldrepenger og lever i [fellesrepo med FP](https://github.com/navikt/ft-frontend-saksbehandling/tree/main/packages). Men felleskoden trenger nok ikke vi røre i førsteomgang.
 
 Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskilden i `.github/skills/v2-architecture/SKILL.md` for fremgangsmåte.
@@ -52,7 +52,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `fakta-bosted-soker`                   | 369     | 0                                                      |
 | `fakta-inntekt-og-ytelser`             | 104     | 3 (oms, frisinn, unntak)                               | Kun visning, 1 API                                             |
 | `fakta-direkte-overgang`               | 285     | 2 (opl, psb)                                           | Enkel skjema, 0 API-avhengigheter                              |
 | `prosess-vilkar-sykdom`                | 134     | 3 (opl, psb, psb-sluttfase)                            | Én fil, periodedata fra forelder                               |
@@ -104,10 +103,11 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | `prosess-omsorgsdager`   | 4839    | 1 (utvidet-rett)      | Mikrofrontend ContainerContext, React Hook Form, flere delflyter               |
 | `prosess-utvidet-rett`   | 2387    | 1 (utvidet-rett)      | Mikrofrontend-avhengighet og flere underpaneler                                |
 
-### Tier 5 — Svært krevende 
+### Tier 5 — Svært krevende
+
 Før man gjør noe med disse panelene bør man kanskje snakke litt sammen på tvers av grupper
 
-| Panel                    | ~Linjer | Konsumenter                 | Merknad                                                                                                              |
-| ------------------------ | ------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `fakta-medisinsk-vilkår` | 11 216  | 3 (psb, opl, psb-sluttfase) | Design har snakket om å flytte denne til prosesspanel |
+| Panel                    | ~Linjer | Konsumenter                 | Merknad                                                               |
+| ------------------------ | ------- | --------------------------- | --------------------------------------------------------------------- |
+| `fakta-medisinsk-vilkår` | 11 216  | 3 (psb, opl, psb-sluttfase) | Design har snakket om å flytte denne til prosesspanel                 |
 | `prosess-vedtak`         | 7 211   | 9                           | Her har det vært snakk om å gjøre omfattende endringer i backend også |
