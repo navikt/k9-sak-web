@@ -45,7 +45,6 @@ export const byggVisningsperioder = (
   justerteAvkortingsperioder.forEach(avkortingsperiode => {
     const vilkårISammePeriode = perioderFraVilkår
       .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
-      .toSorted((a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime())
       .map(vilkårPeriode => ({
         ...vilkårPeriode,
         muligAvkortingPeriode: {
@@ -53,9 +52,13 @@ export const byggVisningsperioder = (
           tom: avkortingsperiode.tom,
         },
       }));
-    for (let periodeIndex = 0; periodeIndex < vilkårISammePeriode.length; periodeIndex += 1) {
-      const periode = vilkårISammePeriode[periodeIndex];
-      const nestePeriode = vilkårISammePeriode[periodeIndex + 1];
+
+    const alleVilkårsPerioder = [...vilkårISammePeriode, ...perioderSomFallerUtenforAvkortingsperioder].toSorted(
+      (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
+    );
+    for (let periodeIndex = 0; periodeIndex < alleVilkårsPerioder.length; periodeIndex += 1) {
+      const periode = alleVilkårsPerioder[periodeIndex];
+      const nestePeriode = alleVilkårsPerioder[periodeIndex + 1];
       const erAvkortetNestePeriode =
         nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
 
@@ -81,6 +84,5 @@ export const byggVisningsperioder = (
       }
     }
   });
-  visningsperioder.push(...perioderSomFallerUtenforAvkortingsperioder);
   return visningsperioder;
 };
