@@ -20,9 +20,21 @@ export type VilkårPeriodeVisning = VilkårPeriodeDto & {
 
 /**
  * Slår sammen en oppfylt vilkårsperiode med en påfølgende avkortet avslagsperiode til én visningsperiode,
- * slik at saksbehandler ser og redigerer avkortingen som én periode.
+ * slik at saksbehandler ser og redigerer avkortingen som én periode. Ved innsending, sendes de to periodene som separate perioder til backend.
  *
- * Ved innsending, sendes de to periodene som separate perioder til backend.
+ * 🟩 = OPPFYLT
+ * 🟦 = IKKE_OPPFYLT (delen av perioden på 260 dager som ikke er innvilget)
+ * 🟥 = IKKE_OPPFYLT (avslag)
+ *
+ * Mappingkoden gjør følgende
+ * 1. 🟩 + 🟦 = Disse to slås sammen hvis de er kant i kant. Alt annet forblir separate perioder
+ * 2. Dersom en periode er innenfor avkortingsperiode (det kommer et annet navn for dette) legger vi på hvor mye det er lov å korte ned en innvilgelse
+ *
+ *
+ * TODO: I revurderinger vil man kunne kunne få 🟩🟥🟦 mønstre. Det er foreløpig ikke håndtert i denne logikken, eller i visningen.
+ * Må avklares med teamet hvordan det skal fremstilles i gui
+ *
+ *
  */
 export const byggVisningsperioder = (
   vilkårMedPerioder: VilkårMedPerioderDto,
