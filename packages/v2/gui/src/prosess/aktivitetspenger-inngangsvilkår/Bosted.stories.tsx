@@ -25,10 +25,10 @@ const meta = {
   args: {
     api: fakeAktivitetspengerApi,
     behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
-    bosattFakta: { perioder: [] },
+    bostedGrunnlag: { perioder: [] },
   },
 } satisfies Meta<typeof Bosted>;
 export default meta;

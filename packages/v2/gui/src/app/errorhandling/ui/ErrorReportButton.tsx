@@ -1,5 +1,5 @@
-import { Button } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import type { FC } from 'react';
 
 export const ErrorReportButton: FC<{ reportLink: string }> = ({ reportLink }) => {

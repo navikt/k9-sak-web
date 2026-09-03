@@ -1,10 +1,10 @@
-import { aktivitetspenger_hentBostedGrunnlag } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
+  aktivitetspenger_hentBostedGrunnlag,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   behandlinger_hentBehandlingData1,
@@ -56,6 +56,7 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   async hentBostedGrunnlag(behandlingUuid: string) {
     return (await aktivitetspenger_hentBostedGrunnlag({ query: { behandlingUuid } })).data;
   }
+
   async getBeregningsgrunnlag(behandlingUuid: string) {
     const { data } = await avp_getBeregningsgrunnlag({ query: { behandlingUuid } });
     return data ?? null;

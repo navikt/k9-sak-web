@@ -8,8 +8,8 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import { qFeatureToggles } from '../../../featuretoggles/k9/featureToggles';
-import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 import { createQueryClient } from '../../../shared/query/queryClient.js';
+import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 const queryClient = createQueryClient({
   queries: {
