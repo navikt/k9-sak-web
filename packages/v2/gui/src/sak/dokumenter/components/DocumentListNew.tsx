@@ -1,14 +1,15 @@
-import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
+import { type DokumentfilterGruppeType } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
+import { BodyShort, HStack, Label, Link, Table, Tooltip, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
-import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
@@ -18,24 +19,25 @@ import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 
 const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
-const alleBehandlinger = 'ALLE';
-
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
 
 const inntektsmeldingBrevkode = '4936';
 
-const isVedtaksdokument = (document: Document) =>
+const KUN_DENNE_BEHANDLINGEN = 'KUN_DENNE_BEHANDLINGEN';
+
+const isVedtaksdokument = (document: DokumentDto) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
 
 const isTextMoreThan25char = (text?: string): boolean => !!text && text.length > 25;
 const trimText = (text: string): string => `${text?.substring(0, 24)}...`;
 
-const getDirectionImage = (document: Document): string => {
+const getDirectionImage = (document: DokumentDto): string => {
   if (isVedtaksdokument(document)) {
     return arrowLeftPurpleImageUrl;
   }
@@ -47,7 +49,7 @@ const getDirectionImage = (document: Document): string => {
   }
   return internDokumentImageUrl;
 };
-const getDirectionText = (document: Document): string => {
+const getDirectionText = (document: DokumentDto): string => {
   if (document.kommunikasjonsretning === Kommunikasjonsretning.INN) {
     return 'Inn';
   }
@@ -69,7 +71,7 @@ const getModiaPath = (fødselsnummer?: string) => {
 };
 
 interface OwnProps {
-  documents: Document[];
+  documents: DokumentDto[];
   behandlingId?: number;
   fagsakPerson?: FagsakPerson;
   saksnummer: number;
@@ -77,14 +79,55 @@ interface OwnProps {
   sakstype: FagsakYtelsesType;
 }
 
+interface DokumentTypeOption {
+  label: string;
+  value: typeof KUN_DENNE_BEHANDLINGEN | DokumentfilterGruppeType;
+}
+
 /**
- * DocumentList
+ * DocumentListNew
  *
  * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
-  const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
+const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
+  const kv = useContext(K9KodeverkoppslagContext);
+  const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
+
+  const dokumentTypeAlternativer: DokumentTypeOption[] = [
+    { label: 'Vis kun dokumenter fra denne behandlingen', value: KUN_DENNE_BEHANDLINGEN },
+    ...dokumentFilterGrupper
+      .sort((a, b) => a.navn.localeCompare(b.navn))
+      .map(gruppe => ({
+        label: gruppe.navn,
+        value: gruppe.kilde,
+      })),
+  ];
+
+  const [kunDenneBehandlingen, setKunDenneBehandlingen] = useState(false);
+  const [valgteDokumentTyper, setValgteDokumentTyper] = useState<Set<DokumentfilterGruppeType>>(new Set());
+
+  const erDokumentfilterGruppeType = (value: string): value is DokumentfilterGruppeType =>
+    dokumentFilterGrupper.some(gruppe => gruppe.kilde === value);
+
+  const onToggleDokumentType = (option: string, isSelected: boolean) => {
+    if (option === KUN_DENNE_BEHANDLINGEN) {
+      setKunDenneBehandlingen(isSelected);
+      return;
+    }
+    if (!erDokumentfilterGruppeType(option)) {
+      throw new Error(`Ugyldig dokumentfiltergruppe type: ${option}`);
+    }
+    setValgteDokumentTyper(prev => {
+      const newSet = new Set(prev);
+      if (isSelected) {
+        newSet.add(option);
+      } else {
+        newSet.delete(option);
+      }
+      return newSet;
+    });
+  };
 
   const erStøttetFagsakYtelseType = [
     fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
@@ -138,10 +181,10 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     );
   }
 
-  const makeDocumentURL = (document: Document) =>
+  const makeDocumentURL = (document: DokumentDto) =>
     `/${getBackendPath()}/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Document) =>
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: DokumentDto) =>
     document.brevkode === inntektsmeldingBrevkode &&
     inntektsmeldingerIBruk &&
     inntektsmeldingerIBruk.length > 0 &&
@@ -150,18 +193,25 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   return (
     <>
       <div className={styles.controlsContainer}>
-        <Select
-          size="small"
-          onChange={event => setSelectedFilter(event.target.value)}
-          label="Hvilke behandlinger skal vises?"
-          hideLabel
-        >
-          <option value={alleBehandlinger}>Alle behandlinger</option>
-          <option value={behandlingId}>Denne behandlingen</option>
-        </Select>
+        <HStack gap="space-16" align="end">
+          <UNSAFE_Combobox
+            size="small"
+            label="Dokumenttype"
+            hideLabel
+            className={styles.dokumenttypeFilter}
+            options={dokumentTypeAlternativer}
+            selectedOptions={dokumentTypeAlternativer.filter(a =>
+              a.value === KUN_DENNE_BEHANDLINGEN ? kunDenneBehandlingen : valgteDokumentTyper.has(a.value),
+            )}
+            onToggleSelected={onToggleDokumentType}
+            isMultiSelect
+            shouldAutocomplete
+            placeholder="Alle dokumenttyper"
+          />
+        </HStack>
         <ModiaLenke />
       </div>
-      <Table>
+      <Table style={{ width: '100%' }}>
         <Table.Header>
           <Table.Row>
             {headerTexts.map(text => (
@@ -173,11 +223,19 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
         </Table.Header>
         <Table.Body>
           {documents
-            .filter(document =>
-              `${behandlingId}` === selectedFilter
-                ? document.behandlinger?.some(behandling => behandling === behandlingId)
-                : true,
-            )
+            .filter(document => {
+              if (kunDenneBehandlingen && !document.behandlinger?.some(b => b === behandlingId)) {
+                return false;
+              }
+              if (valgteDokumentTyper.size === 0) {
+                return true;
+              }
+              const { dokumentgruppe } = document;
+              return (
+                dokumentgruppe != null &&
+                [...valgteDokumentTyper].some(type => dokumentgruppe.some(gruppe => gruppe === type))
+              );
+            })
             .map(document => {
               const directionImage = getDirectionImage(document);
               const directionText = getDirectionText(document);
@@ -266,4 +324,4 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   );
 };
 
-export default DocumentList;
+export default DocumentListNew;
