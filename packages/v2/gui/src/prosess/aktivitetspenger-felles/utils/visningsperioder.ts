@@ -54,8 +54,9 @@ export const byggVisningsperioder = (
         isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode),
       ),
   );
+  const vilkårISammePeriode: VilkårPeriodeVisning[] = [];
   justerteAvkortingsperioder.forEach(avkortingsperiode => {
-    const vilkårISammePeriode = perioderFraVilkår
+    const vilkårISammePeriodeForDenneAvkortingsperioden = perioderFraVilkår
       .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
       .map(vilkårPeriode => ({
         ...vilkårPeriode,
@@ -64,37 +65,38 @@ export const byggVisningsperioder = (
           tom: avkortingsperiode.tom,
         },
       }));
-
-    const alleVilkårsPerioder = [...vilkårISammePeriode, ...perioderSomFallerUtenforAvkortingsperioder].toSorted(
-      (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
-    );
-    for (let periodeIndex = 0; periodeIndex < alleVilkårsPerioder.length; periodeIndex += 1) {
-      const periode = alleVilkårsPerioder[periodeIndex];
-      const nestePeriode = alleVilkårsPerioder[periodeIndex + 1];
-      const erAvkortetNestePeriode =
-        nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
-
-      if (
-        periode &&
-        erAvkortetNestePeriode &&
-        periode.vilkarStatus === Utfall.OPPFYLT &&
-        checkIfPeriodsAreEdgeToEdge(periode.periode, nestePeriode.periode)
-      ) {
-        visningsperioder.push({
-          ...periode,
-          avkortetPeriodeInfo: {
-            begrunnelse: nestePeriode.begrunnelse ?? '',
-            periode: {
-              fom: nestePeriode.periode.fom,
-              tom: nestePeriode.periode.tom,
-            },
-          },
-        });
-        periodeIndex += 1;
-      } else if (periode) {
-        visningsperioder.push(periode);
-      }
-    }
+    vilkårISammePeriode.push(...vilkårISammePeriodeForDenneAvkortingsperioden);
   });
+
+  const alleVilkårsPerioder = [...vilkårISammePeriode, ...perioderSomFallerUtenforAvkortingsperioder].toSorted(
+    (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
+  );
+  for (let periodeIndex = 0; periodeIndex < alleVilkårsPerioder.length; periodeIndex += 1) {
+    const periode = alleVilkårsPerioder[periodeIndex];
+    const nestePeriode = alleVilkårsPerioder[periodeIndex + 1];
+    const erAvkortetNestePeriode =
+      nestePeriode?.vilkarStatus === Utfall.IKKE_OPPFYLT && nestePeriode.avslagKode === Avslagsårsak.AVKORTET;
+
+    if (
+      periode &&
+      erAvkortetNestePeriode &&
+      periode.vilkarStatus === Utfall.OPPFYLT &&
+      checkIfPeriodsAreEdgeToEdge(periode.periode, nestePeriode.periode)
+    ) {
+      visningsperioder.push({
+        ...periode,
+        avkortetPeriodeInfo: {
+          begrunnelse: nestePeriode.begrunnelse ?? '',
+          periode: {
+            fom: nestePeriode.periode.fom,
+            tom: nestePeriode.periode.tom,
+          },
+        },
+      });
+      periodeIndex += 1;
+    } else if (periode) {
+      visningsperioder.push(periode);
+    }
+  }
   return visningsperioder;
 };
