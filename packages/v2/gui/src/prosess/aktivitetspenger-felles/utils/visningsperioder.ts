@@ -28,7 +28,9 @@ export const byggVisningsperioder = (
   vilkårMedPerioder: VilkårMedPerioderDto,
   avkortingsperioder: MuligAvkortingPeriode[],
 ): VilkårPeriodeVisning[] => {
-  const perioderFraVilkår = vilkårMedPerioder.perioder ?? [];
+  const perioderFraVilkår = (vilkårMedPerioder.perioder ?? []).filter(
+    periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT,
+  );
   const visningsperioder: VilkårPeriodeVisning[] = [];
   const justerteAvkortingsperioder = avkortingsperioder.map(avkortingsperiode => ({
     fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),

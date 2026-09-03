@@ -97,4 +97,16 @@ describe('byggVisningsperioder', () => {
     expect(resultat[0]?.muligAvkortingPeriode).toEqual({ fom: '2024-01-02', tom: '2024-06-30' });
     expect(resultat[1]?.muligAvkortingPeriode).toBeUndefined();
   });
+
+  it('filtrerer bort perioder som er ikke relevant', () => {
+    const vilkår = lagVilkår([
+      { periode: { fom: '2024-01-01', tom: '2024-06-30' }, vilkarStatus: Utfall.OPPFYLT },
+      { periode: { fom: '2024-07-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_RELEVANT },
+    ]);
+
+    const resultat = byggVisningsperioder(vilkår, []);
+
+    expect(resultat).toHaveLength(1);
+    expect(resultat[0]?.periode).toEqual({ fom: '2024-01-01', tom: '2024-06-30' });
+  });
 });
