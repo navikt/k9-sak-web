@@ -224,15 +224,17 @@ export const AktivitetspengerInngangsvilkår = ({
               erBehovForBistandBlokkert,
             )}
           />
-          <Tabs.Tab
-            value={InngangsvilkårTab.AKTIVITET}
-            label="Aktivitet"
-            icon={tabIcon(
-              inngangsvilkårdata.vurderAktivitetsvilkårAp,
-              inngangsvilkårdata.vurderAktivitetsvilkårVilkår,
-              erAktivitetBlokkert,
-            )}
-          />
+          {inngangsvilkårdata.vurderAktivitetsvilkårVilkår && (
+            <Tabs.Tab
+              value={InngangsvilkårTab.AKTIVITET}
+              label="Aktivitet"
+              icon={tabIcon(
+                inngangsvilkårdata.vurderAktivitetsvilkårAp,
+                inngangsvilkårdata.vurderAktivitetsvilkårVilkår,
+                erAktivitetBlokkert,
+              )}
+            />
+          )}
           {inngangsvilkårdata.lokalkontorBeslutterAp &&
             aksjonspunktErÅpent(inngangsvilkårdata.lokalkontorBeslutterAp) && (
               <Tabs.Tab
