@@ -12,6 +12,7 @@ Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskilden i `.github/
 Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
 - [x] `fakta/medlemskap` — erstatter `fakta-bosted-soker` (Memberskapsvilkår)
+- [x] `fakta/inntektsmelding`
 - [x] `fakta/ny-inntekt`
 - [x] `fakta/sykdom-og-opplæring`
 - [x] `fakta/vurder-nyoppstartet`
@@ -21,7 +22,9 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/vilkar-overstyring`
 - [x] `prosess/vilkar-soknadsfrist`
 - [x] `prosess/vilkar-alder`
+- [x] `prosess/vilkar-opptjening`
 - [x] `prosess/uttak`
+- [x] `prosess/ti-dager`
 - [x] `prosess/ung-beregning`
 - [x] `prosess/ung-inngangsvilkår`
 - [x] `prosess/ung-vedtak`
@@ -32,9 +35,9 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `fakta-inntektsmelding` → `BRUK_V2_INNTEKTSMELDING`
 - [ ] `fakta-utenlandsopphold` → `BRUK_V2_UTENLANDSOPPHOLD`
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
+- [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
 ---
 
