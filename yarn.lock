@@ -1048,17 +1048,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker"
-  dependencies:
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@k9-sak-web/types": "npm:1.0.0"
-    react: "npm:19.2.8"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/fakta-direkte-overgang@npm:1.0.0, @fpsak-frontend/fakta-direkte-overgang@workspace:packages/fakta-direkte-overgang":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/fakta-direkte-overgang@workspace:packages/fakta-direkte-overgang"
