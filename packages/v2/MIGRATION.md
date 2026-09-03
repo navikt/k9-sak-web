@@ -13,7 +13,7 @@ Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskilden i `.github/
 
 Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
-- [x] `fakta/medlemskap` — erstatter `fakta-bosted-soker` (Memberskapsvilkår)
+- [x] `fakta/medlemskap`
 - [x] `fakta/inntektsmelding`
 - [x] `fakta/ny-inntekt`
 - [x] `fakta/sykdom-og-opplæring`
