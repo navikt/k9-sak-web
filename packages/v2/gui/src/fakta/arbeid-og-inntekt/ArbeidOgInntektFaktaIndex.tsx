@@ -83,20 +83,20 @@ const aktivitetStatusNavn = (status?: string): string => {
 };
 
 const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: ARegisterOpplysningerDto }) => (
-  <div className={styles['expandedCard']}>
+  <div className={styles.expandedCard}>
     <BodyShort size="small" weight="semibold">
       Opplysninger fra Aa-registeret {navn && <>om {navn}</>}
     </BodyShort>
-    <div className={styles['expandedRows']}>
-      <div className={styles['expandedRow']}>
-        <BodyShort size="small" weight="semibold" className={styles['expandedLabel']}>
+    <div className={styles.expandedRows}>
+      <div className={styles.expandedRow}>
+        <BodyShort size="small" weight="semibold" className={styles.expandedLabel}>
           Org. nr.
         </BodyShort>
         <BodyShort size="small">{aRegister.organisasjonsnummer ?? null}</BodyShort>
       </div>
 
-      <div className={styles['expandedRow']}>
-        <BodyShort size="small" weight="semibold" className={styles['expandedLabel']}>
+      <div className={styles.expandedRow}>
+        <BodyShort size="small" weight="semibold" className={styles.expandedLabel}>
           Ansatt i periode
         </BodyShort>
         <BodyShort size="small">
@@ -104,8 +104,8 @@ const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: AReg
         </BodyShort>
       </div>
 
-      <div className={styles['expandedRow']}>
-        <BodyShort size="small" weight="semibold" className={styles['expandedLabel']}>
+      <div className={styles.expandedRow}>
+        <BodyShort size="small" weight="semibold" className={styles.expandedLabel}>
           Stillingsprosent
         </BodyShort>
         <BodyShort size="small">
@@ -114,8 +114,8 @@ const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: AReg
       </div>
 
       {aRegister.permisjoner && aRegister.permisjoner.length > 0 && (
-        <div className={styles['expandedRow']}>
-          <BodyShort size="small" weight="semibold" className={styles['expandedLabel']}>
+        <div className={styles.expandedRow}>
+          <BodyShort size="small" weight="semibold" className={styles.expandedLabel}>
             Permisjoner
           </BodyShort>
           <BodyShort size="small">
@@ -130,7 +130,7 @@ const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: AReg
       )}
     </div>
     {aRegister.sistEndret && (
-      <div className={styles['sistEndret']}>
+      <div className={styles.sistEndret}>
         <Detail>Sist endret</Detail>
         <Detail>
           {formatDate(aRegister.sistEndret)} kl. {timeFormat(aRegister.sistEndret)}
@@ -187,7 +187,7 @@ const AktivitetTabell = ({
   return (
     <>
       {beregningIkkeGjennomført && (
-        <InfoCard data-color="info" className={styles['infoCard']}>
+        <InfoCard data-color="info" className={styles.infoCard}>
           <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
             Kan ikke vise beregnet årsinntekt og fordeling over 6G før beregning er gjennomført.
           </InfoCard.Message>
@@ -287,7 +287,7 @@ const AktivitetTabell = ({
               <Label size="small">Totalt</Label>
             </Table.DataCell>
             <Table.DataCell align="right">
-              <Label size="small">{totaltNormalarbeidstid || ''}</Label>
+              <Label size="small">{totaltNormalarbeidstid ?? ''}</Label>
             </Table.DataCell>
             <Table.DataCell align="right">
               <Label size="small">
@@ -318,7 +318,7 @@ const NyInntektTabell = ({
 
   return (
     <>
-      <HStack align="center" gap="space-4" className={styles['sectionHeadingRow']}>
+      <HStack align="center" gap="space-4" className={styles.sectionHeadingRow}>
         <Heading size="xsmall" level="3">
           Arbeid etter skjæringstidspunkt {formatDate(skjæringstidspunkt)}
         </Heading>
@@ -391,7 +391,7 @@ const ArbeidOgInntektFaktaIndex = ({ behandlingUuid }: ArbeidOgInntektFaktaIndex
 
   if (!arbeidOgInntektListe.length) {
     return (
-      <div className={styles['container']}>
+      <div className={styles.container}>
         <Heading size="small" level="2" spacing>
           Arbeid og inntekt
         </Heading>
@@ -401,7 +401,7 @@ const ArbeidOgInntektFaktaIndex = ({ behandlingUuid }: ArbeidOgInntektFaktaIndex
   }
 
   return (
-    <div className={styles['container']}>
+    <div className={styles.container}>
       <Heading size="small" level="2" spacing>
         Arbeid og inntekt
       </Heading>

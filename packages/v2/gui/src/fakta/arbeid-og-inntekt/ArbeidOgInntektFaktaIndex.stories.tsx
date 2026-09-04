@@ -1,21 +1,18 @@
 import type { ArbeidOgInntektResponse } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidoginntekt/ArbeidOgInntektResponse.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { Suspense } from 'react';
 import { ArbeidOgInntektApiContext } from './api/ArbeidOgInntektApiContext.js';
 import ArbeidOgInntektFaktaIndex from './ArbeidOgInntektFaktaIndex.js';
+import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 
 const withFakeApi = (data: ArbeidOgInntektResponse[]): Decorator => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return Story => (
-    <QueryClientProvider client={queryClient}>
-      <ArbeidOgInntektApiContext value={{ hentArbeidOgInntekt: async () => data }}>
-        <Suspense>
-          <Story />
-        </Suspense>
-      </ArbeidOgInntektApiContext>
-    </QueryClientProvider>
+    <ArbeidOgInntektApiContext value={{ hentArbeidOgInntekt: async () => data }}>
+      <Suspense>
+        <Story />
+      </Suspense>
+    </ArbeidOgInntektApiContext>
   );
 };
 
@@ -134,7 +131,7 @@ const mockData: ArbeidOgInntektResponse[] = [
 const meta = {
   title: 'fakta/arbeid-og-inntekt/ArbeidOgInntektFaktaIndex',
   component: ArbeidOgInntektFaktaIndex,
-  decorators: [withK9Kodeverkoppslag()],
+  decorators: [withK9Kodeverkoppslag(), withQueryClientProvider()],
 } satisfies Meta<typeof ArbeidOgInntektFaktaIndex>;
 export default meta;
 
