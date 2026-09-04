@@ -1,4 +1,7 @@
-import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
+import {
+  Kommunikasjonsretning,
+  type KommunikasjonsretningType,
+} from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
 import { type DokumentfilterGruppeType } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
 import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -30,6 +33,8 @@ const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUEL
 const inntektsmeldingBrevkode = '4936';
 
 const KUN_DENNE_BEHANDLINGEN = 'KUN_DENNE_BEHANDLINGEN';
+const INNGAENDE_DOKUMENTER = 'INNGAENDE_DOKUMENTER';
+const UTGAENDE_DOKUMENTER = 'UTGAENDE_DOKUMENTER';
 
 const isVedtaksdokument = (document: DokumentDto) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
@@ -81,7 +86,8 @@ interface OwnProps {
 
 interface DokumentTypeOption {
   label: string;
-  value: typeof KUN_DENNE_BEHANDLINGEN | DokumentfilterGruppeType;
+  value:
+    typeof KUN_DENNE_BEHANDLINGEN | typeof INNGAENDE_DOKUMENTER | typeof UTGAENDE_DOKUMENTER | DokumentfilterGruppeType;
 }
 
 /**
@@ -96,6 +102,8 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
 
   const dokumentTypeAlternativer: DokumentTypeOption[] = [
     { label: 'Vis kun dokumenter fra denne behandlingen', value: KUN_DENNE_BEHANDLINGEN },
+    { label: 'Inngående dokumenter', value: INNGAENDE_DOKUMENTER },
+    { label: 'Utgående dokumenter', value: UTGAENDE_DOKUMENTER },
     ...dokumentFilterGrupper
       .sort((a, b) => a.navn.localeCompare(b.navn))
       .map(gruppe => ({
@@ -105,14 +113,41 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   ];
 
   const [kunDenneBehandlingen, setKunDenneBehandlingen] = useState(false);
-  const [valgteDokumentTyper, setValgteDokumentTyper] = useState<Set<DokumentfilterGruppeType>>(new Set());
+  const [valgteDokumentTyper, setValgteDokumentTyper] = useState<
+    Set<DokumentfilterGruppeType | KommunikasjonsretningType>
+  >(new Set());
 
   const erDokumentfilterGruppeType = (value: string): value is DokumentfilterGruppeType =>
     dokumentFilterGrupper.some(gruppe => gruppe.kilde === value);
 
+  const erKommunikasjonsretning = (value: string): value is typeof INNGAENDE_DOKUMENTER | typeof UTGAENDE_DOKUMENTER =>
+    value === INNGAENDE_DOKUMENTER || value === UTGAENDE_DOKUMENTER;
+
+  const getKommunikasjonsretning = (
+    value: typeof INNGAENDE_DOKUMENTER | typeof UTGAENDE_DOKUMENTER,
+  ): KommunikasjonsretningType => {
+    if (value === INNGAENDE_DOKUMENTER) {
+      return Kommunikasjonsretning.INN;
+    }
+    return Kommunikasjonsretning.UT;
+  };
+
   const onToggleDokumentType = (option: string, isSelected: boolean) => {
     if (option === KUN_DENNE_BEHANDLINGEN) {
       setKunDenneBehandlingen(isSelected);
+      return;
+    }
+    if (erKommunikasjonsretning(option)) {
+      const retning = getKommunikasjonsretning(option);
+      setValgteDokumentTyper(prev => {
+        const newSet = new Set(prev);
+        if (isSelected) {
+          newSet.add(retning);
+        } else {
+          newSet.delete(retning);
+        }
+        return newSet;
+      });
       return;
     }
     if (!erDokumentfilterGruppeType(option)) {
@@ -200,9 +235,15 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
             hideLabel
             className={styles.dokumenttypeFilter}
             options={dokumentTypeAlternativer}
-            selectedOptions={dokumentTypeAlternativer.filter(a =>
-              a.value === KUN_DENNE_BEHANDLINGEN ? kunDenneBehandlingen : valgteDokumentTyper.has(a.value),
-            )}
+            selectedOptions={dokumentTypeAlternativer.filter(a => {
+              if (a.value === KUN_DENNE_BEHANDLINGEN) {
+                return kunDenneBehandlingen;
+              }
+              if (erKommunikasjonsretning(a.value)) {
+                return valgteDokumentTyper.has(getKommunikasjonsretning(a.value));
+              }
+              return valgteDokumentTyper.has(a.value);
+            })}
             onToggleSelected={onToggleDokumentType}
             isMultiSelect
             shouldAutocomplete
@@ -231,9 +272,10 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
                 return true;
               }
               const { dokumentgruppe } = document;
-              return (
-                dokumentgruppe != null &&
-                [...valgteDokumentTyper].some(type => dokumentgruppe.some(gruppe => gruppe === type))
+              return [...valgteDokumentTyper].some(
+                type =>
+                  type === document.kommunikasjonsretning ||
+                  (dokumentgruppe != null && dokumentgruppe.some(gruppe => gruppe === type)),
               );
             })
             .map(document => {
