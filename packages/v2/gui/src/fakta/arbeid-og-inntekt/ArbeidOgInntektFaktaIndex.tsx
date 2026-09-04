@@ -34,7 +34,7 @@ interface ArbeidOgInntektFaktaIndexProps {
 }
 
 const formatPeriode = (periode?: { fom: string; tom: string }) => {
-  if (!periode) return '-';
+  if (!periode) return '';
   const fom = formatDate(periode.fom);
   const tom = periode.tom ? formatDate(periode.tom) : '';
   return tom ? `${fom} - ${tom}` : `${fom} -`;
@@ -48,7 +48,7 @@ const formatPermisjon = (perm: PermisjonDto) => {
 
 // Fiktiv sluttdato (TIDENES_ENDE) vises som d.d., og en fremtidig sluttdato vises i kursiv
 const Periode = ({ periode }: { periode?: { fom: string; tom: string } }) => {
-  if (!periode) return <>-</>;
+  if (!periode) return <></>;
   const fom = formatDate(periode.fom);
   if (!periode.tom || periode.tom === TIDENES_ENDE) {
     return <>{fom} - d.d.</>;
@@ -66,20 +66,6 @@ const Periode = ({ periode }: { periode?: { fom: string; tom: string } }) => {
       <em>sluttdato {formatDate(periode.tom)}</em>
     </>
   );
-};
-
-const aktivitetStatusNavn = (status?: string): string => {
-  if (!status) return '-';
-  switch (status) {
-    case ArbeidsforholdAktivitetStatus.ARBEIDSTAKER:
-      return 'Arbeidstaker';
-    case ArbeidsforholdAktivitetStatus.FRILANSER:
-      return 'Frilans';
-    case ArbeidsforholdAktivitetStatus.SELVSTENDIG_NÆRINGSDRIVENDE:
-      return 'Selvstendig næringsdrivende';
-    default:
-      return status;
-  }
 };
 
 const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: ARegisterOpplysningerDto }) => (
@@ -109,7 +95,7 @@ const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: AReg
           Stillingsprosent
         </BodyShort>
         <BodyShort size="small">
-          {aRegister.stillingsprosent != null ? `${aRegister.stillingsprosent} %` : '-'}
+          {aRegister.stillingsprosent != null ? `${aRegister.stillingsprosent} %` : ''}
         </BodyShort>
       </div>
 
@@ -231,9 +217,8 @@ const AktivitetTabell = ({
         <Table.Body>
           {aktiviteter.map(aktivitet => {
             const statusNavn = aktivitet.arbeidsstatus
-              ? (kodeverkoppslag.k9sak.aktivitetStatuser(aktivitet.arbeidsstatus, OrUndefined)?.navn ??
-                aktivitetStatusNavn(aktivitet.arbeidsstatus))
-              : '-';
+              ? (kodeverkoppslag.k9sak.aktivitetStatuser(aktivitet.arbeidsstatus, OrUndefined)?.navn ?? '')
+              : '';
 
             return (
               <Table.ExpandableRow
@@ -251,7 +236,7 @@ const AktivitetTabell = ({
                   <BodyShort size="small">{statusNavn}</BodyShort>
                 </Table.DataCell>
                 <Table.DataCell>
-                  <BodyShort size="small">{aktivitet.arbeidsgiverNavn ?? '-'}</BodyShort>
+                  <BodyShort size="small">{aktivitet.arbeidsgiverNavn ?? ''}</BodyShort>
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">
@@ -259,7 +244,7 @@ const AktivitetTabell = ({
                   </BodyShort>
                 </Table.DataCell>
                 <Table.DataCell align="right">
-                  <BodyShort size="small">{aktivitet.normalarbeidstidTimerPerUke ?? '-'}</BodyShort>
+                  <BodyShort size="small">{aktivitet.normalarbeidstidTimerPerUke ?? ''}</BodyShort>
                 </Table.DataCell>
                 <Table.DataCell align="right">
                   {aktivitet.beregningsgrunnlagPrÅr != null ? (
@@ -345,8 +330,7 @@ const NyInntektTabell = ({
         <Table.Body>
           {senereInnslag.map(aktivitet => {
             const statusNavn = aktivitet.arbeidsstatus
-              ? (kodeverkoppslag.k9sak.aktivitetStatuser(aktivitet.arbeidsstatus, OrUndefined)?.navn ??
-                aktivitetStatusNavn(aktivitet.arbeidsstatus))
+              ? kodeverkoppslag.k9sak.aktivitetStatuser(aktivitet.arbeidsstatus, OrUndefined)?.navn
               : null;
 
             return (
@@ -389,7 +373,7 @@ const ArbeidOgInntektFaktaIndex = ({ behandlingUuid }: ArbeidOgInntektFaktaIndex
   const [valgtIndex, setValgtIndex] = useState(0);
   const valgtSkjæringstidspunkt = arbeidOgInntektListe[valgtIndex];
 
-  if (!arbeidOgInntektListe.length) {
+  if (arbeidOgInntektListe.length === 0) {
     return (
       <div className={styles.container}>
         <Heading size="small" level="2" spacing>
