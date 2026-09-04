@@ -1,14 +1,14 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AxiosError } from 'axios';
-import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js';
+import { loadedErrorId } from '../apm.js';
 
 const makeErrorReportLines = (errors: ReadonlyArray<Error>): ReadonlyArray<string> => {
   const errLines: string[] = [];
   errLines.push(`----`);
-  errLines.push(`Teknisk info om feil (ref: ${sentryReportedIdList.join(', ')})`);
+  errLines.push(`Teknisk info om feil (loadedErrorId: ${loadedErrorId})`);
+  errLines.push(`----`);
   for (const error of errors) {
-    const sentryId = `sentry:${sentryReportedErrorIdLookup.get(error)}`;
-    errLines.push(`*${error.name}* (${sentryId})`);
+    errLines.push(`*${error.name}*`);
     errLines.push(`${error.message}`);
     if (error instanceof ExtendedApiError) {
       errLines.push(`NavCallid:${error.navCallid}`);

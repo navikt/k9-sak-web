@@ -5,20 +5,19 @@ const randomErrorId = (): string =>
     ? crypto.randomUUID()
     : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
-// Feil-id-ar som har blitt rapportert til apm sidan sist reload, slik at gui kan inkludere dei i utkopiert
-// feilinformasjon og vi kan slå dei opp igjen i Grafana.
-export const apmReportedErrorIdList: string[] = [];
+/**
+ * Unik id for denne sidelastinga. Blir lagt på alle feil rapportert til apm, slik at vi kan søke opp alle feil ein
+ * bruker har fått sidan sist reload ved oppslag på denne id i nais apm.
+ */
+export const loadedErrorId = randomErrorId();
 
-// Legg til errorId på alle exception type innslag, og lagre disse i apmErrorReportedErrorIdList.
+// Legg loadedErrorId på alle exception innslag. Vi gjer det her, og ikkje med setTag frå @nais/apm, fordi setTag berre
+// blir lagt på feil rapportert gjennom captureException i @nais/apm. Feil fanga automatisk av faro
+// (window.onerror, unhandledrejection, console.error) går utanom, medan beforeSend ser alle innslag.
 const beforeSend: NonNullable<InitOptions['beforeSend']> = item => {
   if (item.type === 'exception') {
     const payload = item.payload as { context?: Record<string, string> };
-    const errorId = randomErrorId();
-    payload.context = { ...payload.context, errorId };
-    apmReportedErrorIdList.push(errorId);
-    if (apmReportedErrorIdList.length > 50) {
-      apmReportedErrorIdList.shift(); // Veldig usansynleg, men unngå for stor array
-    }
+    payload.context = { ...payload.context, loadedErrorId };
   }
   return item;
 };
@@ -31,7 +30,7 @@ interface InitApmOptions {
 }
 
 /**
- * Bruk denne funksjon istadenfor init funksjon frå @nais/apm direkte, for å få errorId med på exceptions.
+ * Bruk denne funksjon istadenfor init funksjon frå @nais/apm direkte, for å få loadedErrorId med på exceptions.
  */
 export function initApm({ app }: InitApmOptions) {
   const namespace = 'k9saksbehandling';
