@@ -1,9 +1,8 @@
-import * as Sentry from '@sentry/react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
-import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
+import { IS_DEV } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
@@ -17,14 +16,8 @@ import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOther
 import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
 import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
 import { initApm } from '@k9-sak-web/gui/app/errorhandling/apm.js';
 
-initSentry({
-  dsn: 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
-  enabled: !IS_DEV,
-  release: VITE_SENTRY_RELEASE || 'unknown',
-});
 initApm({ app: 'ung-sak-web' });
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
@@ -45,8 +38,6 @@ if (featureToggles.SINGLE_AUTHFIXER) {
 }
 
 const store = configureStore();
-
-const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
 const renderFunc = () => {
   /**
@@ -76,14 +67,14 @@ const renderFunc = () => {
       <FeatureTogglesContext value={featureToggles}>
         <Provider store={store}>
           <BrowserRouter basename={basePath}>
-            <SentryRoutes>
+            <Routes>
               <Route element={<RootLayout />}>
                 <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
                 <Route element={<RestApiProviderLayout />}>
                   <Route path="*" element={<AppIndex />} />
                 </Route>
               </Route>
-            </SentryRoutes>
+            </Routes>
           </BrowserRouter>
         </Provider>
       </FeatureTogglesContext>,

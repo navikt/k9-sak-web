@@ -1,10 +1,9 @@
-import * as Sentry from '@sentry/react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import configureStore from './configureStore';
-import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
+import { IS_DEV } from './constants';
 import { isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
@@ -18,14 +17,7 @@ import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
 import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
 import { resolveK9FeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/resolveK9FeatureToggles.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { initSentry } from '@k9-sak-web/gui/app/errorhandling/sentry.js';
 import { initApm } from '@k9-sak-web/gui/app/errorhandling/apm.js';
-
-initSentry({
-  dsn: 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  enabled: !IS_DEV,
-  release: VITE_SENTRY_RELEASE || 'unknown',
-});
 
 initApm({ app: 'k9-sak-web' });
 
@@ -51,8 +43,6 @@ if (featureToggles.SINGLE_AUTHFIXER) {
 }
 
 const store = configureStore();
-
-const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
 const RenderFunc = () => {
   /**
@@ -82,14 +72,14 @@ const RenderFunc = () => {
       <FeatureTogglesContext value={featureToggles}>
         <Provider store={store}>
           <BrowserRouter basename={basePath}>
-            <SentryRoutes>
+            <Routes>
               <Route element={<RootLayout />}>
                 <Route path={authRedirectDoneWindowPath} element={<AuthRedirectDoneWindow />} />
                 <Route element={<RestApiProviderLayout />}>
                   <Route path="*" element={<AppIndex />} />
                 </Route>
               </Route>
-            </SentryRoutes>
+            </Routes>
           </BrowserRouter>
         </Provider>
       </FeatureTogglesContext>,

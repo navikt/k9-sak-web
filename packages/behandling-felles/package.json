@@ -18,7 +18,6 @@
     "@navikt/ds-react": "8.16.1",
     "@navikt/ft-plattform-komponenter": "12.1.5",
     "@navikt/ft-utils": "5.1.5",
-    "@sentry/browser": "10.70.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.21",
     "react": "19.2.8",

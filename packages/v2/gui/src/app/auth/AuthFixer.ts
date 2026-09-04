@@ -6,7 +6,7 @@ import {
 } from '@k9-sak-web/backend/shared/auth/AuthFixApi.js';
 import { resolveLoginURL, withRedirectTo } from '@k9-sak-web/backend/shared/auth/resolveLoginURL.js';
 import type { AuthFixConnectedApi } from './AuthFixConnectedApi.js';
-import * as Sentry from '@sentry/react';
+import { captureMessage } from '@nais/apm';
 
 const intentionalAbortReason = 'promise cleanup';
 
@@ -41,11 +41,11 @@ export class AuthFixer implements AuthFixConnectedApi {
         console.debug(msg);
         break;
       case 'info':
-        Sentry.logger.info(msg);
+        captureMessage(msg, 'info');
         console.info(msg);
         break;
       case 'warn':
-        Sentry.logger.warn(msg);
+        captureMessage(msg, 'warning');
         console.warn(msg);
         break;
     }

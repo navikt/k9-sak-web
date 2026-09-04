@@ -1,4 +1,16 @@
 import { init, type InitOptions } from '@nais/apm';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+
+// Vi ønsker ikkje å rapportere alle feil til apm, feks viss har utgått sesjon.
+// Legg til fleire her ved behov.
+export const shouldReportToApm = (error: Error | null): boolean => {
+  const apiError = ExtendedApiError.findInError(error);
+  if (apiError != null) {
+    const doNotReport = apiError.isUnauthorized;
+    return !doNotReport;
+  }
+  return true;
+};
 
 const randomErrorId = (): string =>
   typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
