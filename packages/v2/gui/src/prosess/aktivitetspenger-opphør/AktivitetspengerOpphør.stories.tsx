@@ -112,7 +112,10 @@ export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
     });
 
     await step('Velg kilde til opplysningene', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Bruker');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Bruker',
+      );
     });
 
     await step('Fyll inn begrunnelse', async () => {
@@ -164,7 +167,10 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
     });
 
     await step('Velg kilde til opplysningene', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Bruker');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Bruker',
+      );
     });
 
     await step('Fyll inn begrunnelse', async () => {
@@ -222,7 +228,10 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
     });
 
     await step('Velg kilde "Annet"', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Annet');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Annet',
+      );
     });
 
     await step('Fyll inn hvor opplysningene kommer fra', async () => {
