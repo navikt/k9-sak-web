@@ -1,0 +1,4 @@
+export type {
+  ung_sak_kontrakt_aktivitetspenger_vilkår_livsopphold_VilkårLivsoppholdsytelserPeriodeVurderingDto as VilkårLivsoppholdsytelserPeriodeVurderingDto,
+  ung_sak_kontrakt_aktivitetspenger_vilkår_livsopphold_VurderAndreLivsoppholdsytelserDto as VurderAndreLivsoppholdsytelserDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';

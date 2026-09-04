@@ -198,7 +198,10 @@ export const AarsakOgVarsel = ({
     !!valgtPeriode && (!valgtPeriode.avklaring || valgtPeriode.avklaring?.kanRedigeres !== true);
   const panelReadOnly = readOnly || readOnlyForValgtPeriode;
   const relevanteBostedsvilkårIkkeOppfyltÅrsaker = Object.values(BostedsvilkårIkkeOppfyltÅrsak).filter(
-    årsak => årsak !== BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT && årsak !== BostedsvilkårIkkeOppfyltÅrsak.AVKORTET,
+    årsak =>
+      årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
+      årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
+      årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
   );
 
   const handleSubmit = async (data: FormData, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {

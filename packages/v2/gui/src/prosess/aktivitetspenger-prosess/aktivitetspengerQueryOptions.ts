@@ -64,3 +64,9 @@ export const bostedGrunnlagQueryOptions = (api: AktivitetspengerApi, behandling:
     queryKey: ['bosted-grunnlag', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.hentBostedGrunnlag(behandling.uuid),
   });
+
+export const perioderSomKanAvkortesQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['perioder-som-kan-avkortes', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentPerioderSomKanAvkortes(behandling.uuid),
+  });

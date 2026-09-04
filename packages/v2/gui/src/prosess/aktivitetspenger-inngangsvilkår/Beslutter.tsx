@@ -46,6 +46,7 @@ const skjermlenkeTypeToTab: Record<string, InngangsvilkårTab | undefined> = {
   [SkjermlenkeType.BOSTEDSVILKÅR]: InngangsvilkårTab.BOSATT_I_TRONDHEIM,
   [SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER]: InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
   [SkjermlenkeType.BISTANDSVILKÅR]: InngangsvilkårTab.BEHOV_FOR_BISTAND,
+  [SkjermlenkeType.AKTIVITETSVILKÅR]: InngangsvilkårTab.AKTIVITET,
   [SkjermlenkeType.SOEKNADSFRIST]: InngangsvilkårTab.SØKNADSFRIST,
 };
 
@@ -55,6 +56,7 @@ const tabSortOrder: InngangsvilkårTab[] = [
   InngangsvilkårTab.BOSATT_I_TRONDHEIM,
   InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
   InngangsvilkårTab.BEHOV_FOR_BISTAND,
+  InngangsvilkårTab.AKTIVITET,
 ];
 
 const getTabOrderIndex = (skjermlenkeType: string): number => {

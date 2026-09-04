@@ -5,6 +5,7 @@ export {
   aktivitetspenger_hentBostedGrunnlag,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
+  avp_hentPerioderSomKanAvkortesAvNavKontor,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,

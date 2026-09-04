@@ -46,6 +46,15 @@ const getInfoTextCode = (
     if (ytelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
       return 'Opplæringspenger er avslått.';
     }
+
+    if (ytelseType === FagsakYtelseType.AKTIVITETSPENGER) {
+      return 'Aktivitetspenger er avslått';
+    }
+
+    if (ytelseType === FagsakYtelseType.UNGDOMSPROGRAMYTELSE) {
+      return 'Ungdomsprogramytelse er avslått';
+    }
+
     return 'Omsorgspenger er avslått';
   }
   // HVIS OPPHØRT
@@ -64,6 +73,12 @@ const getInfoTextCode = (
     }
     if (ytelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
       return 'Opplæringspenger er opphørt.';
+    }
+    if (ytelseType === FagsakYtelseType.AKTIVITETSPENGER) {
+      return 'Aktivitetspenger er opphørt.';
+    }
+    if (ytelseType === FagsakYtelseType.UNGDOMSPROGRAMYTELSE) {
+      return 'Ungdomsprogramytelse er opphørt.';
     }
     return 'Omsorgspenger er opphørt.';
   }
@@ -86,6 +101,10 @@ const getInfoTextCode = (
   }
   if (ytelseType === FagsakYtelseType.UNGDOMSYTELSE) {
     return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
+  }
+
+  if (ytelseType === FagsakYtelseType.AKTIVITETSPENGER) {
+    return 'Aktivitetspenger er innvilget og vedtaket blir iverksatt';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
 };
@@ -122,6 +141,9 @@ const getModalDescriptionTextCode = (
   }
   if (ytelseType === FagsakYtelseType.UNGDOMSYTELSE) {
     return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+  }
+  if (ytelseType === FagsakYtelseType.AKTIVITETSPENGER) {
+    return 'Aktivitetspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
 };
@@ -162,6 +184,8 @@ const getAltImgTextCode = (ytelseType: FagsakYtelseType) => {
       return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt.';
     case FagsakYtelseType.UNGDOMSYTELSE:
       return 'Ungdomsytelse er innvilget og vedtaket blir iverksatt.';
+    case FagsakYtelseType.AKTIVITETSPENGER:
+      return 'Aktivitetspenger er innvilget og vedtaket blir iverksatt.';
     default:
       return 'Omsorgspenger er innvilget og vedtaket blir iverksatt.';
   }
