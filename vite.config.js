@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
@@ -116,16 +115,6 @@ export default ({ mode }) => {
       }),
       svgr(),
       excludeMsw(),
-      sentryVitePlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        disable: !process.env.SENTRY_AUTH_TOKEN,
-        org: 'nav',
-        project: 'k9-sak-web',
-        url: 'https://sentry.gc.nav.no',
-        release: {
-          name: process.env.VITE_SENTRY_RELEASE,
-        },
-      }),
     ],
     esbuild: {
       charset: 'utf8',
@@ -138,7 +127,7 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
-        plugins: [nodeSourcemapsPlugin({ exclude: /@sentry/ })],
+        plugins: [nodeSourcemapsPlugin()],
         output: {
           sourcemapBaseUrl: process.env.VITE_CDN_BASE_URL,
           manualChunks(id) {

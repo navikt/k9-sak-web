@@ -2,7 +2,7 @@ import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPane
 import { HeaderPanel } from '@k9-sak-web/gui/sak/dekoratør/HeaderPanel.js';
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
-import * as Sentry from '@sentry/react';
+import { captureMessage } from '@nais/apm';
 import { useInnloggetBrukerNavn } from '../../data/useNavAnsattForYtelse.js';
 
 const getYtelseNavn = (): string => {
@@ -38,12 +38,12 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
   if (queryStrings.errorcode) {
     const msg = `Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`;
     console.warn(msg);
-    Sentry.logger.warn(msg);
+    captureMessage(msg, 'warning');
   }
   if (queryStrings.errormessage) {
     const msg = `Dekorator queryString.errormessage satt (${queryStrings.errormessage}). Ikke støttet lenger`;
     console.warn(msg);
-    Sentry.logger.warn(msg);
+    captureMessage(msg, 'warning');
   }
   const ytelse = getYtelseNavn();
 

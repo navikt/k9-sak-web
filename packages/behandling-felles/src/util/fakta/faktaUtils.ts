@@ -1,4 +1,3 @@
-import { addBreadcrumb } from '@sentry/browser';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 
 import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
@@ -65,13 +64,6 @@ export const getBekreftAksjonspunktCallback =
       '@type': ap.kode,
       ...ap,
     }));
-
-    addBreadcrumb({
-      category: 'aksjonspunkt',
-      message: 'Sender inn aksjonspunkt',
-      data: { koder: model.map(ap => ap.kode) },
-      level: 'info',
-    });
 
     const params = {
       saksnummer: fagsak.saksnummer,

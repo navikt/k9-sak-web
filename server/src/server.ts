@@ -20,7 +20,6 @@ app.use(
         'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
         'connect-src': [
           "'self'",
-          'https://sentry.gc.nav.no',
           'https://reops-event-proxy.ekstern.dev.nav.no',
           'https://cdn.nav.no',
           'https://telemetry.nav.no',

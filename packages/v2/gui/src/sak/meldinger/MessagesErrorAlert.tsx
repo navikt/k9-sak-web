@@ -1,20 +1,19 @@
 import { Alert, Button } from '@navikt/ds-react';
 import type { ErrorBoundaryFallbackProps } from '../../app/errorhandling/boundary/ErrorBoundary.js';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
-import { sentryReportedErrorIdLookup } from '../../app/errorhandling/sentry.js';
+import { loadedErrorId } from '../../app/errorhandling/apm.js';
 
-export const MessagesErrorAlert = ({ error, reset }: ErrorBoundaryFallbackProps) => {
+export const MessagesErrorAlert = ({ reset }: ErrorBoundaryFallbackProps) => {
   const { reset: queryReset } = useQueryErrorResetBoundary();
   const retry = () => {
     queryReset(); // Try restarting any queries gone wrong
     reset();
   };
-  const sentryId = sentryReportedErrorIdLookup.get(error) ?? '';
   return (
     <Alert variant="error">
       Feil ved henting av maler. Brevsending ikke mulig
       <br />
-      <small>(sentry id {sentryId})</small>
+      <small>(loadedErrorId: {loadedErrorId})</small>
       <br />
       <Button variant="tertiary" size="small" onClick={retry}>
         Prøv igjen
