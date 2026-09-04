@@ -14,7 +14,7 @@ __metadata:
     "@types/node": "npm:22.15.33"
     express: "npm:5.2.1"
     express-http-proxy: "npm:2.1.2"
-    express-rate-limit: "npm:8.6.1"
+    express-rate-limit: "npm:8.7.0"
     helmet: "npm:8.3.0"
     typescript: "npm:6.0.3"
   languageName: unknown
@@ -340,15 +340,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-rate-limit@npm:8.6.1":
-  version: 8.6.1
-  resolution: "express-rate-limit@npm:8.6.1"
+"express-rate-limit@npm:8.7.0":
+  version: 8.7.0
+  resolution: "express-rate-limit@npm:8.7.0"
   dependencies:
     debug: "npm:^4.4.3"
     ip-address: "npm:^10.2.0"
   peerDependencies:
     express: ">= 4.11"
-  checksum: 10/55e40d693fcb9b7dc1adb48e0d83b3552e902982d80ec1812ba3b60deaffda8b0c12392253018b1c70772df4c0fd40c040dad85dc18349e1e025aa3c8fc70aa2
+  checksum: 10/aff2995369d8a14380a46eefa9f7f720ef6c5d6c4478d09b20544f1e91d8fa21dfe442bf8ef5e652b226ee2dea110d3f8e57dc5cf44331d51106ecdef3d85470
   languageName: node
   linkType: hard
 
