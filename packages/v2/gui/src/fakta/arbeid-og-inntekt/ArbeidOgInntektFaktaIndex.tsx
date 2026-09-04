@@ -46,12 +46,12 @@ const formatPermisjon = (perm: PermisjonDto) => {
   return `${periodeStr}${typeStr ? ` (${typeStr})` : ''}`;
 };
 
-// Fiktiv sluttdato (TIDENES_ENDE) vises som åpen periode, og en fremtidig sluttdato vises i kursiv
+// Fiktiv sluttdato (TIDENES_ENDE) vises som d.d., og en fremtidig sluttdato vises i kursiv
 const Periode = ({ periode }: { periode?: { fom: string; tom: string } }) => {
   if (!periode) return <>-</>;
   const fom = formatDate(periode.fom);
   if (!periode.tom || periode.tom === TIDENES_ENDE) {
-    return <>{fom} -</>;
+    return <>{fom} - d.d.</>;
   }
   if (!initializeDate(periode.tom).isAfter(dateToday())) {
     return (
@@ -82,10 +82,10 @@ const aktivitetStatusNavn = (status?: string): string => {
   }
 };
 
-const ARegisterDetaljer = ({ aRegister }: { aRegister: ARegisterOpplysningerDto }) => (
+const ARegisterDetaljer = ({ navn, aRegister }: { navn?: string; aRegister: ARegisterOpplysningerDto }) => (
   <div className={styles['expandedCard']}>
     <BodyShort size="small" weight="semibold">
-      Opplysninger fra Aa-registeret
+      Opplysninger fra Aa-registeret {navn && <>om {navn}</>}
     </BodyShort>
     <div className={styles['expandedRows']}>
       <div className={styles['expandedRow']}>
@@ -238,7 +238,11 @@ const AktivitetTabell = ({
             return (
               <Table.ExpandableRow
                 key={lagKeyForAktivitet(aktivitet)}
-                content={aktivitet.aRegister ? <ARegisterDetaljer aRegister={aktivitet.aRegister} /> : undefined}
+                content={
+                  aktivitet.aRegister ? (
+                    <ARegisterDetaljer navn={aktivitet.arbeidsgiverNavn} aRegister={aktivitet.aRegister} />
+                  ) : undefined
+                }
                 expansionDisabled={!aktivitet.aRegister}
                 expandOnRowClick
                 togglePlacement="right"
