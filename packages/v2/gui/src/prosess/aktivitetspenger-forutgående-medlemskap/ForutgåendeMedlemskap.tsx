@@ -11,7 +11,7 @@ import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, T
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
@@ -63,7 +63,18 @@ export const ForutgåendeMedlemskap = ({
     periode: p.periode,
   }));
 
-  const [selectedItemId, setSelectedItemId] = useState(periods[0]?.id ?? '');
+  const [selectedItemId, setSelectedItemId] = useState(
+    () =>
+      vilkår.perioder?.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
+      periods[0]?.id ??
+      '',
+  );
+
+  useEffect(() => {
+    if (!periods.some(period => period.id === selectedItemId)) {
+      setSelectedItemId('');
+    }
+  }, [periods, selectedItemId]);
 
   const selectedPeriode = vilkår.perioder?.find(p => p.periode.fom === selectedItemId)?.periode;
   const overlappendeMedlemskap = selectedPeriode
