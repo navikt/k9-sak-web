@@ -178,6 +178,10 @@ export const AktivitetspengerInngangsvilkår = ({
     inngangsvilkårdata.vurderBistandsvilkårAp,
   );
 
+  const harVilkårsperioderIAktivitetsvilkåret =
+    inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder?.length &&
+    inngangsvilkårdata.vurderAktivitetsvilkårVilkår.perioder.length > 0;
+
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(inngangsvilkårdata));
 
   useEffect(() => {
@@ -258,7 +262,7 @@ export const AktivitetspengerInngangsvilkår = ({
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
             {erBostedBlokkert && <ProsessStegIkkeBehandlet />}
-            {!erBostedBlokkert && inngangsvilkårdata.bostedVilkår && inngangsvilkårdata.bostedAp && (
+            {!erBostedBlokkert && inngangsvilkårdata.bostedVilkår && (
               <Bosted
                 bostedVilkår={inngangsvilkårdata.bostedVilkår}
                 bostedAp={inngangsvilkårdata.bostedAp}
@@ -274,47 +278,43 @@ export const AktivitetspengerInngangsvilkår = ({
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
             {erAndreLivsoppholdytelserBlokkert && <ProsessStegIkkeBehandlet />}
-            {!erAndreLivsoppholdytelserBlokkert &&
-              inngangsvilkårdata.andreLivsoppholdytelserVilkår &&
-              inngangsvilkårdata.andreLivsoppholdytelserAp && (
-                <AndreLivsoppholdytelser
-                  andreLivsoppholdytelserAp={inngangsvilkårdata.andreLivsoppholdytelserAp}
-                  lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
-                  andreLivsoppholdytelserVilkår={inngangsvilkårdata.andreLivsoppholdytelserVilkår}
-                  readOnly={!kanSaksbehandle}
-                  api={api}
-                  behandling={behandling}
-                  onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                  isPermanentlyReadOnly={
-                    !inngangsvilkårdata.andreLivsoppholdytelserAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
-                  }
-                />
-              )}
+            {!erAndreLivsoppholdytelserBlokkert && inngangsvilkårdata.andreLivsoppholdytelserVilkår && (
+              <AndreLivsoppholdytelser
+                andreLivsoppholdytelserAp={inngangsvilkårdata.andreLivsoppholdytelserAp}
+                lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                andreLivsoppholdytelserVilkår={inngangsvilkårdata.andreLivsoppholdytelserVilkår}
+                readOnly={!kanSaksbehandle}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.andreLivsoppholdytelserAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
             {erBehovForBistandBlokkert && <ProsessStegIkkeBehandlet />}
-            {!erBehovForBistandBlokkert &&
-              inngangsvilkårdata.vurderBistandsvilkårVilkår &&
-              inngangsvilkårdata.vurderBistandsvilkårAp && (
-                <BehovForBistand
-                  vurderBistandsvilkårVilkår={inngangsvilkårdata.vurderBistandsvilkårVilkår}
-                  vurderBistandsvilkårAp={inngangsvilkårdata.vurderBistandsvilkårAp}
-                  lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
-                  api={api}
-                  behandling={behandling}
-                  onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                  readOnly={!kanSaksbehandle}
-                  isPermanentlyReadOnly={
-                    !inngangsvilkårdata.vurderBistandsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
-                  }
-                />
-              )}
+            {!erBehovForBistandBlokkert && inngangsvilkårdata.vurderBistandsvilkårVilkår && (
+              <BehovForBistand
+                vurderBistandsvilkårVilkår={inngangsvilkårdata.vurderBistandsvilkårVilkår}
+                vurderBistandsvilkårAp={inngangsvilkårdata.vurderBistandsvilkårAp}
+                lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={
+                  !inngangsvilkårdata.vurderBistandsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                }
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.AKTIVITET}>
             {erAktivitetBlokkert && <ProsessStegIkkeBehandlet />}
             {!erAktivitetBlokkert &&
               inngangsvilkårdata.vurderAktivitetsvilkårVilkår &&
-              inngangsvilkårdata.vurderAktivitetsvilkårAp && (
+              harVilkårsperioderIAktivitetsvilkåret && (
                 <Aktivitet
                   vurderAktivitetsvilkårVilkår={inngangsvilkårdata.vurderAktivitetsvilkårVilkår}
                   vurderAktivitetsvilkårAp={inngangsvilkårdata.vurderAktivitetsvilkårAp}
