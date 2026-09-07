@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/shared-components": "1.0.0",
     "react": "19.2.8",
-    "react-intl": "10.1.20"
+    "react-intl": "10.1.24"
   },
   "devDependencies": {
     "@types/react": "19.2.18"

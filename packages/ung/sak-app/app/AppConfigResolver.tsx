@@ -1,8 +1,7 @@
 import { ReactElement, useEffect } from 'react';
 
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
@@ -15,11 +14,9 @@ import UngVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/ap
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
-import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
-import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import { IntlProvider } from 'react-intl';
-import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
+import { requestApi } from '../data/ungsakApi';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
@@ -27,8 +24,6 @@ import useHentKodeverk from './useHentKodeverk';
 interface OwnProps {
   children: ReactElement<any>;
 }
-
-const NO_PARAMS = {};
 
 /**
  * Komponent som henter backend-data som skal kunne aksesseres globalt i applikasjonen. Denne dataen blir kun hentet en gang.
@@ -41,13 +36,6 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const [harHentetFerdigInitLenker, harK9sakInitKallFeilet] = useHentInitLenker();
 
-  const options = {
-    suspendRequest: harK9sakInitKallFeilet || !harHentetFerdigInitLenker,
-    updateTriggers: [harHentetFerdigInitLenker],
-  };
-
-  const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.NAV_ANSATT, NO_PARAMS, options);
-
   const harHentetFerdigKodeverk = useHentKodeverk(harHentetFerdigInitLenker);
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
@@ -56,20 +44,18 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const harFeilet = harK9sakInitKallFeilet;
 
-  const erFerdig = harHentetFerdigInitLenker && harHentetFerdigKodeverk && navAnsattState === RestApiState.SUCCESS;
+  const erFerdig = harHentetFerdigInitLenker && harHentetFerdigKodeverk;
 
   return (
     <IntlProvider locale="nb" messages={globalMessages}>
       <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
         <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
           <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
-            <InnloggetAnsattProvider api={new UngSakInnloggetAnsattBackendClient()}>
-              <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
-                <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
-                  {harFeilet || erFerdig ? children : <LoadingPanel />}
-                </NotatBackendClientContext>
-              </AvregningBackendClientContext>
-            </InnloggetAnsattProvider>
+            <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
+              <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
+                {harFeilet || erFerdig ? children : <LoadingPanel />}
+              </NotatBackendClientContext>
+            </AvregningBackendClientContext>
           </VedtakKlageApiContext>
         </KlageVurderingApiContext>
       </UngKodeverkoppslagContext>

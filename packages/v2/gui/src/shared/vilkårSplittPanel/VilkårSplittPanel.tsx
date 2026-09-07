@@ -10,14 +10,14 @@ import {
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
 export interface VilkårSplittPanelPeriod {
   id: string;
   status: 'success' | 'warning' | 'error';
   label: string;
-  periode: {
+  periode?: {
     fom: string;
     tom: string;
   };
@@ -35,6 +35,9 @@ interface VilkårSplittPanelProps {
   afterEditButton?: ReactNode;
   lockedContent?: ReactNode;
   isPermanentlyReadOnly?: boolean;
+  periodListLabel?: string;
+  periodColumnHeader?: string;
+  beforeDetailContent?: ReactNode;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
@@ -73,6 +76,9 @@ export const VilkårSplittPanel = ({
   lockedContent,
   lovreferanse,
   isPermanentlyReadOnly,
+  periodListLabel = 'Alle søknader',
+  periodColumnHeader = 'Søknadstidspunkt',
+  beforeDetailContent,
 }: VilkårSplittPanelProps) => {
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
@@ -85,6 +91,7 @@ export const VilkårSplittPanel = ({
   }, [defaultIsLocked]);
 
   const effectiveLocked = isFormLocked || readOnly;
+  const canEdit = !readOnly && !isPermanentlyReadOnly;
 
   return (
     <HGrid columns="400px 1fr" gap="space-32">
@@ -98,7 +105,7 @@ export const VilkårSplittPanel = ({
         style={{ alignSelf: 'start' }}
       >
         <Heading size="small" level="2">
-          Alle søknader
+          {periodListLabel}
         </Heading>
         <Bleed marginInline="space-16">
           <Table size="medium">
@@ -108,7 +115,7 @@ export const VilkårSplittPanel = ({
                   Status
                 </Table.HeaderCell>
                 <Table.HeaderCell textSize="small" scope="col" colSpan={2}>
-                  Søknadstidspunkt
+                  {periodColumnHeader}
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -164,17 +171,18 @@ export const VilkårSplittPanel = ({
             </HStack>
           )}
           <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
-          {isRenderProp ? (
+          {beforeDetailContent}
+          {!beforeDetailContent && isRenderProp && (
             <>
               <Box
                 borderRadius="8"
                 padding={effectiveLocked ? 'space-16' : 'space-0'}
                 background={effectiveLocked ? 'info-softA' : undefined}
               >
-                <VStack gap={!readOnly && !isPermanentlyReadOnly ? 'space-12' : 'space-0'}>
+                <VStack gap={canEdit ? 'space-12' : 'space-0'}>
                   {children(effectiveLocked, setIsFormLocked)}
                   {isFormLocked && lockedContent}
-                  {isFormLocked && !readOnly && !isPermanentlyReadOnly && (
+                  {isFormLocked && canEdit && (
                     <Bleed marginInline="space-8">
                       <Button
                         size="small"
@@ -190,9 +198,8 @@ export const VilkårSplittPanel = ({
               </Box>
               {isFormLocked && afterEditButton}
             </>
-          ) : (
-            children
           )}
+          {!beforeDetailContent && !isRenderProp && children}
         </VStack>
       </Box>
     </HGrid>

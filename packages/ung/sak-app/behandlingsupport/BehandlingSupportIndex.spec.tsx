@@ -6,10 +6,10 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
-import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {
@@ -45,7 +45,6 @@ describe('<BehandlingSupportIndex>', () => {
   });
 
   it('skal vise godkjennings-panelet', () => {
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});

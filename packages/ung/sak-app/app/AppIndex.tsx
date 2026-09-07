@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import ForbiddenPage from '@k9-sak-web/gui/app/errorhandling/pages/ForbiddenPage.js';
 import UnauthorizedPage, { ungLoginResourcePath } from '@k9-sak-web/gui/app/errorhandling/pages/UnauthorizedPage.js';
-import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import { AxiosError } from 'axios';
 
@@ -13,16 +13,15 @@ import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import { resolveAxiosErrorÅrsakIkkeTilgang } from '@k9-sak-web/gui/app/errorhandling/ui/resolveAxiosErrorView.js';
 import { RootSuspense } from '@k9-sak-web/gui/app/root/suspense/RootSuspense.js';
 import { kodeverkOppslagQueryOptions } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
-import { innloggetAnsattQueryOptions } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
-import { UngSakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/UngSakInnloggetAnsattBackendClient.js';
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { usePrefetchQuery } from '@tanstack/react-query';
-import { resolveAxiosErrorÅrsakIkkeTilgang } from '@k9-sak-web/gui/app/errorhandling/ui/resolveAxiosErrorView.js';
+import { innloggetAnsattUngV2QueryOptions } from '../data/useNavAnsattForYtelse.js';
 
 const isForbidden = (e: Error) =>
   (e instanceof AxiosError && e.response?.status === 403) || ('type' in e && e.type === EventType.REQUEST_FORBIDDEN);
@@ -50,7 +49,7 @@ const AppIndex = () => {
   usePrefetchQuery(kodeverkOppslagQueryOptions.ungSak);
   usePrefetchQuery(kodeverkOppslagQueryOptions.ungTilbake(true));
   // Start forhåndslasting av nav ansatt data
-  usePrefetchQuery(innloggetAnsattQueryOptions(new UngSakInnloggetAnsattBackendClient()));
+  usePrefetchQuery(innloggetAnsattUngV2QueryOptions);
 
   // Sjå bootstrapUng for å sjå kva som er lenger oppe i hierarkiet.
   return (

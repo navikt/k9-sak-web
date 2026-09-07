@@ -14,8 +14,8 @@ import { useMutation } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
-import type { VilkårSplittPanelPeriod } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
-import { getPeriodStatus, VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {

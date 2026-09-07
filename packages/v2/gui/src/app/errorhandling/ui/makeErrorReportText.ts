@@ -1,6 +1,6 @@
-import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AxiosError } from 'axios';
+import { sentryReportedErrorIdLookup, sentryReportedIdList } from '../sentry.js';
 
 const makeErrorReportLines = (errors: ReadonlyArray<Error>): ReadonlyArray<string> => {
   const errLines: string[] = [];

@@ -1,46 +1,57 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import { userEvent } from 'storybook/test';
-import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
-import TotrinnskontrollIndex from './TotrinnskontrollIndex.js';
-import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
-import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
-import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
   TotrinnskontrollData,
   TotrinnskontrollDataForAksjonspunkt,
 } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { innloggetAnsattUngV2QueryOptions } from '@k9-sak-web/gui/saksbehandler/useUngInnloggetAnsatt.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
+import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
-import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
-import { expect } from 'storybook/test';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { Meta, StoryObj, type Decorator } from '@storybook/react-vite';
+import { useQueryClient } from '@tanstack/react-query';
 import { action } from 'storybook/actions';
+import { expect, userEvent } from 'storybook/test';
+import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
+import TotrinnskontrollIndex from './TotrinnskontrollIndex.js';
 
 const navAnsatt = {
   brukernavn: 'Test',
+  navn: 'Test',
   kanBehandleKode6: false,
   kanBehandleKode7: false,
   kanBehandleKodeEgenAnsatt: false,
   kanBeslutte: true,
   kanOverstyre: false,
   kanSaksbehandle: true,
-  kanVeilede: false,
-  navn: 'Test',
+  erUngdomsprogramveileder: false,
+  kanVeiledeUngdomsprogramytelse: false,
+  kanVeiledeAktivitetspenger: false,
+  ungdomsprogramytelseSaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: true, kanOverstyre: false },
+  aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel2SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+};
+
+/** Seeder react-query-cachen med nav-ansatt v2 slik at useNavAnsattForYtelse ikke gjør nettverkskall. */
+const withNavAnsattV2 = (): Decorator => Story => {
+  const queryClient = useQueryClient();
+  queryClient.setQueryData(innloggetAnsattUngV2QueryOptions.queryKey, navAnsatt);
+  return <Story />;
 };
 
 const meta = {
   title: 'ung/sak-app/behandlingsupport/totrinnskontroll/TotrinnskontrollIndex',
   component: TotrinnskontrollIndex,
   beforeEach: () => {
-    requestApi.clearMockData(UngSakApiKeys.NAV_ANSATT);
     requestApi.clearMockData(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT);
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {});
   },
-  decorators: [withKodeverkContext(), withK9Kodeverkoppslag()],
+  decorators: [withNavAnsattV2(), withKodeverkContext(), withK9Kodeverkoppslag()],
 } satisfies Meta<typeof TotrinnskontrollIndex>;
 
 type Story = StoryObj<typeof meta>;

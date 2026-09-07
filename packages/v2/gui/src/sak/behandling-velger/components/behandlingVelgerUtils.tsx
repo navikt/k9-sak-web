@@ -63,12 +63,16 @@ export const getStatusText = (
   behandlingsresultatTypeKode?: string,
   behandlingsresultatTypeNavn?: string,
   erFerdigstilt?: boolean,
+  erAktivitetspengerOpphør?: boolean,
 ) => {
   if (!erFerdigstilt) {
     return 'Ikke fastsatt';
   }
   if (behandlingsresultatTypeKode) {
     return behandlingsresultatTypeNavn;
+  }
+  if (erAktivitetspengerOpphør) {
+    return 'Opphør';
   }
 
   return '-';
