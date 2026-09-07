@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Fragment, useEffect, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
+import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
@@ -56,10 +57,11 @@ export const ForutgåendeMedlemskap = ({
   onAksjonspunktBekreftet,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
-  const periods: VilkårSplittPanelPeriod[] = (vilkår.perioder ?? []).map(p => ({
+  const visningsperioder = byggVisningsperioder(vilkår, []);
+  const periods: VilkårSplittPanelPeriod[] = visningsperioder.map(p => ({
     id: p.periode.fom,
     status: getPeriodStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+    label: `${formatDate(p.periode.fom)}${p.visTom ? ` - ${formatDate(p.periode.tom)}` : ''}`,
     periode: p.periode,
   }));
 

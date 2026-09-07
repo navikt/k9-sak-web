@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 
 export type VilkårPeriodeVisning = VilkårPeriodeDto & {
   muligAvkortingPeriode?: MuligAvkortingPeriode;
+  visTom?: boolean;
   avkortetPeriodeInfo?: {
     begrunnelse: string;
     periode: {
@@ -40,15 +41,12 @@ export const byggVisningsperioder = (
   vilkårMedPerioder: VilkårMedPerioderDto,
   avkortingsperioder: MuligAvkortingPeriode[],
 ): VilkårPeriodeVisning[] => {
-  const perioderFraVilkår = (vilkårMedPerioder.perioder ?? []).filter(
-    periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT,
-  );
   const visningsperioder: VilkårPeriodeVisning[] = [];
   const justerteAvkortingsperioder = avkortingsperioder.map(avkortingsperiode => ({
     fom: dayjs(avkortingsperiode.fom).subtract(1, 'day').format(ISO_DATE_FORMAT),
     tom: avkortingsperiode.tom,
   }));
-  const perioderSomFallerUtenforAvkortingsperioder = perioderFraVilkår.filter(
+  const perioderSomFallerUtenforAvkortingsperioder = (vilkårMedPerioder.perioder ?? []).filter(
     vilkårPeriode =>
       !justerteAvkortingsperioder.some(avkortingsperiode =>
         isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode),
@@ -56,7 +54,7 @@ export const byggVisningsperioder = (
   );
   const vilkårISammePeriode: VilkårPeriodeVisning[] = [];
   justerteAvkortingsperioder.forEach(avkortingsperiode => {
-    const vilkårISammePeriodeForDenneAvkortingsperioden = perioderFraVilkår
+    const vilkårISammePeriodeForDenneAvkortingsperioden = (vilkårMedPerioder.perioder ?? [])
       .filter(vilkårPeriode => isPeriodCoveredByPeriod(vilkårPeriode.periode, avkortingsperiode))
       .map(vilkårPeriode => ({
         ...vilkårPeriode,
@@ -92,11 +90,16 @@ export const byggVisningsperioder = (
             tom: nestePeriode.periode.tom,
           },
         },
+        visTom: true,
       });
       periodeIndex += 1;
     } else if (periode) {
-      visningsperioder.push(periode);
+      visningsperioder.push({ ...periode, visTom: !!nestePeriode });
     }
   }
-  return visningsperioder;
+
+  const visningsperioderUtenIkkeRelevante = visningsperioder.filter(
+    periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT,
+  );
+  return visningsperioderUtenIkkeRelevante;
 };
