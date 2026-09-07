@@ -109,8 +109,6 @@
   "packages/fakta-barn-oms/src/components/BarnVisning.tsx",
   "packages/fakta-barn-oms/src/components/MidlertidigAlene.tsx",
   "packages/fakta-barn-oms/src/utils/formaterDato.spec.ts",
-  "packages/fakta-bosted-soker/src/components/BostedSokerView.spec.tsx",
-  "packages/fakta-bosted-soker/src/components/BostedSokerView.tsx",
   "packages/fakta-direkte-overgang/src/DirekteOvergangFaktaIndex.stories.tsx",
   "packages/fakta-direkte-overgang/src/components/ManglerSøknadForm.tsx",
   "packages/fakta-feilutbetaling/src/components/FeilutbetalingInfoPanel.spec.tsx",
