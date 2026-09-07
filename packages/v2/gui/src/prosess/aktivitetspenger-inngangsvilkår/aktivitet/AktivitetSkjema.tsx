@@ -72,7 +72,7 @@ export const AktivitetSkjema = ({
                     required,
                     value =>
                       redigerTomDato && value === muligAvkortingPeriode?.tom
-                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig til og med-dato.'
+                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato'
                         : undefined,
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}

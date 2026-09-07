@@ -74,7 +74,7 @@ export const BehovForBistandSkjema = ({
                     required,
                     value =>
                       redigerMaksdato && value === muligAvkortingPeriode?.tom
-                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'
+                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.'
                         : undefined,
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}

@@ -327,7 +327,9 @@ export const MaksdatoMåVæreKortere: Story = {
       await userEvent.click(await canvas.findByLabelText('Rediger til og med'));
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
       await expect(
-        canvas.getByText('Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig maksdato.'),
+        canvas.getByText(
+          'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
+        ),
       ).toBeInTheDocument();
     });
   },
