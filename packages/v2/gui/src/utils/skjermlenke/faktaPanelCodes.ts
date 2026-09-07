@@ -36,4 +36,5 @@ export const faktaPanelCodes = {
   OPPLAERING: 'opplaering',
   NYOPPSTARTET: 'nyoppstartet',
   SYKDOM_OG_OPPLAERING: 'sykdom-og-opplaering',
+  ARBEID_OG_INNTEKT: 'arbeid-og-inntekt',
 };
