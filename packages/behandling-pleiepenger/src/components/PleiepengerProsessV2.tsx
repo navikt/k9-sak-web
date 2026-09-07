@@ -14,9 +14,11 @@ import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { Bleed, Box } from '@navikt/ds-react';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
+import { useQuery } from '@tanstack/react-query';
 import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
+import { aksjonspunkterQueryOptions } from '../prosess/api/k9SakQueryOptions';
 import { useProsessmotor } from '../prosess/api/Prosessmotor';
 import {
   BeregningsgrunnlagProsessStegInitPanel,
@@ -106,6 +108,7 @@ export const PleiepengerProsessV2 = ({
 
   const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
   const prosessteg = useProsessmotor({ api: k9SakProsessApi, behandling });
+  const { isFetching: aksjonspunkterLaster } = useQuery(aksjonspunkterQueryOptions(k9SakProsessApi, behandling));
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
@@ -165,7 +168,7 @@ export const PleiepengerProsessV2 = ({
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
 
-      <ProsessMeny steg={prosessteg}>
+      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterLaster}>
         <Bleed marginInline="space-24">
           <Box padding="space-16" className={styles.prosessmenyWrapper}>
             {prosessStegPanelDefinisjoner.map(panelDef => {
