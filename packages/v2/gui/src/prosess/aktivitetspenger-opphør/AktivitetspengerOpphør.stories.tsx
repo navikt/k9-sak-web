@@ -1,3 +1,4 @@
+/* eslint-disable storybook/prefer-pascal-case */
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -112,7 +113,10 @@ export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
     });
 
     await step('Velg kilde til opplysningene', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Bruker');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Bruker',
+      );
     });
 
     await step('Fyll inn begrunnelse', async () => {
@@ -164,7 +168,10 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
     });
 
     await step('Velg kilde til opplysningene', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Bruker');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Bruker',
+      );
     });
 
     await step('Fyll inn begrunnelse', async () => {
@@ -222,7 +229,10 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
     });
 
     await step('Velg kilde "Annet"', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }), 'Annet');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'Annet',
+      );
     });
 
     await step('Fyll inn hvor opplysningene kommer fra', async () => {
