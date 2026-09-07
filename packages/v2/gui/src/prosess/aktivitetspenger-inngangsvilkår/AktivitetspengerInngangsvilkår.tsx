@@ -96,6 +96,12 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokke
 const harUløstTidligereSteg = (...aksjonspunkter: Array<AksjonspunktDto | undefined>) =>
   aksjonspunkter.some(aksjonspunktErÅpent);
 
+const vilkårErFerdigbehandlet = (vilkår?: VilkårMedPerioderDto) =>
+  !!vilkår?.perioder?.length && vilkår.perioder.every(p => p.vilkarStatus !== Utfall.IKKE_VURDERT);
+
+const stegErFerdigbehandlet = (aksjonspunkt?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) =>
+  aksjonspunkt?.status === AksjonspunktStatus.UTFØRT || vilkårErFerdigbehandlet(vilkår);
+
 const utledAktivTab = (data: InngangsvilkårData) => {
   // Prioriter åpne aksjonspunkter som krever handling
   if (data.bostedAp?.status === AksjonspunktStatus.OPPRETTET) {
@@ -114,21 +120,32 @@ const utledAktivTab = (data: InngangsvilkårData) => {
     return InngangsvilkårTab.BESLUTTER;
   }
 
-  // Håndter avslag-flow: hvis bosted eller andre livsoppholdytelser er avslått,
-  // vis den sluttførte fanen hvis ingen videre vilkår skal behandles
-  if (data.lokalkontorForeslårVilkårAp) {
-    if (data.bostedAp?.status === AksjonspunktStatus.UTFØRT && !data.andreLivsoppholdytelserAp) {
-      return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
-    }
-    if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBistandsvilkårAp) {
-      return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
-    }
-    if (data.vurderBistandsvilkårAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderAktivitetsvilkårAp) {
-      return InngangsvilkårTab.BEHOV_FOR_BISTAND;
-    }
+  // Når alle vilkår er ferdigbehandlet, vis det siste løste vilkåret. Ettersom behandlingstypen "Kontroll av inntekt" ikke har aksjonspunkt må vi også sjekke vilkårsperiodene.
+  if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT) {
+    return InngangsvilkårTab.BESLUTTER;
+  }
+  if (stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)) {
+    return InngangsvilkårTab.AKTIVITET;
+  }
+  if (stegErFerdigbehandlet(data.vurderBistandsvilkårAp, data.vurderBistandsvilkårVilkår)) {
+    return InngangsvilkårTab.BEHOV_FOR_BISTAND;
+  }
+  if (stegErFerdigbehandlet(data.andreLivsoppholdytelserAp, data.andreLivsoppholdytelserVilkår)) {
+    return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
+  }
+  if (stegErFerdigbehandlet(data.bostedAp, data.bostedVilkår)) {
+    return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
+  }
+  if (vilkårErFerdigbehandlet(data.alderVilkår)) {
+    return InngangsvilkårTab.ALDER;
   }
 
-  return InngangsvilkårTab.AKTIVITET;
+  if (vilkårErFerdigbehandlet(data.søknadsfristVilkår)) {
+    return InngangsvilkårTab.SØKNADSFRIST;
+  }
+
+  // siste vilkår som alltid vil være der.
+  return InngangsvilkårTab.BEHOV_FOR_BISTAND;
 };
 
 interface Props {
