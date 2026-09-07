@@ -318,7 +318,8 @@ export const AarsakOgVarsel = ({
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.kilde`}
-                  label="Hvor har du fått opplysningene fra (vises til bruker)"
+                  label="Hvor har du fått opplysningene fra?"
+                  description='Velg fra listen eller velg "annet" for å skrive en kort forklaring.'
                   readOnly={isFormLocked}
                   validate={[required]}
                   selectValues={Object.values(BostedsavklaringKildeType).map(kilde => (
@@ -331,8 +332,7 @@ export const AarsakOgVarsel = ({
                   <RhfTextField
                     control={formHook.control}
                     name={`perioder.${selectedId}.kildeFritekst`}
-                    label="Beskriv hvor opplysningene kommer fra"
-                    description="Teksten vises til bruker i varsel og vedtaksbrev."
+                    label="Skriv inn hvor du har fått opplysningene fra"
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(1000)]}
                     maxLength={1000}
