@@ -1,4 +1,5 @@
-import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
@@ -8,7 +9,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
-import type { Document } from '../types/Document';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
@@ -23,19 +23,19 @@ const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
-const alleBehandlinger = 'ALLE';
-
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
 
 const inntektsmeldingBrevkode = '4936';
 
-const isVedtaksdokument = (document: Document) =>
+const alleBehandlinger = 'ALLE';
+
+const isVedtaksdokument = (document: DokumentDto) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
 
 const isTextMoreThan25char = (text?: string): boolean => !!text && text.length > 25;
 const trimText = (text: string): string => `${text?.substring(0, 24)}...`;
 
-const getDirectionImage = (document: Document): string => {
+const getDirectionImage = (document: DokumentDto): string => {
   if (isVedtaksdokument(document)) {
     return arrowLeftPurpleImageUrl;
   }
@@ -47,7 +47,7 @@ const getDirectionImage = (document: Document): string => {
   }
   return internDokumentImageUrl;
 };
-const getDirectionText = (document: Document): string => {
+const getDirectionText = (document: DokumentDto): string => {
   if (document.kommunikasjonsretning === Kommunikasjonsretning.INN) {
     return 'Inn';
   }
@@ -69,7 +69,7 @@ const getModiaPath = (fødselsnummer?: string) => {
 };
 
 interface OwnProps {
-  documents: Document[];
+  documents: DokumentDto[];
   behandlingId?: number;
   fagsakPerson?: FagsakPerson;
   saksnummer: number;
@@ -78,12 +78,12 @@ interface OwnProps {
 }
 
 /**
- * DocumentList
+ * DocumentListOld
  *
  * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
+const DocumentListOld = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
 
   const erStøttetFagsakYtelseType = [
@@ -119,7 +119,12 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   });
 
   const ModiaLenke = () => (
-    <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
+    <Link
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.modiaLink}
+      href={getModiaPath(fagsakPerson?.personnummer)}
+    >
       <span>Se dialog med søker i Modia</span>
       <img alt="Ekstern lenke" className="ml-2 mb-1" src={eksternLinkImageUrl} />
     </Link>
@@ -138,10 +143,10 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     );
   }
 
-  const makeDocumentURL = (document: Document) =>
+  const makeDocumentURL = (document: DokumentDto) =>
     `/${getBackendPath()}/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Document) =>
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: DokumentDto) =>
     document.brevkode === inntektsmeldingBrevkode &&
     inntektsmeldingerIBruk &&
     inntektsmeldingerIBruk.length > 0 &&
@@ -161,7 +166,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
         </Select>
         <ModiaLenke />
       </div>
-      <Table>
+      <Table style={{ width: '100%' }}>
         <Table.Header>
           <Table.Row>
             {headerTexts.map(text => (
@@ -266,4 +271,4 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   );
 };
 
-export default DocumentList;
+export default DocumentListOld;

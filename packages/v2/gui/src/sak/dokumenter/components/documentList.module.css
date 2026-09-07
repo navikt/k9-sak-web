@@ -1,3 +1,14 @@
+.dokumenttypeFilter {
+  width: 20rem;
+}
+
+/* Skiller "vis kun denne behandlingen" fra dokumenttypene i nedtrekkslisten */
+.dokumenttypeFilter :global(.aksel-combobox__list-item:first-child) {
+  border-bottom: 2px solid #3e3832;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .image {
   height: 20px;
   margin-left: 10px;
@@ -24,6 +35,7 @@
   align-items: center;
   display: flex;
   margin-left: auto;
+  white-space: nowrap;
 }
 
 .externalIcon {

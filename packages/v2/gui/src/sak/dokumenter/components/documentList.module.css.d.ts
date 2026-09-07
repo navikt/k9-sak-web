@@ -6,6 +6,7 @@
  * https://npmjs.com/vite-css-modules
  */
 
+declare const dokumenttypeFilter: string;
 declare const image: string;
 declare const starIcon: string;
 declare const noDocuments: string;
@@ -17,6 +18,7 @@ declare const documentAnchor: string;
 declare const documentAnchorPlain: string;
 
 export {
+	dokumenttypeFilter,
 	image,
 	starIcon,
 	noDocuments,
@@ -29,6 +31,7 @@ export {
 };
 
 declare const __default_export__: {
+	dokumenttypeFilter: typeof dokumenttypeFilter;
 	image: typeof image;
 	starIcon: typeof starIcon;
 	noDocuments: typeof noDocuments;
