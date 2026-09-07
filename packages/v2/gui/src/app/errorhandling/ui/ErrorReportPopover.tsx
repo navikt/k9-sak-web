@@ -8,8 +8,8 @@ type ErrorReportPopoverProps = Readonly<{
   errors: ReadonlyArray<Error>;
 }>;
 
-// NB: Sidan makeErrorReportText leser global loadedErrorId, bør ikkje denne komponent rendrast før ein
-// veit at alle feil har blitt rapportert gjennom apm.
+// NB: makeErrorReportText leser global loadedErrorId (unik per sidelasting) som brukes til å korrelere feil i apm.
+// Del loadedErrorId når du melder inn feil, så kan vi finne relevante exceptions i apm.
 export const ErrorReportPopover: FC<ErrorReportPopoverProps> = ({ errors }) => {
   const [showReportBtn, setShowReportBtn] = useState<HTMLElement | null>(null);
   const [reportShowing, setReportShowing] = useState(false);
