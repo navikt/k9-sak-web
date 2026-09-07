@@ -1,6 +1,6 @@
 import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Label, VStack } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Label, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
 import type { BehovForBistandFormData } from './behovForBistandFormData.js';
