@@ -119,7 +119,12 @@ const DocumentListOld = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   });
 
   const ModiaLenke = () => (
-    <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
+    <Link
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.modiaLink}
+      href={getModiaPath(fagsakPerson?.personnummer)}
+    >
       <span>Se dialog med søker i Modia</span>
       <img alt="Ekstern lenke" className="ml-2 mb-1" src={eksternLinkImageUrl} />
     </Link>

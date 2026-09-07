@@ -132,9 +132,9 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
     return Kommunikasjonsretning.UT;
   };
 
-  const onToggleDokumentType = (option: string, isSelected: boolean) => {
+  const onToggleDokumentType = (option: string, isSelected?: boolean) => {
     if (option === KUN_DENNE_BEHANDLINGEN) {
-      setKunDenneBehandlingen(isSelected);
+      setKunDenneBehandlingen(prev => isSelected ?? !prev);
       return;
     }
     if (erKommunikasjonsretning(option)) {
@@ -155,7 +155,9 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
     }
     setValgteDokumentTyper(prev => {
       const newSet = new Set(prev);
-      if (isSelected) {
+      // Viss isSelected ikkje er sendt inn, toggl basert på eksisterande tilstand
+      const skalVelgast = isSelected ?? !newSet.has(option);
+      if (skalVelgast) {
         newSet.add(option);
       } else {
         newSet.delete(option);
@@ -197,7 +199,12 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   });
 
   const ModiaLenke = () => (
-    <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
+    <Link
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.modiaLink}
+      href={getModiaPath(fagsakPerson?.personnummer)}
+    >
       <span>Se dialog med søker i Modia</span>
       <img alt="Ekstern lenke" className="ml-2 mb-1" src={eksternLinkImageUrl} />
     </Link>
@@ -252,7 +259,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
         </HStack>
         <ModiaLenke />
       </div>
-      <Table style={{ width: '100%' }}>
+      <Table className="w-full">
         <Table.Header>
           <Table.Row>
             {headerTexts.map(text => (

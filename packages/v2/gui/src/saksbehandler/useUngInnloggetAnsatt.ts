@@ -48,9 +48,7 @@ export function useNavAnsattForYtelse(
     kanSaksbehandle: erAktivitetspenger
       ? ((avpDel1?.kanSaksbehandle || avpDel2?.kanSaksbehandle) ?? false)
       : (ungTilgang?.kanSaksbehandle ?? false),
-    kanVeilede: erAktivitetspenger
-      ? (data.kanVeiledeAktivitetspenger ?? false)
-      : ((data.erUngdomsprogramveileder || data.kanVeiledeUngdomsprogramytelse) ?? false),
+    kanVeilede: erAktivitetspenger ? !!data.kanVeiledeAktivitetspenger : !!data.kanVeiledeUngdomsprogramytelse,
     skalViseDetaljerteFeilmeldinger: data.skalViseDetaljerteFeilmeldinger,
   };
 }
