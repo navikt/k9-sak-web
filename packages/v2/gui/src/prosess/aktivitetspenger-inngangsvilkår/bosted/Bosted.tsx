@@ -63,7 +63,7 @@ export const Bosted = ({
   const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
-    label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
+    label: `${formatDate(periode.periode.fom)}${periode.avkortetPeriodeInfo ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
     periode: {
       fom: periode.periode.fom,
       tom: periode.periode.tom,
