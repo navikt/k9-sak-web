@@ -28,7 +28,7 @@
     "dev": "yarn cross-env APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy vite serve",
     "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_UNG_SAK=http://k9-sak:8085 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://localhost:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true vite serve",
     "dev-med-formidling": "yarn cross-env APP_URL_K9FORMIDLING=http://k9-formidling:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true vite serve",
-    "build": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite build",
+    "build": "vite build",
     "up": "docker-compose up -d --remove-orphans --build",
     "down": "docker-compose down",
     "preview": "vite preview",
@@ -40,7 +40,7 @@
     "knip:check": "knip --include files,dependencies,exports --no-config-hints",
     "dev:ung": "vite -c ung.vite.config.js serve",
     "dev:aktivitetspenger": "vite -c aktivitetspenger.vite.config.js serve",
-    "build:ung": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite -c ung.vite.config.js build"
+    "build:ung": "vite -c ung.vite.config.js build"
   },
   "workspaces": [
     "packages/*",
@@ -57,7 +57,6 @@
     "@navikt/ft-plattform-komponenter": "12.1.10",
     "@navikt/ft-utils": "5.1.10",
     "@popperjs/core": "2.11.8",
-    "@sentry/browser": "10.72.0",
     "axios": "1.20.0",
     "date-fns": "4.4.0",
     "dayjs": "1.11.23",
@@ -72,7 +71,6 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@sentry/vite-plugin": "5.4.0",
     "@storybook/addon-a11y": "10.5.10",
     "@storybook/addon-docs": "10.5.10",
     "@storybook/react-vite": "10.5.10",
