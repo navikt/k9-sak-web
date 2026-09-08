@@ -1,7 +1,5 @@
-import type {
-  RelatertYtelseData,
-  RelatertYtelseResponse,
-} from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
+import type { RelatertYtelseData } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakYtelseType.js';
 import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
@@ -80,7 +78,7 @@ const statusTilPeriodeIkon = (status: RelatertYtelseData['status']) => {
 
 const lagDetaljinnhold = (
   rad: YtelsePeriode,
-  formatYtelseType: (ytelseType: YtelsePeriode['ytelseType']) => string,
+  formatYtelseType: (ytelseType: FagsakYtelseType) => string,
   formatStatus: (status: YtelsePeriode['status']) => string,
 ) => (
   <VStack gap="space-4" className={styles['detaljerPopover']}>
@@ -108,7 +106,7 @@ const YtelserFaktaIndex = ({ behandlingUuid, gjeldendeSaksnummer }: YtelserFakta
   const { data } = useSuspenseQuery(useYtelserOptions(behandlingUuid));
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
-  const formatYtelseType = (ytelseType: RelatertYtelseResponse['ytelseType']) =>
+  const formatYtelseType = (ytelseType: FagsakYtelseType) =>
     kodeverkoppslag.k9sak.fagsakYtelseTyper(ytelseType, OrUndefined)?.navn ?? ytelseType;
 
   const formatStatus = (status: RelatertYtelseData['status']) =>
