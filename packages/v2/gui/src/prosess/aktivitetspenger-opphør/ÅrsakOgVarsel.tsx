@@ -33,7 +33,7 @@ interface FormData {
       opphørsdato: string;
       årsak: string;
       begrunnelse: string;
-      åpenbarGrunnTilIkkeVarsle: 'ja' | 'nei' | '';
+      skalSendeVarselOmOpphør: 'ja' | 'nei' | '';
       opphøreEllerAvslå: 'opphøre' | 'avslå' | '';
       avslagFom: string;
       avslagTom: string;
@@ -65,8 +65,8 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
               : '',
         opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
         årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
-        åpenbarGrunnTilIkkeVarsle:
-          p.avklaring?.skalSendeVarsel === true ? 'nei' : p.avklaring?.skalSendeVarsel === false ? 'ja' : '',
+        skalSendeVarselOmOpphør:
+          p.avklaring?.skalSendeVarsel === true ? 'ja' : p.avklaring?.skalSendeVarsel === false ? 'nei' : '',
       },
     ]),
   ),
@@ -144,7 +144,7 @@ export const AarsakOgVarsel = ({
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedGrunnlag),
   });
-  const åpenbarGrunnTilIkkeVarsle = formHook.watch(`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`);
+  const skalSendeVarselOmOpphør = formHook.watch(`perioder.${selectedId}.skalSendeVarselOmOpphør`);
   const opphøreEllerAvslå = formHook.watch(`perioder.${selectedId}.opphøreEllerAvslå`);
   const valgtÅrsak = formHook.watch(`perioder.${selectedId}.årsak`);
   const valgtÅrsakErAnnet = valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
@@ -160,7 +160,7 @@ export const AarsakOgVarsel = ({
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
       const isOpphør = selectedFormPeriod.opphøreEllerAvslå === 'opphøre';
-      const skalSendeVarsel = selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'nei';
+      const skalSendeVarsel = selectedFormPeriod.skalSendeVarselOmOpphør === 'ja';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
         begrunnelse: selectedFormPeriod.begrunnelse,
@@ -192,7 +192,7 @@ export const AarsakOgVarsel = ({
     },
   });
 
-  const skalSendeForhåndsvarsel = åpenbarGrunnTilIkkeVarsle === 'nei';
+  const skalSendeForhåndsvarsel = skalSendeVarselOmOpphør === 'ja';
   const valgtPeriode = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
   const readOnlyForValgtPeriode =
     !!valgtPeriode && (!valgtPeriode.avklaring || valgtPeriode.avklaring?.kanRedigeres !== true);
@@ -352,9 +352,9 @@ export const AarsakOgVarsel = ({
                 <RhfRadioGroup
                   key={`${selectedId}-varsle`}
                   control={formHook.control}
-                  name={`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`}
-                  legend="Er det åpenbar grunn til å ikke varsle bruker?"
-                  description="For eksempel at bruker har varslet flytting selv."
+                  name={`perioder.${selectedId}.skalSendeVarselOmOpphør`}
+                  legend="Skal du sende varsel om opphør?"
+                  description="Hvis det er en god grunn til det, kan du la være å sende varsel. For eksempel at bruker har kommet med opplysningene selv."
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
@@ -373,7 +373,7 @@ export const AarsakOgVarsel = ({
                     maxLength={1000}
                   />
                 )}
-                {åpenbarGrunnTilIkkeVarsle === 'ja' && (
+                {skalSendeVarselOmOpphør === 'nei' && (
                   <RhfTextarea
                     control={formHook.control}
                     name={`perioder.${selectedId}.begrunnelseForIkkeVarsle`}
