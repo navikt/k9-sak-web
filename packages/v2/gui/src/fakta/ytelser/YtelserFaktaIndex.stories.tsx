@@ -92,7 +92,7 @@ export const DetaljerÅpne: Story = {
 
     await userEvent.click(firstPeriod);
 
-    await expect(firstPeriod).toHaveClass('aksel-timeline__period--selected');
+    await expect(firstPeriod).toHaveAttribute('aria-current', 'true');
     await expect(await screen.findByText('Periode: 01.06.2026 – 31.10.2026')).toBeVisible();
     await expect(await screen.findByRole('link', { name: 'PSB002' })).toBeVisible();
   },
