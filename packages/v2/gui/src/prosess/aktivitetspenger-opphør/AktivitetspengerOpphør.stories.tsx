@@ -225,7 +225,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
     });
 
     await step('Fritekstfeltet er skjult før "Annet" er valgt', async () => {
-      await expect(canvas.queryByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i })).toBeNull();
+      await expect(canvas.queryByRole('textbox', { name: /skriv inn hvor du har fått opplysningene fra/i })).toBeNull();
     });
 
     await step('Velg kilde "Annet"', async () => {
@@ -237,7 +237,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
     await step('Fyll inn hvor opplysningene kommer fra', async () => {
       await userEvent.type(
-        await canvas.findByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i }),
+        await canvas.findByRole('textbox', { name: /skriv inn hvor du har fått opplysningene fra/i }),
         'Opplyst av veileder ved lokalkontoret',
       );
     });
@@ -445,7 +445,7 @@ export const ÅrsakOgVarselAvslå: Story = {
     await step('Velg kilde til opplysningene', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
-        'Folkeregisteret',
+        'Register',
       );
     });
 

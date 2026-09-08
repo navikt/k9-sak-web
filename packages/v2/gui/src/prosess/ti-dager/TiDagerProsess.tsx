@@ -44,10 +44,11 @@ const lagDefaultValues = (
   opplysninger: RettFraDagEnVisningDto,
   aksjonspunkter: Pick<AksjonspunktDto, 'definisjon' | 'begrunnelse' | 'status'>[],
 ): TiDagerFormData => ({
-  vurderinger: opplysninger.journalposter.map(jp => ({
-    journalpostId: jp.journalpostId,
-    harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
-  })),
+  vurderinger:
+    opplysninger?.journalposter?.map(jp => ({
+      journalpostId: jp.journalpostId,
+      harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
+    })) ?? [],
   begrunnelse: aksjonspunkter[0]?.begrunnelse ?? '',
 });
 
