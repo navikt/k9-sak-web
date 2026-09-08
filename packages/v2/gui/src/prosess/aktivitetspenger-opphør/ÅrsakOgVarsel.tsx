@@ -305,7 +305,7 @@ export const AarsakOgVarsel = ({
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
-                  label="Årsak"
+                  label="Velg årsak"
                   readOnly={isFormLocked}
                   validate={[required]}
                   selectValues={relevanteBostedsvilkårIkkeOppfyltÅrsaker.map(årsak => (
