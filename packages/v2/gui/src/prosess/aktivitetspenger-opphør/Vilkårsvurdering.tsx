@@ -108,7 +108,7 @@ export const Vilkaarsvurdering = ({
               tom: valgtPeriode?.periode?.tom,
             },
             fritekstVurderingBrev:
-              selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : '',
+              selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
           },
         ],
       };

@@ -283,6 +283,9 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      bekreftAksjonspunkt: fn(),
+    }) as AktivitetspengerApi,
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
@@ -310,6 +313,19 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 
     await step('Callback er kalt etter innsending', async () => {
       await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+
+    await step('Payload inneholder ikke tom fritekst', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
+        expect.objectContaining({
+          vurdertePerioder: [
+            expect.objectContaining({
+              erVilkårOppfylt: true,
+              fritekstVurderingBrev: undefined,
+            }),
+          ],
+        }),
+      ]);
     });
   },
 };
