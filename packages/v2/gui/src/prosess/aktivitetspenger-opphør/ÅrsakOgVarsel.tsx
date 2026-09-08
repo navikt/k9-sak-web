@@ -32,7 +32,6 @@ interface FormData {
     {
       opphørsdato: string;
       årsak: string;
-      begrunnelse: string;
       skalSendeVarselOmOpphør: 'ja' | 'nei' | '';
       opphøreEllerAvslå: 'opphøre' | 'avslå' | '';
       avslagFom: string;
@@ -52,7 +51,6 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
       {
         avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
         avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
-        begrunnelse: p.avklaring?.begrunnelse ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
         forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
         kilde: p.avklaring?.kilde ?? '',
@@ -163,7 +161,6 @@ export const AarsakOgVarsel = ({
       const skalSendeVarsel = selectedFormPeriod.skalSendeVarselOmOpphør === 'ja';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
-        begrunnelse: selectedFormPeriod.begrunnelse,
         avklaringer: [
           {
             periode: {
@@ -172,7 +169,6 @@ export const AarsakOgVarsel = ({
             },
             skalIkkeSendeVarsel: !skalSendeVarsel,
             vurdering: {
-              begrunnelse: selectedFormPeriod.begrunnelse,
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
               begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
               fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
@@ -341,14 +337,6 @@ export const AarsakOgVarsel = ({
                     maxLength={1000}
                   />
                 )}
-                <RhfTextarea
-                  control={formHook.control}
-                  name={`perioder.${selectedId}.begrunnelse`}
-                  label="Begrunnelse"
-                  readOnly={isFormLocked}
-                  validate={[required, minLength(3), maxLength(4000)]}
-                  resize
-                />
                 <RhfRadioGroup
                   key={`${selectedId}-varsle`}
                   control={formHook.control}
