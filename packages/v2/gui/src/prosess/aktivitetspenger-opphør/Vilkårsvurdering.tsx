@@ -12,7 +12,7 @@ import { RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -31,6 +31,7 @@ interface FormData {
       årsak: BostedsvilkårIkkeOppfyltÅrsak | '';
       begrunnelse: string;
       flyttetFraTrondheim: string;
+      fritekstVurderingBrev: string;
     }
   >;
 }
@@ -43,6 +44,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
         årsak: p.resultat?.ikkeOppfyltÅrsak ?? '',
         begrunnelse: p.resultat?.begrunnelse ?? '',
         flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : p.resultat?.erBosatt === true ? 'nei' : '',
+        fritekstVurderingBrev: p.resultat?.friteksttilBrev ?? '',
       },
     ]),
   ),
@@ -105,6 +107,8 @@ export const Vilkaarsvurdering = ({
               fom: valgtPeriode?.periode?.fom ?? '',
               tom: valgtPeriode?.periode?.tom,
             },
+            fritekstVurderingBrev:
+              selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : '',
           },
         ],
       };
@@ -126,6 +130,10 @@ export const Vilkaarsvurdering = ({
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
   const defaultIsLocked = isVurderBostedvilkårAPSolved || erLokalkontorForeslårAPÅpent;
+  const flyttetFraTrondheim = useWatch({
+    control: formHook.control,
+    name: `perioder.${selectedId}.flyttetFraTrondheim`,
+  });
 
   return (
     <VStack gap="space-20">
@@ -238,6 +246,17 @@ export const Vilkaarsvurdering = ({
                 </Radio>
                 <Radio value="nei">Nei, bruker bor fortsatt i Trondheim kommune</Radio>
               </RhfRadioGroup>
+              {flyttetFraTrondheim === 'ja' && (
+                <RhfTextarea
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.fritekstVurderingBrev`}
+                  label="Fritekst opphørsbrev"
+                  description="Forklar hvorfor vilkåret er opphørt. Teksten vises i vedtaksbrevet."
+                  readOnly={isFormLocked}
+                  validate={[required, minLength(3), maxLength(4000)]}
+                  resize
+                />
+              )}
               {!isFormLocked && (
                 <HStack gap="space-16">
                   <Button type="submit" size="small" loading={isPending}>

@@ -124,7 +124,7 @@ export const AarsakOgVarsel = ({
       .toSorted((a, b) => b.fom.localeCompare(a.fom))
       .map(p => ({
         id: p.fom,
-        status: p.resultat?.erBosatt ? ('success' as const) : ('error' as const),
+        status: p.resultat ? (p.resultat.erBosatt ? ('success' as const) : ('error' as const)) : ('warning' as const),
         label: p.tom ? `${formatDate(p.fom)} - ${formatDate(p.tom)}` : formatDate(p.fom),
         periode: p.tom
           ? {
