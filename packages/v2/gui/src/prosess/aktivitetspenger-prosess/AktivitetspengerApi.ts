@@ -2,6 +2,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import type { AktivitetspengerUtbetaltMånedDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AktivitetspengerUtbetaltMånedDto.js';
+import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
 import type { AsyncPollingStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import { type BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -25,6 +26,7 @@ export interface AktivitetspengerApi {
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto | null>;
   getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
   getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<AktivitetspengerUtbetaltMånedDto[]>;
+  hentPerioderSomKanAvkortes(behandlingUuid: string): Promise<AvkortingsperioderResponse>;
   bekreftAksjonspunkt(
     behandlingUuid: string,
     behandlingVersjon: number,
