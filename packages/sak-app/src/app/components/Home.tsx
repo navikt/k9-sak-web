@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react';
 import { Route, Routes } from 'react-router';
 
 import NotFoundPage from '@k9-sak-web/gui/app/errorhandling/pages/NotFoundPage.js';
@@ -17,8 +16,6 @@ const CloseWindow = () => {
   return <div />;
 };
 
-const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
-
 /**
  * Home
  *
@@ -27,14 +24,14 @@ const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 const Home = () => (
   <ErrorBoundary>
     <div className={styles.content}>
-      <SentryRoutes>
+      <Routes>
         <Route path="/" element={<FagsakSearchIndex />} />
         <Route path={fagsakRoutePath} element={<FagsakIndex />} />
         {/* OBS: AktoerRoutePath brukes av NKS fra Salesforce til K9-sak-web. Kanskje andre også */}
         <Route path={aktoerRoutePath} element={<AktoerIndex />} />
         <Route path="/close" element={<CloseWindow />} />
         <Route path="*" element={<NotFoundPage />} />
-      </SentryRoutes>
+      </Routes>
     </div>
   </ErrorBoundary>
 );
