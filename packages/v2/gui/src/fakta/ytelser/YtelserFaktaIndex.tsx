@@ -1,5 +1,5 @@
-import type { RelatertYtelseData } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakYtelseType.js';
+import type { RelatertYtelseTilstand } from '@k9-sak-web/backend/k9sak/kodeverk/arbeidsforhold/RelatertYtelseTilstand.js';
 import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
@@ -50,7 +50,7 @@ interface YtelserFaktaIndexProps {
 
 const monthsForZoom = (zoom: ZoomLevel) => Number(zoom);
 
-const statusTilTimelineStatus = (status: RelatertYtelseData['status']) => {
+const statusTilTimelineStatus = (status: RelatertYtelseTilstand) => {
   switch (status) {
     case 'AVSLUTTET':
     case 'LØPENDE':
@@ -63,7 +63,7 @@ const statusTilTimelineStatus = (status: RelatertYtelseData['status']) => {
   }
 };
 
-const statusTilPeriodeIkon = (status: RelatertYtelseData['status']) => {
+const statusTilPeriodeIkon = (status: RelatertYtelseTilstand) => {
   switch (status) {
     case 'AVSLUTTET':
     case 'LØPENDE':
@@ -79,7 +79,7 @@ const statusTilPeriodeIkon = (status: RelatertYtelseData['status']) => {
 const lagDetaljinnhold = (
   rad: YtelsePeriode,
   formatYtelseType: (ytelseType: FagsakYtelseType) => string,
-  formatStatus: (status: YtelsePeriode['status']) => string,
+  formatStatus: (status: RelatertYtelseTilstand) => string,
 ) => (
   <VStack gap="space-4" className={styles['detaljerPopover']}>
     <Label size="small" as="p">
@@ -109,7 +109,7 @@ const YtelserFaktaIndex = ({ behandlingUuid, gjeldendeSaksnummer }: YtelserFakta
   const formatYtelseType = (ytelseType: FagsakYtelseType) =>
     kodeverkoppslag.k9sak.fagsakYtelseTyper(ytelseType, OrUndefined)?.navn ?? ytelseType;
 
-  const formatStatus = (status: RelatertYtelseData['status']) =>
+  const formatStatus = (status: RelatertYtelseTilstand) =>
     kodeverkoppslag.k9sak.relatertYtelseTilstander(status, OrUndefined)?.navn ?? status;
 
   const perioder = lagYtelsePerioder(data);
