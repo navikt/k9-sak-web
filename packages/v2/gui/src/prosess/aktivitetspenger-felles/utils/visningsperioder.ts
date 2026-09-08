@@ -94,7 +94,7 @@ export const byggVisningsperioder = (
       });
       periodeIndex += 1;
     } else if (periode) {
-      visningsperioder.push({ ...periode, visTom: !!nestePeriode });
+      visningsperioder.push({ ...periode, visTom: nestePeriode && nestePeriode?.vilkarStatus !== Utfall.IKKE_VURDERT });
     }
   }
 
