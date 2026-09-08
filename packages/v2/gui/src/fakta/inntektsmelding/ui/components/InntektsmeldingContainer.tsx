@@ -11,7 +11,6 @@ import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
-  ingenTilstanderHarMangler,
   transformKompletthetsdata,
 } from '../../util/utils';
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
@@ -70,11 +69,9 @@ const InntektsmeldingContainer = () => {
 
   const harAktivtAksjonspunkt = !!aktivtAksjonspunkt;
   const harEndretTidligereVurdering = !aktivtAksjonspunkt && sisteAksjonspunkt && formState.isDirty;
-  const ingenTilstanderMangler = ingenTilstanderHarMangler(tilstanderMedUiState);
-  const ferdigVurdert = alleTilstanderHarVurdering && ingenTilstanderMangler;
   const kanSendeInnFlereVurderinger =
     !readOnly && harFlereTilstanderTilVurdering && (harAktivtAksjonspunkt || harEndretTidligereVurdering);
-  const kanFortsetteUtenEndring = !readOnly && harAktivtAksjonspunkt && ferdigVurdert;
+  const kanFortsetteUtenEndring = !readOnly && harAktivtAksjonspunkt && alleTilstanderHarVurdering;
 
   const onSubmit = async (data: FieldValues) => {
     if (!aksjonspunktKode) {
@@ -138,7 +135,7 @@ const InntektsmeldingContainer = () => {
       </Heading>
       {harAktivtAksjonspunkt && (
         <InntektsmeldingAlerts
-          ferdigVurdert={ferdigVurdert}
+          ferdigVurdert={alleTilstanderHarVurdering}
           kanFortsetteUtenEndring={kanFortsetteUtenEndring}
           isSubmitting={formState.isSubmitting}
           onSubmit={handleSubmit(onSubmitUtenEndring)}
