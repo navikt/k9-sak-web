@@ -211,7 +211,12 @@ export const Vilkaarsvurdering = ({
                 readOnly={isFormLocked}
                 validate={[required]}
                 selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak)
-                  .filter(årsak => årsak !== '-')
+                  .filter(
+                    årsak =>
+                      årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
+                      årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
+                      årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
+                  )
                   .map(årsak => (
                     <option key={årsak} value={årsak}>
                       {opphørsårsakLabels[årsak]}
