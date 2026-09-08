@@ -7,8 +7,8 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -224,7 +224,7 @@ export const AktivitetspengerInngangsvilkår = ({
           />
           <Tabs.Tab
             value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}
-            label="Bosatt i Trondheim"
+            label="Bosatt i Trondheim kommune"
             icon={tabIcon(inngangsvilkårdata.bostedAp, inngangsvilkårdata.bostedVilkår, erBostedBlokkert)}
           />
           <Tabs.Tab

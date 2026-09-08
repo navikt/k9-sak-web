@@ -233,7 +233,7 @@ export const AarsakOgVarsel = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Ikke lenger bosatt i Trondheim"
+        detailHeading="Ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
@@ -354,7 +354,7 @@ export const AarsakOgVarsel = ({
                     control={formHook.control}
                     name={`perioder.${selectedId}.forhåndsvarselTekst`}
                     label="Tekst i forhåndsvarsel (vises til bruker)"
-                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim."
+                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim kommune."
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(1000)]}
                     resize
