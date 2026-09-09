@@ -270,6 +270,11 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
+  {
+    kode: 'FORUTGÅENDE_MEDLEMSKAP',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
+  },
 ];
 
 let skjermlenkeCodeMap: Map<SkjermlenkeTypeWithExtraCodes, SkjermlenkeCode[]>;
