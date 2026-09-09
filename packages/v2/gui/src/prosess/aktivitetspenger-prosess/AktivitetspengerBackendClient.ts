@@ -7,6 +7,7 @@ import {
   aktivitetspenger_hentBostedGrunnlag,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
+  avp_hentPerioderSomKanAvkortesAvNavKontor,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,
@@ -64,6 +65,10 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async getSatsOgUtbetalingPerioder(behandlingUuid: string) {
     return (await avp_getSatsOgUtbetalingPerioderAktivitetspenger({ query: { behandlingUuid } })).data;
+  }
+
+  async hentPerioderSomKanAvkortes(behandlingUuid: string) {
+    return (await avp_hentPerioderSomKanAvkortesAvNavKontor({ query: { behandlingUuid } })).data;
   }
 
   async getInnloggetBruker() {

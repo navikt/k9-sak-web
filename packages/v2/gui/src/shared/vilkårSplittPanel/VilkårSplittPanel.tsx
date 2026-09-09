@@ -31,7 +31,13 @@ interface VilkårSplittPanelProps {
   lovreferanse?: string;
   defaultIsLocked?: boolean;
   readOnly?: boolean;
-  children: ReactNode | ((isLocked: boolean, setIsLocked: React.Dispatch<React.SetStateAction<boolean>>) => ReactNode);
+  children:
+    | ReactNode
+    | ((
+        isLocked: boolean,
+        setIsLocked: React.Dispatch<React.SetStateAction<boolean>>,
+        isDefaultLocked: boolean,
+      ) => ReactNode);
   afterEditButton?: ReactNode;
   lockedContent?: ReactNode;
   isPermanentlyReadOnly?: boolean;
@@ -80,15 +86,17 @@ export const VilkårSplittPanel = ({
   periodColumnHeader = 'Søknadstidspunkt',
   beforeDetailContent,
 }: VilkårSplittPanelProps) => {
+  const sortertePerioder = [...periods].sort((a, b) => (b.periode?.fom ?? b.id).localeCompare(a.periode?.fom ?? a.id));
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
-  const [isFormLocked, setIsFormLocked] = useState(defaultIsLocked);
+  // En periode som allerede har en vurdering (f.eks. fra tidligere behandling) skal starte i lesevisning,
+  // selv om aksjonspunktet er gjenåpnet fordi en annen periode trenger vurdering.
+  const shouldStartLocked = defaultIsLocked || selectedItem?.status !== 'warning';
+  const [isFormLocked, setIsFormLocked] = useState(shouldStartLocked);
 
   useEffect(() => {
-    if (defaultIsLocked) {
-      setIsFormLocked(true);
-    }
-  }, [defaultIsLocked]);
+    setIsFormLocked(shouldStartLocked);
+  }, [selectedItemId, defaultIsLocked, shouldStartLocked]);
 
   const effectiveLocked = isFormLocked || readOnly;
   const canEdit = !readOnly && !isPermanentlyReadOnly;
@@ -120,7 +128,7 @@ export const VilkårSplittPanel = ({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {periods.map(period => (
+              {sortertePerioder.map(period => (
                 <Table.Row
                   key={period.id}
                   onClick={() => onItemSelect(period.id)}
@@ -180,7 +188,7 @@ export const VilkårSplittPanel = ({
                 background={effectiveLocked ? 'info-softA' : undefined}
               >
                 <VStack gap={canEdit ? 'space-12' : 'space-0'}>
-                  {children(effectiveLocked, setIsFormLocked)}
+                  {children(effectiveLocked, setIsFormLocked, defaultIsLocked)}
                   {isFormLocked && lockedContent}
                   {isFormLocked && canEdit && (
                     <Bleed marginInline="space-8">

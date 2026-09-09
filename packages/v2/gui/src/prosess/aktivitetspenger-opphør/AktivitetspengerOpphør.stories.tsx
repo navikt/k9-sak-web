@@ -1,3 +1,4 @@
+/* eslint-disable storybook/prefer-pascal-case */
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -89,7 +90,15 @@ const fakeArgsBase = {
   bostedGrunnlag: { perioder: [] },
 };
 
-export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
+const findVarselRadiogroup = (canvas: { getByText: (matcher: RegExp) => HTMLElement }) => {
+  const varsleGroup = canvas.getByText(/skal du sende varsel om opphør\?/i).closest('fieldset');
+  if (!varsleGroup) {
+    throw new Error('Fant ikke radiogruppen for "Skal du sende varsel om opphør?"');
+  }
+  return varsleGroup;
+};
+
+export const ÅrsakOgVarselOpphoreUtenVarsel: Story = {
   args: {
     ...fakeArgsBase,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
@@ -122,14 +131,14 @@ export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
     });
 
-    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    await step('Svar "Nei" — varsel skal ikke sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
     });
 
     await step('Fyll inn begrunnelse for å ikke varsle', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
         'Bruker varslet om flytting selv',
       );
     });
@@ -177,9 +186,9 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
     });
 
-    await step('Svar "Nei" — varsel skal sendes', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
+    await step('Svar "Ja" — varsel skal sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
     });
 
     await step('Send skjema — modal skal åpne seg', async () => {
@@ -224,7 +233,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
     });
 
     await step('Fritekstfeltet er skjult før "Annet" er valgt', async () => {
-      await expect(canvas.queryByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i })).toBeNull();
+      await expect(canvas.queryByRole('textbox', { name: /skriv inn hvor du har fått opplysningene fra/i })).toBeNull();
     });
 
     await step('Velg kilde "Annet"', async () => {
@@ -236,7 +245,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
     await step('Fyll inn hvor opplysningene kommer fra', async () => {
       await userEvent.type(
-        await canvas.findByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i }),
+        await canvas.findByRole('textbox', { name: /skriv inn hvor du har fått opplysningene fra/i }),
         'Opplyst av veileder ved lokalkontoret',
       );
     });
@@ -245,14 +254,14 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
     });
 
-    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    await step('Svar "Nei" — varsel skal ikke sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
     });
 
     await step('Fyll inn begrunnelse for å ikke varsle', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
         'Bruker varslet om flytting selv',
       );
     });
@@ -444,7 +453,7 @@ export const ÅrsakOgVarselAvslå: Story = {
     await step('Velg kilde til opplysningene', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
-        'Folkeregisteret',
+        'Register',
       );
     });
 
@@ -452,14 +461,14 @@ export const ÅrsakOgVarselAvslå: Story = {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for avslag');
     });
 
-    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    await step('Svar "Nei" — varsel skal ikke sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
     });
 
     await step('Fyll inn begrunnelse for å ikke varsle', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
         'Bruker ble varslet på annen måte',
       );
     });

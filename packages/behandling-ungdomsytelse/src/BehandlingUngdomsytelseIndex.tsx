@@ -21,7 +21,10 @@ const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.VILKAR },
   { key: UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
-  { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
+  /*
+  Simulering er ikke klart
+  */
+  //   { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT },
 ];
 
