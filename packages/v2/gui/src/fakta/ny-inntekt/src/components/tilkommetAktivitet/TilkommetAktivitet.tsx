@@ -8,6 +8,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 
 import { ErrorBoundary } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@navikt/ft-utils';
+import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
 
 import type {
   TilkommetAktivitetFieldValues,
@@ -15,7 +16,6 @@ import type {
   TilkommetAktivitetValues,
   TilkommetInntektsforholdFieldValues,
 } from '../../types/FordelBeregningsgrunnlagPanelValues.js';
-import { FaktaFordelBeregningAvklaringsbehovCode } from '../../types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
 import type {
   VurderNyttInntektsforholdAP,
   VurderNyttInntektsforholTransformedValues,
@@ -34,7 +34,7 @@ import type { BeregningsgrunnlagTilBekreftelse } from '../../types/Beregningsgru
 import styles from './tilkommetAktivitet.module.css';
 
 dayjs.extend(isBetween);
-const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
+const { VURDER_NYTT_INNTKTSFRHLD } = AvklaringsbehovDefinisjon;
 export const FORM_NAME = 'VURDER_TILKOMMET_AKTIVITET_FORM';
 
 const findAvklaringsbehov = (avklaringsbehov?: BeregningAvklaringsbehov[]): BeregningAvklaringsbehov => {
@@ -102,9 +102,7 @@ const buildInitialValues = (
   vilkarperioder: Vilkårperiode[],
 ): TilkommetAktivitetFormValues => ({
   [FORM_NAME]: beregningsgrunnlagListe
-    .filter(bg =>
-      bg.avklaringsbehov.some(v => v.definisjon === FaktaFordelBeregningAvklaringsbehovCode.VURDER_NYTT_INNTKTSFRHLD),
-    )
+    .filter(bg => bg.avklaringsbehov.some(v => v.definisjon === VURDER_NYTT_INNTKTSFRHLD))
     .map(bg => buildFieldInitialValues(bg, vilkarperioder)),
 });
 

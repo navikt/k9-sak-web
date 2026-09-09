@@ -1,11 +1,11 @@
 import { Tabs, VStack } from '@navikt/ds-react';
+import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
 
 import { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel.js';
 import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues.js';
-import { FaktaFordelBeregningAvklaringsbehovCode } from './src/types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
 import { type VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP.js';
 import type { Vilkår, Vilkårperiode } from './src/types/Vilkår.js';
 
@@ -22,7 +22,7 @@ const intl = createIntl(
   cache,
 );
 
-const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
+const { VURDER_NYTT_INNTKTSFRHLD } = AvklaringsbehovDefinisjon;
 
 const lagLabel = (bg: Beregningsgrunnlag, vilkårsperioder: Vilkårperiode[]) => {
   const vilkårPeriode = finnVilkårsperiode(vilkårsperioder, bg.vilkårsperiodeFom);
