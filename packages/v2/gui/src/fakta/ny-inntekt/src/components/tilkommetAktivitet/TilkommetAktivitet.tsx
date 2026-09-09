@@ -4,8 +4,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
 import { ErrorBoundary } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@navikt/ft-utils';
 import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
@@ -32,6 +30,9 @@ import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
 import type { Inntektsforhold, VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
 import type { BeregningsgrunnlagTilBekreftelse } from '../../types/BeregningsgrunnlagTilBekreftelse.js';
 import styles from './tilkommetAktivitet.module.css';
+import { harAksjonspunkt } from '../../../../../utils/aksjonspunktUtils.js';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 dayjs.extend(isBetween);
 const { VURDER_NYTT_INNTKTSFRHLD } = AvklaringsbehovDefinisjon;
@@ -187,6 +188,7 @@ const transformValues = (
 };
 
 type Props = {
+  aksjonspunkter: AksjonspunktDto[];
   aktivtBeregningsgrunnlagIndeks: number;
   formData?: TilkommetAktivitetFormValues;
   setFormData: (data: TilkommetAktivitetFormValues) => void;
@@ -199,6 +201,7 @@ type Props = {
 };
 
 export const TilkommetAktivitet = ({
+  aksjonspunkter,
   aktivtBeregningsgrunnlagIndeks,
   formData,
   setFormData,
@@ -232,9 +235,10 @@ export const TilkommetAktivitet = ({
     control,
   });
 
-  const gjeldendeBeregningsgrunnlag = beregningsgrunnlagListe[aktivtBeregningsgrunnlagIndeks];
-  const ap = findAvklaringsbehov(gjeldendeBeregningsgrunnlag?.avklaringsbehov);
-  const erAksjonspunktÅpent = ap ? isAksjonspunktOpen(ap.status) : false;
+  const harAksjonspunktVurderNyttInntektsforhold = harAksjonspunkt(
+    aksjonspunkter,
+    aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD,
+  );
 
   return (
     <ErrorBoundary errorMessage="Noe gikk galt ved visning av tilkommet aktivitet">
@@ -268,14 +272,14 @@ export const TilkommetAktivitet = ({
                   formFieldIndex={formFieldIndex}
                   readOnly={
                     readOnly ||
-                    !erAksjonspunktÅpent ||
+                    !harAksjonspunktVurderNyttInntektsforhold ||
                     !vurderesIBehandlingen(
                       vilkarperioder,
                       beregningsgrunnlagListe[beregningsgrunnlagIndeks]?.vilkårsperiodeFom,
                     )
                   }
                   submittable={submittable}
-                  erAksjonspunktÅpent={erAksjonspunktÅpent}
+                  erAksjonspunktÅpent={harAksjonspunktVurderNyttInntektsforhold}
                   arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 />
               </div>
