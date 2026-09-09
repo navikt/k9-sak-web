@@ -169,6 +169,7 @@ export const AarsakOgVarsel = ({
             },
             skalIkkeSendeVarsel: !skalSendeVarsel,
             vurdering: {
+              begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
               begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
               fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
