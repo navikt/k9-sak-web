@@ -268,6 +268,7 @@ export const TilkommetAktivitet = ({
                   formFieldIndex={formFieldIndex}
                   readOnly={
                     readOnly ||
+                    !erAksjonspunktÅpent ||
                     !vurderesIBehandlingen(
                       vilkarperioder,
                       beregningsgrunnlagListe[beregningsgrunnlagIndeks]?.vilkårsperiodeFom,
