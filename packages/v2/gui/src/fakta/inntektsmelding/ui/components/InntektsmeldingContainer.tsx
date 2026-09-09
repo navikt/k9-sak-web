@@ -11,6 +11,7 @@ import {
   finnSisteAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
+  ingenTilstanderHarMangler,
   transformKompletthetsdata,
 } from '../../util/utils';
 import InntektsmeldingAlerts from './InntektsmeldingAlerts.js';
@@ -62,6 +63,7 @@ const InntektsmeldingContainer = () => {
   ];
   const harFlereTilstanderTilVurdering = tilstanderTilVurdering.length > 1;
 
+  const harIngenManglendeInntektsmeldinger = ingenTilstanderHarMangler(tilstanderMedUiState);
   const alleTilstanderHarVurdering = tilstanderMedUiState
     .filter(t => t.tilVurdering)
     .map(t => t.vurdering)
@@ -137,6 +139,7 @@ const InntektsmeldingContainer = () => {
         <InntektsmeldingAlerts
           ferdigVurdert={alleTilstanderHarVurdering}
           kanFortsetteUtenEndring={kanFortsetteUtenEndring}
+          manglerInntektsmelding={!harIngenManglendeInntektsmeldinger}
           isSubmitting={formState.isSubmitting}
           onSubmit={handleSubmit(onSubmitUtenEndring)}
         />
