@@ -61,6 +61,7 @@ export const AktivitetSkjema = ({
                   label="Fra og med"
                   size="small"
                   readOnly
+                  disableWeekends
                 />
                 <Datovelger
                   key={`${selectedId}-tom`}
@@ -77,6 +78,7 @@ export const AktivitetSkjema = ({
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                   toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                  disableWeekends
                 />
                 {muligAvkortingPeriode && (
                   <RhfCheckbox

@@ -96,6 +96,7 @@ export const BostedSkjema = ({
                 label="Fra"
                 size="small"
                 readOnly
+                disableWeekends
               />
               <Datovelger
                 key={`${selectedId}-maksdato`}
@@ -112,6 +113,7 @@ export const BostedSkjema = ({
                 ]}
                 fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                 toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                disableWeekends
               />
               {muligAvkortingPeriode && (
                 <RhfCheckbox

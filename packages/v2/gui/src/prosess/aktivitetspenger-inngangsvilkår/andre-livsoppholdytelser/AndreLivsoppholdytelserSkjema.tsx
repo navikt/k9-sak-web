@@ -87,6 +87,7 @@ export const AndreLivsoppholdytelserSkjema = ({
                   label="Fra"
                   size="small"
                   readOnly
+                  disableWeekends
                 />
                 <Datovelger
                   key={`${selectedId}-maksdato`}
@@ -103,6 +104,7 @@ export const AndreLivsoppholdytelserSkjema = ({
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                   toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                  disableWeekends
                 />
                 {muligAvkortingPeriode && (
                   <RhfCheckbox

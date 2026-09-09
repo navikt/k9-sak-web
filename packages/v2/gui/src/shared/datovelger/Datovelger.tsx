@@ -16,6 +16,7 @@ const Datovelger = ({
   disabledDays,
   showErrorMessage = true,
   defaultMonth,
+  disableWeekends,
 }: {
   name: string;
   label: string;
@@ -28,6 +29,7 @@ const Datovelger = ({
   disabledDays?: DatePickerProps['disabled'];
   showErrorMessage?: boolean;
   defaultMonth?: Date;
+  disableWeekends?: boolean;
 }) => {
   const formMethods = useFormContext();
   const controller = useController({
@@ -61,6 +63,7 @@ const Datovelger = ({
       toDate={toDate}
       size={size}
       defaultMonth={defaultMonth}
+      disableWeekends={disableWeekends}
     />
   );
 };

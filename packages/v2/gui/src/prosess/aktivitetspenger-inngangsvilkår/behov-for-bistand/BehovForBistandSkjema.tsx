@@ -63,6 +63,7 @@ export const BehovForBistandSkjema = ({
                   label="Fra"
                   size="small"
                   readOnly
+                  disableWeekends
                 />
                 <Datovelger
                   key={`${selectedId}-maksdato`}
@@ -79,6 +80,7 @@ export const BehovForBistandSkjema = ({
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                   toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                  disableWeekends
                 />
                 {muligAvkortingPeriode && (
                   <RhfCheckbox

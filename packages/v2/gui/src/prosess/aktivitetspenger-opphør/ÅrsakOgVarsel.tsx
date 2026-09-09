@@ -9,11 +9,12 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Datovelger from '../../shared/datovelger/Datovelger.js';
 import { VilkårSplittPanel, type VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -269,8 +270,7 @@ export const AarsakOgVarsel = ({
                   <Radio value="avslå">Avslå en innvilget periode</Radio>
                 </RhfRadioGroup>
                 {opphøreEllerAvslå === 'opphøre' && (
-                  <RhfDatepicker
-                    control={formHook.control}
+                  <Datovelger
                     name={`perioder.${selectedId}.opphørsdato`}
                     label="Opphøre fra og med"
                     readOnly={isFormLocked}
@@ -278,12 +278,12 @@ export const AarsakOgVarsel = ({
                     defaultMonth={dagensDato}
                     fromDate={dateRange?.fromDate}
                     toDate={dateRange?.toDate}
+                    disableWeekends
                   />
                 )}
                 {opphøreEllerAvslå === 'avslå' && (
                   <HStack gap="space-8">
-                    <RhfDatepicker
-                      control={formHook.control}
+                    <Datovelger
                       name={`perioder.${selectedId}.avslagFom`}
                       label="Fra og med"
                       readOnly={isFormLocked}
@@ -291,9 +291,9 @@ export const AarsakOgVarsel = ({
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
                       defaultMonth={dagensDato}
+                      disableWeekends
                     />
-                    <RhfDatepicker
-                      control={formHook.control}
+                    <Datovelger
                       name={`perioder.${selectedId}.avslagTom`}
                       label="Til og med"
                       readOnly={isFormLocked}
@@ -301,6 +301,7 @@ export const AarsakOgVarsel = ({
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
                       defaultMonth={dagensDato}
+                      disableWeekends
                     />
                   </HStack>
                 )}

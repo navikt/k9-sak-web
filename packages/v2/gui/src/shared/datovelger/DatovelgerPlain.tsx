@@ -3,7 +3,10 @@ import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import React from 'react';
 
-export type DatovelgerProps = Pick<DatePickerProps, 'defaultMonth' | 'fromDate' | 'toDate' | 'className' | 'disabled'> &
+export type DatovelgerProps = Pick<
+  DatePickerProps,
+  'defaultMonth' | 'fromDate' | 'toDate' | 'className' | 'disabled' | 'disableWeekends'
+> &
   Pick<DateInputProps, 'hideLabel' | 'size' | 'label' | 'description' | 'id'> & {
     onChange: (value: string) => void;
     errorMessage?: React.ReactNode | string;
@@ -29,6 +32,7 @@ const DatovelgerPlain = ({
   size = 'small',
   id,
   disabled,
+  disableWeekends,
 }: DatovelgerProps) => {
   const fromDateDefault = dayjs().subtract(5, 'year').toDate();
   const toDateDefault = dayjs().add(5, 'year').toDate();
@@ -54,6 +58,7 @@ const DatovelgerPlain = ({
     onDateChange: onDateChange,
     defaultSelected: defaultSelected,
     disabled: disabled,
+    disableWeekends,
   });
 
   return (
