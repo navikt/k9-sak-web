@@ -33,12 +33,18 @@ class NyInntektPanelDef extends FaktaPanelDef {
     );
   };
 
-  getOverstyrVisningAvKomponent = ({ beregningsgrunnlag }: { beregningsgrunnlag: BeregningsgrunnlagDto }) => {
+  getOverstyrVisningAvKomponent = ({ beregningsgrunnlag: bg }: { beregningsgrunnlag: any }) => {
+    // typen er riktig etter konverterKodeverkTilKode
+    const beregningsgrunnlag: BeregningsgrunnlagDto[] = JSON.parse(JSON.stringify(bg));
+    konverterKodeverkTilKode(beregningsgrunnlag);
+
     const harNyInntekt =
-      beregningsgrunnlag.avklaringsbehov &&
-      beregningsgrunnlag.avklaringsbehov.filter(
-        v => v.definisjon === AvklaringsbehovDefinisjon.VURDER_NYTT_INNTKTSFRHLD,
-      ).length > 0;
+      beregningsgrunnlag.some(bg => bg.avklaringsbehov) &&
+      beregningsgrunnlag.some(
+        bg =>
+          bg.avklaringsbehov.filter(v => v.definisjon === AvklaringsbehovDefinisjon.VURDER_NYTT_INNTKTSFRHLD).length >
+          0,
+      );
     return harNyInntekt;
   };
 
