@@ -161,6 +161,7 @@ export const AarsakOgVarsel = ({
       const skalSendeVarsel = selectedFormPeriod.skalSendeVarselOmOpphør === 'ja';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
+        begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
         avklaringer: [
           {
             periode: {
