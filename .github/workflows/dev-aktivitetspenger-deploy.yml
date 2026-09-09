@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - copilot/implementer-aktivitetspenger-opphor
+      - master
 
 jobs:
   build-deploy:

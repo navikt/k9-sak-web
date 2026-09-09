@@ -53,7 +53,7 @@ const createOptions = (bt: KodeverkObject, enabledBehandlingstyper: KodeverkObje
 
 const getÅrsakLabel = (årsak: string) => {
   if (årsak === BehandlingÅrsakType.ENDRET_BOSTED) {
-    return '§2 - Ikke bosatt i Trondheim';
+    return '§2 - Ikke bosatt i Trondheim kommune';
   }
   return årsak;
 };

@@ -7,19 +7,21 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { CheckmarkIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import { Alder } from './Alder';
-import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
-import { BehovForBistand } from './BehovForBistand';
+import { Aktivitet } from './aktivitet/Aktivitet';
+import { Alder } from './alder/Alder';
+import { AndreLivsoppholdytelser } from './andre-livsoppholdytelser/AndreLivsoppholdytelser';
+import { BehovForBistand } from './behov-for-bistand/BehovForBistand';
 import { Beslutter } from './Beslutter';
-import { Bosted } from './Bosted';
-import { Søknadsfrist } from './Søknadsfrist';
+import { Bosted } from './bosted/Bosted';
+import { Søknadsfrist } from './søknadsfrist/Søknadsfrist';
 import { InngangsvilkårTab } from './types';
 
 interface InngangsvilkårData {
@@ -28,6 +30,8 @@ interface InngangsvilkårData {
   alderVilkår?: VilkårMedPerioderDto;
   vurderBistandsvilkårAp?: AksjonspunktDto;
   vurderBistandsvilkårVilkår?: VilkårMedPerioderDto;
+  vurderAktivitetsvilkårAp?: AksjonspunktDto;
+  vurderAktivitetsvilkårVilkår?: VilkårMedPerioderDto;
   lokalkontorForeslårVilkårAp?: AksjonspunktDto;
   lokalkontorBeslutterAp?: AksjonspunktDto;
   bostedAp?: AksjonspunktDto;
@@ -47,6 +51,8 @@ const samleInngangsvilkårData = (
   alderVilkår: vilkår.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR),
   vurderBistandsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
   vurderBistandsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.BISTANDSVILKÅR),
+  vurderAktivitetsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR),
+  vurderAktivitetsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.AKTIVITETSVILKÅR),
   lokalkontorForeslårVilkårAp: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),
@@ -66,14 +72,19 @@ const CustomWarningIcon = () => (
   <ExclamationmarkTriangleFillIcon fontSize={24} color="var(--ax-text-warning-decoration)" />
 );
 
-const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderDto) => {
+const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokkertAvTidligereSteg = false) => {
+  if (erBlokkertAvTidligereSteg) return undefined;
   if (!ap && !vilkår) return undefined;
   if (ap) {
     if (aksjonspunktErÅpent(ap)) {
       return <CustomWarningIcon />;
     }
   }
-  if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.OPPFYLT)) {
+  if (
+    vilkår?.perioder?.length &&
+    vilkår.perioder.some(p => p.vilkarStatus === Utfall.OPPFYLT) &&
+    !vilkår.perioder.some(p => p.vilkarStatus === Utfall.IKKE_VURDERT)
+  ) {
     return <CustomCheckmarkIcon />;
   }
   if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
@@ -81,6 +92,15 @@ const tabIcon = (ap?: AksjonspunktDto | undefined, vilkår?: VilkårMedPerioderD
   }
   return undefined;
 };
+
+const harUløstTidligereSteg = (...aksjonspunkter: Array<AksjonspunktDto | undefined>) =>
+  aksjonspunkter.some(aksjonspunktErÅpent);
+
+const vilkårErFerdigbehandlet = (vilkår?: VilkårMedPerioderDto) =>
+  !!vilkår?.perioder?.length && vilkår.perioder.every(p => p.vilkarStatus !== Utfall.IKKE_VURDERT);
+
+const stegErFerdigbehandlet = (aksjonspunkt?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) =>
+  aksjonspunkt?.status === AksjonspunktStatus.UTFØRT || vilkårErFerdigbehandlet(vilkår);
 
 const utledAktivTab = (data: InngangsvilkårData) => {
   // Prioriter åpne aksjonspunkter som krever handling
@@ -90,21 +110,41 @@ const utledAktivTab = (data: InngangsvilkårData) => {
   if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
   }
+  if (data.vurderBistandsvilkårAp?.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.BEHOV_FOR_BISTAND;
+  }
+  if (data.vurderAktivitetsvilkårAp?.status === AksjonspunktStatus.OPPRETTET) {
+    return InngangsvilkårTab.AKTIVITET;
+  }
   if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BESLUTTER;
   }
 
-  // Håndter avslag-flow: hvis bosted eller andre livsoppholdytelser er avslått,
-  // vis den sluttførte fanen hvis ingen videre vilkår skal behandles
-  if (data.lokalkontorForeslårVilkårAp) {
-    if (data.bostedAp?.status === AksjonspunktStatus.UTFØRT && !data.andreLivsoppholdytelserAp) {
-      return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
-    }
-    if (data.andreLivsoppholdytelserAp?.status === AksjonspunktStatus.UTFØRT && !data.vurderBistandsvilkårAp) {
-      return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
-    }
+  // Når alle vilkår er ferdigbehandlet, vis det siste løste vilkåret. Ettersom behandlingstypen "Kontroll av inntekt" ikke har aksjonspunkt må vi også sjekke vilkårsperiodene.
+  if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT) {
+    return InngangsvilkårTab.BESLUTTER;
+  }
+  if (stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)) {
+    return InngangsvilkårTab.AKTIVITET;
+  }
+  if (stegErFerdigbehandlet(data.vurderBistandsvilkårAp, data.vurderBistandsvilkårVilkår)) {
+    return InngangsvilkårTab.BEHOV_FOR_BISTAND;
+  }
+  if (stegErFerdigbehandlet(data.andreLivsoppholdytelserAp, data.andreLivsoppholdytelserVilkår)) {
+    return InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER;
+  }
+  if (stegErFerdigbehandlet(data.bostedAp, data.bostedVilkår)) {
+    return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
+  }
+  if (vilkårErFerdigbehandlet(data.alderVilkår)) {
+    return InngangsvilkårTab.ALDER;
   }
 
+  if (vilkårErFerdigbehandlet(data.søknadsfristVilkår)) {
+    return InngangsvilkårTab.SØKNADSFRIST;
+  }
+
+  // siste vilkår som alltid vil være der.
   return InngangsvilkårTab.BEHOV_FOR_BISTAND;
 };
 
@@ -137,6 +177,27 @@ export const AktivitetspengerInngangsvilkår = ({
     !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
 
   const inngangsvilkårdata = useMemo(() => samleInngangsvilkårData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
+  const erAlderBlokkert = harUløstTidligereSteg(inngangsvilkårdata.søknadsfristAp);
+  const erBostedBlokkert = erAlderBlokkert;
+  const erAndreLivsoppholdytelserBlokkert = harUløstTidligereSteg(
+    inngangsvilkårdata.søknadsfristAp,
+    inngangsvilkårdata.bostedAp,
+  );
+  const erBehovForBistandBlokkert = harUløstTidligereSteg(
+    inngangsvilkårdata.søknadsfristAp,
+    inngangsvilkårdata.bostedAp,
+    inngangsvilkårdata.andreLivsoppholdytelserAp,
+  );
+  const erAktivitetBlokkert = harUløstTidligereSteg(
+    inngangsvilkårdata.søknadsfristAp,
+    inngangsvilkårdata.bostedAp,
+    inngangsvilkårdata.andreLivsoppholdytelserAp,
+    inngangsvilkårdata.vurderBistandsvilkårAp,
+  );
+
+  const harVilkårsperioderIAktivitetsvilkåret =
+    inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder?.length &&
+    inngangsvilkårdata.vurderAktivitetsvilkårVilkår.perioder.length > 0;
 
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(inngangsvilkårdata));
 
@@ -159,12 +220,12 @@ export const AktivitetspengerInngangsvilkår = ({
           <Tabs.Tab
             value={InngangsvilkårTab.ALDER}
             label="Alder"
-            icon={tabIcon(undefined, inngangsvilkårdata.alderVilkår)}
+            icon={tabIcon(undefined, inngangsvilkårdata.alderVilkår, erAlderBlokkert)}
           />
           <Tabs.Tab
             value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}
-            label="Bosatt i Trondheim"
-            icon={tabIcon(inngangsvilkårdata.bostedAp, inngangsvilkårdata.bostedVilkår)}
+            label="Bosatt i Trondheim kommune"
+            icon={tabIcon(inngangsvilkårdata.bostedAp, inngangsvilkårdata.bostedVilkår, erBostedBlokkert)}
           />
           <Tabs.Tab
             value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}
@@ -172,13 +233,29 @@ export const AktivitetspengerInngangsvilkår = ({
             icon={tabIcon(
               inngangsvilkårdata.andreLivsoppholdytelserAp,
               inngangsvilkårdata.andreLivsoppholdytelserVilkår,
+              erAndreLivsoppholdytelserBlokkert,
             )}
           />
           <Tabs.Tab
             value={InngangsvilkårTab.BEHOV_FOR_BISTAND}
             label="Behov for bistand"
-            icon={tabIcon(inngangsvilkårdata.vurderBistandsvilkårAp, inngangsvilkårdata.vurderBistandsvilkårVilkår)}
+            icon={tabIcon(
+              inngangsvilkårdata.vurderBistandsvilkårAp,
+              inngangsvilkårdata.vurderBistandsvilkårVilkår,
+              erBehovForBistandBlokkert,
+            )}
           />
+          {inngangsvilkårdata.vurderAktivitetsvilkårAp && (
+            <Tabs.Tab
+              value={InngangsvilkårTab.AKTIVITET}
+              label="Aktivitet"
+              icon={tabIcon(
+                inngangsvilkårdata.vurderAktivitetsvilkårAp,
+                inngangsvilkårdata.vurderAktivitetsvilkårVilkår,
+                erAktivitetBlokkert,
+              )}
+            />
+          )}
           {inngangsvilkårdata.lokalkontorBeslutterAp &&
             aksjonspunktErÅpent(inngangsvilkårdata.lokalkontorBeslutterAp) && (
               <Tabs.Tab
@@ -195,10 +272,14 @@ export const AktivitetspengerInngangsvilkår = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.ALDER}>
-            {inngangsvilkårdata.alderVilkår && <Alder alderVilkår={inngangsvilkårdata.alderVilkår} />}
+            {erAlderBlokkert && <ProsessStegIkkeBehandlet />}
+            {!erAlderBlokkert && inngangsvilkårdata.alderVilkår && (
+              <Alder alderVilkår={inngangsvilkårdata.alderVilkår} />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BOSATT_I_TRONDHEIM}>
-            {inngangsvilkårdata.bostedVilkår && (
+            {erBostedBlokkert && <ProsessStegIkkeBehandlet />}
+            {!erBostedBlokkert && inngangsvilkårdata.bostedVilkår && (
               <Bosted
                 bostedVilkår={inngangsvilkårdata.bostedVilkår}
                 bostedAp={inngangsvilkårdata.bostedAp}
@@ -213,7 +294,8 @@ export const AktivitetspengerInngangsvilkår = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER}>
-            {inngangsvilkårdata.andreLivsoppholdytelserVilkår && (
+            {erAndreLivsoppholdytelserBlokkert && <ProsessStegIkkeBehandlet />}
+            {!erAndreLivsoppholdytelserBlokkert && inngangsvilkårdata.andreLivsoppholdytelserVilkår && (
               <AndreLivsoppholdytelser
                 andreLivsoppholdytelserAp={inngangsvilkårdata.andreLivsoppholdytelserAp}
                 lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
@@ -229,7 +311,8 @@ export const AktivitetspengerInngangsvilkår = ({
             )}
           </Tabs.Panel>
           <Tabs.Panel value={InngangsvilkårTab.BEHOV_FOR_BISTAND}>
-            {inngangsvilkårdata.vurderBistandsvilkårVilkår && (
+            {erBehovForBistandBlokkert && <ProsessStegIkkeBehandlet />}
+            {!erBehovForBistandBlokkert && inngangsvilkårdata.vurderBistandsvilkårVilkår && (
               <BehovForBistand
                 vurderBistandsvilkårVilkår={inngangsvilkårdata.vurderBistandsvilkårVilkår}
                 vurderBistandsvilkårAp={inngangsvilkårdata.vurderBistandsvilkårAp}
@@ -243,6 +326,25 @@ export const AktivitetspengerInngangsvilkår = ({
                 }
               />
             )}
+          </Tabs.Panel>
+          <Tabs.Panel value={InngangsvilkårTab.AKTIVITET}>
+            {erAktivitetBlokkert && <ProsessStegIkkeBehandlet />}
+            {!erAktivitetBlokkert &&
+              inngangsvilkårdata.vurderAktivitetsvilkårVilkår &&
+              harVilkårsperioderIAktivitetsvilkåret && (
+                <Aktivitet
+                  vurderAktivitetsvilkårVilkår={inngangsvilkårdata.vurderAktivitetsvilkårVilkår}
+                  vurderAktivitetsvilkårAp={inngangsvilkårdata.vurderAktivitetsvilkårAp}
+                  lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                  api={api}
+                  behandling={behandling}
+                  onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  readOnly={!kanSaksbehandle}
+                  isPermanentlyReadOnly={
+                    !inngangsvilkårdata.vurderAktivitetsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
+                  }
+                />
+              )}
           </Tabs.Panel>
           {inngangsvilkårdata.lokalkontorBeslutterAp && (
             <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>

@@ -8,7 +8,7 @@ import {
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
 
 interface Props {
   søknadsfristVilkår: VilkårMedPerioderDto;

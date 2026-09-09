@@ -1,5 +1,7 @@
+/* eslint-disable storybook/prefer-pascal-case */
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -7,10 +9,12 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { AktivitetspengerOpphør } from './AktivitetspengerOpphør.js';
 
 const lagAksjonspunkt = (
@@ -57,6 +61,18 @@ const fakeOpphørVilkår = {
   ],
 } as unknown as VilkårMedPerioderDto;
 
+const fakeBostedGrunnlag = {
+  perioder: [
+    {
+      fom: '2026-01-29',
+      tom: '2027-01-28',
+      erBosattITrondheim: false,
+      kilde: 'BRUKER',
+      avklaring: { kanRedigeres: true },
+    },
+  ],
+} as unknown as BostedGrunnlagResponseDto;
+
 const meta = {
   title: 'gui/prosess/aktivitetspenger-opphør/AktivitetspengerOpphør',
   component: AktivitetspengerOpphør,
@@ -75,7 +91,7 @@ export const DefaultStory: Story = {
     vilkår: [fakeOpphørVilkår],
     totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
-    bostedGrunnlag: { perioder: [] },
+    bostedGrunnlag: fakeBostedGrunnlag,
   },
 };
 
@@ -86,10 +102,18 @@ const fakeArgsBase = {
   vilkår: [fakeOpphørVilkår],
   totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
   lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
-  bostedGrunnlag: { perioder: [] },
+  bostedGrunnlag: fakeBostedGrunnlag,
 };
 
-export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
+const findVarselRadiogroup = (canvas: { getByText: (matcher: RegExp) => HTMLElement }) => {
+  const varsleGroup = canvas.getByText(/skal du sende varsel om opphør\?/i).closest('fieldset');
+  if (!varsleGroup) {
+    throw new Error('Fant ikke radiogruppen for "Skal du sende varsel om opphør?"');
+  }
+  return varsleGroup;
+};
+
+export const ÅrsakOgVarselOpphoreUtenVarsel: Story = {
   args: {
     ...fakeArgsBase,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
@@ -107,7 +131,7 @@ export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
     await step('Velg årsak', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /årsak/i }),
-        'Ikke bosatt adresse i Trondheim',
+        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
       );
     });
 
@@ -118,18 +142,14 @@ export const ÅrsakOgVarselOpphøreUtenVarsel: Story = {
       );
     });
 
-    await step('Fyll inn begrunnelse', async () => {
-      await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
-    });
-
-    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    await step('Svar "Nei" — varsel skal ikke sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
     });
 
     await step('Fyll inn begrunnelse for å ikke varsle', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
         'Bruker varslet om flytting selv',
       );
     });
@@ -162,7 +182,7 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
     await step('Velg årsak', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /årsak/i }),
-        'Ikke bosatt adresse i Trondheim',
+        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
       );
     });
 
@@ -173,13 +193,9 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
       );
     });
 
-    await step('Fyll inn begrunnelse', async () => {
-      await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
-    });
-
-    await step('Svar "Nei" — varsel skal sendes', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
+    await step('Svar "Ja" — varsel skal sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
     });
 
     await step('Send skjema — modal skal åpne seg', async () => {
@@ -219,12 +235,12 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
     await step('Velg årsak', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /årsak/i }),
-        'Ikke bosatt adresse i Trondheim',
+        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
       );
     });
 
     await step('Fritekstfeltet er skjult før "Annet" er valgt', async () => {
-      await expect(canvas.queryByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i })).toBeNull();
+      await expect(canvas.queryByRole('textbox', { name: /skriv inn hvor du har fått opplysningene fra/i })).toBeNull();
     });
 
     await step('Velg kilde "Annet"', async () => {
@@ -236,23 +252,19 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
     await step('Fyll inn hvor opplysningene kommer fra', async () => {
       await userEvent.type(
-        await canvas.findByRole('textbox', { name: /beskriv hvor opplysningene kommer fra/i }),
+        await canvas.findByRole('textbox', { name: /skriv inn hvor du har fått opplysningene fra/i }),
         'Opplyst av veileder ved lokalkontoret',
       );
     });
 
-    await step('Fyll inn begrunnelse', async () => {
-      await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for opphør');
-    });
-
-    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    await step('Svar "Nei" — varsel skal ikke sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
     });
 
     await step('Fyll inn begrunnelse for å ikke varsle', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
         'Bruker varslet om flytting selv',
       );
     });
@@ -271,13 +283,16 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      bekreftAksjonspunkt: fn(),
+    }) as AktivitetspengerApi,
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
     await step('Velg opphørsårsak', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /opphørsårsak/i }),
-        'Ikke bosatt adresse i Trondheim',
+        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
       );
     });
 
@@ -298,6 +313,77 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 
     await step('Callback er kalt etter innsending', async () => {
       await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+
+    await step('Payload inneholder ikke tom fritekst', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
+        expect.objectContaining({
+          vurdertePerioder: [
+            expect.objectContaining({
+              erVilkårOppfylt: true,
+              fritekstVurderingBrev: undefined,
+            }),
+          ],
+        }),
+      ]);
+    });
+  },
+};
+
+export const VilkårsvurderingFlyttetMedFritekst: Story = {
+  args: {
+    ...fakeArgsBase,
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      bekreftAksjonspunkt: fn(),
+    }) as AktivitetspengerApi,
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Velg opphørsårsak', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /opphørsårsak/i }),
+        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
+      );
+    });
+
+    await step('Fyll inn begrunnelse', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker har flyttet/i }),
+        'Bruker har flyttet fra Trondheim kommune.',
+      );
+    });
+
+    await step('Velg at bruker har flyttet fra Trondheim', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
+    });
+
+    await step('Fritekstfeltet vises', async () => {
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toBeInTheDocument();
+    });
+
+    await step('Fyll inn fritekst til opphørsbrev', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }),
+        'Bruker har flyttet fra Trondheim kommune.',
+      );
+    });
+
+    await step('Send til beslutter', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    });
+
+    await step('Payload inneholder fritekst til opphørsbrev', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
+        expect.objectContaining({
+          vurdertePerioder: [
+            expect.objectContaining({
+              erVilkårOppfylt: false,
+              fritekstVurderingBrev: 'Bruker har flyttet fra Trondheim kommune.',
+            }),
+          ],
+        }),
+      ]);
     });
   },
 };
@@ -437,29 +523,25 @@ export const ÅrsakOgVarselAvslå: Story = {
     await step('Velg årsak', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /årsak/i }),
-        'Ikke bosatt adresse i Trondheim',
+        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
       );
     });
 
     await step('Velg kilde til opplysningene', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
-        'Folkeregisteret',
+        'Register',
       );
     });
 
-    await step('Fyll inn begrunnelse', async () => {
-      await userEvent.type(canvas.getByRole('textbox', { name: 'Begrunnelse' }), 'Testbegrunnelse for avslag');
-    });
-
-    await step('Svar "Ja" på åpenbar grunn til ikke å varsle', async () => {
-      const varsleGroup = canvas.getByRole('radiogroup', { name: /åpenbar grunn/i });
-      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    await step('Svar "Nei" — varsel skal ikke sendes', async () => {
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Nei' }));
     });
 
     await step('Fyll inn begrunnelse for å ikke varsle', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov/i }),
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
         'Bruker ble varslet på annen måte',
       );
     });
