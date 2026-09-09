@@ -23,8 +23,13 @@ interface ForeldelseProsessIndexWrapperProps {
   isReadOnly: boolean;
 }
 
+type ForeldelseFormData = {
+  perioder: ForeldelsesresultatActivity[];
+  erEndret: boolean;
+};
+
 const ForeldelseProsessIndexWrapper: React.FC = (props: ForeldelseProsessIndexWrapperProps) => {
-  const [formData, setFormData] = useState<ForeldelsesresultatActivity[] | undefined>(undefined);
+  const [formData, setFormData] = useState<ForeldelseFormData | undefined>(undefined);
   const {
     behandling,
     perioderForeldelse,
