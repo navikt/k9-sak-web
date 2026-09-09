@@ -183,7 +183,7 @@ export const Beslutter = ({
                     const formaterSkjermlenkeType = (skjermlenkeType?: string) => {
                       switch (skjermlenkeType) {
                         case SkjermlenkeType.BOSTEDSVILKÅR:
-                          return 'Bosatt i Trondheim';
+                          return 'Bosatt i Trondheim kommune';
                         case SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
                           return 'Andre livsoppholdsytelser';
                         case SkjermlenkeType.BISTANDSVILKÅR:
