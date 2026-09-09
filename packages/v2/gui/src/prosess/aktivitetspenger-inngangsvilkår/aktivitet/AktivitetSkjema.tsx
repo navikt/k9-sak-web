@@ -4,6 +4,7 @@ import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-for
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import { dateBefore } from '../../../utils/validation/validators.js';
 import type { AktivitetFormData } from './aktivitetFormData.js';
 
 interface Props {
@@ -72,8 +73,11 @@ export const AktivitetSkjema = ({
                   validate={[
                     required,
                     value =>
-                      redigerTomDato && value === muligAvkortingPeriode?.tom
-                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato'
+                      redigerTomDato && muligAvkortingPeriode
+                        ? dateBefore(
+                            muligAvkortingPeriode.tom,
+                            'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato',
+                          )(value)
                         : undefined,
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
