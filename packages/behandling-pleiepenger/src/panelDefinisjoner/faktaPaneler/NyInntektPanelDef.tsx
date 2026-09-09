@@ -34,6 +34,9 @@ class NyInntektPanelDef extends FaktaPanelDef {
   };
 
   getOverstyrVisningAvKomponent = ({ beregningsgrunnlag: bg }: { beregningsgrunnlag: any }) => {
+    if (!bg) {
+      return false;
+    }
     // typen er riktig etter konverterKodeverkTilKode
     const beregningsgrunnlag: BeregningsgrunnlagDto[] = JSON.parse(JSON.stringify(bg));
     konverterKodeverkTilKode(beregningsgrunnlag);
