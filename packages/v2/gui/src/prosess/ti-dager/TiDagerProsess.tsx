@@ -113,7 +113,7 @@ export const TiDagerProsess = ({
 
   useEffect(() => {
     formMethods.reset(lagDefaultValues(opplysninger));
-  }, [formMethods, opplysninger, aksjonspunkter]);
+  }, [formMethods, opplysninger]);
 
   const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
 
