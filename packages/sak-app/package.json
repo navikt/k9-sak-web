@@ -22,7 +22,7 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@nais/apm": "0.6.0",
+    "@nais/apm": "0.6.3",
     "@navikt/aksel-icons": "8.16.2",
     "@navikt/ds-css": "8.16.2",
     "@navikt/ds-react": "8.16.2",
