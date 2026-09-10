@@ -60,7 +60,6 @@ const DatovelgerPlain = ({
     onDateChange: onDateChange,
     defaultSelected: defaultSelected,
     disabled: disabled,
-    disableWeekends,
     fromDate: resolvedFromDate,
     toDate: resolvedToDate,
   });
@@ -74,6 +73,7 @@ const DatovelgerPlain = ({
         dropdownCaption={true}
         fromDate={resolvedFromDate}
         toDate={resolvedToDate}
+        disableWeekends={disableWeekends}
       >
         <DatePicker.Input
           {...inputProps}

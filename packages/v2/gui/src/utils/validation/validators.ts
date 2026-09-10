@@ -10,6 +10,14 @@ export const hasValidSaksnummerOrFodselsnummerFormat = (text: string) =>
 export const dateBefore = (latest: string, errorMessage: string) => (value: string | undefined) =>
   value && !dayjs(value).isBefore(dayjs(latest), 'day') ? errorMessage : undefined;
 
+export const dateIsNotWeekend = (value: string | undefined) => {
+  if (!value || !dayjs(value).isValid()) {
+    return undefined;
+  }
+
+  return dayjs(value).day() === 0 || dayjs(value).day() === 6 ? 'Dato kan ikke være en helgedag' : undefined;
+};
+
 export const hasValidText = (text: string) => {
   if (text === undefined || text === null || text === '') {
     return undefined;
