@@ -47,6 +47,7 @@ export const BostedSkjema = ({
           name={`vurderinger.${selectedId}.begrunnelse`}
           label={begrunnelseLabel}
           validate={[required, minLength(3), maxLength(4000)]}
+          maxLength={4000}
         />
         <RhfRadioGroup
           key={`${selectedId}-bosatt`}
@@ -83,6 +84,7 @@ export const BostedSkjema = ({
             label="Fritekst avslagsbrev"
             description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
             validate={[required, minLength(3), maxLength(4000)]}
+            maxLength={4000}
           />
         )}
         {bosatt === 'oppfylt' && (
@@ -133,7 +135,8 @@ export const BostedSkjema = ({
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
                 label="Begrunn kortere periode enn 260 dager"
-                validate={[required]}
+                validate={[required, minLength(3), maxLength(4000)]}
+                maxLength={4000}
               />
             )}
           </VStack>

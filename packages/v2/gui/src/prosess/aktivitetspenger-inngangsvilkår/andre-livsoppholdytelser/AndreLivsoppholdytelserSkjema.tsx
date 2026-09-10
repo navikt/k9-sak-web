@@ -40,6 +40,7 @@ export const AndreLivsoppholdytelserSkjema = ({
           name={`vurderinger.${selectedId}.begrunnelse`}
           label={begrunnelseLabel}
           validate={[required, minLength(3), maxLength(4000)]}
+          maxLength={4000}
         />
         <RhfRadioGroup
           key={`${selectedId}-andreLivsoppholdytelser`}
@@ -73,6 +74,7 @@ export const AndreLivsoppholdytelserSkjema = ({
             label="Fritekst avslagsbrev"
             description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
             validate={[required, minLength(3), maxLength(4000)]}
+            maxLength={4000}
           />
         )}
         {andreLivsoppholdytelser === 'oppfylt' && (
@@ -125,7 +127,8 @@ export const AndreLivsoppholdytelserSkjema = ({
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
                 label="Begrunn kortere periode enn 260 dager"
-                validate={[required]}
+                validate={[required, minLength(3), maxLength(4000)]}
+                maxLength={4000}
               />
             )}
           </VStack>

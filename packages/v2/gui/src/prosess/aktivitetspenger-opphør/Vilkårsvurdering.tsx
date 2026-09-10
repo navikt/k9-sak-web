@@ -233,6 +233,7 @@ export const Vilkaarsvurdering = ({
                 readOnly={isFormLocked}
                 validate={[required, minLength(3), maxLength(4000)]}
                 resize
+                maxLength={4000}
               />
               <RhfRadioGroup
                 control={formHook.control}
@@ -255,6 +256,7 @@ export const Vilkaarsvurdering = ({
                   readOnly={isFormLocked}
                   validate={[required, minLength(3), maxLength(4000)]}
                   resize
+                  maxLength={4000}
                 />
               )}
               {!isFormLocked && (

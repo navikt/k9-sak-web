@@ -259,6 +259,7 @@ export const Beslutter = ({
                                   name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                                   label="Begrunnelse"
                                   validate={[required, minLength(3), maxLength(4000)]}
+                                  maxLength={4000}
                                 />
                               </Box>
                             </ArrowBox>
