@@ -5,6 +5,7 @@ import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-for
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import { dateBefore } from '../../../utils/validation/validators.js';
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 
 interface Props {
@@ -87,6 +88,7 @@ export const AndreLivsoppholdytelserSkjema = ({
                   label="Fra"
                   size="small"
                   readOnly
+                  disableWeekends
                 />
                 <Datovelger
                   key={`${selectedId}-maksdato`}
@@ -97,12 +99,16 @@ export const AndreLivsoppholdytelserSkjema = ({
                   validate={[
                     required,
                     value =>
-                      redigerMaksdato && value === muligAvkortingPeriode?.tom
-                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.'
+                      redigerMaksdato && muligAvkortingPeriode
+                        ? dateBefore(
+                            muligAvkortingPeriode.tom,
+                            'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
+                          )(value)
                         : undefined,
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                   toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                  disableWeekends
                 />
                 {muligAvkortingPeriode && (
                   <RhfCheckbox
