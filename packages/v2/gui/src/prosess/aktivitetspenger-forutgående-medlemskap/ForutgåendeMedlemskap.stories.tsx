@@ -24,6 +24,7 @@ const meta = {
       { land: 'Sverige', landkode: 'SWE', harTrygdeavtale: true, periode: { fom: '2022-01-01', tom: '2022-12-31' } },
       { land: 'USA', landkode: 'USA', harTrygdeavtale: false, periode: { fom: '2023-01-01', tom: '2023-06-30' } },
     ],
+    isPermanentlyReadOnly: false,
   },
 } satisfies Meta<typeof ForutgåendeMedlemskap>;
 export default meta;

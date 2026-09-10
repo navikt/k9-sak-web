@@ -1,4 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -57,6 +58,9 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
   }
 
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP);
+  const harBeslutterAksjonspunkt = aksjonspunkter.some(
+    ap => ap.definisjon === AksjonspunktDefinisjon.FATTER_VEDTAK && ap.status === AksjonspunktStatus.OPPRETTET,
+  );
 
   return (
     <ForutgåendeMedlemskap
@@ -67,6 +71,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
       vilkår={vilkår}
       behandling={behandling}
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+      isPermanentlyReadOnly={harBeslutterAksjonspunkt}
     />
   );
 };

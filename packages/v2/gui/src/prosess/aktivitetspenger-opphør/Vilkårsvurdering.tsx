@@ -4,6 +4,10 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import {
+  $ManuellVurderingBostedsvilkårDto,
+  $VilkårBostedPeriodeVurderingDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
@@ -231,8 +235,13 @@ export const Vilkaarsvurdering = ({
                 name={`perioder.${selectedId}.begrunnelse`}
                 label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
                 readOnly={isFormLocked}
-                validate={[required, minLength(3), maxLength(4000)]}
+                validate={[
+                  required,
+                  minLength(3),
+                  maxLength($ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength),
+                ]}
                 resize
+                maxLength={$ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength}
               />
               <RhfRadioGroup
                 control={formHook.control}
@@ -253,8 +262,13 @@ export const Vilkaarsvurdering = ({
                   label="Fritekst opphørsbrev"
                   description="Forklar hvorfor vilkåret er opphørt. Teksten vises i vedtaksbrevet."
                   readOnly={isFormLocked}
-                  validate={[required, minLength(3), maxLength(4000)]}
+                  validate={[
+                    required,
+                    minLength(3),
+                    maxLength($VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength),
+                  ]}
                   resize
+                  maxLength={$VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength}
                 />
               )}
               {!isFormLocked && (

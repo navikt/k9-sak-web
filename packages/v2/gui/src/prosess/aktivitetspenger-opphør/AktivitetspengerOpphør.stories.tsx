@@ -513,7 +513,7 @@ export const ÅrsakOgVarselAvslå: Story = {
     });
 
     await step('Fyll inn Fra og med dato', async () => {
-      await userEvent.type(canvas.getByRole('textbox', { name: 'Fra og med' }), '01.03.2026');
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fra og med' }), '02.03.2026');
     });
 
     await step('Fyll inn Til og med dato', async () => {
