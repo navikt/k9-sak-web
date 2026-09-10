@@ -36,8 +36,6 @@ const DatovelgerPlain = ({
 }: DatovelgerProps) => {
   const fromDateDefault = dayjs().subtract(5, 'year').toDate();
   const toDateDefault = dayjs().add(5, 'year').toDate();
-  const resolvedFromDate = fromDate || fromDateDefault;
-  const resolvedToDate = toDate || toDateDefault;
 
   const defaultSelected = selectedDay ? dayjs(selectedDay).toDate() : undefined;
 
@@ -60,8 +58,6 @@ const DatovelgerPlain = ({
     onDateChange: onDateChange,
     defaultSelected: defaultSelected,
     disabled: disabled,
-    fromDate: resolvedFromDate,
-    toDate: resolvedToDate,
   });
 
   return (
@@ -71,8 +67,8 @@ const DatovelgerPlain = ({
         showWeekNumber={true}
         onSelect={onBlur}
         dropdownCaption={true}
-        fromDate={resolvedFromDate}
-        toDate={resolvedToDate}
+        fromDate={fromDate || fromDateDefault}
+        toDate={toDate || toDateDefault}
         disableWeekends={disableWeekends}
       >
         <DatePicker.Input
