@@ -72,10 +72,10 @@ export const EnAnnenSak: Story = {
   },
   play: async ({ canvas }) => {
     await delay(100);
-    await expect(canvas.getByText('Andre saker knyttet til søker')).toBeInTheDocument();
+    await expect(canvas.getByText('1 annen sak knyttet til søker')).toBeInTheDocument();
     const visButton = canvas.getByRole('button', { name: 'Se saker' });
     await userEvent.click(visButton);
-    await expect(canvas.getByRole('link', { name: '22' })).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: '5YC1S:' })).toBeInTheDocument();
     await expect(canvas.getByText('13.04.2022 - 27.09.2025')).toBeInTheDocument();
     await expect(canvas.getByRole('button', { name: 'Skjul saker' })).toBeInTheDocument();
   },
@@ -108,9 +108,9 @@ export const FlereAndreSaker: Story = {
   play: async ({ canvas }) => {
     await delay(100);
     await userEvent.click(canvas.getByRole('button', { name: 'Se saker' }));
-    await expect(canvas.getByRole('link', { name: 'J04PS' })).toBeInTheDocument();
-    await expect(canvas.getByRole('link', { name: 'BIBIBI' })).toBeInTheDocument();
-    await expect(canvas.getByRole('link', { name: '12LBY' })).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: 'J04PS:' })).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: 'BIBIBI:' })).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: '12LBY:' })).toBeInTheDocument();
   },
 };
 
@@ -137,9 +137,9 @@ export const SaksnummerFiltrering: Story = {
   play: async ({ canvas }) => {
     await delay(100);
     await userEvent.click(canvas.getByRole('button', { name: 'Se saker' }));
-    await expect(canvas.getByRole('link', { name: '1124' })).toBeInTheDocument();
-    await expect(canvas.queryByRole('link', { name: '24' })).not.toBeInTheDocument();
-    await expect(canvas.getByRole('link', { name: '335' })).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: '1124:' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('link', { name: '24:' })).not.toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: '335:' })).toBeInTheDocument();
   },
 };
 
