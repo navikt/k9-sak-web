@@ -5,6 +5,7 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårBistandPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bistand/VilkårBistandPeriodeVurderingDto.js';
+import { $VurderBehovForBistandDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bistand/VilkårBistandPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
@@ -120,7 +121,9 @@ export const BehovForBistand = ({
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
         begrunnelse: redigerMaksdatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`.trim()
+          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`
+              .trim()
+              .slice(0, $VurderBehovForBistandDto.properties.begrunnelse.maxLength)
           : begrunnelseInnvilget,
         vurdertePerioder,
       };

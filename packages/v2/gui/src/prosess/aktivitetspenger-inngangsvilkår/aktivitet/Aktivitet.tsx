@@ -5,6 +5,7 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårAktivitetPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
+import { $VurderAktivitetDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
@@ -26,8 +27,8 @@ import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenge
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi';
 import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
-import { AktivitetLesevisning } from './AktivitetLesevisning';
 import { buildInitialValues, type AktivitetFormData } from './aktivitetFormData.js';
+import { AktivitetLesevisning } from './AktivitetLesevisning';
 import { AktivitetSkjema } from './AktivitetSkjema';
 
 interface Props {
@@ -123,7 +124,9 @@ export const Aktivitet = ({
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
         begrunnelse: redigerTomDatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`.trim()
+          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`
+              .trim()
+              .slice(0, $VurderAktivitetDto.properties.begrunnelse.maxLength)
           : begrunnelseInnvilget,
         vurdertePerioder,
       };
