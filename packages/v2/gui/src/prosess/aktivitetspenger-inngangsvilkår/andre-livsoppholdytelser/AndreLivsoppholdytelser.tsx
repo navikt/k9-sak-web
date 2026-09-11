@@ -1,3 +1,4 @@
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -127,9 +128,7 @@ export const AndreLivsoppholdytelser = ({
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-        begrunnelse: redigerMaksdatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`.trim()
-          : begrunnelseInnvilget,
+        begrunnelse: `Aksjonspunkt ${aksjonspunktCodes.VURDER_ANDRE_LIVSOPPHOLDSYTELSER} VURDER_ANDRE_LIVSOPPHOLDSYTELSER bekreftet`, // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
         vurdertePerioder,
       };
 
