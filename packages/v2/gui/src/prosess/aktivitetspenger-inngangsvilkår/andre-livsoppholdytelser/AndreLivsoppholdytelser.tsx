@@ -5,7 +5,6 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårLivsoppholdsytelserPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
-import { $VurderAndreLivsoppholdsytelserDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
@@ -128,11 +127,7 @@ export const AndreLivsoppholdytelser = ({
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-        begrunnelse: redigerMaksdatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`
-              .trim()
-              .slice(0, $VurderAndreLivsoppholdsytelserDto.properties.begrunnelse.maxLength)
-          : begrunnelseInnvilget,
+        begrunnelse: 'Aksjonspunkt bekreftet', // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
         vurdertePerioder,
       };
 

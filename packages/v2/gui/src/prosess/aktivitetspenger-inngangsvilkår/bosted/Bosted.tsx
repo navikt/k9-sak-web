@@ -9,7 +9,6 @@ import type {
   BostedGrunnlagResponseDto,
   VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
-import { $ManuellVurderingBostedsvilkårDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
@@ -129,11 +128,7 @@ export const Bosted = ({
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
-        begrunnelse: redigerMaksdatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`
-              .trim()
-              .slice(0, $ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength)
-          : begrunnelseInnvilget,
+        begrunnelse: 'Aksjonspunkt bekreftet', // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
         vurdertePerioder,
       };
 

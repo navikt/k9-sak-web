@@ -5,7 +5,6 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårAktivitetPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
-import { $VurderAktivitetDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
@@ -123,11 +122,7 @@ export const Aktivitet = ({
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
-        begrunnelse: redigerTomDatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`
-              .trim()
-              .slice(0, $VurderAktivitetDto.properties.begrunnelse.maxLength)
-          : begrunnelseInnvilget,
+        begrunnelse: 'Aksjonspunkt bekreftet', // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
         vurdertePerioder,
       };
 
