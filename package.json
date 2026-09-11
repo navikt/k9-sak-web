@@ -14,7 +14,7 @@
     "test": "vitest",
     "test:all:testonly": "vitest --project test",
     "test:watch": "vitest --watch --silent=false",
-    "test:watch:all": "vitest --watchAll",
+    "test:watch:all": "vitest --watch",
     "test:coverage": "vitest --coverage --project test",
     "test-storybook": "test-storybook --url http://127.0.0.1:9001 --testTimeout=30_000",
     "ts-check": "tsc | loose-ts-check && tsc --pretty --project packages/v2/tsconfig.json",
@@ -116,7 +116,7 @@
     "vite": "8.2.2",
     "vite-css-modules": "1.16.0",
     "vite-plugin-html": "3.2.2",
-    "vitest": "4.1.11",
+    "vitest": "5.0.0",
     "vitest-axe": "0.1.0"
   },
   "resolutions": {
