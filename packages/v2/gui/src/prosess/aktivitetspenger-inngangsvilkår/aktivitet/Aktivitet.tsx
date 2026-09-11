@@ -1,4 +1,5 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AktivitetsvilkåretIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AktivitetsvilkåretIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
@@ -122,7 +123,7 @@ export const Aktivitet = ({
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
-        begrunnelse: 'Aksjonspunkt bekreftet', // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
+        begrunnelse: `Aksjonspunkt ${aksjonspunktCodes.VURDER_AKTIVITETSVILKÅR} VURDER_AKTIVITETSVILKÅR bekreftet`, // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
         vurdertePerioder,
       };
 
