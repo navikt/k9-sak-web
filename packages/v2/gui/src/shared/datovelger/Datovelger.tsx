@@ -1,5 +1,6 @@
 // react hook form wrapper for datovelger
 
+import { dateIsNotWeekend } from '@k9-sak-web/gui/utils/validation/validators.js';
 import type { DatePickerProps } from '@navikt/ds-react';
 import { useController, useFormContext } from 'react-hook-form';
 import DatovelgerPlain from './DatovelgerPlain';
@@ -16,6 +17,7 @@ const Datovelger = ({
   disabledDays,
   showErrorMessage = true,
   defaultMonth,
+  disableWeekends,
 }: {
   name: string;
   label: string;
@@ -28,13 +30,15 @@ const Datovelger = ({
   disabledDays?: DatePickerProps['disabled'];
   showErrorMessage?: boolean;
   defaultMonth?: Date;
+  disableWeekends?: boolean;
 }) => {
   const formMethods = useFormContext();
+  const validators = [...(validate ?? []), ...(disableWeekends ? [dateIsNotWeekend] : [])];
   const controller = useController({
     control: formMethods.control,
     name: name,
     rules: {
-      validate: validate?.reduce((acc, validator, index) => ({ ...acc, [index]: validator }), {}),
+      validate: validators.reduce((acc, validator, index) => ({ ...acc, [index]: validator }), {}),
     },
   });
   const { field, fieldState } = controller;
@@ -61,6 +65,7 @@ const Datovelger = ({
       toDate={toDate}
       size={size}
       defaultMonth={defaultMonth}
+      disableWeekends={disableWeekends}
     />
   );
 };

@@ -4,6 +4,7 @@ import { SkjermlenkeType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/
 import { VurderÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { $TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import {
   Alert,
@@ -26,6 +27,8 @@ import { useFieldArray, useForm, useWatch, type SubmitHandler } from 'react-hook
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import styles from './beslutter.module.css';
 import { InngangsvilkårTab } from './types';
+
+const besluttersBegrunnelseMaxLength = $TotrinnskontrollAksjonspunkterDto.properties.besluttersBegrunnelse.maxLength;
 
 type AksjonspunktGodkjenningItem = {
   aksjonspunktKode: string;
@@ -258,7 +261,8 @@ export const Beslutter = ({
                                   control={control}
                                   name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                                   label="Begrunnelse"
-                                  validate={[required, minLength(3), maxLength(4000)]}
+                                  validate={[required, minLength(3), maxLength(besluttersBegrunnelseMaxLength)]}
+                                  maxLength={besluttersBegrunnelseMaxLength}
                                 />
                               </Box>
                             </ArrowBox>
