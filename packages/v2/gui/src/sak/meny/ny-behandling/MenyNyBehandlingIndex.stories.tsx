@@ -1,10 +1,14 @@
-import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import {
+  behandlingType as BehandlingTypeK9Klage
+} from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
   k9_kodeverk_behandling_BehandlingÅrsakType as BehandlingÅrsakDtoBehandlingArsakType,
   k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import {
+  behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType
+} from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
@@ -66,6 +70,7 @@ const behandlingOppretting = [
 ];
 
 export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
+  decorators: [withFeatureToggles({ REVURDERING_FRA_STEG_V2: false })],
   args: {
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     saksnummer: '123',
