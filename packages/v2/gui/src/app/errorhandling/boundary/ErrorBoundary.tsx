@@ -2,6 +2,7 @@ import { Component, type FC, type ReactNode } from 'react';
 import { ensureError } from '../ensureError.js';
 import { DefaultErrorView } from './DefaultErrorView.js';
 import { CrashErrorView } from './CrashErrorView.js';
+import { captureException } from '@nais/apm';
 
 export interface ErrorBoundaryFallbackProps {
   readonly error: Error;
@@ -48,8 +49,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
         return;
       }
       this.errorCount++;
-      // Feilen blir rapportert til apm automatisk av faro si console.error-instrumentering, som React kallar for
-      // alle feil fanga av ein ErrorBoundary. Vi treng derfor ikkje rapportere den eksplisitt her.
+      captureException(error); // Send feil til nais apm, så den blir prosesert i beforeSend med originalError satt
       if (errorCallback != null) {
         errorCallback(error);
       }

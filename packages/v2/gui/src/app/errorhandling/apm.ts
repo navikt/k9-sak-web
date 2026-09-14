@@ -1,5 +1,6 @@
 import { init, type InitOptions } from '@nais/apm';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { AxiosError } from 'axios';
 
 // Vi ønsker ikkje å rapportere alle feil til apm, feks viss har utgått sesjon.
 // Legg til fleire her ved behov.
@@ -10,6 +11,28 @@ export const shouldReportToApm = (error: Error | null): boolean => {
     return !doNotReport;
   }
   return true;
+};
+
+// Sidan vi legger til preserveOriginalError i initApm skal feilhendelser rapportert ha originalError satt.
+type WithOriginalError = {
+  originalError: Error;
+};
+
+/** Typen på innslaget beforeSend får inn frå faro. */
+type BeforeSendItem = Parameters<NonNullable<InitOptions['beforeSend']>>[0];
+
+/**
+ * Sjekkar om payload på eit beforeSend innslag har originalError satt, slik at vi kan bruke den opphavlege Error
+ * instansen (feks for å sjekke om feilen skal rapporterast).
+ */
+export const hasOriginalError = (
+  item: BeforeSendItem,
+): item is BeforeSendItem & { payload: BeforeSendItem['payload'] & WithOriginalError } => {
+  if (item.payload == null || typeof item.payload !== 'object') {
+    return false;
+  }
+  const { originalError } = item.payload as { originalError?: unknown };
+  return originalError instanceof Error;
 };
 
 const randomErrorId = (): string =>
@@ -30,6 +53,22 @@ const beforeSend: NonNullable<InitOptions['beforeSend']> = item => {
   if (item.type === 'exception') {
     const payload = item.payload as { context?: Record<string, string> };
     payload.context = { ...payload.context, loadedErrorId };
+    if (hasOriginalError(item)) {
+      const { originalError } = item.payload;
+      const extendedApiError = ExtendedApiError.findInError(originalError);
+      if (extendedApiError != null) {
+        if (extendedApiError.navCallid != null) {
+          payload.context = { ...payload.context, navCallid: extendedApiError.navCallid };
+        }
+        if (extendedApiError.status != 0) {
+          payload.context = { ...payload.context, status: `${extendedApiError.status}` };
+        }
+      } else if (originalError instanceof AxiosError) {
+        if (originalError.response?.status != 0) {
+          payload.context = { ...payload.context, status: `${originalError.response?.status}` };
+        }
+      }
+    }
   }
   return item;
 };
@@ -52,5 +91,8 @@ export function initApm({ app }: InitApmOptions) {
     tracing: true,
     devConsoleEcho: false,
     beforeSend,
+    faro: {
+      preserveOriginalError: true,
+    },
   });
 }
