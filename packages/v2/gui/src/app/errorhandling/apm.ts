@@ -45,30 +45,44 @@ const randomErrorId = (): string =>
  */
 export const loadedErrorId = randomErrorId();
 
-// Legg loadedErrorId på alle exception innslag. Vi gjer det her, og ikkje med setTag frå @nais/apm, fordi setTag berre
-// blir lagt på feil rapportert gjennom captureException i @nais/apm. Feil fanga automatisk av faro
-// (window.onerror, unhandledrejection, console.error) går utanom, medan beforeSend ser alle innslag.
+/** Den delen av eit exception payload vi legg ekstra informasjon på. */
+type WithContext = {
+  context?: Record<string, string>;
+};
+
+/**
+ * Lagar ein ny context med ekstra informasjon lagt til. Alle exception innslag får loadedErrorId, og viss
+ * vi har originalError hentar vi i tillegg ut nyttig informasjon frå den (status og navCallid frå api-kall).
+ *
+ * Legg gjerne til meir her seinare, men pass på at ikkje sensitiv info blir sendt til apm.
+ */
+export const enrichApmErrorContext = (
+  context: Record<string, string> | undefined,
+  error: Error | null,
+): Record<string, string> => {
+  const enriched: Record<string, string> = { ...context, loadedErrorId };
+  const extendedApiError = ExtendedApiError.findInError(error);
+  if (extendedApiError != null) {
+    if (extendedApiError.navCallid != null) {
+      enriched['navCallid'] = extendedApiError.navCallid;
+    }
+    enriched['status'] = `${extendedApiError.status}`;
+  } else if (error instanceof AxiosError) {
+    if (error.response?.status != null) {
+      enriched['status'] = `${error.response.status}`;
+    }
+  }
+  return enriched;
+};
+
 const beforeSend: NonNullable<InitOptions['beforeSend']> = item => {
   if (item.type === 'exception') {
-    const payload = item.payload as { context?: Record<string, string> };
-    payload.context = { ...payload.context, loadedErrorId };
-    if (hasOriginalError(item)) {
-      const { originalError } = item.payload;
-      if (shouldNotReportToApm(originalError)) {
-        return null;
-      }
-      const extendedApiError = ExtendedApiError.findInError(originalError);
-      if (extendedApiError != null) {
-        if (extendedApiError.navCallid != null) {
-          payload.context = { ...payload.context, navCallid: extendedApiError.navCallid };
-        }
-        payload.context = { ...payload.context, status: `${extendedApiError.status}` };
-      } else if (originalError instanceof AxiosError) {
-        if (originalError.response?.status != null) {
-          payload.context = { ...payload.context, status: `${originalError.response.status}` };
-        }
-      }
+    const originalError = hasOriginalError(item) ? item.payload.originalError : null;
+    if (shouldNotReportToApm(originalError)) {
+      return null;
     }
+    const payload = item.payload as WithContext; // Caster her sidan item er dårleg typa, union uten god discriminant.
+    payload.context = enrichApmErrorContext(payload.context, originalError);
   }
   return item;
 };
