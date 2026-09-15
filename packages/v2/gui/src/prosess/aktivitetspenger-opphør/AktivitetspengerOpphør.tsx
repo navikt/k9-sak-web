@@ -16,9 +16,9 @@ import { CustomErrorIcon } from '../../shared/icons/CustomErrorIcon.js';
 import { CustomWarningIcon } from '../../shared/icons/CustomWarningIcon.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BeslutterOpphør } from './BeslutterOpphør.js';
+import { BostedAarsakOgVarsel as ÅrsakOgVarsel } from './BostedÅrsakOgVarsel.js';
 import { OpphørTab } from './types.js';
 import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
-import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
   vurderBostedFaktaAP?: AksjonspunktDto;

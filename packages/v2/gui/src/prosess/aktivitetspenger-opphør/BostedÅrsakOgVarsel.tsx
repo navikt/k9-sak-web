@@ -98,7 +98,7 @@ const getBostedDateRange = (
   };
 };
 
-export const AarsakOgVarsel = ({
+export const BostedAarsakOgVarsel = ({
   vurderBostedAP,
   bostedVilkår,
   api,
