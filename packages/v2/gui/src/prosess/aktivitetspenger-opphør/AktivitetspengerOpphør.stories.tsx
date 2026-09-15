@@ -73,6 +73,23 @@ const fakeBostedGrunnlag = {
   ],
 } as unknown as BostedGrunnlagResponseDto;
 
+const fakeAndreLivsoppholdytelserVilkår = {
+  vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  lovReferanse: 'TODO AKT lovreferanse',
+  overstyrbar: true,
+  perioder: [
+    {
+      vilkarStatus: Utfall.IKKE_VURDERT,
+      merknad: '-',
+      merknadParametere: {},
+      periode: { fom: '2026-01-29', tom: '2027-01-28' },
+      begrunnelse: '',
+      fritekstVurderingBrev: '',
+      vurderesIBehandlingen: true,
+    },
+  ],
+} as unknown as VilkårMedPerioderDto;
+
 const meta = {
   title: 'gui/prosess/aktivitetspenger-opphør/AktivitetspengerOpphør',
   component: AktivitetspengerOpphør,
@@ -170,7 +187,7 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
     onAksjonspunktBekreftet: fn(),
   },
-  play: async ({ canvas, step, args }) => {
+  play: async ({ canvas, canvasElement, step, args }) => {
     await step('Velg "Opphøre fra en dato"', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: 'Opphøre fra en dato' }));
     });
@@ -203,11 +220,15 @@ export const ÅrsakOgVarselOpphøreMedForhåndsvarsel: Story = {
     });
 
     await step('Modal for forhåndsvarsel er synlig', async () => {
-      await expect(canvas.findByRole('dialog', { name: /send forhåndsvarsel/i })).resolves.toBeInTheDocument();
+      await expect(
+        within(canvasElement.ownerDocument.body).findByRole('dialog', { name: /send forhåndsvarsel/i }),
+      ).resolves.toBeInTheDocument();
     });
 
     await step('Bekreft sending i modal', async () => {
-      const modal = await canvas.findByRole('dialog');
+      const modal = await within(canvasElement.ownerDocument.body).findByRole('dialog', {
+        name: /send forhåndsvarsel/i,
+      });
       await userEvent.click(within(modal).getByRole('button', { name: /send forhåndsvarsel/i }));
     });
 
@@ -275,6 +296,86 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
     await step('Callback er kalt etter innsending', async () => {
       await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+const fakeAndreLivsoppholdytelserArgsBase = {
+  ...fakeArgsBase,
+  vilkår: [fakeAndreLivsoppholdytelserVilkår],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER)],
+  onAksjonspunktBekreftet: fn(),
+};
+
+export const AndreLivsoppholdytelser: Story = {
+  args: fakeAndreLivsoppholdytelserArgsBase,
+  play: async ({ canvas, step }) => {
+    await step('Velg perioden som skal vurderes', async () => {
+      await userEvent.click(canvas.getByText(/29\.01\.2026 - 28\.01\.2027/i));
+    });
+
+    await step('Skjemaet viser feltet for livsoppholdytelse', async () => {
+      await expect(canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i })).toBeInTheDocument();
+    });
+
+    await step('Velg arbeidsavklaringspenger', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }),
+        'arbeidsavklaringspenger',
+      );
+    });
+  },
+};
+
+export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
+  args: {
+    ...fakeAndreLivsoppholdytelserArgsBase,
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      bekreftAksjonspunkt: fn(),
+    }) as AktivitetspengerApi,
+  },
+  play: async ({ canvas, canvasElement, step, args }) => {
+    await step('Velg perioden som skal vurderes', async () => {
+      await userEvent.click(canvas.getByText(/29\.01\.2026 - 28\.01\.2027/i));
+    });
+
+    await step('Velg opphør fra en dato', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Opphøre fra en dato' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: /opphøre fra og med/i }), '01.05.2026');
+    });
+
+    await step('Velg annen livsoppholdytelse', async () => {
+      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }), 'annet');
+    });
+
+    await step('Velg kilde og svar at bruker skal varsles', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'register',
+      );
+      const varsleGroup = findVarselRadiogroup(canvas);
+      await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
+    });
+
+    await step('Fyll inn forhåndsvarseltekst', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /tekst i forhåndsvarsel/i }),
+        'Bruker mottar annen livsoppholdytelse.',
+      );
+    });
+
+    await step('Åpne og bekreft forhåndsvarsel', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+      const modal = await within(canvasElement.ownerDocument.body).findByRole('dialog', {
+        name: /send forhåndsvarsel/i,
+      });
+      await userEvent.click(within(modal).getByRole('button', { name: /send forhåndsvarsel/i }));
+    });
+
+    await step('Payload sendes til riktig aksjonspunkt', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
+        expect.objectContaining({ '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER }),
+      ]);
     });
   },
 };
