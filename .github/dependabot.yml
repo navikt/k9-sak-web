@@ -34,6 +34,10 @@ updates:
       ft-frontend:
         patterns:
           - '@navikt/ft-*'
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   - package-ecosystem: npm
     directory: '/server'
