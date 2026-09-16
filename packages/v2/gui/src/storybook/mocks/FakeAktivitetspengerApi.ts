@@ -1,4 +1,5 @@
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
+import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
@@ -37,7 +38,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     return {};
   }
 
-  async hentBosattFakta() {
+  async hentBostedGrunnlag() {
     return { perioder: [] };
   }
 
@@ -55,6 +56,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
 
   async getSatsOgUtbetalingPerioder() {
     return [];
+  }
+
+  async hentPerioderSomKanAvkortes(): Promise<AvkortingsperioderResponse> {
+    return { resultat: [] };
   }
 
   async hentTotrinnskontrollSkjermlenkeContext(): ReturnType<

@@ -22,11 +22,13 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_UTENLANDSOPPHOLD: true,
+  BRUK_V2_ARBEID_OG_INNTEKT: true,
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
   PROSESS_MENY_V2: true,
   REVURDERING_FRA_STEG_V2: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
+  FORENKLE_OMS_VEDTAK_STATUS: true,
 });
 
 /**
@@ -39,4 +41,5 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
   SKJUL_PROSESS_MENY_V2_VELGER: true,
+  REVURDERING_FRA_STEG_V2: true,
 });

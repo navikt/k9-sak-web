@@ -4,7 +4,7 @@ import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { use } from 'react';
 import { getPathToK9Los, getPathToK9Punsj } from '../paths';
 import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPanel.js';
-import * as Sentry from '@sentry/react';
+import { captureMessage } from '@nais/apm';
 
 type QueryStrings = {
   errorcode?: string;
@@ -37,16 +37,16 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
     return `${aaregPath}?saksnummer=${fagsakFraUrl}`;
   };
 
-  // Denne koden kan fjernast viss vi ikkje har fått advarsler i sentry ei stund etter utrulling.
+  // Denne koden kan fjernast viss vi ikkje har fått advarsler i apm ei stund etter utrulling.
   if (queryStrings.errorcode) {
     const msg = `Dekorator queryString.errorcode satt (${queryStrings.errorcode}). Ikke støttet lenger`;
     console.warn(msg);
-    Sentry.logger.warn(msg);
+    captureMessage(msg, 'warning');
   }
   if (queryStrings.errormessage) {
     const msg = `Dekorator queryString.errormessage satt (${queryStrings.errormessage}). Ikke støttet lenger`;
     console.warn(msg);
-    Sentry.logger.warn(msg);
+    captureMessage(msg, 'warning');
   }
 
   return (

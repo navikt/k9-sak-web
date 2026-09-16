@@ -2,11 +2,11 @@ import { createContext, type FC, type ReactNode, useEffect, useState, use, useCa
 import { ensureError } from './ensureError.js';
 import ErrorBoundary from './boundary/ErrorBoundary.js';
 import { AppError } from './AppError.js';
-import { shouldReportToSentry } from './sentry.js';
-import { captureException } from '@sentry/browser';
+import { captureException } from '@nais/apm';
 import { ErrorModal } from './ui/ErrorModal.js';
 import { resolveErrorViewProps } from './ui/resolveErrorViewProps.js';
 import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
+import { shouldReportToApm } from './apm.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -32,7 +32,7 @@ const empty: GlobalUnhandledErrors = {
 const DEFAULT_IGNORE_ERRORS = [
   /^Script error\.?$/,
   /^Javascript error: Script error\.? on line 0$/,
-  /^ResizeObserver loop completed with undelivered notifications\.$/,
+  /ResizeObserver loop (limit exceeded|completed with undelivered notifications)/,
   // The browser logs this when a ResizeObserver handler takes a bit longer. Usually this is not an actual issue though. It indicates slowness.
   /^undefined is not an object \(evaluating 'a\.[A-Z]'\)$/,
   // Random error that happens but not actionable or noticeable to end-users.
@@ -101,7 +101,7 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
   const legacyErrorNotifier = useCallback(
     (error: Error) => {
       // error som kjem inn her blir ikkje ellers rapportert, så logg den til Sentry her.
-      if (shouldReportToSentry(error)) {
+      if (shouldReportToApm(error)) {
         captureException(error);
       }
       addGlobalError(error);

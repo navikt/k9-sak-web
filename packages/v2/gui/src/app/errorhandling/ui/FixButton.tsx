@@ -1,6 +1,6 @@
-import type { ErrorFixAction } from './ErrorFixAction.js';
-import type { FC } from 'react';
 import { Button } from '@navikt/ds-react';
+import type { FC } from 'react';
+import type { ErrorFixAction } from './ErrorFixAction.js';
 
 export type FixButtonProps = Readonly<{
   fixAction: ErrorFixAction;

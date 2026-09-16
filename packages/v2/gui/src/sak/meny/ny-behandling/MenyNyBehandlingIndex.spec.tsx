@@ -8,8 +8,8 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import { qFeatureToggles } from '../../../featuretoggles/k9/featureToggles';
-import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 import { createQueryClient } from '../../../shared/query/queryClient.js';
+import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 const queryClient = createQueryClient({
   queries: {
@@ -92,45 +92,47 @@ describe('<MenyNyBehandlingIndex>', () => {
     const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <MenyNyBehandlingIndexV2
-          ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
-          saksnummer="123"
-          behandlingId={3}
-          behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
-          lagNyBehandling={lagNyBehandlingCallback}
-          behandlingOppretting={[
-            {
-              behandlingType: BehandlingTypeK9Sak.REVURDERING,
-              kanOppretteBehandling: true,
-            },
-          ]}
-          behandlingstyper={[
-            {
-              kode: BehandlingTypeK9Sak.REVURDERING,
-              kodeverk: 'BEHANDLING_TYPE',
-              navn: 'Revurdering',
-            },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[
-            {
-              kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
-              kodeverk: 'BEHANDLING_AARSAK',
-              navn: 'Opplysninger om beregningsgrunnlag',
-            },
-          ]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: false,
-            kanRevurderingOpprettes: false,
-          }}
-          uuidForSistLukkede="2323"
-          erTilbakekrevingAktivert
-          sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
-          lukkModal={vi.fn()}
-        />
-      </QueryClientProvider>,
+      <FeatureTogglesContext.Provider value={{ ...qFeatureToggles, REVURDERING_FRA_STEG_V2: false }}>
+        <QueryClientProvider client={queryClient}>
+          <MenyNyBehandlingIndexV2
+            ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
+            saksnummer="123"
+            behandlingId={3}
+            behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
+            lagNyBehandling={lagNyBehandlingCallback}
+            behandlingOppretting={[
+              {
+                behandlingType: BehandlingTypeK9Sak.REVURDERING,
+                kanOppretteBehandling: true,
+              },
+            ]}
+            behandlingstyper={[
+              {
+                kode: BehandlingTypeK9Sak.REVURDERING,
+                kodeverk: 'BEHANDLING_TYPE',
+                navn: 'Revurdering',
+              },
+            ]}
+            tilbakekrevingRevurderingArsaker={[]}
+            revurderingArsaker={[
+              {
+                kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+                kodeverk: 'BEHANDLING_AARSAK',
+                navn: 'Opplysninger om beregningsgrunnlag',
+              },
+            ]}
+            kanTilbakekrevingOpprettes={{
+              kanBehandlingOpprettes: false,
+              kanRevurderingOpprettes: false,
+            }}
+            uuidForSistLukkede="2323"
+            erTilbakekrevingAktivert
+            sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+            lukkModal={vi.fn()}
+          />
+        </QueryClientProvider>
+      </FeatureTogglesContext.Provider>,
     );
 
     await act(async () => {
@@ -165,39 +167,41 @@ describe('<MenyNyBehandlingIndex>', () => {
     const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <MenyNyBehandlingIndexV2
-          ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
-          saksnummer="123"
-          behandlingId={3}
-          behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
-          lagNyBehandling={lagNyBehandlingCallback}
-          behandlingOppretting={[
-            {
-              behandlingType: BehandlingTypeK9Sak.REVURDERING,
-              kanOppretteBehandling: true,
-            },
-          ]}
-          behandlingstyper={[
-            {
-              kode: BehandlingTypeK9Sak.REVURDERING,
-              kodeverk: 'BEHANDLING_TYPE',
-              navn: 'Revurdering',
-            },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: false,
-            kanRevurderingOpprettes: false,
-          }}
-          uuidForSistLukkede="2323"
-          erTilbakekrevingAktivert
-          sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
-          lukkModal={vi.fn()}
-        />
-      </QueryClientProvider>,
+      <FeatureTogglesContext.Provider value={{ ...qFeatureToggles, REVURDERING_FRA_STEG_V2: false }}>
+        <QueryClientProvider client={queryClient}>
+          <MenyNyBehandlingIndexV2
+            ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
+            saksnummer="123"
+            behandlingId={3}
+            behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
+            lagNyBehandling={lagNyBehandlingCallback}
+            behandlingOppretting={[
+              {
+                behandlingType: BehandlingTypeK9Sak.REVURDERING,
+                kanOppretteBehandling: true,
+              },
+            ]}
+            behandlingstyper={[
+              {
+                kode: BehandlingTypeK9Sak.REVURDERING,
+                kodeverk: 'BEHANDLING_TYPE',
+                navn: 'Revurdering',
+              },
+            ]}
+            tilbakekrevingRevurderingArsaker={[]}
+            revurderingArsaker={[]}
+            kanTilbakekrevingOpprettes={{
+              kanBehandlingOpprettes: false,
+              kanRevurderingOpprettes: false,
+            }}
+            uuidForSistLukkede="2323"
+            erTilbakekrevingAktivert
+            sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+            lukkModal={vi.fn()}
+          />
+        </QueryClientProvider>
+      </FeatureTogglesContext.Provider>,
     );
 
     await act(async () => {

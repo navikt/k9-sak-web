@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
@@ -115,22 +114,12 @@ export default ({ mode }) => {
         // Endre namn på bygd entrypoint html frå ung.html til index.html
         name: "rename-html-entry",
         closeBundle: async () => {
-          const buildDir = path.join(__dirname, "dist/ung/web")
+          const buildDir = path.join(import.meta.dirname, "dist/ung/web")
           const oldPath = path.join(buildDir, "ung.html")
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
         }
       },
-      sentryVitePlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        disable: !process.env.SENTRY_AUTH_TOKEN,
-        org: 'nav',
-        project: 'ung-sak-web',
-        url: 'https://sentry.gc.nav.no',
-        release: {
-          name: process.env.VITE_SENTRY_RELEASE,
-        },
-      }),
     ],
     esbuild: {
       charset: 'utf8',
@@ -144,7 +133,10 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
-        plugins: [nodeSourcemapsPlugin({ exclude: /@sentry/ })],
+        plugins: [nodeSourcemapsPlugin()],
+        output: {
+          sourcemapBaseUrl: process.env.VITE_CDN_BASE_URL,
+        },
       },
     },
   });

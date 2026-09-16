@@ -1,5 +1,6 @@
 import { k9_kodeverk_dokument_Kommunikasjonsretning as Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
@@ -17,7 +18,6 @@ import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 
 const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
 
@@ -57,12 +57,21 @@ const getDirectionText = (document: Document): string => {
   return 'Intern';
 };
 
+const modiaDevHosts = new Set(['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no', 'aktivitetspenger.intern.dev.nav.no']);
+
+const modiaProdHosts = new Set([
+  'app.adeo.no',
+  'k9.intern.nav.no',
+  'ung.intern.nav.no',
+  'aktivitetspenger.intern.nav.no',
+]);
+
 const getModiaPath = (fødselsnummer?: string) => {
   const { host } = window.location;
-  if (host === 'k9.intern.dev.nav.no' || host === 'ung.intern.dev.nav.no') {
+  if (modiaDevHosts.has(host)) {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
-  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no') {
+  if (modiaProdHosts.has(host)) {
     return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   return '#';

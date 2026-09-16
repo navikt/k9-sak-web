@@ -36,6 +36,8 @@ interface ProsessMenyProps {
    */
   children: React.ReactElement<ProsessPanelProps> | Array<React.ReactElement<ProsessPanelProps>>;
   steg: ProsessSteg[];
+  /** Om prosessmotor-data (f.eks. aksjonspunkter) er ferdig hentet. Når false hoppes URL-synkroniseringen over. */
+  erKlar?: boolean;
 }
 
 /**
@@ -59,7 +61,7 @@ interface ProsessMenyProps {
  * </ProsessMeny>
  * ```
  */
-export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyProps) => {
+export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }: ProsessMenyProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [valgtPanelId, setValgtPanelId] = useState<string | null>(null);
   const sisteAktivtValgtePanelIdRef = useRef<string | null>(null);
@@ -94,6 +96,12 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
    * render-output direkte. Mutasjon av den skal ikke utløse en ekstra render-syklus.
    */
   useEffect(() => {
+    // Ikke velg panel før prosessmotor-data er ferdig hentet — ellers kan et midlertidig tomt
+    // datasett føre til at feil panel (f.eks. prosessmotorSteg[0]) blir valgt som default
+    if (!erKlar) {
+      return;
+    }
+
     const gyldigePanelIds = prosessmotorSteg.map(s => s.id);
     // Ekskluder aktivt panel — ved stale data kan det fremdeles vises som warning selv om det akkurat ble løst
     const panelMedAksjonspunkt = prosessmotorSteg.find(
@@ -152,7 +160,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg }: ProsessMenyPro
         return neste;
       });
     }
-  }, [urlPanelId, prosessmotorSteg, setSearchParams]);
+  }, [urlPanelId, prosessmotorSteg, setSearchParams, erKlar]);
 
   // Konverter panelregistreringer til ProcessMenu steps-format
   const steg = useMemo(() => {

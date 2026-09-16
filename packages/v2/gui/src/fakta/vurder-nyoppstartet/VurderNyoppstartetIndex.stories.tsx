@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { http, HttpResponse } from 'msw';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
-import { VurderNyoppstartetIndex } from './VurderNyoppstartetIndex';
 import withErrorBoundary from '../../storybook/decorators/withErrorBoundary.js';
+import { VurderNyoppstartetIndex } from './VurderNyoppstartetIndex';
 
 const meta = {
   title: 'gui/fakta/vurder-nyoppstartet/VurderNyoppstartetIndex',
@@ -35,7 +35,7 @@ export const Default: Story = {
     await step('Skal sende inn nyoppstartet dato', async () => {
       await waitFor(() => expect(canvas.getByText('Ja')).toBeInTheDocument());
       await userEvent.click(canvas.getByLabelText('Ja'));
-      await userEvent.type(canvas.getByLabelText('Dato for nyoppstartet'), '2023-01-01');
+      await userEvent.type(canvas.getByLabelText('Dato for nyoppstartet'), '010123');
       await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
       await userEvent.click(canvas.getByText('Bekreft'));
       await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));

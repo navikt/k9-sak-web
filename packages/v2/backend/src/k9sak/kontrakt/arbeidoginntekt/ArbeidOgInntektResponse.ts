@@ -1,0 +1,6 @@
+export type {
+  k9_sak_kontrakt_arbeidoginntekt_ArbeidOgInntektResponse as ArbeidOgInntektResponse,
+  k9_sak_kontrakt_arbeidoginntekt_ArbeidOgInntektResponse_AktivitetDto as AktivitetDto,
+  k9_sak_kontrakt_arbeidoginntekt_ArbeidOgInntektResponse_ARegisterOpplysningerDto as ARegisterOpplysningerDto,
+  k9_sak_kontrakt_arbeidoginntekt_ArbeidOgInntektResponse_PermisjonDto as PermisjonDto,
+} from '@navikt/k9-sak-typescript-client/types';

@@ -8,24 +8,29 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { MenyEndreFristApiContext } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristApiContext.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { FakeMenyEndreFristApi } from '@k9-sak-web/gui/storybook/mocks/FakeMenyEndreFristApi.js';
+import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
+import { innloggetAnsattUngV2QueryOptions } from '../data/useNavAnsattForYtelse.js';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
-import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
-const navAnsatt = {
+const navAnsattV2 = {
   brukernavn: 'Test',
+  navn: 'Test',
   kanBehandleKode6: false,
   kanBehandleKode7: false,
   kanBehandleKodeEgenAnsatt: false,
-  kanBeslutte: true,
-  kanOverstyre: false,
-  kanSaksbehandle: true,
-  kanVeilede: false,
-  navn: 'Test',
+  erUngdomsprogramveileder: false,
+  kanVeiledeAktivitetspenger: false,
+  kanVeiledeUngdomsprogramytelse: false,
+  kanDrifte: false,
+  skalViseDetaljerteFeilmeldinger: false,
+  ungdomsprogramytelseSaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel2SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
 };
 
 const fagsak = {
@@ -85,12 +90,13 @@ const queryClient = createQueryClient({
 
 describe('BehandlingMenuIndex', () => {
   afterEach(() => {
+    queryClient.clear();
     requestApi.clearAllMockData();
   });
 
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
+    queryClient.setQueryData(innloggetAnsattUngV2QueryOptions.queryKey, navAnsattV2);
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, []);
 
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, []);

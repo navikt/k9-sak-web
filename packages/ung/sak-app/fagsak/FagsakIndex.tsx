@@ -3,6 +3,7 @@ import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
   GetUngdomsprogramInformasjonResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -18,11 +19,9 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
@@ -32,6 +31,7 @@ import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import { UngSakBackendClient } from '../data/UngSakBackendClient';
+import { useNavAnsattForYtelse } from '../data/useNavAnsattForYtelse.js';
 import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
@@ -166,7 +166,7 @@ const FagsakIndex = () => {
 
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
+  const navAnsatt = useNavAnsattForYtelse(fagsak?.sakstype ?? '-');
 
   if (!fagsak) {
     if (isRequestNotDone(fagsakState)) {
@@ -247,10 +247,6 @@ const FagsakIndex = () => {
             visittkortContent={() => {
               if (skalIkkeHenteData) {
                 return null;
-              }
-
-              if (isRequestNotDone(personopplysningerState)) {
-                return <LoadingPanel />;
               }
 
               return (

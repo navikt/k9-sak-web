@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - copilot/implementer-aktivitetspenger-opphor
+      - master
 
 jobs:
   build-deploy:
@@ -20,7 +20,7 @@ jobs:
       CLUSTER: dev-gcp
     steps:
       - name: Hente kode
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -29,6 +29,18 @@ jobs:
 
       - name: Bygge dist
         run: yarn build:ung
+        env:
+          VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/aktivitetspenger-sak-web/"
+
+      - name: Last opp assets til CDN
+        uses: nais/deploy/actions/cdn-upload/v2@027a91857992525139798892f2804b0ca21f4af6
+        with:
+          source: dist/ung/web/
+          destination: aktivitetspenger-sak-web/
+          team: k9saksbehandling
+          source_keep_parent_name: false
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
       - name: Bygg server
         uses: ./.github/actions/build-server
@@ -47,7 +59,7 @@ jobs:
             port=9005
           push-image: true
       - name: Deploy to nais
-        uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # v2
+        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6 # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/dev-gcp.yml

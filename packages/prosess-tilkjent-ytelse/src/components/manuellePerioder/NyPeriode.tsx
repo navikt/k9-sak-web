@@ -1,10 +1,10 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Label } from '@navikt/ds-react';
-import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { useFormContext } from 'react-hook-form';
 import {
@@ -93,16 +93,10 @@ const TilkjentYtelseNyPeriode = ({
             <FlexColumn>
               <FlexRow>
                 <FlexColumn>
-                  <RhfDatepicker
-                    control={formMethods.control}
-                    name="nyPeriodeForm.fom"
-                    label="Fra"
-                    validate={[required, hasValidDate]}
-                  />
+                  <Datovelger name="nyPeriodeForm.fom" label="Fra" validate={[required, hasValidDate]} />
                 </FlexColumn>
                 <FlexColumn>
-                  <RhfDatepicker
-                    control={formMethods.control}
+                  <Datovelger
                     name="nyPeriodeForm.tom"
                     label="Til"
                     validate={[required, hasValidDate, dateAfterOrEqual(formState.fom)]}

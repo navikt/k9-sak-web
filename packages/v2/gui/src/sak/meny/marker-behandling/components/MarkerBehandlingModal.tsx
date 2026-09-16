@@ -1,5 +1,6 @@
 import { MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
 import type { MerknadResponse } from '@k9-sak-web/backend/k9sak/kontrakt/los/MerknadResponse.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
@@ -10,7 +11,6 @@ import React from 'react';
 import { useForm, useFormState, useWatch } from 'react-hook-form';
 import type { MarkerBehandlingBackendApi } from '../MarkerBehandlingBackendApi';
 import styles from './markerBehandlingModal.module.css';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 
 const minLength3 = minLength(3);
 const maxLength100000 = maxLength(100000);
@@ -34,10 +34,10 @@ interface FormValues {
 const getMerknader = (merknader: MerknadResponse): MerknadType[] => {
   const ubrukteMerknader: MerknadType[] = [];
 
-  if (!merknader.hastesak.aktiv) {
+  if (!merknader.hastesak?.aktiv) {
     ubrukteMerknader.push(MerknadType.HASTESAK);
   }
-  if (!merknader.utenlandssak.aktiv) {
+  if (!merknader.utenlandssak?.aktiv) {
     ubrukteMerknader.push(MerknadType.UTENLANDSSAK);
   }
   return ubrukteMerknader;
@@ -51,14 +51,14 @@ const getGjeldendeMerknader = (merknader: MerknadResponse) => {
   }
 
   const gjeldendeMerknader: Merknad[] = [];
-  if (merknader.hastesak.aktiv) {
+  if (merknader.hastesak?.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Hastesak',
       begrunnelse: merknader.hastesak.fritekst ?? '',
       merknadKode: MerknadType.HASTESAK,
     });
   }
-  if (merknader.utenlandssak.aktiv) {
+  if (merknader.utenlandssak?.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Utenlandssak',
       begrunnelse: merknader.utenlandssak.fritekst ?? '',

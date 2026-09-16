@@ -1,7 +1,5 @@
-import type {
-  RelatertYtelseData,
-  RelatertYtelseResponse,
-} from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakYtelseType.js';
+import type { RelatertYtelseTilstand } from '@k9-sak-web/backend/k9sak/kodeverk/arbeidsforhold/RelatertYtelseTilstand.js';
 import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
@@ -34,41 +32,44 @@ import { useContext, useState } from 'react';
 import { formatDate } from '../../utils/formatters.js';
 import { useYtelserOptions } from './api/YtelserQueries.js';
 import { kanÅpneRelatertSak } from './relatertSakUtils.js';
+import {
+  grupperYtelserPåSak,
+  lagYtelsePerioder,
+  sorterYtelsePerioder,
+  sorterYtelseSaker,
+  type YtelsePeriode,
+} from './ytelseSakUtils.js';
 import styles from './YtelserFaktaIndex.module.css';
-
-type FlatYtelseRad = RelatertYtelseData & {
-  rowId: string;
-  ytelseType: RelatertYtelseResponse['ytelseType'];
-};
 
 type ZoomLevel = '2' | '4' | '8';
 
 interface YtelserFaktaIndexProps {
   behandlingUuid: string;
+  gjeldendeSaksnummer: string;
 }
-
-const sortByFom = <T extends { fom: string }>(a: T, b: T) => a.fom.localeCompare(b.fom);
 
 const monthsForZoom = (zoom: ZoomLevel) => Number(zoom);
 
-const statusTilTimelineStatus = (status: RelatertYtelseData['status']) => {
+const statusTilTimelineStatus = (status: RelatertYtelseTilstand) => {
   switch (status) {
     case 'AVSLUTTET':
-      return 'success';
     case 'LØPENDE':
+      return 'success';
     case 'ÅPEN':
+    case 'IKKESTARTET':
       return 'warning';
     default:
       return 'neutral';
   }
 };
 
-const statusTilPeriodeIkon = (status: RelatertYtelseData['status']) => {
+const statusTilPeriodeIkon = (status: RelatertYtelseTilstand) => {
   switch (status) {
     case 'AVSLUTTET':
-      return <CheckmarkCircleFillIcon aria-hidden />;
     case 'LØPENDE':
+      return <CheckmarkCircleFillIcon aria-hidden />;
     case 'ÅPEN':
+    case 'IKKESTARTET':
       return <PersonPencilIcon aria-hidden />;
     default:
       return undefined;
@@ -76,9 +77,9 @@ const statusTilPeriodeIkon = (status: RelatertYtelseData['status']) => {
 };
 
 const lagDetaljinnhold = (
-  rad: FlatYtelseRad,
-  formatYtelseType: (ytelseType: FlatYtelseRad['ytelseType']) => string,
-  formatStatus: (status: FlatYtelseRad['status']) => string,
+  rad: YtelsePeriode,
+  formatYtelseType: (ytelseType: FagsakYtelseType) => string,
+  formatStatus: (status: RelatertYtelseTilstand) => string,
 ) => (
   <VStack gap="space-4" className={styles['detaljerPopover']}>
     <Label size="small" as="p">
@@ -101,47 +102,34 @@ const lagDetaljinnhold = (
   </VStack>
 );
 
-const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
+const YtelserFaktaIndex = ({ behandlingUuid, gjeldendeSaksnummer }: YtelserFaktaIndexProps) => {
   const { data } = useSuspenseQuery(useYtelserOptions(behandlingUuid));
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
-  const formatYtelseType = (ytelseType: FlatYtelseRad['ytelseType']) =>
+  const formatYtelseType = (ytelseType: FagsakYtelseType) =>
     kodeverkoppslag.k9sak.fagsakYtelseTyper(ytelseType, OrUndefined)?.navn ?? ytelseType;
 
-  const formatStatus = (status: FlatYtelseRad['status']) =>
+  const formatStatus = (status: RelatertYtelseTilstand) =>
     kodeverkoppslag.k9sak.relatertYtelseTilstander(status, OrUndefined)?.navn ?? status;
 
-  const grupperteYtelser = data
-    .map(ytelse => ({
-      ...ytelse,
-      data: [...ytelse.data].sort(sortByFom),
-    }))
-    .sort((a, b) => {
-      if (a.ytelseType === 'PSB') return -1;
-      if (b.ytelseType === 'PSB') return 1;
-      return formatYtelseType(a.ytelseType).localeCompare(formatYtelseType(b.ytelseType));
-    });
-
-  const rader = grupperteYtelser
-    .flatMap(ytelse =>
-      ytelse.data.map((periode, index) => ({
-        ...periode,
-        rowId: `${ytelse.ytelseType}-${periode.fom}-${periode.tom}-${index}`,
-        ytelseType: ytelse.ytelseType,
-      })),
-    )
-    .sort(sortByFom);
+  const perioder = lagYtelsePerioder(data);
+  const saker = sorterYtelseSaker(grupperYtelserPåSak(perioder, gjeldendeSaksnummer), formatYtelseType);
+  const tabellRader = sorterYtelsePerioder(perioder, gjeldendeSaksnummer);
 
   const latestTom =
-    rader.length > 0
-      ? rader.reduce((max, r) => (dayjs(r.tom).isAfter(max) ? dayjs(r.tom) : max), dayjs(rader[0]!.tom))
+    perioder.length > 0
+      ? perioder.reduce(
+          (max, periode) => (dayjs(periode.tom).isAfter(max) ? dayjs(periode.tom) : max),
+          dayjs(perioder[0]!.tom),
+        )
       : dayjs();
 
   const [zoom, setZoom] = useState<ZoomLevel>('8');
   const [windowEnd, setWindowEnd] = useState<Date>(() => latestTom.add(1, 'month').toDate());
+  const [valgtPeriodeId, setValgtPeriodeId] = useState<string>();
   const monthsToShow = monthsForZoom(zoom);
 
-  if (rader.length === 0) {
+  if (perioder.length === 0) {
     return (
       <VStack gap="space-16">
         <Heading spacing size="small" level="4">
@@ -210,38 +198,34 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
               className={styles['tidslinje']}
             >
               <Timeline.Pin date={new Date()} />
-              {grupperteYtelser.map(ytelse => (
+              {saker.map(sak => (
                 <Timeline.Row
-                  key={ytelse.ytelseType}
+                  key={sak.id}
                   label={
-                    ytelse.ytelseType === 'PSB' ? (
-                      <span className={styles['rowLabelBold']}>{formatYtelseType(ytelse.ytelseType)}</span>
+                    sak.erGjeldendeSak ? (
+                      <span className={styles['rowLabelBold']}>
+                        {`${formatYtelseType(sak.ytelseType)} (denne saken)`}
+                      </span>
                     ) : (
-                      formatYtelseType(ytelse.ytelseType)
+                      formatYtelseType(sak.ytelseType)
                     )
                   }
                 >
-                  {ytelse.data.map((periode, index) => {
-                    const rad = {
-                      ...periode,
-                      rowId: `${ytelse.ytelseType}-${periode.fom}-${periode.tom}-${index}`,
-                      ytelseType: ytelse.ytelseType,
-                    };
-
-                    return (
-                      <Timeline.Period
-                        key={rad.rowId}
-                        id={rad.rowId}
-                        start={dayjs(rad.fom).toDate()}
-                        end={dayjs(rad.tom).add(1, 'day').toDate()}
-                        status={statusTilTimelineStatus(rad.status)}
-                        statusLabel={formatStatus(rad.status)}
-                        icon={statusTilPeriodeIkon(rad.status)}
-                      >
-                        {lagDetaljinnhold(rad, formatYtelseType, formatStatus)}
-                      </Timeline.Period>
-                    );
-                  })}
+                  {sak.perioder.map(periode => (
+                    <Timeline.Period
+                      key={periode.rowId}
+                      id={periode.rowId}
+                      start={dayjs(periode.fom).toDate()}
+                      end={dayjs(periode.tom).add(1, 'day').toDate()}
+                      status={statusTilTimelineStatus(periode.status)}
+                      statusLabel={formatStatus(periode.status)}
+                      icon={statusTilPeriodeIkon(periode.status)}
+                      isActive={valgtPeriodeId === periode.rowId}
+                      onSelectPeriod={() => setValgtPeriodeId(periode.rowId)}
+                    >
+                      {lagDetaljinnhold(periode, formatYtelseType, formatStatus)}
+                    </Timeline.Period>
+                  ))}
                 </Timeline.Row>
               ))}
             </Timeline>
@@ -268,7 +252,7 @@ const YtelserFaktaIndex = ({ behandlingUuid }: YtelserFaktaIndexProps) => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {rader.map(rad => (
+                {tabellRader.map(rad => (
                   <Table.Row key={rad.rowId}>
                     <Table.HeaderCell scope="row">{formatYtelseType(rad.ytelseType)}</Table.HeaderCell>
                     <Table.DataCell>{`${formatDate(rad.fom)} – ${formatDate(rad.tom)}`}</Table.DataCell>

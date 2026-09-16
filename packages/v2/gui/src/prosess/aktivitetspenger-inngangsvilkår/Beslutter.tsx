@@ -4,6 +4,7 @@ import { SkjermlenkeType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/
 import { VurderÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/VurderÅrsak.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { $TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import {
   Alert,
@@ -19,12 +20,15 @@ import {
   VStack,
 } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useMutation } from '@tanstack/react-query';
 import { useFieldArray, useForm, useWatch, type SubmitHandler } from 'react-hook-form';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 import styles from './beslutter.module.css';
 import { InngangsvilkårTab } from './types';
+
+const besluttersBegrunnelseMaxLength = $TotrinnskontrollAksjonspunkterDto.properties.besluttersBegrunnelse.maxLength;
 
 type AksjonspunktGodkjenningItem = {
   aksjonspunktKode: string;
@@ -45,6 +49,7 @@ const skjermlenkeTypeToTab: Record<string, InngangsvilkårTab | undefined> = {
   [SkjermlenkeType.BOSTEDSVILKÅR]: InngangsvilkårTab.BOSATT_I_TRONDHEIM,
   [SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER]: InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
   [SkjermlenkeType.BISTANDSVILKÅR]: InngangsvilkårTab.BEHOV_FOR_BISTAND,
+  [SkjermlenkeType.AKTIVITETSVILKÅR]: InngangsvilkårTab.AKTIVITET,
   [SkjermlenkeType.SOEKNADSFRIST]: InngangsvilkårTab.SØKNADSFRIST,
 };
 
@@ -54,6 +59,7 @@ const tabSortOrder: InngangsvilkårTab[] = [
   InngangsvilkårTab.BOSATT_I_TRONDHEIM,
   InngangsvilkårTab.ANDRE_LIVSOPPHOLDYTELSER,
   InngangsvilkårTab.BEHOV_FOR_BISTAND,
+  InngangsvilkårTab.AKTIVITET,
 ];
 
 const getTabOrderIndex = (skjermlenkeType: string): number => {
@@ -90,7 +96,7 @@ interface Props {
   onTabChange: React.Dispatch<React.SetStateAction<InngangsvilkårTab>>;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   kanBeslutte: boolean;
 }
@@ -140,8 +146,8 @@ export const Beslutter = ({
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
     },
   });
 
@@ -180,7 +186,7 @@ export const Beslutter = ({
                     const formaterSkjermlenkeType = (skjermlenkeType?: string) => {
                       switch (skjermlenkeType) {
                         case SkjermlenkeType.BOSTEDSVILKÅR:
-                          return 'Bosatt i Trondheim';
+                          return 'Bosatt i Trondheim kommune';
                         case SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
                           return 'Andre livsoppholdsytelser';
                         case SkjermlenkeType.BISTANDSVILKÅR:
@@ -250,11 +256,13 @@ export const Beslutter = ({
                                   </Fieldset>
                                 </VStack>
                               )}
-                              <Box marginBlock="space-16 space-0" width="70ch">
+                              <Box marginBlock="space-16 space-0" maxWidth="70ch" width="100%">
                                 <RhfTextarea
                                   control={control}
                                   name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
                                   label="Begrunnelse"
+                                  validate={[required, minLength(3), maxLength(besluttersBegrunnelseMaxLength)]}
+                                  maxLength={besluttersBegrunnelseMaxLength}
                                 />
                               </Box>
                             </ArrowBox>

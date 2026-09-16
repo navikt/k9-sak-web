@@ -34,6 +34,10 @@ updates:
       ft-frontend:
         patterns:
           - '@navikt/ft-*'
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   - package-ecosystem: npm
     directory: '/server'
@@ -44,6 +48,10 @@ updates:
     registries:
       - npm-github
     groups:
+      security-server:
+        applies-to: security-updates
+        patterns:
+          - "*"
       server-patch-and-minor:
         patterns:
           - '*'
@@ -55,6 +63,7 @@ updates:
           - '*'
         update-types:
           - 'major'
+
 
   - package-ecosystem: github-actions
     directory: '/'
