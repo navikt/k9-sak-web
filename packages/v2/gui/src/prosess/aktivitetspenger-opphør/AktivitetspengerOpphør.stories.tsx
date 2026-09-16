@@ -122,6 +122,16 @@ const fakeArgsBase = {
   bostedGrunnlag: fakeBostedGrunnlag,
 };
 
+const fakeAndreLivsoppholdytelserVilkårArgsBase = {
+  ...fakeArgsBase,
+  vilkår: [fakeAndreLivsoppholdytelserVilkår],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER)],
+  api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+    bekreftAksjonspunkt: fn(),
+  }) as AktivitetspengerApi,
+  onAksjonspunktBekreftet: fn(),
+};
+
 const findVarselRadiogroup = (canvas: { getByText: (matcher: RegExp) => HTMLElement }) => {
   const varsleGroup = canvas.getByText(/skal du sende varsel om opphør\?/i).closest('fieldset');
   if (!varsleGroup) {
@@ -376,6 +386,60 @@ export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
       await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
         expect.objectContaining({ '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER }),
       ]);
+    });
+  },
+};
+
+export const AndreLivsoppholdytelserVilkårsvurdering: Story = {
+  args: fakeAndreLivsoppholdytelserVilkårArgsBase,
+  play: async ({ canvas, step }) => {
+    await step('Åpne Vilkårsvurdering-fanen', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Vilkårsvurdering' }));
+    });
+
+    await step('Fyll inn vurderingens begrunnelse', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om søker mottar andre livsoppholdsytelser/i }),
+        'Søker mottar arbeidsavklaringspenger.',
+      );
+    });
+
+    await step('Velg at søker mottar annen livsoppholdytelse', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
+    });
+
+    await step('Fritekstfeltet vises', async () => {
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toBeInTheDocument();
+    });
+
+    await step('Fyll inn fritekst til opphørsbrev', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }),
+        'Søker mottar arbeidsavklaringspenger.',
+      );
+    });
+
+    await step('Send vurderingen til beslutter', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    });
+  },
+};
+
+export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
+  args: {
+    ...fakeAndreLivsoppholdytelserVilkårArgsBase,
+    aksjonspunkter: [
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER, AksjonspunktStatus.UTFØRT),
+    ],
+  },
+  play: async ({ canvas, step }) => {
+    await step('Vilkårsvurdering-fanen er valgt', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Vilkårsvurdering' }));
+    });
+
+    await step('Skjemaet er låst etter vurdering', async () => {
+      await expect(canvas.getByText('Vilkårsvurdering')).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: /send til beslutter/i })).not.toBeInTheDocument();
     });
   },
 };

@@ -15,11 +15,12 @@ import { CustomCheckmarkIcon } from '../../shared/icons/CustomCheckmarkIcon.js';
 import { CustomErrorIcon } from '../../shared/icons/CustomErrorIcon.js';
 import { CustomWarningIcon } from '../../shared/icons/CustomWarningIcon.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { AndreLivsoppholdytelserVilkårsvurdering } from './AndreLivsoppholdytelserVilkårsvurdering.js';
 import { AndreLivsoppholdytelserÅrsakOgVarsel } from './AndreLivsoppholdytelserÅrsakOgVarsel.js';
 import { BeslutterOpphør } from './BeslutterOpphør.js';
+import { BostedVilkårsvurdering } from './BostedVilkårsvurdering.js';
 import { BostedÅrsakOgVarsel } from './BostedÅrsakOgVarsel.js';
 import { OpphørTab } from './types.js';
-import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
 
 interface OpphørData {
   vurderBostedFaktaAP?: AksjonspunktDto;
@@ -122,7 +123,8 @@ export const AktivitetspengerOpphør = ({
     bostedVilkår,
     andreLivsoppholdytelserVilkår,
   } = opphørData;
-  const vilkårsvurderingAPForTab = lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP;
+  const vilkårsvurderingAPForTab =
+    lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP ?? vurderAndreLivsoppholdytelserAP;
   const harBeslutterAP = !!lokalkontorBeslutterAP;
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
@@ -150,7 +152,7 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Tab
             value={OpphørTab.VILKÅRSVURDERING}
             label="Vilkårsvurdering"
-            icon={tabIcon(vilkårsvurderingAPForTab, bostedVilkår)}
+            icon={tabIcon(vilkårsvurderingAPForTab, bostedVilkår ?? andreLivsoppholdytelserVilkår)}
           />
           {visBeslutterTab && (
             <Tabs.Tab
@@ -188,7 +190,7 @@ export const AktivitetspengerOpphør = ({
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
             {bostedVilkår && (
-              <Vilkårsvurdering
+              <BostedVilkårsvurdering
                 vurderBostedVilkårAP={vurderBostedVilkårAP}
                 bostedVilkår={bostedVilkår}
                 api={api}
@@ -198,6 +200,18 @@ export const AktivitetspengerOpphør = ({
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+              />
+            )}
+            {!bostedVilkår && andreLivsoppholdytelserVilkår && (
+              <AndreLivsoppholdytelserVilkårsvurdering
+                vurderAndreLivsoppholdytelserAP={vurderAndreLivsoppholdytelserAP}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
               />
             )}
           </Tabs.Panel>
