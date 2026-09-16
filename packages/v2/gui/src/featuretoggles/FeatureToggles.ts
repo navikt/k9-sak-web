@@ -26,6 +26,7 @@ const rootFeatureToggles = {
   VIS_GLOBAL_ERRORMODAL: false,
   DOKUMENTFILTER: false,
   BRUK_V2_ARBEID_OG_INNTEKT: false,
+  FORENKLE_OMS_VEDTAK_STATUS: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

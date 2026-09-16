@@ -29,6 +29,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   REVURDERING_FRA_STEG_V2: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
   DOKUMENTFILTER: true,
+  FORENKLE_OMS_VEDTAK_STATUS: true,
 });
 
 /**
@@ -41,4 +42,5 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
   SKJUL_PROSESS_MENY_V2_VELGER: true,
+  REVURDERING_FRA_STEG_V2: true,
 });

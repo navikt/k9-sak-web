@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Detail, Label } from '@navikt/ds-react';
+import { BodyLong, Detail, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 
 export interface LabelledContentProps {
   label: string | React.ReactNode;
-  content?: React.ReactNode;
+  content?: string | React.ReactNode;
   labelTag?: React.ElementType;
   indentContent?: boolean;
   size?: 'medium' | 'small';
@@ -34,7 +34,17 @@ export const LabelledContent = ({
       )}
       {description && typeof description === 'string' && <Detail className="mt-1">{description}</Detail>}
       {description && typeof description !== 'string' && description}
-      <div className={cl}>{content}</div>
+      {content && (
+        <div className={cl}>
+          {typeof content === 'string' ? (
+            <BodyLong size={size} className="whitespace-pre-wrap">
+              {content}
+            </BodyLong>
+          ) : (
+            content
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -9,11 +9,12 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Datovelger from '../../shared/datovelger/Datovelger.js';
 import { VilkårSplittPanel, type VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -32,8 +33,7 @@ interface FormData {
     {
       opphørsdato: string;
       årsak: string;
-      begrunnelse: string;
-      åpenbarGrunnTilIkkeVarsle: 'ja' | 'nei' | '';
+      skalSendeVarselOmOpphør: 'ja' | 'nei' | '';
       opphøreEllerAvslå: 'opphøre' | 'avslå' | '';
       avslagFom: string;
       avslagTom: string;
@@ -52,7 +52,6 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
       {
         avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
         avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
-        begrunnelse: p.avklaring?.begrunnelse ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
         forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
         kilde: p.avklaring?.kilde ?? '',
@@ -65,8 +64,8 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
               : '',
         opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
         årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
-        åpenbarGrunnTilIkkeVarsle:
-          p.avklaring?.skalSendeVarsel === true ? 'nei' : p.avklaring?.skalSendeVarsel === false ? 'ja' : '',
+        skalSendeVarselOmOpphør:
+          p.avklaring?.skalSendeVarsel === true ? 'ja' : p.avklaring?.skalSendeVarsel === false ? 'nei' : '',
       },
     ]),
   ),
@@ -126,7 +125,7 @@ export const AarsakOgVarsel = ({
       .toSorted((a, b) => b.fom.localeCompare(a.fom))
       .map(p => ({
         id: p.fom,
-        status: p.resultat?.erBosatt ? ('success' as const) : ('error' as const),
+        status: p.resultat ? (p.resultat.erBosatt ? ('success' as const) : ('error' as const)) : ('warning' as const),
         label: p.tom ? `${formatDate(p.fom)} - ${formatDate(p.tom)}` : formatDate(p.fom),
         periode: p.tom
           ? {
@@ -144,7 +143,7 @@ export const AarsakOgVarsel = ({
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedGrunnlag),
   });
-  const åpenbarGrunnTilIkkeVarsle = formHook.watch(`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`);
+  const skalSendeVarselOmOpphør = formHook.watch(`perioder.${selectedId}.skalSendeVarselOmOpphør`);
   const opphøreEllerAvslå = formHook.watch(`perioder.${selectedId}.opphøreEllerAvslå`);
   const valgtÅrsak = formHook.watch(`perioder.${selectedId}.årsak`);
   const valgtÅrsakErAnnet = valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
@@ -160,10 +159,10 @@ export const AarsakOgVarsel = ({
         throw new Error('Kunne ikke finne valgt periode for opphør');
       }
       const isOpphør = selectedFormPeriod.opphøreEllerAvslå === 'opphøre';
-      const skalSendeVarsel = selectedFormPeriod.åpenbarGrunnTilIkkeVarsle === 'nei';
+      const skalSendeVarsel = selectedFormPeriod.skalSendeVarselOmOpphør === 'ja';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
-        begrunnelse: selectedFormPeriod.begrunnelse,
+        begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
         avklaringer: [
           {
             periode: {
@@ -172,7 +171,7 @@ export const AarsakOgVarsel = ({
             },
             skalIkkeSendeVarsel: !skalSendeVarsel,
             vurdering: {
-              begrunnelse: selectedFormPeriod.begrunnelse,
+              begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
               begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
               fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
@@ -192,13 +191,16 @@ export const AarsakOgVarsel = ({
     },
   });
 
-  const skalSendeForhåndsvarsel = åpenbarGrunnTilIkkeVarsle === 'nei';
+  const skalSendeForhåndsvarsel = skalSendeVarselOmOpphør === 'ja';
   const valgtPeriode = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
   const readOnlyForValgtPeriode =
     !!valgtPeriode && (!valgtPeriode.avklaring || valgtPeriode.avklaring?.kanRedigeres !== true);
   const panelReadOnly = readOnly || readOnlyForValgtPeriode;
   const relevanteBostedsvilkårIkkeOppfyltÅrsaker = Object.values(BostedsvilkårIkkeOppfyltÅrsak).filter(
-    årsak => årsak !== BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT && årsak !== BostedsvilkårIkkeOppfyltÅrsak.AVKORTET,
+    årsak =>
+      årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
+      årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
+      årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
   );
 
   const handleSubmit = async (data: FormData, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -234,7 +236,7 @@ export const AarsakOgVarsel = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Ikke lenger bosatt i Trondheim"
+        detailHeading="Ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
@@ -268,8 +270,7 @@ export const AarsakOgVarsel = ({
                   <Radio value="avslå">Avslå en innvilget periode</Radio>
                 </RhfRadioGroup>
                 {opphøreEllerAvslå === 'opphøre' && (
-                  <RhfDatepicker
-                    control={formHook.control}
+                  <Datovelger
                     name={`perioder.${selectedId}.opphørsdato`}
                     label="Opphøre fra og med"
                     readOnly={isFormLocked}
@@ -277,12 +278,12 @@ export const AarsakOgVarsel = ({
                     defaultMonth={dagensDato}
                     fromDate={dateRange?.fromDate}
                     toDate={dateRange?.toDate}
+                    disableWeekends
                   />
                 )}
                 {opphøreEllerAvslå === 'avslå' && (
                   <HStack gap="space-8">
-                    <RhfDatepicker
-                      control={formHook.control}
+                    <Datovelger
                       name={`perioder.${selectedId}.avslagFom`}
                       label="Fra og med"
                       readOnly={isFormLocked}
@@ -290,9 +291,9 @@ export const AarsakOgVarsel = ({
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
                       defaultMonth={dagensDato}
+                      disableWeekends
                     />
-                    <RhfDatepicker
-                      control={formHook.control}
+                    <Datovelger
                       name={`perioder.${selectedId}.avslagTom`}
                       label="Til og med"
                       readOnly={isFormLocked}
@@ -300,13 +301,14 @@ export const AarsakOgVarsel = ({
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
                       defaultMonth={dagensDato}
+                      disableWeekends
                     />
                   </HStack>
                 )}
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
-                  label="Årsak"
+                  label="Velg årsak"
                   readOnly={isFormLocked}
                   validate={[required]}
                   selectValues={relevanteBostedsvilkårIkkeOppfyltÅrsaker.map(årsak => (
@@ -318,7 +320,8 @@ export const AarsakOgVarsel = ({
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.kilde`}
-                  label="Hvor har du fått opplysningene fra (vises til bruker)"
+                  label="Hvor har du fått opplysningene fra?"
+                  description='Velg fra listen eller velg "annet" for å skrive en kort forklaring.'
                   readOnly={isFormLocked}
                   validate={[required]}
                   selectValues={Object.values(BostedsavklaringKildeType).map(kilde => (
@@ -331,27 +334,18 @@ export const AarsakOgVarsel = ({
                   <RhfTextField
                     control={formHook.control}
                     name={`perioder.${selectedId}.kildeFritekst`}
-                    label="Beskriv hvor opplysningene kommer fra"
-                    description="Teksten vises til bruker i varsel og vedtaksbrev."
+                    label="Skriv inn hvor du har fått opplysningene fra"
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(1000)]}
                     maxLength={1000}
                   />
                 )}
-                <RhfTextarea
-                  control={formHook.control}
-                  name={`perioder.${selectedId}.begrunnelse`}
-                  label="Begrunnelse"
-                  readOnly={isFormLocked}
-                  validate={[required, minLength(3), maxLength(4000)]}
-                  resize
-                />
                 <RhfRadioGroup
                   key={`${selectedId}-varsle`}
                   control={formHook.control}
-                  name={`perioder.${selectedId}.åpenbarGrunnTilIkkeVarsle`}
-                  legend="Er det åpenbar grunn til å ikke varsle bruker?"
-                  description="For eksempel at bruker har varslet flytting selv."
+                  name={`perioder.${selectedId}.skalSendeVarselOmOpphør`}
+                  legend="Skal du sende varsel om opphør?"
+                  description="Hvis det er en god grunn til det, kan du la være å sende varsel. For eksempel at bruker har kommet med opplysningene selv."
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
@@ -363,14 +357,14 @@ export const AarsakOgVarsel = ({
                     control={formHook.control}
                     name={`perioder.${selectedId}.forhåndsvarselTekst`}
                     label="Tekst i forhåndsvarsel (vises til bruker)"
-                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim."
+                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim kommune."
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(1000)]}
                     resize
                     maxLength={1000}
                   />
                 )}
-                {åpenbarGrunnTilIkkeVarsle === 'ja' && (
+                {skalSendeVarselOmOpphør === 'nei' && (
                   <RhfTextarea
                     control={formHook.control}
                     name={`perioder.${selectedId}.begrunnelseForIkkeVarsle`}
@@ -378,6 +372,7 @@ export const AarsakOgVarsel = ({
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(4000)]}
                     resize
+                    maxLength={4000}
                   />
                 )}
                 {!isFormLocked && skalSendeForhåndsvarsel && (
