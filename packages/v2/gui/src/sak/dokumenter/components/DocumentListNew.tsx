@@ -5,23 +5,21 @@ import {
 import { type DokumentfilterGruppeType } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
 import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, Link, Table, Tooltip, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useContext, useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
 import { isUngWeb } from '../../../utils/urlUtils';
 import type { FagsakPerson } from '../types/FagsakPerson';
-import { type Kompletthet } from '../types/Kompletthetsperioder';
+import { DokumenterApiContext } from '../api/DokumenterApiContext.js';
+import { inntektsmeldingerIBrukQueryOptions } from '../api/dokumenterQueryOptions.js';
 import styles from './documentList.module.css';
 import arrowLeftPurpleImageUrl from './icons/arrow_left_purple.svg';
 import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 
 const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
@@ -98,6 +96,7 @@ interface DokumentTypeOption {
  */
 const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
   const kv = useContext(K9KodeverkoppslagContext);
+  const api = useContext(DokumenterApiContext);
   const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
 
   const dokumentTypeAlternativer: DokumentTypeOption[] = [
@@ -171,30 +170,9 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
     fagsakYtelsesType.OPPLÆRINGSPENGER,
   ].some(t => t === sakstype);
 
-  const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
-    axios
-      .get<Kompletthet>(
-        `/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`,
-        addLegacySerializerOption({
-          signal,
-          params: {
-            behandlingUuid,
-          },
-        }),
-      )
-      .then(({ data }) => {
-        const inntektsmeldingerIBruk = data?.vurderinger?.flatMap(kompletthetvurdering =>
-          kompletthetvurdering.vurderinger.filter(vurdering => vurdering.vurdering === 'I_BRUK'),
-        );
-        return inntektsmeldingerIBruk;
-      });
-
-  const { data: inntektsmeldingerIBruk } = useQuery({
-    queryKey: ['kompletthet'],
-    queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
-    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
-    throwOnError: ignore404Errors, // k9-sak kaster 404 på dette kallet av og til. Uvisst når pr no
-  });
+  const { data: inntektsmeldingerIBruk } = useQuery(
+    inntektsmeldingerIBrukQueryOptions(api, behandlingUuid, erStøttetFagsakYtelseType),
+  );
 
   const ModiaLenke = () => (
     <Link

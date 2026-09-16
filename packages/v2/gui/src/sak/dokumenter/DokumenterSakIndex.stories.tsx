@@ -7,6 +7,7 @@ import { withQueryClientProvider } from '../../storybook/decorators/withQueryCli
 import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.js';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { DokumentfilterGruppe } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
+import { withFakeDokumenterApi } from './mock/withFakeDokumenterApi.js';
 
 const behandlingId = 1;
 
@@ -101,6 +102,7 @@ const meta = {
     withQueryClientProvider({ queries: { throwOnError: false } }),
     withK9Kodeverkoppslag(),
     withFeatureToggles({ DOKUMENTFILTER: true }),
+    withFakeDokumenterApi(),
   ],
 } satisfies Meta<typeof DokumenterSakIndex>;
 
