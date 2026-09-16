@@ -7,7 +7,9 @@ class YtelserFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'YtelserFaktaIndex.Ytelser';
 
-  getKomponent = props => <YtelserFaktaIndex behandlingUuid={props.behandling.uuid} />;
+  getKomponent = props => (
+    <YtelserFaktaIndex behandlingUuid={props.behandling.uuid} gjeldendeSaksnummer={props.fagsak.saksnummer} />
+  );
 
   skalVisePanel = (_apCodes, { personopplysninger }, featureToggles) =>
     Boolean(featureToggles?.VIS_YTELSER_PANEL && personopplysninger);

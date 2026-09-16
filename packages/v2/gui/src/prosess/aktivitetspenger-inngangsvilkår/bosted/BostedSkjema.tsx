@@ -1,12 +1,21 @@
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
+import {
+  $ManuellVurderingBostedsvilkårDto,
+  $VilkårBostedPeriodeVurderingDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import { dateBefore } from '../../../utils/validation/validators.js';
 import { opphørsårsakLabels } from '../../aktivitetspenger-prosess/types.js';
 import type { BostedFormData } from './bostedFormData.js';
+
+const begrunnelseMaxLength = $ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength;
+const periodeBegrunnelseMaxLength = $VilkårBostedPeriodeVurderingDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength = $VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength;
 
 const valgbareAvslagsårsaker = [
   BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
@@ -45,7 +54,8 @@ export const BostedSkjema = ({
           control={formHook.control}
           name={`vurderinger.${selectedId}.begrunnelse`}
           label={begrunnelseLabel}
-          validate={[required, minLength(3), maxLength(4000)]}
+          validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
+          maxLength={begrunnelseMaxLength}
         />
         <RhfRadioGroup
           key={`${selectedId}-bosatt`}
@@ -81,7 +91,8 @@ export const BostedSkjema = ({
             name={`vurderinger.${selectedId}.fritekst`}
             label="Fritekst avslagsbrev"
             description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-            validate={[required, minLength(3), maxLength(4000)]}
+            validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+            maxLength={fritekstVurderingBrevMaxLength}
           />
         )}
         {bosatt === 'oppfylt' && (
@@ -96,6 +107,7 @@ export const BostedSkjema = ({
                 label="Fra"
                 size="small"
                 readOnly
+                disableWeekends
               />
               <Datovelger
                 key={`${selectedId}-maksdato`}
@@ -106,12 +118,16 @@ export const BostedSkjema = ({
                 validate={[
                   required,
                   value =>
-                    redigerMaksdato && value === muligAvkortingPeriode?.tom
-                      ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.'
+                    redigerMaksdato && muligAvkortingPeriode
+                      ? dateBefore(
+                          muligAvkortingPeriode.tom,
+                          'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
+                        )(value)
                       : undefined,
                 ]}
                 fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                 toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                disableWeekends
               />
               {muligAvkortingPeriode && (
                 <RhfCheckbox
@@ -127,7 +143,8 @@ export const BostedSkjema = ({
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
                 label="Begrunn kortere periode enn 260 dager"
-                validate={[required]}
+                validate={[required, minLength(3), maxLength(periodeBegrunnelseMaxLength)]}
+                maxLength={periodeBegrunnelseMaxLength}
               />
             )}
           </VStack>

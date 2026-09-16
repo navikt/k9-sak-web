@@ -1,10 +1,19 @@
+import {
+  $VilkårAktivitetPeriodeVurderingDto,
+  $VurderAktivitetDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import { dateBefore } from '../../../utils/validation/validators.js';
 import type { AktivitetFormData } from './aktivitetFormData.js';
+
+const begrunnelseMaxLength = $VurderAktivitetDto.properties.begrunnelse.maxLength;
+const periodeBegrunnelseMaxLength = $VilkårAktivitetPeriodeVurderingDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength = $VilkårAktivitetPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength;
 
 interface Props {
   formHook: UseFormReturn<AktivitetFormData>;
@@ -36,7 +45,8 @@ export const AktivitetSkjema = ({
           control={formHook.control}
           name={`vurderinger.${selectedId}.begrunnelse`}
           label={begrunnelseLabel}
-          validate={[required, minLength(3), maxLength(4000)]}
+          validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
+          maxLength={begrunnelseMaxLength}
         />
         <RhfRadioGroup
           key={`${selectedId}-erSøkerIAktivitet`}
@@ -61,6 +71,7 @@ export const AktivitetSkjema = ({
                   label="Fra og med"
                   size="small"
                   readOnly
+                  disableWeekends
                 />
                 <Datovelger
                   key={`${selectedId}-tom`}
@@ -71,12 +82,16 @@ export const AktivitetSkjema = ({
                   validate={[
                     required,
                     value =>
-                      redigerTomDato && value === muligAvkortingPeriode?.tom
-                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato'
+                      redigerTomDato && muligAvkortingPeriode
+                        ? dateBefore(
+                            muligAvkortingPeriode.tom,
+                            'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato',
+                          )(value)
                         : undefined,
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                   toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                  disableWeekends
                 />
                 {muligAvkortingPeriode && (
                   <RhfCheckbox
@@ -93,7 +108,8 @@ export const AktivitetSkjema = ({
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
                 label="Begrunn kortere periode enn 260 dager"
-                validate={[required]}
+                validate={[required, minLength(3), maxLength(periodeBegrunnelseMaxLength)]}
+                maxLength={periodeBegrunnelseMaxLength}
               />
             )}
           </VStack>
@@ -105,7 +121,8 @@ export const AktivitetSkjema = ({
             name={`vurderinger.${selectedId}.fritekst`}
             label="Fritekst avslagsbrev"
             description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-            validate={[required, minLength(3), maxLength(4000)]}
+            validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+            maxLength={fritekstVurderingBrevMaxLength}
           />
         )}
         <HStack gap="space-8">

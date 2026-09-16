@@ -9,11 +9,12 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, HStack, InfoCard, List, Modal, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Datovelger from '../../shared/datovelger/Datovelger.js';
 import { VilkårSplittPanel, type VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -32,7 +33,6 @@ interface FormData {
     {
       opphørsdato: string;
       årsak: string;
-      begrunnelse: string;
       skalSendeVarselOmOpphør: 'ja' | 'nei' | '';
       opphøreEllerAvslå: 'opphøre' | 'avslå' | '';
       avslagFom: string;
@@ -52,7 +52,6 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
       {
         avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
         avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
-        begrunnelse: p.avklaring?.begrunnelse ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
         forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
         kilde: p.avklaring?.kilde ?? '',
@@ -126,7 +125,7 @@ export const AarsakOgVarsel = ({
       .toSorted((a, b) => b.fom.localeCompare(a.fom))
       .map(p => ({
         id: p.fom,
-        status: p.resultat?.erBosatt ? ('success' as const) : ('error' as const),
+        status: p.resultat ? (p.resultat.erBosatt ? ('success' as const) : ('error' as const)) : ('warning' as const),
         label: p.tom ? `${formatDate(p.fom)} - ${formatDate(p.tom)}` : formatDate(p.fom),
         periode: p.tom
           ? {
@@ -163,7 +162,7 @@ export const AarsakOgVarsel = ({
       const skalSendeVarsel = selectedFormPeriod.skalSendeVarselOmOpphør === 'ja';
       const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
-        begrunnelse: selectedFormPeriod.begrunnelse,
+        begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
         avklaringer: [
           {
             periode: {
@@ -172,7 +171,7 @@ export const AarsakOgVarsel = ({
             },
             skalIkkeSendeVarsel: !skalSendeVarsel,
             vurdering: {
-              begrunnelse: selectedFormPeriod.begrunnelse,
+              begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
               fraflyttingsÅrsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
               begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedFormPeriod.begrunnelseForIkkeVarsle : undefined,
               fritekstTilVarsel: skalSendeVarsel ? selectedFormPeriod.forhåndsvarselTekst : undefined,
@@ -237,7 +236,7 @@ export const AarsakOgVarsel = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Ikke lenger bosatt i Trondheim"
+        detailHeading="Ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse={bostedVilkår.lovReferanse}
@@ -271,8 +270,7 @@ export const AarsakOgVarsel = ({
                   <Radio value="avslå">Avslå en innvilget periode</Radio>
                 </RhfRadioGroup>
                 {opphøreEllerAvslå === 'opphøre' && (
-                  <RhfDatepicker
-                    control={formHook.control}
+                  <Datovelger
                     name={`perioder.${selectedId}.opphørsdato`}
                     label="Opphøre fra og med"
                     readOnly={isFormLocked}
@@ -280,12 +278,12 @@ export const AarsakOgVarsel = ({
                     defaultMonth={dagensDato}
                     fromDate={dateRange?.fromDate}
                     toDate={dateRange?.toDate}
+                    disableWeekends
                   />
                 )}
                 {opphøreEllerAvslå === 'avslå' && (
                   <HStack gap="space-8">
-                    <RhfDatepicker
-                      control={formHook.control}
+                    <Datovelger
                       name={`perioder.${selectedId}.avslagFom`}
                       label="Fra og med"
                       readOnly={isFormLocked}
@@ -293,9 +291,9 @@ export const AarsakOgVarsel = ({
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
                       defaultMonth={dagensDato}
+                      disableWeekends
                     />
-                    <RhfDatepicker
-                      control={formHook.control}
+                    <Datovelger
                       name={`perioder.${selectedId}.avslagTom`}
                       label="Til og med"
                       readOnly={isFormLocked}
@@ -303,13 +301,14 @@ export const AarsakOgVarsel = ({
                       fromDate={dateRange?.fromDate}
                       toDate={dateRange?.toDate}
                       defaultMonth={dagensDato}
+                      disableWeekends
                     />
                   </HStack>
                 )}
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
-                  label="Årsak"
+                  label="Velg årsak"
                   readOnly={isFormLocked}
                   validate={[required]}
                   selectValues={relevanteBostedsvilkårIkkeOppfyltÅrsaker.map(årsak => (
@@ -341,14 +340,6 @@ export const AarsakOgVarsel = ({
                     maxLength={1000}
                   />
                 )}
-                <RhfTextarea
-                  control={formHook.control}
-                  name={`perioder.${selectedId}.begrunnelse`}
-                  label="Begrunnelse"
-                  readOnly={isFormLocked}
-                  validate={[required, minLength(3), maxLength(4000)]}
-                  resize
-                />
                 <RhfRadioGroup
                   key={`${selectedId}-varsle`}
                   control={formHook.control}
@@ -366,7 +357,7 @@ export const AarsakOgVarsel = ({
                     control={formHook.control}
                     name={`perioder.${selectedId}.forhåndsvarselTekst`}
                     label="Tekst i forhåndsvarsel (vises til bruker)"
-                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim."
+                    description="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim kommune."
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(1000)]}
                     resize
@@ -381,6 +372,7 @@ export const AarsakOgVarsel = ({
                     readOnly={isFormLocked}
                     validate={[required, minLength(3), maxLength(4000)]}
                     resize
+                    maxLength={4000}
                   />
                 )}
                 {!isFormLocked && skalSendeForhåndsvarsel && (

@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -100,11 +101,11 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [
       {
-        skjermlenkeType: 'BOSATT_I_TRONDHEIM',
+        skjermlenkeType: SkjermlenkeType.BOSTEDSVILKÅR,
         totrinnskontrollAksjonspunkter: [{ aksjonspunktKode: '5014', totrinnskontrollGodkjent: undefined }],
       },
       {
-        skjermlenkeType: 'BEHOV_FOR_BISTAND',
+        skjermlenkeType: SkjermlenkeType.BISTANDSVILKÅR,
         totrinnskontrollAksjonspunkter: [
           { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, totrinnskontrollGodkjent: undefined },
         ],

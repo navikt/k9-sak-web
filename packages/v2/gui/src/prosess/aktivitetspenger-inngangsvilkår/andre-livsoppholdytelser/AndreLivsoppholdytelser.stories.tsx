@@ -253,7 +253,7 @@ export const RedigererMaksdato: Story = {
     await step('sender avkortet periode med årsak AVKORTET', async () => {
       const maksdato = await canvas.findByLabelText('Til og med');
       await userEvent.clear(maksdato);
-      await userEvent.type(maksdato, '30.06.2024');
+      await userEvent.type(maksdato, '01.07.2024');
       await userEvent.type(
         await canvas.findByLabelText('Begrunn kortere periode enn 260 dager'),
         'Søker ønsker kortere periode.',
@@ -264,20 +264,20 @@ export const RedigererMaksdato: Story = {
       await waitFor(async () => {
         await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual({
           '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-          begrunnelse: 'Søker har ingen andre livsoppholdytelser.\n\nSøker ønsker kortere periode.',
+          begrunnelse: 'Aksjonspunkt 5142 VURDER_ANDRE_LIVSOPPHOLDSYTELSER bekreftet',
           vurdertePerioder: [
             {
               avslagsårsak: undefined,
               begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
               erVilkårOppfylt: true,
-              periode: { fom: '2024-01-01', tom: '2024-06-30' },
+              periode: { fom: '2024-01-01', tom: '2024-07-01' },
               fritekstVurderingBrev: undefined,
             },
             {
               avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
               begrunnelse: 'Søker ønsker kortere periode.',
               erVilkårOppfylt: false,
-              periode: { fom: '2024-07-01', tom: '2024-12-31' },
+              periode: { fom: '2024-07-02', tom: '2024-12-31' },
               fritekstVurderingBrev: undefined,
             },
           ],

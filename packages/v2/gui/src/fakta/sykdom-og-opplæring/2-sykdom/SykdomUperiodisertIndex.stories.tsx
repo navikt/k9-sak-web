@@ -8,8 +8,8 @@ import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { withFakeSykdomOgOpplæringApi } from '../../../storybook/decorators/withFakeSykdomOgOpplæringApi.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -41,59 +41,54 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     </SykdomOgOpplæringContext.Provider>
   );
 };
-const withMockDataIkkeVurdert: Decorator = Story => {
-  // Mock list of uperiodiserte sykdomsvurderinger
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => [];
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => ({
+const withMockDataIkkeVurdert: Decorator = withFakeSykdomOgOpplæringApi({
+  langvarigSykVurderinger: [],
+  vurdertLangvarigSykdom: {
     vurderingUuid: '',
     resultat: LangvarigSykdomResultat.MÅ_VURDERES,
-  });
+  },
+});
 
-  return <Story />;
+const withMockDataLangvarigSykVurderinger = [
+  {
+    uuid: 'v1',
+    vurdertTidspunkt: '2025-01-15T10:00:00Z',
+    godkjent: true,
+    vurderingFraAnnenpart: false,
+    begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+    kanOppdateres: true,
+    diagnosekoder: [],
+    avslagsårsak: undefined,
+    behandlingUuid: '222-3333',
+    saksnummer: { saksnummer: '12345' },
+    vurdertAv: 'Z123456',
+  },
+  {
+    uuid: 'v2',
+    vurdertTidspunkt: '2025-02-10T12:30:00Z',
+    godkjent: false,
+    avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
+    vurderingFraAnnenpart: true,
+    begrunnelse: 'Mangler dokumentasjon',
+    kanOppdateres: true,
+    diagnosekoder: [],
+    behandlingUuid: '222-3333',
+    saksnummer: { saksnummer: '12345' },
+    vurdertAv: 'Z123456',
+  },
+];
+
+const withMockDataVurdertLangvarigSykdom = {
+  vurderingUuid: 'v1',
+  resultat: LangvarigSykdomResultat.GODKJENT,
 };
-const withMockData: Decorator = Story => {
+
+const withMockData: Decorator = withFakeSykdomOgOpplæringApi({
   // Mock list of uperiodiserte sykdomsvurderinger
-  const langvarigSykVurderingerMock = [
-    {
-      uuid: 'v1',
-      vurdertTidspunkt: '2025-01-15T10:00:00Z',
-      godkjent: true,
-      vurderingFraAnnenpart: false,
-      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
-      kanOppdateres: true,
-      diagnosekoder: [],
-      avslagsårsak: undefined,
-      behandlingUuid: '222-3333',
-      saksnummer: { saksnummer: '12345' },
-      vurdertAv: 'Z123456',
-    },
-    {
-      uuid: 'v2',
-      vurdertTidspunkt: '2025-02-10T12:30:00Z',
-      godkjent: false,
-      avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
-      vurderingFraAnnenpart: true,
-      begrunnelse: 'Mangler dokumentasjon',
-      kanOppdateres: true,
-      diagnosekoder: [],
-      behandlingUuid: '222-3333',
-      saksnummer: { saksnummer: '12345' },
-      vurdertAv: 'Z123456',
-    },
-  ];
-
+  langvarigSykVurderinger: withMockDataLangvarigSykVurderinger,
   // Mock which vurdering is used by the aksjonspunkt
-  const vurdertLangvarigSykdomMock = {
-    vurderingUuid: 'v1',
-    resultat: LangvarigSykdomResultat.GODKJENT,
-  };
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => langvarigSykVurderingerMock;
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => vurdertLangvarigSykdomMock;
-
-  return <Story />;
-};
+  vurdertLangvarigSykdom: withMockDataVurdertLangvarigSykdom,
+});
 
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/2-sykdom',

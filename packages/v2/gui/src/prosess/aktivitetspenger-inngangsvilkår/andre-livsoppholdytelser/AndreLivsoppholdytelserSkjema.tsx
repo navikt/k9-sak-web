@@ -1,11 +1,21 @@
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import {
+  $VilkårLivsoppholdsytelserPeriodeVurderingDto,
+  $VurderAndreLivsoppholdsytelserDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
+import { dateBefore } from '../../../utils/validation/validators.js';
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
+
+const begrunnelseMaxLength = $VurderAndreLivsoppholdsytelserDto.properties.begrunnelse.maxLength;
+const periodeBegrunnelseMaxLength = $VilkårLivsoppholdsytelserPeriodeVurderingDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength =
+  $VilkårLivsoppholdsytelserPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength;
 
 interface Props {
   formHook: UseFormReturn<AndreLivsoppholdytelserFormData>;
@@ -38,7 +48,8 @@ export const AndreLivsoppholdytelserSkjema = ({
           control={formHook.control}
           name={`vurderinger.${selectedId}.begrunnelse`}
           label={begrunnelseLabel}
-          validate={[required, minLength(3), maxLength(4000)]}
+          validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
+          maxLength={begrunnelseMaxLength}
         />
         <RhfRadioGroup
           key={`${selectedId}-andreLivsoppholdytelser`}
@@ -71,7 +82,8 @@ export const AndreLivsoppholdytelserSkjema = ({
             name={`vurderinger.${selectedId}.fritekst`}
             label="Fritekst avslagsbrev"
             description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-            validate={[required, minLength(3), maxLength(4000)]}
+            validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+            maxLength={fritekstVurderingBrevMaxLength}
           />
         )}
         {andreLivsoppholdytelser === 'oppfylt' && (
@@ -87,6 +99,7 @@ export const AndreLivsoppholdytelserSkjema = ({
                   label="Fra"
                   size="small"
                   readOnly
+                  disableWeekends
                 />
                 <Datovelger
                   key={`${selectedId}-maksdato`}
@@ -97,12 +110,16 @@ export const AndreLivsoppholdytelserSkjema = ({
                   validate={[
                     required,
                     value =>
-                      redigerMaksdato && value === muligAvkortingPeriode?.tom
-                        ? 'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.'
+                      redigerMaksdato && muligAvkortingPeriode
+                        ? dateBefore(
+                            muligAvkortingPeriode.tom,
+                            'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
+                          )(value)
                         : undefined,
                   ]}
                   fromDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.fom) : undefined}
                   toDate={muligAvkortingPeriode ? new Date(muligAvkortingPeriode.tom) : undefined}
+                  disableWeekends
                 />
                 {muligAvkortingPeriode && (
                   <RhfCheckbox
@@ -119,7 +136,8 @@ export const AndreLivsoppholdytelserSkjema = ({
                 control={formHook.control}
                 name={`vurderinger.${selectedId}.begrunnelseKortereMaksdato`}
                 label="Begrunn kortere periode enn 260 dager"
-                validate={[required]}
+                validate={[required, minLength(3), maxLength(periodeBegrunnelseMaxLength)]}
+                maxLength={periodeBegrunnelseMaxLength}
               />
             )}
           </VStack>

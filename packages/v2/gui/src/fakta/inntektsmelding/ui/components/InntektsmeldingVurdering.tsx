@@ -1,10 +1,10 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { skalVurderes } from '../../util/utils';
 import InntektsmeldingFerdigvisning from './InntektsmeldingFerdigvisning';
 import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 interface InntektsmeldingVurderingProps {
   tilstand: TilstandMedUiState;

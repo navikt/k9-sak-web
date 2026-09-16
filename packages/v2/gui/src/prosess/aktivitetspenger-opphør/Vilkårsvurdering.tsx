@@ -4,15 +4,19 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import {
+  $ManuellVurderingBostedsvilkårDto,
+  $VilkårBostedPeriodeVurderingDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -24,8 +28,6 @@ import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js'
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
-const dagensDato = new Date();
-
 interface FormData {
   perioder: Record<
     string,
@@ -33,7 +35,7 @@ interface FormData {
       årsak: BostedsvilkårIkkeOppfyltÅrsak | '';
       begrunnelse: string;
       flyttetFraTrondheim: string;
-      opphørsdato: string;
+      fritekstVurderingBrev: string;
     }
   >;
 }
@@ -46,7 +48,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
         årsak: p.resultat?.ikkeOppfyltÅrsak ?? '',
         begrunnelse: p.resultat?.begrunnelse ?? '',
         flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : p.resultat?.erBosatt === true ? 'nei' : '',
-        opphørsdato: p.fom,
+        fritekstVurderingBrev: p.resultat?.friteksttilBrev ?? '',
       },
     ]),
   ),
@@ -106,9 +108,11 @@ export const Vilkaarsvurdering = ({
             begrunnelse: selectedFormPeriod.begrunnelse,
             erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
             periode: {
-              fom: selectedFormPeriod.opphørsdato || valgtPeriode?.periode?.fom || '',
-              tom: selectedFormPeriod.opphørsdato ? undefined : (valgtPeriode?.periode?.tom ?? ''),
+              fom: valgtPeriode?.periode?.fom ?? '',
+              tom: valgtPeriode?.periode?.tom,
             },
+            fritekstVurderingBrev:
+              selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
           },
         ],
       };
@@ -126,11 +130,14 @@ export const Vilkaarsvurdering = ({
     },
   });
 
-  const flyttetFraTrondheim = formHook.watch(`perioder.${selectedId}.flyttetFraTrondheim`);
   const isVurderBostedvilkårAPSolved = vurderBostedVilkårAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
   const defaultIsLocked = isVurderBostedvilkårAPSolved || erLokalkontorForeslårAPÅpent;
+  const flyttetFraTrondheim = useWatch({
+    control: formHook.control,
+    name: `perioder.${selectedId}.flyttetFraTrondheim`,
+  });
 
   return (
     <VStack gap="space-20">
@@ -138,7 +145,7 @@ export const Vilkaarsvurdering = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Vurdering av ikke lenger bosatt i Trondheim"
+        detailHeading="Vurdering av ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
         lovreferanse={bostedVilkår.lovReferanse}
         defaultIsLocked={defaultIsLocked}
@@ -228,8 +235,13 @@ export const Vilkaarsvurdering = ({
                 name={`perioder.${selectedId}.begrunnelse`}
                 label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
                 readOnly={isFormLocked}
-                validate={[required, minLength(3), maxLength(4000)]}
+                validate={[
+                  required,
+                  minLength(3),
+                  maxLength($ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength),
+                ]}
                 resize
+                maxLength={$ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength}
               />
               <RhfRadioGroup
                 control={formHook.control}
@@ -241,19 +253,22 @@ export const Vilkaarsvurdering = ({
                 <Radio value="ja">
                   Ja, fra og med {selectedPeriod?.periode?.fom ? formatDate(selectedPeriod?.periode?.fom) : ''}
                 </Radio>
-                <Radio value="jaMedAnnenDato">Ja, fra en annen dato</Radio>
-                <Radio value="nei">Nei, bruker bor fortsatt i Trondheim</Radio>
+                <Radio value="nei">Nei, bruker bor fortsatt i Trondheim kommune</Radio>
               </RhfRadioGroup>
-              {flyttetFraTrondheim === 'jaMedAnnenDato' && (
-                <RhfDatepicker
+              {flyttetFraTrondheim === 'ja' && (
+                <RhfTextarea
                   control={formHook.control}
-                  name={`perioder.${selectedId}.opphørsdato`}
-                  label="Dato for opphør"
+                  name={`perioder.${selectedId}.fritekstVurderingBrev`}
+                  label="Fritekst opphørsbrev"
+                  description="Forklar hvorfor vilkåret er opphørt. Teksten vises i vedtaksbrevet."
                   readOnly={isFormLocked}
-                  validate={[required]}
-                  fromDate={selectedPeriod?.periode?.fom ? new Date(selectedPeriod?.periode?.fom) : undefined}
-                  toDate={selectedPeriod?.periode?.tom ? new Date(selectedPeriod?.periode?.tom) : undefined}
-                  defaultMonth={dagensDato}
+                  validate={[
+                    required,
+                    minLength(3),
+                    maxLength($VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength),
+                  ]}
+                  resize
+                  maxLength={$VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength}
                 />
               )}
               {!isFormLocked && (

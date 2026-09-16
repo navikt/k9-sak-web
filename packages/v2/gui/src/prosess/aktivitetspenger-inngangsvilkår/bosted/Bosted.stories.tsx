@@ -115,7 +115,7 @@ export const IkkeOppfylt: Story = {
     const canvas = within(canvasElement);
 
     await step('viser avslagsårsaken fra backend', async () => {
-      await expect(await canvas.findByText('Ikke bosatt adresse i Trondheim')).toBeInTheDocument();
+      await expect(await canvas.findByText('Har ikke bostedsadresse i Trondheim kommune')).toBeInTheDocument();
     });
   },
 };

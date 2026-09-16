@@ -252,7 +252,7 @@ export const RedigererMaksdato: Story = {
 
       const maksdato = await canvas.findByLabelText('Til og med');
       await userEvent.clear(maksdato);
-      await userEvent.type(maksdato, '30.06.2024');
+      await userEvent.type(maksdato, '01.07.2024');
       await userEvent.type(
         await canvas.findByLabelText('Begrunn kortere periode enn 260 dager'),
         'Søker trenger bistand kortere enn maksperioden.',
@@ -263,20 +263,20 @@ export const RedigererMaksdato: Story = {
       await waitFor(async () => {
         await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual({
           '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-          begrunnelse: 'Søker har behov for bistand.\n\nSøker trenger bistand kortere enn maksperioden.',
+          begrunnelse: 'Aksjonspunkt 5141 VURDER_BISTANDSVILKÅR bekreftet',
           vurdertePerioder: [
             {
               avslagsårsak: undefined,
               begrunnelse: 'Søker har behov for bistand.',
               erVilkårOppfylt: true,
-              periode: { fom: '2024-01-01', tom: '2024-06-30' },
+              periode: { fom: '2024-01-01', tom: '2024-07-01' },
               fritekstVurderingBrev: undefined,
             },
             {
               avslagsårsak: BistandsvilkårIkkeOppfyltÅrsak.AVKORTET,
               begrunnelse: 'Søker trenger bistand kortere enn maksperioden.',
               erVilkårOppfylt: false,
-              periode: { fom: '2024-07-01', tom: '2024-12-31' },
+              periode: { fom: '2024-07-02', tom: '2024-12-31' },
               fritekstVurderingBrev: undefined,
             },
           ],

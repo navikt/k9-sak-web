@@ -14,9 +14,9 @@ import { useMutation } from '@tanstack/react-query';
 import { Fragment, useEffect, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
@@ -27,6 +27,7 @@ interface Props {
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
   vilkår: UngSakVilkårMedPerioderDto;
+  isPermanentlyReadOnly: boolean;
 }
 
 export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -55,6 +56,7 @@ export const ForutgåendeMedlemskap = ({
   vilkår,
   forutgåendeMedlemskap,
   onAksjonspunktBekreftet,
+  isPermanentlyReadOnly,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
   const visningsperioder = byggVisningsperioder(vilkår, []);
@@ -132,6 +134,7 @@ export const ForutgåendeMedlemskap = ({
       detailHeading="Forutgående medlemskap"
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
+      isPermanentlyReadOnly={isPermanentlyReadOnly}
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);

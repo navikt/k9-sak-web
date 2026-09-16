@@ -186,7 +186,10 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        behandlingUuid={behandling.uuid}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+      >
         <RawIntlProvider value={intl}>
           <PleiepengerSluttfasePaneler
             behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}

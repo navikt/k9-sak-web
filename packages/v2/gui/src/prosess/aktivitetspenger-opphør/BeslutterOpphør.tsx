@@ -247,6 +247,7 @@ export const BeslutterOpphør = ({
                                 name={`${fieldPath}.besluttersBegrunnelse`}
                                 label="Begrunnelse"
                                 validate={[required, minLength(3), maxLength(4000)]}
+                                maxLength={4000}
                               />
                             </Box>
                           </ArrowBox>
