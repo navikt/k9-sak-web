@@ -155,9 +155,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
     }
     setValgteDokumentTyper(prev => {
       const newSet = new Set(prev);
-      // Viss isSelected ikkje er sendt inn, toggl basert på eksisterande tilstand
-      const skalVelgast = isSelected ?? !newSet.has(option);
-      if (skalVelgast) {
+      if (isSelected) {
         newSet.add(option);
       } else {
         newSet.delete(option);
