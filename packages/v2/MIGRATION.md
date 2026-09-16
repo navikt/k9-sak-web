@@ -31,6 +31,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/ung-beregning`
 - [x] `prosess/ung-inngangsvilkår`
 - [x] `prosess/ung-vedtak`
+- [x] `fakta/utenlandsopphold`
 
 ---
 
@@ -38,7 +39,6 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `fakta-utenlandsopphold` → `BRUK_V2_UTENLANDSOPPHOLD`
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
