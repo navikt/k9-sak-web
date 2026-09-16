@@ -11,9 +11,8 @@ import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
 import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { withFakeSykdomOgOpplæringApi } from '../../../storybook/decorators/withFakeSykdomOgOpplæringApi.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import { SykdomOgOpplæringBackendClientContext } from '../SykdomOgOpplæringBackendClientContext.js';
-import { FakeSykdomOgOpplæringApi } from '../storybook/FakeSykdomOgOpplæringApi.js';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -40,57 +39,49 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
 
 const sakKodeverkOppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
 
-const withMockData: Decorator = Story => (
-  <SykdomOgOpplæringBackendClientContext
-    value={
-      new FakeSykdomOgOpplæringApi({
-        institusjonInfo: {
-          perioder: [
-            {
-              institusjon: 'St. Olavs hospital',
-              periode: { fom: '2025-02-01', tom: '2025-12-31' },
-              journalpostId: { journalpostId: 'jp-1' },
-            },
-          ],
-          vurderinger: [
-            {
-              journalpostId: { journalpostId: 'jp-1' },
-              resultat: InstitusjonResultat.MÅ_VURDERES,
-              begrunnelse: '',
-              organisasjonsnummer: undefined,
-              vurdertAv: '',
-              vurdertTidspunkt: '',
-              erTilVurdering: true,
-              redigertInstitusjonNavn: 'St. Olavs hospital',
-              perioder: [{ fom: '2025-02-01', tom: '2025-12-31' }],
-            },
-          ],
-        },
-        langvarigSykVurderinger: [
-          {
-            uuid: 'v1',
-            vurdertTidspunkt: '2025-01-15T10:00:00Z',
-            godkjent: true,
-            vurderingFraAnnenpart: false,
-            begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
-            kanOppdateres: true,
-            diagnosekoder: ['A000'],
-            avslagsårsak: undefined,
-            behandlingUuid: '333-4444',
-            saksnummer: { saksnummer: '12345' },
-            vurdertAv: 'Z123456',
-          },
-        ],
-        vurdertLangvarigSykdom: {
-          vurderingUuid: 'v1',
-          resultat: LangvarigSykdomResultat.GODKJENT,
-        },
-      })
-    }
-  >
-    <Story />
-  </SykdomOgOpplæringBackendClientContext>
-);
+const withMockData: Decorator = withFakeSykdomOgOpplæringApi({
+  institusjonInfo: {
+    perioder: [
+      {
+        institusjon: 'St. Olavs hospital',
+        periode: { fom: '2025-02-01', tom: '2025-12-31' },
+        journalpostId: { journalpostId: 'jp-1' },
+      },
+    ],
+    vurderinger: [
+      {
+        journalpostId: { journalpostId: 'jp-1' },
+        resultat: InstitusjonResultat.MÅ_VURDERES,
+        begrunnelse: '',
+        organisasjonsnummer: undefined,
+        vurdertAv: '',
+        vurdertTidspunkt: '',
+        erTilVurdering: true,
+        redigertInstitusjonNavn: 'St. Olavs hospital',
+        perioder: [{ fom: '2025-02-01', tom: '2025-12-31' }],
+      },
+    ],
+  },
+  langvarigSykVurderinger: [
+    {
+      uuid: 'v1',
+      vurdertTidspunkt: '2025-01-15T10:00:00Z',
+      godkjent: true,
+      vurderingFraAnnenpart: false,
+      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+      kanOppdateres: true,
+      diagnosekoder: ['A000'],
+      avslagsårsak: undefined,
+      behandlingUuid: '333-4444',
+      saksnummer: { saksnummer: '12345' },
+      vurdertAv: 'Z123456',
+    },
+  ],
+  vurdertLangvarigSykdom: {
+    vurderingUuid: 'v1',
+    resultat: LangvarigSykdomResultat.GODKJENT,
+  },
+});
 
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/3-nødvendig-opplæring',
