@@ -1,6 +1,6 @@
 ---
 name: v2-architecture
-description: 'Patterns and rules for writing code in packages/v2/. USE FOR: creating new components in v2/, using the OpenAPI-generated backend client, structuring API contracts, import conventions with .js suffix, and migrating old code to v2. DO NOT USE FOR: code outside packages/v2/, NAV Aksel component usage (use @aksel-agent), or general React patterns.'
+description: 'Patterns and rules for writing code in packages/v2/. USE FOR: creating new components in v2/, using the OpenAPI-generated backend client, structuring API contracts, import conventions with .js suffix, and migrating old code to v2. 
 ---
 
 # v2 Architecture
