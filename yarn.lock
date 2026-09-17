@@ -2485,7 +2485,6 @@ __metadata:
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
-    "@k9-sak-web/fakta-utenlandsopphold": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/prosess-vilkar-sykdom": "npm:1.0.0"
@@ -2537,7 +2536,6 @@ __metadata:
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/fakta-om-barnet": "npm:1.0.0"
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
-    "@k9-sak-web/fakta-utenlandsopphold": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/prosess-vilkar-sykdom": "npm:1.0.0"
@@ -2833,16 +2831,6 @@ __metadata:
     "@types/react": "npm:19.2.18"
     react: "npm:19.3.0"
     react-intl: "npm:10.2.2"
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-utenlandsopphold@npm:1.0.0, @k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold"
-  dependencies:
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@k9-sak-web/gui": "workspace:^"
-    "@k9-sak-web/types": "npm:1.0.0"
   languageName: unknown
   linkType: soft
 

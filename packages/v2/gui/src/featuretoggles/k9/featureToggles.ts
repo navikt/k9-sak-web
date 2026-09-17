@@ -21,7 +21,6 @@ const k9SpecificFeatureToggles = {
 export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
-  BRUK_V2_UTENLANDSOPPHOLD: true,
   BRUK_V2_ARBEID_OG_INNTEKT: true,
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
