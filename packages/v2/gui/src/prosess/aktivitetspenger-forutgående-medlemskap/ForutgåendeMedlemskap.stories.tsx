@@ -21,8 +21,20 @@ const meta = {
     aksjonspunkt: { definisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP },
     readOnly: false,
     forutgåendeMedlemskap: [
-      { land: 'Sverige', landkode: 'SWE', harTrygdeavtale: true, periode: { fom: '2022-01-01', tom: '2022-12-31' } },
-      { land: 'USA', landkode: 'USA', harTrygdeavtale: false, periode: { fom: '2023-01-01', tom: '2023-06-30' } },
+      {
+        land: 'Sverige',
+        landkode: 'SWE',
+        periode: { fom: '2018-03-01', tom: '2019-08-31' },
+        harJobbetIPerioden: true,
+        utenlandskNasjonalId: undefined,
+      },
+      {
+        land: 'USA',
+        landkode: 'USA',
+        periode: { fom: '2020-01-01', tom: '2021-06-30' },
+        harJobbetIPerioden: false,
+        utenlandskNasjonalId: undefined,
+      },
     ],
     isPermanentlyReadOnly: false,
   },
