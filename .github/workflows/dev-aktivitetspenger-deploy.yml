@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - feat/aktivitetspenger-inngangsvilkår-flere-vilkår
+      - master
 
 jobs:
   build-deploy:
@@ -20,7 +20,7 @@ jobs:
       CLUSTER: dev-gcp
     steps:
       - name: Hente kode
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -29,15 +29,28 @@ jobs:
 
       - name: Bygge dist
         run: yarn build:ung
+        env:
+          VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/aktivitetspenger-sak-web/"
+
+      - name: Last opp assets til CDN
+        uses: nais/deploy/actions/cdn-upload/v2@027a91857992525139798892f2804b0ca21f4af6
+        with:
+          source: dist/ung/web/
+          destination: aktivitetspenger-sak-web/
+          team: k9saksbehandling
+          source_keep_parent_name: false
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
       - name: Bygg server
         uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
-        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
         id: docker-push
         with:
           additional-tag: 'dev-aktivitetspenger'
+          image_base_name: 'ung-sak-web'
           without_navikt_prefix: true
           build-args: |
             featureToggles=ung.feature-toggles.json
@@ -46,7 +59,7 @@ jobs:
             port=9005
           push-image: true
       - name: Deploy to nais
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6 # v2
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/dev-gcp.yml

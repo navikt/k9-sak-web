@@ -80,7 +80,6 @@ const PleiepengerPaneler = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   dokumenter,
-  hentBehandling,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
@@ -156,7 +155,6 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
-        hentBehandling={hentBehandling}
       />
       <PleiepengerFakta
         behandling={behandling}

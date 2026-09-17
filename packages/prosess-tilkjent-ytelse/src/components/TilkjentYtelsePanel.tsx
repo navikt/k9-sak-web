@@ -14,8 +14,6 @@ import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import type { FeriepengerPrÅr } from '../api/tilkjentYtelseApi';
 import FeriepengerPanel from './feriepenger/FeriepengerPanel';
-import { useContext } from 'react';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 
 const perioderMedClassName = [];
 
@@ -69,7 +67,6 @@ const TilkjentYtelsePanelImpl = ({
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
   const vurderTilbaketrekkAP = finnTilbaketrekkAksjonspunkt(aksjonspunkter);
   const opphoersdato = beregningsresultat?.opphoersdato;
-  const featureToggles = useContext(FeatureTogglesContext);
   return (
     <>
       <Heading size="small" level="2">
@@ -86,7 +83,7 @@ const TilkjentYtelsePanelImpl = ({
         />
       )}
 
-      {featureToggles?.['VIS_FERIEPENGER_PANEL'] && feriepengerPrÅr && feriepengerPrÅr.size > 0 && (
+      {feriepengerPrÅr && feriepengerPrÅr.size > 0 && (
         <Box marginBlock="space-16 space-0">
           <FeriepengerPanel
             feriepengerPrÅr={feriepengerPrÅr}

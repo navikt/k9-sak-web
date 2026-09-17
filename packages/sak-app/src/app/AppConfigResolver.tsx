@@ -1,22 +1,39 @@
 import { ReactElement, useContext, useEffect } from 'react';
 
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
+import { NyInntektApiContext } from '@k9-sak-web/gui/fakta/ny-inntekt/api/NyInntektApiContext.js';
+import { K9NyInntektBackendClient } from '@k9-sak-web/gui/fakta/ny-inntekt/api/K9NyInntektBackendClient.js';
+import { K9UtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9UtenlandsoppholdBackendClient.js';
+import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
+import { K9YtelserBackendClient } from '@k9-sak-web/gui/fakta/ytelser/api/K9YtelserBackendClient.js';
+import { YtelserApiContext } from '@k9-sak-web/gui/fakta/ytelser/api/YtelserApiContext.js';
+import SykdomOgOpplæringBackendClient from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClient.js';
+import { SykdomOgOpplæringBackendClientContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClientContext.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
+import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
+import { K9AvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/K9AvregningBackendClient.js';
 import K9KlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/K9KlageVurderingBackendClient.js';
 import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
+import { K9TiDagerBackendClient } from '@k9-sak-web/gui/prosess/ti-dager/K9TiDagerBackendClient.js';
+import { TiDagerBackendClientContext } from '@k9-sak-web/gui/prosess/ti-dager/TiDagerBackendClientContext.js';
 import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
 import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
 import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
 import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
+import { DokumenterApiContext } from '@k9-sak-web/gui/sak/dokumenter/api/DokumenterApiContext.js';
+import { K9DokumenterBackendClient } from '@k9-sak-web/gui/sak/dokumenter/api/K9DokumenterBackendClient.js';
+import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
 import { K9SakInnloggetAnsattBackendClient } from '@k9-sak-web/gui/saksbehandler/K9SakInnloggetAnsattBackendClient.js';
 import { IntlProvider } from 'react-intl';
@@ -25,8 +42,8 @@ import ApplicationContextPath from './ApplicationContextPath';
 import useGetEnabledApplikasjonContext from './useGetEnabledApplikasjonContext';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
-import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
-import { K9AvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/K9AvregningBackendClient.js';
+import { ArbeidOgInntektApiContext } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/ArbeidOgInntektApiContext.js';
+import { K9ArbeidOgInntektBackendClient } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/K9ArbeidOgInntektBackendClient.js';
 
 interface OwnProps {
   children: ReactElement<any>;
@@ -38,10 +55,10 @@ const NO_PARAMS = {};
  * Komponent som henter backend-data som skal kunne aksesseres globalt i applikasjonen. Denne dataen blir kun hentet en gang.
  */
 const AppConfigResolver = ({ children }: OwnProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
   useEffect(() => {
-    requestApi.setAddErrorMessageHandler(addErrorMessage);
-  }, []);
+    requestApi.setErrorNotifier(legacyErrorNotifier);
+  }, [legacyErrorNotifier]);
 
   const [harHentetFerdigInitLenker, harK9sakInitKallFeilet] = useHentInitLenker();
 
@@ -73,11 +90,27 @@ const AppConfigResolver = ({ children }: OwnProps) => {
             <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
               <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
-                  <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
-                    <UttakApiContext value={new BehandlingUttakBackendClient()}>
-                      {harFeilet || erFerdig ? children : <LoadingPanel />}
-                    </UttakApiContext>
-                  </AvregningBackendClientContext>
+                  <DokumenterApiContext value={new K9DokumenterBackendClient()}>
+                    <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
+                      <NyInntektApiContext value={new K9NyInntektBackendClient()}>
+                        <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                          <YtelserApiContext value={new K9YtelserBackendClient()}>
+                            <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
+                              <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
+                                <UttakApiContext value={new BehandlingUttakBackendClient()}>
+                                  <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
+                                    <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
+                                      {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                    </ArbeidOgInntektApiContext>
+                                  </NotatBackendClientContext>
+                                </UttakApiContext>
+                              </TiDagerBackendClientContext>
+                            </AvregningBackendClientContext>
+                          </YtelserApiContext>
+                        </UtenlandsoppholdApiContext>
+                      </NyInntektApiContext>
+                    </SykdomOgOpplæringBackendClientContext>
+                  </DokumenterApiContext>
                 </InntektsmeldingApiContext>
               </VedtakKlageApiContext>
             </KlageVurderingApiContext>

@@ -1,16 +1,19 @@
-import React from 'react';
 import { type DateInputProps, type DatePickerProps, DatePicker, useDatepicker } from '@navikt/ds-react';
-import dayjs from 'dayjs';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import dayjs from 'dayjs';
+import React from 'react';
 
-export type DatovelgerProps = Pick<DatePickerProps, 'defaultMonth' | 'fromDate' | 'toDate' | 'className'> &
+export type DatovelgerProps = Pick<
+  DatePickerProps,
+  'defaultMonth' | 'fromDate' | 'toDate' | 'className' | 'disabled' | 'disableWeekends'
+> &
   Pick<DateInputProps, 'hideLabel' | 'size' | 'label' | 'description' | 'id'> & {
     onChange: (value: string) => void;
     errorMessage?: React.ReactNode | string;
     selectedDay: string;
-    disabled?: boolean;
     onBlur: () => void;
     value: string;
+    readOnly?: boolean;
   };
 
 const DatovelgerPlain = ({
@@ -20,7 +23,7 @@ const DatovelgerPlain = ({
   className,
   errorMessage,
   selectedDay,
-  disabled,
+  readOnly,
   onBlur,
   value,
   fromDate,
@@ -28,6 +31,8 @@ const DatovelgerPlain = ({
   defaultMonth,
   size = 'small',
   id,
+  disabled,
+  disableWeekends,
 }: DatovelgerProps) => {
   const fromDateDefault = dayjs().subtract(5, 'year').toDate();
   const toDateDefault = dayjs().add(5, 'year').toDate();
@@ -52,6 +57,7 @@ const DatovelgerPlain = ({
     defaultMonth,
     onDateChange: onDateChange,
     defaultSelected: defaultSelected,
+    disabled: disabled,
   });
 
   return (
@@ -63,6 +69,7 @@ const DatovelgerPlain = ({
         dropdownCaption={true}
         fromDate={fromDate || fromDateDefault}
         toDate={toDate || toDateDefault}
+        disableWeekends={disableWeekends}
       >
         <DatePicker.Input
           {...inputProps}
@@ -73,7 +80,7 @@ const DatovelgerPlain = ({
             inputProps.onBlur?.(e);
           }}
           error={errorMessage}
-          disabled={disabled}
+          disabled={readOnly}
           size={size}
           id={id}
         />

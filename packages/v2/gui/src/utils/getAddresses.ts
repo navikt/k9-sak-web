@@ -33,12 +33,7 @@ const getAddresses = (addresses: PersonadresseDto[] = []): Adresser =>
     const country = address.land !== landkoder.NORGE ? address.land : undefined;
     return {
       ...acc,
-      [address.adresseType]: constructAddress(
-        currentAddress,
-        `${address.postNummer}`,
-        `${address.poststed}`,
-        country,
-      ).trim(),
+      [address.adresseType]: constructAddress(currentAddress, address.postNummer, address.poststed, country).trim(),
     };
   }, {});
 

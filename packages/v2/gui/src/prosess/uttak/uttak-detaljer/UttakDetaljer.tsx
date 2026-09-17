@@ -15,6 +15,7 @@ import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-re
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
+  SluttfaseÅrsakerMedTekst,
 } from '../constants/UttaksperiodeInfoÅrsakerTekst';
 import { FremhevingTag } from './FremhevingTag';
 import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
@@ -24,13 +25,8 @@ import { useUttakContext } from '../context/UttakContext';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import styles from './uttakDetaljer.module.css';
 
-const getÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
-  const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => årsaker.includes(årsak.årsak));
-  return funnedeÅrsaker.map(årsak => (
-    <Tag data-color="danger" variant="outline" key={årsak.årsak} className={styles.uttakDetaljer}>
-      {årsak.tekst}
-    </Tag>
-  ));
+const getIkkeOppfylteÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
+  return getÅrsaksetiketter(årsaker, IkkeOppfylteÅrsakerMedTekst);
 };
 
 const getTekstVedBarnetsDødsfall = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
@@ -40,6 +36,25 @@ const getTekstVedBarnetsDødsfall = (årsaker: UttaksperiodeInfoÅrsakerType[]) 
       {årsak.tekst}
     </div>
   ));
+};
+
+const getSluttfaseÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[], ytelse: FagsakYtelsesType) => {
+  return ytelse === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE
+    ? getÅrsaksetiketter(årsaker, SluttfaseÅrsakerMedTekst)
+    : [];
+};
+
+const getÅrsaksetiketter = (
+  årsaker: UttaksperiodeInfoÅrsakerType[],
+  årsakerMedTekst: { årsak: UttaksperiodeInfoÅrsakerType; tekst: string }[],
+) => {
+  return årsakerMedTekst
+    .filter(årsak => årsaker.includes(årsak.årsak))
+    .map(årsak => (
+      <Tag data-color="danger" variant="outline" key={årsak.årsak} className={styles.uttakDetaljer}>
+        {årsak.tekst}
+      </Tag>
+    ));
 };
 
 const utenlandsoppholdTekst = (utenlandsopphold: Utenlandsopphold, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
@@ -138,7 +153,8 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
 
   return (
     <>
-      {getÅrsaksetiketter(årsaker || [])}
+      {getIkkeOppfylteÅrsaksetiketter(årsaker || [])}
+      {getSluttfaseÅrsaksetiketter(årsaker || [], fagsakYtelseType)}
       {getTekstVedBarnetsDødsfall(årsaker || [])}
       {utenlandsoppholdInfo(utfall, utenlandsopphold, kodeverkNavnFraKode)}
       {manueltOverstyrt && (

@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
-import { useUttakContext } from '../context/UttakContext';
-import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
-import styles from './VurderDato.module.css';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
+import { useEffect } from 'react';
+import { useUttakContext } from '../context/UttakContext';
+import styles from './VurderDato.module.css';
+import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
 
 const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');
@@ -45,7 +45,7 @@ const VurderDato = () => {
 
   return (
     <div className={styles['vurderDatoContainer']}>
-      <Alert variant="warning" size="small" className="mt-4">
+      <Alert variant="warning" size="small">
         <Label size="small">Vurder hvilken dato endringer i uttak skal gjelde fra</Label>
         <BodyLong size="small">
           Det er lansert endringer for hvordan utbetalingsgrad settes for nye aktiviteter, ikke yrkesaktiv og kun

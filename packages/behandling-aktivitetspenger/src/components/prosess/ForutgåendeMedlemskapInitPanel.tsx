@@ -1,4 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
@@ -45,16 +47,20 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const isReadOnly = useMemo(() => {
     return (
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
+      (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
+        !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
+      behandling.status === BehandlingStatus.AVSLUTTET
     );
-  }, [innloggetBruker]);
+  }, [innloggetBruker, behandling]);
 
   if (!erValgt || !vilkår) {
     return null;
   }
 
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP);
+  const harBeslutterAksjonspunkt = aksjonspunkter.some(
+    ap => ap.definisjon === AksjonspunktDefinisjon.FATTER_VEDTAK && ap.status === AksjonspunktStatus.OPPRETTET,
+  );
 
   return (
     <ForutgåendeMedlemskap
@@ -65,6 +71,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
       vilkår={vilkår}
       behandling={behandling}
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+      isPermanentlyReadOnly={harBeslutterAksjonspunkt}
     />
   );
 };

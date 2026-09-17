@@ -3,6 +3,7 @@ import {
   ung_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatType,
   GetUngdomsprogramInformasjonResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
@@ -18,10 +19,9 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  NavAnsatt,
   Personopplysninger,
-  SaksbehandlereInfo,
 } from '@k9-sak-web/types';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
@@ -30,9 +30,13 @@ import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
+import { UngSakBackendClient } from '../data/UngSakBackendClient';
+import { useNavAnsattForYtelse } from '../data/useNavAnsattForYtelse.js';
 import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+
+const api = new UngSakBackendClient();
 
 /**
  * FagsakIndex
@@ -153,15 +157,16 @@ const FagsakIndex = () => {
     options,
   );
 
-  const { data: saksbehandlereSomHarGjortEndringerIBehandlingen } = restApiHooks.useRestApi<SaksbehandlereInfo>(
-    UngSakApiKeys.HENT_SAKSBEHANDLERE,
-    { behandlingUuid: behandling?.uuid },
-    options,
-  );
+  const { data: saksbehandlereSomHarGjortEndringerIBehandlingen } = useQuery({
+    queryKey: ['saksbehandlere', api.backend, behandling?.uuid, behandling?.versjon],
+    throwOnError: ignore404Errors,
+    queryFn: () => api.hentSaksbehandlere(behandling?.uuid ?? ''),
+    enabled: !!behandling?.uuid && !skalIkkeHenteData,
+  });
 
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
+  const navAnsatt = useNavAnsattForYtelse(fagsak?.sakstype ?? '-');
 
   if (!fagsak) {
     if (isRequestNotDone(fagsakState)) {
@@ -242,10 +247,6 @@ const FagsakIndex = () => {
             visittkortContent={() => {
               if (skalIkkeHenteData) {
                 return null;
-              }
-
-              if (isRequestNotDone(personopplysningerState)) {
-                return <LoadingPanel />;
               }
 
               return (

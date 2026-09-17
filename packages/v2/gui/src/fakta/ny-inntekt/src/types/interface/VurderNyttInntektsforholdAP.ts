@@ -1,5 +1,5 @@
 import type { BeregningAvklaringsbehovTilBekreftelse } from '../BeregningAvklaringsbehovTilBekreftelse.js';
-import { FaktaFordelBeregningAvklaringsbehovCode } from './FaktaFordelBeregningAvklaringsbehovCode.js';
+import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
 
 export type VurderNyttInntektsforholdAndelTransformedValues = {
   aktivitetStatus: string;
@@ -20,6 +20,6 @@ export type VurderNyttInntektsforholTransformedValues = {
 };
 
 export type VurderNyttInntektsforholdAP = BeregningAvklaringsbehovTilBekreftelse<
-  FaktaFordelBeregningAvklaringsbehovCode.VURDER_NYTT_INNTKTSFRHLD,
+  typeof AvklaringsbehovDefinisjon.VURDER_NYTT_INNTKTSFRHLD,
   VurderNyttInntektsforholTransformedValues
 >;

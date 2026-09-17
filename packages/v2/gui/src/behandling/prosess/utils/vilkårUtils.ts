@@ -1,11 +1,16 @@
 import type { Utfall } from '@k9-sak-web/backend/combined/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
-import {
+import { aksjonspunktStatus as k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { vilkårStatus as k9_kodeverk_vilkår_Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { vilkarType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+export { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+export {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_kodeverk_vilkår_Utfall,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+  k9_kodeverk_vilkår_VilkårType,
+};
 
 /**
  * Type for vilkår med perioder.
@@ -49,8 +54,6 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioderDto[]
       .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus)),
   );
 
-  // Sjekk om alle vilkår har samme status
-  const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT);
   const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT);
   const alleVilkårErOppfylt = vilkarStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT);
 
@@ -58,16 +61,12 @@ export function sjekkDelvisVilkårStatus(vilkårForSteg: VilkårMedPerioderDto[]
   const harFlereVilkår = vilkarStatusCodes.length > 1;
 
   if (harFlereVilkår) {
-    // Sjekk om noen (men ikke alle) vilkår har en bestemt status
-    const erDelvisIkkeVurdert =
-      vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT) && !alleVilkårErIkkeVurdert;
-
     const erDelvisIkkeOppfylt =
       vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT) && !alleVilkårErIkkeOppfylt;
 
     const erDelvisOppfylt =
       vilkarStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.OPPFYLT) && !alleVilkårErOppfylt;
-    return erDelvisIkkeVurdert || erDelvisIkkeOppfylt || erDelvisOppfylt;
+    return erDelvisIkkeOppfylt || erDelvisOppfylt;
   }
 
   return false;
@@ -102,7 +101,10 @@ export const finnPanelStatus = (
         .forEach(periode => vilkårStatusCodes.push(periode.vilkarStatus));
     });
 
-    if (vilkårStatusCodes.every(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)) {
+    if (
+      vilkårStatusCodes.length === 0 ||
+      vilkårStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)
+    ) {
       return ProcessMenuStepType.default;
     }
 

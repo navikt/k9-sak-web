@@ -15,7 +15,7 @@ interface SlettDuplikatModalProps {
 }
 
 const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: SlettDuplikatModalProps): JSX.Element => {
-  const { httpErrorHandler } = React.useContext(ContainerContext);
+  const { errorNotifier } = React.useContext(ContainerContext);
   const controller = useMemo(() => new AbortController(), []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [removeDuplikatFeilet, setRemoveDuplikatFeilet] = useState(false);
@@ -36,7 +36,7 @@ const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: Sl
     };
     setRemoveDuplikatFeilet(false);
     setIsSubmitting(true);
-    post(href, { ...requestPayload, ...dokumentUtenDuplikat }, httpErrorHandler, {
+    post(href, { ...requestPayload, ...dokumentUtenDuplikat }, errorNotifier, {
       signal: controller.signal,
     }).then(
       () => {

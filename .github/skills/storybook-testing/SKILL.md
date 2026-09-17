@@ -45,13 +45,12 @@ export const DefaultStory: Story = {
 // ✅ Interaction test: specific scenario with play
 export const SendsBrevOnSubmit: Story = {
   args: { ... },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas, step }) => {
     await step('Fyll ut skjema', async () => {
       await userEvent.click(canvas.getByLabelText('Mal'));
       // ...
     });
-    await expect(canvas.getByText('Sendt')).toBeInTheDocument();
+    expect(await canvas.findByText('Sendt')).toBeInTheDocument();
   },
 };
 ```
@@ -128,7 +127,7 @@ export class FakeMyFeatureApi implements MyFeatureApi {
 }
 
 // In play():
-play: async ({ canvasElement }) => {
+play: async () => {
   // ... trigger save ...
   expect(api.lastSavedData).toEqual({ expected: 'value' });
 },
@@ -155,10 +154,9 @@ Collect validation/error stories in dedicated named stories:
 ```typescript
 export const VisValideringsfeil: Story = {
   args: { /* minimal args */ },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Send' }));
-    await expect(canvas.getByText('Feltet er påkrevd')).toBeInTheDocument();
+    await expect(await canvas.findByText('Feltet er påkrevd')).toBeInTheDocument();
   },
 };
 ```
@@ -191,9 +189,10 @@ import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MyFeatureApiContext } from './api/MyFeatureApiContext.js';
 import type { MyDataDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { createQueryClient } from "@k9-sak-web/gui/shared/query/queryClient.js";
 
 const withFakeApi = (data: MyDataDto): Decorator => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  const queryClient = createQueryClient({  queries: { retry: false } });
   return Story => (
     <QueryClientProvider client={queryClient}>
       <MyFeatureApiContext value={{ getMyData: async () => data }}>

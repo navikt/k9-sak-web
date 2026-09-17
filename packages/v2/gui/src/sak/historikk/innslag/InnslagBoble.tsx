@@ -80,11 +80,13 @@ export const InnslagBoble = ({ innslag, behandlingLocation }: InnslagBobleProps)
           {bådeTittelOgSkjermlenke ? `: ` : null}
           {innslag.tittel != null ? innslag.tittel : null}
         </Tittel>
-        {innslag.linjer.map((linje, idx) => (
-          <div key={idx} hidden={doCutOff && !expanded && idx > antallLinjerSomAlltidVises - 1}>
-            <InnslagLinje linje={linje} behandlingLocation={behandlingLocation} />
-          </div>
-        ))}
+        <VStack gap="space-0">
+          {innslag.linjer.map((linje, idx) => (
+            <div key={idx} hidden={doCutOff && !expanded && idx > antallLinjerSomAlltidVises - 1}>
+              <InnslagLinje linje={linje} behandlingLocation={behandlingLocation} />
+            </div>
+          ))}
+        </VStack>
 
         {innslag.dokumenter != null ? (
           <VStack gap="space-4">

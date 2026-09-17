@@ -1,7 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import type { k9_sak_kontrakt_beregningsresultat_FeriepengegrunnlagAndelDto as FeriepengegrunnlagAndel } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { render, screen } from '@testing-library/react';
 import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 
@@ -55,55 +54,33 @@ describe('<TilkjentYtelsePanelImpl>', () => {
     erBrukerMottaker: true,
   };
 
-  it('skal vise Feriepenger-panel når VIS_FERIEPENGER_PANEL er true og data finnes', () => {
+  it('skal vise Feriepenger-panel når data finnes', () => {
     const feriepengerPrÅr = new Map([[2024, [mockAndel]]]);
     render(
-      <FeatureTogglesContext.Provider value={{ VIS_FERIEPENGER_PANEL: true } as any}>
-        <TilkjentYtelsePanelImpl
-          readOnly
-          beregningsresultat={null}
-          submitCallback={vi.fn()}
-          readOnlySubmitButton
-          aksjonspunkter={[]}
-          arbeidsgiverOpplysningerPerId={{}}
-          feriepengerPrÅr={feriepengerPrÅr}
-        />
-      </FeatureTogglesContext.Provider>,
+      <TilkjentYtelsePanelImpl
+        readOnly
+        beregningsresultat={null}
+        submitCallback={vi.fn()}
+        readOnlySubmitButton
+        aksjonspunkter={[]}
+        arbeidsgiverOpplysningerPerId={{}}
+        feriepengerPrÅr={feriepengerPrÅr}
+      />,
     );
     expect(screen.getByRole('heading', { name: 'Feriepenger' })).toBeInTheDocument();
   });
 
-  it('skal ikke vise Feriepenger-panel når VIS_FERIEPENGER_PANEL er false', () => {
-    const feriepengerPrÅr = new Map([[2024, [mockAndel]]]);
+  it('skal ikke vise Feriepenger-panel når data er tom', () => {
     render(
-      <FeatureTogglesContext.Provider value={{ VIS_FERIEPENGER_PANEL: false } as any}>
-        <TilkjentYtelsePanelImpl
-          readOnly
-          beregningsresultat={null}
-          submitCallback={vi.fn()}
-          readOnlySubmitButton
-          aksjonspunkter={[]}
-          arbeidsgiverOpplysningerPerId={{}}
-          feriepengerPrÅr={feriepengerPrÅr}
-        />
-      </FeatureTogglesContext.Provider>,
-    );
-    expect(screen.queryByRole('heading', { name: 'Feriepenger' })).not.toBeInTheDocument();
-  });
-
-  it('skal ikke vise Feriepenger-panel når data er tom, selv om toggle er true', () => {
-    render(
-      <FeatureTogglesContext.Provider value={{ VIS_FERIEPENGER_PANEL: true } as any}>
-        <TilkjentYtelsePanelImpl
-          readOnly
-          beregningsresultat={null}
-          submitCallback={vi.fn()}
-          readOnlySubmitButton
-          aksjonspunkter={[]}
-          arbeidsgiverOpplysningerPerId={{}}
-          feriepengerPrÅr={new Map()}
-        />
-      </FeatureTogglesContext.Provider>,
+      <TilkjentYtelsePanelImpl
+        readOnly
+        beregningsresultat={null}
+        submitCallback={vi.fn()}
+        readOnlySubmitButton
+        aksjonspunkter={[]}
+        arbeidsgiverOpplysningerPerId={{}}
+        feriepengerPrÅr={new Map()}
+      />,
     );
     expect(screen.queryByRole('heading', { name: 'Feriepenger' })).not.toBeInTheDocument();
   });

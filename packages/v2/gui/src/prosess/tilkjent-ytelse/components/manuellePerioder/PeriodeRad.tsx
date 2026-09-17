@@ -1,6 +1,6 @@
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Table } from '@navikt/ds-react';
-import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 import Andeler from './Andeler';
@@ -57,8 +57,8 @@ const PeriodeRad = ({
               <Table.Row key={item.fieldId} id={item.fieldId}>
                 <Table.DataCell>
                   <HStack gap="space-8">
-                    <RhfDatepicker control={control} name={`perioder.${index}.fom`} label="" readOnly />
-                    <RhfDatepicker control={control} name={`perioder.${index}.tom`} label="" readOnly />
+                    <Datovelger name={`perioder.${index}.fom`} label="" readOnly />
+                    <Datovelger name={`perioder.${index}.tom`} label="" readOnly />
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell>

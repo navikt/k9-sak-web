@@ -1,6 +1,7 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, describe, it, vi } from 'vitest';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { dokumentSteg } from '../../../../types/Step';
 import Vurderingstype from '../../../../types/Vurderingstype';
 import ContainerContext from '../../../context/ContainerContext';
@@ -10,7 +11,7 @@ import VilkårsvurderingAvToOmsorgspersoner from '../VilkårsvurderingAvToOmsorg
 const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';
 
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 
 const vurderingsoversiktMock = {
   perioderSomKanVurderes: [],
@@ -35,20 +36,22 @@ const onFinishedMock = {
 
 const contextWrapper = ui =>
   render(
-    <ContainerContext.Provider
-      value={
-        {
-          endpoints: { vurderingsoversiktBehovForToOmsorgspersoner: vurderingsoversiktEndpoint },
-          httpErrorHandler: httpErrorHandlerMock,
-          readOnly: false,
-          onFinished: onFinishedMock.fn,
-        } as any
-      }
-    >
-      <VurderingContext.Provider value={{ vurderingstype: Vurderingstype.TO_OMSORGSPERSONER }}>
-        {ui}
-      </VurderingContext.Provider>
-    </ContainerContext.Provider>,
+    <BehandlingProvider refetchBehandling={vi.fn()}>
+      <ContainerContext.Provider
+        value={
+          {
+            endpoints: { vurderingsoversiktBehovForToOmsorgspersoner: vurderingsoversiktEndpoint },
+            errorNotifier: errorNotifierMock,
+            readOnly: false,
+            onFinished: onFinishedMock.fn,
+          } as any
+        }
+      >
+        <VurderingContext.Provider value={{ vurderingstype: Vurderingstype.TO_OMSORGSPERSONER }}>
+          {ui}
+        </VurderingContext.Provider>
+      </ContainerContext.Provider>
+    </BehandlingProvider>,
   );
 
 const navigerTilNesteStegMock = {

@@ -2,9 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import UnntakPaneler from './components/UnntakPaneler';
 import { requestUnntakApi, restApiUnntakHooks, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
@@ -76,7 +78,7 @@ const BehandlingUnntakIndex = ({
   } = restApiUnntakHooks.useRestApiRunner<Behandling>(UnntakBehandlingApiKeys.BEHANDLING_UNNTAK);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const { startRequest: nyBehandlendeEnhet } = restApiUnntakHooks.useRestApiRunner(
     UnntakBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -107,14 +109,14 @@ const BehandlingUnntakIndex = ({
     });
 
     requestUnntakApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestUnntakApi.setAddErrorMessageHandler(addErrorMessage);
+    requestUnntakApi.setErrorNotifier(legacyErrorNotifier);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, []);
+  }, [legacyErrorNotifier]);
 
   const { data, state } = restApiUnntakHooks.useMultipleRestApi<FetchedData>(unntakData, {
     keepData: true,
@@ -133,24 +135,26 @@ const BehandlingUnntakIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <UnntakPaneler
-        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        featureToggles={featureToggles}
-      />
+      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+        <UnntakPaneler
+          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          alleKodeverk={kodeverk}
+          rettigheter={rettigheter}
+          valgtProsessSteg={valgtProsessSteg}
+          valgtFaktaSteg={valgtFaktaSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          opneSokeside={opneSokeside}
+          hasFetchError={behandlingState === RestApiState.ERROR}
+          setBehandling={setBehandling}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          featureToggles={featureToggles}
+        />
+      </BehandlingProvider>
     </>
   );
 };

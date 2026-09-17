@@ -1,8 +1,12 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { SkjermlenkeType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { AktivitetspengerInngangsvilkår } from './AktivitetspengerInngangsvilkår';
@@ -14,6 +18,14 @@ const meta = {
     innloggetBruker: {
       aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: true },
     } satisfies InnloggetAnsattUngV2Dto,
+    lovligeBehandlingsoperasjoner: {
+      uuid: 'fake-uuid',
+      behandlingTilGodkjenningVedLokalkontor: true,
+    },
+    bostedGrunnlag: {
+      perioder: [],
+    },
+    vilkår: [],
   },
 } satisfies Meta<typeof AktivitetspengerInngangsvilkår>;
 export default meta;
@@ -35,12 +47,23 @@ const fakeBehandling = {
   versjon: 1,
 } as unknown as BehandlingDto;
 
+const fakeBostedVilkårPeriode = {
+  periode: { fom: '2024-01-01', tom: '2024-12-31' },
+  vilkarStatus: Utfall.IKKE_VURDERT,
+};
+
+const fakeBostedVilkår = {
+  vilkarType: vilkarType.BOSTEDSVILKÅR,
+  perioder: [fakeBostedVilkårPeriode],
+};
+
 export const MedÅpentBistandsvilkår: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -49,7 +72,8 @@ export const MedUtførtBistandsvilkår: Story = {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -58,7 +82,8 @@ export const MedÅpentLokalkontorForeslårVilkår: Story = {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };
 
@@ -73,6 +98,40 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     } satisfies InnloggetAnsattUngV2Dto,
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
-    onAksjonspunktBekreftet: () => {},
+    onAksjonspunktBekreftet: async () => {},
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: SkjermlenkeType.BOSTEDSVILKÅR,
+        totrinnskontrollAksjonspunkter: [{ aksjonspunktKode: '5014', totrinnskontrollGodkjent: undefined }],
+      },
+      {
+        skjermlenkeType: SkjermlenkeType.BISTANDSVILKÅR,
+        totrinnskontrollAksjonspunkter: [
+          { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, totrinnskontrollGodkjent: undefined },
+        ],
+      },
+    ] satisfies TotrinnskontrollSkjermlenkeContextDto[],
+  },
+};
+
+export const MedÅpentBostedVilkår: Story = {
+  args: {
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    vilkår: [fakeBostedVilkår],
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: async () => {},
+    totrinnskontrollSkjermlenkeContext: [],
+  },
+};
+
+export const MedUtførtBostedVilkår: Story = {
+  args: {
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR, AksjonspunktStatus.UTFØRT)],
+    vilkår: [{ ...fakeBostedVilkår, perioder: [{ ...fakeBostedVilkårPeriode, vilkarStatus: Utfall.OPPFYLT }] }],
+    api: fakeAktivitetspengerApi,
+    behandling: fakeBehandling,
+    onAksjonspunktBekreftet: async () => {},
+    totrinnskontrollSkjermlenkeContext: [],
   },
 };

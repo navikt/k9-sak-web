@@ -3088,7 +3088,7 @@
     },
     {
       "kode": "INGEN",
-      "navn": "Ingen av årsakene over (kan motta pleiepenger i 8 uker)",
+      "navn": "Ingen årsak til utenlandsoppholdet er oppgitt, perioden telles i 8 uker",
       "kodeverk": "UTENLANDSOPPHOLD_ÅRSAK"
     }
   ],

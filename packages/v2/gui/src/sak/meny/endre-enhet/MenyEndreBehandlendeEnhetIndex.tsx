@@ -36,7 +36,7 @@ const MenyEndreBehandlendeEnhetIndexV2 = ({
   );
 
   const submit = useCallback(
-    (formValues: FormValues) => {
+    async (formValues: FormValues) => {
       const nyEnhet = filtrerteBehandlendeEnheter[parseInt(formValues.nyEnhet, 10)];
       const values = {
         behandlingVersjon,

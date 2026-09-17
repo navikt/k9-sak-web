@@ -1,4 +1,4 @@
-# Verdier for dev-fss.k9saksbehandling.yml ved utrulling frå dev-next1 branch til k9-next1.dev.intern.nav.no
+# Verdier for dev-fss.k9saksbehandling.yml ved utrulling frå dev-next1 branch til k9-next1.intern.dev.nav.no
 name: aktivitetspenger-sak-web
 ingress: "https://aktivitetspenger.intern.dev.nav.no/"
 replicas:

@@ -1,0 +1,10 @@
+.ekspanderbarDokumentnavigasjon :global(.aksel-expansioncard__content) {
+  overflow: visible;
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+.ekspanderbarDokumentnavigasjon :global(.aksel-expansioncard__content-inner) {
+  padding: 0;
+  overflow: visible;
+}

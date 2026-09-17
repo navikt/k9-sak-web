@@ -9,6 +9,7 @@ interface OwnProps {
   bodyText: string;
   showModal: boolean;
   submit: () => void;
+  isSubmitting?: boolean;
 }
 
 /**
@@ -16,10 +17,16 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Modal med advarselikon og som viser en valgfri tekst i tillegg til knappen OK.
  */
-const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) => {
+const AdvarselModal = ({ bodyText, headerText, showModal, submit, isSubmitting = false }: OwnProps) => {
   const intl = getPackageIntl();
+  const handleClose = () => {
+    if (isSubmitting) {
+      return;
+    }
+    submit();
+  };
   return (
-    <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={submit}>
+    <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={handleClose}>
       <Modal.Body>
         <HGrid gap="space-4" columns={{ xs: '1fr 8fr 2fr' }}>
           <div className="relative">
@@ -42,6 +49,8 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
               type="submit"
               onClick={submit}
               autoFocus
+              disabled={isSubmitting}
+              loading={isSubmitting}
             >
               {intl.formatMessage({ id: 'AdvarselModal.Ok' })}
             </Button>

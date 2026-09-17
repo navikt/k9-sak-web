@@ -32,5 +32,10 @@ export function prettifyPeriod(fom: string, tom: string): string {
 }
 
 export function getFirstAndLastWeek(fom: string, tom: string): string {
-  return `${initializeDate(fom).startOf('week').week()} - ${initializeDate(tom).endOf('week').week()}`;
+  const fomWeek = initializeDate(fom).startOf('week').week();
+  const tomWeek = initializeDate(tom).endOf('week').week();
+  if (fomWeek === tomWeek) {
+    return `${fomWeek}`;
+  }
+  return `${fomWeek} - ${tomWeek}`;
 }

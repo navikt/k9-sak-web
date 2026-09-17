@@ -1,5 +1,4 @@
 import { HistorikkAktør } from '@k9-sak-web/backend/combined/kodeverk/historikk/HistorikkAktør.js';
-import type { FC } from 'react';
 import {
   PersonFillIcon,
   PersonGavelFillIcon,
@@ -8,6 +7,7 @@ import {
   QuestionmarkCircleFillIcon,
   RobotSmileIcon,
 } from '@navikt/aksel-icons';
+import type { FC } from 'react';
 
 export interface AvatarProps {
   readonly aktørType: HistorikkAktør;
@@ -20,13 +20,13 @@ export const Avatar: FC<AvatarProps> = ({ aktørType }) => {
     case HistorikkAktør.SAKSBEHANDLER:
       return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler" />;
     case HistorikkAktør.LOKALKONTOR_SAKSBEHANDLER:
-      return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler Nav-lokalt" />;
+      return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler Nav-kontor" />;
     case HistorikkAktør.SØKER:
       return <PersonFillIcon fontSize={fontSize} title="Søker" />;
     case HistorikkAktør.BESLUTTER:
       return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter" />;
     case HistorikkAktør.LOKALKONTOR_BESLUTTER:
-      return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter Nav-lokalt" />;
+      return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter Nav-kontor" />;
     case HistorikkAktør.VEDTAKSLØSNINGEN:
       return <RobotSmileIcon fontSize={fontSize} title="Vedtaksløsningen" />;
     case HistorikkAktør.ARBEIDSGIVER:

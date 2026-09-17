@@ -22,6 +22,16 @@ const createMockApi = (responseData = {}, shouldFail = false) => ({
     }
     return Promise.resolve(responseData);
   },
+  getMerknader: () => {
+    return Promise.resolve({
+      hastesak: { aktiv: false },
+      utenlandssak: { aktiv: false },
+      direkteutbetaling: { aktiv: false },
+    });
+  },
+  getÅpneGosysOppgaver: () => {
+    return Promise.resolve([]);
+  },
 });
 
 export const IngenOppgaver: Story = {
@@ -129,7 +139,6 @@ export const MedFeil: Story = {
     api: createMockApi({}, true),
   },
   play: async ({ canvas }) => {
-    await delay(100);
-    await expect(canvas.getByText('Får ikke kontakt med K9-Punsj')).toBeInTheDocument();
+    await expect(await canvas.findByText('Får ikke kontakt med K9-Punsj')).toBeInTheDocument();
   },
 };

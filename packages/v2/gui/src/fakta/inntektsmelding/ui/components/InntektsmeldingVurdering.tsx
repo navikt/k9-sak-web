@@ -1,14 +1,14 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
 import { skalVurderes } from '../../util/utils';
 import InntektsmeldingFerdigvisning from './InntektsmeldingFerdigvisning';
 import VurderingSkjema from './InntektsmeldingAksjonspunktForm';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 interface InntektsmeldingVurderingProps {
   tilstand: TilstandMedUiState;
-  onSubmit: (payload: InntektsmeldingRequestPayload) => void;
+  onSubmit: (payload: InntektsmeldingRequestPayload) => Promise<void>;
   aksjonspunkt?: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;
   harFlereTilstanderTilVurdering: boolean;
@@ -43,7 +43,12 @@ const InntektsmeldingVurdering = ({
 
   if (skalViseFerdigvisning) {
     return (
-      <InntektsmeldingFerdigvisning tilstand={tilstand} onEdit={() => setRedigeringsmodus(true)} readOnly={readOnly} />
+      <InntektsmeldingFerdigvisning
+        tilstand={tilstand}
+        onEdit={() => setRedigeringsmodus(true)}
+        readOnly={readOnly}
+        harAksjonspunkt={!!aksjonspunkt}
+      />
     );
   }
 

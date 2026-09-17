@@ -75,7 +75,7 @@ export const finnNesteStegForLivetsSluttfase = (
     return livetsSluttfaseSteg;
   }
 
-  return null;
+  return sluttfaseDokumentSteg;
 };
 export const finnNesteStegForOpplæringspenger = (
   {

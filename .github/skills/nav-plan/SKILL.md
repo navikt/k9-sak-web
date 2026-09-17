@@ -1,6 +1,10 @@
 ---
 name: nav-plan
 description: Arkitekturplanlegging med beslutningstrær for auth, kommunikasjon, database og Nais-konfigurasjon
+license: MIT
+metadata:
+  domain: general
+  tags: planning architecture scaffold nais modernization migration
 ---
 
 # Nav Architecture Plan

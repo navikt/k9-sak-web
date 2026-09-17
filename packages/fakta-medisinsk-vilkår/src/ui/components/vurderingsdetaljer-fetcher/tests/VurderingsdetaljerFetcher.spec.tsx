@@ -5,7 +5,7 @@ import VurderingsdetaljerFetcher from '../VurderingsdetaljerFetcher';
 
 const mockedContent = 'mockedContent';
 const mockedUrl = 'mockedUrl';
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 
 const vurderingMock = {
   versjoner: [],
@@ -20,7 +20,7 @@ const contextWrapper = ui =>
     <ContainerContext.Provider
       value={
         {
-          httpErrorHandler: httpErrorHandlerMock,
+          errorNotifier: errorNotifierMock,
         } as any
       }
     >

@@ -24,7 +24,7 @@ interface OwnProps {
   lukkModal: () => void;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'];
-  hentMottakere: () => Promise<Klagepart[]>;
+  hentMottakere: () => Promise<Klagepart[] | undefined | null>;
 }
 
 const MenyHenleggIndexV2 = ({
@@ -45,7 +45,10 @@ const MenyHenleggIndexV2 = ({
 
   const { data: brevmottakere } = useQuery<Klagepart[]>({
     queryKey: ['brevmottakere', behandlingId],
-    queryFn: hentMottakere,
+    queryFn: async () => {
+      // hentMottakere kan returnere undefined, som feiler i useQuery. Mapper derfor til tom array
+      return (await hentMottakere()) ?? [];
+    },
   });
 
   const submit = useCallback(

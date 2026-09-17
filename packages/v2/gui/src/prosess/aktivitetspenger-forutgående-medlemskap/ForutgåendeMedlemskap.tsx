@@ -7,14 +7,16 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import type { VilkårSplittPanelItem } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
-import { VilkårSplittPanel } from '../aktivitetspenger-inngangsvilkår/VilkårSplittPanel';
+import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
+import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
@@ -25,9 +27,10 @@ interface Props {
   readOnly: boolean;
   forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
   vilkår: UngSakVilkårMedPerioderDto;
+  isPermanentlyReadOnly: boolean;
 }
 
-type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
+export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
 interface FormData {
   vurderinger: Record<string, Vurdering>;
@@ -45,12 +48,6 @@ const buildInitialValues = (vilkår: UngSakVilkårMedPerioderDto): FormData => (
   ),
 });
 
-const getItemStatus = (status: string): VilkårSplittPanelItem['status'] => {
-  if (status === Utfall.OPPFYLT) return 'success';
-  if (status === Utfall.IKKE_OPPFYLT) return 'error';
-  return 'warning';
-};
-
 export const ForutgåendeMedlemskap = ({
   aksjonspunkt,
   api,
@@ -59,15 +56,29 @@ export const ForutgåendeMedlemskap = ({
   vilkår,
   forutgåendeMedlemskap,
   onAksjonspunktBekreftet,
+  isPermanentlyReadOnly,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
-  const items: VilkårSplittPanelItem[] = (vilkår.perioder ?? []).map(p => ({
+  const visningsperioder = byggVisningsperioder(vilkår, []);
+  const periods: VilkårSplittPanelPeriod[] = visningsperioder.map(p => ({
     id: p.periode.fom,
-    status: getItemStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
+    status: getPeriodStatus(p.vilkarStatus),
+    label: `${formatDate(p.periode.fom)}${p.visTom ? ` - ${formatDate(p.periode.tom)}` : ''}`,
+    periode: p.periode,
   }));
 
-  const [selectedItemId, setSelectedItemId] = useState(items[0]?.id ?? '');
+  const [selectedItemId, setSelectedItemId] = useState(
+    () =>
+      vilkår.perioder?.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
+      periods[0]?.id ??
+      '',
+  );
+
+  useEffect(() => {
+    if (!periods.some(period => period.id === selectedItemId)) {
+      setSelectedItemId('');
+    }
+  }, [periods, selectedItemId]);
 
   const selectedPeriode = vilkår.perioder?.find(p => p.periode.fom === selectedItemId)?.periode;
   const overlappendeMedlemskap = selectedPeriode
@@ -76,7 +87,7 @@ export const ForutgåendeMedlemskap = ({
       )
     : [];
 
-  const formMethods = useForm<FormData>({
+  const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkår),
   });
 
@@ -101,72 +112,100 @@ export const ForutgåendeMedlemskap = ({
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
 
+  if (!aksjonspunkt && !vilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (vilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+    return (
+      <Box width="fit-content">
+        <Alert variant="info" size="small">
+          Ingen perioder å vurdere.
+        </Alert>
+      </Box>
+    );
+  }
+
   return (
     <VilkårSplittPanel
-      items={items}
+      periods={periods}
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
       detailHeading="Forutgående medlemskap"
-      defaultIsEditable={isAksjonspunktSolved}
+      defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
+      isPermanentlyReadOnly={isPermanentlyReadOnly}
     >
-      {(defaultIsEditable: boolean, setIsEditable: React.Dispatch<React.SetStateAction<boolean>>) => (
-        <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
-          <VStack gap="space-16">
-            {!defaultIsEditable && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
-            {overlappendeMedlemskap.length > 0 && (
-              <VStack gap="space-8">
-                <Label size="small" as="p">
-                  Bosteder i utlandet siste 5 år
-                </Label>
-                <HGrid columns="max-content max-content" gap="space-8" align="center">
-                  {overlappendeMedlemskap.map(medlemskap => {
-                    if (!medlemskap.periode) {
-                      return null;
-                    }
-                    const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
-                    return (
-                      <Fragment key={`${medlemskap.land}_${formatertPeriode}`}>
-                        <BodyShort size="small">{`${medlemskap.land}: ${formatertPeriode}`}</BodyShort>
-                        {medlemskap.harTrygdeavtale ? (
-                          <Tag variant="outline" data-color="success" size="small">
-                            Innenfor EØS
-                          </Tag>
-                        ) : (
-                          <Tag variant="outline" data-color="danger" size="small">
-                            Utenfor EØS
-                          </Tag>
-                        )}
-                      </Fragment>
-                    );
-                  })}
-                </HGrid>
-              </VStack>
-            )}
-            <RhfRadioGroup
-              key={selectedItemId}
-              control={formMethods.control}
-              name={`vurderinger.${selectedItemId}`}
-              legend="Er forutgående medlemskap godkjent?"
-              validate={[required]}
-              readOnly={defaultIsEditable}
-            >
-              <Radio value="oppfylt">Ja</Radio>
-              <Radio value="ikkeOppfylt">Nei</Radio>
-            </RhfRadioGroup>
-            {!defaultIsEditable && (
-              <HStack gap="space-8">
-                <Button type="submit" size="small" loading={isPending}>
-                  Bekreft og fortsett
-                </Button>
-                <Button size="small" variant="tertiary" type="button" onClick={() => setIsEditable(true)}>
-                  Avbryt
-                </Button>
-              </HStack>
-            )}
-          </VStack>
-        </RhfForm>
-      )}
+      {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
+        const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
+
+        return (
+          <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+            <VStack gap="space-16">
+              {!isFormLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
+              {overlappendeMedlemskap.length > 0 && (
+                <VStack gap="space-8">
+                  <Label size="small" as="p">
+                    Bosteder i utlandet siste 5 år
+                  </Label>
+                  <HGrid columns="max-content max-content" gap="space-8" align="center">
+                    {overlappendeMedlemskap.map(medlemskap => {
+                      if (!medlemskap.periode) {
+                        return null;
+                      }
+                      const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
+                      return (
+                        <Fragment key={`${medlemskap.land}_${formatertPeriode}`}>
+                          <BodyShort size="small">{`${medlemskap.land}: ${formatertPeriode}`}</BodyShort>
+                          {medlemskap.harTrygdeavtale ? (
+                            <Tag variant="outline" data-color="success" size="small">
+                              Innenfor EØS
+                            </Tag>
+                          ) : (
+                            <Tag variant="outline" data-color="danger" size="small">
+                              Utenfor EØS
+                            </Tag>
+                          )}
+                        </Fragment>
+                      );
+                    })}
+                  </HGrid>
+                </VStack>
+              )}
+              {isFormLocked && vurdering ? (
+                <VStack gap="space-8">
+                  <Label size="small" as="p">
+                    Er forutgående medlemskap godkjent?
+                  </Label>
+                  <BodyShort size="small">{vurdering === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
+                </VStack>
+              ) : (
+                <RhfRadioGroup
+                  key={selectedItemId}
+                  control={formHook.control}
+                  name={`vurderinger.${selectedItemId}`}
+                  legend="Er forutgående medlemskap godkjent?"
+                  validate={[required]}
+                  readOnly={isFormLocked}
+                >
+                  <Radio value="oppfylt">Ja</Radio>
+                  <Radio value="ikkeOppfylt">Nei</Radio>
+                </RhfRadioGroup>
+              )}
+              {!isFormLocked && (
+                <HStack gap="space-8">
+                  <Button type="submit" size="small" loading={isPending}>
+                    Bekreft og fortsett
+                  </Button>
+                  <Button size="small" variant="tertiary" type="button" onClick={() => setIsFormLocked(true)}>
+                    Avbryt
+                  </Button>
+                </HStack>
+              )}
+            </VStack>
+          </RhfForm>
+        );
+      }}
     </VilkårSplittPanel>
   );
 };

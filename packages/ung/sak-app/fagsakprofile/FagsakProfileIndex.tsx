@@ -45,6 +45,8 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
+const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient('ungSak');
+
 export const FagsakProfileIndex = ({
   fagsak,
   alleBehandlinger,
@@ -58,7 +60,6 @@ export const FagsakProfileIndex = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient('ungSak');
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype,

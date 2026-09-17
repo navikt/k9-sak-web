@@ -1,4 +1,5 @@
 import { get, Period } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import React, { useMemo, type JSX } from 'react';
 import Step, { langvarigSykdomSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -29,7 +30,8 @@ const VilkårsvurderingLangvarigSykdom = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingLangvarigSykdomProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -55,7 +57,7 @@ const VilkårsvurderingLangvarigSykdom = ({
 
   const getVurderingsoversikt = () =>
     endpoints.vurderingsoversiktLangvarigSykdom
-      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLangvarigSykdom, httpErrorHandler, {
+      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLangvarigSykdom, errorNotifier, {
           signal: controller.signal,
         })
       : Promise.resolve(null);
@@ -120,6 +122,7 @@ const VilkårsvurderingLangvarigSykdom = ({
     dispatch({ type: ActionType.PENDING });
     try {
       const status = await hentSykdomsstegStatus();
+      refetchBehandlingVedSykdomsendring();
       const nesteSteg = finnNesteStegForOpplæringspenger(status);
       if (nesteSteg === langvarigSykdomSteg || nesteSteg === null) {
         await oppdaterVurderingsoversikt();

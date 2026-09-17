@@ -12,16 +12,19 @@ Code in `packages/v2/` follows stricter TypeScript rules and different conventio
 Use this when migrating any old fakta/prosess panel to v2. Work through it in order — re-iterate until every box is checked.
 
 ### Backend types
+
 - [ ] Stable DTO re-export created in `packages/v2/backend/src/k9sak/kontrakt/<domain>/`
 - [ ] Kodeverk enum re-exports created in `packages/v2/backend/src/k9sak/kodeverk/<path>/` for each enum used
 
 ### API contract
+
 - [ ] Interface defined in `packages/v2/gui/src/fakta/<feature>/api/<Feature>Api.ts`
 - [ ] Context created in `packages/v2/gui/src/fakta/<feature>/api/<Feature>ApiContext.ts`
 - [ ] Production client `K9<Feature>BackendClient` calls the generated SDK function — never a raw URL
 - [ ] `getEndepunkter` **kept** in the old `FaktaPanelDef` for v1 backwards compatibility (removed only when deleting v1 code)
 
 ### v2 component
+
 - [ ] Component fetches its own data via `useSuspenseQuery` + API context — no data received as props from the shell
 - [ ] Uses `K9KodeverkoppslagContext` for kodeverk lookups — no `alleKodeverk` / `kodeverk` prop
 - [ ] CSS module class names use bracket notation: `styles['myClass']` (required by `noPropertyAccessFromIndexSignature`)
@@ -29,21 +32,26 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 - [ ] No imports from non-v2 packages (`@k9-sak-web/utils`, `@k9-sak-web/types`, `@k9-sak-web/shared-components`, etc.)
 
 ### Feature toggle
+
 - [ ] `BRUK_V2_<FEATURE>: false` added to `rootFeatureToggles` in `FeatureToggles.ts`
 - [ ] Toggle enabled in `k9SpecificFeatureToggles` in `k9/featureToggles.ts`
 
 ### FaktaPanelDef wiring (one per behandling package)
+
 - [ ] `getKomponent` is toggle-guarded — v2 branch passes only what the component needs (typically `behandlingUuid`), v1 branch unchanged
 - [ ] Compile-time deletion guard added to the **old v1 package files** — not the `FaktaPanelDef` (see "Marking old files for deletion" section below)
 
 ### AppConfigResolver
+
 - [ ] `<K9<Feature>BackendClient>` context provider added in `packages/sak-app/src/app/AppConfigResolver.tsx`
 - [ ] Add to ung `AppConfigResolver` too if the feature exists there
 
 ### Suspense boundary
+
 - [ ] `<Suspense fallback={<LoadingPanel />}>` wraps the `<ErrorBoundary>` in each behandling `*Fakta.tsx` that renders the panel
 
 ### Stories
+
 - [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
 - [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>`
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
@@ -51,6 +59,7 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 - [ ] Mock data uses generated DTO types (flat string codes) — not old kodeverk objects
 
 ### Verification
+
 - [ ] `yarn ts-check` passes with zero errors
 - [ ] `yarn test` passes for affected packages
 
@@ -78,6 +87,7 @@ packages/v2/
 ## Import Rules
 
 ### Use `.js` suffix — always
+
 ```typescript
 // ✅ Correct — modern TypeScript ESM convention
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -87,16 +97,18 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType';
 ```
 
-### Import directly from files — avoid barrel `index.ts` re-exports
+### Import directly from stable files — avoid barrel `index.ts` re-exports
+
 ```typescript
 // ✅ Direct file import
-import type { k9_sak_kontrakt_behandling_BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UtenlandsoppholdDto.js';
 
 // ❌ Avoid generic barrel imports
 import type { BehandlingDto } from '@k9-sak-web/backend';
 ```
 
 ### No imports from non-v2 packages
+
 ```typescript
 // ✅ OK inside packages/v2/
 import { something } from '@k9-sak-web/backend/k9sak/...';
@@ -117,6 +129,7 @@ Generated types and SDK functions come from published client packages (`@navikt/
 **Never import directly from `generated/types.js`.** The generated type names (e.g. `k9_sak_kontrakt_uttak_UtenlandsoppholdDto`) can change when the OpenAPI spec changes. Instead, create stable re-exports under `packages/v2/backend/src/k9sak/` with friendly aliases, then always import from those:
 
 **DTO types** — re-export in `kontrakt/<domain>/`:
+
 ```typescript
 // packages/v2/backend/src/k9sak/kontrakt/uttak/UtenlandsoppholdDto.ts
 export type {
@@ -126,6 +139,7 @@ export type {
 ```
 
 **Kodeverk const enums** — re-export under `kodeverk/` mirroring the package path from the generated type name:
+
 ```typescript
 // k9_kodeverk_geografisk_Region → kodeverk/geografisk/Region.ts
 export { k9_kodeverk_geografisk_Region as Region } from '@navikt/k9-sak-typescript-client/types';
@@ -137,6 +151,7 @@ export type { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsak
 ```
 
 Then import from the stable paths:
+
 ```typescript
 import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UtenlandsoppholdDto.js';
 import { Region } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/Region.js';
@@ -144,6 +159,7 @@ import { UtenlandsoppholdÅrsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak
 ```
 
 ### Using generated types
+
 Types are generated from OpenAPI specs. Names use the full package path with underscores as separator — use these when creating re-exports:
 
 ```typescript
@@ -152,16 +168,21 @@ export type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '
 ```
 
 ### Combined types
+
 Use `combined/` for types shared across multiple backends:
+
 ```typescript
 import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behandling/BehandlingDto.js';
 ```
 
 ### Fix OpenAPI spec instead of duplicating types
+
 If a generated type is wrong or missing, **fix the OpenAPI definition in the backend** rather than writing manual TypeScript types.
 
 ### Local development with unreleased backend
+
 If the k9-sak API hasn't been released yet:
+
 ```bash
 # In k9-sak project: run "web/generate typescript client" IntelliJ run config
 yarn link ~/path/to/k9-sak/web/target/ts-client
@@ -174,6 +195,7 @@ yarn unlink @navikt/k9-sak-typescript-client
 Components receive their backend client via React Context:
 
 **1. Define the interface** (`api/MyFeatureApi.ts`):
+
 ```typescript
 export interface MyFeatureApi {
   getMyData(id: string): Promise<MyDataDto>;
@@ -182,6 +204,7 @@ export interface MyFeatureApi {
 ```
 
 **2. Create the context** (`api/MyFeatureApiContext.ts`):
+
 ```typescript
 import { createContext } from 'react';
 import type { MyFeatureApi } from './MyFeatureApi.js';
@@ -190,12 +213,14 @@ export const MyFeatureApiContext = createContext<MyFeatureApi | null>(null);
 ```
 
 **3. Use in component**:
+
 ```typescript
 const api = use(MyFeatureApiContext);
 if (!api) throw new Error('MyFeatureApiContext not provided');
 ```
 
 **4. Create a fake for Storybook** (`storybook/mocks/FakeMyFeatureApi.ts`):
+
 ```typescript
 export class FakeMyFeatureApi implements MyFeatureApi {
   async getMyData(id: string): Promise<MyDataDto> {
@@ -248,6 +273,7 @@ Methods exist per kodeverk type on `kodeverkoppslag.k9sak`, e.g. `behandlingType
 For klage/tilbake-specific kodeverk, use `kodeverkoppslag.k9klage` or `kodeverkoppslag.k9tilbake`.
 
 ### KodeverkType enum (legacy)
+
 `KodeverkType` from `@k9-sak-web/lib/kodeverk/types.js` is part of the old `useKodeverkContext()` system. Avoid in new code — use `K9KodeverkoppslagContext` methods instead.
 
 ## Feature Toggles — required for every migration
@@ -255,11 +281,13 @@ For klage/tilbake-specific kodeverk, use `kodeverkoppslag.k9klage` or `kodeverko
 All migrations from old packages to v2 MUST be guarded by a feature toggle so both implementations can coexist during rollout.
 
 ### Adding a toggle
+
 1. Add `BRUK_V2_MY_FEATURE: false` to `rootFeatureToggles` in [FeatureToggles.ts](../../../packages/v2/gui/src/featuretoggles/FeatureToggles.ts)
 2. In [k9/featureToggles.ts](../../../packages/v2/gui/src/featuretoggles/k9/featureToggles.ts), add it to `qFeatureToggles` with `true` to enable in Q
 3. Once stable in prod, move the toggle to `k9SpecificFeatureToggles` and delete the old implementation
 
 ### Using a toggle in a FaktaPanelDef
+
 The old-style `FaktaPanelDef` classes receive `props.featureToggles` from the behandling framework.
 
 When passing v1 data into a v2 component, `konverterKodeverkTilKode` is **required** at the stitching boundary. Old-style props contain kodeverk objects (`{ kode, kodeverk }`) but v2 components expect flat string codes:
@@ -289,7 +317,8 @@ This causes a TypeScript compile error when the toggle key is removed from `Feat
 // Kompileringsfeil her betyr at BRUK_V2_MY_FEATURE er fjernet fra FeatureToggles.
 // Slett hele packages/fakta-<feature> og fjern v1-grenen i FaktaPanelDef når migreringen er ferdig.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type _VenterPåSletting = import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_MY_FEATURE'];
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_MY_FEATURE'];
 ```
 
 Note: Use the inline `import(...)` form so you don't need to add a top-level import just for the guard.
@@ -300,7 +329,7 @@ The `FeatureToggles['BRUK_V2_MY_FEATURE']` lookup will fail with `Property 'BRUK
 
 v2 components that use `useSuspenseQuery` suspend while loading by throwing a Promise. The render tree **must** have a `<Suspense>` boundary to catch it — otherwise React crashes.
 
-The old-style `*Fakta.tsx` files (e.g. `PleiepengerFakta.tsx`, `OpplaeringspengerFakta.tsx`, `PleiepengerSluttfaseFakta.tsx`) render `getKomponent` inside an `<ErrorBoundary>`. A `<Suspense>` should wrap the ErrorBoundary: 
+The old-style `*Fakta.tsx` files (e.g. `PleiepengerFakta.tsx`, `OpplaeringspengerFakta.tsx`, `PleiepengerSluttfaseFakta.tsx`) render `getKomponent` inside an `<ErrorBoundary>`. A `<Suspense>` should wrap the ErrorBoundary:
 
 ```tsx
 import { Suspense } from 'react';
@@ -326,9 +355,7 @@ import { MyFeatureApiContext } from '@k9-sak-web/gui/fakta/myfeature/api/MyFeatu
 import { K9MyFeatureBackendClient } from '@k9-sak-web/gui/fakta/myfeature/api/K9MyFeatureBackendClient.js';
 
 // In the render tree:
-<MyFeatureApiContext value={new K9MyFeatureBackendClient()}>
-  {children}
-</MyFeatureApiContext>
+<MyFeatureApiContext value={new K9MyFeatureBackendClient()}>{children}</MyFeatureApiContext>;
 ```
 
 ## Data fetching — prefer `useSuspenseQuery` in the component
@@ -382,10 +409,9 @@ With `"noUncheckedIndexedAccess": true`, `array[n]` returns `T | undefined`. Use
 
 ```typescript
 // ✅ In stories/tests where the index is guaranteed
-utenlandsoppholdMock.perioder[0]!
+utenlandsoppholdMock.perioder[0]!;
 
 // ✅ In production code: guard instead
 const first = items[0];
 if (!first) return null;
 ```
-

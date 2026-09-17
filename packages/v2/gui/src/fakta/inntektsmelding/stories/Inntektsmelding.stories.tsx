@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
-import { expect, userEvent, waitFor, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
   aksjonspunkt9071Props,
@@ -17,13 +16,14 @@ import InntektsmeldingIndex, { type InntektsmeldingContainerProps } from '../ui/
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
+import { asyncAction } from '../../../storybook/asyncAction.js';
 
 const createProps = (
   behandlingUuid: string,
   props: Partial<InntektsmeldingContainerProps>,
 ): InntektsmeldingContainerProps => ({
   ...inntektsmeldingPropsMock,
-  submitCallback: action('submitCallback'),
+  submitCallback: asyncAction('submitCallback'),
   ...props,
   behandling: {
     uuid: behandlingUuid,
@@ -68,7 +68,9 @@ export const Mangler9069: Story = {
     });
 
     await step('Sjekker at knapp ikke vises når beslutning ikke er valgt', async () => {
-      const radioOption = await canvas.findByLabelText(/Nei, send purring med varsel om avslag/i);
+      const radioOption = await canvas.findByLabelText(
+        /Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker/i,
+      );
       await expect(radioOption).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
       await expect(
@@ -77,7 +79,9 @@ export const Mangler9069: Story = {
     });
 
     await step('Viser riktig knapp når purring er valgt', async () => {
-      const radioOption = await canvas.findByLabelText(/Nei, send purring med varsel om avslag/i);
+      const radioOption = await canvas.findByLabelText(
+        /Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker/i,
+      );
       await user.click(radioOption);
       await waitFor(async () => {
         await expect(canvas.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).not.toBeInTheDocument();
@@ -200,9 +204,9 @@ export const FerdigVisning9071: Story = {
 };
 
 export const AlleInntektsmeldingerMottatt: Story = {
-  args: createProps(alleErMottatt.behandlingUuid, aksjonspunkt9071Props),
+  args: createProps(alleErMottatt.behandlingUuid, { ...aksjonspunkt9071Props, submitCallback: fn() }),
   decorators: [withFakeInntektsmeldingApi(alleErMottatt.behandlingUuid, alleErMottatt.vurdering)],
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
@@ -213,8 +217,9 @@ export const AlleInntektsmeldingerMottatt: Story = {
     await step(
       'Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet',
       async () => {
-        const sendInnButton = await canvas.findByRole('button', { name: /Send inn/i });
+        const sendInnButton = await canvas.findByRole('button', { name: /Fortsett uten endring/i });
         await user.click(sendInnButton);
+        await waitFor(() => expect(args.submitCallback).toHaveBeenCalled());
       },
     );
   },

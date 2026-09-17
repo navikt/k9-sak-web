@@ -1,6 +1,11 @@
 ---
 name: nav-troubleshoot
 description: Strukturerte diagnostiske trær for vanlige Nav-plattformproblemer — pod-krasj, auth-feil, Kafka-lag og databaseproblemer
+license: MIT
+compatibility: Application deployed on Nais
+metadata:
+  domain: platform
+  tags: troubleshooting diagnostics nais kubernetes
 ---
 
 # Nav Troubleshoot — Platform Diagnostics

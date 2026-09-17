@@ -1,29 +1,31 @@
 import AksjonspunktBox from '@k9-sak-web/gui/shared/aksjonspunktBox/AksjonspunktBox.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { Status as InntektsmeldingStatus } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/Status.js';
 import { Alert, Box, Button, Heading, Radio } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../types';
-import { InntektsmeldingVurderingRequestKode } from '../../types';
+import { Vurdering } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurdering.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 type AksjonspunktKode = '9069' | '9071';
 
 const radioConfig: Record<AksjonspunktKode, Array<{ value: string; label: string }>> = {
   '9069': [
-    { value: InntektsmeldingVurderingRequestKode.FORTSETT, label: 'Ja, bruk A-inntekt for {arbeidsgivere}' },
-    { value: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG, label: 'Nei, send purring med varsel om avslag' },
+    { value: Vurdering.KAN_FORTSETTE, label: 'Ja, bruk A-inntekt for {arbeidsgivere}' },
+    {
+      value: Vurdering.MANGLENDE_GRUNNLAG,
+      label: 'Nei, send purring på min side arbeidsgiver og varsel om avslag til bruker',
+    },
   ],
   '9071': [
-    { value: InntektsmeldingVurderingRequestKode.FORTSETT, label: 'Ja, bruk A-inntekt for {arbeidsgivere}' },
+    { value: Vurdering.KAN_FORTSETTE, label: 'Ja, bruk A-inntekt for {arbeidsgivere}' },
     {
-      value: InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG,
+      value: Vurdering.MANGLENDE_GRUNNLAG,
       label: 'Nei, avslå på grunn av manglende opplysninger om inntekt etter §21-3',
     },
     {
-      value: InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP,
+      value: Vurdering.IKKE_INNTEKTSTAP,
       label: 'Nei, avslå søknaden på grunn av at ansatt ikke har tapt arbeidsinntekt §9-3',
     },
   ],
@@ -31,22 +33,22 @@ const radioConfig: Record<AksjonspunktKode, Array<{ value: string; label: string
 
 const knappetekster: Record<AksjonspunktKode, Record<string, string>> = {
   '9069': {
-    [InntektsmeldingVurderingRequestKode.FORTSETT]: 'Fortsett uten inntektsmelding',
-    [InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG]: 'Send purring med varsel om avslag',
+    [Vurdering.KAN_FORTSETTE]: 'Fortsett uten inntektsmelding',
+    [Vurdering.MANGLENDE_GRUNNLAG]: 'Send purring med varsel om avslag',
   },
   '9071': {
-    [InntektsmeldingVurderingRequestKode.FORTSETT]: 'Fortsett uten inntektsmelding',
-    [InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG]: 'Avslå periode',
-    [InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP]: 'Avslå søknad',
+    [Vurdering.KAN_FORTSETTE]: 'Fortsett uten inntektsmelding',
+    [Vurdering.MANGLENDE_GRUNNLAG]: 'Avslå periode',
+    [Vurdering.IKKE_INNTEKTSTAP]: 'Avslå søknad',
   },
 };
 
 const begrunnelseHjelpetekster: Record<string, string> = {
-  [InntektsmeldingVurderingRequestKode.FORTSETT]:
+  [Vurdering.KAN_FORTSETTE]:
     'Vi benytter opplysninger fra A-inntekt for alle arbeidsgivere vi ikke har mottatt inntektsmelding fra. Gjør en vurdering av hvorfor du benytter A-inntekt for å fastsette grunnlaget etter § 8-28.',
-  [InntektsmeldingVurderingRequestKode.MANGLENDE_GRUNNLAG]:
+  [Vurdering.MANGLENDE_GRUNNLAG]:
     'Skriv begrunnelse for hvorfor du ikke kan benytte opplysninger fra A-inntekt for å fastsette grunnlaget, og avslå saken etter folketrygdloven §§ 21-3 og 8-28.',
-  [InntektsmeldingVurderingRequestKode.IKKE_INNTEKTSTAP]:
+  [Vurdering.IKKE_INNTEKTSTAP]:
     'Skriv begrunnelse for hvorfor søker ikke har inntektstap, og avslå saken etter folketrygdloven §9-3.',
 };
 
@@ -77,7 +79,7 @@ interface InntektsmeldingFormProps {
   tilstand: TilstandMedUiState;
   aksjonspunkt: AksjonspunktDto;
   formMethods: UseFormReturn<FieldValues>;
-  onSubmit: (payload: InntektsmeldingRequestPayload) => void;
+  onSubmit: (payload: InntektsmeldingRequestPayload) => Promise<void>;
   harFlereTilstanderTilVurdering: boolean;
 }
 
@@ -97,13 +99,11 @@ const InntektsmeldingAksjonspunktForm = ({
   const beslutningValue = watch(beslutningFieldName);
   const beslutning = Array.isArray(beslutningValue) ? beslutningValue[0] : beslutningValue;
 
-  const skalViseBegrunnelse =
-    aksjonspunktKode !== '9069' || beslutning === InntektsmeldingVurderingRequestKode.FORTSETT;
+  const skalViseBegrunnelse = aksjonspunktKode !== '9069' || beslutning === Vurdering.KAN_FORTSETTE;
 
   // Formater arbeidsgiverliste
-  const arbeidsgivereMedMangler = tilstand.status.filter(s => s.status === InntektsmeldingStatus.MANGLER);
   const arbeidsgivereString = formatListeMedOg(
-    arbeidsgivereMedMangler.map(
+    tilstand.status.map(
       ({ arbeidsgiver: ag }) =>
         `${arbeidsforhold[ag.arbeidsgiver]?.navn ?? ag.arbeidsgiver} (${ag.arbeidsforhold ?? 'ukjent'})`,
     ),
@@ -115,15 +115,15 @@ const InntektsmeldingAksjonspunktForm = ({
     label: r.label.replace('{arbeidsgivere}', arbeidsgivereString),
   }));
 
-  const handleSubmit = (data: FieldValues) => {
+  const handleSubmit = async (data: FieldValues) => {
     const periode = {
       periode: tilstand.periodeOpprinneligFormat,
-      fortsett: data[beslutningFieldName] === InntektsmeldingVurderingRequestKode.FORTSETT,
+      fortsett: data[beslutningFieldName] === Vurdering.KAN_FORTSETTE,
       vurdering: data[beslutningFieldName],
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
     };
 
-    onSubmit({
+    await onSubmit({
       '@type': aksjonspunktKode,
       kode: aksjonspunktKode,
       begrunnelse: skalViseBegrunnelse ? data[begrunnelseFieldName] : undefined,
@@ -180,7 +180,12 @@ const InntektsmeldingAksjonspunktForm = ({
         <Box marginBlock="space-24 space-0">
           <div className="flex gap-4">
             {!harFlereTilstanderTilVurdering && beslutning && (
-              <Button variant="primary" size="small">
+              <Button
+                variant="primary"
+                size="small"
+                loading={formMethods.formState.isSubmitting}
+                disabled={formMethods.formState.isSubmitting}
+              >
                 {knappetekster[aksjonspunktKode][beslutning] ?? 'Send inn'}
               </Button>
             )}

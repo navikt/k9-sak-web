@@ -1,16 +1,16 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
-import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import {
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { action } from 'storybook/actions';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { withFakeSykdomOgOpplæringApi } from '../../../storybook/decorators/withFakeSykdomOgOpplæringApi.js';
+import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
+import SykdomUperiodisertIndex from './SykdomUperiodisertIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -41,59 +41,54 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
     </SykdomOgOpplæringContext.Provider>
   );
 };
-const withMockDataIkkeVurdert: Decorator = Story => {
-  // Mock list of uperiodiserte sykdomsvurderinger
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => [];
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => ({
+const withMockDataIkkeVurdert: Decorator = withFakeSykdomOgOpplæringApi({
+  langvarigSykVurderinger: [],
+  vurdertLangvarigSykdom: {
     vurderingUuid: '',
     resultat: LangvarigSykdomResultat.MÅ_VURDERES,
-  });
+  },
+});
 
-  return <Story />;
+const withMockDataLangvarigSykVurderinger = [
+  {
+    uuid: 'v1',
+    vurdertTidspunkt: '2025-01-15T10:00:00Z',
+    godkjent: true,
+    vurderingFraAnnenpart: false,
+    begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+    kanOppdateres: true,
+    diagnosekoder: [],
+    avslagsårsak: undefined,
+    behandlingUuid: '222-3333',
+    saksnummer: { saksnummer: '12345' },
+    vurdertAv: 'Z123456',
+  },
+  {
+    uuid: 'v2',
+    vurdertTidspunkt: '2025-02-10T12:30:00Z',
+    godkjent: false,
+    avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
+    vurderingFraAnnenpart: true,
+    begrunnelse: 'Mangler dokumentasjon',
+    kanOppdateres: true,
+    diagnosekoder: [],
+    behandlingUuid: '222-3333',
+    saksnummer: { saksnummer: '12345' },
+    vurdertAv: 'Z123456',
+  },
+];
+
+const withMockDataVurdertLangvarigSykdom = {
+  vurderingUuid: 'v1',
+  resultat: LangvarigSykdomResultat.GODKJENT,
 };
-const withMockData: Decorator = Story => {
+
+const withMockData: Decorator = withFakeSykdomOgOpplæringApi({
   // Mock list of uperiodiserte sykdomsvurderinger
-  const langvarigSykVurderingerMock = [
-    {
-      uuid: 'v1',
-      vurdertTidspunkt: '2025-01-15T10:00:00Z',
-      godkjent: true,
-      vurderingFraAnnenpart: false,
-      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
-      kanOppdateres: true,
-      diagnosekoder: [],
-      avslagsårsak: undefined,
-      behandlingUuid: '222-3333',
-      saksnummer: { saksnummer: '12345' },
-      vurdertAv: 'Z123456',
-    },
-    {
-      uuid: 'v2',
-      vurdertTidspunkt: '2025-02-10T12:30:00Z',
-      godkjent: false,
-      avslagsårsak: Avslagsårsak.MANGLENDE_DOKUMENTASJON,
-      vurderingFraAnnenpart: true,
-      begrunnelse: 'Mangler dokumentasjon',
-      kanOppdateres: true,
-      diagnosekoder: [],
-      behandlingUuid: '222-3333',
-      saksnummer: { saksnummer: '12345' },
-      vurdertAv: 'Z123456',
-    },
-  ];
-
+  langvarigSykVurderinger: withMockDataLangvarigSykVurderinger,
   // Mock which vurdering is used by the aksjonspunkt
-  const vurdertLangvarigSykdomMock = {
-    vurderingUuid: 'v1',
-    resultat: LangvarigSykdomResultat.GODKJENT,
-  };
-
-  SykdomOgOpplæringBackendClient.prototype.hentLangvarigSykVurderingerFagsak = async () => langvarigSykVurderingerMock;
-  SykdomOgOpplæringBackendClient.prototype.hentVurdertLangvarigSykdom = async () => vurdertLangvarigSykdomMock;
-
-  return <Story />;
-};
+  vurdertLangvarigSykdom: withMockDataVurdertLangvarigSykdom,
+});
 
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/2-sykdom',
@@ -119,7 +114,9 @@ export const GodkjentMedDiagnoser: Story = {
     await userEvent.type(begrunnelseTextarea, 'Barnet har langvarig sykdom som krever spesiell opplæring av foreldre.');
 
     // Select "Ja"
-    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const radioGroup = canvas.getByRole('radiogroup', {
+      name: /Har barnet en funksjonshemming eller langvarig sykdom/i,
+    });
     const jaRadio = within(radioGroup).getByLabelText('Ja');
     await userEvent.click(jaRadio);
 
@@ -158,7 +155,9 @@ export const IkkeGodkjent: Story = {
     await userEvent.type(begrunnelseTextarea, 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.');
 
     // Select "Nei"
-    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const radioGroup = canvas.getByRole('radiogroup', {
+      name: /Har barnet en funksjonshemming eller langvarig sykdom/i,
+    });
     const neiRadio = within(radioGroup).getByLabelText('Nei');
     await userEvent.click(neiRadio);
 
@@ -193,7 +192,9 @@ export const ManglerDokumentasjon: Story = {
     await userEvent.type(begrunnelseTextarea, 'Vi mangler dokumentasjon på langvarig sykdom.');
 
     // Select "Mangler dokumentasjon"
-    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const radioGroup = canvas.getByRole('radiogroup', {
+      name: /Har barnet en funksjonshemming eller langvarig sykdom/i,
+    });
     const manglerDokRadio = within(radioGroup).getByLabelText('Mangler dokumentasjon');
     await userEvent.click(manglerDokRadio);
 
@@ -239,7 +240,9 @@ export const KanRedigeres: Story = {
     await userEvent.type(begrunnelseTextarea, 'Sykdommen er ikke langvarig nok til å oppfylle vilkåret.');
 
     // Select "Nei"
-    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const radioGroup = canvas.getByRole('radiogroup', {
+      name: /Har barnet en funksjonshemming eller langvarig sykdom/i,
+    });
     const neiRadio = within(radioGroup).getByLabelText('Nei');
     await userEvent.click(neiRadio);
 
@@ -317,7 +320,9 @@ export const Validering: Story = {
 
     // TEST 2: Mangler begrunnelse
     // Select "Ja" but leave begrunnelse empty
-    const radioGroup = canvas.getByRole('group', { name: /Har barnet en funksjonshemming eller langvarig sykdom/i });
+    const radioGroup = canvas.getByRole('radiogroup', {
+      name: /Har barnet en funksjonshemming eller langvarig sykdom/i,
+    });
     const jaRadio = within(radioGroup).getByLabelText('Ja');
     await userEvent.click(jaRadio);
 

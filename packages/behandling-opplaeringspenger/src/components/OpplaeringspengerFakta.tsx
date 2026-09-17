@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -62,7 +62,6 @@ const OpplaeringspengerFakta = ({
   beregningErBehandlet,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiOpplaeringspengerHooks.useRestApiRunner<Behandling>(OpplaeringspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -148,21 +147,24 @@ const OpplaeringspengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              behandling,
-              alleKodeverk,
-              featureToggles,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOpplaeringspengerPaneler, hasFetchError),
-              dokumenter,
-              beregningErBehandlet,
-              formData,
-              setFormData,
-            })}
-          </ErrorBoundary>
+          <Suspense fallback={<LoadingPanel />}>
+            <ErrorBoundary>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                ...faktaDataUtenCaching,
+                fagsak,
+                behandling,
+                alleKodeverk,
+                featureToggles,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOpplaeringspengerPaneler, hasFetchError),
+                dokumenter,
+                beregningErBehandlet,
+                formData,
+                setFormData,
+              })}
+            </ErrorBoundary>
+          </Suspense>
         )}
       </SideMenuWrapper>
     );

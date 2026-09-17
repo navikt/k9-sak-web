@@ -3,7 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
@@ -16,6 +17,7 @@ import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggl
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
@@ -121,7 +123,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
   );
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const { startRequest: nyBehandlendeEnhet } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -158,14 +160,14 @@ const BehandlingPleiepengerSluttfaseIndex = ({
     });
 
     requestPleiepengerSluttfaseApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestPleiepengerSluttfaseApi.setAddErrorMessageHandler(addErrorMessage);
+    requestPleiepengerSluttfaseApi.setErrorNotifier(legacyErrorNotifier);
 
     void hentBehandling({ behandlingId }, false);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, []);
+  }, [legacyErrorNotifier]);
 
   const { data, state } = restApiPleiepengerSluttfaseHooks.useMultipleRestApi<FetchedData>(pleiepengerData, {
     keepData: true,
@@ -184,27 +186,32 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <RawIntlProvider value={intl}>
-        <PleiepengerSluttfasePaneler
-          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-          fetchedData={data}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={kodeverk}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          opneSokeside={opneSokeside}
-          hasFetchError={behandlingState === RestApiState.ERROR}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-          featureToggles={featureToggles}
-          dokumenter={alleDokumenter}
-        />
-      </RawIntlProvider>
+      <BehandlingProvider
+        behandlingUuid={behandling.uuid}
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+      >
+        <RawIntlProvider value={intl}>
+          <PleiepengerSluttfasePaneler
+            behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+            fetchedData={data}
+            fagsak={fagsak}
+            fagsakPerson={fagsakPerson}
+            alleKodeverk={kodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            opneSokeside={opneSokeside}
+            hasFetchError={behandlingState === RestApiState.ERROR}
+            setBehandling={setBehandling}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+            featureToggles={featureToggles}
+            dokumenter={alleDokumenter}
+          />
+        </RawIntlProvider>
+      </BehandlingProvider>
     </>
   );
 };

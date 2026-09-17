@@ -12,6 +12,7 @@ interface OwnProps {
   showModal: boolean;
   submit: () => void;
   cancel: () => void;
+  isSubmitting?: boolean;
 }
 
 /**
@@ -26,35 +27,44 @@ const OkAvbrytModal = ({
   showModal,
   cancel,
   submit,
+  isSubmitting = false,
 }: OwnProps) => {
   const intl = useIntl();
   return (
-  <Modal
-    className={styles.modal}
-    open={showModal}
-    aria-label={text || intl.formatMessage({ id: textCode })}
-    onClose={cancel}
-  >
-    <Modal.Header>
-      <BodyShort size="small">{text || <FormattedMessage id={textCode} />}</BodyShort>
-    </Modal.Header>
-    <Modal.Body>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus>
-              {intl.formatMessage({ id: okButtonTextCode })}
-            </Button>
-          </FlexColumn>
-          <FlexColumn>
-            <Button variant="secondary" size="small" type="reset" onClick={cancel}>
-              {intl.formatMessage({ id: 'OkAvbrytModal.Avbryt' })}
-            </Button>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </Modal.Body>
-  </Modal>
+    <Modal
+      className={styles.modal}
+      open={showModal}
+      aria-label={text || intl.formatMessage({ id: textCode })}
+      onClose={cancel}
+    >
+      <Modal.Header>
+        <BodyShort size="small">{text || <FormattedMessage id={textCode} />}</BodyShort>
+      </Modal.Header>
+      <Modal.Body>
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <Button
+                variant="primary"
+                size="small"
+                type="submit"
+                onClick={submit}
+                autoFocus
+                disabled={isSubmitting}
+                loading={isSubmitting}
+              >
+                {intl.formatMessage({ id: okButtonTextCode })}
+              </Button>
+            </FlexColumn>
+            <FlexColumn>
+              <Button variant="secondary" size="small" type="reset" onClick={cancel}>
+                {intl.formatMessage({ id: 'OkAvbrytModal.Avbryt' })}
+              </Button>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </Modal.Body>
+    </Modal>
   );
 };
 

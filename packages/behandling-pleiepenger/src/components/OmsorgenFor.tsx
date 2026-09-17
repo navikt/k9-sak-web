@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { findAksjonspunkt, httpErrorHandler } from '@fpsak-frontend/utils';
-import OmsorgenForIndex from '@k9-sak-web/gui/fakta/omsorgen-for/OmsorgenForIndex.js';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
+import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
 
 interface OmsorgenForProps {
@@ -15,10 +15,8 @@ interface OmsorgenForProps {
   }[]) => Promise<void>;
 }
 
-export default ({ behandling: { sakstype, uuid }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
-    httpErrorHandler(status, addErrorMessage, locationHeader);
+export default ({ behandling: { links, sakstype }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.AVKLAR_OMSORGEN_FOR);
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
@@ -30,12 +28,20 @@ export default ({ behandling: { sakstype, uuid }, readOnly, aksjonspunkter, subm
     ]);
 
   return (
-    <OmsorgenForIndex
-      httpErrorHandler={httpErrorHandlerCaller}
-      readOnly={readOnly || !harAksjonspunkt}
-      onFinished={løsAksjonspunkt}
-      sakstype={sakstype}
-      behandlingUuid={uuid}
+    <OmsorgenFor
+      data={{
+        omsorgenForAksjonspunkt,
+        errorNotifier: legacyErrorNotifier,
+        endpoints: findEndpointsFromRels(links, [
+          {
+            rel: 'omsorgen-for',
+            desiredName: 'omsorgsperioder',
+          },
+        ]),
+        readOnly: readOnly || !harAksjonspunkt,
+        onFinished: løsAksjonspunkt,
+        sakstype,
+      }}
     />
   );
 };
