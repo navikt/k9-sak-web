@@ -35,7 +35,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   }
 
   async hentMedlemskapFraSøknad() {
-    return { medlemskapFraBruker: null, vilkårsperioder: [] };
+    return { vilkårsperioder: [] };
   }
 
   async hentBostedGrunnlag() {

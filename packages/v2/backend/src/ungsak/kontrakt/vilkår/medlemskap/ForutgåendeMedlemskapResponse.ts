@@ -1,11 +1,1 @@
-import type { MedlemskapDto } from './MedlemskapDto.js';
-import type { VilkårsPeriodeResultatDto } from './VilkårsPeriodeResultatDto.js';
-
-/**
- * TODO(TSFF-3050): Midlertidig, håndskrevet type, se UtenlandsoppholdDto.ts for begrunnelse.
- * Kilde: kontrakt/src/main/java/no/nav/ung/sak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.java
- */
-export type ForutgåendeMedlemskapResponse = {
-  medlemskapFraBruker: MedlemskapDto | null;
-  vilkårsperioder: VilkårsPeriodeResultatDto[];
-};
+export type { ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse as ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
