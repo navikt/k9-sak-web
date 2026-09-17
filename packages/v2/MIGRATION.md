@@ -86,7 +86,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                             | ~Linjer | Konsumenter           | Merknad                                                 |
 | --------------------------------- | ------- | --------------------- | ------------------------------------------------------- |
-| `prosess-varsel-om-revurdering`   | 647     | 5                     | Gammel JSX, forhåndsvisnings-callback for brev, 3 APIer |
 | `fakta-soknadsperioder`           | 727     | 5                     | Periodeoversikt koblet til vilkår, 1 API                |
 | `prosess-avregning` (Simulering)  | 1007    | 6                     | Simuleringsvisning + tilbakekrevingsvalg-skjema         |
 | `fakta-opplysninger-fra-soknaden` | 1268    | 1 (frisinn)           | Frisinn-spesifikk, overstyringsskjema, 1 API            |
