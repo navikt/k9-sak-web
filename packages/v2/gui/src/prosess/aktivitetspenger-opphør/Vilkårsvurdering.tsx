@@ -97,7 +97,7 @@ export const Vilkaarsvurdering = ({
       }
       const valgtPeriode = periods.find(p => p.id === selectedId);
       const payload: BekreftetAksjonspunktDto = {
-        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
+        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
         begrunnelse: selectedFormPeriod.begrunnelse,
         vurdertePerioder: [
           {
