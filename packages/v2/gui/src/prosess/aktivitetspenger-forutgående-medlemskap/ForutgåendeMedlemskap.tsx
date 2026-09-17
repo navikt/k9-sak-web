@@ -5,14 +5,14 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
-import type { MedlemskapsPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapsPeriodeDto.js';
+import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/UtenlandsoppholdDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
-import { Fragment, useEffect, useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
@@ -25,7 +25,7 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
-  forutgåendeMedlemskap: MedlemskapsPeriodeDto[];
+  forutgåendeMedlemskap: UtenlandsoppholdDto[];
   vilkår: UngSakVilkårMedPerioderDto;
   isPermanentlyReadOnly: boolean;
 }
@@ -79,13 +79,6 @@ export const ForutgåendeMedlemskap = ({
       setSelectedItemId('');
     }
   }, [periods, selectedItemId]);
-
-  const selectedPeriode = vilkår.perioder?.find(p => p.periode.fom === selectedItemId)?.periode;
-  const overlappendeMedlemskap = selectedPeriode
-    ? forutgåendeMedlemskap.filter(
-        m => m.periode && m.periode.fom <= selectedPeriode.tom && m.periode.tom >= selectedPeriode.fom,
-      )
-    : [];
 
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkår),
@@ -143,30 +136,21 @@ export const ForutgåendeMedlemskap = ({
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             <VStack gap="space-16">
               {!isFormLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
-              {overlappendeMedlemskap.length > 0 && (
+              {forutgåendeMedlemskap.length > 0 && (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
-                    Bosteder i utlandet siste 5 år
+                    Utenlandsopphold siste 5 år
                   </Label>
-                  <HGrid columns="max-content max-content" gap="space-8" align="center">
-                    {overlappendeMedlemskap.map(medlemskap => {
+                  <HGrid columns="max-content" gap="space-8" align="center">
+                    {forutgåendeMedlemskap.map(medlemskap => {
                       if (!medlemskap.periode) {
                         return null;
                       }
                       const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
                       return (
-                        <Fragment key={`${medlemskap.land}_${formatertPeriode}`}>
-                          <BodyShort size="small">{`${medlemskap.land}: ${formatertPeriode}`}</BodyShort>
-                          {medlemskap.harTrygdeavtale ? (
-                            <Tag variant="outline" data-color="success" size="small">
-                              Innenfor EØS
-                            </Tag>
-                          ) : (
-                            <Tag variant="outline" data-color="danger" size="small">
-                              Utenfor EØS
-                            </Tag>
-                          )}
-                        </Fragment>
+                        <BodyShort size="small" key={`${medlemskap.land}_${formatertPeriode}`}>
+                          {`${medlemskap.land}: ${formatertPeriode}`}
+                        </BodyShort>
                       );
                     })}
                   </HGrid>
