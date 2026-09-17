@@ -138,7 +138,7 @@ const VurderingAvOmsorgsperioderForm = ({
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...formMethods}>
           {omsorgsperiode.relasjon && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-8 space-0">
               <LabelledContent
                 label="Hvilken relasjon har søker til barnet?"
                 content={
@@ -150,15 +150,15 @@ const VurderingAvOmsorgsperioderForm = ({
                   </div>
                 }
               />
-            </Box.New>
+            </Box>
           )}
           {skalViseRelasjonsbeskrivelse && (
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-8 space-0">
               <LabelledContent
                 label="Beskrivelse fra søker"
                 content={<BodyShort size="small">{omsorgsperiode.relasjonsbeskrivelse}</BodyShort>}
               />
-            </Box.New>
+            </Box>
           )}
           <FormWithButtons
             onSubmit={formMethods.handleSubmit(handleSubmit)}
@@ -168,7 +168,7 @@ const VurderingAvOmsorgsperioderForm = ({
             smallButtons
             submitButtonDisabled={isSubmitting}
           >
-            <Box.New marginBlock="8 0">
+            <Box marginBlock="space-8 space-0">
               <RhfTextarea
                 name={FieldName.BEGRUNNELSE}
                 validate={[required]}
@@ -182,8 +182,8 @@ const VurderingAvOmsorgsperioderForm = ({
                   </>
                 }
               />
-            </Box.New>
-            <Box.New marginBlock="8 0">
+            </Box>
+            <Box marginBlock="space-8 space-0">
               <RhfRadioGroup
                 control={formMethods.control}
                 legend={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
@@ -197,9 +197,9 @@ const VurderingAvOmsorgsperioderForm = ({
                   </Radio>
                 ))}
               </RhfRadioGroup>
-            </Box.New>
+            </Box>
             {harSøkerOmsorgenFor === RadioOptions.DELER && (
-              <Box.New marginBlock="8 0">
+              <Box marginBlock="space-8 space-0">
                 <PeriodpickerList
                   name={FieldName.PERIODER}
                   legend="I hvilke perioder har søker omsorgen for barnet?"
@@ -207,10 +207,10 @@ const VurderingAvOmsorgsperioderForm = ({
                   fromDate={omsorgsperiode.periode?.fom}
                   toDate={omsorgsperiode.periode?.tom}
                 />
-              </Box.New>
+              </Box>
             )}
             {resterendePerioder.length > 0 && (
-              <Box.New marginBlock="8 0">
+              <Box marginBlock="space-8 space-0">
                 <Alert size="small" variant="info">
                   <LabelledContent
                     label="Resterende perioder har søkeren ikke omsorgen for barnet:"
@@ -221,7 +221,7 @@ const VurderingAvOmsorgsperioderForm = ({
                     ))}
                   />
                 </Alert>
-              </Box.New>
+              </Box>
             )}
           </FormWithButtons>
         </FormProvider>

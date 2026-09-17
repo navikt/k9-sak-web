@@ -15,11 +15,11 @@ const OmsorgsperiodeoversiktMessages = ({ omsorgsperiodeoversikt }: Omsorgsperio
       .map(({ periode }) => periode)
       .filter(periode => periode !== undefined);
     return (
-      <Box.New marginBlock="0 6">
+      <Box marginBlock="space-0 space-6">
         <Alert size="small" variant="warning" className={styles.alertstripe}>
           <FormattedMessage id="vurdering.advarsel" values={{ perioder: getStringMedPerioder(perioderTilVurdering) }} />
         </Alert>
-      </Box.New>
+      </Box>
     );
   }
   return null;

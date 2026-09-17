@@ -6,8 +6,8 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
+import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { prettifyDateString } from '@navikt/ft-utils';
 import * as messages from '../../nb_NO';
 
 export const teksterForSakstype = (sakstype?: FagsakYtelsesType) => {

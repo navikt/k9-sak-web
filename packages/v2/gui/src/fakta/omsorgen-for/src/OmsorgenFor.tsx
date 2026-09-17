@@ -1,64 +1,39 @@
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box, Heading } from '@navikt/ds-react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { type JSX } from 'react';
 import { IntlProvider } from 'react-intl';
-import type { OmsorgenForBackendApiType } from '../OmsorgenForBackendApiType';
+import { useOmsorgenForOptions } from '../api/OmsorgenForQueries.js';
 import styles from './omsorgenFor.module.css';
-import Omsorgsperiodeoversikt from './Omsorgsperiodeoversikt';
-import type { VurderingSubmitValues } from './types/VurderingSubmitValues';
-import { teksterForSakstype } from './util/utils';
+import Omsorgsperiodeoversikt from './Omsorgsperiodeoversikt.js';
+import type { VurderingSubmitValues } from './types/VurderingSubmitValues.js';
+import { teksterForSakstype } from './util/utils.js';
 
 interface MainComponentProps {
-  api: OmsorgenForBackendApiType;
   readOnly: boolean;
   onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => Promise<void>;
-  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   sakstype?: FagsakYtelsesType;
   behandlingUuid: string;
 }
 
-const OmsorgenFor = ({
-  api,
-  readOnly,
-  onFinished,
-  httpErrorHandler,
-  behandlingUuid,
-  sakstype,
-}: MainComponentProps): JSX.Element => {
-  const {
-    data: omsorgsperiodeoversikt,
-    isFetching: isLoading,
-    isError: omsorgsperiodeoversiktHarFeilet,
-  } = useQuery({
-    queryKey: ['omsorgsperiodeoversikt', behandlingUuid],
-    queryFn: () =>
-      api.getOmsorgsperioder(behandlingUuid).catch(error => {
-        httpErrorHandler(error.status, error.headers.get('Location'));
-        throw error;
-      }),
-  });
+const OmsorgenFor = ({ readOnly, onFinished, behandlingUuid, sakstype }: MainComponentProps): JSX.Element => {
+  const { data: omsorgsperiodeoversikt } = useSuspenseQuery(useOmsorgenForOptions(behandlingUuid));
 
   return (
     <IntlProvider locale="nb-NO" messages={teksterForSakstype(sakstype)}>
       <Heading size="medium" level="1">
         {sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}
       </Heading>
-      <Box.New marginBlock="6 0">
-        <PageContainer isLoading={isLoading} hasError={omsorgsperiodeoversiktHarFeilet}>
-          <div className={styles.mainComponent}>
-            {omsorgsperiodeoversikt && (
-              <Omsorgsperiodeoversikt
-                omsorgsperiodeoversikt={omsorgsperiodeoversikt}
-                sakstype={sakstype}
-                readOnly={readOnly}
-                onFinished={onFinished}
-              />
-            )}
-          </div>
-        </PageContainer>
-      </Box.New>
+      <Box marginBlock="space-6 space-0">
+        <div className={styles.mainComponent}>
+          <Omsorgsperiodeoversikt
+            omsorgsperiodeoversikt={omsorgsperiodeoversikt}
+            sakstype={sakstype}
+            readOnly={readOnly}
+            onFinished={onFinished}
+          />
+        </div>
+      </Box>
     </IntlProvider>
   );
 };

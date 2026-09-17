@@ -1,6 +1,7 @@
 import { k9_sak_kontrakt_omsorg_BarnRelasjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import Vurderingsresultat from '../../fakta/omsorgen-for/src/types/Vurderingsresultat';
-import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
+import type { OmsorgenForApi } from '../../fakta/omsorgen-for/api/OmsorgenForApi.js';
+import Vurderingsresultat from '../../fakta/omsorgen-for/src/types/Vurderingsresultat.js';
+import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
 const omsorgsperioder = [
   {
@@ -42,7 +43,7 @@ const omsorgsperioder = [
   },
 ];
 
-export class FakeOmsorgenForBackendApi {
+export class FakeOmsorgenForBackendApi implements OmsorgenForApi {
   async getOmsorgsperioder(behandlingUuid: string) {
     ignoreUnusedDeclared(behandlingUuid);
     return {

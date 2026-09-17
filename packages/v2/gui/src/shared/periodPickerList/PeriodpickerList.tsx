@@ -1,8 +1,9 @@
 import { HStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfFieldArray } from '@navikt/ft-form-hooks';
+import { RhfFieldArray } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { type JSX } from 'react';
 import { useFieldArray, useFormContext, type FieldPath } from 'react-hook-form';
+import Datovelger from '../datovelger/Datovelger.js';
 
 type PeriodField = { fom: string; tom: string };
 type PeriodListFormValues = { [key: string]: PeriodField[] };
@@ -34,10 +35,9 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
     >
       {(field, index, removeButton) => {
         return (
-          <HStack key={field.id} gap="space-16" paddingBlock="2">
-            <RhfDatepicker<PeriodListFormValues>
+          <HStack key={field.id} gap="space-16" paddingBlock="space-2">
+            <Datovelger
               name={`${name}.${index}.fom` as FieldPath<PeriodListFormValues>}
-              control={control}
               label={index === 0 ? 'Fra' : ''}
               validate={[
                 required,
@@ -48,12 +48,12 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
                 },
               ]}
               onChange={() => (isSubmitted ? trigger() : undefined)}
+              readOnly={readOnly}
               fromDate={fromDate ? new Date(fromDate) : undefined}
               toDate={toDate ? new Date(toDate) : undefined}
             />
-            <RhfDatepicker<PeriodListFormValues>
+            <Datovelger
               name={`${name}.${index}.tom` as FieldPath<PeriodListFormValues>}
-              control={control}
               label={index === 0 ? 'Til' : ''}
               validate={[
                 required,
@@ -64,6 +64,7 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
                 },
               ]}
               onChange={() => (isSubmitted ? trigger() : undefined)}
+              readOnly={readOnly}
               fromDate={fromDate ? new Date(fromDate) : undefined}
               toDate={toDate ? new Date(toDate) : undefined}
             />
