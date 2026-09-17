@@ -6,7 +6,6 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
  */
 const rootFeatureToggles = {
   BRUK_V2_TILKJENT_YTELSE: false,
-  BRUK_V2_UTENLANDSOPPHOLD: false,
   VIS_YTELSER_PANEL: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
@@ -24,6 +23,7 @@ const rootFeatureToggles = {
   SINGLE_AUTHFIXER: false,
   VIS_INNLEGGELSE_FOR_PILS: false,
   VIS_GLOBAL_ERRORMODAL: false,
+  DOKUMENTFILTER: false,
   BRUK_V2_ARBEID_OG_INNTEKT: false,
   FORENKLE_OMS_VEDTAK_STATUS: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
