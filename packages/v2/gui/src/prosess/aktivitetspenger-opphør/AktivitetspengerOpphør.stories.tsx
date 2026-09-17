@@ -289,13 +289,6 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
-    await step('Velg opphørsårsak', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: /opphørsårsak/i }),
-        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
-      );
-    });
-
     await step('Fyll inn begrunnelse', async () => {
       await userEvent.type(
         canvas.getByRole('textbox', { name: /vurder om bruker har flyttet/i }),
@@ -340,13 +333,6 @@ export const VilkårsvurderingFlyttetMedFritekst: Story = {
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
-    await step('Velg opphørsårsak', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: /opphørsårsak/i }),
-        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
-      );
-    });
-
     await step('Fyll inn begrunnelse', async () => {
       await userEvent.type(
         canvas.getByRole('textbox', { name: /vurder om bruker har flyttet/i }),
