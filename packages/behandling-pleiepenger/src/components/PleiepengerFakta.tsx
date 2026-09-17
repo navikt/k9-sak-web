@@ -147,6 +147,7 @@ const PleiepengerFakta = ({
               {valgtPanel.getPanelDef().getKomponent({
                 ...faktaData,
                 ...faktaDataUtenCaching,
+                fagsak,
                 behandling,
                 alleKodeverk,
                 featureToggles,

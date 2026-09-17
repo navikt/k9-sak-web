@@ -152,6 +152,7 @@ const OpplaeringspengerFakta = ({
               {valgtPanel.getPanelDef().getKomponent({
                 ...faktaData,
                 ...faktaDataUtenCaching,
+                fagsak,
                 behandling,
                 alleKodeverk,
                 featureToggles,
