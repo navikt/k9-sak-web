@@ -17,6 +17,7 @@ import {
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
+import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
@@ -51,7 +52,11 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   }
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {
-    return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } })).data;
+    // TODO(TSFF-3050): oppfølgingen på ung-sak#1603 (nytt `resultater`-felt per vilkårsperiode)
+    // er ikke sluppet ennå, så den genererte SDK-typen har fortsatt forrige kontraktform.
+    // Fjern denne casten når @navikt/ung-sak-typescript-client er oppdatert med de nye typene.
+    return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } }))
+      .data as unknown as ForutgåendeMedlemskapResponse;
   }
 
   async hentBostedGrunnlag(behandlingUuid: string) {

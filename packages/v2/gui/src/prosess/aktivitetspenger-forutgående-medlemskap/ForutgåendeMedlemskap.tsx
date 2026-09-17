@@ -1,11 +1,10 @@
-import type { UngSakVilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
-import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/UtenlandsoppholdDto.js';
+import type { MedlemskapPeriodeResultatDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeResultatDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
@@ -16,7 +15,6 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
-import { byggVisningsperioder } from '../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 interface Props {
@@ -25,8 +23,7 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
-  forutgåendeMedlemskap: UtenlandsoppholdDto[];
-  vilkår: UngSakVilkårMedPerioderDto;
+  resultater: MedlemskapPeriodeResultatDto[];
   isPermanentlyReadOnly: boolean;
 }
 
@@ -42,10 +39,8 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (vilkår: UngSakVilkårMedPerioderDto): FormData => ({
-  vurderinger: Object.fromEntries(
-    (vilkår.perioder ?? []).map(p => [p.periode.fom, utfallTilVurdering(p.vilkarStatus)]),
-  ),
+const buildInitialValues = (resultater: MedlemskapPeriodeResultatDto[]): FormData => ({
+  vurderinger: Object.fromEntries(resultater.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
 });
 
 export const ForutgåendeMedlemskap = ({
@@ -53,25 +48,28 @@ export const ForutgåendeMedlemskap = ({
   api,
   behandling,
   readOnly,
-  vilkår,
-  forutgåendeMedlemskap,
+  resultater,
   onAksjonspunktBekreftet,
   isPermanentlyReadOnly,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
-  const visningsperioder = byggVisningsperioder(vilkår, []);
-  const periods: VilkårSplittPanelPeriod[] = visningsperioder.map(p => ({
-    id: p.periode.fom,
-    status: getPeriodStatus(p.vilkarStatus),
-    label: `${formatDate(p.periode.fom)}${p.visTom ? ` - ${formatDate(p.periode.tom)}` : ''}`,
-    periode: p.periode,
-  }));
+  const sorterteResultater = [...resultater].sort(
+    (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
+  );
+  const periods: VilkårSplittPanelPeriod[] = sorterteResultater.map((resultat, index) => {
+    const nesteResultat = sorterteResultater[index + 1];
+    const visTom = !!nesteResultat && nesteResultat.utfall !== Utfall.IKKE_VURDERT;
+    return {
+      id: resultat.periode.fom,
+      status: getPeriodStatus(resultat.utfall),
+      label: `${formatDate(resultat.periode.fom)}${visTom ? ` - ${formatDate(resultat.periode.tom)}` : ''}`,
+      periode: resultat.periode,
+    };
+  });
 
   const [selectedItemId, setSelectedItemId] = useState(
     () =>
-      vilkår.perioder?.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
-      '',
+      sorterteResultater.find(resultat => resultat.utfall === Utfall.IKKE_VURDERT)?.periode.fom ?? periods[0]?.id ?? '',
   );
 
   useEffect(() => {
@@ -80,8 +78,11 @@ export const ForutgåendeMedlemskap = ({
     }
   }, [periods, selectedItemId]);
 
+  const valgtResultat = sorterteResultater.find(resultat => resultat.periode.fom === selectedItemId);
+  const utenlandsopphold = valgtResultat?.medlemskapFraBruker?.utenlandsopphold ?? [];
+
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(vilkår),
+    defaultValues: buildInitialValues(sorterteResultater),
   });
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
@@ -105,11 +106,11 @@ export const ForutgåendeMedlemskap = ({
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
 
-  if (!aksjonspunkt && !vilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)) {
+  if (!aksjonspunkt && !sorterteResultater.some(r => r.utfall !== Utfall.IKKE_VURDERT)) {
     return <ProsessStegIkkeBehandlet />;
   }
 
-  if (vilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+  if (sorterteResultater.length === 0) {
     return (
       <Box width="fit-content">
         <Alert variant="info" size="small">
@@ -136,13 +137,13 @@ export const ForutgåendeMedlemskap = ({
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             <VStack gap="space-16">
               {!isFormLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
-              {forutgåendeMedlemskap.length > 0 && (
+              {utenlandsopphold.length > 0 && (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
                     Utenlandsopphold siste 5 år
                   </Label>
                   <HGrid columns="max-content" gap="space-8" align="center">
-                    {forutgåendeMedlemskap.map(medlemskap => {
+                    {utenlandsopphold.map(medlemskap => {
                       if (!medlemskap.periode) {
                         return null;
                       }
