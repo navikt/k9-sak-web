@@ -12,7 +12,7 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -26,13 +26,11 @@ import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
 import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { BostedsvilkårIkkeOppfyltÅrsak, opphørsårsakLabels } from '../aktivitetspenger-prosess/types.js';
 
 interface FormData {
   perioder: Record<
     string,
     {
-      årsak: BostedsvilkårIkkeOppfyltÅrsak | '';
       begrunnelse: string;
       flyttetFraTrondheim: string;
       fritekstVurderingBrev: string;
@@ -45,7 +43,6 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
     (bostedGrunnlag.perioder ?? []).map(p => [
       p.fom,
       {
-        årsak: p.resultat?.ikkeOppfyltÅrsak ?? '',
         begrunnelse: p.resultat?.begrunnelse ?? '',
         flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : p.resultat?.erBosatt === true ? 'nei' : '',
         fritekstVurderingBrev: p.resultat?.friteksttilBrev ?? '',
@@ -104,7 +101,6 @@ export const Vilkaarsvurdering = ({
         begrunnelse: selectedFormPeriod.begrunnelse,
         vurdertePerioder: [
           {
-            avslagsårsak: selectedFormPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
             begrunnelse: selectedFormPeriod.begrunnelse,
             erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
             periode: {
@@ -211,25 +207,6 @@ export const Vilkaarsvurdering = ({
                   </VStack>
                 </Box>
               )}
-              <RhfSelect
-                control={formHook.control}
-                name={`perioder.${selectedId}.årsak`}
-                label="Opphørsårsak"
-                readOnly={isFormLocked}
-                validate={[required]}
-                selectValues={Object.values(BostedsvilkårIkkeOppfyltÅrsak)
-                  .filter(
-                    årsak =>
-                      årsak === BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM ||
-                      årsak === BostedsvilkårIkkeOppfyltÅrsak.STUDIE_ELLER_ARBEIDSSTED_UTENFOR_TRONDHEIM ||
-                      årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
-                  )
-                  .map(årsak => (
-                    <option key={årsak} value={årsak}>
-                      {opphørsårsakLabels[årsak]}
-                    </option>
-                  ))}
-              />
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
