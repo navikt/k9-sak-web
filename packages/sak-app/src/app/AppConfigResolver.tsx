@@ -30,6 +30,8 @@ import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiConte
 import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
+import { DokumenterApiContext } from '@k9-sak-web/gui/sak/dokumenter/api/DokumenterApiContext.js';
+import { K9DokumenterBackendClient } from '@k9-sak-web/gui/sak/dokumenter/api/K9DokumenterBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
 import { InnloggetAnsattProvider } from '@k9-sak-web/gui/saksbehandler/InnloggetAnsattProvider.js';
@@ -88,25 +90,27 @@ const AppConfigResolver = ({ children }: OwnProps) => {
             <KlageVurderingApiContext value={new K9KlageVurderingBackendClient(formidlingClient)}>
               <VedtakKlageApiContext value={new K9KlageVedtakKlageBackendClient(formidlingClient)}>
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
-                  <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
-                    <NyInntektApiContext value={new K9NyInntektBackendClient()}>
-                      <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
-                        <YtelserApiContext value={new K9YtelserBackendClient()}>
-                          <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
-                            <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
-                              <UttakApiContext value={new BehandlingUttakBackendClient()}>
-                                <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
-                                  <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
-                                    {harFeilet || erFerdig ? children : <LoadingPanel />}
-                                  </ArbeidOgInntektApiContext>
-                                </NotatBackendClientContext>
-                              </UttakApiContext>
-                            </TiDagerBackendClientContext>
-                          </AvregningBackendClientContext>
-                        </YtelserApiContext>
-                      </UtenlandsoppholdApiContext>
-                    </NyInntektApiContext>
-                  </SykdomOgOpplæringBackendClientContext>
+                  <DokumenterApiContext value={new K9DokumenterBackendClient()}>
+                    <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
+                      <NyInntektApiContext value={new K9NyInntektBackendClient()}>
+                        <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                          <YtelserApiContext value={new K9YtelserBackendClient()}>
+                            <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
+                              <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
+                                <UttakApiContext value={new BehandlingUttakBackendClient()}>
+                                  <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
+                                    <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
+                                      {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                    </ArbeidOgInntektApiContext>
+                                  </NotatBackendClientContext>
+                                </UttakApiContext>
+                              </TiDagerBackendClientContext>
+                            </AvregningBackendClientContext>
+                          </YtelserApiContext>
+                        </UtenlandsoppholdApiContext>
+                      </NyInntektApiContext>
+                    </SykdomOgOpplæringBackendClientContext>
+                  </DokumenterApiContext>
                 </InntektsmeldingApiContext>
               </VedtakKlageApiContext>
             </KlageVurderingApiContext>

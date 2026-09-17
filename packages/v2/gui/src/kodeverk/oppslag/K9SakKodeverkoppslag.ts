@@ -13,7 +13,6 @@ import {
 type EnumKodeverdierOppslag = Omit<
   AlleKodeverdierSomObjektResponse,
   | 'avslagårsakerPrVilkårTypeKode'
-  | 'dokumentFilterGrupper'
   | 'landkoder'
   | 'språkkoder'
   // Midlertidig utelatt inntil dei er fjerna frå serverdefinisjon:
@@ -226,6 +225,13 @@ export class K9SakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements
 
   vurderingsÅrsaker<U extends OrUndefined = undefined>(kode: Kilde<EO, 'vurderingsÅrsaker'>, undefinedIfNotFound?: U) {
     return this.finnObjektFraKilde('vurderingsÅrsaker', kode, undefinedIfNotFound);
+  }
+
+  dokumentFilterGrupper<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'dokumentFilterGrupper'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('dokumentFilterGrupper', kode, undefinedIfNotFound);
   }
 
   årsakerTilVurdering<U extends OrUndefined = undefined>(
