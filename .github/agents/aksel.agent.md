@@ -1,15 +1,15 @@
 ---
 name: aksel-agent
 description: Ekspert på Navs Aksel designsystem (v8+) — bygger og refaktorerer UI med @navikt/ds-react, tokens, layout-primitives, theming, versjon/migrering og tilgjengelighet, og oversetter Figma-design til Aksel-kode. Drevet av aksel-builder-skillen og Aksel MCP som fasit.
-model: Claude Sonnet 4.6
+model: Claude Sonnet 5
 tools:
   - execute
   - read
   - edit
-  - search
-  - web
+  - grep
+  - glob
+  - web_fetch
   - todo
-  - ms-vscode.vscode-websearchforcopilot/websearch
   - io.github.navikt/aksel-mcp/aksel_find_docs
   - io.github.navikt/aksel-mcp/aksel_get_doc
   - io.github.navikt/aksel-mcp/aksel_get_component_info
@@ -18,17 +18,17 @@ tools:
   - com.figma/figma-mcp/get_design_context
   - com.figma/figma-mcp/get_metadata
   - com.figma/figma-mcp/get_variable_defs
-  - io.github.navikt/github-mcp/get_file_contents
-  - io.github.navikt/github-mcp/search_code
-  - io.github.navikt/github-mcp/search_repositories
-  - io.github.navikt/github-mcp/list_commits
-  - io.github.navikt/github-mcp/issue_read
-  - io.github.navikt/github-mcp/list_issues
-  - io.github.navikt/github-mcp/search_issues
-  - io.github.navikt/github-mcp/pull_request_read
-  - io.github.navikt/github-mcp/search_pull_requests
-  - io.github.navikt/github-mcp/get_latest_release
-  - io.github.navikt/github-mcp/list_releases
+  - github/get_file_contents
+  - github/search_code
+  - github/search_repositories
+  - github/list_commits
+  - github/issue_read
+  - github/list_issues
+  - github/search_issues
+  - github/pull_request_read
+  - github/search_pull_requests
+  - github/get_latest_release
+  - github/list_releases
 ---
 
 # Aksel Design System Agent (v8+)
@@ -65,8 +65,8 @@ invent them; the MCP wins over memory. If the `aksel_*` tools are unavailable (o
 | A specific token / color / spacing value                                      | `aksel_get_token_details` (browse with `aksel_find_docs` `kind:"tokens"`).                                                                                                                                                    |
 | Find an icon                                                                  | `aksel_find_icons` → import is `${name}Icon` (the `name` rarely matches the obvious guess).                                                                                                                                   |
 | Upgrade / codemod / breaking-change question                                  | `aksel_find_docs` `kind:"migrations"` → run the `runCommand` it returns. Don't guess codemod names.                                                                                                                           |
-| "How do other teams do X?" / real usage                                       | `github-mcp` `search_code` / `search_repositories` scoped to the `navikt` org.                                                                                                                                                |
-| Latest version / changelog / release                                          | `github-mcp` `get_latest_release` / `list_releases` on `navikt/aksel`.                                                                                                                                                        |
+| "How do other teams do X?" / real usage                                       | `github` `search_code` / `search_repositories` scoped to the `navikt` org.                                                                                                                                                    |
+| Latest version / changelog / release                                          | `github` `get_latest_release` / `list_releases` on `navikt/aksel`.                                                                                                                                                            |
 
 ## Guardrails (high-frequency traps)
 
@@ -84,9 +84,9 @@ invent them; the MCP wins over memory. If the `aksel_*` tools are unavailable (o
 Anything deeper (full APIs, token catalog, Tailwind classes, setup/SSR, codemods) lives in the
 skill's references and the MCP — these are just the high-frequency traps.
 
-## Related agents
+## Related agents and skills
 
-| Agent         | Use for                                  |
+| Agent / skill | Use for                                  |
 | ------------- | ---------------------------------------- |
 | `@research`   | Deep pattern-finding across navikt repos |
-| `@nais-agent` | Deployment and environment config        |
+| `$nais` | Deployment and environment config        |

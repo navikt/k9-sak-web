@@ -95,6 +95,6 @@ describe("MetricCard", () => {
 ## Run Tests
 
 ```bash
-yarn test
-yarn test --coverage
+pnpm test
+pnpm test --coverage
 ```
