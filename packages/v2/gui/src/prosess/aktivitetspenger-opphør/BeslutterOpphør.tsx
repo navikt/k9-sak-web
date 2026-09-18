@@ -45,7 +45,7 @@ const AKSJONSPUNKT_GODKJENNING_FIELD = 'aksjonspunktGodkjenning' as const;
 
 const aksjonspunktKodeToTab: Record<string, OpphørTab | undefined> = {
   [AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED]: OpphørTab.ÅRSAK_OG_VARSEL,
-  [AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR]: OpphørTab.VILKÅRSVURDERING,
+  [AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR]: OpphørTab.VILKÅRSVURDERING,
 };
 
 const tabSortOrder: OpphørTab[] = [OpphørTab.ÅRSAK_OG_VARSEL, OpphørTab.VILKÅRSVURDERING];
@@ -60,7 +60,7 @@ const formaterSkjermlenkeType = (aksjonspunktKode?: string): string => {
   switch (aksjonspunktKode) {
     case AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED:
       return 'Årsak og varsel';
-    case AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR:
+    case AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR:
       return 'Vilkårsvurdering';
     default:
       return aksjonspunktKode ?? '';
