@@ -2,7 +2,7 @@ import type { ung_sak_typer_Periode } from '@k9-sak-web/backend/ungsak/generated
 import type { UtenlandsoppholdDto } from './UtenlandsoppholdDto.js';
 
 /**
- * TODO(TSFF-3050): Midlertidig, håndskrevet type. ung-sak#1603-oppfølgingen (nytt `resultater`-felt
+ * TODO(TSFF-3050): Midlertidig, håndskrevet type. ung-sak#1603-oppfølgingen (nytt `perioder`-felt
  * på ForutgåendeMedlemskapResponse) er ikke sluppet ennå, så @navikt/ung-sak-typescript-client
  * mangler denne formen. Erstatt med generert re-eksport når kontrakten er publisert.
  * Kilde: kontrakt/src/main/java/no/nav/ung/sak/kontrakt/vilkår/medlemskap/MedlemskapDto.java

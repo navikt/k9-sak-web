@@ -52,7 +52,7 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   }
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {
-    // TODO(TSFF-3050): oppfølgingen på ung-sak#1603 (nytt `resultater`-felt per vilkårsperiode)
+    // TODO(TSFF-3050): oppfølgingen på ung-sak#1603 (nytt `perioder`-felt per vilkårsperiode)
     // er ikke sluppet ennå, så den genererte SDK-typen har fortsatt forrige kontraktform.
     // Fjern denne casten når @navikt/ung-sak-typescript-client er oppdatert med de nye typene.
     return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } }))

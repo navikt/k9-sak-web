@@ -4,7 +4,7 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
-import type { MedlemskapPeriodeResultatDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeResultatDto.js';
+import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
@@ -23,7 +23,7 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
-  resultater: MedlemskapPeriodeResultatDto[];
+  perioder: MedlemskapPeriodeInfoDto[];
   isPermanentlyReadOnly: boolean;
 }
 
@@ -39,8 +39,8 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (resultater: MedlemskapPeriodeResultatDto[]): FormData => ({
-  vurderinger: Object.fromEntries(resultater.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
+const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
+  vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
 });
 
 export const ForutgåendeMedlemskap = ({
@@ -48,28 +48,30 @@ export const ForutgåendeMedlemskap = ({
   api,
   behandling,
   readOnly,
-  resultater,
+  perioder,
   onAksjonspunktBekreftet,
   isPermanentlyReadOnly,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
-  const sorterteResultater = [...resultater].sort(
+  const sortertePerioder = [...perioder].sort(
     (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
   );
-  const periods: VilkårSplittPanelPeriod[] = sorterteResultater.map((resultat, index) => {
-    const nesteResultat = sorterteResultater[index + 1];
-    const visTom = !!nesteResultat && nesteResultat.utfall !== Utfall.IKKE_VURDERT;
+  const periods: VilkårSplittPanelPeriod[] = sortertePerioder.map((periodeInfo, index) => {
+    const nestePeriodeInfo = sortertePerioder[index + 1];
+    const visTom = !!nestePeriodeInfo && nestePeriodeInfo.utfall !== Utfall.IKKE_VURDERT;
     return {
-      id: resultat.periode.fom,
-      status: getPeriodStatus(resultat.utfall),
-      label: `${formatDate(resultat.periode.fom)}${visTom ? ` - ${formatDate(resultat.periode.tom)}` : ''}`,
-      periode: resultat.periode,
+      id: periodeInfo.periode.fom,
+      status: getPeriodStatus(periodeInfo.utfall),
+      label: `${formatDate(periodeInfo.periode.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode.tom)}` : ''}`,
+      periode: periodeInfo.periode,
     };
   });
 
   const [selectedItemId, setSelectedItemId] = useState(
     () =>
-      sorterteResultater.find(resultat => resultat.utfall === Utfall.IKKE_VURDERT)?.periode.fom ?? periods[0]?.id ?? '',
+      sortertePerioder.find(periodeInfo => periodeInfo.utfall === Utfall.IKKE_VURDERT)?.periode.fom ??
+      periods[0]?.id ??
+      '',
   );
 
   useEffect(() => {
@@ -78,8 +80,8 @@ export const ForutgåendeMedlemskap = ({
     }
   }, [periods, selectedItemId]);
 
-  const valgtResultat = sorterteResultater.find(resultat => resultat.periode.fom === selectedItemId);
-  const medlemskapFraBruker = valgtResultat?.medlemskapFraBruker;
+  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode.fom === selectedItemId);
+  const medlemskapFraBruker = valgtPeriodeInfo?.medlemskapFraBruker;
   const utenlandsopphold = medlemskapFraBruker?.utenlandsopphold ?? [];
 
   const søknadsopplysninger: { label: string; value: boolean }[] = medlemskapFraBruker
@@ -95,7 +97,7 @@ export const ForutgåendeMedlemskap = ({
     : [];
 
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(sorterteResultater),
+    defaultValues: buildInitialValues(sortertePerioder),
   });
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
@@ -119,11 +121,11 @@ export const ForutgåendeMedlemskap = ({
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
 
-  if (!aksjonspunkt && !sorterteResultater.some(r => r.utfall !== Utfall.IKKE_VURDERT)) {
+  if (!aksjonspunkt && !sortertePerioder.some(r => r.utfall !== Utfall.IKKE_VURDERT)) {
     return <ProsessStegIkkeBehandlet />;
   }
 
-  if (sorterteResultater.length === 0) {
+  if (sortertePerioder.length === 0) {
     return (
       <Box width="fit-content">
         <Alert variant="info" size="small">

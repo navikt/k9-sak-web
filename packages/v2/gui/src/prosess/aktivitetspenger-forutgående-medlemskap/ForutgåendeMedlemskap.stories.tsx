@@ -2,7 +2,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
-import type { MedlemskapPeriodeResultatDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeResultatDto.js';
+import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { fakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ForutgåendeMedlemskap } from './ForutgåendeMedlemskap';
@@ -15,7 +15,7 @@ const fakeBehandling = {
 // Vilkårsperioden (`periode`) er fremover i tid, mens `forutgåendePeriode` og utenlandsoppholdene i
 // `medlemskapFraBruker` ligger bakover i tid — de overlapper bevisst ikke i disse eksemplene for å
 // synliggjøre at det er to ulike tidslinjer.
-const lagResultat = (
+const lagPeriodeInfo = (
   periode: { fom: string; tom: string },
   utfall: Utfall,
   land: string,
@@ -24,7 +24,7 @@ const lagResultat = (
   harJobbetUtenforNorge: boolean | null = false,
   utenlandskNasjonalId: string | null = null,
   harTrygdeavtale = true,
-): MedlemskapPeriodeResultatDto => ({
+): MedlemskapPeriodeInfoDto => ({
   periode,
   utfall,
   avslagsårsak: utfall === Utfall.IKKE_OPPFYLT ? MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM : null,
@@ -65,9 +65,9 @@ const meta = {
     onAksjonspunktBekreftet: () => {},
     aksjonspunkt: { definisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP },
     readOnly: false,
-    resultater: [
-      lagResultat(periode1, Utfall.IKKE_VURDERT, 'Sverige', 'SWE', forutgåendePeriode1, false, '198501011234', true),
-      lagResultat(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2, null, null, false),
+    perioder: [
+      lagPeriodeInfo(periode1, Utfall.IKKE_VURDERT, 'Sverige', 'SWE', forutgåendePeriode1, false, '198501011234', true),
+      lagPeriodeInfo(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2, null, null, false),
     ],
     isPermanentlyReadOnly: false,
   },
@@ -80,27 +80,27 @@ export const IkkeVurdert: Story = {};
 
 export const DelvisVurdert: Story = {
   args: {
-    resultater: [
-      lagResultat(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
-      lagResultat(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2),
+    perioder: [
+      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
+      lagPeriodeInfo(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2),
     ],
   },
 };
 
 export const AlleOppfylt: Story = {
   args: {
-    resultater: [
-      lagResultat(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
-      lagResultat(periode2, Utfall.OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
+    perioder: [
+      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
+      lagPeriodeInfo(periode2, Utfall.OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
     ],
   },
 };
 
 export const MedAvslag: Story = {
   args: {
-    resultater: [
-      lagResultat(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
-      lagResultat(periode2, Utfall.IKKE_OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
+    perioder: [
+      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
+      lagPeriodeInfo(periode2, Utfall.IKKE_OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
     ],
   },
 };
@@ -108,9 +108,9 @@ export const MedAvslag: Story = {
 export const ReadOnly: Story = {
   args: {
     readOnly: true,
-    resultater: [
-      lagResultat(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
-      lagResultat(periode2, Utfall.IKKE_OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
+    perioder: [
+      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
+      lagPeriodeInfo(periode2, Utfall.IKKE_OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
     ],
   },
 };

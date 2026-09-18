@@ -24,13 +24,13 @@ interface Props {
 
 export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
-  const [{ data: aksjonspunkter = [] }, { data: resultater }, { data: innloggetBruker }] = useSuspenseQueries({
+  const [{ data: aksjonspunkter = [] }, { data: perioder }, { data: innloggetBruker }] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(api, behandling),
       {
         queryKey: ['forutgåendeMedlemskap', behandling.uuid, api.backend],
         queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
-        select: (data: ForutgåendeMedlemskapResponse) => data.resultater ?? [],
+        select: (data: ForutgåendeMedlemskapResponse) => data.perioder ?? [],
       },
       innloggetBrukerQueryOptions(api),
     ],
@@ -58,7 +58,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
       api={api}
       aksjonspunkt={aksjonspunkt}
       readOnly={isReadOnly}
-      resultater={resultater}
+      perioder={perioder}
       behandling={behandling}
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
       isPermanentlyReadOnly={harBeslutterAksjonspunkt}
