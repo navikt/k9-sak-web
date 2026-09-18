@@ -98,7 +98,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
             </HStack>
             <div className={styles.sakerGrid}>
               {andreFagsakerPåSøker.map(fagsak => {
-                const erHistorisk = fagsak.status === fagsakStatus.AVSLUTTET;
+                const erHistorisk = fagsak.status === fagsakStatus.HISTORISK;
                 return (
                   <React.Fragment key={fagsak.saksnummer}>
                     {erHistorisk ? (
