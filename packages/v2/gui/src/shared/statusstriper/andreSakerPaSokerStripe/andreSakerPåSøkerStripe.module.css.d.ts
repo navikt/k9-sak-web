@@ -6,16 +6,16 @@
  * https://npmjs.com/vite-css-modules
  */
 
-declare const sakerGrid: string;
-declare const historisk: string;
+declare const fagsakLenke: string;
+declare const fagsakLenkeContainer: string;
 
 export {
-	sakerGrid,
-	historisk
+	fagsakLenke,
+	fagsakLenkeContainer
 };
 
 declare const __default_export__: {
-	sakerGrid: typeof sakerGrid;
-	historisk: typeof historisk;
+	fagsakLenke: typeof fagsakLenke;
+	fagsakLenkeContainer: typeof fagsakLenkeContainer;
 };
 export default __default_export__;
