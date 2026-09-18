@@ -72,7 +72,7 @@ const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytel
     begrunnelse: 'Løser aksjonspunkt VURDER_ANDRE_LIVSOPPHOLDSYTELSER',
     vurdertePerioder: [
       {
-        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE,
+        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
         begrunnelse: selectedPeriod.livsoppholdytelse,
         erVilkårOppfylt: false,
         periode: {
@@ -86,7 +86,7 @@ const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytel
 };
 
 interface Props {
-  vurderAndreLivsoppholdytelserAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
   andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
@@ -96,7 +96,7 @@ interface Props {
 }
 
 export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
-  vurderAndreLivsoppholdytelserAP,
+  vurderAndreLivsoppholdytelserFaktaAP,
   andreLivsoppholdytelserVilkår,
   api,
   behandling,
@@ -105,7 +105,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   isPermanentlyReadOnly,
 }: Props) => {
   const periods = getOpphørPeriods({
-    aksjonspunkt: vurderAndreLivsoppholdytelserAP,
+    aksjonspunkt: vurderAndreLivsoppholdytelserFaktaAP,
     perioder: (andreLivsoppholdytelserVilkår.perioder ?? []).map(periode => ({
       fom: periode.periode.fom,
       tom: periode.periode.tom,
@@ -128,7 +128,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   const valgtKilde = watchValue(`perioder.${selectedId}.kilde`);
   const skalSendeVarselOmOpphør = formHook.watch(`perioder.${selectedId}.skalSendeVarselOmOpphør`);
   const valgtYtelse = watchValue(`perioder.${selectedId}.ytelse`);
-  const isSolved = vurderAndreLivsoppholdytelserAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.UTFØRT;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: AndreLivsoppholdytelserFormData) => {
@@ -161,7 +161,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderAndreLivsoppholdytelserAP && (
+      {!isSolved && vurderAndreLivsoppholdytelserFaktaAP && (
         <Alert variant="warning" size="small">
           Vurder årsak til opphør og om bruker skal varsles.
         </Alert>
@@ -178,7 +178,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={
-          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserAP?.ansvarligSaksbehandler} /> : undefined
+          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserFaktaAP?.ansvarligSaksbehandler} /> : undefined
         }
       >
         {(isFormLocked, setIsFormLocked) => (

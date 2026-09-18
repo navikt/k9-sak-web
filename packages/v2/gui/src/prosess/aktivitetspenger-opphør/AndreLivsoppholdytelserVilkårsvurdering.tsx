@@ -6,7 +6,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -34,7 +34,7 @@ interface FormData {
 }
 
 interface Props {
-  vurderAndreLivsoppholdytelserAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
@@ -79,14 +79,14 @@ const buildPayload = ({ formData, selectedId }: { formData: FormData; selectedId
 
   const erVilkårOppfylt = selectedPeriod.andreLivsoppholdytelser === 'ja';
   return {
-    '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+    '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
     begrunnelse: selectedPeriod.begrunnelse,
     vurdertePerioder: [
       {
         avslagsårsak: erVilkårOppfylt
           ? undefined
           : selectedPeriod.avslagsårsak === 'fritekst'
-            ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE
+            ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
             : selectedPeriod.avslagsårsak || undefined,
         begrunnelse: selectedPeriod.begrunnelse,
         erVilkårOppfylt,
@@ -98,7 +98,7 @@ const buildPayload = ({ formData, selectedId }: { formData: FormData; selectedId
 };
 
 export const AndreLivsoppholdytelserVilkårsvurdering = ({
-  vurderAndreLivsoppholdytelserAP,
+  vurderAndreLivsoppholdytelserFaktaAP,
   lokalkontorForeslårVilkårAP,
   andreLivsoppholdytelserVilkår,
   api,
@@ -114,7 +114,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     control: formHook.control,
     name: `perioder.${selectedId}.andreLivsoppholdytelser`,
   });
-  const isSolved = vurderAndreLivsoppholdytelserAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
   const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
@@ -134,7 +134,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderAndreLivsoppholdytelserAP && (
+      {!isSolved && vurderAndreLivsoppholdytelserFaktaAP && (
         <Alert variant="warning" size="small">
           Vurder om søker mottar andre livsoppholdsytelser.
         </Alert>
@@ -150,14 +150,28 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
         readOnly={readOnly || selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error'}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={
-          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserAP?.ansvarligSaksbehandler} /> : undefined
+          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserFaktaAP?.ansvarligSaksbehandler} /> : undefined
         }
         afterEditButton={
           erLokalkontorForeslårAPÅpent ? (
-            <Button size="small" loading={isSendingTilBeslutter} onClick={() => void sendTilBeslutterMutation()}>
-              Send til beslutter
-            </Button>
-          ) : undefined
+            <VStack gap="space-20">
+              <Alert variant="success" size="small">
+                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+              </Alert>
+              <Box>
+                <Button
+                  variant="primary"
+                  data-color="accent"
+                  size="small"
+                  type="button"
+                  loading={isSendingTilBeslutter}
+                  onClick={() => void sendTilBeslutterMutation()}
+                >
+                  Send til beslutter
+                </Button>
+              </Box>
+            </VStack>
+          ) : null
         }
       >
         {(isFormLocked, setIsFormLocked) => (

@@ -125,7 +125,7 @@ const fakeArgsBase = {
 const fakeAndreLivsoppholdytelserVilkårArgsBase = {
   ...fakeArgsBase,
   vilkår: [fakeAndreLivsoppholdytelserVilkår],
-  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER)],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
   api: Object.assign(Object.create(fakeAktivitetspengerApi), {
     bekreftAksjonspunkt: fn(),
   }) as AktivitetspengerApi,
@@ -313,7 +313,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 const fakeAndreLivsoppholdytelserArgsBase = {
   ...fakeArgsBase,
   vilkår: [fakeAndreLivsoppholdytelserVilkår],
-  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER)],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
   onAksjonspunktBekreftet: fn(),
 };
 
@@ -399,12 +399,12 @@ export const AndreLivsoppholdytelserVilkårsvurdering: Story = {
 
     await step('Fyll inn vurderingens begrunnelse', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /vurder om søker mottar andre livsoppholdsytelser/i }),
-        'Søker mottar arbeidsavklaringspenger.',
+        canvas.getByRole('textbox', { name: /vurder om bruker mottar annen livoppholdsytelse/i }),
+        'Bruker mottar arbeidsavklaringspenger.',
       );
     });
 
-    await step('Velg at søker mottar annen livsoppholdytelse', async () => {
+    await step('Velg at bruker mottar annen livsoppholdsytelse', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
     });
 
@@ -429,7 +429,7 @@ export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
   args: {
     ...fakeAndreLivsoppholdytelserVilkårArgsBase,
     aksjonspunkter: [
-      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER, AksjonspunktStatus.UTFØRT),
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER, AksjonspunktStatus.UTFØRT),
     ],
   },
   play: async ({ canvas, step }) => {

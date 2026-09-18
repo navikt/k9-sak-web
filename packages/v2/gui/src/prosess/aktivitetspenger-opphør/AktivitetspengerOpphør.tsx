@@ -24,7 +24,7 @@ import { OpphørTab } from './types.js';
 
 interface OpphørData {
   vurderBostedFaktaAP?: AksjonspunktDto;
-  vurderAndreLivsoppholdytelserAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
   vurderBostedVilkårAP?: AksjonspunktDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   lokalkontorBeslutterAP?: AksjonspunktDto;
@@ -34,8 +34,8 @@ interface OpphørData {
 
 const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
   vurderBostedFaktaAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-  vurderAndreLivsoppholdytelserAP: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+  vurderAndreLivsoppholdytelserFaktaAP: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER,
   ),
   vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
@@ -69,7 +69,7 @@ export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.vurderBostedFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
   }
-  if (data.vurderAndreLivsoppholdytelserAP?.status === AksjonspunktStatus.OPPRETTET) {
+  if (data.vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
   }
   if (data.vurderBostedVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
@@ -116,7 +116,7 @@ export const AktivitetspengerOpphør = ({
 
   const {
     vurderBostedFaktaAP,
-    vurderAndreLivsoppholdytelserAP,
+    vurderAndreLivsoppholdytelserFaktaAP,
     vurderBostedVilkårAP,
     lokalkontorForeslårVilkårAP,
     lokalkontorBeslutterAP,
@@ -124,7 +124,7 @@ export const AktivitetspengerOpphør = ({
     andreLivsoppholdytelserVilkår,
   } = opphørData;
   const vilkårsvurderingAPForTab =
-    lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP ?? vurderAndreLivsoppholdytelserAP;
+    lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP ?? vurderAndreLivsoppholdytelserFaktaAP;
   const harBeslutterAP = !!lokalkontorBeslutterAP;
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
@@ -145,7 +145,7 @@ export const AktivitetspengerOpphør = ({
             value={OpphørTab.ÅRSAK_OG_VARSEL}
             label="Årsak og varsel"
             icon={tabIcon(
-              vurderBostedFaktaAP ?? vurderAndreLivsoppholdytelserAP,
+              vurderBostedFaktaAP ?? vurderAndreLivsoppholdytelserFaktaAP,
               bostedVilkår ?? andreLivsoppholdytelserVilkår,
             )}
           />
@@ -178,7 +178,7 @@ export const AktivitetspengerOpphør = ({
             )}
             {!bostedVilkår && andreLivsoppholdytelserVilkår && (
               <AndreLivsoppholdytelserÅrsakOgVarsel
-                vurderAndreLivsoppholdytelserAP={vurderAndreLivsoppholdytelserAP}
+                vurderAndreLivsoppholdytelserFaktaAP={vurderAndreLivsoppholdytelserFaktaAP}
                 andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
                 api={api}
                 behandling={behandling}
@@ -204,7 +204,7 @@ export const AktivitetspengerOpphør = ({
             )}
             {!bostedVilkår && andreLivsoppholdytelserVilkår && (
               <AndreLivsoppholdytelserVilkårsvurdering
-                vurderAndreLivsoppholdytelserAP={vurderAndreLivsoppholdytelserAP}
+                vurderAndreLivsoppholdytelserFaktaAP={vurderAndreLivsoppholdytelserFaktaAP}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
                 andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
                 api={api}
