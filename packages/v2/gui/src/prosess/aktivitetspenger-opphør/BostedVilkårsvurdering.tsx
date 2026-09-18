@@ -63,7 +63,7 @@ interface Props {
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
 }
 
-export const Vilkaarsvurdering = ({
+export const BostedVilkårsvurdering = ({
   vurderBostedVilkårAP,
   lokalkontorForeslårVilkårAP,
   bostedVilkår,

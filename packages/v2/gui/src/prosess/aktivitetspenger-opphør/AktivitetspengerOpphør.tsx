@@ -15,29 +15,41 @@ import { CustomCheckmarkIcon } from '../../shared/icons/CustomCheckmarkIcon.js';
 import { CustomErrorIcon } from '../../shared/icons/CustomErrorIcon.js';
 import { CustomWarningIcon } from '../../shared/icons/CustomWarningIcon.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { AndreLivsoppholdytelserVilkårsvurdering } from './AndreLivsoppholdytelserVilkårsvurdering.js';
+import { AndreLivsoppholdytelserÅrsakOgVarsel } from './AndreLivsoppholdytelserÅrsakOgVarsel.js';
 import { BeslutterOpphør } from './BeslutterOpphør.js';
+import { BostedVilkårsvurdering } from './BostedVilkårsvurdering.js';
+import { BostedÅrsakOgVarsel } from './BostedÅrsakOgVarsel.js';
 import { OpphørTab } from './types.js';
-import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
-import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
   vurderBostedFaktaAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
   vurderBostedVilkårAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserVilkårAP?: AksjonspunktDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   lokalkontorBeslutterAP?: AksjonspunktDto;
   bostedVilkår?: VilkårMedPerioderDto;
+  andreLivsoppholdytelserVilkår?: VilkårMedPerioderDto;
 }
 
 const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
+  bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
   vurderBostedFaktaAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-  vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+  vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
+  andreLivsoppholdytelserVilkår: vilkår.find(v => v.vilkarType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR),
+  vurderAndreLivsoppholdytelserFaktaAP: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER,
+  ),
+  vurderAndreLivsoppholdytelserVilkårAP: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
+  ),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),
   lokalkontorBeslutterAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   ),
-  bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
 });
 
 const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
@@ -59,6 +71,9 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
 
 export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.vurderBostedFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
+    return OpphørTab.ÅRSAK_OG_VARSEL;
+  }
+  if (data.vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
   }
   if (data.vurderBostedVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
@@ -105,12 +120,16 @@ export const AktivitetspengerOpphør = ({
 
   const {
     vurderBostedFaktaAP,
+    vurderAndreLivsoppholdytelserFaktaAP,
     vurderBostedVilkårAP,
     lokalkontorForeslårVilkårAP,
     lokalkontorBeslutterAP,
     bostedVilkår,
+    andreLivsoppholdytelserVilkår,
+    vurderAndreLivsoppholdytelserVilkårAP,
   } = opphørData;
-  const vilkårsvurderingAPForTab = lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP;
+  const vilkårsvurderingAPForTab =
+    lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP ?? vurderAndreLivsoppholdytelserVilkårAP;
   const harBeslutterAP = !!lokalkontorBeslutterAP;
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
@@ -130,12 +149,15 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Tab
             value={OpphørTab.ÅRSAK_OG_VARSEL}
             label="Årsak og varsel"
-            icon={tabIcon(vurderBostedFaktaAP, bostedVilkår)}
+            icon={tabIcon(
+              vurderBostedFaktaAP ?? vurderAndreLivsoppholdytelserFaktaAP,
+              bostedVilkår ?? andreLivsoppholdytelserVilkår,
+            )}
           />
           <Tabs.Tab
             value={OpphørTab.VILKÅRSVURDERING}
             label="Vilkårsvurdering"
-            icon={tabIcon(vilkårsvurderingAPForTab, bostedVilkår)}
+            icon={tabIcon(vilkårsvurderingAPForTab, bostedVilkår ?? andreLivsoppholdytelserVilkår)}
           />
           {visBeslutterTab && (
             <Tabs.Tab
@@ -148,21 +170,32 @@ export const AktivitetspengerOpphør = ({
         <Box marginBlock="space-20 space-0">
           <Tabs.Panel value={OpphørTab.ÅRSAK_OG_VARSEL}>
             {bostedVilkår && (
-              <ÅrsakOgVarsel
+              <BostedÅrsakOgVarsel
                 vurderBostedAP={vurderBostedFaktaAP}
                 bostedVilkår={bostedVilkår}
+                bostedGrunnlag={bostedGrunnlag}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
-                bostedGrunnlag={bostedGrunnlag}
+              />
+            )}
+            {!bostedVilkår && andreLivsoppholdytelserVilkår && (
+              <AndreLivsoppholdytelserÅrsakOgVarsel
+                vurderAndreLivsoppholdytelserFaktaAP={vurderAndreLivsoppholdytelserFaktaAP}
+                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
               />
             )}
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
             {bostedVilkår && (
-              <Vilkårsvurdering
+              <BostedVilkårsvurdering
                 vurderBostedVilkårAP={vurderBostedVilkårAP}
                 bostedVilkår={bostedVilkår}
                 api={api}
@@ -172,6 +205,18 @@ export const AktivitetspengerOpphør = ({
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+              />
+            )}
+            {!bostedVilkår && andreLivsoppholdytelserVilkår && (
+              <AndreLivsoppholdytelserVilkårsvurdering
+                vurderAndreLivsoppholdytelserVilkårAP={vurderAndreLivsoppholdytelserVilkårAP}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
               />
             )}
           </Tabs.Panel>
