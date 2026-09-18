@@ -34,7 +34,7 @@ interface FormData {
 }
 
 interface Props {
-  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserVilkårAP?: AksjonspunktDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
@@ -98,7 +98,7 @@ const buildPayload = ({ formData, selectedId }: { formData: FormData; selectedId
 };
 
 export const AndreLivsoppholdytelserVilkårsvurdering = ({
-  vurderAndreLivsoppholdytelserFaktaAP,
+  vurderAndreLivsoppholdytelserVilkårAP,
   lokalkontorForeslårVilkårAP,
   andreLivsoppholdytelserVilkår,
   api,
@@ -114,7 +114,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     control: formHook.control,
     name: `perioder.${selectedId}.andreLivsoppholdytelser`,
   });
-  const isSolved = vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
   const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
@@ -134,7 +134,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderAndreLivsoppholdytelserFaktaAP && (
+      {!isSolved && vurderAndreLivsoppholdytelserVilkårAP && (
         <Alert variant="warning" size="small">
           Vurder om søker mottar andre livsoppholdsytelser.
         </Alert>
@@ -150,7 +150,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
         readOnly={readOnly || selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error'}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={
-          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserFaktaAP?.ansvarligSaksbehandler} /> : undefined
+          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserVilkårAP?.ansvarligSaksbehandler} /> : undefined
         }
         afterEditButton={
           erLokalkontorForeslårAPÅpent ? (

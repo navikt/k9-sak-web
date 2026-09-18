@@ -44,7 +44,7 @@ const fakeLovligeBehandlingsoperasjoner = {
   behandlingTilGodkjenningVedLokalkontor: false,
 } satisfies BehandlingOperasjonerDto;
 
-const fakeOpphørVilkår = {
+const fakeBostedVilkår = {
   vilkarType: vilkarType.BOSTEDSVILKÅR,
   lovReferanse: 'TODO AKT lovreferanse',
   overstyrbar: true,
@@ -105,7 +105,7 @@ export const DefaultStory: Story = {
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: fn(),
-    vilkår: [fakeOpphørVilkår],
+    vilkår: [fakeBostedVilkår],
     totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
     bostedGrunnlag: fakeBostedGrunnlag,
@@ -116,7 +116,7 @@ const fakeArgsBase = {
   innloggetBruker: fakeInnloggetBruker,
   api: fakeAktivitetspengerApi,
   behandling: fakeBehandling,
-  vilkår: [fakeOpphørVilkår],
+  vilkår: [fakeBostedVilkår],
   totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
   lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
   bostedGrunnlag: fakeBostedGrunnlag,
@@ -351,11 +351,17 @@ export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
 
     await step('Velg opphør fra en dato', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: 'Opphøre fra en dato' }));
-      await userEvent.type(canvas.getByRole('textbox', { name: /opphøre fra og med/i }), '01.05.2026');
+      const opphørsdato = canvas.getByRole('textbox', { name: /opphøre fra og med/i });
+
+      await userEvent.clear(opphørsdato);
+      await userEvent.type(opphørsdato, '01.05.2026');
     });
 
     await step('Velg annen livsoppholdytelse', async () => {
-      await userEvent.selectOptions(canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }), 'annet');
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }),
+        'arbeidsavklaringspenger',
+      );
     });
 
     await step('Velg kilde og svar at bruker skal varsles', async () => {
@@ -429,7 +435,7 @@ export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
   args: {
     ...fakeAndreLivsoppholdytelserVilkårArgsBase,
     aksjonspunkter: [
-      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER, AksjonspunktStatus.UTFØRT),
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR, AksjonspunktStatus.UTFØRT),
     ],
   },
   play: async ({ canvas, step }) => {
@@ -439,7 +445,7 @@ export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
 
     await step('Skjemaet er låst etter vurdering', async () => {
       await expect(canvas.getByText('Vilkårsvurdering')).toBeInTheDocument();
-      await expect(canvas.getByRole('button', { name: /send til beslutter/i })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /send til beslutter/i })).not.toBeInTheDocument();
     });
   },
 };
@@ -447,7 +453,7 @@ export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
 export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
@@ -491,7 +497,7 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 export const VilkårsvurderingFlyttetMedFritekst: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
@@ -556,7 +562,7 @@ const fakeTotrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[] = [
     skjermlenkeType: 'OPPHØR',
     totrinnskontrollAksjonspunkter: [
       { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED },
-      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR },
+      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR },
     ],
   },
 ];

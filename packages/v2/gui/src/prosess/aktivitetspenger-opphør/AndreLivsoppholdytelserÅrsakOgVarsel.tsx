@@ -123,11 +123,12 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
     defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår),
   });
-  const watchValue = (name: string) => String(formHook.watch(name as never) ?? '');
-  const opphøreEllerAvslå = watchValue(`perioder.${selectedId}.opphøreEllerAvslå`);
-  const valgtKilde = watchValue(`perioder.${selectedId}.kilde`);
-  const skalSendeVarselOmOpphør = formHook.watch(`perioder.${selectedId}.skalSendeVarselOmOpphør`);
-  const valgtYtelse = watchValue(`perioder.${selectedId}.ytelse`);
+  const perioder = formHook.watch('perioder');
+  const valgtPeriode = perioder[selectedId];
+  const opphøreEllerAvslå = valgtPeriode?.opphøreEllerAvslå ?? '';
+  const valgtKilde = valgtPeriode?.kilde ?? '';
+  const skalSendeVarselOmOpphør = valgtPeriode?.skalSendeVarselOmOpphør ?? '';
+  const valgtYtelse = valgtPeriode?.livsoppholdytelse ?? '';
   const isSolved = vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.UTFØRT;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
