@@ -22,7 +22,7 @@
     "dayjs": "1.11.23",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-intl": "10.2.2",
+    "react-intl": "11.0.0",
     "react-redux": "9.3.0",
     "redux": "5.0.1",
     "redux-form": "8.3.10"
