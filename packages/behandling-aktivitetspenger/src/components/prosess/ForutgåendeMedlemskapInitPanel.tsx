@@ -28,7 +28,7 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
     queries: [
       aksjonspunkterQueryOptions(api, behandling),
       {
-        queryKey: ['forutgåendeMedlemskap', behandling.uuid, api.backend],
+        queryKey: ['forutgåendeMedlemskap', behandling.uuid, behandling.versjon, api.backend],
         queryFn: () => api.hentMedlemskapFraSøknad(behandling.uuid),
         select: (data: ForutgåendeMedlemskapResponse) => data.perioder ?? [],
       },
