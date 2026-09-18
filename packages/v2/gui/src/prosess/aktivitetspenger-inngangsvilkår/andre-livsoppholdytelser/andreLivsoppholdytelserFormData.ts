@@ -31,8 +31,7 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
 
 // Backend returnerer Avslagsårsak-koder ved lesing, men forventer AndreLivsoppholdsytelserIkkeOppfyltÅrsak ved innsending.
 const avslagKodeTilÅrsak: Record<string, AndreLivsoppholdsytelserIkkeOppfyltÅrsak> = {
-  [Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE]:
-    AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE,
+  [Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE]: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
   [Avslagsårsak.AVKORTET]: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
 };
 
