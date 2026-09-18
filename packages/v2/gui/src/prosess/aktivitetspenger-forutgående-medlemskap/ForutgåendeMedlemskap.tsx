@@ -59,7 +59,7 @@ export const ForutgåendeMedlemskap = ({
   );
   const periods: VilkårSplittPanelPeriod[] = sortertePerioder.map((periodeInfo, index) => {
     const nestePeriodeInfo = sortertePerioder[index + 1];
-    const visTom = !!nestePeriodeInfo && nestePeriodeInfo.utfall !== Utfall.IKKE_VURDERT;
+    const visTom = !!nestePeriodeInfo && !nestePeriodeInfo.vurderesIBehandlingen;
     return {
       id: periodeInfo.periode.fom,
       status: getPeriodStatus(periodeInfo.utfall),
@@ -69,10 +69,7 @@ export const ForutgåendeMedlemskap = ({
   });
 
   const [selectedItemId, setSelectedItemId] = useState(
-    () =>
-      sortertePerioder.find(periodeInfo => periodeInfo.utfall === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
-      '',
+    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ?? periods[0]?.id ?? '',
   );
 
   useEffect(() => {
@@ -82,6 +79,9 @@ export const ForutgåendeMedlemskap = ({
   }, [periods, selectedItemId]);
 
   const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode.fom === selectedItemId);
+  // Perioder som ikke vurderes i denne behandlingen er allerede avgjort (f.eks. i en tidligere behandling)
+  // og skal ikke kunne redigeres, selv om aksjonspunktet for øvrig er åpent.
+  const erValgtPeriodePermanentLåst = isPermanentlyReadOnly || valgtPeriodeInfo?.vurderesIBehandlingen === false;
   const medlemskapFraBruker = valgtPeriodeInfo?.medlemskapFraBruker;
   const utenlandsopphold = medlemskapFraBruker?.utenlandsopphold ?? [];
 
@@ -125,7 +125,7 @@ export const ForutgåendeMedlemskap = ({
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
 
-  if (!aksjonspunkt && !sortertePerioder.some(r => r.utfall !== Utfall.IKKE_VURDERT)) {
+  if (!aksjonspunkt && !sortertePerioder.some(r => r.vurderesIBehandlingen)) {
     return <ProsessStegIkkeBehandlet />;
   }
 
@@ -147,7 +147,7 @@ export const ForutgåendeMedlemskap = ({
       detailHeading="Vurdering av forutgående medlemskap"
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
-      isPermanentlyReadOnly={isPermanentlyReadOnly}
+      isPermanentlyReadOnly={erValgtPeriodePermanentLåst}
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
@@ -213,9 +213,16 @@ export const ForutgåendeMedlemskap = ({
               )}
               {isFormLocked && vurdering ? (
                 <VStack gap="space-8">
-                  <Label size="small" as="p">
-                    Har søker forutgående medlemskap
-                  </Label>
+                  <HStack gap="space-8" align="center">
+                    <Label size="small" as="p">
+                      Har søker forutgående medlemskap
+                    </Label>
+                    {valgtPeriodeInfo && !valgtPeriodeInfo.erManueltVurdert && (
+                      <Tag variant="outline" data-color="info" size="small">
+                        Automatisk vurdert
+                      </Tag>
+                    )}
+                  </HStack>
                   <BodyShort size="small">{vurdering === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
                 </VStack>
               ) : (

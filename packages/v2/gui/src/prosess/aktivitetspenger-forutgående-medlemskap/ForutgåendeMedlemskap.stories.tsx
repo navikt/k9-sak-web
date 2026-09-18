@@ -24,6 +24,7 @@ const lagPeriodeInfo = (
   harJobbetUtenforNorge: boolean | null = false,
   utenlandskNasjonalId: string | null = null,
   harTrygdeavtale = true,
+  erManueltVurdert = utfall !== Utfall.IKKE_VURDERT,
 ): MedlemskapPeriodeInfoDto => ({
   periode,
   utfall,
@@ -32,6 +33,8 @@ const lagPeriodeInfo = (
     utfall === Utfall.IKKE_VURDERT
       ? null
       : `Forutgående medlemskap er ${utfall === Utfall.OPPFYLT ? '' : 'ikke '}godkjent.`,
+  vurderesIBehandlingen: utfall === Utfall.IKKE_VURDERT,
+  erManueltVurdert,
   medlemskapFraBruker: {
     forutgåendePeriode,
     harBoddINorge: true,
@@ -101,6 +104,15 @@ export const MedAvslag: Story = {
     perioder: [
       lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
       lagPeriodeInfo(periode2, Utfall.IKKE_OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
+    ],
+  },
+};
+
+export const AutomatiskVurdert: Story = {
+  args: {
+    perioder: [
+      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1, false, null, true, false),
+      lagPeriodeInfo(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2),
     ],
   },
 };

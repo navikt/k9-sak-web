@@ -12,5 +12,7 @@ export type MedlemskapPeriodeInfoDto = {
   utfall: Utfall;
   avslagsårsak: MedlemskapAvslagsÅrsakType | null;
   begrunnelse: string | null;
+  vurderesIBehandlingen: boolean;
+  erManueltVurdert: boolean;
   medlemskapFraBruker: MedlemskapDto | null;
 };
