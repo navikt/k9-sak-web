@@ -2,6 +2,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
@@ -102,16 +103,19 @@ export const ForutgåendeMedlemskap = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: FormData) => {
-      if (!aksjonspunkt) {
+      if (!aksjonspunkt || !valgtPeriodeInfo) {
         return;
       }
-      const erVilkarOk = data.vurderinger[selectedItemId] === 'oppfylt';
+      const erVilkårOk = data.vurderinger[selectedItemId] === 'oppfylt';
       const payload = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
-        begrunnelse: erVilkarOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
-        erVilkarOk,
-        avslagsårsak: erVilkarOk ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
-      };
+        begrunnelse: erVilkårOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
+        erVilkårOk,
+        avslagsårsak: erVilkårOk ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
+        vilkårsperiode: valgtPeriodeInfo.periode,
+        // TODO(TSFF-3050): generert klient mangler ennå `erVilkårOk` (heter `erVilkarOk`) og
+        // `vilkårsperiode` på BekreftErMedlemVurderingDto. Fjern casten når klienten er republisert.
+      } as unknown as BekreftetAksjonspunktDto;
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
     onSuccess: () => {
