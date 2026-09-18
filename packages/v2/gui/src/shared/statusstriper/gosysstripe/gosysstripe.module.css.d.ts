@@ -6,19 +6,13 @@
  * https://npmjs.com/vite-css-modules
  */
 
-declare const oppgaveLenke: string;
-declare const marginTop: string;
 declare const ingenAvrunding: string;
 
 export {
-	oppgaveLenke,
-	marginTop,
 	ingenAvrunding
 };
 
 declare const __default_export__: {
-	oppgaveLenke: typeof oppgaveLenke;
-	marginTop: typeof marginTop;
 	ingenAvrunding: typeof ingenAvrunding;
 };
 export default __default_export__;
