@@ -6,10 +6,11 @@ import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontra
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
+import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
-import { required } from '@navikt/ft-form-validators';
+import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
@@ -17,6 +18,8 @@ import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIk
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+
+const begrunnelseMaxLength = $BekreftErMedlemVurderingDto.properties.begrunnelse.maxLength;
 
 interface Props {
   api: AktivitetspengerApi;
@@ -32,6 +35,7 @@ export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
 interface FormData {
   vurderinger: Record<string, Vurdering>;
+  begrunnelser: Record<string, string>;
 }
 
 const utfallTilVurdering = (utfall: string): Vurdering => {
@@ -42,6 +46,7 @@ const utfallTilVurdering = (utfall: string): Vurdering => {
 
 const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
   vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
+  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
 });
 
 export const ForutgåendeMedlemskap = ({
@@ -109,7 +114,7 @@ export const ForutgåendeMedlemskap = ({
       const erVilkårOk = data.vurderinger[selectedItemId] === 'oppfylt';
       const payload = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
-        begrunnelse: erVilkårOk ? 'Forutgående medlemskap er godkjent.' : 'Forutgående medlemskap er ikke godkjent.',
+        begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårOk,
         avslagsårsak: erVilkårOk ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
         vilkårsperiode: valgtPeriodeInfo.periode,
@@ -151,6 +156,7 @@ export const ForutgåendeMedlemskap = ({
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
+        const begrunnelse = formHook.watch(`begrunnelser.${selectedItemId}`);
 
         return (
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
@@ -210,6 +216,24 @@ export const ForutgåendeMedlemskap = ({
                     })}
                   </VStack>
                 </VStack>
+              )}
+              {isFormLocked ? (
+                begrunnelse && (
+                  <VStack gap="space-8">
+                    <Label size="small" as="p">
+                      Vurder om søker har forutgående medlemskap, jmf §X
+                    </Label>
+                    <BodyShort size="small">{begrunnelse}</BodyShort>
+                  </VStack>
+                )
+              ) : (
+                <RhfTextarea
+                  control={formHook.control}
+                  name={`begrunnelser.${selectedItemId}`}
+                  label="Vurder om søker har forutgående medlemskap, jmf §X"
+                  validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
+                  maxLength={begrunnelseMaxLength}
+                />
               )}
               {isFormLocked && vurdering ? (
                 <VStack gap="space-8">
