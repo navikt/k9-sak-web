@@ -6,7 +6,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeResultatDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeResultatDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HGrid, HStack, Label, Radio, ReadMore, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -79,7 +79,20 @@ export const ForutgåendeMedlemskap = ({
   }, [periods, selectedItemId]);
 
   const valgtResultat = sorterteResultater.find(resultat => resultat.periode.fom === selectedItemId);
-  const utenlandsopphold = valgtResultat?.medlemskapFraBruker?.utenlandsopphold ?? [];
+  const medlemskapFraBruker = valgtResultat?.medlemskapFraBruker;
+  const utenlandsopphold = medlemskapFraBruker?.utenlandsopphold ?? [];
+
+  const søknadsopplysninger: { label: string; value: boolean }[] = medlemskapFraBruker
+    ? [
+        { label: 'Har bodd i Norge', value: medlemskapFraBruker.harBoddINorge },
+        ...(medlemskapFraBruker.harJobbetINorge !== null
+          ? [{ label: 'Har jobbet i Norge', value: medlemskapFraBruker.harJobbetINorge }]
+          : []),
+        ...(medlemskapFraBruker.harJobbetUtenforNorge !== null
+          ? [{ label: 'Har jobbet utenfor Norge', value: medlemskapFraBruker.harJobbetUtenforNorge }]
+          : []),
+      ]
+    : [];
 
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(sorterteResultater),
@@ -125,7 +138,7 @@ export const ForutgåendeMedlemskap = ({
       periods={periods}
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
-      detailHeading="Forutgående medlemskap"
+      detailHeading="Vurdering av forutgående medlemskap"
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
       isPermanentlyReadOnly={isPermanentlyReadOnly}
@@ -137,30 +150,65 @@ export const ForutgåendeMedlemskap = ({
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             <VStack gap="space-16">
               {!isFormLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
+              {søknadsopplysninger.length > 0 && (
+                <VStack gap="space-8">
+                  <Label size="small" as="p">
+                    Opplysninger fra søknaden
+                  </Label>
+                  <VStack gap="space-4">
+                    {søknadsopplysninger.map(opplysning => (
+                      <BodyShort size="small" key={opplysning.label}>
+                        {`${opplysning.label}: ${opplysning.value ? 'Ja' : 'Nei'}`}
+                      </BodyShort>
+                    ))}
+                  </VStack>
+                </VStack>
+              )}
               {utenlandsopphold.length > 0 && (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
                     Utenlandsopphold siste 5 år
                   </Label>
-                  <HGrid columns="max-content" gap="space-8" align="center">
+                  <VStack gap="space-12">
                     {utenlandsopphold.map(medlemskap => {
                       if (!medlemskap.periode) {
                         return null;
                       }
                       const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
                       return (
-                        <BodyShort size="small" key={`${medlemskap.land}_${formatertPeriode}`}>
-                          {`${medlemskap.land}: ${formatertPeriode}`}
-                        </BodyShort>
+                        <VStack gap="space-2" key={`${medlemskap.land}_${formatertPeriode}`}>
+                          <HStack gap="space-8" align="center">
+                            <BodyShort size="small">
+                              {`${medlemskap.land ?? ''}${medlemskap.landkode ? ` (${medlemskap.landkode})` : ''}: ${formatertPeriode}`}
+                            </BodyShort>
+                            {medlemskap.harTrygdeavtale ? (
+                              <Tag variant="outline" data-color="success" size="small">
+                                EØS
+                              </Tag>
+                            ) : (
+                              <Tag variant="outline" data-color="danger" size="small">
+                                IKKE-EØS
+                              </Tag>
+                            )}
+                          </HStack>
+                          {medlemskap.harJobbetIPerioden !== null && (
+                            <BodyShort size="small">
+                              {`Har jobbet i perioden: ${medlemskap.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
+                            </BodyShort>
+                          )}
+                          {medlemskap.utenlandskNasjonalId && (
+                            <BodyShort size="small">{`Utenlandsk nasjonal id: ${medlemskap.utenlandskNasjonalId}`}</BodyShort>
+                          )}
+                        </VStack>
                       );
                     })}
-                  </HGrid>
+                  </VStack>
                 </VStack>
               )}
               {isFormLocked && vurdering ? (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
-                    Er forutgående medlemskap godkjent?
+                    Har søker forutgående medlemskap
                   </Label>
                   <BodyShort size="small">{vurdering === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
                 </VStack>
@@ -169,7 +217,7 @@ export const ForutgåendeMedlemskap = ({
                   key={selectedItemId}
                   control={formHook.control}
                   name={`vurderinger.${selectedItemId}`}
-                  legend="Er forutgående medlemskap godkjent?"
+                  legend="Har søker forutgående medlemskap"
                   validate={[required]}
                   readOnly={isFormLocked}
                 >

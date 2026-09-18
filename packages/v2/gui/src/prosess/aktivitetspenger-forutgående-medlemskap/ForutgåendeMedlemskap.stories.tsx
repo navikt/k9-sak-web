@@ -21,6 +21,9 @@ const lagResultat = (
   land: string,
   landkode: string,
   forutgåendePeriode: { fom: string; tom: string },
+  harJobbetUtenforNorge: boolean | null = false,
+  utenlandskNasjonalId: string | null = null,
+  harTrygdeavtale = true,
 ): MedlemskapPeriodeResultatDto => ({
   periode,
   utfall,
@@ -33,7 +36,7 @@ const lagResultat = (
     forutgåendePeriode,
     harBoddINorge: true,
     harJobbetINorge: true,
-    harJobbetUtenforNorge: false,
+    harJobbetUtenforNorge,
     journalpostId: '123456789',
     utenlandsopphold: [
       {
@@ -41,7 +44,8 @@ const lagResultat = (
         landkode,
         periode: forutgåendePeriode,
         harJobbetIPerioden: false,
-        utenlandskNasjonalId: undefined,
+        utenlandskNasjonalId,
+        harTrygdeavtale,
       },
     ],
   },
@@ -62,8 +66,8 @@ const meta = {
     aksjonspunkt: { definisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP },
     readOnly: false,
     resultater: [
-      lagResultat(periode1, Utfall.IKKE_VURDERT, 'Sverige', 'SWE', forutgåendePeriode1),
-      lagResultat(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2),
+      lagResultat(periode1, Utfall.IKKE_VURDERT, 'Sverige', 'SWE', forutgåendePeriode1, false, '198501011234', true),
+      lagResultat(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2, null, null, false),
     ],
     isPermanentlyReadOnly: false,
   },
