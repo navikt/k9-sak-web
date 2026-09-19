@@ -85,7 +85,14 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
                 label="Vis notat i alle saker tilknyttet pleietrengende"
               />
             )}
-            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+            <Button
+              type="submit"
+              className={styles.leggTilNotatKnapp}
+              size="small"
+              variant="primary"
+              loading={formMethods.formState.isSubmitting}
+              disabled={formMethods.formState.isSubmitting}
+            >
               Legg til notat
             </Button>
           </RhfForm>

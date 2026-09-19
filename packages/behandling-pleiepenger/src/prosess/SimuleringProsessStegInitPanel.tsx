@@ -32,8 +32,7 @@ interface Props {
   aksjonspunkterMedKodeverk: Aksjonspunkt[];
   fagsak: Fagsak;
   previewFptilbakeCallback:
-    | ((mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>)
-    | undefined;
+    ((mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>) | undefined;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   isReadOnly: boolean;
   api: K9SakProsessApi;
