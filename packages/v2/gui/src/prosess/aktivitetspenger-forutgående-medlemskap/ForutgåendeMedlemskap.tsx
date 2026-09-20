@@ -152,7 +152,7 @@ export const ForutgåendeMedlemskap = ({
       detailHeading="Vurdering av forutgående medlemskap"
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
-      isPermanentlyReadOnly={isPermanentlyReadOnly}
+      isPermanentlyReadOnly={erValgtPeriodePermanentLåst}
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
