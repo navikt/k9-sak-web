@@ -59,7 +59,7 @@ export const ForutgåendeMedlemskap = ({
   isPermanentlyReadOnly,
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
-  const sortertePerioder = [...perioder].sort(
+  const sortertePerioder = perioder.toSorted(
     (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
   );
   const periods: VilkårSplittPanelPeriod[] = sortertePerioder.map((periodeInfo, index) => {
@@ -111,12 +111,12 @@ export const ForutgåendeMedlemskap = ({
       if (!aksjonspunkt || !valgtPeriodeInfo) {
         return;
       }
-      const erVilkårOk = data.vurderinger[selectedItemId] === 'oppfylt';
+      const erVilkårInnvilget = data.vurderinger[selectedItemId] === 'oppfylt';
       const payload = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: data.begrunnelser[selectedItemId],
-        erVilkårOk,
-        avslagsårsak: erVilkårOk ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
+        erVilkårInnvilget,
+        avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
         vilkårsperiode: valgtPeriodeInfo.periode,
         // TODO(TSFF-3050): generert klient mangler ennå `erVilkårOk` (heter `erVilkarOk`) og
         // `vilkårsperiode` på BekreftErMedlemVurderingDto. Fjern casten når klienten er republisert.
@@ -152,7 +152,7 @@ export const ForutgåendeMedlemskap = ({
       detailHeading="Vurdering av forutgående medlemskap"
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
-      isPermanentlyReadOnly={erValgtPeriodePermanentLåst}
+      isPermanentlyReadOnly={isPermanentlyReadOnly}
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
