@@ -21,17 +21,17 @@ const lagPeriodeInfo = (
   land: string,
   landkode: string,
   forutgåendePeriode: { fom: string; tom: string },
-  harJobbetUtenforNorge: boolean | null = false,
-  utenlandskNasjonalId: string | null = null,
+  harJobbetUtenforNorge: boolean | undefined = false,
+  utenlandskNasjonalId: string | undefined = undefined,
   harTrygdeavtale = true,
   erManueltVurdert = utfall !== Utfall.IKKE_VURDERT,
 ): MedlemskapPeriodeInfoDto => ({
   periode,
   utfall,
-  avslagsårsak: utfall === Utfall.IKKE_OPPFYLT ? MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM : null,
+  avslagsårsak: utfall === Utfall.IKKE_OPPFYLT ? MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM : undefined,
   begrunnelse:
     utfall === Utfall.IKKE_VURDERT
-      ? null
+      ? undefined
       : `Forutgående medlemskap er ${utfall === Utfall.OPPFYLT ? '' : 'ikke '}godkjent.`,
   vurderesIBehandlingen: utfall === Utfall.IKKE_VURDERT,
   erManueltVurdert,
@@ -70,7 +70,7 @@ const meta = {
     readOnly: false,
     perioder: [
       lagPeriodeInfo(periode1, Utfall.IKKE_VURDERT, 'Sverige', 'SWE', forutgåendePeriode1, false, '198501011234', true),
-      lagPeriodeInfo(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2, null, null, false),
+      lagPeriodeInfo(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2, undefined, undefined, false),
     ],
     isPermanentlyReadOnly: false,
   },
@@ -111,7 +111,7 @@ export const MedAvslag: Story = {
 export const AutomatiskVurdert: Story = {
   args: {
     perioder: [
-      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1, false, null, true, false),
+      lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1, false, undefined, true, false),
       lagPeriodeInfo(periode2, Utfall.IKKE_VURDERT, 'USA', 'USA', forutgåendePeriode2),
     ],
   },

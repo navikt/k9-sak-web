@@ -38,15 +38,15 @@ interface FormData {
   begrunnelser: Record<string, string>;
 }
 
-const utfallTilVurdering = (utfall: string): Vurdering => {
+const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
   if (utfall === Utfall.OPPFYLT) return 'oppfylt';
   if (utfall === Utfall.IKKE_OPPFYLT) return 'ikkeOppfylt';
   return '';
 };
 
 const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
-  vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
-  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
+  vurderinger: Object.fromEntries(perioder.map(r => [r.periode!.fom, utfallTilVurdering(r.utfall)])),
+  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode!.fom, r.begrunnelse ?? ''])),
 });
 
 export const ForutgåendeMedlemskap = ({
@@ -60,21 +60,21 @@ export const ForutgåendeMedlemskap = ({
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
   const sortertePerioder = perioder.toSorted(
-    (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
+    (a, b) => new Date(a.periode!.fom).getTime() - new Date(b.periode!.fom).getTime(),
   );
   const periods: VilkårSplittPanelPeriod[] = sortertePerioder.map((periodeInfo, index) => {
     const nestePeriodeInfo = sortertePerioder[index + 1];
     const visTom = !!nestePeriodeInfo && !nestePeriodeInfo.vurderesIBehandlingen;
     return {
-      id: periodeInfo.periode.fom,
-      status: getPeriodStatus(periodeInfo.utfall),
-      label: `${formatDate(periodeInfo.periode.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode.tom)}` : ''}`,
-      periode: periodeInfo.periode,
+      id: periodeInfo.periode!.fom,
+      status: getPeriodStatus(periodeInfo.utfall ?? Utfall.IKKE_VURDERT),
+      label: `${formatDate(periodeInfo.periode!.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode!.tom)}` : ''}`,
+      periode: periodeInfo.periode!,
     };
   });
 
   const [selectedItemId, setSelectedItemId] = useState(
-    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ?? periods[0]?.id ?? '',
+    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode!.fom ?? periods[0]?.id ?? '',
   );
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export const ForutgåendeMedlemskap = ({
     }
   }, [periods, selectedItemId]);
 
-  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode.fom === selectedItemId);
+  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode!.fom === selectedItemId);
   // Perioder som ikke vurderes i denne behandlingen er allerede avgjort (f.eks. i en tidligere behandling)
   // og skal ikke kunne redigeres, selv om aksjonspunktet for øvrig er åpent.
   const erValgtPeriodePermanentLåst = isPermanentlyReadOnly || valgtPeriodeInfo?.vurderesIBehandlingen === false;
@@ -92,11 +92,11 @@ export const ForutgåendeMedlemskap = ({
 
   const søknadsopplysninger: { label: string; value: boolean }[] = medlemskapFraBruker
     ? [
-        { label: 'Har bodd i Norge', value: medlemskapFraBruker.harBoddINorge },
-        ...(medlemskapFraBruker.harJobbetINorge !== null
+        { label: 'Har bodd i Norge', value: medlemskapFraBruker.harBoddINorge ?? false },
+        ...(medlemskapFraBruker.harJobbetINorge !== undefined
           ? [{ label: 'Har jobbet i Norge', value: medlemskapFraBruker.harJobbetINorge }]
           : []),
-        ...(medlemskapFraBruker.harJobbetUtenforNorge !== null
+        ...(medlemskapFraBruker.harJobbetUtenforNorge !== undefined
           ? [{ label: 'Har jobbet utenfor Norge', value: medlemskapFraBruker.harJobbetUtenforNorge }]
           : []),
       ]
@@ -112,15 +112,13 @@ export const ForutgåendeMedlemskap = ({
         return;
       }
       const erVilkårInnvilget = data.vurderinger[selectedItemId] === 'oppfylt';
-      const payload = {
+      const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårInnvilget,
         avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
-        vilkårsperiode: valgtPeriodeInfo.periode,
-        // TODO(TSFF-3050): generert klient mangler ennå `erVilkårOk` (heter `erVilkarOk`) og
-        // `vilkårsperiode` på BekreftErMedlemVurderingDto. Fjern casten når klienten er republisert.
-      } as unknown as BekreftetAksjonspunktDto;
+        vilkårsperiode: valgtPeriodeInfo.periode!,
+      };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
     onSuccess: () => {
@@ -203,7 +201,7 @@ export const ForutgåendeMedlemskap = ({
                               </Tag>
                             )}
                           </HStack>
-                          {medlemskap.harJobbetIPerioden !== null && (
+                          {medlemskap.harJobbetIPerioden !== undefined && (
                             <BodyShort size="small">
                               {`Har jobbet i perioden: ${medlemskap.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
                             </BodyShort>

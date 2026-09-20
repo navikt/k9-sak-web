@@ -1,9 +1,1 @@
-import type { MedlemskapPeriodeInfoDto } from './MedlemskapPeriodeInfoDto.js';
-
-/**
- * TODO(TSFF-3050): Midlertidig, håndskrevet type, se MedlemskapDto.ts for begrunnelse.
- * Kilde: kontrakt/src/main/java/no/nav/ung/sak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.java
- */
-export type ForutgåendeMedlemskapResponse = {
-  perioder: MedlemskapPeriodeInfoDto[];
-};
+export type { ung_sak_kontrakt_vilkår_medlemskap_ForutgåendeMedlemskapResponse as ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/generated/types.js';
