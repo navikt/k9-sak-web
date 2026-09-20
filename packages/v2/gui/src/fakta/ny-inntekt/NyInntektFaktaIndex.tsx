@@ -70,6 +70,11 @@ export const NyInntektFaktaIndex = ({
     aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD,
   );
 
+  const kanReaktivereVurderNyInntekt =
+    !readOnly &&
+    !harAksjonspunkt &&
+    bgMedAvklaringsbehov.some(bg => vurderesIBehandlingen(beregningsgrunnlagVilkår.perioder, bg.vilkårsperiodeFom));
+
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
 
   return (
@@ -105,7 +110,7 @@ export const NyInntektFaktaIndex = ({
         vilkarperioder={beregningsgrunnlagVilkår.perioder}
         aksjonspunkter={aksjonspunkter}
       />
-      {!readOnly && !harAksjonspunkt && (
+      {kanReaktivereVurderNyInntekt && (
         <Box marginBlock="space-16 space-0">
           <Button icon={<PencilFillIcon />} loading={reaktivererAksjonspunkt} onClick={() => reaktiverAksjonspunkt()}>
             Aktiver aksjonspunkt
