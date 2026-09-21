@@ -12,9 +12,9 @@
     "@navikt/ds-react": "8.16.2",
     "date-fns": "4.4.0",
     "formik": "2.4.9",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "react-intl": "10.1.26",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-intl": "10.2.2",
     "yup": "1.7.1"
   },
   "devDependencies": {

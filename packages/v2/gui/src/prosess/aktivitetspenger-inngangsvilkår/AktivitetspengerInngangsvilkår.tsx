@@ -80,14 +80,20 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokke
       return <CustomWarningIcon />;
     }
   }
+  if (!vilkår?.perioder || vilkår.perioder.length === 0) {
+    return undefined;
+  }
   if (
-    vilkår?.perioder?.length &&
     vilkår.perioder.some(p => p.vilkarStatus === Utfall.OPPFYLT) &&
     !vilkår.perioder.some(p => p.vilkarStatus === Utfall.IKKE_VURDERT)
   ) {
     return <CustomCheckmarkIcon />;
   }
-  if (vilkår?.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
+  if (
+    vilkår.perioder
+      .filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT)
+      .every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)
+  ) {
     return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
   }
   return undefined;
@@ -96,8 +102,10 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokke
 const harUløstTidligereSteg = (...aksjonspunkter: Array<AksjonspunktDto | undefined>) =>
   aksjonspunkter.some(aksjonspunktErÅpent);
 
-const vilkårErFerdigbehandlet = (vilkår?: VilkårMedPerioderDto) =>
-  !!vilkår?.perioder?.length && vilkår.perioder.every(p => p.vilkarStatus !== Utfall.IKKE_VURDERT);
+const vilkårErFerdigbehandlet = (vilkår?: VilkårMedPerioderDto) => {
+  const relevantePerioder = vilkår?.perioder?.filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT);
+  return !!relevantePerioder?.length && relevantePerioder.every(p => p.vilkarStatus !== Utfall.IKKE_VURDERT);
+};
 
 const stegErFerdigbehandlet = (aksjonspunkt?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) =>
   aksjonspunkt?.status === AksjonspunktStatus.UTFØRT || vilkårErFerdigbehandlet(vilkår);

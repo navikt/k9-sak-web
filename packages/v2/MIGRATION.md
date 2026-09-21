@@ -31,6 +31,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/ung-beregning`
 - [x] `prosess/ung-inngangsvilkår`
 - [x] `prosess/ung-vedtak`
+- [x] `fakta/utenlandsopphold`
 
 ---
 
@@ -38,10 +39,12 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `fakta-utenlandsopphold` → `BRUK_V2_UTENLANDSOPPHOLD`
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
+Har PR som ikke er merget
+- fakta-feilutbetaling
+- fakta-omsorgen-for
 ---
 
 ### Ikke migrert eller ikke vurdert
@@ -83,12 +86,9 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                             | ~Linjer | Konsumenter           | Merknad                                                 |
 | --------------------------------- | ------- | --------------------- | ------------------------------------------------------- |
-| `prosess-varsel-om-revurdering`   | 647     | 5                     | Gammel JSX, forhåndsvisnings-callback for brev, 3 APIer |
 | `fakta-soknadsperioder`           | 727     | 5                     | Periodeoversikt koblet til vilkår, 1 API                |
-| `fakta-feilutbetaling`            | 1122    | 2 (tilbakekreving ×2) | Periodebasert årsak-skjema, 1 API                       |
 | `prosess-avregning` (Simulering)  | 1007    | 6                     | Simuleringsvisning + tilbakekrevingsvalg-skjema         |
 | `fakta-opplysninger-fra-soknaden` | 1268    | 1 (frisinn)           | Frisinn-spesifikk, overstyringsskjema, 1 API            |
-| `fakta-omsorgen-for`              | 1272    | 3 (oms, opl, psb)     | Vurderingsskjema, 0 API-avhengigheter                   |
 | `prosess-vedtak-tilbakekreving`   | 1498    | 2 (tilbakekreving ×2) | Vedtak med fritekstforhåndsvisning, 1 API               |
 
 ### Tier 4 — Krevende

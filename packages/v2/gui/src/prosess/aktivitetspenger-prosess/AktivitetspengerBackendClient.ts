@@ -16,7 +16,7 @@ import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
-import { type AktivitetspengerApi } from './AktivitetspengerApi';
+import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';

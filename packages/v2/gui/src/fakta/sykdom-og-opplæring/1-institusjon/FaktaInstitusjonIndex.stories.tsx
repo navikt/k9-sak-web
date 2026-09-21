@@ -3,8 +3,8 @@ import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { withFakeSykdomOgOpplæringApi } from '../../../storybook/decorators/withFakeSykdomOgOpplæringApi.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
@@ -29,66 +29,64 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
   );
 };
 
-const withMockData: Decorator = Story => {
+const withMockDataInstitusjonInfo = {
+  perioder: [
+    {
+      institusjon: 'St. Olavs hospital',
+      periode: { fom: '2025-02-01', tom: '2025-02-05' },
+      journalpostId: { journalpostId: 'jp-1' },
+    },
+    {
+      institusjon: 'St. Olavs hospital',
+      periode: { fom: '2025-02-10', tom: '2025-02-12' },
+      journalpostId: { journalpostId: 'jp-1' },
+    },
+    {
+      institusjon: 'Rikshospitalet',
+      periode: { fom: '2025-03-01', tom: '2025-03-03' },
+      journalpostId: { journalpostId: 'jp-2' },
+    },
+  ],
+  vurderinger: [
+    {
+      journalpostId: { journalpostId: 'jp-1' },
+      resultat: InstitusjonResultat.MÅ_VURDERES,
+      begrunnelse: '',
+      organisasjonsnummer: undefined,
+      vurdertAv: '',
+      vurdertTidspunkt: '',
+      erTilVurdering: true,
+      perioder: [
+        { fom: '2025-02-01', tom: '2025-02-05' },
+        { fom: '2025-02-10', tom: '2025-02-12' },
+      ],
+    },
+    {
+      journalpostId: { journalpostId: 'jp-2' },
+      resultat: InstitusjonResultat.GODKJENT_MANUELT,
+      begrunnelse: 'OK',
+      organisasjonsnummer: '123456789',
+      erTilVurdering: false,
+      perioder: [{ fom: '2025-03-01', tom: '2025-03-03' }],
+      vurdertAv: 'Pål Opel',
+      vurdertTidspunkt: '2025-02-10T10:00:00Z',
+    },
+  ],
+};
+
+const withMockDataAlleInstitusjoner = [
+  { uuid: 'i1', navn: 'St. Olavs hospital' },
+  { uuid: 'i2', navn: 'Rikshospitalet' },
+  { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
+];
+
+const withMockData: Decorator = withFakeSykdomOgOpplæringApi({
   // Mock institusjon info (perioder + vurderinger)
   // Grouping logic in component expects same journalpostId to group periods
-  const institusjonInfoMock = {
-    perioder: [
-      {
-        institusjon: 'St. Olavs hospital',
-        periode: { fom: '2025-02-01', tom: '2025-02-05' },
-        journalpostId: { journalpostId: 'jp-1' },
-      },
-      {
-        institusjon: 'St. Olavs hospital',
-        periode: { fom: '2025-02-10', tom: '2025-02-12' },
-        journalpostId: { journalpostId: 'jp-1' },
-      },
-      {
-        institusjon: 'Rikshospitalet',
-        periode: { fom: '2025-03-01', tom: '2025-03-03' },
-        journalpostId: { journalpostId: 'jp-2' },
-      },
-    ],
-    vurderinger: [
-      {
-        journalpostId: { journalpostId: 'jp-1' },
-        resultat: InstitusjonResultat.MÅ_VURDERES,
-        begrunnelse: '',
-        organisasjonsnummer: undefined,
-        vurdertAv: '',
-        vurdertTidspunkt: '',
-        erTilVurdering: true,
-        perioder: [
-          { fom: '2025-02-01', tom: '2025-02-05' },
-          { fom: '2025-02-10', tom: '2025-02-12' },
-        ],
-      },
-      {
-        journalpostId: { journalpostId: 'jp-2' },
-        resultat: InstitusjonResultat.GODKJENT_MANUELT,
-        begrunnelse: 'OK',
-        organisasjonsnummer: '123456789',
-        erTilVurdering: false,
-        perioder: [{ fom: '2025-03-01', tom: '2025-03-03' }],
-        vurdertAv: 'Pål Opel',
-        vurdertTidspunkt: '2025-02-10T10:00:00Z',
-      },
-    ],
-  };
-
+  institusjonInfo: withMockDataInstitusjonInfo,
   // Mock list of institutions used by selector
-  const alleInstitusjonerMock = [
-    { uuid: 'i1', navn: 'St. Olavs hospital' },
-    { uuid: 'i2', navn: 'Rikshospitalet' },
-    { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
-  ];
-
-  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async () => institusjonInfoMock;
-  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async () => alleInstitusjonerMock;
-
-  return <Story />;
-};
+  alleInstitusjoner: withMockDataAlleInstitusjoner,
+});
 
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/1-institusjon',
