@@ -22,8 +22,13 @@ const scrollToVurderDatoContainer = () => {
   return undefined;
 };
 const VurderDato = () => {
-  const { virkningsdatoUttakNyeRegler, harAksjonspunkt, readOnly, aksjonspunktVurderDatoNyRegelUttak } =
-    useUttakContext();
+  const {
+    virkningsdatoUttakNyeRegler,
+    harAksjonspunkt,
+    readOnly,
+    aksjonspunktVurderDatoNyRegelUttak,
+    redigerVirkningsdato,
+  } = useUttakContext();
 
   useEffect(() => {
     if (virkningsdatoUttakNyeRegler) {
@@ -35,6 +40,11 @@ const VurderDato = () => {
     !harAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK) &&
     !(readOnly && harAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK))
   ) {
+    return false;
+  }
+
+  // Endringsdato er allerede satt - vis kun etter at «Rediger aksjonspunkt» er trykket i uttaksperiodetabellen
+  if (virkningsdatoUttakNyeRegler && !redigerVirkningsdato) {
     return false;
   }
 
