@@ -4,7 +4,6 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
@@ -46,8 +45,8 @@ const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
 };
 
 const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
-  vurderinger: Object.fromEntries(perioder.map(r => [r.periode!.fom, utfallTilVurdering(r.utfall)])),
-  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode!.fom, r.begrunnelse ?? ''])),
+  vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
+  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
 });
 
 export const ForutgåendeMedlemskap = ({
@@ -61,21 +60,21 @@ export const ForutgåendeMedlemskap = ({
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
   const sortertePerioder = perioder.toSorted(
-    (a, b) => new Date(a.periode!.fom).getTime() - new Date(b.periode!.fom).getTime(),
+    (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
   );
   const periods: VilkårSplittPanelPeriod[] = sortertePerioder.map((periodeInfo, index) => {
     const nestePeriodeInfo = sortertePerioder[index + 1];
     const visTom = !!nestePeriodeInfo && !nestePeriodeInfo.vurderesIBehandlingen;
     return {
-      id: periodeInfo.periode!.fom,
+      id: periodeInfo.periode.fom,
       status: getPeriodStatus(periodeInfo.utfall ?? Utfall.IKKE_VURDERT),
-      label: `${formatDate(periodeInfo.periode!.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode!.tom)}` : ''}`,
-      periode: periodeInfo.periode!,
+      label: `${formatDate(periodeInfo.periode.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode.tom)}` : ''}`,
+      periode: periodeInfo.periode,
     };
   });
 
   const [selectedItemId, setSelectedItemId] = useState(
-    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode!.fom ?? periods[0]?.id ?? '',
+    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ?? periods[0]?.id ?? '',
   );
 
   useEffect(() => {
@@ -84,7 +83,7 @@ export const ForutgåendeMedlemskap = ({
     }
   }, [periods, selectedItemId]);
 
-  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode!.fom === selectedItemId);
+  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode.fom === selectedItemId);
   // Perioder som ikke vurderes i denne behandlingen er allerede avgjort (f.eks. i en tidligere behandling)
   // og skal ikke kunne redigeres, selv om aksjonspunktet for øvrig er åpent.
   const erValgtPeriodePermanentLåst = isPermanentlyReadOnly || valgtPeriodeInfo?.vurderesIBehandlingen === false;
@@ -113,18 +112,14 @@ export const ForutgåendeMedlemskap = ({
         return;
       }
       const erVilkårInnvilget = data.vurderinger[selectedItemId] === 'oppfylt';
-      const payload: BekreftErMedlemVurderingDto = {
+      const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårInnvilget,
         avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
-        perioderVurdert: [valgtPeriodeInfo.periode!],
+        perioderVurdert: [valgtPeriodeInfo.periode],
       };
-      // TODO(TSFF-3050): Fjern casten når @navikt/ung-sak-typescript-client har fått med endringen fra
-      // BekreftErMedlemVurderingDto.java (perioderVurdert i stedet for vilkårsperiode).
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
-        payload as unknown as BekreftetAksjonspunktDto,
-      ]);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
     onSuccess: () => {
       onAksjonspunktBekreftet();
