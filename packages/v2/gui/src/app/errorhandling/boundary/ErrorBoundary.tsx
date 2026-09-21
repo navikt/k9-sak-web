@@ -2,7 +2,7 @@ import { Component, type FC, type ReactNode } from 'react';
 import { ensureError } from '../ensureError.js';
 import { DefaultErrorView } from './DefaultErrorView.js';
 import { CrashErrorView } from './CrashErrorView.js';
-import { captureException } from '@nais/apm';
+import { captureException, markErrorCaptured } from '@nais/apm';
 
 export interface ErrorBoundaryFallbackProps {
   readonly error: Error;
@@ -37,6 +37,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
 
   static getDerivedStateFromError(anyError: unknown): State {
     const error = ensureError(anyError);
+    markErrorCaptured(error); // Avoid duplicate reporting in apm (keep originalError).
     return { error };
   }
 

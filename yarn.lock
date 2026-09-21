@@ -2858,7 +2858,7 @@ __metadata:
     "@hookform/resolvers": "npm:5.9.1"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "workspace:^"
-    "@nais/apm": "npm:v0.7.0-beta.2"
+    "@nais/apm": "npm:^0.7.0-beta.3"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ds-react": "npm:8.16.2"
@@ -3099,7 +3099,7 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@nais/apm": "npm:v0.7.0-beta.2"
+    "@nais/apm": "npm:^0.7.0-beta.3"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
@@ -3152,7 +3152,7 @@ __metadata:
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@nais/apm": "npm:v0.7.0-beta.2"
+    "@nais/apm": "npm:^0.7.0-beta.3"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
     "@navikt/ft-form-hooks": "npm:12.4.12"
@@ -3220,9 +3220,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nais/apm@npm:v0.7.0-beta.2":
-  version: 0.7.0-beta.2
-  resolution: "@nais/apm@npm:0.7.0-beta.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40nais%2Fapm%2F0.7.0-beta.2%2F837b5e566a97407481d82fe4da18289e47b396d9"
+"@nais/apm@npm:^0.7.0-beta.3":
+  version: 0.7.0-beta.3
+  resolution: "@nais/apm@npm:0.7.0-beta.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40nais%2Fapm%2F0.7.0-beta.3%2Fa8c37d451356b44abac4e371be9e91dd9646e6f2"
   dependencies:
     "@grafana/faro-web-sdk": "npm:^2.11.0"
     "@grafana/faro-web-tracing": "npm:2.11.0"
@@ -3235,7 +3235,7 @@ __metadata:
     react-dom: ">=17.0.0"
     react-router: ">=6.0.0"
     react-router-dom: ">=6.0.0"
-  checksum: 10/e942f041fae31ee710386d948162125bdb6a982931dcc918fc43d2ae3b70cd2318a1e18e7fbf245dcd0caf9237e59544604e4dd535f6fe116ee8f162d82ebc30
+  checksum: 10/08d8de0581a8c7752bed95256bc9887b6e2294859ec73984d89107713bd350f669fcfdd61e0ce51f45e78717093620a5b3c2b07604969323c15b9005f99a995d
   languageName: node
   linkType: hard
 
