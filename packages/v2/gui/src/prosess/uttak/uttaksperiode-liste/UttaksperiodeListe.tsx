@@ -149,7 +149,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     });
   }
 
-  // uttaksperiodeListe er sortert nyeste først, så banner-radene må splittes ut i synkende dato-rekkefølge
+  // uttaksperiodeListe er sortert nyeste først, så regel-radene må splittes ut i synkende dato-rekkefølge
   // for at hver regel skal havne før perioden den gjelder fra.
   const uttaksregelInfoSynkende = [...uttaksregelInfo].sort((a, b) => (a.dato < b.dato ? 1 : -1));
 
