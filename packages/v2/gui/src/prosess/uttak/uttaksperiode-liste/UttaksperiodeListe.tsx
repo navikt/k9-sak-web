@@ -46,6 +46,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
     uttaksperiodeListe,
     lasterUttak,
     readOnly,
+    behandling,
   } = useUttakContext();
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const headers = tableHeaders(ytelseType);
@@ -97,12 +98,11 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
                   <Button
                     variant="secondary"
                     size="small"
-                    className={styles['redigerDato']}
                     icon={<PencilIcon />}
                     onClick={redigerVirkningsdatoFunc}
-                    disabled={status === behandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
+                    disabled={behandling.status === behandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
                   >
-                    Rediger aksjonspunkt
+                    Rediger dato
                   </Button>
                 </div>
               </Alert>
