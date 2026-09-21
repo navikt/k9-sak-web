@@ -50,7 +50,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
         return;
       }
       this.errorCount++;
-      captureException(error); // Send feil til nais apm, så den blir prosesert i beforeSend med originalError satt
+      captureException(error); // Send feil til nais apm, så den blir prosessert i beforeSend med originalError satt
       if (errorCallback != null) {
         errorCallback(error);
       }
