@@ -1,4 +1,4 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
 import { useEffect } from 'react';
 import { useUttakContext } from '../context/UttakContext';

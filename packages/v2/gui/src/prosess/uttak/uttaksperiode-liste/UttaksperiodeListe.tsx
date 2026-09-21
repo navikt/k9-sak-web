@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 import { Alert, BodyLong, Button, Table, Loader, HStack } from '@navikt/ds-react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import {
-  type k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+  type FagsakYtelsesType as FagsakYtelseType,
+  fagsakYtelsesType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import UttakRad from './UttakRad';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
@@ -21,6 +21,7 @@ const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
+  visEndringerIUttakFunc: () => void;
 }
 
 interface UttaksregelInfo {
@@ -38,7 +39,11 @@ const tableHeaders = (sakstype: FagsakYtelseType | undefined) => {
   return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 };
 
-const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoFunc, redigerVirkningsdato }) => {
+const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
+  redigerVirkningsdatoFunc,
+  redigerVirkningsdato,
+  visEndringerIUttakFunc,
+}) => {
   const {
     fagsakYtelseType: ytelseType,
     virkningsdatoUttakNyeRegler,
@@ -132,7 +137,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
                     Endringer fra {dayjs(NORMALARBEIDSTID_LÅST_DATO).format('DD.MM.YYYY')}: Fra denne datoen låses
                     normalarbeidstid på skjæringstidspunktet for arbeidsforhold, frilans og selvstendig næringsdrivende.
                   </BodyLong>
-                  <Button variant="tertiary" size="small">
+                  <Button variant="tertiary" size="small" onClick={visEndringerIUttakFunc}>
                     Les mer om endring
                   </Button>
                 </div>
@@ -144,9 +149,13 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
     });
   }
 
+  // uttaksperiodeListe er sortert nyeste først, så banner-radene må splittes ut i synkende dato-rekkefølge
+  // for at hver regel skal havne før perioden den gjelder fra.
+  const uttaksregelInfoSynkende = [...uttaksregelInfo].sort((a, b) => (a.dato < b.dato ? 1 : -1));
+
   let resterendePerioder: UttaksperiodeBeriket[] = [...uttaksperiodeListe];
   let periodeIndeks = 0;
-  const segmenter = uttaksregelInfo.map(uttaksregelInfo => {
+  const segmenter = uttaksregelInfoSynkende.map(uttaksregelInfo => {
     const { afterOrCovering, before } = splitUttakByDate(resterendePerioder, uttaksregelInfo.dato);
     resterendePerioder = before;
     const rader = afterOrCovering.map(uttak => renderPeriodeRad(uttak, periodeIndeks++));
