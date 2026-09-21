@@ -4,7 +4,7 @@ import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import { useEffect, useState, type JSX } from 'react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
-import EndringerIUttakDialog from './components/endringer-i-uttak/EndringerIUttakDialog';
+import EndringerIUttakDrawer from './components/endringer-i-uttak/EndringerIUttakDialog';
 import Infostripe from './components/infostripe/Infostripe';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
 import { useUttakContext } from './context/UttakContext';
@@ -56,7 +56,7 @@ const UttakInnhold = (): JSX.Element => {
           Endringer i uttak
         </Button>
       </HStack>
-      <EndringerIUttakDialog open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
+      <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
       {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
         <ContentMaxWidth>

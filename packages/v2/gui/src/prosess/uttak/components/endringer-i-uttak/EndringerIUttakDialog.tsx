@@ -2,12 +2,12 @@ import { BodyLong, Button, Detail, Dialog, Heading, HStack, VStack } from '@navi
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import type { FC } from 'react';
 
-interface EndringerIUttakDialogProps {
+interface EndringerIUttakDrawerProps {
   open: boolean;
   onClose: () => void;
 }
 
-const EndringerIUttakDialog: FC<EndringerIUttakDialogProps> = ({ open, onClose }) => (
+const EndringerIUttakDrawer: FC<EndringerIUttakDrawerProps> = ({ open, onClose }) => (
   <Dialog open={open} onOpenChange={nextOpen => !nextOpen && onClose()}>
     <Dialog.Popup position="right" width="530px">
       <Dialog.Header>
@@ -73,4 +73,4 @@ const EndringerIUttakDialog: FC<EndringerIUttakDialogProps> = ({ open, onClose }
   </Dialog>
 );
 
-export default EndringerIUttakDialog;
+export default EndringerIUttakDrawer;
