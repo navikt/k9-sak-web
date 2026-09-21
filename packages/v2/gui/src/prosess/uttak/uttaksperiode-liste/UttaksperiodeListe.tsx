@@ -122,7 +122,8 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     [...uttaksperiodeListe],
     NORMALARBEIDSTID_LÅST_DATO,
   );
-  const visNormalarbeidstidInfo = perioderEtterLåstNormalarbeidstid.length > 0;
+  const visNormalarbeidstidInfo =
+    erSakstype(fagsakYtelseType.PLEIEPENGER_SYKT_BARN) && perioderEtterLåstNormalarbeidstid.length > 0;
 
   if (visNormalarbeidstidInfo) {
     uttaksregelInfo.push({
