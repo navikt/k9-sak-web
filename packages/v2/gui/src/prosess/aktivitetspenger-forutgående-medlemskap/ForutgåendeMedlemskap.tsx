@@ -4,11 +4,12 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -112,14 +113,18 @@ export const ForutgåendeMedlemskap = ({
         return;
       }
       const erVilkårInnvilget = data.vurderinger[selectedItemId] === 'oppfylt';
-      const payload: BekreftetAksjonspunktDto = {
+      const payload: BekreftErMedlemVurderingDto = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårInnvilget,
         avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
-        vilkårsperiode: valgtPeriodeInfo.periode!,
+        perioderVurdert: [valgtPeriodeInfo.periode!],
       };
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+      // TODO(TSFF-3050): Fjern casten når @navikt/ung-sak-typescript-client har fått med endringen fra
+      // BekreftErMedlemVurderingDto.java (perioderVurdert i stedet for vilkårsperiode).
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
+        payload as unknown as BekreftetAksjonspunktDto,
+      ]);
     },
     onSuccess: () => {
       onAksjonspunktBekreftet();
@@ -159,7 +164,6 @@ export const ForutgåendeMedlemskap = ({
         return (
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             <VStack gap="space-16">
-              {!isFormLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
               {søknadsopplysninger.length > 0 && (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
