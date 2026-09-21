@@ -1,4 +1,4 @@
-import { BodyLong, Button, Detail, Dialog, Heading, HStack, VStack } from '@navikt/ds-react';
+import { BodyLong, Detail, Dialog, Heading, HStack, VStack } from '@navikt/ds-react';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 
 interface EndringerIUttakDrawerProps {
@@ -63,11 +63,6 @@ const EndringerIUttakDrawer = ({ open, onClose }: EndringerIUttakDrawerProps) =>
           </VStack>
         </VStack>
       </Dialog.Body>
-      <Dialog.Footer>
-        <Button variant="tertiary" onClick={onClose}>
-          Lukk
-        </Button>
-      </Dialog.Footer>
     </Dialog.Popup>
   </Dialog>
 );
