@@ -21,7 +21,7 @@
     "@navikt/ft-ui-komponenter": "8.2.8",
     "@navikt/ft-utils": "5.1.11",
     "dayjs": "1.11.23",
-    "moment": "2.30.1",
+    "moment": "2.31.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-hook-form": "7.88.0",
