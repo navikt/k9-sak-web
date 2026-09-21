@@ -4,7 +4,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 
 import { useState } from 'react';
 import { useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
-import { harÅpentAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
+import { harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { TilkommetAktivitet } from './src/components/tilkommetAktivitet/TilkommetAktivitet.js';
 import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues.js';
@@ -65,14 +65,14 @@ export const NyInntektFaktaIndex = ({
     return null;
   }
 
-  const harAksjonspunkt = harÅpentAksjonspunkt(
+  const harAksjonspunktVurderNyInntekt = harAksjonspunkt(
     aksjonspunkter,
     aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD,
   );
 
   const kanReaktivereVurderNyInntekt =
     !readOnly &&
-    !harAksjonspunkt &&
+    !harAksjonspunktVurderNyInntekt &&
     bgMedAvklaringsbehov.some(bg => vurderesIBehandlingen(beregningsgrunnlagVilkår.perioder, bg.vilkårsperiodeFom));
 
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
