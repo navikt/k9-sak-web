@@ -15,6 +15,7 @@ import splitUttakByDate from '../utils/splitUttakByDate';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { PencilIcon } from '@navikt/aksel-icons';
 
+// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
 
 interface UttaksperiodeListeProps {
