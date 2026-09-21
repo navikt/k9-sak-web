@@ -1,13 +1,12 @@
 import { BodyLong, Button, Detail, Dialog, Heading, HStack, VStack } from '@navikt/ds-react';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
-import type { FC } from 'react';
 
 interface EndringerIUttakDrawerProps {
   open: boolean;
   onClose: () => void;
 }
 
-const EndringerIUttakDrawer: FC<EndringerIUttakDrawerProps> = ({ open, onClose }) => (
+const EndringerIUttakDrawer = ({ open, onClose }: EndringerIUttakDrawerProps) => (
   <Dialog open={open} onOpenChange={nextOpen => !nextOpen && onClose()}>
     <Dialog.Popup position="right" width="530px">
       <Dialog.Header>
@@ -19,17 +18,17 @@ const EndringerIUttakDrawer: FC<EndringerIUttakDrawerProps> = ({ open, onClose }
       <Dialog.Body>
         <VStack gap="space-24">
           <VStack gap="space-4">
-            <Detail>Oktober 2026</Detail>
+            <Detail>Januar 2027</Detail>
             <Heading size="xsmall" level="2">
               Normalarbeidstid låses på skjæringstidspunktet
             </Heading>
             <BodyLong>
-              Fra og med 01.11.2026 låses normalarbeidstid på skjæringstidspunktet. For arbeidstakere låses
+              Fra og med 01.01.2027 låses normalarbeidstid på skjæringstidspunktet. For arbeidstakere låses
               normalarbeidstiden per arbeidsforhold, for frilans og selvstendig næring låses den for hele aktiviteten
               samlet. Faktisk arbeidstid kan fortsatt endres gjennom hele søknadsperioden.
             </BodyLong>
             <BodyLong>
-              Normalarbeidstid for en periode etter 01.11.2026 kan kun endres ved å endre den ved skjæringstidspunktet.
+              Normalarbeidstid for en periode etter 01.01.2027 kan kun endres ved å endre den ved skjæringstidspunktet.
               Om man punsjer eller endrer normalarbeidstid for senere perioder vil den ikke endre seg i uttak.
             </BodyLong>
           </VStack>
