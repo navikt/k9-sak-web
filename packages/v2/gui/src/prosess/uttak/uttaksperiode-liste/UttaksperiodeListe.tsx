@@ -107,7 +107,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
                     onClick={redigerVirkningsdatoFunc}
                     disabled={behandling.status === behandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
                   >
-                    Rediger dato
+                    Rediger
                   </Button>
                 </div>
               </Alert>
