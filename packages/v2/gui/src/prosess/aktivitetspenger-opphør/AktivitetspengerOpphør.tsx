@@ -30,7 +30,7 @@ interface OpphørData {
 
 const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
   vurderBostedFaktaAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-  vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+  vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),

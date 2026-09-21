@@ -282,7 +282,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
@@ -326,7 +326,7 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 export const VilkårsvurderingFlyttetMedFritekst: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
@@ -391,7 +391,7 @@ const fakeTotrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[] = [
     skjermlenkeType: 'OPPHØR',
     totrinnskontrollAksjonspunkter: [
       { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED },
-      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR },
+      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR },
     ],
   },
 ];
