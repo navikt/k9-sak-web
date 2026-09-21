@@ -251,7 +251,7 @@ export const Vilkaarsvurdering = ({
               {!isFormLocked && (
                 <HStack gap="space-16">
                   <Button type="submit" size="small" loading={isPending}>
-                    Send til beslutter
+                    Bekreft og fortsett
                   </Button>
                   {defaultIsLocked && (
                     <Button type="button" size="small" variant="secondary" onClick={() => setIsFormLocked(true)}>
