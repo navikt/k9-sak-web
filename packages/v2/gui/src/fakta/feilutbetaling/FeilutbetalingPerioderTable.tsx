@@ -28,16 +28,22 @@ const FeilutbetalingPerioderTable = ({
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {sortertePerioder.map((periode, index) => (
-          <FeilutbetalingPerioderRow
-            key={`${periode.fom}-${periode.tom}`}
-            periode={periode}
-            index={index}
-            årsaker={årsaker}
-            readOnly={readOnly}
-            behandlePerioderSamlet={behandlePerioderSamlet}
-          />
-        ))}
+        {sortertePerioder.length === 0 ? (
+          <Table.Row>
+            <Table.DataCell colSpan={3}>Ingen perioder med feilutbetaling</Table.DataCell>
+          </Table.Row>
+        ) : (
+          sortertePerioder.map((periode, index) => (
+            <FeilutbetalingPerioderRow
+              key={`${periode.fom}-${periode.tom}`}
+              periode={periode}
+              index={index}
+              årsaker={årsaker}
+              readOnly={readOnly}
+              behandlePerioderSamlet={behandlePerioderSamlet}
+            />
+          ))
+        )}
       </Table.Body>
     </Table>
   );

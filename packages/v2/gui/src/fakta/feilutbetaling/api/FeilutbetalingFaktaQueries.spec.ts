@@ -1,10 +1,11 @@
+import type { BehandlingFeilutbetalingFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
 import { describe, expect, it } from 'vitest';
 import type { FeilutbetalingFaktaApi } from './FeilutbetalingFaktaApi.js';
 import { feilutbetalingFaktaQueryOptions, feilutbetalingÅrsakerQueryOptions } from './FeilutbetalingFaktaQueries.js';
 
 const api = {
   backend: 'k9tilbake',
-  hentFeilutbetalingFakta: async () => undefined,
+  hentFeilutbetalingFakta: async () => ({}) as BehandlingFeilutbetalingFaktaDto,
   hentFeilutbetalingÅrsaker: async () => [],
 } satisfies FeilutbetalingFaktaApi;
 

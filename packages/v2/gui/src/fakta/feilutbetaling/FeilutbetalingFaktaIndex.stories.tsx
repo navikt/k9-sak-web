@@ -55,6 +55,13 @@ const faktaMedÅrsaker: BehandlingFeilutbetalingFaktaDto = {
   },
 };
 
+const faktaUtenPerioder: BehandlingFeilutbetalingFaktaDto = {
+  behandlingFakta: {
+    ...fakta.behandlingFakta!,
+    perioder: [],
+  },
+};
+
 const årsaker: HendelseTyperPrYtelseTypeDto[] = [
   {
     ytelseType: 'PSB' as const,
@@ -130,8 +137,19 @@ export const ReadOnly: Story = {
     hasOpenAksjonspunkter: false,
   },
   decorators: [withK9Kodeverkoppslag(), withFakeApi(faktaMedÅrsaker, årsaker)],
+  play: async ({ canvas }) => {
+    await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('checkbox', { name: 'Behandle alle perioder samlet' })).not.toBeInTheDocument();
+  },
 };
 
 export const MedEksisterendeÅrsaker: Story = {
   decorators: [withK9Kodeverkoppslag(), withFakeApi(faktaMedÅrsaker, årsaker)],
+};
+
+export const UtenPerioder: Story = {
+  decorators: [withK9Kodeverkoppslag(), withFakeApi(faktaUtenPerioder, årsaker)],
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Ingen perioder med feilutbetaling')).toBeInTheDocument();
+  },
 };

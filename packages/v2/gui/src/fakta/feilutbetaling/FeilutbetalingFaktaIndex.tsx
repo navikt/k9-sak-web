@@ -71,9 +71,7 @@ const FeilutbetalingFaktaIndex = ({
   submitCallback,
 }: FeilutbetalingFaktaIndexProps) => {
   const api = useFeilutbetalingFaktaApi();
-  const { data: faktaDto } = useSuspenseQuery(
-    feilutbetalingFaktaQueryOptions(api, behandlingUuid, behandlingVersjon),
-  );
+  const { data: faktaDto } = useSuspenseQuery(feilutbetalingFaktaQueryOptions(api, behandlingUuid, behandlingVersjon));
   const { data: alleÅrsaker } = useSuspenseQuery(feilutbetalingÅrsakerQueryOptions(api));
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
@@ -187,15 +185,17 @@ const FeilutbetalingFaktaIndex = ({
                     <BodyShort size="small">{fakta?.tidligereVarseltBeløp ?? 'Ikke varslet'}</BodyShort>
                   </VStack>
                 </HGrid>
-                <Controller
-                  control={control}
-                  name="behandlePerioderSamlet"
-                  render={({ field }) => (
-                    <Checkbox size="small" checked={field.value} onChange={field.onChange} readOnly={readOnly}>
-                      Behandle alle perioder samlet
-                    </Checkbox>
-                  )}
-                />
+                {!readOnly && (
+                  <Controller
+                    control={control}
+                    name="behandlePerioderSamlet"
+                    render={({ field }) => (
+                      <Checkbox size="small" checked={field.value} onChange={field.onChange}>
+                        Behandle alle perioder samlet
+                      </Checkbox>
+                    )}
+                  />
+                )}
                 <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
                   <FeilutbetalingPerioderTable
                     perioder={perioder}
@@ -249,17 +249,19 @@ const FeilutbetalingFaktaIndex = ({
                 )}
               />
             </HGrid>
-            <div>
-              <Button
-                variant="primary"
-                size="small"
-                type="submit"
-                disabled={!formState.isDirty || formState.isSubmitting}
-                loading={formState.isSubmitting}
-              >
-                Bekreft og fortsett
-              </Button>
-            </div>
+            {!readOnly && (
+              <div>
+                <Button
+                  variant="primary"
+                  size="small"
+                  type="submit"
+                  disabled={!formState.isDirty || formState.isSubmitting}
+                  loading={formState.isSubmitting}
+                >
+                  Bekreft og fortsett
+                </Button>
+              </div>
+            )}
           </VStack>
         </form>
       </FormProvider>
