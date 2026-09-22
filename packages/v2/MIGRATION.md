@@ -40,7 +40,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 #### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG`
+- [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG` (V2 implementert, aktivert i Q)
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
