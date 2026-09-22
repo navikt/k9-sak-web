@@ -22,8 +22,8 @@ describe('utledAktivTab', () => {
     );
   });
 
-  it('returnerer VILKÅRSVURDERING når VURDER_BOSTEDVILKÅR er OPPRETTET', () => {
-    expect(utledAktivTab({ vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR) })).toBe(
+  it('returnerer VILKÅRSVURDERING når VURDER_BOSTEDSVILKÅR_OPPHØR er OPPRETTET', () => {
+    expect(utledAktivTab({ vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR) })).toBe(
       OpphørTab.VILKÅRSVURDERING,
     );
   });
@@ -53,16 +53,16 @@ describe('utledAktivTab', () => {
     expect(
       utledAktivTab({
         vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-        vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+        vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
       }),
     ).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
   });
 
-  it('returnerer VILKÅRSVURDERING når VURDER_FAKTA_OM_BOSTED er UTFØRT og VURDER_BOSTEDVILKÅR er OPPRETTET', () => {
+  it('returnerer VILKÅRSVURDERING når VURDER_FAKTA_OM_BOSTED er UTFØRT og VURDER_BOSTEDSVILKÅR_OPPHØR er OPPRETTET', () => {
     expect(
       utledAktivTab({
         vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED, AksjonspunktStatus.UTFØRT),
-        vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+        vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
       }),
     ).toBe(OpphørTab.VILKÅRSVURDERING);
   });

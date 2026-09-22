@@ -5,3 +5,7 @@
 .marginTop {
   margin-top: 1rem;
 }
+
+.ingenAvrunding:global(.aksel-alert) {
+  border-radius: 0 !important;
+}

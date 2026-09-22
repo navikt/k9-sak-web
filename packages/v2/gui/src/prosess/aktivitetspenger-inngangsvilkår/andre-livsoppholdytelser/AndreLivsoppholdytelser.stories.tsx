@@ -264,7 +264,7 @@ export const RedigererMaksdato: Story = {
       await waitFor(async () => {
         await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual({
           '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-          begrunnelse: 'Søker har ingen andre livsoppholdytelser.\n\nSøker ønsker kortere periode.',
+          begrunnelse: 'Aksjonspunkt 5142 VURDER_ANDRE_LIVSOPPHOLDSYTELSER bekreftet',
           vurdertePerioder: [
             {
               avslagsårsak: undefined,

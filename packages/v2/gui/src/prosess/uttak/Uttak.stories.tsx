@@ -109,8 +109,8 @@ export const UttakBasis: Story = {
     });
 
     await step('Kan åpne/lukke periodedetaljer', async () => {
-      // Finn ekspanderbare elementer (knapper eller overskrifter)
-      const expandButtons = canvas.queryAllByRole('button');
+      // Finn ekspanderbare elementer for perioder
+      const expandButtons = canvas.queryAllByRole('button', { name: 'Åpne' });
       await expect(expandButtons.length).toEqual(3);
 
       if (expandButtons.length > 0 && expandButtons[0]) {

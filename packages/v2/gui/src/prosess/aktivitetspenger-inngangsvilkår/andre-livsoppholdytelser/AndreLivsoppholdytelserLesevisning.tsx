@@ -6,7 +6,7 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 
 const avslagsårsakLabels: Record<string, string> = {
-  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE]: 'Søker har annen livsoppholdytelse',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE]: 'Søker har annen livsoppholdytelse',
   fritekst: 'Fritekst',
 };
 

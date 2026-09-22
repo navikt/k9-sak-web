@@ -1,4 +1,4 @@
-import type { FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakYtelseType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { RelatertYtelseTilstand } from '@k9-sak-web/backend/k9sak/kodeverk/arbeidsforhold/RelatertYtelseTilstand.js';
 import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
@@ -78,7 +78,7 @@ const statusTilPeriodeIkon = (status: RelatertYtelseTilstand) => {
 
 const lagDetaljinnhold = (
   rad: YtelsePeriode,
-  formatYtelseType: (ytelseType: FagsakYtelseType) => string,
+  formatYtelseType: (ytelseType: FagsakYtelsesType) => string,
   formatStatus: (status: RelatertYtelseTilstand) => string,
 ) => (
   <VStack gap="space-4" className={styles['detaljerPopover']}>
@@ -106,7 +106,7 @@ const YtelserFaktaIndex = ({ behandlingUuid, gjeldendeSaksnummer }: YtelserFakta
   const { data } = useSuspenseQuery(useYtelserOptions(behandlingUuid));
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
-  const formatYtelseType = (ytelseType: FagsakYtelseType) =>
+  const formatYtelseType = (ytelseType: FagsakYtelsesType) =>
     kodeverkoppslag.k9sak.fagsakYtelseTyper(ytelseType, OrUndefined)?.navn ?? ytelseType;
 
   const formatStatus = (status: RelatertYtelseTilstand) =>

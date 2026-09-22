@@ -7,3 +7,8 @@
 .historisk {
   font-style: italic;
 }
+
+.ingenAvrunding:global(.aksel-alert),
+.ingenAvrunding:global(.aksel-base-alert) {
+  border-radius: 0 !important;
+}

@@ -66,6 +66,7 @@ const behandlingOppretting = [
 ];
 
 export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
+  decorators: [withFeatureToggles({ REVURDERING_FRA_STEG_V2: false })],
   args: {
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     saksnummer: '123',

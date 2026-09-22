@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import { getGosysUrl } from '@k9-sak-web/lib/paths/paths.js';
+import styles from './gosysstripe.module.css';
 
 interface GosysstripeProps {
   saksnummer: string;
@@ -33,7 +34,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
 
   if (error) {
     return (
-      <Alert size="small" variant="error">
+      <Alert size="small" variant="error" className={styles.ingenAvrunding}>
         Får ikke hentet Gosys-oppgaver
       </Alert>
     );
@@ -49,7 +50,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
     return null;
   }
   return (
-    <Alert size="small" variant="info" className="mt-2">
+    <Alert size="small" variant="info" className={styles.ingenAvrunding}>
       <VStack gap="space-6">
         <div>
           <BodyShort size="small">

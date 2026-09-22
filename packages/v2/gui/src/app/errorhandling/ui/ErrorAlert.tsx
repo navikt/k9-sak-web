@@ -5,13 +5,14 @@ import { ErrorReportButton } from './ErrorReportButton.js';
 import { ErrorReportPopover } from './ErrorReportPopover.js';
 import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
 import { ErrorPanel } from './ErrorPanel.js';
+import styles from './errorAlert.module.css';
 
 export type ErrorAlertProps = ErrorViewProps;
 
 export const ErrorAlert = ({ error, title, errorInfo, fixAction }: ErrorAlertProps) => {
   const reportLink = makeErrorReportLinkForJira([error]);
   return (
-    <LocalAlert status="error">
+    <LocalAlert status="error" className={styles.ingenAvrunding}>
       <LocalAlert.Header>
         <LocalAlert.Title>{title}</LocalAlert.Title>
       </LocalAlert.Header>

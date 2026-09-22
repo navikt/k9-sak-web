@@ -27,7 +27,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos, api })
 
   if (error) {
     return (
-      <Alert size="small" variant="error">
+      <Alert size="small" variant="error" className={styles.ingenAvrunding}>
         Får ikke kontakt med K9-Punsj
       </Alert>
     );
@@ -72,7 +72,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos, api })
   };
 
   return (
-    <Alert size="small" variant="warning">
+    <Alert size="small" variant="warning" className={styles.ingenAvrunding}>
       <div>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</div>
       <div className="marginTop">{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</div>
     </Alert>

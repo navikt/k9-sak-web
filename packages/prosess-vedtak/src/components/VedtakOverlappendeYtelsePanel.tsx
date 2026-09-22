@@ -47,21 +47,19 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
   /**
    * Set opp radene som brukes i Tidslinjen
    */
-  const usorterteRader = overlappendeYtelser.map(
-    (rad, radIndex): TidslinjeRad<Periodeinfo> => ({
-      id: `rad-${radIndex}`,
-      perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
-        fom: periode.fom,
-        tom: periode.tom,
-        id: `rad-${radIndex}-periode-${periodeIndex}`,
-        hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(rad.kilde)}`,
-        periodeinfo: {
-          kilde: rad.kilde,
-          ytelseType: rad.ytelseType,
-        },
-      })),
-    }),
-  );
+  const usorterteRader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<Periodeinfo> => ({
+    id: `rad-${radIndex}`,
+    perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
+      fom: periode.fom,
+      tom: periode.tom,
+      id: `rad-${radIndex}-periode-${periodeIndex}`,
+      hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(rad.kilde)}`,
+      periodeinfo: {
+        kilde: rad.kilde,
+        ytelseType: rad.ytelseType,
+      },
+    })),
+  }));
 
   /**
    * Sorter radene slik at raden som har en periode med den tidligste datoen sorteres øverst
@@ -154,7 +152,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
           <Accordion.Item>
             <Accordion.Header>
               <Heading size="xsmall" level="3">
-                Hvilke ytelser går det automatisk melding?
+                Hvilke ytelser går det automatisk melding om?
               </Heading>
             </Accordion.Header>
             <Accordion.Content>

@@ -282,20 +282,13 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
-    await step('Velg opphørsårsak', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: /opphørsårsak/i }),
-        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
-      );
-    });
-
     await step('Fyll inn begrunnelse', async () => {
       await userEvent.type(
         canvas.getByRole('textbox', { name: /vurder om bruker har flyttet/i }),
@@ -307,8 +300,8 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
       await userEvent.click(canvas.getByRole('radio', { name: /nei, bruker bor fortsatt/i }));
     });
 
-    await step('Send til beslutter', async () => {
-      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    await step('Bekreft og fortsett', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
     });
 
     await step('Callback er kalt etter innsending', async () => {
@@ -333,20 +326,13 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 export const VilkårsvurderingFlyttetMedFritekst: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
-    await step('Velg opphørsårsak', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: /opphørsårsak/i }),
-        BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
-      );
-    });
-
     await step('Fyll inn begrunnelse', async () => {
       await userEvent.type(
         canvas.getByRole('textbox', { name: /vurder om bruker har flyttet/i }),
@@ -369,8 +355,8 @@ export const VilkårsvurderingFlyttetMedFritekst: Story = {
       );
     });
 
-    await step('Send til beslutter', async () => {
-      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    await step('Bekreft og fortsett', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
     });
 
     await step('Payload inneholder fritekst til opphørsbrev', async () => {
@@ -405,7 +391,7 @@ const fakeTotrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[] = [
     skjermlenkeType: 'OPPHØR',
     totrinnskontrollAksjonspunkter: [
       { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED },
-      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR },
+      { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR },
     ],
   },
 ];

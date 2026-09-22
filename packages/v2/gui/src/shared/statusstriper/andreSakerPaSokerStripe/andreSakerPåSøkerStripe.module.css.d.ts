@@ -8,14 +8,17 @@
 
 declare const sakerGrid: string;
 declare const historisk: string;
+declare const ingenAvrunding: string;
 
 export {
 	sakerGrid,
-	historisk
+	historisk,
+	ingenAvrunding
 };
 
 declare const __default_export__: {
 	sakerGrid: typeof sakerGrid;
 	historisk: typeof historisk;
+	ingenAvrunding: typeof ingenAvrunding;
 };
 export default __default_export__;

@@ -27,7 +27,7 @@
     "verbatimModuleSyntax": true,
     "sourceMap": true,
     "jsx": "react-jsx",
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom/vitest"],
     "skipLibCheck": true
   },
   "include": ["./**/*"]

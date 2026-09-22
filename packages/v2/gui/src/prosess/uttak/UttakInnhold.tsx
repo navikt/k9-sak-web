@@ -1,8 +1,11 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import { useEffect, useState, type JSX } from 'react';
+import { useContext, useEffect, useState, type JSX } from 'react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
+import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
+import EndringerIUttakDrawer from './components/endringer-i-uttak/EndringerIUttakDialog';
 import Infostripe from './components/infostripe/Infostripe';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
 import { useUttakContext } from './context/UttakContext';
@@ -24,6 +27,8 @@ const UttakInnhold = (): JSX.Element => {
   } = useUttakContext();
 
   const [overstyringAktiv, setOverstyringAktiv] = useState<boolean>(aksjonspunktForOverstyringAvUttak !== undefined);
+  const [visEndringerIUttak, setVisEndringerIUttak] = useState(false);
+  const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
 
   useEffect(() => {
     setOverstyringAktiv(aksjonspunktForOverstyringAvUttak !== undefined);
@@ -37,12 +42,27 @@ const UttakInnhold = (): JSX.Element => {
 
   return (
     <VStack gap="space-16">
-      <HStack justify="start">
-        <Heading size="small" level="1">
-          Uttak
-        </Heading>
-        {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
+      <HStack justify="space-between">
+        <HStack>
+          <Heading size="small" level="1">
+            Uttak
+          </Heading>
+          {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
+        </HStack>
+        {NORMALARBEIDSTID_UTTAK && (
+          <Button
+            variant="tertiary"
+            size="small"
+            icon={<InformationSquareIcon aria-hidden />}
+            onClick={() => setVisEndringerIUttak(true)}
+          >
+            Endringer i uttak
+          </Button>
+        )}
       </HStack>
+      {NORMALARBEIDSTID_UTTAK && (
+        <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
+      )}
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
       {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
         <ContentMaxWidth>
@@ -60,6 +80,7 @@ const UttakInnhold = (): JSX.Element => {
           <UttaksperiodeListe
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
             redigerVirkningsdato={redigerVirkningsdato}
+            visEndringerIUttakFunc={() => setVisEndringerIUttak(true)}
           />
         )}
       </VStack>

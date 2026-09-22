@@ -154,6 +154,7 @@ const PleiepengerSluttfaseFakta = ({
               {valgtPanel.getPanelDef().getKomponent({
                 ...faktaData,
                 ...faktaDataUtenCaching,
+                fagsak,
                 behandling,
                 alleKodeverk,
                 featureToggles,

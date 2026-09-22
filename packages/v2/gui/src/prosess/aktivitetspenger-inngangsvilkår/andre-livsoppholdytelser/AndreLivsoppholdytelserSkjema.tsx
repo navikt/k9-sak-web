@@ -69,7 +69,7 @@ export const AndreLivsoppholdytelserSkjema = ({
             legend="Avslagsårsak"
             validate={[required]}
           >
-            <Radio value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE}>
+            <Radio value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE}>
               Søker har annen livsoppholdytelse
             </Radio>
             <Radio value="fritekst">Fritekst</Radio>

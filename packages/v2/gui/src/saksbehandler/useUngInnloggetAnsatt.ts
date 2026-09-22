@@ -1,6 +1,9 @@
-import { FagsakYtelseType as FagsakYtelseTypeK9sak } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakYtelseType.js';
+import type { FagsakYtelsesType as FagsakYtelseTypeK9sak } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { navAnsatt_innloggetBrukerV2 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import { FagsakYtelseType as FagsakYtelsesTypeUng } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
+import {
+  type FagsakYtelsesType as FagsakYtelsesTypeUngType,
+  fagsakYtelsesType as FagsakYtelsesTypeUng,
+} from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 export type UngNavAnsattTilgang = {
@@ -24,7 +27,7 @@ export const innloggetAnsattUngV2QueryOptions = {
 };
 
 export function useNavAnsattForYtelse(
-  fagsakYtelsesType: FagsakYtelseTypeK9sak | FagsakYtelsesTypeUng,
+  fagsakYtelsesType: FagsakYtelseTypeK9sak | FagsakYtelsesTypeUngType,
 ): UngNavAnsattTilgang {
   const { data } = useSuspenseQuery(innloggetAnsattUngV2QueryOptions);
   const erAktivitetspenger = fagsakYtelsesType === FagsakYtelsesTypeUng.AKTIVITETSPENGER;

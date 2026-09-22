@@ -85,6 +85,7 @@ const InntektsmeldingVeiledningAlert = () => (
 export interface InntektsmeldingAlertsProps {
   ferdigVurdert: boolean;
   kanFortsetteUtenEndring: boolean;
+  manglerInntektsmelding: boolean;
   isSubmitting: boolean;
   onSubmit: () => void;
 }
@@ -92,12 +93,13 @@ export interface InntektsmeldingAlertsProps {
 const InntektsmeldingAlerts = ({
   ferdigVurdert,
   kanFortsetteUtenEndring,
+  manglerInntektsmelding,
   isSubmitting,
   onSubmit,
 }: InntektsmeldingAlertsProps) => (
   <>
     {kanFortsetteUtenEndring && <FerdigVurdertAlert isSubmitting={isSubmitting} onSubmit={onSubmit} />}
-    {!ferdigVurdert && <ManglendeInntektsmeldingAlert />}
+    {!ferdigVurdert && manglerInntektsmelding && <ManglendeInntektsmeldingAlert />}
     <InntektsmeldingVeiledningAlert />
   </>
 );

@@ -62,7 +62,6 @@ export type { default as RelatertFagsak } from './src/relatertFagsak';
 export type { default as SaksbehandlereInfo } from './src/saksbehandlereInfo';
 export * from './src/tidslinje';
 export type { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
-export * from './src/utenlandsopphold/utenlandsoppholdTsType';
 export type { default as Venteaarsak } from './src/venteaarsakTsType';
 export * from './src/vilkarUtfallPeriodisert';
 export { default as Vurderingsresultat } from './src/Vurderingsresultat';
