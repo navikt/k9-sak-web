@@ -1,13 +1,11 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { thunk } from 'redux-thunk';
-import { IS_DEV } from './constants';
-
-const isDevelopment = IS_DEV;
+import { isDev } from '@k9-sak-web/lib/paths/paths.js';
 
 const configureStore = () => {
   let enhancer;
-  if (isDevelopment || window.location.href.includes('intern.dev.nav.no')) {
+  if (isDev() || window.location.href.includes('intern.dev.nav.no')) {
     /* eslint-disable-next-line no-underscore-dangle */
     const composeEnhancers = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
     enhancer = composeEnhancers(applyMiddleware(thunk));
