@@ -22,7 +22,11 @@ const BeredskapsperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: BeredskapsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const { readOnly = false } = useContext(ContainerContext) || {};
+  const {
+    readOnly = false,
+    harUløstAksjonspunktForBeredskap = false,
+    harLøstAksjonspunktForBeredskap = false,
+  } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = beredskapsperiode;
   return (
     <DetailView
@@ -34,7 +38,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
               Rediger vurdering
             </Button>
           )}
-          readOnly={readOnly}
+          readOnly={readOnly || (!harUløstAksjonspunktForBeredskap && !harLøstAksjonspunktForBeredskap)}
         />
       )}
     >

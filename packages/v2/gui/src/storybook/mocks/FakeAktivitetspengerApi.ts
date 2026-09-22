@@ -1,4 +1,5 @@
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
+import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
@@ -23,12 +24,22 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     throw new Error('Not implemented');
   }
 
+  async hentLovligeBehandlingsoperasjoner(behandlingUuid: string) {
+    return {
+      uuid: behandlingUuid,
+    };
+  }
+
   async hentBehandlingMidlertidigStatus(): Promise<never> {
     throw new Error('Not implemented');
   }
 
   async hentMedlemskapFraSøknad() {
-    return {};
+    return { perioder: [] };
+  }
+
+  async hentBostedGrunnlag() {
+    return { perioder: [] };
   }
 
   async getBeregningsgrunnlag(): Promise<never> {
@@ -44,6 +55,16 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   }
 
   async getSatsOgUtbetalingPerioder() {
+    return [];
+  }
+
+  async hentPerioderSomKanAvkortes(): Promise<AvkortingsperioderResponse> {
+    return { resultat: [] };
+  }
+
+  async hentTotrinnskontrollSkjermlenkeContext(): ReturnType<
+    AktivitetspengerApi['hentTotrinnskontrollSkjermlenkeContext']
+  > {
     return [];
   }
 }

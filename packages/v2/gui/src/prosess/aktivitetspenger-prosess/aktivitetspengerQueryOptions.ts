@@ -12,10 +12,11 @@ export const vilkårQueryOptions = (api: AktivitetspengerApi, behandling: Behand
     queryFn: () => api.getVilkår(behandling.uuid),
   });
 
-export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling?: Behandling) =>
   queryOptions({
-    queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon, api.backend],
-    queryFn: () => api.getAksjonspunkter(behandling.uuid),
+    queryKey: ['aksjonspunkter', behandling?.uuid, behandling?.versjon, api.backend],
+    queryFn: () => api.getAksjonspunkter(behandling!.uuid),
+    enabled: !!behandling,
   });
 
 export const behandlingQueryOptions = (api: AktivitetspengerApi, behandling: Pick<Behandling, 'uuid' | 'versjon'>) =>
@@ -44,4 +45,28 @@ export const satsOgUtbetalingPerioderQueryOptions = (
   queryOptions({
     queryKey: ['satsOgUtbetalingPerioder', behandling.uuid, api.backend, enabled],
     queryFn: () => (enabled ? api.getSatsOgUtbetalingPerioder(behandling.uuid) : null),
+  });
+
+export const totrinnskontrollSkjermlenkeContextQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['totrinnskontroll-skjermlenke-context', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentTotrinnskontrollSkjermlenkeContext(behandling.uuid),
+  });
+
+export const lovligeBehandlingsoperasjonerQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['lovlige-behandlingsoperasjoner', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentLovligeBehandlingsoperasjoner(behandling.uuid),
+  });
+
+export const bostedGrunnlagQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['bosted-grunnlag', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentBostedGrunnlag(behandling.uuid),
+  });
+
+export const perioderSomKanAvkortesQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['perioder-som-kan-avkortes', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentPerioderSomKanAvkortes(behandling.uuid),
   });

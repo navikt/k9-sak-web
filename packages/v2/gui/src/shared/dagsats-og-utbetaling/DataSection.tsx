@@ -22,6 +22,9 @@ export const DataSection = ({ ungdomsprogramInformasjon }: DataSectionProps) => 
           <InformationSquareIcon color="#417DA0" fontSize="1.5rem" />
           <Label as="p">Nøkkelinformasjon</Label>
         </HStack>
+        <BodyShort size="small">
+          <b>Periode:</b> {ungdomsprogramInformasjon?.harForlengetPeriode ? '260 + 40 dager' : '260 dager'}
+        </BodyShort>
         <HStack gap="space-16">
           <BodyShort size="small">
             <b>Startdato:</b>{' '}

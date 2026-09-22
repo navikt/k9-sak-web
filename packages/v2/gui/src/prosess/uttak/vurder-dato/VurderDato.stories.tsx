@@ -50,7 +50,6 @@ export const ÅpentAksjonspunkt: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -92,7 +91,6 @@ export const Skjemavalidering: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -135,7 +133,6 @@ export const LøsAksjonspunkt: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -201,7 +198,6 @@ export const RedigerVurdering: Story = {
           'Endringene i uttaksreglene skal gjelde fra 15. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
       }),
     ],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -210,11 +206,7 @@ export const RedigerVurdering: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel for endringsdato', async () => {
-      await expect(
-        canvas.getByRole('row', {
-          name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.',
-        }),
-      );
+      await expect(canvas.getByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger' }));
     });
 

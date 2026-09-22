@@ -2,8 +2,9 @@ import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9k
 import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -11,8 +12,8 @@ import { use, useCallback } from 'react';
 import NyBehandlingModal, {
   type BehandlingOppretting,
   type DelvisRevurderingÅrsakMapping,
-  type FormValues,
 } from './components/NyBehandlingModal';
+import { NyBehandlingModalAktivitetspenger } from './components/NyBehandlingModalAktivitetspenger';
 import VilkårBackendClient from './VilkårBackendClient';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [
@@ -49,6 +50,18 @@ interface OwnProps {
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
+type FormValues = {
+  behandlingType: string;
+  nyBehandlingEtterKlage?: string;
+  behandlingArsakType?: string;
+  revurderingModus?: 'FULL' | 'DELVIS';
+  steg?: string;
+  fom?: string;
+  tom?: string;
+  fomForPeriodeForInntektskontroll?: string;
+  valgtePerioder?: string[];
+};
+
 const MenyNyBehandlingIndexV2 = ({
   ytelseType,
   saksnummer,
@@ -71,10 +84,13 @@ const MenyNyBehandlingIndexV2 = ({
   gjeldendeVedtakBehandlendeEnhetId,
 }: OwnProps) => {
   const vilkårBackendClient = new VilkårBackendClient(
-    ytelseType === fagsakYtelsesType.UNGDOMSYTELSE ? 'ungSak' : 'k9Sak',
+    ytelseType === fagsakYtelsesType.UNGDOMSYTELSE || ytelseType === fagsakYtelsesType.AKTIVITETSPENGER
+      ? 'ungSak'
+      : 'k9Sak',
   );
   const { data: vilkår } = useQuery({
     queryKey: ['vilkar', behandlingUuid],
+    throwOnError: ignore404Errors,
     queryFn: () => (behandlingUuid ? vilkårBackendClient.getVilkår(behandlingUuid) : []),
     enabled: !!behandlingUuid && !erTilbakekreving(behandlingType),
   });
@@ -92,7 +108,11 @@ const MenyNyBehandlingIndexV2 = ({
     async (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
       const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
-      const filteredFormValues = Object.fromEntries(Object.entries(formValues).filter(([, v]) => v !== ''));
+      const filteredFormValues: Record<string, unknown> = Object.fromEntries(
+        Object.entries(formValues).filter(
+          ([, v]) => v !== '' && v !== undefined && (!Array.isArray(v) || v.length > 0),
+        ),
+      );
 
       if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {
         delete filteredFormValues['steg'];
@@ -100,6 +120,23 @@ const MenyNyBehandlingIndexV2 = ({
         delete filteredFormValues['tom'];
         delete filteredFormValues['revurderingModus'];
       } else if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'DELVIS') {
+        const valgtePerioder = Array.isArray(formValues.valgtePerioder)
+          ? formValues.valgtePerioder
+              .filter(Boolean)
+              .map(value => {
+                const [fom, tom] = value.split('/');
+                return fom && tom ? { fom, tom } : null;
+              })
+              .filter((p): p is { fom: string; tom: string } => p !== null)
+          : [];
+
+        if (valgtePerioder.length > 0) {
+          filteredFormValues['perioder'] = valgtePerioder;
+          delete filteredFormValues['fom'];
+          delete filteredFormValues['tom'];
+        }
+
+        delete filteredFormValues['valgtePerioder'];
         delete filteredFormValues['revurderingModus'];
         delete filteredFormValues['behandlingArsakType'];
         delete filteredFormValues['nyBehandlingEtterKlage'];
@@ -121,6 +158,26 @@ const MenyNyBehandlingIndexV2 = ({
     },
     [behandlingId, saksnummer, lagNyBehandling, lukkModal, REVURDERING_FRA_STEG_V2],
   );
+  const isAktivitetspenger = ytelseType === fagsakYtelsesType.AKTIVITETSPENGER;
+  if (isAktivitetspenger) {
+    return (
+      <NyBehandlingModalAktivitetspenger
+        behandlingstyper={behandlingstyper}
+        behandlingOppretting={behandlingOppretting}
+        tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
+        cancelEvent={lukkModal}
+        kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
+        saksnummer={saksnummer}
+        behandlingType={behandlingType}
+        behandlingUuid={behandlingUuid}
+        uuidForSistLukkede={uuidForSistLukkede}
+        erTilbakekrevingAktivert={erTilbakekrevingAktivert}
+        sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
+        submitCallback={submit}
+      />
+    );
+  }
   return (
     <NyBehandlingModal
       ytelseType={ytelseType}

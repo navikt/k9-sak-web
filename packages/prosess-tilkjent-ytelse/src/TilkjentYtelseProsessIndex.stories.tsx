@@ -13,7 +13,7 @@ import {
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import { TilkjentYtelseV1ApiContext } from './api/TilkjentYtelseApiContext';
 import type { FeriepengerPrÅr } from './api/tilkjentYtelseApi';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
+import { withQueryClientProvider } from '@k9-sak-web/gui/storybook/decorators/withQueryClientProvider.js';
 
 const fagsak = {
   sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
@@ -204,6 +204,7 @@ const fakeFeriepengerApi = {
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
+  decorators: [withQueryClientProvider({ queries: { throwOnError: false } })],
 };
 
 export const VisUtenAksjonspunkt = args => (
@@ -300,8 +301,6 @@ export const VisMedFeriepengerPanel = args => (
     </TilkjentYtelseV1ApiContext.Provider>
   </KodeverkProvider>
 );
-
-VisMedFeriepengerPanel.decorators = [withFeatureToggles({ VIS_FERIEPENGER_PANEL: true })];
 
 VisMedFeriepengerPanel.args = {
   isReadOnly: true,

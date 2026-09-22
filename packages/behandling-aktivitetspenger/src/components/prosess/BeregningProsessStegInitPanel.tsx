@@ -2,43 +2,28 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregning } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregning.js';
-import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
-import {
-  aksjonspunkterQueryOptions,
-  beregningsgrunnlagQueryOptions,
-  innloggetBrukerQueryOptions,
-} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { beregningsgrunnlagQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQueries } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useContext } from 'react';
 
 const PANEL_ID = prosessStegCodes.BEREGNING;
 
 interface Props {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
 }
 
-export const BeregningProsessStegInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
+export const BeregningProsessStegInitPanel = ({ api, behandling }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
-  const aktivitetspengerBeregningApi = useMemo(() => new AktivitetspengerBeregningBackendClient(), []);
-  const [{ data: beregningsgrunnlag }, { data: aksjonspunkter }, { data: innloggetBruker }] = useSuspenseQueries({
-    queries: [
-      beregningsgrunnlagQueryOptions(api, behandling, erTilBehandlingEllerBehandlet),
-      aksjonspunkterQueryOptions(api, behandling),
-      innloggetBrukerQueryOptions(api),
-    ],
-  });
+
+  const { data: beregningsgrunnlag } = useSuspenseQuery(
+    beregningsgrunnlagQueryOptions(api, behandling, erTilBehandlingEllerBehandlet),
+  );
+
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-  const isReadOnly = useMemo(() => {
-    return (
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-      !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle
-    );
-  }, [innloggetBruker]);
 
   if (!erValgt) {
     return null;
@@ -52,14 +37,5 @@ export const BeregningProsessStegInitPanel = ({ api, behandling, onAksjonspunktB
     return null;
   }
 
-  return (
-    <AktivitetspengerBeregning
-      data={beregningsgrunnlag}
-      behandling={behandling}
-      api={aktivitetspengerBeregningApi}
-      aksjonspunkter={aksjonspunkter}
-      onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-      isReadOnly={isReadOnly}
-    />
-  );
+  return <AktivitetspengerBeregning data={beregningsgrunnlag} />;
 };

@@ -21,6 +21,24 @@ const config: StorybookConfig = {
     name: getAbsolutePath('@storybook/react-vite'),
     options: {},
   },
+
+  viteFinal: async viteConfig => {
+    return {
+      ...viteConfig,
+      resolve: {
+        ...viteConfig.resolve,
+        dedupe: [
+          ...(viteConfig.resolve?.dedupe ?? []),
+          'react',
+          'react-dom',
+          'react-router',
+          'react-router-dom',
+          '@tanstack/react-query',
+          '@tanstack/query-core',
+        ],
+      },
+    };
+  },
 };
 
 export default config;

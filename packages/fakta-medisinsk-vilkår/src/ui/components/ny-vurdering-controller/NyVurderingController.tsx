@@ -32,7 +32,7 @@ const NyVurderingController = ({
   onVurderingLagret,
   formRenderer,
 }: NyVurderingControllerProps): JSX.Element => {
-  const { httpErrorHandler } = React.useContext(ContainerContext);
+  const { errorNotifier } = React.useContext(ContainerContext);
   const { vurderingstype } = React.useContext(VurderingContext);
 
   const [state, dispatch] = React.useReducer(vurderingControllerReducer, {
@@ -67,7 +67,7 @@ const NyVurderingController = ({
         opprettVurderingLink.href,
         opprettVurderingLink.requestPayload.behandlingUuid,
         { ...nyVurderingsversjon, type: vurderingstype },
-        httpErrorHandler,
+        errorNotifier,
         controller.signal,
       ).then(
         () => {
@@ -93,7 +93,7 @@ const NyVurderingController = ({
         opprettVurderingLink.href,
         opprettVurderingLink.requestPayload.behandlingUuid,
         { ...nyVurderingsversjon, type: vurderingstype },
-        httpErrorHandler,
+        errorNotifier,
         controller.signal,
       );
     } else {
@@ -141,7 +141,7 @@ const NyVurderingController = ({
         resolve([]);
       });
     }
-    return httpUtils.get(dataTilVurderingUrl, httpErrorHandler, { signal: controller.signal });
+    return httpUtils.get(dataTilVurderingUrl, errorNotifier, { signal: controller.signal });
   }
 
   const handleHentDataTilVurderingError = () => {

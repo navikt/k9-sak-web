@@ -1,5 +1,5 @@
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import { ReactNode } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
@@ -17,31 +17,41 @@ interface OwnProps {
 
 const SideMenuWrapper = ({ paneler, onClick, children }: OwnProps) => {
   const intl = useIntl();
+
+  const handleClick = useCallback(
+    (index: number) => {
+      const panelLabel = intl.formatMessage({ id: paneler[index]?.tekstKode });
+      window.umami?.track('faktapanel-klikk', { panel: panelLabel });
+      onClick?.(index);
+    },
+    [onClick, paneler, intl],
+  );
+
   return (
-  <div className={styles.container}>
-    <FlexContainer fullHeight>
-      <FlexRow>
-        <FlexColumn className={styles.sideMenu}>
-          <SideMenu
-            heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
-            links={paneler.map(panel => ({
-              label: intl.formatMessage({ id: panel.tekstKode }),
-              active: panel.erAktiv,
-              icon: panel.harAksjonspunkt ? (
-                <ExclamationmarkTriangleFillIcon
-                  fontSize="1.25rem"
-                  data-testid="sidemenu-aksjonspunkt-icon"
-                  style={{ color: 'var(--ax-text-warning-decoration)', fontSize: '1.25rem' }}
-                />
-              ) : undefined,
-            }))}
-            onClick={onClick}
-          />
-        </FlexColumn>
-        <FlexColumn className={styles.content}>{children}</FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-  </div>
+    <div className={styles.container}>
+      <FlexContainer fullHeight>
+        <FlexRow>
+          <FlexColumn className={styles.sideMenu}>
+            <SideMenu
+              heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
+              links={paneler.map(panel => ({
+                label: intl.formatMessage({ id: panel.tekstKode }),
+                active: panel.erAktiv,
+                icon: panel.harAksjonspunkt ? (
+                  <ExclamationmarkTriangleFillIcon
+                    fontSize="1.25rem"
+                    data-testid="sidemenu-aksjonspunkt-icon"
+                    style={{ color: 'var(--ax-text-warning-decoration)', fontSize: '1.25rem' }}
+                  />
+                ) : undefined,
+              }))}
+              onClick={handleClick}
+            />
+          </FlexColumn>
+          <FlexColumn className={styles.content}>{children}</FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </div>
   );
 };
 

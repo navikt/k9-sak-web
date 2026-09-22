@@ -1,5 +1,6 @@
 import { isObject } from '../../typecheck/isObject.js';
 import { isString } from '../../typecheck/isString.js';
+import { isÅrsakIkkeTilgangArray, resolveÅrsakIkkeTilgangTekster } from './ÅrsakIkkeTilgang.js';
 
 export type NavCallid = `CallId_${string}`;
 
@@ -7,25 +8,25 @@ export const isNavCallid = (maybe: string): maybe is NavCallid => maybe.startsWi
 
 export class ExtendedApiError extends Error {
   public navCallid: NavCallid | null;
-  public readonly errorId: number = Math.floor(Math.random() * 1000000000);
   public readonly url: string;
   public readonly status: number;
   public readonly statusText: string;
-  public readonly error: string | object;
   public readonly body: string | object;
   public readonly request: Request;
   public readonly location: string | null;
 
-  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
-    const errBody = typeof error === 'string' ? error : JSON.stringify(error);
-    const msg = `Forespørsel til ${req.url} feilet (${resp.status}): ${errBody}`;
+  constructor(req: Request, resp: Response, body: string | object, navCallid: string | null) {
+    let msg = `${req.method} Forespørsel til ${req.url} feilet (${resp.status})`;
+    const bodyFeilmelding = ExtendedApiError.resolveBodyFeilmelding(body);
+    if (bodyFeilmelding != null) {
+      msg = `${msg}: ${bodyFeilmelding}`;
+    }
     super(msg);
     this.url = req.url;
     this.status = resp.status;
     this.statusText = resp.statusText;
     this.location = resp.headers.get('Location');
-    this.error = error;
-    this.body = error;
+    this.body = body;
     this.request = req;
 
     this.name = this.constructor.name;
@@ -56,20 +57,39 @@ export class ExtendedApiError extends Error {
     return this.status >= 400 && this.status < 500;
   }
 
-  public get bodyFeilmelding(): string | null {
-    const { body } = this;
+  public get isGatewayTimeout(): boolean {
+    return this.status === 504;
+  }
+
+  public get isConflict() {
+    return this.status === 409;
+  }
+
+  private static resolveBodyFeilmelding(body: string | object): string | null {
     if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
       return body.feilmelding;
     }
     return null;
   }
 
-  public override toString(): string {
-    let feilmelding = this.bodyFeilmelding;
-    if (feilmelding !== null) {
-      feilmelding = ' - ' + feilmelding;
+  public get bodyFeilmelding(): string | null {
+    const { body } = this;
+    return ExtendedApiError.resolveBodyFeilmelding(body);
+  }
+
+  /**
+   * Utled visningstekster for årsaker til manglande tilgang når feilen er en 403 (isForbidden).
+   * Returnerer tom liste viss feilen ikkje er en 403, eller viss ingen årsaker kan utledast frå body.
+   */
+  public resolveÅrsakIkkeTilgangTekster(): string[] {
+    if (!this.isForbidden) {
+      return [];
     }
-    return `${super.name} (${this.url}): ${super.message} ${feilmelding}`;
+    const { body } = this;
+    if (isObject(body) && 'ikkeTilgangÅrsaker' in body && isÅrsakIkkeTilgangArray(body.ikkeTilgangÅrsaker)) {
+      return resolveÅrsakIkkeTilgangTekster(body.ikkeTilgangÅrsaker);
+    }
+    return [];
   }
 
   /**

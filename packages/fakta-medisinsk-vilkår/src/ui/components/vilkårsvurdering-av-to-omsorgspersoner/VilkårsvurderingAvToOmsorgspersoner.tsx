@@ -1,4 +1,5 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import { PageContainer } from '@k9-sak-web/gui/shared/pageContainer/PageContainer.js';
 import { Box } from '@navikt/ds-react';
@@ -26,7 +27,8 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingAvToOmsorgspersonerProps): JSX.Element => {
-  const { endpoints, onFinished, httpErrorHandler, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, onFinished, errorNotifier, readOnly } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -51,7 +53,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
-    httpUtils.get<Vurderingsoversikt>(endpoints.vurderingsoversiktBehovForToOmsorgspersoner, httpErrorHandler, {
+    httpUtils.get<Vurderingsoversikt>(endpoints.vurderingsoversiktBehovForToOmsorgspersoner, errorNotifier, {
       signal: controller.signal,
     });
 
@@ -111,6 +113,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   const onVurderingLagret = async () => {
     dispatch({ type: ActionType.PENDING });
     const status = await hentSykdomsstegStatus();
+    refetchBehandlingVedSykdomsendring();
     if (status.kanLøseAksjonspunkt) {
       onFinished();
       return;

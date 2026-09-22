@@ -20,9 +20,9 @@ const PANEL_ID = 'uttak';
 interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
-  hentBehandling: (params?: any, keepData?: boolean) => Promise<Behandling>;
   erOverstyrer: boolean;
   isReadOnly: boolean;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
 export function UttakProsessStegInitPanel(props: Props) {
@@ -54,8 +54,8 @@ export function UttakProsessStegInitPanel(props: Props) {
     .map(ap => ap.definisjon)
     .filter(definisjon => definisjon !== undefined);
 
-  const hentBehandling = async () => {
-    await props.hentBehandling({ behandlingId: props.behandling.id }, false);
+  const onAksjonspunktBekreftet = () => {
+    props.oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
   };
 
   return (
@@ -64,9 +64,9 @@ export function UttakProsessStegInitPanel(props: Props) {
       behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
-      hentBehandling={hentBehandling}
       erOverstyrer={props.erOverstyrer}
       readOnly={props.isReadOnly}
+      onAksjonspunktBekreftet={onAksjonspunktBekreftet}
     />
   );
 }

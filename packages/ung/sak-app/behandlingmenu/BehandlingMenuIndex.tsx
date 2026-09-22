@@ -3,11 +3,12 @@ import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/s
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
-import MenyEndreFristBackendClient from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristBackendClient.js';
+import { MenyEndreFristApiContext } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristApiContext.js';
 import { MenyEndreFristIndex } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
@@ -24,17 +25,17 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { use, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
+import { useNavAnsattForYtelse } from '../data/useNavAnsattForYtelse.js';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
 import MenyKodeverk from './MenyKodeverk';
@@ -130,7 +131,7 @@ export const BehandlingMenuIndex = ({
   const { startRequest: sjekkTilbakeRevurdKanOpprettes, data: kanRevurderingOpprettes = false } =
     restApiHooks.useRestApiRunner<boolean>(UngSakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
 
-  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
+  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype);
 
   const erTilbakekrevingAktivert = useGetEnabledApplikasjonContext().includes(ApplicationContextPath.TILBAKE);
 
@@ -160,12 +161,13 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagNyBehandlingKlage } = restApiHooks.useRestApiRunner<boolean>(
     UngSakApiKeys.NEW_BEHANDLING_KLAGE,
   );
-  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
+  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[] | undefined | null>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,
   );
-  const menyEndreFristClient = useMemo(() => new MenyEndreFristBackendClient(), []);
+  const menyEndreFristClient = use(MenyEndreFristApiContext);
   const { data: etterlysninger = [] } = useQuery({
     queryKey: ['etterlysninger', behandling?.uuid],
+    throwOnError: ignore404Errors,
     queryFn: () => menyEndreFristClient.hentEtterlysninger(behandling?.uuid ?? ''),
     enabled: !!behandling?.uuid,
     select: etterlysninger =>
@@ -329,7 +331,6 @@ export const BehandlingMenuIndex = ({
                 behandlingId={behandling.id}
                 behandlingUuid={behandling?.uuid}
                 behandlingVersjon={behandling.versjon}
-                api={menyEndreFristClient}
               />
             );
           }

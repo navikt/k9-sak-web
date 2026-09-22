@@ -5,6 +5,8 @@ import RequestErrorEventHandler from './error/RequestErrorEventHandler';
 import TimeoutError from './error/TimeoutError';
 import EventType from './eventType';
 import { Response } from './ResponseTsType';
+import { NotificationEmitter } from './NotificationEmitter.js';
+import type { ErrorNotifier } from './error/ErrorNotifier.js';
 
 const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
@@ -16,9 +18,6 @@ const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const hasLocationAndStatusDelayedOrHalted = (responseData): boolean =>
   responseData.location &&
   (responseData.status === AsyncPollingStatus.DELAYED || responseData.status === AsyncPollingStatus.HALTED);
-
-type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void;
-type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void;
 
 let popupWindow = null;
 
@@ -40,7 +39,8 @@ class RequestRunner {
 
   maxPollingLimit: number = MAX_POLLING_ATTEMPTS;
 
-  notify: Notify = () => undefined;
+  notify: NotificationEmitter = () => undefined;
+  errorNotifier: ErrorNotifier | undefined;
 
   isCancelled = false;
 
@@ -62,10 +62,18 @@ class RequestRunner {
   setNotificationEmitter = (notificationEmitter: NotificationEmitter): void => {
     this.notify = notificationEmitter;
   };
+  setErrorNotifier(errorNotifier: ErrorNotifier) {
+    this.errorNotifier = errorNotifier;
+  }
 
-  execLongPolling = async (location: string, pollingInterval = 0, pollingCounter = 0): Promise<Response> => {
+  execLongPolling = async (
+    location: string,
+    pollingInterval = 0,
+    pollingCounter = 0,
+    message?: string,
+  ): Promise<Response> => {
     if (pollingCounter === this.maxPollingLimit) {
-      throw new TimeoutError(location);
+      throw new TimeoutError(location, message);
     }
 
     await wait(pollingInterval);
@@ -85,7 +93,7 @@ class RequestRunner {
     if (responseData && responseData.status === AsyncPollingStatus.PENDING) {
       const { pollIntervalMillis, message } = responseData;
       this.notify(EventType.UPDATE_POLLING_MESSAGE, message);
-      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1);
+      return this.execLongPolling(location, pollIntervalMillis, pollingCounter + 1, message);
     }
 
     return statusOrResultResponse;
@@ -104,7 +112,13 @@ class RequestRunner {
       } catch (error) {
         const responseData = error.response ? error.response.data : undefined;
         if (responseData && hasLocationAndStatusDelayedOrHalted(responseData)) {
+          // Oppgåva er halted/delayed. Hent behandlinga frå location likevel, slik at den kan visast
           response = await this.httpClientApi.get(responseData.location);
+          // Rapporter i tillegg 418-feilen til den nye feilhandteringa (errorNotifier ->
+          // resolveErrorViewProps/resolveAxiosErrorView) slik at brukar får melding om halted/delayed.
+          // Den gamle POLLING_HALTED_OR_DELAYED-notifikasjonen under har ikkje lenger nokon konsument som viser
+          // melding til brukar, berre ein som skjuler «ventar»-indikatoren.
+          this.errorNotifier?.(error);
           if ('data' in response) {
             this.notify(EventType.POLLING_HALTED_OR_DELAYED, response.data.taskStatus);
           }
@@ -150,7 +164,7 @@ class RequestRunner {
           resolve(retryResponse);
           popupWindow = null;
         } catch (error2) {
-          void new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error2);
+          void new RequestErrorEventHandler(this.notify, this.isPollingRequest, this.errorNotifier).handleError(error2);
           reject(error2);
         }
       }, 500);
@@ -166,7 +180,7 @@ class RequestRunner {
       if (response && response.status === 401 && response.headers && response.headers.location) {
         return this.retryStart(response, params);
       }
-      void new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
+      void new RequestErrorEventHandler(this.notify, this.isPollingRequest, this.errorNotifier).handleError(error);
       throw error;
     }
   };

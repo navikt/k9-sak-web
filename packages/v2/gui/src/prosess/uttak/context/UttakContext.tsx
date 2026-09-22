@@ -7,6 +7,7 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import {
   createContext,
   useCallback,
@@ -27,12 +28,11 @@ export type UttakContextType = {
   uttak: UttaksplanMedUtsattePerioder;
   uttakApi: BehandlingUttakBackendClient;
   perioderTilVurdering: string[];
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<void>;
   hentUttak?: () => Promise<any>;
+  onAksjonspunktBekreftet?: () => void;
   harEtUløstAksjonspunktIUttak: boolean;
   erOverstyrer: boolean;
   readOnly: boolean;
-  oppdaterBehandling: () => void;
   virkningsdatoUttakNyeRegler: string | undefined;
   redigerVirkningsdato: boolean;
   setRedigervirkningsdato: Dispatch<SetStateAction<boolean>>;
@@ -56,12 +56,11 @@ export interface UttakProviderProps {
     | 'uttak'
     | 'uttakApi'
     | 'perioderTilVurdering'
-    | 'hentBehandling'
     | 'harEtUløstAksjonspunktIUttak'
     | 'erOverstyrer'
     | 'readOnly'
-    | 'oppdaterBehandling'
     | 'virkningsdatoUttakNyeRegler'
+    | 'onAksjonspunktBekreftet'
   > & { aksjonspunkter: Aksjonspunkt[] };
   children: ReactNode;
 }
@@ -110,11 +109,9 @@ export const UttakProvider = ({
     uttak: value.uttak,
     uttakApi: value.uttakApi,
     perioderTilVurdering: value.perioderTilVurdering,
-    hentBehandling: value.hentBehandling,
     harEtUløstAksjonspunktIUttak: value.harEtUløstAksjonspunktIUttak,
     erOverstyrer: value.erOverstyrer,
     readOnly: value.readOnly,
-    oppdaterBehandling: value.oppdaterBehandling,
     virkningsdatoUttakNyeRegler: value.virkningsdatoUttakNyeRegler,
     redigerVirkningsdato,
     setRedigervirkningsdato,
@@ -128,6 +125,7 @@ export const UttakProvider = ({
     aksjonspunktVurderOverlappendeSaker: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER),
     aksjonspunktVentAnnenPSBSak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK),
     aksjonspunktVurderDatoNyRegelUttak: aksjonspunkterMap.get(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK),
+    onAksjonspunktBekreftet: value.onAksjonspunktBekreftet,
   };
 
   return <UttakContext.Provider value={contextValue}>{children}</UttakContext.Provider>;
@@ -135,7 +133,6 @@ export const UttakProvider = ({
 
 export const useUttakContext = () => {
   const uttakContext = useContext(UttakContext);
-
   if (uttakContext === undefined) {
     throw new Error('useUttakContext must be used within a UttakProvider');
   }
@@ -167,6 +164,7 @@ export const useUttakContext = () => {
    */
   const { refetch: hentUttak } = useQuery({
     queryKey: ['uttak', behandling.uuid],
+    throwOnError: ignore404Errors,
     queryFn: async () => {
       const hentetUttak = await uttakApi.hentUttak(behandling.uuid);
       return hentetUttak;

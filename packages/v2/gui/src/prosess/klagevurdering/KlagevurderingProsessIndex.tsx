@@ -5,6 +5,7 @@ import type { BehandlingDto as K9KlageBehandlingDto } from '@k9-sak-web/backend/
 import type { BehandlingDto as UngSakBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useContext } from 'react';
 import { LoadingPanel } from '../../shared/loading-panel/LoadingPanel';
 import { assertDefined } from '../../utils/validation/assertDefined.js';
@@ -33,11 +34,13 @@ export const KlagevurderingProsessIndex = ({
   const api = assertDefined(useContext(KlageVurderingApiContext));
   const { data: ungHjemler = [] } = useQuery({
     queryKey: ['klage-hjemler', api.backend],
+    throwOnError: ignore404Errors,
     queryFn: () => api.hentValgbareKlagehjemlerForUng?.() ?? Promise.resolve([]),
     enabled: api.hentValgbareKlagehjemlerForUng !== undefined,
   });
   const { data: klageVurdering, isLoading } = useQuery({
     queryKey: ['klageVurdering', behandling, api.backend],
+    throwOnError: ignore404Errors,
     queryFn: () => api.getKlageVurdering(behandling.uuid),
   });
   const { mutateAsync: previewCallback } = useMutation({

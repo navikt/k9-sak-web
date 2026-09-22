@@ -12,6 +12,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import { withQueryClientProvider } from '../../../storybook/decorators/withQueryClientProvider.js';
 import Uttak from '../Uttak';
 
 /**
@@ -34,6 +35,7 @@ const meta = {
     },
   },
   decorators: [
+    withQueryClientProvider(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -62,7 +64,6 @@ export const EmptyState: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -97,7 +98,6 @@ export const LeggTilOverstyring: Story = {
     uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -194,7 +194,6 @@ export const Overstyringer: Story = {
     ]),
     erOverstyrer: true,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -260,7 +259,6 @@ export const RedigerOverstyring: Story = {
     ]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -369,7 +367,6 @@ export const FjernOverstyring: Story = {
     ]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
@@ -453,7 +450,6 @@ export const Lesemodus: Story = {
     ]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
-    hentBehandling: fn(),
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },

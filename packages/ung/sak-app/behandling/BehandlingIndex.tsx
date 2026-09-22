@@ -4,16 +4,15 @@ import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-rou
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import { FagsakYtelseType } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import BehandlingAktivitetspengerIndex from '@k9-sak-web/behandling-aktivitetspenger';
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { gyldigBehandlingId, gyldigBehandlingUuid } from '@k9-sak-web/gui/utils/paths.js';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -21,11 +20,11 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  NavAnsatt,
 } from '@k9-sak-web/types';
 import { ung_kodeverk_behandling_BehandlingType } from '@navikt/ung-sak-typescript-client/types';
 import { getFaktaLocation, getLocationWithDefaultProsessStegAndFakta, getProsessStegLocation } from '../app/paths';
 import { LinkCategory, requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import { useNavAnsattForYtelse } from '../data/useNavAnsattForYtelse.js';
 import behandlingEventHandler from './BehandlingEventHandler';
 
 const BehandlingTilbakekrevingUngdomsytelseIndex = lazy(
@@ -94,8 +93,6 @@ const BehandlingIndex = ({
     }
   }, [behandling]);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-
   const oppdaterBehandlingVersjon = useCallback(
     versjon => setBehandlingIdOgVersjon(behandling?.id, versjon),
     [behandling?.id],
@@ -106,7 +103,7 @@ const BehandlingIndex = ({
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
+  const navAnsatt = useNavAnsattForYtelse(fagsak.sakstype);
   const rettigheter = useMemo(
     () => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type),
     [fagsak.status, behandling?.id, behandling?.status, behandling?.type],
@@ -166,7 +163,7 @@ const BehandlingIndex = ({
     if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingTilbakekrevingUngdomsytelseIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               harApenRevurdering={fagsakBehandlingerInfo.some(
@@ -186,7 +183,7 @@ const BehandlingIndex = ({
     if (behandlingTypeKode === ung_kodeverk_behandling_BehandlingType.KLAGE && featureToggles?.UNG_KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <ErrorBoundary>
             <BehandlingKlageUngdomsytelseIndex
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -198,25 +195,23 @@ const BehandlingIndex = ({
       );
     }
 
-    if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER && featureToggles?.AKTIVITETSPENGER) {
+    if (fagsak.sakstype === fagsakYtelsesType.AKTIVITETSPENGER) {
       return (
-        <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            <BehandlingAktivitetspengerIndex
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              valgtFaktaSteg={query.fakta}
-              key={behandling.id}
-              behandlingVersjon={behandling.versjon}
-              {...defaultProps}
-            />
-          </ErrorBoundary>
-        </Suspense>
+        <ErrorBoundary>
+          <BehandlingAktivitetspengerIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            key={behandling.id}
+            behandlingVersjon={behandling.versjon}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
       );
     }
 
     return (
       <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+        <ErrorBoundary>
           <BehandlingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}

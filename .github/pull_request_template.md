@@ -1,10 +1,8 @@
-### **Behov / Bakgrunn**
+### Behov / Bakgrunn
 
 
-### **Løsning**
+### Løsning
 
 
-### **Andre endringer**
+### Andre endringer
 
-
-### **Skjermbilder** (hvis relevant)

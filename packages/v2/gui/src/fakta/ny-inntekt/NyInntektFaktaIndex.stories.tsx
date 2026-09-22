@@ -1,8 +1,12 @@
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import OpptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { ComponentType } from 'react';
 
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
+import { BehandlingProvider } from '../../context/BehandlingContext.js';
+import { NyInntektApiContext } from './api/NyInntektApiContext.js';
+import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import { type Vilkår } from './src/types/Vilkår';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from './testdata/TilkommetAktivitetMedForlengelseLukketAP';
@@ -11,6 +15,8 @@ import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplit
 import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from './testdata/TilkommetAktivitetTrePerioderHelgMellom';
 
 import { asyncAction } from '@k9-sak-web/gui/storybook/asyncAction.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
@@ -78,11 +84,27 @@ const lagVilkår = (perioder: any[]): Vilkår => ({
 const meta = {
   title: 'gui/fakta/ny-inntekt',
   component: NyInntektFaktaIndex,
+  decorators: [
+    (Story: ComponentType) => (
+      <BehandlingProvider
+        behandlingUuid="00000000-0000-0000-0000-000000000000"
+        refetchBehandling={async () => undefined}
+      >
+        <NyInntektApiContext value={{ reaktiverAksjonspunktNyInntekt: async () => undefined }}>
+          <Story />
+        </NyInntektApiContext>
+      </BehandlingProvider>
+    ),
+    withQueryClientProvider(),
+  ],
   args: {
     submitCallback: asyncAction('Løs aksjonspunkt'),
     arbeidsgiverOpplysningerPerId: agOpplysninger,
     setFormData: () => undefined,
     submittable: true,
+    aksjonspunkter: [
+      { definisjon: AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD, status: aksjonspunktStatus.OPPRETTET },
+    ],
   },
 } satisfies Meta<typeof NyInntektFaktaIndex>;
 
@@ -424,7 +446,11 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       await userEvent.click(canvas.getByText('09.11.2022 - 13.11.2022'));
 
       await expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
-      await expect(canvas.getAllByText('450 000 kr')).toHaveLength(3);
+      await expect(
+        canvas
+          .getAllByLabelText('kroner')
+          .filter(element => element.parentElement?.textContent?.replace(/\s/g, ' ') === '450 000 kr'),
+      ).toHaveLength(3);
 
       await expect(canvas.getAllByText('Reduserer inntektstap')).toHaveLength(2);
 
@@ -434,7 +460,11 @@ export const TilkommetAktivitetMedForlengelse: Story = {
       await expect(canvas.getAllByText('Nav Troms og Finnmark (974652293)...456')).toHaveLength(2);
       await expect(canvas.getAllByText('Ja')).toHaveLength(3);
 
-      await expect(canvas.getByText('300 000 kr')).toBeInTheDocument();
+      await expect(
+        canvas
+          .getAllByLabelText('kroner')
+          .filter(element => element.parentElement?.textContent?.replace(/\s/g, ' ') === '300 000 kr'),
+      ).toHaveLength(1);
       await expect(canvas.getByText('16.11.2022 - 20.11.2022')).toBeInTheDocument();
       await expect(
         canvas.getByText(
@@ -504,6 +534,7 @@ export const TilkommetAktivitetMedForlengelse: Story = {
 export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
   args: {
     readOnly: false,
+    aksjonspunkter: [],
     beregningsgrunnlagListe: bgTilkommetInntektsforholdMedForlengelseLukketAP,
     beregningsgrunnlagVilkår: lagVilkår([
       {
@@ -513,6 +544,32 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
         erForlengelse: true,
       },
     ]),
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal vise aktiver aksjonspunkt når lukket AP vurderes i behandlingen', async () => {
+      await expect(canvas.getByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+    });
+  },
+};
+
+export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: Story = {
+  args: {
+    readOnly: false,
+    aksjonspunkter: [],
+    beregningsgrunnlagListe: bgTilkommetInntektsforholdMedForlengelseLukketAP,
+    beregningsgrunnlagVilkår: lagVilkår([
+      {
+        fom: '2022-11-08',
+        tom: '2022-11-20',
+        vurderesIBehandlingen: false,
+        erForlengelse: true,
+      },
+    ]),
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal ikke vise aktiver aksjonspunkt når perioden ikke vurderes i behandlingen', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Aktiver aksjonspunkt' })).not.toBeInTheDocument();
+    });
   },
 };
 

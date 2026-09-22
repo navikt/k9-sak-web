@@ -1,11 +1,11 @@
+import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { withFakeSykdomOgOpplæringApi } from '../../../storybook/decorators/withFakeSykdomOgOpplæringApi.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import FaktaInstitusjonIndex from './FaktaInstitusjonIndex';
-import SykdomOgOpplæringBackendClient from '../SykdomOgOpplæringBackendClient';
-import { k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 const løsAksjonspunkt9300 = fn(action('løsAksjonspunkt9300'));
 const løsAksjonspunkt9301 = fn(action('løsAksjonspunkt9301'));
@@ -29,66 +29,64 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
   );
 };
 
-const withMockData: Decorator = Story => {
+const withMockDataInstitusjonInfo = {
+  perioder: [
+    {
+      institusjon: 'St. Olavs hospital',
+      periode: { fom: '2025-02-01', tom: '2025-02-05' },
+      journalpostId: { journalpostId: 'jp-1' },
+    },
+    {
+      institusjon: 'St. Olavs hospital',
+      periode: { fom: '2025-02-10', tom: '2025-02-12' },
+      journalpostId: { journalpostId: 'jp-1' },
+    },
+    {
+      institusjon: 'Rikshospitalet',
+      periode: { fom: '2025-03-01', tom: '2025-03-03' },
+      journalpostId: { journalpostId: 'jp-2' },
+    },
+  ],
+  vurderinger: [
+    {
+      journalpostId: { journalpostId: 'jp-1' },
+      resultat: InstitusjonResultat.MÅ_VURDERES,
+      begrunnelse: '',
+      organisasjonsnummer: undefined,
+      vurdertAv: '',
+      vurdertTidspunkt: '',
+      erTilVurdering: true,
+      perioder: [
+        { fom: '2025-02-01', tom: '2025-02-05' },
+        { fom: '2025-02-10', tom: '2025-02-12' },
+      ],
+    },
+    {
+      journalpostId: { journalpostId: 'jp-2' },
+      resultat: InstitusjonResultat.GODKJENT_MANUELT,
+      begrunnelse: 'OK',
+      organisasjonsnummer: '123456789',
+      erTilVurdering: false,
+      perioder: [{ fom: '2025-03-01', tom: '2025-03-03' }],
+      vurdertAv: 'Pål Opel',
+      vurdertTidspunkt: '2025-02-10T10:00:00Z',
+    },
+  ],
+};
+
+const withMockDataAlleInstitusjoner = [
+  { uuid: 'i1', navn: 'St. Olavs hospital' },
+  { uuid: 'i2', navn: 'Rikshospitalet' },
+  { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
+];
+
+const withMockData: Decorator = withFakeSykdomOgOpplæringApi({
   // Mock institusjon info (perioder + vurderinger)
   // Grouping logic in component expects same journalpostId to group periods
-  const institusjonInfoMock = {
-    perioder: [
-      {
-        institusjon: 'St. Olavs hospital',
-        periode: { fom: '2025-02-01', tom: '2025-02-05' },
-        journalpostId: { journalpostId: 'jp-1' },
-      },
-      {
-        institusjon: 'St. Olavs hospital',
-        periode: { fom: '2025-02-10', tom: '2025-02-12' },
-        journalpostId: { journalpostId: 'jp-1' },
-      },
-      {
-        institusjon: 'Rikshospitalet',
-        periode: { fom: '2025-03-01', tom: '2025-03-03' },
-        journalpostId: { journalpostId: 'jp-2' },
-      },
-    ],
-    vurderinger: [
-      {
-        journalpostId: { journalpostId: 'jp-1' },
-        resultat: InstitusjonResultat.MÅ_VURDERES,
-        begrunnelse: '',
-        organisasjonsnummer: undefined,
-        vurdertAv: '',
-        vurdertTidspunkt: '',
-        erTilVurdering: true,
-        perioder: [
-          { fom: '2025-02-01', tom: '2025-02-05' },
-          { fom: '2025-02-10', tom: '2025-02-12' },
-        ],
-      },
-      {
-        journalpostId: { journalpostId: 'jp-2' },
-        resultat: InstitusjonResultat.GODKJENT_MANUELT,
-        begrunnelse: 'OK',
-        organisasjonsnummer: '123456789',
-        erTilVurdering: false,
-        perioder: [{ fom: '2025-03-01', tom: '2025-03-03' }],
-        vurdertAv: 'Pål Opel',
-        vurdertTidspunkt: '2025-02-10T10:00:00Z',
-      },
-    ],
-  };
-
+  institusjonInfo: withMockDataInstitusjonInfo,
   // Mock list of institutions used by selector
-  const alleInstitusjonerMock = [
-    { uuid: 'i1', navn: 'St. Olavs hospital' },
-    { uuid: 'i2', navn: 'Rikshospitalet' },
-    { uuid: 'i3', navn: 'Haukeland universitetssjukehus' },
-  ];
-
-  SykdomOgOpplæringBackendClient.prototype.getInstitusjonInfo = async () => institusjonInfoMock;
-  SykdomOgOpplæringBackendClient.prototype.hentAlleInstitusjoner = async () => alleInstitusjonerMock;
-
-  return <Story />;
-};
+  alleInstitusjoner: withMockDataAlleInstitusjoner,
+});
 
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/1-institusjon',
@@ -108,7 +106,7 @@ export const Default: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for the form to appear
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
     await expect(godkjentRadioGroup).toBeInTheDocument();
@@ -146,7 +144,7 @@ export const GodkjentMedSkriftligVurdering: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 
@@ -195,7 +193,7 @@ export const IkkeGodkjent: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 
@@ -237,7 +235,7 @@ export const Validering: Story = {
     await userEvent.click(firstPeriodButton);
 
     // Wait for form
-    const godkjentRadioGroup = await canvas.findByRole('group', {
+    const godkjentRadioGroup = await canvas.findByRole('radiogroup', {
       name: /Er institusjonen en godkjent helseinstitusjon/i,
     });
 

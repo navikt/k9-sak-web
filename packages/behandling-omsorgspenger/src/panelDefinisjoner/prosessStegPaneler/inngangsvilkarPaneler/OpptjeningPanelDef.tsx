@@ -1,9 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
-import OpptjeningVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndexV2.js';
+import OpptjeningVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { OmsorgspengerBehandlingApiKeys } from '../../../data/omsorgspengerBehandlingApi';
 
@@ -13,12 +12,9 @@ class OpptjeningPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Opptjening';
 
   getKomponent = props => {
-    if (props.featureToggles.BRUK_V2_VILKAR_OPPTJENING) {
-      const deepCopyProps = JSON.parse(JSON.stringify(props));
-      konverterKodeverkTilKode(deepCopyProps, false);
-      return <OpptjeningVilkarProsessIndexV2 {...props} {...deepCopyProps} />;
-    }
-    return <OpptjeningVilkarProsessIndex {...props} />;
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <OpptjeningVilkarProsessIndex {...props} {...deepCopyProps} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET];

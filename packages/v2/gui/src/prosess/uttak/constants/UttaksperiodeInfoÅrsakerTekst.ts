@@ -74,3 +74,10 @@ export const IkkeOppfylteÅrsakerMedTekst: UttaksperiodeInfoÅrsakerTekstType[] 
     tekst: 'Årsak for avslag: Søker har mottatt pleiepenger i 60 dager.',
   },
 ];
+
+export const SluttfaseÅrsakerMedTekst: UttaksperiodeInfoÅrsakerTekstType[] = [
+  {
+    årsak: UttaksperiodeInfoÅrsaker.UTENOM_PLEIEBEHOV,
+    tekst: 'Årsak for avslag: Pleietrengende er innlagt.',
+  },
+];

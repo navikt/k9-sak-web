@@ -1,18 +1,22 @@
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
+  aktivitetspenger_hentBostedGrunnlag,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
+  avp_hentPerioderSomKanAvkortesAvNavKontor,
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
+  behandlinger_hentLovligeBehandlingsoperasjoner,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
+  totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
-} from '@navikt/ung-sak-typescript-client/sdk';
-import type { ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto } from '@navikt/ung-sak-typescript-client/types';
-import { type AktivitetspengerApi } from './AktivitetspengerApi';
+} from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
+import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
@@ -21,7 +25,7 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;
   }
 
-  async lagreAksjonspunktOverstyr(props: ung_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) {
+  async lagreAksjonspunktOverstyr(props: BekreftetOgOverstyrteAksjonspunkterDto) {
     const { behandlingId, behandlingVersjon, bekreftedeAksjonspunktDtoer, overstyrteAksjonspunktDtoer } = props;
     return (
       await aksjonspunkt_overstyr({
@@ -38,19 +42,33 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await behandlinger_hentBehandlingData1({ query: { behandlingUuid } })).data;
   }
 
-  async hentBehandlingMidlertidigStatus(behandlingUuid: string) {
-    return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid } })).data;
+  async hentLovligeBehandlingsoperasjoner(behandlingUuid: string) {
+    return (await behandlinger_hentLovligeBehandlingsoperasjoner({ query: { behandlingUuid } })).data;
+  }
+
+  async hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal) {
+    return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid }, signal })).data;
   }
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {
     return (await forutgåendeMedlemskap_medlemskap({ query: { behandlingUuid } })).data;
   }
+
+  async hentBostedGrunnlag(behandlingUuid: string) {
+    return (await aktivitetspenger_hentBostedGrunnlag({ query: { behandlingUuid } })).data;
+  }
+
   async getBeregningsgrunnlag(behandlingUuid: string) {
-    return (await avp_getBeregningsgrunnlag({ query: { behandlingUuid } })).data;
+    const { data } = await avp_getBeregningsgrunnlag({ query: { behandlingUuid } });
+    return data ?? null;
   }
 
   async getSatsOgUtbetalingPerioder(behandlingUuid: string) {
     return (await avp_getSatsOgUtbetalingPerioderAktivitetspenger({ query: { behandlingUuid } })).data;
+  }
+
+  async hentPerioderSomKanAvkortes(behandlingUuid: string) {
+    return (await avp_hentPerioderSomKanAvkortesAvNavKontor({ query: { behandlingUuid } })).data;
   }
 
   async getInnloggetBruker() {
@@ -69,5 +87,9 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
         bekreftedeAksjonspunktDtoer,
       },
     });
+  }
+
+  async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string) {
+    return (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({ query: { behandlingUuid } })).data;
   }
 }

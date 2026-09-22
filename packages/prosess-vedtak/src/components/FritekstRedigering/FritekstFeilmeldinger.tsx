@@ -1,44 +1,51 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { Alert } from '@navikt/ds-react';
-
-import {
-  harDokumentdataApiFeilmelding,
-  harForhandsvisFeilmeldinger,
-  utledForhandsvisFeilmeldinger,
-} from './RedigeringUtils';
+import { AxiosError } from 'axios';
 
 import styles from './RedigerFritekstbrev.module.css';
 
+// Denne feilhandteringa bør endrast slik at ein ikkje henter ut feil frå global liste og filtrerer og lager spesialfeilmelding som her.
+// Heile dialogen bør skrivast om til v2 og ikkje bruke rest-api, men tanstack query med lokal feilhandtering inni dialogen.
 const FritekstFeilmeldinger = () => {
-  const errorMessages = useRestApiError() || [];
+  const { globalErrors } = useGlobalUnhandledErrors();
+  // Lag forståeleg(e) dedupliserte feilmeldinger viss det gjeld feila kall til formdling.
+  const formidlingFeilmeldinger = [
+    ...new Set(
+      globalErrors.flatMap(error => {
+        if (error instanceof AxiosError) {
+          if (error.config?.url == '/k9/formidling/api/brev/forhaandsvis') {
+            return [
+              'Feil ved henting av forhåndsvisning. Du kan prøve igjen om litt eller melde fra om feil hvis det ikke løser seg.',
+            ];
+          }
+          if (error.config?.url == '/k9/formidling/dokumentdata/api') {
+            return [
+              'Feil ved kommunikasjon med dokumentdata server. Du kan prøve igjen om litt eller melde fra om feil hvis det ikke løser seg.',
+            ];
+          }
+        }
+        return [];
+      }),
+    ),
+  ];
 
-  if (
-    harDokumentdataApiFeilmelding({ feilmeldinger: errorMessages }) ||
-    harForhandsvisFeilmeldinger({ feilmeldinger: errorMessages })
-  ) {
-    return (
-      <>
-        <VerticalSpacer sixteenPx />
-        <Alert variant="error" className={styles.alertMeldinger}>
-          {utledForhandsvisFeilmeldinger({ feilmeldinger: errorMessages }).map(feilmelding => (
-            <p>{feilmelding.feilmelding}</p>
-          ))}
-          {harDokumentdataApiFeilmelding({ feilmeldinger: errorMessages }) && (
-            <p>
-              <FormattedMessage id="RedigeringAvFritekstBrev.KommunikasjonsfeilLagre" />
-            </p>
-          )}
-        </Alert>
-        <VerticalSpacer sixteenPx />
-      </>
-    );
+  if (formidlingFeilmeldinger.length === 0) {
+    return null;
   }
 
-  return null;
+  return (
+    <>
+      <VerticalSpacer sixteenPx />
+      <Alert variant="error" className={styles.alertMeldinger}>
+        {formidlingFeilmeldinger.map((feilmelding, index) => {
+          return <p key={index}>{feilmelding}</p>;
+        })}
+      </Alert>
+      <VerticalSpacer sixteenPx />
+    </>
+  );
 };
 
 export default FritekstFeilmeldinger;

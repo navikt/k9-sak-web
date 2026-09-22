@@ -1,9 +1,9 @@
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
-import { RhfDatepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import Andeler from './Andeler';
 import { TilkjentYtelseFormState } from './FormState';
@@ -60,10 +60,10 @@ const PeriodeRad = ({
                 <Table.DataCell>
                   <FlexRow>
                     <FlexColumn>
-                      <RhfDatepicker control={control} name={`perioder.${index}.fom`} label="" isReadOnly />
+                      <Datovelger name={`perioder.${index}.fom`} label="" readOnly />
                     </FlexColumn>
                     <FlexColumn>
-                      <RhfDatepicker control={control} name={`perioder.${index}.tom`} label="" isReadOnly />
+                      <Datovelger name={`perioder.${index}.tom`} label="" readOnly />
                     </FlexColumn>
                   </FlexRow>
                 </Table.DataCell>

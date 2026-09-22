@@ -1,14 +1,17 @@
-import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import {
   k9_kodeverk_vilkår_Avslagsårsak as Avslagsårsak,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_institusjon_InstitusjonResultat as InstitusjonResultat,
+  k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_sykdom_LangvarigSykdomResultat as LangvarigSykdomResultat,
   k9_sak_web_app_tjenester_behandling_opplæringspenger_visning_opplæring_OpplæringResultat as OpplæringVurderingDtoResultat,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
-import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import { oppslagKodeverkSomObjektK9Sak } from '../../../kodeverk/mocks/oppslagKodeverkSomObjektK9Sak.js';
 import { K9SakKodeverkoppslag } from '../../../kodeverk/oppslag/K9SakKodeverkoppslag.js';
 import withK9Kodeverkoppslag from '../../../storybook/decorators/withK9Kodeverkoppslag';
+import { withFakeSykdomOgOpplæringApi } from '../../../storybook/decorators/withFakeSykdomOgOpplæringApi.js';
 import { SykdomOgOpplæringContext } from '../FaktaSykdomOgOpplæringIndex';
 import NødvendigOpplæringForm from './NødvendigOpplæringForm';
 
@@ -36,10 +39,54 @@ const withSykdomOgOpplæringContext = (): Decorator => Story => {
 
 const sakKodeverkOppslag = new K9SakKodeverkoppslag(oppslagKodeverkSomObjektK9Sak);
 
+const withMockData: Decorator = withFakeSykdomOgOpplæringApi({
+  institusjonInfo: {
+    perioder: [
+      {
+        institusjon: 'St. Olavs hospital',
+        periode: { fom: '2025-02-01', tom: '2025-12-31' },
+        journalpostId: { journalpostId: 'jp-1' },
+      },
+    ],
+    vurderinger: [
+      {
+        journalpostId: { journalpostId: 'jp-1' },
+        resultat: InstitusjonResultat.MÅ_VURDERES,
+        begrunnelse: '',
+        organisasjonsnummer: undefined,
+        vurdertAv: '',
+        vurdertTidspunkt: '',
+        erTilVurdering: true,
+        redigertInstitusjonNavn: 'St. Olavs hospital',
+        perioder: [{ fom: '2025-02-01', tom: '2025-12-31' }],
+      },
+    ],
+  },
+  langvarigSykVurderinger: [
+    {
+      uuid: 'v1',
+      vurdertTidspunkt: '2025-01-15T10:00:00Z',
+      godkjent: true,
+      vurderingFraAnnenpart: false,
+      begrunnelse: 'Barnet har langvarig sykdom som krever opplæring',
+      kanOppdateres: true,
+      diagnosekoder: ['A000'],
+      avslagsårsak: undefined,
+      behandlingUuid: '333-4444',
+      saksnummer: { saksnummer: '12345' },
+      vurdertAv: 'Z123456',
+    },
+  ],
+  vurdertLangvarigSykdom: {
+    vurderingUuid: 'v1',
+    resultat: LangvarigSykdomResultat.GODKJENT,
+  },
+});
+
 const meta = {
   title: 'gui/fakta/sykdom-og-opplæring/3-nødvendig-opplæring',
   component: NødvendigOpplæringForm,
-  decorators: [withK9Kodeverkoppslag(), withSykdomOgOpplæringContext()],
+  decorators: [withK9Kodeverkoppslag(), withSykdomOgOpplæringContext(), withMockData],
 } satisfies Meta<typeof NødvendigOpplæringForm>;
 
 export default meta;
@@ -64,7 +111,7 @@ export const Avslagsårsaker: Story = {
     andrePerioderTilVurdering: [],
   },
   play: async ({ canvas }) => {
-    const harViFåttLegeerklæringGroup = canvas.getByRole('group', {
+    const harViFåttLegeerklæringGroup = canvas.getByRole('radiogroup', {
       name: /Har vi fått legeerklæring/i,
     });
     const jaKnapp = within(harViFåttLegeerklæringGroup).getByLabelText('Ja');
@@ -77,7 +124,7 @@ export const Avslagsårsaker: Story = {
     await expect(vurderingTextInput).toBeVisible();
     await userEvent.clear(vurderingTextInput);
     await userEvent.type(vurderingTextInput, 'Testbegrunnelse');
-    const harSøkerOpplæringGroup = canvas.getByRole('group', { name: /Har søker opplæring som er nødvendig/ });
+    const harSøkerOpplæringGroup = canvas.getByRole('radiogroup', { name: /Har søker opplæring som er nødvendig/ });
     const neiKnapp = within(harSøkerOpplæringGroup).getByLabelText('Nei');
     await userEvent.click(neiKnapp);
     const opplæringIkkeNødvendigRadio = canvas.getByText(
@@ -124,7 +171,7 @@ export const GodkjentOpplæring: Story = {
   },
   play: async ({ canvas }) => {
     // Select "Ja" for legeerklæring
-    const harViFåttLegeerklæringGroup = canvas.getByRole('group', {
+    const harViFåttLegeerklæringGroup = canvas.getByRole('radiogroup', {
       name: /Har vi fått legeerklæring/i,
     });
     const jaKnapp = within(harViFåttLegeerklæringGroup).getByLabelText('Ja');
@@ -138,7 +185,7 @@ export const GodkjentOpplæring: Story = {
     await userEvent.type(vurderingTextInput, 'Opplæringen er nødvendig og godkjent');
 
     // Select "Ja" for nødvendig opplæring
-    const harSøkerOpplæringGroup = canvas.getByRole('group', { name: /Har søker opplæring som er nødvendig/ });
+    const harSøkerOpplæringGroup = canvas.getByRole('radiogroup', { name: /Har søker opplæring som er nødvendig/ });
     const nødvendigJaKnapp = within(harSøkerOpplæringGroup).getByLabelText('Ja');
     await userEvent.click(nødvendigJaKnapp);
 
@@ -183,7 +230,7 @@ export const GjenbrukValideringOgSubmit: Story = {
   },
   play: async ({ canvas }) => {
     // Legeerklæring: Ja
-    const legeGroup = await canvas.findByRole('group', { name: /Har vi fått legeerklæring/i });
+    const legeGroup = await canvas.findByRole('radiogroup', { name: /Har vi fått legeerklæring/i });
     await userEvent.click(within(legeGroup).getByLabelText('Ja'));
 
     //begrunnelse
@@ -196,7 +243,7 @@ export const GjenbrukValideringOgSubmit: Story = {
     await userEvent.type(begrunnelse, begrunnelseTekst);
 
     // Nødvendig opplæring: Ja
-    const nodvGroup = await canvas.findByRole('group', { name: /Har søker opplæring som er nødvendig/i });
+    const nodvGroup = await canvas.findByRole('radiogroup', { name: /Har søker opplæring som er nødvendig/i });
     await userEvent.click(within(nodvGroup).getByLabelText('Ja'));
 
     // Kryss av for gjenbruk uten å velge periode
@@ -263,14 +310,14 @@ export const AlleValidatorerUtenTilleggsperioder: Story = {
     await waitFor(() => expect(løsAksjonspunkt9302).not.toHaveBeenCalled());
 
     // 2) Velg legeerklæring: Ja. Forsøk submit uten nødvendig opplæring -> feilmelding og ingen submit
-    const legeGroup = await canvas.findByRole('group', { name: /Har vi fått legeerklæring/i });
+    const legeGroup = await canvas.findByRole('radiogroup', { name: /Har vi fått legeerklæring/i });
     await userEvent.click(within(legeGroup).getByLabelText('Ja'));
     await userEvent.click(bekreft);
     await expect(await canvas.findByText('Nødvendig opplæring er påkrevd')).toBeInTheDocument();
     await waitFor(() => expect(løsAksjonspunkt9302).not.toHaveBeenCalled());
 
     // 3) Velg nødvendig opplæring: Ja. Forsøk submit uten begrunnelse -> feilmelding og ingen submit
-    const nodvGroup = await canvas.findByRole('group', { name: /Har søker opplæring som er nødvendig/i });
+    const nodvGroup = await canvas.findByRole('radiogroup', { name: /Har søker opplæring som er nødvendig/i });
     await userEvent.click(within(nodvGroup).getByLabelText('Ja'));
 
     // Forsøk å sende inn -> forvent feilmelding for perioder
@@ -318,7 +365,7 @@ export const ValideringAvReisedagIHelg: Story = {
   },
   play: async ({ canvas }) => {
     // Legeerklæring: Ja
-    const legeGroup = await canvas.findByRole('group', { name: /Har vi fått legeerklæring/i });
+    const legeGroup = await canvas.findByRole('radiogroup', { name: /Har vi fått legeerklæring/i });
     await userEvent.click(within(legeGroup).getByLabelText('Ja'));
 
     // Begrunnelse
@@ -329,7 +376,7 @@ export const ValideringAvReisedagIHelg: Story = {
     await userEvent.type(begrunnelseInput, 'Test av reisedag validering');
 
     // Nødvendig opplæring: Deler av perioden
-    const nodvGroup = await canvas.findByRole('group', { name: /Har søker opplæring som er nødvendig/i });
+    const nodvGroup = await canvas.findByRole('radiogroup', { name: /Har søker opplæring som er nødvendig/i });
     await userEvent.click(within(nodvGroup).getByLabelText('Deler av perioden'));
 
     // Legg til en periode med opplæring (Fredag 14.02)

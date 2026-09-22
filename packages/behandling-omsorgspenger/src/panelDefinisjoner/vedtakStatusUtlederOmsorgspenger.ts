@@ -1,7 +1,8 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 // TODO (TOR) Kan denne skrivast om? For høg kompleksitet.
 
@@ -20,12 +21,22 @@ const harVilkårSomIkkeErOppfylt = vilkar =>
 const harVilkårSomIkkeErVurdert = vilkar =>
   vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT));
 
-const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat) => {
+const findStatusForVedtak = (
+  vilkar,
+  aksjonspunkter,
+  vedtakAksjonspunkter,
+  behandlingsresultat,
+  featureToggles: FeatureToggles,
+) => {
   if (vilkar.length === 0) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  if (hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) && harVilkårSomIkkeErOppfylt(vilkar)) {
+  if (
+    !featureToggles.FORENKLE_OMS_VEDTAK_STATUS &&
+    hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) &&
+    harVilkårSomIkkeErOppfylt(vilkar)
+  ) {
     return vilkarUtfallType.IKKE_OPPFYLT;
   }
 

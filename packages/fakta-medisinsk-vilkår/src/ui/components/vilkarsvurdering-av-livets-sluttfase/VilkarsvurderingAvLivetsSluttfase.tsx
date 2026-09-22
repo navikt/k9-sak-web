@@ -1,4 +1,5 @@
 import { get, Period } from '@fpsak-frontend/utils';
+import useRefetchBehandlingVedSykdomsendring from '../../hooks/useRefetchBehandlingVedSykdomsendring';
 import React, { useMemo, type JSX } from 'react';
 import Step, { livetsSluttfaseSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -29,7 +30,8 @@ const VilkårsvurderingAvLivetsSluttfase = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingAvLivetsSluttfaseProps): JSX.Element => {
-  const { endpoints, httpErrorHandler, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, fagsakYtelseType, behandlingType } = React.useContext(ContainerContext);
+  const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
   const [state, dispatch] = React.useReducer(vilkårsvurderingReducer, {
@@ -55,7 +57,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
 
   const getVurderingsoversikt = () =>
     endpoints.vurderingsoversiktLivetsSluttfase
-      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLivetsSluttfase, httpErrorHandler, {
+      ? get<Vurderingsoversikt>(endpoints.vurderingsoversiktLivetsSluttfase, errorNotifier, {
           signal: controller.signal,
         })
       : Promise.resolve(null);
@@ -120,6 +122,7 @@ const VilkårsvurderingAvLivetsSluttfase = ({
     dispatch({ type: ActionType.PENDING });
     try {
       const status = await hentSykdomsstegStatus();
+      refetchBehandlingVedSykdomsendring();
       const nesteSteg = finnNesteStegForLivetsSluttfase(status);
       if (nesteSteg === livetsSluttfaseSteg || nesteSteg === null) {
         await oppdaterVurderingsoversikt();

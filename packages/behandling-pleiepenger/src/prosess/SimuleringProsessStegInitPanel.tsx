@@ -5,13 +5,20 @@ import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } 
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { AvregningProsessIndex as AvregningProsessIndexV2 } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions } from './api/k9SakQueryOptions';
+import {
+  aksjonspunkterQueryOptions,
+  behandlingQueryOptions,
+  fagsakQueryOptions,
+  simuleringResultatQueryOptions,
+  tilbakekrevingvalgQueryOptions,
+} from './api/k9SakQueryOptions';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
@@ -33,9 +40,24 @@ interface Props {
 }
 
 export function SimuleringProsessStegInitPanel(props: Props) {
-  const { data: aksjonspunkter = [] } = useSuspenseQuery(aksjonspunkterQueryOptions(props.api, props.behandling));
   const featureToggles = use(FeatureTogglesContext);
   const prosessPanelContext = useContext(ProsessPanelContext);
+  const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+  const [
+    { data: aksjonspunkter = [] },
+    { data: fagsakV2 },
+    { data: behandlingV2 },
+    { data: tilbakekrevingvalgV2 },
+    { data: simuleringResultatV2 },
+  ] = useSuspenseQueries({
+    queries: [
+      aksjonspunkterQueryOptions(props.api, props.behandling),
+      fagsakQueryOptions(props.api, props.fagsak.saksnummer, props.behandling),
+      behandlingQueryOptions(props.api, props.behandling),
+      tilbakekrevingvalgQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+      simuleringResultatQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
+    ],
+  });
 
   const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
     simuleringResultat: any;
@@ -50,8 +72,6 @@ export function SimuleringProsessStegInitPanel(props: Props) {
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
-  const erTilBehandlingEllerBehandlet = prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
-
   const data = restApiData.data;
 
   if (!erValgt || !data) {
@@ -65,6 +85,9 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   const relevanteAksjonspunkter = props.aksjonspunkterMedKodeverk?.filter(ap =>
     RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon.kode),
   );
+  const relevanteAksjonspunkterV2 = aksjonspunkter.filter(ap =>
+    RELEVANTE_AKSJONSPUNKTER.some(relevantAksjonspunkt => relevantAksjonspunkt === ap.definisjon),
+  );
 
   // Beregn readOnlySubmitButton basert på aksjonspunkter
   // Hvis det finnes åpne aksjonspunkter, skal submit-knappen ikke være read-only
@@ -76,6 +99,19 @@ export function SimuleringProsessStegInitPanel(props: Props) {
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, aksjonspunkter);
   };
+
+  if (featureToggles?.BRUK_V2_AVREGNING) {
+    return (
+      <AvregningProsessIndexV2
+        fagsak={fagsakV2}
+        behandling={behandlingV2}
+        aksjonspunkter={relevanteAksjonspunkterV2}
+        simuleringResultat={simuleringResultatV2}
+        tilbakekrevingvalg={tilbakekrevingvalgV2}
+        isReadOnly={props.isReadOnly}
+      />
+    );
+  }
 
   return (
     <AvregningProsessIndex

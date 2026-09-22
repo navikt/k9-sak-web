@@ -12,18 +12,15 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
     steps:
       - name: Hente kode
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Storybook
-        run: yarn build-storybook-test --quiet
-
-      - name: Serve Storybook and run tests
+      - name: Start Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on tcp:9001 && yarn test-storybook"
+            "yarn storybook --ci --no-open" \
+            "npx wait-on http://127.0.0.1:9001/iframe.html && yarn test-storybook --url http://127.0.0.1:9001 --maxWorkers=2"

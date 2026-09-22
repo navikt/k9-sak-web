@@ -4,6 +4,7 @@ import {
   type ung_kodeverk_KodeverdiSomObjektUng_kodeverk_dokument_DokumentMalType,
   type ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgResponse as VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Alert, BodyShort, Box, Button, Label, VStack } from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useMutation, type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query';
@@ -13,16 +14,17 @@ import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { FritekstBrevpanel } from './brev/FritekstBrevpanel';
 import type { FormData } from './FormData';
+import { type VedtakAksjonspunktDto, type VedtakBekreftetAksjonspunktDto } from './ungVedtakAksjonspunktAvgrensing.js';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
-import { type VedtakAksjonspunktDto, type VedtakBekreftetAksjonspunktDto } from './ungVedtakAksjonspunktAvgrensing.js';
 
 type UngVedtakBekreftelseCallback = (bekreftet: VedtakBekreftetAksjonspunktDto[]) => Promise<void>;
 
 export interface UngVedtakProps {
   aksjonspunkter: VedtakAksjonspunktDto[];
+  totrinnAksjonspunkter?: Pick<AksjonspunktDto, 'erAktivt' | 'toTrinnsBehandling'>[];
   api: UngVedtakBackendApiType;
   behandling: UngVedtakBehandlingDto;
   vedtakBekreftelseCallback: UngVedtakBekreftelseCallback;
@@ -44,6 +46,7 @@ export const UngVedtak = ({
   api,
   behandling,
   aksjonspunkter,
+  totrinnAksjonspunkter,
   vedtakBekreftelseCallback,
   vilkår,
   readOnly,
@@ -58,8 +61,9 @@ export const UngVedtak = ({
   const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
   const behandlingErIkkeFastsatt =
     behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT;
+  const totrinnKilde = totrinnAksjonspunkter ?? aksjonspunkter;
   const harAksjonspunkt = aksjonspunkter.some(ap => ap.kanLoses);
-  const harAksjonspunktMedTotrinnsbehandling = aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
+  const harAksjonspunktMedTotrinnsbehandling = totrinnKilde.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {

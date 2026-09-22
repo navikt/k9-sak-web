@@ -1,42 +1,159 @@
-import { BodyLong, Box, Button, Heading, Radio, RadioGroup, ReadMore, Textarea, VStack } from '@navikt/ds-react';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { AvklarRettFraDagEnDto_JournalpostVurderingDto as JournalpostVurderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/AvklarRettFraDagEnDto.js';
+import type {
+  RettFraDagEnVisningDto_JournalpostVisningDto as JournalpostVisningDto,
+  RettFraDagEnVisningDto,
+} from '@k9-sak-web/backend/k9sak/kontrakt/inngangsvilkår/RettFraDagEnVisningDto.js';
+import { CheckmarkCircleFillIcon, FileIcon, PencilIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import {
+  Bleed,
+  BodyLong,
+  BodyShort,
+  Box,
+  Button,
+  Detail,
+  Heading,
+  HStack,
+  Label,
+  Link,
+  Radio,
+  RadioGroup,
+  ReadMore,
+  Textarea,
+  VStack,
+} from '@navikt/ds-react';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import { Controller, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { Lovreferanse } from '../../shared/lovreferanse/Lovreferanse';
+import styles from './tiDagerProsessIndex.module.css';
+
+interface TiDagerVurderingFormData {
+  journalpostId: string;
+  harUtbetaltPliktigeDager?: 'ja' | 'nei';
+}
 
 interface TiDagerFormData {
-  harRettFraDag1: 'ja' | 'nei';
+  vurderinger: TiDagerVurderingFormData[];
   begrunnelse: string;
 }
 
-interface TiDagerSubmitModel {
+const lagDefaultValues = (opplysninger: RettFraDagEnVisningDto): TiDagerFormData => ({
+  vurderinger:
+    opplysninger?.journalposter?.map(jp => ({
+      journalpostId: jp.journalpostId,
+      harUtbetaltPliktigeDager: booleanTilJaNei(jp.harUtbetaltPliktigeDager),
+    })) ?? [],
+  begrunnelse: opplysninger?.begrunnelse ?? '',
+});
+
+export interface TiDagerSubmitModel {
   kode: string;
-  avklarAgRettFraDag1: boolean;
   begrunnelse: string;
+  avklarRettFraDagEn: {
+    vurderinger: JournalpostVurderingDto[];
+  };
 }
 
-interface TiDagerProsessIndexProps {
+interface TiDagerProsessProps {
   submitCallback: (data: TiDagerSubmitModel[]) => Promise<void>;
-  aksjonspunkter: { definisjon: { kode: string } }[];
+  aksjonspunkter: Pick<AksjonspunktDto, 'definisjon' | 'begrunnelse' | 'status'>[];
   isReadOnly: boolean;
+  saksnummer: string;
+  arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } };
+  opplysninger: RettFraDagEnVisningDto;
+  vilkårErOppfylt: boolean;
+  vilkårErFerdigVurdert: boolean;
 }
 
-export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly }: TiDagerProsessIndexProps) => {
-  const formMethods = useForm<TiDagerFormData>();
-  const { control } = formMethods;
+function formatArbeidsgiverNavn(
+  journalpost: JournalpostVisningDto,
+  arbeidsgiverOpplysningerPerId?: { [key: string]: { navn: string } },
+): string {
+  const identifikator = journalpost.arbeidsgiver?.arbeidsgiverOrgnr ?? journalpost.arbeidsgiver?.arbeidsgiverAktørId;
+  if (identifikator) {
+    const navn = arbeidsgiverOpplysningerPerId?.[identifikator]?.navn;
+    if (navn) return navn;
+  }
+  return identifikator ?? journalpost.journalpostId;
+}
+
+function booleanTilJaNei(value: boolean | null | undefined): 'ja' | 'nei' | undefined {
+  if (value == null) return undefined;
+  return value ? 'ja' : 'nei';
+}
+
+export const TiDagerProsess = ({
+  aksjonspunkter,
+  submitCallback,
+  isReadOnly,
+  saksnummer,
+  arbeidsgiverOpplysningerPerId,
+  opplysninger,
+  vilkårErOppfylt,
+  vilkårErFerdigVurdert,
+}: TiDagerProsessProps) => {
+  const hasSolvedAksjonspunkt = aksjonspunkter[0] && aksjonspunkter[0].status === aksjonspunktStatus.UTFØRT;
+  const readOnly = isReadOnly || aksjonspunkter.length === 0;
+  const [isFormLocked, setIsFormLocked] = useState(hasSolvedAksjonspunkt);
+
+  useEffect(() => {
+    if (hasSolvedAksjonspunkt) {
+      setIsFormLocked(true);
+    }
+  }, [hasSolvedAksjonspunkt]);
+
+  const formIsLockedOrReadOnly = isFormLocked || readOnly;
+
+  const formMethods = useForm<TiDagerFormData>({
+    defaultValues: lagDefaultValues(opplysninger),
+  });
+
+  useEffect(() => {
+    formMethods.reset(lagDefaultValues(opplysninger));
+  }, [formMethods, opplysninger]);
+
+  const { fields } = useFieldArray({ control: formMethods.control, name: 'vurderinger' });
 
   const onSubmit = async (data: TiDagerFormData) => {
-    const payload = aksjonspunkter.map(ap => ({
-      kode: ap.definisjon.kode,
-      avklarAgRettFraDag1: data.harRettFraDag1 === 'ja',
-      begrunnelse: data.begrunnelse,
-    }));
+    const payload = [
+      {
+        kode: AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN,
+        begrunnelse: data.begrunnelse,
+        avklarRettFraDagEn: {
+          vurderinger: data.vurderinger.map(v => {
+            const journalpost = opplysninger.journalposter.find(jp => jp.journalpostId === v.journalpostId);
+            return {
+              journalpostId: v.journalpostId,
+              harUtbetaltPliktigeDager: v.harUtbetaltPliktigeDager === 'ja',
+              arbeidsgiver: journalpost?.arbeidsgiver,
+            };
+          }),
+        },
+      },
+    ];
     await submitCallback(payload);
   };
 
   return (
-    <Box paddingInline="space-16 space-32" paddingBlock="space-8" width="fit-content">
-      <Heading size="medium" level="2" spacing>
-        Ti dager
-      </Heading>
+    <Box paddingInline="space-8" paddingBlock="space-8" width="fit-content">
+      <HStack gap="space-16">
+        {vilkårErFerdigVurdert ? (
+          vilkårErOppfylt ? (
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--ax-bg-success-strong)' }} />
+          ) : (
+            <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
+          )
+        ) : null}
+        <Heading size="small" level="2" spacing>
+          Ti dager
+        </Heading>
+        <Detail className={styles.vilkar}>
+          <Lovreferanse>§ 9-8 tredje ledd</Lovreferanse>
+        </Detail>
+      </HStack>
       <ReadMore header="Hvordan går jeg frem?" size="small">
         <BodyLong size="small">
           Arbeidsgiver må dekke de første 10 omsorgsdagene hvert kalenderår for ansatte som har barn under 12 år, eller
@@ -44,8 +161,8 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
           rett på flere enn 10 omsorgsdager.
         </BodyLong>
         <BodyLong size="small">
-          Fyller den ansatte vilkår for å få omsorgspenger fra første dag? Kronisk sykt barn: Ved kronisk sykt barn over
-          12, og ingen andre barn under 13 år, kan arbeidsgiver søke om refusjon fra første fraværsdag.
+          Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag Kronisk sykt barn: Ved kronisk sykt
+          barn over 12, og ingen andre barn under 13 år, kan arbeidsgiver søke om refusjon fra første fraværsdag.
         </BodyLong>
         <BodyLong size="small">
           Avbrudd i arbeidsforholdet: Dette kan være når arbeidstaker har vært i arbeid eller likestilte situasjoner i
@@ -54,44 +171,90 @@ export const TiDagerProsessIndex = ({ aksjonspunkter, submitCallback, isReadOnly
           14 dager, og er tilbake i arbeid.
         </BodyLong>
       </ReadMore>
-      <Box marginBlock="space-8">
+      <Box
+        marginBlock="space-16 space-8"
+        borderRadius="8"
+        padding={formIsLockedOrReadOnly ? 'space-16' : 'space-0'}
+        background={formIsLockedOrReadOnly ? 'info-softA' : undefined}
+      >
         <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
           <VStack gap="space-16">
             <Controller
-              control={control}
-              name="harRettFraDag1"
-              rules={{ required: true }}
-              render={({ field, fieldState }) => (
-                <RadioGroup
-                  legend="Fremkommer det av inntektsmelding at 10 dager er benyttet?"
-                  onChange={field.onChange}
-                  value={field.value ?? ''}
-                  error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  size="small"
-                  readOnly={isReadOnly}
-                >
-                  <Radio value="ja">Ja</Radio>
-                  <Radio value="nei">Nei</Radio>
-                </RadioGroup>
-              )}
-            />
-
-            <Controller
-              control={control}
+              control={formMethods.control}
               name="begrunnelse"
               rules={{ required: true }}
               render={({ field, fieldState }) => (
                 <Textarea
                   {...field}
-                  label="Begrunnelse"
+                  label="Vurder om den ansatte fyller vilkår for å få omsorgspenger fra første dag"
                   size="small"
                   error={fieldState.error ? 'Feltet er påkrevd' : undefined}
-                  readOnly={isReadOnly}
+                  readOnly={formIsLockedOrReadOnly}
                 />
               )}
             />
+            {fields.map((field, index) => {
+              const journalpost = opplysninger.journalposter.find(jp => jp.journalpostId === field.journalpostId);
+              return (
+                <Box key={field.id} borderWidth="1" borderRadius="8" padding="space-12">
+                  <VStack gap="space-8">
+                    <VStack gap="space-4">
+                      <Label size="small">Arbeidsgiver</Label>
+                      <BodyShort size="small">
+                        {journalpost
+                          ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId)
+                          : field.journalpostId}
+                      </BodyShort>
+                    </VStack>
+                    {journalpost?.dokumentId && (
+                      <Link
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${journalpost.journalpostId}&dokumentId=${journalpost.dokumentId}`}
+                        data-color="accent"
+                      >
+                        <HStack align="center" gap="space-4">
+                          <FileIcon title="Inntektsmelding" width={24} height={24} />
+                          {`Inntektsmelding (${journalpost.journalpostId})`}
+                        </HStack>
+                      </Link>
+                    )}
+                    <Controller
+                      control={formMethods.control}
+                      name={`vurderinger.${index}.harUtbetaltPliktigeDager`}
+                      rules={{ required: true }}
+                      render={({ field: radioField, fieldState }) => (
+                        <RadioGroup
+                          legend={`Har arbeidsgiveren rett fra første dag selv om pliktige dager ikke er dekket? (${journalpost ? formatArbeidsgiverNavn(journalpost, arbeidsgiverOpplysningerPerId) : 'Ukjent arbeidsgiver'})`}
+                          onChange={radioField.onChange}
+                          value={radioField.value ?? ''}
+                          error={fieldState.error ? 'Feltet er påkrevd' : undefined}
+                          size="small"
+                          readOnly={formIsLockedOrReadOnly}
+                        >
+                          <Radio value="ja">Ja</Radio>
+                          <Radio value="nei">Nei</Radio>
+                        </RadioGroup>
+                      )}
+                    />
+                  </VStack>
+                </Box>
+              );
+            })}
+            {isFormLocked && !readOnly && (
+              <Bleed marginInline="space-8">
+                <Button
+                  size="small"
+                  variant="tertiary"
+                  icon={<PencilIcon aria-hidden="true" fontSize="1.5rem" />}
+                  onClick={() => setIsFormLocked(false)}
+                >
+                  Rediger vurdering
+                </Button>
+              </Bleed>
+            )}
           </VStack>
-          {!isReadOnly && (
+          {!formIsLockedOrReadOnly && (
             <Box marginBlock="space-16 space-0">
               <Button size="small" type="submit" loading={formMethods.formState.isSubmitting}>
                 Bekreft

@@ -92,7 +92,7 @@ export const InngangsvilkarProsessStegInitPanel = ({
           </Tabs.List>
         </Tabs>
       )}
-      <HGrid columns={2} marginBlock={tabs.length > 1 ? 'space-32' : 'space-16'}>
+      <HGrid columns={2} marginBlock={tabs.length > 1 ? 'space-32' : 'space-16'} gap="space-16">
         <VStack gap="space-48">
           <SøknadsfristProsessStegInitPanel
             behandling={behandling}

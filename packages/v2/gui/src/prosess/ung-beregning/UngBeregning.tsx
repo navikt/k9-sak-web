@@ -7,6 +7,7 @@ import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/Aksjonspu
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, Loader, Tabs } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { DagsatsOgUtbetaling, sortSatser } from '../../shared/dagsats-og-utbetaling/DagsatsOgUtbetaling';
 import { ArbeidOgInntekt, type ArbeidOgInntektProps } from '../../shared/kontroll-inntekt/ArbeidOgInntekt';
 import { BarnPanel } from './BarnPanel';
@@ -45,6 +46,7 @@ const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjo
     queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatsOgUtbetalingPerioder(behandling.uuid),
     select: sortSatser,
+    throwOnError: false,
   });
 
   const {
@@ -55,6 +57,7 @@ const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjo
     queryKey: ['kontrollInntekt', behandling.uuid, behandling.versjon],
     queryFn: () => api.getKontrollerInntekt(behandling.uuid),
     select: sortInntekt,
+    throwOnError: false,
   });
 
   const {
@@ -64,10 +67,12 @@ const UngBeregning = ({ api, behandling, barn, inntektKontrollertCallback, aksjo
   } = useQuery({
     queryKey: ['ungdomsprogramInformasjon', behandling.uuid],
     queryFn: () => api.getUngdomsprogramInformasjon(behandling.uuid),
+    throwOnError: false,
   });
 
   const { data: arbeidsgivere } = useQuery({
     queryKey: ['arbeidsgivere', behandling.uuid],
+    throwOnError: ignore404Errors,
     queryFn: () => api.getArbeidsgiverOpplysninger(behandling.uuid),
   });
 

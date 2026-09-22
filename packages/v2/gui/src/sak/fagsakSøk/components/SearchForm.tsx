@@ -1,4 +1,4 @@
-import { Alert, Button, Heading } from '@navikt/ds-react';
+import { Alert, Box, Button, Heading } from '@navikt/ds-react';
 import { RhfForm, RhfTextField } from '@navikt/ft-form-hooks';
 import { useForm } from 'react-hook-form';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '../../../utils/validation/validators';
@@ -59,9 +59,11 @@ export const SearchForm = ({ searchStarted, searchResultAccessDenied, onSubmit }
         </Button>
       </div>
       {searchResultAccessDenied && (
-        <Alert inline variant="warning">
-          {searchResultAccessDenied.feilmelding}
-        </Alert>
+        <Box marginBlock="space-8 space-0">
+          <Alert inline variant="warning">
+            {searchResultAccessDenied.feilmelding}
+          </Alert>
+        </Box>
       )}
     </RhfForm>
   );

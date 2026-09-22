@@ -5,11 +5,30 @@ import { RhfCheckbox, RhfRadioGroup, RhfTextField } from '@navikt/ft-form-hooks'
 import { hasValidOrgNumber, required } from '@navikt/ft-form-validators';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { getFeilmeldingFraFeilDto } from '../../../../app/feilmeldinger/errorUtils.js';
 import { useAlleInstitusjoner, useHentOrganisasjonsnummer } from '../../SykdomOgOpplæringQueries';
 import { InstitusjonFormFields } from '../types/InstitusjonFormFields.js';
+import type { FeilDtoUnion } from '@k9-sak-web/backend/shared/errorhandling/FeilDtoUnion.js';
 
 const ANTALL_SIFFER_ORGNR = 9;
+
+/**
+ * Henter feilmelding fra FeilDto.
+ * Hvis feltFeil array er tom eller ikke eksisterer, returnerer feilmelding.
+ */
+export const getFeilmeldingFraFeilDto = (feilDto?: FeilDtoUnion | null): string => {
+  if (!feilDto) {
+    return '';
+  }
+
+  if (feilDto?.feltFeil && feilDto.feltFeil.length > 0) {
+    const firstFeltFeil = feilDto.feltFeil[0];
+    if (firstFeltFeil) {
+      return firstFeltFeil.melding;
+    }
+  }
+
+  return feilDto.feilmelding;
+};
 
 const InstitusjonVelger = ({
   institusjonFraSøknad,

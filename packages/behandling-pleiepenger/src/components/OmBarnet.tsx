@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
 import { OmBarnet } from '@k9-sak-web/fakta-om-barnet';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 interface OmBarnetProps {
   behandling: BehandlingAppKontekst;
@@ -15,9 +15,7 @@ interface OmBarnetProps {
 }
 
 export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallback }: OmBarnetProps) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
-    httpErrorHandler(status, addErrorMessage, locationHeader);
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const omBarnetAksjonspunkt = findAksjonspunkt(
     aksjonspunkter,
@@ -34,7 +32,7 @@ export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallbac
   return (
     <OmBarnet
       data={{
-        httpErrorHandler: httpErrorHandlerCaller,
+        errorNotifier: legacyErrorNotifier,
         endpoints: findEndpointsFromRels(links, [
           {
             rel: 'rett-ved-dod',

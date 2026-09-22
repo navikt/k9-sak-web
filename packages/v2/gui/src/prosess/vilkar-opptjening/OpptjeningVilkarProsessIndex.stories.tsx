@@ -12,7 +12,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { asyncAction } from '../../storybook/asyncAction';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles';
-import OpptjeningVilkarProsessIndexV2 from './OpptjeningVilkarProsessIndexV2';
+import OpptjeningVilkarProsessIndex from './OpptjeningVilkarProsessIndex';
 
 const opptjening = {
   fastsattOpptjening: {
@@ -130,9 +130,9 @@ const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 
 const meta = {
   title: 'gui/prosess/vilkar-opptjening',
-  component: OpptjeningVilkarProsessIndexV2,
+  component: OpptjeningVilkarProsessIndex,
   decorators: [withFeatureToggles({})],
-} satisfies Meta<typeof OpptjeningVilkarProsessIndexV2>;
+} satisfies Meta<typeof OpptjeningVilkarProsessIndex>;
 
 export default meta;
 

@@ -45,7 +45,7 @@ export const getPathToK9Los = v2GetPathToK9Los;
 
 export const getPathToK9Punsj = (): string | null => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
+  if (host === 'k9.intern.dev.nav.no') {
     return 'https://k9-punsj-frontend.intern.dev.nav.no/';
   }
   if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {

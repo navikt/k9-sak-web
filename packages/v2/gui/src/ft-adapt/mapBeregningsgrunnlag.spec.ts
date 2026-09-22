@@ -1,4 +1,4 @@
-import { folketrygdloven_kalkulus_kodeverk_LønnsendringScenario } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { LønnsendringScenario } from '@k9-sak-web/backend/k9sak/kodeverk/LønnsendringScenario.js';
 import { describe, expect, it } from 'vitest';
 import { mapBeregningsgrunnlagTilFP } from './mapBeregningsgrunnlag.js';
 
@@ -111,7 +111,7 @@ describe('mapBeregningsgrunnlagTilFP – faktaOmBeregning', () => {
           lønnsendringSaksopplysning: [
             {
               sisteLønnsendringsdato: '2024-01-01',
-              lønnsendringscenario: folketrygdloven_kalkulus_kodeverk_LønnsendringScenario.FULL_MÅNEDSINNTEKT_EN_MND,
+              lønnsendringscenario: LønnsendringScenario.FULL_MÅNEDSINNTEKT_EN_MND,
               arbeidsforhold: { andelsnr: undefined, arbeidsgiverIdent: undefined },
             },
           ],

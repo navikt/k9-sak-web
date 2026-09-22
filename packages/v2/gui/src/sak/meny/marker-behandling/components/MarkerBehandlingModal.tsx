@@ -1,5 +1,6 @@
-import { merknadType, type MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
+import { MerknadType } from '@k9-sak-web/backend/k9sak/kodeverk/produksjonsstyring/MerknadType.js';
 import type { MerknadResponse } from '@k9-sak-web/backend/k9sak/kontrakt/los/MerknadResponse.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { Bleed, BodyShort, Box, Button, Heading, HStack, List, Loader, Modal, VStack } from '@navikt/ds-react';
@@ -33,11 +34,11 @@ interface FormValues {
 const getMerknader = (merknader: MerknadResponse): MerknadType[] => {
   const ubrukteMerknader: MerknadType[] = [];
 
-  if (!merknader.hastesak.aktiv) {
-    ubrukteMerknader.push(merknadType.HASTESAK);
+  if (!merknader.hastesak?.aktiv) {
+    ubrukteMerknader.push(MerknadType.HASTESAK);
   }
-  if (!merknader.utenlandssak.aktiv) {
-    ubrukteMerknader.push(merknadType.UTENLANDSSAK);
+  if (!merknader.utenlandssak?.aktiv) {
+    ubrukteMerknader.push(MerknadType.UTENLANDSSAK);
   }
   return ubrukteMerknader;
 };
@@ -50,18 +51,18 @@ const getGjeldendeMerknader = (merknader: MerknadResponse) => {
   }
 
   const gjeldendeMerknader: Merknad[] = [];
-  if (merknader.hastesak.aktiv) {
+  if (merknader.hastesak?.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Hastesak',
       begrunnelse: merknader.hastesak.fritekst ?? '',
-      merknadKode: merknadType.HASTESAK,
+      merknadKode: MerknadType.HASTESAK,
     });
   }
-  if (merknader.utenlandssak.aktiv) {
+  if (merknader.utenlandssak?.aktiv) {
     gjeldendeMerknader.push({
       tittel: 'Utenlandssak',
       begrunnelse: merknader.utenlandssak.fritekst ?? '',
-      merknadKode: merknadType.UTENLANDSSAK,
+      merknadKode: MerknadType.UTENLANDSSAK,
     });
   }
   return gjeldendeMerknader;
@@ -73,6 +74,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
     refetch: hentMerknader,
     isFetching,
   } = useQuery({
+    throwOnError: ignore404Errors, // Denne feiler med 404 for klage/tilbake behandlinger
     queryKey: ['merknader', behandlingUuid],
     queryFn: async () => {
       const data = await api.getMerknader(behandlingUuid);
@@ -165,7 +167,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({ lukkModal, behandlingUu
                     label="Velg ny merknad"
                     selectValues={tilgjengeligeMerknader.map(merknad => {
                       let label = merknad.charAt(0) + merknad.slice(1).toLowerCase();
-                      if (merknad === merknadType.UTENLANDSSAK) {
+                      if (merknad === MerknadType.UTENLANDSSAK) {
                         label = 'Utenlandssak';
                       }
                       return (

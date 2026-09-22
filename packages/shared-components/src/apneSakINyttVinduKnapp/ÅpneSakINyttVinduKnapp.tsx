@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ExternalLink } from '@navikt/ds-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Button, ButtonProps } from '@navikt/ds-react';
 
 import { useHref, useLocation } from 'react-router';
@@ -16,7 +16,7 @@ const ÅpneSakINyttVindu: React.FC<Omit<ButtonProps, 'children'> & ÅpneSakINytt
   size = 'small',
   disabled,
   loading,
-  icon = <ExternalLink aria-hidden />,
+  icon = <ExternalLinkIcon aria-hidden />,
   iconPosition,
   value = 'Åpne sak i ny fane',
   overridePath,

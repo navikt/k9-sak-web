@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
@@ -29,6 +28,27 @@ const createProxy = (target, pathRewrite) => ({
     });
   },
 });
+
+function nodeSourcemapsPlugin({ exclude } = {}) {
+  return {
+    name: 'node-sourcemaps',
+    async transform(code, id) {
+      const cleanId = id.replace(/^\0/, '').split('?')[0].split('#')[0];
+      if (!/(^|[\\/])node_modules([\\/]|$)/.test(cleanId)) return null;
+      if (exclude?.test(cleanId)) return null;
+      if (!/\.[cm]?[jt]sx?$/.test(cleanId)) return null;
+      const match = code.match(/\/\/[#@] sourceMappingURL=(\S+)/m);
+      if (!match || match[1].startsWith('data:')) return null;
+      try {
+        const mapPath = path.resolve(path.dirname(cleanId), match[1]);
+        const map = JSON.parse(await fs.promises.readFile(mapPath, 'utf-8'));
+        return { code, map };
+      } catch {
+        return null;
+      }
+    },
+  };
+}
 
 function excludeMsw() {
   return {
@@ -83,7 +103,7 @@ export default ({ mode }) => {
         ),
       },
     },
-    base: '/k9/web',
+    base: process.env.VITE_CDN_BASE_URL ?? '/k9/web',
     publicDir: './public',
     resolve: {
       dedupe: ['react', 'react-dom'],
@@ -95,17 +115,10 @@ export default ({ mode }) => {
       }),
       svgr(),
       excludeMsw(),
-      sentryVitePlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        disable: !process.env.SENTRY_AUTH_TOKEN,
-        org: 'nav',
-        project: 'k9-sak-web',
-        url: 'https://sentry.gc.nav.no',
-        release: {
-          name: process.env.VITE_SENTRY_RELEASE,
-        },
-      }),
     ],
+    esbuild: {
+      charset: 'utf8',
+    },
     build: {
       // Relative to the root
       outDir: './dist/k9/web',
@@ -114,7 +127,9 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
+        plugins: [nodeSourcemapsPlugin()],
         output: {
+          sourcemapBaseUrl: process.env.VITE_CDN_BASE_URL,
           manualChunks(id) {
             if (id.includes('@navikt/diagnosekoder')) {
               return 'diagnosekoder';
@@ -139,6 +154,7 @@ export default ({ mode }) => {
       css: {
         modules: {
           classNameStrategy: 'non-scoped',
+          localsConvention: 'camelCase'
         },
       },
       globals: true,
