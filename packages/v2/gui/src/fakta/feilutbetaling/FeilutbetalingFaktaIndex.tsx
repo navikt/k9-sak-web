@@ -7,7 +7,7 @@ import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useFeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApiContext.js';
 import {
@@ -32,6 +32,7 @@ export interface FeilutbetalingFormValues {
 
 interface FeilutbetalingFaktaIndexProps {
   behandlingUuid: string;
+  behandlingVersjon: number;
   fagsakYtelseType: string;
   readOnly: boolean;
   hasOpenAksjonspunkter: boolean;
@@ -62,6 +63,7 @@ const buildDefaultValues = (perioder: LogiskPeriodeMedFaktaDto[], begrunnelse?: 
 
 const FeilutbetalingFaktaIndex = ({
   behandlingUuid,
+  behandlingVersjon,
   fagsakYtelseType,
   readOnly,
   hasOpenAksjonspunkter,
@@ -69,7 +71,9 @@ const FeilutbetalingFaktaIndex = ({
   submitCallback,
 }: FeilutbetalingFaktaIndexProps) => {
   const api = useFeilutbetalingFaktaApi();
-  const { data: faktaDto } = useSuspenseQuery(feilutbetalingFaktaQueryOptions(api, behandlingUuid));
+  const { data: faktaDto } = useSuspenseQuery(
+    feilutbetalingFaktaQueryOptions(api, behandlingUuid, behandlingVersjon),
+  );
   const { data: alleÅrsaker } = useSuspenseQuery(feilutbetalingÅrsakerQueryOptions(api));
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
@@ -100,7 +104,14 @@ const FeilutbetalingFaktaIndex = ({
     mode: 'onTouched',
   });
 
-  const { control, handleSubmit, formState } = formMethods;
+  const { control, handleSubmit, formState, reset } = formMethods;
+  const defaultValuesRef = useRef(buildDefaultValues(perioder, fakta?.begrunnelse));
+  defaultValuesRef.current = buildDefaultValues(perioder, fakta?.begrunnelse);
+
+  useEffect(() => {
+    reset(defaultValuesRef.current);
+  }, [behandlingVersjon, reset]);
+
   const behandlePerioderSamlet = useWatch({ control, name: 'behandlePerioderSamlet' });
 
   const onSubmit = async (values: FeilutbetalingFormValues) => {

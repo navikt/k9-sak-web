@@ -105,6 +105,7 @@ const meta = {
   component: FeilutbetalingFaktaIndex,
   args: {
     behandlingUuid: 'test-uuid',
+    behandlingVersjon: 1,
     fagsakYtelseType: 'PSB',
     readOnly: false,
     hasOpenAksjonspunkter: true,

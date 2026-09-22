@@ -1,9 +1,13 @@
 import { queryOptions } from '@tanstack/react-query';
 import type { FeilutbetalingFaktaApi } from './FeilutbetalingFaktaApi.js';
 
-export const feilutbetalingFaktaQueryOptions = (api: FeilutbetalingFaktaApi, behandlingUuid: string) =>
+export const feilutbetalingFaktaQueryOptions = (
+  api: FeilutbetalingFaktaApi,
+  behandlingUuid: string,
+  behandlingVersjon: number,
+) =>
   queryOptions({
-    queryKey: ['feilutbetaling-fakta', behandlingUuid, api.backend],
+    queryKey: ['feilutbetaling-fakta', behandlingUuid, behandlingVersjon, api.backend],
     queryFn: () => api.hentFeilutbetalingFakta(behandlingUuid),
   });
 
