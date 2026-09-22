@@ -37,15 +37,29 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
 ### Under migrering
 
+#### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
-Har PR som ikke er merget
+#### Under arbeid
 - fakta-feilutbetaling
 - fakta-omsorgen-for
 ---
+
+### Trenger avklaringer
+- fakta-medisinsk-vilkår
+    Kjernefunksjonalitet med masse kode og logikk. 
+    Design ønsker å flytte denne til prosesspanel, og samtidig gjøre omfattende endringer i flyt.
+    Virker sannsynlig at en komplett omskrivning vil være beste løsning for panelet i den sammenheng.
+- prosess-vedtak
+    Her er det snakk om å gjøre omfattende endringer i backend også, for det er mye forretningslogikk i frontend.
+    Tror vi ønsker å flytte mye logikk til backend
+
+### Skal IKKE migreres
+- fakta-inntekt-og-ytelser 
+    Erstattes av arbeid og inntekt. fakta-inntekt-og-ytelser kan slettes når arbeid og inntekt er togglet på i prod.
 
 ### Ikke migrert eller ikke vurdert
 
@@ -55,7 +69,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `fakta-inntekt-og-ytelser`             | 104     | 3 (oms, frisinn, unntak)                               | Kun visning, 1 API                                             |
 | `fakta-direkte-overgang`               | 285     | 2 (opl, psb)                                           | Enkel skjema, 0 API-avhengigheter                              |
 | `prosess-vilkar-sykdom`                | 134     | 3 (opl, psb, psb-sluttfase)                            | Én fil, periodedata fra forelder                               |
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
@@ -102,12 +115,3 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | `prosess-tilbakekreving` | 4185    | 2 (tilbakekreving ×2) | Komplekst periode-for-periode vurderingsrutenett, aktsomhet/god-tro-flyter     |
 | `prosess-omsorgsdager`   | 4839    | 1 (utvidet-rett)      | Mikrofrontend ContainerContext, React Hook Form, flere delflyter               |
 | `prosess-utvidet-rett`   | 2387    | 1 (utvidet-rett)      | Mikrofrontend-avhengighet og flere underpaneler                                |
-
-### Tier 5 — Svært krevende
-
-Før man gjør noe med disse panelene bør man kanskje snakke litt sammen på tvers av grupper
-
-| Panel                    | ~Linjer | Konsumenter                 | Merknad                                                               |
-| ------------------------ | ------- | --------------------------- | --------------------------------------------------------------------- |
-| `fakta-medisinsk-vilkår` | 11 216  | 3 (psb, opl, psb-sluttfase) | Design har snakket om å flytte denne til prosesspanel                 |
-| `prosess-vedtak`         | 7 211   | 9                           | Her har det vært snakk om å gjøre omfattende endringer i backend også |
