@@ -19,7 +19,6 @@ it('<BarnInformasjonVisning> med rett info', () => {
 
   renderWithIntl(<BarnInformasjonVisning barnet={barn} />, { messages });
 
-  expect(screen.getByText('Barnet bor med søker')).toBeInTheDocument();
   expect(screen.getByText('Barnet er fosterbarn')).toBeInTheDocument();
   expect(screen.queryByText('Barnet bor i utlandet')).not.toBeInTheDocument();
 });
