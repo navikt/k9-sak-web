@@ -32,7 +32,7 @@ const vilkårStatusTekst = (erVilkarOk?: boolean) => {
 
 // Opplæringspenger og livets sluttfase har egne lovreferanser som skal brukes direkte
 const utledLovReferanseTekst = (pleietrengendeErOver18år?: boolean, lovReferanse?: string) => {
-  if (lovReferanse) {
+  if (lovReferanse === '§ 9-14' || lovReferanse === '§ 9-13') {
     return lovReferanse;
   }
   if (pleietrengendeErOver18år) {
