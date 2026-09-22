@@ -6,25 +6,16 @@
  * https://npmjs.com/vite-css-modules
  */
 
-declare const contentContainer: string;
-declare const sideMenuContainer: string;
-declare const mainContainerWithSideMenu: string;
+declare const harSidemeny: string;
 declare const vilkar: string;
-declare const statusMelding: string;
 
 export {
-	contentContainer,
-	sideMenuContainer,
-	mainContainerWithSideMenu,
-	vilkar,
-	statusMelding
+	harSidemeny,
+	vilkar
 };
 
 declare const __default_export__: {
-	contentContainer: typeof contentContainer;
-	sideMenuContainer: typeof sideMenuContainer;
-	mainContainerWithSideMenu: typeof mainContainerWithSideMenu;
+	harSidemeny: typeof harSidemeny;
 	vilkar: typeof vilkar;
-	statusMelding: typeof statusMelding;
 };
 export default __default_export__;

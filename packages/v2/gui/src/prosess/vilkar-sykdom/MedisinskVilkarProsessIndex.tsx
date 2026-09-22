@@ -4,7 +4,7 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import { CircleIkkeOppfyltIkon } from '@k9-sak-web/gui/shared/icons/CircleIkkeOppfyltIkon.js';
 import { CircleOppfyltIkon } from '@k9-sak-web/gui/shared/icons/CircleOppfyltIkon.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
+import { Box, Detail, Heading, HStack, Label, VStack } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useState } from 'react';
 import styles from './MedisinskVilkarProsessIndex.module.css';
@@ -70,9 +70,9 @@ const MedisinskVilkarProsessIndex = ({ perioder, panelTittel, lovReferanse }: Me
   const lovReferanseTekst = utledLovReferanseTekst(activePeriode?.pleietrengendeErOver18år, lovReferanse);
 
   return (
-    <div className={skalBrukeSidemeny ? styles.mainContainerWithSideMenu : undefined}>
+    <HStack className={skalBrukeSidemeny ? styles.harSidemeny : undefined}>
       {skalBrukeSidemeny && (
-        <div className={styles.sideMenuContainer}>
+        <Box flexShrink="0" marginInline="space-0 space-32">
           <SideMenu
             links={perioder.map((periode, index) => ({
               active: activeTab === index,
@@ -82,9 +82,9 @@ const MedisinskVilkarProsessIndex = ({ perioder, panelTittel, lovReferanse }: Me
             onClick={setActiveTab}
             heading="Perioder"
           />
-        </div>
+        </Box>
       )}
-      <div className={styles.contentContainer}>
+      <VStack gap="space-8" flexGrow="1">
         <HStack gap="space-16" align="center">
           {getVilkarStatusIkon(erVilkarOk)}
           <Heading size="small" level="2">
@@ -94,13 +94,9 @@ const MedisinskVilkarProsessIndex = ({ perioder, panelTittel, lovReferanse }: Me
             <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
           </Detail>
         </HStack>
-        <div className={styles.statusMelding}>
-          <Label size="small" as="p">
-            {vilkårStatusTekst(erVilkarOk)}
-          </Label>
-        </div>
-      </div>
-    </div>
+        <Label size="small">{vilkårStatusTekst(erVilkarOk)}</Label>
+      </VStack>
+    </HStack>
   );
 };
 

@@ -1,21 +1,8 @@
-.contentContainer {
-  flex: 1;
-}
-
-.sideMenuContainer {
-  flex-shrink: 0;
-  margin: 0 32px 0 0;
-}
-
-.mainContainerWithSideMenu {
-  display: flex;
+/* Aksel har ingen negative spacing-tokens, så dette lar seg ikke uttrykke via Box/HStack-props */
+.harSidemeny {
   margin-left: -8px;
 }
 
 .vilkar:global(.aksel-detail) {
   margin-top: 3px;
-}
-
-.statusMelding {
-  margin-top: 8px;
 }
