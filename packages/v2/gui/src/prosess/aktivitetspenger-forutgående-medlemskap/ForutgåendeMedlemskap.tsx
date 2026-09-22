@@ -8,7 +8,7 @@ import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Radio, ReadMore, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -45,8 +45,8 @@ const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
 };
 
 const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
-  vurderinger: Object.fromEntries(perioder.map(r => [r.periode!.fom, utfallTilVurdering(r.utfall)])),
-  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode!.fom, r.begrunnelse ?? ''])),
+  vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
+  begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
 });
 
 export const ForutgåendeMedlemskap = ({
@@ -60,21 +60,21 @@ export const ForutgåendeMedlemskap = ({
 }: Props) => {
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
   const sortertePerioder = perioder.toSorted(
-    (a, b) => new Date(a.periode!.fom).getTime() - new Date(b.periode!.fom).getTime(),
+    (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
   );
   const periods: VilkårSplittPanelPeriod[] = sortertePerioder.map((periodeInfo, index) => {
     const nestePeriodeInfo = sortertePerioder[index + 1];
     const visTom = !!nestePeriodeInfo && !nestePeriodeInfo.vurderesIBehandlingen;
     return {
-      id: periodeInfo.periode!.fom,
+      id: periodeInfo.periode.fom,
       status: getPeriodStatus(periodeInfo.utfall ?? Utfall.IKKE_VURDERT),
-      label: `${formatDate(periodeInfo.periode!.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode!.tom)}` : ''}`,
-      periode: periodeInfo.periode!,
+      label: `${formatDate(periodeInfo.periode.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode.tom)}` : ''}`,
+      periode: periodeInfo.periode,
     };
   });
 
   const [selectedItemId, setSelectedItemId] = useState(
-    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode!.fom ?? periods[0]?.id ?? '',
+    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ?? periods[0]?.id ?? '',
   );
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export const ForutgåendeMedlemskap = ({
     }
   }, [periods, selectedItemId]);
 
-  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode!.fom === selectedItemId);
+  const valgtPeriodeInfo = sortertePerioder.find(periodeInfo => periodeInfo.periode.fom === selectedItemId);
   // Perioder som ikke vurderes i denne behandlingen er allerede avgjort (f.eks. i en tidligere behandling)
   // og skal ikke kunne redigeres, selv om aksjonspunktet for øvrig er åpent.
   const erValgtPeriodePermanentLåst = isPermanentlyReadOnly || valgtPeriodeInfo?.vurderesIBehandlingen === false;
@@ -117,7 +117,7 @@ export const ForutgåendeMedlemskap = ({
         begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårInnvilget,
         avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
-        vilkårsperiode: valgtPeriodeInfo.periode!,
+        perioderVurdert: [valgtPeriodeInfo.periode],
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -159,7 +159,6 @@ export const ForutgåendeMedlemskap = ({
         return (
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             <VStack gap="space-16">
-              {!isFormLocked && <ReadMore header="Hvordan går jeg frem?">Veiledning her</ReadMore>}
               {søknadsopplysninger.length > 0 && (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
