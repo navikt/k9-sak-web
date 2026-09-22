@@ -28,7 +28,7 @@ const UttakInnhold = (): JSX.Element => {
 
   const [overstyringAktiv, setOverstyringAktiv] = useState<boolean>(aksjonspunktForOverstyringAvUttak !== undefined);
   const [visEndringerIUttak, setVisEndringerIUttak] = useState(false);
-  const { VIS_ENDRINGER_I_UTTAK } = useContext(FeatureTogglesContext);
+  const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
 
   useEffect(() => {
     setOverstyringAktiv(aksjonspunktForOverstyringAvUttak !== undefined);
@@ -49,7 +49,7 @@ const UttakInnhold = (): JSX.Element => {
           </Heading>
           {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
         </HStack>
-        {VIS_ENDRINGER_I_UTTAK && (
+        {NORMALARBEIDSTID_UTTAK && (
           <Button
             variant="tertiary"
             size="small"
@@ -60,7 +60,7 @@ const UttakInnhold = (): JSX.Element => {
           </Button>
         )}
       </HStack>
-      {VIS_ENDRINGER_I_UTTAK && (
+      {NORMALARBEIDSTID_UTTAK && (
         <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
       )}
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
