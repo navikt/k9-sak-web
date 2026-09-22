@@ -4,6 +4,7 @@ import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9Kod
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
+import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.js';
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -37,7 +38,7 @@ interface FeilutbetalingFaktaIndexProps {
   readOnly: boolean;
   hasOpenAksjonspunkter: boolean;
   alleMerknaderFraBeslutter?: Record<string, { notAccepted?: boolean }>;
-  submitCallback: (data: unknown) => Promise<void>;
+  submitCallback: LegacyBekreftAksjonspunktCallback;
 }
 
 const AKSJONSPUNKT_KODE = '7003';
