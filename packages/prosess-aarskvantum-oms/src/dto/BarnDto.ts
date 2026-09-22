@@ -1,4 +1,4 @@
-import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
+import { BarnTypeType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 
 interface BarnDto {
   personIdent?: string;
@@ -6,7 +6,7 @@ interface BarnDto {
   dødsdato?: string;
   deltBostedPerioder?: string[];
   sammeBostedPerioder?: string[];
-  barnType?: BarnType;
+  barnType?: BarnTypeType;
 }
 
 export default BarnDto;

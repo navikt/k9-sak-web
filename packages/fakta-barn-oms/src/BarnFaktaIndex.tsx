@@ -1,6 +1,7 @@
 import { behandlingÅrskvantumUttak_getBarnOgRammevedtak } from '@k9-sak-web/backend/k9sak/api/behandlingÅrskvantumUttak.js';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { BarnDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
 import BarnFakta from './BarnFakta';
@@ -36,7 +37,7 @@ const BarnFaktaIndex = ({
   }
 
   if (isPending) {
-    return null;
+    return <LoadingPanel />;
   }
 
   return <BarnFakta barn={data.barn} rammevedtak={data.rammevedtak} fagsaksType={fagsaksType} />;

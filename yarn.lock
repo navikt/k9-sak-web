@@ -2902,6 +2902,7 @@ __metadata:
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
+    "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/konstanter": "npm:1.0.0"
     "@k9-sak-web/prosess-omsorgsdager": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
