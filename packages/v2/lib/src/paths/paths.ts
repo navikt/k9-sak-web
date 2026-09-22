@@ -1,8 +1,8 @@
-const { DEV: IS_DEV } = import.meta.env;
 export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
 const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no'];
 const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no'];
+const localHosts = ['localhost', '127.0.0.1', '[::1]', '::1'];
 
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
@@ -47,7 +47,9 @@ export const goToSearch = () => {
   window.location.assign(`/${getBackendUrl()}/web`);
 };
 
-export const isDev = () => IS_DEV;
+// Vi reknar det som dev når appen køyrer via vite dev server, eller når den er lasta frå localhost
+// (t.d. ferdigbygd frontend i lokal verdikjede).
+export const isDev = (): boolean => import.meta.env.DEV || localHosts.includes(window.location.hostname.toLowerCase());
 
 export const isQ = (): boolean => window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
 
