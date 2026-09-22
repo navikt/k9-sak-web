@@ -38,7 +38,7 @@ jobs:
           VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/k9-sak-web/"
 
       - name: Last opp assets til CDN
-        uses: nais/deploy/actions/cdn-upload/v2@027a91857992525139798892f2804b0ca21f4af6
+        uses: nais/deploy/actions/cdn-upload/v2@027a91857992525139798892f2804b0ca21f4af6 # v2
         with:
           source: dist/k9/web/
           destination: k9-sak-web/
