@@ -37,12 +37,13 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 
 ### Under migrering
 
+#### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
-Har PR som ikke er merget
+#### Under arbeid
 - fakta-feilutbetaling
 - fakta-omsorgen-for
 ---
