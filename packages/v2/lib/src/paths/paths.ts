@@ -3,6 +3,7 @@ export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
 const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no'];
 const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no'];
+const localHosts = ['localhost', '127.0.0.1', '[::1]', '::1'];
 
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
@@ -49,7 +50,14 @@ export const goToSearch = () => {
 
 export const isDev = () => IS_DEV;
 
-export const isQ = (): boolean => window.location.hostname.toLowerCase().endsWith('.intern.dev.nav.no');
+export const isQ = (): boolean => {
+  const hostname = window.location.hostname.toLowerCase();
+  if (hostname.endsWith('.intern.dev.nav.no')) {
+    return true;
+  }
+  // Viss frontend køyrer i lokal verdikjede ønskjer vi også at isQ skal returnere true
+  return !isDev() && localHosts.includes(hostname);
+};
 
 export const isProd = () => {
   const { host } = window.location;
