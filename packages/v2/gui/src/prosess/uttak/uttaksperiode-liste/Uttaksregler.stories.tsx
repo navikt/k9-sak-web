@@ -62,7 +62,7 @@ export const BeggeReglene: Story = {
 
     await step('Viser banner for endringsdato', async () => {
       await expect(canvas.getByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
-      await expect(canvas.getByRole('button', { name: 'Rediger dato' })).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Rediger' })).toBeInTheDocument();
     });
 
     await step('Viser banner for låst normalarbeidstid', async () => {
