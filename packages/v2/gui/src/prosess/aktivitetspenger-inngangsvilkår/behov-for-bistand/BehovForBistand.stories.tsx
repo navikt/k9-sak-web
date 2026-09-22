@@ -263,7 +263,7 @@ export const RedigererMaksdato: Story = {
       await waitFor(async () => {
         await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual({
           '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-          begrunnelse: 'Søker har behov for bistand.\n\nSøker trenger bistand kortere enn maksperioden.',
+          begrunnelse: 'Aksjonspunkt 5141 VURDER_BISTANDSVILKÅR bekreftet',
           vurdertePerioder: [
             {
               avslagsårsak: undefined,

@@ -4,7 +4,7 @@ import { NavigateFunction, useLocation, useNavigate, useParams } from 'react-rou
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import { FagsakYtelseType } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakYtelseType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import BehandlingAktivitetspengerIndex from '@k9-sak-web/behandling-aktivitetspenger';
 import BehandlingKlageUngdomsytelseIndex from '@k9-sak-web/behandling-klage-ungdomsytelse';
 import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
@@ -195,7 +195,7 @@ const BehandlingIndex = ({
       );
     }
 
-    if (fagsak.sakstype === FagsakYtelseType.AKTIVITETSPENGER) {
+    if (fagsak.sakstype === fagsakYtelsesType.AKTIVITETSPENGER) {
       return (
         <ErrorBoundary>
           <BehandlingAktivitetspengerIndex

@@ -1,3 +1,4 @@
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AktivitetsvilkåretIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AktivitetsvilkåretIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -26,8 +27,8 @@ import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenge
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi';
 import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
-import { AktivitetLesevisning } from './AktivitetLesevisning';
 import { buildInitialValues, type AktivitetFormData } from './aktivitetFormData.js';
+import { AktivitetLesevisning } from './AktivitetLesevisning';
 import { AktivitetSkjema } from './AktivitetSkjema';
 
 interface Props {
@@ -122,9 +123,7 @@ export const Aktivitet = ({
 
       const payload = {
         '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
-        begrunnelse: redigerTomDatoAktiv
-          ? `${begrunnelseInnvilget}\n\n${begrunnelseAvkortet}`.trim()
-          : begrunnelseInnvilget,
+        begrunnelse: `Aksjonspunkt ${aksjonspunktCodes.VURDER_AKTIVITETSVILKÅR} VURDER_AKTIVITETSVILKÅR bekreftet`, // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
         vurdertePerioder,
       };
 

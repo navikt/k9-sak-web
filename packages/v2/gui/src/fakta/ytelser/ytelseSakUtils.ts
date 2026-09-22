@@ -2,16 +2,16 @@ import type {
   RelatertYtelseData,
   RelatertYtelseResponse,
 } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/RelatertYtelseResponse.js';
-import type { FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakYtelseType.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 export type YtelsePeriode = RelatertYtelseData & {
   rowId: string;
-  ytelseType: FagsakYtelseType;
+  ytelseType: FagsakYtelsesType;
 };
 
 export type YtelseSak = {
   id: string;
-  ytelseType: FagsakYtelseType;
+  ytelseType: FagsakYtelsesType;
   saksnummer?: string;
   perioder: YtelsePeriode[];
   erGjeldendeSak: boolean;
@@ -56,7 +56,7 @@ export const grupperYtelserPåSak = (perioder: YtelsePeriode[], gjeldendeSaksnum
 
 export const sorterYtelseSaker = (
   saker: YtelseSak[],
-  formatYtelseType: (ytelseType: FagsakYtelseType) => string,
+  formatYtelseType: (ytelseType: FagsakYtelsesType) => string,
 ): YtelseSak[] =>
   saker.toSorted((a, b) => {
     if (a.erGjeldendeSak !== b.erGjeldendeSak) {
