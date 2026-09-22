@@ -38,7 +38,7 @@ jobs:
           VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/k9-sak-web/"
 
       - name: Last opp assets til CDN
-        uses: nais/deploy/actions/cdn-upload/v2@027a91857992525139798892f2804b0ca21f4af6
+        uses: nais/deploy/actions/cdn-upload/v2@027a91857992525139798892f2804b0ca21f4af6 # v2
         with:
           source: dist/k9/web/
           destination: k9-sak-web/
@@ -51,7 +51,7 @@ jobs:
         uses: ./.github/actions/build-server
 
       - name: Build and push to docker registry
-        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
         id: docker-push
         with:
           without_navikt_prefix: true
@@ -73,7 +73,7 @@ jobs:
       id-token: write
       contents: read
       packages: read
-    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@main
+    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
     needs: build-docker-image
     with:
       tag: ${{ needs.build-docker-image.outputs.tag }}
@@ -82,7 +82,7 @@ jobs:
 
   trivy:
     needs: [build-docker-image]
-    uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
+    uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@97a944ba12c0db588a29cfeed8a7dcb22e087d3f # v1.0.1
     permissions:
       contents: write
       id-token: write
