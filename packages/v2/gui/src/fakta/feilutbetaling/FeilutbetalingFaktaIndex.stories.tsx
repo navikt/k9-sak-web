@@ -79,9 +79,9 @@ const createFakeApi = (
   faktaData: BehandlingFeilutbetalingFaktaDto,
   årsakerData: HendelseTyperPrYtelseTypeDto[],
 ): FeilutbetalingFaktaApi => ({
+  backend: 'k9tilbake',
   hentFeilutbetalingFakta: async () => faktaData,
   hentFeilutbetalingÅrsaker: async () => årsakerData,
-  bekreftAksjonspunkt: async () => {},
 });
 
 const withFakeApi = (

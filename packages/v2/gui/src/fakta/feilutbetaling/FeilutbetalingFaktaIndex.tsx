@@ -7,7 +7,11 @@ import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } f
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useFeilutbetalingFaktaOptions, useFeilutbetalingÅrsakerOptions } from './api/FeilutbetalingFaktaQueries.js';
+import { useFeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApiContext.js';
+import {
+  feilutbetalingFaktaQueryOptions,
+  feilutbetalingÅrsakerQueryOptions,
+} from './api/FeilutbetalingFaktaQueries.js';
 import styles from './feilutbetalingFakta.module.css';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable.js';
 
@@ -62,8 +66,9 @@ const FeilutbetalingFaktaIndex = ({
   alleMerknaderFraBeslutter,
   submitCallback,
 }: FeilutbetalingFaktaIndexProps) => {
-  const { data: faktaDto } = useSuspenseQuery(useFeilutbetalingFaktaOptions(behandlingUuid));
-  const { data: alleÅrsaker } = useSuspenseQuery(useFeilutbetalingÅrsakerOptions());
+  const api = useFeilutbetalingFaktaApi();
+  const { data: faktaDto } = useSuspenseQuery(feilutbetalingFaktaQueryOptions(api, behandlingUuid));
+  const { data: alleÅrsaker } = useSuspenseQuery(feilutbetalingÅrsakerQueryOptions(api));
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
