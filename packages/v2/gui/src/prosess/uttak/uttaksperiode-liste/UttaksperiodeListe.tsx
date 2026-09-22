@@ -15,7 +15,7 @@ import splitUttakByDate from '../utils/splitUttakByDate';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { PencilIcon } from '@navikt/aksel-icons';
 
-// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
+// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet (OLP, PSB og PILS)
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
 
 interface UttaksperiodeListeProps {
@@ -123,7 +123,10 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     NORMALARBEIDSTID_LÅST_DATO,
   );
   const visNormalarbeidstidInfo =
-    erSakstype(fagsakYtelseType.PLEIEPENGER_SYKT_BARN) && perioderEtterLåstNormalarbeidstid.length > 0;
+    (erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ||
+      erSakstype(fagsakYtelseType.PLEIEPENGER_SYKT_BARN) ||
+      erSakstype(fagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE)) &&
+    perioderEtterLåstNormalarbeidstid.length > 0;
 
   if (visNormalarbeidstidInfo) {
     uttaksregelInfo.push({
