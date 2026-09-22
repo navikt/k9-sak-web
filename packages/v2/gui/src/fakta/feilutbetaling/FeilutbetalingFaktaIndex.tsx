@@ -3,7 +3,9 @@ import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkop
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
+import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -46,7 +48,7 @@ const formatDate = (dateStr?: string) => {
 };
 
 const buildDefaultValues = (perioder: LogiskPeriodeMedFaktaDto[], begrunnelse?: string): FeilutbetalingFormValues => ({
-  begrunnelse: begrunnelse ?? '',
+  begrunnelse: decodeHtmlEntity(begrunnelse ?? '') ?? '',
   behandlePerioderSamlet: false,
   perioder: [...perioder]
     .sort((a, b) => (a.fom ?? '').localeCompare(b.fom ?? ''))
@@ -222,6 +224,7 @@ const FeilutbetalingFaktaIndex = ({
                   required: 'Feltet må fylles ut',
                   minLength: { value: 3, message: 'Du må skrive minst 3 tegn' },
                   maxLength: { value: 1500, message: 'Du kan skrive maksimalt 1500 tegn' },
+                  validate: hasValidText,
                 }}
                 render={({ field, fieldState }) => (
                   <Textarea

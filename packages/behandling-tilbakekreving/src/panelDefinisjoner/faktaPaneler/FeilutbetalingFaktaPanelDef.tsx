@@ -5,6 +5,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, FeilutbetalingFakta } from '@k9-sak-web/types';
+import FeilutbetalingFaktaIndexV2 from '@k9-sak-web/gui/fakta/feilutbetaling/FeilutbetalingFaktaIndex.js';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 
@@ -15,9 +16,24 @@ class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING];
 
-  getKomponent = props => <FeilutbetalingFaktaIndex {...props} />;
+  getKomponent = props => {
+    if (props.featureToggles?.BRUK_V2_FEILUTBETALING) {
+      return (
+        <FeilutbetalingFaktaIndexV2
+          behandlingUuid={props.behandling.uuid}
+          fagsakYtelseType={props.fagsakYtelseTypeKode}
+          readOnly={props.readOnly}
+          hasOpenAksjonspunkter={props.harApneAksjonspunkter}
+          alleMerknaderFraBeslutter={props.alleMerknaderFraBeslutter}
+          submitCallback={props.submitCallback}
+        />
+      );
+    }
+    return <FeilutbetalingFaktaIndex {...props} />;
+  };
 
-  getEndepunkter = () => [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK];
+  getEndepunkter = featureToggles =>
+    featureToggles?.BRUK_V2_FEILUTBETALING ? [] : [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK];
 
   getOverstyrVisningAvKomponent = ({ feilutbetalingFakta }) => !!feilutbetalingFakta;
 

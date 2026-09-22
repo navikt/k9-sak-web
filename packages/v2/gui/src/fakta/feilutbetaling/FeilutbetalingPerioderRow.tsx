@@ -63,8 +63,8 @@ const FeilutbetalingPerioderRow = ({
     const perioder = getValues('perioder');
     perioder.forEach((_, i) => {
       if (i !== index) {
-        setValue(`perioder.${i}.årsak`, nyÅrsak, { shouldValidate: true });
-        setValue(`perioder.${i}.underÅrsak`, '', { shouldValidate: false });
+        setValue(`perioder.${i}.årsak`, nyÅrsak, { shouldDirty: true, shouldValidate: true });
+        setValue(`perioder.${i}.underÅrsak`, '', { shouldDirty: true, shouldValidate: false });
       }
     });
   };
@@ -74,7 +74,7 @@ const FeilutbetalingPerioderRow = ({
     const perioder = getValues('perioder');
     perioder.forEach((p, i) => {
       if (i !== index && p.årsak === valgtÅrsak) {
-        setValue(`perioder.${i}.underÅrsak`, nyUnderÅrsak, { shouldValidate: true });
+        setValue(`perioder.${i}.underÅrsak`, nyUnderÅrsak, { shouldDirty: true, shouldValidate: true });
       }
     });
   };

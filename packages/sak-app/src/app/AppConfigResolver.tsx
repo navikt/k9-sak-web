@@ -6,6 +6,8 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
+import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
+import { K9FeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/K9FeilutbetalingFaktaBackendClient.js';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 import { NyInntektApiContext } from '@k9-sak-web/gui/fakta/ny-inntekt/api/NyInntektApiContext.js';
@@ -92,23 +94,25 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
                   <DokumenterApiContext value={new K9DokumenterBackendClient()}>
                     <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
-                      <NyInntektApiContext value={new K9NyInntektBackendClient()}>
-                        <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
-                          <YtelserApiContext value={new K9YtelserBackendClient()}>
-                            <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
-                              <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
-                                <UttakApiContext value={new BehandlingUttakBackendClient()}>
-                                  <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
-                                    <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
-                                      {harFeilet || erFerdig ? children : <LoadingPanel />}
-                                    </ArbeidOgInntektApiContext>
-                                  </NotatBackendClientContext>
-                                </UttakApiContext>
-                              </TiDagerBackendClientContext>
-                            </AvregningBackendClientContext>
-                          </YtelserApiContext>
-                        </UtenlandsoppholdApiContext>
-                      </NyInntektApiContext>
+                      <FeilutbetalingFaktaApiContext value={new K9FeilutbetalingFaktaBackendClient()}>
+                        <NyInntektApiContext value={new K9NyInntektBackendClient()}>
+                          <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                            <YtelserApiContext value={new K9YtelserBackendClient()}>
+                              <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
+                                <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
+                                  <UttakApiContext value={new BehandlingUttakBackendClient()}>
+                                    <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
+                                      <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
+                                        {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                      </ArbeidOgInntektApiContext>
+                                    </NotatBackendClientContext>
+                                  </UttakApiContext>
+                                </TiDagerBackendClientContext>
+                              </AvregningBackendClientContext>
+                            </YtelserApiContext>
+                          </UtenlandsoppholdApiContext>
+                        </NyInntektApiContext>
+                      </FeilutbetalingFaktaApiContext>
                     </SykdomOgOpplæringBackendClientContext>
                   </DokumenterApiContext>
                 </InntektsmeldingApiContext>
