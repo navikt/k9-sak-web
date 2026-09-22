@@ -1,15 +1,37 @@
 import { init, type InitOptions } from '@nais/apm';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { AxiosError } from 'axios';
+
+// Sidan vi legger til preserveOriginalError i initApm skal feilhendelser rapportert ha originalError satt.
+type WithOriginalError = {
+  originalError: Error;
+};
+
+/** Typen på innslaget beforeSend får inn frå faro. */
+type BeforeSendItem = Parameters<NonNullable<InitOptions['beforeSend']>>[0];
+
+/**
+ * Sjekkar om payload på eit beforeSend innslag har originalError satt, slik at vi kan bruke den opphavlege Error
+ * instansen (feks for å sjekke om feilen skal rapporterast).
+ */
+export const hasOriginalError = (
+  item: BeforeSendItem,
+): item is BeforeSendItem & { payload: BeforeSendItem['payload'] & WithOriginalError } => {
+  if (item.payload == null || typeof item.payload !== 'object') {
+    return false;
+  }
+  const { originalError } = item.payload as { originalError?: unknown };
+  return originalError instanceof Error;
+};
 
 // Vi ønsker ikkje å rapportere alle feil til apm, feks viss har utgått sesjon.
 // Legg til fleire her ved behov.
-export const shouldReportToApm = (error: Error | null): boolean => {
+const shouldNotReportToApm = (error: Error | null): boolean => {
   const apiError = ExtendedApiError.findInError(error);
   if (apiError != null) {
-    const doNotReport = apiError.isUnauthorized;
-    return !doNotReport;
+    return apiError.isUnauthorized;
   }
-  return true;
+  return false;
 };
 
 const randomErrorId = (): string =>
@@ -23,13 +45,44 @@ const randomErrorId = (): string =>
  */
 export const loadedErrorId = randomErrorId();
 
-// Legg loadedErrorId på alle exception innslag. Vi gjer det her, og ikkje med setTag frå @nais/apm, fordi setTag berre
-// blir lagt på feil rapportert gjennom captureException i @nais/apm. Feil fanga automatisk av faro
-// (window.onerror, unhandledrejection, console.error) går utanom, medan beforeSend ser alle innslag.
+/** Den delen av eit exception payload vi legg ekstra informasjon på. */
+type WithContext = {
+  context?: Record<string, string>;
+};
+
+/**
+ * Lagar ein ny context med ekstra informasjon lagt til. Alle exception innslag får loadedErrorId, og viss
+ * vi har originalError hentar vi i tillegg ut nyttig informasjon frå den (status og navCallid frå api-kall).
+ *
+ * Legg gjerne til meir her seinare, men pass på at ikkje sensitiv info blir sendt til apm.
+ */
+export const enrichApmErrorContext = (
+  context: Record<string, string> | undefined,
+  error: Error | null,
+): Record<string, string> => {
+  const enriched: Record<string, string> = { ...context, loadedErrorId };
+  const extendedApiError = ExtendedApiError.findInError(error);
+  if (extendedApiError != null) {
+    if (extendedApiError.navCallid != null) {
+      enriched['navCallid'] = extendedApiError.navCallid;
+    }
+    enriched['status'] = `${extendedApiError.status}`;
+  } else if (error instanceof AxiosError) {
+    if (error.response?.status != null) {
+      enriched['status'] = `${error.response.status}`;
+    }
+  }
+  return enriched;
+};
+
 const beforeSend: NonNullable<InitOptions['beforeSend']> = item => {
   if (item.type === 'exception') {
-    const payload = item.payload as { context?: Record<string, string> };
-    payload.context = { ...payload.context, loadedErrorId };
+    const originalError = hasOriginalError(item) ? item.payload.originalError : null;
+    if (shouldNotReportToApm(originalError)) {
+      return null;
+    }
+    const payload = item.payload as WithContext; // Caster her sidan item er dårleg typa, union uten god discriminant.
+    payload.context = enrichApmErrorContext(payload.context, originalError);
   }
   return item;
 };
@@ -52,5 +105,8 @@ export function initApm({ app }: InitApmOptions) {
     tracing: true,
     devConsoleEcho: false,
     beforeSend,
+    faro: {
+      preserveOriginalError: true,
+    },
   });
 }

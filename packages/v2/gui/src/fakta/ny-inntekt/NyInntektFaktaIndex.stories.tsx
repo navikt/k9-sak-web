@@ -545,6 +545,32 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
       },
     ]),
   },
+  play: async ({ canvas, step }) => {
+    await step('skal vise aktiver aksjonspunkt når lukket AP vurderes i behandlingen', async () => {
+      await expect(canvas.getByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+    });
+  },
+};
+
+export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: Story = {
+  args: {
+    readOnly: false,
+    aksjonspunkter: [],
+    beregningsgrunnlagListe: bgTilkommetInntektsforholdMedForlengelseLukketAP,
+    beregningsgrunnlagVilkår: lagVilkår([
+      {
+        fom: '2022-11-08',
+        tom: '2022-11-20',
+        vurderesIBehandlingen: false,
+        erForlengelse: true,
+      },
+    ]),
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal ikke vise aktiver aksjonspunkt når perioden ikke vurderes i behandlingen', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Aktiver aksjonspunkt' })).not.toBeInTheDocument();
+    });
+  },
 };
 
 export const TilkommetAktivitetMedRevurdering: Story = {

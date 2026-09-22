@@ -164,7 +164,7 @@ export const HistoriskSak: Story = {
       {
         saksnummer: '2',
         ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
-        status: fagsakStatus.AVSLUTTET,
+        status: fagsakStatus.HISTORISK,
         gyldigPeriode: { fom: '2020-01-01', tom: '2020-06-30' },
       },
     ]),

@@ -471,8 +471,8 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
       await userEvent.click(canvas.getByRole('radio', { name: /nei, bruker bor fortsatt/i }));
     });
 
-    await step('Send til beslutter', async () => {
-      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    await step('Bekreft og fortsett', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
     });
 
     await step('Callback er kalt etter innsending', async () => {
@@ -526,8 +526,8 @@ export const VilkårsvurderingFlyttetMedFritekst: Story = {
       );
     });
 
-    await step('Send til beslutter', async () => {
-      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    await step('Bekreft og fortsett', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
     });
 
     await step('Payload inneholder fritekst til opphørsbrev', async () => {
