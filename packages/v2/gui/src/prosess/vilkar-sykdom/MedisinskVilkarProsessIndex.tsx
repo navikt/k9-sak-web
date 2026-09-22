@@ -94,7 +94,7 @@ const MedisinskVilkarProsessIndex = ({ perioder, panelTittel, lovReferanse }: Me
             <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
           </Detail>
         </HStack>
-        <Label size="small">{vilkårStatusTekst(erVilkarOk)}</Label>
+        <Label size="small" as="p">{vilkårStatusTekst(erVilkarOk)}</Label>
       </VStack>
     </HStack>
   );
