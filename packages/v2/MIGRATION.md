@@ -40,6 +40,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 #### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
+- [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG` (V2 implementert, aktivert i Q)
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
@@ -69,7 +70,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `fakta-direkte-overgang`               | 285     | 2 (opl, psb)                                           | Enkel skjema, 0 API-avhengigheter                              |
 | `prosess-vilkar-sykdom`                | 134     | 3 (opl, psb, psb-sluttfase)                            | Én fil, periodedata fra forelder                               |
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
 | `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
@@ -108,7 +108,7 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                    | ~Linjer | Konsumenter           | Merknad                                                                        |
 | ------------------------ | ------- | --------------------- | ------------------------------------------------------------------------------ |
-| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering               |
+| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering              |
 | `fakta-arbeidsforhold`   | 2664    | 5                     | Skjemadrevet, kryssreferanser mot arbeidsgiverOpplysninger                     |
 | `fakta-opptjening-oms`   | 2815    | 4                     | Store individuelle filer, kompleks periodebasert opptjeningsredigering         |
 | `fakta-etablert-tilsyn`  | 2907    | 2 (opl, psb)          | Dobble flyter for Nattevåk+Beredskap, periodenavigering, egendefinert kontekst |
