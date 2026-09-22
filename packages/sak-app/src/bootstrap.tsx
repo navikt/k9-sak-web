@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import configureStore from './configureStore';
-import { IS_DEV } from './constants';
-import { isQ } from '@k9-sak-web/lib/paths/paths.js';
+import { isDev, isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 import { configureK9KlageClient } from '@k9-sak-web/backend/k9klage/configureK9KlageClient.js';
 import { configureK9SakClient } from '@k9-sak-web/backend/k9sak/configureK9SakClient.js';
@@ -21,7 +20,7 @@ import { initApm } from '@k9-sak-web/gui/app/errorhandling/apm.js';
 
 initApm({ app: 'k9-sak-web' });
 
-const featureToggles = resolveK9FeatureToggles({ useQVersion: IS_DEV || isQ() });
+const featureToggles = resolveK9FeatureToggles({ useQVersion: isDev() || isQ() });
 
 const basePath = '/k9/web';
 
