@@ -7,7 +7,7 @@ import {
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
 import Uttak from '../Uttak';
 
 /**
@@ -72,15 +72,17 @@ export const BeggeReglene: Story = {
 
     await step('Åpner dialog fra "Endringer i uttak"-knappen i toppmenyen', async () => {
       await user.click(canvas.getByRole('button', { name: 'Endringer i uttak' }));
-      await expect(canvas.getByRole('heading', { name: 'Endringer i uttak' })).toBeInTheDocument();
-      await user.click(canvas.getByRole('button', { name: 'Lukk' }));
-      await expect(canvas.queryByRole('heading', { name: 'Endringer i uttak' })).not.toBeInTheDocument();
+      await expect(screen.getByRole('heading', { name: 'Endringer i uttak' })).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'Lukk' }));
+      await waitFor(async function sjekkLukketDialog() {
+        await expect(screen.queryByRole('heading', { name: 'Endringer i uttak' })).not.toBeInTheDocument();
+      });
     });
 
     await step('Åpner dialog fra "Les mer om endring"-knappen i banneret', async () => {
       await user.click(canvas.getByRole('button', { name: 'Les mer om endring' }));
-      await expect(canvas.getByRole('heading', { name: 'Endringer i uttak' })).toBeInTheDocument();
-      await expect(canvas.getByText('Normalarbeidstid låses på skjæringstidspunktet')).toBeInTheDocument();
+      await expect(screen.getByRole('heading', { name: 'Endringer i uttak' })).toBeInTheDocument();
+      await expect(screen.getByText('Normalarbeidstid låses på skjæringstidspunktet')).toBeInTheDocument();
     });
   },
 };
