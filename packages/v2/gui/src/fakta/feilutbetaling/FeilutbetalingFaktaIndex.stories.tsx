@@ -4,7 +4,7 @@ import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Ko
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import type { FeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApi.js';
 import { FeilutbetalingFaktaApiContext } from './api/FeilutbetalingFaktaApiContext.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex.js';
@@ -109,10 +109,6 @@ const meta = {
     readOnly: false,
     hasOpenAksjonspunkter: true,
     submitCallback: fn(),
-    behandlingsresultat: { type: 'FULL_TILBAKEBETALING' },
-    behandlingÅrsaker: [{ behandlingArsakType: 'RE_FEILUTBETALT_BELØP_REDUSERT' }],
-    datoForRevurderingsvedtak: '2024-04-15',
-    tilbakekrevingValg: { videreBehandling: 'TILBAKEKR_OPPRETT' },
   },
 } satisfies Meta<typeof FeilutbetalingFaktaIndex>;
 
@@ -121,6 +117,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   decorators: [withK9Kodeverkoppslag(), withFakeApi(fakta, årsaker)],
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('15.04.2024')).toBeInTheDocument();
+    await expect(canvas.getByText('Feilutbetaling med tilbakekreving')).toBeInTheDocument();
+  },
 };
 
 export const ReadOnly: Story = {

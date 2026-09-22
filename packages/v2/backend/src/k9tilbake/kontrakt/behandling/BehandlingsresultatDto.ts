@@ -1,4 +1,0 @@
-import type { foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingsresultatDto } from '@navikt/k9-tilbake-typescript-client/types';
-
-export type BehandlingsresultatDto =
-  foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingsresultatDto;

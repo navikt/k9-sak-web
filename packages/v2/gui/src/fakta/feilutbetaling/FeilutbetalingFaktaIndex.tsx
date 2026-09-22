@@ -1,9 +1,4 @@
 import type { LogiskPeriodeMedFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
-import type {
-  BehandlingsresultatDto,
-  BehandlingÅrsakDto,
-  TilbakekrevingValgDto,
-} from '@k9-sak-web/backend/combined/kontrakt/tilbakekreving/TilbakekrevingBehandlingDto.js';
 import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
@@ -36,10 +31,6 @@ interface FeilutbetalingFaktaIndexProps {
   hasOpenAksjonspunkter: boolean;
   alleMerknaderFraBeslutter?: Record<string, { notAccepted?: boolean }>;
   submitCallback: (data: unknown) => Promise<void>;
-  behandlingsresultat?: BehandlingsresultatDto;
-  behandlingÅrsaker?: BehandlingÅrsakDto[];
-  datoForRevurderingsvedtak?: string;
-  tilbakekrevingValg?: TilbakekrevingValgDto;
 }
 
 const AKSJONSPUNKT_KODE = '7003';
@@ -70,10 +61,6 @@ const FeilutbetalingFaktaIndex = ({
   hasOpenAksjonspunkter,
   alleMerknaderFraBeslutter,
   submitCallback,
-  behandlingsresultat,
-  behandlingÅrsaker,
-  datoForRevurderingsvedtak,
-  tilbakekrevingValg,
 }: FeilutbetalingFaktaIndexProps) => {
   const { data: faktaDto } = useSuspenseQuery(useFeilutbetalingFaktaOptions(behandlingUuid));
   const { data: alleÅrsaker } = useSuspenseQuery(useFeilutbetalingÅrsakerOptions());
@@ -136,34 +123,6 @@ const FeilutbetalingFaktaIndex = ({
   };
 
   const merknaderFraBeslutter = alleMerknaderFraBeslutter?.[AKSJONSPUNKT_KODE];
-
-  const hentBehandlingÅrsakNavn = (kode?: string) => {
-    if (!kode) return '';
-    try {
-      return (
-        kodeverkoppslag.k9tilbake.behandlingÅrsakTyper(
-          kode as Parameters<typeof kodeverkoppslag.k9tilbake.behandlingÅrsakTyper>[0],
-          OrUndefined,
-        )?.navn ?? kode
-      );
-    } catch {
-      return kode;
-    }
-  };
-
-  const hentBehandlingResultatNavn = (kode?: string) => {
-    if (!kode) return '';
-    try {
-      return (
-        kodeverkoppslag.k9tilbake.behandlingResultatTyper(
-          kode as Parameters<typeof kodeverkoppslag.k9tilbake.behandlingResultatTyper>[0],
-          OrUndefined,
-        )?.navn ?? kode
-      );
-    } catch {
-      return kode;
-    }
-  };
 
   const hentVidereBehandlingNavn = (kode?: string) => {
     if (!kode) return '';
@@ -233,32 +192,19 @@ const FeilutbetalingFaktaIndex = ({
                   Revurdering
                 </Label>
                 <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
-                  <VStack gap="space-2">
-                    <Detail>Årsak(er) til revurdering</Detail>
-                    <BodyShort size="small">
-                      {behandlingÅrsaker
-                        ?.map(ba => hentBehandlingÅrsakNavn(ba.behandlingArsakType))
-                        .filter(Boolean)
-                        .join(', ')}
-                    </BodyShort>
-                  </VStack>
-                  {datoForRevurderingsvedtak && (
+                  {fakta?.datoForRevurderingsvedtak && (
                     <VStack gap="space-2">
                       <Detail>Dato for revurderingsvedtak</Detail>
-                      <BodyShort size="small">{formatDate(datoForRevurderingsvedtak)}</BodyShort>
+                      <BodyShort size="small">{formatDate(fakta.datoForRevurderingsvedtak)}</BodyShort>
                     </VStack>
                   )}
                 </HGrid>
                 <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
                   <VStack gap="space-2">
-                    <Detail>Resultat</Detail>
-                    <BodyShort size="small">{hentBehandlingResultatNavn(behandlingsresultat?.type)}</BodyShort>
-                  </VStack>
-                </HGrid>
-                <HGrid gap="space-16" columns={{ xs: '6fr 6fr' }}>
-                  <VStack gap="space-2">
                     <Detail>Tilbakekrevingsvalg</Detail>
-                    <BodyShort size="small">{hentVidereBehandlingNavn(tilbakekrevingValg?.videreBehandling)}</BodyShort>
+                    <BodyShort size="small">
+                      {hentVidereBehandlingNavn(fakta?.tilbakekrevingValg?.videreBehandling)}
+                    </BodyShort>
                   </VStack>
                 </HGrid>
               </VStack>
