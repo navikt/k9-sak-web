@@ -30,7 +30,7 @@ const totrinnskontrollaksjonspunktTextCodes: Partial<Record<AksjonspunktDefinisj
   [AksjonspunktDefinisjon.TILKNYTTET_STORTINGET]:
     'Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.',
   [AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK]:
-    'Søker har tilkommet aktivitet i perioden. Dato for når nye uttaksregler skal gjelde fra er satt.',
+    'Søker har tilkommet aktivitet i perioden. Dato for når endring i utbetalingsgrad for ikke yrkesaktiv, kun ytelse og ny aktivitet skal gjelde fra er satt.',
   [AksjonspunktDefinisjon.VURDER_TILBAKETREKK]: 'Det er vurdert om det skal utføres tilbakekreving fra søker.',
   [AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET]: 'Opptjeningsvilkåret har blitt manuelt vurdert.',
   [AksjonspunktDefinisjon.FORESLÅ_VEDTAK]: 'Det er laget et fritekstbrev',
