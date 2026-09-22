@@ -15,7 +15,7 @@ import splitUttakByDate from '../utils/splitUttakByDate';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { PencilIcon } from '@navikt/aksel-icons';
 
-// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet (OLP, PSB og PILS)
+// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
 
 interface UttaksperiodeListeProps {
@@ -122,11 +122,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     [...uttaksperiodeListe],
     NORMALARBEIDSTID_LÅST_DATO,
   );
-  const visNormalarbeidstidInfo =
-    (erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ||
-      erSakstype(fagsakYtelseType.PLEIEPENGER_SYKT_BARN) ||
-      erSakstype(fagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE)) &&
-    perioderEtterLåstNormalarbeidstid.length > 0;
+  const visNormalarbeidstidInfo = perioderEtterLåstNormalarbeidstid.length > 0;
 
   if (visNormalarbeidstidInfo) {
     uttaksregelInfo.push({
@@ -155,7 +151,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
 
   // uttaksperiodeListe er sortert nyeste først, så regel-radene må splittes ut i synkende dato-rekkefølge
   // for at hver regel skal havne før perioden den gjelder fra.
-  const uttaksregelInfoSynkende = [...uttaksregelInfo].sort((a, b) => (a.dato < b.dato ? 1 : -1));
+  const uttaksregelInfoSynkende = uttaksregelInfo.toSorted((a, b) => (a.dato < b.dato ? 1 : -1));
 
   let resterendePerioder: UttaksperiodeBeriket[] = [...uttaksperiodeListe];
   let periodeIndeks = 0;
