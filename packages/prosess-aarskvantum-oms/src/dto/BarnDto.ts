@@ -1,17 +1,12 @@
-export enum BarnType {
-  VANLIG = 'VANLIG',
-  FOSTERBARN = 'FOSTERBARN',
-  UTENLANDSK_BARN = 'UTENLANDSK_BARN',
-}
+import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 
 interface BarnDto {
-  personIdent: string;
+  personIdent?: string;
   fødselsdato?: string;
   dødsdato?: string;
-  harSammeBosted: boolean;
   deltBostedPerioder?: string[];
   sammeBostedPerioder?: string[];
-  barnType: BarnType;
+  barnType?: BarnType;
 }
 
 export default BarnDto;
