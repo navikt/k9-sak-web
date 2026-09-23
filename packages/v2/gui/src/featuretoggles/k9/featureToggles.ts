@@ -25,6 +25,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_ARBEID_OG_INNTEKT: true,
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
+  BRUK_V2_FEILUTBETALING: true,
   PROSESS_MENY_V2: true,
   REVURDERING_FRA_STEG_V2: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
