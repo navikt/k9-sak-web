@@ -159,22 +159,41 @@ describe('FeilutbetalingFaktaIndex', () => {
     expect(submitCallback).not.toHaveBeenCalled();
   });
 
-  it('stopper lagring når valgt hendelse ikke har en oppført underårsak', async () => {
+  it('tømmer underårsak og sender hendelse uten undertype når den nye hendelsen ikke har undertyper', async () => {
     const user = userEvent.setup();
     const { submitCallback } = renderComponent({
+      fakta: faktaMedÅrsak('MEDLEMSKAP', 'ANNET_FRITEKST'),
       årsaker: [
         {
           ytelseType: 'PSB',
-          hendelseTyper: [{ hendelseType: 'PSB_ANNET_TYPE', hendelseUndertyper: [] }],
+          hendelseTyper: [
+            { hendelseType: 'MEDLEMSKAP', hendelseUndertyper: ['ANNET_FRITEKST'] },
+            { hendelseType: 'PSB_ANNET_TYPE', hendelseUndertyper: [] },
+          ],
         },
       ],
     });
 
+    await user.selectOptions(await screen.findByRole('combobox', { name: 'Hendelse' }), 'PSB_ANNET_TYPE');
+    expect(screen.queryByRole('combobox', { name: 'Underårsak' })).not.toBeInTheDocument();
     await oppdaterBegrunnelse(user);
     await submit(user);
 
-    expect(await screen.findByText('Valgt hendelse mangler gyldige underårsaker')).toBeInTheDocument();
-    expect(submitCallback).not.toHaveBeenCalled();
+    await waitFor(() =>
+      expect(submitCallback).toHaveBeenCalledWith([
+        {
+          kode: '7003',
+          begrunnelse: 'Oppdatert begrunnelse',
+          feilutbetalingFakta: [
+            {
+              fom: '2024-01-01',
+              tom: '2024-01-31',
+              årsak: { hendelseType: 'PSB_ANNET_TYPE', hendelseUndertype: undefined },
+            },
+          ],
+        },
+      ]),
+    );
   });
 
   it('stopper lagring når den forhåndsvalgte underårsaken ikke finnes i katalogen', async () => {

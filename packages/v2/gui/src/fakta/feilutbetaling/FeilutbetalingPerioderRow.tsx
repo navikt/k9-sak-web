@@ -71,7 +71,6 @@ const FeilutbetalingPerioderRow = ({
             validate: årsak => {
               const hendelse = årsaker.find(a => a.hendelseType === årsak);
               if (!hendelse) return 'Valgt hendelse er ikke tilgjengelig for denne ytelsen';
-              if (!hendelse.hendelseUndertyper?.length) return 'Valgt hendelse mangler gyldige underårsaker';
               return true;
             },
           }}

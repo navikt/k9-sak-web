@@ -74,6 +74,19 @@ const TestForm = () => {
 };
 
 describe('FeilutbetalingPerioderRow', () => {
+  it('tømmer gammel underårsak når hendelsen ikke har undertyper', async () => {
+    const user = userEvent.setup();
+    render(<TestForm />);
+
+    const hendelser = screen.getAllByRole('combobox', { name: 'Hendelse' });
+    await user.selectOptions(hendelser[0]!, 'MEDLEMSKAP');
+
+    expect(screen.queryByRole('combobox', { name: 'Underårsak' })).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '"perioder":[{"fom":"2024-01-01","tom":"2024-01-31","årsak":"MEDLEMSKAP","underÅrsak":""},{"fom":"2024-02-01","tom":"2024-02-29","årsak":"MEDLEMSKAP","underÅrsak":""}]',
+    );
+  });
+
   it('propagerer årsak og underårsak, tømmer gammel underårsak og markerer alle endrede felt som dirty', async () => {
     const user = userEvent.setup();
     render(<TestForm />);
