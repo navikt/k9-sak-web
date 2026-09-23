@@ -72,12 +72,4 @@ describe('UngFeilutbetalingFaktaBackendClient', () => {
     ]);
     expect(kodeverk_hentAlleFeilutbetalingÅrsaker).toHaveBeenCalledWith();
   });
-
-  it('rejects a non-array response from the reason endpoint', async () => {
-    vi.mocked(kodeverk_hentAlleFeilutbetalingÅrsaker).mockResolvedValue({ data: {} } as never);
-
-    await expect(new UngFeilutbetalingFaktaBackendClient().hentFeilutbetalingÅrsaker()).rejects.toThrow(
-      'Feilutbetaling årsaker-endepunktet returnerte ikke en liste',
-    );
-  });
 });

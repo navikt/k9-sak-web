@@ -75,9 +75,6 @@ export class K9FeilutbetalingFaktaBackendClient implements FeilutbetalingFaktaAp
 
   async hentFeilutbetalingÅrsaker(): Promise<FeilutbetalingÅrsakerPerYtelseViewModel[]> {
     const response = await kodeverk_hentAlleFeilutbetalingÅrsaker();
-    if (!Array.isArray(response.data)) {
-      throw new Error('Feilutbetaling årsaker-endepunktet returnerte ikke en liste');
-    }
-    return mapK9FeilutbetalingÅrsaker(response.data as unknown as HendelseTyperPrYtelseTypeDto[]);
+    return mapK9FeilutbetalingÅrsaker(response.data);
   }
 }
