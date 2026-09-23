@@ -1,11 +1,11 @@
-import type { LogiskPeriodeMedFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
-import type { HendelseTypeMedUndertyperDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
-import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import { fakeK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/mocks/fakeK9Kodeverkoppslag.js';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm, useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { describe, expect, it } from 'vitest';
+import type {
+  FeilutbetalingHendelseTypeViewModel,
+  FeilutbetalingPeriodeViewModel,
+} from './api/FeilutbetalingFaktaViewModel.js';
 import type { FeilutbetalingFormValues } from './FeilutbetalingFaktaIndex.js';
 import FeilutbetalingPerioderRow from './FeilutbetalingPerioderRow.js';
 
@@ -18,12 +18,12 @@ const årsaker = [
     hendelseType: 'MEDLEMSKAP',
     hendelseUndertyper: [],
   },
-] as HendelseTypeMedUndertyperDto[];
+] as FeilutbetalingHendelseTypeViewModel[];
 
 const perioder = [
   { fom: '2024-01-01', tom: '2024-01-31', belop: 1000 },
   { fom: '2024-02-01', tom: '2024-02-29', belop: 1000 },
-] as LogiskPeriodeMedFaktaDto[];
+] as FeilutbetalingPeriodeViewModel[];
 
 const FormValues = () => {
   const { control } = useFormContext<FeilutbetalingFormValues>();
@@ -45,29 +45,31 @@ const TestForm = () => {
   });
 
   return (
-    <K9KodeverkoppslagContext value={fakeK9Kodeverkoppslag()}>
-      <FormProvider {...formMethods}>
-        <table>
-          <tbody>
-            <FeilutbetalingPerioderRow
-              periode={perioder[0]!}
-              index={0}
-              årsaker={årsaker}
-              readOnly={false}
-              behandlePerioderSamlet
-            />
-            <FeilutbetalingPerioderRow
-              periode={perioder[1]!}
-              index={1}
-              årsaker={årsaker}
-              readOnly={false}
-              behandlePerioderSamlet
-            />
-          </tbody>
-        </table>
-        <FormValues />
-      </FormProvider>
-    </K9KodeverkoppslagContext>
+    <FormProvider {...formMethods}>
+      <table>
+        <tbody>
+          <FeilutbetalingPerioderRow
+            periode={perioder[0]!}
+            index={0}
+            årsaker={årsaker}
+            readOnly={false}
+            behandlePerioderSamlet
+            hentHendelseTypeNavn={kode => kode ?? ''}
+            hentHendelseUnderTypeNavn={kode => kode ?? ''}
+          />
+          <FeilutbetalingPerioderRow
+            periode={perioder[1]!}
+            index={1}
+            årsaker={årsaker}
+            readOnly={false}
+            behandlePerioderSamlet
+            hentHendelseTypeNavn={kode => kode ?? ''}
+            hentHendelseUnderTypeNavn={kode => kode ?? ''}
+          />
+        </tbody>
+      </table>
+      <FormValues />
+    </FormProvider>
   );
 };
 
@@ -85,6 +87,8 @@ describe('FeilutbetalingPerioderRow', () => {
     expect(screen.getByRole('status')).toHaveTextContent(
       '"perioder":[{"fom":"2024-01-01","tom":"2024-01-31","årsak":"BEREGNING_TYPE","underÅrsak":"ENDRING_GRUNNLAG"},{"fom":"2024-02-01","tom":"2024-02-29","årsak":"BEREGNING_TYPE","underÅrsak":"ENDRING_GRUNNLAG"}]',
     );
-    expect(screen.getByRole('status')).toHaveTextContent('"dirtyFields":{"perioder":[{"årsak":true,"underÅrsak":true},{"årsak":true,"underÅrsak":true}]}');
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '"dirtyFields":{"perioder":[{"årsak":true,"underÅrsak":true},{"årsak":true,"underÅrsak":true}]}',
+    );
   });
 });

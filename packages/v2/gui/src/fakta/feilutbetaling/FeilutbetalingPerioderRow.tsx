@@ -1,26 +1,22 @@
-import type { LogiskPeriodeMedFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
-import type { HendelseTypeMedUndertyperDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
-import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
-import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { Box, Select, Table } from '@navikt/ds-react';
-import { useContext } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import type {
+  FeilutbetalingPeriodeViewModel,
+  FeilutbetalingÅrsakerPerYtelseViewModel,
+} from './api/FeilutbetalingFaktaViewModel.js';
 import styles from './feilutbetalingFakta.module.css';
 import type { FeilutbetalingFormValues } from './FeilutbetalingFaktaIndex.js';
+import { formatDateStringToDDMMYYYY } from '../../utils/dateutils.js';
 
 interface FeilutbetalingPerioderRowProps {
-  periode: LogiskPeriodeMedFaktaDto;
+  periode: FeilutbetalingPeriodeViewModel;
   index: number;
-  årsaker: HendelseTypeMedUndertyperDto[];
+  årsaker: NonNullable<FeilutbetalingÅrsakerPerYtelseViewModel['hendelseTyper']>;
   readOnly: boolean;
   behandlePerioderSamlet: boolean;
+  hentHendelseTypeNavn: (kode?: string) => string;
+  hentHendelseUnderTypeNavn: (kode?: string) => string;
 }
-
-const formatDate = (dateStr?: string) => {
-  if (!dateStr) return '';
-  const [year, month, day] = dateStr.split('-');
-  return `${day}.${month}.${year}`;
-};
 
 const FeilutbetalingPerioderRow = ({
   periode,
@@ -28,35 +24,16 @@ const FeilutbetalingPerioderRow = ({
   årsaker,
   readOnly,
   behandlePerioderSamlet,
+  hentHendelseTypeNavn,
+  hentHendelseUnderTypeNavn,
 }: FeilutbetalingPerioderRowProps) => {
   const { control, setValue, getValues } = useFormContext<FeilutbetalingFormValues>();
-  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 
   const valgtÅrsak = useWatch({ control, name: `perioder.${index}.årsak` });
 
   const hendelseUndertyper = årsaker.find(a => a.hendelseType === valgtÅrsak)?.hendelseUndertyper ?? [];
 
   const harUndertyper = hendelseUndertyper.length > 0;
-
-  const hentHendelseTypeNavn = (kode?: string) => {
-    if (!kode) return kode ?? '';
-    return (
-      kodeverkoppslag.k9tilbake.hendelseTyper(
-        kode as Parameters<typeof kodeverkoppslag.k9tilbake.hendelseTyper>[0],
-        OrUndefined,
-      )?.navn ?? kode
-    );
-  };
-
-  const hentHendelseUnderTypeNavn = (kode?: string) => {
-    if (!kode) return kode ?? '';
-    return (
-      kodeverkoppslag.k9tilbake.hendelseUnderTyper(
-        kode as Parameters<typeof kodeverkoppslag.k9tilbake.hendelseUnderTyper>[0],
-        OrUndefined,
-      )?.navn ?? kode
-    );
-  };
 
   const propagateÅrsak = (nyÅrsak: string) => {
     if (!behandlePerioderSamlet) return;
@@ -81,7 +58,9 @@ const FeilutbetalingPerioderRow = ({
 
   return (
     <Table.Row shadeOnHover={false}>
-      <Table.DataCell>{`${formatDate(periode.fom)} - ${formatDate(periode.tom)}`}</Table.DataCell>
+      <Table.DataCell>
+        {`${formatDateStringToDDMMYYYY(periode.fom ?? '')} - ${formatDateStringToDDMMYYYY(periode.tom ?? '')}`}
+      </Table.DataCell>
       <Table.DataCell>
         <Controller
           control={control}

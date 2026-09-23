@@ -1,13 +1,17 @@
-import type { LogiskPeriodeMedFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
-import type { HendelseTypeMedUndertyperDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
 import { Table } from '@navikt/ds-react';
+import type {
+  FeilutbetalingPeriodeViewModel,
+  FeilutbetalingÅrsakerPerYtelseViewModel,
+} from './api/FeilutbetalingFaktaViewModel.js';
 import FeilutbetalingPerioderRow from './FeilutbetalingPerioderRow.js';
 
 interface FeilutbetalingPerioderTableProps {
-  perioder: LogiskPeriodeMedFaktaDto[];
-  årsaker: HendelseTypeMedUndertyperDto[];
+  perioder: FeilutbetalingPeriodeViewModel[];
+  årsaker: NonNullable<FeilutbetalingÅrsakerPerYtelseViewModel['hendelseTyper']>;
   readOnly: boolean;
   behandlePerioderSamlet: boolean;
+  hentHendelseTypeNavn: (kode?: string) => string;
+  hentHendelseUnderTypeNavn: (kode?: string) => string;
 }
 
 const FeilutbetalingPerioderTable = ({
@@ -15,6 +19,8 @@ const FeilutbetalingPerioderTable = ({
   årsaker,
   readOnly,
   behandlePerioderSamlet,
+  hentHendelseTypeNavn,
+  hentHendelseUnderTypeNavn,
 }: FeilutbetalingPerioderTableProps) => {
   const sortertePerioder = [...perioder].sort((a, b) => (a.fom ?? '').localeCompare(b.fom ?? ''));
 
@@ -41,6 +47,8 @@ const FeilutbetalingPerioderTable = ({
               årsaker={årsaker}
               readOnly={readOnly}
               behandlePerioderSamlet={behandlePerioderSamlet}
+              hentHendelseTypeNavn={hentHendelseTypeNavn}
+              hentHendelseUnderTypeNavn={hentHendelseUnderTypeNavn}
             />
           ))
         )}

@@ -1,5 +1,3 @@
-import type { BehandlingFeilutbetalingFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
-import type { HendelseTyperPrYtelseTypeDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -7,9 +5,14 @@ import { Suspense } from 'react';
 import { expect, fn } from 'storybook/test';
 import type { FeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApi.js';
 import { FeilutbetalingFaktaApiContext } from './api/FeilutbetalingFaktaApiContext.js';
+import type {
+  FeilutbetalingFaktaViewModel,
+  FeilutbetalingÅrsakerPerYtelseViewModel,
+} from './api/FeilutbetalingFaktaViewModel.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex.js';
+import { FeilutbetalingKodeverkoppslagContext } from './FeilutbetalingKodeverkoppslagContext.js';
 
-const fakta: BehandlingFeilutbetalingFaktaDto = {
+const fakta: FeilutbetalingFaktaViewModel = {
   behandlingFakta: {
     totalPeriodeFom: '2024-01-01',
     totalPeriodeTom: '2024-03-31',
@@ -28,7 +31,7 @@ const fakta: BehandlingFeilutbetalingFaktaDto = {
   },
 };
 
-const faktaMedÅrsaker: BehandlingFeilutbetalingFaktaDto = {
+const faktaMedÅrsaker: FeilutbetalingFaktaViewModel = {
   behandlingFakta: {
     ...fakta.behandlingFakta!,
     begrunnelse: 'Feil i beregningen førte til for mye utbetalt.',
@@ -55,14 +58,14 @@ const faktaMedÅrsaker: BehandlingFeilutbetalingFaktaDto = {
   },
 };
 
-const faktaUtenPerioder: BehandlingFeilutbetalingFaktaDto = {
+const faktaUtenPerioder: FeilutbetalingFaktaViewModel = {
   behandlingFakta: {
     ...fakta.behandlingFakta!,
     perioder: [],
   },
 };
 
-const årsaker: HendelseTyperPrYtelseTypeDto[] = [
+const årsaker: FeilutbetalingÅrsakerPerYtelseViewModel[] = [
   {
     ytelseType: 'PSB' as const,
     hendelseTyper: [
@@ -83,8 +86,8 @@ const årsaker: HendelseTyperPrYtelseTypeDto[] = [
 ];
 
 const createFakeApi = (
-  faktaData: BehandlingFeilutbetalingFaktaDto,
-  årsakerData: HendelseTyperPrYtelseTypeDto[],
+  faktaData: FeilutbetalingFaktaViewModel,
+  årsakerData: FeilutbetalingÅrsakerPerYtelseViewModel[],
 ): FeilutbetalingFaktaApi => ({
   backend: 'k9tilbake',
   hentFeilutbetalingFakta: async () => faktaData,
@@ -92,16 +95,25 @@ const createFakeApi = (
 });
 
 const withFakeApi = (
-  faktaData: BehandlingFeilutbetalingFaktaDto,
-  årsakerData: HendelseTyperPrYtelseTypeDto[],
+  faktaData: FeilutbetalingFaktaViewModel,
+  årsakerData: FeilutbetalingÅrsakerPerYtelseViewModel[],
 ): Decorator => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return Story => (
     <QueryClientProvider client={queryClient}>
       <FeilutbetalingFaktaApiContext value={createFakeApi(faktaData, årsakerData)}>
-        <Suspense>
-          <Story />
-        </Suspense>
+        <FeilutbetalingKodeverkoppslagContext
+          value={{
+            hentHendelseTypeNavn: kode => kode ?? '',
+            hentHendelseUnderTypeNavn: kode => kode ?? '',
+            hentVidereBehandlingNavn: kode =>
+              kode === 'TILBAKEKR_OPPRETT' ? 'Feilutbetaling med tilbakekreving' : (kode ?? ''),
+          }}
+        >
+          <Suspense>
+            <Story />
+          </Suspense>
+        </FeilutbetalingKodeverkoppslagContext>
       </FeilutbetalingFaktaApiContext>
     </QueryClientProvider>
   );

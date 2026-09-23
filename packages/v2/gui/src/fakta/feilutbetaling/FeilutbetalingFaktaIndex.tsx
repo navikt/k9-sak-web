@@ -1,6 +1,3 @@
-import type { LogiskPeriodeMedFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
-import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
-import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
@@ -8,15 +5,18 @@ import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/ty
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useContext, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useFeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApiContext.js';
 import {
   feilutbetalingFaktaQueryOptions,
   feilutbetalingÅrsakerQueryOptions,
 } from './api/FeilutbetalingFaktaQueries.js';
+import type { FeilutbetalingPeriodeViewModel } from './api/FeilutbetalingFaktaViewModel.js';
 import styles from './feilutbetalingFakta.module.css';
+import { useFeilutbetalingKodeverkoppslag } from './FeilutbetalingKodeverkoppslagContext.js';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable.js';
+import { formatDateStringToDDMMYYYY } from '../../utils/dateutils.js';
 
 export interface FeilutbetalingFormPeriode {
   fom: string;
@@ -43,13 +43,10 @@ interface FeilutbetalingFaktaIndexProps {
 
 const AKSJONSPUNKT_KODE = '7003';
 
-const formatDate = (dateStr?: string) => {
-  if (!dateStr) return '';
-  const [year, month, day] = dateStr.split('-');
-  return `${day}.${month}.${year}`;
-};
-
-const buildDefaultValues = (perioder: LogiskPeriodeMedFaktaDto[], begrunnelse?: string): FeilutbetalingFormValues => ({
+const buildDefaultValues = (
+  perioder: FeilutbetalingPeriodeViewModel[],
+  begrunnelse?: string,
+): FeilutbetalingFormValues => ({
   begrunnelse: decodeHtmlEntity(begrunnelse ?? '') ?? '',
   behandlePerioderSamlet: false,
   perioder: [...perioder]
@@ -74,8 +71,8 @@ const FeilutbetalingFaktaIndex = ({
   const api = useFeilutbetalingFaktaApi();
   const { data: faktaDto } = useSuspenseQuery(feilutbetalingFaktaQueryOptions(api, behandlingUuid, behandlingVersjon));
   const { data: alleÅrsaker } = useSuspenseQuery(feilutbetalingÅrsakerQueryOptions(api));
-
-  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
+  const { hentHendelseTypeNavn, hentHendelseUnderTypeNavn, hentVidereBehandlingNavn } =
+    useFeilutbetalingKodeverkoppslag();
 
   const fakta = faktaDto?.behandlingFakta;
   const perioder = fakta?.perioder ?? [];
@@ -84,19 +81,15 @@ const FeilutbetalingFaktaIndex = ({
     const match = alleÅrsaker?.find(a => a.ytelseType === fagsakYtelseType);
     const hendelseTyper = match?.hendelseTyper ?? [];
     return [...hendelseTyper].sort((a, b) => {
-      const navn1 = a.hendelseType
-        ? (kodeverkoppslag.k9tilbake.hendelseTyper(a.hendelseType, OrUndefined)?.navn ?? a.hendelseType)
-        : '';
-      const navn2 = b.hendelseType
-        ? (kodeverkoppslag.k9tilbake.hendelseTyper(b.hendelseType, OrUndefined)?.navn ?? b.hendelseType)
-        : '';
+      const navn1 = hentHendelseTypeNavn(a.hendelseType);
+      const navn2 = hentHendelseTypeNavn(b.hendelseType);
       const erParagraf1 = navn1.startsWith('§');
       const erParagraf2 = navn2.startsWith('§');
       const v1 = erParagraf1 ? navn1.replace(/\D/g, '') : navn1;
       const v2 = erParagraf2 ? navn2.replace(/\D/g, '') : navn2;
       return v1.localeCompare(v2);
     });
-  }, [alleÅrsaker, fagsakYtelseType, kodeverkoppslag]);
+  }, [alleÅrsaker, fagsakYtelseType, hentHendelseTypeNavn]);
 
   const formMethods = useForm<FeilutbetalingFormValues>({
     defaultValues: buildDefaultValues(perioder, fakta?.begrunnelse),
@@ -141,20 +134,6 @@ const FeilutbetalingFaktaIndex = ({
 
   const merknaderFraBeslutter = alleMerknaderFraBeslutter?.[AKSJONSPUNKT_KODE];
 
-  const hentVidereBehandlingNavn = (kode?: string) => {
-    if (!kode) return '';
-    try {
-      return (
-        kodeverkoppslag.k9tilbake.videreBehandlinger(
-          kode as Parameters<typeof kodeverkoppslag.k9tilbake.videreBehandlinger>[0],
-          OrUndefined,
-        )?.navn ?? kode
-      );
-    } catch {
-      return kode;
-    }
-  };
-
   return (
     <VStack gap="space-16">
       <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
@@ -172,7 +151,7 @@ const FeilutbetalingFaktaIndex = ({
                   <VStack gap="space-2">
                     <Detail>Periode med feilutbetaling</Detail>
                     <BodyShort size="small">
-                      {`${formatDate(fakta?.totalPeriodeFom)} - ${formatDate(fakta?.totalPeriodeTom)}`}
+                      {`${formatDateStringToDDMMYYYY(fakta?.totalPeriodeFom ?? '')} - ${formatDateStringToDDMMYYYY(fakta?.totalPeriodeTom ?? '')}`}
                     </BodyShort>
                   </VStack>
                   <VStack gap="space-2">
@@ -203,6 +182,8 @@ const FeilutbetalingFaktaIndex = ({
                     årsaker={årsakerForYtelse}
                     readOnly={readOnly}
                     behandlePerioderSamlet={behandlePerioderSamlet}
+                    hentHendelseTypeNavn={hentHendelseTypeNavn}
+                    hentHendelseUnderTypeNavn={hentHendelseUnderTypeNavn}
                   />
                 </FaktaGruppe>
               </VStack>
@@ -214,7 +195,7 @@ const FeilutbetalingFaktaIndex = ({
                   {fakta?.datoForRevurderingsvedtak && (
                     <VStack gap="space-2">
                       <Detail>Dato for revurderingsvedtak</Detail>
-                      <BodyShort size="small">{formatDate(fakta.datoForRevurderingsvedtak)}</BodyShort>
+                      <BodyShort size="small">{formatDateStringToDDMMYYYY(fakta.datoForRevurderingsvedtak)}</BodyShort>
                     </VStack>
                   )}
                 </HGrid>
