@@ -41,8 +41,8 @@ const faktaMedÅrsaker: FeilutbetalingFaktaViewModel = {
         tom: '2024-01-31',
         belop: 5000,
         feilutbetalingÅrsakDto: {
-          hendelseType: 'BEREGNING_TYPE' as const,
-          hendelseUndertype: 'ENDRING_GRUNNLAG' as const,
+          hendelseType: 'PSB_ANNET_TYPE' as const,
+          hendelseUndertype: 'ANNET_FRITEKST' as const,
         },
       },
       {
@@ -50,8 +50,8 @@ const faktaMedÅrsaker: FeilutbetalingFaktaViewModel = {
         tom: '2024-02-29',
         belop: 5000,
         feilutbetalingÅrsakDto: {
-          hendelseType: 'BEREGNING_TYPE' as const,
-          hendelseUndertype: 'ENDRING_GRUNNLAG' as const,
+          hendelseType: 'PSB_ANNET_TYPE' as const,
+          hendelseUndertype: 'ANNET_FRITEKST' as const,
         },
       },
     ],
@@ -70,16 +70,8 @@ const årsaker: FeilutbetalingÅrsakerPerYtelseViewModel[] = [
     ytelseType: 'PSB' as const,
     hendelseTyper: [
       {
-        hendelseType: 'BEREGNING_TYPE' as const,
-        hendelseUndertyper: ['ENDRING_GRUNNLAG' as const, 'ENDRET_DEKNINGSGRAD' as const],
-      },
-      {
-        hendelseType: 'MEDLEMSKAP' as const,
-        hendelseUndertyper: [],
-      },
-      {
-        hendelseType: 'OKONOMI_FEIL' as const,
-        hendelseUndertyper: ['OKONOMI_DOBBELUTBETALING' as const],
+        hendelseType: 'PSB_ANNET_TYPE' as const,
+        hendelseUndertyper: ['ANNET_FRITEKST' as const],
       },
     ],
   },
