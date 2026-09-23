@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - master
+      - TSFF-3077-opphør-livsopphold
 
 jobs:
   build-deploy:
