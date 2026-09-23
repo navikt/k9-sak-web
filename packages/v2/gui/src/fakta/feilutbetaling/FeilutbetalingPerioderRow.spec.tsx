@@ -81,6 +81,10 @@ describe('FeilutbetalingPerioderRow', () => {
     const hendelser = screen.getAllByRole('combobox', { name: 'Hendelse' });
     await user.selectOptions(hendelser[0]!, 'BEREGNING_TYPE');
 
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '"perioder":[{"fom":"2024-01-01","tom":"2024-01-31","årsak":"BEREGNING_TYPE","underÅrsak":""},{"fom":"2024-02-01","tom":"2024-02-29","årsak":"BEREGNING_TYPE","underÅrsak":""}]',
+    );
+
     const underårsaker = screen.getAllByRole('combobox', { name: 'Underårsak' });
     await user.selectOptions(underårsaker[0]!, 'ENDRING_GRUNNLAG');
 
