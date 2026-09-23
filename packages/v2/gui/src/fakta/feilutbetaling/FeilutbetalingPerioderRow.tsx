@@ -31,7 +31,8 @@ const FeilutbetalingPerioderRow = ({
 
   const valgtÅrsak = useWatch({ control, name: `perioder.${index}.årsak` });
 
-  const hendelseUndertyper = årsaker.find(a => a.hendelseType === valgtÅrsak)?.hendelseUndertyper ?? [];
+  const valgtHendelse = årsaker.find(a => a.hendelseType === valgtÅrsak);
+  const hendelseUndertyper = valgtHendelse?.hendelseUndertyper ?? [];
 
   const harUndertyper = hendelseUndertyper.length > 0;
 
@@ -65,7 +66,15 @@ const FeilutbetalingPerioderRow = ({
         <Controller
           control={control}
           name={`perioder.${index}.årsak`}
-          rules={{ required: 'Feltet må fylles ut' }}
+          rules={{
+            required: 'Feltet må fylles ut',
+            validate: årsak => {
+              const hendelse = årsaker.find(a => a.hendelseType === årsak);
+              if (!hendelse) return 'Valgt hendelse er ikke tilgjengelig for denne ytelsen';
+              if (!hendelse.hendelseUndertyper?.length) return 'Valgt hendelse mangler gyldige underårsaker';
+              return true;
+            },
+          }}
           render={({ field, fieldState }) => (
             <Select
               label="Hendelse"
@@ -94,7 +103,11 @@ const FeilutbetalingPerioderRow = ({
             <Controller
               control={control}
               name={`perioder.${index}.underÅrsak`}
-              rules={{ required: 'Feltet må fylles ut' }}
+              rules={{
+                required: 'Feltet må fylles ut',
+                validate: underÅrsak =>
+                  hendelseUndertyper.includes(underÅrsak) || 'Valgt underårsak er ikke tilgjengelig for hendelsen',
+              }}
               render={({ field, fieldState }) => (
                 <Select
                   label="Underårsak"
