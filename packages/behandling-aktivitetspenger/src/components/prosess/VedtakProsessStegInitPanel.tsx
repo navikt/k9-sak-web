@@ -28,11 +28,6 @@ const vedtakPanelTekster = {
   avslått: 'Aktivitetspenger er avslått',
 };
 
-// const vedtakOpphørPanelTekster = {
-//   innvilget: 'Opphør',
-//   avslått: 'Opphør',
-// };
-
 interface Props {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;

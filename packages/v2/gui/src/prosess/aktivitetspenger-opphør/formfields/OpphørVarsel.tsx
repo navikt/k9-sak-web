@@ -22,7 +22,7 @@ export const OpphørVarsel = <TForm extends FieldValues>({
   forhåndsvarselBeskrivelse,
 }: Props<TForm>) => {
   const varselPath = `perioder.${selectedId}.skalSendeVarselOmOpphør` as Path<TForm & OpphørVarselFormData>;
-  const forhåndsvarselPath = `perioder.${selectedId}.forhåndsvarselTekst` as Path<TForm & OpphørVarselFormData>;
+  const fritekstTilVarselPath = `perioder.${selectedId}.fritekstTilVarsel` as Path<TForm & OpphørVarselFormData>;
   const begrunnelsePath = `perioder.${selectedId}.begrunnelseForIkkeVarsle` as Path<TForm & OpphørVarselFormData>;
 
   return (
@@ -42,7 +42,7 @@ export const OpphørVarsel = <TForm extends FieldValues>({
       {skalViseForhåndsvarselTekst && skalSendeForhåndsvarsel === 'ja' && (
         <RhfTextarea
           control={control}
-          name={forhåndsvarselPath}
+          name={fritekstTilVarselPath}
           label="Tekst i forhåndsvarsel (vises til bruker)"
           description={forhåndsvarselBeskrivelse}
           readOnly={isFormLocked}

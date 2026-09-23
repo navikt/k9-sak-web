@@ -1,4 +1,4 @@
-import { formatCurrencyWithKr, formatCurrencyWithoutKr, formatFødselsdato } from './formatters';
+import { formatCurrencyWithKr, formatCurrencyWithoutKr, formatFødselsdato, formatSnakeCaseLabel } from './formatters';
 
 describe('formatCurrencyWithKr', () => {
   it('should format integers correctly', () => {
@@ -72,5 +72,14 @@ describe('formatFødselsdato', () => {
   it('formats YYYY-MM-DD to DD.MM.YY', () => {
     expect(formatFødselsdato('1993-10-27')).toBe('27.10.93');
     expect(formatFødselsdato('2000-01-01')).toBe('01.01.00');
+  });
+});
+
+describe('formatSnakeCaseLabel', () => {
+  it('formats snake_case labels to readable text', () => {
+    expect(formatSnakeCaseLabel('MOTTAR_ARBEIDSAVKLARINGSPENGER')).toBe('Mottar arbeidsavklaringspenger');
+    expect(formatSnakeCaseLabel('MOTTAR_TILTAKSPENGER')).toBe('Mottar tiltakspenger');
+    expect(formatSnakeCaseLabel('MOTTAR_ANNEN_YTELSE')).toBe('Mottar annen ytelse');
+    expect(formatSnakeCaseLabel('UDEFINERT')).toBe('Udefinert');
   });
 });

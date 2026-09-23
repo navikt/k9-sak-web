@@ -22,9 +22,9 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { useMutation } from '@tanstack/react-query';
 import { useFieldArray, useForm, useWatch, type SubmitHandler } from 'react-hook-form';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { OpphørTab } from '../types.js';
 import styles from './beslutterOpphør.module.css';
-import { OpphørTab } from './types.js';
 
 type AksjonspunktGodkjenningItem = {
   aksjonspunktKode: string;

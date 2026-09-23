@@ -63,3 +63,18 @@ export const formatPeriod = (fomDate: string, tomDate: string): string =>
 export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
 
 export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);
+
+export const formatSnakeCaseLabel = (value?: string): string => {
+  if (!value) {
+    return '';
+  }
+
+  const words = value.toLowerCase().split('_').filter(Boolean);
+
+  const [firstWord, ...rest] = words;
+  if (!firstWord) {
+    return '';
+  }
+
+  return `${firstWord.charAt(0).toUpperCase()}${firstWord.slice(1)}${rest.length ? ` ${rest.join(' ')}` : ''}`;
+};

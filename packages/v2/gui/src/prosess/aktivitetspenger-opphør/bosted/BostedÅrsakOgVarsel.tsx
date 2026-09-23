@@ -12,21 +12,26 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
-import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   BostedsavklaringKildeType,
   BostedsvilkårIkkeOppfyltÅrsak,
-  kildeLabels,
   opphørsårsakLabels,
-} from '../aktivitetspenger-prosess/types.js';
-import { OpphørAvslagValg, getDateRangeFromVilkår } from './formfields/OpphørAvslagValg.js';
-import { OpphørForhåndsvarselModal } from './formfields/OpphørForhåndsvarselModal.js';
-import { OpphørKilde } from './formfields/OpphørKilde.js';
-import { getOpphørPeriods } from './formfields/OpphørPerioder.js';
-import { OpphørVarsel } from './formfields/OpphørVarsel.js';
-import type { OpphørVarselPeriodForm } from './formfields/OpphørVarselFormData.js';
+} from '../../aktivitetspenger-prosess/types.js';
+import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
+import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
+import { OpphørKilde } from '../formfields/OpphørKilde.js';
+import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
+import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
+import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+
+const kildeLabels: Record<BostedsavklaringKildeType, string> = {
+  [BostedsavklaringKildeType.BRUKER]: 'Bruker',
+  [BostedsavklaringKildeType.FOLKEREGISTER]: 'Register',
+  [BostedsavklaringKildeType.ANNET]: 'Annet',
+};
 
 interface BostedPeriodForm extends OpphørVarselPeriodForm {
   avslagFom: string;
@@ -51,7 +56,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): BostedFo
         avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
         avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
         begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
-        forhåndsvarselTekst: p.avklaring?.fritekstTilVarsel ?? '',
+        fritekstTilVarsel: p.avklaring?.fritekstTilVarsel ?? '',
         kilde: p.avklaring?.kilde ?? '',
         kildeFritekst: p.avklaring?.kildeFritekst ?? '',
         opphøreEllerAvslå:
@@ -87,7 +92,7 @@ const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; sele
           begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
           fraflyttingsÅrsak: selectedPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
           begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
-          fritekstTilVarsel: skalSendeVarsel ? selectedPeriod.forhåndsvarselTekst : undefined,
+          fritekstTilVarsel: skalSendeVarsel ? selectedPeriod.fritekstTilVarsel : undefined,
           kilde: selectedPeriod.kilde as BostedsavklaringKildeType,
           kildeFritekst:
             selectedPeriod.kilde === BostedsavklaringKildeType.ANNET ? selectedPeriod.kildeFritekst : undefined,

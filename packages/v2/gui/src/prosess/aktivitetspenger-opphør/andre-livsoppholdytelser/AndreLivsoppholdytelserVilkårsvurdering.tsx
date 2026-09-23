@@ -16,11 +16,11 @@ import {
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
-import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
-import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
-import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 
 interface PeriodForm {
   begrunnelse: string;

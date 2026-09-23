@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { AndreLivsoppholdsytelserAvklaringKildeType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserAvklaringKildeType.js';
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -11,15 +12,22 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
-import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { OpphørAvslagValg, getDateRangeFromVilkår } from './formfields/OpphørAvslagValg.js';
-import { OpphørForhåndsvarselModal } from './formfields/OpphørForhåndsvarselModal.js';
-import { OpphørKilde } from './formfields/OpphørKilde.js';
-import { getOpphørPeriods } from './formfields/OpphørPerioder.js';
-import { OpphørVarsel } from './formfields/OpphørVarsel.js';
-import type { OpphørVarselPeriodForm } from './formfields/OpphørVarselFormData.js';
+import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { formatSnakeCaseLabel } from '../../../utils/formatters.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
+import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
+import { OpphørKilde } from '../formfields/OpphørKilde.js';
+import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
+import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
+import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+
+const kildeLabels: Record<AndreLivsoppholdsytelserAvklaringKildeType, string> = {
+  [AndreLivsoppholdsytelserAvklaringKildeType.BRUKER]: 'Bruker',
+  [AndreLivsoppholdsytelserAvklaringKildeType.NAV]: 'Nav',
+  [AndreLivsoppholdsytelserAvklaringKildeType.ANNET]: 'Annet',
+};
 
 interface AndreLivsoppholdytelserPeriodForm extends OpphørVarselPeriodForm {
   avslagFom: string;
@@ -37,11 +45,6 @@ interface AndreLivsoppholdytelserFormData {
   perioder: Record<string, AndreLivsoppholdytelserPeriodForm>;
 }
 
-const livsoppholdytelseOptions = [
-  { value: 'arbeidsavklaringspenger', label: 'Arbeidsavklaringspenger (AAP)' },
-  { value: 'annen', label: 'Annen ytelse' },
-];
-
 const buildInitialValues = (vilkår: VilkårMedPerioderDto): AndreLivsoppholdytelserFormData => ({
   perioder: Object.fromEntries(
     (vilkår.perioder ?? []).map(period => [
@@ -50,10 +53,10 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): AndreLivsoppholdyte
         avslagFom: period.periode.fom,
         avslagTom: period.periode.tom ?? '',
         begrunnelseForIkkeVarsle: '',
-        forhåndsvarselTekst: '',
+        fritekstTilVarsel: '',
         kilde: '',
         kildeFritekst: '',
-        livsoppholdytelse: 'arbeidsavklaringspenger',
+        livsoppholdytelse: '',
         opphøreEllerAvslå: '',
         opphørsdato: period.periode.fom,
         skalSendeVarselOmOpphør: '',
@@ -68,22 +71,38 @@ const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytel
   const isOpphør = selectedPeriod.opphøreEllerAvslå === 'opphøre';
   const skalSendeVarsel = selectedPeriod.skalSendeVarselOmOpphør === 'ja';
   return {
-    '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
-    begrunnelse: 'Løser aksjonspunkt VURDER_ANDRE_LIVSOPPHOLDSYTELSER',
-    vurdertePerioder: [
+    '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER,
+    begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER',
+    avklaringer: [
       {
-        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
-        begrunnelse: selectedPeriod.livsoppholdytelse,
-        erVilkårOppfylt: false,
         periode: {
           fom: isOpphør ? selectedPeriod.opphørsdato : selectedPeriod.avslagFom,
-          tom: isOpphør ? selectedPeriod.opphørsdato : selectedPeriod.avslagTom,
+          tom: isOpphør ? undefined : selectedPeriod.avslagTom,
         },
-        fritekstVurderingBrev: skalSendeVarsel ? selectedPeriod.forhåndsvarselTekst : undefined,
+        avklaring: {
+          begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER',
+          begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
+          fritekstTilVarsel:
+            selectedPeriod.livsoppholdytelse === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
+              ? selectedPeriod.annenLivsoppholdytelse
+              : undefined,
+          ikkeOppfyltÅrsak: selectedPeriod.livsoppholdytelse as AndreLivsoppholdsytelserIkkeOppfyltÅrsak,
+          kilde: selectedPeriod.kilde as AndreLivsoppholdsytelserAvklaringKildeType,
+          kildeFritekst:
+            selectedPeriod.kilde === AndreLivsoppholdsytelserAvklaringKildeType.ANNET
+              ? selectedPeriod.kildeFritekst
+              : undefined,
+          skalIkkeSendeVarsel: !skalSendeVarsel,
+        },
       },
     ],
   };
 };
+
+const ikkeOppfyltÅrsaker = Object.values(AndreLivsoppholdsytelserIkkeOppfyltÅrsak).map(årsak => ({
+  value: årsak,
+  label: formatSnakeCaseLabel(årsak),
+}));
 
 interface Props {
   vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
@@ -217,13 +236,13 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                   }
                   readOnly={isFormLocked}
                   validate={[required]}
-                  selectValues={livsoppholdytelseOptions.map(option => (
+                  selectValues={ikkeOppfyltÅrsaker.map(option => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
                 />
-                {valgtYtelse === 'annen' && (
+                {valgtYtelse === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE && (
                   <RhfTextField
                     control={formHook.control}
                     name={`perioder.${selectedId}.annenLivsoppholdytelse`}
@@ -237,19 +256,18 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                   selectedId={selectedId}
                   isFormLocked={isFormLocked}
                   valgtKilde={valgtKilde}
-                  kildeOptions={[
-                    { value: 'register', label: 'Register' },
-                    { value: 'saksbehandler', label: 'Saksbehandler' },
-                    { value: 'annet', label: 'Annet' },
-                  ]}
-                  kildeAnnetValue="annet"
+                  kildeOptions={Object.values(AndreLivsoppholdsytelserAvklaringKildeType).map(kilde => ({
+                    value: kilde,
+                    label: kildeLabels[kilde],
+                  }))}
+                  kildeAnnetValue={AndreLivsoppholdsytelserAvklaringKildeType.ANNET}
                 />
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
                   isFormLocked={isFormLocked}
                   skalSendeForhåndsvarsel={skalSendeVarselOmOpphør}
-                  skalViseForhåndsvarselTekst
+                  skalViseForhåndsvarselTekst={false}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør fordi bruker mottar andre livsoppholdsytelser."
                 />
                 {!isFormLocked && (
