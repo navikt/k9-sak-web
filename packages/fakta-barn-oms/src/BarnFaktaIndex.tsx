@@ -27,16 +27,12 @@ const BarnFaktaIndex = ({
   fagsaksType,
   hentBarnOgRammevedtak = hentBarnOgRammevedtakFraApi,
 }: BarnFaktaIndexProps) => {
-  const { data, error, isPending } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['barn-og-rammevedtak', behandlingUuid],
     queryFn: () => hentBarnOgRammevedtak(behandlingUuid),
   });
 
-  if (error) {
-    throw error;
-  }
-
-  if (isPending) {
+  if (isPending || !data) {
     return <LoadingPanel />;
   }
 
