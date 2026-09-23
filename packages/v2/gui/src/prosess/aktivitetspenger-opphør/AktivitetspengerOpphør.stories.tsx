@@ -1,6 +1,9 @@
 /* eslint-disable storybook/prefer-pascal-case */
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
@@ -30,6 +33,13 @@ const lagAksjonspunkt = (
 const fakeBehandling = {
   uuid: 'fake-behandling-uuid',
   versjon: 1,
+  status: BehandlingStatus.OPPRETTET,
+  behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+} as BehandlingDto;
+
+const fakeAndreLivsoppholdytelserBehandling = {
+  ...fakeBehandling,
+  behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE }],
 } as BehandlingDto;
 
 const fakeInnloggetBruker = {
@@ -124,6 +134,7 @@ const fakeArgsBase = {
 
 const fakeAndreLivsoppholdytelserVilkårArgsBase = {
   ...fakeArgsBase,
+  behandling: fakeAndreLivsoppholdytelserBehandling,
   vilkår: [fakeAndreLivsoppholdytelserVilkår],
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
   api: Object.assign(Object.create(fakeAktivitetspengerApi), {
@@ -312,6 +323,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
 const fakeAndreLivsoppholdytelserArgsBase = {
   ...fakeArgsBase,
+  behandling: fakeAndreLivsoppholdytelserBehandling,
   vilkår: [fakeAndreLivsoppholdytelserVilkår],
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
   onAksjonspunktBekreftet: fn(),
@@ -321,7 +333,7 @@ export const AndreLivsoppholdytelser: Story = {
   args: fakeAndreLivsoppholdytelserArgsBase,
   play: async ({ canvas, step }) => {
     await step('Velg perioden som skal vurderes', async () => {
-      await userEvent.click(canvas.getByText(/29\.01\.2026 - 28\.01\.2027/i));
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
     });
 
     await step('Skjemaet viser feltet for livsoppholdytelse', async () => {
@@ -331,7 +343,7 @@ export const AndreLivsoppholdytelser: Story = {
     await step('Velg arbeidsavklaringspenger', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }),
-        'arbeidsavklaringspenger',
+        AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER,
       );
     });
   },
@@ -346,7 +358,7 @@ export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
   },
   play: async ({ canvas, canvasElement, step, args }) => {
     await step('Velg perioden som skal vurderes', async () => {
-      await userEvent.click(canvas.getByText(/29\.01\.2026 - 28\.01\.2027/i));
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
     });
 
     await step('Velg opphør fra en dato', async () => {
@@ -360,24 +372,17 @@ export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
     await step('Velg annen livsoppholdytelse', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }),
-        'arbeidsavklaringspenger',
+        AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER,
       );
     });
 
     await step('Velg kilde og svar at bruker skal varsles', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
-        'register',
+        'NAV',
       );
       const varsleGroup = findVarselRadiogroup(canvas);
       await userEvent.click(within(varsleGroup).getByRole('radio', { name: 'Ja' }));
-    });
-
-    await step('Fyll inn forhåndsvarseltekst', async () => {
-      await userEvent.type(
-        canvas.getByRole('textbox', { name: /tekst i forhåndsvarsel/i }),
-        'Bruker mottar annen livsoppholdytelse.',
-      );
     });
 
     await step('Åpne og bekreft forhåndsvarsel', async () => {
@@ -389,9 +394,11 @@ export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
     });
 
     await step('Payload sendes til riktig aksjonspunkt', async () => {
-      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
-        expect.objectContaining({ '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER }),
-      ]);
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeAndreLivsoppholdytelserBehandling.uuid,
+        fakeAndreLivsoppholdytelserBehandling.versjon,
+        [expect.objectContaining({ '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER })],
+      );
     });
   },
 };
