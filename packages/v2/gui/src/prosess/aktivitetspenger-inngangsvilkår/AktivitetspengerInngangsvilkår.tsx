@@ -204,7 +204,7 @@ export const AktivitetspengerInngangsvilkår = ({
   );
 
   const harVilkårsperioderIAktivitetsvilkåret =
-    inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder?.length &&
+    !!inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder &&
     inngangsvilkårdata.vurderAktivitetsvilkårVilkår.perioder.length > 0;
 
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(inngangsvilkårdata));

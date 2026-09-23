@@ -65,6 +65,7 @@ const buildInitialValues = (vilkår: VilkårMedPerioderDto): AndreLivsoppholdyte
     ]),
   ),
 });
+
 const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytelserFormData; selectedId: string }) => {
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for andre livsoppholdsytelser');
@@ -172,7 +173,9 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   };
 
   const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
-    if (!pendingSubmitData) return;
+    if (!pendingSubmitData) {
+      return;
+    }
     await bekreftAksjonspunktMutation(pendingSubmitData);
     setVisBekreftSubmitModal(false);
     setPendingSubmitData(null);
