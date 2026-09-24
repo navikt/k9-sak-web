@@ -8,6 +8,9 @@ import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { ArbeidOgInntektApiContext } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/ArbeidOgInntektApiContext.js';
 import { K9ArbeidOgInntektBackendClient } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/K9ArbeidOgInntektBackendClient.js';
+import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
+import { K9FeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/K9FeilutbetalingFaktaBackendClient.js';
+import { FeilutbetalingKodeverkoppslagContext } from '@k9-sak-web/gui/fakta/feilutbetaling/FeilutbetalingKodeverkoppslagContext.js';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 import { K9NyInntektBackendClient } from '@k9-sak-web/gui/fakta/ny-inntekt/api/K9NyInntektBackendClient.js';
@@ -18,6 +21,7 @@ import { K9UtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlands
 import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
 import { K9YtelserBackendClient } from '@k9-sak-web/gui/fakta/ytelser/api/K9YtelserBackendClient.js';
 import { YtelserApiContext } from '@k9-sak-web/gui/fakta/ytelser/api/YtelserApiContext.js';
+import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
 import { useK9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.jsx';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
@@ -92,23 +96,44 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
                   <DokumenterApiContext value={new K9DokumenterBackendClient()}>
                     <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
-                      <NyInntektApiContext value={new K9NyInntektBackendClient()}>
-                        <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
-                          <YtelserApiContext value={new K9YtelserBackendClient()}>
-                            <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
-                              <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
-                                <UttakApiContext value={new BehandlingUttakBackendClient()}>
-                                  <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
-                                    <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
-                                      {harFeilet || erFerdig ? children : <LoadingPanel />}
-                                    </ArbeidOgInntektApiContext>
-                                  </NotatBackendClientContext>
-                                </UttakApiContext>
-                              </TiDagerBackendClientContext>
-                            </AvregningBackendClientContext>
-                          </YtelserApiContext>
-                        </UtenlandsoppholdApiContext>
-                      </NyInntektApiContext>
+                      <FeilutbetalingFaktaApiContext value={new K9FeilutbetalingFaktaBackendClient()}>
+                        <FeilutbetalingKodeverkoppslagContext
+                          value={{
+                            hentHendelseTypeNavn: kode =>
+                              kode
+                                ? (k9KodeverkOppslag.k9tilbake.hendelseTyper(kode as never, OrUndefined)?.navn ?? kode)
+                                : '',
+                            hentHendelseUnderTypeNavn: kode =>
+                              kode
+                                ? (k9KodeverkOppslag.k9tilbake.hendelseUnderTyper(kode as never, OrUndefined)?.navn ??
+                                  kode)
+                                : '',
+                            hentVidereBehandlingNavn: kode =>
+                              kode
+                                ? (k9KodeverkOppslag.k9tilbake.videreBehandlinger(kode as never, OrUndefined)?.navn ??
+                                  kode)
+                                : '',
+                          }}
+                        >
+                          <NyInntektApiContext value={new K9NyInntektBackendClient()}>
+                            <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                              <YtelserApiContext value={new K9YtelserBackendClient()}>
+                                <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
+                                  <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
+                                    <UttakApiContext value={new BehandlingUttakBackendClient()}>
+                                      <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
+                                        <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
+                                          {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                        </ArbeidOgInntektApiContext>
+                                      </NotatBackendClientContext>
+                                    </UttakApiContext>
+                                  </TiDagerBackendClientContext>
+                                </AvregningBackendClientContext>
+                              </YtelserApiContext>
+                            </UtenlandsoppholdApiContext>
+                          </NyInntektApiContext>
+                        </FeilutbetalingKodeverkoppslagContext>
+                      </FeilutbetalingFaktaApiContext>
                     </SykdomOgOpplæringBackendClientContext>
                   </DokumenterApiContext>
                 </InntektsmeldingApiContext>

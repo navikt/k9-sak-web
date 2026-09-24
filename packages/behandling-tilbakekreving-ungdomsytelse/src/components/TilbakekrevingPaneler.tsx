@@ -1,4 +1,5 @@
 import { Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import FetchedData from '../types/fetchedDataTsType';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -22,6 +23,7 @@ interface OwnProps {
   harApenRevurdering: boolean;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
+  featureToggles: FeatureToggles;
 }
 
 const TilbakekrevingPaneler = ({
@@ -41,6 +43,7 @@ const TilbakekrevingPaneler = ({
   harApenRevurdering,
   hasFetchError,
   setBehandling,
+  featureToggles,
 }: OwnProps) => (
   <>
     <BehandlingPåVent
@@ -74,6 +77,7 @@ const TilbakekrevingPaneler = ({
       oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       hasFetchError={hasFetchError}
       setBehandling={setBehandling}
+      featureToggles={featureToggles}
     />
   </>
 );

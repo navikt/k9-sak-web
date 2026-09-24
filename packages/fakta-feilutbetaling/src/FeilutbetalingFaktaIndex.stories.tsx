@@ -67,34 +67,17 @@ const feilutbetalingFakta = {
 
 const feilutbetalingAarsak = [
   {
+    ytelseType: 'PSB',
     hendelseTyper: [
       {
         hendelseType: {
-          kode: 'OPPTJENING',
-          navn: '§14-6 Opptjening',
-        },
-        hendelseUndertyper: [],
-      },
-      {
-        hendelseType: {
-          kode: 'ANNET',
+          kode: 'PSB_ANNET_TYPE',
           navn: 'Annet',
-        },
-        hendelseUndertyper: [],
-      },
-      {
-        hendelseType: {
-          kode: 'MEDLEM',
-          navn: '§14-2 Medlemskap',
         },
         hendelseUndertyper: [
           {
-            kode: 'IKKE_EØS',
-            navn: 'Ikke oppholdsrett EØS',
-          },
-          {
-            kode: 'IKKE_BOSATT',
-            navn: 'Ikke bosatt',
+            kode: 'ANNET_FRITEKST',
+            navn: 'Annet - fritekst',
           },
         ],
       },
@@ -165,6 +148,7 @@ export const visAksjonspunktForFeilutbetaling = args => (
     ]}
     alleKodeverk={alleKodeverk}
     fpsakKodeverk={alleKodeverk}
+    fagsakYtelseTypeKode="PSB"
     submitCallback={action('button-click')}
     {...args}
   />

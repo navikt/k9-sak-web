@@ -4,6 +4,10 @@ import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/Glob
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
+import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
+import { UngFeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/UngFeilutbetalingFaktaBackendClient.js';
+import { FeilutbetalingKodeverkoppslagContext } from '@k9-sak-web/gui/fakta/feilutbetaling/FeilutbetalingKodeverkoppslagContext.js';
+import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
@@ -49,15 +53,32 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   return (
     <IntlProvider locale="nb" messages={globalMessages}>
       <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-        <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
-            <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
-              <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
-                {harFeilet || erFerdig ? children : <LoadingPanel />}
-              </NotatBackendClientContext>
-            </AvregningBackendClientContext>
-          </VedtakKlageApiContext>
-        </KlageVurderingApiContext>
+        <FeilutbetalingFaktaApiContext value={new UngFeilutbetalingFaktaBackendClient()}>
+          <FeilutbetalingKodeverkoppslagContext
+            value={{
+              hentHendelseTypeNavn: kode =>
+                kode ? (ungKodeverkOppslag.ungTilbake.hendelseTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
+              hentHendelseUnderTypeNavn: kode =>
+                kode
+                  ? (ungKodeverkOppslag.ungTilbake.hendelseUnderTyper(kode as never, OrUndefined)?.navn ?? kode)
+                  : '',
+              hentVidereBehandlingNavn: kode =>
+                kode
+                  ? (ungKodeverkOppslag.ungTilbake.videreBehandlinger(kode as never, OrUndefined)?.navn ?? kode)
+                  : '',
+            }}
+          >
+            <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+              <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+                <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
+                  <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
+                    {harFeilet || erFerdig ? children : <LoadingPanel />}
+                  </NotatBackendClientContext>
+                </AvregningBackendClientContext>
+              </VedtakKlageApiContext>
+            </KlageVurderingApiContext>
+          </FeilutbetalingKodeverkoppslagContext>
+        </FeilutbetalingFaktaApiContext>
       </UngKodeverkoppslagContext>
     </IntlProvider>
   );
