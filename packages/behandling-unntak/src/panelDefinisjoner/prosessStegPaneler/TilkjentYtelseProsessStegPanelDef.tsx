@@ -27,7 +27,7 @@ class PanelDef extends ProsessStegPanelDef {
     return (
       <TilkjentYtelseProsessIndex
         behandling={deepCopyProps.behandling}
-        beregningsresultat={deepCopyProps.beregningsresultatUtbetaling}
+        beregningsresultat={deepCopyProps.beregningsresultat}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
         personopplysninger={deepCopyProps.personopplysninger}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
