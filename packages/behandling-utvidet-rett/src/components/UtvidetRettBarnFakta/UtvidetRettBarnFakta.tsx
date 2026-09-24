@@ -1,34 +1,27 @@
-import React from 'react';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Rammevedtak } from '@k9-sak-web/types';
-import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
-import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import type { BarnDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
+import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
+import { BarnFakta } from '@k9-sak-web/fakta-barn-oms';
+import { Personopplysninger, Rammevedtak } from '@k9-sak-web/types';
 
 interface OwnProps {
-  personopplysninger: {
-    barn: { fnr: string; fodselsdato: string }[];
-    barnSoktFor: { fnr: string; fodselsdato: string }[];
-  };
+  personopplysninger?: Personopplysninger;
   rammevedtak: Rammevedtak[];
   fagsaksType: FagsakYtelsesType;
 }
 
 const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: OwnProps) => {
   const erFagsakYtelseTypeKroniskSyktBarn = fagsakYtelsesType.OMSORGSPENGER_KS === fagsaksType;
-  const barn = erFagsakYtelseTypeKroniskSyktBarn
+  const personOpplysningerBarn = erFagsakYtelseTypeKroniskSyktBarn
     ? personopplysninger?.barnSoktFor || []
     : personopplysninger?.barn || [];
 
-  const formateradeBarn: BarnDto[] = barn.map(
-    ({ fnr, fodselsdato }) =>
-      ({
-        personIdent: fnr,
-        fødselsdato: fodselsdato,
-        harSammeBosted: undefined,
-        barnType: BarnType.VANLIG,
-      }) as BarnDto,
-  );
+  const barn: BarnDto[] = personOpplysningerBarn.map(({ fnr, fodselsdato }) => ({
+    personIdent: fnr,
+    fødselsdato: fodselsdato,
+    barnType: BarnType.VANLIG,
+  }));
 
-  return <FaktaBarnIndex rammevedtak={rammevedtak} barn={formateradeBarn} fagsaksType={fagsaksType} />;
+  return <BarnFakta barn={barn} rammevedtak={rammevedtak} fagsaksType={fagsaksType} />;
 };
 export default UtvidetRettBarnFakta;

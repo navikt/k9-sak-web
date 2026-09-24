@@ -1,19 +1,17 @@
-import React from 'react';
-
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
-import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
-import users from '@fpsak-frontend/assets/images/users.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
+import users from '@fpsak-frontend/assets/images/users.svg';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { BarnDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
+import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import MidlertidigAlene from './components/MidlertidigAlene';
+import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import BarnSeksjon from './components/BarnSeksjon';
+import MidlertidigAlene from './components/MidlertidigAlene';
+import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
 import BarnMedRammevedtak from './dto/BarnMedRammevedtak';
 import KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
-import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
 
 const cache = createIntlCache();
 
@@ -25,9 +23,9 @@ const intl = createIntl(
   cache,
 );
 
-interface FaktaBarnIndexProps {
-  barn: BarnDto[];
-  rammevedtak: Rammevedtak[];
+interface BarnFaktaProps {
+  barn?: BarnDto[];
+  rammevedtak?: Rammevedtak[];
   fagsaksType?: FagsakYtelsesType;
 }
 
@@ -68,7 +66,7 @@ const mapRammevedtakBarn = (
   };
 };
 
-const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnIndexProps) => {
+const BarnFakta = ({ barn = [], rammevedtak = [], fagsaksType }: BarnFaktaProps) => {
   const midlertidigAleneansvar = rammevedtak.find(rv => rv.type === RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG);
   let vanligeBarnTekstId;
   switch (fagsaksType) {
@@ -91,7 +89,7 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
       switch (rv.type) {
         case RammevedtakEnum.UTVIDET_RETT: {
           const alleUtvidetRettRammevedtak: Rammevedtak[] = rammevedtak.filter(
-            rvedtak => rvedtak.utvidetRettFor === rv.utvidetRettFor,
+            rvedtak => 'utvidetRettFor' in rvedtak && rvedtak.utvidetRettFor === rv.utvidetRettFor,
           );
           return mapRammevedtakBarn(tmpBarn, alleUtvidetRettRammevedtak, 'utvidetRettFor', 'kroniskSykdom');
         }
@@ -116,13 +114,13 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
 
   const samletBarnOgRammevedtak: KombinertBarnOgRammevedtak[] = barn.map(b => {
     const kombinertBarnOgRammevedtak: KombinertBarnOgRammevedtak = {
-      personIdent: b.personIdent,
+      personIdent: b.personIdent ?? '',
       barnRelevantIBehandling: b,
     };
 
     rammevedtakGruppertPerBarn.forEach(barnMedRV => {
       const BarnRVFodselsnummer = barnMedRV.personIdent.substr(0, 6);
-      const BarnFodselsnummer = b.personIdent.substr(0, 6);
+      const BarnFodselsnummer = b.personIdent?.substr(0, 6);
       if (
         barnMedRV.personIdent === b.personIdent ||
         BarnRVFodselsnummer === b.personIdent ||
@@ -154,4 +152,4 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
   );
 };
 
-export default FaktaBarnIndex;
+export default BarnFakta;
