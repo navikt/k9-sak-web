@@ -47,7 +47,7 @@ const finnResterendePerioder = (perioderFraForm: Periode[], periodeTilVurdering?
 interface VurderingAvOmsorgsperioderFormProps {
   omsorgsperiode: OmsorgenForDto;
   onAvbryt?: () => void;
-  fosterbarn: string[];
+  hentValiderteFosterbarn?: () => Promise<string[] | null>;
   onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => Promise<void>;
   sakstype?: FagsakYtelsesType;
   readOnly: boolean;
@@ -62,7 +62,7 @@ interface VurderingAvOmsorgsperioderFormState {
 const VurderingAvOmsorgsperioderForm = ({
   omsorgsperiode,
   onAvbryt,
-  fosterbarn,
+  hentValiderteFosterbarn,
   onFinished,
   sakstype,
   readOnly,
@@ -82,35 +82,42 @@ const VurderingAvOmsorgsperioderForm = ({
   const handleSubmit = async (formState: VurderingAvOmsorgsperioderFormState) => {
     const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
     setIsSubmitting(true);
-    let vurdertePerioder: VurderingSubmitValues[];
-    const fosterbarnForOmsorgspenger = erOMP ? fosterbarn : undefined;
-    if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
-      vurdertePerioder = perioder.map(periode => ({
-        periode,
-        resultat: Vurderingsresultat.OPPFYLT,
-        begrunnelse,
-      }));
-
-      const resterendePerioder = finnResterendePerioder(perioder, omsorgsperiode.periode);
-      const perioderUtenOmsorg = resterendePerioder.map(periode => ({
-        periode,
-        resultat: Vurderingsresultat.IKKE_OPPFYLT,
-        begrunnelse,
-      }));
-      vurdertePerioder = vurdertePerioder.concat(perioderUtenOmsorg);
-    } else {
-      vurdertePerioder = [
-        {
-          periode: omsorgsperiode.periode,
-          resultat:
-            harSøkerOmsorgenForIPeriode === RadioOptions.HELE
-              ? Vurderingsresultat.OPPFYLT
-              : Vurderingsresultat.IKKE_OPPFYLT,
-          begrunnelse,
-        },
-      ];
-    }
     try {
+      let fosterbarnForOmsorgspenger: string[] | undefined;
+      if (erOMP && hentValiderteFosterbarn) {
+        const validerteFosterbarn = await hentValiderteFosterbarn();
+        if (validerteFosterbarn === null) {
+          return;
+        }
+        fosterbarnForOmsorgspenger = validerteFosterbarn;
+      }
+      let vurdertePerioder: VurderingSubmitValues[];
+      if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
+        vurdertePerioder = perioder.map(periode => ({
+          periode,
+          resultat: Vurderingsresultat.OPPFYLT,
+          begrunnelse,
+        }));
+
+        const resterendePerioder = finnResterendePerioder(perioder, omsorgsperiode.periode);
+        const perioderUtenOmsorg = resterendePerioder.map(periode => ({
+          periode,
+          resultat: Vurderingsresultat.IKKE_OPPFYLT,
+          begrunnelse,
+        }));
+        vurdertePerioder = vurdertePerioder.concat(perioderUtenOmsorg);
+      } else {
+        vurdertePerioder = [
+          {
+            periode: omsorgsperiode.periode,
+            resultat:
+              harSøkerOmsorgenForIPeriode === RadioOptions.HELE
+                ? Vurderingsresultat.OPPFYLT
+                : Vurderingsresultat.IKKE_OPPFYLT,
+            begrunnelse,
+          },
+        ];
+      }
       await onFinished(vurdertePerioder, fosterbarnForOmsorgspenger);
     } finally {
       setIsSubmitting(false);

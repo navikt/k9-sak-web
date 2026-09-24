@@ -2,92 +2,107 @@ import { Delete } from '@navikt/ds-icons';
 import { Box, Button, Heading, Table } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
 import { RhfTextField } from '@navikt/ft-form-hooks';
-import React, { useEffect } from 'react';
-import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { forwardRef, useImperativeHandle } from 'react';
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+
+export interface FosterbarnHandle {
+  hentValiderteFosterbarn: () => Promise<string[] | null>;
+}
 
 interface FosterbarnProps {
-  setFosterbarn: React.Dispatch<React.SetStateAction<string[]>>;
   readOnly: boolean;
 }
 
-const Fosterbarn = ({ setFosterbarn, readOnly }: FosterbarnProps) => {
-  const { control } = useForm({ mode: 'onBlur' });
+const Fosterbarn = forwardRef<FosterbarnHandle, FosterbarnProps>(({ readOnly }, ref) => {
+  const formMethods = useForm({ mode: 'onBlur' });
+  const { control, trigger, getValues } = formMethods;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'fosterbarn',
   });
 
-  const fosterbarnFormValues: { fødselsnummer: string }[] = useWatch({ name: 'fosterbarn', control });
-
-  useEffect(() => {
-    const unikeFosterbarn = new Set(fosterbarnFormValues?.map(fosterbarn => fosterbarn.fødselsnummer));
-    setFosterbarn([...unikeFosterbarn]);
-  }, [fosterbarnFormValues]);
+  useImperativeHandle(ref, () => ({
+    hentValiderteFosterbarn: async () => {
+      if (fields.length === 0) {
+        return [];
+      }
+      const erGyldig = await trigger();
+      if (!erGyldig) {
+        return null;
+      }
+      const fosterbarnFraSkjema: { fødselsnummer: string }[] = getValues('fosterbarn') ?? [];
+      const unikeFosterbarn = new Set(fosterbarnFraSkjema.map(fosterbarn => fosterbarn.fødselsnummer));
+      return [...unikeFosterbarn];
+    },
+  }));
 
   return (
-    <Box marginBlock="space-0 space-6">
-      <Box padding="space-4" borderWidth="1" borderRadius="4">
-        <Box marginBlock="space-0 space-4">
-          <Heading level="2" size="medium">
-            Fosterbarn
-          </Heading>
-        </Box>
-        {fields.length > 0 && (
+    <FormProvider {...formMethods}>
+      <Box marginBlock="space-0 space-6">
+        <Box padding="space-16" borderWidth="1" borderRadius="4">
           <Box marginBlock="space-0 space-4">
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell scope="col" />
-                  <Table.HeaderCell scope="col">Fødselsnummer</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Fjern</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {fields.map((field, index) => (
-                  <Table.Row key={field.id}>
-                    <Table.DataCell>{`Fosterbarn ${index + 1}`}</Table.DataCell>
-                    <Table.DataCell>
-                      <RhfTextField
-                        control={control}
-                        name={`fosterbarn.${index}.fødselsnummer`}
-                        label="Fødselsnummer"
-                        htmlSize={11}
-                        size="small"
-                        minLength={11}
-                        maxLength={11}
-                        validate={[
-                          (value: string) => {
-                            if (validator.fnr(value).status === 'valid') {
-                              return '';
-                            }
-                            return 'Ugyldig fødselsnummer';
-                          },
-                        ]}
-                      />
-                    </Table.DataCell>
-                    <Table.DataCell>
-                      <Button
-                        size="small"
-                        variant="tertiary"
-                        onClick={() => remove(index)}
-                        disabled={readOnly}
-                        icon={<Delete />}
-                        aria-label="Fjern fosterbarn"
-                      />
-                    </Table.DataCell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
+            <Heading level="2" size="medium">
+              Fosterbarn
+            </Heading>
           </Box>
-        )}
+          {fields.length > 0 && (
+            <Box marginBlock="space-0 space-4">
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell scope="col" />
+                    <Table.HeaderCell scope="col">Fødselsnummer</Table.HeaderCell>
+                    <Table.HeaderCell scope="col">Fjern</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {fields.map((field, index) => (
+                    <Table.Row key={field.id}>
+                      <Table.DataCell>{`Fosterbarn ${index + 1}`}</Table.DataCell>
+                      <Table.DataCell>
+                        <RhfTextField
+                          control={control}
+                          name={`fosterbarn.${index}.fødselsnummer`}
+                          label="Fødselsnummer"
+                          htmlSize={11}
+                          size="small"
+                          minLength={11}
+                          maxLength={11}
+                          hideLabel
+                          validate={[
+                            (value: string) => {
+                              if (validator.fnr(value).status === 'valid') {
+                                return '';
+                              }
+                              return 'Ugyldig fødselsnummer';
+                            },
+                          ]}
+                        />
+                      </Table.DataCell>
+                      <Table.DataCell>
+                        <Button
+                          size="small"
+                          variant="tertiary"
+                          onClick={() => remove(index)}
+                          disabled={readOnly}
+                          icon={<Delete />}
+                          aria-label="Fjern fosterbarn"
+                        />
+                      </Table.DataCell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </Box>
+          )}
 
-        <Button variant="secondary" onClick={() => append({ fødselsnummer: '' })} size="small">
-          Legg til fosterbarn
-        </Button>
+          <Button variant="secondary" onClick={() => append({ fødselsnummer: '' })} size="small">
+            Legg til fosterbarn
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </FormProvider>
   );
-};
+});
 
 export default Fosterbarn;

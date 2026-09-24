@@ -35,7 +35,7 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
     >
       {(field, index, removeButton) => {
         return (
-          <HStack key={field.id} gap="space-16" paddingBlock="space-2">
+          <HStack key={field.id} gap="space-16" paddingBlock="space-2" align="end">
             <Datovelger
               name={`${name}.${index}.fom` as FieldPath<PeriodListFormValues>}
               label={index === 0 ? 'Fra' : ''}

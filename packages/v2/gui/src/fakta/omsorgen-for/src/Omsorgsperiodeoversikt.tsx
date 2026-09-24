@@ -5,8 +5,8 @@ import type {
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { NavigationWithDetailView } from '@k9-sak-web/gui/shared/navigation-with-detail-view/NavigationWithDetailView.js';
 import hash from 'object-hash';
-import { useState, type JSX } from 'react';
-import Fosterbarn from './Fosterbarn';
+import { useRef, useState, type JSX } from 'react';
+import Fosterbarn, { type FosterbarnHandle } from './Fosterbarn';
 import OmsorgsperiodeoversiktMessages from './OmsorgsperiodeoversiktMessages';
 import OmsorgsperiodeVurderingsdetaljer from './OmsorgsperiodeVurderingsdetaljer';
 import Periodenavigasjon from './Periodenavigasjon';
@@ -36,7 +36,7 @@ const Omsorgsperiodeoversikt = ({
     return null;
   });
   const [erRedigeringsmodus, setErRedigeringsmodus] = useState(false);
-  const [fosterbarn, setFosterbarn] = useState<string[]>([]);
+  const fosterbarnRef = useRef<FosterbarnHandle>(null);
 
   const vurderteOmsorgsperioder = finnVurdertePerioder(omsorgsperiodeoversikt.omsorgsperioder);
 
@@ -49,7 +49,7 @@ const Omsorgsperiodeoversikt = ({
     <>
       <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} />
       {sakstype === fagsakYtelsesType.OMSORGSPENGER && !readOnly && (
-        <Fosterbarn setFosterbarn={setFosterbarn} readOnly={readOnly} />
+        <Fosterbarn ref={fosterbarnRef} readOnly={readOnly} />
       )}
       <NavigationWithDetailView
         navigationSection={() => (
@@ -69,7 +69,9 @@ const Omsorgsperiodeoversikt = ({
                   key={hash(valgtPeriode)}
                   omsorgsperiode={valgtPeriode}
                   onAvbryt={erRedigeringsmodus ? () => setErRedigeringsmodus(false) : undefined}
-                  fosterbarn={fosterbarn}
+                  hentValiderteFosterbarn={() =>
+                    fosterbarnRef.current?.hentValiderteFosterbarn() ?? Promise.resolve([])
+                  }
                   onFinished={onFinished}
                   readOnly={readOnly}
                   sakstype={sakstype}
