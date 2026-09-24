@@ -35,6 +35,7 @@ const FeilutbetalingPerioderRow = ({
   const hendelseUndertyper = valgtHendelse?.hendelseUndertyper ?? [];
 
   const harUndertyper = hendelseUndertyper.length > 0;
+  const periodeTekst = `${formatDateStringToDDMMYYYY(periode.fom ?? '')} - ${formatDateStringToDDMMYYYY(periode.tom ?? '')}`;
 
   const propagateÅrsak = (nyÅrsak: string) => {
     if (!behandlePerioderSamlet) return;
@@ -59,9 +60,7 @@ const FeilutbetalingPerioderRow = ({
 
   return (
     <Table.Row shadeOnHover={false}>
-      <Table.DataCell>
-        {`${formatDateStringToDDMMYYYY(periode.fom ?? '')} - ${formatDateStringToDDMMYYYY(periode.tom ?? '')}`}
-      </Table.DataCell>
+      <Table.DataCell>{periodeTekst}</Table.DataCell>
       <Table.DataCell>
         <Controller
           control={control}
@@ -76,13 +75,13 @@ const FeilutbetalingPerioderRow = ({
           }}
           render={({ field, fieldState }) => (
             <Select
-              label="Hendelse"
+              label={`Hendelse for perioden ${periodeTekst}`}
               hideLabel
               size="small"
               {...field}
               onChange={e => {
                 field.onChange(e);
-                setValue(`perioder.${index}.underÅrsak`, '');
+                setValue(`perioder.${index}.underÅrsak`, '', { shouldDirty: true });
                 propagateÅrsak(e.target.value);
               }}
               error={fieldState.error?.message}
@@ -109,7 +108,7 @@ const FeilutbetalingPerioderRow = ({
               }}
               render={({ field, fieldState }) => (
                 <Select
-                  label="Underårsak"
+                  label={`Underårsak for perioden ${periodeTekst}`}
                   hideLabel
                   size="small"
                   {...field}

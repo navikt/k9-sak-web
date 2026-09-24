@@ -174,8 +174,11 @@ describe('FeilutbetalingFaktaIndex', () => {
       ],
     });
 
-    await user.selectOptions(await screen.findByRole('combobox', { name: 'Hendelse' }), 'PSB_ANNET_TYPE');
-    expect(screen.queryByRole('combobox', { name: 'Underårsak' })).not.toBeInTheDocument();
+    await user.selectOptions(
+      await screen.findByRole('combobox', { name: 'Hendelse for perioden 01.01.2024 - 31.01.2024' }),
+      'PSB_ANNET_TYPE',
+    );
+    expect(screen.queryByRole('combobox', { name: /Underårsak for perioden/ })).not.toBeInTheDocument();
     await oppdaterBegrunnelse(user);
     await submit(user);
 

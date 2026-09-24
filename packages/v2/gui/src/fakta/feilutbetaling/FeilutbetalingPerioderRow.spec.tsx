@@ -32,13 +32,13 @@ const FormValues = () => {
   return <output>{JSON.stringify({ values, dirtyFields })}</output>;
 };
 
-const TestForm = () => {
+const TestForm = ({ førstePeriode }: { førstePeriode?: FeilutbetalingFormValues['perioder'][number] }) => {
   const formMethods = useForm<FeilutbetalingFormValues>({
     defaultValues: {
       begrunnelse: '',
       behandlePerioderSamlet: true,
       perioder: [
-        { fom: '2024-01-01', tom: '2024-01-31', årsak: '', underÅrsak: '' },
+        førstePeriode ?? { fom: '2024-01-01', tom: '2024-01-31', årsak: '', underÅrsak: '' },
         { fom: '2024-02-01', tom: '2024-02-29', årsak: 'MEDLEMSKAP', underÅrsak: 'GAMMEL_UNDERÅRSAK' },
       ],
     },
@@ -76,29 +76,46 @@ const TestForm = () => {
 describe('FeilutbetalingPerioderRow', () => {
   it('tømmer gammel underårsak når hendelsen ikke har undertyper', async () => {
     const user = userEvent.setup();
-    render(<TestForm />);
+    render(
+      <TestForm
+        førstePeriode={{
+          fom: '2024-01-01',
+          tom: '2024-01-31',
+          årsak: 'BEREGNING_TYPE',
+          underÅrsak: 'ENDRING_GRUNNLAG',
+        }}
+      />,
+    );
 
-    const hendelser = screen.getAllByRole('combobox', { name: 'Hendelse' });
-    await user.selectOptions(hendelser[0]!, 'MEDLEMSKAP');
+    expect(screen.getByRole('combobox', { name: 'Hendelse for perioden 01.01.2024 - 31.01.2024' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Hendelse for perioden 01.02.2024 - 29.02.2024' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('combobox', { name: 'Underårsak for perioden 01.01.2024 - 31.01.2024' }),
+    ).toBeInTheDocument();
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'Hendelse for perioden 01.01.2024 - 31.01.2024' }),
+      'MEDLEMSKAP',
+    );
 
-    expect(screen.queryByRole('combobox', { name: 'Underårsak' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('combobox', { name: /Underårsak for perioden/ })).not.toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent(
       '"perioder":[{"fom":"2024-01-01","tom":"2024-01-31","årsak":"MEDLEMSKAP","underÅrsak":""},{"fom":"2024-02-01","tom":"2024-02-29","årsak":"MEDLEMSKAP","underÅrsak":""}]',
     );
+    expect(screen.getByRole('status')).toHaveTextContent('"dirtyFields":{"perioder":[{"årsak":true,"underÅrsak":true}');
   });
 
   it('propagerer årsak og underårsak, tømmer gammel underårsak og markerer alle endrede felt som dirty', async () => {
     const user = userEvent.setup();
     render(<TestForm />);
 
-    const hendelser = screen.getAllByRole('combobox', { name: 'Hendelse' });
+    const hendelser = screen.getAllByRole('combobox', { name: /Hendelse for perioden/ });
     await user.selectOptions(hendelser[0]!, 'BEREGNING_TYPE');
 
     expect(screen.getByRole('status')).toHaveTextContent(
       '"perioder":[{"fom":"2024-01-01","tom":"2024-01-31","årsak":"BEREGNING_TYPE","underÅrsak":""},{"fom":"2024-02-01","tom":"2024-02-29","årsak":"BEREGNING_TYPE","underÅrsak":""}]',
     );
 
-    const underårsaker = screen.getAllByRole('combobox', { name: 'Underårsak' });
+    const underårsaker = screen.getAllByRole('combobox', { name: /Underårsak for perioden/ });
     await user.selectOptions(underårsaker[0]!, 'ENDRING_GRUNNLAG');
 
     expect(screen.getByRole('status')).toHaveTextContent(
