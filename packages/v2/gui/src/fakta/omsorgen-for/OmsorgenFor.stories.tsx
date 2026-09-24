@@ -6,7 +6,7 @@ import { asyncAction } from '../../storybook/asyncAction.js';
 import { FakeOmsorgenForBackendApi } from '../../storybook/mocks/FakeOmsorgenForBackendApi.js';
 import type { OmsorgenForApi } from './api/OmsorgenForApi.js';
 import { OmsorgenForApiContext } from './api/OmsorgenForApiContext.js';
-import OmsorgenFor from './src/OmsorgenFor.js';
+import { OmsorgenFor } from './src/OmsorgenFor.js';
 
 const api = new FakeOmsorgenForBackendApi();
 

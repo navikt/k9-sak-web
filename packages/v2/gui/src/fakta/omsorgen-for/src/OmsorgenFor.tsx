@@ -16,7 +16,7 @@ interface MainComponentProps {
   behandlingUuid: string;
 }
 
-const OmsorgenFor = ({ readOnly, onFinished, behandlingUuid, sakstype }: MainComponentProps): JSX.Element => {
+export const OmsorgenFor = ({ readOnly, onFinished, behandlingUuid, sakstype }: MainComponentProps): JSX.Element => {
   const { data: omsorgsperiodeoversikt } = useSuspenseQuery(useOmsorgenForOptions(behandlingUuid));
 
   return (
@@ -37,5 +37,3 @@ const OmsorgenFor = ({ readOnly, onFinished, behandlingUuid, sakstype }: MainCom
     </IntlProvider>
   );
 };
-
-export default OmsorgenFor;
