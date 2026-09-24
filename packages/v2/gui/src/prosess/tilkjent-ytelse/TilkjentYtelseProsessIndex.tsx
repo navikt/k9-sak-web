@@ -5,6 +5,7 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {use} from 'react';
+import {ignore404Errors} from '../../app/errorhandling/ignore404Errors.js';
 import {assertDefined} from '../../utils/validation/assertDefined.js';
 import {TilkjentYtelseApiContext} from './api/TilkjentYtelseApiContext.js';
 import type {FeriepengerPrÅr} from './components/feriepenger/FeriepengerPanel.tsx';
@@ -45,11 +46,18 @@ export const TilkjentYtelseProsessIndex = ({
   const { data: feriepengerPrÅr } = useSuspenseQuery({
     queryKey: ['feriepengegrunnlag', behandling?.uuid],
     queryFn: async () => {
-      return behandling?.uuid != null
-        ? await tilkjentYtelseBackendClient.hentFeriepengegrunnlagPrÅr(behandling.uuid)
-        : null;
+      if (behandling?.uuid == null) {
+        return emptyResult;
+      }
+      try {
+        return await tilkjentYtelseBackendClient.hentFeriepengegrunnlagPrÅr(behandling.uuid);
+      } catch (error) {
+        if (ignore404Errors(error as Error)) {
+          throw error;
+        }
+        return emptyResult;
+      }
     },
-    select: data => (data != null ? data : emptyResult),
   });
 
   if (!arbeidsgiverOpplysningerPerId) {
