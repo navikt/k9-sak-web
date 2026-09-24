@@ -84,7 +84,7 @@ export const LeggerTilFosterbarnOgBekrefter: Story = {
   play: async ({ canvas, args, step }) => {
     await step('Skal legge til fosterbarn og bekrefte vurdering', async () => {
       await userEvent.click(canvas.getByRole('button', { name: 'Legg til fosterbarn' }));
-      await userEvent.type(canvas.getByLabelText('Fødselsnummer'), '13097248022');
+      await userEvent.type(canvas.getByLabelText('Fødselsnummer'), '17420373147');
       await waitFor(() => expect(canvas.getByLabelText('Ja')).toBeInTheDocument());
       await userEvent.click(canvas.getByLabelText('Ja'));
       await userEvent.type(
@@ -101,7 +101,7 @@ export const LeggerTilFosterbarnOgBekrefter: Story = {
             begrunnelse: 'Søker bor sammen med barnet i perioden',
           },
         ],
-        ['13097248022'],
+        ['17420373147'],
       );
     });
   },
