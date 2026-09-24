@@ -277,12 +277,15 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     const inngangsvilkårPanel = erAktivitetspengerOpphørsbehandling(behandling)
       ? byggOpphørPanel(aksjonspunkter, vilkår, innloggetBruker)
       : byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
-    const medlemskapPanel = byggVilkårPanel(
-      inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
-      vilkår,
-      PANEL_KONFIG.medlemskap,
-      aksjonspunkter,
-    );
+    const medlemskapPanel = {
+      ...byggVilkårPanel(
+        inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
+        vilkår,
+        PANEL_KONFIG.medlemskap,
+        aksjonspunkter,
+      ),
+      usePartialStatus: false,
+    };
 
     const beregningPanel = {
       id: PANEL_KONFIG.beregning.id,
