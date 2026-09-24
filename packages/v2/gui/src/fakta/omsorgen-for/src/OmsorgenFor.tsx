@@ -24,7 +24,7 @@ export const OmsorgenFor = ({ readOnly, onFinished, behandlingUuid, sakstype }: 
       <Heading size="medium" level="1">
         {sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}
       </Heading>
-      <Box marginBlock="space-6 space-0">
+      <Box marginBlock="space-24 space-0">
         <div className={styles.mainComponent}>
           <Omsorgsperiodeoversikt
             omsorgsperiodeoversikt={omsorgsperiodeoversikt}
