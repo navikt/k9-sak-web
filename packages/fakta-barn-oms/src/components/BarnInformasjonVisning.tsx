@@ -1,7 +1,7 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { formatDate, formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
-import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { BodyShort } from '@navikt/ds-react';
 import { FormattedMessage } from 'react-intl';
 
@@ -10,28 +10,20 @@ interface BarnInputProps {
 }
 
 const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
-  const { harSammeBosted, dødsdato, barnType, deltBostedPerioder, sammeBostedPerioder } =
-    barnet.barnRelevantIBehandling;
+  const { dødsdato, barnType, deltBostedPerioder, sammeBostedPerioder } = barnet.barnRelevantIBehandling ?? {};
   const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length > 0;
 
   return (
     <div>
-      {typeof harSammeBosted !== 'undefined' && (
-        <BodyShort size="small">
-          <FormattedMessage
-            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
-            values={{ b: chunks => <b>{chunks}</b> }}
-          />
-        </BodyShort>
-      )}
-
       {skalViseDeltBostedMedPerioder && (
         <>
           <BodyShort size="small">
             <FormattedMessage id="FaktaBarn.DeltBostedMedPerioder" />
           </BodyShort>
           {deltBostedPerioder.map(periode => (
-            <BodyShort size="small">{formatereLukketPeriode(periode)}</BodyShort>
+            <BodyShort key={formatereLukketPeriode(periode)} size="small">
+              {formatereLukketPeriode(periode)}
+            </BodyShort>
           ))}
           <VerticalSpacer sixteenPx />
         </>
@@ -43,7 +35,9 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
             <FormattedMessage id="FaktaBarn.SammeBostedMedPerioder" />
           </BodyShort>
           {sammeBostedPerioder.map(periode => (
-            <BodyShort size="small">{formatereLukketPeriode(periode)}</BodyShort>
+            <BodyShort key={formatereLukketPeriode(periode)} size="small">
+              {formatereLukketPeriode(periode)}
+            </BodyShort>
           ))}
           <VerticalSpacer sixteenPx />
         </>

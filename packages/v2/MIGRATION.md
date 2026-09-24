@@ -26,6 +26,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/vilkar-soknadsfrist`
 - [x] `prosess/vilkar-alder`
 - [x] `prosess/vilkar-opptjening`
+- [x] `prosess/vilkar-sykdom`
 - [x] `prosess/uttak`
 - [x] `prosess/ti-dager`
 - [x] `prosess/ung-beregning`
@@ -44,8 +45,9 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
 #### Under arbeid
-- fakta-feilutbetaling
-- fakta-omsorgen-for
+- fakta-omsorgen-for (Hallvard)
+- fakta-feilutbetaling (Aleksei)
+- fakta-direkte-overgang (Aleksei)
 ---
 
 ### Trenger avklaringer
@@ -69,8 +71,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `fakta-direkte-overgang`               | 285     | 2 (opl, psb)                                           | Enkel skjema, 0 API-avhengigheter                              |
-| `prosess-vilkar-sykdom`                | 134     | 3 (opl, psb, psb-sluttfase)                            | Én fil, periodedata fra forelder                               |
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
 | `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
 | `fakta-om-pleietrengende`              | 51      | 1 (psb-sluttfase)                                      | Enkel visning av opplysninger om den pleietrengende            |

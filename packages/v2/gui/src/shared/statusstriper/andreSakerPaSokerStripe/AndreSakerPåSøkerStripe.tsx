@@ -70,7 +70,10 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
   const antallSakerPåSøker = andreFagsakerPåSøker.length;
   return (
     <InfoCard data-color="info" size="small" className={styles.ingenAvrunding}>
-      <InfoCard.Message icon={<InformationSquareFillIcon fontSize="1.5rem" className="mt-[3px]" />}>
+      <InfoCard.Message
+        icon={<InformationSquareFillIcon fontSize="1.5rem" className={'mt-[3px]'} />}
+        className={styles.ingenAvrunding}
+      >
         <HStack gap="space-16">
           <div className="flex items-center">
             <BodyShort size="small">
