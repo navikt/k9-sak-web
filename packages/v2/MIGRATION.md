@@ -41,7 +41,8 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 #### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
+- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE` 
+    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509 
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
 #### Under arbeid
