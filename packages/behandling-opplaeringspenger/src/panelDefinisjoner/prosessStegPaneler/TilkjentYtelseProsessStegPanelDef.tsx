@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import { TilkjentYtelseProsessIndex } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/TilkjentYtelseProsessIndex.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -17,7 +17,18 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} />;
+    return (
+      <TilkjentYtelseProsessIndex
+        behandling={deepCopyProps.behandling}
+        beregningsresultat={deepCopyProps.beregningsresultat}
+        aksjonspunkter={deepCopyProps.aksjonspunkter}
+        personopplysninger={deepCopyProps.personopplysninger}
+        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+        isReadOnly={deepCopyProps.isReadOnly}
+        submitCallback={props.submitCallback}
+        readOnlySubmitButton={deepCopyProps.readOnlySubmitButton}
+      />
+    );
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_TILBAKETREKK];
@@ -42,6 +53,7 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
   }) => ({
     fagsak,
+    behandling,
     behandlingUuid: behandling?.uuid,
     beregningsresultat: beregningsresultatUtbetaling,
     personopplysninger,

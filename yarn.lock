@@ -1329,25 +1329,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/prosess-tilkjent-ytelse@npm:1.0.0, @fpsak-frontend/prosess-tilkjent-ytelse@workspace:packages/prosess-tilkjent-ytelse":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-tilkjent-ytelse@workspace:packages/prosess-tilkjent-ytelse"
-  dependencies:
-    "@fpsak-frontend/assets": "npm:1.0.0"
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@fpsak-frontend/tidslinje": "npm:1.0.0"
-    "@fpsak-frontend/utils": "npm:1.0.0"
-    "@fpsak-frontend/utils-test": "npm:1.0.0"
-    "@k9-sak-web/gui": "workspace:^"
-    "@k9-sak-web/types": "npm:1.0.0"
-    "@types/react": "npm:19.2.18"
-    moment: "npm:2.31.0"
-    react: "npm:19.3.0"
-    react-intl: "npm:12.1.1"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/prosess-vedtak-tilbakekreving@npm:1.0.0, @fpsak-frontend/prosess-vedtak-tilbakekreving@workspace:packages/prosess-vedtak-tilbakekreving":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-vedtak-tilbakekreving@workspace:packages/prosess-vedtak-tilbakekreving"
@@ -2293,7 +2274,6 @@ __metadata:
     "@fpsak-frontend/fakta-opplysninger-fra-soknaden": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/prosess-avregning": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/behandling-felles": "npm:1.0.0"
@@ -2367,7 +2347,6 @@ __metadata:
     "@fpsak-frontend/fakta-verge": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/prosess-avregning": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/prosess-vilkar-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
@@ -2415,7 +2394,6 @@ __metadata:
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/prosess-avregning": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/prosess-vilkar-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
@@ -2462,7 +2440,6 @@ __metadata:
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/prosess-avregning": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/prosess-vilkar-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
@@ -2508,7 +2485,6 @@ __metadata:
     "@fpsak-frontend/fakta-overstyr-beregning": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/prosess-avregning": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/prosess-vilkar-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
@@ -2642,7 +2618,6 @@ __metadata:
     "@fpsak-frontend/fakta-verge": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
     "@fpsak-frontend/prosess-avregning": "npm:1.0.0"
-    "@fpsak-frontend/prosess-tilkjent-ytelse": "npm:1.0.0"
     "@fpsak-frontend/prosess-vedtak": "npm:1.0.0"
     "@fpsak-frontend/prosess-vilkar-opptjening-oms": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"

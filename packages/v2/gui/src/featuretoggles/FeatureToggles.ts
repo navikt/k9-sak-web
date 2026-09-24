@@ -5,7 +5,6 @@ import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } fro
  * varianter ein ønsker å ha true på.
  */
 const rootFeatureToggles = {
-  BRUK_V2_TILKJENT_YTELSE: false,
   VIS_YTELSER_PANEL: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
@@ -36,7 +35,6 @@ const rootFeatureToggles = {
  */
 const baseQFeatureToggles = {
   isFor: 'Q',
-  BRUK_V2_TILKJENT_YTELSE: true,
   UNNTAKSBEHANDLING: true,
   SINGLE_AUTHFIXER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
