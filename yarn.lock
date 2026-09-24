@@ -2471,7 +2471,6 @@ __metadata:
     "@k9-sak-web/fakta-medisinsk-vilkar": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
-    "@k9-sak-web/prosess-vilkar-sykdom": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
@@ -2521,7 +2520,6 @@ __metadata:
     "@k9-sak-web/fakta-omsorgen-for": "npm:1.0.0"
     "@k9-sak-web/gui": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
-    "@k9-sak-web/prosess-vilkar-sykdom": "npm:1.0.0"
     "@k9-sak-web/rest-api": "npm:1.0.0"
     "@k9-sak-web/rest-api-hooks": "npm:1.0.0"
     "@k9-sak-web/sak-app": "npm:1.0.0"
@@ -3004,27 +3002,6 @@ __metadata:
     react: "npm:19.3.0"
     react-dom: "npm:19.3.0"
     react-hook-form: "npm:7.88.0"
-    react-intl: "npm:12.1.1"
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/prosess-vilkar-sykdom@npm:1.0.0, @k9-sak-web/prosess-vilkar-sykdom@workspace:packages/prosess-vilkar-sykdom":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/prosess-vilkar-sykdom@workspace:packages/prosess-vilkar-sykdom"
-  dependencies:
-    "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/shared-components": "npm:1.0.0"
-    "@navikt/aksel-icons": "npm:8.16.2"
-    "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
-    "@types/react": "npm:19.2.18"
-    "@types/react-dom": "npm:19.2.5"
-    classnames: "npm:2.5.1"
-    dayjs: "npm:1.11.23"
-    lodash: "npm:4.18.1"
-    react: "npm:19.3.0"
-    react-dom: "npm:19.3.0"
     react-intl: "npm:12.1.1"
   languageName: unknown
   linkType: soft

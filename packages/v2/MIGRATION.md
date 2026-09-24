@@ -26,6 +26,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/vilkar-soknadsfrist`
 - [x] `prosess/vilkar-alder`
 - [x] `prosess/vilkar-opptjening`
+- [x] `prosess/vilkar-sykdom`
 - [x] `prosess/uttak`
 - [x] `prosess/ti-dager`
 - [x] `prosess/ung-beregning`
@@ -47,7 +48,6 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - fakta-omsorgen-for (Hallvard)
 - fakta-feilutbetaling (Aleksei)
 - fakta-direkte-overgang (Aleksei)
-- prosess-vilkar-sykdom (Vebjørn)
 ---
 
 ### Trenger avklaringer
