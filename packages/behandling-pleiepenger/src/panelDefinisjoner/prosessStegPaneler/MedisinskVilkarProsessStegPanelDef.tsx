@@ -1,8 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import MedisinskVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-sykdom/MedisinskVilkarProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import React from 'react';
 import { Vilkar } from '@k9-sak-web/types';
 
@@ -30,7 +31,11 @@ class PanelDef extends ProsessStegPanelDef {
       pleietrengendeErOver18år: true,
     }));
     const allePerioder = perioderUnder18.concat(perioderOver18);
-    return <SykdomProsessIndex {...props} perioder={allePerioder} />;
+    const deepCopyProps = JSON.parse(
+      JSON.stringify({ perioder: allePerioder, lovReferanse: props.lovReferanse, panelTittel: 'Sykdom' }),
+    );
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <MedisinskVilkarProsessIndex {...deepCopyProps} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];

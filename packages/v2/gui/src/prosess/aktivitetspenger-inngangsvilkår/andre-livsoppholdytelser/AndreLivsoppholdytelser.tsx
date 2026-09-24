@@ -102,7 +102,7 @@ export const AndreLivsoppholdytelser = ({
         {
           avslagsårsak:
             vurdering.andreLivsoppholdytelser !== 'oppfylt'
-              ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.HAR_ANNEN_LIVSOPPHOLDSYTELSE
+              ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
               : undefined,
           begrunnelse: begrunnelseInnvilget,
           erVilkårOppfylt: vurdering.andreLivsoppholdytelser === 'oppfylt',

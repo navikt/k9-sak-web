@@ -7,3 +7,7 @@
 .historisk {
   font-style: italic;
 }
+
+.ingenAvrunding {
+  border-radius: 0 !important;
+}

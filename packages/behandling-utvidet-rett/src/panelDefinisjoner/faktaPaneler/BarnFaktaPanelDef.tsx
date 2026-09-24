@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Fagsak } from '@k9-sak-web/types';
@@ -9,7 +8,9 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FaktaBarn.Title';
 
-  getKomponent = props => <UtvidetRettBarnFakta {...props} />;
+  getKomponent = ({ personopplysninger, fagsaksType, rammevedtak }) => (
+    <UtvidetRettBarnFakta personopplysninger={personopplysninger} fagsaksType={fagsaksType} rammevedtak={rammevedtak} />
+  );
 
   getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 

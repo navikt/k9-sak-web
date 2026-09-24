@@ -9,6 +9,7 @@ import { ErrorReportPopover } from './ErrorReportPopover.js';
 import { FixButton } from './FixButton.js';
 import { deduplicateConsecutiveErrors } from './deduplicateConsecutiveErrors.js';
 import css from './handCursor.module.css';
+import errorAlertStyles from './errorAlert.module.css';
 import { makeErrorReportLinkForJira } from './makeErrorReportText.js';
 import { resolveErrorViewProps } from './resolveErrorViewProps.js';
 
@@ -55,7 +56,7 @@ export const TopErrorPanelUI = ({
     const extraHeaderTxt = errors.length > 1 ? `(${page} av ${errors.length})` : ``;
     return (
       <>
-        <GlobalAlert status="error" centered={false} size="small">
+        <GlobalAlert status="error" centered={false} size="small" className={errorAlertStyles.ingenAvrunding}>
           <GlobalAlert.Header onClick={() => setExpanded(prev => !prev)} className={css.handCursor}>
             <GlobalAlert.Title>
               {title} {extraHeaderTxt}

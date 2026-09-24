@@ -9,6 +9,7 @@ const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
+  NORMALARBEIDSTID_UTTAK: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**

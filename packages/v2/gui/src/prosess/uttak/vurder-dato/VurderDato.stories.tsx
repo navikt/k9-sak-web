@@ -206,11 +206,7 @@ export const RedigerVurdering: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel for endringsdato', async () => {
-      await expect(
-        canvas.getByRole('row', {
-          name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.',
-        }),
-      );
+      await expect(canvas.getByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger' }));
     });
 

@@ -41,7 +41,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
 
   if (error) {
     return (
-      <Alert size="small" variant="error">
+      <Alert size="small" variant="error" className={styles.ingenAvrunding}>
         Får ikke hentet andre saker knyttet til søker
       </Alert>
     );
@@ -69,8 +69,11 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
 
   const antallSakerPåSøker = andreFagsakerPåSøker.length;
   return (
-    <InfoCard data-color="info" size="small">
-      <InfoCard.Message icon={<InformationSquareFillIcon fontSize="1.5rem" className="mt-[3px]" />}>
+    <InfoCard data-color="info" size="small" className={styles.ingenAvrunding}>
+      <InfoCard.Message
+        icon={<InformationSquareFillIcon fontSize="1.5rem" className={'mt-[3px]'} />}
+        className={styles.ingenAvrunding}
+      >
         <HStack gap="space-16">
           <div className="flex items-center">
             <BodyShort size="small">
@@ -98,7 +101,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
             </HStack>
             <div className={styles.sakerGrid}>
               {andreFagsakerPåSøker.map(fagsak => {
-                const erHistorisk = fagsak.status === fagsakStatus.AVSLUTTET;
+                const erHistorisk = fagsak.status === fagsakStatus.HISTORISK;
                 return (
                   <React.Fragment key={fagsak.saksnummer}>
                     {erHistorisk ? (

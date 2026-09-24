@@ -6,7 +6,6 @@ import { captureException } from '@nais/apm';
 import { ErrorModal } from './ui/ErrorModal.js';
 import { resolveErrorViewProps } from './ui/resolveErrorViewProps.js';
 import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
-import { shouldReportToApm } from './apm.js';
 
 interface GlobalUnhandledErrors {
   readonly globalErrors: ReadonlyArray<Error>;
@@ -100,10 +99,8 @@ export const GlobalUnhandledErrorCatcher: FC<GlobalUnhandledErrorCatcherProps> =
 
   const legacyErrorNotifier = useCallback(
     (error: Error) => {
-      // error som kjem inn her blir ikkje ellers rapportert, så logg den til Sentry her.
-      if (shouldReportToApm(error)) {
-        captureException(error);
-      }
+      // error som kjem inn her blir ikkje ellers rapportert, så logg den til APM her.
+      captureException(error);
       addGlobalError(error);
     },
     [addGlobalError],
