@@ -174,7 +174,7 @@ export const Bosted = ({
     <VStack gap="space-20">
       {!isBostedApSolved && (
         <Alert variant="warning" size="small">
-          Vurder om søker er bosatt i Trondheim kommune på søknadstidspunktet.
+          Vurder om søker er bosatt i Trondheim kommune på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel

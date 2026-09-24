@@ -176,7 +176,7 @@ export const BehovForBistand = ({
     <VStack gap="space-20">
       {!isVurderBistandsvilkårApSolved && (
         <Alert variant="warning" size="small">
-          Vurder behov for bistand på søknadstidspunktet.
+          Vurder behov for bistand på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel

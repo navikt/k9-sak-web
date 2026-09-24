@@ -165,7 +165,7 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
     await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
       await expect(
-        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.', { exact: false }),
+        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.', { exact: false }),
       ).not.toBeInTheDocument();
     });
 
