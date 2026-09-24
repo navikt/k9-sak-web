@@ -39,6 +39,7 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 ### FaktaPanelDef wiring (one per behandling package)
 
 - [ ] `getKomponent` is toggle-guarded — v2 branch passes only what the component needs (typically `behandlingUuid`), v1 branch unchanged
+- [ ] v2 branch passes props explicitly by name — never `{...props}` / `{...deepCopyProps}` spread onto the v2 component
 - [ ] Compile-time deletion guard added to the **old v1 package files** — not the `FaktaPanelDef` (see "Marking old files for deletion" section below)
 
 ### AppConfigResolver
@@ -299,13 +300,21 @@ getKomponent = props => {
   if (props.featureToggles?.BRUK_V2_MY_FEATURE) {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <MyFeatureV2Index {...deepCopyProps} />;
+    return (
+      <MyFeatureV2Index
+        behandling={deepCopyProps.behandling}
+        fagsak={deepCopyProps.fagsak}
+        isReadOnly={props.isReadOnly}
+      />
+    );
   }
   return <OldMyFeature {...props} />;
 };
 ```
 
 `konverterKodeverkTilKode` recursively converts 2-attr kodeverk objects (`{ kode, kodeverk }`) to plain strings (the `kode` value). Objects with 3+ attrs (e.g. `{ kode, kodeverk, namn }`) are kept as-is. Adjust your v2 component types accordingly.
+
+**Never spread `{...props}` or `{...deepCopyProps}` onto the v2 component.** Pass each prop the component's typed interface declares, by name. Spreading the whole (converted) legacy props object defeats the v2 component's prop typing, silently forwards props it never asked for, and makes it impossible to see at the call site which data the component actually depends on. The `{...props}` on the **old** v1 branch is fine to leave as-is — that's existing v1 code style, not something this migration touches.
 
 ### Marking old files for deletion — compile-time guard
 
