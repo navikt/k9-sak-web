@@ -49,6 +49,7 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - fakta-omsorgen-for (Hallvard)
 - fakta-feilutbetaling (Aleksei)
 - fakta-direkte-overgang (Aleksei)
+- fakta-uttak (Vebjørn)
 ---
 
 ### Trenger avklaringer
@@ -75,7 +76,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
 | `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
 | `fakta-om-pleietrengende`              | 51      | 1 (psb-sluttfase)                                      | Enkel visning av opplysninger om den pleietrengende            |
-| `fakta-uttak`                          | 38      | 2 (oms, unntak)                                        | Enkel visning av uttaksdata                                    |
 | `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
 | `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
 | `prosess-fortsatt-medlemskap`          | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
