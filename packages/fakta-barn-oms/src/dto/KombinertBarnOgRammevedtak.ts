@@ -1,8 +1,8 @@
-import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { BarnDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 import BarnMedRammevedtak from './BarnMedRammevedtak';
 
 interface KombinertBarnOgRammevedtak {
-  personIdent: string;
+  personIdent?: string;
   rammevedtak?: BarnMedRammevedtak;
   barnRelevantIBehandling?: BarnDto;
 }
