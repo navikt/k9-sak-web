@@ -1,5 +1,6 @@
 import { Box, ToggleGroup } from '@navikt/ds-react';
 import { ReactNode, useState } from 'react';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 
 interface OwnProps {
   v1: ReactNode;
@@ -11,6 +12,10 @@ interface OwnProps {
  */
 const VersjonsvelgerV1V2 = ({ v1, v2 }: OwnProps) => {
   const [valgtVersjon, setValgtVersjon] = useState<'v1' | 'v2'>('v2');
+
+  if (isProd()) {
+    return v1;
+  }
 
   return (
     <Box marginBlock="space-0 space-4">
