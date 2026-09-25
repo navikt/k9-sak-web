@@ -14,7 +14,7 @@
     "formik": "2.4.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-intl": "12.1.1",
+    "react-intl": "12.1.2",
     "yup": "1.7.1"
   },
   "devDependencies": {
