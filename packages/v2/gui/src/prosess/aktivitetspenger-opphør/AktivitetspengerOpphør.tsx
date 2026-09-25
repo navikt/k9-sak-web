@@ -88,11 +88,11 @@ export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.VILKÅRSVURDERING;
   }
-  if (data.lokalkontorForeslårVilkårAP) {
-    return OpphørTab.VILKÅRSVURDERING;
-  }
   if (data.lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.BESLUTTER;
+  }
+  if (data.lokalkontorForeslårVilkårAP) {
+    return OpphørTab.VILKÅRSVURDERING;
   }
   return OpphørTab.ÅRSAK_OG_VARSEL;
 };
