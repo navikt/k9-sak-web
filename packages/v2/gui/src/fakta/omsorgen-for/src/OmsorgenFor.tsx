@@ -1,5 +1,5 @@
-import type { NorskIdentDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/NorskIdentDto.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { NorskIdentDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/NorskIdentDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { type JSX } from 'react';
