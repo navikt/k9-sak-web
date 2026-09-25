@@ -38,7 +38,7 @@
     "@navikt/ft-types": "6.3.10",
     "@navikt/ft-ui-komponenter": "8.2.9",
     "@navikt/ft-utils": "5.1.12",
-    "@tanstack/react-query": "5.103.1",
+    "@tanstack/react-query": "5.103.2",
     "@types/css-tree": "2.3.11",
     "@types/object-hash": "3.0.6",
     "axios": "1.20.0",
@@ -50,7 +50,7 @@
     "react-collapse": "5.1.1",
     "react-dom": "19.3.0",
     "react-hook-form": "7.88.0",
-    "react-intl": "12.1.1",
+    "react-intl": "12.1.2",
     "react-router": "8.4.0",
     "yup": "1.7.1"
   },
