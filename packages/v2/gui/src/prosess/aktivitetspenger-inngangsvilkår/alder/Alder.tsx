@@ -40,7 +40,7 @@ export const Alder = ({ alderVilkår }: Props) => {
       <VStack gap="space-24">
         <VStack gap="space-8">
           <Label size="small" as="p">
-            Er vilkår om alder oppfylt på søknadstidspunktet?
+            Er vilkår om alder oppfylt på virkningstidspunktet?
           </Label>
           <HStack gap="space-8" align="center">
             <BodyShort size="small">

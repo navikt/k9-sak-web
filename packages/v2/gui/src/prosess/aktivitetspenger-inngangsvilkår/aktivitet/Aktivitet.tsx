@@ -179,7 +179,7 @@ export const Aktivitet = ({
     <VStack gap="space-20">
       {!isVurderAktivitetsvilkårApSolved && (
         <Alert variant="warning" size="small">
-          Vurder om søker er i aktivitet på søknadstidspunktet.
+          Vurder om søker er i aktivitet på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel

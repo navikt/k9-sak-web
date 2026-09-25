@@ -1,3 +1,4 @@
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -110,7 +111,7 @@ const vilkårErFerdigbehandlet = (vilkår?: VilkårMedPerioderDto) => {
 const stegErFerdigbehandlet = (aksjonspunkt?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) =>
   aksjonspunkt?.status === AksjonspunktStatus.UTFØRT || vilkårErFerdigbehandlet(vilkår);
 
-const utledAktivTab = (data: InngangsvilkårData) => {
+const utledAktivTab = (data: InngangsvilkårData, erFørstegangsbehandling: boolean) => {
   // Prioriter åpne aksjonspunkter som krever handling
   if (data.bostedAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
@@ -132,7 +133,10 @@ const utledAktivTab = (data: InngangsvilkårData) => {
   if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT) {
     return InngangsvilkårTab.BESLUTTER;
   }
-  if (stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)) {
+  if (
+    !erFørstegangsbehandling &&
+    stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)
+  ) {
     return InngangsvilkårTab.AKTIVITET;
   }
   if (stegErFerdigbehandlet(data.vurderBistandsvilkårAp, data.vurderBistandsvilkårVilkår)) {
@@ -204,14 +208,18 @@ export const AktivitetspengerInngangsvilkår = ({
   );
 
   const harVilkårsperioderIAktivitetsvilkåret =
-    inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder?.length &&
+    !!inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder &&
     inngangsvilkårdata.vurderAktivitetsvilkårVilkår.perioder.length > 0;
 
-  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(inngangsvilkårdata));
+  const erFørstegangsbehandling = behandling.type === BehandlingType.FØRSTEGANGSSØKNAD;
+
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(
+    utledAktivTab(inngangsvilkårdata, erFørstegangsbehandling),
+  );
 
   useEffect(() => {
-    setAktivTab(utledAktivTab(inngangsvilkårdata));
-  }, [inngangsvilkårdata]);
+    setAktivTab(utledAktivTab(inngangsvilkårdata, erFørstegangsbehandling));
+  }, [inngangsvilkårdata, erFørstegangsbehandling]);
 
   return (
     <VStack gap="space-20">

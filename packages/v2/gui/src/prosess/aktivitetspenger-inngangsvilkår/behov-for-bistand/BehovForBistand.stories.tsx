@@ -126,7 +126,7 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
     await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
       await expect(
-        canvas.queryByText('Vurder behov for bistand på søknadstidspunktet.', { exact: false }),
+        canvas.queryByText('Vurder behov for bistand på virkningstidspunktet.', { exact: false }),
       ).not.toBeInTheDocument();
     });
 
