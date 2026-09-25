@@ -26,7 +26,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
   PROSESS_MENY_V2: true,
-  REVURDERING_FRA_STEG_V2: true,
+  DELVIS_REVURDERING_MEDISINSK_VILKAR: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
@@ -42,5 +42,4 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
   SKJUL_PROSESS_MENY_V2_VELGER: true,
-  REVURDERING_FRA_STEG_V2: true,
 });
