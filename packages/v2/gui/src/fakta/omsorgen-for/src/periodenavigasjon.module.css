@@ -1,0 +1,32 @@
+.nyVurderingKnapp {
+  flex-basis: 40%;
+  margin-left: auto;
+}
+
+.vurderingsvelgerContainer {
+  flex-grow: 1;
+  margin-top: 1rem;
+}
+
+.vurderingsperiodePostElementContainer {
+  margin-left: 1.375rem;
+  display: flex;
+}
+
+.vurderingsperiodePostElementContainer :nth-child(2) {
+  margin-left: 1rem;
+}
+
+.vurderingsnavigasjon {
+  position: relative;
+}
+
+.vurderingsnavigasjonOpprettVurderingKnapp {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+
+.vurderingsnavigasjonHeading {
+  padding: 1.25rem 0.9375rem 0 1.375rem;
+}

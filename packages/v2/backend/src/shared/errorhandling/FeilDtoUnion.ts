@@ -26,13 +26,9 @@ type FeilTypeObjectUnion = Record<
   FeilTypeValuesUnion
 >;
 export type FeilDtoUnion =
-  | k9_sak_kontrakt_FeilDto
-  | (k9_klage_kontrakt_FeilDto & { feilkode: undefined })
-  | ung_sak_kontrakt_FeilDto;
+  k9_sak_kontrakt_FeilDto | (k9_klage_kontrakt_FeilDto & { feilkode: undefined }) | ung_sak_kontrakt_FeilDto;
 export type FeltFeilDtoUnion =
-  | k9_sak_kontrakt_FeltFeilDto
-  | k9_klage_kontrakt_FeltFeilDto
-  | ung_sak_kontrakt_FeltFeilDto;
+  k9_sak_kontrakt_FeltFeilDto | k9_klage_kontrakt_FeltFeilDto | ung_sak_kontrakt_FeltFeilDto;
 
 const bodyPropnames: Record<keyof FeilDtoUnion, keyof FeilDtoUnion> = {
   feilmelding: 'feilmelding',

@@ -30,6 +30,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   VIS_INNLEGGELSE_FOR_PILS: true,
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
+  BRUK_OMSORGEN_FOR: true,
 });
 
 /**

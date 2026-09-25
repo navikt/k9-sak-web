@@ -116,7 +116,14 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
         {submittable && (
           <>
             <HStack gap="space-16">
-              <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={isSubmitting || !formState.isDirty} loading={isSubmitting}>
+              <Button
+                variant="primary"
+                size="small"
+                type="button"
+                onClick={handleSubmit}
+                disabled={isSubmitting || !formState.isDirty}
+                loading={isSubmitting}
+              >
                 Oppdater
               </Button>
               <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>

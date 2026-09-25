@@ -8,4 +8,3 @@ const AvslåttAvInnleggelsesperiodeMelding = () => (
 );
 
 export default AvslåttAvInnleggelsesperiodeMelding;
-
