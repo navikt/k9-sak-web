@@ -1,8 +1,6 @@
-import type {
-  k9_sak_kontrakt_person_NorskIdentDto as NorskIdentDto,
-  k9_sak_kontrakt_omsorg_OmsorgenForDto as OmsorgenForDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { type k9_sak_typer_Periode as Periode } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
+import type { NorskIdentDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/NorskIdentDto.js';
+import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';

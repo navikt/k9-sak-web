@@ -1,9 +1,7 @@
-import type { k9_sak_typer_Periode as Periode } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {
-  k9_kodeverk_sykdom_Resultat as Resultat,
-  type k9_sak_kontrakt_omsorg_OmsorgenForDto as OmsorgenForDto,
-  type k9_sak_kontrakt_omsorg_OmsorgenForOversiktDto as OmsorgenForOversiktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
+import { Resultat } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/Resultat.js';
+import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
+import type { OmsorgenForOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForOversiktDto.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';

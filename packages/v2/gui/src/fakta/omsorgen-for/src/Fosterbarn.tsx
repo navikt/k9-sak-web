@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_person_NorskIdentDto as NorskIdentDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { NorskIdentDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/NorskIdentDto.js';
 import { Delete } from '@navikt/ds-icons';
 import { Box, Button, Heading, Table } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';

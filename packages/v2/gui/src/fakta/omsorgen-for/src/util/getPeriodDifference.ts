@@ -1,4 +1,4 @@
-import { type k9_sak_typer_Periode as Periode } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import { getArrayDifference, makeArrayWithoutDuplicates } from './arrayUtils';
 import { isDayAfter } from './dateComparison';
 import { dateStringSorter } from './sort';

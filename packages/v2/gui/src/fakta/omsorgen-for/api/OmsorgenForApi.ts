@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_omsorg_OmsorgenForOversiktDto as OmsorgenForOversiktDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { OmsorgenForOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForOversiktDto.js';
 
 export interface OmsorgenForApi {
   getOmsorgsperioder(behandlingUuid: string): Promise<OmsorgenForOversiktDto>;

@@ -1,7 +1,5 @@
-import {
-  k9_kodeverk_sykdom_Resultat as Resultat,
-  type k9_sak_typer_Periode as Periode,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Resultat } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/Resultat.js';
+import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React, { type JSX } from 'react';
 import { prettifyPeriode } from './util/utils';

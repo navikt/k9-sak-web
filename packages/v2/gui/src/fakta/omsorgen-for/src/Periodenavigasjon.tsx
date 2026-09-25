@@ -1,4 +1,4 @@
-import type { k9_sak_kontrakt_omsorg_OmsorgenForDto as OmsorgenForDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect, type JSX } from 'react';

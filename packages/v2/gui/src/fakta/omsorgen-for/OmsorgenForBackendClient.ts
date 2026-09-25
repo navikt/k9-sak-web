@@ -1,4 +1,4 @@
-import { omsorgenFor_hentOmsorgenForInformasjon } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import { omsorgenFor_hentOmsorgenForInformasjon } from '@k9-sak-web/backend/k9sak/tjenester/omsorg/OmsorgenForApi.js';
 import type { OmsorgenForApi } from './api/OmsorgenForApi.js';
 
 export default class OmsorgenForBackendClient implements OmsorgenForApi {
