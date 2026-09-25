@@ -1,3 +1,4 @@
+import type { k9_sak_kontrakt_person_NorskIdentDto as NorskIdentDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { Delete } from '@navikt/ds-icons';
 import { Box, Button, Heading, Table } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
@@ -6,7 +7,7 @@ import { forwardRef, useImperativeHandle } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 
 export interface FosterbarnHandle {
-  hentValiderteFosterbarn: () => Promise<string[] | null>;
+  hentValiderteFosterbarn: () => Promise<NorskIdentDto[] | null>;
 }
 
 interface FosterbarnProps {
@@ -32,7 +33,7 @@ const Fosterbarn = forwardRef<FosterbarnHandle, FosterbarnProps>(({ readOnly }, 
       }
       const fosterbarnFraSkjema: { fødselsnummer: string }[] = getValues('fosterbarn') ?? [];
       const unikeFosterbarn = new Set(fosterbarnFraSkjema.map(fosterbarn => fosterbarn.fødselsnummer));
-      return [...unikeFosterbarn];
+      return [...unikeFosterbarn].map(fnr => ({ fnr }));
     },
   }));
 

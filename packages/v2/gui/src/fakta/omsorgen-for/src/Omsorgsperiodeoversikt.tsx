@@ -1,4 +1,5 @@
 import type {
+  k9_sak_kontrakt_person_NorskIdentDto as NorskIdentDto,
   k9_sak_kontrakt_omsorg_OmsorgenForDto as OmsorgenForDto,
   k9_sak_kontrakt_omsorg_OmsorgenForOversiktDto as OmsorgenForOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -18,7 +19,7 @@ interface OmsorgsperiodeoversiktProps {
   omsorgsperiodeoversikt: OmsorgenForOversiktDto;
   sakstype?: FagsakYtelsesType;
   readOnly: boolean;
-  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => Promise<void>;
+  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: NorskIdentDto[]) => Promise<void>;
 }
 
 const Omsorgsperiodeoversikt = ({

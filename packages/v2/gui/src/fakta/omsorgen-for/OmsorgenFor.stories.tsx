@@ -101,7 +101,7 @@ export const LeggerTilFosterbarnOgBekrefter: Story = {
             begrunnelse: 'Søker bor sammen med barnet i perioden',
           },
         ],
-        ['17420373147'],
+        [{ fnr: '17420373147' }],
       );
     });
   },

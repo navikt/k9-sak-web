@@ -1,4 +1,7 @@
-import type { k9_sak_kontrakt_omsorg_OmsorgenForDto as OmsorgenForDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type {
+  k9_sak_kontrakt_person_NorskIdentDto as NorskIdentDto,
+  k9_sak_kontrakt_omsorg_OmsorgenForDto as OmsorgenForDto,
+} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { type k9_sak_typer_Periode as Periode } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
@@ -36,10 +39,9 @@ const finnResterendePerioder = (perioderFraForm: Periode[], periodeTilVurdering?
     fom: periode.fom,
     tom: periode.tom,
   }));
-  const resterendePerioder =
-    formatertePerioderFraForm.length > 0 && periodeTilVurdering
-      ? getPeriodDifference([periodeTilVurdering], formatertePerioderFraForm)
-      : [];
+  const resterendePerioder = periodeTilVurdering
+    ? getPeriodDifference([periodeTilVurdering], formatertePerioderFraForm)
+    : [];
 
   return resterendePerioder;
 };
@@ -47,8 +49,8 @@ const finnResterendePerioder = (perioderFraForm: Periode[], periodeTilVurdering?
 interface VurderingAvOmsorgsperioderFormProps {
   omsorgsperiode: OmsorgenForDto;
   onAvbryt?: () => void;
-  hentValiderteFosterbarn?: () => Promise<string[] | null>;
-  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: string[]) => Promise<void>;
+  hentValiderteFosterbarn?: () => Promise<NorskIdentDto[] | null>;
+  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: NorskIdentDto[]) => Promise<void>;
   sakstype?: FagsakYtelsesType;
   readOnly: boolean;
 }
@@ -83,7 +85,7 @@ const VurderingAvOmsorgsperioderForm = ({
     const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
     setIsSubmitting(true);
     try {
-      let fosterbarnForOmsorgspenger: string[] | undefined;
+      let fosterbarnForOmsorgspenger: NorskIdentDto[] | undefined;
       if (erOMP && hentValiderteFosterbarn) {
         const validerteFosterbarn = await hentValiderteFosterbarn();
         if (validerteFosterbarn === null) {

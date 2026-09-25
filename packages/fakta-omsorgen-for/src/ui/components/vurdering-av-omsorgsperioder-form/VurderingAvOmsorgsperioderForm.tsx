@@ -77,7 +77,7 @@ const VurderingAvOmsorgsperioderForm = ({
     const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
 
     let vurdertePerioder;
-    const fosterbarnForOmsorgspenger = erOMP ? fosterbarn : undefined;
+    const fosterbarnForOmsorgspenger = erOMP ? fosterbarn.map(fnr => ({ fnr })) : undefined;
     if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
       vurdertePerioder = perioder.map(({ period }) => ({
         periode: period,

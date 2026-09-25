@@ -31,19 +31,19 @@ const Periodenavigasjon = ({
     }
   }, [harValgtPeriode, previousHarValgtPeriode]);
 
-  const vurdertePerioderElements = vurdertePerioder
-    .sort((op1, op2) => {
-      const omsorgsperiode1 = op1.periode;
-      const omsorgsperiode2 = op2.periode;
-      return omsorgsperiode1 && omsorgsperiode2 ? sortPeriodsByFomDate(omsorgsperiode1, omsorgsperiode2) : 0;
-    })
-    .map(omsorgsperiode => {
-      const { periode } = omsorgsperiode;
-      if (!periode) {
-        return <></>;
-      }
-      return <VurderingsperiodeElement periode={periode} resultat={hentResultatFraPeriode(omsorgsperiode)} />;
-    });
+  const sortedVurdertePerioder = vurdertePerioder.toSorted((op1, op2) => {
+    const omsorgsperiode1 = op1.periode;
+    const omsorgsperiode2 = op2.periode;
+    return omsorgsperiode1 && omsorgsperiode2 ? sortPeriodsByFomDate(omsorgsperiode1, omsorgsperiode2) : 0;
+  });
+
+  const vurdertePerioderElements = sortedVurdertePerioder.map(omsorgsperiode => {
+    const { periode } = omsorgsperiode;
+    if (!periode) {
+      return <></>;
+    }
+    return <VurderingsperiodeElement periode={periode} resultat={hentResultatFraPeriode(omsorgsperiode)} />;
+  });
 
   const periodeTilVurderingElements = perioderTilVurdering.map(({ periode }) => {
     if (!periode) {
@@ -52,7 +52,7 @@ const Periodenavigasjon = ({
     return <PeriodeSomSkalVurderes periode={periode} />;
   });
 
-  const perioder = [...perioderTilVurdering, ...vurdertePerioder];
+  const perioder = [...perioderTilVurdering, ...sortedVurdertePerioder];
   const elements = [...periodeTilVurderingElements, ...vurdertePerioderElements];
   const antallPerioder = elements.length;
 
