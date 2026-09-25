@@ -9,7 +9,6 @@ import { ung_kodeverk_behandling_BehandlingÅrsakType } from '@k9-sak-web/backen
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, userEvent } from 'storybook/test';
-import withFeatureToggles from '../../../storybook/decorators/withFeatureToggles.js';
 import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 export default {
@@ -66,7 +65,6 @@ const behandlingOppretting = [
 ];
 
 export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
-  decorators: [withFeatureToggles({ REVURDERING_FRA_STEG_V2: false })],
   args: {
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     saksnummer: '123',
@@ -117,34 +115,19 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
         canvas.getByRole('checkbox', { name: 'Behandlingen opprettes som et resultat av klagebehandling' }),
       ).toBeInTheDocument();
     });
-    await step('skal vise dropdown for revurderingsårsaker når revurdering er valgt', async () => {
+    await step('skal vise årsak-velger for full revurdering når revurdering er valgt uten delvisårsaker', async () => {
       await userEvent.selectOptions(
         canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
         'BT-004',
       );
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
-        'inngangsvilkår',
-      );
-      await expect(canvas.getAllByRole('combobox').length).toBe(3);
-      await expect(canvas.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
-      await expect(canvas.getByRole('option', { name: 'Fra inngangsvilkår (full revurdering)' })).toBeInTheDocument();
       await expect(
-        canvas.getByRole('option', { name: 'Fra uttak, refusjon og fordeling-steget (delvis revurdering)' }),
+        canvas.queryByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+      ).not.toBeInTheDocument();
+      await expect(
+        canvas.getByRole('combobox', { name: 'Hva er årsaken til den nye behandlingen?' }),
       ).toBeInTheDocument();
+      await expect(canvas.getByRole('option', { name: 'Beregningsgrunnlag' })).toBeInTheDocument();
       await expect(canvas.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
-    });
-    await step('skal rendre fra- og til-dato når revurdering fra uttakssteg er valgt', async () => {
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
-        'BT-004',
-      );
-      await userEvent.selectOptions(
-        canvas.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
-        'RE-ENDRET-FORDELING',
-      );
-      await expect(canvas.getByRole('textbox', { name: 'Fra og med' })).toBeInTheDocument();
-      await expect(canvas.getByRole('textbox', { name: 'Til og med' })).toBeInTheDocument();
     });
   },
 };
@@ -208,7 +191,6 @@ export const modalForUngdomsprogramytelse: StoryObj<typeof MenyNyBehandlingIndex
 };
 
 export const delvisRevurderingV2: StoryObj<typeof MenyNyBehandlingIndexV2> = {
-  decorators: [withFeatureToggles({ REVURDERING_FRA_STEG_V2: true })],
   args: {
     ...Default.args,
     delvisRevurderingsårsaker: [
