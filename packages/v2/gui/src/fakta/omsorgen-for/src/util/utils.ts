@@ -36,6 +36,13 @@ const erVurdert = (periode: OmsorgenForDto) => {
   return erManueltVurdert(periode) || erAutomatiskVurdert(periode);
 };
 
+/** Perioder som tvinges til manuell vurdering er ferdig vurdert, men skal likevel åpnes i redigeringsmodus. */
+export const skalVisesIRedigeringsmodus = (periode: OmsorgenForDto) =>
+  periodeManglerVurdering(periode) || !!periode.skalTvingesTilManuellVurdering;
+
+export const finnRedigerbarePerioder = (omsorgsperioder: OmsorgenForOversiktDto['omsorgsperioder']) =>
+  omsorgsperioder?.filter(omsorgsperiode => skalVisesIRedigeringsmodus(omsorgsperiode)) ?? [];
+
 export const finnPerioderTilVurdering = (omsorgsperioder: OmsorgenForOversiktDto['omsorgsperioder']) =>
   omsorgsperioder?.filter(omsorgsperiode => periodeManglerVurdering(omsorgsperiode)) ?? [];
 
@@ -86,8 +93,6 @@ export const periodeIncludesDate = (periode: Periode, dateString: string) => {
   );
 };
 
-export const erOppfylt = (periode: OmsorgenForDto) =>
-  periode.resultat === Resultat.OPPFYLT || periode.resultatEtterAutomatikk === Resultat.OPPFYLT;
+export const erOppfylt = (periode: OmsorgenForDto) => hentResultatFraPeriode(periode) === Resultat.OPPFYLT;
 
-export const erIkkeOppfylt = (periode: OmsorgenForDto) =>
-  periode.resultat === Resultat.IKKE_OPPFYLT || periode.resultatEtterAutomatikk === Resultat.IKKE_OPPFYLT;
+export const erIkkeOppfylt = (periode: OmsorgenForDto) => hentResultatFraPeriode(periode) === Resultat.IKKE_OPPFYLT;

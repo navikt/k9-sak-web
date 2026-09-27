@@ -7,10 +7,11 @@ import { finnPerioderTilVurdering, harPerioderTilVurdering } from './util/utils'
 
 interface OmsorgsperiodeoversiktMessagesProps {
   omsorgsperiodeoversikt: OmsorgenForOversiktDto;
+  readOnly: boolean;
 }
 
-const OmsorgsperiodeoversiktMessages = ({ omsorgsperiodeoversikt }: OmsorgsperiodeoversiktMessagesProps) => {
-  if (harPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder)) {
+const OmsorgsperiodeoversiktMessages = ({ omsorgsperiodeoversikt, readOnly }: OmsorgsperiodeoversiktMessagesProps) => {
+  if (!readOnly && harPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder)) {
     const perioderTilVurdering = finnPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder)
       .map(({ periode }) => periode)
       .filter(periode => periode !== undefined);

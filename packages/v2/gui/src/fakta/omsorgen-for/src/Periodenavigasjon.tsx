@@ -1,10 +1,9 @@
 import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
 import { Box, Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React, { useEffect, type JSX } from 'react';
+import { type JSX } from 'react';
 import styles from './periodenavigasjon.module.css';
 import PeriodeSomSkalVurderes from './PeriodeSomSkalVurderes';
-import { usePrevious } from './util/hooks';
 import { sortPeriodsByFomDate } from './util/periodUtils';
 import { hentResultatFraPeriode } from './util/utils';
 import VurderingsperiodeElement from './VurderingsperiodeElement';
@@ -12,25 +11,15 @@ interface PeriodenavigasjonProps {
   perioderTilVurdering: OmsorgenForDto[];
   vurdertePerioder: OmsorgenForDto[];
   onPeriodeValgt: (periode: OmsorgenForDto) => void;
-  harValgtPeriode: boolean;
+  valgtPeriode: OmsorgenForDto | null;
 }
 
 const Periodenavigasjon = ({
   perioderTilVurdering,
   vurdertePerioder,
   onPeriodeValgt,
-  harValgtPeriode,
+  valgtPeriode,
 }: PeriodenavigasjonProps): JSX.Element => {
-  const harPerioderSomSkalVurderes = perioderTilVurdering?.length > 0;
-  const [activeIndex, setActiveIndex] = React.useState(harPerioderSomSkalVurderes ? 0 : -1);
-  const previousHarValgtPeriode = usePrevious(harValgtPeriode);
-
-  useEffect(() => {
-    if (harValgtPeriode === false && previousHarValgtPeriode === true) {
-      setActiveIndex(-1);
-    }
-  }, [harValgtPeriode, previousHarValgtPeriode]);
-
   const sortedVurdertePerioder = vurdertePerioder.toSorted((op1, op2) => {
     const omsorgsperiode1 = op1.periode;
     const omsorgsperiode2 = op2.periode;
@@ -49,12 +38,13 @@ const Periodenavigasjon = ({
     if (!periode) {
       return <></>;
     }
-    return <PeriodeSomSkalVurderes periode={periode} />;
+    return <PeriodeSomSkalVurderes key={`${periode.fom}-${periode.tom}`} periode={periode} />;
   });
 
   const perioder = [...perioderTilVurdering, ...sortedVurdertePerioder];
   const elements = [...periodeTilVurderingElements, ...vurdertePerioderElements];
   const antallPerioder = elements.length;
+  const activeIndex = valgtPeriode ? perioder.indexOf(valgtPeriode) : -1;
 
   return (
     <div className={styles.vurderingsnavigasjon}>
@@ -72,10 +62,9 @@ const Periodenavigasjon = ({
               active: activeIndex === currentIndex,
               key: `${currentIndex}`,
               onClick: () => {
-                setActiveIndex(currentIndex);
-                const periodeIndex = elements.indexOf(element);
-                if (perioder[periodeIndex]) {
-                  onPeriodeValgt(perioder[periodeIndex]);
+                const periode = perioder[currentIndex];
+                if (periode) {
+                  onPeriodeValgt(periode);
                 }
               },
             }))}

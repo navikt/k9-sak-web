@@ -1,6 +1,12 @@
 import { HStack } from '@navikt/ds-react';
 import { RhfFieldArray } from '@navikt/ft-form-hooks';
-import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
+import {
+  dateAfterOrEqual,
+  dateBeforeOrEqual,
+  dateRangesNotOverlapping,
+  hasValidDate,
+  required,
+} from '@navikt/ft-form-validators';
 import { type JSX } from 'react';
 import { useFieldArray, useFormContext, type FieldPath } from 'react-hook-form';
 import Datovelger from '../datovelger/Datovelger.js';
@@ -22,6 +28,26 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
     control,
     name,
   });
+
+  const overlapperAndrePerioder = (index: number) => {
+    const allePerioder = getValues(name) ?? [];
+    const denne = allePerioder[index];
+    if (!denne?.fom || !denne?.tom) {
+      return null;
+    }
+    const harOverlapp = allePerioder.some(
+      (annen, annenIndex) =>
+        annenIndex !== index &&
+        annen?.fom &&
+        annen?.tom &&
+        dateRangesNotOverlapping([
+          [denne.fom, denne.tom],
+          [annen.fom, annen.tom],
+        ]) !== null,
+    );
+    return harOverlapp ? 'Periodene kan ikke overlappe' : null;
+  };
+
   return (
     <RhfFieldArray<PeriodListFormValues, string>
       fields={fields}
@@ -46,6 +72,7 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
                   const tomVerdi = getValues(`${name}.${index}.tom` as FieldPath<PeriodListFormValues>);
                   return tomVerdi && fomVerdi ? dateBeforeOrEqual(String(tomVerdi))(fomVerdi) : null;
                 },
+                () => overlapperAndrePerioder(index),
               ]}
               onChange={() => (isSubmitted ? trigger() : undefined)}
               readOnly={readOnly}
@@ -62,6 +89,7 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
                   const fomVerdi = getValues(`${name}.${index}.fom` as FieldPath<PeriodListFormValues>);
                   return tomVerdi && fomVerdi ? dateAfterOrEqual(String(fomVerdi))(tomVerdi) : null;
                 },
+                () => overlapperAndrePerioder(index),
               ]}
               onChange={() => (isSubmitted ? trigger() : undefined)}
               readOnly={readOnly}

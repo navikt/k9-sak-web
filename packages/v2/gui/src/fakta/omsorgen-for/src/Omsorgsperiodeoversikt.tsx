@@ -10,7 +10,12 @@ import OmsorgsperiodeoversiktMessages from './OmsorgsperiodeoversiktMessages';
 import OmsorgsperiodeVurderingsdetaljer from './OmsorgsperiodeVurderingsdetaljer';
 import Periodenavigasjon from './Periodenavigasjon';
 import type { VurderingSubmitValues } from './types/VurderingSubmitValues';
-import { finnPerioderTilVurdering, finnVurdertePerioder, harPerioderTilVurdering } from './util/utils';
+import {
+  finnPerioderTilVurdering,
+  finnRedigerbarePerioder,
+  finnVurdertePerioder,
+  skalVisesIRedigeringsmodus,
+} from './util/utils';
 import VurderingAvOmsorgsperioderForm from './VurderingAvOmsorgsperioderForm';
 
 interface OmsorgsperiodeoversiktProps {
@@ -28,12 +33,9 @@ const Omsorgsperiodeoversikt = ({
 }: OmsorgsperiodeoversiktProps): JSX.Element => {
   const perioderTilVurdering = finnPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder);
 
-  const [valgtPeriode, setValgtPeriode] = useState<OmsorgenForDto | null>(() => {
-    if (harPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder) && perioderTilVurdering[0]) {
-      return perioderTilVurdering[0];
-    }
-    return null;
-  });
+  const [valgtPeriode, setValgtPeriode] = useState<OmsorgenForDto | null>(
+    () => finnRedigerbarePerioder(omsorgsperiodeoversikt.omsorgsperioder)[0] ?? null,
+  );
   const [erRedigeringsmodus, setErRedigeringsmodus] = useState(false);
   const fosterbarnRef = useRef<FosterbarnHandle>(null);
 
@@ -46,7 +48,7 @@ const Omsorgsperiodeoversikt = ({
 
   return (
     <>
-      <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} />
+      <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} readOnly={readOnly} />
       {sakstype === fagsakYtelsesType.OMSORGSPENGER && !readOnly && (
         <Fosterbarn ref={fosterbarnRef} readOnly={readOnly} />
       )}
@@ -56,13 +58,13 @@ const Omsorgsperiodeoversikt = ({
             perioderTilVurdering={perioderTilVurdering}
             vurdertePerioder={vurderteOmsorgsperioder}
             onPeriodeValgt={velgPeriode}
-            harValgtPeriode={valgtPeriode !== null}
+            valgtPeriode={valgtPeriode}
           />
         )}
         showDetailSection={!!valgtPeriode}
         detailSection={() => {
           if (valgtPeriode) {
-            if (perioderTilVurdering.includes(valgtPeriode) || erRedigeringsmodus) {
+            if (skalVisesIRedigeringsmodus(valgtPeriode) || erRedigeringsmodus) {
               return (
                 <VurderingAvOmsorgsperioderForm
                   key={hash(valgtPeriode)}
