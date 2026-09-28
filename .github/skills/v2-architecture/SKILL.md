@@ -39,7 +39,7 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 
 - [ ] `BRUK_V2_<FEATURE>: false` added to `rootFeatureToggles` in `FeatureToggles.ts`
 - [ ] Toggle enabled in `k9SpecificFeatureToggles` in `k9/featureToggles.ts`
-- [ ] Versjonsvelger can be used if manual regression testing is needed
+- [ ] Ask the user whether they want a v1/v2 toggle using `VersjonsvelgerV1V2` for manual regression testing. Only add the versjonsvelger if they say yes.
 
 ### FaktaPanelDef wiring (one per behandling package)
 
@@ -63,6 +63,7 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
 - [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
 - [ ] Mock data uses generated DTO types (flat string codes) — not old kodeverk objects
+- [ ] If the user wants a v1/v2 versjonsvelger, ask as a separate follow-up whether they also want a comparison story for visual regression testing. If yes, render both versions with matching data through the feature-toggled `FaktaPanelDef` and `VersjonsvelgerV1V2`; keep the v2 component's own story independent. Add a compile-time deletion guard tied to the feature toggle in the comparison story so it is removed with the v1 branch.
 
 ### Verification
 

@@ -1,19 +1,11 @@
 import type { RammevedtakDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/RammevedtakDto.js';
-import { VersjonsvelgerV1V2 } from '@k9-sak-web/behandling-felles';
-import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import { DelingAvDagerApiContext } from '@k9-sak-web/gui/fakta/deling-av-dager/api/DelingAvDagerApiContext.js';
-import DelingAvDagerFaktaIndex from '@k9-sak-web/gui/fakta/deling-av-dager/DelingAvDagerFaktaIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
-
-/**
- * Story som viser v1 (@k9-sak-web/fakta-barn-og-overfoeringsdager) og v2 (DelingAvDagerFaktaIndex)
- * side om side bak versjonsvelgeren, slik at panelene enkelt kan regresjonstestes mot hverandre
- * med samme testdata.
- */
+import UttakFaktaPanelDef from './UttakFaktaPanelDef';
 
 // @ts-expect-error Migrert frå ts-ignore
 const behandling: Behandling = {
@@ -21,6 +13,9 @@ const behandling: Behandling = {
   versjon: 1,
   uuid: 'test-behandling-uuid',
 };
+
+const panelDef = new UttakFaktaPanelDef();
+const featureToggles = { BRUK_V2_DELING_AV_DAGER: true };
 
 const fårRammevedtakV1 = (type: RammevedtakType, lengde: string): Rammevedtak => ({
   type,
@@ -93,25 +88,20 @@ export const MedOverføringerOgFordelinger: Story = {
       girRammevedtakV2('FordelingGir', 'P4D'),
     ]),
   ],
-  render: () => (
-    <VersjonsvelgerV1V2
-      v1={
-        <FaktaRammevedtakIndex
-          behandling={behandling}
-          rammevedtak={[
-            fårRammevedtakV1(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
-            fårRammevedtakV1(RammevedtakEnum.OVERFØRING_FÅR, 'P7D'),
-            fårRammevedtakV1(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P3D'),
-            girRammevedtakV1(RammevedtakEnum.OVERFØRING_GIR, 'P8D'),
-            girRammevedtakV1(RammevedtakEnum.FORDELING_GIR, 'P1D'),
-            girRammevedtakV1(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P2D'),
-            girRammevedtakV1(RammevedtakEnum.FORDELING_GIR, 'P4D'),
-          ]}
-        />
-      }
-      v2={<DelingAvDagerFaktaIndex behandlingUuid={behandling.uuid} />}
-    />
-  ),
+  render: () =>
+    panelDef.getKomponent({
+      behandling,
+      featureToggles,
+      rammevedtak: [
+        fårRammevedtakV1(RammevedtakEnum.OVERFØRING_FÅR, 'P4D'),
+        fårRammevedtakV1(RammevedtakEnum.OVERFØRING_FÅR, 'P7D'),
+        fårRammevedtakV1(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P3D'),
+        girRammevedtakV1(RammevedtakEnum.OVERFØRING_GIR, 'P8D'),
+        girRammevedtakV1(RammevedtakEnum.FORDELING_GIR, 'P1D'),
+        girRammevedtakV1(RammevedtakEnum.KORONAOVERFØRING_GIR, 'P2D'),
+        girRammevedtakV1(RammevedtakEnum.FORDELING_GIR, 'P4D'),
+      ],
+    }),
 };
 
 export const KunDagerSøkerFår: Story = {
@@ -122,29 +112,25 @@ export const KunDagerSøkerFår: Story = {
       fårRammevedtakV2('FordelingFår', 'P3D'),
     ]),
   ],
-  render: () => (
-    <VersjonsvelgerV1V2
-      v1={
-        <FaktaRammevedtakIndex
-          behandling={behandling}
-          rammevedtak={[
-            fårRammevedtakV1(RammevedtakEnum.OVERFØRING_FÅR, 'P13D'),
-            fårRammevedtakV1(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P5D'),
-            fårRammevedtakV1(RammevedtakEnum.FORDELING_FÅR, 'P3D'),
-          ]}
-        />
-      }
-      v2={<DelingAvDagerFaktaIndex behandlingUuid={behandling.uuid} />}
-    />
-  ),
+  render: () =>
+    panelDef.getKomponent({
+      behandling,
+      featureToggles,
+      rammevedtak: [
+        fårRammevedtakV1(RammevedtakEnum.OVERFØRING_FÅR, 'P13D'),
+        fårRammevedtakV1(RammevedtakEnum.KORONAOVERFØRING_FÅR, 'P5D'),
+        fårRammevedtakV1(RammevedtakEnum.FORDELING_FÅR, 'P3D'),
+      ],
+    }),
 };
 
 export const IngenOverføringer: Story = {
   decorators: [withFakeApiV2([])],
-  render: () => (
-    <VersjonsvelgerV1V2
-      v1={<FaktaRammevedtakIndex behandling={behandling} rammevedtak={[]} />}
-      v2={<DelingAvDagerFaktaIndex behandlingUuid={behandling.uuid} />}
-    />
-  ),
+  render: () => panelDef.getKomponent({ behandling, featureToggles, rammevedtak: [] }),
 };
+
+// Kompileringsfeil her betyr at BRUK_V2_DELING_AV_DAGER er fjernet fra FeatureToggles.
+// Slett sammenligningsstoryen når versjonsvelgeren fjernes.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_DELING_AV_DAGER'];
