@@ -5,8 +5,8 @@ import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import { FaktaPanelDef, VersjonsvelgerV1V2 } from '@k9-sak-web/behandling-felles';
 import DelingAvDagerFaktaIndex from '@k9-sak-web/gui/fakta/deling-av-dager/DelingAvDagerFaktaIndex.js';
 
-class UttakFaktaPanelDef extends FaktaPanelDef {
-  getUrlKode = () => faktaPanelCodes.UTTAK;
+class DelingAvDagerFaktaPanelDef extends FaktaPanelDef {
+  getUrlKode = () => faktaPanelCodes.DELING_AV_DAGER;
 
   getTekstKode = () => 'FaktaRammevedtak.Title';
 
@@ -27,4 +27,4 @@ class UttakFaktaPanelDef extends FaktaPanelDef {
   getData = ({ forbrukteDager }) => ({ rammevedtak: forbrukteDager?.rammevedtak || [] });
 }
 
-export default UttakFaktaPanelDef;
+export default DelingAvDagerFaktaPanelDef;

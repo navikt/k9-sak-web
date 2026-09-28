@@ -5,7 +5,7 @@ import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
-import UttakFaktaPanelDef from './UttakFaktaPanelDef';
+import DelingAvDagerFaktaPanelDef from './DelingAvDagerFaktaPanelDef';
 
 // @ts-expect-error Migrert frå ts-ignore
 const behandling: Behandling = {
@@ -14,7 +14,7 @@ const behandling: Behandling = {
   uuid: 'test-behandling-uuid',
 };
 
-const panelDef = new UttakFaktaPanelDef();
+const panelDef = new DelingAvDagerFaktaPanelDef();
 const featureToggles = { BRUK_V2_DELING_AV_DAGER: true };
 
 const fårRammevedtakV1 = (type: RammevedtakType, lengde: string): Rammevedtak => ({
@@ -69,7 +69,7 @@ const withFakeApiV2 = (rammevedtak: RammevedtakDto[]): Decorator => {
 };
 
 const meta = {
-  title: 'omsorgspenger/fakta/UttakFaktaPanelDef (v1 vs v2)',
+  title: 'omsorgspenger/fakta/DelingAvDagerFaktaPanelDef (v1 vs v2)',
 } satisfies Meta;
 
 export default meta;
