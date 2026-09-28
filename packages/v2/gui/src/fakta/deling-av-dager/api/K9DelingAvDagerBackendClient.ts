@@ -8,6 +8,9 @@ export class K9DelingAvDagerBackendClient implements DelingAvDagerApi {
       query: { behandlingUuid },
     });
     // Backend svarer 204 uten innhold når årskvantum ikke er fastsatt
-    return response.data?.rammevedtak ?? [];
+    if (!response.data) {
+      return [];
+    }
+    return response.data.rammevedtak ?? [];
   }
 }
