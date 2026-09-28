@@ -51,6 +51,48 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
   ),
 });
 
+const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[] =>
+  (vilkår.perioder ?? [])
+    .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
+    .map(period => ({
+      id: period.periode.fom,
+      status: getPeriodStatus(period.vilkarStatus),
+      label: formatDate(period.periode.fom),
+      periode: period.periode,
+    }));
+
+const buildPayload = ({
+  formData,
+  selectedId,
+  periods,
+}: {
+  formData: FormData;
+  selectedId: string;
+  periods: VilkårSplittPanelPeriod[];
+}): BekreftetAksjonspunktDto => {
+  const selectedFormPeriod = formData.perioder[selectedId];
+  if (!selectedFormPeriod) {
+    throw new Error('Kunne ikke finne valgt periode for opphør');
+  }
+  const valgtPeriode = periods.find(period => period.id === selectedId);
+  return {
+    '@type': AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+    begrunnelse: selectedFormPeriod.begrunnelse,
+    vurdertePerioder: [
+      {
+        begrunnelse: selectedFormPeriod.begrunnelse,
+        erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
+        periode: {
+          fom: valgtPeriode?.periode?.fom ?? '',
+          tom: valgtPeriode?.periode?.tom,
+        },
+        fritekstVurderingBrev:
+          selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
+      },
+    ],
+  };
+};
+
 interface Props {
   vurderBostedVilkårAP?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
@@ -74,14 +116,7 @@ export const BostedVilkårsvurdering = ({
   isPermanentlyReadOnly,
   bostedGrunnlag,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? [])
-    .toSorted((a, b) => b.periode.fom.localeCompare(a.periode.fom))
-    .map(p => ({
-      id: p.periode.fom,
-      status: getPeriodStatus(p.vilkarStatus),
-      label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
-      periode: p.periode,
-    }));
+  const periods = buildPeriods(bostedVilkår);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedGrunnlag),
   });
@@ -91,27 +126,7 @@ export const BostedVilkårsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
-      const selectedFormPeriod = formData.perioder[selectedId];
-      if (!selectedFormPeriod) {
-        throw new Error('Kunne ikke finne valgt periode for opphør');
-      }
-      const valgtPeriode = periods.find(p => p.id === selectedId);
-      const payload: BekreftetAksjonspunktDto = {
-        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
-        begrunnelse: selectedFormPeriod.begrunnelse,
-        vurdertePerioder: [
-          {
-            begrunnelse: selectedFormPeriod.begrunnelse,
-            erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
-            periode: {
-              fom: valgtPeriode?.periode?.fom ?? '',
-              tom: valgtPeriode?.periode?.tom,
-            },
-            fritekstVurderingBrev:
-              selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
-          },
-        ],
-      };
+      const payload = buildPayload({ formData, selectedId, periods });
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
     onSuccess: () => {

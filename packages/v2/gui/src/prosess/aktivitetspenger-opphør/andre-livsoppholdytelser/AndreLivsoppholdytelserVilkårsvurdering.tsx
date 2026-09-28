@@ -65,9 +65,7 @@ const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[
     .map(period => ({
       id: period.periode.fom,
       status: getPeriodStatus(period.vilkarStatus),
-      label: period.periode.tom
-        ? `${formatDate(period.periode.fom)} - ${formatDate(period.periode.tom)}`
-        : formatDate(period.periode.fom),
+      label: formatDate(period.periode.fom),
       periode: period.periode.tom ? { fom: period.periode.fom, tom: period.periode.tom } : undefined,
     }));
 
