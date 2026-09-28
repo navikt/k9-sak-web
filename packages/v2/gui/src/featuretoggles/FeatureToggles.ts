@@ -22,11 +22,11 @@ const rootFeatureToggles = {
   DELVIS_REVURDERING_MEDISINSK_VILKAR: false,
   SINGLE_AUTHFIXER: false,
   VIS_INNLEGGELSE_FOR_PILS: false,
-  NORMALARBEIDSTID_UTTAK: false,
   VIS_GLOBAL_ERRORMODAL: false,
   DOKUMENTFILTER: false,
   BRUK_V2_ARBEID_OG_INNTEKT: false,
   FORENKLE_OMS_VEDTAK_STATUS: false,
+  NORMALARBEIDSTID_UTTAK: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
