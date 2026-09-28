@@ -3,6 +3,8 @@ import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { expect, fn } from 'storybook/test';
+import { OrUndefined } from '../../kodeverk/oppslag/GeneriskKodeverkoppslag.js';
+import { fakeK9Kodeverkoppslag } from '../../kodeverk/mocks/fakeK9Kodeverkoppslag.js';
 import type { FeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApi.js';
 import { FeilutbetalingFaktaApiContext } from './api/FeilutbetalingFaktaApiContext.js';
 import type {
@@ -77,6 +79,8 @@ const årsaker: FeilutbetalingÅrsakerPerYtelseViewModel[] = [
   },
 ];
 
+const k9tilbakeKodeverk = fakeK9Kodeverkoppslag().k9tilbake;
+
 const createFakeApi = (
   faktaData: FeilutbetalingFaktaViewModel,
   årsakerData: FeilutbetalingÅrsakerPerYtelseViewModel[],
@@ -96,10 +100,12 @@ const withFakeApi = (
       <FeilutbetalingFaktaApiContext value={createFakeApi(faktaData, årsakerData)}>
         <FeilutbetalingKodeverkoppslagContext
           value={{
-            hentHendelseTypeNavn: kode => kode ?? '',
-            hentHendelseUnderTypeNavn: kode => kode ?? '',
+            hentHendelseTypeNavn: kode =>
+              kode ? (k9tilbakeKodeverk.hendelseTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
+            hentHendelseUnderTypeNavn: kode =>
+              kode ? (k9tilbakeKodeverk.hendelseUnderTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
             hentVidereBehandlingNavn: kode =>
-              kode === 'TILBAKEKR_OPPRETT' ? 'Feilutbetaling med tilbakekreving' : (kode ?? ''),
+              kode ? (k9tilbakeKodeverk.videreBehandlinger(kode as never, OrUndefined)?.navn ?? kode) : '',
           }}
         >
           <Suspense>
@@ -132,6 +138,7 @@ export const Default: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByText('15.04.2024')).toBeInTheDocument();
     await expect(canvas.getByText('Feilutbetaling med tilbakekreving')).toBeInTheDocument();
+    await expect(canvas.getAllByRole('option', { name: 'Annet' })).toHaveLength(3);
   },
 };
 
@@ -144,6 +151,7 @@ export const ReadOnly: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
     await expect(canvas.queryByRole('checkbox', { name: 'Behandle alle perioder samlet' })).not.toBeInTheDocument();
+    await expect(canvas.getAllByRole('option', { name: 'Annet - fritekst' })).toHaveLength(2);
   },
 };
 
