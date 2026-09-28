@@ -1,6 +1,10 @@
 ---
 name: v2-architecture
-description: 'Patterns and rules for writing code in packages/v2/. USE FOR: creating new components in v2/, using the OpenAPI-generated backend client, structuring API contracts, import conventions with .js suffix, and migrating old code to v2. 
+description: >-
+  Patterns and rules for writing code in packages/v2/. USE FOR: creating new
+  components in v2/, using the OpenAPI-generated backend client, structuring
+  API contracts, import conventions with .js suffix, and migrating old code
+  to v2.
 ---
 
 # v2 Architecture
@@ -35,6 +39,7 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 
 - [ ] `BRUK_V2_<FEATURE>: false` added to `rootFeatureToggles` in `FeatureToggles.ts`
 - [ ] Toggle enabled in `k9SpecificFeatureToggles` in `k9/featureToggles.ts`
+- [ ] Versjonsvelger can be used if manual regression testing is needed
 
 ### FaktaPanelDef wiring (one per behandling package)
 
