@@ -1182,8 +1182,8 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     classnames: "npm:2.5.1"
@@ -1414,8 +1414,8 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
     dayjs: "npm:1.11.23"
@@ -1492,14 +1492,14 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2270,8 +2270,8 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     classnames: "npm:2.5.1"
@@ -2304,15 +2304,15 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-fakta-beregning": "npm:14.2.11"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-fakta-beregning": "npm:15.0.0"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2385,16 +2385,16 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-fakta-beregning": "npm:14.2.11"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:16.2.11"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-fakta-beregning": "npm:15.0.0"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:17.0.0"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2433,16 +2433,16 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-fakta-beregning": "npm:14.2.11"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:16.2.11"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-fakta-beregning": "npm:15.0.0"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:17.0.0"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2478,16 +2478,16 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-fakta-beregning": "npm:14.2.11"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:16.2.11"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-fakta-beregning": "npm:15.0.0"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:17.0.0"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2527,16 +2527,16 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-fakta-beregning": "npm:14.2.11"
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:16.2.11"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-fakta-beregning": "npm:15.0.0"
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "npm:17.0.0"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2565,13 +2565,13 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:10.2.11"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:11.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2600,13 +2600,13 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:10.2.11"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "npm:11.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -2726,8 +2726,8 @@ __metadata:
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@popperjs/core": "npm:2.11.8"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
@@ -2750,8 +2750,8 @@ __metadata:
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@popperjs/core": "npm:2.11.8"
     "@tanstack/react-query": "npm:5.103.2"
     "@types/react": "npm:19.2.18"
@@ -2788,8 +2788,8 @@ __metadata:
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:8.16.2"
     "@navikt/fnrvalidator": "npm:2.2.1"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@popperjs/core": "npm:2.11.8"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
@@ -2831,11 +2831,11 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/diagnosekoder": "npm:1.2026.0"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@tanstack/react-query": "npm:5.103.2"
     "@types/css-tree": "npm:2.3.11"
     "@types/object-hash": "npm:3.0.6"
@@ -2992,10 +2992,10 @@ __metadata:
     "@k9-sak-web/types": "npm:1.0.0"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.5"
     dayjs: "npm:1.11.23"
@@ -3051,15 +3051,15 @@ __metadata:
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-css": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-fakta-beregning": "npm:14.2.11"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-form-validators": "npm:6.1.12"
+    "@navikt/ft-fakta-beregning": "npm:15.0.0"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-kodeverk": "npm:3.0.0"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-prosess-beregningsgrunnlag": "npm:13.2.12"
-    "@navikt/ft-types": "npm:6.3.10"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-prosess-beregningsgrunnlag": "npm:14.0.0"
+    "@navikt/ft-types": "npm:7.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@tanstack/react-query": "npm:5.103.2"
     "@types/react": "npm:19.2.18"
     axios: "npm:1.20.0"
@@ -3103,10 +3103,10 @@ __metadata:
     "@nais/apm": "npm:0.7.2"
     "@navikt/aksel-icons": "npm:8.16.2"
     "@navikt/ds-react": "npm:8.16.2"
-    "@navikt/ft-form-hooks": "npm:12.4.14"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-ui-komponenter": "npm:8.2.9"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-form-hooks": "npm:13.0.0"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-ui-komponenter": "npm:9.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@tanstack/react-query": "npm:5.103.2"
     "@types/react": "npm:19.2.18"
     axios: "npm:1.20.0"
@@ -3295,9 +3295,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning@npm:14.2.11":
-  version: 14.2.11
-  resolution: "@navikt/ft-fakta-beregning@npm:14.2.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F14.2.11%2F5dbc9690cf90822fd0e3ec1469e7c0895aa7352e"
+"@navikt/ft-fakta-beregning@npm:15.0.0":
+  version: 15.0.0
+  resolution: "@navikt/ft-fakta-beregning@npm:15.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F15.0.0%2Fa8f92c12a46b99b75239f62ce16e5799a47eb911"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-css": 8.x
@@ -3313,14 +3313,14 @@ __metadata:
     react: 19.x
     react-dom: 19.x
     react-hook-form: 7.x
-    react-intl: 10.x
-  checksum: 10/7b7560fb950ce50e58648246d6f7f0faa68d1313e14f5ac68a95aedda791f98c7ef5c84b1f8c1385f55366c4fb4b014bbf283d5f1f19926a0c19c80d4e75ea9f
+    react-intl: 12.x
+  checksum: 10/c253d419baf4a98f3121e61170d293730cd841047c5f95d9fd5ed0ed7a7142e97c37569bc0addac4fe62dd23eff4122c1c20da9e6f94312f52f2d55456833496
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:16.2.11":
-  version: 16.2.11
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:16.2.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F16.2.11%2F30c35b6034dd62c2a5f61413c8d87879d3c9d4b3"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:17.0.0":
+  version: 17.0.0
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:17.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F17.0.0%2F6674136bbd81aee864afece78a4ee3bfa0dc205d"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-css": 8.x
@@ -3336,14 +3336,14 @@ __metadata:
     react: 19.x
     react-dom: 19.x
     react-hook-form: 7.x
-    react-intl: 10.x
-  checksum: 10/07de28ba6cf71ddcc1350db535dfeba248f70cd1cb1fba2f1438b2fcb0a56ef08a9d6e31c753028bb597b464ae5899beeb6171c2d12a51d17d70eb289f8f3ed1
+    react-intl: 12.x
+  checksum: 10/28da07250f0989bb1844d000fc37fffde90c67ea2c3254a90064e6b57053b5d4dcce02ef523d5a9644722ca40119a0273e9a4c8dd427247d1322feff94c3012b
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-hooks@npm:12.4.14":
-  version: 12.4.14
-  resolution: "@navikt/ft-form-hooks@npm:12.4.14::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F12.4.14%2F6da60e75db4e948dbae40929279f2d687b42d6a2"
+"@navikt/ft-form-hooks@npm:13.0.0":
+  version: 13.0.0
+  resolution: "@navikt/ft-form-hooks@npm:13.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F13.0.0%2F1d00f701660f864ebeea23b9f8c840185187a439"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-react": 8.x
@@ -3353,17 +3353,17 @@ __metadata:
     react: 19.x
     react-dom: 19.x
     react-hook-form: 7.x
-  checksum: 10/9e5dc74ab75d4aec73d9a402bbb6e7a338a4db1eaa04ffab10c3d6aaa175adb8e679521130f24fd64275ecf89cd029326c9ace6c6036d27b8b71590c1ee1a178
+  checksum: 10/e01156ed31be16d4263365ab2012dfe253f7e25e60df7beb6267b60281d26dcedf913882ac5b1ddb55ab224edc7bee4c9aed83ebca0837593487ad9c5dc667af
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-validators@npm:6.1.12":
-  version: 6.1.12
-  resolution: "@navikt/ft-form-validators@npm:6.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F6.1.12%2F525d9e3317315c8979fe686f85f820f7f127de09"
+"@navikt/ft-form-validators@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@navikt/ft-form-validators@npm:7.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F7.0.0%2F6cf4ada4d8bd265c6dc6f9f10c8106e6f57a6102"
   peerDependencies:
     "@navikt/ft-utils": 5.x
     dayjs: 1.x
-  checksum: 10/db3bfabfd3b8e21547175a0d94c437dda00c8bcb39ee8a27aecfd052482dcdad730a24b51c2654a41ad294da6185f84442240d75dbfc0b3b5823cae408de62d9
+  checksum: 10/7e131e25443e87b19d90921a0c20da52a87ebd2e2322eb16b09226caf0216a1c3a852880ce70eba16193bf3f0a3637718f31e59157d5904a2a133915f0d26646
   languageName: node
   linkType: hard
 
@@ -3374,9 +3374,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:12.1.12":
-  version: 12.1.12
-  resolution: "@navikt/ft-plattform-komponenter@npm:12.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F12.1.12%2Fd34c39ad2b1fa3096e49582cbd87ee818b31226a"
+"@navikt/ft-plattform-komponenter@npm:13.0.0":
+  version: 13.0.0
+  resolution: "@navikt/ft-plattform-komponenter@npm:13.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F13.0.0%2F82971b109511d2293b9fe7b5e5f500f754fddd4d"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-react": 8.x
@@ -3384,13 +3384,13 @@ __metadata:
     dayjs: 1.x
     react: 19.x
     react-dom: 19.x
-  checksum: 10/eb45ac429abe450b67d3658dfe88c444d4b1fe1dd7dfba3580cb9d1e851a7cf79da9e8e2cd7d2695d23bb90c37e8cb41fa1c612e182065cac5946f0852315407
+  checksum: 10/1e6e205defa09804cc21257fe551295a981fb453f1b9935e26eca661e836777afecd3509f5bf91373b7b9b448830d2146c0531256cdbda94483b7498c3f5fc4a
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:13.2.12":
-  version: 13.2.12
-  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:13.2.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F13.2.12%2F325d1a466c7b222b67dc0406632b33376a2de136"
+"@navikt/ft-prosess-beregningsgrunnlag@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:14.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F14.0.0%2F808748c6ce728180ae1d8c707c05b131e9b7930f"
   dependencies:
     echarts: "npm:6.1.0"
   peerDependencies:
@@ -3408,14 +3408,14 @@ __metadata:
     react: 19.x
     react-dom: 19.x
     react-hook-form: 7.x
-    react-intl: 10.x
-  checksum: 10/c909773f0a071ab88d535fe4ae9b569a2868bc2139376f8677c43af19fa1753ec16a9cc77e2b664c7c849fd11db466f37523f62c92229f18d4b0a9d76af5b069
+    react-intl: 12.x
+  checksum: 10/c910a78b1c037108c9da5c1444951850eff0b07769330acb2369a2f0617d629d909836e9d55a1b5dfdf2373bc0f30533a6fbb45376aaea26d73b6d2b799336d6
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:10.2.11":
-  version: 10.2.11
-  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:10.2.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F10.2.11%2Fd492dfc759fc7204247d0687db402c0065630c2a"
+"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:11.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F11.0.0%2F94743056bbeb57da1121d711ae7e9eeae3b2bec2"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-css": 8.x
@@ -3430,21 +3430,21 @@ __metadata:
     react: 19.x
     react-dom: 19.x
     react-hook-form: 7.x
-    react-intl: 10.x
-  checksum: 10/67a80d0e7ffde278b2e88e5ea5cd71d45e3ff2a205e9edc2193fa737a7f0d93fe5b89eee5e585308b5fae7b7885b8b80003e26f96c6ed8270da6d7f346415533
+    react-intl: 12.x
+  checksum: 10/7994f9b3bb4a4ecdb0ed239bb6d0fc93629ea897b3c76f4f9be4b03f1a29b12e601a301ddff75688c70fd1ad912d080652f8d6c831c34d142f0076b60b32ee53
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:6.3.10":
-  version: 6.3.10
-  resolution: "@navikt/ft-types@npm:6.3.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F6.3.10%2Fe4b1e96989eb46dcad738837b51a54dd3eedf789"
-  checksum: 10/5e18b0018d0be5e85b7b5f18141a411b4aaadd7092f6af899fc9dcbe0a013d7d0a54a3c98dfdd91e3a41876c7978ec7716bf9d3d99aec3622c88288e3d0b892b
+"@navikt/ft-types@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@navikt/ft-types@npm:7.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F7.0.0%2F673c9ee869f4038da0ae8df57fda279780d13aa2"
+  checksum: 10/28ef20826d0cf1726390fa88c06b44b298f72ad23f52b371ac7dfc164b7274a3e60fbe84db5f6e77cee15dd73abdfbcc680fa54d22e61e0aea58c7a7a8819360
   languageName: node
   linkType: hard
 
-"@navikt/ft-ui-komponenter@npm:8.2.9":
-  version: 8.2.9
-  resolution: "@navikt/ft-ui-komponenter@npm:8.2.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F8.2.9%2F95d426d08bdafe99d18b9c1c64f609bfabc3aaab"
+"@navikt/ft-ui-komponenter@npm:9.0.0":
+  version: 9.0.0
+  resolution: "@navikt/ft-ui-komponenter@npm:9.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F9.0.0%2F51c45f94b7ca774b8b853fb64248dda68da3e457"
   peerDependencies:
     "@navikt/aksel-icons": 8.x
     "@navikt/ds-react": 8.x
@@ -3452,18 +3452,18 @@ __metadata:
     dayjs: 1.x
     react: 19.x
     react-dom: 19.x
-    react-intl: 10.x
-  checksum: 10/3eba2466d42c609881f5cc295dff154c3ae53701563e2d3359408f72e22c10a9d5389f9ed1a043679b3333f94ccb24fcd032768033d5a401cc499063f21f463e
+    react-intl: 12.x
+  checksum: 10/fe41b2e30ab3b891eacb57d0d1509228148f9a9de54fea0f7997445e31802118e0da640078b2baacc0d4a8013246c2ffdce3a5a875191905bfb711a73c58e2b9
   languageName: node
   linkType: hard
 
-"@navikt/ft-utils@npm:5.1.12":
-  version: 5.1.12
-  resolution: "@navikt/ft-utils@npm:5.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F5.1.12%2Fe6c7f8bfa13514b5c352ca5b4633be50448c6005"
+"@navikt/ft-utils@npm:6.0.0":
+  version: 6.0.0
+  resolution: "@navikt/ft-utils@npm:6.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F6.0.0%2Feef8c44fa915c27b2ed863c13ddb47a7a65827c0"
   peerDependencies:
     dayjs: 1.x
-    react-intl: 10.x
-  checksum: 10/1b90eab5592965efd70659e967d9d0b3eb1947651cbd3d6e9b0fcbff9d5bc7dbe8061ab018be266dbfc55d11df98afe7fdd9039f1096bc7e0b21982576a7a124
+    react-intl: 12.x
+  checksum: 10/1ecca4aea0130f3b0c9729f6d7a2e8651a8330a0769c287d4135b0f5a6f51bbb5f47fd9239643f01c1197f531908778a5b195b31b5f9b06c3f1d467d9794680f
   languageName: node
   linkType: hard
 
@@ -10573,8 +10573,8 @@ __metadata:
     "@navikt/ds-react": "npm:8.16.2"
     "@navikt/ds-tailwind": "npm:8.16.2"
     "@navikt/endringslogg": "npm:2.0.1"
-    "@navikt/ft-plattform-komponenter": "npm:12.1.12"
-    "@navikt/ft-utils": "npm:5.1.12"
+    "@navikt/ft-plattform-komponenter": "npm:13.0.0"
+    "@navikt/ft-utils": "npm:6.0.0"
     "@popperjs/core": "npm:2.11.8"
     "@storybook/addon-a11y": "npm:10.6.0"
     "@storybook/addon-docs": "npm:10.6.0"
