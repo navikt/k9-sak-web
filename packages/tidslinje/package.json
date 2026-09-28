@@ -10,7 +10,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "moment": "2.31.0",
     "react": "19.3.0",
-    "react-intl": "12.1.1",
+    "react-intl": "12.1.2",
     "vis-data": "8.0.5",
     "vis-timeline": "8.5.4"
   },
