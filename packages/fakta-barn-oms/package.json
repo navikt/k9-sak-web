@@ -11,10 +11,10 @@
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "1.0.0",
     "@k9-sak-web/prosess-aarskvantum-oms": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@tanstack/react-query": "5.103.1",
+    "@tanstack/react-query": "5.103.2",
     "moment": "2.31.0",
     "react": "19.3.0",
-    "react-intl": "12.1.1"
+    "react-intl": "12.1.2"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
