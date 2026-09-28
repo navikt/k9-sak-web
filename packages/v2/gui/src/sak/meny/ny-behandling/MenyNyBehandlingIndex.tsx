@@ -3,12 +3,11 @@ import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/back
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { erTilbakekreving } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { use, useCallback } from 'react';
+import { useCallback } from 'react';
 import NyBehandlingModal, {
   type BehandlingOppretting,
   type DelvisRevurderingÅrsakMapping,
@@ -102,8 +101,6 @@ const MenyNyBehandlingIndexV2 = ({
       return !senesteDatoFunnet || tomDato.isAfter(senesteDatoFunnet) ? tomDato.toDate() : senesteDatoFunnet;
     }, null);
 
-  const { REVURDERING_FRA_STEG_V2 } = use(FeatureTogglesContext);
-
   const submit = useCallback(
     async (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.some(b => b === formValues.behandlingType);
@@ -114,12 +111,12 @@ const MenyNyBehandlingIndexV2 = ({
         ),
       );
 
-      if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'FULL') {
+      if (formValues.revurderingModus === 'FULL') {
         delete filteredFormValues['steg'];
         delete filteredFormValues['fom'];
         delete filteredFormValues['tom'];
         delete filteredFormValues['revurderingModus'];
-      } else if (REVURDERING_FRA_STEG_V2 && formValues.revurderingModus === 'DELVIS') {
+      } else if (formValues.revurderingModus === 'DELVIS') {
         const valgtePerioder = Array.isArray(formValues.valgtePerioder)
           ? formValues.valgtePerioder
               .filter(Boolean)
@@ -140,10 +137,6 @@ const MenyNyBehandlingIndexV2 = ({
         delete filteredFormValues['revurderingModus'];
         delete filteredFormValues['behandlingArsakType'];
         delete filteredFormValues['nyBehandlingEtterKlage'];
-      } else if (!REVURDERING_FRA_STEG_V2 && formValues.steg === 'inngangsvilkår') {
-        delete filteredFormValues['steg'];
-        delete filteredFormValues['fom'];
-        delete filteredFormValues['tom'];
       }
 
       const params = {
@@ -156,7 +149,7 @@ const MenyNyBehandlingIndexV2 = ({
 
       lukkModal();
     },
-    [behandlingId, saksnummer, lagNyBehandling, lukkModal, REVURDERING_FRA_STEG_V2],
+    [behandlingId, saksnummer, lagNyBehandling, lukkModal],
   );
   const isAktivitetspenger = ytelseType === fagsakYtelsesType.AKTIVITETSPENGER;
   if (isAktivitetspenger) {
