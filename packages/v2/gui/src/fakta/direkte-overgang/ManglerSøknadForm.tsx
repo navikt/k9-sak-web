@@ -75,13 +75,11 @@ export const ManglerSøknadForm = ({
           return;
         }
 
-        await Promise.resolve(
-          submitCallback(
-            relevanteAksjonspunkter.map(aksjonspunkt => ({
-              kode: aksjonspunkt.definisjon,
-              begrunnelse: submittedBegrunnelse,
-            })),
-          ),
+        await submitCallback(
+          relevanteAksjonspunkter.map(aksjonspunkt => ({
+            kode: aksjonspunkt.definisjon,
+            begrunnelse: submittedBegrunnelse,
+          })),
         );
       })}
     >
