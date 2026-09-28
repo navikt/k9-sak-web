@@ -17,7 +17,7 @@ class TiDagerProsessStegPanelDef extends ProsessStegPanelDef {
         behandlingUUID={props.behandling.uuid}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
         vilkar={deepCopyProps.vilkar}
-        saksnummer={deepCopyProps.fagsak.saksnummer}
+        saksnummer={deepCopyProps.saksnummer}
       />
     );
   };

@@ -27,7 +27,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   useMultipleRestApi: (endpoints: EndpointData[], options: Options) => RestApiData<any>;
   featureToggles: FeatureToggles | undefined;
-  fagsak: Fagsak;
+  saksnummer: Fagsak['saksnummer'];
 }
 
 const InngangsvilkarPanel = ({
@@ -39,7 +39,7 @@ const InngangsvilkarPanel = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   useMultipleRestApi,
   featureToggles,
-  fagsak,
+  saksnummer,
 }: OwnProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const filteredPanels = prosessStegData.filter(stegData => stegData.getKomponentData);
@@ -138,7 +138,7 @@ const InngangsvilkarPanel = ({
                     submitCallback,
                     visAllePerioder,
                     featureToggles,
-                    fagsak,
+                    saksnummer,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
@@ -156,7 +156,7 @@ const InngangsvilkarPanel = ({
                     submitCallback,
                     visAllePerioder,
                     featureToggles,
-                    fagsak,
+                    saksnummer,
                     ...stegData.getKomponentData(),
                   })}
                 </div>

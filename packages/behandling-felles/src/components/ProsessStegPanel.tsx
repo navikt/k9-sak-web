@@ -127,6 +127,7 @@ const ProsessStegPanel = ({
                     setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
                     erOverstyrer,
+                    saksnummer: fagsak?.saksnummer,
                     ...delPaneler[0].getKomponentData(),
                     ...data,
                   })}
@@ -144,7 +145,7 @@ const ProsessStegPanel = ({
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               useMultipleRestApi={useMultipleRestApi}
               featureToggles={featureToggles}
-              fagsak={fagsak}
+              saksnummer={fagsak?.saksnummer}
             />
           )}
         </MargMarkering>

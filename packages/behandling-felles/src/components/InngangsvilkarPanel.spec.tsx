@@ -6,7 +6,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
@@ -102,7 +102,7 @@ describe('<InngangsvilkarPanel>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
         featureToggles={featureToggles}
-        fagsak={{ saksnummer: '1234' } as Fagsak}
+        saksnummer="1234"
       />,
     );
 
@@ -142,7 +142,7 @@ describe('<InngangsvilkarPanel>', () => {
         }}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
         featureToggles={featureToggles}
-        fagsak={{ saksnummer: '1234' } as Fagsak}
+        saksnummer="1234"
       />,
     );
 
