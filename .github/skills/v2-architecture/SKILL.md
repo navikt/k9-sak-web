@@ -34,6 +34,7 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 - [ ] CSS module class names use bracket notation: `styles['myClass']` (required by `noPropertyAccessFromIndexSignature`)
 - [ ] All imports use `.js` suffix
 - [ ] No imports from non-v2 packages (`@k9-sak-web/utils`, `@k9-sak-web/types`, `@k9-sak-web/shared-components`, etc.)
+- [ ] Avoid type assertions (`as Type`, especially `as any` / `as unknown as Type`) and non-null assertions (`!`) in both code and tests. Prefer inferred types, `satisfies`, typed helpers and explicit guards; handle invalid or missing values rather than asserting them away.
 
 ### Feature toggle
 
@@ -63,12 +64,13 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
 - [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
 - [ ] Mock data uses generated DTO types (flat string codes) — not old kodeverk objects
+- [ ] For display components, prefer Storybook stories with `play` tests over React Testing Library (RTL) tests. When migrating an existing component, replace its RTL tests only after the stories cover the same rendering states and interactions. Keep pure logic tests, such as grouping and data transformations, in Vitest.
 - [ ] If the user wants a v1/v2 versjonsvelger, ask as a separate follow-up whether they also want a comparison story for visual regression testing. If yes, render both versions with matching data through the feature-toggled `FaktaPanelDef` and `VersjonsvelgerV1V2`; keep the v2 component's own story independent. Add a compile-time deletion guard tied to the feature toggle in the comparison story so it is removed with the v1 branch.
 
 ### Verification
 
 - [ ] `yarn ts-check` passes with zero errors
-- [ ] `yarn test` passes for affected packages
+- [ ] Run the affected Storybook `play` tests for display components; run Vitest (`yarn test`) for logic tests
 
 ## Directory Structure
 
@@ -324,7 +326,7 @@ getKomponent = props => {
 
 ### Marking old files for deletion — compile-time guard
 
-Add a type assertion in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`). The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
+Add a compile-time type lookup in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`).  The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
 
 This causes a TypeScript compile error when the toggle key is removed from `FeatureToggles`, forcing cleanup before the build passes:
 
@@ -420,13 +422,11 @@ With `"noPropertyAccessFromIndexSignature": true`, CSS module class names must u
 
 ## noUncheckedIndexedAccess — array index access returns T | undefined
 
-With `"noUncheckedIndexedAccess": true`, `array[n]` returns `T | undefined`. Use `array[n]!` when you know the index is valid:
+With `"noUncheckedIndexedAccess": true`, `array[n]` returns `T | undefined`. Check that the element exists instead of using `!`, including in stories and tests:
 
 ```typescript
-// ✅ In stories/tests where the index is guaranteed
-utenlandsoppholdMock.perioder[0]!;
-
-// ✅ In production code: guard instead
 const first = items[0];
-if (!first) return null;
+if (first === undefined) {
+  throw new Error('Expected at least one item');
+}
 ```
