@@ -101,6 +101,7 @@
     "eslint-plugin-storybook": "10.6.0",
     "globals": "17.12.0",
     "happy-dom": "20.14.5",
+    "http-server": "^14.1.1",
     "knip": "6.38.0",
     "lefthook": "2.1.14",
     "loose-ts-check": "2.0.0",
@@ -118,7 +119,8 @@
     "vite-css-modules": "1.16.0",
     "vite-plugin-html": "3.2.2",
     "vitest": "5.0.2",
-    "vitest-axe": "0.1.0"
+    "vitest-axe": "0.1.0",
+    "wait-on": "^9.1.0"
   },
   "resolutions": {
     "parse-url": "8.1.0",
