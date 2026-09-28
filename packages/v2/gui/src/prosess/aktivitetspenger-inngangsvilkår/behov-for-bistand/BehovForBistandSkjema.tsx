@@ -125,7 +125,7 @@ export const BehovForBistandSkjema = ({
             validate={[required]}
           >
             <Radio value={BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK}>
-              Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.
+              Søker har ikke behov for bistand fra Nav
             </Radio>
             <Radio value="fritekst">Fritekst</Radio>
           </RhfRadioGroup>
