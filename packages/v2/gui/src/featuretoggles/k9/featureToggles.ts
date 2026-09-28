@@ -9,7 +9,6 @@ const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
   SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
-  NORMALARBEIDSTID_UTTAK: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
@@ -30,6 +29,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   VIS_INNLEGGELSE_FOR_PILS: true,
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
+  NORMALARBEIDSTID_UTTAK: true,
 });
 
 /**
