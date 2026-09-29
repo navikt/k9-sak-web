@@ -1,0 +1,5 @@
+export type {
+  foreldrepenger_tilbakekreving_behandling_modell_BehandlingFeilutbetalingFakta as BehandlingFeilutbetalingFakta,
+  foreldrepenger_tilbakekreving_web_app_tjenester_behandling_dto_BehandlingFeilutbetalingFaktaDto as BehandlingFeilutbetalingFaktaDto,
+  foreldrepenger_tilbakekreving_behandling_modell_LogiskPeriodeMedFaktaDto as LogiskPeriodeMedFaktaDto,
+} from '@k9-sak-web/backend/k9tilbake/generated/types.js';
