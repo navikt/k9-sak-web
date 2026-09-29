@@ -1,19 +1,19 @@
 import {
   behandlingfakta_hentFeilutbetalingFakta,
   kodeverk_hentAlleFeilutbetalingÅrsaker,
-} from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
+} from '@k9-sak-web/backend/ungtilbake/api/feilutbetaling.js';
 import type { BehandlingFeilutbetalingFaktaDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
 import type { HendelseTyperPrYtelseTypeDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
 import { describe, expect, it, vi } from 'vitest';
 import { UngFeilutbetalingFaktaBackendClient } from './UngFeilutbetalingFaktaBackendClient.js';
 
-vi.mock('@k9-sak-web/backend/ungtilbake/generated/sdk.js', () => ({
+vi.mock('@k9-sak-web/backend/ungtilbake/api/feilutbetaling.js', () => ({
   behandlingfakta_hentFeilutbetalingFakta: vi.fn(),
   kodeverk_hentAlleFeilutbetalingÅrsaker: vi.fn(),
 }));
 
 describe('UngFeilutbetalingFaktaBackendClient', () => {
-  it('maps facts to the shared view model', async () => {
+  it('returnerer fakta som er kompatible med den felles visningsmodellen', async () => {
     const fakta: BehandlingFeilutbetalingFaktaDto = {
       behandlingFakta: {
         aktuellFeilUtbetaltBeløp: 1000,
@@ -43,7 +43,7 @@ describe('UngFeilutbetalingFaktaBackendClient', () => {
     });
   });
 
-  it('accepts an array response from the reason endpoint', async () => {
+  it('håndterer en liste med årsaker fra årsaksendepunktet', async () => {
     const årsaker: HendelseTyperPrYtelseTypeDto[] = [
       {
         ytelseType: 'UNG' as const,

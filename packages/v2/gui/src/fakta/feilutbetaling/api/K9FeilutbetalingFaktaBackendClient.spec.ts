@@ -1,13 +1,13 @@
 import {
   behandlingfakta_hentFeilutbetalingFakta,
   kodeverk_hentAlleFeilutbetalingÅrsaker,
-} from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
+} from '@k9-sak-web/backend/k9tilbake/api/feilutbetaling.js';
 import type { BehandlingFeilutbetalingFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
 import type { HendelseTyperPrYtelseTypeDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
 import { describe, expect, it, vi } from 'vitest';
 import { K9FeilutbetalingFaktaBackendClient } from './K9FeilutbetalingFaktaBackendClient.js';
 
-vi.mock('@k9-sak-web/backend/k9tilbake/generated/sdk.js', () => ({
+vi.mock('@k9-sak-web/backend/k9tilbake/api/feilutbetaling.js', () => ({
   behandlingfakta_hentFeilutbetalingFakta: vi.fn(),
   kodeverk_hentAlleFeilutbetalingÅrsaker: vi.fn(),
 }));
@@ -29,7 +29,7 @@ describe('K9FeilutbetalingFaktaBackendClient', () => {
     });
   });
 
-  it('accepts an array response from the reason endpoint', async () => {
+  it('håndterer en liste med årsaker fra årsaksendepunktet', async () => {
     const årsaker: HendelseTyperPrYtelseTypeDto[] = [
       {
         ytelseType: 'PSB',
