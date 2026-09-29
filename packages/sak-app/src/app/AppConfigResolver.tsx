@@ -8,6 +8,8 @@ import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { ArbeidOgInntektApiContext } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/ArbeidOgInntektApiContext.js';
 import { K9ArbeidOgInntektBackendClient } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/K9ArbeidOgInntektBackendClient.js';
+import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
+import { K9FeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/K9FeilutbetalingFaktaBackendClient.js';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 import { K9NyInntektBackendClient } from '@k9-sak-web/gui/fakta/ny-inntekt/api/K9NyInntektBackendClient.js';
@@ -103,7 +105,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                   <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
                                     <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
                                       <OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>
-                                        {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                        <FeilutbetalingFaktaApiContext value={new K9FeilutbetalingFaktaBackendClient()}>
+                                          {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                        </FeilutbetalingFaktaApiContext>
                                       </OmPleietrengendeApiContext>
                                     </ArbeidOgInntektApiContext>
                                   </NotatBackendClientContext>

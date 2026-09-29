@@ -10,8 +10,10 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
+import FeilutbetalingFaktaPanelDef from '../panelDefinisjoner/faktaPaneler/FeilutbetalingFaktaPanelDef';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
 import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
@@ -126,6 +128,7 @@ describe('<TilbakekrevingFakta>', () => {
           oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           hasFetchError={false}
           setBehandling={vi.fn()}
+          featureToggles={prodFeatureToggles}
         />
       </GlobalUnhandledErrorCatcher>,
     );
@@ -153,6 +156,7 @@ describe('<TilbakekrevingFakta>', () => {
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           hasFetchError={false}
           setBehandling={vi.fn()}
+          featureToggles={prodFeatureToggles}
         />
       </GlobalUnhandledErrorCatcher>,
     );
@@ -167,5 +171,14 @@ describe('<TilbakekrevingFakta>', () => {
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('feilutbetaling');
+  });
+
+  it('skal bruke legacy årsak-endepunkt bare når v2-featuren er avslått', () => {
+    const panelDef = new FeilutbetalingFaktaPanelDef();
+
+    expect(panelDef.getEndepunkter(prodFeatureToggles)).toEqual([
+      TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK,
+    ]);
+    expect(panelDef.getEndepunkter({ ...prodFeatureToggles, BRUK_V2_FEILUTBETALING: true })).toEqual([]);
   });
 });
