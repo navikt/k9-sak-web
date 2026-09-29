@@ -66,7 +66,9 @@ export const enrichApmErrorContext = (
     if (extendedApiError.navCallid != null) {
       enriched['navCallid'] = extendedApiError.navCallid;
     }
-    enriched['status'] = `${extendedApiError.status}`;
+    if (extendedApiError.status !== undefined) {
+      enriched['status'] = `${extendedApiError.status}`;
+    }
   } else if (error instanceof AxiosError) {
     if (error.response?.status != null) {
       enriched['status'] = `${error.response.status}`;
