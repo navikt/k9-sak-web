@@ -30,6 +30,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
   NORMALARBEIDSTID_UTTAK: true,
+  BRUK_V2_OM_PLEIETRENGENDE: true,
 });
 
 /**
