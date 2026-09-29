@@ -9,7 +9,17 @@ class TiDagerProsessStegPanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <TiDagerProsessIndex {...props} {...deepCopyProps} behandlingUUID={props.behandling.uuid} />;
+    return (
+      <TiDagerProsessIndex
+        submitCallback={props.submitCallback}
+        aksjonspunkter={deepCopyProps.aksjonspunkter}
+        isReadOnly={deepCopyProps.isReadOnly}
+        behandlingUUID={props.behandling.uuid}
+        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+        vilkar={deepCopyProps.vilkar}
+        saksnummer={deepCopyProps.saksnummer}
+      />
+    );
   };
 
   getAksjonspunktKoder = () => [AksjonspunktDefinisjon.VURDER_RETT_FRA_DAG_EN];
