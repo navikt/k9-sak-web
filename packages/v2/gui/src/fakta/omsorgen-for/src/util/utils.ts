@@ -8,7 +8,10 @@ import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import * as messages from '../../nb_NO';
 
-export const teksterForSakstype = (sakstype?: FagsakYtelsesType) => {
+type TeksterForSakstype = Omit<typeof messages.omsorgspenger, 'vurdering.hjemmel.hjelpetekst'> &
+  Partial<Pick<typeof messages.omsorgspenger, 'vurdering.hjemmel.hjelpetekst'>>;
+
+export const teksterForSakstype = (sakstype?: FagsakYtelsesType): TeksterForSakstype => {
   if (sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return messages.pleiepenger;
   }

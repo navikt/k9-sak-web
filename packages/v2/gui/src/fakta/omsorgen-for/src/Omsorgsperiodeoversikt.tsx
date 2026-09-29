@@ -48,7 +48,11 @@ const Omsorgsperiodeoversikt = ({
 
   return (
     <>
-      <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} readOnly={readOnly} />
+      <OmsorgsperiodeoversiktMessages
+        omsorgsperiodeoversikt={omsorgsperiodeoversikt}
+        readOnly={readOnly}
+        sakstype={sakstype}
+      />
       {sakstype === fagsakYtelsesType.OMSORGSPENGER && !readOnly && (
         <Fosterbarn ref={fosterbarnRef} readOnly={readOnly} />
       )}

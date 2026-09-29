@@ -7,10 +7,9 @@ import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { BodyShort, Box, Button, Label, Tag } from '@navikt/ds-react';
 import { type JSX } from 'react';
-import { useIntl } from 'react-intl';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
 import Relasjon from './types/Relasjon';
-import { erAutomatiskVurdert, erIkkeOppfylt, erManueltVurdert, erOppfylt } from './util/utils.js';
+import { erAutomatiskVurdert, erIkkeOppfylt, erManueltVurdert, erOppfylt, teksterForSakstype } from './util/utils.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: OmsorgenForDto;
@@ -27,13 +26,12 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   readOnly,
   sakstype,
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const intl = useIntl();
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
+  const tekster = teksterForSakstype(sakstype);
   const begrunnelseRenderer = () => {
     let label = (
       <Label size="small">
-        {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
-        <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
+        {tekster['vurdering.hjemmel']} <Lovreferanse>{tekster['vurdering.paragraf'] ?? ''}</Lovreferanse>
       </Label>
     );
     let begrunnelse = '';

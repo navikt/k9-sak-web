@@ -1,24 +1,33 @@
+import { type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { OmsorgenForOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForOversiktDto.js';
 import { Alert, Box } from '@navikt/ds-react';
-import { FormattedMessage } from 'react-intl';
 import styles from './omsorgsperiodeoversiktMessages.module.css';
-import { getStringMedPerioder } from './util/periodUtils';
-import { finnPerioderTilVurdering, harPerioderTilVurdering } from './util/utils';
+import { getStringMedPerioder } from './util/periodUtils.js';
+import { finnPerioderTilVurdering, harPerioderTilVurdering, teksterForSakstype } from './util/utils.js';
 
 interface OmsorgsperiodeoversiktMessagesProps {
   omsorgsperiodeoversikt: OmsorgenForOversiktDto;
   readOnly: boolean;
+  sakstype?: FagsakYtelsesType;
 }
 
-const OmsorgsperiodeoversiktMessages = ({ omsorgsperiodeoversikt, readOnly }: OmsorgsperiodeoversiktMessagesProps) => {
+const OmsorgsperiodeoversiktMessages = ({
+  omsorgsperiodeoversikt,
+  readOnly,
+  sakstype,
+}: OmsorgsperiodeoversiktMessagesProps) => {
   if (!readOnly && harPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder)) {
     const perioderTilVurdering = finnPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder)
       .map(({ periode }) => periode)
       .filter(periode => periode !== undefined);
+    const advarsel = (teksterForSakstype(sakstype)['vurdering.advarsel'] ?? '').replace(
+      '{perioder}',
+      getStringMedPerioder(perioderTilVurdering),
+    );
     return (
       <Box marginBlock="space-0 space-24">
         <Alert size="small" variant="warning" className={styles.alertstripe}>
-          <FormattedMessage id="vurdering.advarsel" values={{ perioder: getStringMedPerioder(perioderTilVurdering) }} />
+          {advarsel}
         </Alert>
       </Box>
     );

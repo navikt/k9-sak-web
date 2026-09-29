@@ -11,13 +11,12 @@ import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useIntl } from 'react-intl';
 import { PeriodpickerList } from '../../../shared/periodPickerList/PeriodpickerList';
 import Relasjon from './types/Relasjon';
 import Vurderingsresultat from './types/Vurderingsresultat';
 import type { VurderingSubmitValues } from './types/VurderingSubmitValues';
 import getPeriodDifference from './util/getPeriodDifference';
-import { prettifyPeriode } from './util/utils';
+import { prettifyPeriode, teksterForSakstype } from './util/utils.js';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
 
 export enum FieldName {
@@ -70,7 +69,7 @@ const VurderingAvOmsorgsperioderForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const erOLP = sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER;
-  const intl = useIntl();
+  const tekster = teksterForSakstype(sakstype);
   const formMethods = useForm({
     defaultValues: {
       [FieldName.PERIODER]: omsorgsperiode.periode ? [omsorgsperiode.periode] : [],
@@ -183,9 +182,8 @@ const VurderingAvOmsorgsperioderForm = ({
                 control={formMethods.control}
                 label={
                   <>
-                    {intl.formatMessage({ id: 'vurdering.hjemmel' })}{' '}
-                    <Lovreferanse>{intl.formatMessage({ id: 'vurdering.paragraf' })}</Lovreferanse>
-                    {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
+                    {tekster['vurdering.hjemmel']} <Lovreferanse>{tekster['vurdering.paragraf'] ?? ''}</Lovreferanse>
+                    {erOMP && <p>{tekster['vurdering.hjemmel.hjelpetekst']}</p>}
                   </>
                 }
               />
@@ -193,7 +191,7 @@ const VurderingAvOmsorgsperioderForm = ({
             <Box marginBlock="space-8 space-0">
               <RhfRadioGroup
                 control={formMethods.control}
-                legend={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
+                legend={tekster['vurdering.harOmsorgenFor']}
                 name={FieldName.HAR_SØKER_OMSORGEN_FOR_I_PERIODE}
                 validate={[required]}
                 disabled={readOnly}
