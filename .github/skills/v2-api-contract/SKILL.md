@@ -58,138 +58,109 @@ Extract the DTO type names needed for the BackendApiType.
 
 ### Step 3: Create SDK Re-Export
 
-Create or update `packages/v2/backend/src/<backend>/sdk/<Domain>Sdk.ts`:
+Steps 3–8 show a worked example. `references/templates.md` has the same files as generic templates with placeholders.
+
+Worked example used in steps 3–8: feature `OmPleietrengende`, backend `k9sak`, folder `fakta/om-pleietrengende/api/`, endpoint `behandlingPerson_getPersonopplysninger1` returning `PersonopplysningDto`.
+
+Create `packages/v2/backend/src/k9sak/sdk/OmPleietrengendeSdk.ts`:
 
 ```typescript
-export {
-  <endpoint1>,
-  <endpoint2>,
-} from '@k9-sak-web/backend/<backend>/generated/sdk.js';
+export { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 ```
 
 ### Step 4: Create Type Re-Exports
 
-For each DTO type used in the API, create a re-export file at:
-`packages/v2/backend/src/<backend>/kontrakt/<domain>/<TypeName>.ts`
-
-Pattern A — single type re-export with alias:
-
-```typescript
-export type { <namespace_prefix_TypeName> as <TypeName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
-```
-
-Pattern B — const enum + type (for string union enums):
-
-```typescript
-export { <namespace_prefix_EnumName> as <EnumName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
-```
-
-Check if re-exports already exist before creating duplicates.
+For each DTO type used in the API, create a re-export file, e.g. `packages/v2/backend/src/k9sak/kontrakt/person/PersonopplysningDto.ts`. See `references/templates.md` for the patterns (single type, const enum). Check if a re-export already exists before creating a duplicate.
 
 ### Step 5: Create BackendApiType
 
-Create `packages/v2/gui/src/<target>/<Domain>BackendApiType.ts`:
+`packages/v2/gui/src/fakta/om-pleietrengende/api/OmPleietrengendeBackendApiType.ts`:
 
 ```typescript
-import type { <Type1> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type1>.js';
-import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type2>.js';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
 import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export interface <Domain>BackendApiType extends BackendTilhørighet {
-  <methodName>(param1: string): Promise<ReturnType>;
-  <methodName2>(param1: string, param2: number): Promise<void>;
+export interface OmPleietrengendeBackendApiType extends BackendTilhørighet {
+  hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningDto | null>;
 }
 ```
 
 Rules:
 
-- Extend `BackendTilhørighet` from `packages/v2/gui/src/utils/BackendTilhørighet.ts`. It declares `readonly backend`; the client sets the literal value, which must be one of `BackendNavn` (`k9sak`, `k9klage`, `k9tilbake`, `ungsak`, `ungtilbake`)
-- Method names should be descriptive (e.g. `getKontrollerInntekt`, not `kontroll_hentKontrollerInntekt`)
-- GET endpoints return `Promise<DtoType>`
-- POST/PUT endpoints that mutate return `Promise<void>` (unless they return data)
+- Extend `BackendTilhørighet` (`packages/v2/gui/src/utils/BackendTilhørighet.ts`). It declares `readonly backend`; the client sets the literal value, one of `k9sak`, `k9klage`, `k9tilbake`, `ungsak`, `ungtilbake`
+- Method names are descriptive (`hentPleietrengende`, not `behandlingPerson_getPersonopplysninger1`)
+- GET endpoints return `Promise<Dto>`; mutating POST/PUT return `Promise<void>` unless they return data
 - Use `import type` for all type imports
 
 ### Step 6: Create BackendClient
 
-The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake` (matching `readonly backend`), also when only one backend exists. Example for domain `OmPleietrengende` against k9sak: file and class `K9SakOmPleietrengendeBackendClient`, with `readonly backend = 'k9sak'`. Below, `<Backend>` stands for that first part (e.g. `K9Sak`) and `<Domain>` for the feature name (e.g. `OmPleietrengende`). `readonly backend` (typed by `BackendTilhørighet`) is used as the last element in `queryKey`, so instances against different backends get separate cache entries. If the component is shared between K9 and Ung, keep one `<Domain>BackendApiType` and create one client per backend.
+The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake`, also when only one backend exists. If the component is shared between K9 and Ung, keep one BackendApiType and create one client per backend (e.g. `K9SakHistorikkBackendClient` and `UngSakHistorikkBackendClient`).
 
-Create `packages/v2/gui/src/<target>/<Backend><Domain>BackendClient.ts`:
+`packages/v2/gui/src/fakta/om-pleietrengende/api/K9SakOmPleietrengendeBackendClient.ts`:
 
 ```typescript
-import type { <RequestType> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<RequestType>.js';
-import {
-  <sdkFunction1>,
-  <sdkFunction2>,
-} from '@k9-sak-web/backend/<backend>/sdk/<Domain>Sdk.js';
-import { type <Domain>BackendApiType } from './<Domain>BackendApiType.js';
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9sak/sdk/OmPleietrengendeSdk.js';
+import type { OmPleietrengendeBackendApiType } from './OmPleietrengendeBackendApiType.js';
 
-export class <Backend><Domain>BackendClient implements <Domain>BackendApiType {
-  readonly backend = '<backend>';
+export class K9SakOmPleietrengendeBackendClient implements OmPleietrengendeBackendApiType {
+  readonly backend = 'k9sak';
 
-  async <methodName>(param1: string) {
-    return (await <sdkFunction1>({ query: { param1 } })).data;
-  }
-
-  async <methodName2>(param1: string, param2: number, body: <RequestType>) {
-    await <sdkFunction2>({ body: { ...body, param1, param2 } });
+  async hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningDto | null> {
+    const response = await behandlingPerson_getPersonopplysninger1({ query: { behandlingUuid } });
+    return response.data || null;
   }
 }
 ```
 
 Rules:
 
-- `readonly backend = '<backend>'` — literal string type
-- Every SDK call is awaited and `.data` is extracted for GET endpoints
-- POST/PUT calls may not return `.data` if response is void
-- Parameters match the `query`/`body` shape from the SDK Options type
-- Import the BackendApiType with `{ type <Domain>BackendApiType }` (inline type import)
+- `readonly backend = 'k9sak'` is a literal type and is used as the last element in `queryKey`, so the same feature against different backends gets separate cache entries
+- Every SDK call is awaited; `.data` is returned for GET endpoints
+- Parameters match the `query`/`body` shape of the SDK Options type
 
 ### Step 7: Create QueryOptions (if requested)
 
-Create `packages/v2/gui/src/<target>/<domain>QueryOptions.ts`:
+`packages/v2/gui/src/fakta/om-pleietrengende/api/omPleietrengendeQueryOptions.ts`:
 
 ```typescript
 import { queryOptions } from '@tanstack/react-query';
-import type { <Domain>BackendApiType } from './<Domain>BackendApiType.js';
+import type { OmPleietrengendeBackendApiType } from './OmPleietrengendeBackendApiType.js';
 
-interface Behandling {
-  uuid: string;
-  versjon: number;
-}
-
-export const <queryName>QueryOptions = (api: <Domain>BackendApiType, behandling: Behandling) =>
+export const omPleietrengendeQueryOptions = (api: OmPleietrengendeBackendApiType, behandlingUuid: string) =>
   queryOptions({
-    queryKey: ['<resource-name>', behandling.uuid, behandling.versjon, api.backend],
-    queryFn: () => api.<methodName>(behandling.uuid),
+    queryKey: ['omPleietrengende', behandlingUuid, api.backend],
+    queryFn: () => api.hentPleietrengende(behandlingUuid),
   });
 ```
 
 Rules:
 
-- Only create queryOptions for GET endpoints
-- `queryKey` always includes `api.backend` as last element
-- `queryKey` includes `behandling.uuid` and `behandling.versjon` for cache busting
-- For optional/conditional queries, add `enabled` parameter:
-  ```typescript
-  export const xQueryOptions = (api: ApiType, behandling: Behandling, enabled = true) =>
-    queryOptions({
-      queryKey: ['x', behandling.uuid, behandling.versjon, enabled, api.backend],
-      queryFn: () => (enabled ? api.getX(behandling.uuid) : null),
-    });
-  ```
+- Only for GET endpoints
+- `queryKey` always ends with `api.backend`
+- Include `behandling.versjon` in the key when the data changes with the behandling version
+- For conditional queries, add an `enabled` parameter to the key and return `null` from `queryFn` when disabled
 
 ### Step 8: Create the API context
 
-Create `packages/v2/gui/src/<target>/<Domain>ApiContext.ts`:
+`packages/v2/gui/src/fakta/om-pleietrengende/api/OmPleietrengendeApiContext.ts`:
 
 ```typescript
-import { createContext } from 'react';
-import type { <Domain>BackendApiType } from './<Domain>BackendApiType.js';
+import { createContext, useContext } from 'react';
+import type { OmPleietrengendeBackendApiType } from './OmPleietrengendeBackendApiType.js';
 
-export const <Domain>ApiContext = createContext<<Domain>BackendApiType | null>(null);
+export const OmPleietrengendeApiContext = createContext<OmPleietrengendeBackendApiType | null>(null);
+
+export const useOmPleietrengendeApi = (): OmPleietrengendeBackendApiType => {
+  const context = useContext(OmPleietrengendeApiContext);
+  if (!context) {
+    throw new Error('useOmPleietrengendeApi må brukes innenfor en OmPleietrengendeApiContext');
+  }
+  return context;
+};
 ```
 
-Components read it with `use(<Domain>ApiContext)` and throw if it is missing, then pass `api` to the queryOptions from step 7. The production provider (`<Domain>ApiContext value={new <Backend><Domain>BackendClient()}`) is added in `AppConfigResolver` (see the `v2-architecture` skill).
+The production provider (`<OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>`) is added in `AppConfigResolver` (see the `v2-architecture` skill).
 
 ### Step 9: Verify
 

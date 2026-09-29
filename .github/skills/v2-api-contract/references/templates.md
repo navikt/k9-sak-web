@@ -1,6 +1,18 @@
 # File Templates
 
-Complete templates for each generated file.
+Generic templates with placeholders (`<Domain>`, `<Backend>`, `<backend>` …) for each generated file. A concrete, human-readable example (`OmPleietrengende` against k9sak) is in steps 3–8 of `SKILL.md`; use the templates here for variations (POST endpoints, several methods, conditional queries).
+
+## Placeholders
+
+| Placeholder | Meaning | Example |
+| --- | --- | --- |
+| `<Domain>` | PascalCase feature name | `OmPleietrengende` |
+| `<domain>` | camelCase feature name | `omPleietrengende` |
+| `<backend>` | Backend value (`readonly backend`, import path) | `k9sak` |
+| `<Backend>` | Same backend in PascalCase, prefix in the client name | `K9Sak` |
+| `<target>` | Folder under `packages/v2/gui/src/` | `fakta/om-pleietrengende/api` |
+| `<sdkFunction>` | Generated SDK function | `behandlingPerson_getPersonopplysninger1` |
+| `<getMethod>` | Descriptive method name in the BackendApiType | `hentPleietrengende` |
 
 ## 1. SDK Re-Export (`<Domain>Sdk.ts`)
 
@@ -102,6 +114,27 @@ export const <resourceName>QueryOptions = (
   });
 ```
 
+## 6. API Context (`<Domain>ApiContext.ts`)
+
+Path: `packages/v2/gui/src/<target>/<Domain>ApiContext.ts`
+
+```typescript
+import { createContext, useContext } from 'react';
+import type { <Domain>BackendApiType } from './<Domain>BackendApiType.js';
+
+export const <Domain>ApiContext = createContext<<Domain>BackendApiType | null>(null);
+
+export const use<Domain>Api = (): <Domain>BackendApiType => {
+  const context = useContext(<Domain>ApiContext);
+  if (!context) {
+    throw new Error('use<Domain>Api må brukes innenfor en <Domain>ApiContext');
+  }
+  return context;
+};
+```
+
+The production provider `<<Domain>ApiContext value={new <Backend><Domain>BackendClient()}>` is added in `packages/sak-app/src/app/AppConfigResolver.tsx`.
+
 ## Namespace Prefix Mapping
 
 When creating type re-exports, strip the namespace prefix:
@@ -155,3 +188,4 @@ async save(behandlingUuid: string, behandlingVersjon: number, dto: SaveDto) {
   });
 }
 ```
+
