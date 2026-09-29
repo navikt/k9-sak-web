@@ -27,7 +27,7 @@ const rootFeatureToggles = {
   DOKUMENTFILTER: false,
   BRUK_V2_ARBEID_OG_INNTEKT: false,
   FORENKLE_OMS_VEDTAK_STATUS: false,
-  BRUK_OMSORGEN_FOR: false,
+  BRUK_OMSORGEN_FOR_V2: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

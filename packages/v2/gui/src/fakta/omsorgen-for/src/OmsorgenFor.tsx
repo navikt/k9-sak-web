@@ -15,10 +15,17 @@ interface MainComponentProps {
   onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: NorskIdentDto[]) => Promise<void>;
   sakstype?: FagsakYtelsesType;
   behandlingUuid: string;
+  behandlingVersjon: number;
 }
 
-export const OmsorgenFor = ({ readOnly, onFinished, behandlingUuid, sakstype }: MainComponentProps): JSX.Element => {
-  const { data: omsorgsperiodeoversikt } = useSuspenseQuery(useOmsorgenForOptions(behandlingUuid));
+export const OmsorgenFor = ({
+  readOnly,
+  onFinished,
+  behandlingUuid,
+  behandlingVersjon,
+  sakstype,
+}: MainComponentProps): JSX.Element => {
+  const { data: omsorgsperiodeoversikt } = useSuspenseQuery(useOmsorgenForOptions(behandlingUuid, behandlingVersjon));
 
   return (
     <IntlProvider locale="nb-NO" messages={teksterForSakstype(sakstype)}>

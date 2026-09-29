@@ -23,7 +23,7 @@ interface OmsorgenForProps {
 export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
   const { links } = behandling;
   const sakstype = fagsak.sakstype;
-  const { BRUK_OMSORGEN_FOR } = useContext(FeatureTogglesContext);
+  const { BRUK_OMSORGEN_FOR_V2 } = useContext(FeatureTogglesContext);
 
   const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
@@ -41,13 +41,14 @@ export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }
       },
     ]);
 
-  if (BRUK_OMSORGEN_FOR) {
+  if (BRUK_OMSORGEN_FOR_V2) {
     return (
       <OmsorgenForV2
         readOnly={readOnly || !harAksjonspunkt}
         onFinished={løsAksjonspunkt}
         sakstype={sakstype}
         behandlingUuid={behandling.uuid}
+        behandlingVersjon={behandling.versjon}
       />
     );
   }

@@ -40,6 +40,7 @@ export const DefaultStory: Story = {
     behandlingUuid: '123',
     onFinished: asyncAction('onFinished'),
     sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    behandlingVersjon: 1,
   },
 };
 
@@ -49,6 +50,7 @@ export const BekrefterVurderingAvPeriode: Story = {
     behandlingUuid: '123',
     onFinished: fn(),
     sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    behandlingVersjon: 1,
   },
   play: async ({ canvas, args, step }) => {
     await step('Skal vurdere periode til vurdering og bekrefte', async () => {
@@ -80,6 +82,7 @@ export const LeggerTilFosterbarnOgBekrefter: Story = {
     behandlingUuid: '123',
     onFinished: fn(),
     sakstype: fagsakYtelsesType.OMSORGSPENGER,
+    behandlingVersjon: 1,
   },
   play: async ({ canvas, args, step }) => {
     await step('Skal legge til fosterbarn og bekrefte vurdering', async () => {

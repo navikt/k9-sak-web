@@ -19,12 +19,12 @@ interface OmsorgenForProps {
 }
 
 export default ({
-  behandling: { sakstype, uuid, links },
+  behandling: { sakstype, uuid, links, versjon },
   readOnly,
   aksjonspunkter,
   submitCallback,
 }: OmsorgenForProps) => {
-  const { BRUK_OMSORGEN_FOR } = useContext(FeatureTogglesContext);
+  const { BRUK_OMSORGEN_FOR_V2 } = useContext(FeatureTogglesContext);
   const { legacyErrorNotifier } = useGlobalUnhandledErrors();
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.AVKLAR_OMSORGEN_FOR);
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
@@ -35,13 +35,14 @@ export default ({
       { kode: omsorgenForAksjonspunktkode ?? '', begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder },
     ]);
 
-  if (BRUK_OMSORGEN_FOR) {
+  if (BRUK_OMSORGEN_FOR_V2) {
     return (
       <OmsorgenForV2
         readOnly={readOnly || !harAksjonspunkt}
         onFinished={løsAksjonspunkt}
         sakstype={sakstype}
         behandlingUuid={uuid}
+        behandlingVersjon={versjon}
       />
     );
   }
