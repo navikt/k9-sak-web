@@ -22,7 +22,12 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 ### API contract (when calling a backend)
 
-- [ ] API contract (SDK re-export, `<Feature>BackendApiType`, `<Backend><Feature>BackendClient` (e.g. `K9SakFooBackendClient`) with `readonly backend`, `queryOptions()`, `<Feature>ApiContext`) created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`) — it defines names, file locations and templates. Never call a raw URL or import directly from `generated/sdk.js`
+- [ ] API contract created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`), which defines names, file locations and templates. For a feature called `OmPleietrengende` against k9sak this gives:
+  - `OmPleietrengendeBackendApiType` (interface, extends `BackendTilhørighet`)
+  - `K9SakOmPleietrengendeBackendClient` (class, `readonly backend = 'k9sak'`)
+  - `omPleietrengendeQueryOptions`
+  - `OmPleietrengendeApiContext`
+  Name the client after the backend: `K9Sak…`, `K9Klage…`, `K9Tilbake…`, `UngSak…` or `UngTilbake…`. Never call a raw URL or import directly from `generated/sdk.js`
 
 ### v2 component
 
@@ -66,7 +71,7 @@ Only apply these steps when replacing an existing fakta/prosess panel. Work thro
 
 ### AppConfigResolver
 
-- [ ] `<Backend><Feature>BackendClient` context provider added in `packages/sak-app/src/app/AppConfigResolver.tsx`
+- [ ] Client context provider added (e.g. `<OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>`) in `packages/sak-app/src/app/AppConfigResolver.tsx`
 - [ ] Add to ung `AppConfigResolver` too if the feature exists there
 
 ### Suspense boundary

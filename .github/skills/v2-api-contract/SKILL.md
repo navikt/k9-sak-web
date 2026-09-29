@@ -111,7 +111,7 @@ Rules:
 
 ### Step 6: Create BackendClient
 
-`<Backend>` below is the full backend name in PascalCase: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake` (matching `readonly backend`). Always name the client `<Backend><Domain>BackendClient`, also when only one backend exists. `readonly backend` (typed by `BackendTilhørighet`) is used as the last element in `queryKey`, so instances against different backends get separate cache entries. If the component is shared between K9 and Ung, keep one `<Domain>BackendApiType` and create one client per backend.
+The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake` (matching `readonly backend`), also when only one backend exists. Example for domain `OmPleietrengende` against k9sak: file and class `K9SakOmPleietrengendeBackendClient`, with `readonly backend = 'k9sak'`. Below, `<Backend>` stands for that first part (e.g. `K9Sak`) and `<Domain>` for the feature name (e.g. `OmPleietrengende`). `readonly backend` (typed by `BackendTilhørighet`) is used as the last element in `queryKey`, so instances against different backends get separate cache entries. If the component is shared between K9 and Ung, keep one `<Domain>BackendApiType` and create one client per backend.
 
 Create `packages/v2/gui/src/<target>/<Backend><Domain>BackendClient.ts`:
 
