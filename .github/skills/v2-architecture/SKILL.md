@@ -24,7 +24,10 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 - [ ] Interface defined in `packages/v2/gui/src/fakta/<feature>/api/<Feature>Api.ts`
 - [ ] Context created in `packages/v2/gui/src/fakta/<feature>/api/<Feature>ApiContext.ts`
-- [ ] Production client `K9<Feature>BackendClient` calls the generated SDK function — never a raw URL
+- [ ] Interface has `readonly backend: '<backend>'` (one of the backends listed under "Available backends" below), and the production client `K9<Feature>BackendClient` implements it
+- [ ] Production client calls the generated SDK function through an SDK re-export in `packages/v2/backend/src/<backend>/sdk/<Feature>Sdk.ts` — never a raw URL and never directly from `generated/sdk.js`
+- [ ] Query options defined with `queryOptions()` in `api/<feature>QueryOptions.ts`, taking `(api, ...)` and including `api.backend` last in `queryKey`
+- [ ] Use the `backend-client-generator` skill (`.github/skills/backend-client-generator/SKILL.md`) to create the SDK re-export, BackendApiType/client and queryOptions files
 
 ### v2 component
 
@@ -38,7 +41,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 ### Stories
 
 - [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
-- [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>` when the component fetches data
+- [ ] Reusable `withFake<Feature>Api(data)` decorator in `packages/v2/gui/src/storybook/decorators/` provides the API context + `<Suspense>` when the component fetches data (the `QueryClientProvider` comes from the global `withQueryClientProvider`, which creates a new client per story). Do not define local `withFakeApi` decorators inside stories
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
 - [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
 - [ ] When mocking backend data, use generated DTO types (flat string codes) — not old kodeverk objects
@@ -88,6 +91,7 @@ packages/v2/
 │   ├── k9klage/          # Generated from k9-klage OpenAPI spec
 │   ├── k9tilbake/        # Generated from k9-tilbake OpenAPI spec
 │   ├── ungsak/           # Generated from ung-sak OpenAPI spec
+│   ├── ungtilbake/       # Generated from ung-tilbake OpenAPI spec
 │   ├── k9formidling/     # Manual client for k9-formidling
 │   └── combined/         # Types combining generated types from multiple backends
 ├── gui/src/              # React components
@@ -99,6 +103,21 @@ packages/v2/
 │   └── storybook/        # Storybook mocks and decorators
 └── lib/src/              # UI-independent utility functions
 ```
+
+## Available backends
+
+The `backend` value in API interfaces/clients and in `queryKey` must be one of these folders under `packages/v2/backend/src/`:
+
+| Backend | Client package | Generated SDK/types |
+| --- | --- | --- |
+| `k9sak` | `@navikt/k9-sak-typescript-client` | yes |
+| `ungsak` | `@navikt/ung-sak-typescript-client` | yes |
+| `k9klage` | `@navikt/k9-klage-typescript-client` | yes |
+| `k9tilbake` | `@navikt/k9-tilbake-typescript-client` | yes |
+| `ungtilbake` | `@navikt/ung-tilbake-typescript-client` | yes |
+| `k9formidling` | — | no, manual client |
+
+`combined/` holds types shared across several backends and is not a backend value. See the `backend-client-generator` skill for creating SDK re-exports and clients per backend.
 
 ## Import Rules
 
@@ -373,10 +392,8 @@ import { MyFeatureApiContext } from './api/MyFeatureApiContext.js';
 const api = useContext(MyFeatureApiContext);
 if (!api) throw new Error('MyFeatureApiContext not provided');
 
-const { data } = useSuspenseQuery({
-  queryKey: ['myFeature', behandlingUuid],
-  queryFn: () => api.getMyData(behandlingUuid),
-});
+// myFeatureQueryOptions er definert med queryOptions() i api/myFeatureQueryOptions.ts
+const { data } = useSuspenseQuery(myFeatureQueryOptions(api, behandlingUuid));
 ```
 
 This eliminates the need for `konverterKodeverkTilKode` at the shell boundary, since the SDK response already uses generated types.

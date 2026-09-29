@@ -1,13 +1,15 @@
 import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useOmPleietrengendeOptions } from './api/OmPleietrengendeQueries.js';
+import { useOmPleietrengendeApi } from './api/OmPleietrengendeApiContext.js';
+import { omPleietrengendeQueryOptions } from './api/omPleietrengendeQueryOptions.js';
 
 interface OmPleietrengendeFaktaIndexProps {
   behandlingUuid: string;
 }
 
 const OmPleietrengendeFaktaIndex = ({ behandlingUuid }: OmPleietrengendeFaktaIndexProps) => {
-  const { data: pleietrengende } = useSuspenseQuery(useOmPleietrengendeOptions(behandlingUuid));
+  const api = useOmPleietrengendeApi();
+  const { data: pleietrengende } = useSuspenseQuery(omPleietrengendeQueryOptions(api, behandlingUuid));
 
   if (!pleietrengende) {
     return <Alert variant="info">Ingen opplysninger om pleietrengende.</Alert>;

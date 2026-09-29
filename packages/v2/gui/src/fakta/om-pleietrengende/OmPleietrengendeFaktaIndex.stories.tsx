@@ -1,23 +1,8 @@
 import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Suspense } from 'react';
+import { withFakeOmPleietrengendeApi } from '@k9-sak-web/gui/storybook/decorators/withFakeOmPleietrengendeApi.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
-import { OmPleietrengendeApiContext } from './api/OmPleietrengendeApiContext.js';
 import OmPleietrengendeFaktaIndex from './OmPleietrengendeFaktaIndex.js';
-
-const withFakeApi = (data: PersonopplysningDto | null): Decorator => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return Story => (
-    <QueryClientProvider client={queryClient}>
-      <OmPleietrengendeApiContext value={{ hentPleietrengende: async () => data }}>
-        <Suspense>
-          <Story />
-        </Suspense>
-      </OmPleietrengendeApiContext>
-    </QueryClientProvider>
-  );
-};
 
 const pleietrengendeMock: PersonopplysningDto = {
   aktoerId: '1234567890123',
@@ -28,6 +13,7 @@ const pleietrengendeMock: PersonopplysningDto = {
 const meta = {
   title: 'gui/fakta/om-pleietrengende/OmPleietrengendeFaktaIndex',
   component: OmPleietrengendeFaktaIndex,
+  decorators: [withFakeOmPleietrengendeApi(pleietrengendeMock)],
   args: {
     behandlingUuid: 'test-behandling-uuid',
   },
@@ -38,7 +24,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  decorators: [withFakeApi(pleietrengendeMock)],
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('heading', { name: 'Om pleietrengende' })).toBeInTheDocument();
     await expect(canvas.getByText('Ola Nordmann')).toBeInTheDocument();
@@ -47,7 +32,7 @@ export const Default: Story = {
 };
 
 export const IngenData: Story = {
-  decorators: [withFakeApi(null)],
+  decorators: [withFakeOmPleietrengendeApi(null)],
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Ingen opplysninger om pleietrengende.')).toBeInTheDocument();
   },
