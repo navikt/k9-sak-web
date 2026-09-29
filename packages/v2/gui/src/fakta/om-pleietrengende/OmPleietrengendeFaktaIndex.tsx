@@ -1,4 +1,4 @@
-import { BodyShort, Heading, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useOmPleietrengendeOptions } from './api/OmPleietrengendeQueries.js';
 
@@ -10,7 +10,7 @@ const OmPleietrengendeFaktaIndex = ({ behandlingUuid }: OmPleietrengendeFaktaInd
   const { data: pleietrengende } = useSuspenseQuery(useOmPleietrengendeOptions(behandlingUuid));
 
   if (!pleietrengende) {
-    return <BodyShort>Ikke hentet inn data.</BodyShort>;
+    return <Alert variant="info">Ingen opplysninger om pleietrengende.</Alert>;
   }
 
   return (

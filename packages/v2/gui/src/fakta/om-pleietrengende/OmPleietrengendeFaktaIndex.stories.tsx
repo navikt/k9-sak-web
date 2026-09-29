@@ -49,6 +49,6 @@ export const Default: Story = {
 export const IngenData: Story = {
   decorators: [withFakeApi(null)],
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Ikke hentet inn data.')).toBeInTheDocument();
+    await expect(canvas.getByText('Ingen opplysninger om pleietrengende.')).toBeInTheDocument();
   },
 };
