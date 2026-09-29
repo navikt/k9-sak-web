@@ -1,6 +1,7 @@
 import React from 'react';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
@@ -22,6 +23,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
   setBehandling: (behandling: Behandling) => void;
+  featureToggles: FeatureToggles;
 }
 
 const TilbakekrevingFakta = ({
@@ -35,6 +37,7 @@ const TilbakekrevingFakta = ({
   valgtFaktaSteg,
   hasFetchError,
   setBehandling,
+  featureToggles,
 }: OwnProps) => {
   const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
 
@@ -58,6 +61,7 @@ const TilbakekrevingFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
+    featureToggles,
   );
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
@@ -73,7 +77,7 @@ const TilbakekrevingFakta = ({
   const endepunkter = valgtPanel
     ? valgtPanel
         .getPanelDef()
-        .getEndepunkter()
+        .getEndepunkter(featureToggles)
         .map(e => ({ key: e }))
     : [];
   const endepunkterUtenCaching = valgtPanel
@@ -112,7 +116,13 @@ const TilbakekrevingFakta = ({
               alleKodeverk,
               fpsakKodeverk,
               submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvTilbakekrevingPaneler, hasFetchError),
+              featureToggles,
+              ...valgtPanel.getKomponentData(
+                rettigheter,
+                dataTilUtledingAvTilbakekrevingPaneler,
+                hasFetchError,
+                featureToggles,
+              ),
             })}
           </ErrorBoundary>
         )}

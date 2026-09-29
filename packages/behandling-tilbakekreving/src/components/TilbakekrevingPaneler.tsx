@@ -2,6 +2,7 @@ import React from 'react';
 
 import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -24,6 +25,7 @@ interface OwnProps {
   harApenRevurdering: boolean;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
+  featureToggles: FeatureToggles;
 }
 
 const TilbakekrevingPaneler = ({
@@ -43,6 +45,7 @@ const TilbakekrevingPaneler = ({
   harApenRevurdering,
   hasFetchError,
   setBehandling,
+  featureToggles,
 }: OwnProps) => (
   <>
     <BehandlingPaVent
@@ -78,6 +81,7 @@ const TilbakekrevingPaneler = ({
       oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       hasFetchError={hasFetchError}
       setBehandling={setBehandling}
+      featureToggles={featureToggles}
     />
   </>
 );

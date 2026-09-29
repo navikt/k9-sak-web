@@ -1,13 +1,15 @@
-import {
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType,
-  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { behandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import {
+  BehandlingVisningsnavn,
+  type BehandlingVisningsnavnType,
+} from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingVisningsnavn.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label, Link } from '@navikt/ds-react';
 import { NavLink, useLocation } from 'react-router';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
+import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 import type { K9UngPeriode } from '../types/PerioderMedBehandlingsId';
 import styles from './behandlingSelected.module.css';
 import {
@@ -16,7 +18,6 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
-import { createPathForSkjermlenke } from '../../../utils/skjermlenke/createPathForSkjermlenke.js';
 
 interface BehandlingSelectedProps {
   opprettetDato: string;
@@ -28,7 +29,7 @@ interface BehandlingSelectedProps {
   søknadsperioder: K9UngPeriode[];
   behandlingTypeKode: string;
   sakstypeKode: string;
-  behandlingVisningsnavn?: ung_sak_kontrakt_behandling_BehandlingVisningsnavn | undefined;
+  behandlingVisningsnavn?: BehandlingVisningsnavnType | undefined;
 }
 
 const BehandlingSelected = ({
@@ -86,8 +87,7 @@ const BehandlingSelected = ({
   ];
 
   const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.some(ytelse => ytelse === sakstypeKode);
-  const erEndringAvBarnetillegg =
-    behandlingVisningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
+  const erEndringAvBarnetillegg = behandlingVisningsnavn === BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>

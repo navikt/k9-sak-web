@@ -4,6 +4,8 @@ import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/Glob
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
+import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
+import { UngFeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/UngFeilutbetalingFaktaBackendClient.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
@@ -49,15 +51,17 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   return (
     <IntlProvider locale="nb" messages={globalMessages}>
       <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-        <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-          <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
-            <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
-              <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
-                {harFeilet || erFerdig ? children : <LoadingPanel />}
-              </NotatBackendClientContext>
-            </AvregningBackendClientContext>
-          </VedtakKlageApiContext>
-        </KlageVurderingApiContext>
+        <FeilutbetalingFaktaApiContext value={new UngFeilutbetalingFaktaBackendClient()}>
+          <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
+            <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+              <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
+                <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
+                  {harFeilet || erFerdig ? children : <LoadingPanel />}
+                </NotatBackendClientContext>
+              </AvregningBackendClientContext>
+            </VedtakKlageApiContext>
+          </KlageVurderingApiContext>
+        </FeilutbetalingFaktaApiContext>
       </UngKodeverkoppslagContext>
     </IntlProvider>
   );
