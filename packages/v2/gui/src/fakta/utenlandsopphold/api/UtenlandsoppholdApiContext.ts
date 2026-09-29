@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-import type { UtenlandsoppholdApi } from './UtenlandsoppholdApi.js';
+import type { UtenlandsoppholdBackendApiType } from './UtenlandsoppholdBackendApiType.js';
 
-export const UtenlandsoppholdApiContext = createContext<UtenlandsoppholdApi | null>(null);
+export const UtenlandsoppholdApiContext = createContext<UtenlandsoppholdBackendApiType | null>(null);
 
-export const useUtenlandsoppholdApi = (): UtenlandsoppholdApi => {
+export const useUtenlandsoppholdApi = (): UtenlandsoppholdBackendApiType => {
   const context = useContext(UtenlandsoppholdApiContext);
   if (!context) {
     throw new Error('useUtenlandsoppholdApi må brukes innenfor en UtenlandsoppholdApiProvider');

@@ -1,11 +1,11 @@
 ---
-name: backend-client-generator
-description: 'Generate BackendClient, BackendApiType, QueryOptions, and SDK re-export files from OpenAPI-generated SDK endpoints. USE FOR: creating new BackendClient classes that wrap SDK calls, defining typed API contracts, generating TanStack Query options, and setting up SDK re-exports. DO NOT USE FOR: modifying existing BackendClients, general v2 architecture questions (use v2-architecture skill), or writing React components.'
+name: v2-api-contract
+description: 'Create the API contract for a v2 component: SDK re-export, BackendApiType, BackendClient, QueryOptions, API context, based on OpenAPI-generated SDK endpoints. USE FOR: creating new BackendClient classes that wrap SDK calls, defining typed API contracts, generating TanStack Query options, wiring the API context. DO NOT USE FOR: modifying existing BackendClients, general v2 architecture questions (use v2-architecture skill), or writing React components.'
 ---
 
-# BackendClient Generator
+# v2 API Contract
 
-Generate a complete set of typed API client files from OpenAPI-generated SDK endpoints in `@navikt/*-typescript-client` packages.
+Generate a complete API contract from OpenAPI-generated SDK endpoints in `@navikt/*-typescript-client` packages: typed client files and the React context that provides the client.
 
 ## Required Input
 
@@ -169,6 +169,19 @@ Rules:
     });
   ```
 
-### Step 8: Verify
+### Step 8: Create the API context
+
+Create `packages/v2/gui/src/<target>/<Domain>ApiContext.ts`:
+
+```typescript
+import { createContext } from 'react';
+import type { <Domain>BackendApiType } from './<Domain>BackendApiType.js';
+
+export const <Domain>ApiContext = createContext<<Domain>BackendApiType | null>(null);
+```
+
+Components read it with `use(<Domain>ApiContext)` and throw if it is missing, then pass `api` to the queryOptions from step 7. The production provider (`<Domain>ApiContext value={new <Domain>BackendClient()}`) is added in `AppConfigResolver` (see the `v2-architecture` skill).
+
+### Step 9: Verify
 
 Run `yarn ts-check` to verify no type errors were introduced.
