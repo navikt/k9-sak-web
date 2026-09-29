@@ -1,9 +1,10 @@
-import { k9_kodeverk_behandling_BehandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { behandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { fagsakYtelsesType as UngFagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingType.js';
 import {
-  ung_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
-  ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  ung_sak_kontrakt_krav_ÅrsakTilVurdering as UngÅrsakTilVurdering,
-} from '@k9-sak-web/backend/ungsak/generated/types.js';
+  ÅrsakTilVurdering as UngÅrsakTilVurdering,
+  type ÅrsakTilVurderingType as UngÅrsakTilVurderingType,
+} from '@k9-sak-web/backend/ungsak/kontrakt/krav/ÅrsakTilVurdering.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React from 'react';
@@ -93,14 +94,14 @@ export const sortBehandlinger = (behandlinger: Behandling[]): Behandling[] =>
     return new Date(b2.opprettet).getTime() - new Date(b1.opprettet).getTime();
   });
 
-export const erUngdomsytelse = (sakstype: string) => sakstype === BehandlingDtoSakstype.UNGDOMSYTELSE;
+export const erUngdomsytelse = (sakstype: string) => sakstype === UngFagsakYtelsesType.UNGDOMSYTELSE;
 
 export const erFørstegangsbehandlingIUngdomsytelsen = (sakstype: string, behandlingType: string) =>
   erUngdomsytelse(sakstype) && behandlingType === BehandlingDtoType.FØRSTEGANGSSØKNAD;
 
 export const filterPerioderByÅrsak = (
   søknadsperioderData: PerioderMedBehandlingsId | undefined,
-  årsak: UngÅrsakTilVurdering,
+  årsak: UngÅrsakTilVurderingType,
 ) => {
   return (
     søknadsperioderData?.perioderMedÅrsak

@@ -1,14 +1,16 @@
 /* eslint-disable max-len */
+import { behandlingResultatType as BehandlingsresultatDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
-  k9_kodeverk_behandling_FagsakYtelseType as BehandlingDtoSakstype,
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-  k9_kodeverk_behandling_BehandlingResultatType as BehandlingsresultatDtoType,
-  k9_sak_kontrakt_ResourceLink_HttpMethod as HttpMethod,
-  type k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+  behandlingType as BehandlingDtoType,
+  behandlingType,
+} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import {
+  fagsakYtelsesType as BehandlingDtoSakstype,
+  fagsakYtelsesType,
+} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import { ResourceLinkHttpMethod as HttpMethod } from '@k9-sak-web/backend/k9sak/kontrakt/ResourceLinkHttpMethod.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, screen, spyOn, userEvent } from 'storybook/test';
 import withKodeverkContext from '../../storybook/decorators/withKodeverkContext.js';
