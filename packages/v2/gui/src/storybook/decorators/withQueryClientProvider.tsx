@@ -12,6 +12,7 @@ const QueryClientForStory = ({
   defaultOptionsOverride?: DefaultOptionsOverride;
   children: ReactNode;
 }) => {
+  // Denne ligger i useState sånn at createQueryClient kun kjøres ved mount av komponenten, og ikke ved hver render.
   const [queryClient] = useState(() =>
     createQueryClient({
       ...defaultOptionsOverride,
@@ -25,7 +26,7 @@ const QueryClientForStory = ({
 };
 
 export const withQueryClientProvider = (defaultOptionsOverride?: DefaultOptionsOverride): Decorator => {
-  // key sørger for ny QueryClient per story, slik at cachet data ikke deles mellom stories
+  // Når man bruker key prop vil React remounte komponenten hver gang key endrer seg, og dermed opprettes en ny QueryClient.
   return (Story, context) => (
     <QueryClientForStory key={context.id} defaultOptionsOverride={defaultOptionsOverride}>
       <Story />
