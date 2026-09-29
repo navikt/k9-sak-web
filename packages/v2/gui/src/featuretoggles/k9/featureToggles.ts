@@ -8,7 +8,6 @@ import { initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatu
 const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
-  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**

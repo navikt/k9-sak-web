@@ -10,7 +10,6 @@ const rootFeatureToggles = {
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
   OVERSTYR_BEREGNING: false,
-  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
   UNG_KLAGE: false,
   UNNTAKSBEHANDLING: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx

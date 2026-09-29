@@ -1,5 +1,5 @@
-import { k9_kodeverk_behandling_BehandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingVisningsnavn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import {
   erAktivitetspengerOpphørsbehandling,
@@ -57,8 +57,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const erUnntaksløype = behandling.type === BehandlingDtoType.UNNTAKSBEHANDLING;
   const opprettet = behandling.opprettet;
   const avsluttet = behandling.avsluttet;
-  const erEndringAvBarnetillegg =
-    behandling.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
+  const erEndringAvBarnetillegg = behandling.visningsnavn === BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
   const visKunStartdato =
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
