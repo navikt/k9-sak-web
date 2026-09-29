@@ -38,7 +38,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 ### Stories
 
 - [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
-- [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>` when the component fetches data
+- [ ] `withFakeApi` decorator provides API context + `<LoadingPanelSuspense>` when the component fetches data — never construct a `QueryClient` / `QueryClientProvider` manually in a story; add `withQueryClientProvider()` from `storybook/decorators/withQueryClientProvider.js` to `meta.decorators` instead (it applies the shared query-client defaults, e.g. `retry: false`)
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
 - [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
 - [ ] When mocking backend data, use generated DTO types (flat string codes) — not old kodeverk objects

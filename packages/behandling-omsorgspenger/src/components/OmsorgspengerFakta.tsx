@@ -12,7 +12,7 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { isBefore, parse } from 'date-fns';
 import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omsorgspengerBehandlingApi';
@@ -20,6 +20,7 @@ import faktaPanelDefinisjoner, {
   faktaPanelDefinisjonerUtenOmsorgenFor,
 } from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
@@ -156,7 +157,7 @@ const OmsorgspengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <Suspense fallback={<LoadingPanel />}>
+          <LoadingPanelSuspense>
             <ErrorBoundary>
               {valgtPanel.getPanelDef().getKomponent({
                 ...faktaData,
@@ -172,7 +173,7 @@ const OmsorgspengerFakta = ({
                 featureToggles,
               })}
             </ErrorBoundary>
-          </Suspense>
+          </LoadingPanelSuspense>
         )}{' '}
       </SideMenuWrapper>
     );

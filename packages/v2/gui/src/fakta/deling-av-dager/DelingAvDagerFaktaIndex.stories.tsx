@@ -1,23 +1,20 @@
 import type { RammevedtakDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/RammevedtakDto.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
+import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import { DelingAvDagerApiContext } from './api/DelingAvDagerApiContext.js';
 import DelingAvDagerFaktaIndex from './DelingAvDagerFaktaIndex.js';
 
-const withFakeApi = (rammevedtak: RammevedtakDto[]): Decorator => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return Story => (
-    <QueryClientProvider client={queryClient}>
-      <DelingAvDagerApiContext value={{ hentRammevedtak: async () => rammevedtak }}>
-        <Suspense>
-          <Story />
-        </Suspense>
-      </DelingAvDagerApiContext>
-    </QueryClientProvider>
+const withFakeApi =
+  (rammevedtak: RammevedtakDto[]): Decorator =>
+  Story => (
+    <DelingAvDagerApiContext value={{ hentRammevedtak: async () => rammevedtak }}>
+      <Suspense>
+        <Story />
+      </Suspense>
+    </DelingAvDagerApiContext>
   );
-};
 
 const fårRammevedtak = (
   type: 'OverføringFår' | 'FordelingFår' | 'KoronaOverføringFår',
@@ -44,6 +41,7 @@ const girRammevedtak = (
 const meta = {
   title: 'gui/fakta/deling-av-dager/DelingAvDagerFaktaIndex',
   component: DelingAvDagerFaktaIndex,
+  decorators: [withQueryClientProvider()],
   args: {
     behandlingUuid: 'test-behandling-uuid',
   },
