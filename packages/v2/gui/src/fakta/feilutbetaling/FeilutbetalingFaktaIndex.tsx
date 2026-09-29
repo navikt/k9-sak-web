@@ -49,8 +49,8 @@ const buildDefaultValues = (
 ): FeilutbetalingFormValues => ({
   begrunnelse: decodeHtmlEntity(begrunnelse ?? '') ?? '',
   behandlePerioderSamlet: false,
-  perioder: [...perioder]
-    .sort((a, b) => (a.fom ?? '').localeCompare(b.fom ?? ''))
+  perioder: perioder
+    .toSorted((a, b) => (a.fom ?? '').localeCompare(b.fom ?? ''))
     .map(p => ({
       fom: p.fom ?? '',
       tom: p.tom ?? '',
