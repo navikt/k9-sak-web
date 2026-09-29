@@ -3,7 +3,7 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef, VersjonsvelgerV1V2 } from '@k9-sak-web/behandling-felles';
 import { AvregningProsessIndex as AvregningProsessIndexV2 } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
@@ -15,7 +15,21 @@ class PanelDef extends ProsessStegPanelDef {
     if (props.featureToggles?.BRUK_V2_AVREGNING) {
       const deepCopyProps = JSON.parse(JSON.stringify(props));
       konverterKodeverkTilKode(deepCopyProps, false);
-      return <AvregningProsessIndexV2 {...props} {...deepCopyProps} />;
+      return (
+        <VersjonsvelgerV1V2
+          v1={<AvregningProsessIndex {...props} />}
+          v2={
+            <AvregningProsessIndexV2
+              fagsak={deepCopyProps.fagsak}
+              behandling={deepCopyProps.behandling}
+              aksjonspunkter={deepCopyProps.aksjonspunkter}
+              simuleringResultat={deepCopyProps.simuleringResultat}
+              tilbakekrevingvalg={deepCopyProps.tilbakekrevingvalg}
+              isReadOnly={props.isReadOnly}
+            />
+          }
+        />
+      );
     }
     return <AvregningProsessIndex {...props} />;
   };

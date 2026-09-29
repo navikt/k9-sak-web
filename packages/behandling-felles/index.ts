@@ -7,6 +7,7 @@ export { default as BehandlingHenlagtPanel } from './src/components/BehandlingHe
 export { default as ProsessStegPanel } from './src/components/ProsessStegPanel';
 export { default as ReduxFormStateCleaner } from './src/components/ReduxFormStateCleaner';
 export { default as ProsessStegIkkeBehandletPanel } from './src/components/ProsessStegIkkeBehandletPanel';
+export { default as VersjonsvelgerV1V2 } from './src/components/VersjonsvelgerV1V2';
 export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
 export { default as FatterVedtakStatusModal } from './src/components/vedtak/FatterVedtakStatusModal';
 

@@ -8,8 +8,6 @@ import { initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatu
 const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
-  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
-  NORMALARBEIDSTID_UTTAK: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
@@ -27,10 +25,11 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_AVREGNING: true,
   BRUK_V2_FEILUTBETALING: true,
   PROSESS_MENY_V2: true,
-  REVURDERING_FRA_STEG_V2: true,
+  DELVIS_REVURDERING_MEDISINSK_VILKAR: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
+  NORMALARBEIDSTID_UTTAK: true,
 });
 
 /**
@@ -43,5 +42,4 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
   SKJUL_PROSESS_MENY_V2_VELGER: true,
-  REVURDERING_FRA_STEG_V2: true,
 });

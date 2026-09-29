@@ -41,13 +41,15 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 #### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
+- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE` 
+    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509 
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
 - fakta-feilutbetaling (Aleksei)
 - fakta-direkte-overgang (Aleksei)
+- fakta-uttak (Vebjørn)
 ---
 
 ### Trenger avklaringer
@@ -74,7 +76,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
 | `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
 | `fakta-om-pleietrengende`              | 51      | 1 (psb-sluttfase)                                      | Enkel visning av opplysninger om den pleietrengende            |
-| `fakta-uttak`                          | 38      | 2 (oms, unntak)                                        | Enkel visning av uttaksdata                                    |
 | `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
 | `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
 | `prosess-fortsatt-medlemskap`          | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |

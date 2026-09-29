@@ -1,44 +1,69 @@
 ---
 name: v2-architecture
-description: 'Patterns and rules for writing code in packages/v2/. USE FOR: creating new components in v2/, using the OpenAPI-generated backend client, structuring API contracts, import conventions with .js suffix, and migrating old code to v2. 
+description: >-
+  Patterns and rules for writing code in packages/v2/. USE FOR: creating new
+  components in v2/, using the OpenAPI-generated backend client, structuring
+  API contracts, import conventions with .js suffix, and migrating old code
+  to v2.
 ---
 
 # v2 Architecture
 
 Code in `packages/v2/` follows stricter TypeScript rules and different conventions than the rest of the monorepo.
 
-## Migration Checklist
+## v2 development checklist
 
-Use this when migrating any old fakta/prosess panel to v2. Work through it in order — re-iterate until every box is checked.
+Use these sections for new v2 components and for migrations. Complete the additional migration checklist below only when replacing an existing panel.
 
-### Backend types
+### Backend types (when using backend data)
 
 - [ ] Stable DTO re-export created in `packages/v2/backend/src/k9sak/kontrakt/<domain>/`
 - [ ] Kodeverk enum re-exports created in `packages/v2/backend/src/k9sak/kodeverk/<path>/` for each enum used
 
-### API contract
+### API contract (when calling a backend)
 
 - [ ] Interface defined in `packages/v2/gui/src/fakta/<feature>/api/<Feature>Api.ts`
 - [ ] Context created in `packages/v2/gui/src/fakta/<feature>/api/<Feature>ApiContext.ts`
 - [ ] Production client `K9<Feature>BackendClient` calls the generated SDK function — never a raw URL
-- [ ] `getEndepunkter` **kept** in the old `FaktaPanelDef` for v1 backwards compatibility (removed only when deleting v1 code)
 
 ### v2 component
 
-- [ ] Component fetches its own data via `useSuspenseQuery` + API context — no data received as props from the shell
-- [ ] Uses `K9KodeverkoppslagContext` for kodeverk lookups — no `alleKodeverk` / `kodeverk` prop
+- [ ] When the component is the sole consumer of an endpoint, it fetches its own data via `useSuspenseQuery` + API context instead of receiving that data from the shell
+- [ ] If kodeverk lookups are needed, uses `K9KodeverkoppslagContext` — no `alleKodeverk` / `kodeverk` prop
 - [ ] CSS module class names use bracket notation: `styles['myClass']` (required by `noPropertyAccessFromIndexSignature`)
 - [ ] All imports use `.js` suffix
 - [ ] No imports from non-v2 packages (`@k9-sak-web/utils`, `@k9-sak-web/types`, `@k9-sak-web/shared-components`, etc.)
+- [ ] Avoid type assertions (`as Type`, especially `as any` / `as unknown as Type`) and non-null assertions (`!`) in both code and tests. Prefer inferred types, `satisfies`, typed helpers and explicit guards; handle invalid or missing values rather than asserting them away.
+
+### Stories
+
+- [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
+- [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>` when the component fetches data
+- [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
+- [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
+- [ ] When mocking backend data, use generated DTO types (flat string codes) — not old kodeverk objects
+- [ ] For display components, prefer Storybook stories with `play` tests over React Testing Library (RTL) tests. When migrating an existing component, replace its RTL tests only after the stories cover the same rendering states and interactions. Keep pure logic tests, such as grouping and data transformations, in Vitest.
+
+### Verification
+
+- [ ] `yarn ts-check` passes with zero errors
+- [ ] Run the affected Storybook `play` tests for display components; run Vitest (`yarn test`) for logic tests
+
+## Migration checklist
+
+Only apply these steps when replacing an existing fakta/prosess panel. Work through them in order.
 
 ### Feature toggle
 
 - [ ] `BRUK_V2_<FEATURE>: false` added to `rootFeatureToggles` in `FeatureToggles.ts`
-- [ ] Toggle enabled in `k9SpecificFeatureToggles` in `k9/featureToggles.ts`
+- [ ] Toggle enabled in `qFeatureToggles` in `k9/featureToggles.ts` for Q; after validation, remove the toggle and v1 code together so v2 becomes the default in Q and prod
+- [ ] Ask the user whether they want a v1/v2 toggle using `VersjonsvelgerV1V2` for manual regression testing. Only add the versjonsvelger if they say yes.
 
 ### FaktaPanelDef wiring (one per behandling package)
 
 - [ ] `getKomponent` is toggle-guarded — v2 branch passes only what the component needs (typically `behandlingUuid`), v1 branch unchanged
+- [ ] v2 branch passes props explicitly by name — never `{...props}` / `{...deepCopyProps}` spread onto the v2 component
+- [ ] `getEndepunkter` **kept** in the old `FaktaPanelDef` for v1 backwards compatibility (removed only when deleting v1 code)
 - [ ] Compile-time deletion guard added to the **old v1 package files** — not the `FaktaPanelDef` (see "Marking old files for deletion" section below)
 
 ### AppConfigResolver
@@ -50,18 +75,9 @@ Use this when migrating any old fakta/prosess panel to v2. Work through it in or
 
 - [ ] `<Suspense fallback={<LoadingPanel />}>` wraps the `<ErrorBoundary>` in each behandling `*Fakta.tsx` that renders the panel
 
-### Stories
+### Comparison story (optional)
 
-- [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
-- [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>`
-- [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
-- [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
-- [ ] Mock data uses generated DTO types (flat string codes) — not old kodeverk objects
-
-### Verification
-
-- [ ] `yarn ts-check` passes with zero errors
-- [ ] `yarn test` passes for affected packages
+- [ ] If the user wants a v1/v2 versjonsvelger, ask as a separate follow-up whether they also want a comparison story for visual regression testing. If yes, render both versions with matching data through the feature-toggled `FaktaPanelDef` and `VersjonsvelgerV1V2`; keep the v2 component's own story independent. Add a compile-time deletion guard tied to the feature toggle in the comparison story so it is removed with the v1 branch.
 
 ## Directory Structure
 
@@ -126,7 +142,7 @@ import { something } from '@k9-sak-web/types';
 
 Generated types and SDK functions come from published client packages (`@navikt/k9-sak-typescript-client`, `@navikt/k9-klage-typescript-client`, etc.) and are re-exported via `@k9-sak-web/backend` using `export *`. All types and SDK functions are available through the `@k9-sak-web/backend` imports. When searching for available types/endpoints, search in `node_modules/@navikt/k9-sak-typescript-client/src/types.gen.ts` and `sdk.gen.ts` — the re-export layer (`packages/v2/backend/src/k9sak/generated/`) uses `export *` so everything is available, but the source files are the definitive reference.
 
-**Never import directly from `generated/types.js`.** The generated type names (e.g. `k9_sak_kontrakt_uttak_UtenlandsoppholdDto`) can change when the OpenAPI spec changes. Instead, create stable re-exports under `packages/v2/backend/src/k9sak/` with friendly aliases, then always import from those:
+**GUI components should not import directly from `generated/types.js`.** The generated type names (e.g. `k9_sak_kontrakt_uttak_UtenlandsoppholdDto`) can change when the OpenAPI spec changes. Instead, create stable re-exports under `packages/v2/backend/src/k9sak/` with friendly aliases, then import from those. Backend re-export files may import from `generated/types.js` or directly from the published client:
 
 **DTO types** — re-export in `kontrakt/<domain>/`:
 
@@ -284,32 +300,19 @@ All migrations from old packages to v2 MUST be guarded by a feature toggle so bo
 
 1. Add `BRUK_V2_MY_FEATURE: false` to `rootFeatureToggles` in [FeatureToggles.ts](../../../packages/v2/gui/src/featuretoggles/FeatureToggles.ts)
 2. In [k9/featureToggles.ts](../../../packages/v2/gui/src/featuretoggles/k9/featureToggles.ts), add it to `qFeatureToggles` with `true` to enable in Q
-3. Once stable in prod, move the toggle to `k9SpecificFeatureToggles` and delete the old implementation
+3. After validating v2 in Q, remove the toggle and old v1 implementation together so v2 becomes the default in both Q and prod.
 
 ### Using a toggle in a FaktaPanelDef
 
 The old-style `FaktaPanelDef` classes receive `props.featureToggles` from the behandling framework.
 
-When passing v1 data into a v2 component, `konverterKodeverkTilKode` is **required** at the stitching boundary. Old-style props contain kodeverk objects (`{ kode, kodeverk }`) but v2 components expect flat string codes:
+If the v2 component fetches generated DTOs itself, pass only what it needs (for example `behandlingUuid`); no kodeverk conversion is needed at the shell boundary. If the v2 component must receive legacy props containing kodeverk objects (`{ kode, kodeverk }`), map the needed values to the v2 prop types explicitly. Use `konverterKodeverkTilKode` at the boundary only when such legacy data actually needs recursive conversion; it converts two-field kodeverk objects but leaves objects with additional fields unchanged. Do not use `JSON.parse(JSON.stringify(props))` as a default copying or typing strategy.
 
-```typescript
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-
-getKomponent = props => {
-  if (props.featureToggles?.BRUK_V2_MY_FEATURE) {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps, false);
-    return <MyFeatureV2Index {...deepCopyProps} />;
-  }
-  return <OldMyFeature {...props} />;
-};
-```
-
-`konverterKodeverkTilKode` recursively converts 2-attr kodeverk objects (`{ kode, kodeverk }`) to plain strings (the `kode` value). Objects with 3+ attrs (e.g. `{ kode, kodeverk, namn }`) are kept as-is. Adjust your v2 component types accordingly.
+**Never spread `{...props}` or `{...deepCopyProps}` onto the v2 component.** Pass each prop the component's typed interface declares, by name. Spreading the whole legacy props object defeats the v2 component's prop typing and silently forwards props it never asked for. The `{...props}` on the **old** v1 branch is fine to leave as-is.
 
 ### Marking old files for deletion — compile-time guard
 
-Add a type assertion in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`). The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
+Add a compile-time type lookup in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`).  The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
 
 This causes a TypeScript compile error when the toggle key is removed from `FeatureToggles`, forcing cleanup before the build passes:
 
@@ -405,13 +408,11 @@ With `"noPropertyAccessFromIndexSignature": true`, CSS module class names must u
 
 ## noUncheckedIndexedAccess — array index access returns T | undefined
 
-With `"noUncheckedIndexedAccess": true`, `array[n]` returns `T | undefined`. Use `array[n]!` when you know the index is valid:
+With `"noUncheckedIndexedAccess": true`, `array[n]` returns `T | undefined`. Check that the element exists instead of using `!`, including in stories and tests:
 
 ```typescript
-// ✅ In stories/tests where the index is guaranteed
-utenlandsoppholdMock.perioder[0]!;
-
-// ✅ In production code: guard instead
 const first = items[0];
-if (!first) return null;
+if (first === undefined) {
+  throw new Error('Expected at least one item');
+}
 ```
