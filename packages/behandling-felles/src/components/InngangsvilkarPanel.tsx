@@ -5,18 +5,18 @@ import {
   NestedIntlProvider,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Link, Tabs } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import styles from './inngangsvilkarPanel.module.css';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface OwnProps {
   behandling: Behandling;
@@ -27,6 +27,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   useMultipleRestApi: (endpoints: EndpointData[], options: Options) => RestApiData<any>;
   featureToggles: FeatureToggles | undefined;
+  saksnummer: Fagsak['saksnummer'];
 }
 
 const InngangsvilkarPanel = ({
@@ -38,6 +39,7 @@ const InngangsvilkarPanel = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   useMultipleRestApi,
   featureToggles,
+  saksnummer,
 }: OwnProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const filteredPanels = prosessStegData.filter(stegData => stegData.getKomponentData);
@@ -136,6 +138,7 @@ const InngangsvilkarPanel = ({
                     submitCallback,
                     visAllePerioder,
                     featureToggles,
+                    saksnummer,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
@@ -153,6 +156,7 @@ const InngangsvilkarPanel = ({
                     submitCallback,
                     visAllePerioder,
                     featureToggles,
+                    saksnummer,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
