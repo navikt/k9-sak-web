@@ -4,6 +4,7 @@ import {
   ung_kodeverk_behandling_BehandlingType as BehandlingDtoType,
   ung_sak_kontrakt_krav_ÅrsakTilVurdering as UngÅrsakTilVurdering,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, ExclamationmarkTriangleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
@@ -31,7 +32,7 @@ export const getFormattedSøknadserioder = (søknadsperioder: K9UngPeriode[], vi
         {index > 0 && ', '}
         <DateLabel dateString={periode.fom} />
         {` - `}
-        <DateLabel dateString={periode.tom} />
+        {periode.tom !== TIDENES_ENDE && <DateLabel dateString={periode.tom} />}
       </React.Fragment>
     );
   });
