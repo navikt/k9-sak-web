@@ -120,9 +120,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [withK9Kodeverkoppslag(), withFakeApi(fakta, årsaker)],
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('15.04.2024')).toBeInTheDocument();
-    await expect(canvas.getByText('Feilutbetaling med tilbakekreving')).toBeInTheDocument();
-    await expect(canvas.getAllByRole('option', { name: 'Annet' })).toHaveLength(3);
+    await expect(await canvas.findByText('15.04.2024')).toBeInTheDocument();
+    await expect(await canvas.findByText('Feilutbetaling med tilbakekreving')).toBeInTheDocument();
+    await expect(await canvas.findAllByRole('option', { name: 'Annet' })).toHaveLength(3);
   },
 };
 
@@ -135,7 +135,7 @@ export const ReadOnly: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
     await expect(canvas.queryByRole('checkbox', { name: 'Behandle alle perioder samlet' })).not.toBeInTheDocument();
-    await expect(canvas.getAllByRole('option', { name: 'Annet - fritekst' })).toHaveLength(2);
+    await expect(await canvas.findAllByRole('option', { name: 'Annet - fritekst' })).toHaveLength(2);
   },
 };
 
@@ -146,6 +146,6 @@ export const MedEksisterendeÅrsaker: Story = {
 export const UtenPerioder: Story = {
   decorators: [withK9Kodeverkoppslag(), withFakeApi(faktaUtenPerioder, årsaker)],
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Ingen perioder med feilutbetaling')).toBeInTheDocument();
+    await expect(await canvas.findByRole('cell', { name: 'Ingen perioder med feilutbetaling' })).toBeInTheDocument();
   },
 };
