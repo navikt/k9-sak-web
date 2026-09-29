@@ -1,4 +1,5 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Resultat } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/Resultat.js';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
@@ -8,7 +9,6 @@ import { FakeOmsorgenForBackendApi } from '../../storybook/mocks/FakeOmsorgenFor
 import type { OmsorgenForApi } from './api/OmsorgenForApi.js';
 import { OmsorgenForApiContext } from './api/OmsorgenForApiContext.js';
 import { OmsorgenFor } from './src/OmsorgenFor.js';
-import Vurderingsresultat from './src/types/Vurderingsresultat.js';
 
 const api = new FakeOmsorgenForBackendApi();
 
@@ -66,7 +66,7 @@ export const BekrefterVurderingAvPeriode: Story = {
         [
           {
             periode: { fom: '2021-03-20', tom: '2021-03-25' },
-            resultat: Vurderingsresultat.OPPFYLT,
+            resultat: Resultat.OPPFYLT,
             begrunnelse: 'Søker bor sammen med barnet i perioden',
           },
         ],
@@ -100,7 +100,7 @@ export const LeggerTilFosterbarnOgBekrefter: Story = {
         [
           {
             periode: { fom: '2021-03-20', tom: '2021-03-25' },
-            resultat: Vurderingsresultat.OPPFYLT,
+            resultat: Resultat.OPPFYLT,
             begrunnelse: 'Søker bor sammen med barnet i perioden',
           },
         ],

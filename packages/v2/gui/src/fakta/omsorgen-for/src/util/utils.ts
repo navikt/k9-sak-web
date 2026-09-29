@@ -1,4 +1,3 @@
-import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Resultat } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/Resultat.js';
 import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
 import type { OmsorgenForOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForOversiktDto.js';
@@ -6,25 +5,6 @@ import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 
 import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import * as messages from '../../nb_NO';
-
-type TeksterForSakstype = Omit<typeof messages.omsorgspenger, 'vurdering.hjemmel.hjelpetekst'> &
-  Partial<Pick<typeof messages.omsorgspenger, 'vurdering.hjemmel.hjelpetekst'>>;
-
-export const teksterForSakstype = (sakstype?: FagsakYtelsesType): TeksterForSakstype => {
-  if (sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
-    return messages.pleiepenger;
-  }
-
-  if (sakstype === fagsakYtelsesType.OMSORGSPENGER) {
-    return messages.omsorgspenger;
-  }
-  if (sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
-    return messages.opplaeringspenger;
-  }
-  return messages.pleiepenger;
-};
-
 const periodeManglerVurdering = (periode: OmsorgenForDto) =>
   periode.resultat === Resultat.IKKE_VURDERT && periode.resultatEtterAutomatikk === Resultat.IKKE_VURDERT;
 

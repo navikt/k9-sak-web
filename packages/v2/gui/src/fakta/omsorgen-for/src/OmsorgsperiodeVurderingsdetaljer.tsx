@@ -9,7 +9,7 @@ import { BodyShort, Box, Button, Label, Tag } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
 import Relasjon from './types/Relasjon';
-import { erAutomatiskVurdert, erIkkeOppfylt, erManueltVurdert, erOppfylt, teksterForSakstype } from './util/utils.js';
+import { erAutomatiskVurdert, erIkkeOppfylt, erManueltVurdert, erOppfylt } from './util/utils.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: OmsorgenForDto;
@@ -27,24 +27,29 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   sakstype,
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
-  const tekster = teksterForSakstype(sakstype);
-  const begrunnelseRenderer = () => {
-    let label = (
-      <Label size="small">
-        {tekster['vurdering.hjemmel']} <Lovreferanse>{tekster['vurdering.paragraf'] ?? ''}</Lovreferanse>
-      </Label>
-    );
-    let begrunnelse = '';
+  const hjemmel = erOMP ? 'Vurder om søker har omsorg for barn etter' : 'Vurder om søker har omsorgen for barnet etter';
+  const paragraf = erOMP ? '§ 9-5' : sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER ? '§ 9-14' : '§ 9-10, første ledd';
+  const automatiskVurdert = erAutomatiskVurdert(omsorgsperiode);
+  const label = automatiskVurdert ? (
+    <Label size="small">Automatisk vurdert</Label>
+  ) : (
+    <Label size="small">
+      {hjemmel} <Lovreferanse>{paragraf}</Lovreferanse>
+    </Label>
+  );
+  const finnBegrunnelse = (): string => {
     if (erManueltVurdert(omsorgsperiode)) {
-      begrunnelse = omsorgsperiode.begrunnelse || '';
-    } else if (erAutomatiskVurdert(omsorgsperiode)) {
-      if (!erOMP) {
-        begrunnelse = registrertForeldrerelasjon
-          ? 'Søker er folkeregistrert forelder'
-          : 'Søker er ikke folkeregistrert forelder';
-      }
-      label = <Label size="small">Automatisk vurdert</Label>;
+      return omsorgsperiode.begrunnelse || '';
     }
+    if (automatiskVurdert && !erOMP) {
+      return registrertForeldrerelasjon
+        ? 'Søker er folkeregistrert forelder'
+        : 'Søker er ikke folkeregistrert forelder';
+    }
+    return '';
+  };
+  const begrunnelse = finnBegrunnelse();
+  const begrunnelseRenderer = () => {
     return (
       <>
         <LabelledContent

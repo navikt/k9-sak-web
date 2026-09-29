@@ -1,4 +1,5 @@
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Resultat } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/Resultat.js';
 import type { NorskIdentDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/NorskIdentDto.js';
 import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
@@ -13,10 +14,9 @@ import { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { PeriodpickerList } from '../../../shared/periodPickerList/PeriodpickerList';
 import Relasjon from './types/Relasjon';
-import Vurderingsresultat from './types/Vurderingsresultat';
 import type { VurderingSubmitValues } from './types/VurderingSubmitValues';
 import getPeriodDifference from './util/getPeriodDifference';
-import { prettifyPeriode, teksterForSakstype } from './util/utils.js';
+import { prettifyPeriode } from './util/utils.js';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
 
 export enum FieldName {
@@ -69,7 +69,11 @@ const VurderingAvOmsorgsperioderForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const erOLP = sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER;
-  const tekster = teksterForSakstype(sakstype);
+  const hjemmel = erOMP ? 'Vurder om søker har omsorg for barn etter' : 'Vurder om søker har omsorgen for barnet etter';
+  const paragraf = erOMP ? '§ 9-5' : erOLP ? '§ 9-14' : '§ 9-10, første ledd';
+  const spørsmål = erOMP
+    ? 'Er vilkåret oppfylt for denne perioden?'
+    : 'Har søker omsorgen for barnet i denne perioden?';
   const formMethods = useForm({
     defaultValues: {
       [FieldName.PERIODER]: omsorgsperiode.periode ? [omsorgsperiode.periode] : [],
@@ -94,14 +98,14 @@ const VurderingAvOmsorgsperioderForm = ({
       if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
         vurdertePerioder = perioder.map(periode => ({
           periode,
-          resultat: Vurderingsresultat.OPPFYLT,
+          resultat: Resultat.OPPFYLT,
           begrunnelse,
         }));
 
         const resterendePerioder = finnResterendePerioder(perioder, omsorgsperiode.periode);
         const perioderUtenOmsorg = resterendePerioder.map(periode => ({
           periode,
-          resultat: Vurderingsresultat.IKKE_OPPFYLT,
+          resultat: Resultat.IKKE_OPPFYLT,
           begrunnelse,
         }));
         vurdertePerioder = vurdertePerioder.concat(perioderUtenOmsorg);
@@ -109,10 +113,7 @@ const VurderingAvOmsorgsperioderForm = ({
         vurdertePerioder = [
           {
             periode: omsorgsperiode.periode,
-            resultat:
-              harSøkerOmsorgenForIPeriode === RadioOptions.HELE
-                ? Vurderingsresultat.OPPFYLT
-                : Vurderingsresultat.IKKE_OPPFYLT,
+            resultat: harSøkerOmsorgenForIPeriode === RadioOptions.HELE ? Resultat.OPPFYLT : Resultat.IKKE_OPPFYLT,
             begrunnelse,
           },
         ];
@@ -182,8 +183,13 @@ const VurderingAvOmsorgsperioderForm = ({
                 control={formMethods.control}
                 label={
                   <>
-                    {tekster['vurdering.hjemmel']} <Lovreferanse>{tekster['vurdering.paragraf'] ?? ''}</Lovreferanse>
-                    {erOMP && <p>{tekster['vurdering.hjemmel.hjelpetekst']}</p>}
+                    {hjemmel} <Lovreferanse>{paragraf}</Lovreferanse>
+                    {erOMP && (
+                      <p>
+                        Hvis søker ikke oppfyller vilkåret etter § 9-5, så skal vilkåret likevel settes oppfylt dersom
+                        søker kan ha fått fordelt eller overført dager etter § 9-6, femte og sjette ledd
+                      </p>
+                    )}
                   </>
                 }
               />
@@ -191,7 +197,7 @@ const VurderingAvOmsorgsperioderForm = ({
             <Box marginBlock="space-8 space-0">
               <RhfRadioGroup
                 control={formMethods.control}
-                legend={tekster['vurdering.harOmsorgenFor']}
+                legend={spørsmål}
                 name={FieldName.HAR_SØKER_OMSORGEN_FOR_I_PERIODE}
                 validate={[required]}
                 disabled={readOnly}
