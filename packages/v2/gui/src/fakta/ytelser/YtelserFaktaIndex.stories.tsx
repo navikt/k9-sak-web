@@ -85,15 +85,14 @@ export const Default: Story = {};
 export const DetaljerÅpne: Story = {
   decorators: [withFakeApi(ytelserDetaljerAapne)],
   play: async ({ canvasElement }) => {
-    let firstPeriod: HTMLElement | null = null;
     await waitFor(() => {
       const period = canvasElement.querySelector('[data-timeline-period="true"]');
       if (!(period instanceof HTMLElement)) {
         throw new Error('Fant ikke noen tidslinjeperiode');
       }
-      firstPeriod = period;
     });
 
+    const firstPeriod = canvasElement.querySelector('[data-timeline-period="true"]');
     if (!firstPeriod) {
       throw new Error('Fant ikke noen tidslinjeperiode');
     }
