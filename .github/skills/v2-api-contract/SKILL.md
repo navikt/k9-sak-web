@@ -19,12 +19,12 @@ Ask the user for:
 
 ## Backend → Client Package Mapping
 
-| Backend | Client package | Import prefix |
-|---------|---------------|---------------|
-| `ungsak` | `@navikt/ung-sak-typescript-client` | `@k9-sak-web/backend/ungsak/` |
-| `k9sak` | `@navikt/k9-sak-typescript-client` | `@k9-sak-web/backend/k9sak/` |
-| `k9klage` | `@navikt/k9-klage-typescript-client` | `@k9-sak-web/backend/k9klage/` |
-| `k9tilbake` | `@navikt/k9-tilbake-typescript-client` | `@k9-sak-web/backend/k9tilbake/` |
+| Backend      | Client package                          | Import prefix                     |
+| ------------ | --------------------------------------- | --------------------------------- |
+| `ungsak`     | `@navikt/ung-sak-typescript-client`     | `@k9-sak-web/backend/ungsak/`     |
+| `k9sak`      | `@navikt/k9-sak-typescript-client`      | `@k9-sak-web/backend/k9sak/`      |
+| `k9klage`    | `@navikt/k9-klage-typescript-client`    | `@k9-sak-web/backend/k9klage/`    |
+| `k9tilbake`  | `@navikt/k9-tilbake-typescript-client`  | `@k9-sak-web/backend/k9tilbake/`  |
 | `ungtilbake` | `@navikt/ung-tilbake-typescript-client` | `@k9-sak-web/backend/ungtilbake/` |
 
 ## Workflow
@@ -40,6 +40,7 @@ node_modules/<client-package>/src/sdk.gen.ts
 Where `<client-package>` is the full package name from the table above (e.g., `@navikt/ung-sak-typescript-client`).
 
 Read the function signatures for each requested endpoint. Note:
+
 - The HTTP method (GET/POST/PUT/DELETE)
 - The `Options<XxxData, ThrowOnError>` parameter type
 - The response type (e.g. `XxxResponses`)
@@ -47,6 +48,7 @@ Read the function signatures for each requested endpoint. Note:
 ### Step 2: Read the Types
 
 In `node_modules/<client-package>/src/types.gen.ts`, find:
+
 - The `XxxData` type — contains `query` and/or `body` fields showing the request shape
 - The response type — the actual DTO returned
 
@@ -71,11 +73,13 @@ For each DTO type used in the API, create a re-export file at:
 `packages/v2/backend/src/<backend>/kontrakt/<domain>/<TypeName>.ts`
 
 Pattern A — single type re-export with alias:
+
 ```typescript
 export type { <namespace_prefix_TypeName> as <TypeName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
 ```
 
 Pattern B — const enum + type (for string union enums):
+
 ```typescript
 export { <namespace_prefix_EnumName> as <EnumName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
 ```
@@ -89,16 +93,17 @@ Create `packages/v2/gui/src/<target>/<Domain>BackendApiType.ts`:
 ```typescript
 import type { <Type1> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type1>.js';
 import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type2>.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export type <Domain>BackendApiType = {
-  readonly backend: '<backend>';
+export interface <Domain>BackendApiType extends BackendTilhørighet {
   <methodName>(param1: string): Promise<ReturnType>;
   <methodName2>(param1: string, param2: number): Promise<void>;
-};
+}
 ```
 
 Rules:
-- Include `readonly backend: '<backend>'` as first field
+
+- Extend `BackendTilhørighet` from `packages/v2/gui/src/utils/BackendTilhørighet.ts`. It declares `readonly backend`; the client sets the literal value, which must be one of `BackendNavn` (`k9sak`, `k9klage`, `k9tilbake`, `ungsak`, `ungtilbake`)
 - Method names should be descriptive (e.g. `getKontrollerInntekt`, not `kontroll_hentKontrollerInntekt`)
 - GET endpoints return `Promise<DtoType>`
 - POST/PUT endpoints that mutate return `Promise<void>` (unless they return data)
@@ -106,7 +111,9 @@ Rules:
 
 ### Step 6: Create BackendClient
 
-Create `packages/v2/gui/src/<target>/<Domain>BackendClient.ts`:
+`<Backend>` below is the full backend name in PascalCase: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake` (matching `readonly backend`). Always name the client `<Backend><Domain>BackendClient`, also when only one backend exists. `readonly backend` (typed by `BackendTilhørighet`) is used as the last element in `queryKey`, so instances against different backends get separate cache entries. If the component is shared between K9 and Ung, keep one `<Domain>BackendApiType` and create one client per backend.
+
+Create `packages/v2/gui/src/<target>/<Backend><Domain>BackendClient.ts`:
 
 ```typescript
 import type { <RequestType> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<RequestType>.js';
@@ -116,7 +123,7 @@ import {
 } from '@k9-sak-web/backend/<backend>/sdk/<Domain>Sdk.js';
 import { type <Domain>BackendApiType } from './<Domain>BackendApiType.js';
 
-export class <Domain>BackendClient implements <Domain>BackendApiType {
+export class <Backend><Domain>BackendClient implements <Domain>BackendApiType {
   readonly backend = '<backend>';
 
   async <methodName>(param1: string) {
@@ -130,6 +137,7 @@ export class <Domain>BackendClient implements <Domain>BackendApiType {
 ```
 
 Rules:
+
 - `readonly backend = '<backend>'` — literal string type
 - Every SDK call is awaited and `.data` is extracted for GET endpoints
 - POST/PUT calls may not return `.data` if response is void
@@ -157,6 +165,7 @@ export const <queryName>QueryOptions = (api: <Domain>BackendApiType, behandling:
 ```
 
 Rules:
+
 - Only create queryOptions for GET endpoints
 - `queryKey` always includes `api.backend` as last element
 - `queryKey` includes `behandling.uuid` and `behandling.versjon` for cache busting
@@ -180,7 +189,7 @@ import type { <Domain>BackendApiType } from './<Domain>BackendApiType.js';
 export const <Domain>ApiContext = createContext<<Domain>BackendApiType | null>(null);
 ```
 
-Components read it with `use(<Domain>ApiContext)` and throw if it is missing, then pass `api` to the queryOptions from step 7. The production provider (`<Domain>ApiContext value={new <Domain>BackendClient()}`) is added in `AppConfigResolver` (see the `v2-architecture` skill).
+Components read it with `use(<Domain>ApiContext)` and throw if it is missing, then pass `api` to the queryOptions from step 7. The production provider (`<Domain>ApiContext value={new <Backend><Domain>BackendClient()}`) is added in `AppConfigResolver` (see the `v2-architecture` skill).
 
 ### Step 9: Verify
 

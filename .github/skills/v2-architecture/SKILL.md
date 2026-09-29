@@ -22,7 +22,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 ### API contract (when calling a backend)
 
-- [ ] API contract (SDK re-export, `<Feature>BackendApiType`, `<Feature>BackendClient` with `readonly backend`, `queryOptions()`, `<Feature>ApiContext`) created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`) — it defines names, file locations and templates. Never call a raw URL or import directly from `generated/sdk.js`
+- [ ] API contract (SDK re-export, `<Feature>BackendApiType`, `<Backend><Feature>BackendClient` (e.g. `K9SakFooBackendClient`) with `readonly backend`, `queryOptions()`, `<Feature>ApiContext`) created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`) — it defines names, file locations and templates. Never call a raw URL or import directly from `generated/sdk.js`
 
 ### v2 component
 
@@ -66,7 +66,7 @@ Only apply these steps when replacing an existing fakta/prosess panel. Work thro
 
 ### AppConfigResolver
 
-- [ ] `<Feature>BackendClient` context provider added in `packages/sak-app/src/app/AppConfigResolver.tsx`
+- [ ] `<Backend><Feature>BackendClient` context provider added in `packages/sak-app/src/app/AppConfigResolver.tsx`
 - [ ] Add to ung `AppConfigResolver` too if the feature exists there
 
 ### Suspense boundary
@@ -311,10 +311,10 @@ When a v2 component uses an API context (e.g. `UtenlandsoppholdApiContext`), the
 
 ```tsx
 import { MyFeatureApiContext } from '@k9-sak-web/gui/fakta/myfeature/api/MyFeatureApiContext.js';
-import { MyFeatureBackendClient } from '@k9-sak-web/gui/fakta/myfeature/api/MyFeatureBackendClient.js';
+import { K9SakMyFeatureBackendClient } from '@k9-sak-web/gui/fakta/myfeature/api/K9SakMyFeatureBackendClient.js';
 
 // In the render tree:
-<MyFeatureApiContext value={new MyFeatureBackendClient()}>{children}</MyFeatureApiContext>;
+<MyFeatureApiContext value={new K9SakMyFeatureBackendClient()}>{children}</MyFeatureApiContext>;
 ```
 
 ## Data fetching — prefer `useSuspenseQuery` in the component

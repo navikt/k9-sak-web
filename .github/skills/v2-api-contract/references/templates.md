@@ -34,17 +34,17 @@ Path: `packages/v2/gui/src/<target>/<Domain>BackendApiType.ts`
 ```typescript
 import type { <Type1> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type1>.js';
 import type { <Type2> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<Type2>.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export type <Domain>BackendApiType = {
-  readonly backend: '<backend>';
+export interface <Domain>BackendApiType extends BackendTilhørighet {
   <getMethod>(behandlingUuid: string): Promise<ResponseDto>;
   <postMethod>(behandlingUuid: string, behandlingVersjon: number, body: <RequestDto>): Promise<void>;
-};
+}
 ```
 
-## 4. BackendClient (`<Domain>BackendClient.ts`)
+## 4. BackendClient (`<Backend><Domain>BackendClient.ts`)
 
-Path: `packages/v2/gui/src/<target>/<Domain>BackendClient.ts`
+Path: `packages/v2/gui/src/<target>/<Backend><Domain>BackendClient.ts`
 
 ```typescript
 import type { <RequestDto> } from '@k9-sak-web/backend/<backend>/kontrakt/<domain>/<RequestDto>.js';
@@ -54,7 +54,7 @@ import {
 } from '@k9-sak-web/backend/<backend>/sdk/<Domain>Sdk.js';
 import { type <Domain>BackendApiType } from './<Domain>BackendApiType.js';
 
-export class <Domain>BackendClient implements <Domain>BackendApiType {
+export class <Backend><Domain>BackendClient implements <Domain>BackendApiType {
   readonly backend = '<backend>';
 
   async <getMethod>(behandlingUuid: string) {

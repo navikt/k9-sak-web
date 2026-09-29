@@ -2,7 +2,7 @@ import { behandlingUttak_getUtenlandsopphold } from '@k9-sak-web/backend/k9sak/s
 import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UtenlandsoppholdDto.js';
 import type { UtenlandsoppholdBackendApiType } from './UtenlandsoppholdBackendApiType.js';
 
-export class UtenlandsoppholdBackendClient implements UtenlandsoppholdBackendApiType {
+export class K9SakUtenlandsoppholdBackendClient implements UtenlandsoppholdBackendApiType {
   readonly backend = 'k9sak';
 
   async hentUtenlandsopphold(behandlingUuid: string): Promise<UtenlandsoppholdDto> {
