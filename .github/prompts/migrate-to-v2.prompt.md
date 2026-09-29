@@ -18,14 +18,6 @@ For migrering av et fakta- eller prosesspanel:
 - Sørg for at `Suspense` omslutter `ErrorBoundary` der panelet bruker `useSuspenseQuery`.
 - Legg kompileringsvakter i v1-filene som skal slettes etter utrulling, ikke i `FaktaPanelDef`.
 
-Hvis det finnes en comparison story med elementer med `aria-label="v1"` og `aria-label="v2"`, kjør en lokal visuell sammenligning:
-
-- Start Storybook med `yarn storybook` (port 9001), med loggen i `.tmp/`.
-- Kjør `yarn visuell-diff <story-id>`. Story-id finnes i `http://127.0.0.1:9001/index.json`.
-- Skriptet lagrer `v1.png`, `v2.png` og `diff.png` i `.tmp/visuell-diff/` og skriver ut avviksprosenten. Se på `diff.png`.
-- Forklar forskjellene kort (margin, fontstørrelse, avstand osv.), og rett opp de som er utilsiktede. Avvik på noen få prosent fra små avstandsforskjeller kan aksepteres, men si fra om dem.
-- Stopp Storybook når du er ferdig.
-
 Følg v2-konvensjonene:
 
 - Bruk stabile DTO- og kodeverkeksporter fra backend-pakken, og kall genererte SDK-funksjoner gjennom API-klienter.
@@ -35,5 +27,8 @@ Følg v2-konvensjonene:
 - Unngå imports fra pakker utenfor v2, type assertions og non-null assertions.
 
 Oppdater eller legg til stories og tester som dekker eksisterende visningstilstander og interaksjoner. Kjør relevante tester og `yarn ts-check`. Ikke fjern v1-koden eller feature togglen som del av denne migreringen.
+
+Hold `packages/v2/MIGRATION.md` oppdatert: flytt panelet fra «Ikke migrert eller ikke vurdert» (eller «Under arbeid») til «Feature togglet» med riktig `BRUK_V2_<FEATURE>`, og fjern raden fra tier-tabellen.
+Når migreringen er fullført, oppdater `packages/v2/MIGRATION.md`.
 
 Hvis du møter et valg som påvirker funksjonalitet eller utrulling, spør meg før du bestemmer deg. Avslutt med en kort oversikt over endringene og eventuelle tester du ikke kunne kjøre.
