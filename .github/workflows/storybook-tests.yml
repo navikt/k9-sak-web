@@ -26,4 +26,4 @@ jobs:
         run: |
           yarn concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "yarn http-server .static_storybook --port 9001 --silent" \
-            "yarn wait-on --timeout 60000 tcp:127.0.0.1:9001 && yarn test-storybook --maxWorkers=2"
+            "yarn wait-on --timeout 60000 tcp:127.0.0.1:9001 && yarn test-storybook"
