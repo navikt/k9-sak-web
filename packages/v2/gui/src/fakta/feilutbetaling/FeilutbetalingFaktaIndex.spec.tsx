@@ -11,7 +11,10 @@ import type {
   FeilutbetalingÅrsakerPerYtelseViewModel,
 } from './api/FeilutbetalingFaktaViewModel.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex.js';
-import { FeilutbetalingKodeverkoppslagContext } from './FeilutbetalingKodeverkoppslagContext.js';
+import { K9KodeverkoppslagContext } from '../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { UngKodeverkoppslagContext } from '../../kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { fakeK9Kodeverkoppslag } from '../../kodeverk/mocks/fakeK9Kodeverkoppslag.js';
+import { fakeUngKodeverkoppslag } from '../../kodeverk/mocks/fakeUngKodeverkoppslag.js';
 
 const faktaMedÅrsak = (
   hendelseType = 'PSB_ANNET_TYPE',
@@ -45,8 +48,9 @@ const gyldigeÅrsaker: FeilutbetalingÅrsakerPerYtelseViewModel[] = [
 const createApi = (
   fakta: FeilutbetalingFaktaViewModel,
   årsaker: FeilutbetalingÅrsakerPerYtelseViewModel[],
+  backend: FeilutbetalingFaktaApi['backend'],
 ): FeilutbetalingFaktaApi => ({
-  backend: 'k9tilbake',
+  backend,
   hentFeilutbetalingFakta: async () => fakta,
   hentFeilutbetalingÅrsaker: async () => årsaker,
 });
@@ -54,37 +58,38 @@ const createApi = (
 const createSubmitCallback = () => vi.fn<LegacyBekreftAksjonspunktCallback>().mockResolvedValue(undefined);
 
 const renderComponent = ({
+  backend = 'k9tilbake',
   fakta = faktaMedÅrsak(),
   årsaker = gyldigeÅrsaker,
   submitCallback = createSubmitCallback(),
 }: {
+  backend?: FeilutbetalingFaktaApi['backend'];
   fakta?: FeilutbetalingFaktaViewModel;
   årsaker?: FeilutbetalingÅrsakerPerYtelseViewModel[];
   submitCallback?: ReturnType<typeof createSubmitCallback>;
 } = {}) => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 
+  const panel = (
+    <Suspense fallback={null}>
+      <FeilutbetalingFaktaIndex
+        behandlingUuid="behandling-uuid"
+        behandlingVersjon={1}
+        fagsakYtelseType="PSB"
+        readOnly={false}
+        hasOpenAksjonspunkter
+        submitCallback={submitCallback}
+      />
+    </Suspense>
+  );
   render(
     <QueryClientProvider client={queryClient}>
-      <FeilutbetalingFaktaApiContext value={createApi(fakta, årsaker)}>
-        <FeilutbetalingKodeverkoppslagContext
-          value={{
-            hentHendelseTypeNavn: kode => kode ?? '',
-            hentHendelseUnderTypeNavn: kode => kode ?? '',
-            hentVidereBehandlingNavn: kode => kode ?? '',
-          }}
-        >
-          <Suspense fallback={null}>
-            <FeilutbetalingFaktaIndex
-              behandlingUuid="behandling-uuid"
-              behandlingVersjon={1}
-              fagsakYtelseType="PSB"
-              readOnly={false}
-              hasOpenAksjonspunkter
-              submitCallback={submitCallback}
-            />
-          </Suspense>
-        </FeilutbetalingKodeverkoppslagContext>
+      <FeilutbetalingFaktaApiContext value={createApi(fakta, årsaker, backend)}>
+        {backend === 'k9tilbake' ? (
+          <K9KodeverkoppslagContext value={fakeK9Kodeverkoppslag()}>{panel}</K9KodeverkoppslagContext>
+        ) : (
+          <UngKodeverkoppslagContext value={fakeUngKodeverkoppslag()}>{panel}</UngKodeverkoppslagContext>
+        )}
       </FeilutbetalingFaktaApiContext>
     </QueryClientProvider>,
   );
@@ -103,6 +108,47 @@ const submit = async (user: ReturnType<typeof userEvent.setup>) => {
 };
 
 describe('FeilutbetalingFaktaIndex', () => {
+  const backends: FeilutbetalingFaktaApi['backend'][] = ['k9tilbake', 'ungtilbake'];
+
+  it.each(backends)('viser navn fra riktig kodeverk for %s', async backend => {
+    const fakta = faktaMedÅrsak();
+    renderComponent({
+      backend,
+      fakta: {
+        behandlingFakta: {
+          ...fakta.behandlingFakta,
+          tilbakekrevingValg: { videreBehandling: 'TILBAKEKR_OPPRETT' },
+        },
+      },
+    });
+
+    expect(await screen.findByRole('option', { name: 'Annet' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Annet - fritekst' })).toBeInTheDocument();
+    expect(screen.getByText('Feilutbetaling med tilbakekreving')).toBeInTheDocument();
+  });
+
+  it.each(backends)('viser koden når navn mangler i kodeverket for %s', async backend => {
+    const fakta = faktaMedÅrsak('UKJENT_HENDELSE', 'UKJENT_UNDERAARSAK');
+    renderComponent({
+      backend,
+      fakta: {
+        behandlingFakta: {
+          ...fakta.behandlingFakta,
+          tilbakekrevingValg: { videreBehandling: 'UKJENT_VIDERE_BEHANDLING' },
+        },
+      },
+      årsaker: [
+        {
+          ytelseType: 'PSB',
+          hendelseTyper: [{ hendelseType: 'UKJENT_HENDELSE', hendelseUndertyper: ['UKJENT_UNDERAARSAK'] }],
+        },
+      ],
+    });
+
+    expect(await screen.findByRole('option', { name: 'UKJENT_HENDELSE' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'UKJENT_UNDERAARSAK' })).toBeInTheDocument();
+    expect(screen.getByText('UKJENT_VIDERE_BEHANDLING')).toBeInTheDocument();
+  });
   it('sender komplett årsak gjennom den eksisterende 7003-callbacken', async () => {
     const user = userEvent.setup();
     const { submitCallback } = renderComponent();

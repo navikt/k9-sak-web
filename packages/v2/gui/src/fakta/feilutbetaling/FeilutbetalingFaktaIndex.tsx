@@ -5,7 +5,7 @@ import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/ty
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useEffect, useMemo, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useFeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApiContext.js';
 import {
@@ -14,7 +14,9 @@ import {
 } from './api/FeilutbetalingFaktaQueries.js';
 import type { FeilutbetalingPeriodeViewModel } from './api/FeilutbetalingFaktaViewModel.js';
 import styles from './feilutbetalingFakta.module.css';
-import { useFeilutbetalingKodeverkoppslag } from './FeilutbetalingKodeverkoppslagContext.js';
+import { K9KodeverkoppslagContext } from '../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { UngKodeverkoppslagContext } from '../../kodeverk/oppslag/UngKodeverkoppslagContext.js';
+import { OrUndefined } from '../../kodeverk/oppslag/GeneriskKodeverkoppslag.js';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable.js';
 import { formatDateStringToDDMMYYYY } from '../../utils/dateutils.js';
 
@@ -71,8 +73,20 @@ const FeilutbetalingFaktaIndex = ({
   const api = useFeilutbetalingFaktaApi();
   const { data: faktaDto } = useSuspenseQuery(feilutbetalingFaktaQueryOptions(api, behandlingUuid, behandlingVersjon));
   const { data: alleÅrsaker } = useSuspenseQuery(feilutbetalingÅrsakerQueryOptions(api));
-  const { hentHendelseTypeNavn, hentHendelseUnderTypeNavn, hentVidereBehandlingNavn } =
-    useFeilutbetalingKodeverkoppslag();
+  const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
+  const ungKodeverkoppslag = useContext(UngKodeverkoppslagContext);
+  const kodeverkoppslag = api.backend === 'k9tilbake' ? k9Kodeverkoppslag.k9tilbake : ungKodeverkoppslag.ungTilbake;
+  const { hentHendelseTypeNavn, hentHendelseUnderTypeNavn, hentVidereBehandlingNavn } = useMemo(
+    () => ({
+      hentHendelseTypeNavn: (kode?: string): string =>
+        kode ? (kodeverkoppslag.hendelseTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
+      hentHendelseUnderTypeNavn: (kode?: string): string =>
+        kode ? (kodeverkoppslag.hendelseUnderTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
+      hentVidereBehandlingNavn: (kode?: string): string =>
+        kode ? (kodeverkoppslag.videreBehandlinger(kode as never, OrUndefined)?.navn ?? kode) : '',
+    }),
+    [kodeverkoppslag],
+  );
 
   const fakta = faktaDto?.behandlingFakta;
   const perioder = fakta?.perioder ?? [];

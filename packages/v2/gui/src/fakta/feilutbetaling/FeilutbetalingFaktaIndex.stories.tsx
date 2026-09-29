@@ -3,8 +3,6 @@ import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { expect, fn } from 'storybook/test';
-import { OrUndefined } from '../../kodeverk/oppslag/GeneriskKodeverkoppslag.js';
-import { fakeK9Kodeverkoppslag } from '../../kodeverk/mocks/fakeK9Kodeverkoppslag.js';
 import type { FeilutbetalingFaktaApi } from './api/FeilutbetalingFaktaApi.js';
 import { FeilutbetalingFaktaApiContext } from './api/FeilutbetalingFaktaApiContext.js';
 import type {
@@ -12,7 +10,6 @@ import type {
   FeilutbetalingÅrsakerPerYtelseViewModel,
 } from './api/FeilutbetalingFaktaViewModel.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex.js';
-import { FeilutbetalingKodeverkoppslagContext } from './FeilutbetalingKodeverkoppslagContext.js';
 
 const fakta: FeilutbetalingFaktaViewModel = {
   behandlingFakta: {
@@ -79,8 +76,6 @@ const årsaker: FeilutbetalingÅrsakerPerYtelseViewModel[] = [
   },
 ];
 
-const k9tilbakeKodeverk = fakeK9Kodeverkoppslag().k9tilbake;
-
 const createFakeApi = (
   faktaData: FeilutbetalingFaktaViewModel,
   årsakerData: FeilutbetalingÅrsakerPerYtelseViewModel[],
@@ -98,20 +93,9 @@ const withFakeApi = (
   return Story => (
     <QueryClientProvider client={queryClient}>
       <FeilutbetalingFaktaApiContext value={createFakeApi(faktaData, årsakerData)}>
-        <FeilutbetalingKodeverkoppslagContext
-          value={{
-            hentHendelseTypeNavn: kode =>
-              kode ? (k9tilbakeKodeverk.hendelseTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
-            hentHendelseUnderTypeNavn: kode =>
-              kode ? (k9tilbakeKodeverk.hendelseUnderTyper(kode as never, OrUndefined)?.navn ?? kode) : '',
-            hentVidereBehandlingNavn: kode =>
-              kode ? (k9tilbakeKodeverk.videreBehandlinger(kode as never, OrUndefined)?.navn ?? kode) : '',
-          }}
-        >
-          <Suspense>
-            <Story />
-          </Suspense>
-        </FeilutbetalingKodeverkoppslagContext>
+        <Suspense>
+          <Story />
+        </Suspense>
       </FeilutbetalingFaktaApiContext>
     </QueryClientProvider>
   );
