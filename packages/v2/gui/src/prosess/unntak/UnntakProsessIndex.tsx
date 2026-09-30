@@ -137,7 +137,7 @@ export const UnntakProsessIndex = ({ periode, ...props }: UnntakProsessIndexProp
           Vurder vilkår
         </Heading>
         <Alert variant="warning" size="small">
-          Fant ikke en gyldig periode for vilkåret. Aksjonspunktet kan ikke løses.
+          Fant ikke én entydig og gyldig periode for vilkåret. Aksjonspunktet kan ikke løses.
         </Alert>
       </VStack>
     );

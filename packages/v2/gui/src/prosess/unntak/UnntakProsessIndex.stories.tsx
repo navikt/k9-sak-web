@@ -152,7 +152,7 @@ export const ManglerPeriode: Story = {
   },
   play: async ({ canvas, args }) => {
     await expect(
-      canvas.getByText('Fant ikke en gyldig periode for vilkåret. Aksjonspunktet kan ikke løses.'),
+      canvas.getByText('Fant ikke én entydig og gyldig periode for vilkåret. Aksjonspunktet kan ikke løses.'),
     ).toBeInTheDocument();
     await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
     await expect(args.submitCallback).not.toHaveBeenCalled();
