@@ -21,6 +21,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
   BRUK_V2_ARBEID_OG_INNTEKT: true,
+  BRUK_V2_DIREKTE_OVERGANG: true,
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
   BRUK_V2_FEILUTBETALING: true,
@@ -29,6 +30,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   VIS_INNLEGGELSE_FOR_PILS: true,
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
+  BRUK_V2_DELING_AV_DAGER: true,
   NORMALARBEIDSTID_UTTAK: true,
 });
 
