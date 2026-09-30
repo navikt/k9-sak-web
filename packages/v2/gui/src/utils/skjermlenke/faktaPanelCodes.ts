@@ -20,7 +20,7 @@ export const faktaPanelCodes = {
   OPPTJENINGSVILKARET: 'opptjeningsvilkaaret',
   SAKEN: 'saken',
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
-  UTTAK: 'uttak',
+  DELING_AV_DAGER: 'deling-av-dager',
   NØKKELTALL: 'nokkeltall',
   BARN: 'barn',
   VERGE: 'verge',

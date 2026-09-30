@@ -7,19 +7,42 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useQueryClient } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { FakeAktivitetspengerApi } from '../../../storybook/mocks/FakeAktivitetspengerApi';
+import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 import { BehovForBistand } from './BehovForBistand';
 
 const avkortingsperiode = { fom: '2024-01-01', tom: '2024-12-31' };
 
+const avkortingsperioder = {
+  resultat: [{ vilkårType: vilkarType.BISTANDSVILKÅR, perioder: [avkortingsperiode] }],
+};
+
 class FakeApiMedAvkortingsperiode extends FakeAktivitetspengerApi {
   override async hentPerioderSomKanAvkortes() {
-    return {
-      resultat: [{ vilkårType: vilkarType.BISTANDSVILKÅR, perioder: [avkortingsperiode] }],
-    };
+    return avkortingsperioder;
   }
 }
+
+// Skjemaet leser avkortingsperioder bare ved første render, så dataene må ligge i cachen før komponenten vises.
+const MedForhåndshentetAvkorting = ({
+  api,
+  behandling,
+  children,
+}: {
+  api: Parameters<typeof perioderSomKanAvkortesQueryOptions>[0];
+  behandling: Parameters<typeof perioderSomKanAvkortesQueryOptions>[1];
+  children: ReactNode;
+}) => {
+  const queryClient = useQueryClient();
+  const { queryKey } = perioderSomKanAvkortesQueryOptions(api, behandling);
+  if (queryClient.getQueryData(queryKey) === undefined) {
+    queryClient.setQueryData(queryKey, avkortingsperioder);
+  }
+  return children;
+};
 
 class FakeApiSomHuskerAksjonspunkt extends FakeApiMedAvkortingsperiode {
   sisteBekreftedeAksjonspunkt: unknown;
@@ -51,6 +74,13 @@ const meta = {
       perioder: [{ periode: { fom: '2024-01-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_VURDERT }],
     },
   },
+  decorators: [
+    (Story, { args }) => (
+      <MedForhåndshentetAvkorting api={args.api} behandling={args.behandling}>
+        <Story />
+      </MedForhåndshentetAvkorting>
+    ),
+  ],
 } satisfies Meta<typeof BehovForBistand>;
 export default meta;
 

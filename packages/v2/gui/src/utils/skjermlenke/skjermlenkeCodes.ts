@@ -118,7 +118,7 @@ const skjermlenkeCodes: SkjermlenkeCode[] = [
   },
   {
     kode: 'FAKTA_OM_UTTAK',
-    faktaNavn: faktaPanelCodes.UTTAK,
+    faktaNavn: faktaPanelCodes.DELING_AV_DAGER,
     punktNavn: '',
   },
   {
