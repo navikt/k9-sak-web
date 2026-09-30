@@ -9,7 +9,7 @@ export const withQueryClientProvider = (defaultOptionsOverride?: DefaultOptionsO
 
   return (Story, context) => {
     if (storyQueryClient?.storyId !== context.id) {
-      // Klienten må overleve en første render som forkastes når en story suspenderer.
+      // Vi må lage en ny klient for hver story for å unngå deling av cache mellom stories.
       storyQueryClient = {
         storyId: context.id,
         client: createQueryClient({
