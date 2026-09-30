@@ -5,11 +5,12 @@ import { expect, userEvent, within } from 'storybook/test';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import { DelingAvDagerApiContext } from './api/DelingAvDagerApiContext.js';
 import DelingAvDagerFaktaIndex from './DelingAvDagerFaktaIndex.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const withFakeApi =
   (rammevedtak: RammevedtakDto[]): Decorator =>
   Story => (
-    <DelingAvDagerApiContext value={{ backend: 'k9sak', hentRammevedtak: async () => rammevedtak }}>
+    <DelingAvDagerApiContext value={{ backend: backendNavn.k9sak, hentRammevedtak: async () => rammevedtak }}>
       <Suspense>
         <Story />
       </Suspense>

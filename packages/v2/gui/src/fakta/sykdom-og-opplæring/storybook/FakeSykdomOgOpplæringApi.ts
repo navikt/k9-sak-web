@@ -12,9 +12,10 @@ import type {
   OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { SykdomOgOpplæringApi } from '../api/SykdomOgOpplæringApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeSykdomOgOpplæringApi implements SykdomOgOpplæringApi {
-  readonly backend = 'k9sak';
+  readonly backend = backendNavn.k9sak;
 
   constructor(
     private readonly data: {

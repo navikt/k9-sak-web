@@ -3,9 +3,10 @@ import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/k
 import type { AktivitetspengerBeregningBackendApiType } from '../../prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendApiType';
 import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.ts';
 import { asyncAction } from '../asyncAction.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeAktivitetspengerBeregningBackendApi implements AktivitetspengerBeregningBackendApiType {
-  readonly backend = 'ungsak';
+  readonly backend = backendNavn.ungsak;
 
   async getKontrollerInntekt(): Promise<KontrollerInntektDto> {
     return {

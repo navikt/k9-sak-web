@@ -6,9 +6,10 @@ import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9AvregningBackendClient implements BehandlingAvregningBackendApiType {
-  readonly backend = 'k9';
+  readonly backend = sammenstiltBackendNavn.k9;
 
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
     behandlingId: number,

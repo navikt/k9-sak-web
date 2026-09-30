@@ -6,6 +6,7 @@ import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import DelingAvDagerFaktaPanelDef from './DelingAvDagerFaktaPanelDef';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 // @ts-expect-error Migrert frå ts-ignore
 const behandling: Behandling = {
@@ -59,7 +60,7 @@ const withFakeApiV2 = (rammevedtak: RammevedtakDto[]): Decorator => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return Story => (
     <QueryClientProvider client={queryClient}>
-      <DelingAvDagerApiContext value={{ backend: 'k9sak', hentRammevedtak: async () => rammevedtak }}>
+      <DelingAvDagerApiContext value={{ backend: backendNavn.k9sak, hentRammevedtak: async () => rammevedtak }}>
         <Suspense>
           <Story />
         </Suspense>

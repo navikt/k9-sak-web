@@ -4,9 +4,10 @@ import type { BehandlingAvregningBackendApiType } from '../../prosess/avregning/
 import { fakePdf } from './fakePdf';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 import { fn } from 'storybook/test';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeBehandlingAvregningBackendApi implements BehandlingAvregningBackendApiType {
-  readonly backend = 'k9';
+  readonly backend = sammenstiltBackendNavn.k9;
 
   bekreftAksjonspunktSjekkHøyEtterbetaling = fn(
     async (behandlingId: number, behandlingVersjon: number, begrunnelse: string): Promise<void> => {

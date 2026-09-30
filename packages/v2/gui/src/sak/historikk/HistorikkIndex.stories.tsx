@@ -6,6 +6,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { HistorikkIndex } from './HistorikkIndex.js';
 import withUngKodeverkoppslag from '../../storybook/decorators/withUngKodeverkoppslag.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const meta = {
   title: 'gui/sak/historikk/HistorikkIndex',
@@ -24,7 +25,7 @@ export const K9Historikk: Story = {
     behandlingVersjon: 2,
   },
   decorators: [
-    withFakeHistorikkBackend('k9'),
+    withFakeHistorikkBackend(sammenstiltBackendNavn.k9),
     withK9Kodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
   ],
   play: async ({ canvas }) => {
@@ -81,7 +82,7 @@ export const UngHistorikk: Story = {
     behandlingVersjon: 2,
   },
   decorators: [
-    withFakeHistorikkBackend('ung'),
+    withFakeHistorikkBackend(sammenstiltBackendNavn.ung),
     withUngKodeverkoppslag(), // Må vere etter withFakeHistorikkBackend(), sidan den bruker context oppretta i denne.
   ],
   play: async ({ canvas }) => {

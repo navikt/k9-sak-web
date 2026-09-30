@@ -7,6 +7,7 @@ import { asyncAction } from '../../storybook/asyncAction.js';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
 import { TiDagerBackendClientContext } from './TiDagerBackendClientContext.js';
 import { TiDagerProsessIndex } from './TiDagerProsessIndex.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const opplysningerEnArbeidsgiver: RettFraDagEnVisningDto = {
   journalposter: [
@@ -92,7 +93,7 @@ const tekstMatcher = (tekst: string) => (_: string, element: Element | null) =>
 
 const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator => {
   const fakeApi: TiDagerBackendApiType = {
-    backend: 'k9sak',
+    backend: backendNavn.k9sak,
     hentRettFraDagEnOpplysninger: async () => opplysninger,
   };
   return Story => (

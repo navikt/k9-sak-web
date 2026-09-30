@@ -7,6 +7,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type { TiDagerBackendApiType } from './TiDagerBackendApiType.js';
 import { TiDagerBackendClientContext } from './TiDagerBackendClientContext.js';
 import { TiDagerProsessIndex } from './TiDagerProsessIndex.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 vi.mock('./TiDagerProsess.js', () => ({
   TiDagerProsess: ({
@@ -24,7 +25,7 @@ vi.mock('./TiDagerProsess.js', () => ({
 }));
 
 const ingenJournalposter: TiDagerBackendApiType = {
-  backend: 'k9sak',
+  backend: backendNavn.k9sak,
   hentRettFraDagEnOpplysninger: async () => ({ journalposter: [] }),
 };
 
@@ -93,7 +94,7 @@ describe('TiDagerProsessIndex', () => {
 
   it('viser TiDagerProsess selv om alle perioder er oppfylt når det finnes journalposter', async () => {
     const apiMedJournalpost: TiDagerBackendApiType = {
-      backend: 'k9sak',
+      backend: backendNavn.k9sak,
       hentRettFraDagEnOpplysninger: async () => ({
         journalposter: [
           {

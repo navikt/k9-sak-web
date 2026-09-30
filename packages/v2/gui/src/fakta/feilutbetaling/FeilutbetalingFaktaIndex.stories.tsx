@@ -10,6 +10,7 @@ import type {
   FeilutbetalingÅrsakerPerYtelseViewModel,
 } from './api/FeilutbetalingFaktaViewModel.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const fakta: FeilutbetalingFaktaViewModel = {
   behandlingFakta: {
@@ -80,7 +81,7 @@ const createFakeApi = (
   faktaData: FeilutbetalingFaktaViewModel,
   årsakerData: FeilutbetalingÅrsakerPerYtelseViewModel[],
 ): FeilutbetalingFaktaApi => ({
-  backend: 'k9tilbake',
+  backend: backendNavn.k9tilbake,
   hentFeilutbetalingFakta: async () => faktaData,
   hentFeilutbetalingÅrsaker: async () => årsakerData,
 });

@@ -15,6 +15,7 @@ import type { K9KlageKodeverkoppslag } from '../../../../kodeverk/oppslag/K9Klag
 import type { K9KlageTotrinnskontrollAksjonspunktDtoAdjusted } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9klage/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/k9klage/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9KlageTotrinnskontrollData implements TotrinnskontrollData {
   #kodeverkoppslag: K9KlageKodeverkoppslag;
@@ -64,7 +65,7 @@ export class K9KlageTotrinnskontrollData implements TotrinnskontrollData {
 }
 
 export class K9KlageTotrinnskontrollBackendClient implements TotrinnskontrollApi {
-  readonly backend = 'k9klage';
+  readonly backend = backendNavn.k9klage;
   #kodeverkoppslag: K9KlageKodeverkoppslag;
 
   constructor(kodeverkoppslag: K9KlageKodeverkoppslag) {

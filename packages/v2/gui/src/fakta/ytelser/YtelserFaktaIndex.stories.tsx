@@ -6,13 +6,14 @@ import { Suspense } from 'react';
 import { expect, screen, userEvent, waitFor, within } from 'storybook/test';
 import { YtelserApiContext } from './api/YtelserApiContext.js';
 import YtelserFaktaIndex from './YtelserFaktaIndex.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const withFakeApi = (data: RelatertYtelseResponse[]): Decorator => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 
   return Story => (
     <QueryClientProvider client={queryClient}>
-      <YtelserApiContext value={{ backend: 'k9sak', hentYtelser: async () => data }}>
+      <YtelserApiContext value={{ backend: backendNavn.k9sak, hentYtelser: async () => data }}>
         <Suspense>
           <Story />
         </Suspense>

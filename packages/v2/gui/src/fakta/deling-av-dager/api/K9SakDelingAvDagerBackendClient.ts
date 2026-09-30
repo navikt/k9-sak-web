@@ -1,9 +1,10 @@
 import { behandlingÅrskvantumUttak_getForbrukteDager } from '@k9-sak-web/backend/k9sak/api/behandlingÅrskvantumUttak.js';
 import type { RammevedtakDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/RammevedtakDto.js';
 import type { DelingAvDagerApi } from './DelingAvDagerApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9SakDelingAvDagerBackendClient implements DelingAvDagerApi {
-  readonly backend = 'k9sak';
+  readonly backend = backendNavn.k9sak;
 
   async hentRammevedtak(behandlingUuid: string): Promise<RammevedtakDto[]> {
     const response = await behandlingÅrskvantumUttak_getForbrukteDager({
