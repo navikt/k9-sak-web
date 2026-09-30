@@ -3,7 +3,7 @@ import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Ko
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
-import { expect, screen, userEvent, within } from 'storybook/test';
+import { expect, screen, userEvent, waitFor, within } from 'storybook/test';
 import { YtelserApiContext } from './api/YtelserApiContext.js';
 import YtelserFaktaIndex from './YtelserFaktaIndex.js';
 
@@ -85,12 +85,20 @@ export const Default: Story = {};
 export const DetaljerÅpne: Story = {
   decorators: [withFakeApi(ytelserDetaljerAapne)],
   play: async ({ canvasElement }) => {
+    await waitFor(() => {
+      const period = canvasElement.querySelector('[data-timeline-period="true"]');
+      if (!(period instanceof HTMLElement)) {
+        throw new Error('Fant ikke noen tidslinjeperiode');
+      }
+    });
+
     const firstPeriod = canvasElement.querySelector('[data-timeline-period="true"]');
-    if (!(firstPeriod instanceof HTMLElement)) {
+    if (!firstPeriod) {
       throw new Error('Fant ikke noen tidslinjeperiode');
     }
-
-    await userEvent.click(firstPeriod);
+    if (firstPeriod.getAttribute('aria-expanded') !== 'true') {
+      await userEvent.click(firstPeriod);
+    }
 
     await expect(firstPeriod).toHaveAttribute('aria-current', 'true');
     await expect(await screen.findByText('Periode: 01.06.2026 – 31.10.2026')).toBeVisible();
