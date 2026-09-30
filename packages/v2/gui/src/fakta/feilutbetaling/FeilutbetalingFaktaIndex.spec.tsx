@@ -86,7 +86,7 @@ const renderComponent = ({
   render(
     <QueryClientProvider client={queryClient}>
       <FeilutbetalingFaktaApiContext value={createApi(fakta, årsaker, backend)}>
-        {backend === 'k9tilbake' ? (
+        {backend === backendNavn.k9tilbake ? (
           <K9KodeverkoppslagContext value={fakeK9Kodeverkoppslag()}>{panel}</K9KodeverkoppslagContext>
         ) : (
           <UngKodeverkoppslagContext value={fakeUngKodeverkoppslag()}>{panel}</UngKodeverkoppslagContext>

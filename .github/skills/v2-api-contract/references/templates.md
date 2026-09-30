@@ -4,15 +4,15 @@ Generic templates with placeholders (`<Domain>`, `<Backend>`, `<backend>` …) f
 
 ## Placeholders
 
-| Placeholder | Meaning | Example |
-| --- | --- | --- |
-| `<Domain>` | PascalCase feature name | `OmPleietrengende` |
-| `<domain>` | camelCase feature name | `omPleietrengende` |
-| `<backend>` | Backend value (`readonly backend`, import path) | `k9sak` |
-| `<Backend>` | Same backend in PascalCase, prefix in the client name | `K9Sak` |
-| `<target>` | Folder under `packages/v2/gui/src/` | `fakta/om-pleietrengende/api` |
-| `<sdkFunction>` | Generated SDK function | `behandlingPerson_getPersonopplysninger1` |
-| `<getMethod>` | Descriptive method name in the BackendApiType | `hentPleietrengende` |
+| Placeholder     | Meaning                                               | Example                                   |
+| --------------- | ----------------------------------------------------- | ----------------------------------------- |
+| `<Domain>`      | PascalCase feature name                               | `OmPleietrengende`                        |
+| `<domain>`      | camelCase feature name                                | `omPleietrengende`                        |
+| `<backend>`     | Backend value (`readonly backend`, import path)       | `k9sak`                                   |
+| `<Backend>`     | Same backend in PascalCase, prefix in the client name | `K9Sak`                                   |
+| `<target>`      | Folder under `packages/v2/gui/src/`                   | `fakta/om-pleietrengende/api`             |
+| `<sdkFunction>` | Generated SDK function                                | `behandlingPerson_getPersonopplysninger1` |
+| `<getMethod>`   | Descriptive method name in the BackendApiType         | `hentPleietrengende`                      |
 
 ## 1. SDK Re-Export (`<Domain>Sdk.ts`)
 
@@ -30,11 +30,13 @@ export {
 Path: `packages/v2/backend/src/<backend>/kontrakt/<domain>/<TypeName>.ts`
 
 ### For DTO types:
+
 ```typescript
 export type { <namespace_TypeName> as <TypeName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
 ```
 
 ### For enums (const + type):
+
 ```typescript
 export { <namespace_EnumName> as <EnumName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
 ```
@@ -56,7 +58,7 @@ export interface <Domain>BackendApiType extends BackendTilhørighet {
 
 If the API is shared between several backends, narrow the type parameter: `extends BackendTilhørighet<'<backend1>' | '<backend2>'>`.
 
-If one client calls several backends within the same product (aggregating), use `extends BackendTilhørighet<SammenstiltBackendNavn>` and name the client `K9<Domain>BackendClient` / `Ung<Domain>BackendClient` with `readonly backend = 'k9'` / `'ung'`.
+If one client calls several backends within the same product (aggregating), use `extends BackendTilhørighet<SammenstiltBackendNavn>` and name the client `K9<Domain>BackendClient` / `Ung<Domain>BackendClient` with `readonly backend = sammenstiltBackendNavn.k9` / `sammenstiltBackendNavn.ung`.
 
 ## 4. BackendClient (`<Backend><Domain>BackendClient.ts`)
 
@@ -68,10 +70,11 @@ import {
   <sdkFunction1>,
   <sdkFunction2>,
 } from '@k9-sak-web/backend/<backend>/sdk/<Domain>Sdk.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import { type <Domain>BackendApiType } from './<Domain>BackendApiType.js';
 
 export class <Backend><Domain>BackendClient implements <Domain>BackendApiType {
-  readonly backend = '<backend>';
+  readonly backend = backendNavn.<backend>;
 
   async <getMethod>(behandlingUuid: string) {
     return (await <sdkFunction1>({ query: { behandlingUuid } })).data;
@@ -106,6 +109,7 @@ export const <resourceName>QueryOptions = (api: <Domain>BackendApiType, behandli
 ```
 
 ### With optional enabled parameter:
+
 ```typescript
 export const <resourceName>QueryOptions = (
   api: <Domain>BackendApiType,
@@ -143,19 +147,20 @@ The production provider `<<Domain>ApiContext value={new <Backend><Domain>Backend
 
 When creating type re-exports, strip the namespace prefix:
 
-| Backend | Namespace prefix pattern | Example |
-|---------|-------------------------|---------|
-| `ungsak` | `ung_sak_kontrakt_<domain>_` | `ung_sak_kontrakt_kontroll_KontrollerInntektDto` → `KontrollerInntektDto` |
-| `k9sak` | `k9_sak_kontrakt_<domain>_` | `k9_sak_kontrakt_uttak_UtenlandsoppholdDto` → `UtenlandsoppholdDto` |
-| `k9klage` | `k9_klage_kontrakt_<domain>_` | `k9_klage_kontrakt_klage_KlageVurderingDto` → `KlageVurderingDto` |
-| `k9tilbake` | `k9_tilbake_kontrakt_<domain>_` | `k9_tilbake_kontrakt_vedtak_VedtakDto` → `VedtakDto` |
-| `ungtilbake` | `ung_tilbake_kontrakt_<domain>_` | `ung_tilbake_kontrakt_vedtak_VedtakDto` → `VedtakDto` |
+| Backend      | Namespace prefix pattern         | Example                                                                   |
+| ------------ | -------------------------------- | ------------------------------------------------------------------------- |
+| `ungsak`     | `ung_sak_kontrakt_<domain>_`     | `ung_sak_kontrakt_kontroll_KontrollerInntektDto` → `KontrollerInntektDto` |
+| `k9sak`      | `k9_sak_kontrakt_<domain>_`      | `k9_sak_kontrakt_uttak_UtenlandsoppholdDto` → `UtenlandsoppholdDto`       |
+| `k9klage`    | `k9_klage_kontrakt_<domain>_`    | `k9_klage_kontrakt_klage_KlageVurderingDto` → `KlageVurderingDto`         |
+| `k9tilbake`  | `k9_tilbake_kontrakt_<domain>_`  | `k9_tilbake_kontrakt_vedtak_VedtakDto` → `VedtakDto`                      |
+| `ungtilbake` | `ung_tilbake_kontrakt_<domain>_` | `ung_tilbake_kontrakt_vedtak_VedtakDto` → `VedtakDto`                     |
 
 ## SDK Function Parameter Patterns
 
 SDK functions accept an options object. Map parameters based on HTTP method:
 
 ### GET endpoints:
+
 ```typescript
 // SDK signature:
 export const foo_bar = (options: Options<FooBarData, ThrowOnError>) => ...
@@ -170,6 +175,7 @@ async bar(behandlingUuid: string) {
 ```
 
 ### POST endpoints:
+
 ```typescript
 // SDK signature:
 export const foo_create = (options: Options<FooCreateData, ThrowOnError>) => ...
@@ -184,6 +190,7 @@ async create(dto: CreateDto) {
 ```
 
 ### POST with query + body:
+
 ```typescript
 // BackendClient method:
 async save(behandlingUuid: string, behandlingVersjon: number, dto: SaveDto) {
@@ -192,4 +199,3 @@ async save(behandlingUuid: string, behandlingVersjon: number, dto: SaveDto) {
   });
 }
 ```
-
