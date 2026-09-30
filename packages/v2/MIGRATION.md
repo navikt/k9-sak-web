@@ -42,15 +42,16 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 #### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE` 
-    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509 
+- [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG`
+- [ ] `fakta-feilutbetaling` → `BRUK_V2_FEILUTBETALING`
+- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
+    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 - [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
-- fakta-feilutbetaling (Aleksei)
-- fakta-direkte-overgang (Aleksei)
+- fakta-uttak (Vebjørn)
 ---
 
 ### Trenger avklaringer
@@ -108,7 +109,7 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                    | ~Linjer | Konsumenter           | Merknad                                                                        |
 | ------------------------ | ------- | --------------------- | ------------------------------------------------------------------------------ |
-| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering               |
+| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering              |
 | `fakta-arbeidsforhold`   | 2664    | 5                     | Skjemadrevet, kryssreferanser mot arbeidsgiverOpplysninger                     |
 | `fakta-opptjening-oms`   | 2815    | 4                     | Store individuelle filer, kompleks periodebasert opptjeningsredigering         |
 | `fakta-etablert-tilsyn`  | 2907    | 2 (opl, psb)          | Dobble flyter for Nattevåk+Beredskap, periodenavigering, egendefinert kontekst |
