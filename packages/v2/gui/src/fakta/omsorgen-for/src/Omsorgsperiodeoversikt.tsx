@@ -59,7 +59,7 @@ const Omsorgsperiodeoversikt = ({
     await onFinished(vurdering, fosterbarnForOmsorgspenger);
   };
 
-  const velgPeriode = (periode: OmsorgenForDto) => {
+  const velgPeriode = (periode: OmsorgenForDto | null) => {
     setValgtPeriode(periode);
     setErRedigeringsmodus(false);
   };

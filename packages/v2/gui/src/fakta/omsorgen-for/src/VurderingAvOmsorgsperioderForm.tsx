@@ -56,6 +56,34 @@ interface VurderingAvOmsorgsperioderFormState {
   [FieldName.HAR_SØKER_OMSORGEN_FOR_I_PERIODE]: RadioOptions | undefined;
 }
 
+const lagVurdertePerioder = (
+  { begrunnelse, perioder, harSøkerOmsorgenForIPeriode }: VurderingAvOmsorgsperioderFormState,
+  omsorgsperiode: OmsorgenForDto,
+): VurderingSubmitValues[] => {
+  if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
+    const perioderMedOmsorg = perioder.map(periode => ({
+      periode,
+      resultat: Resultat.OPPFYLT,
+      begrunnelse,
+    }));
+    const perioderUtenOmsorg = finnResterendePerioder(perioder, omsorgsperiode.periode).map(periode => ({
+      periode,
+      resultat: Resultat.IKKE_OPPFYLT,
+      begrunnelse,
+    }));
+
+    return [...perioderMedOmsorg, ...perioderUtenOmsorg];
+  }
+
+  return [
+    {
+      periode: omsorgsperiode.periode,
+      resultat: harSøkerOmsorgenForIPeriode === RadioOptions.HELE ? Resultat.OPPFYLT : Resultat.IKKE_OPPFYLT,
+      begrunnelse,
+    },
+  ];
+};
+
 const VurderingAvOmsorgsperioderForm = ({
   omsorgsperiode,
   onAvbryt,
@@ -80,34 +108,9 @@ const VurderingAvOmsorgsperioderForm = ({
   });
 
   const handleSubmit = async (formState: VurderingAvOmsorgsperioderFormState) => {
-    const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
     setIsSubmitting(true);
     try {
-      let vurdertePerioder: VurderingSubmitValues[];
-      if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
-        vurdertePerioder = perioder.map(periode => ({
-          periode,
-          resultat: Resultat.OPPFYLT,
-          begrunnelse,
-        }));
-
-        const resterendePerioder = finnResterendePerioder(perioder, omsorgsperiode.periode);
-        const perioderUtenOmsorg = resterendePerioder.map(periode => ({
-          periode,
-          resultat: Resultat.IKKE_OPPFYLT,
-          begrunnelse,
-        }));
-        vurdertePerioder = vurdertePerioder.concat(perioderUtenOmsorg);
-      } else {
-        vurdertePerioder = [
-          {
-            periode: omsorgsperiode.periode,
-            resultat: harSøkerOmsorgenForIPeriode === RadioOptions.HELE ? Resultat.OPPFYLT : Resultat.IKKE_OPPFYLT,
-            begrunnelse,
-          },
-        ];
-      }
-      await onFinished(vurdertePerioder);
+      await onFinished(lagVurdertePerioder(formState, omsorgsperiode));
     } finally {
       setIsSubmitting(false);
     }
