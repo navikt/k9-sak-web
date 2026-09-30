@@ -5,6 +5,7 @@ import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/t
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import FetchedData from './types/fetchedDataTsType';
@@ -39,6 +40,7 @@ interface OwnProps {
   harApenRevurdering: boolean;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   setRequestPendingMessage: (message: string) => void;
+  featureToggles: FeatureToggles;
 }
 
 const BehandlingTilbakekrevingIndex = ({
@@ -55,6 +57,7 @@ const BehandlingTilbakekrevingIndex = ({
   valgtFaktaSteg,
   harApenRevurdering,
   setRequestPendingMessage,
+  featureToggles,
 }: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
@@ -166,6 +169,7 @@ const BehandlingTilbakekrevingIndex = ({
           harApenRevurdering={harApenRevurdering}
           hasFetchError={behandlingState === RestApiState.ERROR}
           setBehandling={setBehandling}
+          featureToggles={featureToggles}
         />
       </BehandlingProvider>
     </>

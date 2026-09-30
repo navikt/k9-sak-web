@@ -7,7 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
-import { qFeatureToggles } from '../../../featuretoggles/k9/featureToggles';
+import { prodFeatureToggles, qFeatureToggles } from '../../../featuretoggles/k9/featureToggles';
 import { createQueryClient } from '../../../shared/query/queryClient.js';
 import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
@@ -88,11 +88,11 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(lukkModalCallback.mock.calls).toHaveLength(1);
   });
 
-  it('skal bruke gammel full-revurdering-payload når REVURDERING_FRA_STEG_V2 er av', async () => {
+  it('skal bruke full-revurdering-payload i ny flyt', async () => {
     const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
 
     render(
-      <FeatureTogglesContext.Provider value={{ ...qFeatureToggles, REVURDERING_FRA_STEG_V2: false }}>
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
         <QueryClientProvider client={queryClient}>
           <MenyNyBehandlingIndexV2
             ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
@@ -141,10 +141,6 @@ describe('<MenyNyBehandlingIndex>', () => {
         BehandlingTypeK9Sak.REVURDERING,
       );
       await userEvent.selectOptions(
-        screen.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
-        'inngangsvilkår',
-      );
-      await userEvent.selectOptions(
         screen.getByRole('combobox', { name: 'Hva er årsaken til den nye behandlingen?' }),
         BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
       );
@@ -160,75 +156,6 @@ describe('<MenyNyBehandlingIndex>', () => {
       eksternUuid: '2323',
       fagsakYtelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
       saksnummer: '123',
-    });
-  });
-
-  it('skal bruke gammel delvis-revurdering-payload når REVURDERING_FRA_STEG_V2 er av', async () => {
-    const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
-
-    render(
-      <FeatureTogglesContext.Provider value={{ ...qFeatureToggles, REVURDERING_FRA_STEG_V2: false }}>
-        <QueryClientProvider client={queryClient}>
-          <MenyNyBehandlingIndexV2
-            ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
-            saksnummer="123"
-            behandlingId={3}
-            behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
-            lagNyBehandling={lagNyBehandlingCallback}
-            behandlingOppretting={[
-              {
-                behandlingType: BehandlingTypeK9Sak.REVURDERING,
-                kanOppretteBehandling: true,
-              },
-            ]}
-            behandlingstyper={[
-              {
-                kode: BehandlingTypeK9Sak.REVURDERING,
-                kodeverk: 'BEHANDLING_TYPE',
-                navn: 'Revurdering',
-              },
-            ]}
-            tilbakekrevingRevurderingArsaker={[]}
-            revurderingArsaker={[]}
-            kanTilbakekrevingOpprettes={{
-              kanBehandlingOpprettes: false,
-              kanRevurderingOpprettes: false,
-            }}
-            uuidForSistLukkede="2323"
-            erTilbakekrevingAktivert
-            sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
-            sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
-            lukkModal={vi.fn()}
-          />
-        </QueryClientProvider>
-      </FeatureTogglesContext.Provider>,
-    );
-
-    await act(async () => {
-      await userEvent.selectOptions(
-        screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
-        BehandlingTypeK9Sak.REVURDERING,
-      );
-      await userEvent.selectOptions(
-        screen.getByRole('combobox', { name: 'Hvor i prosessen vil du starte revurderingen?' }),
-        'RE-ENDRET-FORDELING',
-      );
-      await userEvent.type(screen.getByRole('textbox', { name: 'Fra og med' }), '01.03.2026');
-      await userEvent.type(screen.getByRole('textbox', { name: 'Til og med' }), '10.03.2026');
-      await userEvent.click(screen.getByRole('button', { name: 'Opprett behandling' }));
-    });
-
-    const kall = lagNyBehandlingCallback.mock.calls;
-    expect(kall).toHaveLength(1);
-    expect(kall[0]?.[0]).toBe(BehandlingTypeK9Sak.REVURDERING);
-    expect(kall[0]?.[1]).toEqual({
-      behandlingType: BehandlingTypeK9Sak.REVURDERING,
-      eksternUuid: '2323',
-      fagsakYtelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
-      fom: '2026-03-01',
-      saksnummer: '123',
-      steg: 'RE-ENDRET-FORDELING',
-      tom: '2026-03-10',
     });
   });
 
@@ -607,6 +534,163 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     expect(options.some(o => o.value === BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG)).toBe(true);
     expect(options.some(o => o.value === BehandlingÅrsakType.RE_ENDRING_BEREGNINGSGRUNNLAG)).toBe(false);
+  });
+
+  it('skal la saksbehandler velge revurdering av medisinsk vilkår når toggle er på', async () => {
+    const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
+
+    render(
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
+        <QueryClientProvider client={queryClient}>
+          <MenyNyBehandlingIndexV2
+            ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
+            saksnummer="123"
+            behandlingId={3}
+            behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
+            lagNyBehandling={lagNyBehandlingCallback}
+            behandlingOppretting={[
+              {
+                behandlingType: BehandlingTypeK9Sak.REVURDERING,
+                kanOppretteBehandling: true,
+              },
+            ]}
+            delvisRevurderingsårsaker={[
+              {
+                årsak: BehandlingÅrsakType.RE_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON,
+                vilkårType: 'K9_VK_2_a',
+                periodeType: 'PERIODE',
+                valgbarePerioder: [],
+              },
+            ]}
+            behandlingstyper={[
+              {
+                kode: BehandlingTypeK9Sak.REVURDERING,
+                kodeverk: 'BEHANDLING_TYPE',
+                navn: 'Revurdering',
+              },
+            ]}
+            tilbakekrevingRevurderingArsaker={[]}
+            revurderingArsaker={[
+              {
+                kode: BehandlingÅrsakType.RE_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON,
+                kodeverk: 'BEHANDLING_AARSAK',
+                navn: 'Nye opplysninger om sykdom',
+              },
+            ]}
+            kanTilbakekrevingOpprettes={{
+              kanBehandlingOpprettes: false,
+              kanRevurderingOpprettes: false,
+            }}
+            uuidForSistLukkede="2323"
+            erTilbakekrevingAktivert
+            sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+            lukkModal={vi.fn()}
+          />
+        </QueryClientProvider>
+      </FeatureTogglesContext.Provider>,
+    );
+
+    await act(async () => {
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
+        BehandlingTypeK9Sak.REVURDERING,
+      );
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+        'DELVIS',
+      );
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' }),
+        BehandlingÅrsakType.RE_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON,
+      );
+    });
+
+    expect(screen.getByText('Vilkår som revurderes: Sykdomsvilkåret')).toBeInTheDocument();
+  });
+
+  it('skal ikke tilby revurdering av medisinsk vilkår når toggle er av', async () => {
+    const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
+
+    render(
+      <FeatureTogglesContext.Provider value={prodFeatureToggles}>
+        <QueryClientProvider client={queryClient}>
+          <MenyNyBehandlingIndexV2
+            ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
+            saksnummer="123"
+            behandlingId={3}
+            behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
+            lagNyBehandling={lagNyBehandlingCallback}
+            behandlingOppretting={[
+              {
+                behandlingType: BehandlingTypeK9Sak.REVURDERING,
+                kanOppretteBehandling: true,
+              },
+            ]}
+            delvisRevurderingsårsaker={[
+              {
+                årsak: BehandlingÅrsakType.RE_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON,
+                vilkårType: 'K9_VK_2_a',
+                periodeType: 'PERIODE',
+                valgbarePerioder: [],
+              },
+              {
+                årsak: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+                vilkårType: 'FP_VK_41',
+                periodeType: 'STP',
+                valgbarePerioder: [{ fom: '2026-03-01', tom: '2026-03-01' }],
+              },
+            ]}
+            behandlingstyper={[
+              {
+                kode: BehandlingTypeK9Sak.REVURDERING,
+                kodeverk: 'BEHANDLING_TYPE',
+                navn: 'Revurdering',
+              },
+            ]}
+            tilbakekrevingRevurderingArsaker={[]}
+            revurderingArsaker={[
+              {
+                kode: BehandlingÅrsakType.RE_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON,
+                kodeverk: 'BEHANDLING_AARSAK',
+                navn: 'Nye opplysninger om sykdom',
+              },
+              {
+                kode: BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+                kodeverk: 'BEHANDLING_AARSAK',
+                navn: 'Opplysninger om beregningsgrunnlag',
+              },
+            ]}
+            kanTilbakekrevingOpprettes={{
+              kanBehandlingOpprettes: false,
+              kanRevurderingOpprettes: false,
+            }}
+            uuidForSistLukkede="2323"
+            erTilbakekrevingAktivert
+            sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+            lukkModal={vi.fn()}
+          />
+        </QueryClientProvider>
+      </FeatureTogglesContext.Provider>,
+    );
+
+    await act(async () => {
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hva slags behandling ønsker du å opprette?' }),
+        BehandlingTypeK9Sak.REVURDERING,
+      );
+      await userEvent.selectOptions(
+        screen.getByRole('combobox', { name: 'Hvordan vil du opprette revurderingen?' }),
+        'DELVIS',
+      );
+    });
+
+    const årsakSelect = screen.getByRole('combobox', { name: 'Hva er årsaken til revurderingen?' });
+    const options = Array.from(årsakSelect.querySelectorAll('option')).map(o => o.value);
+
+    expect(options).toContain(BehandlingÅrsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG);
+    expect(options).not.toContain(BehandlingÅrsakType.RE_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON);
   });
 
   it('skal skjule delvis-valg når backend ikke har delvisårsaker', async () => {

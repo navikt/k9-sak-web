@@ -1,7 +1,5 @@
 import { EyeWithPupilIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
-import { useContext } from 'react';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { useInntektsmeldingContext } from '../../context/InntektsmeldingContext';
 import type { ArbeidsgiverArbeidsforholdId } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/ArbeidsgiverArbeidsforholdId.js';
@@ -38,13 +36,11 @@ interface InntektsmeldingRadProps {
 
 const InntektsmeldingRad = ({ tilstand }: InntektsmeldingRadProps) => {
   const { dokumenter, behandling } = useInntektsmeldingContext();
-  const featureToggles = useContext(FeatureTogglesContext);
 
   const finnDokumentLink = (journalpostId: string) =>
     dokumenter?.find(d => d.journalpostId === journalpostId)?.href ?? '#';
 
-  const visSendNyOppgave =
-    featureToggles.SAKSBEHANDLERINITIERT_INNTEKTSMELDING && erTillattSakstypeForNyInntektsmelding(behandling.sakstype);
+  const visSendNyOppgave = erTillattSakstypeForNyInntektsmelding(behandling.sakstype);
 
   return (
     <div>

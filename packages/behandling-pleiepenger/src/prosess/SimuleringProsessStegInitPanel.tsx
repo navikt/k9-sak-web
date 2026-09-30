@@ -7,6 +7,7 @@ import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/Pro
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { AvregningProsessIndex as AvregningProsessIndexV2 } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { VersjonsvelgerV1V2 } from '@k9-sak-web/behandling-felles';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
@@ -32,8 +33,7 @@ interface Props {
   aksjonspunkterMedKodeverk: Aksjonspunkt[];
   fagsak: Fagsak;
   previewFptilbakeCallback:
-    | ((mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>)
-    | undefined;
+    ((mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>) | undefined;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   isReadOnly: boolean;
   api: K9SakProsessApi;
@@ -102,13 +102,32 @@ export function SimuleringProsessStegInitPanel(props: Props) {
 
   if (featureToggles?.BRUK_V2_AVREGNING) {
     return (
-      <AvregningProsessIndexV2
-        fagsak={fagsakV2}
-        behandling={behandlingV2}
-        aksjonspunkter={relevanteAksjonspunkterV2}
-        simuleringResultat={simuleringResultatV2}
-        tilbakekrevingvalg={tilbakekrevingvalgV2}
-        isReadOnly={props.isReadOnly}
+      <VersjonsvelgerV1V2
+        v1={
+          <AvregningProsessIndex
+            behandling={props.behandling}
+            aksjonspunkter={relevanteAksjonspunkter}
+            fagsak={props.fagsak}
+            simuleringResultat={data.simuleringResultat}
+            tilbakekrevingvalg={data.tilbakekrevingvalg}
+            previewFptilbakeCallback={props.previewFptilbakeCallback}
+            featureToggles={featureToggles}
+            readOnlySubmitButton={readOnlySubmitButton}
+            submitCallback={handleSubmit}
+            isReadOnly={props.isReadOnly}
+            isAksjonspunktOpen={harApentAksjonspunkt}
+          />
+        }
+        v2={
+          <AvregningProsessIndexV2
+            fagsak={fagsakV2}
+            behandling={behandlingV2}
+            aksjonspunkter={relevanteAksjonspunkterV2}
+            simuleringResultat={simuleringResultatV2}
+            tilbakekrevingvalg={tilbakekrevingvalgV2}
+            isReadOnly={props.isReadOnly}
+          />
+        }
       />
     );
   }

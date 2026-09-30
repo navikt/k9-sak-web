@@ -1,31 +1,27 @@
-import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { BarnDto, BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import React from 'react';
-import FaktaBarnIndex from './FaktaBarnIndex';
+import BarnFakta from './BarnFakta';
 
 export default {
   title: 'omsorgspenger/fakta/Barn',
-  component: FaktaBarnIndex,
+  component: BarnFakta,
 };
 
 const barn: BarnDto[] = [
   {
     personIdent: '010116',
     fødselsdato: '2016-01-01',
-    harSammeBosted: true,
     barnType: BarnType.VANLIG,
   },
   {
     personIdent: '02031845962',
     fødselsdato: '2018-03-02',
-    harSammeBosted: false,
     barnType: BarnType.UTENLANDSK_BARN,
   },
   {
     personIdent: '05051952104',
     fødselsdato: '2019-05-05',
-    harSammeBosted: true,
     deltBostedPerioder: ['2022-02-07/2022-02-08', '2022-02-07/2022-02-08'],
     dødsdato: '2020-03-03',
     barnType: BarnType.FOSTERBARN,
@@ -55,6 +51,6 @@ const rammevedtak: Rammevedtak[] = [
   },
 ];
 
-export const treBarn = () => <FaktaBarnIndex barn={barn} rammevedtak={rammevedtak} />;
+export const treBarn = () => <BarnFakta barn={barn} rammevedtak={rammevedtak} />;
 
-export const ingenBarn = () => <FaktaBarnIndex barn={[]} rammevedtak={rammevedtak} />;
+export const ingenBarn = () => <BarnFakta barn={[]} rammevedtak={[]} />;

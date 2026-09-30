@@ -2,8 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
-import { IS_DEV } from './constants';
-import { isQ } from '@k9-sak-web/lib/paths/paths.js';
+import { isDev, isQ } from '@k9-sak-web/lib/paths/paths.js';
 
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import AppIndex from './app/AppIndex';
@@ -20,7 +19,7 @@ import { initApm } from '@k9-sak-web/gui/app/errorhandling/apm.js';
 
 initApm({ app: 'ung-sak-web' });
 
-const featureToggles = resolveUngFeatureToggles({ useQVersion: IS_DEV || isQ() });
+const featureToggles = resolveUngFeatureToggles({ useQVersion: isDev() || isQ() });
 
 const basePath = '/ung/web';
 if (featureToggles.SINGLE_AUTHFIXER) {

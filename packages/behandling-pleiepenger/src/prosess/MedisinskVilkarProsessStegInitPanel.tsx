@@ -1,7 +1,7 @@
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
+import MedisinskVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-sykdom/MedisinskVilkarProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import SykdomProsessIndex from '@k9-sak-web/prosess-vilkar-sykdom';
 import { Behandling } from '@k9-sak-web/types';
 import {
   k9_kodeverk_vilkår_VilkårType,
@@ -29,14 +29,12 @@ const transformerTilPerioder = (vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerio
     vilkårUnder18?.perioder?.map(periode => ({
       ...periode,
       pleietrengendeErOver18år: false,
-      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
     })) ?? [];
 
   const perioderOver18 =
     vilkårOver18?.perioder?.map(periode => ({
       ...periode,
       pleietrengendeErOver18år: true,
-      vilkarStatus: { kode: periode.vilkarStatus, kodeverk: '' },
     })) ?? [];
 
   return perioderUnder18.concat(perioderOver18);
@@ -74,6 +72,10 @@ export function MedisinskVilkarProsessStegInitPanel({ api, behandling }: Props) 
   const allePerioder = transformerTilPerioder(vilkår);
 
   return (
-    <SykdomProsessIndex lovReferanse={vilkårForSteg[0].lovReferanse} panelTittelKode="Sykdom" perioder={allePerioder} />
+    <MedisinskVilkarProsessIndex
+      lovReferanse={vilkårForSteg[0].lovReferanse}
+      panelTittel="Sykdom"
+      perioder={allePerioder}
+    />
   );
 }
