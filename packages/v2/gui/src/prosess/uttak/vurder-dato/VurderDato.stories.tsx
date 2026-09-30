@@ -6,7 +6,6 @@ import {
   lagUtredBehandling,
   lagUttak,
   lagVurderDatoNyRegelAksjonspunkt,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
@@ -54,7 +53,6 @@ export const ÅpentAksjonspunkt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -100,7 +98,6 @@ export const Skjemavalidering: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -142,7 +139,6 @@ export const LøsAksjonspunkt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -207,7 +203,6 @@ export const RedigerVurdering: Story = {
           'Endringene i uttaksreglene skal gjelde fra 15. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
       }),
     ],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {

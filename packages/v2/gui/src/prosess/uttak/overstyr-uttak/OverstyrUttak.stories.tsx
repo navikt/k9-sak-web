@@ -7,7 +7,6 @@ import {
   lagOverstyringUttakAksjonspunkt,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
@@ -64,7 +63,6 @@ export const EmptyState: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -98,7 +96,6 @@ export const LeggTilOverstyring: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -194,7 +191,6 @@ export const Overstyringer: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: true,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -259,7 +255,6 @@ export const RedigerOverstyring: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -367,7 +362,6 @@ export const FjernOverstyring: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -450,7 +444,6 @@ export const Lesemodus: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {

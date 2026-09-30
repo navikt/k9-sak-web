@@ -1,8 +1,9 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { relevanteUttakAksjonspunkter } from '@k9-sak-web/gui/prosess/uttak/relevanteUttakAksjonspunkter.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { AntallDagerLivetsSluttfase } from '@k9-sak-web/gui/prosess/uttak-antall-dager-sluttfase/AntallDagerLivetsSluttfase.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
@@ -14,7 +15,7 @@ class PanelDef extends ProsessStegPanelDef {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
     const { erOverstyrer, isReadOnly } = props;
-    const { behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
+    const { behandling, aksjonspunkter } = deepCopyProps;
     // Felles Suspense slik at kvoteinfo og uttak vises samtidig fra samme uttak-query
     return (
       <LoadingPanelSuspense>
@@ -23,7 +24,6 @@ class PanelDef extends ProsessStegPanelDef {
           <Uttak
             behandling={behandling}
             aksjonspunkter={aksjonspunkter}
-            relevanteAksjonspunkter={relevanteAksjonspunkter}
             erOverstyrer={erOverstyrer}
             readOnly={isReadOnly}
           />
@@ -32,7 +32,7 @@ class PanelDef extends ProsessStegPanelDef {
     );
   };
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => relevanteUttakAksjonspunkter(fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE);
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -56,8 +56,6 @@ class PanelDef extends ProsessStegPanelDef {
   };
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
-
-  getData = () => ({ relevanteAksjonspunkter: this.getAksjonspunktKoder() });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

@@ -4,7 +4,6 @@ import {
   lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -58,7 +57,6 @@ export const BeggeReglene: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {

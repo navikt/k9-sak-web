@@ -14,7 +14,6 @@ import {
   lagTilsynsgraderingPeriode,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
   Årsak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -96,7 +95,6 @@ export const UttakBasis: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {
@@ -225,7 +223,6 @@ export const UttakMedUlikeStatuser: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -268,7 +265,6 @@ export const UttakGradertMotInntekt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -377,7 +373,6 @@ export const UttakGradertMedUlikeAktivitetstyper: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
 };
@@ -406,7 +401,6 @@ export const UttakGradertMotTilsyn: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -461,7 +455,6 @@ export const UttakLesemodus: Story = {
     behandling: lagAvsluttetBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {
@@ -562,7 +555,6 @@ export const UttakMedOpphold: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
 };
@@ -586,7 +578,6 @@ export const UttakPleiepengerNærstående: Story = {
     behandling: lagUtredBehandling({ sakstype: FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE }),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {

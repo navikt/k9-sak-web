@@ -23,7 +23,6 @@ import {
   lagOverlappendeSakerAksjonspunkt,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import {
   beregnSplittDatoer,
@@ -97,7 +96,6 @@ export const Aksjonspunkt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -147,7 +145,6 @@ export const LøsAksjonspunkt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvas, step }) => {
@@ -222,7 +219,6 @@ export const LøsAksjonspunktMedSplitt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -318,7 +314,6 @@ export const LøstAksjonspunkt: Story = {
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
 };
@@ -358,7 +353,6 @@ export const LøstAksjonspunktKanRedigeres: Story = {
         erAktivt: true, // Må være true for å kunne redigeres
       }),
     ],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -476,7 +470,6 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {

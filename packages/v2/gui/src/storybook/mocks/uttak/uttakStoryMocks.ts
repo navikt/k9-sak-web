@@ -385,16 +385,6 @@ export const lagVurderDatoNyRegelAksjonspunkt = (
 ): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK, status, overrides);
 
 /**
- * Alle relevante aksjonspunktdefinisjoner for uttak.
- */
-export const relevanteAksjonspunkterAlle: AksjonspunktDefinisjon[] = [
-  AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
-  AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
-  AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
-  AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
-];
-
-/**
  * Oppretter mock arbeidsgivere-data.
  *
  * @param arbeidsgivere - Array av arbeidsgiverkonfigurasjoner

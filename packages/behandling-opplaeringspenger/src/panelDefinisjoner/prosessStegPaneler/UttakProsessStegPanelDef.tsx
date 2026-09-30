@@ -1,8 +1,9 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { relevanteUttakAksjonspunkter } from '@k9-sak-web/gui/prosess/uttak/relevanteUttakAksjonspunkter.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
@@ -14,18 +15,13 @@ class PanelDef extends ProsessStegPanelDef {
       <Uttak
         behandling={deepCopyProps.behandling}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
-        relevanteAksjonspunkter={deepCopyProps.relevanteAksjonspunkter}
         erOverstyrer={props.erOverstyrer}
         readOnly={props.isReadOnly}
       />
     );
   };
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
-    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
-    aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
-  ];
+  getAksjonspunktKoder = () => relevanteUttakAksjonspunkter(fagsakYtelsesType.OPPLÆRINGSPENGER);
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -49,8 +45,6 @@ class PanelDef extends ProsessStegPanelDef {
   };
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD];
-
-  getData = () => ({ relevanteAksjonspunkter: this.getAksjonspunktKoder() });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {
