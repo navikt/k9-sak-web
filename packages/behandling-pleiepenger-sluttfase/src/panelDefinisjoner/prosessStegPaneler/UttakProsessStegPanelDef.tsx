@@ -2,8 +2,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase';
 import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { AntallDagerLivetsSluttfase } from '@k9-sak-web/gui/prosess/uttak-antall-dager-sluttfase/AntallDagerLivetsSluttfase.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
@@ -11,11 +13,18 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    const { kvoteInfo, erOverstyrer, isReadOnly } = props;
+    const { erOverstyrer, isReadOnly } = props;
     const { uttak, behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
     return (
       <>
-        <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
+        <LoadingPanelSuspense>
+          <ErrorBoundary>
+            <AntallDagerLivetsSluttfase
+              behandlingUuid={props.behandling.uuid}
+              behandlingVersjon={props.behandling.versjon}
+            />
+          </ErrorBoundary>
+        </LoadingPanelSuspense>
         <Uttak
           uttak={uttak}
           behandling={behandling}
@@ -55,7 +64,6 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ uttak }) => ({
     uttak,
-    kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     uttaksperioder: uttak?.uttaksplan?.perioder,
     relevanteAksjonspunkter: this.getAksjonspunktKoder(),
   });

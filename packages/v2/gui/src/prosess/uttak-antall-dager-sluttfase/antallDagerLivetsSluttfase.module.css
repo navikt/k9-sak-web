@@ -1,8 +1,7 @@
-.antallDagerLivetsSluttfaseIndexContainer {
+.antallDagerLivetsSluttfaseContainer {
   background-color: #cce1f3;
   border-radius: 4px;
   padding: 1rem;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
 }
 
 .header {
@@ -15,11 +14,5 @@
 .sistePleiedagBoks {
   background-color: var(--ax-accent-300);
   border-radius: 8px;
-  padding: 0 1rem;
-}
-
-.sistePleiedagBoks p {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
 }

@@ -1,29 +1,28 @@
-import React from 'react';
-
+import type { JSX } from 'react';
 import styles from './fremdriftslinje.module.css';
 
-interface OwnProps {
+interface FremdriftslinjeProps {
   max: number;
   antallGrønnBar: number;
   antallGulBar: number;
   totalBreddeProsent: number;
 }
 
-const Fremdriftslinje = ({ max, antallGrønnBar, antallGulBar, totalBreddeProsent }: OwnProps) => {
-  const antallTitler = [];
-  let antallPerIntervall;
-
+const finnAntallPerIntervall = (max: number): number => {
   if (max >= 100) {
-    antallPerIntervall = 10;
-  } else if (max <= 10) {
-    antallPerIntervall = 1;
-  } else {
-    antallPerIntervall = 5;
+    return 10;
   }
+  if (max <= 10) {
+    return 1;
+  }
+  return 5;
+};
 
+export const Fremdriftslinje = ({ max, antallGrønnBar, antallGulBar, totalBreddeProsent }: FremdriftslinjeProps) => {
+  const antallPerIntervall = finnAntallPerIntervall(max);
   const breddePerDagProsent = totalBreddeProsent / max;
 
-  antallTitler.push(<div key={0}>{0}</div>);
+  const antallTitler: JSX.Element[] = [<div key={0}>{0}</div>];
   for (let i = antallPerIntervall; i <= max; i += antallPerIntervall) {
     antallTitler.push(
       <div key={i} style={{ width: `${breddePerDagProsent * antallPerIntervall}%`, textAlign: 'right' }}>
@@ -41,6 +40,7 @@ const Fremdriftslinje = ({ max, antallGrønnBar, antallGulBar, totalBreddeProsen
       {antallGrønnBar > 0 && (
         <div
           className={styles.gronnBar}
+          data-testid="fremdriftslinje-gronn"
           style={{
             width: `${antallGrønnBar >= max ? totalBreddeProsent : antallGrønnBar * breddePerDagProsent}%`,
             borderRadius: `${antallGulBar > 0 && antallGrønnBar < max ? '1.5rem 0rem 0rem 1.5rem' : '1.5rem'}`,
@@ -51,6 +51,7 @@ const Fremdriftslinje = ({ max, antallGrønnBar, antallGulBar, totalBreddeProsen
       {antallGulBar > 0 && (antallGrønnBar < 60 || !antallGrønnBar) && (
         <div
           className={styles.gulBar}
+          data-testid="fremdriftslinje-gul"
           style={{
             width: `${
               antallGulBar + antallGrønnBar >= max
@@ -65,5 +66,3 @@ const Fremdriftslinje = ({ max, antallGrønnBar, antallGulBar, totalBreddeProsen
     </>
   );
 };
-
-export default Fremdriftslinje;
