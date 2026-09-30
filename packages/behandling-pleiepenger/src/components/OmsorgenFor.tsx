@@ -1,5 +1,5 @@
 import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
-import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { OmsorgenFor as OmsorgenForV2 } from '@k9-sak-web/gui/fakta/omsorgen-for/src/OmsorgenFor.js';
@@ -26,13 +26,13 @@ export default ({
 }: OmsorgenForProps) => {
   const { BRUK_OMSORGEN_FOR_V2 } = useContext(FeatureTogglesContext);
   const { legacyErrorNotifier } = useGlobalUnhandledErrors();
-  const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktkodeDefinisjonType.AVKLAR_OMSORGEN_FOR);
+  const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, AksjonspunktDefinisjon.VURDER_OMSORGEN_FOR_V2);
   const harAksjonspunkt = !!omsorgenForAksjonspunkt;
 
   const løsAksjonspunkt = omsorgsperioder =>
     submitCallback([
       {
-        kode: aksjonspunktkodeDefinisjonType.AVKLAR_OMSORGEN_FOR ?? '',
+        kode: AksjonspunktDefinisjon.VURDER_OMSORGEN_FOR_V2,
         begrunnelse: 'Omsorgen for er behandlet',
         omsorgsperioder,
       },

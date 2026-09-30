@@ -1,6 +1,5 @@
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Resultat } from '@k9-sak-web/backend/k9sak/kodeverk/sykdom/Resultat.js';
-import type { NorskIdentDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/NorskIdentDto.js';
 import type { OmsorgenForDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorg/OmsorgenForDto.js';
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
@@ -46,8 +45,7 @@ const finnResterendePerioder = (perioderFraForm: Periode[], periodeTilVurdering?
 interface VurderingAvOmsorgsperioderFormProps {
   omsorgsperiode: OmsorgenForDto;
   onAvbryt?: () => void;
-  hentValiderteFosterbarn?: () => Promise<NorskIdentDto[] | null>;
-  onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: NorskIdentDto[]) => Promise<void>;
+  onFinished: (vurdering: VurderingSubmitValues[]) => Promise<void>;
   sakstype?: FagsakYtelsesType;
   readOnly: boolean;
 }
@@ -61,7 +59,6 @@ interface VurderingAvOmsorgsperioderFormState {
 const VurderingAvOmsorgsperioderForm = ({
   omsorgsperiode,
   onAvbryt,
-  hentValiderteFosterbarn,
   onFinished,
   sakstype,
   readOnly,
@@ -86,14 +83,6 @@ const VurderingAvOmsorgsperioderForm = ({
     const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
     setIsSubmitting(true);
     try {
-      let fosterbarnForOmsorgspenger: NorskIdentDto[] | undefined;
-      if (erOMP && hentValiderteFosterbarn) {
-        const validerteFosterbarn = await hentValiderteFosterbarn();
-        if (validerteFosterbarn === null) {
-          return;
-        }
-        fosterbarnForOmsorgspenger = validerteFosterbarn;
-      }
       let vurdertePerioder: VurderingSubmitValues[];
       if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
         vurdertePerioder = perioder.map(periode => ({
@@ -118,7 +107,7 @@ const VurderingAvOmsorgsperioderForm = ({
           },
         ];
       }
-      await onFinished(vurdertePerioder, fosterbarnForOmsorgspenger);
+      await onFinished(vurdertePerioder);
     } finally {
       setIsSubmitting(false);
     }
