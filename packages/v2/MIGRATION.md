@@ -47,6 +47,7 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
     I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
+- [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
@@ -90,7 +91,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | `fakta-om-barnet`                 | 441     | 2 (opl, psb)                       | Fokusert på pleietrengendes dødsfall, 1 aksjonspunkt         |
 | `fakta-verge`                     | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
 | `fakta-overstyr-beregning`        | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
-| `fakta-barn-og-overfoeringsdager` | 895     | 2 (oms, unntak)                    | Visningsorientert, leser rammevedtak-tre                     |
 | `fakta-barn-oms`                  | 903     | 3 (oms, unntak, utvidet-rett)      | Visning av barn-liste, 0 API-avhengigheter                   |
 | `prosess-anke-merknader`          | 363     | 1 (behandling-anke)                | Gammel JSX, enkel, 0 API — migrer alle 3 anke-paneler samlet |
 | `prosess-anke-resultat`           | 620     | 1 (behandling-anke)                | Gammel JSX, vedtak-lignende resultatform                     |

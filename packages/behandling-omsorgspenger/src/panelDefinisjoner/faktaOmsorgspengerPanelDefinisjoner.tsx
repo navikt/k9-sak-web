@@ -8,7 +8,7 @@ import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/Medlemskapsvilkaret
 import NyInntektPanelDef from './faktaPaneler/NyInntektPanelDef';
 import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
-import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
+import DelingAvDagerFaktaPanelDef from './faktaPaneler/DelingAvDagerFaktaPanelDef';
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import VurderNyoppstartetFaktaPanelDef from './faktaPaneler/VurderNyoppstartetFaktaPanelDef';
 import YtelserFaktaPanelDef from './faktaPaneler/YtelserFaktaPanelDef';
@@ -19,7 +19,7 @@ export const faktaPanelDefinisjonerUtenOmsorgenFor = [
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),
   new InntektsmeldingFaktaPanelDef(),
-  new UttakFaktaPanelDef(),
+  new DelingAvDagerFaktaPanelDef(),
   new BarnFaktaPanelDef(),
   new BeregningFaktaPanelDef(),
   new NyInntektPanelDef(),

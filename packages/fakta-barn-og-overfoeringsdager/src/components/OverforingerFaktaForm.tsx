@@ -130,3 +130,9 @@ export default connect(mapStateToPropsFactory)(
     enableReinitialize: true,
   })(OverforingerFaktaForm),
 );
+
+// Kompileringsfeil her betyr at BRUK_V2_DELING_AV_DAGER er fjernet fra FeatureToggles.
+// Slett denne fila (med tilhørende spec/css) og fjern v1-grenen i DelingAvDagerFaktaPanelDef når migreringen er ferdig.
+// Fila er løst typesjekket (loosely-type-checked-files.json), der TS2339 ignoreres. Bruker derfor satisfies (TS1360).
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+'BRUK_V2_DELING_AV_DAGER' satisfies keyof import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles;

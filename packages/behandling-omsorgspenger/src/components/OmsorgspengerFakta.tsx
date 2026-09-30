@@ -20,6 +20,7 @@ import faktaPanelDefinisjoner, {
   faktaPanelDefinisjonerUtenOmsorgenFor,
 } from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
@@ -156,21 +157,23 @@ const OmsorgspengerFakta = ({
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
-          <ErrorBoundary>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              ...faktaDataUtenCaching,
-              fagsak,
-              behandling,
-              alleKodeverk,
-              formData,
-              setFormData,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
-              dokumenter,
-              featureToggles,
-            })}
-          </ErrorBoundary>
+          <LoadingPanelSuspense>
+            <ErrorBoundary>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                ...faktaDataUtenCaching,
+                fagsak,
+                behandling,
+                alleKodeverk,
+                formData,
+                setFormData,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
+                dokumenter,
+                featureToggles,
+              })}
+            </ErrorBoundary>
+          </LoadingPanelSuspense>
         )}{' '}
       </SideMenuWrapper>
     );
