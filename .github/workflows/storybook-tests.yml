@@ -24,6 +24,6 @@ jobs:
 
       - name: Serve Storybook and run tests
         run: |
-          yarn concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "yarn http-server .static_storybook --port 9001 --silent" \
-            "yarn wait-on --timeout 60000 tcp:127.0.0.1:9001 && yarn test-storybook"
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server .static_storybook --port 9001 --silent" \
+            "npx wait-on --timeout 60000 tcp:127.0.0.1:9001 && npx test-storybook"
