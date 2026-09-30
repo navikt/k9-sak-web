@@ -9,8 +9,9 @@ import type {
   k9_sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
   k9_sak_kontrakt_uttak_overstyring_OverstyrtUttakDto as OverstyrtUttakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BackendTilhørighet } from '../../utils/BackendTilhørighet.js';
 
-export type BehandlingUttakBackendApiType = {
+export type BehandlingUttakBackendApiType = BackendTilhørighet & {
   hentUttak(behandlingUuid: string): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder>;
   getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto>;
   bekreftAksjonspunkt(requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto): Promise<void>;

@@ -25,6 +25,7 @@ export interface FakeUttakBackendConfig {
 }
 
 export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
+  readonly backend = 'k9sak';
   #arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
   #inntektsgraderinger: InntektgraderingDto;
   #overstyringer: OverstyrtUttakDto['overstyringer'];

@@ -44,10 +44,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ÅpentAksjonspunkt: Story = {
-  decorators: [withFakeUttakBackend({ onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload) })],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
+      onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -58,7 +62,9 @@ export const ÅpentAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel', async () => {
-      await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
+      await expect(
+        await canvas.findByText('Vurder hvilken dato endringer i uttak skal gjelde fra'),
+      ).toBeInTheDocument();
     });
 
     await step('Viser informasjon om endringene i uttak', async () => {
@@ -85,10 +91,13 @@ export const ÅpentAksjonspunkt: Story = {
 };
 
 export const Skjemavalidering: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -97,7 +106,7 @@ export const Skjemavalidering: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
-    const begrunnelseField = canvas.getByLabelText('Begrunnelse');
+    const begrunnelseField = await canvas.findByLabelText('Begrunnelse');
 
     await step('For kort begrunnelse', async () => {
       await user.clear(begrunnelseField);
@@ -122,6 +131,7 @@ const submitSpy = fn();
 export const LøsAksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
       onBekreftAksjonspunkt: payload => {
         submitSpy(payload);
         action('aksjonspunkt:submit')(payload);
@@ -130,7 +140,6 @@ export const LøsAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -141,7 +150,7 @@ export const LøsAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Velg dato', async () => {
-      const dateInput = canvas.getByLabelText('Endringsdato');
+      const dateInput = await canvas.findByLabelText('Endringsdato');
       await user.clear(dateInput);
       await user.type(dateInput, '20.01.2024');
       await expect(dateInput).toHaveValue('20.01.2024');
@@ -180,6 +189,9 @@ export const LøsAksjonspunkt: Story = {
 export const RedigerVurdering: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+        virkningsdatoUttakNyeRegler: '2024-01-15',
+      }),
       onBekreftAksjonspunkt: payload => {
         submitSpy(payload);
         action('aksjonspunkt:submit')(payload);
@@ -188,9 +200,6 @@ export const RedigerVurdering: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
-      virkningsdatoUttakNyeRegler: '2024-01-15',
-    }),
     erOverstyrer: false,
     aksjonspunkter: [
       lagVurderDatoNyRegelAksjonspunkt(AksjonspunktStatus.UTFØRT, {
@@ -206,7 +215,7 @@ export const RedigerVurdering: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel for endringsdato', async () => {
-      await expect(canvas.getByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
+      await expect(await canvas.findByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger' }));
     });
 

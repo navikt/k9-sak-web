@@ -10,6 +10,8 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/v
 import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { useUttakApi } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
+import { uttakQueryOptions } from '@k9-sak-web/gui/prosess/uttak/api/uttakQueryOptions.js';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -20,7 +22,6 @@ import {
   aksjonspunkterQueryOptions,
   beregningsresultatUtbetalingQueryOptions,
   simuleringResultatQueryOptions,
-  uttakQueryOptions,
   vilkårQueryOptions,
 } from './k9SakQueryOptions';
 
@@ -315,7 +316,9 @@ interface ProsessmotorProps {
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(api, behandling));
+  // Samme query som Uttak-panelet, så uttak hentes én gang og status oppdateres ved ny henting
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   const { data: beregningsresultatUtbetaling } = useSuspenseQuery(
     beregningsresultatUtbetalingQueryOptions(api, behandling),
   );

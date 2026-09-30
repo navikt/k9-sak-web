@@ -1,9 +1,9 @@
-import { BodyShort, Box, Heading } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { BodyShort, Box, Heading } from '@navikt/ds-react';
 import { formatDate } from '../../utils/formatters.js';
+import { useUttakApi } from '../uttak/api/UttakApiContext.js';
+import { uttakQueryOptions } from '../uttak/api/uttakQueryOptions.js';
 import styles from './antallDagerLivetsSluttfase.module.css';
-import { useAntallDagerLivetsSluttfaseApi } from './api/AntallDagerLivetsSluttfaseApiContext.js';
-import { antallDagerLivetsSluttfaseQueryOptions } from './api/antallDagerLivetsSluttfaseQueryOptions.js';
 import { Fremdriftslinje } from './Fremdriftslinje.js';
 
 const MAX_ANTALL_DAGER = 60;
@@ -14,10 +14,9 @@ interface AntallDagerLivetsSluttfaseProps {
 }
 
 export const AntallDagerLivetsSluttfase = ({ behandlingUuid, behandlingVersjon }: AntallDagerLivetsSluttfaseProps) => {
-  const api = useAntallDagerLivetsSluttfaseApi();
-  const { data: kvoteInfo } = useSuspenseQuery(
-    antallDagerLivetsSluttfaseQueryOptions(api, behandlingUuid, behandlingVersjon),
-  );
+  const api = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(api, behandlingUuid, behandlingVersjon));
+  const kvoteInfo = uttak?.uttaksplan?.kvoteInfo;
 
   if (!kvoteInfo) {
     return null;

@@ -22,7 +22,7 @@ import type {
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
+import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType.js';
 import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
 import {
   finnSisteSluttDatoFraPerioderTilVurdering,
@@ -40,7 +40,7 @@ type OwnProps = {
   loading: boolean;
   setLoading: (loading: boolean) => void;
   perioderTilVurdering?: string[];
-  api: BehandlingUttakBackendClient;
+  api: BehandlingUttakBackendApiType;
   handleOverstyring: HandleOverstyringType;
   arbeidsgivereFromParent?: ArbeidsgiverOversiktDto['arbeidsgivere'];
 };

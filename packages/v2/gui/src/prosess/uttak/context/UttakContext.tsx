@@ -6,8 +6,7 @@ import type {
   k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   createContext,
   useCallback,
@@ -19,14 +18,15 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import type BehandlingUttakBackendClient from '../BehandlingUttakBackendClient';
+import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType.js';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 import hentPerioderFraUttak from '../utils/hentPerioderFraUttak';
 import lagUttaksperiodeliste from '../utils/uttaksperioder';
 
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   uttak: UttaksplanMedUtsattePerioder;
-  uttakApi: BehandlingUttakBackendClient;
+  uttakApi: BehandlingUttakBackendApiType;
   perioderTilVurdering: string[];
   hentUttak?: () => Promise<any>;
   onAksjonspunktBekreftet?: () => void;
@@ -156,25 +156,8 @@ export const useUttakContext = () => {
     refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg
   });
 
-  /**
-   * Etter overstyring av uttak må uttaksperiodene hentes på nytt for å få oppdatert uttaksplanen
-   * De initielle uttaksdataene lastes fortsatt fra tidligere api-kall, denne er derfor deaktivert
-   * og må trigges manuelt ved behov. Når uthentingen av uttak senere er flyttet over til ny api-client
-   * kan denne endres til å være aktivert ved mount.
-   */
-  const { refetch: hentUttak } = useQuery({
-    queryKey: ['uttak', behandling.uuid],
-    throwOnError: ignore404Errors,
-    queryFn: async () => {
-      const hentetUttak = await uttakApi.hentUttak(behandling.uuid);
-      return hentetUttak;
-    },
-    enabled: false,
-    initialData: uttakContext.uttak,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  });
+  // Samme query som Uttak bruker, så data hentes fra cachen. refetch brukes etter overstyring av uttak.
+  const { refetch: hentUttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
 
   const fagsakYtelseType = uttakContext?.behandling.sakstype;
 

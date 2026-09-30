@@ -52,6 +52,7 @@ type Story = StoryObj<typeof meta>;
 export const EmptyState: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
       allowedRanges: [
         { fom: '2024-01-01', tom: '2024-01-31' },
@@ -61,7 +62,6 @@ export const EmptyState: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: true,
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -72,7 +72,7 @@ export const EmptyState: Story = {
     const user = userEvent.setup();
 
     await step('Viser Uttak', async () => {
-      await expect(canvas.getByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
+      await expect(await canvas.findByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
       await expect(canvas.getByRole('cell', { name: /01.02.2024 - 28.02.2024/i })).toBeInTheDocument();
       await expect(canvas.getByRole('cell', { name: /01.01.2024 - 31.01.2024/i })).toBeInTheDocument();
       const expandButtons = canvas.getAllByRole('button', { name: /Åpne/i });
@@ -87,6 +87,7 @@ export const EmptyState: Story = {
 export const LeggTilOverstyring: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
       allowedRanges: [
         { fom: '2024-01-01', tom: '2024-12-31' }, // Allow full year for flexibility
@@ -95,7 +96,6 @@ export const LeggTilOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: true,
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -106,7 +106,7 @@ export const LeggTilOverstyring: Story = {
     const user = userEvent.setup();
 
     await step('Aktiver overstyring', async () => {
-      const overstyrKnapp = canvas.getByTestId('overstyringsknapp');
+      const overstyrKnapp = await canvas.findByTestId('overstyringsknapp');
       await user.click(overstyrKnapp);
     });
 
@@ -154,6 +154,12 @@ export const LeggTilOverstyring: Story = {
 export const Overstyringer: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31', { manueltOverstyrt: true, uttaksgrad: 60 }),
+        lagOppfyltPeriode('2024-02-01/2024-02-14'),
+        lagOppfyltPeriode('2024-02-15/2024-02-28'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -186,12 +192,6 @@ export const Overstyringer: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31', { manueltOverstyrt: true, uttaksgrad: 60 }),
-      lagOppfyltPeriode('2024-02-01/2024-02-14'),
-      lagOppfyltPeriode('2024-02-15/2024-02-28'),
-    ]),
     erOverstyrer: true,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -230,6 +230,10 @@ const submitSpy = fn();
 export const RedigerOverstyring: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -253,10 +257,6 @@ export const RedigerOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-    ]),
     erOverstyrer: true,
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -338,6 +338,10 @@ export const RedigerOverstyring: Story = {
 export const FjernOverstyring: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -361,10 +365,6 @@ export const FjernOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-    ]),
     erOverstyrer: true,
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -426,6 +426,10 @@ export const FjernOverstyring: Story = {
 export const Lesemodus: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -444,10 +448,6 @@ export const Lesemodus: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-    ]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,

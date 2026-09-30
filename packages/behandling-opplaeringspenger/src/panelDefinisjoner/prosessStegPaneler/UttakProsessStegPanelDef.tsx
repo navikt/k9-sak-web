@@ -12,7 +12,6 @@ class PanelDef extends ProsessStegPanelDef {
     konverterKodeverkTilKode(deepCopyProps, false);
     return (
       <Uttak
-        uttak={deepCopyProps.uttak}
         behandling={deepCopyProps.behandling}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
         relevanteAksjonspunkter={deepCopyProps.relevanteAksjonspunkter}
@@ -51,7 +50,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak }) => ({ uttak, relevanteAksjonspunkter: this.getAksjonspunktKoder() });
+  getData = () => ({ relevanteAksjonspunkter: this.getAksjonspunktKoder() });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

@@ -3,15 +3,15 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus as aksjonspunktStatus,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
   type k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
-  type k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { use, useMemo, type JSX } from 'react';
-import { UttakApiContext } from './api/UttakApiContext';
-import { UttakProvider } from './context/UttakContext';
-import UttakInnhold from './UttakInnhold';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMemo, type JSX } from 'react';
+import { useUttakApi } from './api/UttakApiContext.js';
+import { uttakQueryOptions } from './api/uttakQueryOptions.js';
+import { UttakProvider } from './context/UttakContext.js';
+import UttakInnhold from './UttakInnhold.js';
 
 interface UttakProps {
-  uttak: UttaksplanMedUtsattePerioder;
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
@@ -21,7 +21,6 @@ interface UttakProps {
 }
 
 const Uttak = ({
-  uttak,
   behandling,
   erOverstyrer = false,
   aksjonspunkter,
@@ -29,7 +28,8 @@ const Uttak = ({
   readOnly,
   onAksjonspunktBekreftet,
 }: UttakProps): JSX.Element => {
-  const uttakApi = use(UttakApiContext);
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
 
   const harEtUløstAksjonspunktIUttak = useMemo(
@@ -46,10 +46,6 @@ const Uttak = ({
 
   if (!uttak) {
     return <></>;
-  }
-
-  if (!uttakApi) {
-    throw new Error('Uttak må wrappes i UttakApiContext');
   }
 
   const uttakValues = {

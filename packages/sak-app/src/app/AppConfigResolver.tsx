@@ -35,8 +35,6 @@ import { TiDagerBackendClientContext } from '@k9-sak-web/gui/prosess/ti-dager/Ti
 import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/K9TilkjentYtelseBackendClient.js';
 import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
 import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
-import { AntallDagerLivetsSluttfaseApiContext } from '@k9-sak-web/gui/prosess/uttak-antall-dager-sluttfase/api/AntallDagerLivetsSluttfaseApiContext.js';
-import { K9SakAntallDagerLivetsSluttfaseBackendClient } from '@k9-sak-web/gui/prosess/uttak-antall-dager-sluttfase/api/K9SakAntallDagerLivetsSluttfaseBackendClient.js';
 import BehandlingUttakBackendClient from '@k9-sak-web/gui/prosess/uttak/BehandlingUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
@@ -113,11 +111,7 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                           <FeilutbetalingFaktaApiContext
                                             value={new K9FeilutbetalingFaktaBackendClient()}
                                           >
-                                            <AntallDagerLivetsSluttfaseApiContext
-                                              value={new K9SakAntallDagerLivetsSluttfaseBackendClient()}
-                                            >
-                                              {harFeilet || erFerdig ? children : <LoadingPanel />}
-                                            </AntallDagerLivetsSluttfaseApiContext>
+                                            {harFeilet || erFerdig ? children : <LoadingPanel />}
                                           </FeilutbetalingFaktaApiContext>
                                         </OmPleietrengendeApiContext>
                                       </DelingAvDagerApiContext>

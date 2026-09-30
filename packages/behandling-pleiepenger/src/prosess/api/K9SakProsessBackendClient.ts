@@ -4,7 +4,6 @@ import {
   behandlinger_hentBehandlingData1,
   behandlingPerson_getPersonopplysninger,
   behandlingPerson_hentMedlemskap,
-  behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder,
   beregningsgrunnlag_hentBeregningsgrunnlagene,
   beregningsgrunnlag_hentNøklerTilVurdering,
   beregningsresultat_hentBeregningsresultatMedUtbetaling,
@@ -29,10 +28,6 @@ export class K9SakProsessBackendClient implements K9SakProsessApi {
 
   async getFagsak(saksnummer: string) {
     return (await fagsak_hentFagsak({ query: { saksnummer: { saksnummer } } })).data;
-  }
-
-  async getUttaksplan(behandlingUuid: string) {
-    return (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
   }
 
   async getBeregningsresultatMedUtbetaling(behandlingUuid: string) {

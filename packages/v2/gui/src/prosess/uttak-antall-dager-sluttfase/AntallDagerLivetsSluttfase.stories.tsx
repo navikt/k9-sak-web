@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
-import { withFakeAntallDagerLivetsSluttfaseApi } from '../../storybook/decorators/withFakeAntallDagerLivetsSluttfaseApi.js';
+import type { KvoteInfo } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/KvoteInfo.js';
+import { withFakeUttakBackend } from '../../storybook/decorators/withFakeUttakBackend.js';
+import { lagUttak } from '../../storybook/mocks/uttak/uttakStoryMocks.js';
 import { AntallDagerLivetsSluttfase } from './AntallDagerLivetsSluttfase.js';
+
+const medKvoteInfo = (kvoteInfo: KvoteInfo | undefined) =>
+  withFakeUttakBackend({ uttak: lagUttak([], { uttaksplan: { perioder: {}, kvoteInfo } }) });
 
 const meta = {
   title: 'gui/prosess/uttak-antall-dager-sluttfase/AntallDagerLivetsSluttfase',
@@ -17,7 +22,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ForbrukInnenforKvote: Story = {
-  decorators: [withFakeAntallDagerLivetsSluttfaseApi({ maxDato: '2021-02-20', totaltForbruktKvote: 20 })],
+  decorators: [medKvoteInfo({ maxDato: '2021-02-20', totaltForbruktKvote: 20 })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByRole('heading', { name: 'Uttak av pleiepenger' })).toBeInTheDocument();
     await expect(canvas.getByText('Siste pleiedag:')).toBeInTheDocument();
@@ -30,7 +35,7 @@ export const ForbrukInnenforKvote: Story = {
 };
 
 export const KvoteBruktOpp: Story = {
-  decorators: [withFakeAntallDagerLivetsSluttfaseApi({ maxDato: '2021-02-20', totaltForbruktKvote: 60 })],
+  decorators: [medKvoteInfo({ maxDato: '2021-02-20', totaltForbruktKvote: 60 })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('60 av 60 dager')).toBeInTheDocument();
     await expect(canvas.queryByText(/gjenstår etter denne behandlingen/)).not.toBeInTheDocument();
@@ -40,7 +45,7 @@ export const KvoteBruktOpp: Story = {
 };
 
 export const Overforbruk: Story = {
-  decorators: [withFakeAntallDagerLivetsSluttfaseApi({ maxDato: '2021-02-20', totaltForbruktKvote: 70 })],
+  decorators: [medKvoteInfo({ maxDato: '2021-02-20', totaltForbruktKvote: 70 })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('70 av 60 dager')).toBeInTheDocument();
     await expect(canvas.queryByText(/gjenstår etter denne behandlingen/)).not.toBeInTheDocument();
@@ -50,7 +55,7 @@ export const Overforbruk: Story = {
 };
 
 export const UtenSistePleiedagOgForbruk: Story = {
-  decorators: [withFakeAntallDagerLivetsSluttfaseApi({ totaltForbruktKvote: 0 })],
+  decorators: [medKvoteInfo({ totaltForbruktKvote: 0 })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('60 dager')).toBeInTheDocument();
     await expect(canvas.queryByText('Siste pleiedag:')).not.toBeInTheDocument();
@@ -60,7 +65,7 @@ export const UtenSistePleiedagOgForbruk: Story = {
 };
 
 export const UtenKvoteInfo: Story = {
-  decorators: [withFakeAntallDagerLivetsSluttfaseApi(null)],
+  decorators: [medKvoteInfo(undefined)],
   play: async ({ canvas }) => {
     await expect(canvas.queryByRole('heading', { name: 'Uttak av pleiepenger' })).not.toBeInTheDocument();
   },

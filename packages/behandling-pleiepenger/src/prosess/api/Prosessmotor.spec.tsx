@@ -4,6 +4,11 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { FakeK9SakProsessApi } from '@k9-sak-web/gui/storybook/mocks/FakeK9SakProsessApi.js';
+import {
+  FakeUttakBackendApi,
+  type FakeUttakBackendConfig,
+} from '@k9-sak-web/gui/storybook/mocks/FakeUttakBackendApi.js';
+import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
@@ -18,9 +23,13 @@ import {
 } from './Prosessmotor';
 
 const createWrapper =
-  (queryClient: QueryClient) =>
+  (queryClient: QueryClient, uttak?: FakeUttakBackendConfig['uttak']) =>
   ({ children }: { children: React.ReactNode }) =>
-    React.createElement(QueryClientProvider, { client: queryClient }, children);
+    React.createElement(
+      QueryClientProvider,
+      { client: queryClient },
+      React.createElement(UttakApiContext, { value: new FakeUttakBackendApi({ uttak }) }, children),
+    );
 
 const createMockBehandling = (overrides = {}) => ({
   id: 1,
@@ -142,16 +151,16 @@ describe('useProsessmotor', () => {
   });
 
   test('tilkjent ytelse er default og simulering er success når uttak er avslått', async () => {
-    const api = new FakeK9SakProsessApi({
-      uttak: {
-        uttaksplan: {
-          perioder: {
-            '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
-            '2024-02-01/2024-02-28': { utfall: vilkårStatus.IKKE_OPPFYLT },
-          },
+    const uttak = {
+      uttaksplan: {
+        perioder: {
+          '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
+          '2024-02-01/2024-02-28': { utfall: vilkårStatus.IKKE_OPPFYLT },
         },
-        simulertUttaksplan: {},
       },
+      simulertUttaksplan: {},
+    };
+    const api = new FakeK9SakProsessApi({
       simuleringResultat: {
         simuleringResultat: { periode: { fom: '', tom: '' } },
         simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
@@ -160,7 +169,7 @@ describe('useProsessmotor', () => {
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(queryClient, uttak),
     });
 
     await waitFor(() => {
@@ -177,20 +186,20 @@ describe('useProsessmotor', () => {
   });
 
   test('setter simulering til warning når uttak er avslått og simulering har åpent aksjonspunkt', async () => {
-    const api = new FakeK9SakProsessApi({
-      uttak: {
-        uttaksplan: {
-          perioder: {
-            '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
-          },
+    const uttak = {
+      uttaksplan: {
+        perioder: {
+          '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
         },
-        simulertUttaksplan: {},
       },
+      simulertUttaksplan: {},
+    };
+    const api = new FakeK9SakProsessApi({
       aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FEILUTBETALING)],
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(queryClient, uttak),
     });
 
     await waitFor(() => {
@@ -270,14 +279,6 @@ describe('useProsessmotor', () => {
           },
         ],
       },
-      uttak: {
-        uttaksplan: {
-          perioder: {
-            '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT },
-          },
-        },
-        simulertUttaksplan: {},
-      },
       simuleringResultat: {
         simuleringResultat: { periode: { fom: '', tom: '' } },
         simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
@@ -286,7 +287,10 @@ describe('useProsessmotor', () => {
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(queryClient, {
+        uttaksplan: { perioder: { '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT } } },
+        simulertUttaksplan: {},
+      }),
     });
 
     await waitFor(() => {

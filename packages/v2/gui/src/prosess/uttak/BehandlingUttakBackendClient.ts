@@ -20,7 +20,7 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export default class BehandlingUttakBackendClient {
-  constructor() {}
+  readonly backend = 'k9sak';
 
   async hentUttak(
     behandlingUuid: string,

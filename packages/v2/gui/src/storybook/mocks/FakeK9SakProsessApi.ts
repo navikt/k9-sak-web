@@ -14,13 +14,11 @@ import type {
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 interface FakeK9SakProsessApiOptions {
   vilkår?: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];
   aksjonspunkter?: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  uttak?: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
   beregningsresultatUtbetaling?: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto;
   simuleringResultat?: k9_oppdrag_kontrakt_simulering_v1_SimuleringDto | null;
   fagsak?: k9_sak_kontrakt_fagsak_FagsakDto;
@@ -49,10 +47,6 @@ export class FakeK9SakProsessApi {
 
   async getAksjonspunkter(): Promise<k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]> {
     return this.options.aksjonspunkter ?? [];
-  }
-
-  async getUttaksplan(): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder> {
-    return this.options.uttak ?? { uttaksplan: { perioder: {} }, simulertUttaksplan: { perioder: {} } };
   }
 
   async getBeregningsresultatMedUtbetaling(): Promise<k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto> {

@@ -6,7 +6,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, behandlingQueryOptions, uttakQueryOptions } from './api/k9SakQueryOptions';
+import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './api/k9SakQueryOptions';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK,
@@ -30,11 +30,10 @@ export function UttakProsessStegInitPanel(props: Props) {
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
-  const [{ data: behandlingV2 }, { data: aksjonspunkter = [] }, { data: uttak }] = useSuspenseQueries({
+  const [{ data: behandlingV2 }, { data: aksjonspunkter = [] }] = useSuspenseQueries({
     queries: [
       behandlingQueryOptions(props.api, props.behandling),
       aksjonspunkterQueryOptions(props.api, props.behandling),
-      uttakQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
     ],
   });
 
@@ -43,10 +42,6 @@ export function UttakProsessStegInitPanel(props: Props) {
   }
   if (!erTilBehandlingEllerBehandlet) {
     return <ProsessStegIkkeBehandlet />;
-  }
-
-  if (!uttak) {
-    return null;
   }
 
   const relevanteAksjonspunkter = aksjonspunkter
@@ -60,7 +55,6 @@ export function UttakProsessStegInitPanel(props: Props) {
 
   return (
     <Uttak
-      uttak={uttak}
       behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       relevanteAksjonspunkter={relevanteAksjonspunkter}

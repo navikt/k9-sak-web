@@ -83,6 +83,7 @@ const submitSpy = fn();
 export const Aksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
@@ -94,7 +95,6 @@ export const Aksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -130,6 +130,7 @@ export const Aksjonspunkt: Story = {
 export const LøsAksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
@@ -144,7 +145,6 @@ export const LøsAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -205,6 +205,7 @@ export const LøsAksjonspunkt: Story = {
 export const LøsAksjonspunktMedSplitt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
@@ -219,7 +220,6 @@ export const LøsAksjonspunktMedSplitt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -293,6 +293,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 export const LøstAksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
@@ -313,7 +314,6 @@ export const LøstAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
@@ -326,6 +326,7 @@ export const LøstAksjonspunkt: Story = {
 export const LøstAksjonspunktKanRedigeres: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
@@ -350,7 +351,6 @@ export const LøstAksjonspunktKanRedigeres: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, {
@@ -451,6 +451,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 export const LøstAksjonspunktAvsluttetSak: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
@@ -471,7 +472,6 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
   ],
   args: {
     behandling: lagAvsluttetBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),

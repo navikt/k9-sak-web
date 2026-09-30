@@ -41,17 +41,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const BeggeReglene: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak(
+        [
+          lagOppfyltPeriode('2026-10-01/2026-10-15'),
+          lagOppfyltPeriode('2026-11-01/2026-11-15'),
+          lagOppfyltPeriode('2027-01-01/2027-01-15'),
+        ],
+        { virkningsdatoUttakNyeRegler: '2026-11-01' },
+      ),
+    }),
+    withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [
-        lagOppfyltPeriode('2026-10-01/2026-10-15'),
-        lagOppfyltPeriode('2026-11-01/2026-11-15'),
-        lagOppfyltPeriode('2027-01-01/2027-01-15'),
-      ],
-      { virkningsdatoUttakNyeRegler: '2026-11-01' },
-    ),
     erOverstyrer: false,
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
@@ -62,7 +66,7 @@ export const BeggeReglene: Story = {
     const user = userEvent.setup();
 
     await step('Viser banner for endringsdato', async () => {
-      await expect(canvas.getByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
+      await expect(await canvas.findByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger' })).toBeInTheDocument();
     });
 

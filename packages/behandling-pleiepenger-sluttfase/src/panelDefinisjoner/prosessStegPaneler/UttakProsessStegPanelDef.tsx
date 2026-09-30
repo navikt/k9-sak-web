@@ -14,26 +14,21 @@ class PanelDef extends ProsessStegPanelDef {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
     const { erOverstyrer, isReadOnly } = props;
-    const { uttak, behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
+    const { behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
+    // Felles Suspense slik at kvoteinfo og uttak vises samtidig fra samme uttak-query
     return (
-      <>
-        <LoadingPanelSuspense>
-          <ErrorBoundary>
-            <AntallDagerLivetsSluttfase
-              behandlingUuid={props.behandling.uuid}
-              behandlingVersjon={props.behandling.versjon}
-            />
-          </ErrorBoundary>
-        </LoadingPanelSuspense>
-        <Uttak
-          uttak={uttak}
-          behandling={behandling}
-          aksjonspunkter={aksjonspunkter}
-          relevanteAksjonspunkter={relevanteAksjonspunkter}
-          erOverstyrer={erOverstyrer}
-          readOnly={isReadOnly}
-        />
-      </>
+      <LoadingPanelSuspense>
+        <ErrorBoundary>
+          <AntallDagerLivetsSluttfase behandlingUuid={behandling.uuid} behandlingVersjon={behandling.versjon} />
+          <Uttak
+            behandling={behandling}
+            aksjonspunkter={aksjonspunkter}
+            relevanteAksjonspunkter={relevanteAksjonspunkter}
+            erOverstyrer={erOverstyrer}
+            readOnly={isReadOnly}
+          />
+        </ErrorBoundary>
+      </LoadingPanelSuspense>
     );
   };
 
@@ -62,11 +57,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak }) => ({
-    uttak,
-    uttaksperioder: uttak?.uttaksplan?.perioder,
-    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
-  });
+  getData = () => ({ relevanteAksjonspunkter: this.getAksjonspunktKoder() });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {
