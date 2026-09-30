@@ -4,8 +4,14 @@ import { type FeilDtoUnion, feilTypeUnion, isFeilDtoUnion } from './FeilDtoUnion
 export abstract class SharedFeilDtoError extends ExtendedApiError {
   #feilDto: FeilDtoUnion | undefined | null;
 
-  constructor(req: Request, resp: Response, body: string | object, navCallid: string | null) {
-    super(req, resp, body, navCallid);
+  constructor(
+    req: Request,
+    resp: Response | undefined,
+    body: string | object,
+    navCallid: string | null,
+    options?: ErrorOptions,
+  ) {
+    super(req, resp, body, navCallid, options);
     this.name = SharedFeilDtoError.name;
   }
 
