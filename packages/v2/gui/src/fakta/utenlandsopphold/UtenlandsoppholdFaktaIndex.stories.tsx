@@ -1,28 +1,13 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
-import { Suspense } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { expect, userEvent } from 'storybook/test';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { UtenlandsoppholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UtenlandsoppholdDto.js';
 import { Region } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/Region.js';
 import { UtenlandsoppholdÅrsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UtenlandsoppholdÅrsak.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
-import { UtenlandsoppholdApiContext } from './api/UtenlandsoppholdApiContext.js';
+import { withFakeUtenlandsoppholdApi } from '@k9-sak-web/gui/storybook/decorators/withFakeUtenlandsoppholdApi.js';
 import UtenlandsoppholdFaktaIndex from './UtenlandsoppholdFaktaIndex.js';
-
-const withFakeApi = (data: UtenlandsoppholdDto): Decorator => {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return Story => (
-    <QueryClientProvider client={queryClient}>
-      <UtenlandsoppholdApiContext value={{ hentUtenlandsopphold: async () => data }}>
-        <Suspense>
-          <Story />
-        </Suspense>
-      </UtenlandsoppholdApiContext>
-    </QueryClientProvider>
-  );
-};
 
 const utenlandsoppholdMock: UtenlandsoppholdDto = {
   perioder: [
@@ -80,7 +65,7 @@ const perioder = utenlandsoppholdMock.perioder!;
 const meta = {
   title: 'gui/fakta/utenlandsopphold/UtenlandsoppholdFaktaIndex',
   component: UtenlandsoppholdFaktaIndex,
-  decorators: [withK9Kodeverkoppslag(), withFakeApi(utenlandsoppholdMock)],
+  decorators: [withK9Kodeverkoppslag(), withFakeUtenlandsoppholdApi(utenlandsoppholdMock)],
   args: {
     behandlingUuid: 'test-behandling-uuid',
   },
@@ -103,7 +88,7 @@ export const HjelpetekstKanToggle: Story = {
   play: async ({ canvas, step }) => {
     await step('Hjelpetekst er lukket som standard', async () => {
       await expect(
-        canvas.getByRole('button', {
+        await canvas.findByRole('button', {
           name: 'Hvor lenge har søker rett på pleiepenger i utlandet?',
           expanded: false,
         }),
@@ -129,7 +114,7 @@ export const OmsorgspengerYtelsestype: Story = {
   },
   play: async ({ canvas }) => {
     await expect(
-      canvas.getByRole('button', {
+      await canvas.findByRole('button', {
         name: 'Hvor lenge har søker rett på omsorgspenger i utlandet?',
         expanded: false,
       }),
@@ -138,7 +123,7 @@ export const OmsorgspengerYtelsestype: Story = {
 };
 
 export const EØSLandVises: Story = {
-  decorators: [withFakeApi({ perioder: [perioder[0]!] })],
+  decorators: [withFakeUtenlandsoppholdApi({ perioder: [perioder[0]!] })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Land')).toBeVisible();
     await expect(canvas.getByText('Luxemburg')).toBeVisible();
@@ -150,7 +135,7 @@ export const EØSLandVises: Story = {
 };
 
 export const LandUtenforEØSVises: Story = {
-  decorators: [withFakeApi({ perioder: [perioder[1]!] })],
+  decorators: [withFakeUtenlandsoppholdApi({ perioder: [perioder[1]!] })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Land')).toBeVisible();
     await expect(canvas.getByText('Kina')).toBeVisible();
@@ -163,7 +148,7 @@ export const LandUtenforEØSVises: Story = {
 };
 
 export const KosovoVises: Story = {
-  decorators: [withFakeApi({ perioder: [perioder[6]!] })],
+  decorators: [withFakeUtenlandsoppholdApi({ perioder: [perioder[6]!] })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Kosovo')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
@@ -171,7 +156,7 @@ export const KosovoVises: Story = {
 };
 
 export const StorbritanniaErIkkeEØS: Story = {
-  decorators: [withFakeApi({ perioder: [perioder[7]!] })],
+  decorators: [withFakeUtenlandsoppholdApi({ perioder: [perioder[7]!] })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Storbritannia')).toBeVisible();
     await expect(canvas.getByText('Nei')).toBeVisible();
@@ -179,7 +164,7 @@ export const StorbritanniaErIkkeEØS: Story = {
 };
 
 export const IngenUtenlandsopphold: Story = {
-  decorators: [withFakeApi({ perioder: [] })],
+  decorators: [withFakeUtenlandsoppholdApi({ perioder: [] })],
   play: async ({ canvas }) => {
     await expect(await canvas.findByText('Søker har ingen utenlandsopphold å vise.')).toBeVisible();
   },

@@ -22,9 +22,12 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 ### API contract (when calling a backend)
 
-- [ ] Interface defined in `packages/v2/gui/src/fakta/<feature>/api/<Feature>Api.ts`
-- [ ] Context created in `packages/v2/gui/src/fakta/<feature>/api/<Feature>ApiContext.ts`
-- [ ] Production client `K9<Feature>BackendClient` calls the generated SDK function — never a raw URL
+- [ ] API contract created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`), which defines names, file locations and templates. For a feature called `OmPleietrengende` against k9sak this gives:
+  - `OmPleietrengendeBackendApiType` (interface, extends `BackendTilhørighet`)
+  - `K9SakOmPleietrengendeBackendClient` (class, `readonly backend = 'k9sak'`)
+  - `omPleietrengendeQueryOptions`
+  - `OmPleietrengendeApiContext`
+  Name the client after the backend: `K9Sak…`, `K9Klage…`, `K9Tilbake…`, `UngSak…` or `UngTilbake…`. Never call a raw URL or import directly from `generated/sdk.js`
 
 ### v2 component
 
@@ -38,7 +41,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 ### Stories
 
 - [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
-- [ ] `withFakeApi` decorator provides `QueryClientProvider` + API context + `<Suspense>` when the component fetches data
+- [ ] Reusable `withFake<Feature>Api(data)` decorator in `packages/v2/gui/src/storybook/decorators/` provides the API context + `<Suspense>` when the component fetches data (the `QueryClientProvider` comes from the global `withQueryClientProvider`, which creates a new client per story). Do not define local `withFakeApi` decorators inside stories
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
 - [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
 - [ ] When mocking backend data, use generated DTO types (flat string codes) — not old kodeverk objects
@@ -68,7 +71,7 @@ Only apply these steps when replacing an existing fakta/prosess panel. Work thro
 
 ### AppConfigResolver
 
-- [ ] `<K9<Feature>BackendClient>` context provider added in `packages/sak-app/src/app/AppConfigResolver.tsx`
+- [ ] Client context provider added (e.g. `<OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>`) in `packages/sak-app/src/app/AppConfigResolver.tsx`
 - [ ] Add to ung `AppConfigResolver` too if the feature exists there
 
 ### Suspense boundary
@@ -88,6 +91,7 @@ packages/v2/
 │   ├── k9klage/          # Generated from k9-klage OpenAPI spec
 │   ├── k9tilbake/        # Generated from k9-tilbake OpenAPI spec
 │   ├── ungsak/           # Generated from ung-sak OpenAPI spec
+│   ├── ungtilbake/       # Generated from ung-tilbake OpenAPI spec
 │   ├── k9formidling/     # Manual client for k9-formidling
 │   └── combined/         # Types combining generated types from multiple backends
 ├── gui/src/              # React components
@@ -99,6 +103,10 @@ packages/v2/
 │   └── storybook/        # Storybook mocks and decorators
 └── lib/src/              # UI-independent utility functions
 ```
+
+## Available backends
+
+The `backend` value is one of the folders under `packages/v2/backend/src/`: `k9sak`, `ungsak`, `k9klage`, `k9tilbake`, `ungtilbake` (generated clients, see the mapping table in the `v2-api-contract` skill) and `k9formidling` (manual client). `combined/` holds types shared across several backends and is not a backend value.
 
 ## Import Rules
 
@@ -174,15 +182,6 @@ import { Region } from '@k9-sak-web/backend/k9sak/kodeverk/geografisk/Region.js'
 import { UtenlandsoppholdÅrsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UtenlandsoppholdÅrsak.js';
 ```
 
-### Using generated types
-
-Types are generated from OpenAPI specs. Names use the full package path with underscores as separator — use these when creating re-exports:
-
-```typescript
-// In a re-export file:
-export type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@navikt/k9-sak-typescript-client/types';
-```
-
 ### Combined types
 
 Use `combined/` for types shared across multiple backends:
@@ -208,45 +207,7 @@ yarn unlink @navikt/k9-sak-typescript-client
 
 ## API Contract Pattern
 
-Components receive their backend client via React Context:
-
-**1. Define the interface** (`api/MyFeatureApi.ts`):
-
-```typescript
-export interface MyFeatureApi {
-  getMyData(id: string): Promise<MyDataDto>;
-  saveMyData(data: SaveDto): Promise<void>;
-}
-```
-
-**2. Create the context** (`api/MyFeatureApiContext.ts`):
-
-```typescript
-import { createContext } from 'react';
-import type { MyFeatureApi } from './MyFeatureApi.js';
-
-export const MyFeatureApiContext = createContext<MyFeatureApi | null>(null);
-```
-
-**3. Use in component**:
-
-```typescript
-const api = use(MyFeatureApiContext);
-if (!api) throw new Error('MyFeatureApiContext not provided');
-```
-
-**4. Create a fake for Storybook** (`storybook/mocks/FakeMyFeatureApi.ts`):
-
-```typescript
-export class FakeMyFeatureApi implements MyFeatureApi {
-  async getMyData(id: string): Promise<MyDataDto> {
-    return { id, name: 'Test data' };
-  }
-  async saveMyData(data: SaveDto): Promise<void> {
-    action('saveMyData')(data);
-  }
-}
-```
+Components receive their backend client via React Context (`<Feature>ApiContext`). The interface, client, `queryOptions()` and context are created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`), which defines names, file locations and templates.
 
 ## No i18n or Translation Layer
 
@@ -355,10 +316,10 @@ When a v2 component uses an API context (e.g. `UtenlandsoppholdApiContext`), the
 
 ```tsx
 import { MyFeatureApiContext } from '@k9-sak-web/gui/fakta/myfeature/api/MyFeatureApiContext.js';
-import { K9MyFeatureBackendClient } from '@k9-sak-web/gui/fakta/myfeature/api/K9MyFeatureBackendClient.js';
+import { K9SakMyFeatureBackendClient } from '@k9-sak-web/gui/fakta/myfeature/api/K9SakMyFeatureBackendClient.js';
 
 // In the render tree:
-<MyFeatureApiContext value={new K9MyFeatureBackendClient()}>{children}</MyFeatureApiContext>;
+<MyFeatureApiContext value={new K9SakMyFeatureBackendClient()}>{children}</MyFeatureApiContext>;
 ```
 
 ## Data fetching — prefer `useSuspenseQuery` in the component
@@ -373,10 +334,8 @@ import { MyFeatureApiContext } from './api/MyFeatureApiContext.js';
 const api = useContext(MyFeatureApiContext);
 if (!api) throw new Error('MyFeatureApiContext not provided');
 
-const { data } = useSuspenseQuery({
-  queryKey: ['myFeature', behandlingUuid],
-  queryFn: () => api.getMyData(behandlingUuid),
-});
+// myFeatureQueryOptions er definert med queryOptions() i api/myFeatureQueryOptions.ts
+const { data } = useSuspenseQuery(myFeatureQueryOptions(api, behandlingUuid));
 ```
 
 This eliminates the need for `konverterKodeverkTilKode` at the shell boundary, since the SDK response already uses generated types.
