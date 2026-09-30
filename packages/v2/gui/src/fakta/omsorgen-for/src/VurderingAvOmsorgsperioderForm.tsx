@@ -6,6 +6,7 @@ import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { Alert, BodyShort, Box, Radio, Tag } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
@@ -14,8 +15,7 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { PeriodpickerList } from '../../../shared/periodPickerList/PeriodpickerList';
 import Relasjon from './types/Relasjon';
 import type { VurderingSubmitValues } from './types/VurderingSubmitValues';
-import getPeriodDifference from './util/getPeriodDifference';
-import { prettifyPeriode } from './util/utils.js';
+import getPeriodDifference from './util/getPeriodDifference.js';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
 
 export enum FieldName {
@@ -219,7 +219,7 @@ const VurderingAvOmsorgsperioderForm = ({
                     label="Resterende perioder har søkeren ikke omsorgen for barnet:"
                     content={resterendePerioder.map(periode => (
                       <p key={`${periode.fom}-${periode.tom}`} className={styles.resterendePeriode}>
-                        {prettifyPeriode(periode)}
+                        {new Period(periode.fom, periode.tom).prettifyPeriod()}
                       </p>
                     ))}
                   />

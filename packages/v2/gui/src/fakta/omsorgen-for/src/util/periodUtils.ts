@@ -1,5 +1,7 @@
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
-import { periodeStartsBefore, prettifyPeriode } from './utils';
+import { Period } from '@k9-sak-web/gui/utils/Period.js';
+
+const prettifyPeriode = (periode: Periode) => new Period(periode.fom, periode.tom).prettifyPeriod();
 
 export const getStringMedPerioder = (perioder: Periode[]): string => {
   if (perioder.length === 1) {
@@ -19,14 +21,4 @@ export const getStringMedPerioder = (perioder: Periode[]): string => {
   });
 
   return `periodene ${perioderString}`;
-};
-
-export const sortPeriodsByFomDate = (period1: Periode, period2: Periode): number => {
-  if (periodeStartsBefore(period1, period2)) {
-    return 1;
-  }
-  if (periodeStartsBefore(period2, period1)) {
-    return -1;
-  }
-  return 0;
 };
