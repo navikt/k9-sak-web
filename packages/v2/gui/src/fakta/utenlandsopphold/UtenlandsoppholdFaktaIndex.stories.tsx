@@ -88,7 +88,7 @@ export const HjelpetekstKanToggle: Story = {
   play: async ({ canvas, step }) => {
     await step('Hjelpetekst er lukket som standard', async () => {
       await expect(
-        canvas.getByRole('button', {
+        await canvas.findByRole('button', {
           name: 'Hvor lenge har søker rett på pleiepenger i utlandet?',
           expanded: false,
         }),
@@ -114,7 +114,7 @@ export const OmsorgspengerYtelsestype: Story = {
   },
   play: async ({ canvas }) => {
     await expect(
-      canvas.getByRole('button', {
+      await canvas.findByRole('button', {
         name: 'Hvor lenge har søker rett på omsorgspenger i utlandet?',
         expanded: false,
       }),

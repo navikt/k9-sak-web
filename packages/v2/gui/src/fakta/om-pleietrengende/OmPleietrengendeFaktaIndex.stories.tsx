@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { name: 'Om pleietrengende' })).toBeInTheDocument();
+    await expect(await canvas.findByRole('heading', { name: 'Om pleietrengende' })).toBeInTheDocument();
     await expect(canvas.getByText('Ola Nordmann')).toBeInTheDocument();
     await expect(canvas.getByText('12345678910')).toBeInTheDocument();
   },
@@ -34,6 +34,6 @@ export const Default: Story = {
 export const IngenData: Story = {
   decorators: [withFakeOmPleietrengendeApi(null)],
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Ingen opplysninger om pleietrengende.')).toBeInTheDocument();
+    await expect(await canvas.findByText('Ingen opplysninger om pleietrengende.')).toBeInTheDocument();
   },
 };
