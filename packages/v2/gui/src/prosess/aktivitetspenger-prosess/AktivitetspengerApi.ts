@@ -12,9 +12,9 @@ import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export interface AktivitetspengerApi {
-  readonly backend: 'ungsak';
+export interface AktivitetspengerApi extends BackendTilhørighet {
   getAksjonspunkter(behandlingId: string): Promise<AksjonspunktDto[]>;
   lagreAksjonspunktOverstyr(props: BekreftetOgOverstyrteAksjonspunkterDto): Promise<unknown>;
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;

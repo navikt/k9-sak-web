@@ -5,8 +5,8 @@ import {
 import type { VedtakKlageApi } from './VedtakKlageApi.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 
-export default class UngVedtakKlageBackendClient implements VedtakKlageApi {
-  readonly backend = 'ung';
+export default class UngSakVedtakKlageBackendClient implements VedtakKlageApi {
+  readonly backend = 'ungsak';
   async forhåndsvisKlageVedtaksbrev(behandling: BehandlingDto) {
     if (behandling.id == null) {
       throw new Error(`Kan ikke forhåndsvise brev for behandling uten id.`);

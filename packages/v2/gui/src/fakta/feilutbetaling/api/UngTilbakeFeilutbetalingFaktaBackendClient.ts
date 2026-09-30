@@ -1,19 +1,19 @@
 import {
   behandlingfakta_hentFeilutbetalingFakta,
   kodeverk_hentAlleFeilutbetalingÅrsaker,
-} from '@k9-sak-web/backend/k9tilbake/api/feilutbetaling.js';
+} from '@k9-sak-web/backend/ungtilbake/api/feilutbetaling.js';
 import type { FeilutbetalingFaktaApi } from './FeilutbetalingFaktaApi.js';
 import type {
   FeilutbetalingFaktaViewModel,
   FeilutbetalingÅrsakerPerYtelseViewModel,
 } from './FeilutbetalingFaktaViewModel.js';
 
-export class K9FeilutbetalingFaktaBackendClient implements FeilutbetalingFaktaApi {
-  readonly backend = 'k9tilbake' as const;
+export class UngTilbakeFeilutbetalingFaktaBackendClient implements FeilutbetalingFaktaApi {
+  readonly backend = 'ungtilbake' as const;
 
   async hentFeilutbetalingFakta(behandlingUuid: string): Promise<FeilutbetalingFaktaViewModel> {
     const response = await behandlingfakta_hentFeilutbetalingFakta({
-      query: { uuid: { behandlingId: behandlingUuid } },
+      query: { behandlingUuid },
     });
     return response.data;
   }

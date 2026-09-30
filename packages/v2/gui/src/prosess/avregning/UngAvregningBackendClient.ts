@@ -8,6 +8,8 @@ import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiTyp
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 export class UngAvregningBackendClient implements BehandlingAvregningBackendApiType {
+  readonly backend = 'ung';
+
   async bekreftAksjonspunktVurderFeilutbetaling(
     behandlingId: number,
     behandlingVersjon: number,

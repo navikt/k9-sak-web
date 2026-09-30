@@ -14,6 +14,8 @@ import type {
 import type { SykdomOgOpplæringApi } from '../api/SykdomOgOpplæringApi.js';
 
 export class FakeSykdomOgOpplæringApi implements SykdomOgOpplæringApi {
+  readonly backend = 'k9sak';
+
   constructor(
     private readonly data: {
       vilkår?: GetVilkårV3Response;

@@ -88,13 +88,18 @@ export interface OmPleietrengendeBackendApiType extends BackendTilhørighet {
 Rules:
 
 - Extend `BackendTilhørighet` (`packages/v2/gui/src/utils/BackendTilhørighet.ts`). It declares `readonly backend`; the client sets the literal value, one of `k9sak`, `k9klage`, `k9tilbake`, `ungsak`, `ungtilbake`
+- Single backend: use plain `extends BackendTilhørighet` (no type parameter)
+- Multiple backends: narrow with the type parameter, e.g. `extends BackendTilhørighet<'k9tilbake' | 'ungtilbake'>`. This stops a client from implementing the interface with the wrong backend, and lets code that branches on `api.backend` narrow correctly
+- Aggregating clients: if one client calls endpoints in several backends within the same product, e.g. historikk calling `k9sak`, `k9klage` and `k9tilbake`, use `extends BackendTilhørighet<SammenstiltBackendNavn>`. The value is then `'k9'` or `'ung'`. Only endpoint calls count; an import of a type or enum from another backend does not make a client aggregating, and neither does `k9formidling`
 - Method names are descriptive (`hentPleietrengende`, not `behandlingPerson_getPersonopplysninger1`)
 - GET endpoints return `Promise<Dto>`; mutating POST/PUT return `Promise<void>` unless they return data
 - Use `import type` for all type imports
 
 ### Step 6: Create BackendClient
 
-The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake`, also when only one backend exists. If the component is shared between K9 and Ung, keep one BackendApiType and create one client per backend (e.g. `K9SakHistorikkBackendClient` and `UngSakHistorikkBackendClient`).
+The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake`, also when only one backend exists. If the component is shared between K9 and Ung, keep one BackendApiType and create one client per backend (e.g. `K9TilbakeFeilutbetalingFaktaBackendClient` and `UngTilbakeFeilutbetalingFaktaBackendClient`).
+
+Aggregating clients, which call several backends within the same product, are named after the product: `K9` or `Ung`, e.g. `K9HistorikkBackendClient` (`readonly backend = 'k9'`) and `UngHistorikkBackendClient` (`readonly backend = 'ung'`). Current examples: historikk and avregning.
 
 `packages/v2/gui/src/fakta/om-pleietrengende/api/K9SakOmPleietrengendeBackendClient.ts`:
 

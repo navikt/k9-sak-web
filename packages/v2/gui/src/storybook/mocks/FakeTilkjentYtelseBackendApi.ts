@@ -4,6 +4,8 @@ import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../prosess/tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
 
 export class FakeTilkjentYtelseBackendApi implements TilkjentYtelseApi {
+  readonly backend = 'k9sak';
+
   #feriepengerPrÅr: FeriepengerPrÅr;
 
   constructor(feriepengerPrÅr: FeriepengerPrÅr) {

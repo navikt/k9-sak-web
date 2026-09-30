@@ -18,7 +18,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
 
-export class AktivitetspengerBackendClient implements AktivitetspengerApi {
+export class UngSakAktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
 
   async getAksjonspunkter(behandlingId: string) {

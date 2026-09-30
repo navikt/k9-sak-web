@@ -3,7 +3,7 @@ import type { InnloggetAnsattDto } from '@k9-sak-web/backend/combined/sif/abac/k
 import { navAnsatt_innloggetBruker } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
 export class K9SakInnloggetAnsattBackendClient implements InnloggetAnsattApi {
-  readonly backend = 'k9-sak';
+  readonly backend = 'k9sak';
 
   async innloggetBruker(): Promise<InnloggetAnsattDto> {
     return (await navAnsatt_innloggetBruker()).data;

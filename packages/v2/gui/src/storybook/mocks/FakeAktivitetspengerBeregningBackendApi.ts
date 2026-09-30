@@ -5,6 +5,8 @@ import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kon
 import { asyncAction } from '../asyncAction.js';
 
 export class FakeAktivitetspengerBeregningBackendApi implements AktivitetspengerBeregningBackendApiType {
+  readonly backend = 'ungsak';
+
   async getKontrollerInntekt(): Promise<KontrollerInntektDto> {
     return {
       kontrollperioder: [

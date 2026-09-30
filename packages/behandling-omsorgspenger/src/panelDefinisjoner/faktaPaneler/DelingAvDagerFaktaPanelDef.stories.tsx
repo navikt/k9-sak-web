@@ -59,7 +59,7 @@ const withFakeApiV2 = (rammevedtak: RammevedtakDto[]): Decorator => {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return Story => (
     <QueryClientProvider client={queryClient}>
-      <DelingAvDagerApiContext value={{ hentRammevedtak: async () => rammevedtak }}>
+      <DelingAvDagerApiContext value={{ backend: 'k9sak', hentRammevedtak: async () => rammevedtak }}>
         <Suspense>
           <Story />
         </Suspense>

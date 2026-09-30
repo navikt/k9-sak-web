@@ -8,6 +8,8 @@ import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiTyp
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 export class K9AvregningBackendClient implements BehandlingAvregningBackendApiType {
+  readonly backend = 'k9';
+
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
     behandlingId: number,
     behandlingVersjon: number,

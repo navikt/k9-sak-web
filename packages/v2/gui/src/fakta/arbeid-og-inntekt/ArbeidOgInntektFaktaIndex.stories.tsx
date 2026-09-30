@@ -8,7 +8,7 @@ import { withQueryClientProvider } from '../../storybook/decorators/withQueryCli
 
 const withFakeApi = (data: ArbeidOgInntektResponse[]): Decorator => {
   return Story => (
-    <ArbeidOgInntektApiContext value={{ hentArbeidOgInntekt: async () => data }}>
+    <ArbeidOgInntektApiContext value={{ backend: 'k9sak', hentArbeidOgInntekt: async () => data }}>
       <Suspense>
         <Story />
       </Suspense>

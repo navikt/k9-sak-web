@@ -5,7 +5,9 @@ import type {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { MenyEndreFristApi } from './MenyEndreFristApi';
 
-export default class MenyEndreFristBackendClient implements MenyEndreFristApi {
+export default class UngSakMenyEndreFristBackendClient implements MenyEndreFristApi {
+  readonly backend = 'ungsak';
+
   async hentEtterlysninger(behandlingUuid: string): Promise<ung_sak_kontrakt_etterlysning_Etterlysning[]> {
     return (await hentEtterlysninger({ query: { behandlingUuid } })).data;
   }

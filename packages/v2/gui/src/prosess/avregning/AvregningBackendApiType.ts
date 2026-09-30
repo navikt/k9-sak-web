@@ -1,7 +1,8 @@
 import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
 import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { BackendTilhørighet, SammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export type BehandlingAvregningBackendApiType = {
+export interface BehandlingAvregningBackendApiType extends BackendTilhørighet<SammenstiltBackendNavn> {
   // denne er optional fordi aksjonspunktet SJEKK_HØY_ETTERBETALING kun finnes i k9sak, og ikke i ungsak.
   bekreftAksjonspunktSjekkHøyEtterbetaling?(
     behandlingId: number,
@@ -20,4 +21,4 @@ export type BehandlingAvregningBackendApiType = {
     fagsakYtelseType: FagsakYtelseType,
     varseltekst?: string,
   ): Promise<Blob>;
-};
+}

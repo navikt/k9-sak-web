@@ -12,7 +12,7 @@ const withFakeApi = (data: RelatertYtelseResponse[]): Decorator => {
 
   return Story => (
     <QueryClientProvider client={queryClient}>
-      <YtelserApiContext value={{ hentYtelser: async () => data }}>
+      <YtelserApiContext value={{ backend: 'k9sak', hentYtelser: async () => data }}>
         <Suspense>
           <Story />
         </Suspense>

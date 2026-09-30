@@ -7,6 +7,7 @@ export const withFakeDokumenterApi =
   (vurderingerAvMottatteInntektsmeldinger: VurderingPerPeriode = { vurderinger: [] }): Decorator =>
   Story => {
     const fakeDokumenterApi: DokumenterApi = {
+      backend: 'k9sak',
       hentVurderingerAvMottatteInntektsmeldinger: () => Promise.resolve(vurderingerAvMottatteInntektsmeldinger),
     };
 

@@ -2,7 +2,9 @@ import { kompletthet_utledVurderingerAvMottatteInntektsmeldinger } from '@k9-sak
 import type { VurderingPerPeriode } from '@k9-sak-web/backend/k9sak/kontrakt/kompletthet/inntektsmelding/VurderingPerPeriode.js';
 import type { DokumenterApi } from './DokumenterApi.js';
 
-export class K9DokumenterBackendClient implements DokumenterApi {
+export class K9SakDokumenterBackendClient implements DokumenterApi {
+  readonly backend = 'k9sak';
+
   async hentVurderingerAvMottatteInntektsmeldinger(
     behandlingUuid: string,
     signal?: AbortSignal,

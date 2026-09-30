@@ -7,7 +7,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behand
 
 export class FakeVedtakKlageBackendApi implements VedtakKlageApi {
   #klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto;
-  readonly backend = 'ung';
+  readonly backend = 'ungsak';
 
   constructor(klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto | k9_klage_kontrakt_klage_KlagebehandlingDto) {
     this.#klageVurdering = klageVurdering;

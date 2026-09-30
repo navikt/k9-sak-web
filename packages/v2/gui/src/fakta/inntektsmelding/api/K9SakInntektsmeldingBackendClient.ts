@@ -9,7 +9,9 @@ import type { EtterspørInntektsmeldingRequest } from '@k9-sak-web/backend/k9sak
 import type { SettBehandlingPaVentDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/SettBehandlingPaVentDto.js';
 import type { InntektsmeldingApi } from './InntektsmeldingApi.ts';
 
-export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
+export class K9SakInntektsmeldingBackendClient implements InntektsmeldingApi {
+  readonly backend = 'k9sak';
+
   async hentKompletthetsoversikt(behandlingUuid: string): Promise<KompletthetsVurdering> {
     const response = await kompletthet_utledStatusForKompletthet({
       query: { behandlingUuid },

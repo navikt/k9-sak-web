@@ -9,7 +9,7 @@ import DelingAvDagerFaktaIndex from './DelingAvDagerFaktaIndex.js';
 const withFakeApi =
   (rammevedtak: RammevedtakDto[]): Decorator =>
   Story => (
-    <DelingAvDagerApiContext value={{ hentRammevedtak: async () => rammevedtak }}>
+    <DelingAvDagerApiContext value={{ backend: 'k9sak', hentRammevedtak: async () => rammevedtak }}>
       <Suspense>
         <Story />
       </Suspense>

@@ -24,6 +24,7 @@ vi.mock('./TiDagerProsess.js', () => ({
 }));
 
 const ingenJournalposter: TiDagerBackendApiType = {
+  backend: 'k9sak',
   hentRettFraDagEnOpplysninger: async () => ({ journalposter: [] }),
 };
 
@@ -92,6 +93,7 @@ describe('TiDagerProsessIndex', () => {
 
   it('viser TiDagerProsess selv om alle perioder er oppfylt når det finnes journalposter', async () => {
     const apiMedJournalpost: TiDagerBackendApiType = {
+      backend: 'k9sak',
       hentRettFraDagEnOpplysninger: async () => ({
         journalposter: [
           {

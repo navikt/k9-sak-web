@@ -6,6 +6,8 @@ import type { MenyEndreFristApi } from '@k9-sak-web/gui/sak/meny/endre-frist/Men
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 
 export class FakeMenyEndreFristApi implements MenyEndreFristApi {
+  readonly backend = 'ungsak';
+
   #etterlysninger: ung_sak_kontrakt_etterlysning_Etterlysning[];
 
   constructor(etterlysninger: ung_sak_kontrakt_etterlysning_Etterlysning[] = []) {

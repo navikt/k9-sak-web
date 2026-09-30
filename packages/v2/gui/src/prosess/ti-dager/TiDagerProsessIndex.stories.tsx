@@ -92,6 +92,7 @@ const tekstMatcher = (tekst: string) => (_: string, element: Element | null) =>
 
 const withFakeTiDagerBackend = (opplysninger: RettFraDagEnVisningDto): Decorator => {
   const fakeApi: TiDagerBackendApiType = {
+    backend: 'k9sak',
     hentRettFraDagEnOpplysninger: async () => opplysninger,
   };
   return Story => (

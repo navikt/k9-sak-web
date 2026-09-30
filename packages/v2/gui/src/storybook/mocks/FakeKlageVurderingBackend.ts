@@ -10,7 +10,7 @@ import { fakePdf } from './fakePdf.js';
 
 export class FakeKlageVurderingBackend implements KlageVurderingApi {
   #klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
-  readonly backend = 'ung';
+  readonly backend = 'ungsak';
 
   constructor(klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto) {
     this.#klageVurdering = klageVurdering;

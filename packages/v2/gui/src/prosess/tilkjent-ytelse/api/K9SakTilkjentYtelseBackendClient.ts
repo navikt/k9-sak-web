@@ -2,7 +2,9 @@ import { beregningsresultat_hentFeriepengegrunnlag } from '@k9-sak-web/backend/k
 import type { FeriepengerPrÅr } from '../components/feriepenger/FeriepengerPanel.js';
 import type { TilkjentYtelseApi } from './TilkjentYtelseApi.js';
 
-export default class K9TilkjentYtelseBackendClient implements TilkjentYtelseApi {
+export default class K9SakTilkjentYtelseBackendClient implements TilkjentYtelseApi {
+  readonly backend = 'k9sak';
+
   /**
    * Returnerer feriepengegrunnlag gruppert pr år
    */

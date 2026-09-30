@@ -6,6 +6,8 @@ import { ignoreUnusedDeclared } from './ignoreUnusedDeclared';
 import { fn } from 'storybook/test';
 
 export class FakeBehandlingAvregningBackendApi implements BehandlingAvregningBackendApiType {
+  readonly backend = 'k9';
+
   bekreftAksjonspunktSjekkHøyEtterbetaling = fn(
     async (behandlingId: number, behandlingVersjon: number, begrunnelse: string): Promise<void> => {
       ignoreUnusedDeclared(behandlingId);

@@ -7,7 +7,9 @@ import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kon
 import { aksjonspunkt_bekreft } from '@navikt/ung-sak-typescript-client/sdk';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
-export class AktivitetspengerBeregningBackendClient implements AktivitetspengerBeregningBackendApiType {
+export class UngSakAktivitetspengerBeregningBackendClient implements AktivitetspengerBeregningBackendApiType {
+  readonly backend = 'ungsak';
+
   async getKontrollerInntekt(behandlingUuid: string): Promise<KontrollerInntektDto> {
     return (await kontroll_hentKontrollerInntekt({ query: { behandlingUuid } })).data;
   }

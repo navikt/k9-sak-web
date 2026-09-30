@@ -7,6 +7,7 @@ export const withFakeInntektsmeldingApi =
   (forBehandlingUuid: string, kompletthetsdata: KompletthetsVurdering): Decorator =>
   Story => {
     const fakeInntekstmeldingBackend: InntektsmeldingApi = {
+      backend: 'k9sak',
       hentKompletthetsoversikt(behandlingUuid: string): Promise<KompletthetsVurdering> {
         if (behandlingUuid === forBehandlingUuid) {
           return Promise.resolve(kompletthetsdata);

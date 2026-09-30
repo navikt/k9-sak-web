@@ -54,6 +54,10 @@ export interface <Domain>BackendApiType extends BackendTilhørighet {
 }
 ```
 
+If the API is shared between several backends, narrow the type parameter: `extends BackendTilhørighet<'<backend1>' | '<backend2>'>`.
+
+If one client calls several backends within the same product (aggregating), use `extends BackendTilhørighet<SammenstiltBackendNavn>` and name the client `K9<Domain>BackendClient` / `Ung<Domain>BackendClient` with `readonly backend = 'k9'` / `'ung'`.
+
 ## 4. BackendClient (`<Backend><Domain>BackendClient.ts`)
 
 Path: `packages/v2/gui/src/<target>/<Backend><Domain>BackendClient.ts`

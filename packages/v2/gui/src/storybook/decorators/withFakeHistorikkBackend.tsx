@@ -5,9 +5,10 @@ import { use } from 'react';
 import { K9KodeverkoppslagContext } from '../../kodeverk/oppslag/K9KodeverkoppslagContext.js';
 import { UngKodeverkoppslagContext } from '../../kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { FakeUngHistorikkBackend } from '../mocks/FakeUngHistorikkBackend.js';
+import type { HistorikkBackendApi } from '../../sak/historikk/api/HistorikkBackendApi.js';
 
 export const withFakeHistorikkBackend =
-  (backend: 'k9' | 'ung'): Decorator =>
+  (backend: HistorikkBackendApi['backend']): Decorator =>
   Story => {
     const fakeHistorikkBackend =
       backend === 'ung'

@@ -2,7 +2,9 @@ import { arbeidOgInntekt_hentArbeidOgInntekt } from '@k9-sak-web/backend/k9sak/g
 import type { ArbeidOgInntektResponse } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidoginntekt/ArbeidOgInntektResponse.js';
 import type { ArbeidOgInntektApi } from './ArbeidOgInntektApi.js';
 
-export class K9ArbeidOgInntektBackendClient implements ArbeidOgInntektApi {
+export class K9SakArbeidOgInntektBackendClient implements ArbeidOgInntektApi {
+  readonly backend = 'k9sak';
+
   async hentArbeidOgInntekt(behandlingUuid: string): Promise<ArbeidOgInntektResponse[]> {
     const response = await arbeidOgInntekt_hentArbeidOgInntekt({
       query: { behandlingUuid },

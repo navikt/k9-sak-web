@@ -12,7 +12,9 @@ import {
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 
-export default class SykdomOgOpplæringBackendClient implements SykdomOgOpplæringApi {
+export default class K9SakSykdomOgOpplæringBackendClient implements SykdomOgOpplæringApi {
+  readonly backend = 'k9sak';
+
   async getVilkår(behandlingUuid: string) {
     return (await vilkår_getVilkårV3({ query: { behandlingUuid } })).data;
   }

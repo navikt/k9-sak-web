@@ -27,7 +27,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
   - `K9SakOmPleietrengendeBackendClient` (class, `readonly backend = 'k9sak'`)
   - `omPleietrengendeQueryOptions`
   - `OmPleietrengendeApiContext`
-  Name the client after the backend: `K9Sak…`, `K9Klage…`, `K9Tilbake…`, `UngSak…` or `UngTilbake…`. Never call a raw URL or import directly from `generated/sdk.js`
+  Name the client after the backend: `K9Sak…`, `K9Klage…`, `K9Tilbake…`, `UngSak…` or `UngTilbake…`. Aggregating clients that call several backends within the same product are named `K9…`/`Ung…` and use `BackendTilhørighet<SammenstiltBackendNavn>` (`'k9'`/`'ung'`). Never call a raw URL or import directly from `generated/sdk.js`
 
 ### v2 component
 
