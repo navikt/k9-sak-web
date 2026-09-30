@@ -12,7 +12,8 @@ import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { useContext } from 'react';
 import styles from './utenlandsopphold.module.css';
-import { useUtenlandsoppholdOptions } from './api/UtenlandsoppholdQueries.js';
+import { useUtenlandsoppholdApi } from './api/UtenlandsoppholdApiContext.js';
+import { utenlandsoppholdQueryOptions } from './api/utenlandsoppholdQueryOptions.js';
 
 countries.registerLocale(norwegianLocale);
 
@@ -22,7 +23,8 @@ interface UtenlandsoppholdFaktaIndexProps {
 }
 
 const UtenlandsoppholdFaktaIndex = ({ behandlingUuid, fagsakYtelseType }: UtenlandsoppholdFaktaIndexProps) => {
-  const { data: utenlandsopphold } = useSuspenseQuery(useUtenlandsoppholdOptions(behandlingUuid));
+  const api = useUtenlandsoppholdApi();
+  const { data: utenlandsopphold } = useSuspenseQuery(utenlandsoppholdQueryOptions(api, behandlingUuid));
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
 

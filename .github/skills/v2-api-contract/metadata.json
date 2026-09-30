@@ -1,7 +1,7 @@
 {
-  "description": "Generer BackendClient, BackendApiType, QueryOptions og SDK re-export filer fra OpenAPI-genererte SDK-endepunkter",
+  "description": "Generer API-kontrakt for v2: SDK re-export, BackendApiType, BackendClient, QueryOptions og API-context fra OpenAPI-genererte SDK-endepunkter",
   "domain": "backend",
-  "tags": ["v2", "backend-client", "api", "code-generation", "typescript", "tanstack-query"],
+  "tags": ["v2", "backend-client", "api-contract", "api", "code-generation", "typescript", "tanstack-query"],
   "references": ["references/templates.md"],
   "examples": [
     {

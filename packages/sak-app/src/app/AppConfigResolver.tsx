@@ -8,13 +8,17 @@ import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { ArbeidOgInntektApiContext } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/ArbeidOgInntektApiContext.js';
 import { K9ArbeidOgInntektBackendClient } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/K9ArbeidOgInntektBackendClient.js';
+import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
+import { K9FeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/K9FeilutbetalingFaktaBackendClient.js';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
 import { K9NyInntektBackendClient } from '@k9-sak-web/gui/fakta/ny-inntekt/api/K9NyInntektBackendClient.js';
 import { NyInntektApiContext } from '@k9-sak-web/gui/fakta/ny-inntekt/api/NyInntektApiContext.js';
 import SykdomOgOpplæringBackendClient from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClient.js';
 import { SykdomOgOpplæringBackendClientContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClientContext.js';
-import { K9UtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9UtenlandsoppholdBackendClient.js';
+import { K9SakOmPleietrengendeBackendClient } from '@k9-sak-web/gui/fakta/om-pleietrengende/api/K9SakOmPleietrengendeBackendClient.js';
+import { OmPleietrengendeApiContext } from '@k9-sak-web/gui/fakta/om-pleietrengende/api/OmPleietrengendeApiContext.js';
+import { K9SakUtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9SakUtenlandsoppholdBackendClient.js';
 import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
 import { K9YtelserBackendClient } from '@k9-sak-web/gui/fakta/ytelser/api/K9YtelserBackendClient.js';
 import { YtelserApiContext } from '@k9-sak-web/gui/fakta/ytelser/api/YtelserApiContext.js';
@@ -95,7 +99,7 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                   <DokumenterApiContext value={new K9DokumenterBackendClient()}>
                     <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
                       <NyInntektApiContext value={new K9NyInntektBackendClient()}>
-                        <UtenlandsoppholdApiContext value={new K9UtenlandsoppholdBackendClient()}>
+                        <UtenlandsoppholdApiContext value={new K9SakUtenlandsoppholdBackendClient()}>
                           <YtelserApiContext value={new K9YtelserBackendClient()}>
                             <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
                               <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
@@ -103,7 +107,13 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                   <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
                                     <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
                                       <DelingAvDagerApiContext value={new K9DelingAvDagerBackendClient()}>
-                                        {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                        <OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>
+                                          <FeilutbetalingFaktaApiContext
+                                            value={new K9FeilutbetalingFaktaBackendClient()}
+                                          >
+                                            {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                          </FeilutbetalingFaktaApiContext>
+                                        </OmPleietrengendeApiContext>
                                       </DelingAvDagerApiContext>
                                     </ArbeidOgInntektApiContext>
                                   </NotatBackendClientContext>
