@@ -52,6 +52,10 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
 - fakta-uttak (Vebjørn)
+
+#### Klargjort for migrering
+- prosess-unntak (analyse og trinnvis plan ferdig; V2-implementasjon, PR/merge, Q-toggle og Q-verifisering gjenstår; prod etter dette)
+
 ---
 
 ### Trenger avklaringer
@@ -76,7 +80,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
-| `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
 | `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
 | `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
 | `prosess-fortsatt-medlemskap`          | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
