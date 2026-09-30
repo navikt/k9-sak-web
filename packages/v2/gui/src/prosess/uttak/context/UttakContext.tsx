@@ -156,7 +156,6 @@ export const useUttakContext = () => {
     refetchOnWindowFocus: false, // Forhindrer at kallet gjentas om man feks. byttet prosesssteg
   });
 
-  // Samme query som Uttak bruker, så data hentes fra cachen. refetch brukes etter overstyring av uttak.
   const { refetch: hentUttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
 
   const fagsakYtelseType = uttakContext?.behandling.sakstype;

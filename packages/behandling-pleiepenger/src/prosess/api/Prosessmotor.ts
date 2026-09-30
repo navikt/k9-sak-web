@@ -316,7 +316,6 @@ interface ProsessmotorProps {
 export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår } = useSuspenseQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(api, behandling));
-  // Samme query som Uttak-panelet, så uttak hentes én gang og status oppdateres ved ny henting
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   const { data: beregningsresultatUtbetaling } = useSuspenseQuery(
