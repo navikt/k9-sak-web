@@ -10,6 +10,7 @@ import {
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
+import { isAktivitetspenger } from '../../utils/urlUtils';
 import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
@@ -165,7 +166,7 @@ export const VilkårSplittPanel = ({
           </Heading>
           {lovreferanse && (
             <BodyShort size="small" textColor="subtle">
-              <Lovreferanse isUng>{lovreferanse}</Lovreferanse>
+              <Lovreferanse isAktivitetspenger={isAktivitetspenger()}>{lovreferanse}</Lovreferanse>
             </BodyShort>
           )}
         </HStack>

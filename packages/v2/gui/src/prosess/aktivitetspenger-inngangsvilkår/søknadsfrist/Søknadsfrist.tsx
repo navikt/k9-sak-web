@@ -39,7 +39,7 @@ export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av søknadsfrist"
-      lovreferanse={søknadsfristVilkår.lovReferanse}
+      lovreferanse="§ 22-13 tredje ledd"
     >
       <VStack gap="space-24">
         <VStack gap="space-8">

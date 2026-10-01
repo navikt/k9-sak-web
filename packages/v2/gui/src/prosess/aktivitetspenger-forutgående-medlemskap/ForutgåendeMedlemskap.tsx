@@ -4,11 +4,11 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
-import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Link, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -151,6 +151,7 @@ export const ForutgåendeMedlemskap = ({
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
       isPermanentlyReadOnly={erValgtPeriodePermanentLåst}
+      lovreferanse="§ 3"
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
@@ -218,7 +219,10 @@ export const ForutgåendeMedlemskap = ({
                 begrunnelse && (
                   <VStack gap="space-8">
                     <Label size="small" as="p">
-                      Vurder om søker har forutgående medlemskap, jmf §X
+                      Vurder om søker har forutgående medlemskap, jmf{' '}
+                      <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§3" target="_blank">
+                        § 3 Forutgående medlemskap
+                      </Link>
                     </Label>
                     <BodyShort size="small">{begrunnelse}</BodyShort>
                   </VStack>
@@ -227,7 +231,14 @@ export const ForutgåendeMedlemskap = ({
                 <RhfTextarea
                   control={formHook.control}
                   name={`begrunnelser.${selectedItemId}`}
-                  label="Vurder om søker har forutgående medlemskap, jmf §X"
+                  label={
+                    <span>
+                      Vurder om søker har forutgående medlemskap, jmf{' '}
+                      <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§3" target="_blank">
+                        § 3 Forutgående medlemskap
+                      </Link>
+                    </span>
+                  }
                   validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                   maxLength={begrunnelseMaxLength}
                 />

@@ -2,6 +2,11 @@ import { Link } from '@navikt/ds-react';
 import { Fragment } from 'react';
 type LovreferanseProps = {
   /**
+   * Om lovreferansen er for Aktivitetspenger.
+   * Dette brukes for å bestemme hvilken lovdatalenke som skal brukes.
+   * Hvis ikke satt, vil den bruke lovdatalenken for vanlig lovreferanse. */
+  isAktivitetspenger?: boolean;
+  /**
    * Lovreferanseteksten.
    *
    * Denne teksten antas å være på formatet "§ 9-1", "§§ 9-2 og 9-3", "§ 8", "§ 9-3 jamfør 8-9" osv. */
@@ -10,7 +15,7 @@ type LovreferanseProps = {
    * Om lovreferansen er for Ungdomsprogrammet.
    * Dette brukes for å bestemme hvilken lovdatalenke som skal brukes.
    * Hvis ikke satt, vil den bruke lovdatalenken for vanlig lovreferanse. */
-  isUng?: boolean;
+  isUngdomsprogrammet?: boolean;
 };
 
 /**
@@ -21,14 +26,18 @@ type LovreferanseProps = {
  * <Lovreferanse>§§ 9-1 og 9-2 jf. 22-21</Lovreferanse>
  * ```
  * */
-export const Lovreferanse = ({ children, isUng }: LovreferanseProps) => {
-  return <span>{berikMedLovdataLenker(children, isUng)}</span>;
+export const Lovreferanse = ({ children, isUngdomsprogrammet, isAktivitetspenger }: LovreferanseProps) => {
+  return <span>{berikMedLovdataLenker(children, isUngdomsprogrammet, isAktivitetspenger)}</span>;
 };
 
-const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
-  const grunnUrlen = isUng
-    ? 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/'
-    : 'https://lovdata.no/pro/NL/lov/1997-02-28-19/';
+const berikMedLovdataLenker = (lovreferanse: string, isUngdomsprogrammet?: boolean, isAktivitetspenger?: boolean) => {
+  const k9LovdataBaseUrl = 'https://lovdata.no/pro/NL/lov/1997-02-28-19/';
+  let grunnUrlen = k9LovdataBaseUrl;
+  if (isUngdomsprogrammet) {
+    grunnUrlen = 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/';
+  } else if (isAktivitetspenger) {
+    grunnUrlen = 'https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/';
+  }
 
   const seksjonsRegex = /(\d+(-\d+)?)/;
 
@@ -54,7 +63,7 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
       }
 
       const link =
-        kapittelOgKanskjeParagraf.includes('-') || isUng
+        kapittelOgKanskjeParagraf.includes('-') || isUngdomsprogrammet || isAktivitetspenger
           ? `${grunnUrlen}§${kapittelOgKanskjeParagraf}`
           : `${grunnUrlen}§${kapittelOgKanskjeParagraf}-1`;
 

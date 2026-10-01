@@ -8,14 +8,13 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { VilkårLivsoppholdsytelserPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Box, Button, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, Link, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -150,9 +149,9 @@ export const AndreLivsoppholdytelser = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker mottar andre livsoppholdsytelser, jf.{' '}
-      {andreLivsoppholdytelserVilkår.lovReferanse && (
-        <Lovreferanse isUng>{andreLivsoppholdytelserVilkår.lovReferanse}</Lovreferanse>
-      )}
+      <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§4" target="_blank">
+        § 4 Forholdet til andre ytelser
+      </Link>
     </span>
   );
   const harAvslagIAndreLivsoppholdytelser = andreLivsoppholdytelserVilkår.perioder?.some(
@@ -196,7 +195,7 @@ export const AndreLivsoppholdytelser = ({
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av andre livsoppholdsytelser"
-        lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
+        lovreferanse="§ 4"
         defaultIsLocked={isAndreLivsoppholdytelserApSolved}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
