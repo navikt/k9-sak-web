@@ -19,7 +19,6 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -156,7 +155,6 @@ export const Bosted = ({
       <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§2" target="blank">
         §2 Geografisk virkeområde
       </Link>
-      {bostedVilkår.lovReferanse && <Lovreferanse isUngdomsprogrammet>{bostedVilkår.lovReferanse}</Lovreferanse>}
     </span>
   );
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
