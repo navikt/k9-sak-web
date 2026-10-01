@@ -1,6 +1,6 @@
-import { Fragment, useContext, useState, type FC, type ReactNode } from 'react';
+import { Fragment, useContext, useMemo, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
-import { Alert, BodyLong, Button, Table, Loader, HStack } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Table } from '@navikt/ds-react';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
   type FagsakYtelsesType as FagsakYtelseType,
@@ -10,11 +10,16 @@ import UttakRad from './UttakRad.js';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger.js';
 import styles from './uttaksperiodeListe.module.css';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
+import hentPerioderFraUttak from '../utils/hentPerioderFraUttak.js';
+import lagUttaksperiodeliste from '../utils/uttaksperioder.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import { prettifyPeriod } from '../utils/periodUtils.js';
 import splitUttakByDate from '../utils/splitUttakByDate.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import { PencilIcon } from '@navikt/aksel-icons';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 // Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
@@ -45,18 +50,14 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   redigerVirkningsdato,
   visEndringerIUttakFunc,
 }) => {
-  const {
-    fagsakYtelseType: ytelseType,
-    virkningsdatoUttakNyeRegler,
-    erSakstype,
-    uttaksperiodeListe,
-    lasterUttak,
-    readOnly,
-    behandling,
-  } = useUttakContext();
+  const { readOnly, behandling } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
+  const uttaksperiodeListe = useMemo(() => lagUttaksperiodeliste(hentPerioderFraUttak(uttak ?? undefined)), [uttak]);
   const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
-  const headers = tableHeaders(ytelseType);
+  const headers = tableHeaders(behandling.sakstype);
 
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
@@ -75,7 +76,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
           </td>
         </Table.Row>
       )}
-      {erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ? (
+      {behandling.sakstype === fagsakYtelseType.OPPLÆRINGSPENGER ? (
         <UttakRadOpplæringspenger
           uttak={uttak}
           erValgt={valgtPeriodeIndex === index}
@@ -167,11 +168,6 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
 
   return (
     <div className={styles.tableContainer}>
-      {lasterUttak && (
-        <HStack justify="center">
-          <Loader variant="inverted" size="2xlarge" title="Laster uttaksperioder..." />
-        </HStack>
-      )}
       <Table size="small">
         <Table.Header>
           <Table.Row>

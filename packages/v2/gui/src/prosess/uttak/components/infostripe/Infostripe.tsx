@@ -5,7 +5,7 @@ import { useUttakContext } from '../../context/UttakContext.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const Infostripe: FC = () => {
-  const { erSakstype } = useUttakContext();
+  const { behandling } = useUttakContext();
 
   return (
     <div className={styles.infostripe}>
@@ -14,8 +14,8 @@ const Infostripe: FC = () => {
         <ol className={styles.infostripePunktliste}>
           <li>
             Åpne alle behandlinger tilknyttet
-            {erSakstype(fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) ? 'pleietrengende' : 'barnet'} og behandle de til
-            uttakssteget.
+            {behandling.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE ? 'pleietrengende' : 'barnet'} og behandle
+            de til uttakssteget.
           </li>
           <li>
             Oppdater siden (Ctrl+R). Gå til saken som nå har kommet forbi uttak, behandle videre og beslutt, før neste

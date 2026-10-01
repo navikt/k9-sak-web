@@ -6,6 +6,8 @@ import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useState, type FC } from 'react';
 import { useUttakContext } from '../context/UttakContext.js';
@@ -14,6 +16,8 @@ import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringU
 import AktivitetRad from './AktivitetRad.js';
 import OverstyringUttakForm from './OverstyringUttakForm.js';
 import styles from './overstyrUttakForm.module.css';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 export enum OverstyrUttakHandling {
   SLETT = 'SLETT',
@@ -26,7 +30,14 @@ interface OverstyrUttakProps {
 }
 
 const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
-  const { behandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } = useUttakContext();
+  const { behandling, aksjonspunkter, erOverstyrer } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak, refetch: hentUttak } = useSuspenseQuery(
+    uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  );
+  const perioderTilVurdering = uttak?.perioderTilVurdering ?? [];
+  const harOverstyringAksjonspunkt =
+    finnAksjonspunkt(aksjonspunkter, AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) !== undefined;
   const hentBehandling = useRefetchBehandling();
   const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -134,7 +145,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   if (harNoeÅVise) {
     return (
       <div>
-        {harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
+        {harOverstyringAksjonspunkt && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad
@@ -233,7 +244,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
               </div>
             )}
 
-            {!visOverstyringSkjema && harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
+            {!visOverstyringSkjema && harOverstyringAksjonspunkt && (
               <div className={styles.overstyrUttakFormFooter}>
                 <Button
                   variant="primary"

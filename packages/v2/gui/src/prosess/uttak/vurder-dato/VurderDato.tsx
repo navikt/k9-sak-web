@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDato.module.css';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');
@@ -21,14 +24,20 @@ const scrollToVurderDatoContainer = () => {
   }
   return undefined;
 };
-const VurderDato = () => {
-  const {
-    virkningsdatoUttakNyeRegler,
-    harAksjonspunkt,
-    readOnly,
-    aksjonspunktVurderDatoNyRegelUttak,
-    redigerVirkningsdato,
-  } = useUttakContext();
+interface VurderDatoProps {
+  redigerVirkningsdato: boolean;
+  lukkRedigering: () => void;
+}
+
+const VurderDato = ({ redigerVirkningsdato, lukkRedigering }: VurderDatoProps) => {
+  const { aksjonspunkter } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { behandling } = useUttakContext();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
+  const aksjonspunktVurderDatoNyRegelUttak = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+  );
 
   useEffect(() => {
     if (virkningsdatoUttakNyeRegler) {
@@ -36,10 +45,7 @@ const VurderDato = () => {
     }
   }, [virkningsdatoUttakNyeRegler]);
 
-  if (
-    !harAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK) &&
-    !(readOnly && harAksjonspunkt(AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK))
-  ) {
+  if (!aksjonspunktVurderDatoNyRegelUttak) {
     return false;
   }
 
@@ -47,11 +53,6 @@ const VurderDato = () => {
   if (virkningsdatoUttakNyeRegler && !redigerVirkningsdato) {
     return false;
   }
-
-  const initialValues = {
-    begrunnelse: aksjonspunktVurderDatoNyRegelUttak?.begrunnelse ?? '',
-    virkningsdato: virkningsdatoUttakNyeRegler ?? '',
-  };
 
   return (
     <VStack className={styles.vurderDatoContainer} gap="space-20">
@@ -85,7 +86,7 @@ const VurderDato = () => {
           </ReadMore>
         </VStack>
       </Alert>
-      <VurderDatoAksjonspunkt initialValues={initialValues} />
+      <VurderDatoAksjonspunkt lukkRedigering={lukkRedigering} />
     </VStack>
   );
 };

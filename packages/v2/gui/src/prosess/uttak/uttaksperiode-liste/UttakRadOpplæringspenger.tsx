@@ -15,9 +15,12 @@ import Endringsstatus from '../components/icons/Endringsstatus.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer.js';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils.js';
-import { useUttakContext } from '../context/UttakContext.js';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import { uttakInntektsgraderingerQueryOptions } from '../api/uttakQueryOptions.js';
 
 const opplæringspengerVilkår: readonly string[] = [
   vilkarType.LANGVARIG_SYKDOM,
@@ -37,7 +40,9 @@ interface UttakProps {
 // Lager en egen komponent for å vise opplæringspenger så det ikke blir så forvirrende hvissom atte dersom atte i koden
 
 const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { inntektsgraderinger } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { behandling } = useUttakContext();
+  const inntektsgraderinger = useSuspenseQuery(uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid)).data;
   const { periode, uttaksgrad, inngangsvilkår: vilkår, endringsstatus, manueltOverstyrt } = uttak;
 
   const sykdomOgOpplæringVilkår = Object.fromEntries(

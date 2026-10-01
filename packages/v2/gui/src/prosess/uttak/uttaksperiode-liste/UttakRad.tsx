@@ -22,6 +22,9 @@ import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils.js';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { uttakInntektsgraderingerQueryOptions } from '../api/uttakQueryOptions.js';
 
 interface UttakProps {
   uttak: UttaksperiodeBeriket;
@@ -31,7 +34,10 @@ interface UttakProps {
 }
 
 const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { erSakstype, inntektsgraderinger } = useUttakContext();
+  const { behandling } = useUttakContext();
+  const erPleiepengerNærstående = behandling.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
+  const uttakApi = useUttakApi();
+  const inntektsgraderinger = useSuspenseQuery(uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid)).data;
   const {
     periode,
     uttaksgrad,
@@ -44,7 +50,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsak.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
-  const visPleiebehovProsent = !erSakstype(fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE);
+  const visPleiebehovProsent = !erPleiepengerNærstående;
 
   const { erGradertMotInntekt, erGradertMotTilsyn } = finnGraderingForUttak(uttak, inntektsgraderinger);
   const uttakGradIndikatorCls = finnUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
@@ -84,7 +90,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
             <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
           )}
         </Table.DataCell>
-        {erSakstype(fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) && (
+        {erPleiepengerNærstående && (
           <Table.DataCell>
             {uttaksgrad === 0 ? (
               <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--ax-bg-danger-strong)' }} />
@@ -134,7 +140,7 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
         </Table.DataCell>
       </Table.Row>
       <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
-        <td colSpan={erSakstype(fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) ? 8 : 7}>
+        <td colSpan={erPleiepengerNærstående ? 8 : 7}>
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
               {harOppfyltAlleInngangsvilkår ? (

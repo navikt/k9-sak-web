@@ -8,23 +8,32 @@ import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js
 import EndringerIUttakDrawer from './components/endringer-i-uttak/EndringerIUttakDialog.js';
 import Infostripe from './components/infostripe/Infostripe.js';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { useUttakContext } from './context/UttakContext.js';
+import { finnAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
+import { harEtUløstAksjonspunktIUttak } from './utils/aksjonspunkter.js';
 import OverstyrUttak from './overstyr-uttak/OverstyrUttak.js';
 import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe.js';
 import VurderDato from './vurder-dato/VurderDato.js';
 import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak.js';
 
 const UttakInnhold = (): JSX.Element => {
-  const {
-    erOverstyrer,
-    aksjonspunktForOverstyringAvUttak,
-    aksjonspunktVurderOverlappendeSaker,
-    aksjonspunktVentAnnenPSBSak,
-    aksjonspunktVurderDatoNyRegelUttak,
-    harEtUløstAksjonspunktIUttak,
-    setRedigervirkningsdato,
-    redigerVirkningsdato,
-  } = useUttakContext();
+  const { erOverstyrer, aksjonspunkter, behandling } = useUttakContext();
+  const [redigerVirkningsdato, setRedigervirkningsdato] = useState(false);
+  const aksjonspunktForOverstyringAvUttak = finnAksjonspunkt(
+    aksjonspunkter,
+    AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK,
+  );
+  const aksjonspunktVurderOverlappendeSaker = finnAksjonspunkt(
+    aksjonspunkter,
+    AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
+  );
+  const aksjonspunktVentAnnenPSBSak = finnAksjonspunkt(aksjonspunkter, AksjonspunktDefinisjon.VENT_ANNEN_PSB_SAK);
+  const aksjonspunktVurderDatoNyRegelUttak = finnAksjonspunkt(
+    aksjonspunkter,
+    AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+  );
+  const harUløstAksjonspunktIUttak = harEtUløstAksjonspunktIUttak(aksjonspunkter, behandling.sakstype);
 
   const [overstyringAktiv, setOverstyringAktiv] = useState<boolean>(aksjonspunktForOverstyringAvUttak !== undefined);
   const [visEndringerIUttak, setVisEndringerIUttak] = useState(false);
@@ -64,7 +73,7 @@ const UttakInnhold = (): JSX.Element => {
         <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
       )}
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
-      {harEtUløstAksjonspunktIUttak && overstyringAktiv && (
+      {harUløstAksjonspunktIUttak && overstyringAktiv && (
         <ContentMaxWidth>
           <Alert variant="warning" size="small">
             Aktive aksjonspunkter i uttak må løses før uttak kan overstyres.
@@ -74,8 +83,13 @@ const UttakInnhold = (): JSX.Element => {
       <VStack gap="space-32">
         {aksjonspunktVurderOverlappendeSaker && <VurderOverlappendeSak />}
         <UtsattePerioderStripe />
-        {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && <VurderDato />}
-        {!harEtUløstAksjonspunktIUttak && <OverstyrUttak overstyringAktiv={overstyringAktiv} />}
+        {(harOpprettetAksjonspunktVurderDato || redigerVirkningsdato) && (
+          <VurderDato
+            redigerVirkningsdato={redigerVirkningsdato}
+            lukkRedigering={() => setRedigervirkningsdato(false)}
+          />
+        )}
+        {!harUløstAksjonspunktIUttak && <OverstyrUttak overstyringAktiv={overstyringAktiv} />}
         {!aksjonspunktVentAnnenPSBSak && (
           <UttaksperiodeListe
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}

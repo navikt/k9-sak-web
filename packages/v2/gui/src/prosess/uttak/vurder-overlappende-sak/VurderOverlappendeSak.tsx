@@ -1,3 +1,4 @@
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { EgneOverlappendeSakerValg as PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/EgneOverlappendeSakerValg.js';
 import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/EgneOverlappendeSakerDto.js';
@@ -29,6 +30,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import type { ObjectSchema } from 'yup';
 import * as yup from 'yup';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt.js';
+import { useUttakApi } from '../api/UttakApiContext.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm.js';
 import styles from './VurderOverlappendeSak.module.css';
@@ -49,13 +51,11 @@ export interface VurderOverlappendeSakFormData {
 const gyldigAksjonspunktType = '9292' as const;
 
 const VurderOverlappendeSak: FC = () => {
-  const {
-    behandling,
-    aksjonspunktVurderOverlappendeSaker: aksjonspunkt,
-    uttakApi,
-    readOnly,
-    onAksjonspunktBekreftet,
-  } = useUttakContext();
+  const { behandling, aksjonspunkter, readOnly, onAksjonspunktBekreftet } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const aksjonspunkt = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
+  );
   const oppdaterBehandling = useRefetchBehandling();
 
   const { status, uuid, id, versjon } = behandling;

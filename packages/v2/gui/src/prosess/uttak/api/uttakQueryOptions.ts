@@ -23,3 +23,23 @@ export const uttakQueryOptions = (
     // Behandlingsversjon er i nøkkelen, så data trenger ikke hentes på nytt ved hver mount
     staleTime: Infinity,
   });
+
+// refetchOnMount og refetchOnWindowFocus er av, ellers gjentas kallet flere ganger, for eksempel ved bytte av prosesssteg
+export const uttakArbeidsgivereQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
+  queryOptions({
+    queryKey: ['uttak-arbeidsgivere', behandlingUuid, api.backend],
+    queryFn: async () => {
+      const arbeidsgivere = await api.getArbeidsgivere(behandlingUuid);
+      return arbeidsgivere.arbeidsgivere ?? {};
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+export const uttakInntektsgraderingerQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
+  queryOptions({
+    queryKey: ['uttak-inntektsgraderinger', behandlingUuid, api.backend],
+    queryFn: () => api.hentInntektsgraderinger(behandlingUuid),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });

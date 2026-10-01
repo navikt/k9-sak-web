@@ -3,20 +3,25 @@ import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import type { InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/InntektgraderingPeriodeDto.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar.js';
-import { useUttakContext } from '../context/UttakContext.js';
 import {
   utledAktivitetVisningsnavn,
   utledArbeidsgiverNavn,
   utledArbeidstypeVisningsnavn,
 } from '../utils/aktivitetVisning.js';
 import styles from './uttakDetaljer.module.css';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import { uttakArbeidsgivereQueryOptions } from '../api/uttakQueryOptions.js';
 
 interface ownProps {
   inntektsgradering: InntektgraderingPeriodeDto;
 }
 
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
-  const { arbeidsgivere } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { behandling } = useUttakContext();
+  const arbeidsgivere = useSuspenseQuery(uttakArbeidsgivereQueryOptions(uttakApi, behandling.uuid)).data;
 
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
 

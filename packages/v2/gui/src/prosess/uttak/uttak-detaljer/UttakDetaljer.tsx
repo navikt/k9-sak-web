@@ -22,6 +22,9 @@ import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import styles from './uttakDetaljer.module.css';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { uttakInntektsgraderingerQueryOptions } from '../api/uttakQueryOptions.js';
 
 const getIkkeOppfylteÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
   return getÅrsaksetiketter(årsaker, IkkeOppfylteÅrsakerMedTekst);
@@ -105,7 +108,10 @@ const graderingBenevnelse = (ytelse: FagsakYtelsesType) => {
 
 const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
-  const { erSakstype, fagsakYtelseType, inntektsgraderinger } = useUttakContext();
+  const { behandling } = useUttakContext();
+  const fagsakYtelseType = behandling.sakstype;
+  const uttakApi = useUttakApi();
+  const inntektsgraderinger = useSuspenseQuery(uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid)).data;
   const {
     utbetalingsgrader,
     graderingMotTilsyn,
@@ -139,10 +145,9 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
     årsaker &&
     shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
-  const skalViseGraderingMotTilsyn = !erSakstype([
-    fagsakYtelsesType.OPPLÆRINGSPENGER,
-    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
-  ]);
+  const skalViseGraderingMotTilsyn =
+    fagsakYtelseType !== fagsakYtelsesType.OPPLÆRINGSPENGER &&
+    fagsakYtelseType !== fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
   const harBarnetsDødsfallÅrsak = årsaker?.some((årsak: UttaksperiodeInfoÅrsakerType) =>
