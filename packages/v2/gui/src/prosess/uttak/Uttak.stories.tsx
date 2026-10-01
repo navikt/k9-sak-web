@@ -1,10 +1,12 @@
+import { Endringsstatus } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Endringsstatus.js';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Årsak.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
   defaultArbeidsgivere,
   arbeidsgivereWithTilkommet,
-  Endringsstatus,
-  FagsakYtelseType,
   inntektsgraderingFlereArbeidsgivere,
   lagInntektgraderingPeriodeDto,
   lagAvsluttetBehandling,
@@ -14,11 +16,10 @@ import {
   lagTilsynsgraderingPeriode,
   lagUtredBehandling,
   lagUttak,
-  Årsak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from './Uttak';
+import Uttak from './Uttak.js';
 
 const meta = {
   title: 'gui/prosess/Uttak',
@@ -31,6 +32,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -575,7 +577,7 @@ export const UttakPleiepengerNærstående: Story = {
     }),
   ],
   args: {
-    behandling: lagUtredBehandling({ sakstype: FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE }),
+    behandling: lagUtredBehandling({ sakstype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE }),
     erOverstyrer: false,
     aksjonspunkter: [],
     readOnly: true,

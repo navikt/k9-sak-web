@@ -9,7 +9,7 @@ interface VilkårslisteItemProps {
 }
 
 const VilkårslisteItem = ({ vilkår, erOppfylt }: VilkårslisteItemProps): JSX.Element => (
-  <li className={styles['item']}>
+  <li className={styles.item}>
     <div className={styles.itemText}>{`${vilkår}:`}</div>
     <div>
       {erOppfylt ? (

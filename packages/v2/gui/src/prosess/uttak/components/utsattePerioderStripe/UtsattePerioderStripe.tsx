@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
-import { prettifyPeriod, sortPeriodsChronological } from '../../utils/periodUtils';
+import { prettifyPeriod, sortPeriodsChronological } from '../../utils/periodUtils.js';
 import styles from './utsattePerioderStripe.module.css';
-import { useUttakContext } from '../../context/UttakContext';
+import { useUttakContext } from '../../context/UttakContext.js';
 
 const UtsattePerioderStripe: FC = () => {
   const { uttak } = useUttakContext();

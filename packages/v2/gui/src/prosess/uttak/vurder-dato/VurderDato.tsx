@@ -1,9 +1,9 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Alert, BodyLong, Label, ReadMore, VStack } from '@navikt/ds-react';
 import { useEffect } from 'react';
-import { useUttakContext } from '../context/UttakContext';
+import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDato.module.css';
-import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
+import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt.js';
 
 const scrollToVurderDatoContainer = () => {
   const vurderDatoContainer = document.querySelector('#uttakApp');
@@ -54,7 +54,7 @@ const VurderDato = () => {
   };
 
   return (
-    <VStack className={styles['vurderDatoContainer']} gap="space-20">
+    <VStack className={styles.vurderDatoContainer} gap="space-20">
       <Alert variant="warning" size="small">
         <Label size="small">Vurder hvilken dato endringer i uttak skal gjelde fra</Label>
         <VStack gap="space-12">

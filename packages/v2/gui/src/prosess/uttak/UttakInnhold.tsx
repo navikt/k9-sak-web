@@ -3,16 +3,16 @@ import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import { useContext, useEffect, useState, type JSX } from 'react';
-import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth';
+import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth.js';
 import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
-import EndringerIUttakDrawer from './components/endringer-i-uttak/EndringerIUttakDialog';
-import Infostripe from './components/infostripe/Infostripe';
-import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
-import { useUttakContext } from './context/UttakContext';
-import OverstyrUttak from './overstyr-uttak/OverstyrUttak';
-import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe';
-import VurderDato from './vurder-dato/VurderDato';
-import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak';
+import EndringerIUttakDrawer from './components/endringer-i-uttak/EndringerIUttakDialog.js';
+import Infostripe from './components/infostripe/Infostripe.js';
+import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe.js';
+import { useUttakContext } from './context/UttakContext.js';
+import OverstyrUttak from './overstyr-uttak/OverstyrUttak.js';
+import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe.js';
+import VurderDato from './vurder-dato/VurderDato.js';
+import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak.js';
 
 const UttakInnhold = (): JSX.Element => {
   const {

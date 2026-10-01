@@ -12,26 +12,24 @@ import {
 import dayjs from 'dayjs';
 import { useEffect, useState, type FC } from 'react';
 import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
-import OverstyrAktivitetListe from './OverstyrAktivitetListe';
+import OverstyrAktivitetListe from './OverstyrAktivitetListe.js';
 
-import type {
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
-  k9_sak_kontrakt_uttak_overstyring_OverstyrUttakPeriodeDto as OverstyrUttakPeriodeDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakPeriodeDto.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType.js';
-import type { HandleOverstyringType } from '../types/OverstyringUttakTypes';
+import type { UttakBackendApiType } from '../api/UttakBackendApiType.js';
+import type { HandleOverstyringType } from '../types/OverstyringUttakTypes.js';
 import {
   finnSisteSluttDatoFraPerioderTilVurdering,
   finnTidligsteStartDatoFraPerioderTilVurdering,
   formaterOverstyringAktiviteter,
   overstyrUttakFormValidationSchema,
-} from '../utils/overstyringUtils';
+} from '../utils/overstyringUtils.js';
 import styles from './overstyringUttakForm.module.css';
-import { OverstyrUttakHandling } from './OverstyrUttak';
+import { OverstyrUttakHandling } from './OverstyrUttak.js';
 
 type OwnProps = {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon'>;
@@ -40,7 +38,7 @@ type OwnProps = {
   loading: boolean;
   setLoading: (loading: boolean) => void;
   perioderTilVurdering?: string[];
-  api: BehandlingUttakBackendApiType;
+  api: UttakBackendApiType;
   handleOverstyring: HandleOverstyringType;
   arbeidsgivereFromParent?: ArbeidsgiverOversiktDto['arbeidsgivere'];
 };
@@ -59,6 +57,7 @@ const OverstyringUttakForm: FC<OwnProps> = ({
   const [arbeidsgivere, setArbeidsgivere] = useState<ArbeidsgiverOversiktDto['arbeidsgivere']>({});
 
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
+  // Yup-skjemaet tillater null i arbeidsforhold, mens DTO-en kun tillater undefined. Typene er ikke kompatible uten cast.
   const resolver: Resolver<OverstyrUttakPeriodeDto, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
     any,
     any

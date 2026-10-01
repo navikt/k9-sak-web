@@ -1,8 +1,9 @@
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  AksjonspunktStatus,
   lagOppfyltPeriode,
   lagOverstyringUttakAksjonspunkt,
   lagUtredBehandling,
@@ -11,8 +12,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import { withQueryClientProvider } from '../../../storybook/decorators/withQueryClientProvider.js';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 /**
  * OverstyrUttak-komponenten lar saksbehandlere med overstyrerrolle manuelt overstyre
@@ -34,7 +34,7 @@ const meta = {
     },
   },
   decorators: [
-    withQueryClientProvider(),
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -190,7 +190,7 @@ export const Overstyringer: Story = {
   args: {
     behandling: lagUtredBehandling(),
     erOverstyrer: true,
-    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -443,7 +443,7 @@ export const Lesemodus: Story = {
   args: {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
-    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {

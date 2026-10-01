@@ -1,6 +1,6 @@
-import { k9_kodeverk_vilkår_VilkårType as VilkårType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 
-const vilkår = [
+const vilkår: { name: string; kode: VilkårType }[] = [
   {
     name: 'Medlemskap',
     kode: 'FP_VK_2', // Medlemskapsvilkåret
@@ -45,6 +45,6 @@ const vilkår = [
     name: 'Institusjon',
     kode: 'K9_VK_21', // Godkjent opplæringsinstitusjon
   },
-] as { name: string; kode: VilkårType }[];
+];
 
 export default vilkår;

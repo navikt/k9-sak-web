@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType.js';
+import type { UttakBackendApiType } from './UttakBackendApiType.js';
 
-export const UttakApiContext = createContext<BehandlingUttakBackendApiType | null>(null);
+export const UttakApiContext = createContext<UttakBackendApiType | null>(null);
 
-export const useUttakApi = (): BehandlingUttakBackendApiType => {
+export const useUttakApi = (): UttakBackendApiType => {
   const context = useContext(UttakApiContext);
   if (!context) {
     throw new Error('useUttakApi må brukes innenfor en UttakApiContext');

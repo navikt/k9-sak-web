@@ -1,28 +1,26 @@
-import { type JSX } from 'react';
-import {
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  pleiepengerbarn_uttak_kontrakter_Utfall as Utfall,
-  pleiepengerbarn_uttak_kontrakter_Årsak as Årsaker,
-  type pleiepengerbarn_uttak_kontrakter_Utenlandsopphold as Utenlandsopphold,
-  type pleiepengerbarn_uttak_kontrakter_Utfall as UttaksperiodeInfoUtfallType,
-  type pleiepengerbarn_uttak_kontrakter_Årsak as UttaksperiodeInfoÅrsakerType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { type JSX, useContext } from 'react';
+import { Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Utfall.js';
+import { Årsak as Årsaker } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Årsak.js';
+import type { Utenlandsopphold } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utenlandsopphold.js';
+import type { Utfall as UttaksperiodeInfoUtfallType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Utfall.js';
+import type { Årsak as UttaksperiodeInfoÅrsakerType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Årsak.js';
 import { fagsakYtelsesType, type FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType, type KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { OrUndefined } from '@k9-sak-web/gui/kodeverk/oppslag/GeneriskKodeverkoppslag.js';
+import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import type { K9Kodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import { BriefcaseClockIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
 import {
   BarnetsDødsfallÅrsakerMedTekst,
   IkkeOppfylteÅrsakerMedTekst,
   SluttfaseÅrsakerMedTekst,
-} from '../constants/UttaksperiodeInfoÅrsakerTekst';
-import { FremhevingTag } from './FremhevingTag';
-import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer';
-import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
-import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer';
-import { useUttakContext } from '../context/UttakContext';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+} from '../constants/UttaksperiodeInfoÅrsakerTekst.js';
+import { FremhevingTag } from './FremhevingTag.js';
+import GraderingMotArbeidstidDetaljer from './GraderingMotArbeidstidDetaljer.js';
+import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer.js';
+import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import styles from './uttakDetaljer.module.css';
 
 const getIkkeOppfylteÅrsaksetiketter = (årsaker: UttaksperiodeInfoÅrsakerType[]) => {
@@ -57,20 +55,20 @@ const getÅrsaksetiketter = (
     ));
 };
 
-const utenlandsoppholdTekst = (utenlandsopphold: Utenlandsopphold, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
+const utenlandsoppholdTekst = (utenlandsopphold: Utenlandsopphold, kodeverkoppslag: K9Kodeverkoppslag) => {
   if (utenlandsopphold?.erEøsLand) {
     return 'Periode med utenlandsopphold i EØS-land, telles ikke i 8 uker.';
   }
 
   if (!utenlandsopphold.årsak) return 'Mangler årsak for utenlandsopphold';
 
-  return kodeverkNavnFraKode(utenlandsopphold.årsak, KodeverkType.UTLANDSOPPHOLD_AARSAK);
+  return kodeverkoppslag.k9sak.utenlandsoppholdÅrsaker(utenlandsopphold.årsak, OrUndefined)?.navn ?? 'Ukjent årsak';
 };
 
 const utenlandsoppholdInfo = (
   utfall: UttaksperiodeInfoUtfallType | undefined,
   utenlandsopphold: Utenlandsopphold | undefined,
-  kodeverkNavnFraKode: KodeverkNavnFraKodeType,
+  kodeverkoppslag: K9Kodeverkoppslag,
 ) => {
   if (!utenlandsopphold?.landkode || utfall === undefined) {
     return null;
@@ -82,7 +80,7 @@ const utenlandsoppholdInfo = (
 
   return (
     <Tag data-color="success" variant="outline" className={styles.uttakDetaljer}>
-      {utenlandsoppholdTekst(utenlandsopphold, kodeverkNavnFraKode)}
+      {utenlandsoppholdTekst(utenlandsopphold, kodeverkoppslag)}
     </Tag>
   );
 };
@@ -106,7 +104,7 @@ const graderingBenevnelse = (ytelse: FagsakYtelsesType) => {
 };
 
 const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
-  const { kodeverkNavnFraKode } = useKodeverkContext();
+  const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const { erSakstype, fagsakYtelseType, inntektsgraderinger } = useUttakContext();
   const {
     utbetalingsgrader,
@@ -142,8 +140,8 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
     shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker || []);
 
   const skalViseGraderingMotTilsyn = !erSakstype([
-    FagsakYtelseType.OPPLÆRINGSPENGER,
-    FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
   ]);
 
   // Hvis en av årsakene fra uttaksdetaljene er en av årsakene for barnets dødsfall ...
@@ -156,13 +154,13 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
       {getIkkeOppfylteÅrsaksetiketter(årsaker || [])}
       {getSluttfaseÅrsaksetiketter(årsaker || [], fagsakYtelseType)}
       {getTekstVedBarnetsDødsfall(årsaker || [])}
-      {utenlandsoppholdInfo(utfall, utenlandsopphold, kodeverkNavnFraKode)}
+      {utenlandsoppholdInfo(utfall, utenlandsopphold, kodeverkoppslag)}
       {manueltOverstyrt && (
         <Alert variant="info" size="small" className="mx-4">
           Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
         </Alert>
       )}
-      <HGrid gap="space-32" columns={3} align="start" className={styles['uttakDetaljer']}>
+      <HGrid gap="space-32" columns={3} align="start" className={styles.uttakDetaljer}>
         {graderingMotTilsyn && skalViseGraderingMotTilsyn && (
           <Box
             className={`${styles.uttakDetaljerGraderingDetaljer} ${shouldHighlightTilsyn ? styles.uttakDetaljerGraderingDetaljerHighlighted : styles.uttakDetaljerGraderingDetaljerNotHighlighted}`}

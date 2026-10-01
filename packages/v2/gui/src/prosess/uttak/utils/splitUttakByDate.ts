@@ -1,4 +1,4 @@
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 
 export interface SplitResult {
   before: UttaksperiodeBeriket[];

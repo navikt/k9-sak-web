@@ -1,7 +1,8 @@
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  AksjonspunktStatus,
   lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
@@ -10,7 +11,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 /**
  * VurderDato-komponenten håndterer vurdering av virkningsdato for nye uttaksregler.
@@ -29,6 +30,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -153,7 +155,7 @@ export const LøsAksjonspunkt: Story = {
     });
 
     await step('Fyll inn begrunnelse', async () => {
-      const begrunnelseField = canvas.getByLabelText('Begrunnelse') as HTMLTextAreaElement;
+      const begrunnelseField = canvas.getByLabelText<HTMLTextAreaElement>('Begrunnelse');
       await user.clear(begrunnelseField);
       await user.type(
         begrunnelseField,
@@ -198,7 +200,7 @@ export const RedigerVurdering: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagVurderDatoNyRegelAksjonspunkt(AksjonspunktStatus.UTFØRT, {
+      lagVurderDatoNyRegelAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse:
           'Endringene i uttaksreglene skal gjelde fra 15. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
       }),
@@ -219,7 +221,7 @@ export const RedigerVurdering: Story = {
       const dateInput = canvas.getByLabelText('Endringsdato');
       await user.clear(dateInput);
       await user.type(dateInput, '20.01.2024');
-      const begrunnelseField = canvas.getByLabelText('Begrunnelse') as HTMLTextAreaElement;
+      const begrunnelseField = canvas.getByLabelText<HTMLTextAreaElement>('Begrunnelse');
       await user.clear(begrunnelseField);
       await user.type(
         begrunnelseField,

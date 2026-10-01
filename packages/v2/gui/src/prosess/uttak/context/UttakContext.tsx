@@ -1,11 +1,9 @@
-import type {
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as Aksjonspunkt,
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversikt,
-  k9_sak_kontrakt_behandling_BehandlingDto as Behandling,
-  k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AksjonspunktDto as Aksjonspunkt } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { ArbeidsgiverOversiktDto as ArbeidsgiverOversikt } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { BehandlingDto as Behandling } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { FagsakYtelsesType as FagsakYtelseType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   createContext,
@@ -18,15 +16,15 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType.js';
+import type { UttakBackendApiType } from '../api/UttakBackendApiType.js';
 import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
-import hentPerioderFraUttak from '../utils/hentPerioderFraUttak';
-import lagUttaksperiodeliste from '../utils/uttaksperioder';
+import hentPerioderFraUttak from '../utils/hentPerioderFraUttak.js';
+import lagUttaksperiodeliste from '../utils/uttaksperioder.js';
 
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
   uttak: UttaksplanMedUtsattePerioder;
-  uttakApi: BehandlingUttakBackendApiType;
+  uttakApi: UttakBackendApiType;
   perioderTilVurdering: string[];
   hentUttak?: () => Promise<any>;
   onAksjonspunktBekreftet?: () => void;

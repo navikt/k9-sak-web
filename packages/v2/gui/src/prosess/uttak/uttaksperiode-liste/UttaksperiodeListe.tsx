@@ -1,19 +1,19 @@
 import { Fragment, useContext, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
 import { Alert, BodyLong, Button, Table, Loader, HStack } from '@navikt/ds-react';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
   type FagsakYtelsesType as FagsakYtelseType,
   fagsakYtelsesType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import UttakRad from './UttakRad';
-import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
+import UttakRad from './UttakRad.js';
+import UttakRadOpplæringspenger from './UttakRadOpplæringspenger.js';
 import styles from './uttaksperiodeListe.module.css';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
-import { useUttakContext } from '../context/UttakContext';
-import { prettifyPeriod } from '../utils/periodUtils';
-import splitUttakByDate from '../utils/splitUttakByDate';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { useUttakContext } from '../context/UttakContext.js';
+import { prettifyPeriod } from '../utils/periodUtils.js';
+import splitUttakByDate from '../utils/splitUttakByDate.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import { PencilIcon } from '@navikt/aksel-icons';
 
 // Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
@@ -71,7 +71,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
       {uttak.harOppholdTilNestePeriode && (
         <Table.Row>
           <td colSpan={12}>
-            <div className={styles['oppholdRow']} />
+            <div className={styles.oppholdRow} />
           </td>
         </Table.Row>
       )}
@@ -95,7 +95,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
       rad: (
         <Table.Row key="uttaksregelinfo-endringsdato">
           <Table.DataCell colSpan={12}>
-            <div className={styles['alertRow']}>
+            <div className={styles.alertRow}>
               <Alert variant="info">
                 <div className="flex items-center justify-between gap-4">
                   <BodyLong size="small">
@@ -107,7 +107,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
                     size="small"
                     icon={<PencilIcon />}
                     onClick={redigerVirkningsdatoFunc}
-                    disabled={behandling.status === behandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
+                    disabled={behandling.status === BehandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
                   >
                     Rediger
                   </Button>
@@ -132,7 +132,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
       rad: (
         <Table.Row key="uttaksregelinfo-normalarbeidstid-låst">
           <Table.DataCell colSpan={12}>
-            <div className={styles['alertRow']}>
+            <div className={styles.alertRow}>
               <Alert variant="info">
                 <div className="flex items-center justify-between gap-4">
                   <BodyLong size="small">
@@ -166,7 +166,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   const sisteSegment = resterendePerioder.map(uttak => renderPeriodeRad(uttak, periodeIndeks++));
 
   return (
-    <div className={styles['tableContainer']}>
+    <div className={styles.tableContainer}>
       {lasterUttak && (
         <HStack justify="center">
           <Loader variant="inverted" size="2xlarge" title="Laster uttaksperioder..." />
@@ -179,7 +179,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
               <Table.HeaderCell
                 scope="col"
                 key={header}
-                className={styles['headerColumn']}
+                className={styles.headerColumn}
                 colSpan={headers.length - 1 === index ? 2 : 1}
               >
                 {header}

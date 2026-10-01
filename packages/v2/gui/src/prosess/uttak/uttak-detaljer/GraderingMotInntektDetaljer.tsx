@@ -2,13 +2,13 @@ import { Fragment, type FC } from 'react';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import type { InntektgraderingPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/InntektgraderingPeriodeDto.js';
 import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
-import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
-import { useUttakContext } from '../context/UttakContext';
+import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar.js';
+import { useUttakContext } from '../context/UttakContext.js';
 import {
   utledAktivitetVisningsnavn,
   utledArbeidsgiverNavn,
   utledArbeidstypeVisningsnavn,
-} from '../utils/aktivitetVisning';
+} from '../utils/aktivitetVisning.js';
 import styles from './uttakDetaljer.module.css';
 
 interface ownProps {

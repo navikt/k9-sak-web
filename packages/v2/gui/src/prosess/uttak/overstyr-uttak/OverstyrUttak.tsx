@@ -1,7 +1,5 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { OverstyringAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/OverstyringAksjonspunktDto.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
@@ -10,11 +8,11 @@ import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Tab
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { useState, type FC } from 'react';
-import { useUttakContext } from '../context/UttakContext';
-import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
-import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
-import AktivitetRad from './AktivitetRad';
-import OverstyringUttakForm from './OverstyringUttakForm';
+import { useUttakContext } from '../context/UttakContext.js';
+import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes.js';
+import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils.js';
+import AktivitetRad from './AktivitetRad.js';
+import OverstyringUttakForm from './OverstyringUttakForm.js';
 import styles from './overstyrUttakForm.module.css';
 
 export enum OverstyrUttakHandling {
@@ -45,7 +43,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   const { mutate: handleOverstyring } = useMutation({
     mutationFn: async ({ action, values }: OverstyringUttakHandling) => {
       const overstyrteAksjonspunktDto: DTOWithDiscriminatorType<
-        k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+        OverstyringAksjonspunktDto,
         typeof aksjonspunktCodes.OVERSTYRING_AV_UTTAK
       > = {
         '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK,

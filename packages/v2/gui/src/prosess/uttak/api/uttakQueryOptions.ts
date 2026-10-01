@@ -1,9 +1,9 @@
 import { queryOptions } from '@tanstack/react-query';
 import { ignore404Errors } from '../../../app/errorhandling/ignore404Errors.js';
-import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType.js';
+import type { UttakBackendApiType } from './UttakBackendApiType.js';
 
 export const uttakQueryOptions = (
-  api: BehandlingUttakBackendApiType,
+  api: UttakBackendApiType,
   behandlingUuid: string,
   behandlingVersjon: number | undefined,
 ) =>

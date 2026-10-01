@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
-import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn, utledArbeidstypeVisningsnavn } from './aktivitetVisning';
+import { utledAktivitetVisningsnavn, utledArbeidsgiverNavn, utledArbeidstypeVisningsnavn } from './aktivitetVisning.js';
 
 const arbeidsgivere = {
   '123': {
@@ -8,7 +8,7 @@ const arbeidsgivere = {
     identifikator: '123',
     arbeidsforholdreferanser: [],
   },
-} as ArbeidsgiverOversiktDto['arbeidsgivere'];
+} satisfies ArbeidsgiverOversiktDto['arbeidsgivere'];
 
 describe('aktivitetVisning', () => {
   it('viser ikke arbeidsgiverlinje når backend ikke sender identifikator', async () => {

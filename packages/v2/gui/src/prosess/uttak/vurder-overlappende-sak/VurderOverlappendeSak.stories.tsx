@@ -1,3 +1,4 @@
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 /**
  * VurderOverlappendeSak komponent stories.
  *
@@ -14,9 +15,9 @@
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  AksjonspunktStatus,
   lagAvsluttetBehandling,
   lagOppfyltPeriode,
   lagOverlappendePeriode,
@@ -34,7 +35,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
 import { action } from 'storybook/actions';
 import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 dayjs.locale('nb');
 
@@ -61,6 +62,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -312,7 +314,7 @@ export const LøstAksjonspunkt: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
     readOnly: false,
   },
@@ -348,7 +350,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
     behandling: lagUtredBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, {
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse: 'Dette er en grundig begrunnelse',
         erAktivt: true, // Må være true for å kunne redigeres
       }),
@@ -468,7 +470,7 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
     behandling: lagAvsluttetBehandling(),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
     readOnly: true,
   },

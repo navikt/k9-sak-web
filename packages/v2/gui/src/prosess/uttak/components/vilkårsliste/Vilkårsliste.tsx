@@ -1,16 +1,14 @@
 import type { JSX } from 'react';
 import { Label } from '@navikt/ds-react';
-import {
-  k9_kodeverk_vilkår_VilkårType as VilkårType,
-  k9_kodeverk_vilkår_Utfall as VilkårUtfall,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import VilkårslisteItem from './VilkårslisteItem';
-import vilkårListe from './Vilkår';
+import { type VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { vilkårStatus, type VilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import VilkårslisteItem from './VilkårslisteItem.js';
+import vilkårListe from './Vilkår.js';
 import styles from './vilkårsliste.module.css';
 
-type VilkårTypeMap = { [key in VilkårType]?: VilkårUtfall };
+type VilkårTypeMap = { [key in VilkårType]?: VilkårStatus };
 
-const erVilkårOppfylt = (vilkårkode: VilkårType, vilkår: VilkårTypeMap) => vilkår[vilkårkode] === VilkårUtfall.OPPFYLT;
+const erVilkårOppfylt = (vilkårkode: VilkårType, vilkår: VilkårTypeMap) => vilkår[vilkårkode] === vilkårStatus.OPPFYLT;
 
 const Vilkårsliste = ({ vilkår }: { vilkår: VilkårTypeMap }): JSX.Element => {
   return (

@@ -1,4 +1,4 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button } from '@navikt/ds-react';
@@ -6,7 +6,7 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useUttakContext } from '../context/UttakContext';
+import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDatoAksjonspunkt.module.css';
 
 interface FormData {
@@ -64,7 +64,7 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
-      <div className={styles['vurderDatoAksjonspunktContainer']}>
+      <div className={styles.vurderDatoAksjonspunktContainer}>
         <Datovelger
           name="virkningsdato"
           label="Endringsdato"
@@ -84,8 +84,8 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
           readOnly={readOnly}
         />
         {!readOnly && (
-          <div className={styles['knapper']}>
-            <Button size="small" type="submit" className={styles['bekreft']}>
+          <div className={styles.knapper}>
+            <Button size="small" type="submit" className={styles.bekreft}>
               Bekreft og fortsett
             </Button>
 

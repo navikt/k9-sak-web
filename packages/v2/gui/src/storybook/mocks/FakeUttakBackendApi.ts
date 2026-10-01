@@ -1,15 +1,13 @@
-import type {
-  k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
-  k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  k9_sak_kontrakt_uttak_inntektgradering_InntektgraderingDto as InntektgraderingDto,
-  k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
-  k9_sak_web_app_tjenester_behandling_uttak_overstyring_OverstyrbareAktiviteterForUttakRequest as OverstyrbareAktiviteterForUttakRequest,
-  k9_sak_kontrakt_uttak_overstyring_OverstyrbareUttakAktiviterDto as OverstyrbareUttakAktiviterDto,
-  k9_sak_kontrakt_uttak_overstyring_OverstyrtUttakDto as OverstyrtUttakDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { BehandlingUttakBackendApiType } from '../../prosess/uttak/BehandlingUttakBackendApiType.js';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/EgneOverlappendeSakerDto.js';
+import type { InntektgraderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/inntektgradering/InntektgraderingDto.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
+import type { OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/overstyring/OverstyrbareAktiviteterForUttakRequest.js';
+import type { OverstyrbareUttakAktiviterDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrbareUttakAktiviterDto.js';
+import type { OverstyrtUttakDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrtUttakDto.js';
+import type { UttakBackendApiType } from '../../prosess/uttak/api/UttakBackendApiType.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import { defaultArbeidsgivere, lagUttak } from './uttak/uttakStoryMocks.js';
 
@@ -18,22 +16,21 @@ export interface FakeUttakBackendConfig {
   inntektsgraderinger?: InntektgraderingDto;
   overstyringer?: OverstyrtUttakDto['overstyringer'];
   egneOverlappendeSaker?: EgneOverlappendeSakerDto;
-  uttak?: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
+  uttak?: UttaksplanMedUtsattePerioder;
   allowedRanges?: Array<{ fom: string; tom: string }>;
-  onBekreftAksjonspunkt?: (requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => void;
-  onOverstyringUttak?: (requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void;
+  onBekreftAksjonspunkt?: (requestBody: BekreftedeAksjonspunkterDto) => void;
+  onOverstyringUttak?: (requestBody: BekreftetOgOverstyrteAksjonspunkterDto) => void;
 }
 
-export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
+export class FakeUttakBackendApi implements UttakBackendApiType {
   readonly backend = 'k9sak';
   #arbeidsgivere: ArbeidsgiverOversiktDto['arbeidsgivere'];
   #inntektsgraderinger: InntektgraderingDto;
   #overstyringer: OverstyrtUttakDto['overstyringer'];
   #egneOverlappendeSaker: EgneOverlappendeSakerDto;
-  #uttak: k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder;
-  #onBekreftAksjonspunkt: ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto) => void) | undefined;
-  #onOverstyringUttak:
-    ((requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto) => void) | undefined;
+  #uttak: UttaksplanMedUtsattePerioder;
+  #onBekreftAksjonspunkt: ((requestBody: BekreftedeAksjonspunkterDto) => void) | undefined;
+  #onOverstyringUttak: ((requestBody: BekreftetOgOverstyrteAksjonspunkterDto) => void) | undefined;
   #allowedRanges: Array<{ fom: string; tom: string }> | undefined;
 
   constructor(config?: FakeUttakBackendConfig) {
@@ -47,9 +44,7 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
     this.#allowedRanges = config?.allowedRanges;
   }
 
-  async hentUttak(
-    behandlingUuid: string,
-  ): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder> {
+  async hentUttak(behandlingUuid: string): Promise<UttaksplanMedUtsattePerioder> {
     ignoreUnusedDeclared(behandlingUuid);
     return this.#uttak;
   }
@@ -59,7 +54,7 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
     return this.#egneOverlappendeSaker;
   }
 
-  async bekreftAksjonspunkt(requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto): Promise<void> {
+  async bekreftAksjonspunkt(requestBody: BekreftedeAksjonspunkterDto): Promise<void> {
     this.#onBekreftAksjonspunkt?.(requestBody);
   }
 
@@ -104,9 +99,7 @@ export class FakeUttakBackendApi implements BehandlingUttakBackendApiType {
     return { arbeidsgivere: this.#arbeidsgivere };
   }
 
-  async overstyringUttak(
-    requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftetOgOverstyrteAksjonspunkterDto,
-  ): Promise<void> {
+  async overstyringUttak(requestBody: BekreftetOgOverstyrteAksjonspunkterDto): Promise<void> {
     this.#onOverstyringUttak?.(requestBody);
   }
 

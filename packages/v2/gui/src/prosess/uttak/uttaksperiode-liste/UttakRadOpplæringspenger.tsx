@@ -9,21 +9,21 @@ import {
 } from '@navikt/aksel-icons';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { BodyShort, Button, HelpText, Table } from '@navikt/ds-react';
-import { k9_kodeverk_vilkår_Utfall as VilkårUtfall } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
-import Endringsstatus from '../components/icons/Endringsstatus';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
-import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
-import { useUttakContext } from '../context/UttakContext';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste.js';
+import Endringsstatus from '../components/icons/Endringsstatus.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
+import UttakDetaljer from '../uttak-detaljer/UttakDetaljer.js';
+import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils.js';
+import { useUttakContext } from '../context/UttakContext.js';
 import styles from './uttak.module.css';
-import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';
+import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator.js';
 
-const opplæringspengerVilkår = [
+const opplæringspengerVilkår: readonly string[] = [
   vilkarType.LANGVARIG_SYKDOM,
   vilkarType.NØDVENDIG_OPPLÆRING,
   vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
-] as string[];
+];
 
 interface UttakProps {
   uttak: UttaksperiodeBeriket;
@@ -51,10 +51,10 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
   const { erGradertMotInntekt, erGradertMotTilsyn } = finnGraderingForUttak(uttak, inntektsgraderinger);
   const uttakGradIndikatorCls = finnUttakGradIndikatorCls(uttaksgrad, erGradertMotInntekt, erGradertMotTilsyn);
 
-  const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === VilkårUtfall.OPPFYLT);
+  const harOppfyltAlleInngangsvilkår = Object.values(inngangsvilkår).every(vilkar => vilkar === vilkårStatus.OPPFYLT);
 
   const harOppfyltAlleVilkårSykdomOgOpplæring = opplæringspengerVilkår.every(
-    vilkar => sykdomOgOpplæringVilkår[vilkar] === VilkårUtfall.OPPFYLT,
+    vilkar => sykdomOgOpplæringVilkår[vilkar] === vilkårStatus.OPPFYLT,
   );
 
   const alleVilkårErOppfylt = harOppfyltAlleInngangsvilkår && harOppfyltAlleVilkårSykdomOgOpplæring;
@@ -124,10 +124,10 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
           </div>
         </Table.DataCell>
       </Table.Row>
-      <tr className={`${erValgt ? '' : styles['collapseRow']} ${styles['expandedRow']}`}>
+      <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
         <td colSpan={8}>
           <Collapse isOpened={erValgt}>
-            <div className={styles['expanded']}>
+            <div className={styles.expanded}>
               {alleVilkårErOppfylt ? (
                 <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt || false} />
               ) : (
