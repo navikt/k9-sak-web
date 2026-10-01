@@ -36,7 +36,7 @@ export const DefaultStory: Story = {
 export const UngdomsprogramFårRiktigLenke: Story = {
   args: {
     children: 'Forskrift om ungdomsprogram og ungdomsprogramytelse § 8',
-    isUng: true,
+    isUngdomsprogrammet: true,
   },
   play: async ({ canvasElement, step }) => {
     const { linkEls } = elemsfinder(canvasElement);
@@ -44,6 +44,21 @@ export const UngdomsprogramFårRiktigLenke: Story = {
       await expect(linkEls()).toHaveLength(1);
       await expect(linkEls()[0]).toHaveTextContent('8');
       await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/§8');
+    });
+  },
+};
+
+export const AktivitetspengerFårRiktigLenke: Story = {
+  args: {
+    children: '§ 5',
+    isAktivitetspenger: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls } = elemsfinder(canvasElement);
+    await step('Enkeltparagraf lenkes til riktig forskrift', async () => {
+      await expect(linkEls()).toHaveLength(1);
+      await expect(linkEls()[0]).toHaveTextContent('5');
+      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§5');
     });
   },
 };
@@ -213,6 +228,21 @@ export const MedlemskapReferanse: Story = {
       await expect(kapittelLink).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
 
       await expect(root()).toHaveTextContent('§ 9-2 jf. kapittel 2');
+    });
+  },
+};
+
+export const HeleTekstenInneIlenken: Story = {
+  args: {
+    children: '§2 Geografisk virkeområde',
+    includeFullTextInLink: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls } = elemsfinder(canvasElement);
+    await step('Hele teksten er del av lenketeksten', async () => {
+      await expect(linkEls()).toHaveLength(1);
+      await expect(linkEls()[0]).toHaveTextContent('§2 Geografisk virkeområde');
+      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
     });
   },
 };

@@ -138,6 +138,7 @@ export const Vilkaarsvurdering = ({
   return (
     <VStack gap="space-20">
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
