@@ -7,7 +7,7 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { action } from 'storybook/actions';
@@ -19,7 +19,7 @@ import VilkarresultatMedOverstyringProsessIndex, {
 
 const vilkarOpptjening = [
   {
-    vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+    vilkarType: VilkarType.OPPTJENINGSVILKÅRET,
     overstyrbar: true,
     relevanteInnvilgetMerknader: [
       { innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B' },
@@ -48,7 +48,7 @@ const vilkarOpptjening = [
 
 const vilkarMedlemskap = [
   {
-    vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+    vilkarType: VilkarType.MEDLEMSKAPSVILKÅRET,
     overstyrbar: true,
     relevanteInnvilgetMerknader: [],
     perioder: [
@@ -199,7 +199,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
     overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
     vilkar: [
       {
-        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+        vilkarType: VilkarType.OPPTJENINGSVILKÅRET,
         overstyrbar: true,
         relevanteInnvilgetMerknader: [
           { merknad: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B' },

@@ -1,58 +1,59 @@
-import { vilkårStatus, type VilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import type { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkarType, type VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import type { VilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Label } from '@navikt/ds-react';
 import type { JSX } from 'react';
 import styles from './vilkårsliste.module.css';
 
-const vilkårListe: { name: string; kode: VilkårType }[] = [
+type VilkårTypeMap = { [key in VilkårType]?: VilkårStatus };
+
+const vilkårListe = [
   {
     name: 'Medlemskap',
-    kode: 'FP_VK_2', // Medlemskapsvilkåret
+    kode: VilkarType.MEDLEMSKAPSVILKÅRET, // Medlemskapsvilkåret
   },
   {
     name: 'Søknadsfrist',
-    kode: 'FP_VK_3',
+    kode: VilkarType.SØKNADSFRIST,
   },
   {
     name: 'Opptjening',
-    kode: 'FP_VK_23', // Opptjeningsvilkåret
+    kode: VilkarType.OPPTJENINGSVILKÅRET, // Opptjeningsvilkåret
   },
   {
     name: 'Beregningsgrunnlag',
-    kode: 'FP_VK_41', // Beregningsgrunnlagvilkår
+    kode: VilkarType.BEREGNINGSGRUNNLAGVILKÅR, // Beregningsgrunnlagvilkår
   },
   {
     name: 'Omsorgen for',
-    kode: 'K9_VK_1',
+    kode: VilkarType.OMSORGEN_FOR,
   },
   {
     name: 'Sykdom',
-    kode: 'K9_VK_2_a', // medisinske vilkår for barn under 18 år
+    kode: VilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, // medisinske vilkår for barn under 18 år
   },
   {
     name: 'Sykdom',
-    kode: 'K9_VK_2_b', // medisinske vilkår for barn over 18 år
+    kode: VilkarType.MEDISINSKEVILKÅR_18_ÅR, // medisinske vilkår for barn over 18 år
   },
   {
     name: 'Søkers alder',
-    kode: 'K9_VK_3', // Aldersvilkåret
+    kode: VilkarType.ALDERSVILKÅR, // Aldersvilkåret
   },
   {
     name: 'Langvarig sykdom',
-    kode: 'K9_VK_17', //  i opplæringspenger
+    kode: VilkarType.LANGVARIG_SYKDOM, //  i opplæringspenger
   },
   {
     name: 'Nødvendig opplæring',
-    kode: 'K9_VK_20', // Nødvendig opplæring for å ta vare på barnet
+    kode: VilkarType.NØDVENDIG_OPPLÆRING, // Nødvendig opplæring for å ta vare på barnet
   },
   {
     name: 'Institusjon',
-    kode: 'K9_VK_21', // Godkjent opplæringsinstitusjon
+    kode: VilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON, // Godkjent opplæringsinstitusjon
   },
 ];
-
-type VilkårTypeMap = { [key in VilkårType]?: VilkårStatus };
 
 const VilkårslisteItem = ({ vilkår, erOppfylt }: { vilkår: string; erOppfylt: boolean }): JSX.Element => (
   <li className={styles.item}>

@@ -7,7 +7,7 @@ import {
   PersonPencilFillIcon,
   XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { BodyShort, Button, HelpText, Table } from '@navikt/ds-react';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste.js';
@@ -23,9 +23,9 @@ import { useUttakContext } from '../context/UttakContext.js';
 import { uttakInntektsgraderingerQueryOptions } from '../api/uttakQueryOptions.js';
 
 const opplæringspengerVilkår: readonly string[] = [
-  vilkarType.LANGVARIG_SYKDOM,
-  vilkarType.NØDVENDIG_OPPLÆRING,
-  vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
+  VilkarType.LANGVARIG_SYKDOM,
+  VilkarType.NØDVENDIG_OPPLÆRING,
+  VilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON,
 ];
 
 interface UttakProps {

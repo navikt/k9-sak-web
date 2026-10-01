@@ -2,7 +2,7 @@ import { k9_kodeverk_behandling_FagsakYtelseType } from '@k9-sak-web/backend/k9s
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { asyncAction } from '../../storybook/asyncAction';
 import AldersVilkarProsessIndex from './AldersVilkarProsessIndex';
@@ -29,7 +29,7 @@ export const MedUløstAksjonspunkt: Story = {
       {
         lovReferanse: '§ 9-5',
         perioder: [{ vilkarStatus: 'IKKE_VURDERT', periode: { fom: '2022-01-01', tom: '2022-12-31' } }],
-        vilkarType: vilkarType.ALDERSVILKÅR_BARN,
+        vilkarType: VilkarType.ALDERSVILKÅR_BARN,
         vurdertAv: 'Ola Nordmann',
       },
     ],
@@ -62,7 +62,7 @@ export const Lesevisning: Story = {
       {
         lovReferanse: '§ 9-5',
         perioder: [{ vilkarStatus: 'OPPFYLT', periode: { fom: '2022-01-01', tom: '2022-12-31' } }],
-        vilkarType: vilkarType.ALDERSVILKÅR_BARN,
+        vilkarType: VilkarType.ALDERSVILKÅR_BARN,
         vurdertAv: 'Ola Nordmann',
       },
     ],

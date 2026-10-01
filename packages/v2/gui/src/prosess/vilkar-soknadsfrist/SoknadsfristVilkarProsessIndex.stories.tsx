@@ -3,7 +3,7 @@ import React from 'react';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { k9_sak_kontrakt_krav_KravDokumentType as kravDokumentType } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
@@ -13,7 +13,7 @@ import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
   {
-    vilkarType: vilkarType.SØKNADSFRIST, // kodeverk: 'test'
+    vilkarType: VilkarType.SØKNADSFRIST, // kodeverk: 'test'
     overstyrbar: true,
     perioder: [
       {
