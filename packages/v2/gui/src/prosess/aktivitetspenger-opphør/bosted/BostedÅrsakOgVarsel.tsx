@@ -191,7 +191,7 @@ export const BostedÅrsakOgVarsel = ({
         detailHeading="Ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
-        lovreferanse={bostedVilkår.lovReferanse}
+        lovreferanse="§ 2"
         defaultIsLocked={vurderBostedAP?.status === AksjonspunktStatus.UTFØRT}
         readOnly={readOnly || valgtPeriodeErReadOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}

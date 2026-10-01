@@ -5,6 +5,7 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -138,12 +139,13 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
         </Alert>
       )}
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av andre livsoppholdsytelser"
         periodListLabel="Alle perioder"
-        lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
+        lovreferanse="§ 4"
         defaultIsLocked={isSolved || erLokalkontorForeslårAPÅpent}
         readOnly={readOnly || selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error'}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
@@ -184,7 +186,14 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
-                label="Vurder om bruker mottar annen livoppholdsytelse, jf. § 4 Forholdet til andre ytelser"
+                label={
+                  <span>
+                    Vurder om bruker mottar annen livoppholdsytelse, jf.{' '}
+                    <Lovreferanse includeFullTextInLink isAktivitetspenger>
+                      § 4 Forholdet til andre ytelser
+                    </Lovreferanse>
+                  </span>
+                }
                 readOnly={isFormLocked}
                 validate={[required, minLength(3), maxLength(4000)]}
                 resize

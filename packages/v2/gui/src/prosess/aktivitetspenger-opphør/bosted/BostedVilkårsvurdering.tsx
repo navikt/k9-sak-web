@@ -9,6 +9,7 @@ import {
   $VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
@@ -159,7 +160,7 @@ export const BostedVilkårsvurdering = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
-        lovreferanse={bostedVilkår.lovReferanse}
+        lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
         readOnly={selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error' || readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
@@ -226,7 +227,14 @@ export const BostedVilkårsvurdering = ({
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
-                label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
+                label={
+                  <span>
+                    Vurder om bruker har flyttet fra Trondheim kommune, jmf{' '}
+                    <Lovreferanse includeFullTextInLink isAktivitetspenger>
+                      §2 Geografisk virkeområde
+                    </Lovreferanse>
+                  </span>
+                }
                 readOnly={isFormLocked}
                 validate={[
                   required,
