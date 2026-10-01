@@ -31,11 +31,12 @@ export const Alder = ({ alderVilkår }: Props) => {
 
   return (
     <VilkårSplittPanel
+      isAktivitetspenger
       periods={periods}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av alder"
-      lovreferanse={alderVilkår.lovReferanse}
+      lovreferanse="§5"
     >
       <VStack gap="space-24">
         <VStack gap="space-8">

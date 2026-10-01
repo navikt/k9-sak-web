@@ -29,6 +29,7 @@ interface VilkårSplittPanelProps {
   onItemSelect: (id: string) => void;
   detailHeading: string;
   lovreferanse?: string;
+  isAktivitetspenger?: boolean;
   defaultIsLocked?: boolean;
   readOnly?: boolean;
   children:
@@ -81,6 +82,7 @@ export const VilkårSplittPanel = ({
   afterEditButton,
   lockedContent,
   lovreferanse,
+  isAktivitetspenger = false,
   isPermanentlyReadOnly,
   periodListLabel = 'Alle søknader',
   periodColumnHeader = 'Virkningstidspunkt',
@@ -165,7 +167,7 @@ export const VilkårSplittPanel = ({
           </Heading>
           {lovreferanse && (
             <BodyShort size="small" textColor="subtle">
-              <Lovreferanse isUng>{lovreferanse}</Lovreferanse>
+              <Lovreferanse isAktivitetspenger={isAktivitetspenger}>{lovreferanse}</Lovreferanse>
             </BodyShort>
           )}
         </HStack>

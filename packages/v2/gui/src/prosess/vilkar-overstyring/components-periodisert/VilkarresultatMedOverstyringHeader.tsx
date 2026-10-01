@@ -89,7 +89,8 @@ const VilkarresultatMedOverstyringHeader = ({
     .map(a => a.definisjon);
   const status = periode?.vilkarStatus;
   const erOppfylt = vilkårStatus.OPPFYLT === status;
-  const erVilkarOk = vilkårStatus.IKKE_VURDERT !== status ? erOppfylt : undefined;
+  const erVilkarOk =
+    status === vilkårStatus.IKKE_VURDERT || status === vilkårStatus.IKKE_RELEVANT ? undefined : erOppfylt;
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };

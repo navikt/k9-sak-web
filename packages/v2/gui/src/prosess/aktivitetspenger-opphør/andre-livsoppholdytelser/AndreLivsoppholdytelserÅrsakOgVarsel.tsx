@@ -190,6 +190,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
         </Alert>
       )}
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}

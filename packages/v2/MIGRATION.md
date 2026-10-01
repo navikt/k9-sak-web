@@ -33,6 +33,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/ung-inngangsvilkår`
 - [x] `prosess/ung-vedtak`
 - [x] `fakta/utenlandsopphold`
+- [x] `fakta/om-pleietrengende`
 
 ---
 
@@ -41,14 +42,15 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 #### Feature togglet
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
-- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE` 
-    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509 
+- [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG`
+- [ ] `fakta-feilutbetaling` → `BRUK_V2_FEILUTBETALING`
+- [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
+    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
+- [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
-- fakta-feilutbetaling (Aleksei)
-- fakta-direkte-overgang (Aleksei)
 - fakta-uttak (Vebjørn)
 ---
 
@@ -75,7 +77,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
 | `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
 | `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
-| `fakta-om-pleietrengende`              | 51      | 1 (psb-sluttfase)                                      | Enkel visning av opplysninger om den pleietrengende            |
 | `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
 | `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
 | `prosess-fortsatt-medlemskap`          | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
@@ -90,7 +91,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 | `fakta-om-barnet`                 | 441     | 2 (opl, psb)                       | Fokusert på pleietrengendes dødsfall, 1 aksjonspunkt         |
 | `fakta-verge`                     | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
 | `fakta-overstyr-beregning`        | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
-| `fakta-barn-og-overfoeringsdager` | 895     | 2 (oms, unntak)                    | Visningsorientert, leser rammevedtak-tre                     |
 | `fakta-barn-oms`                  | 903     | 3 (oms, unntak, utvidet-rett)      | Visning av barn-liste, 0 API-avhengigheter                   |
 | `prosess-anke-merknader`          | 363     | 1 (behandling-anke)                | Gammel JSX, enkel, 0 API — migrer alle 3 anke-paneler samlet |
 | `prosess-anke-resultat`           | 620     | 1 (behandling-anke)                | Gammel JSX, vedtak-lignende resultatform                     |
@@ -109,7 +109,7 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                    | ~Linjer | Konsumenter           | Merknad                                                                        |
 | ------------------------ | ------- | --------------------- | ------------------------------------------------------------------------------ |
-| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering               |
+| `prosess-foreldelse`     | 2027    | 2 (tilbakekreving ×2) | JSX+TS blandet, kompleks periodetidslinje for foreldelsevurdering              |
 | `fakta-arbeidsforhold`   | 2664    | 5                     | Skjemadrevet, kryssreferanser mot arbeidsgiverOpplysninger                     |
 | `fakta-opptjening-oms`   | 2815    | 4                     | Store individuelle filer, kompleks periodebasert opptjeningsredigering         |
 | `fakta-etablert-tilsyn`  | 2907    | 2 (opl, psb)          | Dobble flyter for Nattevåk+Beredskap, periodenavigering, egendefinert kontekst |

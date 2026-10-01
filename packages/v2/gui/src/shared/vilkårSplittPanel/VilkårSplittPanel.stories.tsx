@@ -43,6 +43,7 @@ export const Default: Story = {};
 export const MedLovreferanse: Story = {
   args: {
     lovreferanse: '§ 9-10',
+    isAktivitetspenger: true,
   },
 };
 

@@ -316,6 +316,24 @@ describe('finnPanelStatus', () => {
     expect(finnPanelStatus(true, vilkår, [], [])).toBe(ProcessMenuStepType.default);
   });
 
+  test('returnerer default når noen perioder ikke er relevante', () => {
+    const vilkår = [
+      {
+        perioder: [
+          { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
+          {
+            vurderesIBehandlingen: true,
+            vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+            periode: periode('', ''),
+          },
+        ],
+        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        relevanteInnvilgetMerknader: [],
+      },
+    ];
+    expect(finnPanelStatus(true, vilkår, [], [])).toBe(ProcessMenuStepType.default);
+  });
+
   test('returnerer default når vilkårForSteg er tom', () => {
     expect(finnPanelStatus(true, [], [], [])).toBe(ProcessMenuStepType.default);
   });

@@ -9,23 +9,31 @@ export const isNavCallid = (maybe: string): maybe is NavCallid => maybe.startsWi
 export class ExtendedApiError extends Error {
   public navCallid: NavCallid | null;
   public readonly url: string;
-  public readonly status: number;
-  public readonly statusText: string;
+  // undefined når ingen respons ble mottatt (f.eks. ved nettverksfeil)
+  public readonly status: number | undefined;
+  public readonly statusText: string | undefined;
   public readonly body: string | object;
   public readonly request: Request;
   public readonly location: string | null;
 
-  constructor(req: Request, resp: Response, body: string | object, navCallid: string | null) {
-    let msg = `${req.method} Forespørsel til ${req.url} feilet (${resp.status})`;
+  constructor(
+    req: Request,
+    resp: Response | undefined,
+    body: string | object,
+    navCallid: string | null,
+    options?: ErrorOptions,
+  ) {
+    const statusTekst = resp !== undefined ? `${resp.status}` : 'ingen respons';
+    let msg = `${req.method} Forespørsel til ${req.url} feilet (${statusTekst})`;
     const bodyFeilmelding = ExtendedApiError.resolveBodyFeilmelding(body);
     if (bodyFeilmelding != null) {
       msg = `${msg}: ${bodyFeilmelding}`;
     }
-    super(msg);
+    super(msg, options);
     this.url = req.url;
-    this.status = resp.status;
-    this.statusText = resp.statusText;
-    this.location = resp.headers.get('Location');
+    this.status = resp?.status;
+    this.statusText = resp?.statusText;
+    this.location = resp?.headers.get('Location') ?? null;
     this.body = body;
     this.request = req;
 
@@ -54,7 +62,7 @@ export class ExtendedApiError extends Error {
   }
 
   public get isClientError(): boolean {
-    return this.status >= 400 && this.status < 500;
+    return this.status !== undefined && this.status >= 400 && this.status < 500;
   }
 
   public get isGatewayTimeout(): boolean {

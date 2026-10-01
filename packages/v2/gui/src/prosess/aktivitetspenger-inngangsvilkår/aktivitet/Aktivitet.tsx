@@ -7,6 +7,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårAktivitetPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
@@ -15,7 +16,6 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -146,9 +146,9 @@ export const Aktivitet = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker oppfyller krav til aktivitet, jf.{' '}
-      {vurderAktivitetsvilkårVilkår.lovReferanse && (
-        <Lovreferanse isUng>{vurderAktivitetsvilkårVilkår.lovReferanse}</Lovreferanse>
-      )}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        § 8 Medlemmets medvirknings- og aktivitetsplikt og konsekvenser av fravær
+      </Lovreferanse>
     </span>
   );
   const lokalkontorKanSendeTilBeslutter =
@@ -183,11 +183,12 @@ export const Aktivitet = ({
         </Alert>
       )}
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av aktivitet"
-        lovreferanse={vurderAktivitetsvilkårVilkår.lovReferanse}
+        lovreferanse="§ 8"
         defaultIsLocked={isVurderAktivitetsvilkårApSolved || lokalkontorKanSendeTilBeslutter}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}

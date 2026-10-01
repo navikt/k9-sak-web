@@ -7,8 +7,11 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useQueryClient } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { FakeAktivitetspengerApi } from '../../../storybook/mocks/FakeAktivitetspengerApi';
+import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 import { AndreLivsoppholdytelser } from './AndreLivsoppholdytelser';
 
 const lagAksjonspunkt = (
@@ -21,18 +24,38 @@ const lagAksjonspunkt = (
   erAktivt: status === AksjonspunktStatus.OPPRETTET,
 });
 
+const avkortingsperioder = {
+  resultat: [
+    {
+      vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ fom: '2024-01-01', tom: '2024-12-31' }],
+    },
+  ],
+};
+
 class FakeAktivitetspengerApiMedAvkortingsperiode extends FakeAktivitetspengerApi {
   override async hentPerioderSomKanAvkortes() {
-    return {
-      resultat: [
-        {
-          vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
-          perioder: [{ fom: '2024-01-01', tom: '2024-12-31' }],
-        },
-      ],
-    };
+    return avkortingsperioder;
   }
 }
+
+// Skjemaet leser avkortingsperioder bare ved første render, så dataene må ligge i cachen før komponenten vises.
+const MedForhåndshentetAvkorting = ({
+  api,
+  behandling,
+  children,
+}: {
+  api: Parameters<typeof perioderSomKanAvkortesQueryOptions>[0];
+  behandling: Parameters<typeof perioderSomKanAvkortesQueryOptions>[1];
+  children: ReactNode;
+}) => {
+  const queryClient = useQueryClient();
+  const { queryKey } = perioderSomKanAvkortesQueryOptions(api, behandling);
+  if (queryClient.getQueryData(queryKey) === undefined) {
+    queryClient.setQueryData(queryKey, avkortingsperioder);
+  }
+  return children;
+};
 
 class FakeAktivitetspengerApiSomHuskerAksjonspunkt extends FakeAktivitetspengerApiMedAvkortingsperiode {
   sisteBekreftedeAksjonspunkt: unknown;
@@ -58,6 +81,13 @@ const meta = {
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
   },
+  decorators: [
+    (Story, { args }) => (
+      <MedForhåndshentetAvkorting api={args.api} behandling={args.behandling}>
+        <Story />
+      </MedForhåndshentetAvkorting>
+    ),
+  ],
 } satisfies Meta<typeof AndreLivsoppholdytelser>;
 export default meta;
 
