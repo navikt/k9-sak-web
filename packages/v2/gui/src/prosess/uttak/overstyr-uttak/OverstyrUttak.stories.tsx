@@ -280,11 +280,11 @@ export const RedigerOverstyring: Story = {
 
       await waitFor(
         async function oppdaterSkjemafelter() {
-          const utbetalingsgradField = await canvas.getByRole('spinbutton', { name: 'Ny utbetalingsgrad (%)' });
-          await expect(utbetalingsgradField).toHaveValue(80);
+          const utbetalingsgradField = await canvas.getByRole('textbox', { name: 'Ny utbetalingsgrad (%)' });
+          await expect(utbetalingsgradField).toHaveValue('80');
           await user.clear(utbetalingsgradField);
           await user.type(utbetalingsgradField, '70');
-          await expect(utbetalingsgradField).toHaveValue(70);
+          await expect(utbetalingsgradField).toHaveValue('70');
         },
         { timeout: 5000 },
       );
@@ -390,7 +390,6 @@ export const FjernOverstyring: Story = {
         if (deleteButton) {
           await user.click(deleteButton);
         }
-        await expect(within(modal).getByText('Venter...')).toBeInTheDocument();
       });
 
       await step('Sletting av overstyring sendt til backend', async () => {

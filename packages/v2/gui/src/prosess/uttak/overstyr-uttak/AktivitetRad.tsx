@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import dayjs from 'dayjs';
-import { Delete, Edit } from '@navikt/ds-icons';
+import { PencilIcon, TrashIcon } from '@navikt/aksel-icons';
 import { Button, Table } from '@navikt/ds-react';
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
 import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakPeriodeDto.js';
@@ -54,7 +54,7 @@ const AktivitetRad: FC<ownProps> = ({
               <Button
                 size="xsmall"
                 variant="tertiary"
-                icon={<Edit aria-hidden />}
+                icon={<PencilIcon aria-hidden />}
                 onClick={() => {
                   handleRediger(index);
                 }}
@@ -67,7 +67,7 @@ const AktivitetRad: FC<ownProps> = ({
               <Button
                 size="xsmall"
                 variant="tertiary"
-                icon={<Delete aria-hidden />}
+                icon={<TrashIcon aria-hidden />}
                 onClick={() => handleSlett(id)}
                 disabled={visOverstyringSkjema}
                 loading={loading}

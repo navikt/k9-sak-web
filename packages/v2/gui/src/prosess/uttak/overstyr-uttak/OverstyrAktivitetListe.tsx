@@ -1,9 +1,11 @@
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
 import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakPeriodeDto.js';
-import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
+import { Label } from '@navikt/ds-react';
+import { RhfNumericField } from '@navikt/ft-form-hooks';
+import { maxValue, minValue, required } from '@navikt/ft-form-validators';
 import { type FC } from 'react';
 import { useFormContext, type FieldArrayWithId } from 'react-hook-form';
-import { arbeidstypeTilVisning } from '../constants/Arbeidstype.js';
+import { utledArbeidstypeVisningsnavn } from '../utils/aktivitetVisning.js';
 import { utledAktivitetNavn } from '../utils/overstyringUtils.js';
 import styles from './overstyrAktivitetListe.module.css';
 
@@ -14,10 +16,7 @@ type ownProps = {
 };
 
 const OverstyrAktivitetListe: FC<ownProps> = ({ fields, loading, arbeidsgivere }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<OverstyrUttakPeriodeDto>();
+  const { control } = useFormContext<OverstyrUttakPeriodeDto>();
 
   return (
     <>
@@ -25,8 +24,7 @@ const OverstyrAktivitetListe: FC<ownProps> = ({ fields, loading, arbeidsgivere }
       <div className={styles.overstyringSkjemaAktiviteter}>
         {fields.map((field, index) => {
           const arbeidstype =
-            field.arbeidsforhold?.type !== 'BA' ? arbeidstypeTilVisning[field.arbeidsforhold?.type] : false;
-          const harFeil = !!errors['utbetalingsgrader']?.[index]?.utbetalingsgrad;
+            field.arbeidsforhold.type !== 'BA' ? utledArbeidstypeVisningsnavn(field.arbeidsforhold.type) : undefined;
 
           return (
             <div key={field.id} className={styles.overstyringSkjemaAktivitet}>
@@ -34,26 +32,20 @@ const OverstyrAktivitetListe: FC<ownProps> = ({ fields, loading, arbeidsgivere }
                 {utledAktivitetNavn(field.arbeidsforhold, arbeidsgivere)}
                 {arbeidstype && <span>, {arbeidstype}</span>}
               </div>
-              <div className={harFeil ? 'aksel-error-message aksel-label' : ''}>
-                <TextField
-                  {...register(`utbetalingsgrader.${index}.utbetalingsgrad`)}
-                  className={harFeil ? 'aksel-text-field--error' : ''}
+              <div>
+                <RhfNumericField
+                  control={control}
+                  name={`utbetalingsgrader.${index}.utbetalingsgrad`}
                   label="Ny utbetalingsgrad (%)"
                   hideLabel
                   size="small"
                   htmlSize={3}
                   maxLength={3}
-                  min={0}
-                  max={100}
-                  type="number"
+                  returnAsNumber
                   disabled={loading}
+                  validate={[required, minValue(0), maxValue(100)]}
                 />
                 %
-                {harFeil && (
-                  <ErrorMessage className="inline ml-4">
-                    {errors['utbetalingsgrader']?.[index]?.utbetalingsgrad?.message || 'Ukjent feil'}
-                  </ErrorMessage>
-                )}
               </div>
             </div>
           );

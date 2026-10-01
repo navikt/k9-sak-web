@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
-import * as Yup from 'yup';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { yupValiderProsent } from '@k9-sak-web/lib/validationUtils/yupSchemas.js';
 import { UttakArbeidType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
 import type { OverstyrUttakArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakArbeidsforholdDto.js';
@@ -97,26 +95,3 @@ export const formaterOverstyringAktiviteter = (
     },
     utbetalingsgrad: 0,
   }));
-
-export const overstyrUttakFormValidationSchema = Yup.object().shape({
-  søkersUttaksgrad: yupValiderProsent,
-  periode: Yup.object().shape({
-    fom: Yup.string().required('Feltet er påkrevd'),
-    tom: Yup.string().required('Feltet er påkrevd'),
-  }),
-  begrunnelse: Yup.string()
-    .required('Feltet er påkrevd')
-    .min(5, 'Du må skrive minst 5 tegn')
-    .max(1500, 'Du kan skrive maksimalt 1500 tegn'),
-  utbetalingsgrader: Yup.array().of(
-    Yup.object().shape({
-      utbetalingsgrad: yupValiderProsent.required('Feltet er påkrevd'),
-      arbeidsforhold: Yup.object().shape({
-        type: Yup.string().nullable(),
-        orgnr: Yup.string().nullable(),
-        aktørId: Yup.string().nullable(),
-        arbeidsforholdId: Yup.string().nullable(),
-      }),
-    }),
-  ),
-});

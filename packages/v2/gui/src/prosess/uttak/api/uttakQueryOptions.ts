@@ -43,3 +43,24 @@ export const uttakInntektsgraderingerQueryOptions = (api: UttakBackendApiType, b
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+export const uttakOverstyringerQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
+  queryOptions({
+    queryKey: ['uttak-overstyringer', behandlingUuid, api.backend],
+    queryFn: () => api.hentOverstyringUttak(behandlingUuid),
+    throwOnError: ignore404Errors,
+  });
+
+export const uttakAktuelleAktiviteterQueryOptions = (
+  api: UttakBackendApiType,
+  behandlingUuid: string,
+  fom: string,
+  tom: string,
+  enabled: boolean,
+) =>
+  queryOptions({
+    queryKey: ['uttak-aktuelle-aktiviteter', behandlingUuid, fom, tom, enabled, api.backend],
+    queryFn: () => api.hentAktuelleAktiviteter(behandlingUuid, fom, tom),
+    throwOnError: ignore404Errors,
+    enabled,
+  });
