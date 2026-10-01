@@ -35,6 +35,7 @@ export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
 
   return (
     <VilkårSplittPanel
+      isAktivitetspenger
       periods={periods}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}

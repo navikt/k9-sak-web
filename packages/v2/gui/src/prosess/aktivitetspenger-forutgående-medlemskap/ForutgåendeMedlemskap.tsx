@@ -144,6 +144,7 @@ export const ForutgåendeMedlemskap = ({
 
   return (
     <VilkårSplittPanel
+      isAktivitetspenger
       periods={periods}
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}

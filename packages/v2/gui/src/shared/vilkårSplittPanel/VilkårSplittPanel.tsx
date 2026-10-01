@@ -10,7 +10,6 @@ import {
 import { Bleed, BodyShort, Box, Button, Heading, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { isAktivitetspenger } from '../../utils/urlUtils';
 import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import styles from './vilkårSplittPanel.module.css';
 
@@ -30,6 +29,7 @@ interface VilkårSplittPanelProps {
   onItemSelect: (id: string) => void;
   detailHeading: string;
   lovreferanse?: string;
+  isAktivitetspenger?: boolean;
   defaultIsLocked?: boolean;
   readOnly?: boolean;
   children:
@@ -82,6 +82,7 @@ export const VilkårSplittPanel = ({
   afterEditButton,
   lockedContent,
   lovreferanse,
+  isAktivitetspenger = false,
   isPermanentlyReadOnly,
   periodListLabel = 'Alle søknader',
   periodColumnHeader = 'Søknadstidspunkt',
@@ -166,7 +167,7 @@ export const VilkårSplittPanel = ({
           </Heading>
           {lovreferanse && (
             <BodyShort size="small" textColor="subtle">
-              <Lovreferanse isAktivitetspenger={isAktivitetspenger()}>{lovreferanse}</Lovreferanse>
+              <Lovreferanse isAktivitetspenger={isAktivitetspenger}>{lovreferanse}</Lovreferanse>
             </BodyShort>
           )}
         </HStack>
