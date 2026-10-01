@@ -7,6 +7,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårLivsoppholdsytelserPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
@@ -15,7 +16,6 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -150,9 +150,9 @@ export const AndreLivsoppholdytelser = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker mottar andre livsoppholdsytelser, jf.{' '}
-      {andreLivsoppholdytelserVilkår.lovReferanse && (
-        <Lovreferanse isUng>{andreLivsoppholdytelserVilkår.lovReferanse}</Lovreferanse>
-      )}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        § 4 Forholdet til andre ytelser
+      </Lovreferanse>
     </span>
   );
   const harAvslagIAndreLivsoppholdytelser = andreLivsoppholdytelserVilkår.perioder?.some(
@@ -192,11 +192,12 @@ export const AndreLivsoppholdytelser = ({
         </Alert>
       )}
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av andre livsoppholdsytelser"
-        lovreferanse={andreLivsoppholdytelserVilkår.lovReferanse}
+        lovreferanse="§ 4"
         defaultIsLocked={isAndreLivsoppholdytelserApSolved}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}

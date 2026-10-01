@@ -6,6 +6,7 @@ import type { ComponentType } from 'react';
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
 import { BehandlingProvider } from '../../context/BehandlingContext.js';
 import { NyInntektApiContext } from './api/NyInntektApiContext.js';
+import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import { type Vilkår } from './src/types/Vilkår';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
@@ -96,6 +97,7 @@ const meta = {
       </BehandlingProvider>
     ),
     withQueryClientProvider(),
+    withFeatureToggles({ REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: true }),
   ],
   args: {
     submitCallback: asyncAction('Løs aksjonspunkt'),

@@ -233,6 +233,7 @@ export const AarsakOgVarsel = ({
         </Alert>
       )}
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}

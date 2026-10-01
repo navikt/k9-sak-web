@@ -11,6 +11,7 @@ import type {
   VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
@@ -19,7 +20,6 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
@@ -153,7 +153,9 @@ export const Bosted = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
-      {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        §2 Geografisk virkeområde
+      </Lovreferanse>
     </span>
   );
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
@@ -178,11 +180,12 @@ export const Bosted = ({
         </Alert>
       )}
       <VilkårSplittPanel
+        isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av bosatt i Trondheim kommune"
-        lovreferanse={bostedVilkår.lovReferanse}
+        lovreferanse="§ 2"
         defaultIsLocked={isBostedApSolved}
         readOnly={readOnly}
         lockedContent={isBostedApSolved ? <VurdertAv ident={bostedAp?.ansvarligSaksbehandler} /> : undefined}
