@@ -16,6 +16,7 @@ type LovreferanseProps = {
    * Dette brukes for å bestemme hvilken lovdatalenke som skal brukes.
    * Hvis ikke satt, vil den bruke lovdatalenken for vanlig lovreferanse. */
   isUngdomsprogrammet?: boolean;
+  includeFullTextInLink?: boolean;
 };
 
 /**
@@ -26,11 +27,21 @@ type LovreferanseProps = {
  * <Lovreferanse>§§ 9-1 og 9-2 jf. 22-21</Lovreferanse>
  * ```
  * */
-export const Lovreferanse = ({ children, isUngdomsprogrammet, isAktivitetspenger }: LovreferanseProps) => {
-  return <span>{berikMedLovdataLenker(children, isUngdomsprogrammet, isAktivitetspenger)}</span>;
+export const Lovreferanse = ({
+  children,
+  isUngdomsprogrammet,
+  isAktivitetspenger,
+  includeFullTextInLink,
+}: LovreferanseProps) => {
+  return <span>{berikMedLovdataLenker(children, isUngdomsprogrammet, isAktivitetspenger, includeFullTextInLink)}</span>;
 };
 
-const berikMedLovdataLenker = (lovreferanse: string, isUngdomsprogrammet?: boolean, isAktivitetspenger?: boolean) => {
+const berikMedLovdataLenker = (
+  lovreferanse: string,
+  isUngdomsprogrammet?: boolean,
+  isAktivitetspenger?: boolean,
+  includeFullTextInLink = false,
+) => {
   const k9LovdataBaseUrl = 'https://lovdata.no/pro/NL/lov/1997-02-28-19/';
   let grunnUrlen = k9LovdataBaseUrl;
   if (isUngdomsprogrammet) {
@@ -45,6 +56,24 @@ const berikMedLovdataLenker = (lovreferanse: string, isUngdomsprogrammet?: boole
   // så returnerer vi bare teksten
   if (!/(§|Kapittel)/i.test(lovreferanse)) {
     return lovreferanse;
+  }
+
+  if (includeFullTextInLink) {
+    const paragrafnummer = lovreferanse.match(/(?:§{1,2}\s*|kapittel\s+)(\d+(?:-\d+)?)/i)?.[1];
+    if (!paragrafnummer) {
+      return lovreferanse;
+    }
+
+    const link =
+      paragrafnummer.includes('-') || isUngdomsprogrammet || isAktivitetspenger
+        ? `${grunnUrlen}§${paragrafnummer}`
+        : `${grunnUrlen}§${paragrafnummer}-1`;
+
+    return (
+      <Link href={link} title="Les mer på Lovdata.no" target="_blank">
+        {lovreferanse}
+      </Link>
+    );
   }
 
   return lovreferanse

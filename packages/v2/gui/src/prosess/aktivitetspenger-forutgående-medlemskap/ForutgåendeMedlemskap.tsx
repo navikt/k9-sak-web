@@ -7,8 +7,9 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Link, Radio, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
@@ -221,9 +222,9 @@ export const ForutgåendeMedlemskap = ({
                   <VStack gap="space-8">
                     <Label size="small" as="p">
                       Vurder om søker har forutgående medlemskap, jmf{' '}
-                      <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§3" target="_blank">
+                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
                         § 3 Forutgående medlemskap
-                      </Link>
+                      </Lovreferanse>
                     </Label>
                     <BodyShort size="small">{begrunnelse}</BodyShort>
                   </VStack>
@@ -235,9 +236,9 @@ export const ForutgåendeMedlemskap = ({
                   label={
                     <span>
                       Vurder om søker har forutgående medlemskap, jmf{' '}
-                      <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§3" target="_blank">
+                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
                         § 3 Forutgående medlemskap
-                      </Link>
+                      </Lovreferanse>
                     </span>
                   }
                   validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}

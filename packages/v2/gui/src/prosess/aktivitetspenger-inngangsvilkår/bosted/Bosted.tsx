@@ -11,8 +11,9 @@ import type {
   VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Link, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -152,9 +153,9 @@ export const Bosted = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
-      <Link href="https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§2" target="blank">
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
         §2 Geografisk virkeområde
-      </Link>
+      </Lovreferanse>
     </span>
   );
   const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);

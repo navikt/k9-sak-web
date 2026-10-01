@@ -231,3 +231,18 @@ export const MedlemskapReferanse: Story = {
     });
   },
 };
+
+export const HeleTekstenInneIlenken: Story = {
+  args: {
+    children: '§2 Geografisk virkeområde',
+    includeFullTextInLink: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls } = elemsfinder(canvasElement);
+    await step('Hele teksten er del av lenketeksten', async () => {
+      await expect(linkEls()).toHaveLength(1);
+      await expect(linkEls()[0]).toHaveTextContent('§2 Geografisk virkeområde');
+      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/pro/NL/lov/1997-02-28-19/§2-1');
+    });
+  },
+};
