@@ -1,7 +1,7 @@
 import { aksjonspunktStatus, AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { FakeK9SakProsessApi } from '@k9-sak-web/gui/storybook/mocks/FakeK9SakProsessApi.js';
 import {
@@ -71,21 +71,21 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.ALDERSVILKÅR,
+          vilkarType: VilkårType.ALDERSVILKÅR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.OMSORGEN_FOR,
+          vilkarType: VilkårType.OMSORGEN_FOR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
@@ -108,7 +108,7 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
@@ -129,7 +129,7 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
             { vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
@@ -212,35 +212,35 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.ALDERSVILKÅR,
+          vilkarType: VilkårType.ALDERSVILKÅR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.OMSORGEN_FOR,
+          vilkarType: VilkårType.OMSORGEN_FOR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+          vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+          vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
             { vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
@@ -305,12 +305,12 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.ALDERSVILKÅR,
+          vilkarType: VilkårType.ALDERSVILKÅR,
           perioder: [{ vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
@@ -535,7 +535,7 @@ describe('beregnVedtakType', () => {
   const vedtakAksjonspunkter = [AksjonspunktDefinisjon.FORESLÅ_VEDTAK, AksjonspunktDefinisjon.FATTER_VEDTAK];
 
   const lagVilkår = (status: string) => ({
-    vilkarType: vilkarType.SØKNADSFRIST,
+    vilkarType: VilkårType.SØKNADSFRIST,
     perioder: [{ vilkarStatus: status, periode: { fom: '', tom: '' } }],
     relevanteInnvilgetMerknader: [],
   });

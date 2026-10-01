@@ -5,7 +5,7 @@ import type {
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { VilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
 import AldersVilkarAP from './components/AldersvilkarAP';
 import AldersVilkarStatus from './components/AldersvilkarStatus';
@@ -35,7 +35,7 @@ const AldersVilkarProsessIndex = ({
   status,
   fagsak,
 }: AldersVilkarProsessIndexProps) => {
-  const aldersVilkarBarn = vilkar.find(v => v.vilkarType === VilkarType.ALDERSVILKÅR_BARN);
+  const aldersVilkarBarn = vilkar.find(v => v.vilkarType === VilkårType.ALDERSVILKÅR_BARN);
   const periode = aldersVilkarBarn?.perioder?.[0];
   const erVurdert = periode?.vilkarStatus !== vilkårStatus.IKKE_VURDERT;
   const vilkarOppfylt = erVurdert ? status === vilkårStatus.OPPFYLT : false;

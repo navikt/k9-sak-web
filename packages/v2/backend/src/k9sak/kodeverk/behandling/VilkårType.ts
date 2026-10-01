@@ -5,4 +5,4 @@ import {
 
 export type VilkårType = generatedVilkarTypeEnumUnion;
 
-export const VilkarType = enumObj;
+export const VilkårType = enumObj;

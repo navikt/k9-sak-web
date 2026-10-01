@@ -1,5 +1,5 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { VilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import Vilkårsliste from './Vilkårsliste.js';
@@ -17,9 +17,9 @@ type Story = StoryObj<typeof meta>;
 export const BlandetOppfyltOgIkkeOppfylt: Story = {
   args: {
     vilkår: {
-      [VilkarType.MEDLEMSKAPSVILKÅRET]: vilkårStatus.OPPFYLT,
-      [VilkarType.OPPTJENINGSVILKÅRET]: vilkårStatus.IKKE_OPPFYLT,
-      [VilkarType.SØKNADSFRIST]: vilkårStatus.OPPFYLT,
+      [VilkårType.MEDLEMSKAPSVILKÅRET]: vilkårStatus.OPPFYLT,
+      [VilkårType.OPPTJENINGSVILKÅRET]: vilkårStatus.IKKE_OPPFYLT,
+      [VilkårType.SØKNADSFRIST]: vilkårStatus.OPPFYLT,
     },
   },
   play: async ({ canvasElement }) => {
@@ -36,9 +36,9 @@ export const BlandetOppfyltOgIkkeOppfylt: Story = {
 export const Opplæringspenger: Story = {
   args: {
     vilkår: {
-      [VilkarType.LANGVARIG_SYKDOM]: vilkårStatus.OPPFYLT,
-      [VilkarType.NØDVENDIG_OPPLÆRING]: vilkårStatus.OPPFYLT,
-      [VilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON]: vilkårStatus.IKKE_OPPFYLT,
+      [VilkårType.LANGVARIG_SYKDOM]: vilkårStatus.OPPFYLT,
+      [VilkårType.NØDVENDIG_OPPLÆRING]: vilkårStatus.OPPFYLT,
+      [VilkårType.GODKJENT_OPPLÆRINGSINSTITUSJON]: vilkårStatus.IKKE_OPPFYLT,
     },
   },
   play: async ({ canvasElement }) => {
@@ -54,17 +54,17 @@ export const Opplæringspenger: Story = {
 export const AlleVilkår: Story = {
   args: {
     vilkår: {
-      [VilkarType.MEDLEMSKAPSVILKÅRET]: vilkårStatus.OPPFYLT,
-      [VilkarType.SØKNADSFRIST]: vilkårStatus.OPPFYLT,
-      [VilkarType.OPPTJENINGSVILKÅRET]: vilkårStatus.IKKE_OPPFYLT,
-      [VilkarType.BEREGNINGSGRUNNLAGVILKÅR]: vilkårStatus.OPPFYLT,
-      [VilkarType.OMSORGEN_FOR]: vilkårStatus.OPPFYLT,
-      [VilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR]: vilkårStatus.OPPFYLT,
-      [VilkarType.MEDISINSKEVILKÅR_18_ÅR]: vilkårStatus.IKKE_OPPFYLT,
-      [VilkarType.ALDERSVILKÅR]: vilkårStatus.OPPFYLT,
-      [VilkarType.LANGVARIG_SYKDOM]: vilkårStatus.OPPFYLT,
-      [VilkarType.NØDVENDIG_OPPLÆRING]: vilkårStatus.IKKE_OPPFYLT,
-      [VilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON]: vilkårStatus.OPPFYLT,
+      [VilkårType.MEDLEMSKAPSVILKÅRET]: vilkårStatus.OPPFYLT,
+      [VilkårType.SØKNADSFRIST]: vilkårStatus.OPPFYLT,
+      [VilkårType.OPPTJENINGSVILKÅRET]: vilkårStatus.IKKE_OPPFYLT,
+      [VilkårType.BEREGNINGSGRUNNLAGVILKÅR]: vilkårStatus.OPPFYLT,
+      [VilkårType.OMSORGEN_FOR]: vilkårStatus.OPPFYLT,
+      [VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR]: vilkårStatus.OPPFYLT,
+      [VilkårType.MEDISINSKEVILKÅR_18_ÅR]: vilkårStatus.IKKE_OPPFYLT,
+      [VilkårType.ALDERSVILKÅR]: vilkårStatus.OPPFYLT,
+      [VilkårType.LANGVARIG_SYKDOM]: vilkårStatus.OPPFYLT,
+      [VilkårType.NØDVENDIG_OPPLÆRING]: vilkårStatus.IKKE_OPPFYLT,
+      [VilkårType.GODKJENT_OPPLÆRINGSINSTITUSJON]: vilkårStatus.OPPFYLT,
     },
   },
   play: async ({ canvasElement }) => {

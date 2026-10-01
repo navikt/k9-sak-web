@@ -1,4 +1,4 @@
-import { VilkarType, type VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { VilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
@@ -11,47 +11,47 @@ type VilkårTypeMap = { [key in VilkårType]?: VilkårStatus };
 const vilkårListe = [
   {
     name: 'Medlemskap',
-    kode: VilkarType.MEDLEMSKAPSVILKÅRET, // Medlemskapsvilkåret
+    kode: VilkårType.MEDLEMSKAPSVILKÅRET, // Medlemskapsvilkåret
   },
   {
     name: 'Søknadsfrist',
-    kode: VilkarType.SØKNADSFRIST,
+    kode: VilkårType.SØKNADSFRIST,
   },
   {
     name: 'Opptjening',
-    kode: VilkarType.OPPTJENINGSVILKÅRET, // Opptjeningsvilkåret
+    kode: VilkårType.OPPTJENINGSVILKÅRET, // Opptjeningsvilkåret
   },
   {
     name: 'Beregningsgrunnlag',
-    kode: VilkarType.BEREGNINGSGRUNNLAGVILKÅR, // Beregningsgrunnlagvilkår
+    kode: VilkårType.BEREGNINGSGRUNNLAGVILKÅR, // Beregningsgrunnlagvilkår
   },
   {
     name: 'Omsorgen for',
-    kode: VilkarType.OMSORGEN_FOR,
+    kode: VilkårType.OMSORGEN_FOR,
   },
   {
     name: 'Sykdom',
-    kode: VilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, // medisinske vilkår for barn under 18 år
+    kode: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR, // medisinske vilkår for barn under 18 år
   },
   {
     name: 'Sykdom',
-    kode: VilkarType.MEDISINSKEVILKÅR_18_ÅR, // medisinske vilkår for barn over 18 år
+    kode: VilkårType.MEDISINSKEVILKÅR_18_ÅR, // medisinske vilkår for barn over 18 år
   },
   {
     name: 'Søkers alder',
-    kode: VilkarType.ALDERSVILKÅR, // Aldersvilkåret
+    kode: VilkårType.ALDERSVILKÅR, // Aldersvilkåret
   },
   {
     name: 'Langvarig sykdom',
-    kode: VilkarType.LANGVARIG_SYKDOM, //  i opplæringspenger
+    kode: VilkårType.LANGVARIG_SYKDOM, //  i opplæringspenger
   },
   {
     name: 'Nødvendig opplæring',
-    kode: VilkarType.NØDVENDIG_OPPLÆRING, // Nødvendig opplæring for å ta vare på barnet
+    kode: VilkårType.NØDVENDIG_OPPLÆRING, // Nødvendig opplæring for å ta vare på barnet
   },
   {
     name: 'Institusjon',
-    kode: VilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON, // Godkjent opplæringsinstitusjon
+    kode: VilkårType.GODKJENT_OPPLÆRINGSINSTITUSJON, // Godkjent opplæringsinstitusjon
   },
 ];
 

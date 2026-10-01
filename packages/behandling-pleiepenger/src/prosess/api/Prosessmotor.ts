@@ -2,7 +2,7 @@ import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus as Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType as VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatMedUtbetaltePeriodeDto.js';
 import type { SimuleringDto } from '@k9-sak-web/backend/k9sak/kontrakt/simulering/v1/SimuleringDto.js';
