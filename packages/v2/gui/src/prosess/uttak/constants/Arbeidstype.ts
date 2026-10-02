@@ -1,6 +1,6 @@
 import type { UttakArbeidType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
 
-export const arbeidstypeTilVisning: Record<UttakArbeidType, string> = {
+export const arbeidstypeTilVisning = {
   AT: 'Arbeidstaker',
   FL: 'Frilanser',
   DP: 'Dagpenger',
@@ -14,4 +14,4 @@ export const arbeidstypeTilVisning: Record<UttakArbeidType, string> = {
   IKKE_YRKESAKTIV_UTEN_ERSTATNING: 'Ikke yrkesaktiv',
   PSB_AV_DP: 'Pleiepenger av dagpenger', // Denne lå ikke i den gamle constanten, men er med i de genererte typene
   ANNET: 'Annet', // Denne lå ikke i den gamle constanten, men er med i de genererte typene
-};
+} satisfies Record<UttakArbeidType, string>;

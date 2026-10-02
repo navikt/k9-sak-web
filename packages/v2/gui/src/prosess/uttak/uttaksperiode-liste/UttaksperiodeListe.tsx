@@ -1,20 +1,25 @@
-import { Fragment, useContext, useState, type FC, type ReactNode } from 'react';
+import { Fragment, useContext, useMemo, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
-import { Alert, BodyLong, Button, Table, Loader, HStack } from '@navikt/ds-react';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Alert, BodyLong, Button, Table } from '@navikt/ds-react';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
   type FagsakYtelsesType as FagsakYtelseType,
   fagsakYtelsesType as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import UttakRad from './UttakRad';
-import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
+import UttakRad from './UttakRad.js';
+import UttakRadOpplæringspenger from './UttakRadOpplæringspenger.js';
 import styles from './uttaksperiodeListe.module.css';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
-import { useUttakContext } from '../context/UttakContext';
-import { prettifyPeriod } from '../utils/periodUtils';
-import splitUttakByDate from '../utils/splitUttakByDate';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import hentPerioderFraUttak from '../utils/hentPerioderFraUttak.js';
+import lagUttaksperiodeliste from '../utils/uttaksperioder.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import { prettifyPeriod } from '../utils/periodUtils.js';
+import splitUttakByDate from '../utils/splitUttakByDate.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import { PencilIcon } from '@navikt/aksel-icons';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 // Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
@@ -45,18 +50,14 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   redigerVirkningsdato,
   visEndringerIUttakFunc,
 }) => {
-  const {
-    fagsakYtelseType: ytelseType,
-    virkningsdatoUttakNyeRegler,
-    erSakstype,
-    uttaksperiodeListe,
-    lasterUttak,
-    readOnly,
-    behandling,
-  } = useUttakContext();
+  const { readOnly, behandling } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
+  const uttaksperiodeListe = useMemo(() => lagUttaksperiodeliste(hentPerioderFraUttak(uttak ?? undefined)), [uttak]);
   const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
-  const headers = tableHeaders(ytelseType);
+  const headers = tableHeaders(behandling.sakstype);
 
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
@@ -71,11 +72,11 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
       {uttak.harOppholdTilNestePeriode && (
         <Table.Row>
           <td colSpan={12}>
-            <div className={styles['oppholdRow']} />
+            <div className={styles.oppholdRow} />
           </td>
         </Table.Row>
       )}
-      {erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ? (
+      {behandling.sakstype === fagsakYtelseType.OPPLÆRINGSPENGER ? (
         <UttakRadOpplæringspenger
           uttak={uttak}
           erValgt={valgtPeriodeIndex === index}
@@ -95,7 +96,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
       rad: (
         <Table.Row key="uttaksregelinfo-endringsdato">
           <Table.DataCell colSpan={12}>
-            <div className={styles['alertRow']}>
+            <div className={styles.alertRow}>
               <Alert variant="info">
                 <div className="flex items-center justify-between gap-4">
                   <BodyLong size="small">
@@ -107,7 +108,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
                     size="small"
                     icon={<PencilIcon />}
                     onClick={redigerVirkningsdatoFunc}
-                    disabled={behandling.status === behandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
+                    disabled={behandling.status === BehandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
                   >
                     Rediger
                   </Button>
@@ -132,7 +133,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
       rad: (
         <Table.Row key="uttaksregelinfo-normalarbeidstid-låst">
           <Table.DataCell colSpan={12}>
-            <div className={styles['alertRow']}>
+            <div className={styles.alertRow}>
               <Alert variant="info">
                 <div className="flex items-center justify-between gap-4">
                   <BodyLong size="small">
@@ -166,12 +167,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   const sisteSegment = resterendePerioder.map(uttak => renderPeriodeRad(uttak, periodeIndeks++));
 
   return (
-    <div className={styles['tableContainer']}>
-      {lasterUttak && (
-        <HStack justify="center">
-          <Loader variant="inverted" size="2xlarge" title="Laster uttaksperioder..." />
-        </HStack>
-      )}
+    <div className={styles.tableContainer}>
       <Table size="small">
         <Table.Header>
           <Table.Row>
@@ -179,7 +175,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
               <Table.HeaderCell
                 scope="col"
                 key={header}
-                className={styles['headerColumn']}
+                className={styles.headerColumn}
                 colSpan={headers.length - 1 === index ? 2 : 1}
               >
                 {header}

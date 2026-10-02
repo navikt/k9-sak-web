@@ -14,16 +14,12 @@ import {
   type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export interface K9SakProsessApi {
   getAksjonspunkter(behandlingUuid: string): Promise<k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]>;
   getVilkår(behandlingUuid: string): Promise<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[]>;
   getFagsak(saksnummer: string): Promise<k9_sak_kontrakt_fagsak_FagsakDto>;
-  getUttaksplan(
-    behandlingUuid: string,
-  ): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder>;
   getBeregningsresultatMedUtbetaling(
     behandlingUuid: string,
   ): Promise<k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto>;

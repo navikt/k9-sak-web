@@ -1,0 +1,502 @@
+// LEGACY-UTTAK: Slettes når feature toggle NYTT_UTTAK_PANEL fjernes. Ikke endre.
+/**
+ * VurderOverlappendeSak komponent stories.
+ *
+ * Denne komponenten håndterer vurdering av overlappende søskensaker hvor flere
+ * søknader eksisterer for samme barn i overlappende tidsperioder. Saksbehandlere
+ * må vurdere disse overlappene og potensielt dele perioder for å sikre korrekt
+ * ytelsesfordeling mellom søkerne.
+ *
+ * Nøkkelscenarier som testes:
+ * - Visning av overlappende perioder fra søskensaker
+ * - Deling av perioder for å løse overlapp
+ * - Innsending av vurderinger med begrunnelser
+ * - Skjemavalidering
+ * - Skrivebeskyttet modus for fullførte vurderinger
+ */
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/legacy-uttak/decorators/withFakeUttakBackend.js';
+import {
+  AksjonspunktStatus,
+  lagAvsluttetBehandling,
+  lagOppfyltPeriode,
+  lagOverlappendePeriode,
+  lagOverlappendeSakerAksjonspunkt,
+  lagUtredBehandling,
+  lagUttak,
+  relevanteAksjonspunkterAlle,
+} from '@k9-sak-web/gui/storybook/legacy-uttak/mocks/uttakStoryMocks.js';
+import {
+  beregnSplittDatoer,
+  lagRelativePerioder,
+  tilIsoDato,
+  tilVisningsDato,
+} from '@k9-sak-web/gui/storybook/legacy-uttak/mocks/uttakTestHelpers.js';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import dayjs from 'dayjs';
+import { action } from 'storybook/actions';
+import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
+import Uttak from '../Uttak';
+
+dayjs.locale('nb');
+
+const { periode1, periode2 } = lagRelativePerioder();
+const fom1 = periode1.fom;
+const tom1 = periode1.tom;
+const fom2 = periode2.fom;
+const tom2 = periode2.tom;
+const { splittFom, splittTom } = beregnSplittDatoer(fom1);
+
+/**
+ * VurderOverlappendeSak-komponenten håndterer vurdering av overlappende søskensaker.
+ * Vises i kontekst av hele uttak-visningen.
+ */
+const meta = {
+  title: 'gui/prosess/Uttak-legacy/Overlappende-Saker',
+  component: Uttak,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Komponent for vurdering av overlappende søskensaker hvor flere søknader eksisterer for samme barn i overlappende tidsperioder.',
+      },
+    },
+  },
+  decorators: [
+    Story => (
+      <BehandlingProvider refetchBehandling={fn()}>
+        <Story />
+      </BehandlingProvider>
+    ),
+  ],
+  beforeEach: () => {
+    submitSpy.mockClear();
+  },
+  tags: ['vurderOverlappendeSak', 'uttak'],
+} satisfies Meta<typeof Uttak>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+const submitSpy = fn();
+
+export const Aksjonspunkt: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
+          lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
+          lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ']),
+        ],
+      },
+      onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload),
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+    erOverstyrer: false,
+    aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Viser infoboks med overlappende perioder', async () => {
+      await expect(
+        canvas.findByRole('heading', { name: 'Uttaksgrad for overlappende perioder' }),
+      ).resolves.toBeInTheDocument();
+      await expect(canvas.findByText('Perioder som overlapper med sak:')).resolves.toBeInTheDocument();
+      await expect(canvas.findByRole('link', { name: 'ABCDE' })).resolves.toBeInTheDocument();
+      await expect(canvas.findByRole('link', { name: 'FGHIJ' })).resolves.toBeInTheDocument();
+    });
+
+    await step('Viser skjema for vurdering av overlappende perioder', async () => {
+      const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
+      const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
+
+      const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
+
+      await expect(gruppeEn.findByRole('radio', { name: 'Ingen uttak i perioden' })).resolves.toBeInTheDocument();
+      await expect(gruppeEn.findByRole('radio', { name: 'Vanlig uttak i perioden' })).resolves.toBeInTheDocument();
+      await expect(gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' })).resolves.toBeInTheDocument();
+      await waitFor(() => expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument());
+    });
+  },
+};
+
+export const LøsAksjonspunkt: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
+          lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
+          lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ']),
+        ],
+      },
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+    erOverstyrer: false,
+    aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+  play: async ({ canvas, step }) => {
+    const user = userEvent.setup();
+
+    await step('Fyll ut skjema for overlappende perioder', async () => {
+      const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
+      const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
+
+      const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
+      await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
+
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
+      const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
+      if (felt2) {
+        await user.type(felt2, '60');
+      }
+      await user.type(await canvas.findByLabelText('Begrunnelse'), 'Dette er en grundig begrunnelse');
+    });
+
+    await step('Bekreft og send inn', async () => {
+      await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
+
+      await waitFor(async function sjekkFørstePeriode() {
+        await expect(submitSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            behandlingId: '1',
+            behandlingVersjon: 1,
+            bekreftedeAksjonspunktDtoer: expect.arrayContaining([
+              expect.objectContaining({
+                '@type': '9292',
+                begrunnelse: 'Dette er en grundig begrunnelse',
+                perioder: expect.arrayContaining([
+                  expect.objectContaining({
+                    valg: 'JUSTERT_GRAD',
+                    søkersUttaksgrad: 40,
+                  }),
+                  expect.objectContaining({
+                    valg: 'JUSTERT_GRAD',
+                    søkersUttaksgrad: 60,
+                  }),
+                ]),
+              }),
+            ]),
+          }),
+        );
+      });
+    });
+  },
+};
+
+export const LøsAksjonspunktMedSplitt: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
+          lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
+          lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ']),
+        ],
+      },
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+    erOverstyrer: false,
+    aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const user = userEvent.setup();
+    const canvas = within(canvasElement);
+
+    await step('Åpne splitt periode dialog', async () => {
+      const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
+      const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
+      await fireEvent.change(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), {
+        target: { value: '40' },
+      });
+      const gruppeEnOppdatert = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+      await user.click(await gruppeEnOppdatert.findByRole('button', { name: 'Splitt periode' }));
+      await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
+    });
+
+    await step('Velg periode for splitting', async () => {
+      if (splittFom.isAfter(fom1, 'month')) {
+        await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+      }
+
+      await user.click(await canvas.findByRole('button', { name: `${splittFom.format('dddd D')}` }));
+
+      if (splittTom.isAfter(splittFom, 'month')) {
+        await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+      }
+
+      const splittTomButton = await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` });
+      if (splittTomButton.className.includes('rdp-day_disabled')) {
+        await user.click(await canvas.findByRole('button', { name: `Gå til neste måned` }));
+        await user.click(await canvas.findByRole('button', { name: `${splittTom.format('dddd D')}` }));
+      } else {
+        await user.click(splittTomButton);
+      }
+
+      // Verifiser at periodene er splittet - bruker RegExp for å matche uten "Splitt periode" knappen
+      await expect(
+        canvas.findByRole('radiogroup', {
+          name: new RegExp(
+            `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(splittFom.subtract(1, 'day'))}`,
+            'i',
+          ),
+        }),
+      ).resolves.toBeInTheDocument();
+    });
+
+    await step('Fyll ut og send inn', async () => {
+      const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Vanlig uttak i perioden' }));
+
+      await fireEvent.change(await canvas.findByLabelText('Begrunnelse'), {
+        target: { value: 'Dette er en grundig begrunnelse' },
+      });
+
+      await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
+
+      await waitFor(async function sjekkAksjonspunkt() {
+        await expect(submitSpy).toHaveBeenCalled();
+      });
+    });
+  },
+};
+
+export const LøstAksjonspunkt: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
+          lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
+            fastsattUttaksgrad: 60.0,
+            saksbehandler: 'Sara Sak',
+            vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+            valg: 'JUSTERT_GRAD',
+          }),
+          lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ'], {
+            fastsattUttaksgrad: 70.0,
+            saksbehandler: 'Sara Sak',
+            valg: 'JUSTERT_GRAD',
+            vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+          }),
+        ],
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+    erOverstyrer: false,
+    aksjonspunkter: [
+      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+    ],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+};
+
+export const LøstAksjonspunktKanRedigeres: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
+          lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
+            fastsattUttaksgrad: 50.0,
+            saksbehandler: 'Sara Sak',
+            vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+            valg: 'JUSTERT_GRAD',
+          }),
+          lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ'], {
+            fastsattUttaksgrad: 30.0,
+            saksbehandler: 'Sara Sak',
+            valg: 'JUSTERT_GRAD',
+            vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+          }),
+        ],
+      },
+      onBekreftAksjonspunkt: payload => {
+        submitSpy(payload);
+        action('aksjonspunkt:submit')(payload);
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+    erOverstyrer: false,
+    aksjonspunkter: [
+      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, {
+        begrunnelse: 'Dette er en grundig begrunnelse',
+        erAktivt: true, // Må være true for å kunne redigeres
+      }),
+    ],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const user = userEvent.setup();
+    const canvas = within(canvasElement);
+
+    await step('Viser lesevisning av løst aksjonspunkt', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).toBeInTheDocument();
+
+        const radios = Array.from(
+          canvasElement.querySelectorAll<HTMLInputElement>('input[type="radio"][value="JUSTERT_GRAD"]'),
+        );
+        if (radios.length !== 2 || radios.some(radio => !radio.checked)) {
+          throw new Error('Forventer to valgte JUSTERT_GRAD-radioer i lesevisning');
+        }
+
+        const begrunnelse = await canvas.findByLabelText('Begrunnelse');
+        if (!begrunnelse.hasAttribute('readonly')) {
+          throw new Error('Forventer at begrunnelsefeltet er skrivebeskyttet i lesevisning');
+        }
+      });
+    });
+
+    await step('Kan redigere aksjonspunkt', async () => {
+      await user.click(await canvas.findByRole('button', { name: 'Rediger' }));
+
+      const gruppeEn = await canvas.findByRole('radiogroup', {
+        name: new RegExp(
+          `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)}`,
+          'i',
+        ),
+      });
+
+      const begrunnelseFelt = await canvas.findByLabelText('Begrunnelse');
+
+      await user.click(within(gruppeEn).getByRole('radio', { name: 'Vanlig uttak i perioden' }));
+      const gruppeToOppdatert = await canvas.findByRole('radiogroup', {
+        name: new RegExp(
+          `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`,
+          'i',
+        ),
+      });
+      await user.click(within(gruppeToOppdatert).getByRole('radio', { name: 'Ingen uttak i perioden' }));
+
+      await user.clear(begrunnelseFelt);
+      await user.type(begrunnelseFelt, 'Dette er en modifisert begrunnelse');
+    });
+
+    await step('Kan lagre aksjonspunkt', async () => {
+      await user.click(await canvas.findByRole('button', { name: 'Bekreft og fortsett' }));
+
+      await waitFor(async function sjekkAksjonspunkt() {
+        await expect(submitSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            behandlingId: '1',
+            behandlingVersjon: 1,
+            bekreftedeAksjonspunktDtoer: expect.arrayContaining([
+              expect.objectContaining({
+                '@type': '9292',
+                begrunnelse: 'Dette er en modifisert begrunnelse',
+                perioder: expect.arrayContaining([
+                  expect.objectContaining({
+                    begrunnelse: 'Dette er en modifisert begrunnelse',
+                    periode: {
+                      fom: tilIsoDato(fom1),
+                      tom: tilIsoDato(tom1),
+                    },
+                    valg: 'INGEN_JUSTERING',
+                  }),
+                  expect.objectContaining({
+                    begrunnelse: 'Dette er en modifisert begrunnelse',
+                    periode: {
+                      fom: tilIsoDato(fom2),
+                      tom: tilIsoDato(tom2),
+                    },
+                    valg: 'INGEN_UTTAK_I_PERIODEN',
+                    søkersUttaksgrad: 0,
+                  }),
+                ]),
+              }),
+            ]),
+          }),
+        );
+      });
+    });
+  },
+};
+
+export const LøstAksjonspunktAvsluttetSak: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      egneOverlappendeSaker: {
+        perioderMedOverlapp: [
+          lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
+            fastsattUttaksgrad: 60.0,
+            saksbehandler: 'Sara Sak',
+            vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+            valg: 'JUSTERT_GRAD',
+          }),
+          lagOverlappendePeriode(tilIsoDato(fom2), tilIsoDato(tom2), ['FGHIJ'], {
+            fastsattUttaksgrad: 70.0,
+            saksbehandler: 'Sara Sak',
+            valg: 'JUSTERT_GRAD',
+            vurdertTidspunkt: dayjs().subtract(2, 'day').toISOString(),
+          }),
+        ],
+      },
+    }),
+  ],
+  args: {
+    behandling: lagAvsluttetBehandling(),
+    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+    erOverstyrer: false,
+    aksjonspunkter: [
+      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+    ],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Viser leseversjon i avsluttet sak', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('heading', { name: 'Uttaksgrad for overlappende perioder' })).toBeInTheDocument();
+
+        const radios = Array.from(
+          canvasElement.querySelectorAll<HTMLInputElement>('input[type="radio"][value="JUSTERT_GRAD"]'),
+        );
+        if (radios.length !== 2 || radios.some(radio => !radio.checked)) {
+          throw new Error('Forventer to valgte JUSTERT_GRAD-radioer i lesevisning');
+        }
+      });
+
+      await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};

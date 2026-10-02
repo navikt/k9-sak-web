@@ -23,7 +23,7 @@ Følg v2-konvensjonene:
 - Bruk stabile DTO- og kodeverkeksporter fra backend-pakken, og kall genererte SDK-funksjoner gjennom API-klienter.
 - Bruk `.js` på importsuffikser.
 - Bruk `K9KodeverkoppslagContext` for kodeverk.
-- Bruk bracket notation for CSS module-klasser.
+- Bruk dot notation for CSS module-klasser (`styles.minKlasse`).
 - Unngå imports fra pakker utenfor v2, type assertions og non-null assertions.
 
 Oppdater eller legg til stories og tester som dekker eksisterende visningstilstander og interaksjoner. Kjør relevante tester og `yarn ts-check`. Ikke fjern v1-koden eller feature togglen som del av denne migreringen.

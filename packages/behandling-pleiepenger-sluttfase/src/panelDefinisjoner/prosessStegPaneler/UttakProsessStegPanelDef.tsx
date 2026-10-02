@@ -1,9 +1,11 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { UttakPanel } from '@k9-sak-web/gui/prosess/uttak/UttakPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase';
-import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
+import { relevanteUttakAksjonspunkter } from '@k9-sak-web/gui/prosess/uttak/relevanteUttakAksjonspunkter.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
@@ -11,24 +13,25 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    const { kvoteInfo, erOverstyrer, isReadOnly } = props;
-    const { uttak, behandling, aksjonspunkter, relevanteAksjonspunkter } = deepCopyProps;
+    const { erOverstyrer, isReadOnly } = props;
+    const { behandling, aksjonspunkter } = deepCopyProps;
+    // Felles Suspense slik at kvoteinfo og uttak vises samtidig fra samme uttak-query
     return (
-      <>
-        <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
-        <Uttak
-          uttak={uttak}
-          behandling={behandling}
-          aksjonspunkter={aksjonspunkter}
-          relevanteAksjonspunkter={relevanteAksjonspunkter}
-          erOverstyrer={erOverstyrer}
-          readOnly={isReadOnly}
-        />
-      </>
+      <LoadingPanelSuspense>
+        <ErrorBoundary>
+          <UttakPanel
+            behandling={behandling}
+            aksjonspunkter={aksjonspunkter}
+            erOverstyrer={erOverstyrer}
+            readOnly={isReadOnly}
+            visKvoteinfoSluttfase
+          />
+        </ErrorBoundary>
+      </LoadingPanelSuspense>
     );
   };
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => relevanteUttakAksjonspunkter(fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE);
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -52,13 +55,6 @@ class PanelDef extends ProsessStegPanelDef {
   };
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
-
-  getData = ({ uttak }) => ({
-    uttak,
-    kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
-    uttaksperioder: uttak?.uttaksplan?.perioder,
-    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
-  });
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

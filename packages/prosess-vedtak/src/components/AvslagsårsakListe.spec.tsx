@@ -1,5 +1,5 @@
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import {
@@ -12,7 +12,7 @@ describe('<AvslagårsakListe>', () => {
   it('skal rendre liste med avslagsårsaker', () => {
     const vilkar = [
       {
-        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+        vilkarType: VilkårType.OPPTJENINGSVILKÅRET,
         lovReferanse: '§ 9-2 jamfør 8-2',
         overstyrbar: true,
         perioder: [
@@ -39,7 +39,7 @@ describe('<AvslagårsakListe>', () => {
         ],
       },
       {
-        vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET, // VILKAR_TYPE
+        vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET, // VILKAR_TYPE
         lovReferanse: '§ 2',
         overstyrbar: true,
         perioder: [

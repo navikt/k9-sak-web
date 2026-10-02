@@ -34,6 +34,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/ung-vedtak`
 - [x] `fakta/utenlandsopphold`
 - [x] `fakta/om-pleietrengende`
+- [x] `prosess/uttak-antall-dager-sluttfase`
 
 ---
 
@@ -75,7 +76,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
 | `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
 | `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
 | `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
