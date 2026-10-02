@@ -33,7 +33,6 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_DELING_AV_DAGER: true,
   NORMALARBEIDSTID_UTTAK: true,
   REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: true,
-  NYTT_UTTAK_PANEL: true,
 });
 
 /**
