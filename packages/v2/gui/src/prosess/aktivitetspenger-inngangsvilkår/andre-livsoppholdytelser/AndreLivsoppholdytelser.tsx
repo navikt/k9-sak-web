@@ -100,17 +100,17 @@ export const AndreLivsoppholdytelser = ({
       const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
       const vurdertePerioder: VilkårLivsoppholdsytelserPeriodeVurderingDto[] = [
         {
-          avslagsårsak:
-            vurdering.andreLivsoppholdytelser !== 'oppfylt'
-              ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
-              : undefined,
+          avslagsårsak: vurdering.andreLivsoppholdytelser !== 'oppfylt' ? vurdering.avslagsårsak : undefined,
           begrunnelse: begrunnelseInnvilget,
           erVilkårOppfylt: vurdering.andreLivsoppholdytelser === 'oppfylt',
           periode: {
             fom: vurdering.fom,
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
-          fritekstVurderingBrev: vurdering.avslagsårsak === 'fritekst' ? vurdering.fritekst : undefined,
+          fritekstVurderingBrev:
+            vurdering.avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
+              ? vurdering.fritekst
+              : undefined,
         },
       ];
       if (redigerMaksdatoAktiv && muligAvkorting) {
