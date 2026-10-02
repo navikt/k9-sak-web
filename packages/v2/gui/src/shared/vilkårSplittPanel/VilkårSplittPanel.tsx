@@ -85,7 +85,7 @@ export const VilkårSplittPanel = ({
   isAktivitetspenger = false,
   isPermanentlyReadOnly,
   periodListLabel = 'Alle søknader',
-  periodColumnHeader = 'Søknadstidspunkt',
+  periodColumnHeader = 'Virkningstidspunkt',
   beforeDetailContent,
 }: VilkårSplittPanelProps) => {
   const sortertePerioder = [...periods].sort((a, b) => (b.periode?.fom ?? b.id).localeCompare(a.periode?.fom ?? a.id));

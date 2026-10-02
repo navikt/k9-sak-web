@@ -188,7 +188,7 @@ export const AndreLivsoppholdytelser = ({
     <VStack gap="space-20">
       {!isAndreLivsoppholdytelserApSolved && (
         <Alert variant="warning" size="small">
-          Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.
+          Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel

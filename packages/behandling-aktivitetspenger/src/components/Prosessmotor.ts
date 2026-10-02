@@ -81,10 +81,13 @@ const PANEL_KONFIG = {
   opphør: {
     aksjonspunkter: [
       AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
-      AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
+      AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
       AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
       AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
       AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_BOSTEDUTTALELSE,
+      AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
+      AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_LIVSOPPHOLDSYTELSEUTTALELSE,
     ],
     id: prosessStegCodes.OPPHØR,
     label: 'Opphør',
@@ -274,12 +277,15 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
     const inngangsvilkårPanel = erAktivitetspengerOpphørsbehandling(behandling)
       ? byggOpphørPanel(aksjonspunkter, vilkår, innloggetBruker)
       : byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
-    const medlemskapPanel = byggVilkårPanel(
-      inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
-      vilkår,
-      PANEL_KONFIG.medlemskap,
-      aksjonspunkter,
-    );
+    const medlemskapPanel = {
+      ...byggVilkårPanel(
+        inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
+        vilkår,
+        PANEL_KONFIG.medlemskap,
+        aksjonspunkter,
+      ),
+      usePartialStatus: false,
+    };
 
     const beregningPanel = {
       id: PANEL_KONFIG.beregning.id,

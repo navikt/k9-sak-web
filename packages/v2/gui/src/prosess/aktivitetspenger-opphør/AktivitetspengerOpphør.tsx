@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
@@ -15,29 +16,41 @@ import { CustomCheckmarkIcon } from '../../shared/icons/CustomCheckmarkIcon.js';
 import { CustomErrorIcon } from '../../shared/icons/CustomErrorIcon.js';
 import { CustomWarningIcon } from '../../shared/icons/CustomWarningIcon.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { BeslutterOpphør } from './BeslutterOpphør.js';
+import { AndreLivsoppholdytelserVilkårsvurdering } from './andre-livsoppholdytelser/AndreLivsoppholdytelserVilkårsvurdering.js';
+import { AndreLivsoppholdytelserÅrsakOgVarsel } from './andre-livsoppholdytelser/AndreLivsoppholdytelserÅrsakOgVarsel.js';
+import { BeslutterOpphør } from './beslutter/BeslutterOpphør.js';
+import { BostedVilkårsvurdering } from './bosted/BostedVilkårsvurdering.js';
+import { BostedÅrsakOgVarsel } from './bosted/BostedÅrsakOgVarsel.js';
 import { OpphørTab } from './types.js';
-import { Vilkaarsvurdering as Vilkårsvurdering } from './Vilkårsvurdering.js';
-import { AarsakOgVarsel as ÅrsakOgVarsel } from './ÅrsakOgVarsel.js';
 
 interface OpphørData {
   vurderBostedFaktaAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
   vurderBostedVilkårAP?: AksjonspunktDto;
+  vurderAndreLivsoppholdytelserVilkårAP?: AksjonspunktDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   lokalkontorBeslutterAP?: AksjonspunktDto;
   bostedVilkår?: VilkårMedPerioderDto;
+  andreLivsoppholdytelserVilkår?: VilkårMedPerioderDto;
 }
 
 const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
+  bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
   vurderBostedFaktaAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
   vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
+  andreLivsoppholdytelserVilkår: vilkår.find(v => v.vilkarType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR),
+  vurderAndreLivsoppholdytelserFaktaAP: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER,
+  ),
+  vurderAndreLivsoppholdytelserVilkårAP: aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
+  ),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
   ),
   lokalkontorBeslutterAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
   ),
-  bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
 });
 
 const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
@@ -57,11 +70,22 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
   return undefined;
 };
 
+const erOpphørForBehandlingsårsak = (
+  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | undefined,
+  type: BehandlingÅrsakType,
+): boolean => behandlingÅrsaker?.some(årsak => årsak.behandlingArsakType === type) ?? false;
+
 export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.vurderBostedFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.ÅRSAK_OG_VARSEL;
   }
+  if (data.vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.OPPRETTET) {
+    return OpphørTab.ÅRSAK_OG_VARSEL;
+  }
   if (data.vurderBostedVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
+    return OpphørTab.VILKÅRSVURDERING;
+  }
+  if (data.vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.VILKÅRSVURDERING;
   }
   if (data.lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET) {
@@ -100,21 +124,34 @@ export const AktivitetspengerOpphør = ({
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
     !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
+  const isBehandlingsårsakBosted = erOpphørForBehandlingsårsak(
+    behandling.behandlingÅrsaker,
+    BehandlingÅrsakType.ENDRET_BOSTED,
+  );
+  const isBehandlingsårsakAndreLivsoppholdytelser = erOpphørForBehandlingsårsak(
+    behandling.behandlingÅrsaker,
+    BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE,
+  );
 
   const opphørData = useMemo(() => samleOpphørData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
 
   const {
     vurderBostedFaktaAP,
+    vurderAndreLivsoppholdytelserFaktaAP,
     vurderBostedVilkårAP,
     lokalkontorForeslårVilkårAP,
     lokalkontorBeslutterAP,
     bostedVilkår,
+    andreLivsoppholdytelserVilkår,
+    vurderAndreLivsoppholdytelserVilkårAP,
   } = opphørData;
-  const vilkårsvurderingAPForTab = lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP;
+  const vilkårsvurderingAPForTab =
+    lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP ?? vurderAndreLivsoppholdytelserVilkårAP;
   const harBeslutterAP = !!lokalkontorBeslutterAP;
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
   const [aktivTab, setAktivTab] = useState<OpphørTab>(utledAktivTab(opphørData));
+  const gjeldendeVilkår = vurderBostedFaktaAP ? bostedVilkår : andreLivsoppholdytelserVilkår;
 
   useEffect(() => {
     setAktivTab(utledAktivTab(opphørData));
@@ -130,12 +167,12 @@ export const AktivitetspengerOpphør = ({
           <Tabs.Tab
             value={OpphørTab.ÅRSAK_OG_VARSEL}
             label="Årsak og varsel"
-            icon={tabIcon(vurderBostedFaktaAP, bostedVilkår)}
+            icon={tabIcon(vurderBostedFaktaAP ?? vurderAndreLivsoppholdytelserFaktaAP, gjeldendeVilkår)}
           />
           <Tabs.Tab
             value={OpphørTab.VILKÅRSVURDERING}
             label="Vilkårsvurdering"
-            icon={tabIcon(vilkårsvurderingAPForTab, bostedVilkår)}
+            icon={tabIcon(vilkårsvurderingAPForTab, gjeldendeVilkår)}
           />
           {visBeslutterTab && (
             <Tabs.Tab
@@ -147,22 +184,33 @@ export const AktivitetspengerOpphør = ({
         </Tabs.List>
         <Box marginBlock="space-20 space-0">
           <Tabs.Panel value={OpphørTab.ÅRSAK_OG_VARSEL}>
-            {bostedVilkår && (
-              <ÅrsakOgVarsel
+            {isBehandlingsårsakBosted && bostedVilkår && (
+              <BostedÅrsakOgVarsel
                 vurderBostedAP={vurderBostedFaktaAP}
                 bostedVilkår={bostedVilkår}
+                bostedGrunnlag={bostedGrunnlag}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
-                bostedGrunnlag={bostedGrunnlag}
+              />
+            )}
+            {isBehandlingsårsakAndreLivsoppholdytelser && andreLivsoppholdytelserVilkår && (
+              <AndreLivsoppholdytelserÅrsakOgVarsel
+                vurderAndreLivsoppholdytelserFaktaAP={vurderAndreLivsoppholdytelserFaktaAP}
+                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
               />
             )}
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
-            {bostedVilkår && (
-              <Vilkårsvurdering
+            {bostedVilkår && isBehandlingsårsakBosted && (
+              <BostedVilkårsvurdering
                 vurderBostedVilkårAP={vurderBostedVilkårAP}
                 bostedVilkår={bostedVilkår}
                 api={api}
@@ -172,6 +220,18 @@ export const AktivitetspengerOpphør = ({
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+              />
+            )}
+            {andreLivsoppholdytelserVilkår && isBehandlingsårsakAndreLivsoppholdytelser && (
+              <AndreLivsoppholdytelserVilkårsvurdering
+                vurderAndreLivsoppholdytelserVilkårAP={vurderAndreLivsoppholdytelserVilkårAP}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
               />
             )}
           </Tabs.Panel>
