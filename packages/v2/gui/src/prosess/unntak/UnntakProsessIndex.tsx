@@ -23,7 +23,7 @@ export type UnntakSubmitModel = Required<Pick<Overstyringk9VilkåretDto, 'period
 };
 
 interface FormValues {
-  begrunnelse: string;
+  begrunnelse: string | null;
   behandlingResultatType: UnntakResultat | '';
 }
 
@@ -58,10 +58,10 @@ const UnntakForm = ({
   });
   const { isDirty, isSubmitting } = formMethods.formState;
   const [gjeldendeBegrunnelse, gjeldendeResultat] = formMethods.watch(['begrunnelse', 'behandlingResultatType']);
-  const harTommeObligatoriskeFelt = gjeldendeBegrunnelse.trim() === '' || gjeldendeResultat === '';
+  const harTommeObligatoriskeFelt = (gjeldendeBegrunnelse ?? '').trim() === '' || gjeldendeResultat === '';
 
   const handleSubmit = async (values: FormValues) => {
-    if (!erUnntakResultat(values.behandlingResultatType)) {
+    if (values.begrunnelse === null || !erUnntakResultat(values.behandlingResultatType)) {
       return;
     }
     await submitCallback([
@@ -109,7 +109,7 @@ const UnntakForm = ({
               size="small"
               type="submit"
               loading={isSubmitting}
-              disabled={(!isDirty && readOnlySubmitButton) || harTommeObligatoriskeFelt}
+              disabled={isSubmitting || (!isDirty && readOnlySubmitButton) || harTommeObligatoriskeFelt}
             >
               Bekreft og fortsett
             </Button>
@@ -142,5 +142,7 @@ export const UnntakProsessIndex = ({ periode, ...props }: UnntakProsessIndexProp
       </VStack>
     );
   }
-  return <UnntakForm periode={periode} {...props} />;
+  // Nøkkel på lagrede verdier gir nytt skjema med nye startverdier når behandlingen er oppdatert.
+  const skjemaNøkkel = JSON.stringify([periode.fom, periode.tom, props.begrunnelse, props.behandlingResultatType]);
+  return <UnntakForm key={skjemaNøkkel} periode={periode} {...props} />;
 };

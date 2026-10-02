@@ -1,5 +1,9 @@
-import { behandlingResultatType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import {
+  behandlingResultatType,
+  type BehandlingResultatType,
+} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { UnntakProsessIndex } from './UnntakProsessIndex.js';
 
@@ -141,6 +145,57 @@ export const ForLangBegrunnelse: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
     await expect(await canvas.findByText('Du kan skrive maksimalt 4000 tegn')).toBeInTheDocument();
     await expect(args.submitCallback).not.toHaveBeenCalled();
+  },
+};
+
+export const TømtBegrunnelse: Story = {
+  args: {
+    begrunnelse: 'Lagret begrunnelse',
+    behandlingResultatType: behandlingResultatType.INNVILGET,
+  },
+  play: async ({ canvas, args }) => {
+    await userEvent.clear(canvas.getByRole('textbox', { name: 'Notat' }));
+    await expect(canvas.getByRole('textbox', { name: 'Notat' })).toHaveValue('');
+    await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
+    await expect(args.submitCallback).not.toHaveBeenCalled();
+  },
+};
+
+export const OppdatertEtterRefresh: Story = {
+  render: args => {
+    const [lagret, setLagret] = useState<{ begrunnelse: string; resultat: BehandlingResultatType }>({
+      begrunnelse: 'Første begrunnelse',
+      resultat: behandlingResultatType.INNVILGET,
+    });
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => setLagret({ begrunnelse: 'Oppdatert begrunnelse', resultat: behandlingResultatType.AVSLÅTT })}
+        >
+          Oppdater behandling
+        </button>
+        <UnntakProsessIndex {...args} begrunnelse={lagret.begrunnelse} behandlingResultatType={lagret.resultat} />
+      </>
+    );
+  },
+  play: async ({ canvas, args }) => {
+    await expect(canvas.getByRole('textbox', { name: 'Notat' })).toHaveValue('Første begrunnelse');
+    await expect(canvas.getByRole('radio', { name: 'Innvilget eller endring' })).toBeChecked();
+    await userEvent.click(canvas.getByRole('button', { name: 'Oppdater behandling' }));
+    await expect(canvas.getByRole('textbox', { name: 'Notat' })).toHaveValue('Oppdatert begrunnelse');
+    await expect(canvas.getByRole('radio', { name: 'Avslå eller ingen endring' })).toBeChecked();
+    await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+    await waitFor(() =>
+      expect(args.submitCallback).toHaveBeenCalledWith([
+        {
+          kode: '6016',
+          periode,
+          behandlingResultatType: behandlingResultatType.AVSLÅTT,
+          begrunnelse: 'Oppdatert begrunnelse',
+        },
+      ]),
+    );
   },
 };
 
