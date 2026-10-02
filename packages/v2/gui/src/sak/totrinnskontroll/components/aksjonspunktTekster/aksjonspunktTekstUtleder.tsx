@@ -114,8 +114,7 @@ const omgjoerTekstMap: Record<KlagevurderingOmgjørType, string> = {
 
 const getTextForKlageHelper = (
   klageVurderingResultat:
-    | KlagebehandlingDto['klageVurderingResultatNK']
-    | KlagebehandlingDto['klageVurderingResultatNFP'],
+    KlagebehandlingDto['klageVurderingResultatNK'] | KlagebehandlingDto['klageVurderingResultatNFP'],
 ) => {
   let aksjonspunktText = '';
   if (!klageVurderingResultat) {

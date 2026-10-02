@@ -92,7 +92,7 @@ const validateForm = values => ({
 
 const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => (state, ownProps) => {
   const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
-  const onSubmit = async (values) => {
+  const onSubmit = async values => {
     await initialOwnProps.updateArbeidsforhold(values);
     skjulArbeidsforhold();
   };
