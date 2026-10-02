@@ -22,6 +22,7 @@ import { useUttakApi } from '../api/UttakApiContext.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import { uttakInntektsgraderingerQueryOptions } from '../api/uttakQueryOptions.js';
 
+// Denne settes til readonly string fordi pleiepengerbarn_uttak_kontrakter_UttaksperiodeInfo har string som key for inngangsvilkår
 const opplæringspengerVilkår: readonly string[] = [
   VilkårType.LANGVARIG_SYKDOM,
   VilkårType.NØDVENDIG_OPPLÆRING,
