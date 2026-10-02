@@ -12,7 +12,7 @@ export interface AndreLivsoppholdytelserFormData {
     {
       begrunnelse: string;
       andreLivsoppholdytelser: Vurdering;
-      avslagsårsak?: AndreLivsoppholdsytelserIkkeOppfyltÅrsak | 'fritekst';
+      avslagsårsak?: AndreLivsoppholdsytelserIkkeOppfyltÅrsak;
       fritekst?: string;
       fom: string;
       tom: string;
