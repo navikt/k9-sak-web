@@ -87,24 +87,30 @@ export interface OmPleietrengendeBackendApiType extends BackendTilhørighet {
 
 Rules:
 
-- Extend `BackendTilhørighet` (`packages/v2/gui/src/utils/BackendTilhørighet.ts`). It declares `readonly backend`; the client sets the literal value, one of `k9sak`, `k9klage`, `k9tilbake`, `ungsak`, `ungtilbake`
+- Extend `BackendTilhørighet` (`packages/v2/gui/src/utils/BackendTilhørighet.ts`). It declares `readonly backend`; the client sets the value from the `backendNavn` const (`backendNavn.k9sak`, `.k9klage`, `.k9tilbake`, `.ungsak`, `.ungtilbake`). Never write the backend as a string literal — use `backendNavn`/`sammenstiltBackendNavn` in clients, fakes, stories and comparisons such as `api.backend === backendNavn.k9tilbake`
+- Single backend: use plain `extends BackendTilhørighet` (no type parameter)
+- Multiple backends: narrow with the type parameter, e.g. `extends BackendTilhørighet<'k9tilbake' | 'ungtilbake'>`. This stops a client from implementing the interface with the wrong backend, and lets code that branches on `api.backend` narrow correctly
+- Aggregating clients: if one client calls endpoints in several backends within the same product, e.g. historikk calling `k9sak`, `k9klage` and `k9tilbake`, use `extends BackendTilhørighet<SammenstiltBackendNavn>`. The value is then `sammenstiltBackendNavn.k9` or `sammenstiltBackendNavn.ung`. Only endpoint calls count; an import of a type or enum from another backend does not make a client aggregating, and neither does `k9formidling`
 - Method names are descriptive (`hentPleietrengende`, not `behandlingPerson_getPersonopplysninger1`)
 - GET endpoints return `Promise<Dto>`; mutating POST/PUT return `Promise<void>` unless they return data
 - Use `import type` for all type imports
 
 ### Step 6: Create BackendClient
 
-The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake`, also when only one backend exists. If the component is shared between K9 and Ung, keep one BackendApiType and create one client per backend (e.g. `K9SakHistorikkBackendClient` and `UngSakHistorikkBackendClient`).
+The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbake`, `UngSak` or `UngTilbake`, also when only one backend exists. If the component is shared between K9 and Ung, keep one BackendApiType and create one client per backend (e.g. `K9TilbakeFeilutbetalingFaktaBackendClient` and `UngTilbakeFeilutbetalingFaktaBackendClient`).
+
+Aggregating clients, which call several backends within the same product, are named after the product: `K9` or `Ung`, e.g. `K9HistorikkBackendClient` (`readonly backend = sammenstiltBackendNavn.k9`) and `UngHistorikkBackendClient` (`readonly backend = sammenstiltBackendNavn.ung`). Current examples: historikk and avregning.
 
 `packages/v2/gui/src/fakta/om-pleietrengende/api/K9SakOmPleietrengendeBackendClient.ts`:
 
 ```typescript
 import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
 import { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9sak/sdk/OmPleietrengendeSdk.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import type { OmPleietrengendeBackendApiType } from './OmPleietrengendeBackendApiType.js';
 
 export class K9SakOmPleietrengendeBackendClient implements OmPleietrengendeBackendApiType {
-  readonly backend = 'k9sak';
+  readonly backend = backendNavn.k9sak;
 
   async hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningDto | null> {
     const response = await behandlingPerson_getPersonopplysninger1({ query: { behandlingUuid } });
@@ -115,7 +121,7 @@ export class K9SakOmPleietrengendeBackendClient implements OmPleietrengendeBacke
 
 Rules:
 
-- `readonly backend = 'k9sak'` is a literal type and is used as the last element in `queryKey`, so the same feature against different backends gets separate cache entries
+- `readonly backend = backendNavn.k9sak` has the literal type `'k9sak'` and is used as the last element in `queryKey`, so the same feature against different backends gets separate cache entries
 - Every SDK call is awaited; `.data` is returned for GET endpoints
 - Parameters match the `query`/`body` shape of the SDK Options type
 

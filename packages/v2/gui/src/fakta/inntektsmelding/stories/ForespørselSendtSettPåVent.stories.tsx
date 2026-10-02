@@ -5,10 +5,12 @@ import dayjs from 'dayjs';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { expect, userEvent, within } from 'storybook/test';
 import { InntektsmeldingApiContext } from '../api/InntektsmeldingApiContext.js';
+import type { InntektsmeldingApi } from '../api/InntektsmeldingApi.js';
 import InntektsmeldingContext from '../context/InntektsmeldingContext.js';
 import type { InntektsmeldingContextType } from '../types.js';
 import { ForespørselSendtSettPåVent } from '../ui/components/NyInntektsmeldingDialog/ForespørselSendtSettPåVent.js';
 import { createQueryClient } from '../../../shared/query/queryClient.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const queryClient = createQueryClient();
 
@@ -25,7 +27,8 @@ const contextValue: InntektsmeldingContextType = {
   aksjonspunkter: [],
 };
 
-const apiValue = {
+const apiValue: InntektsmeldingApi = {
+  backend: backendNavn.k9sak,
   hentKompletthetsoversikt: async () => ({ tilstand: [] }),
   etterspørInntektsmelding: async () => undefined,
   settPåVent: async () => undefined,

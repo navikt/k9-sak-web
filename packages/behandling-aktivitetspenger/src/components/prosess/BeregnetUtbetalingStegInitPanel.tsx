@@ -7,7 +7,7 @@ import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/k
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
-import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
+import { UngSakAktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/UngSakAktivitetspengerBeregningBackendClient.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
@@ -48,7 +48,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
-  const aktivitetspengerBeregningApi = useMemo(() => new AktivitetspengerBeregningBackendClient(), []);
+  const aktivitetspengerBeregningApi = useMemo(() => new UngSakAktivitetspengerBeregningBackendClient(), []);
 
   const { data: satser } = useSuspenseQuery({
     ...satsOgUtbetalingPerioderQueryOptions(api, behandling, erTilBehandlingEllerBehandlet),

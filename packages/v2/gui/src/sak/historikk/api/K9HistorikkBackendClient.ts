@@ -5,11 +5,12 @@ import { historikk_hentAlleInnslagV2 as k9tilbake_historikk_hentAlleInnslagV2 } 
 import { type BeriketHistorikkInnslag } from './HistorikkBackendApi.js';
 import type { K9Kodeverkoppslag } from '../../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import { K9HistorikkInnslagBeriker } from './K9HistorikkInnslagBeriker.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9HistorikkBackendClient implements HistorikkBackendApi {
   #beriker: K9HistorikkInnslagBeriker;
 
-  readonly backend = 'k9';
+  readonly backend = sammenstiltBackendNavn.k9;
 
   constructor(kodeverkoppslag: K9Kodeverkoppslag) {
     this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);

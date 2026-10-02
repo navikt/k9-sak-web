@@ -7,9 +7,10 @@ import {
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 import type { ung_sak_web_app_tjenester_klage_KlageRestTjeneste_AbacKlageVurderingResultatAksjonspunktMellomlagringDto as MellomlagringDataDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { KlageVurderingApi } from './KlageVurderingApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export default class UngKlageVurderingBackendClient implements KlageVurderingApi {
-  readonly backend = 'ung';
+export default class UngSakKlageVurderingBackendClient implements KlageVurderingApi {
+  readonly backend = backendNavn.ungsak;
 
   async forhåndsvisKlageVedtaksbrev(behandling: BehandlingDto) {
     if (behandling.id == null) {

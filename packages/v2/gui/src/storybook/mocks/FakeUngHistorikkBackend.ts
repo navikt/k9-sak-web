@@ -8,6 +8,7 @@ import type { HistorikkinnslagDto } from '@k9-sak-web/backend/ungsak/kontrakt/hi
 import type { HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/historikk/HistorikkinnslagDto.js';
 import { UngHistorikkInnslagBeriker } from '../../sak/historikk/api/UngHistorikkInnslagBeriker.js';
 import type { UngKodeverkoppslag } from '../../kodeverk/oppslag/useUngKodeverkoppslag.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const fakeUngSakResponse: HistorikkinnslagDto[] = [
   {
@@ -205,7 +206,7 @@ const fakeUngTilbakeResponse: TilbakeHistorikkinnslagDto[] = [
 export class FakeUngHistorikkBackend implements HistorikkBackendApi {
   #beriker: UngHistorikkInnslagBeriker;
 
-  readonly backend = 'ung';
+  readonly backend = sammenstiltBackendNavn.ung;
 
   constructor(kodeverkoppslag: UngKodeverkoppslag) {
     this.#beriker = new UngHistorikkInnslagBeriker(kodeverkoppslag);

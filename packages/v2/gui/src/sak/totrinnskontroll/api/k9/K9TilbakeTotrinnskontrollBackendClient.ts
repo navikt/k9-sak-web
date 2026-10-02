@@ -19,6 +19,7 @@ import { AksjonspunktDefinisjon as K9TilbakeAksjonspunktDefinisjon } from '@k9-s
 import { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9TilbakeTotrinnskontrollData implements TotrinnskontrollData {
   #kodeverkoppslag: K9TilbakeKodeverkoppslag;
@@ -94,7 +95,7 @@ export class K9TilbakeTotrinnskontrollData implements TotrinnskontrollData {
 }
 
 export class K9TilbakeTotrinnskontrollBackendClient implements TotrinnskontrollApi {
-  readonly backend = 'k9tilbake';
+  readonly backend = backendNavn.k9tilbake;
   #kodeverkoppslag: K9TilbakeKodeverkoppslag;
 
   constructor(kodeverkoppslag: K9TilbakeKodeverkoppslag) {

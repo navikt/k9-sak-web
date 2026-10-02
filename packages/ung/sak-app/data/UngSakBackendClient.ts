@@ -4,9 +4,10 @@ import {
   ung_sak_kontrakt_saksbehandler_SaksbehandlerDto,
 } from '@navikt/ung-sak-typescript-client/types';
 import type { UngSakBackendApi } from './UngSakBackendApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class UngSakBackendClient implements UngSakBackendApi {
-  readonly backend = 'ungsak';
+  readonly backend = backendNavn.ungsak;
   async fagsakSøk(searchString: string): Promise<Array<ung_sak_kontrakt_fagsak_FagsakDto>> {
     return (await fagsak_søkFagsaker({ body: { searchString } })).data;
   }

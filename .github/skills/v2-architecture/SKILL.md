@@ -24,10 +24,10 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 - [ ] API contract created with the `v2-api-contract` skill (`.github/skills/v2-api-contract/SKILL.md`), which defines names, file locations and templates. For a feature called `OmPleietrengende` against k9sak this gives:
   - `OmPleietrengendeBackendApiType` (interface, extends `BackendTilhørighet`)
-  - `K9SakOmPleietrengendeBackendClient` (class, `readonly backend = 'k9sak'`)
+  - `K9SakOmPleietrengendeBackendClient` (class, `readonly backend = backendNavn.k9sak`)
   - `omPleietrengendeQueryOptions`
   - `OmPleietrengendeApiContext`
-  Name the client after the backend: `K9Sak…`, `K9Klage…`, `K9Tilbake…`, `UngSak…` or `UngTilbake…`. Never call a raw URL or import directly from `generated/sdk.js`
+    Name the client after the backend: `K9Sak…`, `K9Klage…`, `K9Tilbake…`, `UngSak…` or `UngTilbake…`. Aggregating clients that call several backends within the same product are named `K9…`/`Ung…` and use `BackendTilhørighet<SammenstiltBackendNavn>` (`sammenstiltBackendNavn.k9`/`.ung`). Backend values always come from the `backendNavn`/`sammenstiltBackendNavn` consts in `utils/BackendTilhørighet.ts`, never string literals. Never call a raw URL or import directly from `generated/sdk.js`
 
 ### v2 component
 
@@ -41,7 +41,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 ### Stories
 
 - [ ] `<Feature>.stories.tsx` created next to the component in `packages/v2/gui/src/fakta/<feature>/`
-- [ ] Reusable `withFake<Feature>Api(data)` decorator in `packages/v2/gui/src/storybook/decorators/` provides the API context + `<Suspense>` when the component fetches data. Never construct a `QueryClient` / `QueryClientProvider` manually in a story; withQueryClientProvider()` from `storybook/decorators/withQueryClientProvider.js` is globally added as a decorator.
+- [ ] Reusable `withFake<Feature>Api(data)` decorator in `packages/v2/gui/src/storybook/decorators/` provides the API context + `<Suspense>` when the component fetches data. Never construct a `QueryClient` / `QueryClientProvider` manually in a story; withQueryClientProvider()`from`storybook/decorators/withQueryClientProvider.js` is globally added as a decorator.
 - [ ] `withK9Kodeverkoppslag()` decorator added if component uses kodeverk
 - [ ] At least one story per ytelsestype (if behaviour differs) and one empty-state story
 - [ ] When mocking backend data, use generated DTO types (flat string codes) — not old kodeverk objects
@@ -273,7 +273,7 @@ If the v2 component fetches generated DTOs itself, pass only what it needs (for 
 
 ### Marking old files for deletion — compile-time guard
 
-Add a compile-time type lookup in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`).  The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
+Add a compile-time type lookup in every **old v1 package file** (e.g. in `packages/fakta-<feature>/src/`). The `FaktaPanelDef` files are **not** the right place — they survive the migration (their v1 branch just gets removed). The old package files are what get deleted entirely.
 
 This causes a TypeScript compile error when the toggle key is removed from `FeatureToggles`, forcing cleanup before the build passes:
 

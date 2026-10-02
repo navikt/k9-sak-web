@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import type { FeilutbetalingFaktaApi } from './FeilutbetalingFaktaApi.js';
 import { feilutbetalingFaktaQueryOptions, feilutbetalingÅrsakerQueryOptions } from './FeilutbetalingFaktaQueries.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const api = {
-  backend: 'k9tilbake',
+  backend: backendNavn.k9tilbake,
   hentFeilutbetalingFakta: async () => ({}),
   hentFeilutbetalingÅrsaker: async () => [],
 } satisfies FeilutbetalingFaktaApi;

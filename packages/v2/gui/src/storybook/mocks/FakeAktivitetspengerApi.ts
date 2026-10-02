@@ -1,8 +1,9 @@
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
-  readonly backend = 'ungsak' as const;
+  readonly backend = backendNavn.ungsak;
 
   async getAksjonspunkter() {
     return [];

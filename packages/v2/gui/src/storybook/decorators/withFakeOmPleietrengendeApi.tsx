@@ -2,11 +2,12 @@ import type { Decorator } from '@storybook/react-vite';
 import { Suspense } from 'react';
 import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
 import { OmPleietrengendeApiContext } from '../../fakta/om-pleietrengende/api/OmPleietrengendeApiContext.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export const withFakeOmPleietrengendeApi =
   (data: PersonopplysningDto | null): Decorator =>
   Story => (
-    <OmPleietrengendeApiContext value={{ backend: 'k9sak', hentPleietrengende: async () => data }}>
+    <OmPleietrengendeApiContext value={{ backend: backendNavn.k9sak, hentPleietrengende: async () => data }}>
       <Suspense>
         <Story />
       </Suspense>

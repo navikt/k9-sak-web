@@ -5,14 +5,14 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
-import { UngFeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/UngFeilutbetalingFaktaBackendClient.js';
+import { UngTilbakeFeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/UngTilbakeFeilutbetalingFaktaBackendClient.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
 import { UngAvregningBackendClient } from '@k9-sak-web/gui/prosess/avregning/UngAvregningBackendClient.js';
 import { KlageVurderingApiContext } from '@k9-sak-web/gui/prosess/klagevurdering/api/KlageVurderingApiContext.js';
-import UngKlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/UngKlageVurderingBackendClient.js';
-import UngVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/UngVedtakKlageBackendClient.js';
+import UngSakKlageVurderingBackendClient from '@k9-sak-web/gui/prosess/klagevurdering/api/UngSakKlageVurderingBackendClient.js';
+import UngSakVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/UngSakVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
 import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
@@ -51,9 +51,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
   return (
     <IntlProvider locale="nb" messages={globalMessages}>
       <UngKodeverkoppslagContext value={ungKodeverkOppslag}>
-        <FeilutbetalingFaktaApiContext value={new UngFeilutbetalingFaktaBackendClient()}>
-          <KlageVurderingApiContext value={new UngKlageVurderingBackendClient()}>
-            <VedtakKlageApiContext value={new UngVedtakKlageBackendClient()}>
+        <FeilutbetalingFaktaApiContext value={new UngTilbakeFeilutbetalingFaktaBackendClient()}>
+          <KlageVurderingApiContext value={new UngSakKlageVurderingBackendClient()}>
+            <VedtakKlageApiContext value={new UngSakVedtakKlageBackendClient()}>
               <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
                 <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
                   {harFeilet || erFerdig ? children : <LoadingPanel />}

@@ -2,13 +2,14 @@ import type { FagsakDto } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/Fagsa
 import { ignoreUnusedDeclared } from '@k9-sak-web/gui/storybook/mocks/ignoreUnusedDeclared.js';
 import { ung_sak_kontrakt_saksbehandler_SaksbehandlerDto } from '@navikt/ung-sak-typescript-client/types';
 import type { UngSakBackendApi } from '../../data/UngSakBackendApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 interface FakeUngSakBackendClientOptions {
   fagsaker?: FagsakDto[];
 }
 
 export class FakeUngSakBackendClient implements UngSakBackendApi {
-  readonly backend = 'ungsak';
+  readonly backend = backendNavn.ungsak;
   private options: FakeUngSakBackendClientOptions;
 
   constructor(options: FakeUngSakBackendClientOptions = {}) {

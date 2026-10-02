@@ -2,9 +2,10 @@ import { type BestillBrevDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/doku
 import { brev_bestillBrev, brev_forhåndsvisBrev, brev_hentMaler } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
 import type { TilbakeBestillBrevDto, TilbakeMeldingerApi } from './TilbakeMeldingerApi.js';
 import type { BrevmalDto } from '@k9-sak-web/backend/combined/tilbakekreving/dokumentbestilling/BrevmalDto.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9TilbakeMeldingerBackendClient implements TilbakeMeldingerApi {
-  readonly backend = 'k9tilbake';
+  readonly backend = backendNavn.k9tilbake;
 
   #adaptBestillBrevDto(bestilling: TilbakeBestillBrevDto): BestillBrevDto {
     return {
