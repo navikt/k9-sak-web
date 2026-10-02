@@ -4,9 +4,10 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
-import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -144,6 +145,7 @@ export const ForutgåendeMedlemskap = ({
 
   return (
     <VilkårSplittPanel
+      isAktivitetspenger
       periods={periods}
       selectedItemId={selectedItemId}
       onItemSelect={setSelectedItemId}
@@ -151,6 +153,7 @@ export const ForutgåendeMedlemskap = ({
       defaultIsLocked={isAksjonspunktSolved}
       readOnly={readOnly}
       isPermanentlyReadOnly={erValgtPeriodePermanentLåst}
+      lovreferanse="§ 3"
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
@@ -218,7 +221,10 @@ export const ForutgåendeMedlemskap = ({
                 begrunnelse && (
                   <VStack gap="space-8">
                     <Label size="small" as="p">
-                      Vurder om søker har forutgående medlemskap, jmf §X
+                      Vurder om søker har forutgående medlemskap, jmf{' '}
+                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+                        § 3 Forutgående medlemskap
+                      </Lovreferanse>
                     </Label>
                     <BodyShort size="small">{begrunnelse}</BodyShort>
                   </VStack>
@@ -227,7 +233,14 @@ export const ForutgåendeMedlemskap = ({
                 <RhfTextarea
                   control={formHook.control}
                   name={`begrunnelser.${selectedItemId}`}
-                  label="Vurder om søker har forutgående medlemskap, jmf §X"
+                  label={
+                    <span>
+                      Vurder om søker har forutgående medlemskap, jmf{' '}
+                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+                        § 3 Forutgående medlemskap
+                      </Lovreferanse>
+                    </span>
+                  }
                   validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                   maxLength={begrunnelseMaxLength}
                 />

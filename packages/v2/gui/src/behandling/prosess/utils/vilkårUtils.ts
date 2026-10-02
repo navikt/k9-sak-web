@@ -103,7 +103,10 @@ export const finnPanelStatus = (
 
     if (
       vilkårStatusCodes.length === 0 ||
-      vilkårStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)
+      vilkårStatusCodes.some(
+        vsc =>
+          vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT || vsc === k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+      )
     ) {
       return ProcessMenuStepType.default;
     }

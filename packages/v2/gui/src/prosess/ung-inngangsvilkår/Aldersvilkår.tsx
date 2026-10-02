@@ -42,7 +42,7 @@ export const Aldersvilkår = ({ vilkår }: AldersvilkårProps) => {
             {vilkår?.lovReferanse && (
               <Box>
                 <Detail className={styles.lovreferanse}>
-                  <Lovreferanse isUng>{vilkår.lovReferanse}</Lovreferanse>
+                  <Lovreferanse isUngdomsprogrammet>{vilkår.lovReferanse}</Lovreferanse>
                 </Detail>
               </Box>
             )}

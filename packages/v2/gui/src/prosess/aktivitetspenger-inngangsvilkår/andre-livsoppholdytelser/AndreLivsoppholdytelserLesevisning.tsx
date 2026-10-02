@@ -6,8 +6,17 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 
 const avslagsårsakLabels: Record<string, string> = {
-  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE]: 'Søker har annen livsoppholdytelse',
-  fritekst: 'Fritekst',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER]: 'Arbeidsavklaringspenger (AAP)',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_TILTAKSPENGER]: 'Tiltakspenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_KVALIFISERINGSSTØNAD]: 'Kvalifiseringsstønad (KVP)',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_DAGPENGER]: 'Dagpenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_FORELDREPENGER]: 'Foreldrepenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_SVANGERSKAPSPENGER]: 'Svangerskapspenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_UFØRETRYGD]: 'Uføretrygd',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_INTRODUKSJONSSTØNAD]: 'Introduksjonsstønad',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_BARNEPENSJON]: 'Barnepensjon',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE]: 'Annen ytelse',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET]: 'Avkortet',
 };
 
 interface Props {
