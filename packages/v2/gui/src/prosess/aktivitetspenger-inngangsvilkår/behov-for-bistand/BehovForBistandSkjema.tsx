@@ -124,13 +124,16 @@ export const BehovForBistandSkjema = ({
             legend="Avslagsårsak"
             validate={[required]}
           >
-            <Radio value={BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK}>
-              Søker har ikke behov for bistand fra Nav
+            <Radio value={BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_ARBEID}>
+              Søker er i arbeid, og har ikke behov for bistand fra Nav
             </Radio>
-            <Radio value="fritekst">Fritekst</Radio>
+            <Radio value={BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING}>
+              Søker er i utdanning, og har ikke behov for bistand fra Nav
+            </Radio>
+            <Radio value={BistandsvilkårIkkeOppfyltÅrsak.ANNET}>Fritekst</Radio>
           </RhfRadioGroup>
         )}
-        {behovForBistand === 'ikkeOppfylt' && avslagsårsak === 'fritekst' && (
+        {behovForBistand === 'ikkeOppfylt' && avslagsårsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET && (
           <RhfTextarea
             key={`${selectedId}-fritekst`}
             control={formHook.control}
