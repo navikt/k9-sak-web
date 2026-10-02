@@ -1,10 +1,9 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { UttakPanel } from '@k9-sak-web/gui/prosess/uttak/UttakPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { relevanteUttakAksjonspunkter } from '@k9-sak-web/gui/prosess/uttak/relevanteUttakAksjonspunkter.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { AntallDagerLivetsSluttfase } from '@k9-sak-web/gui/prosess/uttak-antall-dager-sluttfase/AntallDagerLivetsSluttfase.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
 import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
@@ -20,12 +19,12 @@ class PanelDef extends ProsessStegPanelDef {
     return (
       <LoadingPanelSuspense>
         <ErrorBoundary>
-          <AntallDagerLivetsSluttfase behandlingUuid={behandling.uuid} behandlingVersjon={behandling.versjon} />
-          <Uttak
+          <UttakPanel
             behandling={behandling}
             aksjonspunkter={aksjonspunkter}
             erOverstyrer={erOverstyrer}
             readOnly={isReadOnly}
+            visKvoteinfoSluttfase
           />
         </ErrorBoundary>
       </LoadingPanelSuspense>

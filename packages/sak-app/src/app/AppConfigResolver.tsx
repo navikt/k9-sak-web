@@ -36,6 +36,9 @@ import K9TilkjentYtelseBackendClient from '@k9-sak-web/gui/prosess/tilkjent-ytel
 import { TilkjentYtelseApiContext } from '@k9-sak-web/gui/prosess/tilkjent-ytelse/api/TilkjentYtelseApiContext.js';
 import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
 import { K9SakUttakBackendClient } from '@k9-sak-web/gui/prosess/uttak/api/K9SakUttakBackendClient.js';
+// LEGACY-UTTAK: Fjernes sammen med feature toggle NYTT_UTTAK_PANEL
+import { UttakApiContext as UttakApiContextLegacy } from '@k9-sak-web/gui/prosess/uttak-legacy/api/UttakApiContext.js';
+import BehandlingUttakBackendClientLegacy from '@k9-sak-web/gui/prosess/uttak-legacy/BehandlingUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
 import { DokumenterApiContext } from '@k9-sak-web/gui/sak/dokumenter/api/DokumenterApiContext.js';
@@ -104,19 +107,21 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                             <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
                               <TiDagerBackendClientContext value={new K9TiDagerBackendClient()}>
                                 <UttakApiContext value={new K9SakUttakBackendClient()}>
-                                  <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
-                                    <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
-                                      <DelingAvDagerApiContext value={new K9DelingAvDagerBackendClient()}>
-                                        <OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>
-                                          <FeilutbetalingFaktaApiContext
-                                            value={new K9FeilutbetalingFaktaBackendClient()}
-                                          >
-                                            {harFeilet || erFerdig ? children : <LoadingPanel />}
-                                          </FeilutbetalingFaktaApiContext>
-                                        </OmPleietrengendeApiContext>
-                                      </DelingAvDagerApiContext>
-                                    </ArbeidOgInntektApiContext>
-                                  </NotatBackendClientContext>
+                                  <UttakApiContextLegacy value={new BehandlingUttakBackendClientLegacy()}>
+                                    <NotatBackendClientContext value={new NotatBackendClient('k9Sak')}>
+                                      <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
+                                        <DelingAvDagerApiContext value={new K9DelingAvDagerBackendClient()}>
+                                          <OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>
+                                            <FeilutbetalingFaktaApiContext
+                                              value={new K9FeilutbetalingFaktaBackendClient()}
+                                            >
+                                              {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                            </FeilutbetalingFaktaApiContext>
+                                          </OmPleietrengendeApiContext>
+                                        </DelingAvDagerApiContext>
+                                      </ArbeidOgInntektApiContext>
+                                    </NotatBackendClientContext>
+                                  </UttakApiContextLegacy>
                                 </UttakApiContext>
                               </TiDagerBackendClientContext>
                             </AvregningBackendClientContext>

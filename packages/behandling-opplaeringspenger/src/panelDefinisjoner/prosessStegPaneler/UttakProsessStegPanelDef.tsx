@@ -1,7 +1,7 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { UttakPanel } from '@k9-sak-web/gui/prosess/uttak/UttakPanel.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { relevanteUttakAksjonspunkter } from '@k9-sak-web/gui/prosess/uttak/relevanteUttakAksjonspunkter.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
@@ -12,7 +12,7 @@ class PanelDef extends ProsessStegPanelDef {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
     return (
-      <Uttak
+      <UttakPanel
         behandling={deepCopyProps.behandling}
         aksjonspunkter={deepCopyProps.aksjonspunkter}
         erOverstyrer={props.erOverstyrer}
