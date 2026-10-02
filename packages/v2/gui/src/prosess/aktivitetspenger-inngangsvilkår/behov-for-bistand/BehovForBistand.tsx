@@ -93,16 +93,15 @@ export const BehovForBistand = ({
       const vurdertePerioder: VilkårBistandPeriodeVurderingDto[] = [
         {
           avslagsårsak:
-            vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak
-              ? BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK
-              : undefined,
+            vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak ? vurdering.avslagsårsak : undefined,
           begrunnelse: begrunnelseInnvilget,
           erVilkårOppfylt: vurdering.behovForBistand === 'oppfylt',
           periode: {
             fom: vurdering.fom,
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
-          fritekstVurderingBrev: vurdering.avslagsårsak === 'fritekst' ? vurdering.fritekst : undefined,
+          fritekstVurderingBrev:
+            vurdering.avslagsårsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering.fritekst : undefined,
         },
       ];
       if (redigerMaksdatoAktiv && muligAvkorting) {
