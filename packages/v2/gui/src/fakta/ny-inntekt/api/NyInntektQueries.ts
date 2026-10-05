@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useBehandlingContext, useBehandlingUuid } from '../../../context/BehandlingContext.js';
+import { assertDefined } from '../../../utils/validation/assertDefined.js';
+import { useBehandlingContext } from '../../../context/BehandlingContext.js';
 import { useNyInntektApi } from './NyInntektApiContext.js';
 
 const kanReaktivereQueryKey = (behandlingUuid: string) => ['kanReaktivereAksjonspunktNyInntekt', behandlingUuid];
 
 export const useKanReaktivereAksjonspunktNyInntekt = (enabled: boolean) => {
   const api = useNyInntektApi();
-  const behandlingUuid = useBehandlingUuid();
+  const behandlingUuid = assertDefined(useBehandlingContext().behandlingUuid);
 
   return useQuery({
     queryKey: [...kanReaktivereQueryKey(behandlingUuid), api.backend],
@@ -17,15 +18,15 @@ export const useKanReaktivereAksjonspunktNyInntekt = (enabled: boolean) => {
 
 export const useReaktiverAksjonspunktNyInntekt = () => {
   const api = useNyInntektApi();
-  const behandlingUuid = useBehandlingUuid();
-  const { refetchBehandling } = useBehandlingContext();
+  const behandlingContext = useBehandlingContext();
+  const behandlingUuid = assertDefined(behandlingContext.behandlingUuid);
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, void>({
     mutationFn: () => api.reaktiverAksjonspunkt(behandlingUuid),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: kanReaktivereQueryKey(behandlingUuid) });
-      await refetchBehandling();
+      await behandlingContext.refetchBehandling();
     },
     throwOnError: true,
   });

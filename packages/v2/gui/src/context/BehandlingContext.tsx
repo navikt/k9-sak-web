@@ -36,11 +36,3 @@ export const useBehandlingContext = (): BehandlingContextType => {
   }
   return context;
 };
-
-export const useBehandlingUuid = (): string => {
-  const { behandlingUuid } = useBehandlingContext();
-  if (!behandlingUuid) {
-    throw new Error('behandlingUuid mangler i BehandlingContext');
-  }
-  return behandlingUuid;
-};
