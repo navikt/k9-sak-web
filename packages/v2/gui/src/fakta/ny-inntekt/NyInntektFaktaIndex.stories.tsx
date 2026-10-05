@@ -91,7 +91,13 @@ const meta = {
         behandlingUuid="00000000-0000-0000-0000-000000000000"
         refetchBehandling={async () => undefined}
       >
-        <NyInntektApiContext value={{ reaktiverAksjonspunktNyInntekt: async () => undefined }}>
+        <NyInntektApiContext
+          value={{
+            backend: 'k9sak',
+            kanReaktivereAksjonspunkt: async () => true,
+            reaktiverAksjonspunkt: async () => undefined,
+          }}
+        >
           <Story />
         </NyInntektApiContext>
       </BehandlingProvider>

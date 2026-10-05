@@ -4,7 +4,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 
 import { useContext, useState } from 'react';
 import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
-import { useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
+import { useKanReaktivereAksjonspunktNyInntekt, useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
 import { harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { TilkommetAktivitet } from './src/components/tilkommetAktivitet/TilkommetAktivitet.js';
@@ -61,6 +61,9 @@ export const NyInntektFaktaIndex = ({
   const bgMedAvklaringsbehov = beregningsgrunnlagListe.filter(bg => kreverManuellBehandlingFn(bg));
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const featureToggles = useContext(FeatureTogglesContext);
+  const { data: backendTillaterReaktivering } = useKanReaktivereAksjonspunktNyInntekt(
+    featureToggles.REAKTIVER_AKSJONSPUNKT_NY_INNTEKT && !readOnly,
+  );
   const { mutate: reaktiverAksjonspunkt, isPending: reaktivererAksjonspunkt } = useReaktiverAksjonspunktNyInntekt();
 
   if (bgMedAvklaringsbehov.length === 0) {
@@ -76,7 +79,7 @@ export const NyInntektFaktaIndex = ({
     featureToggles.REAKTIVER_AKSJONSPUNKT_NY_INNTEKT &&
     !readOnly &&
     !harAksjonspunktVurderNyInntekt &&
-    bgMedAvklaringsbehov.some(bg => vurderesIBehandlingen(beregningsgrunnlagVilkår.perioder, bg.vilkårsperiodeFom));
+    backendTillaterReaktivering === true;
 
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
 

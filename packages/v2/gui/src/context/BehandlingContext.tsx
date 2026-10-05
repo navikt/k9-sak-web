@@ -28,3 +28,19 @@ export const useRefetchBehandling = (): BehandlingContextType['refetchBehandling
   }
   return context.refetchBehandling;
 };
+
+export const useBehandlingContext = (): BehandlingContextType => {
+  const context = useContext(BehandlingContext);
+  if (!context) {
+    throw new Error('useBehandlingContext must be used within a BehandlingProvider');
+  }
+  return context;
+};
+
+export const useBehandlingUuid = (): string => {
+  const { behandlingUuid } = useBehandlingContext();
+  if (!behandlingUuid) {
+    throw new Error('behandlingUuid mangler i BehandlingContext');
+  }
+  return behandlingUuid;
+};
