@@ -2,6 +2,7 @@ import { useContext, createContext, type ReactNode } from 'react';
 
 export interface BehandlingContextType {
   behandlingUuid?: string;
+  behandlingVersjon?: number;
   refetchBehandling: () => Promise<any>;
 }
 
@@ -10,14 +11,18 @@ export const BehandlingContext = createContext<BehandlingContextType | undefined
 export const BehandlingProvider = ({
   children,
   behandlingUuid,
+  behandlingVersjon,
   refetchBehandling,
 }: {
   children: ReactNode;
   behandlingUuid?: string;
+  behandlingVersjon?: number;
   refetchBehandling: BehandlingContextType['refetchBehandling'];
 }) => {
   return (
-    <BehandlingContext.Provider value={{ behandlingUuid, refetchBehandling }}>{children}</BehandlingContext.Provider>
+    <BehandlingContext.Provider value={{ behandlingUuid, behandlingVersjon, refetchBehandling }}>
+      {children}
+    </BehandlingContext.Provider>
   );
 };
 

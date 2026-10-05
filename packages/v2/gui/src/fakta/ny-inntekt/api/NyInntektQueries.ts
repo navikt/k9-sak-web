@@ -7,11 +7,12 @@ const kanReaktivereQueryKey = (behandlingUuid: string) => ['kanReaktivereAksjons
 
 export const useKanReaktivereAksjonspunktNyInntekt = (enabled: boolean) => {
   const api = useNyInntektApi();
-  const behandlingUuid = assertDefined(useBehandlingContext().behandlingUuid);
+  const { behandlingUuid, behandlingVersjon } = useBehandlingContext();
+  const uuid = assertDefined(behandlingUuid);
 
   return useQuery({
-    queryKey: [...kanReaktivereQueryKey(behandlingUuid), api.backend],
-    queryFn: () => api.kanReaktivereAksjonspunkt(behandlingUuid),
+    queryKey: [...kanReaktivereQueryKey(uuid), behandlingVersjon, api.backend],
+    queryFn: () => api.kanReaktivereAksjonspunkt(uuid),
     enabled,
   });
 };
