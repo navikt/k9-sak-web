@@ -54,7 +54,6 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
-- fakta-uttak (Vebjørn)
 
 ---
 
