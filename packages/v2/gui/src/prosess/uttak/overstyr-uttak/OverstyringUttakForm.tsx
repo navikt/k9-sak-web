@@ -1,10 +1,20 @@
 import type { OverstyrUttakPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakPeriodeDto.js';
-import { Button, DatePicker, Heading, Loader, useRangeDatepicker, type DatePickerProps } from '@navikt/ds-react';
+import {
+  Button,
+  DatePicker,
+  ErrorMessage,
+  Heading,
+  Loader,
+  useRangeDatepicker,
+  type DatePickerProps,
+  type DateValidationT,
+  type RangeValidationT,
+} from '@navikt/ds-react';
 import { RhfForm, RhfNumericField, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, maxValue, minLength, minValue, required } from '@navikt/ft-form-validators';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useForm, useFieldArray, useWatch } from 'react-hook-form';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import {
@@ -28,6 +38,19 @@ type OwnProps = {
   loading: boolean;
 };
 
+const datoFeilmelding = (validering: DateValidationT & { isBeforeFrom?: boolean }): string | undefined => {
+  if (validering.isEmpty || validering.isValidDate) {
+    return undefined;
+  }
+  if (validering.isInvalid) {
+    return 'Ugyldig datoformat. Bruk dd.mm.åååå';
+  }
+  if (validering.isBeforeFrom) {
+    return 'Kan ikke være før fra og med-dato';
+  }
+  return 'Må være innenfor periodene til vurdering';
+};
+
 const OverstyringUttakForm: FC<OwnProps> = ({ overstyring, lagre, avbryt, loading }) => {
   const { behandling } = useUttakContext();
   const uttakApi = useUttakApi();
@@ -49,14 +72,18 @@ const OverstyringUttakForm: FC<OwnProps> = ({ overstyring, lagre, avbryt, loadin
     control,
     setValue,
     register,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = formMethods;
 
-  // Datoene settes via datovelgeren, så de registreres her for at påkrevd-regelen skal gjelde i isValid
-  register('periode.fom', { required: true });
-  register('periode.tom', { required: true });
-
   const tidligsteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering);
+  const sisteSluttDato = finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering);
+
+  // Datovelgeren gir tom verdi både for tomt og ugyldig innhold. Feilen fra datovelgeren har derfor forrang
+  const [datovelgerValidering, setDatovelgerValidering] = useState<RangeValidationT>();
+
+  // Datoene settes via datovelgeren, så de registreres her for at påkrevd-regelen skal gjelde i isValid og ved innsending
+  register('periode.fom', { required: 'Må oppgis' });
+  register('periode.tom', { required: 'Må oppgis' });
 
   const { fields, replace: replaceAktiviteter } = useFieldArray({ control, name: 'utbetalingsgrader' });
 
@@ -67,6 +94,9 @@ const OverstyringUttakForm: FC<OwnProps> = ({ overstyring, lagre, avbryt, loadin
         setValue('periode.tom', values.to ? dayjs(values.to).format('YYYY-MM-DD') : '', { shouldValidate: true });
       }
     },
+    onValidate: setDatovelgerValidering,
+    fromDate: tidligsteStartDato,
+    toDate: sisteSluttDato,
     defaultSelected: erNyOverstyring
       ? undefined
       : { from: dayjs(overstyring.periode.fom).toDate(), to: dayjs(overstyring.periode.tom).toDate() },
@@ -95,11 +125,16 @@ const OverstyringUttakForm: FC<OwnProps> = ({ overstyring, lagre, avbryt, loadin
     ? aktuelleAktiviteter?.arbeidsgiverOversikt?.arbeidsgivere
     : overstyrte?.arbeidsgiverOversikt?.arbeidsgivere;
 
+  const fraFeil = (datovelgerValidering && datoFeilmelding(datovelgerValidering.from)) ?? errors.periode?.fom?.message;
+  const tilFeil = (datovelgerValidering && datoFeilmelding(datovelgerValidering.to)) ?? errors.periode?.tom?.message;
+
+  const uttaksgradFeil = errors.søkersUttaksgrad?.message;
+
   const deaktiverLeggTil = beggeDatoerValgt && !isValid;
 
   const disabledDays: DatePickerProps['disabled'] = [
     date => dayjs(date).isBefore(tidligsteStartDato, 'day'),
-    date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering), 'day'),
+    date => dayjs(date).isAfter(sisteSluttDato, 'day'),
   ];
 
   return (
@@ -112,8 +147,20 @@ const OverstyringUttakForm: FC<OwnProps> = ({ overstyring, lagre, avbryt, loadin
         <div className={styles.overstyringDatoOgUttaksgrad}>
           <DatePicker {...datepickerProps} disabled={disabledDays}>
             <div className={styles.overstyringDatoVelger}>
-              <DatePicker.Input {...fromInputProps} label="Fra og med" size="small" disabled={loading} />
-              <DatePicker.Input {...toInputProps} label="Til og med" size="small" disabled={loading} />
+              <DatePicker.Input
+                {...fromInputProps}
+                label="Fra og med"
+                size="small"
+                disabled={loading}
+                error={!!fraFeil}
+              />
+              <DatePicker.Input
+                {...toInputProps}
+                label="Til og med"
+                size="small"
+                disabled={loading}
+                error={!!tilFeil}
+              />
             </div>
           </DatePicker>
           <RhfNumericField
@@ -126,8 +173,17 @@ const OverstyringUttakForm: FC<OwnProps> = ({ overstyring, lagre, avbryt, loadin
             returnAsNumber
             disabled={loading}
             validate={[minValue(0), maxValue(100)]}
+            error={!!uttaksgradFeil}
           />
         </div>
+
+        {(fraFeil || tilFeil || uttaksgradFeil) && (
+          <div className={styles.overstyringDatoFeil} aria-live="polite">
+            {fraFeil && <ErrorMessage size="small">Fra og med: {fraFeil}</ErrorMessage>}
+            {tilFeil && <ErrorMessage size="small">Til og med: {tilFeil}</ErrorMessage>}
+            {uttaksgradFeil && <ErrorMessage size="small">Ny uttaksgrad (%): {uttaksgradFeil}</ErrorMessage>}
+          </div>
+        )}
 
         <div className={styles.overstyringAktivitetListe}>
           {lasterAktiviteter && <Loader />}

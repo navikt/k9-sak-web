@@ -148,6 +148,72 @@ export const LeggTilOverstyring: Story = {
   },
 };
 
+const onOverstyringUttakValidering = fn();
+
+export const ValideringAvPeriode: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+      onOverstyringUttak: payload => onOverstyringUttakValidering(payload),
+      allowedRanges: [{ fom: '2024-01-01', tom: '2024-12-31' }],
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: true,
+    aksjonspunkter: [],
+    readOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await step('Åpne overstyringsskjema', async () => {
+      await user.click(await canvas.findByTestId('overstyringsknapp'));
+      await user.click(await canvas.findByRole('button', { name: /Legg til ny overstyring/i }));
+    });
+
+    await step('Mangler periode gir feilmelding', async () => {
+      await user.click(await canvas.findByRole('button', { name: /Legg til overstyring/i }));
+      await expect(await canvas.findByText('Fra og med: Må oppgis')).toBeInTheDocument();
+      await expect(await canvas.findByText('Til og med: Må oppgis')).toBeInTheDocument();
+      await expect(onOverstyringUttakValidering).not.toHaveBeenCalled();
+    });
+
+    await step('Til og med før fra og med gir feilmelding', async () => {
+      const fraInput = await canvas.findByLabelText('Fra og med');
+      const tilInput = await canvas.findByLabelText('Til og med');
+      await user.type(fraInput, '20.01.2024');
+      await user.type(tilInput, '10.01.2024');
+      await user.tab();
+      await expect(await canvas.findByText('Til og med: Kan ikke være før fra og med-dato')).toBeInTheDocument();
+    });
+
+    await step('Dato utenfor periodene til vurdering gir feilmelding', async () => {
+      const fraInput = await canvas.findByLabelText('Fra og med');
+      await user.clear(fraInput);
+      await user.type(fraInput, '01.01.2020');
+      await user.tab();
+      await expect(await canvas.findByText(/Fra og med: Må være innenfor periodene til vurdering/)).toBeInTheDocument();
+      await user.type(await canvas.findByLabelText(/begrunnelse/i), 'Begrunnelse for overstyring');
+      await user.click(await canvas.findByRole('button', { name: /Legg til overstyring/i }));
+      await expect(onOverstyringUttakValidering).not.toHaveBeenCalled();
+    });
+
+    await step('Gyldig periode kan sendes inn', async () => {
+      const fraInput = await canvas.findByLabelText('Fra og med');
+      await user.clear(fraInput);
+      await user.type(fraInput, '01.01.2024');
+      await user.clear(await canvas.findByLabelText('Til og med'));
+      await user.type(await canvas.findByLabelText('Til og med'), '15.01.2024');
+      await user.type(await canvas.findByLabelText(/uttaksgrad/i), '80');
+      await user.tab();
+      await user.click(await canvas.findByRole('button', { name: /Legg til overstyring/i }));
+      await waitFor(() => expect(onOverstyringUttakValidering).toHaveBeenCalledTimes(1));
+    });
+  },
+};
+
 export const Overstyringer: Story = {
   decorators: [
     withFakeUttakBackend({

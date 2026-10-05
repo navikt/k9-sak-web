@@ -12,6 +12,7 @@ declare const overstyringDatoVelger: string;
 declare const overstyringKnapperad: string;
 declare const overstyringBegrunnelse: string;
 declare const overstyringAktivitetListe: string;
+declare const overstyringDatoFeil: string;
 
 export {
 	overstyringSkjemaWrapper,
@@ -19,7 +20,8 @@ export {
 	overstyringDatoVelger,
 	overstyringKnapperad,
 	overstyringBegrunnelse,
-	overstyringAktivitetListe
+	overstyringAktivitetListe,
+	overstyringDatoFeil
 };
 
 declare const __default_export__: {
@@ -29,5 +31,6 @@ declare const __default_export__: {
 	overstyringKnapperad: typeof overstyringKnapperad;
 	overstyringBegrunnelse: typeof overstyringBegrunnelse;
 	overstyringAktivitetListe: typeof overstyringAktivitetListe;
+	overstyringDatoFeil: typeof overstyringDatoFeil;
 };
 export default __default_export__;
