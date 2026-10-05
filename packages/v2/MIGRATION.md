@@ -49,7 +49,7 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 - [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
 - [ ] `prosess-unntak` → `BRUK_V2_PROSESS_UNNTAK`
-    V2 er implementert og slått på for Q. Prod bruker fortsatt v1.
+    V2 er ferdig implementert og i bruk i Q. Prod bruker fortsatt v1.
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
