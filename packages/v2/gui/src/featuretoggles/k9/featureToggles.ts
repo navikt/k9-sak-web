@@ -31,7 +31,6 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   DOKUMENTFILTER: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,
   BRUK_V2_DELING_AV_DAGER: true,
-  NORMALARBEIDSTID_UTTAK: true,
   REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: true,
 });
 

@@ -6,7 +6,6 @@ import {
   lagUttak,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
 import Uttak from '../Uttak';
@@ -41,7 +40,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const BeggeReglene: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak(
