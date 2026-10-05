@@ -62,7 +62,7 @@ const UnntakForm = ({
 
   const handleSubmit = async (values: FormValues) => {
     if (values.begrunnelse === null || !erUnntakResultat(values.behandlingResultatType)) {
-      return;
+      throw new Error('Kan ikke bekrefte unntak uten begrunnelse og gyldig resultat.');
     }
     await submitCallback([
       {
