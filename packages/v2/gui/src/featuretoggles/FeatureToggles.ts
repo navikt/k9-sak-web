@@ -30,7 +30,6 @@ const rootFeatureToggles = {
   BRUK_V2_DELING_AV_DAGER: false,
   NORMALARBEIDSTID_UTTAK: false,
   REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: false,
-  NYTT_UTTAK_PANEL: false, // Gammel versjon ligger i prosess/uttak-legacy
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

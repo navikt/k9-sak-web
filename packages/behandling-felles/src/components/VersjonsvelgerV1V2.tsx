@@ -1,5 +1,5 @@
 import { Box, ToggleGroup } from '@navikt/ds-react';
-import { useState, type ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 
 interface OwnProps {
@@ -21,7 +21,7 @@ const VersjonsvelgerV1V2 = ({ v1, v2 }: OwnProps) => {
     <Box marginBlock="space-0 space-4">
       <ToggleGroup
         value={valgtVersjon}
-        onChange={value => setValgtVersjon(value === 'v1' ? 'v1' : 'v2')}
+        onChange={value => setValgtVersjon(value as 'v1' | 'v2')}
         size="small"
         data-color="neutral"
         aria-label="Velg versjon av panelet"

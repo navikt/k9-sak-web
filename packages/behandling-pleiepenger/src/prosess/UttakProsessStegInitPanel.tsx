@@ -1,7 +1,7 @@
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
+import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
-import { UttakPanel } from '@k9-sak-web/gui/prosess/uttak/UttakPanel.js';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { K9SakProsessApi } from './api/K9SakProsessApi';
@@ -41,7 +41,7 @@ export function UttakProsessStegInitPanel(props: Props) {
   };
 
   return (
-    <UttakPanel
+    <Uttak
       behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       erOverstyrer={props.erOverstyrer}
