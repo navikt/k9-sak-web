@@ -100,10 +100,16 @@ const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytel
   };
 };
 
-const ikkeOppfyltÅrsaker = Object.values(AndreLivsoppholdsytelserIkkeOppfyltÅrsak).map(årsak => ({
-  value: årsak,
-  label: formatSnakeCaseLabel(årsak),
-}));
+const ikkeOppfyltÅrsaker = Object.values(AndreLivsoppholdsytelserIkkeOppfyltÅrsak)
+  .filter(
+    årsak =>
+      årsak !== AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET &&
+      årsak !== AndreLivsoppholdsytelserIkkeOppfyltÅrsak.UDEFINERT,
+  )
+  .map(årsak => ({
+    value: årsak,
+    label: formatSnakeCaseLabel(årsak),
+  }));
 
 interface Props {
   vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
