@@ -554,13 +554,26 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal vise aktiver aksjonspunkt når lukket AP vurderes i behandlingen', async () => {
-      await expect(canvas.getByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+    await step('skal vise aktiver aksjonspunkt når backend tillater reaktivering', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
     });
   },
 };
 
 export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: Story = {
+  decorators: [
+    (Story: ComponentType) => (
+      <NyInntektApiContext
+        value={{
+          backend: 'k9sak',
+          kanReaktivereAksjonspunkt: async () => false,
+          reaktiverAksjonspunkt: async () => undefined,
+        }}
+      >
+        <Story />
+      </NyInntektApiContext>
+    ),
+  ],
   args: {
     readOnly: false,
     aksjonspunkter: [],
@@ -575,7 +588,8 @@ export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: 
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal ikke vise aktiver aksjonspunkt når perioden ikke vurderes i behandlingen', async () => {
+    await step('skal ikke vise aktiver aksjonspunkt når backend ikke tillater reaktivering', async () => {
+      await expect(await canvas.findByText('Perioder med ny aktivitet')).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Aktiver aksjonspunkt' })).not.toBeInTheDocument();
     });
   },
