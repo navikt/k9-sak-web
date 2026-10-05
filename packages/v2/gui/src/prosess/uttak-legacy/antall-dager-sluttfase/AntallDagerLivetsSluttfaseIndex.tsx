@@ -1,5 +1,4 @@
 // LEGACY-UTTAK: Slettes når feature toggle NYTT_UTTAK_PANEL fjernes. Ikke endre.
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import type KvoteInfo from './KvoteInfo';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from './nb_NO';
@@ -57,7 +56,7 @@ const AntallDagerLivetsSluttfaseIndex = ({ kvoteInfo }: OwnProps) => {
             </div>
           )}
         </div>
-        <VerticalSpacer sixteenPx />
+        <div style={{ height: 16 }} />
 
         <Fremdriftslinje
           max={maxAntallDager}
@@ -65,7 +64,7 @@ const AntallDagerLivetsSluttfaseIndex = ({ kvoteInfo }: OwnProps) => {
           antallGrønnBar={antallForbrukteDagerInnenforKvote}
           antallGulBar={antallFrobrukteDagerVedOverforbruk}
         />
-        <VerticalSpacer fourPx />
+        <div style={{ height: 4 }} />
         <p>
           {!!kvoteInfo.totaltForbruktKvote &&
             intl.formatMessage(

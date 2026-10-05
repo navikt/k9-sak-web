@@ -2,7 +2,7 @@
 import { Fragment, useContext, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
 import { Alert, BodyLong, Button, Table, Loader, HStack } from '@navikt/ds-react';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
   type FagsakYtelsesType as FagsakYtelseType,
   fagsakYtelsesType as fagsakYtelseType,
@@ -108,7 +108,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
                     size="small"
                     icon={<PencilIcon />}
                     onClick={redigerVirkningsdatoFunc}
-                    disabled={behandling.status === behandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
+                    disabled={behandling.status === BehandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
                   >
                     Rediger
                   </Button>
