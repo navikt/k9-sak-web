@@ -1,5 +1,6 @@
 // LEGACY-UTTAK: Slettes når feature toggle NYTT_UTTAK_PANEL fjernes. Ikke endre.
 
+import type { JSX } from 'react';
 import styles from './fremdriftslinje.module.css';
 
 interface OwnProps {
@@ -10,7 +11,7 @@ interface OwnProps {
 }
 
 const Fremdriftslinje = ({ max, antallGrønnBar, antallGulBar, totalBreddeProsent }: OwnProps) => {
-  const antallTitler = [];
+  const antallTitler: JSX.Element[] = [];
   let antallPerIntervall;
 
   if (max >= 100) {
