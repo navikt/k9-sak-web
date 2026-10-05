@@ -40,7 +40,7 @@ interface BostedPeriodForm extends OpphørVarselPeriodForm {
   kildeFritekst: string;
   opphøreEllerAvslå: string;
   opphørsdato: string;
-  årsak: string;
+  årsak?: BostedsvilkårIkkeOppfyltÅrsak;
   skalSendeVarselOmOpphør: string;
 }
 
@@ -66,7 +66,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): BostedFo
               ? 'avslå'
               : '',
         opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
-        årsak: p.avklaring?.ikkeOppfyltÅrsak ?? '',
+        årsak: p.avklaring?.ikkeOppfyltÅrsak ?? undefined,
         skalSendeVarselOmOpphør:
           p.avklaring?.skalSendeVarsel === true ? 'ja' : p.avklaring?.skalSendeVarsel === false ? 'nei' : '',
       },
@@ -76,6 +76,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): BostedFo
 const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; selectedId: string }) => {
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for opphør');
+  if (!selectedPeriod.årsak) throw new Error('Årsak for valgt periode er ikke satt');
   const isOpphør = selectedPeriod.opphøreEllerAvslå === 'opphøre';
   const skalSendeVarsel = selectedPeriod.skalSendeVarselOmOpphør === 'ja';
   return {
@@ -90,7 +91,7 @@ const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; sele
         skalIkkeSendeVarsel: !skalSendeVarsel,
         vurdering: {
           begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
-          fraflyttingsÅrsak: selectedPeriod.årsak as BostedsvilkårIkkeOppfyltÅrsak,
+          fraflyttingsÅrsak: selectedPeriod.årsak,
           begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
           fritekstTilVarsel: skalSendeVarsel ? selectedPeriod.fritekstTilVarsel : undefined,
           kilde: selectedPeriod.kilde as BostedsavklaringKildeType,
