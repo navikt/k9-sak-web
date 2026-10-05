@@ -135,6 +135,7 @@ const utledAktivTab = (data: InngangsvilkårData, erFørstegangsbehandling: bool
   }
   if (
     !erFørstegangsbehandling &&
+    data.vurderAktivitetsvilkårAp &&
     stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)
   ) {
     return InngangsvilkårTab.AKTIVITET;
