@@ -188,6 +188,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
       />
       <BehandlingProvider
         behandlingUuid={behandling.uuid}
+        behandlingVersjon={behandling.versjon}
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
       >
         <RawIntlProvider value={intl}>

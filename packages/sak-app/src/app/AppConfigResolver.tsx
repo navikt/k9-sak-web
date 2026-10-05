@@ -12,7 +12,7 @@ import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetal
 import { K9FeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/K9FeilutbetalingFaktaBackendClient.js';
 import { InntektsmeldingApiContext } from '@k9-sak-web/gui/fakta/inntektsmelding/api/InntektsmeldingApiContext.js';
 import { K9InntektsmeldingBackendClient } from '@k9-sak-web/gui/fakta/inntektsmelding/api/K9InntektsmeldingBackendClient.js';
-import { K9NyInntektBackendClient } from '@k9-sak-web/gui/fakta/ny-inntekt/api/K9NyInntektBackendClient.js';
+import { K9SakNyInntektBackendClient } from '@k9-sak-web/gui/fakta/ny-inntekt/api/K9SakNyInntektBackendClient.js';
 import { NyInntektApiContext } from '@k9-sak-web/gui/fakta/ny-inntekt/api/NyInntektApiContext.js';
 import SykdomOgOpplæringBackendClient from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClient.js';
 import { SykdomOgOpplæringBackendClientContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClientContext.js';
@@ -98,7 +98,7 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                 <InntektsmeldingApiContext value={new K9InntektsmeldingBackendClient()}>
                   <DokumenterApiContext value={new K9DokumenterBackendClient()}>
                     <SykdomOgOpplæringBackendClientContext value={new SykdomOgOpplæringBackendClient()}>
-                      <NyInntektApiContext value={new K9NyInntektBackendClient()}>
+                      <NyInntektApiContext value={new K9SakNyInntektBackendClient()}>
                         <UtenlandsoppholdApiContext value={new K9SakUtenlandsoppholdBackendClient()}>
                           <YtelserApiContext value={new K9YtelserBackendClient()}>
                             <AvregningBackendClientContext value={new K9AvregningBackendClient()}>
