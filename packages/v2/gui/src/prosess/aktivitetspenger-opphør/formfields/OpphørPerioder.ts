@@ -5,6 +5,7 @@ import type { VilkårSplittPanelPeriod } from '../../../shared/vilkårSplittPane
 
 export type OpphørPeriodStatus = VilkårSplittPanelPeriod['status'];
 export interface OpphørPeriodInput {
+  id?: string;
   fom: string;
   tom?: string;
   status: OpphørPeriodStatus;
@@ -22,7 +23,7 @@ export const getOpphørPeriods = ({ aksjonspunkt, perioder }: GetOpphørPeriodsP
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.fom.localeCompare(firstPeriod.fom))
     .map(periode => {
       const mappedPeriod: VilkårSplittPanelPeriod = {
-        id: periode.fom,
+        id: periode.id ?? periode.fom,
         status: periode.status,
         label: periode.tom ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}` : formatDate(periode.fom),
       };

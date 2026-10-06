@@ -1,5 +1,7 @@
+import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { queryOptions } from '@tanstack/react-query';
-import type { AktivitetspengerApi } from './AktivitetspengerApi';
+import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
 
 interface Behandling {
   uuid: string;
@@ -10,6 +12,26 @@ export const vilkårQueryOptions = (api: AktivitetspengerApi, behandling: Behand
   queryOptions({
     queryKey: ['vilkar', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getVilkår(behandling.uuid),
+  });
+
+export const vilkårsavklaringerQueryOptions = (
+  api: AktivitetspengerApi,
+  behandling: Behandling,
+  vilkarType: VilkårType,
+) =>
+  queryOptions({
+    queryKey: ['vilkårsavklaringer', behandling.uuid, behandling.versjon, vilkarType, api.backend],
+    queryFn: () => api.hentVilkårsavklaringer(behandling.uuid, vilkarType),
+  });
+
+export const vilkårsavklaringVurderingerQueryOptions = (
+  api: AktivitetspengerApi,
+  behandling: Behandling,
+  vilkarType: VilkårType,
+) =>
+  queryOptions<VilkårsavklaringVurderingerDto>({
+    queryKey: ['vilkårsavklaring-vurderinger', behandling.uuid, behandling.versjon, vilkarType, api.backend],
+    queryFn: () => api.hentVilkårsavklaringVurderinger(behandling.uuid, vilkarType),
   });
 
 export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling?: Behandling) =>

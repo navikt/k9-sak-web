@@ -1,16 +1,16 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import {
@@ -22,12 +22,12 @@ import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 
 interface PeriodForm {
   begrunnelse: string;
   andreLivsoppholdytelser: 'ja' | 'nei' | '';
-  avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak | 'fritekst' | '';
-  fritekst: string;
+  fritekstVurderingBrev: string;
 }
 
 interface FormData {
@@ -37,7 +37,6 @@ interface FormData {
 interface Props {
   vurderAndreLivsoppholdytelserVilkårAP?: AksjonspunktDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
-  andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -45,52 +44,54 @@ interface Props {
   isPermanentlyReadOnly: boolean;
 }
 
-const buildInitialValues = (vilkår: VilkårMedPerioderDto): FormData => ({
+const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
   perioder: Object.fromEntries(
-    (vilkår.perioder ?? []).map(period => [
+    (vilkårsavklaringVurderinger.perioder ?? []).map(period => [
       period.periode.fom,
       {
-        begrunnelse: period.begrunnelse ?? '',
+        begrunnelse: period.avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
         andreLivsoppholdytelser:
-          period.vilkarStatus === Utfall.OPPFYLT ? 'ja' : period.vilkarStatus === Utfall.IKKE_OPPFYLT ? 'nei' : '',
-        avslagsårsak: '',
-        fritekst: period.fritekstVurderingBrev ?? '',
+          period.utfall === Utfall.OPPFYLT ? 'nei' : period.utfall === Utfall.IKKE_OPPFYLT ? 'ja' : '',
+        fritekstVurderingBrev: period.avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
       },
     ]),
   ),
 });
 
-const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[] =>
-  (vilkår.perioder ?? [])
+const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): VilkårSplittPanelPeriod[] =>
+  (vilkårsavklaringVurderinger.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
     .map(period => ({
       id: period.periode.fom,
-      status: getPeriodStatus(period.vilkarStatus),
+      status: getPeriodStatus(period.utfall),
       label: formatDate(period.periode.fom),
-      periode: period.periode.tom ? { fom: period.periode.fom, tom: period.periode.tom } : undefined,
+      periode: period.periode,
     }));
 
-const buildPayload = ({ formData, selectedId }: { formData: FormData; selectedId: string }) => {
-  const selectedPeriod = formData.perioder[selectedId];
-  if (!selectedPeriod) {
+const buildPayload = ({
+  formData,
+  selectedId,
+  periods,
+}: {
+  formData: FormData;
+  selectedId: string;
+  periods: VilkårSplittPanelPeriod[];
+}) => {
+  const selectedFormPeriod = formData.perioder[selectedId];
+  if (!selectedFormPeriod) {
     throw new Error('Kunne ikke finne valgt periode for andre livsoppholdsytelser');
   }
-
-  const erVilkårOppfylt = selectedPeriod.andreLivsoppholdytelser === 'ja';
+  const erVilkårOppfylt = selectedFormPeriod.andreLivsoppholdytelser === 'nei';
+  const selectedPeriod = periods.find(p => p.id === selectedId);
   return {
     '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
-    begrunnelse: selectedPeriod.begrunnelse,
+    begrunnelse: selectedFormPeriod.begrunnelse,
     vurdertePerioder: [
       {
-        avslagsårsak: erVilkårOppfylt
-          ? undefined
-          : selectedPeriod.avslagsårsak === 'fritekst'
-            ? AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
-            : selectedPeriod.avslagsårsak || undefined,
-        begrunnelse: selectedPeriod.begrunnelse,
+        begrunnelse: selectedFormPeriod.begrunnelse,
         erVilkårOppfylt,
-        periode: { fom: selectedId, tom: '' },
-        fritekstVurderingBrev: selectedPeriod.avslagsårsak === 'fritekst' ? selectedPeriod.fritekst : undefined,
+        periode: { fom: selectedPeriod?.periode?.fom ?? '', tom: selectedPeriod?.periode?.tom },
+        fritekstVurderingBrev: !erVilkårOppfylt ? selectedFormPeriod.fritekstVurderingBrev : undefined,
       },
     ],
   };
@@ -99,16 +100,22 @@ const buildPayload = ({ formData, selectedId }: { formData: FormData; selectedId
 export const AndreLivsoppholdytelserVilkårsvurdering = ({
   vurderAndreLivsoppholdytelserVilkårAP,
   lokalkontorForeslårVilkårAP,
-  andreLivsoppholdytelserVilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
 }: Props) => {
-  const periods = buildPeriods(andreLivsoppholdytelserVilkår);
+  const queryClient = useQueryClient();
+  const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(
+    api,
+    behandling,
+    vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  );
+  const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
+  const periods = buildPeriods(vilkårsavklaringVurderinger);
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
-  const formHook = useForm<FormData>({ defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår) });
+  const formHook = useForm<FormData>({ defaultValues: buildInitialValues(vilkårsavklaringVurderinger) });
   const andreLivsoppholdytelser = useWatch({
     control: formHook.control,
     name: `perioder.${selectedId}.andreLivsoppholdytelser`,
@@ -121,9 +128,14 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload({ formData, selectedId })]);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
+        buildPayload({ formData, selectedId, periods }),
+      ]);
     },
-    onSuccess: onAksjonspunktBekreftet,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
+      onAksjonspunktBekreftet();
+    },
   });
 
   const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({

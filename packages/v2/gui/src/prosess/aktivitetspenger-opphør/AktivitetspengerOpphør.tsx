@@ -226,7 +226,6 @@ export const AktivitetspengerOpphør = ({
               <AndreLivsoppholdytelserVilkårsvurdering
                 vurderAndreLivsoppholdytelserVilkårAP={vurderAndreLivsoppholdytelserVilkårAP}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
-                andreLivsoppholdytelserVilkår={andreLivsoppholdytelserVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}

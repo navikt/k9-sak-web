@@ -4,6 +4,7 @@ import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandli
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
@@ -14,6 +15,7 @@ import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrak
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
@@ -139,6 +141,10 @@ const fakeAndreLivsoppholdytelserVilkårArgsBase = {
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
   api: Object.assign(Object.create(fakeAktivitetspengerApi), {
     bekreftAksjonspunkt: fn(),
+    hentVilkårsavklaringVurderinger: fn(async () => ({
+      perioder: [],
+      vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+    })),
   }) as AktivitetspengerApi,
   onAksjonspunktBekreftet: fn(),
 };
@@ -337,7 +343,9 @@ export const AndreLivsoppholdytelser: Story = {
     });
 
     await step('Skjemaet viser feltet for livsoppholdytelse', async () => {
-      await expect(canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i })).toBeInTheDocument();
+      const ytelse = canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i });
+      await expect(ytelse).toBeInTheDocument();
+      await expect(ytelse).toHaveValue('');
     });
 
     await step('Velg arbeidsavklaringspenger', async () => {
@@ -345,6 +353,53 @@ export const AndreLivsoppholdytelser: Story = {
         canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i }),
         AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER,
       );
+    });
+  },
+};
+
+const fakeVilkårsavklaringer = {
+  vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  avklaringer: [
+    {
+      avklaringtype: Avklaringtype.OPPHØR,
+      begrunnelseIkkeVarsel: 'Bruker varslet om endringen selv.',
+      fritekstTilVarsel: 'Arbeidsavklaringspenger',
+      ikkeOppfyltÅrsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+      kilde: 'NAV',
+      periode: { fom: '2026-01-29', tom: '2026-12-31' },
+      referanse: 'andre-livsoppholdsytelser-ref',
+      skalSendeVarsel: false,
+    },
+  ],
+} satisfies VilkårsavklaringerDto;
+
+export const AndreLivsoppholdytelserPreutfylt: Story = {
+  tags: ['avklarings-prefill-test'],
+  args: {
+    ...fakeAndreLivsoppholdytelserArgsBase,
+    behandling: { ...fakeAndreLivsoppholdytelserBehandling, uuid: 'fake-preutfylt-behandling' },
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      hentVilkårsavklaringer: fn(async () => fakeVilkårsavklaringer),
+    }) as AktivitetspengerApi,
+  },
+  play: async ({ canvas, step }) => {
+    await step('Velg perioden fra avklaringen', async () => {
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 31\.12\.2026/i }));
+    });
+
+    await step('Perioden og feltene er forhåndsutfylt', async () => {
+      await expect(canvas.getByRole('radio', { name: 'Opphøre fra en dato' })).toBeChecked();
+      await expect(canvas.getByRole('combobox', { name: /hvilken ytelse mottar bruker/i })).toHaveValue(
+        AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+      );
+      await expect(canvas.getByRole('textbox', { name: /skriv inn hvilken ytelse/i })).toHaveValue(
+        'Arbeidsavklaringspenger',
+      );
+      await expect(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i })).toHaveValue('NAV');
+      await expect(canvas.getByRole('radio', { name: 'Nei' })).toBeChecked();
+      await expect(
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
+      ).toHaveValue('Bruker varslet om endringen selv.');
     });
   },
 };
@@ -405,9 +460,16 @@ export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
 
 export const AndreLivsoppholdytelserVilkårsvurdering: Story = {
   args: fakeAndreLivsoppholdytelserVilkårArgsBase,
-  play: async ({ canvas, step }) => {
+  play: async ({ canvas, step, args }) => {
     await step('Åpne Vilkårsvurdering-fanen', async () => {
       await userEvent.click(canvas.getByRole('tab', { name: 'Vilkårsvurdering' }));
+    });
+
+    await step('Hent vurderinger fra endepunktet', async () => {
+      await expect(args.api.hentVilkårsavklaringVurderinger).toHaveBeenCalledWith(
+        fakeAndreLivsoppholdytelserBehandling.uuid,
+        vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      );
     });
 
     await step('Fyll inn vurderingens begrunnelse', async () => {

@@ -64,4 +64,12 @@ describe('getOpphørPeriods', () => {
     expect(result).toHaveLength(2);
     expect(result.map(period => period.id)).toEqual(['2027-01-01', '2026-01-01']);
   });
+
+  it('bruker avklaringens referanse som periode-ID når den finnes', () => {
+    const result = getOpphørPeriods({
+      perioder: [{ fom: '2026-01-01', tom: '2026-12-31', status: 'success', id: 'avklaring-1' }],
+    });
+
+    expect(result[0]?.id).toBe('avklaring-1');
+  });
 });

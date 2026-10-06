@@ -2,24 +2,28 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { AndreLivsoppholdsytelserAvklaringKildeType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserAvklaringKildeType.js';
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårsavklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Alert, BodyShort, Button, HStack, List, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { formatSnakeCaseLabel } from '../../../utils/formatters.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
 import { OpphørKilde } from '../formfields/OpphørKilde.js';
-import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
+import { getOpphørPeriods, type OpphørPeriodInput } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
 
@@ -45,58 +49,106 @@ interface AndreLivsoppholdytelserFormData {
   perioder: Record<string, AndreLivsoppholdytelserPeriodForm>;
 }
 
-const buildInitialValues = (vilkår: VilkårMedPerioderDto): AndreLivsoppholdytelserFormData => ({
-  perioder: Object.fromEntries(
+const getPeriodStatus = (status?: Utfall): OpphørPeriodInput['status'] =>
+  status === Utfall.OPPFYLT ? 'success' : status === Utfall.IKKE_OPPFYLT ? 'error' : 'warning';
+
+const buildPeriodInputs = (vilkår: VilkårMedPerioderDto, avklaringer: VilkårsavklaringDto[]) => {
+  const perioder = new Map<string, OpphørPeriodInput>(
     (vilkår.perioder ?? []).map(period => [
       period.periode.fom,
       {
-        avslagFom: period.periode.fom,
-        avslagTom: period.periode.tom ?? '',
-        begrunnelseForIkkeVarsle: '',
-        fritekstTilVarsel: '',
-        kilde: '',
-        kildeFritekst: '',
-        livsoppholdytelse: '',
-        opphøreEllerAvslå: '',
-        opphørsdato: period.periode.fom,
-        skalSendeVarselOmOpphør: '',
-        annenLivsoppholdytelse: '',
+        fom: period.periode.fom,
+        tom: period.periode.tom,
+        status: getPeriodStatus(period.vilkarStatus),
       },
     ]),
-  ),
-});
+  );
+
+  for (const avklaring of avklaringer) {
+    const vilkårsperiode = (vilkår.perioder ?? []).find(
+      period =>
+        period.periode.fom <= avklaring.periode.fom &&
+        (period.periode.tom === undefined || period.periode.tom >= avklaring.periode.fom),
+    );
+    perioder.set(avklaring.periode.fom, {
+      ...avklaring.periode,
+      id: avklaring.referanse,
+      status: getPeriodStatus(vilkårsperiode?.vilkarStatus),
+    });
+  }
+
+  return [...perioder.values()];
+};
+
+const buildInitialValues = (
+  perioder: OpphørPeriodInput[],
+  avklaringer: VilkårsavklaringDto[],
+): AndreLivsoppholdytelserFormData => {
+  const avklaringerByReferanse = new Map(avklaringer.map(avklaring => [avklaring.referanse, avklaring]));
+  const avklaringerByFom = new Map(avklaringer.map(avklaring => [avklaring.periode.fom, avklaring]));
+
+  return {
+    perioder: Object.fromEntries(
+      perioder.map(period => {
+        const id = period.id ?? period.fom;
+        const avklaring = avklaringerByReferanse.get(id) ?? avklaringerByFom.get(period.fom);
+        const isOpphør = avklaring?.avklaringtype === Avklaringtype.OPPHØR;
+        return [
+          id,
+          {
+            avslagFom: avklaring?.periode.fom ?? period.fom,
+            avslagTom: avklaring ? (avklaring.periode.tom ?? '') : (period.tom ?? ''),
+            begrunnelseForIkkeVarsle: avklaring?.begrunnelseIkkeVarsel ?? '',
+            fritekstTilVarsel: '',
+            kilde: avklaring?.kilde ?? '',
+            kildeFritekst: avklaring?.kildeFritekst ?? '',
+            livsoppholdytelse: avklaring?.ikkeOppfyltÅrsak ?? '',
+            opphøreEllerAvslå: avklaring ? (isOpphør ? 'opphøre' : 'avslå') : '',
+            opphørsdato: avklaring?.periode.fom ?? period.fom,
+            skalSendeVarselOmOpphør:
+              avklaring?.skalSendeVarsel === undefined ? '' : avklaring.skalSendeVarsel ? 'ja' : 'nei',
+            annenLivsoppholdytelse:
+              avklaring?.ikkeOppfyltÅrsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
+                ? (avklaring.fritekstTilVarsel ?? '')
+                : '',
+          },
+        ];
+      }),
+    ),
+  };
+};
 
 const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytelserFormData; selectedId: string }) => {
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for andre livsoppholdsytelser');
   const isOpphør = selectedPeriod.opphøreEllerAvslå === 'opphøre';
   const skalSendeVarsel = selectedPeriod.skalSendeVarselOmOpphør === 'ja';
+  const avklaring = {
+    periode: {
+      fom: isOpphør ? selectedPeriod.opphørsdato : selectedPeriod.avslagFom,
+      tom: isOpphør ? undefined : selectedPeriod.avslagTom,
+    },
+    avklaring: {
+      begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER',
+      begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
+      fritekstTilVarsel:
+        selectedPeriod.livsoppholdytelse === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
+          ? selectedPeriod.annenLivsoppholdytelse
+          : undefined,
+      ikkeOppfyltÅrsak: selectedPeriod.livsoppholdytelse as AndreLivsoppholdsytelserIkkeOppfyltÅrsak,
+      kilde: selectedPeriod.kilde as AndreLivsoppholdsytelserAvklaringKildeType,
+      kildeFritekst:
+        selectedPeriod.kilde === AndreLivsoppholdsytelserAvklaringKildeType.ANNET
+          ? selectedPeriod.kildeFritekst
+          : undefined,
+      skalIkkeSendeVarsel: !skalSendeVarsel,
+    },
+  };
+  const avklaringer: [typeof avklaring] = [avklaring];
   return {
     '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER,
     begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER',
-    avklaringer: [
-      {
-        periode: {
-          fom: isOpphør ? selectedPeriod.opphørsdato : selectedPeriod.avslagFom,
-          tom: isOpphør ? undefined : selectedPeriod.avslagTom,
-        },
-        avklaring: {
-          begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER',
-          begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
-          fritekstTilVarsel:
-            selectedPeriod.livsoppholdytelse === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
-              ? selectedPeriod.annenLivsoppholdytelse
-              : undefined,
-          ikkeOppfyltÅrsak: selectedPeriod.livsoppholdytelse as AndreLivsoppholdsytelserIkkeOppfyltÅrsak,
-          kilde: selectedPeriod.kilde as AndreLivsoppholdsytelserAvklaringKildeType,
-          kildeFritekst:
-            selectedPeriod.kilde === AndreLivsoppholdsytelserAvklaringKildeType.ANNET
-              ? selectedPeriod.kildeFritekst
-              : undefined,
-          skalIkkeSendeVarsel: !skalSendeVarsel,
-        },
-      },
-    ],
+    avklaringer,
   };
 };
 
@@ -130,24 +182,24 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   readOnly,
   isPermanentlyReadOnly,
 }: Props) => {
+  const queryClient = useQueryClient();
+  const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(
+    api,
+    behandling,
+    vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  );
+  const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
+  const avklaringer = vilkårsavklaringer.avklaringer;
+  const periodInputs = buildPeriodInputs(andreLivsoppholdytelserVilkår, avklaringer);
   const periods = getOpphørPeriods({
     aksjonspunkt: vurderAndreLivsoppholdytelserFaktaAP,
-    perioder: (andreLivsoppholdytelserVilkår.perioder ?? []).map(periode => ({
-      fom: periode.periode.fom,
-      tom: periode.periode.tom,
-      status:
-        periode.vilkarStatus === Utfall.OPPFYLT
-          ? 'success'
-          : periode.vilkarStatus === Utfall.IKKE_OPPFYLT
-            ? 'error'
-            : 'warning',
-    })),
+    perioder: periodInputs,
   });
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<AndreLivsoppholdytelserFormData | null>(null);
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
-    defaultValues: buildInitialValues(andreLivsoppholdytelserVilkår),
+    defaultValues: buildInitialValues(periodInputs, avklaringer),
   });
   const perioder = formHook.watch('perioder');
   const valgtPeriode = perioder[selectedId];
@@ -161,7 +213,10 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
     mutationFn: async (formData: AndreLivsoppholdytelserFormData) => {
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload({ formData, selectedId })]);
     },
-    onSuccess: onAksjonspunktBekreftet,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: vilkårsavklaringerOptions.queryKey });
+      onAksjonspunktBekreftet();
+    },
   });
 
   const handleSubmit = async (

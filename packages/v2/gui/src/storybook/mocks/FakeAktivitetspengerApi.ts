@@ -1,5 +1,6 @@
-import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
+import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
+import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
@@ -40,6 +41,14 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
 
   async hentBostedGrunnlag() {
     return { perioder: [] };
+  }
+
+  async hentVilkårsavklaringer(_behandlingUuid: string, vilkarType: VilkårType) {
+    return { avklaringer: [], vilkårType: vilkarType };
+  }
+
+  async hentVilkårsavklaringVurderinger(_behandlingUuid: string, vilkarType: VilkårType) {
+    return { perioder: [], vilkårType: vilkarType };
   }
 
   async getBeregningsgrunnlag(): Promise<never> {

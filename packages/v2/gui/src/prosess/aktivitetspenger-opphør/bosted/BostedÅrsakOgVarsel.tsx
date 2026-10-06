@@ -79,27 +79,27 @@ const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; sele
   if (!selectedPeriod.årsak) throw new Error('Årsak for valgt periode er ikke satt');
   const isOpphør = selectedPeriod.opphøreEllerAvslå === 'opphøre';
   const skalSendeVarsel = selectedPeriod.skalSendeVarselOmOpphør === 'ja';
+  const avklaring = {
+    periode: {
+      fom: isOpphør ? selectedPeriod.opphørsdato : selectedPeriod.avslagFom,
+      tom: isOpphør ? undefined : selectedPeriod.avslagTom,
+    },
+    skalIkkeSendeVarsel: !skalSendeVarsel,
+    vurdering: {
+      begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
+      fraflyttingsÅrsak: selectedPeriod.årsak,
+      begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
+      fritekstTilVarsel: skalSendeVarsel ? selectedPeriod.fritekstTilVarsel : undefined,
+      kilde: selectedPeriod.kilde as BostedsavklaringKildeType,
+      kildeFritekst:
+        selectedPeriod.kilde === BostedsavklaringKildeType.ANNET ? selectedPeriod.kildeFritekst : undefined,
+    },
+  };
+  const avklaringer: [typeof avklaring] = [avklaring];
   return {
     '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
     begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
-    avklaringer: [
-      {
-        periode: {
-          fom: isOpphør ? selectedPeriod.opphørsdato : selectedPeriod.avslagFom,
-          tom: isOpphør ? undefined : selectedPeriod.avslagTom,
-        },
-        skalIkkeSendeVarsel: !skalSendeVarsel,
-        vurdering: {
-          begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BOSTED',
-          fraflyttingsÅrsak: selectedPeriod.årsak,
-          begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
-          fritekstTilVarsel: skalSendeVarsel ? selectedPeriod.fritekstTilVarsel : undefined,
-          kilde: selectedPeriod.kilde as BostedsavklaringKildeType,
-          kildeFritekst:
-            selectedPeriod.kilde === BostedsavklaringKildeType.ANNET ? selectedPeriod.kildeFritekst : undefined,
-        },
-      },
-    ],
+    avklaringer,
   };
 };
 

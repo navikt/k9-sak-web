@@ -1,3 +1,4 @@
+import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
@@ -12,6 +13,10 @@ import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type {
+  VilkårsavklaringerDto,
+  VilkårsavklaringVurderingerDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 
 export interface AktivitetspengerApi {
   readonly backend: 'ungsak';
@@ -23,6 +28,11 @@ export interface AktivitetspengerApi {
   hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal): Promise<AsyncPollingStatus>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
   hentBostedGrunnlag(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
+  hentVilkårsavklaringer(behandlingUuid: string, vilkarType: VilkårType): Promise<VilkårsavklaringerDto>;
+  hentVilkårsavklaringVurderinger(
+    behandlingUuid: string,
+    vilkarType: VilkårType,
+  ): Promise<VilkårsavklaringVurderingerDto>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto | null>;
   getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
   getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<AktivitetspengerUtbetaltMånedDto[]>;
