@@ -91,17 +91,18 @@ export const AndreLivsoppholdytelserSkjema = ({
           />
         )}
 
-        {avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE && (
-          <RhfTextarea
-            key={`${selectedId}-fritekst`}
-            control={formHook.control}
-            name={`vurderinger.${selectedId}.fritekst`}
-            label="Fritekst avslagsbrev"
-            description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
-            validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
-            maxLength={fritekstVurderingBrevMaxLength}
-          />
-        )}
+        {andreLivsoppholdytelser === 'ikkeOppfylt' &&
+          avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE && (
+            <RhfTextarea
+              key={`${selectedId}-fritekst`}
+              control={formHook.control}
+              name={`vurderinger.${selectedId}.fritekst`}
+              label="Fritekst avslagsbrev"
+              description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+              validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+              maxLength={fritekstVurderingBrevMaxLength}
+            />
+          )}
         {andreLivsoppholdytelser === 'oppfylt' && (
           <VStack gap="space-16">
             <VStack gap="space-8">
