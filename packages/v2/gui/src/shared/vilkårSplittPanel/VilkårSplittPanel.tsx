@@ -21,6 +21,7 @@ export interface VilkårSplittPanelPeriod {
     fom: string;
     tom: string;
   };
+  vurderesIBehandlingen?: boolean;
 }
 
 interface VilkårSplittPanelProps {

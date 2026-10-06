@@ -19,20 +19,20 @@ const getVilkårUtfall = (vilkårStatus: Utfall) => {
 };
 
 export const Alder = ({ alderVilkår }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (alderVilkår?.perioder ?? []).map(p => ({
+  const perioder: VilkårSplittPanelPeriod[] = (alderVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(perioder[0]?.id ?? '');
 
   const selectedVilkårPeriode = alderVilkår.perioder?.find(p => p.periode.fom === selectedId);
 
   return (
     <VilkårSplittPanel
       isAktivitetspenger
-      periods={periods}
+      periods={perioder}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av alder"

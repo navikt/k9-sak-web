@@ -61,7 +61,7 @@ export const Bosted = ({
   const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
   const avkortingsperiodeBosted = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BOSTEDSVILKÅR);
   const søknadsperioder = byggVisningsperioder(bostedVilkår, avkortingsperiodeBosted?.perioder ?? []);
-  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
     label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
@@ -69,6 +69,7 @@ export const Bosted = ({
       fom: periode.periode.fom,
       tom: periode.periode.tom,
     },
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
   }));
   const formHook = useForm<BostedFormData>({
     defaultValues: buildInitialValues(søknadsperioder),
@@ -77,20 +78,21 @@ export const Bosted = ({
   const [selectedId, setSelectedId] = useState(
     () =>
       søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
+      perioder[0]?.id ??
       '',
   );
   useEffect(() => {
-    if (!periods.some(period => period.id === selectedId)) {
+    if (!perioder.some(period => period.id === selectedId)) {
       setSelectedId('');
     }
-  }, [periods, selectedId]);
+  }, [perioder, selectedId]);
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (data: BostedFormData) => {
+    mutationFn: async ({ data, selectedId }: { data: BostedFormData; selectedId: string }) => {
+      const periode = perioder.find(period => period.id === selectedId);
       const vurdering = data.vurderinger[selectedId];
-      const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem || !vurdering) {
+      if (!periode || !vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const muligAvkorting = vurdering.muligAvkortingPeriode;
@@ -181,7 +183,7 @@ export const Bosted = ({
       )}
       <VilkårSplittPanel
         isAktivitetspenger
-        periods={periods}
+        periods={perioder}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av bosatt i Trondheim kommune"
@@ -210,7 +212,7 @@ export const Bosted = ({
             </VStack>
           ) : null
         }
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
       >
         {(isFormLocked, setIsFormLocked, isDefaultLocked) => (
           <VStack gap="space-24">
@@ -237,7 +239,7 @@ export const Bosted = ({
                 isPending={isPending}
                 visAvbryt={isDefaultLocked}
                 onSubmit={async data => {
-                  await bekreftAksjonspunktMutation(data);
+                  await bekreftAksjonspunktMutation({ data, selectedId });
                   setIsFormLocked(true);
                 }}
                 onAvbryt={() => {

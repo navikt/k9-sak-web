@@ -55,23 +55,25 @@ export const BehovForBistand = ({
   const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
   const avkortingsperiodeBistand = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BISTANDSVILKÅR);
   const søknadsperioder = byggVisningsperioder(vurderBistandsvilkårVilkår, avkortingsperiodeBistand?.perioder ?? []);
-  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
     label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
     periode: periode.periode,
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
   }));
   const [selectedId, setSelectedId] = useState(
     () =>
       søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
+      perioder[0]?.id ??
       '',
   );
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
   useEffect(() => {
-    if (!periods.some(period => period.id === selectedId)) {
+    if (!perioder.some(period => period.id === selectedId)) {
       setSelectedId('');
     }
-  }, [periods, selectedId]);
+  }, [perioder, selectedId]);
   const formHook = useForm<BehovForBistandFormData>({
     defaultValues: buildInitialValues(søknadsperioder),
   });
@@ -180,14 +182,14 @@ export const BehovForBistand = ({
       )}
       <VilkårSplittPanel
         isAktivitetspenger
-        periods={periods}
+        periods={perioder}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av behov for bistand"
         lovreferanse="§ 6"
         defaultIsLocked={isVurderBistandsvilkårApSolved || lokalkontorKanSendeTilBeslutter}
         readOnly={readOnly}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
         afterEditButton={
           lokalkontorKanSendeTilBeslutter ? (
             <VStack gap="space-20">
