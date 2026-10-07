@@ -6,8 +6,9 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Box, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
+import { PersonFillIcon } from '@navikt/aksel-icons';
+import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -47,7 +48,7 @@ interface Props {
 const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
   perioder: Object.fromEntries(
     (vilkårsavklaringVurderinger.perioder ?? []).map(period => [
-      period.periode.fom,
+      `${period.periode.fom}_${period.periode.tom ?? 'åpen_periode'}`,
       {
         begrunnelse: period.avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
         andreLivsoppholdytelser:
@@ -62,7 +63,7 @@ const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderinger
   (vilkårsavklaringVurderinger.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
     .map(period => ({
-      id: period.periode.fom,
+      id: `${period.periode.fom}_${period.periode.tom ?? 'åpen_periode'}`,
       status: getPeriodStatus(period.utfall),
       label: formatDate(period.periode.fom),
       periode: period.periode,
@@ -125,6 +126,11 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
   const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
   const selectedPeriod = periods.find(period => period.id === selectedId);
+  const selectedVilkårsavklaringVurdering = vilkårsavklaringVurderinger.perioder.find(
+    vurdering =>
+      vurdering.periode?.fom === selectedPeriod?.periode?.fom &&
+      vurdering.periode?.tom === selectedPeriod?.periode?.tom,
+  );
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -142,6 +148,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     mutationFn: async () => sendTilBeslutter(api, behandling),
     onSuccess: onAksjonspunktBekreftet,
   });
+  const uttalelse = selectedVilkårsavklaringVurdering?.avklaringOgVurdering?.avklaring.uttalelse;
 
   return (
     <VStack gap="space-20">
@@ -195,6 +202,34 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
             }}
           >
             <VStack gap="space-24" maxWidth="70ch" width="100%">
+              {uttalelse?.harUttalelse && (
+                <Box borderRadius="8" padding="space-16" background="info-softA">
+                  <VStack gap="space-20">
+                    <VStack gap="space-8">
+                      <HStack justify="space-between">
+                        <BodyShort size="small" weight="semibold">
+                          Stemmer opplysningene om opphør?
+                        </BodyShort>
+                        <Tag variant="outline" data-color="info" size="small">
+                          Fra bruker
+                        </Tag>
+                      </HStack>
+                      <BodyShort size="small">Nei</BodyShort>
+                    </VStack>
+                    <HStack gap="space-4">
+                      <PersonFillIcon title="Bruker" fontSize="1.5rem" />
+                      <VStack gap="space-6" marginBlock="space-2 space-0">
+                        <BodyShort size="small" weight="semibold">
+                          Tilbakemelding fra bruker om opphør
+                          {uttalelse.mottattTidspunkt &&
+                            ` ${formatDate(uttalelse.mottattTidspunkt)} kl. ${timeFormat(uttalelse.mottattTidspunkt)}`}
+                        </BodyShort>
+                        <BodyLong size="small">{uttalelse?.uttalelseTekst}</BodyLong>
+                      </VStack>
+                    </HStack>
+                  </VStack>
+                </Box>
+              )}
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
