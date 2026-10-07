@@ -9,7 +9,8 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import { Alert, BodyShort, Button, HStack, List, ReadMore, VStack } from '@navikt/ds-react';
+import { InformationSquareIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, HStack, InfoCard, List, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -189,25 +190,28 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
     vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   );
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
-  const avklaringer = vilkårsavklaringer.avklaringer;
-  const periodInputs = buildPeriodInputs(andreLivsoppholdytelserVilkår, avklaringer);
-  const periods = getOpphørPeriods({
+  const { avklaringer } = vilkårsavklaringer;
+  const periodData = buildPeriodInputs(andreLivsoppholdytelserVilkår, avklaringer);
+  const opphørPeriods = getOpphørPeriods({
     aksjonspunkt: vurderAndreLivsoppholdytelserFaktaAP,
-    perioder: periodInputs,
+    perioder: periodData,
   });
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(opphørPeriods[0]?.id ?? '');
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<AndreLivsoppholdytelserFormData | null>(null);
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
-    defaultValues: buildInitialValues(periodInputs, avklaringer),
+    defaultValues: buildInitialValues(periodData, avklaringer),
   });
-  const perioder = formHook.watch('perioder');
-  const valgtPeriode = perioder[selectedId];
-  const opphøreEllerAvslå = valgtPeriode?.opphøreEllerAvslå ?? '';
-  const valgtKilde = valgtPeriode?.kilde ?? '';
-  const skalSendeVarselOmOpphør = valgtPeriode?.skalSendeVarselOmOpphør ?? '';
-  const valgtYtelse = valgtPeriode?.livsoppholdytelse ?? '';
+  const formPerioder = formHook.watch('perioder');
+  const valgtFormPeriode = formPerioder[selectedId];
+  const valgtOpphørPeriode = opphørPeriods.find(periode => periode.id === selectedId);
+  const opphøreEllerAvslå = valgtFormPeriode?.opphøreEllerAvslå ?? '';
+  const valgtKilde = valgtFormPeriode?.kilde ?? '';
+  const skalSendeVarselOmOpphør = valgtFormPeriode?.skalSendeVarselOmOpphør ?? '';
+  const valgtYtelse = valgtFormPeriode?.livsoppholdytelse ?? '';
   const isSolved = vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.UTFØRT;
+  const erValgtPeriodeInnvilgetUtenAvklaring =
+    valgtOpphørPeriode?.status === 'success' && !avklaringer.some(avklaring => avklaring.referanse === selectedId);
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: AndreLivsoppholdytelserFormData) => {
@@ -252,7 +256,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
       )}
       <VilkårSplittPanel
         isAktivitetspenger
-        periods={periods}
+        periods={opphørPeriods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Mottar annen livsoppholdytelse"
@@ -261,7 +265,16 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
         lovreferanse="§ 4"
         defaultIsLocked={isSolved}
         readOnly={readOnly}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || erValgtPeriodeInnvilgetUtenAvklaring}
+        beforeDetailContent={
+          erValgtPeriodeInnvilgetUtenAvklaring ? (
+            <InfoCard data-color="info" size="small">
+              <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+                Alle vilkår er innvilget i perioden.
+              </InfoCard.Message>
+            </InfoCard>
+          ) : undefined
+        }
         lockedContent={
           isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserFaktaAP?.ansvarligSaksbehandler} /> : undefined
         }
