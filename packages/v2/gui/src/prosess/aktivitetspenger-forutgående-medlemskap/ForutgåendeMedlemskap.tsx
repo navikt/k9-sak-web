@@ -93,12 +93,25 @@ export const ForutgåendeMedlemskap = ({
 
   const søknadsopplysninger: { label: string; value: boolean }[] = medlemskapFraBruker
     ? [
-        { label: 'Har bodd i Norge', value: medlemskapFraBruker.harBoddINorge ?? false },
+        {
+          label: 'Har du bodd sammenhengende i Norge de 5 siste årene?',
+          value: medlemskapFraBruker.harBoddINorge ?? false,
+        },
         ...(medlemskapFraBruker.harJobbetINorge !== undefined
-          ? [{ label: 'Har jobbet i Norge', value: medlemskapFraBruker.harJobbetINorge }]
+          ? [
+              {
+                label: 'Har du jobbet sammenhengende i Norge de 5 siste årene?',
+                value: medlemskapFraBruker.harJobbetINorge,
+              },
+            ]
           : []),
         ...(medlemskapFraBruker.harJobbetUtenforNorge !== undefined
-          ? [{ label: 'Har jobbet utenfor Norge', value: medlemskapFraBruker.harJobbetUtenforNorge }]
+          ? [
+              {
+                label: 'Har du jobbet utenfor Norge de 5 siste årene?',
+                value: medlemskapFraBruker.harJobbetUtenforNorge,
+              },
+            ]
           : []),
       ]
     : [];
@@ -179,7 +192,7 @@ export const ForutgåendeMedlemskap = ({
               {utenlandsopphold.length > 0 && (
                 <VStack gap="space-8">
                   <Label size="small" as="p">
-                    Utenlandsopphold siste 5 år
+                    Utenlandsopphold eller jobb utenfor Norge
                   </Label>
                   <VStack gap="space-12">
                     {utenlandsopphold.map(medlemskap => {
@@ -190,9 +203,7 @@ export const ForutgåendeMedlemskap = ({
                       return (
                         <VStack gap="space-2" key={`${medlemskap.land}_${formatertPeriode}`}>
                           <HStack gap="space-8" align="center">
-                            <BodyShort size="small">
-                              {`${medlemskap.land ?? ''}${medlemskap.landkode ? ` (${medlemskap.landkode})` : ''}: ${formatertPeriode}`}
-                            </BodyShort>
+                            <BodyShort size="small">{`${medlemskap.land} : ${formatertPeriode}`}</BodyShort>
                             {medlemskap.harTrygdeavtale ? (
                               <Tag variant="outline" data-color="success" size="small">
                                 EØS
@@ -205,11 +216,11 @@ export const ForutgåendeMedlemskap = ({
                           </HStack>
                           {medlemskap.harJobbetIPerioden !== undefined && (
                             <BodyShort size="small">
-                              {`Har jobbet i perioden: ${medlemskap.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
+                              {`Jobbet i perioden: ${medlemskap.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
                             </BodyShort>
                           )}
                           {medlemskap.utenlandskNasjonalId && (
-                            <BodyShort size="small">{`Utenlandsk nasjonal id: ${medlemskap.utenlandskNasjonalId}`}</BodyShort>
+                            <BodyShort size="small">{`ID: ${medlemskap.utenlandskNasjonalId}`}</BodyShort>
                           )}
                         </VStack>
                       );
@@ -249,7 +260,7 @@ export const ForutgåendeMedlemskap = ({
                 <VStack gap="space-8">
                   <HStack gap="space-8" align="center">
                     <Label size="small" as="p">
-                      Har søker forutgående medlemskap
+                      Har søker 5 år forutgående medlemskap
                     </Label>
                     {valgtPeriodeInfo && !valgtPeriodeInfo.erManueltVurdert && (
                       <Tag variant="outline" data-color="info" size="small">
