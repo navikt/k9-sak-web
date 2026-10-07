@@ -97,15 +97,15 @@ export const finnPanelStatus = (
     const vilkårStatusCodes: string[] = [];
     vilkårForSteg.forEach(vilkar => {
       vilkar.perioder
-        ?.filter(periode => periode.vurderesIBehandlingen)
+        ?.filter(
+          periode => periode.vurderesIBehandlingen && periode.vilkarStatus !== k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+        )
         .forEach(periode => vilkårStatusCodes.push(periode.vilkarStatus));
     });
 
     if (
       vilkårStatusCodes.length === 0 ||
-      vilkårStatusCodes.some(
-        vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT || vsc === k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
-      )
+      vilkårStatusCodes.some(vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT)
     ) {
       return ProcessMenuStepType.default;
     }
