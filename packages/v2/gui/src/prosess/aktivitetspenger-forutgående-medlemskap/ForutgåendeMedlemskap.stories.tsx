@@ -5,6 +5,8 @@ import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { fakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 import { ForutgåendeMedlemskap } from './ForutgåendeMedlemskap';
 
 const fakeBehandling = {
@@ -25,6 +27,7 @@ const lagPeriodeInfo = (
   utenlandskNasjonalId: string | undefined = undefined,
   harTrygdeavtale = true,
   erManueltVurdert = utfall !== Utfall.IKKE_VURDERT,
+  vurderesIBehandlingen = utfall === Utfall.IKKE_VURDERT,
 ): MedlemskapPeriodeInfoDto => ({
   periode,
   utfall,
@@ -33,7 +36,7 @@ const lagPeriodeInfo = (
     utfall === Utfall.IKKE_VURDERT
       ? undefined
       : `Forutgående medlemskap er ${utfall === Utfall.OPPFYLT ? '' : 'ikke '}godkjent.`,
-  vurderesIBehandlingen: utfall === Utfall.IKKE_VURDERT,
+  vurderesIBehandlingen,
   erManueltVurdert,
   medlemskapFraBruker: {
     forutgåendePeriode,
@@ -124,5 +127,45 @@ export const ReadOnly: Story = {
       lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1),
       lagPeriodeInfo(periode2, Utfall.IKKE_OPPFYLT, 'USA', 'USA', forutgåendePeriode2),
     ],
+  },
+};
+
+const manueltVurdertIDenneBehandlingen = [
+  lagPeriodeInfo(
+    periode1,
+    Utfall.OPPFYLT,
+    'Sverige',
+    'SWE',
+    forutgåendePeriode1,
+    false,
+    '198501011234',
+    true,
+    true,
+    true,
+  ),
+];
+
+export const ManueltVurdertMedNavn: Story = {
+  args: {
+    aksjonspunkt: {
+      definisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
+      status: AksjonspunktStatus.UTFØRT,
+      ansvarligSaksbehandler: 'Z12345',
+    },
+    perioder: manueltVurdertIDenneBehandlingen,
+  },
+  decorators: [
+    Story => (
+      <SaksbehandlernavnContext.Provider value={{ Z12345: 'Sara Saksbehandler' }}>
+        <Story />
+      </SaksbehandlernavnContext.Provider>
+    ),
+  ],
+};
+
+export const ManueltVurdertUtenNavn: Story = {
+  args: {
+    aksjonspunkt: { definisjon: AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP, status: AksjonspunktStatus.UTFØRT },
+    perioder: manueltVurdertIDenneBehandlingen,
   },
 };
