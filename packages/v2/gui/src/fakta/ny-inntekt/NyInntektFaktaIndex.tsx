@@ -2,8 +2,9 @@ import { Box, Button, Tabs, VStack } from '@navikt/ds-react';
 import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
-import { useState } from 'react';
-import { useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
+import { useContext, useState } from 'react';
+import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
+import { useKanReaktivereAksjonspunktNyInntekt, useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
 import { harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { TilkommetAktivitet } from './src/components/tilkommetAktivitet/TilkommetAktivitet.js';
@@ -59,6 +60,10 @@ export const NyInntektFaktaIndex = ({
 }: NyInntektFaktaIndexProps) => {
   const bgMedAvklaringsbehov = beregningsgrunnlagListe.filter(bg => kreverManuellBehandlingFn(bg));
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
+  const featureToggles = useContext(FeatureTogglesContext);
+  const { data: backendTillaterReaktivering } = useKanReaktivereAksjonspunktNyInntekt(
+    featureToggles.REAKTIVER_AKSJONSPUNKT_NY_INNTEKT && !readOnly,
+  );
   const { mutate: reaktiverAksjonspunkt, isPending: reaktivererAksjonspunkt } = useReaktiverAksjonspunktNyInntekt();
 
   if (bgMedAvklaringsbehov.length === 0) {
@@ -71,9 +76,10 @@ export const NyInntektFaktaIndex = ({
   );
 
   const kanReaktivereVurderNyInntekt =
+    featureToggles.REAKTIVER_AKSJONSPUNKT_NY_INNTEKT &&
     !readOnly &&
     !harAksjonspunktVurderNyInntekt &&
-    bgMedAvklaringsbehov.some(bg => vurderesIBehandlingen(beregningsgrunnlagVilkår.perioder, bg.vilkårsperiodeFom));
+    backendTillaterReaktivering === true;
 
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
 

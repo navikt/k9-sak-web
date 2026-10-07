@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button, HStack, Label, Radio, VStack } from '@navikt/ds-react';
-import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
@@ -62,20 +62,36 @@ export const AndreLivsoppholdytelserSkjema = ({
           <Radio value="ikkeOppfylt">Nei</Radio>
         </RhfRadioGroup>
         {andreLivsoppholdytelser === 'ikkeOppfylt' && (
-          <RhfRadioGroup
+          <RhfSelect
             key={`${selectedId}-avslagsårsak`}
             control={formHook.control}
             name={`vurderinger.${selectedId}.avslagsårsak`}
-            legend="Avslagsårsak"
+            label="Hvilken ytelse mottar bruker?"
             validate={[required]}
-          >
-            <Radio value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE}>
-              Søker har annen livsoppholdytelse
-            </Radio>
-            <Radio value="fritekst">Fritekst</Radio>
-          </RhfRadioGroup>
+            selectValues={[
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER}>
+                Arbeidsavklaringspenger (AAP)
+              </option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_TILTAKSPENGER}>Tiltakspenger</option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_KVALIFISERINGSSTØNAD}>
+                Kvalifiseringsstønad (KVP)
+              </option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_DAGPENGER}>Dagpenger</option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_FORELDREPENGER}>Foreldrepenger</option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_SVANGERSKAPSPENGER}>
+                Svangerskapspenger
+              </option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_UFØRETRYGD}>Uføretrygd</option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_INTRODUKSJONSSTØNAD}>
+                Introduksjonsstønad
+              </option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_BARNEPENSJON}>Barnepensjon</option>,
+              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE}>Annen ytelse</option>,
+            ]}
+          />
         )}
-        {avslagsårsak === 'fritekst' && (
+
+        {avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE && (
           <RhfTextarea
             key={`${selectedId}-fritekst`}
             control={formHook.control}

@@ -6,6 +6,7 @@ import type { ComponentType } from 'react';
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
 import { BehandlingProvider } from '../../context/BehandlingContext.js';
 import { NyInntektApiContext } from './api/NyInntektApiContext.js';
+import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import { type Vilkår } from './src/types/Vilkår';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
@@ -90,12 +91,19 @@ const meta = {
         behandlingUuid="00000000-0000-0000-0000-000000000000"
         refetchBehandling={async () => undefined}
       >
-        <NyInntektApiContext value={{ reaktiverAksjonspunktNyInntekt: async () => undefined }}>
+        <NyInntektApiContext
+          value={{
+            backend: 'k9sak',
+            kanReaktivereAksjonspunkt: async () => true,
+            reaktiverAksjonspunkt: async () => undefined,
+          }}
+        >
           <Story />
         </NyInntektApiContext>
       </BehandlingProvider>
     ),
     withQueryClientProvider(),
+    withFeatureToggles({ REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: true }),
   ],
   args: {
     submitCallback: asyncAction('Løs aksjonspunkt'),
@@ -546,13 +554,26 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal vise aktiver aksjonspunkt når lukket AP vurderes i behandlingen', async () => {
-      await expect(canvas.getByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+    await step('skal vise aktiver aksjonspunkt når backend tillater reaktivering', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
     });
   },
 };
 
 export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: Story = {
+  decorators: [
+    (Story: ComponentType) => (
+      <NyInntektApiContext
+        value={{
+          backend: 'k9sak',
+          kanReaktivereAksjonspunkt: async () => false,
+          reaktiverAksjonspunkt: async () => undefined,
+        }}
+      >
+        <Story />
+      </NyInntektApiContext>
+    ),
+  ],
   args: {
     readOnly: false,
     aksjonspunkter: [],
@@ -567,7 +588,8 @@ export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: 
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal ikke vise aktiver aksjonspunkt når perioden ikke vurderes i behandlingen', async () => {
+    await step('skal ikke vise aktiver aksjonspunkt når backend ikke tillater reaktivering', async () => {
+      await expect(await canvas.findByText('Perioder med ny aktivitet')).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Aktiver aksjonspunkt' })).not.toBeInTheDocument();
     });
   },

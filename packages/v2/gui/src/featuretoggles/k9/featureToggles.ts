@@ -32,7 +32,9 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   FORENKLE_OMS_VEDTAK_STATUS: true,
   BRUK_OMSORGEN_FOR_V2: true,
   BRUK_V2_DELING_AV_DAGER: true,
+  BRUK_V2_PROSESS_UNNTAK: true,
   NORMALARBEIDSTID_UTTAK: true,
+  REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: true,
 });
 
 /**
