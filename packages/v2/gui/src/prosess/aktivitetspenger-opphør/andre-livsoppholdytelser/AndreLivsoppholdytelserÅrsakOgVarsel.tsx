@@ -100,7 +100,6 @@ const buildInitialValues = (
             avslagFom: avklaring?.periode.fom ?? period.fom,
             avslagTom: avklaring ? (avklaring.periode.tom ?? '') : (period.tom ?? ''),
             begrunnelseForIkkeVarsle: avklaring?.begrunnelseIkkeVarsel ?? '',
-            fritekstTilVarsel: '',
             kilde: avklaring?.kilde ?? '',
             kildeFritekst: avklaring?.kildeFritekst ?? '',
             livsoppholdytelse: avklaring?.ikkeOppfyltÅrsak ?? '',
