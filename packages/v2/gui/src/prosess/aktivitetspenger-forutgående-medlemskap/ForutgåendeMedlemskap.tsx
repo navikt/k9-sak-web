@@ -256,12 +256,12 @@ export const ForutgåendeMedlemskap = ({
                           utenlandsoppholdet.utenlandskNasjonalId) && (
                           <List size="small">
                             {utenlandsoppholdet.harJobbetIPerioden !== undefined && (
-                              <List.Item>
+                              <List.Item className="!mb-0">
                                 {`Jobbet i perioden: ${utenlandsoppholdet.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
                               </List.Item>
                             )}
                             {utenlandsoppholdet.utenlandskNasjonalId && (
-                              <List.Item>{`Utenlandsk nasjonal ID: ${utenlandsoppholdet.utenlandskNasjonalId}`}</List.Item>
+                              <List.Item className="!mb-0">{`Utenlandsk nasjonal ID: ${utenlandsoppholdet.utenlandskNasjonalId}`}</List.Item>
                             )}
                           </List>
                         )}
