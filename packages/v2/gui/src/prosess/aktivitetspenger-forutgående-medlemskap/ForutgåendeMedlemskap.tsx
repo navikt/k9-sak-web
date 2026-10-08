@@ -2,11 +2,9 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
-import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
@@ -22,6 +20,11 @@ import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
+import {
+  type BekreftErMedlemVurderingMedFritekstDto,
+  fritekstVurderingBrevMaxLength,
+  type MedlemskapPeriodeInfoMedFritekstDto,
+} from './midlertidigeTyper.js';
 
 const begrunnelseMaxLength = $BekreftErMedlemVurderingDto.properties.begrunnelse.maxLength;
 
@@ -31,7 +34,7 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status' | 'ansvarligSaksbehandler'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
-  perioder: MedlemskapPeriodeInfoDto[];
+  perioder: MedlemskapPeriodeInfoMedFritekstDto[];
   isPermanentlyReadOnly: boolean;
 }
 
@@ -40,6 +43,7 @@ export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 interface FormData {
   vurderinger: Record<string, Vurdering>;
   begrunnelser: Record<string, string>;
+  fritekster: Record<string, string>;
 }
 
 const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
@@ -48,9 +52,10 @@ const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
+const buildInitialValues = (perioder: MedlemskapPeriodeInfoMedFritekstDto[]): FormData => ({
   vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
   begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
+  fritekster: Object.fromEntries(perioder.map(r => [r.periode.fom, r.fritekstVurderingBrev ?? ''])),
 });
 
 const InfoBoks = ({ children }: { children: ReactNode }) => (
@@ -136,12 +141,13 @@ export const ForutgåendeMedlemskap = ({
         return;
       }
       const erVilkårInnvilget = data.vurderinger[selectedItemId] === 'oppfylt';
-      const payload: BekreftetAksjonspunktDto = {
+      const payload: BekreftErMedlemVurderingMedFritekstDto = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårInnvilget,
         avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
         perioderVurdert: [valgtPeriodeInfo.periode],
+        fritekstVurderingBrev: erVilkårInnvilget ? undefined : data.fritekster[selectedItemId],
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -193,6 +199,7 @@ export const ForutgåendeMedlemskap = ({
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
         const begrunnelse = formHook.watch(`begrunnelser.${selectedItemId}`);
+        const fritekst = formHook.watch(`fritekster.${selectedItemId}`);
         const harSøknadsinnhold = !!medlemskapFraBruker;
         const vurdertIndikator = (() => {
           if (!valgtPeriodeInfo) {
@@ -291,6 +298,9 @@ export const ForutgåendeMedlemskap = ({
                             {vurderingSpørsmål}
                           </Label>
                           <BodyShort size="small">{vurdering === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
+                          {vurdering === 'ikkeOppfylt' && fritekst && (
+                            <LabelledContent label="Fritekst avslagsbrev" content={fritekst} indentContent />
+                          )}
                           {vurdertIndikator && (
                             <HStack gap="space-8" align="center">
                               <vurdertIndikator.Icon fontSize="1.5rem" />
@@ -328,6 +338,17 @@ export const ForutgåendeMedlemskap = ({
                   <Radio value="oppfylt">Ja</Radio>
                   <Radio value="ikkeOppfylt">Nei</Radio>
                 </RhfRadioGroup>
+              )}
+              {!isFormLocked && vurdering === 'ikkeOppfylt' && (
+                <RhfTextarea
+                  key={`${selectedItemId}-fritekst`}
+                  control={formHook.control}
+                  name={`fritekster.${selectedItemId}`}
+                  label="Fritekst avslagsbrev"
+                  description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+                  validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+                  maxLength={fritekstVurderingBrevMaxLength}
+                />
               )}
               {!isFormLocked && (
                 <HStack gap="space-8">
