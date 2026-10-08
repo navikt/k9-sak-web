@@ -57,7 +57,7 @@ const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => (
 });
 
 const InfoBoks = ({ children }: { children: ReactNode }) => (
-  <Box background="accent-moderate" borderColor="neutral-subtle" borderWidth="1" borderRadius="8" padding="space-16">
+  <Box background="info-softA" borderRadius="8" padding="space-16">
     <VStack gap="space-16">{children}</VStack>
   </Box>
 );
