@@ -160,7 +160,7 @@ export const ForutgåendeMedlemskap = ({
 
   const vurderingBegrunnelseLabel = (
     <span>
-      Vurder om søker har forutgående medlemskap, jmf{' '}
+      Vurder om søker har 5 år forutgående medlemskap, jf.{' '}
       <Lovreferanse isAktivitetspenger includeFullTextInLink>
         § 3 Forutgående medlemskap
       </Lovreferanse>
