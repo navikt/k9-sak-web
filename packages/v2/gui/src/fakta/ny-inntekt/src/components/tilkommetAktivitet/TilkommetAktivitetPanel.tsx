@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { ScissorsIcon } from '@navikt/aksel-icons';
+import { PencilIcon, ScissorsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
@@ -36,6 +36,7 @@ type Props = {
   readOnly: boolean;
   submittable: boolean;
   erAksjonspunktÅpent: boolean;
+  redigeringsstatus?: { redigerer: boolean; onRediger: () => void; onAvbryt: () => void };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 };
 
@@ -46,6 +47,7 @@ export const TilkommetAktivitetPanel = ({
   readOnly,
   submittable,
   erAksjonspunktÅpent,
+  redigeringsstatus,
   arbeidsgiverOpplysningerPerId,
 }: Props) => {
   const [modalErÅpen, setModalErÅpen] = useState<boolean>(false);
@@ -221,6 +223,22 @@ export const TilkommetAktivitetPanel = ({
             Perioder med ny aktivitet
           </Heading>
           <div className={styles.modalKnapp}>
+            {redigeringsstatus &&
+              (redigeringsstatus.redigerer ? (
+                <Button variant="tertiary" size="small" type="button" onClick={redigeringsstatus.onAvbryt}>
+                  Avbryt redigering
+                </Button>
+              ) : (
+                <Button
+                  variant="tertiary"
+                  size="small"
+                  type="button"
+                  icon={<PencilIcon />}
+                  onClick={redigeringsstatus.onRediger}
+                >
+                  Rediger
+                </Button>
+              ))}
             <Button
               variant="tertiary"
               loading={false}
