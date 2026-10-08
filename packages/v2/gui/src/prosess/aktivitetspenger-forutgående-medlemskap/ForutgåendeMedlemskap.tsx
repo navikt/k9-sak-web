@@ -2,9 +2,11 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { $BekreftErMedlemVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/BekreftErMedlemVurderingSchema.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
+import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
@@ -20,13 +22,9 @@ import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
-import {
-  type BekreftErMedlemVurderingMedFritekstDto,
-  fritekstVurderingBrevMaxLength,
-  type MedlemskapPeriodeInfoMedFritekstDto,
-} from './midlertidigeTyper.js';
 
 const begrunnelseMaxLength = $BekreftErMedlemVurderingDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength = $BekreftErMedlemVurderingDto.properties.fritekstVurderingBrev.maxLength;
 
 interface Props {
   api: AktivitetspengerApi;
@@ -34,7 +32,7 @@ interface Props {
   aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status' | 'ansvarligSaksbehandler'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
-  perioder: MedlemskapPeriodeInfoMedFritekstDto[];
+  perioder: MedlemskapPeriodeInfoDto[];
   isPermanentlyReadOnly: boolean;
 }
 
@@ -52,7 +50,7 @@ const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
   return '';
 };
 
-const buildInitialValues = (perioder: MedlemskapPeriodeInfoMedFritekstDto[]): FormData => ({
+const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
   vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
   begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
   fritekster: Object.fromEntries(perioder.map(r => [r.periode.fom, r.fritekstVurderingBrev ?? ''])),
@@ -141,7 +139,7 @@ export const ForutgåendeMedlemskap = ({
         return;
       }
       const erVilkårInnvilget = data.vurderinger[selectedItemId] === 'oppfylt';
-      const payload: BekreftErMedlemVurderingMedFritekstDto = {
+      const payload: BekreftetAksjonspunktDto = {
         '@type': AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP,
         begrunnelse: data.begrunnelser[selectedItemId],
         erVilkårInnvilget,

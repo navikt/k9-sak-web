@@ -2,6 +2,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapAvslagsÅrsakType.js';
+import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import {
   FakeAktivitetspengerApi,
   fakeAktivitetspengerApi,
@@ -11,7 +12,6 @@ import { expect, fn, userEvent, within } from 'storybook/test';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 import { ForutgåendeMedlemskap } from './ForutgåendeMedlemskap';
-import type { MedlemskapPeriodeInfoMedFritekstDto } from './midlertidigeTyper.js';
 
 const fakeBehandling = {
   uuid: 'fake-uuid',
@@ -32,7 +32,7 @@ const lagPeriodeInfo = (
   harTrygdeavtale = true,
   erManueltVurdert = utfall !== Utfall.IKKE_VURDERT,
   vurderesIBehandlingen = utfall === Utfall.IKKE_VURDERT,
-): MedlemskapPeriodeInfoMedFritekstDto => ({
+): MedlemskapPeriodeInfoDto => ({
   periode,
   utfall,
   avslagsårsak: utfall === Utfall.IKKE_OPPFYLT ? MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM : undefined,
