@@ -210,7 +210,7 @@ export const ForutgåendeMedlemskap = ({
           const navn = ident && (saksbehandlernavn[ident] || ident);
           return {
             Icon: PersonPencilFillIcon,
-            tekst: navn ? `Vurdering av ${navn}` : 'Manuelt vurdert',
+            tekst: navn ? `Vurdert av ${navn}` : 'Manuelt vurdert',
           };
         })();
 
