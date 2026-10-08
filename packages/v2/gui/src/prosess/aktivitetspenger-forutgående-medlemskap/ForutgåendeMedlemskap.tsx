@@ -9,23 +9,27 @@ import { MedlemskapAvslagsÅrsakType } from '@k9-sak-web/backend/ungsak/kontrakt
 import type { MedlemskapPeriodeInfoDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/MedlemskapPeriodeInfoDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Radio, Tag, VStack } from '@navikt/ds-react';
+import { CogIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Box, Button, HStack, Label, List, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { type ReactNode, useContext, useEffect, useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
+import { SaksbehandlernavnContext } from '../../shared/SaksbehandlernavnContext/SaksbehandlernavnContext';
+import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
 import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 const begrunnelseMaxLength = $BekreftErMedlemVurderingDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength = $BekreftErMedlemVurderingDto.properties.fritekstVurderingBrev.maxLength;
 
 interface Props {
   api: AktivitetspengerApi;
   onAksjonspunktBekreftet: () => void;
-  aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status'> | undefined;
+  aksjonspunkt: Pick<AksjonspunktDto, 'definisjon' | 'status' | 'ansvarligSaksbehandler'> | undefined;
   behandling: BehandlingDto;
   readOnly: boolean;
   perioder: MedlemskapPeriodeInfoDto[];
@@ -37,6 +41,7 @@ export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 interface FormData {
   vurderinger: Record<string, Vurdering>;
   begrunnelser: Record<string, string>;
+  fritekster: Record<string, string>;
 }
 
 const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
@@ -48,7 +53,14 @@ const utfallTilVurdering = (utfall: string | undefined): Vurdering => {
 const buildInitialValues = (perioder: MedlemskapPeriodeInfoDto[]): FormData => ({
   vurderinger: Object.fromEntries(perioder.map(r => [r.periode.fom, utfallTilVurdering(r.utfall)])),
   begrunnelser: Object.fromEntries(perioder.map(r => [r.periode.fom, r.begrunnelse ?? ''])),
+  fritekster: Object.fromEntries(perioder.map(r => [r.periode.fom, r.fritekstVurderingBrev ?? ''])),
 });
+
+const InfoBoks = ({ children }: { children: ReactNode }) => (
+  <Box background="accent-moderate" borderColor="neutral-subtle" borderWidth="1" borderRadius="8" padding="space-16">
+    <VStack gap="space-16">{children}</VStack>
+  </Box>
+);
 
 export const ForutgåendeMedlemskap = ({
   aksjonspunkt,
@@ -59,6 +71,7 @@ export const ForutgåendeMedlemskap = ({
   onAksjonspunktBekreftet,
   isPermanentlyReadOnly,
 }: Props) => {
+  const saksbehandlernavn = useContext(SaksbehandlernavnContext);
   const isAksjonspunktSolved = aksjonspunkt?.status === AksjonspunktStatus.UTFØRT;
   const sortertePerioder = perioder.toSorted(
     (a, b) => new Date(a.periode.fom).getTime() - new Date(b.periode.fom).getTime(),
@@ -93,12 +106,25 @@ export const ForutgåendeMedlemskap = ({
 
   const søknadsopplysninger: { label: string; value: boolean }[] = medlemskapFraBruker
     ? [
-        { label: 'Har bodd i Norge', value: medlemskapFraBruker.harBoddINorge ?? false },
+        {
+          label: 'Har du bodd sammenhengende i Norge de 5 siste årene?',
+          value: medlemskapFraBruker.harBoddINorge,
+        },
         ...(medlemskapFraBruker.harJobbetINorge !== undefined
-          ? [{ label: 'Har jobbet i Norge', value: medlemskapFraBruker.harJobbetINorge }]
+          ? [
+              {
+                label: 'Har du jobbet sammenhengende i Norge de 5 siste årene?',
+                value: medlemskapFraBruker.harJobbetINorge,
+              },
+            ]
           : []),
         ...(medlemskapFraBruker.harJobbetUtenforNorge !== undefined
-          ? [{ label: 'Har jobbet utenfor Norge', value: medlemskapFraBruker.harJobbetUtenforNorge }]
+          ? [
+              {
+                label: 'Har du jobbet utenfor Norge de 5 siste årene?',
+                value: medlemskapFraBruker.harJobbetUtenforNorge,
+              },
+            ]
           : []),
       ]
     : [];
@@ -119,6 +145,7 @@ export const ForutgåendeMedlemskap = ({
         erVilkårInnvilget,
         avslagsårsak: erVilkårInnvilget ? undefined : MedlemskapAvslagsÅrsakType.SØKER_IKKE_MEDLEM,
         perioderVurdert: [valgtPeriodeInfo.periode],
+        fritekstVurderingBrev: erVilkårInnvilget ? undefined : data.fritekster[selectedItemId],
       };
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
@@ -128,6 +155,17 @@ export const ForutgåendeMedlemskap = ({
   });
 
   const onSubmit: SubmitHandler<FormData> = data => bekreftAksjonspunktMutation(data);
+
+  const vurderingSpørsmål = 'Har søker 5 år forutgående medlemskap?';
+
+  const vurderingBegrunnelseLabel = (
+    <span>
+      Vurder om søker har forutgående medlemskap, jmf{' '}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        § 3 Forutgående medlemskap
+      </Lovreferanse>
+    </span>
+  );
 
   if (!aksjonspunkt && !sortertePerioder.some(r => r.vurderesIBehandlingen)) {
     return <ProsessStegIkkeBehandlet />;
@@ -154,123 +192,161 @@ export const ForutgåendeMedlemskap = ({
       readOnly={readOnly}
       isPermanentlyReadOnly={erValgtPeriodePermanentLåst}
       lovreferanse="§ 3"
+      hideLockedBackground
     >
       {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
         const vurdering = formHook.watch(`vurderinger.${selectedItemId}`);
         const begrunnelse = formHook.watch(`begrunnelser.${selectedItemId}`);
+        const fritekst = formHook.watch(`fritekster.${selectedItemId}`);
+        const harSøknadsinnhold = !!medlemskapFraBruker;
+        const vurdertIndikator = (() => {
+          if (!valgtPeriodeInfo) {
+            return undefined;
+          }
+          if (!valgtPeriodeInfo.erManueltVurdert) {
+            return { Icon: CogIcon, tekst: 'Automatisk vurdert' };
+          }
+          const ident = valgtPeriodeInfo.vurderesIBehandlingen ? aksjonspunkt?.ansvarligSaksbehandler : undefined;
+          const navn = ident && (saksbehandlernavn[ident] || ident);
+          return {
+            Icon: PersonPencilFillIcon,
+            tekst: navn ? `Vurdering av ${navn}` : 'Manuelt vurdert',
+          };
+        })();
+
+        const søknadsinnholdInnhold = (
+          <>
+            {søknadsopplysninger.length > 0 && (
+              <VStack gap="space-8">
+                <HStack justify="space-between" align="center">
+                  <Label size="small" as="p">
+                    Opplysninger fra søknaden:
+                  </Label>
+                  <Tag variant="outline" data-color="info" size="small">
+                    Fra søknad
+                  </Tag>
+                </HStack>
+                <VStack gap="space-4">
+                  {søknadsopplysninger.map(opplysning => (
+                    <BodyShort size="small" key={opplysning.label}>
+                      {`${opplysning.label} ${opplysning.value ? 'Ja' : 'Nei'}`}
+                    </BodyShort>
+                  ))}
+                </VStack>
+              </VStack>
+            )}
+            {utenlandsopphold.length > 0 && (
+              <VStack gap="space-8">
+                <Label size="small" as="p">
+                  Utenlandsopphold eller jobb utenfor Norge:
+                </Label>
+                <VStack gap="space-12">
+                  {utenlandsopphold.map(utenlandsoppholdet => {
+                    const formatertPeriode = `${formatDate(utenlandsoppholdet.periode.fom)} - ${formatDate(utenlandsoppholdet.periode.tom)}`;
+                    return (
+                      <VStack gap="space-2" key={`${utenlandsoppholdet.land}_${formatertPeriode}`}>
+                        <HStack gap="space-8" align="center">
+                          <BodyShort size="small">{`${utenlandsoppholdet.land}: ${formatertPeriode}`}</BodyShort>
+                          {utenlandsoppholdet.harTrygdeavtale ? (
+                            <Tag variant="outline" data-color="success" size="small">
+                              EØS
+                            </Tag>
+                          ) : (
+                            <Tag variant="outline" data-color="danger" size="small">
+                              Ikke EØS
+                            </Tag>
+                          )}
+                        </HStack>
+                        {(utenlandsoppholdet.harJobbetIPerioden !== undefined ||
+                          utenlandsoppholdet.utenlandskNasjonalId) && (
+                          <List size="small">
+                            {utenlandsoppholdet.harJobbetIPerioden !== undefined && (
+                              <List.Item className="!mb-0">
+                                {`Jobbet i perioden: ${utenlandsoppholdet.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
+                              </List.Item>
+                            )}
+                            {utenlandsoppholdet.utenlandskNasjonalId && (
+                              <List.Item className="!mb-0">{`Utenlandsk nasjonal ID: ${utenlandsoppholdet.utenlandskNasjonalId}`}</List.Item>
+                            )}
+                          </List>
+                        )}
+                      </VStack>
+                    );
+                  })}
+                </VStack>
+              </VStack>
+            )}
+          </>
+        );
 
         return (
           <RhfForm formMethods={formHook} onSubmit={onSubmit}>
             <VStack gap="space-16">
-              {søknadsopplysninger.length > 0 && (
-                <VStack gap="space-8">
-                  <Label size="small" as="p">
-                    Opplysninger fra søknaden
-                  </Label>
-                  <VStack gap="space-4">
-                    {søknadsopplysninger.map(opplysning => (
-                      <BodyShort size="small" key={opplysning.label}>
-                        {`${opplysning.label}: ${opplysning.value ? 'Ja' : 'Nei'}`}
-                      </BodyShort>
-                    ))}
-                  </VStack>
-                </VStack>
-              )}
-              {utenlandsopphold.length > 0 && (
-                <VStack gap="space-8">
-                  <Label size="small" as="p">
-                    Utenlandsopphold siste 5 år
-                  </Label>
-                  <VStack gap="space-12">
-                    {utenlandsopphold.map(medlemskap => {
-                      if (!medlemskap.periode) {
-                        return null;
-                      }
-                      const formatertPeriode = `${formatDate(medlemskap.periode.fom)} - ${formatDate(medlemskap.periode.tom)}`;
-                      return (
-                        <VStack gap="space-2" key={`${medlemskap.land}_${formatertPeriode}`}>
-                          <HStack gap="space-8" align="center">
-                            <BodyShort size="small">
-                              {`${medlemskap.land ?? ''}${medlemskap.landkode ? ` (${medlemskap.landkode})` : ''}: ${formatertPeriode}`}
-                            </BodyShort>
-                            {medlemskap.harTrygdeavtale ? (
-                              <Tag variant="outline" data-color="success" size="small">
-                                EØS
-                              </Tag>
-                            ) : (
-                              <Tag variant="outline" data-color="danger" size="small">
-                                IKKE-EØS
-                              </Tag>
-                            )}
-                          </HStack>
-                          {medlemskap.harJobbetIPerioden !== undefined && (
-                            <BodyShort size="small">
-                              {`Har jobbet i perioden: ${medlemskap.harJobbetIPerioden ? 'Ja' : 'Nei'}`}
-                            </BodyShort>
+              {isFormLocked ? (
+                <>
+                  {harSøknadsinnhold && <InfoBoks>{søknadsinnholdInnhold}</InfoBoks>}
+                  {(begrunnelse || vurdering) && (
+                    <InfoBoks>
+                      {begrunnelse && (
+                        <LabelledContent label={vurderingBegrunnelseLabel} content={begrunnelse} indentContent />
+                      )}
+                      {vurdering && (
+                        <VStack gap="space-8">
+                          <Label size="small" as="p">
+                            {vurderingSpørsmål}
+                          </Label>
+                          <BodyShort size="small">{vurdering === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
+                          {vurdering === 'ikkeOppfylt' && fritekst && (
+                            <LabelledContent label="Fritekst avslagsbrev" content={fritekst} indentContent />
                           )}
-                          {medlemskap.utenlandskNasjonalId && (
-                            <BodyShort size="small">{`Utenlandsk nasjonal id: ${medlemskap.utenlandskNasjonalId}`}</BodyShort>
+                          {vurdertIndikator && (
+                            <HStack gap="space-8" align="center">
+                              <vurdertIndikator.Icon fontSize="1.5rem" />
+                              <BodyShort size="small" weight="semibold">
+                                {vurdertIndikator.tekst}
+                              </BodyShort>
+                            </HStack>
                           )}
                         </VStack>
-                      );
-                    })}
-                  </VStack>
-                </VStack>
-              )}
-              {isFormLocked ? (
-                begrunnelse && (
-                  <VStack gap="space-8">
-                    <Label size="small" as="p">
-                      Vurder om søker har forutgående medlemskap, jmf{' '}
-                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
-                        § 3 Forutgående medlemskap
-                      </Lovreferanse>
-                    </Label>
-                    <BodyShort size="small">{begrunnelse}</BodyShort>
-                  </VStack>
-                )
+                      )}
+                    </InfoBoks>
+                  )}
+                </>
               ) : (
-                <RhfTextarea
-                  control={formHook.control}
-                  name={`begrunnelser.${selectedItemId}`}
-                  label={
-                    <span>
-                      Vurder om søker har forutgående medlemskap, jmf{' '}
-                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
-                        § 3 Forutgående medlemskap
-                      </Lovreferanse>
-                    </span>
-                  }
-                  validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
-                  maxLength={begrunnelseMaxLength}
-                />
+                <>
+                  {harSøknadsinnhold && <InfoBoks>{søknadsinnholdInnhold}</InfoBoks>}
+                  <RhfTextarea
+                    control={formHook.control}
+                    name={`begrunnelser.${selectedItemId}`}
+                    label={vurderingBegrunnelseLabel}
+                    validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
+                    maxLength={begrunnelseMaxLength}
+                  />
+                </>
               )}
-              {isFormLocked && vurdering ? (
-                <VStack gap="space-8">
-                  <HStack gap="space-8" align="center">
-                    <Label size="small" as="p">
-                      Har søker forutgående medlemskap
-                    </Label>
-                    {valgtPeriodeInfo && !valgtPeriodeInfo.erManueltVurdert && (
-                      <Tag variant="outline" data-color="info" size="small">
-                        Automatisk vurdert
-                      </Tag>
-                    )}
-                  </HStack>
-                  <BodyShort size="small">{vurdering === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
-                </VStack>
-              ) : (
+              {!(isFormLocked && vurdering) && (
                 <RhfRadioGroup
                   key={selectedItemId}
                   control={formHook.control}
                   name={`vurderinger.${selectedItemId}`}
-                  legend="Har søker forutgående medlemskap"
+                  legend={vurderingSpørsmål}
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
                   <Radio value="oppfylt">Ja</Radio>
                   <Radio value="ikkeOppfylt">Nei</Radio>
                 </RhfRadioGroup>
+              )}
+              {!isFormLocked && vurdering === 'ikkeOppfylt' && (
+                <RhfTextarea
+                  key={`${selectedItemId}-fritekst`}
+                  control={formHook.control}
+                  name={`fritekster.${selectedItemId}`}
+                  label="Fritekst avslagsbrev"
+                  description="Beskriv hvorfor vilkåret er avslått. Teksten vises i vedtaksbrevet til søker."
+                  validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+                  maxLength={fritekstVurderingBrevMaxLength}
+                />
               )}
               {!isFormLocked && (
                 <HStack gap="space-8">
