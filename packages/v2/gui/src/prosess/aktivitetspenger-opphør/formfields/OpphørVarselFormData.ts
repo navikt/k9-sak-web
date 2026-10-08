@@ -1,6 +1,6 @@
 export interface OpphørVarselPeriodForm {
   begrunnelseForIkkeVarsle: string;
-  fritekstTilVarsel: string;
+  fritekstTilVarsel?: string;
   skalSendeVarselOmOpphør: string;
 }
 

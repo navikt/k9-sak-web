@@ -203,7 +203,7 @@ export const BostedÅrsakOgVarsel = ({
         }
         beforeDetailContent={
           valgtPeriodeErReadOnly && selectedPeriod?.resultat?.erBosatt ? (
-            <InfoCard data-color="info">
+            <InfoCard data-color="info" size="small">
               <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
                 Alle vilkår er innvilget i perioden.
               </InfoCard.Message>
