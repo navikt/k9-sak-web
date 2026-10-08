@@ -215,6 +215,12 @@ export const MedisinskVilkårPleiepengerNærstående: Story = {
       await userEvent.clear(tilFelt);
       await userEvent.type(tilFelt, '030221');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
+      await expect(await canvas.findByText('Du må oppgi begrunnelse')).toBeInTheDocument();
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Beskriv hvor opplysningene om innleggelse kommer fra' }),
+        'Innleggelsesperioden påvirker retten til pleiepenger.',
+      );
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
       await waitFor(async () => {
         await expect(
           canvas.queryByText('Innleggelsesperioden må være innenfor søknadsperioden'),

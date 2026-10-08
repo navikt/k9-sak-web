@@ -1,7 +1,7 @@
-import { Period } from '@fpsak-frontend/utils';
 import { http, HttpResponse } from 'msw';
 import Dokument, { Dokumenttype } from '../src/types/Dokument';
 import NyVurderingsversjon from '../src/types/NyVurderingsversjon';
+import { SykdomInnleggelseDto } from '../src/types/SykdomInnleggelseDto';
 import Vurderingstype from '../src/types/Vurderingstype';
 import { createKontinuerligTilsynVurdering, createToOmsorgspersonerVurdering } from './apiUtils';
 import { mockUrlPrepend } from './constants';
@@ -35,9 +35,8 @@ type EndreDiagnosekoderRequestBody = {
   diagnosekoder: string[];
 };
 
-type EndreInnleggelsesperioderRequestBody = {
+type EndreInnleggelsesperioderRequestBody = SykdomInnleggelseDto & {
   dryRun: boolean;
-  perioder: Period[];
 };
 
 export const handlers = [

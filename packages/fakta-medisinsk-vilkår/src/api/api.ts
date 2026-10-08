@@ -1,6 +1,6 @@
-import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 import { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
-import { RequestPayload } from '../types/RequestPayload';
+import { SykdomInnleggelseDto } from '../types/SykdomInnleggelseDto';
 import { Vurderingsversjon } from '../types/Vurdering';
 import Vurderingstype from '../types/Vurderingstype';
 
@@ -96,17 +96,13 @@ export async function postEndreVurderingDryRun(
   return postEndreVurdering(href, behandlingUuid, vurderingsid, vurderingsversjon, errorNotifier, signal, true);
 }
 
-interface InnleggelsesperioderRequestBody extends RequestPayload {
-  perioder: Period[];
-}
-
 export interface InnleggelsesperiodeDryRunResponse {
   førerTilRevurdering: boolean;
 }
 
 export async function postInnleggelsesperioder(
   href: string,
-  body: InnleggelsesperioderRequestBody,
+  body: SykdomInnleggelseDto,
   errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
   dryRun?: boolean,
@@ -116,7 +112,7 @@ export async function postInnleggelsesperioder(
 
 export async function postInnleggelsesperioderDryRun(
   href: string,
-  body: InnleggelsesperioderRequestBody,
+  body: SykdomInnleggelseDto,
   errorNotifier: HttpErrorHandler,
   signal?: AbortSignal,
 ): Promise<InnleggelsesperiodeDryRunResponse> {
