@@ -32,7 +32,7 @@ const EndringerIUttakDrawer = ({ open, onClose }: EndringerIUttakDrawerProps) =>
               Normalarbeidstid for en periode etter 01.01.2027 kan kun endres ved å endre den fra skjæringstidspunktet,
               gjennom søknad eller punsj. Merk at søker fortsatt kan opplyse endret normalarbeidstid i søknaden, slik at
               de rapporterer faktisk antall arbeidstimer riktig. Uttak kan derfor vise en annen normalarbeidstid enn det
-              bruker får i søknaden.
+              brukeren får i søknaden.
             </BodyLong>
             <BodyLong>
               Alle saker som ikke har fått aksjonspunkt for reglene fra oktober 2024, vil fra denne datoen komme over på
