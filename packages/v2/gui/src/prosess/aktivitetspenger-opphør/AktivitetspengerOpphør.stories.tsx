@@ -142,7 +142,7 @@ const fakeAndreLivsoppholdytelserVilkårArgsBase = {
   api: Object.assign(Object.create(fakeAktivitetspengerApi), {
     bekreftAksjonspunkt: fn(),
     hentVilkårsavklaringVurderinger: fn(async () => ({
-      perioder: [],
+      perioder: [{ periode: { fom: '2026-01-29', tom: '2027-01-28' }, utfall: Utfall.IKKE_VURDERT }],
       vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
     })),
   }) as AktivitetspengerApi,
