@@ -25,40 +25,43 @@ const EndringerIUttakDrawer = ({ open, onClose }: EndringerIUttakDrawerProps) =>
             <BodyLong>
               Fra og med 01.01.2027 låses normalarbeidstid på skjæringstidspunktet. For arbeidstakere låses
               normalarbeidstiden per arbeidsforhold, for frilans og selvstendig næring låses den for hele aktiviteten
-              samlet. Faktisk arbeidstid kan fortsatt endres gjennom hele søknadsperioden.
+              samlet. Dette medfører at vurdering av tapt arbeidstid alltid ser hen til arbeidstiden på
+              skjæringstidspunktet.
             </BodyLong>
             <BodyLong>
-              Normalarbeidstid for en periode etter 01.01.2027 kan kun endres ved å endre den ved skjæringstidspunktet.
-              Om man punsjer eller endrer normalarbeidstid for senere perioder vil den ikke endre seg i uttak.
+              Normalarbeidstid for en periode etter 01.01.2027 kan kun endres ved å endre den fra skjæringstidspunktet,
+              gjennom søknad eller punsj. Merk at søker fortsatt kan opplyse endret normalarbeidstid i søknaden, slik at
+              de rapporterer faktisk antall arbeidstimer riktig. Uttak kan derfor vise en annen normalarbeidstid enn det
+              brukeren får i søknaden.
+            </BodyLong>
+            <BodyLong>
+              Alle saker som ikke har fått aksjonspunkt for reglene fra oktober 2024, vil fra denne datoen komme over på
+              samme regelsett.
             </BodyLong>
           </VStack>
           <VStack gap="space-4">
-            <Detail>2024-2025</Detail>
-            <Heading size="xsmall" level="2">
-              Flere endringer legges til i uttak
-            </Heading>
+            <Detail>November 2025</Detail>
             <BodyLong>
-              November 2025: Det opprettes perioder med inaktiv frilans og inaktiv selvstendig næring om disse
-              bortfaller.
-            </BodyLong>
-            <BodyLong>
-              Mars 2025: Normalarbeidstid for ikke yrkesaktiv settes lik normalarbeidstid for arbeidsforholdet ved
-              skjæringstidspunkt for alle saker som har satt dato i aksjonspunkt.
+              Det opprettes perioder med inaktiv frilans og inaktiv selvstendig næring om disse bortfaller.
             </BodyLong>
           </VStack>
           <VStack gap="space-4">
-            <Detail>Mai 2023</Detail>
-            <Heading size="xsmall" level="2">
-              Nye uttaksregler innføres for saker med «ny aktivitet», «ikke yrkesaktiv» og «kun ytelse»
-            </Heading>
+            <Detail>Mars 2025</Detail>
+            <BodyLong>
+              Normalarbeidstid for ikke yrkesaktiv settes lik normalarbeidstid for arbeidsforholdet ved
+              skjæringstidspunkt for alle saker som har satt dato i aksjonspunkt innført oktober 2024.
+            </BodyLong>
+          </VStack>
+          <VStack gap="space-4">
+            <Detail>Oktober 2024</Detail>
             <BodyLong>
               Nye uttaksregler innføres for saker med ny aktivitet (nytt arbeidsforhold), ikke yrkesaktiv og kun ytelse,
               slik at man kan gradere mot ny inntekt. For saker som får ny aktivitet opprettes aksjonspunkt, og
-              saksbehandler setter dato for når nye regler skal gjelde fra.
+              saksbehandler setter dato for når nye regler skal gjelde fra. Datoen skulle som hovedregel settes fra
+              neste stønadsperiode som ikke var innvilget.
             </BodyLong>
             <BodyLong>
-              Nye aktiviteter blir ikke tatt med i utregning av søkers uttaksgrad. «Ikke-yrkesaktiv» og «Kun ytelse» får
-              alltid 100% som utbetalingsgrad, hvis det ikke er reduksjon grunnet tilsyn.
+              Nye aktiviteter blir ikke gradert mot arbeidstid, men de kan få utslag i gradering mot inntektstap.
             </BodyLong>
           </VStack>
         </VStack>
