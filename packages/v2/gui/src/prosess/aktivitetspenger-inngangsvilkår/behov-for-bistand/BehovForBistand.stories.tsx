@@ -123,7 +123,7 @@ export const MedUtførtBistandsvilkår: Story = {
 export const MedÅpentLokalkontorForeslår: Story = {
   args: {
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
-    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
     isPermanentlyReadOnly: false,
   },
 };

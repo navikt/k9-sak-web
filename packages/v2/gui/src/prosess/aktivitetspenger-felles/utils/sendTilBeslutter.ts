@@ -4,7 +4,7 @@ import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/Aktivit
 
 export const sendTilBeslutter = async (api: AktivitetspengerApi, behandling: BehandlingDto) => {
   const payload = {
-    '@type': AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+    '@type': AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
     begrunnelse: 'Send til beslutter',
   };
 

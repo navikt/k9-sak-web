@@ -816,10 +816,10 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'KONTROLL_AV_INNTEKT',
     },
     {
-      kode: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+      kode: 'NAV_KONTOR_BESLUTTER_VILKÅR',
       kodeverk: 'SKJERMLENKE_TYPE',
       navn: 'Lokalkontor beslutter vilkår',
-      kilde: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+      kilde: 'NAV_KONTOR_BESLUTTER_VILKÅR',
     },
     {
       kode: 'OPPLYSNINGSPLIKT',
@@ -866,16 +866,16 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'BESL',
     },
     {
-      kode: 'LOKALKONTOR_BESL',
+      kode: 'NAV_KONTOR_BESL',
       kodeverk: 'HISTORIKK_AKTOER',
       navn: 'Beslutter Nav-lokalt',
-      kilde: 'LOKALKONTOR_BESL',
+      kilde: 'NAV_KONTOR_BESL',
     },
     {
-      kode: 'LOKALKONTOR_SBH',
+      kode: 'NAV_KONTOR_SBH',
       kodeverk: 'HISTORIKK_AKTOER',
       navn: 'Saksbehandler Nav-lokalt',
-      kilde: 'LOKALKONTOR_SBH',
+      kilde: 'NAV_KONTOR_SBH',
     },
     {
       kode: 'SBH',
@@ -916,10 +916,10 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'IVED',
     },
     {
-      kode: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+      kode: 'NAV_KONTOR_BESLUTTER_VILKÅR',
       kodeverk: 'BEHANDLING_STATUS',
       navn: 'Lokalkontor beslutter vilkår',
-      kilde: 'LOKALKONTOR_BESLUTTER_VILKÅR',
+      kilde: 'NAV_KONTOR_BESLUTTER_VILKÅR',
     },
     {
       kode: 'OPPRE',
