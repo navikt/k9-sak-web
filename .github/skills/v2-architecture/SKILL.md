@@ -33,7 +33,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 - [ ] When the component is the sole consumer of an endpoint, it fetches its own data via `useSuspenseQuery` + API context instead of receiving that data from the shell
 - [ ] If kodeverk lookups are needed, uses `K9KodeverkoppslagContext` — no `alleKodeverk` / `kodeverk` prop
-- [ ] CSS module class names use bracket notation: `styles['myClass']` (required by `noPropertyAccessFromIndexSignature`)
+- [ ] CSS module class names use dot notation: `styles.myClass`. Never `styles['myClass']`. Each `*.module.css` has a generated `*.module.css.d.ts`, so dot access type-checks
 - [ ] All imports use `.js` suffix
 - [ ] No imports from non-v2 packages (`@k9-sak-web/utils`, `@k9-sak-web/types`, `@k9-sak-web/shared-components`, etc.)
 - [ ] Avoid type assertions (`as Type`, especially `as any` / `as unknown as Type`) and non-null assertions (`!`) in both code and tests. Prefer inferred types, `satisfies`, typed helpers and explicit guards; handle invalid or missing values rather than asserting them away.
@@ -353,16 +353,16 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import { fagsakYtelsesType, FagsakYtelsesType } from '...';
 ```
 
-## noPropertyAccessFromIndexSignature — CSS module classes
+## CSS module classes — dot notation
 
-With `"noPropertyAccessFromIndexSignature": true`, CSS module class names must use bracket notation:
+Use dot notation for CSS module class names. The generated `*.module.css.d.ts` files declare each class, so dot access passes `noPropertyAccessFromIndexSignature`. If a module has no `.d.ts`, generate it instead of falling back to bracket notation.
 
 ```typescript
 // ✅ Correct
-<div className={styles['myClass']} />
-
-// ❌ Wrong — TypeScript will error
 <div className={styles.myClass} />
+
+// ❌ Wrong — do not use bracket notation
+<div className={styles['myClass']} />
 ```
 
 ## noUncheckedIndexedAccess — array index access returns T | undefined

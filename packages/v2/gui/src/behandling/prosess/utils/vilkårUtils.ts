@@ -3,7 +3,7 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksj
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { aksjonspunktStatus as k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus as k9_kodeverk_vilkår_Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 export { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 export {
@@ -104,8 +104,7 @@ export const finnPanelStatus = (
     if (
       vilkårStatusCodes.length === 0 ||
       vilkårStatusCodes.some(
-        vsc =>
-          vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT || vsc === k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+        vsc => vsc === k9_kodeverk_vilkår_Utfall.IKKE_VURDERT || vsc === k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
       )
     ) {
       return ProcessMenuStepType.default;

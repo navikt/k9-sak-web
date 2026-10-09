@@ -1,4 +1,4 @@
-import type { k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder as UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 
 export const hentPerioderFraUttak = (uttak: UttaksplanMedUtsattePerioder | undefined) => {
   if (!uttak) return undefined;

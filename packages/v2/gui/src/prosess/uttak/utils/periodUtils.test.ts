@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sortPeriodsChronological, sortPeriodsByNewest, prettifyPeriod, getFirstAndLastWeek } from './periodUtils';
+import { sortPeriodsChronological, sortPeriodsByNewest, prettifyPeriod, getFirstAndLastWeek } from './periodUtils.js';
 
 interface Periode {
   fom: string;

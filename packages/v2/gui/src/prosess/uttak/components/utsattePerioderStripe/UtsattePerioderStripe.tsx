@@ -1,12 +1,17 @@
 import type { FC } from 'react';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
-import { prettifyPeriod, sortPeriodsChronological } from '../../utils/periodUtils';
+import { prettifyPeriod, sortPeriodsChronological } from '../../utils/periodUtils.js';
 import styles from './utsattePerioderStripe.module.css';
-import { useUttakContext } from '../../context/UttakContext';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../../api/UttakApiContext.js';
+import { useUttakContext } from '../../context/UttakContext.js';
+import { uttakQueryOptions } from '../../api/uttakQueryOptions.js';
 
 const UtsattePerioderStripe: FC = () => {
-  const { uttak } = useUttakContext();
-  const { utsattePerioder } = uttak;
+  const uttakApi = useUttakApi();
+  const { behandling } = useUttakContext();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const utsattePerioder = uttak?.utsattePerioder;
 
   if (!utsattePerioder || utsattePerioder.length === 0) {
     return null;

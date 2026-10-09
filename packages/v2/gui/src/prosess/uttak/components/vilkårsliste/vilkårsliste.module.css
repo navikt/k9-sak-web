@@ -6,3 +6,19 @@
   margin: 0;
   padding: 0;
 }
+
+.item {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.itemText {
+  min-width: 200px;
+  white-space: nowrap;
+}
+
+.item svg {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}

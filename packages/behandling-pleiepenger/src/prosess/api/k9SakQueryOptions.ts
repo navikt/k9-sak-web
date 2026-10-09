@@ -51,12 +51,6 @@ export const personopplysningerQueryOptions = (api: K9SakProsessApi, behandling:
     queryFn: () => api.getPersonopplysninger(behandling.uuid),
   });
 
-export const uttakQueryOptions = (api: K9SakProsessApi, behandling: Behandling, enabled = true) =>
-  queryOptions({
-    queryKey: ['uttak', behandling.uuid, behandling.versjon, enabled],
-    queryFn: () => (enabled ? api.getUttaksplan(behandling.uuid) : null),
-  });
-
 export const beregningsresultatUtbetalingQueryOptions = (
   api: K9SakProsessApi,
   behandling: Behandling,

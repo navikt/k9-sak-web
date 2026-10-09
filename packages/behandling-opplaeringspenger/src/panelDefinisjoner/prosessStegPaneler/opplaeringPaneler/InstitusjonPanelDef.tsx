@@ -1,5 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 class InstitusjonPanelDef extends ProsessStegPanelDef {
@@ -15,7 +15,7 @@ class InstitusjonPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
 
-  getVilkarKoder = () => [vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON];
+  getVilkarKoder = () => [VilkårType.GODKJENT_OPPLÆRINGSINSTITUSJON];
 
   getData = ({
     overstyrteAksjonspunktKoder,
