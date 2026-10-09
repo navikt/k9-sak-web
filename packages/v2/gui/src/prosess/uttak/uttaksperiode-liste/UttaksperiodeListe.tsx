@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState, type FC, type ReactNode } from 'react';
+import { Fragment, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
 import { Alert, BodyLong, Button, Table, Loader, HStack } from '@navikt/ds-react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -9,7 +9,6 @@ import {
 import UttakRad from './UttakRad';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
 import { useUttakContext } from '../context/UttakContext';
 import { prettifyPeriod } from '../utils/periodUtils';
 import splitUttakByDate from '../utils/splitUttakByDate';
@@ -56,7 +55,6 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     readOnly,
     behandling,
   } = useUttakContext();
-  const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const headers = tableHeaders(ytelseType);
 
@@ -130,7 +128,6 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     behandling.avsluttet != null &&
     dayjs(behandling.avsluttet).isSameOrAfter(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT), 'day');
   const visNormalarbeidstidInfo =
-    NORMALARBEIDSTID_UTTAK &&
     perioderEtterLåstNormalarbeidstid.length > 0 &&
     (!behandling.avsluttet || behandlingBleAvsluttetEtterRegleneTrådteIKraft);
 

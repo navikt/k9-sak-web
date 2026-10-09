@@ -7,7 +7,6 @@ import {
   lagUttak,
   relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
 import Uttak from '../Uttak';
@@ -42,7 +41,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const BeggeReglene: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak(
@@ -95,7 +94,7 @@ const perioderOverSkjæringsdato = [
 ];
 
 export const DialogInnhold: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak(perioderOverSkjæringsdato),
@@ -124,7 +123,7 @@ export const DialogInnhold: Story = {
 };
 
 export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-11T12:00:00' }),
     uttak: lagUttak(perioderOverSkjæringsdato),
@@ -141,7 +140,7 @@ export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
 };
 
 export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-12T00:00:00' }),
     uttak: lagUttak(perioderOverSkjæringsdato),
@@ -157,26 +156,10 @@ export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
 };
 
 export const IngenPerioderEtterSkjæringsdato: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [withFakeUttakBackend()],
   args: {
     behandling: lagUtredBehandling(),
     uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]),
-    erOverstyrer: false,
-    aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
-    readOnly: false,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.queryByText(/Endringer fra 01\.01\.2027:/)).not.toBeInTheDocument();
-  },
-};
-
-export const FeatureToggleAv: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: false })],
-  args: {
-    behandling: lagUtredBehandling(),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
     relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
