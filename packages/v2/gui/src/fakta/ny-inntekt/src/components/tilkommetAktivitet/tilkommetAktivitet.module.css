@@ -53,6 +53,11 @@
   display: flex;
 }
 
+.modalKnapp {
+  display: flex;
+  gap: var(--ax-space-8);
+}
+
 .modalKnapp > button {
   padding-top: 0;
 }
