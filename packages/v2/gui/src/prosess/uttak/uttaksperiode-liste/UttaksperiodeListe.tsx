@@ -18,6 +18,8 @@ import { PencilIcon } from '@navikt/aksel-icons';
 
 // Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
+// Datoen når låsing av normalarbeidstid trer i kraft. Behandlinger avsluttet før denne datoen får ikke låst normalarbeidstid.
+const DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT = '2026-10-12';
 
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;
@@ -124,7 +126,11 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     [...uttaksperiodeListe],
     NORMALARBEIDSTID_LÅST_DATO,
   );
-  const visNormalarbeidstidInfo = NORMALARBEIDSTID_UTTAK && perioderEtterLåstNormalarbeidstid.length > 0;
+  const avsluttetFørInfoDato =
+    behandling.avsluttet != null &&
+    dayjs(behandling.avsluttet).isBefore(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT));
+  const visNormalarbeidstidInfo =
+    NORMALARBEIDSTID_UTTAK && perioderEtterLåstNormalarbeidstid.length > 0 && !avsluttetFørInfoDato;
 
   if (visNormalarbeidstidInfo) {
     uttaksregelInfo.push({
