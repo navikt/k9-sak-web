@@ -1,7 +1,8 @@
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import OpptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { ComponentType } from 'react';
+import { type ComponentType, useState } from 'react';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
 import { BehandlingProvider } from '../../context/BehandlingContext.js';
@@ -556,7 +557,81 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
   play: async ({ canvas, step }) => {
     await step('skal vise aktiver aksjonspunkt når backend tillater reaktivering', async () => {
       await expect(await canvas.findByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Del opp periode' })).toBeDisabled();
+      await expect(canvas.queryByRole('textbox', { name: /Begrunnelse/ })).not.toBeInTheDocument();
     });
+  },
+};
+
+export const TilkommetAktivitetMedUtførtAksjonspunkt: Story = {
+  args: {
+    ...TilkommetAktivitetMedForlengelseLukketAP.args,
+    aksjonspunkter: [
+      { definisjon: AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD, status: aksjonspunktStatus.UTFØRT },
+    ],
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText('Perioder med ny aktivitet')).toBeInTheDocument();
+    await expect(canvas.queryByRole('textbox', { name: /Begrunnelse/ })).not.toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Del opp periode' })).toBeDisabled();
+    await userEvent.click(canvas.getByRole('button', { name: 'Rediger' }));
+    await expect(await canvas.findByRole('textbox', { name: /Begrunnelse/ })).not.toHaveAttribute('readonly');
+    await expect(canvas.getByRole('button', { name: 'Del opp periode' })).toBeEnabled();
+    await userEvent.click(canvas.getByRole('button', { name: 'Avbryt redigering' }));
+    await expect(canvas.queryByRole('textbox', { name: /Begrunnelse/ })).not.toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: 'Del opp periode' })).toBeDisabled();
+  },
+};
+
+export const TilkommetAktivitetMedUtførtAksjonspunktReadOnly: Story = {
+  args: {
+    ...TilkommetAktivitetMedUtførtAksjonspunkt.args,
+    readOnly: true,
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole('button', { name: 'Del opp periode' })).toBeDisabled();
+    await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
+  },
+};
+
+export const TilkommetAktivitetEtterReaktivering: Story = {
+  args: TilkommetAktivitetMedForlengelseLukketAP.args,
+  render: function Render(args) {
+    const [aksjonspunkter, setAksjonspunkter] = useState<AksjonspunktDto[]>([]);
+    return (
+      <NyInntektApiContext
+        value={{
+          backend: 'k9sak',
+          kanReaktivereAksjonspunkt: async () => true,
+          reaktiverAksjonspunkt: async () => {
+            setAksjonspunkter([
+              { definisjon: AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD, status: aksjonspunktStatus.OPPRETTET },
+            ]);
+          },
+        }}
+      >
+        <NyInntektFaktaIndex
+          beregningsgrunnlagVilkår={args.beregningsgrunnlagVilkår}
+          beregningsgrunnlagListe={args.beregningsgrunnlagListe}
+          arbeidsgiverOpplysningerPerId={args.arbeidsgiverOpplysningerPerId}
+          submittable={args.submittable}
+          submitCallback={args.submitCallback}
+          readOnly={args.readOnly}
+          aksjonspunkter={aksjonspunkter}
+          formData={args.formData}
+          setFormData={args.setFormData}
+        />
+      </NyInntektApiContext>
+    );
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole('button', { name: 'Del opp periode' })).toBeDisabled();
+    await expect(canvas.queryByRole('button', { name: 'Rediger' })).not.toBeInTheDocument();
+    await userEvent.click(await canvas.findByRole('button', { name: 'Aktiver aksjonspunkt' }));
+    await waitFor(() => expect(canvas.getByRole('button', { name: 'Del opp periode' })).toBeEnabled());
+    await expect(canvas.getByRole('textbox', { name: /Begrunnelse/ })).not.toHaveAttribute('readonly');
+    await expect(canvas.queryByRole('button', { name: 'Aktiver aksjonspunkt' })).not.toBeInTheDocument();
   },
 };
 

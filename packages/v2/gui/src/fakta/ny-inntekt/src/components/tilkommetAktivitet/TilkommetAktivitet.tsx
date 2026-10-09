@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import dayjs from 'dayjs';
@@ -30,7 +30,7 @@ import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
 import type { Inntektsforhold, VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
 import type { BeregningsgrunnlagTilBekreftelse } from '../../types/BeregningsgrunnlagTilBekreftelse.js';
 import styles from './tilkommetAktivitet.module.css';
-import { harAksjonspunkt } from '../../../../../utils/aksjonspunktUtils.js';
+import { aksjonspunktErUtført, harAksjonspunkt } from '../../../../../utils/aksjonspunktUtils.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
@@ -212,6 +212,7 @@ export const TilkommetAktivitet = ({
   vilkarperioder,
   arbeidsgiverOpplysningerPerId,
 }: Props) => {
+  const [redigerer, setRedigerer] = useState(false);
   const formMethods = useForm<TilkommetAktivitetFormValues>({
     defaultValues: formData?.['VURDER_TILKOMMET_AKTIVITET_FORM']
       ? formData
@@ -222,6 +223,7 @@ export const TilkommetAktivitet = ({
     formState: { dirtyFields, isSubmitted, errors },
     trigger,
     control,
+    reset,
   } = formMethods;
 
   useEffect(() => {
@@ -239,6 +241,8 @@ export const TilkommetAktivitet = ({
     aksjonspunkter,
     aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD,
   );
+  const erUtført = aksjonspunktErUtført(aksjonspunkter, aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD);
+  const låstTilLesevisning = !harAksjonspunktVurderNyttInntektsforhold || (erUtført && !redigerer);
 
   return (
     <ErrorBoundary errorMessage="Noe gikk galt ved visning av tilkommet aktivitet">
@@ -246,8 +250,9 @@ export const TilkommetAktivitet = ({
         <RhfForm
           formMethods={formMethods}
           onSubmit={async values => {
-            if (Object.keys(errors).length === 0) {
+            if (!readOnly && !låstTilLesevisning && Object.keys(errors).length === 0) {
               await submitCallback(transformValues(values, beregningsgrunnlagListe, vilkarperioder));
+              setRedigerer(false);
             }
           }}
           setDataOnUnmount={setFormData}
@@ -272,14 +277,32 @@ export const TilkommetAktivitet = ({
                   formFieldIndex={formFieldIndex}
                   readOnly={
                     readOnly ||
-                    !harAksjonspunktVurderNyttInntektsforhold ||
+                    låstTilLesevisning ||
                     !vurderesIBehandlingen(
                       vilkarperioder,
                       beregningsgrunnlagListe[beregningsgrunnlagIndeks]?.vilkårsperiodeFom,
                     )
                   }
                   submittable={submittable}
-                  erAksjonspunktÅpent={harAksjonspunktVurderNyttInntektsforhold}
+                  redigeringsstatus={
+                    harAksjonspunktVurderNyttInntektsforhold &&
+                    erUtført &&
+                    !readOnly &&
+                    vurderesIBehandlingen(
+                      vilkarperioder,
+                      beregningsgrunnlagListe[beregningsgrunnlagIndeks]?.vilkårsperiodeFom,
+                    )
+                      ? {
+                          redigerer,
+                          onRediger: () => setRedigerer(true),
+                          onAvbryt: () => {
+                            reset(buildInitialValues(beregningsgrunnlagListe, vilkarperioder));
+                            setRedigerer(false);
+                          },
+                        }
+                      : undefined
+                  }
+                  erAksjonspunktÅpent={harAksjonspunktVurderNyttInntektsforhold && !låstTilLesevisning}
                   arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 />
               </div>
