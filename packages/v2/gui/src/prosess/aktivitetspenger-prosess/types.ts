@@ -10,9 +10,3 @@ export const opphørsårsakLabels: Record<BostedsvilkårIkkeOppfyltÅrsak, strin
   [BostedsvilkårIkkeOppfyltÅrsak.UDEFINERT]: '-',
   [BostedsvilkårIkkeOppfyltÅrsak.AVKORTET]: 'Avkortet',
 };
-
-export const kildeLabels: Record<BostedsavklaringKildeType, string> = {
-  [BostedsavklaringKildeType.BRUKER]: 'Bruker',
-  [BostedsavklaringKildeType.FOLKEREGISTER]: 'Register',
-  [BostedsavklaringKildeType.ANNET]: 'Annet',
-};

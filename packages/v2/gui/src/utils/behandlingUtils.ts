@@ -14,10 +14,13 @@ export const erKlage = (behandlingType?: string): boolean =>
 export const erAktivitetspengerOpphørsbehandling = (behandling: {
   type?: BehandlingDto['type'];
   behandlingÅrsaker?: BehandlingDto['behandlingÅrsaker'];
-}): boolean =>
-  behandling.type === BehandlingType.REVURDERING &&
-  (behandling.behandlingÅrsaker?.some(årsak => årsak.behandlingArsakType === BehandlingÅrsakType.ENDRET_BOSTED) ??
-    false);
+}): boolean => {
+  if (behandling.type === BehandlingType.REVURDERING) {
+    const opphørsårsaker = [BehandlingÅrsakType.ENDRET_BOSTED, BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE];
+    return !!behandling.behandlingÅrsaker?.some(årsak => opphørsårsaker.some(å => å === årsak.behandlingArsakType));
+  }
+  return false;
+};
 
 export const finnKodeverkTypeForBehandlingType = (
   behandlingType?: string,

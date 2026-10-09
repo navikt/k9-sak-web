@@ -21,6 +21,7 @@ export interface VilkårSplittPanelPeriod {
     fom: string;
     tom: string;
   };
+  vurderesIBehandlingen?: boolean;
 }
 
 interface VilkårSplittPanelProps {
@@ -45,6 +46,8 @@ interface VilkårSplittPanelProps {
   periodListLabel?: string;
   periodColumnHeader?: string;
   beforeDetailContent?: ReactNode;
+  /** Sett til true når innholdet selv styrer egen boks-styling (f.eks. flere separate bokser) i stedet for panelets automatiske blå bakgrunn i låst visning. */
+  hideLockedBackground?: boolean;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
@@ -85,8 +88,9 @@ export const VilkårSplittPanel = ({
   isAktivitetspenger = false,
   isPermanentlyReadOnly,
   periodListLabel = 'Alle søknader',
-  periodColumnHeader = 'Søknadstidspunkt',
+  periodColumnHeader = 'Virkningstidspunkt',
   beforeDetailContent,
+  hideLockedBackground = false,
 }: VilkårSplittPanelProps) => {
   const sortertePerioder = [...periods].sort((a, b) => (b.periode?.fom ?? b.id).localeCompare(a.periode?.fom ?? a.id));
   const selectedItem = periods.find(period => period.id === selectedItemId);
@@ -186,8 +190,8 @@ export const VilkårSplittPanel = ({
             <>
               <Box
                 borderRadius="8"
-                padding={effectiveLocked ? 'space-16' : 'space-0'}
-                background={effectiveLocked ? 'info-softA' : undefined}
+                padding={effectiveLocked && !hideLockedBackground ? 'space-16' : 'space-0'}
+                background={effectiveLocked && !hideLockedBackground ? 'info-softA' : undefined}
               >
                 <VStack gap={canEdit ? 'space-12' : 'space-0'}>
                   {children(effectiveLocked, setIsFormLocked, defaultIsLocked)}

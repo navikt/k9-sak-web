@@ -123,6 +123,31 @@ export const Oppfylt: Story = {
   },
 };
 
+export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
+  args: {
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        {
+          periode,
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: false,
+          begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+        },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByRole('button', { name: /Rediger vurdering/ })).not.toBeInTheDocument();
+  },
+};
+
 export const IkkeOppfylt: Story = {
   args: {
     andreLivsoppholdytelserVilkår: {
@@ -195,7 +220,7 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
     await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
       await expect(
-        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.', { exact: false }),
+        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.', { exact: false }),
       ).not.toBeInTheDocument();
     });
 

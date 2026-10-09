@@ -1,3 +1,4 @@
+import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
 import {
@@ -5,6 +6,8 @@ import {
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
   aktivitetspenger_hentBostedGrunnlag,
+  aktivitetspenger_hentVilkårsavklaringer,
+  aktivitetspenger_hentVilkårsavklaringVurderinger,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   avp_hentPerioderSomKanAvkortesAvNavKontor,
@@ -56,6 +59,14 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async hentBostedGrunnlag(behandlingUuid: string) {
     return (await aktivitetspenger_hentBostedGrunnlag({ query: { behandlingUuid } })).data;
+  }
+
+  async hentVilkårsavklaringer(behandlingUuid: string, vilkarType: VilkårType) {
+    return (await aktivitetspenger_hentVilkårsavklaringer({ query: { behandlingUuid, vilkarType } })).data;
+  }
+
+  async hentVilkårsavklaringVurderinger(behandlingUuid: string, vilkarType: VilkårType) {
+    return (await aktivitetspenger_hentVilkårsavklaringVurderinger({ query: { behandlingUuid, vilkarType } })).data;
   }
 
   async getBeregningsgrunnlag(behandlingUuid: string) {

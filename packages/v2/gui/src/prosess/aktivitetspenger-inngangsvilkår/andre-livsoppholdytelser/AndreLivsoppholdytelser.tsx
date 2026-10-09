@@ -61,23 +61,25 @@ export const AndreLivsoppholdytelser = ({
     avkortingsperiodeLivsopphold?.perioder ?? [],
   );
 
-  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
     label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
     periode: periode.periode,
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
   }));
   const [selectedId, setSelectedId] = useState(
     () =>
       søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
+      perioder[0]?.id ??
       '',
   );
   useEffect(() => {
-    if (!periods.some(period => period.id === selectedId)) {
+    if (!perioder.some(period => period.id === selectedId)) {
       setSelectedId('');
     }
-  }, [periods, selectedId]);
+  }, [perioder, selectedId]);
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
   const isAndreLivsoppholdytelserApSolved = aksjonspunktErLøst(andreLivsoppholdytelserAp);
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
     defaultValues: buildInitialValues(søknadsperioder),
@@ -86,13 +88,13 @@ export const AndreLivsoppholdytelser = ({
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (data: AndreLivsoppholdytelserFormData) => {
       const vurdering = data.vurderinger[selectedId];
-      const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem || selectedItem.periode === undefined || !vurdering) {
-        throw new Error('Kunne ikke finne valgt periode for andre livsoppholdytelser vilkår');
+      if (!vurdering) {
+        throw new Error('Kunne ikke finne vurdering for valgt periode');
       }
       const muligAvkorting = vurdering.muligAvkortingPeriode;
+      const andreLivsoppholdytelserErOppfylt = vurdering.andreLivsoppholdytelser === 'oppfylt';
       const redigerMaksdatoAktiv =
-        vurdering.andreLivsoppholdytelser === 'oppfylt' &&
+        andreLivsoppholdytelserErOppfylt &&
         vurdering.redigerMaksdato &&
         muligAvkorting !== undefined &&
         vurdering.tom !== muligAvkorting.tom;
@@ -100,14 +102,15 @@ export const AndreLivsoppholdytelser = ({
       const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
       const vurdertePerioder: VilkårLivsoppholdsytelserPeriodeVurderingDto[] = [
         {
-          avslagsårsak: vurdering.andreLivsoppholdytelser !== 'oppfylt' ? vurdering.avslagsårsak : undefined,
+          avslagsårsak: !andreLivsoppholdytelserErOppfylt ? vurdering.avslagsårsak : undefined,
           begrunnelse: begrunnelseInnvilget,
-          erVilkårOppfylt: vurdering.andreLivsoppholdytelser === 'oppfylt',
+          erVilkårOppfylt: andreLivsoppholdytelserErOppfylt,
           periode: {
             fom: vurdering.fom,
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
           fritekstVurderingBrev:
+            !andreLivsoppholdytelserErOppfylt &&
             vurdering.avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
               ? vurdering.fritekst
               : undefined,
@@ -188,19 +191,19 @@ export const AndreLivsoppholdytelser = ({
     <VStack gap="space-20">
       {!isAndreLivsoppholdytelserApSolved && (
         <Alert variant="warning" size="small">
-          Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.
+          Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
-        periods={periods}
+        periods={perioder}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av andre livsoppholdsytelser"
         lovreferanse="§ 4"
         defaultIsLocked={isAndreLivsoppholdytelserApSolved}
         readOnly={readOnly}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
         afterEditButton={
           skalViseSendTilBeslutter ? (
             <VStack gap="space-20">

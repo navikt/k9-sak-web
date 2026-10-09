@@ -9,6 +9,7 @@ import {
   $VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
@@ -21,11 +22,11 @@ import {
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
-import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
-import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
-import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
-import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 
 interface FormData {
   perioder: Record<
@@ -51,6 +52,48 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
   ),
 });
 
+const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[] =>
+  (vilkår.perioder ?? [])
+    .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
+    .map(period => ({
+      id: period.periode.fom,
+      status: getPeriodStatus(period.vilkarStatus),
+      label: formatDate(period.periode.fom),
+      periode: period.periode,
+    }));
+
+const buildPayload = ({
+  formData,
+  selectedId,
+  periods,
+}: {
+  formData: FormData;
+  selectedId: string;
+  periods: VilkårSplittPanelPeriod[];
+}): BekreftetAksjonspunktDto => {
+  const selectedFormPeriod = formData.perioder[selectedId];
+  if (!selectedFormPeriod) {
+    throw new Error('Kunne ikke finne valgt periode for opphør');
+  }
+  const valgtPeriode = periods.find(period => period.id === selectedId);
+  return {
+    '@type': AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+    begrunnelse: selectedFormPeriod.begrunnelse,
+    vurdertePerioder: [
+      {
+        begrunnelse: selectedFormPeriod.begrunnelse,
+        erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
+        periode: {
+          fom: valgtPeriode?.periode?.fom ?? '',
+          tom: valgtPeriode?.periode?.tom,
+        },
+        fritekstVurderingBrev:
+          selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
+      },
+    ],
+  };
+};
+
 interface Props {
   vurderBostedVilkårAP?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
@@ -63,7 +106,7 @@ interface Props {
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
 }
 
-export const Vilkaarsvurdering = ({
+export const BostedVilkårsvurdering = ({
   vurderBostedVilkårAP,
   lokalkontorForeslårVilkårAP,
   bostedVilkår,
@@ -74,14 +117,7 @@ export const Vilkaarsvurdering = ({
   isPermanentlyReadOnly,
   bostedGrunnlag,
 }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (bostedVilkår.perioder ?? [])
-    .toSorted((a, b) => b.periode.fom.localeCompare(a.periode.fom))
-    .map(p => ({
-      id: p.periode.fom,
-      status: getPeriodStatus(p.vilkarStatus),
-      label: `${formatDate(p.periode.fom)} - ${formatDate(p.periode.tom)}`,
-      periode: p.periode,
-    }));
+  const periods = buildPeriods(bostedVilkår);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(bostedGrunnlag),
   });
@@ -91,27 +127,7 @@ export const Vilkaarsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
-      const selectedFormPeriod = formData.perioder[selectedId];
-      if (!selectedFormPeriod) {
-        throw new Error('Kunne ikke finne valgt periode for opphør');
-      }
-      const valgtPeriode = periods.find(p => p.id === selectedId);
-      const payload: BekreftetAksjonspunktDto = {
-        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
-        begrunnelse: selectedFormPeriod.begrunnelse,
-        vurdertePerioder: [
-          {
-            begrunnelse: selectedFormPeriod.begrunnelse,
-            erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
-            periode: {
-              fom: valgtPeriode?.periode?.fom ?? '',
-              tom: valgtPeriode?.periode?.tom,
-            },
-            fritekstVurderingBrev:
-              selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
-          },
-        ],
-      };
+      const payload = buildPayload({ formData, selectedId, periods });
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
     onSuccess: () => {
@@ -144,7 +160,7 @@ export const Vilkaarsvurdering = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
-        lovreferanse={bostedVilkår.lovReferanse}
+        lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
         readOnly={selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error' || readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
@@ -211,7 +227,14 @@ export const Vilkaarsvurdering = ({
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
-                label="Vurder om bruker har flyttet fra Trondheim kommune, jmf"
+                label={
+                  <span>
+                    Vurder om bruker har flyttet fra Trondheim kommune, jmf{' '}
+                    <Lovreferanse includeFullTextInLink isAktivitetspenger>
+                      §2 Geografisk virkeområde
+                    </Lovreferanse>
+                  </span>
+                }
                 readOnly={isFormLocked}
                 validate={[
                   required,
