@@ -1,13 +1,13 @@
+import type { HistorikkinnslagDto } from '@k9-sak-web/backend/ungsak/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/historikk/HistorikkinnslagDto.js';
+import type { UngKodeverkoppslag } from '../../kodeverk/oppslag/useUngKodeverkoppslag.js';
 import {
   fangFeilVedHenting,
+  type BeriketHistorikkInnslag,
   type HentetHistorikk,
   type HistorikkBackendApi,
 } from '../../sak/historikk/api/HistorikkBackendApi.js';
-import { type BeriketHistorikkInnslag } from '../../sak/historikk/api/HistorikkBackendApi.js';
-import type { HistorikkinnslagDto } from '@k9-sak-web/backend/ungsak/kontrakt/historikk/HistorikkinnslagDto.js';
-import type { HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/historikk/HistorikkinnslagDto.js';
 import { UngHistorikkInnslagBeriker } from '../../sak/historikk/api/UngHistorikkInnslagBeriker.js';
-import type { UngKodeverkoppslag } from '../../kodeverk/oppslag/useUngKodeverkoppslag.js';
 
 const fakeUngSakResponse: HistorikkinnslagDto[] = [
   {
@@ -35,7 +35,7 @@ const fakeUngSakResponse: HistorikkinnslagDto[] = [
   {
     behandlingUuid: '1adbd9e0-33c9-40c4-a870-0ad2f4526a54',
     aktør: {
-      type: 'LOKALKONTOR_SBH',
+      type: 'NAV_KONTOR_SBH',
       ident: 'Z990404',
     },
     opprettetTidspunkt: '2025-11-28T10:00:38.993',
@@ -56,7 +56,7 @@ const fakeUngSakResponse: HistorikkinnslagDto[] = [
   {
     behandlingUuid: 'd7c89e5b-ed48-40c8-8fc9-8c6faca4de28',
     aktør: {
-      type: 'LOKALKONTOR_BESL',
+      type: 'NAV_KONTOR_BESL',
       ident: 'B123456',
     },
     skjermlenke: 'VEDTAK',
