@@ -104,7 +104,13 @@ export const EndreBehandlendeEnhetModal = ({
             <div />
             <Box marginBlock="space-16 space-0">
               <div className={styles.floatButtons}>
-                <Button variant="primary" size="small" disabled={!(nyEnhet && begrunnelse) || formMethods.formState.isSubmitting} loading={formMethods.formState.isSubmitting} type="submit">
+                <Button
+                  variant="primary"
+                  size="small"
+                  disabled={!(nyEnhet && begrunnelse) || formMethods.formState.isSubmitting}
+                  loading={formMethods.formState.isSubmitting}
+                  type="submit"
+                >
                   OK
                 </Button>
                 <Button variant="secondary" type="button" size="small" onClick={lukkModal}>

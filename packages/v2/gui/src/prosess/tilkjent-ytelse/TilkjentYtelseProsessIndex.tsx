@@ -3,14 +3,14 @@ import type {
   k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto,
   k9_sak_kontrakt_person_PersonopplysningDto as PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import {useSuspenseQuery} from '@tanstack/react-query';
-import {use} from 'react';
-import {assertDefined} from '../../utils/validation/assertDefined.js';
-import {TilkjentYtelseApiContext} from './api/TilkjentYtelseApiContext.js';
-import type {FeriepengerPrÅr} from './components/feriepenger/FeriepengerPanel.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { use } from 'react';
+import { assertDefined } from '../../utils/validation/assertDefined.js';
+import { TilkjentYtelseApiContext } from './api/TilkjentYtelseApiContext.js';
+import type { FeriepengerPrÅr } from './components/feriepenger/FeriepengerPanel.tsx';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
-import type {ArbeidsgiverOpplysningerPerId} from './types/arbeidsgiverOpplysningerType';
-import type {BeregningsresultatMedUtbetaltePeriodeDto} from './types/BeregningsresultatMedUtbetaltePeriode';
+import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
+import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
