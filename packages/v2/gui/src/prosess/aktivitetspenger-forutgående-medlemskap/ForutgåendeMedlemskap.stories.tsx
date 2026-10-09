@@ -229,7 +229,7 @@ export const FritekstVedAvslag: Story = {
 
     await step('fritekstfelt er påkrevd når Nei er valgt', async () => {
       await userEvent.type(
-        canvas.getByRole('textbox', { name: /Vurder om søker har forutgående medlemskap/ }),
+        canvas.getByRole('textbox', { name: /Vurder om søker har 5 år forutgående medlemskap/ }),
         'Begrunnelse',
       );
       await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
