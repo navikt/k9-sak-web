@@ -542,7 +542,12 @@ export const TilkommetAktivitetMedForlengelse: Story = {
 export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
   args: {
     readOnly: false,
-    aksjonspunkter: [],
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD,
+        status: aksjonspunktStatus.UTFØRT,
+      },
+    ],
     beregningsgrunnlagListe: bgTilkommetInntektsforholdMedForlengelseLukketAP,
     beregningsgrunnlagVilkår: lagVilkår([
       {
@@ -554,8 +559,8 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal vise aktiver aksjonspunkt når backend tillater reaktivering', async () => {
-      await expect(await canvas.findByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+    await step('skal vise redigeringsknapp for ferdigbehandlet aksjonspunkt', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Rediger' })).toBeInTheDocument();
     });
   },
 };
