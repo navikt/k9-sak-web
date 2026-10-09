@@ -128,7 +128,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   );
   const behandlingBleAvsluttetEtterRegleneTrådteIKraft =
     behandling.avsluttet != null &&
-    dayjs(behandling.avsluttet).isSameOrAfter(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT));
+    dayjs(behandling.avsluttet).isSameOrAfter(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT), 'day');
   const visNormalarbeidstidInfo =
     NORMALARBEIDSTID_UTTAK &&
     perioderEtterLåstNormalarbeidstid.length > 0 &&
