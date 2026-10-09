@@ -81,6 +81,7 @@ const PANEL_KONFIG = {
   opphør: {
     aksjonspunkter: [
       AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
+      AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
       AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
       AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
       AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
