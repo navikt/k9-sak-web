@@ -126,11 +126,13 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     [...uttaksperiodeListe],
     NORMALARBEIDSTID_LÅST_DATO,
   );
-  const avsluttetFørInfoDato =
+  const behandlingBleAvsluttetEtterRegleneTrådteIKraft =
     behandling.avsluttet != null &&
-    dayjs(behandling.avsluttet).isBefore(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT));
+    dayjs(behandling.avsluttet).isSameOrAfter(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT));
   const visNormalarbeidstidInfo =
-    NORMALARBEIDSTID_UTTAK && perioderEtterLåstNormalarbeidstid.length > 0 && !avsluttetFørInfoDato;
+    NORMALARBEIDSTID_UTTAK &&
+    perioderEtterLåstNormalarbeidstid.length > 0 &&
+    (!behandling.avsluttet || behandlingBleAvsluttetEtterRegleneTrådteIKraft);
 
   if (visNormalarbeidstidInfo) {
     uttaksregelInfo.push({
