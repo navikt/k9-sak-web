@@ -33,8 +33,8 @@ const PANEL_KONFIG = {
   inngangsvilkår: {
     aksjonspunkter: [
       AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
-      AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
-      AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+      AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
+      AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
       AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
@@ -82,8 +82,9 @@ const PANEL_KONFIG = {
     aksjonspunkter: [
       AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED,
       AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
-      AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
-      AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+      AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+      AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
+      AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
       AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_BOSTEDUTTALELSE,
     ],
     id: prosessStegCodes.OPPHØR,
