@@ -32,10 +32,10 @@ const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMed
   vurderBostedFaktaAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
   vurderBostedVilkårAP: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
   ),
   lokalkontorBeslutterAP: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
   ),
   bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
 });
@@ -99,7 +99,7 @@ export const AktivitetspengerOpphør = ({
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
-    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
+    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
 
   const opphørData = useMemo(() => samleOpphørData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
 

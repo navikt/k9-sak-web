@@ -28,6 +28,7 @@ const rootFeatureToggles = {
   BRUK_V2_FEILUTBETALING: false,
   FORENKLE_OMS_VEDTAK_STATUS: false,
   BRUK_V2_DELING_AV_DAGER: false,
+  BRUK_V2_PROSESS_UNNTAK: false,
   REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
