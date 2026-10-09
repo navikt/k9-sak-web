@@ -46,10 +46,10 @@ const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMed
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
   ),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
   ),
   lokalkontorBeslutterAP: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
   ),
 });
 
@@ -123,7 +123,7 @@ export const AktivitetspengerOpphør = ({
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
-    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
+    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
   const isBehandlingsårsakBosted = erOpphørForBehandlingsårsak(
     behandling.behandlingÅrsaker,
     BehandlingÅrsakType.ENDRET_BOSTED,

@@ -1,33 +1,19 @@
 /* eslint-disable storybook/prefer-pascal-case */
-import {
-  AksjonspunktDefinisjon
-} from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
-import {
-  AndreLivsoppholdsytelserIkkeOppfyltÅrsak
-} from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
-import {
-  BostedsvilkårIkkeOppfyltÅrsak
-} from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type {
-  BehandlingOperasjonerDto
-} from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
-import type {
-  InnloggetAnsattUngV2Dto
-} from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
-import type {
-  TotrinnskontrollSkjermlenkeContextDto
-} from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import type {
-  BostedGrunnlagResponseDto
-} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
+import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -67,7 +53,7 @@ const fakeInnloggetBruker = {
 
 const fakeLovligeBehandlingsoperasjoner = {
   uuid: 'fake-behandling-uuid',
-  behandlingTilGodkjenningVedLokalkontor: false,
+  behandlingTilGodkjenningVedNavKontor: false,
 } satisfies BehandlingOperasjonerDto;
 
 const fakeBostedVilkår = {
@@ -637,7 +623,7 @@ const fakeInnloggetBrukerSomKanBeslutte = {
 
 const fakeLovligeBehandlingsoperasjonerTilGodkjenning = {
   uuid: 'fake-behandling-uuid',
-  behandlingTilGodkjenningVedLokalkontor: true,
+  behandlingTilGodkjenningVedNavKontor: true,
 } satisfies BehandlingOperasjonerDto;
 
 const fakeTotrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[] = [
@@ -655,7 +641,7 @@ const fakeBeslutterArgsBase = {
   innloggetBruker: fakeInnloggetBrukerSomKanBeslutte,
   lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjonerTilGodkjenning,
   totrinnskontrollSkjermlenkeContext: fakeTotrinnskontrollContext,
-  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR)],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR)],
 };
 
 export const BeslutterGodkjennerAlle: Story = {
@@ -727,7 +713,7 @@ export const SaksbehandlerSerBeslutterFanen: Story = {
     innloggetBruker: fakeInnloggetBruker,
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjonerTilGodkjenning,
     totrinnskontrollSkjermlenkeContext: fakeTotrinnskontrollContext,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR)],
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step }) => {
@@ -799,7 +785,7 @@ export const ÅrsakOgVarselAvslå: Story = {
 export const LokalkontorForeslårVilkår: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR)],
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
