@@ -20,7 +20,7 @@ const meta = {
     } satisfies InnloggetAnsattUngV2Dto,
     lovligeBehandlingsoperasjoner: {
       uuid: 'fake-uuid',
-      behandlingTilGodkjenningVedLokalkontor: true,
+      behandlingTilGodkjenningVedNavKontor: true,
     },
     bostedGrunnlag: {
       perioder: [],
@@ -79,7 +79,7 @@ export const MedUtførtBistandsvilkår: Story = {
 
 export const MedÅpentLokalkontorForeslårVilkår: Story = {
   args: {
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR)],
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: async () => {},
@@ -91,7 +91,7 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
   args: {
     aksjonspunkter: [
       lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
-      lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR),
+      lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR),
     ],
     innloggetBruker: {
       aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: true },
