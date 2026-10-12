@@ -12,7 +12,7 @@ import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
-import { byggEndringer, erRadNyEllerEndret, InnleggelsesperiodeRad } from './innleggelsesperiodeEndringer';
+import { byggEndringer, erRadNyEllerEndret, InnleggelsesperiodeEndringRad } from './innleggelsesperiodeEndringer';
 import styles from './innleggelsesperiodeFormModal.module.css';
 
 export enum FieldName {
@@ -89,7 +89,7 @@ const InnleggelsesperiodeFormModal = ({
         begrunnelse: '',
         opprinneligPeriode: innleggelsesPeriode.fom ? innleggelsesPeriode : null,
       })),
-      [FieldName.SLETTEDE_PERIODER]: [] as InnleggelsesperiodeRad[],
+      [FieldName.SLETTEDE_PERIODER]: [] as InnleggelsesperiodeEndringRad[],
     },
   });
   const modalRef = useRef<HTMLDialogElement>(undefined);

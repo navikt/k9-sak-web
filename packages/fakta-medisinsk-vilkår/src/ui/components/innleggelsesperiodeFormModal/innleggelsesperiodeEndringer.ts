@@ -1,7 +1,7 @@
 import { Period } from '@fpsak-frontend/utils';
 import type { SykdomInnleggelseEndringBegrunnelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/sykdom/SykdomInnleggelseDto.js';
 
-export interface InnleggelsesperiodeRad {
+export interface InnleggelsesperiodeEndringRad {
   period: Period;
   begrunnelse: string;
   opprinneligPeriode: Period | null;
@@ -11,8 +11,8 @@ export const erRadNyEllerEndret = (periode: Period, opprinneligPeriode: Period |
   !opprinneligPeriode || opprinneligPeriode.fom !== periode.fom || opprinneligPeriode.tom !== periode.tom;
 
 export const byggEndringer = (
-  aktiveRader: InnleggelsesperiodeRad[],
-  slettedeRader: InnleggelsesperiodeRad[],
+  aktiveRader: InnleggelsesperiodeEndringRad[],
+  slettedeRader: InnleggelsesperiodeEndringRad[],
 ): SykdomInnleggelseEndringBegrunnelseDto[] => [
   ...aktiveRader
     .filter(rad => erRadNyEllerEndret(rad.period, rad.opprinneligPeriode))

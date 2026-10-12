@@ -1,21 +1,21 @@
 import { Period } from '@fpsak-frontend/utils';
-import { byggEndringer, InnleggelsesperiodeRad } from '../innleggelsesperiodeEndringer';
+import { byggEndringer, InnleggelsesperiodeEndringRad } from '../innleggelsesperiodeEndringer';
 
 const rad = (
   fom: string,
   tom: string,
   begrunnelse = '',
   opprinnelig?: { fom: string; tom: string } | null,
-): InnleggelsesperiodeRad => ({
+): InnleggelsesperiodeEndringRad => ({
   period: new Period(fom, tom),
   begrunnelse,
   opprinneligPeriode: opprinnelig ? new Period(opprinnelig.fom, opprinnelig.tom) : null,
 });
 
 // En rad som er seedet fra en opprinnelig periode (uendret utgangspunkt).
-const seedetRad = (fom: string, tom: string): InnleggelsesperiodeRad => rad(fom, tom, '', { fom, tom });
+const seedetRad = (fom: string, tom: string): InnleggelsesperiodeEndringRad => rad(fom, tom, '', { fom, tom });
 
-const slettetRad = (fom: string, tom: string, begrunnelse = ''): InnleggelsesperiodeRad =>
+const slettetRad = (fom: string, tom: string, begrunnelse = ''): InnleggelsesperiodeEndringRad =>
   rad(fom, tom, begrunnelse, { fom, tom });
 
 describe('innleggelsesperiodeEndringer', () => {
