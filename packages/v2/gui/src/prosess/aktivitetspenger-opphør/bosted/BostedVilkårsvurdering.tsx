@@ -13,7 +13,7 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -27,6 +27,7 @@ import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '../../aktivitetspenger-prosess/types.js';
 
 interface FormData {
   perioder: Record<
@@ -35,6 +36,7 @@ interface FormData {
       begrunnelse: string;
       flyttetFraTrondheim: string;
       fritekstVurderingBrev: string;
+      harFritekstbrev: boolean;
     }
   >;
 }
@@ -47,6 +49,7 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData
         begrunnelse: p.resultat?.begrunnelse ?? '',
         flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : p.resultat?.erBosatt === true ? 'nei' : '',
         fritekstVurderingBrev: p.resultat?.friteksttilBrev ?? '',
+        harFritekstbrev: !!p.resultat?.friteksttilBrev,
       },
     ]),
   ),
@@ -150,9 +153,17 @@ export const BostedVilkårsvurdering = ({
     control: formHook.control,
     name: `perioder.${selectedId}.flyttetFraTrondheim`,
   });
+  const harFritekstbrev = formHook.watch(`perioder.${selectedId}.harFritekstbrev`);
+
+  const erÅrsakTilOpphørAnnet = selectedFakta?.avklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
 
   return (
     <VStack gap="space-20">
+      {!isVurderBostedvilkårAPSolved && vurderBostedVilkårAP && (
+        <Alert variant="warning" size="small">
+          Vurder om søker ikke lenger er bosatt i Trondheim kommune.
+        </Alert>
+      )}
       <VilkårSplittPanel
         isAktivitetspenger
         periods={periods}
@@ -256,7 +267,14 @@ export const BostedVilkårsvurdering = ({
                 </Radio>
                 <Radio value="nei">Nei, bruker bor fortsatt i Trondheim kommune</Radio>
               </RhfRadioGroup>
-              {flyttetFraTrondheim === 'ja' && (
+              {flyttetFraTrondheim === 'ja' && !erÅrsakTilOpphørAnnet && (
+                <RhfCheckbox
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.harFritekstbrev`}
+                  label="Legg til fritekstbeskrivelse i avslagsbrev"
+                />
+              )}
+              {flyttetFraTrondheim === 'ja' && (erÅrsakTilOpphørAnnet || harFritekstbrev) && (
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}

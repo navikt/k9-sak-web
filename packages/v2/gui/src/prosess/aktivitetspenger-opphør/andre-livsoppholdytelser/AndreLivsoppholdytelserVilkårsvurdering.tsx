@@ -9,7 +9,7 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
-import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -29,6 +29,7 @@ interface PeriodForm {
   begrunnelse: string;
   andreLivsoppholdytelser: 'ja' | 'nei' | '';
   fritekstVurderingBrev: string;
+  harFritekstbrev: boolean;
 }
 
 interface FormData {
@@ -54,6 +55,7 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
         andreLivsoppholdytelser:
           period.utfall === Utfall.OPPFYLT ? 'nei' : period.utfall === Utfall.IKKE_OPPFYLT ? 'ja' : '',
         fritekstVurderingBrev: period.avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
+        harFritekstbrev: !!period.avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
       },
     ]),
   ),
@@ -121,6 +123,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     control: formHook.control,
     name: `perioder.${selectedId}.andreLivsoppholdytelser`,
   });
+  const harFritekstbrev = formHook.watch(`perioder.${selectedId}.harFritekstbrev`);
   const isSolved = vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
@@ -259,6 +262,13 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                 <Radio value="nei">Nei</Radio>
               </RhfRadioGroup>
               {andreLivsoppholdytelser === 'ja' && (
+                <RhfCheckbox
+                  control={formHook.control}
+                  name={`perioder.${selectedId}.harFritekstbrev`}
+                  label="Legg til fritekstbeskrivelse i avslagsbrev"
+                />
+              )}
+              {harFritekstbrev && (
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}
