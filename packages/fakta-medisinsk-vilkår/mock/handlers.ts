@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import Dokument, { Dokumenttype } from '../src/types/Dokument';
 import NyVurderingsversjon from '../src/types/NyVurderingsversjon';
-import { SykdomInnleggelseDto } from '../src/types/SykdomInnleggelseDto';
+import type { SykdomInnleggelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/sykdom/SykdomInnleggelseDto.js';
 import Vurderingstype from '../src/types/Vurderingstype';
 import { createKontinuerligTilsynVurdering, createToOmsorgspersonerVurdering } from './apiUtils';
 import { mockUrlPrepend } from './constants';

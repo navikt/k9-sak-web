@@ -25,24 +25,24 @@ describe('innleggelsesperiodeEndringer', () => {
       expect(endringer).toEqual([]);
     });
 
-    it('registrerer en lagt til periode med fraPeriode = null', () => {
+    it('registrerer en lagt til periode med fraPeriode = undefined', () => {
       const rader = [seedetRad('2025-01-01', '2025-01-10'), rad('2025-03-01', '2025-03-05', 'Ny innleggelse')];
 
       const endringer = byggEndringer(rader, []);
 
       expect(endringer).toEqual([
-        { fraPeriode: null, tilPeriode: { fom: '2025-03-01', tom: '2025-03-05' }, begrunnelse: 'Ny innleggelse' },
+        { fraPeriode: undefined, tilPeriode: { fom: '2025-03-01', tom: '2025-03-05' }, begrunnelse: 'Ny innleggelse' },
       ]);
     });
 
-    it('registrerer en fjernet periode med tilPeriode = null og egen begrunnelse', () => {
+    it('registrerer en fjernet periode med tilPeriode = undefined og egen begrunnelse', () => {
       const rader = [seedetRad('2025-01-01', '2025-01-10')];
       const slettede = [slettetRad('2025-02-01', '2025-02-05', 'Feilregistrert')];
 
       const endringer = byggEndringer(rader, slettede);
 
       expect(endringer).toEqual([
-        { fraPeriode: { fom: '2025-02-01', tom: '2025-02-05' }, tilPeriode: null, begrunnelse: 'Feilregistrert' },
+        { fraPeriode: { fom: '2025-02-01', tom: '2025-02-05' }, tilPeriode: undefined, begrunnelse: 'Feilregistrert' },
       ]);
     });
 
@@ -55,8 +55,8 @@ describe('innleggelsesperiodeEndringer', () => {
       const endringer = byggEndringer([], slettede);
 
       expect(endringer).toEqual([
-        { fraPeriode: { fom: '2025-02-01', tom: '2025-02-05' }, tilPeriode: null, begrunnelse: 'Første' },
-        { fraPeriode: { fom: '2025-03-01', tom: '2025-03-10' }, tilPeriode: null, begrunnelse: 'Andre' },
+        { fraPeriode: { fom: '2025-02-01', tom: '2025-02-05' }, tilPeriode: undefined, begrunnelse: 'Første' },
+        { fraPeriode: { fom: '2025-03-01', tom: '2025-03-10' }, tilPeriode: undefined, begrunnelse: 'Andre' },
       ]);
     });
 
@@ -89,8 +89,8 @@ describe('innleggelsesperiodeEndringer', () => {
           tilPeriode: { fom: '2025-01-01', tom: '2025-01-12' },
           begrunnelse: 'Justert',
         },
-        { fraPeriode: null, tilPeriode: { fom: '2025-04-01', tom: '2025-04-03' }, begrunnelse: 'Lagt til' },
-        { fraPeriode: { fom: '2025-02-01', tom: '2025-02-05' }, tilPeriode: null, begrunnelse: 'Slettet' },
+        { fraPeriode: undefined, tilPeriode: { fom: '2025-04-01', tom: '2025-04-03' }, begrunnelse: 'Lagt til' },
+        { fraPeriode: { fom: '2025-02-01', tom: '2025-02-05' }, tilPeriode: undefined, begrunnelse: 'Slettet' },
       ]);
     });
   });

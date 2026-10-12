@@ -1,6 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
-import { SykdomInnleggelseDto } from '../types/SykdomInnleggelseDto';
+import type { SykdomInnleggelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/sykdom/SykdomInnleggelseDto.js';
 import { Vurderingsversjon } from '../types/Vurdering';
 import Vurderingstype from '../types/Vurderingstype';
 

@@ -91,7 +91,7 @@ describe('InnleggelsesperiodeFormModal', () => {
       expect(onSubmit.mock.calls[0][0].endringer).toEqual([
         {
           fraPeriode: expect.objectContaining({ fom: '2025-02-01', tom: '2025-02-05' }),
-          tilPeriode: null,
+          tilPeriode: undefined,
           begrunnelse: 'Feilregistrert',
         },
       ]);
