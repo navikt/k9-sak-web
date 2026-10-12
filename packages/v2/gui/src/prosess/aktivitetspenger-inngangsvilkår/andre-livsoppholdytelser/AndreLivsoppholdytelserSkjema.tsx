@@ -5,7 +5,7 @@ import {
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { BodyLong, BodyShort, Button, HStack, Label, Link, List, Radio, ReadMore, VStack } from '@navikt/ds-react';
-import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfSelect, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
@@ -40,6 +40,7 @@ export const AndreLivsoppholdytelserSkjema = ({
   const redigerMaksdato = formHook.watch(`vurderinger.${selectedId}.redigerMaksdato`);
   const muligAvkortingPeriode = formHook.watch(`vurderinger.${selectedId}.muligAvkortingPeriode`);
   const harFritekstbrev = formHook.watch(`vurderinger.${selectedId}.harFritekstbrev`);
+  const avslagsårsak = formHook.watch(`vurderinger.${selectedId}.avslagsårsak`);
 
   return (
     <RhfForm formMethods={formHook} onSubmit={onSubmit}>
@@ -136,6 +137,18 @@ export const AndreLivsoppholdytelserSkjema = ({
             ]}
           />
         )}
+
+        {andreLivsoppholdytelser === 'ikkeOppfylt' &&
+          avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE && (
+            <RhfTextField
+              key={`${selectedId}-annen-ytelse`}
+              control={formHook.control}
+              name={`vurderinger.${selectedId}.ytelseNavn`}
+              label="Skriv inn hvilken ytelse"
+              validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
+              maxLength={fritekstVurderingBrevMaxLength}
+            />
+          )}
 
         {andreLivsoppholdytelser === 'ikkeOppfylt' && (
           <RhfCheckbox
