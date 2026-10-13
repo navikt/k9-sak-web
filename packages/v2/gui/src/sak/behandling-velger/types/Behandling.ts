@@ -4,7 +4,7 @@ import type { BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungs
 export type Behandling = {
   ansvarligSaksbehandler: BehandlingDto['ansvarligSaksbehandler'];
   avsluttet: BehandlingDto['avsluttet'];
-  behandlingAnsvarlige: UngBehandlingDto['behandlingAnsvarlige'];
+  behandlingAnsvarlige?: UngBehandlingDto['behandlingAnsvarlige'];
   behandlingsresultat: BehandlingDto['behandlingsresultat'];
   behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | UngBehandlingDto['behandlingÅrsaker'];
   id: number;
