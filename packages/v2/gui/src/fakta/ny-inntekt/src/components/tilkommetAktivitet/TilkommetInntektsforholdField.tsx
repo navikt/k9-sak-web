@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, BodyLong, Box, Heading, Label, List, Radio, ReadMore, VStack } from '@navikt/ds-react';
+import { Alert, BodyLong, Box, Detail, Heading, Label, List, Radio, ReadMore, VStack } from '@navikt/ds-react';
 
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
@@ -213,18 +213,16 @@ export const TilkommetInntektsforholdField = ({
         <>
           <Box marginBlock="space-16 space-8">
             <Label size="small">Fastsett årsinntekt</Label>
+            <Detail>
+              Legg inn årsinntekten søker vil ha hvis de jobber fullt i den nye stillingen sin. Hvis bruker jobber
+              delvis i den nye stillingen, må du regne ut hvilken årsinntekt bruker vil ha ved fullt arbeid.
+            </Detail>
           </Box>
-          <div className={styles.bruttoInntektContainer}>
+          <div className="mt-4 flex">
             <RhfTextField
               control={formMethods.control}
               name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.bruttoInntektPrÅr`}
               label="Fastsett årsinntekt"
-              description={
-                <>
-                  Legg inn årsinntekten søker vil ha hvis de <b>jobber fullt</b> i den nye stillingen sin. Hvis bruker
-                  jobber delvis i den nye stillingen, må du regne ut hvilken årsinntekt bruker vil ha ved fullt arbeid.
-                </>
-              }
               hideLabel
               readOnly={readOnly}
               parse={parseCurrencyInput}
