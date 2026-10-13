@@ -1,28 +1,28 @@
+import { type DokumentfilterGruppeType } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
 import {
   Kommunikasjonsretning,
   type KommunikasjonsretningType,
 } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
-import { type DokumentfilterGruppeType } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
-import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, Link, Table, Tooltip, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
+import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
-import { isUngWeb } from '../../../utils/urlUtils';
-import type { FagsakPerson } from '../types/FagsakPerson';
+import { isUngdomsprogramytelsen } from '../../../utils/urlUtils';
 import { DokumenterApiContext } from '../api/DokumenterApiContext.js';
 import { inntektsmeldingerIBrukQueryOptions } from '../api/dokumenterQueryOptions.js';
+import type { FagsakPerson } from '../types/FagsakPerson';
 import styles from './documentList.module.css';
 import arrowLeftPurpleImageUrl from './icons/arrow_left_purple.svg';
 import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
-import { K9KodeverkoppslagContext } from '../../../kodeverk/oppslag/K9KodeverkoppslagContext';
 
-const getBackendPath = () => (isUngWeb() ? 'ung' : 'k9');
+const getBackendPath = () => (isUngdomsprogramytelsen() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 

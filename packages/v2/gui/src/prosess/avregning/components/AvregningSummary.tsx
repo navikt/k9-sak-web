@@ -1,7 +1,7 @@
-import { BodyShort, HGrid, Label } from '@navikt/ds-react';
-import { formatCurrencyWithoutKr, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { isUngWeb } from '../../../utils/urlUtils';
 import type { DetaljertSimuleringResultatDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/DetaljertSimuleringResultatDto.js';
+import { formatCurrencyWithoutKr, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
+import { BodyShort, HGrid, Label } from '@navikt/ds-react';
+import { isUngdomsprogramytelsen } from '../../../utils/urlUtils';
 
 interface AvregningSummaryProps {
   fom: DetaljertSimuleringResultatDto['periode']['fom'];
@@ -25,7 +25,7 @@ const AvregningSummary = ({
   inntrekk = undefined,
   ingenPerioderMedAvvik,
 }: AvregningSummaryProps) => {
-  const isUngFagsak = isUngWeb();
+  const isUngFagsak = isUngdomsprogramytelsen();
   return (
     <>
       <BodyShort size="small" className="font-bold">
