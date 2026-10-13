@@ -2350,7 +2350,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20260817083631"
-    "@navikt/k9-sak-typescript-client": "npm:3.0.20261006092110"
+    "@navikt/k9-sak-typescript-client": "npm:3.0.20261012105822"
     "@navikt/k9-tilbake-typescript-client": "npm:1.1.20260923103844"
     "@navikt/ung-sak-typescript-client": "npm:2.0.20261012070345"
     "@navikt/ung-tilbake-typescript-client": "npm:3.0.20260923084419"
@@ -2888,6 +2888,7 @@ __metadata:
     "@navikt/ds-css": "npm:8.18.0"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:8.18.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-plattform-komponenter": "npm:13.0.0"
     "@navikt/ft-utils": "npm:6.0.0"
     "@popperjs/core": "npm:2.11.8"
@@ -3612,10 +3613,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:3.0.20261006092110":
-  version: 3.0.20261006092110
-  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20261006092110::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20261006092110%2Fc7b35a66a859612b8a4eb5860d5dcee82918a635"
-  checksum: 10/d1687c93032bb6ee69e74743939c1ecaa0d7c64386cc5fdad69cf194cd3a49483e13835ea79cdc8823a621c04164e0bf8e55d51bee9e9c490b3ea90078ab394b
+"@navikt/k9-sak-typescript-client@npm:3.0.20261012105822":
+  version: 3.0.20261012105822
+  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20261012105822::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20261012105822%2F7108e823126fff54f7bedd39278e550fe4c885e0"
+  checksum: 10/cb5a489e320982e3e103efd6b5f1dec48d5daa6da18d6b219c496dd0fc7f64effcb47286281b3e414d92ed031b5b20cfd9d01dbdfb35ebd9534f9c141bd9d7b4
   languageName: node
   linkType: hard
 
