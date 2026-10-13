@@ -24,7 +24,7 @@ import hentPerioderFraUttak from '../utils/hentPerioderFraUttak';
 import lagUttaksperiodeliste from '../utils/uttaksperioder';
 
 export type UttakContextType = {
-  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
+  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
   uttak: UttaksplanMedUtsattePerioder;
   uttakApi: BehandlingUttakBackendClient;
   perioderTilVurdering: string[];

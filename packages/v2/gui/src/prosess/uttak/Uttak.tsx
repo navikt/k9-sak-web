@@ -12,7 +12,7 @@ import UttakInnhold from './UttakInnhold';
 
 interface UttakProps {
   uttak: UttaksplanMedUtsattePerioder;
-  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
+  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
