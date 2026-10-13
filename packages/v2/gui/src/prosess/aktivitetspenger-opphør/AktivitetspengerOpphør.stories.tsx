@@ -85,6 +85,18 @@ const fakeBostedGrunnlag = {
   ],
 } as unknown as BostedGrunnlagResponseDto;
 
+const fakeBostedGrunnlagMedAnnenÅrsak: BostedGrunnlagResponseDto = {
+  ...fakeBostedGrunnlag,
+  perioder: fakeBostedGrunnlag.perioder?.map(period => ({
+    ...period,
+    avklaring: {
+      ...period.avklaring,
+      erBosatt: period.avklaring?.erBosatt ?? false,
+      ikkeOppfyltÅrsak: BostedsvilkårIkkeOppfyltÅrsak.ANNET,
+    },
+  })),
+};
+
 const fakeAndreLivsoppholdytelserVilkår = {
   vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   lovReferanse: 'TODO AKT lovreferanse',
@@ -483,7 +495,9 @@ export const AndreLivsoppholdytelserVilkårsvurdering: Story = {
       await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
     });
 
-    await step('Fritekstfeltet vises', async () => {
+    await step('Vis fritekstfeltet når avhukingen velges', async () => {
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
       await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toBeInTheDocument();
     });
 
@@ -496,7 +510,57 @@ export const AndreLivsoppholdytelserVilkårsvurdering: Story = {
 
     await step('Send vurderingen til beslutter', async () => {
       await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeAndreLivsoppholdytelserBehandling.uuid,
+        fakeAndreLivsoppholdytelserBehandling.versjon,
+        [
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: false,
+                fritekstVurderingBrev: 'Søker mottar arbeidsavklaringspenger.',
+              }),
+            ],
+          }),
+        ],
+      );
     });
+  },
+};
+
+export const AndreLivsoppholdytelserVilkårsvurderingUtenFritekst: Story = {
+  ...AndreLivsoppholdytelserVilkårsvurdering,
+  play: async ({ canvas, step, args }) => {
+    await step('Åpne Vilkårsvurdering-fanen', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Vilkårsvurdering' }));
+    });
+    await userEvent.type(
+      canvas.getByRole('textbox', { name: /vurder om bruker mottar annen livoppholdsytelse/i }),
+      'Bruker mottar arbeidsavklaringspenger.',
+    );
+    await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
+    await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+    await userEvent.type(
+      canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }),
+      'Teksten skal ikke bli med etter at avhukingen fjernes.',
+    );
+    await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+    await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+      fakeAndreLivsoppholdytelserBehandling.uuid,
+      fakeAndreLivsoppholdytelserBehandling.versjon,
+      [
+        expect.objectContaining({
+          vurdertePerioder: [
+            expect.objectContaining({
+              erVilkårOppfylt: false,
+              fritekstVurderingBrev: undefined,
+            }),
+          ],
+        }),
+      ],
+    );
   },
 };
 
@@ -566,6 +630,7 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 export const VilkårsvurderingFlyttetMedFritekst: Story = {
   args: {
     ...fakeArgsBase,
+    bostedGrunnlag: fakeBostedGrunnlagMedAnnenÅrsak,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
     api: Object.assign(Object.create(fakeAktivitetspengerApi), {
       bekreftAksjonspunkt: fn(),
@@ -584,7 +649,7 @@ export const VilkårsvurderingFlyttetMedFritekst: Story = {
       await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
     });
 
-    await step('Fritekstfeltet vises', async () => {
+    await step('Vis fritekstfeltet for årsaken Annet', async () => {
       await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toBeInTheDocument();
     });
 
@@ -606,6 +671,40 @@ export const VilkårsvurderingFlyttetMedFritekst: Story = {
             expect.objectContaining({
               erVilkårOppfylt: false,
               fritekstVurderingBrev: 'Bruker har flyttet fra Trondheim kommune.',
+            }),
+          ],
+        }),
+      ]);
+    });
+  },
+};
+
+export const VilkårsvurderingFlyttetUtenFritekst: Story = {
+  ...VilkårsvurderingFyllUtOgSend,
+  play: async ({ canvas, step, args }) => {
+    await step('Fyll inn begrunnelse og velg flytting', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker har flyttet/i }),
+        'Bruker har flyttet fra Trondheim kommune.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }),
+        'Teksten skal ikke bli med etter at avhukingen fjernes.',
+      );
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft uten fritekst', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /Bekreft og fortsett/i }));
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(fakeBehandling.uuid, fakeBehandling.versjon, [
+        expect.objectContaining({
+          vurdertePerioder: [
+            expect.objectContaining({
+              erVilkårOppfylt: false,
+              fritekstVurderingBrev: undefined,
             }),
           ],
         }),

@@ -94,7 +94,8 @@ const buildPayload = ({
         begrunnelse: selectedFormPeriod.begrunnelse,
         erVilkårOppfylt,
         periode: { fom: selectedPeriod?.periode?.fom ?? '', tom: selectedPeriod?.periode?.tom },
-        fritekstVurderingBrev: !erVilkårOppfylt ? selectedFormPeriod.fritekstVurderingBrev : undefined,
+        fritekstVurderingBrev:
+          !erVilkårOppfylt && selectedFormPeriod.harFritekstbrev ? selectedFormPeriod.fritekstVurderingBrev : undefined,
       },
     ],
   };

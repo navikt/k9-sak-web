@@ -69,10 +69,12 @@ const buildPayload = ({
   formData,
   selectedId,
   periods,
+  erÅrsakTilOpphørAnnet,
 }: {
   formData: FormData;
   selectedId: string;
   periods: VilkårSplittPanelPeriod[];
+  erÅrsakTilOpphørAnnet: boolean;
 }): BekreftetAksjonspunktDto => {
   const selectedFormPeriod = formData.perioder[selectedId];
   if (!selectedFormPeriod) {
@@ -91,7 +93,10 @@ const buildPayload = ({
           tom: valgtPeriode?.periode?.tom,
         },
         fritekstVurderingBrev:
-          selectedFormPeriod.flyttetFraTrondheim === 'ja' ? selectedFormPeriod.fritekstVurderingBrev : undefined,
+          selectedFormPeriod.flyttetFraTrondheim === 'ja' &&
+          (erÅrsakTilOpphørAnnet || selectedFormPeriod.harFritekstbrev)
+            ? selectedFormPeriod.fritekstVurderingBrev
+            : undefined,
       },
     ],
   };
@@ -127,10 +132,11 @@ export const BostedVilkårsvurdering = ({
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const selectedFakta = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
   const selectedPeriod = periods.find(p => p.id === selectedId);
+  const erÅrsakTilOpphørAnnet = selectedFakta?.avklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
-      const payload = buildPayload({ formData, selectedId, periods });
+      const payload = buildPayload({ formData, selectedId, periods, erÅrsakTilOpphørAnnet });
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
     onSuccess: () => {
@@ -154,8 +160,6 @@ export const BostedVilkårsvurdering = ({
     name: `perioder.${selectedId}.flyttetFraTrondheim`,
   });
   const harFritekstbrev = formHook.watch(`perioder.${selectedId}.harFritekstbrev`);
-
-  const erÅrsakTilOpphørAnnet = selectedFakta?.avklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
 
   return (
     <VStack gap="space-20">
