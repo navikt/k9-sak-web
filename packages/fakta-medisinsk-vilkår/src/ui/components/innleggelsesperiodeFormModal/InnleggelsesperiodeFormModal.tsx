@@ -1,10 +1,10 @@
 import { PeriodpickerListRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Personopplysninger } from '@k9-sak-web/types';
 import { Alert, BodyShort, Box, Button, Label, Modal } from '@navikt/ds-react';
+import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
 import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
 import { FormProvider, useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -37,9 +37,8 @@ interface InnleggelsesperiodeFormModal {
 }
 
 const begrunnelseValidators = {
-  påkrevd: (begrunnelse: string) => (begrunnelse?.trim() ? true : 'Du må oppgi begrunnelse'),
-  maksLengde: (begrunnelse: string) =>
-    !begrunnelse || begrunnelse.length <= 4000 ? true : 'Begrunnelse kan ikke være lengre enn 4000 tegn',
+  required,
+  maxLength: maxLength(4000),
   hasValidText,
 };
 

@@ -2888,6 +2888,7 @@ __metadata:
     "@navikt/ds-css": "npm:8.18.0"
     "@navikt/ds-icons": "npm:3.4.3"
     "@navikt/ds-react": "npm:8.18.0"
+    "@navikt/ft-form-validators": "npm:7.0.0"
     "@navikt/ft-plattform-komponenter": "npm:13.0.0"
     "@navikt/ft-utils": "npm:6.0.0"
     "@popperjs/core": "npm:2.11.8"

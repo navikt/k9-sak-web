@@ -41,7 +41,7 @@ describe('InnleggelsesperiodeFormModal', () => {
       const begrunnelse = await screen.findByRole('textbox', { name: 'Begrunn endring av perioden' });
 
       await bekreft();
-      expect(await screen.findByText('Du må oppgi begrunnelse')).toBeInTheDocument();
+      expect(await screen.findByText('Feltet må fylles ut')).toBeInTheDocument();
       expect(onSubmit).not.toHaveBeenCalled();
 
       await userEvent.type(begrunnelse, 'Forlenget opphold');
@@ -81,7 +81,7 @@ describe('InnleggelsesperiodeFormModal', () => {
       expect(screen.getByText('01.02.2025 – 05.02.2025')).toBeInTheDocument();
 
       await bekreft();
-      expect(await screen.findByText('Du må oppgi begrunnelse')).toBeInTheDocument();
+      expect(await screen.findByText('Feltet må fylles ut')).toBeInTheDocument();
       expect(onSubmit).not.toHaveBeenCalled();
 
       await userEvent.type(screen.getByRole('textbox', { name: 'Begrunn sletting av perioden' }), 'Feilregistrert');
@@ -104,7 +104,7 @@ describe('InnleggelsesperiodeFormModal', () => {
       await userEvent.type(screen.getByRole('textbox', { name: 'Begrunn sletting av perioden' }), '   ');
       await bekreft();
 
-      expect(await screen.findByText('Du må oppgi begrunnelse')).toBeInTheDocument();
+      expect(await screen.findByText('Feltet må fylles ut')).toBeInTheDocument();
       expect(onSubmit).not.toHaveBeenCalled();
     });
   });
