@@ -159,7 +159,7 @@ export const TilkommetAktivitetField = ({
         {skalViseBegrunnelse && (
           <>
             <VStack gap="space-16">
-              <Box className="mt-8">
+              <Box marginBlock="space-32 space-0">
                 <RhfTextarea
                   control={control}
                   name={`${formName}.${formFieldIndex}.begrunnelse`}
