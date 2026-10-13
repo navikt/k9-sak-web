@@ -70,3 +70,21 @@ export const perioderSomKanAvkortesQueryOptions = (api: AktivitetspengerApi, beh
     queryKey: ['perioder-som-kan-avkortes', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.hentPerioderSomKanAvkortes(behandling.uuid),
   });
+
+export const simuleringResultatQueryOptions = (api: AktivitetspengerApi, behandling: Behandling, enabled = true) =>
+  queryOptions({
+    queryKey: ['simuleringResultat', behandling.uuid, behandling.versjon, enabled, api.backend],
+    queryFn: () => (enabled ? api.getSimuleringResultat(behandling.uuid) : null),
+  });
+
+export const tilbakekrevingvalgQueryOptions = (api: AktivitetspengerApi, behandling: Behandling, enabled = true) =>
+  queryOptions({
+    queryKey: ['tilbakekrevingvalg', behandling.uuid, behandling.versjon, enabled, api.backend],
+    queryFn: () => (enabled ? api.getTilbakekrevingValg(behandling.uuid) : null),
+  });
+
+export const fagsakQueryOptions = (api: AktivitetspengerApi, saksnummer: string) =>
+  queryOptions({
+    queryKey: ['fagsak', saksnummer, api.backend],
+    queryFn: () => api.getFagsak(saksnummer),
+  });

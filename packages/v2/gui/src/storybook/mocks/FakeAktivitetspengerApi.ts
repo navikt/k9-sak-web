@@ -1,5 +1,5 @@
-import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
+import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
@@ -66,6 +66,18 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     AktivitetspengerApi['hentTotrinnskontrollSkjermlenkeContext']
   > {
     return [];
+  }
+
+  async getSimuleringResultat(): Promise<never> {
+    throw new Error('Not implemented');
+  }
+
+  async getTilbakekrevingValg(): Promise<never> {
+    throw new Error('Not implemented');
+  }
+
+  async getFagsak(): Promise<never> {
+    throw new Error('Not implemented');
   }
 }
 

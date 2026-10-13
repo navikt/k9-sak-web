@@ -11,8 +11,11 @@ import {
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,
+  fagsak_hentFagsak,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
+  simulering_hentSimuleringResultat,
+  tilbakekrevingsvalg_hentTilbakekrevingValg,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
@@ -91,5 +94,17 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string) {
     return (await totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext({ query: { behandlingUuid } })).data;
+  }
+
+  async getFagsak(saksnummer: string) {
+    return (await fagsak_hentFagsak({ query: { saksnummer: { saksnummer } } })).data;
+  }
+
+  async getSimuleringResultat(behandlingUuid: string) {
+    return (await simulering_hentSimuleringResultat({ query: { behandlingUuid } })).data;
+  }
+
+  async getTilbakekrevingValg(behandlingUuid: string) {
+    return (await tilbakekrevingsvalg_hentTilbakekrevingValg({ query: { behandlingUuid } })).data;
   }
 }
