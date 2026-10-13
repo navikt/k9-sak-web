@@ -1,4 +1,5 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import type { ung_sak_kontrakt_vilkår_VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -24,8 +25,7 @@ const AvslagsårsakListe = ({ vilkår }: AvslagsårsakListeProps) => {
 
   const visAvslåtteVilkårsperioder = (avslåttVilkår: UngVedtakVilkårDto) => {
     const avslåttePerioder = avslåttVilkår?.perioder?.filter(
-      periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT,
-    );
+      periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT && periode.avslagKode !== Avslagsårsak.AVKORTET);
     const avslåttePerioderMedUnikeAvslagskoder = finnUnikeAvslagskoder(avslåttePerioder);
 
     return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
@@ -44,7 +44,7 @@ const AvslagsårsakListe = ({ vilkår }: AvslagsårsakListeProps) => {
   };
 
   const avslatteVilkar = vilkår.filter(
-    v => Array.isArray(v.perioder) && v.perioder.some(periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT),
+    v => Array.isArray(v.perioder) && v.perioder.some(periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT && periode.avslagKode !== Avslagsårsak.AVKORTET),
   );
   if (avslatteVilkar.length === 0) {
     return <BodyShort>Søker har ikke noen gyldig uttaksperiode</BodyShort>;
