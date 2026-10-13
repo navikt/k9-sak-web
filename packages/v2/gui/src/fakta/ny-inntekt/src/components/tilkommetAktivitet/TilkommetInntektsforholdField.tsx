@@ -110,7 +110,7 @@ export const TilkommetInntektsforholdField = ({
                 </List.Item>
                 <List.Item>
                   Har søker kun jobbet 40 prosent, tilsvarer 15 000 kroner bare 40 prosent av inntekten i en
-                  fulltidsstilling. Årsinntekten ved fullt arbeid blir da 450 000 kroner (15 000 ÷ 40 × 100).
+                  fulltidsstilling. Årsinntekten ved fullt arbeid blir da 450 000 kroner (15 000 ÷ 40 × 100 × 12).
                 </List.Item>
               </List>
             </VStack>
