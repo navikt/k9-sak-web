@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, Box, Label, Radio, ReadMore } from '@navikt/ds-react';
+import { Alert, BodyLong, Box, Heading, Label, List, Radio, ReadMore, VStack } from '@navikt/ds-react';
 
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { maxValueFormatted, required } from '@navikt/ft-form-validators';
@@ -69,19 +69,56 @@ export const TilkommetInntektsforholdField = ({
     switch (field.aktivitetStatus) {
       case AktivitetStatus.ARBEIDSTAKER:
         return (
-          <>
-            Her skal du fastsette den inntekten bruker ville hatt fremover ved fullt arbeid i sin «normalarbeidstid».
-            Dette vurderes helhetlig ut fra opplysninger fra inntektsmelding, a-inntekt eller fra bruker selv. <br />
-            <br />
-            Det er viktig at det er samsvar mellom forventet inntekt sett opp mot den normalarbeidstiden bruker ville
-            hatt hvis de jobbet fullt. Bruk opplysninger om arbeidstid i Aa-reg og fra søknaden.
-            <br />
-            <br /> Er du usikker på arbeidstid og/eller inntekt, må du kontakte bruker for avklaring. Spesielt ved
-            varierende inntekt og arbeidstid, kan det være behov for å utrede inntektsforholdet. Du kan for eksempel be
-            om arbeidskontrakt, innbetalt forskuddsskatt, foreløpig resultatregnskap og lignende.
-            <br />
-            <br /> Husk å begrunne fastsatt inntekt for alle periodene.
-          </>
+          <VStack gap="space-24">
+            <VStack gap="space-8">
+              <Heading level="4" size="xsmall">
+                Fullt arbeid i ny jobb
+              </Heading>
+              <BodyLong size="small">
+                Hvis bruker jobber fullt i den nye jobben, skal du legge inn årsinntekten som bruker ville hatt ved
+                fullt arbeid i sin normalarbeidstid. Bruk opplysninger fra A-inntekt, Aa-registeret og søknaden for å
+                finne riktig arbeidstid og inntekt.
+              </BodyLong>
+              <BodyLong size="small">
+                Du trenger ikke å endre årsinntekten ut fra søknadsperioder, så lenge forholdet mellom normalarbeidstid
+                og årsinntekt er lik i perioden.
+              </BodyLong>
+              <BodyLong size="small">
+                Eksempel:
+                <br />
+                Søker har fått en ny jobb med en normalarbeidstid på 30 timer i uken. Legg inn årsinntekten hun ville
+                hatt dersom hun jobbet 30 timer hver uke. K9 beregner inntekten i perioden ut fra registrert inntekt og
+                arbeidstid.
+              </BodyLong>
+            </VStack>
+            <VStack gap="space-8">
+              <Heading level="4" size="xsmall">
+                Delvis arbeid i ny jobb
+              </Heading>
+              <BodyLong size="small">
+                Hvis bruker jobber delvis i den nye jobben, må du regne ut hvilken årsinntekt bruker ville hatt ved
+                fullt arbeid. Du kan derfor ikke bare gange faktisk utbetalt inntekt med 12.
+              </BodyLong>
+              <BodyLong size="small">
+                Eksempel:
+                <br />
+                Søker har fått utbetalt 15 000 kroner i A-inntekt i juni.
+              </BodyLong>
+              <List size="small" as="ul">
+                <List.Item>
+                  Har søker jobbet 100 prosent, tilsvarer dette en årsinntekt på 180 000 kroner (15 000 × 12).
+                </List.Item>
+                <List.Item>
+                  Har søker kun jobbet 40 prosent, tilsvarer 15 000 kroner bare 40 prosent av inntekten i en
+                  fulltidsstilling. Årsinntekten ved fullt arbeid blir da 450 000 kroner (15 000 ÷ 40 × 100).
+                </List.Item>
+              </List>
+            </VStack>
+            <BodyLong size="small">
+              Er du usikker på arbeidstid eller inntekt, må du kontakte bruker. Du kan også be om dokumentasjon, for
+              eksempel arbeidskontrakt eller foreløpig resultatregnskap.
+            </BodyLong>
+          </VStack>
         );
       case AktivitetStatus.FRILANSER:
         return (
@@ -176,13 +213,18 @@ export const TilkommetInntektsforholdField = ({
         <>
           <Box marginBlock="space-16 space-8">
             <Label size="small">Fastsett årsinntekt</Label>
-            <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
           </Box>
           <div className={styles.bruttoInntektContainer}>
             <RhfTextField
               control={formMethods.control}
               name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.bruttoInntektPrÅr`}
               label="Fastsett årsinntekt"
+              description={
+                <>
+                  Legg inn årsinntekten søker vil ha hvis de <b>jobber fullt</b> i den nye stillingen sin. Hvis bruker
+                  jobber delvis i den nye stillingen, må du regne ut hvilken årsinntekt bruker vil ha ved fullt arbeid.
+                </>
+              }
               hideLabel
               readOnly={readOnly}
               parse={parseCurrencyInput}
@@ -191,6 +233,11 @@ export const TilkommetInntektsforholdField = ({
             />
             <span className={styles.bruttoInntektCurrency}>kr</span>
           </div>
+          <Box marginBlock="space-16 space-0">
+            <ReadMore size="small" header="Hvordan fastsette årsinntekt?">
+              {lagHjelpetekst()}
+            </ReadMore>
+          </Box>
         </>
       )}
     </>
