@@ -253,6 +253,36 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('setter opphørspanel til warning når VURDER_BOSTEDSVILKÅR_OPPHØR er åpent', async () => {
+    const api = createApi({
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current[0].label).toBe('Opphør');
+      expect(result.current[0].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
   test('viser inngangsvilkårpanel ved revurdering uten endret bosted-årsak', async () => {
     const api = createApi();
 

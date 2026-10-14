@@ -1,4 +1,4 @@
-import { Fragment, useContext, useMemo, useState, type FC, type ReactNode } from 'react';
+import { Fragment, useMemo, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
 import { Alert, BodyLong, Button, Table } from '@navikt/ds-react';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
@@ -9,7 +9,6 @@ import {
 import UttakRad from './UttakRad.js';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger.js';
 import styles from './uttaksperiodeListe.module.css';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
 import hentPerioderFraUttak from '../utils/hentPerioderFraUttak.js';
 import lagUttaksperiodeliste from '../utils/uttaksperioder.js';
 import { useUttakContext } from '../context/UttakContext.js';
@@ -23,6 +22,8 @@ import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 // Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
 const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
+// Datoen når låsing av normalarbeidstid trer i kraft. Behandlinger avsluttet før denne datoen får ikke låst normalarbeidstid.
+const DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT = '2026-10-12';
 
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;
@@ -55,7 +56,6 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
   const uttaksperiodeListe = useMemo(() => lagUttaksperiodeliste(hentPerioderFraUttak(uttak ?? undefined)), [uttak]);
-  const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const headers = tableHeaders(behandling.sakstype);
 
@@ -125,7 +125,12 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
     [...uttaksperiodeListe],
     NORMALARBEIDSTID_LÅST_DATO,
   );
-  const visNormalarbeidstidInfo = NORMALARBEIDSTID_UTTAK && perioderEtterLåstNormalarbeidstid.length > 0;
+  const behandlingBleAvsluttetEtterRegleneTrådteIKraft =
+    behandling.avsluttet != null &&
+    dayjs(behandling.avsluttet).isSameOrAfter(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT), 'day');
+  const visNormalarbeidstidInfo =
+    perioderEtterLåstNormalarbeidstid.length > 0 &&
+    (!behandling.avsluttet || behandlingBleAvsluttetEtterRegleneTrådteIKraft);
 
   if (visNormalarbeidstidInfo) {
     uttaksregelInfo.push({

@@ -8,7 +8,7 @@ import { UttakProvider } from './context/UttakContext.js';
 import UttakInnhold from './UttakInnhold.js';
 
 interface UttakProps {
-  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
+  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;

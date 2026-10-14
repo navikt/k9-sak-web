@@ -2,9 +2,8 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
-import { useContext, useEffect, useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 import ContentMaxWidth from '../../shared/ContentMaxWidth/ContentMaxWidth.js';
-import FeatureTogglesContext from '../../featuretoggles/FeatureTogglesContext.js';
 import EndringerIUttakDrawer from './components/endringer-i-uttak/EndringerIUttakDialog.js';
 import Infostripe from './components/infostripe/Infostripe.js';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe.js';
@@ -37,7 +36,6 @@ const UttakInnhold = (): JSX.Element => {
 
   const [overstyringAktiv, setOverstyringAktiv] = useState<boolean>(aksjonspunktForOverstyringAvUttak !== undefined);
   const [visEndringerIUttak, setVisEndringerIUttak] = useState(false);
-  const { NORMALARBEIDSTID_UTTAK } = useContext(FeatureTogglesContext);
 
   useEffect(() => {
     setOverstyringAktiv(aksjonspunktForOverstyringAvUttak !== undefined);
@@ -58,20 +56,16 @@ const UttakInnhold = (): JSX.Element => {
           </Heading>
           {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
         </HStack>
-        {NORMALARBEIDSTID_UTTAK && (
-          <Button
-            variant="tertiary"
-            size="small"
-            icon={<InformationSquareIcon aria-hidden />}
-            onClick={() => setVisEndringerIUttak(true)}
-          >
-            Endringer i uttak
-          </Button>
-        )}
+        <Button
+          variant="tertiary"
+          size="small"
+          icon={<InformationSquareIcon aria-hidden />}
+          onClick={() => setVisEndringerIUttak(true)}
+        >
+          Endringer i uttak
+        </Button>
       </HStack>
-      {NORMALARBEIDSTID_UTTAK && (
-        <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
-      )}
+      <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
       {harUløstAksjonspunktIUttak && overstyringAktiv && (
         <ContentMaxWidth>

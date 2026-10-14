@@ -175,6 +175,7 @@ const BehandlingOpplaeringspengerIndex = ({
 
       <BehandlingProvider
         behandlingUuid={behandling.uuid}
+        behandlingVersjon={behandling.versjon}
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
       >
         <OpplaeringspengerPaneler

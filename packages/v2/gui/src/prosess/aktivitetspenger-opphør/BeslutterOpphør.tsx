@@ -136,7 +136,7 @@ export const BeslutterOpphør = ({
         throw new Error('Fant ikke aksjonspunkt for beslutter');
       }
       const payload = {
-        '@type': AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+        '@type': AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
         aksjonspunktGodkjenningDtos: data.aksjonspunktGodkjenning.map(apGodkjenning => {
           return {
             aksjonspunktKode: apGodkjenning.aksjonspunktKode,

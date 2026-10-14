@@ -4,7 +4,7 @@ import { createContext, useContext, type ReactElement, type ReactNode } from 're
 
 // Kun det som sendes inn fra skallet og brukes av mange komponenter. Alt som kan utledes eller hentes ligger utenfor.
 export type UttakContextType = {
-  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype'>;
+  behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
   aksjonspunkter: Aksjonspunkt[];
   erOverstyrer: boolean;
   readOnly: boolean;

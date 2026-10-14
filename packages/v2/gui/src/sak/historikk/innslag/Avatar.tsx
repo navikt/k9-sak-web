@@ -19,13 +19,13 @@ export const Avatar: FC<AvatarProps> = ({ aktørType }) => {
   switch (aktørType) {
     case HistorikkAktør.SAKSBEHANDLER:
       return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler" />;
-    case HistorikkAktør.LOKALKONTOR_SAKSBEHANDLER:
+    case HistorikkAktør.NAV_KONTOR_SAKSBEHANDLER:
       return <PersonPencilFillIcon fontSize={fontSize} title="Saksbehandler Nav-kontor" />;
     case HistorikkAktør.SØKER:
       return <PersonFillIcon fontSize={fontSize} title="Søker" />;
     case HistorikkAktør.BESLUTTER:
       return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter" />;
-    case HistorikkAktør.LOKALKONTOR_BESLUTTER:
+    case HistorikkAktør.NAV_KONTOR_BESLUTTER:
       return <PersonGavelFillIcon fontSize={fontSize} title="Beslutter Nav-kontor" />;
     case HistorikkAktør.VEDTAKSLØSNINGEN:
       return <RobotSmileIcon fontSize={fontSize} title="Vedtaksløsningen" />;
