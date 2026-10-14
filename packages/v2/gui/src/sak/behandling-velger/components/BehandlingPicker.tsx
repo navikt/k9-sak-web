@@ -21,6 +21,7 @@ import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
 import {
+  erAutomatiskBehandlet,
   filterPerioderForBarnetillegg,
   filterPerioderForKontrollAvInntekt,
   sortBehandlinger,
@@ -41,9 +42,6 @@ const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: Kodeverk
       return 'Viderebehandling';
   }
 };
-
-const erAutomatiskBehandlet = (behandling: Behandling) =>
-  !behandling.ansvarligSaksbehandler && behandling.status === BehandlingDtoStatus.AVSLUTTET;
 
 /**
  * Henter søknadsperioder for valgt behandling.

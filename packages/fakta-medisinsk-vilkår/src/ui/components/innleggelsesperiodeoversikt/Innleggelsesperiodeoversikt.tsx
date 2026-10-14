@@ -84,7 +84,7 @@ const Innleggelsesperiodeoversikt = ({
     const { behandlingUuid, versjon } = innleggelsesperioderResponse;
     postInnleggelsesperioder(
       href,
-      { behandlingUuid, versjon, perioder: nyeInnleggelsesperioder },
+      { behandlingUuid, versjon, perioder: nyeInnleggelsesperioder, endringer: formState.endringer },
       errorNotifier,
       controller.signal,
     )
@@ -205,6 +205,7 @@ const Innleggelsesperiodeoversikt = ({
           isLoading={isLoading}
           pleietrengendePart={pleietrengendePart}
           innleggelsesperiodeBegrensning={innleggelsesperiodeBegrensning}
+          fagsakYtelseType={fagsakYtelseType}
           endringerPåvirkerAndreBehandlinger={nyeInnleggelsesperioder => {
             const { href, requestPayload } = findLinkByRel(
               LinkRel.ENDRE_INNLEGGELSESPERIODER,
