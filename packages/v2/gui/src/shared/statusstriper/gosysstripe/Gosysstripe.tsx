@@ -5,7 +5,7 @@ import React from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import { getGosysUrl } from '@k9-sak-web/lib/paths/paths.js';
 import styles from './gosysstripe.module.css';
-import { InformationSquareFillIcon } from '@navikt/aksel-icons';
+import { ExclamationmarkTriangleIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 
 interface GosysstripeProps {
   saksnummer: string;
@@ -36,7 +36,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
   if (error) {
     return (
       <InfoCard size="small" data-color="warning" className={styles.ingenAvrunding}>
-        <InfoCard.Message className={styles.ingenAvrunding} icon={null}>
+        <InfoCard.Message className={styles.ingenAvrunding} icon={<ExclamationmarkTriangleIcon fontSize="1.5rem" />}>
           Får ikke hentet Gosys-oppgaver
         </InfoCard.Message>
       </InfoCard>

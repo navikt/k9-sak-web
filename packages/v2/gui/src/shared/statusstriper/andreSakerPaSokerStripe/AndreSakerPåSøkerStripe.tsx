@@ -5,7 +5,12 @@ import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ChevronDownIcon, ChevronUpIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ExclamationmarkTriangleIcon,
+  InformationSquareFillIcon,
+} from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HelpText, HStack, InfoCard, Label, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
@@ -42,7 +47,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
   if (error) {
     return (
       <InfoCard size="small" data-color="warning" className={styles.ingenAvrunding}>
-        <InfoCard.Message className={styles.ingenAvrunding} icon={null}>
+        <InfoCard.Message className={styles.ingenAvrunding} icon={<ExclamationmarkTriangleIcon fontSize="1.5rem" />}>
           Får ikke hentet andre saker knyttet til søker
         </InfoCard.Message>
       </InfoCard>
