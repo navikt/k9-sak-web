@@ -15,6 +15,7 @@ import {
   behandlingUttak_hentOverstyrbareAktiviterForUttak,
 } from '@k9-sak-web/backend/k9sak/sdk/UttakSdk.js';
 import type { OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/overstyring/OverstyrbareAktiviteterForUttakRequest.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { validerUttak, type Uttak } from '../types/Uttak.js';
 import type { UttakBackendApiType } from './UttakBackendApiType.js';
 
@@ -22,10 +23,18 @@ export class K9SakUttakBackendClient implements UttakBackendApiType {
   readonly backend = 'k9sak';
 
   async hentUttak(behandlingUuid: string): Promise<Uttak | null> {
-    const data = (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
+    try {
+      const data = (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
 
-    validerUttak(data);
-    return data;
+      validerUttak(data);
+      return data;
+    } catch (error) {
+      const apiError = ExtendedApiError.findInError(error);
+      if (apiError?.isNotFound) {
+        return null;
+      }
+      throw error;
+    }
   }
 
   async getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto> {
