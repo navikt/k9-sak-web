@@ -8,6 +8,7 @@ import { TimeoutError } from '../../app/errorhandling/legacycompat/TimeoutError.
 import { createQueryClient } from '../../shared/query/queryClient.js';
 import { FakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
+import type { BehandlingStatusEllerBehandling } from './AktivitetspengerApi.js';
 import { behandlingQueryOptions, ventTilBehandlingErKlar } from './aktivitetspengerQueryOptions.js';
 
 const behandling = { uuid: 'behandling-uuid', versjon: 1 };
@@ -21,7 +22,10 @@ const behandlingFraBackend = {
   type: behandlingType.FØRSTEGANGSSØKNAD,
 } satisfies BehandlingDto;
 
-const status = (s: AsyncPollingStatus['status']): AsyncPollingStatus => ({ status: s, pollIntervalMillis: 1 });
+const status = (s: AsyncPollingStatus['status']): BehandlingStatusEllerBehandling => ({
+  status: { status: s, pollIntervalMillis: 1 },
+});
+const pendingUtenVent: BehandlingStatusEllerBehandling = { status: { status: 'PENDING', pollIntervalMillis: 0 } };
 
 const lagApi = () => {
   const api = new FakeAktivitetspengerApi();
@@ -31,7 +35,7 @@ const lagApi = () => {
     kall.push('behandling');
     return behandlingFraBackend;
   });
-  const statusSekvens = (...statuser: AsyncPollingStatus[]) =>
+  const statusSekvens = (...statuser: BehandlingStatusEllerBehandling[]) =>
     hentStatus.mockImplementation(async () => {
       kall.push('status');
       const neste = statuser.shift();
@@ -57,6 +61,13 @@ describe('ventTilBehandlingErKlar', () => {
     await ventTilBehandlingErKlar(api, behandling.uuid, signal());
 
     expect(hentStatus).toHaveBeenCalledTimes(1);
+  });
+
+  it('returnerer behandlingen når backend sender den med', async () => {
+    const { api, statusSekvens } = lagApi();
+    statusSekvens(status('PENDING'), { behandling: behandlingFraBackend });
+
+    await expect(ventTilBehandlingErKlar(api, behandling.uuid, signal())).resolves.toBe(behandlingFraBackend);
   });
 
   it('poller til prosessen ikke lenger er PENDING', async () => {
@@ -111,7 +122,7 @@ describe('ventTilBehandlingErKlar', () => {
 
   it('kaster TimeoutError når pollgrensen er nådd', async () => {
     const { api, hentStatus } = lagApi();
-    hentStatus.mockResolvedValue({ status: 'PENDING', pollIntervalMillis: 0 });
+    hentStatus.mockResolvedValue(pendingUtenVent);
 
     await expect(ventTilBehandlingErKlar(api, behandling.uuid, signal())).rejects.toBeInstanceOf(TimeoutError);
     expect(hentStatus).toHaveBeenCalledTimes(150);
@@ -132,6 +143,24 @@ describe('behandlingQueryOptions', () => {
     expect(kall).toEqual(['status', 'status', 'behandling']);
   });
 
+  it('henter ikke behandling på nytt når backend sendte den med', async () => {
+    const { api, kall, statusSekvens } = lagApi();
+    statusSekvens({ behandling: behandlingFraBackend });
+    const queryClient = createQueryClient({ queries: { retry: false } });
+
+    await expect(queryClient.query(behandlingQueryOptions(api, behandling))).resolves.toBe(behandlingFraBackend);
+    expect(kall).toEqual(['status']);
+  });
+
+  it('henter ikke på nytt rett etter at cache er fylt', async () => {
+    const { api, hentStatus } = lagApi();
+    const queryClient = createQueryClient({ queries: { retry: false } });
+    queryClient.setQueryData(behandlingQueryOptions(api, behandling).queryKey, behandlingFraBackend);
+
+    await expect(queryClient.query(behandlingQueryOptions(api, behandling))).resolves.toBe(behandlingFraBackend);
+    expect(hentStatus).not.toHaveBeenCalled();
+  });
+
   it('henter ikke behandling når statuskallet feiler', async () => {
     const feil = makeFakeExtendedApiError({ status: 500 });
     const { api, hentStatus, getBehandling } = lagApi();
@@ -144,7 +173,7 @@ describe('behandlingQueryOptions', () => {
 
   it('retryer ikke når pollgrensen er nådd', async () => {
     const { api, hentStatus, getBehandling } = lagApi();
-    hentStatus.mockResolvedValue({ status: 'PENDING', pollIntervalMillis: 0 });
+    hentStatus.mockResolvedValue(pendingUtenVent);
     const queryClient = createQueryClient({ queries: { retryDelay: 0 } });
 
     await expect(queryClient.query(behandlingQueryOptions(api, behandling))).rejects.toBeInstanceOf(TimeoutError);

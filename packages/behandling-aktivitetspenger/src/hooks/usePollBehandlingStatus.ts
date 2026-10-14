@@ -38,16 +38,17 @@ export const usePollBehandlingStatus = (
     setIsPolling(true);
     try {
       const { uuid, versjon } = behandlingRef.current;
+      let ferdigBehandling;
       try {
-        await ventTilBehandlingErKlar(api, uuid, controller.signal);
+        ferdigBehandling = await ventTilBehandlingErKlar(api, uuid, controller.signal);
       } catch (error) {
         if (controller.signal.aborted) return;
         throw error;
       }
       if (controller.signal.aborted) return;
 
-      // Hentes direkte for å unngå at queryFn poller status på nytt uten vårt AbortSignal
-      const nyBehandling = await api.getBehandling(uuid);
+      // Hentes utenom queryFn så status ikke polles på nytt uten vårt AbortSignal
+      const nyBehandling = ferdigBehandling ?? (await api.getBehandling(uuid));
       if (!controller.signal.aborted && nyBehandling) {
         // Gammel nøkkel oppdateres så ny versjon når fram via useQuery og useOppdateringAvBehandlingsversjon
         queryClient.setQueryData(behandlingQueryOptions(api, { uuid, versjon }).queryKey, nyBehandling);

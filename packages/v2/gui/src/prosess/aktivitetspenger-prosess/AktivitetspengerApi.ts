@@ -13,6 +13,8 @@ import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontr
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 
+export type BehandlingStatusEllerBehandling = { status: AsyncPollingStatus } | { behandling: BehandlingDto };
+
 export interface AktivitetspengerApi {
   readonly backend: 'ungsak';
   getAksjonspunkter(behandlingId: string): Promise<AksjonspunktDto[]>;
@@ -20,7 +22,10 @@ export interface AktivitetspengerApi {
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;
   hentLovligeBehandlingsoperasjoner(behandlingUuid: string): Promise<BehandlingOperasjonerDto>;
-  hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal): Promise<AsyncPollingStatus>;
+  hentBehandlingMidlertidigStatus(
+    behandlingUuid: string,
+    signal: AbortSignal,
+  ): Promise<BehandlingStatusEllerBehandling>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
   hentBostedGrunnlag(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto | null>;

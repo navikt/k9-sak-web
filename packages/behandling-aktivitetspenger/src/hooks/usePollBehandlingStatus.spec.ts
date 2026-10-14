@@ -1,8 +1,8 @@
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
-import type { AsyncPollingStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingStatusEllerBehandling } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
@@ -23,23 +23,21 @@ const nyBehandling = {
   status: BehandlingStatus.UTREDES,
   type: behandlingType.FØRSTEGANGSSØKNAD,
 } satisfies BehandlingDto;
-const pending: AsyncPollingStatus = { status: 'PENDING', pollIntervalMillis: 5 };
-const complete: AsyncPollingStatus = { status: 'COMPLETE' };
+const pending: BehandlingStatusEllerBehandling = { status: { status: 'PENDING', pollIntervalMillis: 5 } };
+const complete: BehandlingStatusEllerBehandling = { status: { status: 'COMPLETE' } };
 
-const lagApi = (statuser: () => AsyncPollingStatus) => {
+const lagApi = (statuser: () => BehandlingStatusEllerBehandling) => {
   const api = new FakeAktivitetspengerApi();
-  const hentStatus = vi
-    .spyOn(api, 'hentBehandlingMidlertidigStatus')
-    .mockImplementation(async (_uuid: string, signal: AbortSignal) => {
-      await delay(0, signal);
-      return statuser();
-    });
+  const hentStatus = vi.spyOn(api, 'hentBehandlingMidlertidigStatus').mockImplementation(async () => {
+    await delay(0);
+    return statuser();
+  });
   const getBehandling = vi.spyOn(api, 'getBehandling').mockResolvedValue(nyBehandling);
   return { api, hentStatus, getBehandling };
 };
 
 const iRekkefølge =
-  (...statuser: AsyncPollingStatus[]) =>
+  (...statuser: BehandlingStatusEllerBehandling[]) =>
   () => {
     const neste = statuser.shift();
     if (neste === undefined) {
@@ -74,6 +72,17 @@ describe('usePollBehandlingStatus', () => {
     expect(queryClient.getQueryData(behandlingQueryOptions(api, behandling).queryKey)).toBe(nyBehandling);
     expect(queryClient.getQueryData(behandlingQueryOptions(api, nyBehandling).queryKey)).toBe(nyBehandling);
     expect(result.current.isPolling).toBe(false);
+  });
+
+  it('bruker behandlingen backend sendte med i stedet for å hente den på nytt', async () => {
+    const { api, getBehandling } = lagApi(iRekkefølge(pending, { behandling: nyBehandling }));
+    const { result } = render(api);
+
+    await act(() => result.current.pollTilBehandlingErKlar());
+
+    expect(getBehandling).not.toHaveBeenCalled();
+    expect(setBehandling).toHaveBeenCalledWith(nyBehandling);
+    expect(queryClient.getQueryData(behandlingQueryOptions(api, nyBehandling).queryKey)).toBe(nyBehandling);
   });
 
   it('avbryter polling ved unmount', async () => {
