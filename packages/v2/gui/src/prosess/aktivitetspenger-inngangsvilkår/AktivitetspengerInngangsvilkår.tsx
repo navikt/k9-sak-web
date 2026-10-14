@@ -90,11 +90,8 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokke
   ) {
     return <CustomCheckmarkIcon />;
   }
-  if (
-    vilkår.perioder
-      .filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT)
-      .every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)
-  ) {
+  const relevantePerioder = vilkår.perioder.filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT);
+  if (relevantePerioder.length > 0 && relevantePerioder.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
     return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
   }
   return undefined;
