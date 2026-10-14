@@ -1,6 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 import { ignore404Errors } from '../../../app/errorhandling/ignore404Errors.js';
 import type { UttakBackendApiType } from './UttakBackendApiType.js';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 
 export const uttakQueryOptions = (
   api: UttakBackendApiType,
@@ -13,8 +14,8 @@ export const uttakQueryOptions = (
       try {
         return await api.hentUttak(behandlingUuid);
       } catch (error) {
-        // useSuspenseQuery støtter ikke throwOnError, så 404 (ingen uttak) gir null i stedet for ErrorBoundary
-        if (error instanceof Error && !ignore404Errors(error)) {
+        const apiError = ExtendedApiError.findInError(error);
+        if (apiError?.isNotFound) {
           return null;
         }
         throw error;
@@ -33,7 +34,6 @@ export const uttakArbeidsgivereQueryOptions = (api: UttakBackendApiType, behandl
       return arbeidsgivere.arbeidsgivere ?? {};
     },
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
 export const uttakInntektsgraderingerQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
@@ -41,14 +41,12 @@ export const uttakInntektsgraderingerQueryOptions = (api: UttakBackendApiType, b
     queryKey: ['uttak-inntektsgraderinger', behandlingUuid, api.backend],
     queryFn: () => api.hentInntektsgraderinger(behandlingUuid),
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
 export const uttakOverstyringerQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
   queryOptions({
     queryKey: ['uttak-overstyringer', behandlingUuid, api.backend],
     queryFn: () => api.hentOverstyringUttak(behandlingUuid),
-    throwOnError: ignore404Errors,
   });
 
 export const uttakAktuelleAktiviteterQueryOptions = (
