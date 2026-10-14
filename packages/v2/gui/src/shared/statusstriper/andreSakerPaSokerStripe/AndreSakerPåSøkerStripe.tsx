@@ -6,7 +6,7 @@ import { pathToFagsak } from '@k9-sak-web/gui/utils/paths.js';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ChevronDownIcon, ChevronUpIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Box, Button, HelpText, HStack, InfoCard, Label, Link } from '@navikt/ds-react';
+import { BodyShort, Box, Button, HelpText, HStack, InfoCard, Label, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
@@ -41,9 +41,11 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ saksnummer, api }) => {
 
   if (error) {
     return (
-      <Alert size="small" variant="error" className={styles.ingenAvrunding}>
-        Får ikke hentet andre saker knyttet til søker
-      </Alert>
+      <InfoCard size="small" data-color="warning" className={styles.ingenAvrunding}>
+        <InfoCard.Message className={styles.ingenAvrunding} icon={null}>
+          Får ikke hentet andre saker knyttet til søker
+        </InfoCard.Message>
+      </InfoCard>
     );
   }
 
