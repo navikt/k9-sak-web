@@ -1,10 +1,36 @@
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { AsyncPollingStatusStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import { queryOptions } from '@tanstack/react-query';
+import { delay } from '../../utils/delay.js';
 import type { AktivitetspengerApi } from './AktivitetspengerApi';
 
 interface Behandling {
   uuid: string;
   versjon: number;
 }
+
+const MAX_POLL_ATTEMPTS = 150;
+
+// Backend kan ha en pågående prosess som endrer behandlingsversjonen etter at behandlingen er hentet
+const ventTilBehandlingErKlar = async (api: AktivitetspengerApi, behandlingUuid: string, signal: AbortSignal) => {
+  for (let attempts = 0; attempts < MAX_POLL_ATTEMPTS; attempts++) {
+    let status;
+    try {
+      status = await api.hentBehandlingMidlertidigStatus(behandlingUuid, signal);
+    } catch (error) {
+      // Som i RequestRunner: ved HALTED/DELAYED hentes behandlingen likevel, og feilen meldes til bruker.
+      const pollingStatus = error instanceof ExtendedApiError ? error.pollingStatus?.status : undefined;
+      if (pollingStatus === AsyncPollingStatusStatus.HALTED || pollingStatus === AsyncPollingStatusStatus.DELAYED) {
+        void Promise.reject(error);
+        return;
+      }
+      throw error;
+    }
+    if (status?.status !== AsyncPollingStatusStatus.PENDING) return;
+    await delay(status.pollIntervalMillis ?? 500, signal);
+  }
+  throw new Error(`Polling av behandling ${behandlingUuid} nådde maks antall forsøk uten at behandlingen ble klar.`);
+};
 
 export const vilkårQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
   queryOptions({
@@ -22,7 +48,10 @@ export const aksjonspunkterQueryOptions = (api: AktivitetspengerApi, behandling?
 export const behandlingQueryOptions = (api: AktivitetspengerApi, behandling: Pick<Behandling, 'uuid' | 'versjon'>) =>
   queryOptions({
     queryKey: ['behandling', behandling.uuid, behandling.versjon, api.backend],
-    queryFn: () => api.getBehandling(behandling.uuid),
+    queryFn: async ({ signal }) => {
+      await ventTilBehandlingErKlar(api, behandling.uuid, signal);
+      return api.getBehandling(behandling.uuid);
+    },
   });
 
 export const beregningsgrunnlagQueryOptions = (api: AktivitetspengerApi, behandling: Behandling, enabled = true) =>
