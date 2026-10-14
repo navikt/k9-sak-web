@@ -15,14 +15,17 @@ import {
   behandlingUttak_hentOverstyrbareAktiviterForUttak,
 } from '@k9-sak-web/backend/k9sak/sdk/UttakSdk.js';
 import type { OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/overstyring/OverstyrbareAktiviteterForUttakRequest.js';
-import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
+import { validerUttak, type Uttak } from '../types/Uttak.js';
 import type { UttakBackendApiType } from './UttakBackendApiType.js';
 
 export class K9SakUttakBackendClient implements UttakBackendApiType {
   readonly backend = 'k9sak';
 
-  async hentUttak(behandlingUuid: string): Promise<UttaksplanMedUtsattePerioder> {
-    return (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
+  async hentUttak(behandlingUuid: string): Promise<Uttak> {
+    const data = (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
+
+    validerUttak(data);
+    return data;
   }
 
   async getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto> {

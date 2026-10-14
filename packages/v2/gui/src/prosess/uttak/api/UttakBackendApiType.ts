@@ -6,11 +6,11 @@ import type { OverstyrbareUttakAktiviterDto } from '@k9-sak-web/backend/k9sak/ko
 import type { OverstyrtUttakDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrtUttakDto.js';
 import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/EgneOverlappendeSakerDto.js';
 import type { OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/overstyring/OverstyrbareAktiviteterForUttakRequest.js';
-import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
+import type { Uttak } from '../types/Uttak.js';
 
 export interface UttakBackendApiType extends BackendTilhørighet {
-  hentUttak(behandlingUuid: string): Promise<UttaksplanMedUtsattePerioder>;
+  hentUttak(behandlingUuid: string): Promise<Uttak>;
   getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto>;
   bekreftAksjonspunkt(requestBody: BekreftedeAksjonspunkterDto): Promise<void>;
   hentOverstyringUttak(behandlingUuid: string): Promise<OverstyrtUttakDto>;

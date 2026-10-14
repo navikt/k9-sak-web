@@ -8,6 +8,7 @@ import type { OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend
 import type { OverstyrbareUttakAktiviterDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrbareUttakAktiviterDto.js';
 import type { OverstyrtUttakDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrtUttakDto.js';
 import type { UttakBackendApiType } from '../../prosess/uttak/api/UttakBackendApiType.js';
+import { validerUttak, type Uttak } from '../../prosess/uttak/types/Uttak.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import { defaultArbeidsgivere, lagUttak } from './uttak/uttakStoryMocks.js';
 
@@ -44,8 +45,9 @@ export class FakeUttakBackendApi implements UttakBackendApiType {
     this.#allowedRanges = config?.allowedRanges;
   }
 
-  async hentUttak(behandlingUuid: string): Promise<UttaksplanMedUtsattePerioder> {
+  async hentUttak(behandlingUuid: string): Promise<Uttak> {
     ignoreUnusedDeclared(behandlingUuid);
+    validerUttak(this.#uttak);
     return this.#uttak;
   }
 

@@ -22,7 +22,7 @@ export const AntallDagerLivetsSluttfase = ({ behandlingUuid, behandlingVersjon }
     return null;
   }
 
-  const totaltForbruktKvote = kvoteInfo.totaltForbruktKvote ?? 0;
+  const totaltForbruktKvote = kvoteInfo.totaltForbruktKvote;
   const antallDagerGjenstar = MAX_ANTALL_DAGER - totaltForbruktKvote;
 
   /*
