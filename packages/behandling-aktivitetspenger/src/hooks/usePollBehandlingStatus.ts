@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import {
+  behandlingQueryOptions,
+  ventTilBehandlingErKlar,
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface Behandling {
@@ -34,14 +37,20 @@ export const usePollBehandlingStatus = (
 
     setIsPolling(true);
     try {
-      // behandlingQueryOptions poller status til behandlingen er klar før den hentes
-      const nyBehandling = await queryClient.query(
-        behandlingQueryOptions(api, {
-          uuid: behandlingRef.current.uuid,
-          versjon: behandlingRef.current.versjon,
-        }),
-      );
+      const { uuid, versjon } = behandlingRef.current;
+      try {
+        await ventTilBehandlingErKlar(api, uuid, controller.signal);
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        throw error;
+      }
+      if (controller.signal.aborted) return;
+
+      // Hentes direkte for å unngå at queryFn poller status på nytt uten vårt AbortSignal
+      const nyBehandling = await api.getBehandling(uuid);
       if (!controller.signal.aborted && nyBehandling) {
+        // Gammel nøkkel oppdateres så ny versjon når fram via useQuery og useOppdateringAvBehandlingsversjon
+        queryClient.setQueryData(behandlingQueryOptions(api, { uuid, versjon }).queryKey, nyBehandling);
         // Forhåndsutfyller cache for ny versjon så behandling ikke er undefined i mellomtiden
         queryClient.setQueryData(
           behandlingQueryOptions(api, { uuid: nyBehandling.uuid, versjon: nyBehandling.versjon }).queryKey,

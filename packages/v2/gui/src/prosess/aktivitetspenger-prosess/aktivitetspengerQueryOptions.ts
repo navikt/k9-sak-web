@@ -1,6 +1,7 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { AsyncPollingStatusStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import { queryOptions } from '@tanstack/react-query';
+import { TimeoutError } from '../../app/errorhandling/legacycompat/TimeoutError.js';
 import { delay } from '../../utils/delay.js';
 import type { AktivitetspengerApi } from './AktivitetspengerApi';
 
@@ -12,7 +13,11 @@ interface Behandling {
 const MAX_POLL_ATTEMPTS = 150;
 
 // Backend kan ha en pågående prosess som endrer behandlingsversjonen etter at behandlingen er hentet
-const ventTilBehandlingErKlar = async (api: AktivitetspengerApi, behandlingUuid: string, signal: AbortSignal) => {
+export const ventTilBehandlingErKlar = async (
+  api: AktivitetspengerApi,
+  behandlingUuid: string,
+  signal: AbortSignal,
+) => {
   for (let attempts = 0; attempts < MAX_POLL_ATTEMPTS; attempts++) {
     let status;
     try {
@@ -29,7 +34,7 @@ const ventTilBehandlingErKlar = async (api: AktivitetspengerApi, behandlingUuid:
     if (status?.status !== AsyncPollingStatusStatus.PENDING) return;
     await delay(status.pollIntervalMillis ?? 500, signal);
   }
-  throw new Error(`Polling av behandling ${behandlingUuid} nådde maks antall forsøk uten at behandlingen ble klar.`);
+  throw new TimeoutError(`behandling/status?behandlingUuid=${behandlingUuid}`);
 };
 
 export const vilkårQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
@@ -52,6 +57,8 @@ export const behandlingQueryOptions = (api: AktivitetspengerApi, behandling: Pic
       await ventTilBehandlingErKlar(api, behandling.uuid, signal);
       return api.getBehandling(behandling.uuid);
     },
+    // Pollgrensen skal begrense antall kall mot backend, så den skal ikke multipliseres av retries
+    retry: (failureCount, error) => !(error instanceof TimeoutError) && failureCount < 3,
   });
 
 export const beregningsgrunnlagQueryOptions = (api: AktivitetspengerApi, behandling: Behandling, enabled = true) =>
