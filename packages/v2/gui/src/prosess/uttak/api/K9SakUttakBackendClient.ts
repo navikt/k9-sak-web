@@ -21,7 +21,7 @@ import type { UttakBackendApiType } from './UttakBackendApiType.js';
 export class K9SakUttakBackendClient implements UttakBackendApiType {
   readonly backend = 'k9sak';
 
-  async hentUttak(behandlingUuid: string): Promise<Uttak> {
+  async hentUttak(behandlingUuid: string): Promise<Uttak | null> {
     const data = (await behandlingPleiepengerUttak_uttaksplanMedUtsattePerioder({ query: { behandlingUuid } })).data;
 
     validerUttak(data);

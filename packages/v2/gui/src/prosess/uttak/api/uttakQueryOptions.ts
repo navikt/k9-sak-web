@@ -1,7 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { ignore404Errors } from '../../../app/errorhandling/ignore404Errors.js';
 import type { UttakBackendApiType } from './UttakBackendApiType.js';
-import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 
 export const uttakQueryOptions = (
   api: UttakBackendApiType,
@@ -10,17 +9,7 @@ export const uttakQueryOptions = (
 ) =>
   queryOptions({
     queryKey: ['uttak', behandlingUuid, behandlingVersjon, api.backend],
-    queryFn: async () => {
-      try {
-        return await api.hentUttak(behandlingUuid);
-      } catch (error) {
-        const apiError = ExtendedApiError.findInError(error);
-        if (apiError?.isNotFound) {
-          return null;
-        }
-        throw error;
-      }
-    },
+    queryFn: () => api.hentUttak(behandlingUuid),
     // Behandlingsversjon er i nøkkelen, så data trenger ikke hentes på nytt ved hver mount
     staleTime: Infinity,
   });

@@ -10,7 +10,7 @@ import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørig
 import type { Uttak } from '../types/Uttak.js';
 
 export interface UttakBackendApiType extends BackendTilhørighet {
-  hentUttak(behandlingUuid: string): Promise<Uttak>;
+  hentUttak(behandlingUuid: string): Promise<Uttak | null>;
   getEgneOverlappendeSaker(behandlingUuid: string): Promise<EgneOverlappendeSakerDto>;
   bekreftAksjonspunkt(requestBody: BekreftedeAksjonspunkterDto): Promise<void>;
   hentOverstyringUttak(behandlingUuid: string): Promise<OverstyrtUttakDto>;
