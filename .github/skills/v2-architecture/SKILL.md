@@ -164,14 +164,14 @@ export type {
 
 **Kodeverk const enums** — re-export under `kodeverk/` mirroring the package path from the generated type name:
 
+When the generated symbol has both a const and a type with the same name, a single `export { ... }` re-exports both under the same alias. Do not add a separate `export type` or a `Type`-suffixed alias. Keep `export type` for DTOs and other type-only symbols.
+
 ```typescript
 // k9_kodeverk_geografisk_Region → kodeverk/geografisk/Region.ts
 export { k9_kodeverk_geografisk_Region as Region } from '@navikt/k9-sak-typescript-client/types';
-export type { k9_kodeverk_geografisk_Region as RegionType } from '@navikt/k9-sak-typescript-client/types';
 
 // k9_kodeverk_uttak_UtenlandsoppholdÅrsak → kodeverk/uttak/UtenlandsoppholdÅrsak.ts
 export { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsak } from '@navikt/k9-sak-typescript-client/types';
-export type { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsakType } from '@navikt/k9-sak-typescript-client/types';
 ```
 
 Then import from the stable paths:

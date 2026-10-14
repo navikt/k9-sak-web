@@ -72,6 +72,8 @@ export { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9s
 
 For each DTO type used in the API, create a re-export file, e.g. `packages/v2/backend/src/k9sak/kontrakt/person/PersonopplysningDto.ts`. See `references/templates.md` for the patterns (single type, const enum). Check if a re-export already exists before creating a duplicate.
 
+Use `export type` for type-only symbols. When a generated symbol has both a const and a type with the same name, use a single `export { ... }` to re-export both under the same alias; do not add a separate `export type` or a `Type`-suffixed alias.
+
 ### Step 5: Create BackendApiType
 
 `packages/v2/gui/src/fakta/om-pleietrengende/api/OmPleietrengendeBackendApiType.ts`:
