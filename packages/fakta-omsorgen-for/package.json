@@ -20,7 +20,7 @@
     "object-hash": "3.0.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-hook-form": "7.89.0",
+    "react-hook-form": "7.90.0",
     "react-intl": "12.1.4"
   },
   "devDependencies": {
