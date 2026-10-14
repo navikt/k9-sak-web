@@ -97,13 +97,11 @@ const perioderOverSkjæringsdato = [
 ];
 
 export const DialogInnhold: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement }) => {
@@ -126,13 +124,11 @@ export const DialogInnhold: Story = {
 };
 
 export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-11T12:00:00' }),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement }) => {
@@ -143,13 +139,11 @@ export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
 };
 
 export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-12T00:00:00' }),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement }) => {
@@ -159,13 +153,11 @@ export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
 };
 
 export const IngenPerioderEtterSkjæringsdato: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]) })],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement }) => {
