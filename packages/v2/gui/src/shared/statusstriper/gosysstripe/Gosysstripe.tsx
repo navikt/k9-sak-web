@@ -56,7 +56,7 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
     <InfoCard data-color="info" size="small" className={styles.ingenAvrunding}>
       <InfoCard.Message
         className={styles.ingenAvrunding}
-        icon={<InformationSquareFillIcon fontSize="1.5rem" className="mt-[3px]" />}
+        icon={<InformationSquareFillIcon aria-hidden fontSize="1.5rem" className="mt-[3px]" />}
       >
         <VStack gap="space-6">
           <div>
