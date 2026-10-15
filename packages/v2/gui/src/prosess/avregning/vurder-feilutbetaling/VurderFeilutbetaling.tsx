@@ -9,8 +9,6 @@ import type { BehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/behand
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/combined/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { AksjonspunktDto as K9SakAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
-import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
 import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { useContext, useEffect } from 'react';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
@@ -91,9 +89,6 @@ export const VurderFeilutbetaling = ({
       throw new Error('Utviklerfeil: Behandling UUID er påkrevd for forhåndsvisning varselbrev. Meld fra i porten.');
     }
 
-    if (!isValueOfConstObject(fagsakYtelseType, FagsakYtelseTypeK9Tilbake)) {
-      throw new Error('Utviklerfeil: Ugyldig fagsak ytelse type');
-    }
     const blob = await avregningBackendClient.hentForhåndsvisningVarselbrev(
       behandling.uuid,
       fagsakYtelseType,
@@ -103,6 +98,9 @@ export const VurderFeilutbetaling = ({
   };
 
   const submit = formMethods.handleSubmit(async values => {
+    if (readOnly) {
+      return;
+    }
     if (!behandling.id || !behandling.versjon || !behandling.uuid) {
       throw new Error(
         'Utviklerfeil: Behandling ID, versjon og UUID er påkrevd for å løse aksjonspunkt. Meld fra i porten.',
@@ -209,7 +207,7 @@ export const VurderFeilutbetaling = ({
               variant="primary"
               size="small"
               onClick={submit}
-              disabled={formMethods.formState.isSubmitting}
+              disabled={readOnly || formMethods.formState.isSubmitting}
               loading={formMethods.formState.isSubmitting}
             >
               Bekreft og fortsett

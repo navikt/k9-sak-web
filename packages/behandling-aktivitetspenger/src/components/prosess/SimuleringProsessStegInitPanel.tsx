@@ -43,13 +43,20 @@ export const SimuleringProsessStegInitPanel = ({ api, behandling, saksnummer }: 
     ],
   });
 
+  const relevanteAksjonspunkter = aksjonspunkter.filter(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+  );
+  const aksjonspunkt = relevanteAksjonspunkter[0];
+
   const isReadOnly = useMemo(() => {
-    return (
-      (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-        !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
-      behandling.status === BehandlingStatus.AVSLUTTET
-    );
-  }, [innloggetBruker, behandling]);
+    const tilgang = innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang;
+    const manglerTilgang = !tilgang?.kanBeslutte && !tilgang?.kanSaksbehandle;
+    const behandlingErLåst =
+      behandling.status === BehandlingStatus.AVSLUTTET || behandling.status === BehandlingStatus.FATTER_VEDTAK;
+    const aksjonspunktErIkkeLøsbart = aksjonspunkt == undefined || aksjonspunkt.kanLoses === false;
+
+    return manglerTilgang || behandlingErLåst || aksjonspunktErIkkeLøsbart;
+  }, [innloggetBruker, behandling, aksjonspunkt]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
   if (!erValgt) {
@@ -59,10 +66,6 @@ export const SimuleringProsessStegInitPanel = ({ api, behandling, saksnummer }: 
   if (!erTilBehandlingEllerBehandlet) {
     return <ProsessStegIkkeBehandlet />;
   }
-
-  const relevanteAksjonspunkter = aksjonspunkter.filter(
-    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
-  );
 
   return (
     <AvregningProsessIndex
