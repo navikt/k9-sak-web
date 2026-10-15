@@ -10,7 +10,7 @@ import UttakRad from './UttakRad';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
 import { useUttakContext } from '../context/UttakContext';
-import { prettifyPeriod } from '../utils/periodUtils';
+import { prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import splitUttakByDate from '../utils/splitUttakByDate';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import { PencilIcon } from '@navikt/aksel-icons';
