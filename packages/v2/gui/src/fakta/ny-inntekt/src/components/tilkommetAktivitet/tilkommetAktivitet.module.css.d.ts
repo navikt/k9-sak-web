@@ -12,7 +12,6 @@ declare const aktivitetTable: string;
 declare const separator: string;
 declare const aksjonspunktContainer: string;
 declare const aksjonspunktContainerLukketAP: string;
-declare const bruttoInntektContainer: string;
 declare const bruttoInntektCurrency: string;
 declare const edited: string;
 declare const inntektsmeldingTag: string;
@@ -26,7 +25,6 @@ export {
 	separator,
 	aksjonspunktContainer,
 	aksjonspunktContainerLukketAP,
-	bruttoInntektContainer,
 	bruttoInntektCurrency,
 	edited,
 	inntektsmeldingTag,
@@ -41,7 +39,6 @@ declare const __default_export__: {
 	separator: typeof separator;
 	aksjonspunktContainer: typeof aksjonspunktContainer;
 	aksjonspunktContainerLukketAP: typeof aksjonspunktContainerLukketAP;
-	bruttoInntektContainer: typeof bruttoInntektContainer;
 	bruttoInntektCurrency: typeof bruttoInntektCurrency;
 	edited: typeof edited;
 	inntektsmeldingTag: typeof inntektsmeldingTag;

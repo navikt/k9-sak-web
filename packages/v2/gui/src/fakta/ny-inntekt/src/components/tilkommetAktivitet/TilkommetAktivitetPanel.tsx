@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { ScissorsIcon } from '@navikt/aksel-icons';
+import { PencilIcon, ScissorsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Box, Button, Heading, HStack, Label } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
@@ -36,6 +36,7 @@ type Props = {
   readOnly: boolean;
   submittable: boolean;
   erAksjonspunktÅpent: boolean;
+  redigeringsstatus?: { redigerer: boolean; onRediger: () => void; onAvbryt: () => void };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 };
 
@@ -46,6 +47,7 @@ export const TilkommetAktivitetPanel = ({
   readOnly,
   submittable,
   erAksjonspunktÅpent,
+  redigeringsstatus,
   arbeidsgiverOpplysningerPerId,
 }: Props) => {
   const [modalErÅpen, setModalErÅpen] = useState<boolean>(false);
@@ -200,27 +202,28 @@ export const TilkommetAktivitetPanel = ({
   return (
     <>
       {getAksjonspunktText()}
-      {!!vurderInntektsforholdPerioder &&
-        erAksjonspunktÅpent &&
-        (() => {
-          const ytelsetype = beregningsgrunnlag.ytelsesspesifiktGrunnlag?.ytelsetype;
-          const ytelseTekst = ytelseVisningsnavn(ytelsetype);
-          return (
-            <Box marginBlock="space-8 space-0">
-              <Alert size="small" variant="info" title="">
-                Inntekter som kommer til underveis i en løpende {ytelseTekst.ytelsePeriode} er ikke en del av søkers
-                beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om{' '}
-                {ytelseTekst.ytelseNavnBestemt} skal graderes mot den nye inntekten.
-              </Alert>
-            </Box>
-          );
-        })()}
       <Box marginBlock="space-40 space-0">
         <HStack gap="space-16" justify="space-between">
           <Heading size="small" level="3">
             Perioder med ny aktivitet
           </Heading>
           <div className={styles.modalKnapp}>
+            {redigeringsstatus &&
+              (redigeringsstatus.redigerer ? (
+                <Button variant="tertiary" size="small" type="button" onClick={redigeringsstatus.onAvbryt}>
+                  Avbryt redigering
+                </Button>
+              ) : (
+                <Button
+                  variant="tertiary"
+                  size="small"
+                  type="button"
+                  icon={<PencilIcon />}
+                  onClick={redigeringsstatus.onRediger}
+                >
+                  Rediger
+                </Button>
+              ))}
             <Button
               variant="tertiary"
               loading={false}
