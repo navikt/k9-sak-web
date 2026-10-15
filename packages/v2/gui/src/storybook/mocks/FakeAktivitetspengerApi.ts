@@ -67,6 +67,18 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   > {
     return [];
   }
+
+  async getSimuleringResultat(): Promise<never> {
+    throw new Error('Not implemented');
+  }
+
+  async getTilbakekrevingValg(): Promise<never> {
+    throw new Error('Not implemented');
+  }
+
+  async getFagsak(): Promise<never> {
+    throw new Error('Not implemented');
+  }
 }
 
 export const fakeAktivitetspengerApi = new FakeAktivitetspengerApi();

@@ -25,7 +25,8 @@ const AvslagsårsakListe = ({ vilkår }: AvslagsårsakListeProps) => {
 
   const visAvslåtteVilkårsperioder = (avslåttVilkår: UngVedtakVilkårDto) => {
     const avslåttePerioder = avslåttVilkår?.perioder?.filter(
-      periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT && periode.avslagKode !== Avslagsårsak.AVKORTET);
+      periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT && periode.avslagKode !== Avslagsårsak.AVKORTET,
+    );
     const avslåttePerioderMedUnikeAvslagskoder = finnUnikeAvslagskoder(avslåttePerioder);
 
     return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
@@ -44,7 +45,11 @@ const AvslagsårsakListe = ({ vilkår }: AvslagsårsakListeProps) => {
   };
 
   const avslatteVilkar = vilkår.filter(
-    v => Array.isArray(v.perioder) && v.perioder.some(periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT && periode.avslagKode !== Avslagsårsak.AVKORTET),
+    v =>
+      Array.isArray(v.perioder) &&
+      v.perioder.some(
+        periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT && periode.avslagKode !== Avslagsårsak.AVKORTET,
+      ),
   );
   if (avslatteVilkar.length === 0) {
     return <BodyShort>Søker har ikke noen gyldig uttaksperiode</BodyShort>;
