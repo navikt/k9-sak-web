@@ -4,6 +4,7 @@ import { sortPeriodsByNewest, sortPeriodsChronological } from '@k9-sak-web/lib/d
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import type { Uttaksplan } from '@k9-sak-web/backend/k9sak/kontrakt/Uttaksplan.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter';
 import type { Dayjs } from 'dayjs';
 
 const oppholdHarUkedager = (tom: Dayjs, fom: Dayjs) => {
@@ -20,7 +21,7 @@ const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) =>
 // Kun årsskiftet 2026–2027 skal deles, slik at perioden fra og med 2027 starter 1. januar.
 // Dette er for å vise infoboks om at normaltid for arbeid låses fra 01.01.2027.
 const splittVedÅrsskiftet2026Til2027 = (uttaksperiode: UttaksperiodeBeriket): UttaksperiodeBeriket[] => {
-  const skjæringsdato = initializeDate('2027-01-01');
+  const skjæringsdato = initializeDate(NORMALARBEIDSTID_LÅST_DATO);
   const fom = initializeDate(uttaksperiode.periode.fom);
   const tom = initializeDate(uttaksperiode.periode.tom);
 
