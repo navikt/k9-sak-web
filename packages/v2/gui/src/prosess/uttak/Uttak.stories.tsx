@@ -325,6 +325,10 @@ export const UttakGradertMotInntektOverÅrsskifte: Story = {
     const periode2026 = canvas.getByRole('row', { name: /28\.12\.2026 - 31\.12\.2026/ });
     const periode2027 = canvas.getByRole('row', { name: /01\.01\.2027 - 03\.01\.2027/ });
 
+    const rader = canvas.getAllByRole('row');
+    const infoboks = canvas.getByRole('row', { name: /Endringer fra 01\.01\.2027:/ });
+    await expect(rader.indexOf(periode2027)).toBeLessThan(rader.indexOf(infoboks));
+    await expect(rader.indexOf(infoboks)).toBeLessThan(rader.indexOf(periode2026));
     await expect(periode2026).toHaveTextContent(/^53/);
     await expect(periode2027).toHaveTextContent(/^53/);
     await expect(periode2026.querySelector(`.${innvilgetMotInntektClass}`)).toBeInTheDocument();
