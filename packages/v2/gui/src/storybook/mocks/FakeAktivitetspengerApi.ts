@@ -1,5 +1,5 @@
-import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
+import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
@@ -20,7 +20,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     return [];
   }
 
-  async getBehandling(): Promise<never> {
+  async getBehandling(): ReturnType<AktivitetspengerApi['getBehandling']> {
     throw new Error('Not implemented');
   }
 
@@ -30,7 +30,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     };
   }
 
-  async hentBehandlingMidlertidigStatus(): Promise<never> {
+  async hentBehandlingMidlertidigStatus(): ReturnType<AktivitetspengerApi['hentBehandlingMidlertidigStatus']> {
     throw new Error('Not implemented');
   }
 
