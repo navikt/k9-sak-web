@@ -10,13 +10,12 @@ import UttakRad from './UttakRad';
 import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
 import styles from './uttaksperiodeListe.module.css';
 import { useUttakContext } from '../context/UttakContext';
-import { prettifyPeriod } from '../utils/periodUtils';
+import { prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import splitUttakByDate from '../utils/splitUttakByDate';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter';
 import { PencilIcon } from '@navikt/aksel-icons';
 
-// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
-const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
 // Datoen når låsing av normalarbeidstid trer i kraft. Behandlinger avsluttet før denne datoen får ikke låst normalarbeidstid.
 const DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT = '2026-10-12';
 

@@ -18,6 +18,8 @@ import type {
   VilkårsavklaringVurderingerDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 
+export type BehandlingStatusEllerBehandling = { status: AsyncPollingStatus } | { behandling: BehandlingDto };
+
 export interface AktivitetspengerApi {
   readonly backend: 'ungsak';
   getAksjonspunkter(behandlingId: string): Promise<AksjonspunktDto[]>;
@@ -25,7 +27,10 @@ export interface AktivitetspengerApi {
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;
   hentLovligeBehandlingsoperasjoner(behandlingUuid: string): Promise<BehandlingOperasjonerDto>;
-  hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal): Promise<AsyncPollingStatus>;
+  hentBehandlingMidlertidigStatus(
+    behandlingUuid: string,
+    signal: AbortSignal,
+  ): Promise<BehandlingStatusEllerBehandling>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
   hentBostedGrunnlag(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
   hentVilkårsavklaringer(behandlingUuid: string, vilkarType: VilkårType): Promise<VilkårsavklaringerDto>;

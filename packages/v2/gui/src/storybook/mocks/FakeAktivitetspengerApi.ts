@@ -21,7 +21,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     return [];
   }
 
-  async getBehandling(): Promise<never> {
+  async getBehandling(): ReturnType<AktivitetspengerApi['getBehandling']> {
     throw new Error('Not implemented');
   }
 
@@ -31,7 +31,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     };
   }
 
-  async hentBehandlingMidlertidigStatus(): Promise<never> {
+  async hentBehandlingMidlertidigStatus(): ReturnType<AktivitetspengerApi['hentBehandlingMidlertidigStatus']> {
     throw new Error('Not implemented');
   }
 

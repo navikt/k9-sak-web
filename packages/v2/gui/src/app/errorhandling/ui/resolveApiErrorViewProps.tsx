@@ -3,6 +3,7 @@ import type { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/
 import { EnterIcon } from '@navikt/aksel-icons';
 import { BodyLong, List } from '@navikt/ds-react';
 import type { ReactNode } from 'react';
+import { formatDate, timeFormat } from '../../../utils/formatters.js';
 import { reloadAction, reloadActionWithFormResetWarning, restartAction } from './ErrorFixAction.js';
 import type { ErrorViewProps } from './resolveErrorViewProps.js';
 
@@ -99,6 +100,38 @@ export const resolveApiErrorViewProps = (error: ExtendedApiError): ErrorViewProp
     title = 'Dette tok for lang tid';
     errorInfo = 'Systemet har brukt for lang tid på å svare deg.';
     fixAction = reloadAction;
+  } else if (error.pollingStatus?.status === 'HALTED') {
+    // Speiler 418-håndteringen i resolveAxiosErrorView
+    title = 'Bakgrunnsprosess feilet';
+    errorInfo = 'Noe gikk galt i bakgrunnsprosess knyttet til saken. Feilen kan være midlertidig.';
+    fixAction = {
+      ...reloadAction,
+      info: (
+        <>
+          <BodyLong>Prøv å laste siden på nytt eller komme tilbake til saken litt senere.</BodyLong>
+          <BodyLong>Meld feilen i Porten hvis du ikke får løst det.</BodyLong>
+        </>
+      ),
+    };
+  } else if (error.pollingStatus?.status === 'DELAYED') {
+    const { eta } = error.pollingStatus;
+    const tryAgainAfter = eta != null ? ` etter ${formatDate(eta)} kl. ${timeFormat(eta)}` : ` litt senere`;
+    title = 'Venter fortsatt på svar';
+    errorInfo = (
+      <>
+        <BodyLong>Saksbehandlingssystemet venter på et annet system som ikke svarer akkurat nå.</BodyLong>
+        <BodyLong>Du trenger ikke melde inn en feil, men prøv igjen {tryAgainAfter}.</BodyLong>
+      </>
+    );
+    fixAction = {
+      ...reloadAction,
+      info: (
+        <>
+          <BodyLong>Prøv å laste siden på nytt.</BodyLong>
+          <BodyLong>Sjekk driftsmeldinger eller meld feil i Porten, hvis den ikke løser seg etter hvert.</BodyLong>
+        </>
+      ),
+    };
   }
 
   return {

@@ -1,6 +1,8 @@
+import { isObject } from '@k9-sak-web/backend/typecheck/isObject.js';
 import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import {
   aksjonspunkt_bekreft,
   aksjonspunkt_getAksjonspunkter,
@@ -19,7 +21,9 @@ import {
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
-import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
+import type { AktivitetspengerApi, BehandlingStatusEllerBehandling } from './AktivitetspengerApi.js';
+
+const erBehandlingDto = (data: unknown): data is BehandlingDto => isObject(data) && 'uuid' in data && 'versjon' in data;
 
 export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   readonly backend = 'ungsak';
@@ -49,8 +53,19 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
     return (await behandlinger_hentLovligeBehandlingsoperasjoner({ query: { behandlingUuid } })).data;
   }
 
-  async hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal) {
-    return (await behandlinger_hentBehandlingMidlertidigStatus1({ query: { behandlingUuid }, signal })).data;
+  async hentBehandlingMidlertidigStatus(
+    behandlingUuid: string,
+    signal: AbortSignal,
+  ): Promise<BehandlingStatusEllerBehandling> {
+    const { data, response } = await behandlinger_hentBehandlingMidlertidigStatus1({
+      query: { behandlingUuid },
+      signal,
+    });
+    // Når ingen prosess pågår svarer backend med 303 til behandlingen, som fetch følger automatisk
+    if (response.redirected && erBehandlingDto(data)) {
+      return { behandling: data };
+    }
+    return { status: data };
   }
 
   async hentMedlemskapFraSøknad(behandlingUuid: string) {

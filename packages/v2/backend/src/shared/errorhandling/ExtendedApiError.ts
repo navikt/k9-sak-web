@@ -73,6 +73,18 @@ export class ExtendedApiError extends Error {
     return this.status === 409;
   }
 
+  // 418 brukes av backend når polling av bakgrunnsprosess er HALTED eller DELAYED
+  public get pollingStatus(): { status: string | undefined; eta: string | undefined } | null {
+    const { body } = this;
+    if (this.status !== 418 || !isObject(body)) {
+      return null;
+    }
+    return {
+      status: 'status' in body && isString(body.status) ? body.status : undefined,
+      eta: 'eta' in body && isString(body.eta) ? body.eta : undefined,
+    };
+  }
+
   private static resolveBodyFeilmelding(body: string | object): string | null {
     if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
       return body.feilmelding;
