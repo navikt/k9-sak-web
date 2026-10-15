@@ -3,13 +3,13 @@ import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k
 import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { addLegacySerializerOption } from '@k9-sak-web/gui/utils/axios/axiosUtils.js';
+import { getBackendUrl } from '@k9-sak-web/lib/paths/paths.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
-import { isUngdomsprogramytelsen } from '../../../utils/urlUtils';
 import type { FagsakPerson } from '../types/FagsakPerson';
 import { type Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
@@ -18,8 +18,6 @@ import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from './icons/intern_dokument.svg';
 import mottaDokumentImageUrl from './icons/motta_dokument.svg';
 import sendDokumentImageUrl from './icons/send_dokument.svg';
-
-const getBackendPath = () => (isUngdomsprogramytelsen() ? 'ung' : 'k9');
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
@@ -105,7 +103,7 @@ const DocumentListOld = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
       .get<Kompletthet>(
-        `/${getBackendPath()}/sak/api/behandling/kompletthet/beregning/vurderinger`,
+        `/${getBackendUrl()}/sak/api/behandling/kompletthet/beregning/vurderinger`,
         addLegacySerializerOption({
           signal,
           params: {
@@ -153,7 +151,7 @@ const DocumentListOld = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   }
 
   const makeDocumentURL = (document: DokumentDto) =>
-    `/${getBackendPath()}/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
+    `/${getBackendUrl()}/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
   const erInntektsmeldingOgBruktIDenneBehandlingen = (document: DokumentDto) =>
     document.brevkode === inntektsmeldingBrevkode &&

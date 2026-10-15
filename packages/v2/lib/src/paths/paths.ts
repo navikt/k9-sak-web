@@ -1,7 +1,7 @@
 export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
-const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no'];
-const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no'];
+const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no', 'aktivitetspenger.intern.dev.nav.no'];
+const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no', 'aktivitetspenger.intern.nav.no'];
 const localHosts = ['localhost', '127.0.0.1', '[::1]', '::1'];
 
 export const getPathToK9Los = (): string | null => {
