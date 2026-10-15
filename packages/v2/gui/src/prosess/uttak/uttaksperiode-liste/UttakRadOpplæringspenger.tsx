@@ -14,7 +14,7 @@ import Vilkårsliste from '../components/vilkårsliste/Vilkårsliste';
 import Endringsstatus from '../components/icons/Endringsstatus';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import { getFirstAndLastWeek, prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import { useUttakContext } from '../context/UttakContext';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';

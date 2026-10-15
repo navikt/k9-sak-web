@@ -1,8 +1,8 @@
-import type { k9_sak_typer_Periode as Periode } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import type { FomTom } from './dateUtils.js';
+import { DDMMYYYY_DATE_FORMAT } from './formats.js';
+import { initializeDate } from './initializeDate.js';
 
-export const sortPeriodsChronological = (period1: Periode, period2: Periode): number => {
+export const sortPeriodsChronological = (period1: FomTom, period2: FomTom): number => {
   const p1start = initializeDate(period1.fom);
   const p2start = initializeDate(period2.fom);
   if (p1start.isBefore(p2start)) {
@@ -15,7 +15,7 @@ export const sortPeriodsChronological = (period1: Periode, period2: Periode): nu
   return 0;
 };
 
-export const sortPeriodsByNewest = (period1: Periode, period2: Periode): number => {
+export const sortPeriodsByNewest = (period1: FomTom, period2: FomTom): number => {
   const p1start = initializeDate(period1.fom);
   const p2start = initializeDate(period2.fom);
   if (p1start.isBefore(p2start)) {
@@ -32,8 +32,8 @@ export function prettifyPeriod(fom: string, tom: string): string {
 }
 
 export function getFirstAndLastWeek(fom: string, tom: string): string {
-  const fomWeek = initializeDate(fom).startOf('week').week();
-  const tomWeek = initializeDate(tom).endOf('week').week();
+  const fomWeek = initializeDate(fom).isoWeek();
+  const tomWeek = initializeDate(tom).isoWeek();
   if (fomWeek === tomWeek) {
     return `${fomWeek}`;
   }

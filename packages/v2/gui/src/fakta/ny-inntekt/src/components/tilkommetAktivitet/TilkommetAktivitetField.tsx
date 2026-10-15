@@ -159,7 +159,7 @@ export const TilkommetAktivitetField = ({
         {skalViseBegrunnelse && (
           <>
             <VStack gap="space-16">
-              <Box marginBlock="space-40 space-0">
+              <Box marginBlock="space-32 space-0">
                 <RhfTextarea
                   control={control}
                   name={`${formName}.${formFieldIndex}.begrunnelse`}
@@ -169,14 +169,14 @@ export const TilkommetAktivitetField = ({
                 />
               </Box>
               <VurdertAv ident={avklaringsbehov?.vurdertAv} date={avklaringsbehov?.vurdertTidspunkt} />
-              <div>
+              <Box marginBlock="space-16 space-0">
                 <SubmitButton
                   isSubmittable={submittable}
                   isReadOnly={readOnly}
                   isSubmitting={formState.isSubmitting}
                   isDirty={formState.isDirty}
                 />
-              </div>
+              </Box>
             </VStack>
           </>
         )}

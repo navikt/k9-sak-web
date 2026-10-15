@@ -1,9 +1,10 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
+import { sortPeriodsByNewest, sortPeriodsChronological } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import type { Uttaksplan } from '@k9-sak-web/backend/k9sak/kontrakt/Uttaksplan.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter';
 import type { Dayjs } from 'dayjs';
 
 const oppholdHarUkedager = (tom: Dayjs, fom: Dayjs) => {
@@ -16,6 +17,38 @@ const oppholdHarUkedager = (tom: Dayjs, fom: Dayjs) => {
 
 const sjekkOmPerioderErKantIKant = (periode: Periode, nestePeriode: Periode) =>
   !oppholdHarUkedager(initializeDate(periode.tom), initializeDate(nestePeriode.fom));
+
+// Kun årsskiftet 2026–2027 skal deles, slik at perioden fra og med 2027 starter 1. januar.
+// Dette er for å vise infoboks om at normaltid for arbeid låses fra 01.01.2027.
+const splittVedÅrsskiftet2026Til2027 = (uttaksperiode: UttaksperiodeBeriket): UttaksperiodeBeriket[] => {
+  const skjæringsdato = initializeDate(NORMALARBEIDSTID_LÅST_DATO);
+  const fom = initializeDate(uttaksperiode.periode.fom);
+  const tom = initializeDate(uttaksperiode.periode.tom);
+
+  if (!fom.isBefore(skjæringsdato) || !tom.isSameOrAfter(skjæringsdato)) {
+    return [uttaksperiode];
+  }
+
+  const sisteDagI2026 = skjæringsdato.subtract(1, 'day');
+  return [
+    {
+      ...uttaksperiode,
+      periode: {
+        ...uttaksperiode.periode,
+        fom: fom.format(YYYYMMDD_DATE_FORMAT),
+        tom: sisteDagI2026.format(YYYYMMDD_DATE_FORMAT),
+      },
+    },
+    {
+      ...uttaksperiode,
+      periode: {
+        ...uttaksperiode.periode,
+        fom: skjæringsdato.format(YYYYMMDD_DATE_FORMAT),
+        tom: tom.format(YYYYMMDD_DATE_FORMAT),
+      },
+    },
+  ];
+};
 
 const lagUttaksperiodeliste = (uttaksperioder: Uttaksplan['perioder']): UttaksperiodeBeriket[] => {
   const perioder = Object.keys(uttaksperioder ?? {})
@@ -37,7 +70,9 @@ const lagUttaksperiodeliste = (uttaksperioder: Uttaksplan['perioder']): Uttakspe
     })
     .filter((p): p is UttaksperiodeBeriket => p !== undefined);
 
-  const kronologiskSortertePerioder = perioder.sort((p1, p2) => sortPeriodsChronological(p1.periode, p2.periode));
+  const kronologiskSortertePerioder = perioder
+    .flatMap(splittVedÅrsskiftet2026Til2027)
+    .sort((p1, p2) => sortPeriodsChronological(p1.periode, p2.periode));
   const perioderMedOppholdFlagg: UttaksperiodeBeriket[] = [];
 
   kronologiskSortertePerioder.forEach((uttaksperiode, index, array) => {

@@ -5,6 +5,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -25,6 +26,7 @@ type ApiOverrides = {
   vilkår?: Awaited<ReturnType<AktivitetspengerApi['getVilkår']>>;
   aksjonspunkter?: Awaited<ReturnType<AktivitetspengerApi['getAksjonspunkter']>>;
   innloggetBruker?: Awaited<ReturnType<AktivitetspengerApi['getInnloggetBruker']>>;
+  simuleringResultat?: Awaited<ReturnType<AktivitetspengerApi['getSimuleringResultat']>>;
 };
 
 const createApi = (overrides?: ApiOverrides): AktivitetspengerApi =>
@@ -32,6 +34,7 @@ const createApi = (overrides?: ApiOverrides): AktivitetspengerApi =>
     getVilkår: async () => overrides?.vilkår ?? [],
     getAksjonspunkter: async () => overrides?.aksjonspunkter ?? [],
     getInnloggetBruker: async () => overrides?.innloggetBruker ?? {},
+    getSimuleringResultat: async () => overrides?.simuleringResultat ?? null,
   });
 
 const createVilkår = (vilkarStatus: Utfall, type: ung_kodeverk_vilkår_VilkårType) => ({
@@ -60,7 +63,7 @@ describe('Prossesmotor', () => {
     });
   });
 
-  test('returnerer fem paneler i forventet rekkefølge', async () => {
+  test('returnerer seks paneler i forventet rekkefølge', async () => {
     const api = createApi();
     const behandling = createBehandling();
 
@@ -69,12 +72,13 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current).toHaveLength(5);
+      expect(result.current).toHaveLength(6);
       expect(result.current.map(panel => panel.label)).toEqual([
         'Inngangsvilkår',
         'Medlemskap',
         'Beregning',
         'Beregnet utbetaling',
+        'Simulering',
         'Vedtak',
       ]);
     });
@@ -153,7 +157,7 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[4].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current[5].type).toBe(ProcessMenuStepType.warning);
     });
   });
 
@@ -183,7 +187,7 @@ describe('Prossesmotor', () => {
     );
 
     await waitFor(() => {
-      expect(result.current[4].type).toBe(ProcessMenuStepType.success);
+      expect(result.current[5].type).toBe(ProcessMenuStepType.success);
     });
   });
 
@@ -221,6 +225,52 @@ describe('Prossesmotor', () => {
         },
       ],
     });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[5].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('setter simulering til warning og vedtak til default når VURDER_FEILUTBETALING er åpent', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+      simuleringResultat: {} as SimuleringDto,
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[4].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current[5].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('setter simulering til success når simuleringsresultat finnes og ingen aksjonspunkt er åpent', async () => {
+    const api = createApi({ simuleringResultat: {} as SimuleringDto });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current[4].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('setter simulering til default når simuleringsresultat mangler', async () => {
+    const api = createApi();
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
       wrapper: createWrapper(queryClient),
