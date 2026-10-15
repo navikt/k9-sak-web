@@ -285,6 +285,9 @@ export const UttakGradertMotInntekt: Story = {
 export const UttakGradertMotInntektOverÅrsskifte: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagInntektsgraderingPeriode('2026-12-28/2027-01-03', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
+      ]),
       inntektsgraderinger: {
         perioder: [
           {
@@ -319,7 +322,7 @@ export const UttakGradertMotInntektOverÅrsskifte: Story = {
     const canvas = within(canvasElement);
     const innvilgetMotInntektClass = uttakStyles['uttakIndikatorInnvilgetDelvisInntekt'];
 
-    const periode2026 = canvas.getByRole('row', { name: /28\.12\.2026 - 31\.12\.2026/ });
+    const periode2026 = await canvas.findByRole('row', { name: /28\.12\.2026 - 31\.12\.2026/ });
     const periode2027 = canvas.getByRole('row', { name: /01\.01\.2027 - 03\.01\.2027/ });
 
     const rader = canvas.getAllByRole('row');
