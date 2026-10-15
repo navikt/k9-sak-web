@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
-import { prettifyPeriod, sortPeriodsChronological } from '../../utils/periodUtils.js';
+import { prettifyPeriod, sortPeriodsChronological } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import styles from './utsattePerioderStripe.module.css';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useUttakApi } from '../../api/UttakApiContext.js';

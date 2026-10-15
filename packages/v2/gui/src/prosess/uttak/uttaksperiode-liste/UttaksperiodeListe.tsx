@@ -11,17 +11,16 @@ import UttakRadOpplæringspenger from './UttakRadOpplæringspenger.js';
 import styles from './uttaksperiodeListe.module.css';
 import hentPerioderFraUttak from '../utils/hentPerioderFraUttak.js';
 import lagUttaksperiodeliste from '../utils/uttaksperioder.js';
-import { useUttakContext } from '../context/UttakContext.js';
-import { prettifyPeriod } from '../utils/periodUtils.js';
-import splitUttakByDate from '../utils/splitUttakByDate.js';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
+import { useUttakContext } from '../context/UttakContext';
+import { prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
+import splitUttakByDate from '../utils/splitUttakByDate';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter';
 import { PencilIcon } from '@navikt/aksel-icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
-// Fra denne datoen låses normalarbeidstid på skjæringstidspunktet
-const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';
 // Datoen når låsing av normalarbeidstid trer i kraft. Behandlinger avsluttet før denne datoen får ikke låst normalarbeidstid.
 const DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT = '2026-10-12';
 

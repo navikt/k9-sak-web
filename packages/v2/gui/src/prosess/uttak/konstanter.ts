@@ -1,0 +1,1 @@
+export const NORMALARBEIDSTID_LÅST_DATO = '2027-01-01';

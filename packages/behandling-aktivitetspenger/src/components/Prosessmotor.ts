@@ -7,11 +7,13 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
   innloggetBrukerQueryOptions,
+  simuleringResultatQueryOptions,
   vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
@@ -27,6 +29,7 @@ const PROSESS_STEG_KODER = {
   VEDTAK: prosessStegCodes.VEDTAK,
   BEREGNING: prosessStegCodes.BEREGNING,
   BEREGNET_UTBETALING: prosessStegCodes.KONTROLL_AV_INNTEKT,
+  SIMULERING: prosessStegCodes.SIMULERING,
 } as const;
 
 const PANEL_KONFIG = {
@@ -90,6 +93,11 @@ const PANEL_KONFIG = {
     id: prosessStegCodes.OPPHØR,
     label: 'Opphør',
     vilkår: [],
+  },
+  simulering: {
+    aksjonspunkter: [AksjonspunktDefinisjon.VURDER_FEILUTBETALING],
+    id: PROSESS_STEG_KODER.SIMULERING,
+    label: 'Simulering',
   },
 } as const;
 
@@ -261,6 +269,21 @@ const byggOpphørPanel = (
   };
 };
 
+export const beregnSimuleringType = (
+  aksjonspunkter: AksjonspunktDto[],
+  simuleringResultat: SimuleringDto | null | undefined,
+  simuleringAksjonspunkter: readonly string[],
+): ProcessMenuStepType => {
+  const harApentAksjonspunkt = aksjonspunkter.some(
+    ap => simuleringAksjonspunkter.some(sap => sap === ap.definisjon) && ap.status && isAksjonspunktOpen(ap.status),
+  );
+
+  if (harApentAksjonspunkt) {
+    return ProcessMenuStepType.warning;
+  }
+  return simuleringResultat ? ProcessMenuStepType.success : ProcessMenuStepType.default;
+};
+
 interface ProsessmotorProps {
   api: AktivitetspengerApi;
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat' | 'type' | 'behandlingÅrsaker'>;
@@ -270,6 +293,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
   const { data: vilkår = [] } = useQuery(vilkårQueryOptions(api, behandling));
   const { data: aksjonspunkter = [] } = useQuery(aksjonspunkterQueryOptions(api, behandling));
   const { data: innloggetBruker } = useQuery(innloggetBrukerQueryOptions(api));
+  const { data: simuleringResultat } = useQuery(simuleringResultatQueryOptions(api, behandling));
 
   return useMemo(() => {
     const inngangsvilkårPanel = erAktivitetspengerOpphørsbehandling(behandling)
@@ -301,6 +325,18 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
         PANEL_KONFIG.beregnetUtbetaling.aksjonspunkter,
       ),
     };
+    const simuleringType = beregnSimuleringType(
+      aksjonspunkter,
+      simuleringResultat,
+      PANEL_KONFIG.simulering.aksjonspunkter,
+    );
+    const simuleringPanel = {
+      type: simuleringType,
+      label: PANEL_KONFIG.simulering.label,
+      id: PANEL_KONFIG.simulering.id,
+      erVurdert: erPanelVurdert(simuleringType),
+    };
+
     const vedtakType = beregnVedtakType(vilkår, aksjonspunkter, behandling, PANEL_KONFIG.vedtak.aksjonspunkter);
     const vedtakPanel = {
       id: PANEL_KONFIG.vedtak.id,
@@ -308,6 +344,13 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       type: vedtakType,
       usePartialStatus: false,
     };
-    return [inngangsvilkårPanel, medlemskapPanel, beregningPanel, beregnetUtbetalingPanel, vedtakPanel];
-  }, [aksjonspunkter, innloggetBruker, vilkår, behandling]);
+    return [
+      inngangsvilkårPanel,
+      medlemskapPanel,
+      beregningPanel,
+      beregnetUtbetalingPanel,
+      simuleringPanel,
+      vedtakPanel,
+    ];
+  }, [aksjonspunkter, innloggetBruker, vilkår, behandling, simuleringResultat]);
 };

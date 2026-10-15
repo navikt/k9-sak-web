@@ -31,6 +31,7 @@ const FAGOMRÅDE_NAVN: Partial<Record<FagOmrådeKode, string>> = {
   [FagOmrådeKode.PLEIEPENGER_V1_ARBEIDSGIVER]: 'Omsorg, opplæring, og pleiepenger',
   [FagOmrådeKode.FRISINN]: 'FRISINN',
   [FagOmrådeKode.UNG]: 'Ungdomsprogramytelse',
+  [FagOmrådeKode.AKTIVUNG]: 'Aktivitetspenger',
 };
 
 /** Suffiks per feltnavn (differanse har unntak for OOPREF og FRISINN) */

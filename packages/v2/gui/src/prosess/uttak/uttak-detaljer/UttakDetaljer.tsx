@@ -21,6 +21,7 @@ import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer.js';
 import GraderingMotTilsynDetaljer from './GraderingMotTilsynDetaljer.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
+import { isPeriodCoveredByPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import styles from './uttakDetaljer.module.css';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useUttakApi } from '../api/UttakApiContext.js';
@@ -122,9 +123,7 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
     utfall,
   } = uttak;
 
-  const inntektgradering = inntektsgraderinger?.perioder?.find(
-    p => p.periode.fom === uttak.periode.fom && p.periode.tom === uttak.periode.tom,
-  );
+  const inntektgradering = inntektsgraderinger?.perioder?.find(p => isPeriodCoveredByPeriod(uttak.periode, p.periode));
 
   /*
    * Hvis det returneres data for inntektsgradering fra backend, er det Gradering mot arbeidsinntekt som skal "highlightes".

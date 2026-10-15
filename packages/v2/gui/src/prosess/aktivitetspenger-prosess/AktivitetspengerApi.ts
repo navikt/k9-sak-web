@@ -7,11 +7,16 @@ import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import type { AsyncPollingStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import { type BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
+import type { FagsakDto } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakDto.js';
 import { type InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/ungsak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+
+export type BehandlingStatusEllerBehandling = { status: AsyncPollingStatus } | { behandling: BehandlingDto };
 
 export interface AktivitetspengerApi {
   readonly backend: 'ungsak';
@@ -20,7 +25,10 @@ export interface AktivitetspengerApi {
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
   getBehandling(behandlingUuid: string): Promise<BehandlingDto>;
   hentLovligeBehandlingsoperasjoner(behandlingUuid: string): Promise<BehandlingOperasjonerDto>;
-  hentBehandlingMidlertidigStatus(behandlingUuid: string, signal: AbortSignal): Promise<AsyncPollingStatus>;
+  hentBehandlingMidlertidigStatus(
+    behandlingUuid: string,
+    signal: AbortSignal,
+  ): Promise<BehandlingStatusEllerBehandling>;
   hentMedlemskapFraSøknad(behandlingUuid: string): Promise<ForutgåendeMedlemskapResponse>;
   hentBostedGrunnlag(behandlingUuid: string): Promise<BostedGrunnlagResponseDto>;
   getBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto | null>;
@@ -33,4 +41,7 @@ export interface AktivitetspengerApi {
     bekreftedeAksjonspunktDtoer: BekreftetAksjonspunktDto[],
   ): Promise<void>;
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollSkjermlenkeContextDto[]>;
+  getSimuleringResultat(behandlingUuid: string): Promise<SimuleringDto>;
+  getTilbakekrevingValg(behandlingUuid: string): Promise<TilbakekrevingValgDto>;
+  getFagsak(saksnummer: string): Promise<FagsakDto>;
 }

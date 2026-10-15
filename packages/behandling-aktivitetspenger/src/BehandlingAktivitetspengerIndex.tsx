@@ -7,7 +7,7 @@ import {
   behandlingQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
@@ -29,6 +29,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
   behandlingVersjon: number;
   behandlingUuid: string;
+  fagsak: Fagsak;
 }
 
 const ungSakProsessApi = new AktivitetspengerBackendClient();
@@ -41,6 +42,7 @@ const BehandlingAktivitetspengerIndex = ({
   setRequestPendingMessage,
   behandlingVersjon,
   behandlingUuid,
+  fagsak,
 }: OwnProps) => {
   const setBehandling = useCallback(nyBehandling => {
     requestUngdomsytelseApi.resetCache();
@@ -99,6 +101,7 @@ const BehandlingAktivitetspengerIndex = ({
       <AktivitetspengerProsess
         api={ungSakProsessApi}
         behandling={behandling}
+        saksnummer={fagsak.saksnummer}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}

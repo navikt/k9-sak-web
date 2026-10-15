@@ -19,7 +19,7 @@ import Endringsstatus from '../components/icons/Endringsstatus.js';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
-import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils.js';
+import { getFirstAndLastWeek, prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator.js';
 import { useSuspenseQuery } from '@tanstack/react-query';

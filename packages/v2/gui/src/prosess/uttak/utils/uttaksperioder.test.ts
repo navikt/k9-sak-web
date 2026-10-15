@@ -52,6 +52,30 @@ describe('lagUttaksperiodeliste', () => {
     await expect(earlier?.harOppholdTilNestePeriode).toBe(false);
   });
 
+  it('deler en periode ved årsskiftet slik at nyårsperioden starter 1. januar', () => {
+    const perioder = {
+      [key('2026-12-28', '2027-01-03')]: { uttaksgrad: 50 },
+    } as any;
+
+    const liste = lagUttaksperiodeliste(perioder);
+
+    expect(liste.map(p => key(p.periode.fom, p.periode.tom))).toEqual([
+      key('2027-01-01', '2027-01-03'),
+      key('2026-12-28', '2026-12-31'),
+    ]);
+    expect(liste.map(p => p.uttaksgrad)).toEqual([50, 50]);
+  });
+
+  it('deler ikke perioder ved andre årsskifter', () => {
+    const perioder = {
+      [key('2024-12-30', '2025-01-05')]: { uttaksgrad: 50 },
+    } as any;
+
+    const liste = lagUttaksperiodeliste(perioder);
+
+    expect(liste.map(p => key(p.periode.fom, p.periode.tom))).toEqual([key('2024-12-30', '2025-01-05')]);
+  });
+
   it('håndterer uke 53 til uke 1 (2020->2021) uten opphold', async () => {
     // 2020-12-28 er mandag i ISO uke 53
     const sisteUke = dayjs('2020-12-28');
