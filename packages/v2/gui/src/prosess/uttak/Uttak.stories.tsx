@@ -20,6 +20,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import Uttak from './Uttak';
+import uttakStyles from './uttaksperiode-liste/uttak.module.css';
 
 const meta = {
   title: 'gui/prosess/Uttak',
@@ -277,6 +278,61 @@ export const UttakGradertMotInntekt: Story = {
         await expect(buttons.length).toEqual(3);
       });
     });
+  },
+};
+
+export const UttakGradertMotInntektOverÅrsskifte: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      inntektsgraderinger: {
+        perioder: [
+          {
+            periode: { fom: '2026-12-28', tom: '2027-01-03' },
+            beregningsgrunnlag: 500000,
+            løpendeInntekt: 200000,
+            bortfaltInntekt: 300000,
+            reduksjonsProsent: 40,
+            graderingsProsent: 60,
+            inntektsforhold: [
+              {
+                arbeidsgiverIdentifikator: '123456789',
+                arbeidstidprosent: 40,
+                bruttoInntekt: 500000,
+                løpendeInntekt: 200000,
+                erNytt: false,
+                type: 'AT',
+              },
+            ],
+          },
+        ],
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    uttak: lagUttak([
+      lagInntektsgraderingPeriode('2026-12-28/2027-01-03', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
+    ]),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const innvilgetMotInntektClass = uttakStyles['uttakIndikatorInnvilgetDelvisInntekt'];
+
+    const periode2026 = canvas.getByRole('row', { name: /28\.12\.2026 - 31\.12\.2026/ });
+    const periode2027 = canvas.getByRole('row', { name: /01\.01\.2027 - 03\.01\.2027/ });
+
+    const rader = canvas.getAllByRole('row');
+    const infoboks = canvas.getByRole('row', { name: /Endringer fra 01\.01\.2027:/ });
+    await expect(rader.indexOf(periode2027)).toBeLessThan(rader.indexOf(infoboks));
+    await expect(rader.indexOf(infoboks)).toBeLessThan(rader.indexOf(periode2026));
+    await expect(periode2026).toHaveTextContent(/^53/);
+    await expect(periode2027).toHaveTextContent(/^53/);
+    await expect(periode2026.querySelector(`.${innvilgetMotInntektClass}`)).toBeInTheDocument();
+    await expect(periode2027.querySelector(`.${innvilgetMotInntektClass}`)).toBeInTheDocument();
   },
 };
 

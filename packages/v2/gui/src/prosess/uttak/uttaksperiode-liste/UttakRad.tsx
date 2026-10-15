@@ -21,7 +21,7 @@ import Endringsstatus from '../components/icons/Endringsstatus';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import { useUttakContext } from '../context/UttakContext';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
-import { getFirstAndLastWeek, prettifyPeriod } from '../utils/periodUtils';
+import { getFirstAndLastWeek, prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import styles from './uttak.module.css';
 import { finnGraderingForUttak, finnUttakGradIndikatorCls } from './uttakGradIndikator';
 
