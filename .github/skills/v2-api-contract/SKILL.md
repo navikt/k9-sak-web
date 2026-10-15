@@ -120,6 +120,21 @@ Rules:
 - `readonly backend = 'k9sak'` is a literal type and is used as the last element in `queryKey`, so the same feature against different backends gets separate cache entries
 - Every SDK call is awaited; `.data` is returned for GET endpoints
 - Parameters match the `query`/`body` shape of the SDK Options type
+- When a 404 is an expected response, handle it in the client and return `null` (add `| null` to the return type in the BackendApiType). Rethrow all other errors. Do not use `throwOnError: ignore404Errors` in the queryOptions:
+
+```typescript
+try {
+  return (await sdkFunction({ query: { behandlingUuid } })).data;
+} catch (error) {
+  const apiError = ExtendedApiError.findInError(error);
+  if (apiError?.isNotFound) {
+    return null;
+  }
+  throw error;
+}
+```
+
+`ExtendedApiError` is imported from `@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js`.
 
 ### Step 7: Create QueryOptions (if requested)
 

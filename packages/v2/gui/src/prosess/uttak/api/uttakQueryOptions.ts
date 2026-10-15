@@ -1,5 +1,4 @@
 import { queryOptions } from '@tanstack/react-query';
-import { ignore404Errors } from '../../../app/errorhandling/ignore404Errors.js';
 import type { UttakBackendApiType } from './UttakBackendApiType.js';
 
 export const uttakQueryOptions = (
@@ -48,6 +47,5 @@ export const uttakAktuelleAktiviteterQueryOptions = (
   queryOptions({
     queryKey: ['uttak-aktuelle-aktiviteter', behandlingUuid, fom, tom, enabled, api.backend],
     queryFn: () => api.hentAktuelleAktiviteter(behandlingUuid, fom, tom),
-    throwOnError: ignore404Errors,
     enabled,
   });

@@ -19,7 +19,7 @@ import {
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from './Uttak';
+import Uttak from './Uttak.js';
 import uttakStyles from './uttaksperiode-liste/uttak.module.css';
 
 const meta = {
@@ -320,7 +320,7 @@ export const UttakGradertMotInntektOverÅrsskifte: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const innvilgetMotInntektClass = uttakStyles['uttakIndikatorInnvilgetDelvisInntekt'];
+    const innvilgetMotInntektClass = uttakStyles.uttakIndikatorInnvilgetDelvisInntekt;
 
     const periode2026 = await canvas.findByRole('row', { name: /28\.12\.2026 - 31\.12\.2026/ });
     const periode2027 = canvas.getByRole('row', { name: /01\.01\.2027 - 03\.01\.2027/ });

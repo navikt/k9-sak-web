@@ -18,7 +18,7 @@ export interface UttakBackendApiType extends BackendTilhørighet {
     behandlingUuid: OverstyrbareAktiviteterForUttakRequest['behandlingIdDto'],
     fom: OverstyrbareAktiviteterForUttakRequest['fom'],
     tom: OverstyrbareAktiviteterForUttakRequest['tom'],
-  ): Promise<OverstyrbareUttakAktiviterDto>;
+  ): Promise<OverstyrbareUttakAktiviterDto | null>;
   getArbeidsgivere(behandlingUuid: string): Promise<ArbeidsgiverOversiktDto>;
   overstyringUttak(requestBody: BekreftetOgOverstyrteAksjonspunkterDto): Promise<void>;
   hentInntektsgraderinger(behandlingUuid: string): Promise<InntektgraderingDto>;

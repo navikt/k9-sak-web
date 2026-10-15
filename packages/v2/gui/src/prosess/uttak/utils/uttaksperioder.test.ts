@@ -55,7 +55,7 @@ describe('lagUttaksperiodeliste', () => {
   it('deler en periode ved årsskiftet slik at nyårsperioden starter 1. januar', () => {
     const perioder = {
       [key('2026-12-28', '2027-01-03')]: { uttaksgrad: 50 },
-    } as any;
+    } satisfies Perioder;
 
     const liste = lagUttaksperiodeliste(perioder);
 
@@ -69,7 +69,7 @@ describe('lagUttaksperiodeliste', () => {
   it('deler ikke perioder ved andre årsskifter', () => {
     const perioder = {
       [key('2024-12-30', '2025-01-05')]: { uttaksgrad: 50 },
-    } as any;
+    } satisfies Perioder;
 
     const liste = lagUttaksperiodeliste(perioder);
 

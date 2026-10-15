@@ -54,16 +54,24 @@ export class K9SakUttakBackendClient implements UttakBackendApiType {
     behandlingUuid: OverstyrbareAktiviteterForUttakRequest['behandlingIdDto'],
     fom: OverstyrbareAktiviteterForUttakRequest['fom'],
     tom: OverstyrbareAktiviteterForUttakRequest['tom'],
-  ): Promise<OverstyrbareUttakAktiviterDto> {
-    return (
-      await behandlingUttak_hentOverstyrbareAktiviterForUttak({
-        body: {
-          behandlingIdDto: behandlingUuid,
-          fom,
-          tom,
-        },
-      })
-    ).data;
+  ): Promise<OverstyrbareUttakAktiviterDto | null> {
+    try {
+      return (
+        await behandlingUttak_hentOverstyrbareAktiviterForUttak({
+          body: {
+            behandlingIdDto: behandlingUuid,
+            fom,
+            tom,
+          },
+        })
+      ).data;
+    } catch (error) {
+      const apiError = ExtendedApiError.findInError(error);
+      if (apiError?.isNotFound) {
+        return null;
+      }
+      throw error;
+    }
   }
 
   async getArbeidsgivere(behandlingUuid: string) {

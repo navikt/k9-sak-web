@@ -1,6 +1,5 @@
 import { Tooltip } from '@navikt/ds-react';
 import { type JSX } from 'react';
-// import type { UttaksperiodeInfoEndringsstatus } from '@k9-sak-web/backend/k9sak/generated';
 import PillIcon from './PillIcon.js';
 import type { Endringsstatus as EndringsStatus } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Endringsstatus.js';
 

@@ -3,8 +3,8 @@ import { YYYYMMDD_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { sortPeriodsByNewest, sortPeriodsChronological } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import type { Uttaksplan } from '@k9-sak-web/backend/k9sak/kontrakt/Uttaksplan.js';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
-import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
+import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter.js';
 import type { Dayjs } from 'dayjs';
 
 const oppholdHarUkedager = (tom: Dayjs, fom: Dayjs) => {
