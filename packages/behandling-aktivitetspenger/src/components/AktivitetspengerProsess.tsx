@@ -17,12 +17,14 @@ import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegIni
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
 import { OpphørInitPanel } from './prosess/OpphørInitPanel';
+import { SimuleringProsessStegInitPanel } from './prosess/SimuleringProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prosessmotor';
 
 interface OwnProps {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
+  saksnummer: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
@@ -32,6 +34,7 @@ interface OwnProps {
 export const AktivitetspengerProsess = ({
   api,
   behandling,
+  saksnummer,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
@@ -146,7 +149,16 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-
+              if (steg.id === prosessStegCodes.SIMULERING) {
+                return (
+                  <SimuleringProsessStegInitPanel
+                    key={steg.id}
+                    api={api}
+                    behandling={behandling}
+                    saksnummer={saksnummer}
+                  />
+                );
+              }
               return null;
             })}
           </Box>

@@ -11,8 +11,11 @@ export {
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,
+  fagsak_hentFagsak,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
+  simulering_hentSimuleringResultat,
+  tilbakekrevingsvalg_hentTilbakekrevingValg,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';

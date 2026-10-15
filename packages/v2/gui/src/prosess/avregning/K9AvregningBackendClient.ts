@@ -1,11 +1,12 @@
-import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
-import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
-import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
-import type { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
-import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
-import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
+import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
+import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
+import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 
 export class K9AvregningBackendClient implements BehandlingAvregningBackendApiType {
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
@@ -53,9 +54,12 @@ export class K9AvregningBackendClient implements BehandlingAvregningBackendApiTy
     fagsakYtelseType: FagsakYtelseType,
     varseltekst?: string,
   ): Promise<Blob> {
+    if (!isValueOfConstObject(fagsakYtelseType, FagsakYtelseTypeK9Tilbake)) {
+      throw new Error(`Utviklerfeil: Ugyldig fagsak ytelse type for k9-tilbake: ${fagsakYtelseType}`);
+    }
     return (
       await dokument_hentForhåndsvisningVarselbrev({
-        body: { behandlingUuid, fagsakYtelseType: fagsakYtelseType as FagsakYtelseTypeK9Tilbake, varseltekst },
+        body: { behandlingUuid, fagsakYtelseType, varseltekst },
       })
     ).data as Blob;
   }
