@@ -33,7 +33,7 @@ Use these sections for new v2 components and for migrations. Complete the additi
 
 - [ ] When the component is the sole consumer of an endpoint, it fetches its own data via `useSuspenseQuery` + API context instead of receiving that data from the shell
 - [ ] If kodeverk lookups are needed, uses `K9KodeverkoppslagContext` — no `alleKodeverk` / `kodeverk` prop
-- [ ] CSS module class names use bracket notation: `styles['myClass']` (required by `noPropertyAccessFromIndexSignature`)
+- [ ] CSS module class names use dot notation: `styles.myClass`. Never `styles['myClass']`. Each `*.module.css` has a generated `*.module.css.d.ts`, so dot access type-checks
 - [ ] All imports use `.js` suffix
 - [ ] No imports from non-v2 packages (`@k9-sak-web/utils`, `@k9-sak-web/types`, `@k9-sak-web/shared-components`, etc.)
 - [ ] Avoid type assertions (`as Type`, especially `as any` / `as unknown as Type`) and non-null assertions (`!`) in both code and tests. Prefer inferred types, `satisfies`, typed helpers and explicit guards; handle invalid or missing values rather than asserting them away.
@@ -164,14 +164,14 @@ export type {
 
 **Kodeverk const enums** — re-export under `kodeverk/` mirroring the package path from the generated type name:
 
+When the generated symbol has both a const and a type with the same name, a single `export { ... }` re-exports both under the same alias. Do not add a separate `export type` or a `Type`-suffixed alias. Keep `export type` for DTOs and other type-only symbols.
+
 ```typescript
 // k9_kodeverk_geografisk_Region → kodeverk/geografisk/Region.ts
 export { k9_kodeverk_geografisk_Region as Region } from '@navikt/k9-sak-typescript-client/types';
-export type { k9_kodeverk_geografisk_Region as RegionType } from '@navikt/k9-sak-typescript-client/types';
 
 // k9_kodeverk_uttak_UtenlandsoppholdÅrsak → kodeverk/uttak/UtenlandsoppholdÅrsak.ts
 export { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsak } from '@navikt/k9-sak-typescript-client/types';
-export type { k9_kodeverk_uttak_UtenlandsoppholdÅrsak as UtenlandsoppholdÅrsakType } from '@navikt/k9-sak-typescript-client/types';
 ```
 
 Then import from the stable paths:
@@ -353,16 +353,16 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import { fagsakYtelsesType, FagsakYtelsesType } from '...';
 ```
 
-## noPropertyAccessFromIndexSignature — CSS module classes
+## CSS module classes — dot notation
 
-With `"noPropertyAccessFromIndexSignature": true`, CSS module class names must use bracket notation:
+Use dot notation for CSS module class names. The generated `*.module.css.d.ts` files declare each class, so dot access passes `noPropertyAccessFromIndexSignature`. If a module has no `.d.ts`, generate it instead of falling back to bracket notation.
 
 ```typescript
 // ✅ Correct
-<div className={styles['myClass']} />
-
-// ❌ Wrong — TypeScript will error
 <div className={styles.myClass} />
+
+// ❌ Wrong — do not use bracket notation
+<div className={styles['myClass']} />
 ```
 
 ## noUncheckedIndexedAccess — array index access returns T | undefined

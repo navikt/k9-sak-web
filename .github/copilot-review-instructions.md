@@ -1,3 +1,7 @@
+## Skills
+
+- Check every changed file against the relevant skills in `.github/skills/` (`SKILL.md` and `references/`). Flag deviations and name the skill and rule.
+
 ## TypeScript
 
 - Use Aksel Design System spacing tokens (`space-16`), never Tailwind `p-*`/`m-*`

@@ -5,7 +5,11 @@ excludeAgent: "cloud-agent"
 
 # Review av kodeendringer
 
-Les relevante instruksjoner i `.github/copilot-instructions.md` og `.github/instructions/`, og relevante skills i `.github/skills/`, før du vurderer endringene. Flagg konkrete avvik for menneskelig reviewer, ikke valgfrie steg eller regler som ikke gjelder endringen.
+Les relevante instruksjoner i `.github/copilot-instructions.md` og `.github/instructions/` før du vurderer endringene. Flagg konkrete avvik for menneskelig reviewer, ikke valgfrie steg eller regler som ikke gjelder endringen.
+
+## Skills
+
+Kontroller alle endrede filer mot relevante skills i `.github/skills/`, også uendrede linjer i filer som PR-en endrer. Vis til skillen og regelen når du flagger et avvik. Hvis endringen innfører et mønster som strider mot en skill, flagg at enten koden eller skillen må oppdateres.
 
 ## Feature toggles
 

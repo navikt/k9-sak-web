@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
-import { pleiepengerbarn_uttak_kontrakter_Årsak as Årsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Årsak.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import { isPeriodCoveredByPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
 import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
