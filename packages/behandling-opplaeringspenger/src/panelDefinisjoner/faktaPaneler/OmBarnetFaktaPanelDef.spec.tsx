@@ -16,7 +16,7 @@ const lagProps = ({
   submittable?: boolean;
 } = {}) => ({
   featureToggles,
-  behandling: { uuid: 'test-behandling-uuid', links: [] },
+  behandling: { uuid: 'test-behandling-uuid', versjon: 3, links: [] },
   aksjonspunkter,
   readOnly,
   submittable,
@@ -45,6 +45,7 @@ describe('OmBarnetFaktaPanelDef', () => {
     expect(element.type).toBe(OmBarnetFaktaIndex);
     expect(element.props).toEqual({
       behandlingUuid: 'test-behandling-uuid',
+      behandlingVersjon: 3,
       readOnly: false,
       submittable: true,
       harAksjonspunkt: true,

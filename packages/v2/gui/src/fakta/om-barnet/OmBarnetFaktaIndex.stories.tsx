@@ -3,6 +3,7 @@ import { RettVedDødType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/RettVe
 import type { VurderingRettPleiepengerVedDødDto } from '@k9-sak-web/backend/k9sak/kontrakt/død/VurderingRettPleiepengerVedDødDto.js';
 import type { PersonopplysningPleietrengendeDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningPleietrengendeDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type ComponentProps, useState } from 'react';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import withErrorBoundary from '../../storybook/decorators/withErrorBoundary.js';
 import { withFakeOmBarnetApi } from '../../storybook/decorators/withFakeOmBarnetApi.js';
@@ -26,21 +27,52 @@ const lagretVurdering = {
 
 // Simulerer backend: vurderingen som hentes endres når aksjonspunktet er løst
 let backendVurdering: VurderingRettPleiepengerVedDødDto | null = null;
+const hentRettVedDød = fn(async () => backendVurdering);
+
+const lagreIBackend = fn(async (aksjonspunkter: BekreftRettVedDødAksjonspunkt[]) => {
+  for (const { vurdering, rettVedDødType } of aksjonspunkter) {
+    backendVurdering = {
+      vurdering,
+      rettVedDødType,
+      vurdertAv: 'Z999999',
+      vurdertTidspunkt: '2025-05-01T09:00:00',
+    };
+  }
+});
+
+// Simulerer skallet, som får ny behandlingsversjon fra backend etter lagring av aksjonspunkt
+const MedBehandlingsversjon = (args: ComponentProps<typeof OmBarnetFaktaIndex>) => {
+  const [behandlingVersjon, setBehandlingVersjon] = useState(args.behandlingVersjon);
+  const nyBehandlingsversjon = () => setBehandlingVersjon(versjon => versjon + 1);
+  return (
+    <>
+      <button type="button" onClick={nyBehandlingsversjon}>
+        Simuler ny behandlingsversjon
+      </button>
+      <OmBarnetFaktaIndex
+        {...args}
+        behandlingVersjon={behandlingVersjon}
+        submitCallback={async aksjonspunkter => {
+          await args.submitCallback(aksjonspunkter);
+          nyBehandlingsversjon();
+        }}
+      />
+    </>
+  );
+};
 
 const meta = {
   title: 'gui/fakta/om-barnet/OmBarnetFaktaIndex',
   component: OmBarnetFaktaIndex,
-  decorators: [
-    withFakeOmBarnetApi({
-      pleietrengende,
-      hentRettVedDød: async () => backendVurdering,
-    }),
-  ],
+  decorators: [withFakeOmBarnetApi({ pleietrengende, hentRettVedDød })],
   beforeEach: () => {
     backendVurdering = null;
+    hentRettVedDød.mockClear();
+    lagreIBackend.mockClear();
   },
   args: {
     behandlingUuid: 'test-behandling-uuid',
+    behandlingVersjon: 1,
     readOnly: false,
     submittable: true,
     harAksjonspunkt: true,
@@ -53,18 +85,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const NyVurderingLagresOgViserOppdatertVurdering: Story = {
-  args: {
-    submitCallback: fn(async (aksjonspunkter: BekreftRettVedDødAksjonspunkt[]) => {
-      for (const { vurdering, rettVedDødType } of aksjonspunkter) {
-        backendVurdering = {
-          vurdering,
-          rettVedDødType,
-          vurdertAv: 'Z999999',
-          vurdertTidspunkt: '2025-05-01T09:00:00',
-        };
-      }
-    }),
-  },
+  args: { submitCallback: lagreIBackend },
+  render: args => <MedBehandlingsversjon {...args} />,
   play: async ({ canvas, args, step }) => {
     await step('Henter opplysninger om barnet og viser tomt skjema uten lagret vurdering', async () => {
       await expect(await canvas.findByRole('heading', { name: 'Om barnet' })).toBeInTheDocument();
@@ -73,7 +95,7 @@ export const NyVurderingLagresOgViserOppdatertVurdering: Story = {
       await expect(canvas.getByRole('textbox', { name: 'Vurdering' })).toHaveValue('');
     });
 
-    await step('Sender aksjonspunkt og viser den nye vurderingen etter lagring', async () => {
+    await step('Sender aksjonspunkt og viser vurderingen hentet for ny behandlingsversjon', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: rett12UkerTekst }));
       await userEvent.type(canvas.getByRole('textbox', { name: 'Vurdering' }), 'Tre år eller mer.');
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
@@ -86,10 +108,32 @@ export const NyVurderingLagresOgViserOppdatertVurdering: Story = {
           rettVedDødType: RettVedDødType.RETT_12_UKER,
         },
       ]);
-      await waitFor(() => expect(canvas.getByText('Vurdering av Z999999, 01.05.2025')).toBeInTheDocument());
+      await expect(await canvas.findByText('Vurdering av Z999999, 01.05.2025')).toBeInTheDocument();
       await expect(canvas.getByText(rett12UkerTekst)).toBeInTheDocument();
       await expect(canvas.getByText('Tre år eller mer.')).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger vurdering' })).toBeInTheDocument();
+      await expect(hentRettVedDød).toHaveBeenCalledTimes(2);
+    });
+  },
+};
+
+export const NyBehandlingsversjonHenterVurderingPåNytt: Story = {
+  beforeEach: () => {
+    backendVurdering = lagretVurdering;
+  },
+  render: args => <MedBehandlingsversjon {...args} />,
+  play: async ({ canvas, step }) => {
+    await step('Viser vurdering hentet for gjeldende behandlingsversjon', async () => {
+      await expect(await canvas.findByText(rett6UkerTekst)).toBeInTheDocument();
+      await expect(hentRettVedDød).toHaveBeenCalledTimes(1);
+    });
+
+    await step('Henter og viser endret vurdering når behandlingsversjonen endres', async () => {
+      backendVurdering = { ...lagretVurdering, rettVedDødType: RettVedDødType.RETT_12_UKER };
+      await userEvent.click(canvas.getByRole('button', { name: 'Simuler ny behandlingsversjon' }));
+      await expect(await canvas.findByText(rett12UkerTekst)).toBeInTheDocument();
+      await expect(canvas.queryByText(rett6UkerTekst)).not.toBeInTheDocument();
+      await expect(hentRettVedDød).toHaveBeenCalledTimes(2);
     });
   },
 };
@@ -140,14 +184,15 @@ export const SkrivebeskyttetBehandling: Story = {
 };
 
 export const IngenOpplysningerOmBarnet: Story = {
-  decorators: [
-    withFakeOmBarnetApi({
-      pleietrengende: null,
-      hentRettVedDød: async () => null,
-    }),
-  ],
-  play: async ({ canvas }) => {
+  decorators: [withFakeOmBarnetApi({ pleietrengende: null, hentRettVedDød })],
+  args: { submitCallback: lagreIBackend },
+  play: async ({ canvas, args }) => {
     await expect(await canvas.findByText('Ingen opplysninger om barnet.')).toBeInTheDocument();
+    await expect(canvas.getByRole('heading', { name: 'Rett til pleiepenger ved barnets død' })).toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('radio', { name: rett6UkerTekst }));
+    await userEvent.type(canvas.getByRole('textbox', { name: 'Vurdering' }), 'Vurdert uten opplysninger om barnet.');
+    await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+    await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
   },
 };
 

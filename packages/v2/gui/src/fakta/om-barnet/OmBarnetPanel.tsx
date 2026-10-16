@@ -1,6 +1,6 @@
 import type { PersonopplysningPleietrengendeDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningPleietrengendeDto.js';
 import type { VurderingRettPleiepengerVedDødDto } from '@k9-sak-web/backend/k9sak/kontrakt/død/VurderingRettPleiepengerVedDødDto.js';
-import { Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { BekreftRettVedDødAksjonspunkt } from './BekreftRettVedDødAksjonspunkt.js';
 import { OmBarnetInformasjon } from './OmBarnetInformasjon.js';
@@ -8,7 +8,7 @@ import { RettVedDødForm } from './RettVedDødForm.js';
 import { RettVedDødVurderingsdetaljer } from './RettVedDødVurderingsdetaljer.js';
 
 interface OmBarnetPanelProps {
-  pleietrengende: PersonopplysningPleietrengendeDto;
+  pleietrengende: PersonopplysningPleietrengendeDto | null;
   rettVedDød: VurderingRettPleiepengerVedDødDto | null;
   readOnly: boolean;
   submittable: boolean;
@@ -37,7 +37,13 @@ export const OmBarnetPanel = ({
         <Heading size="large" level="1">
           Om barnet
         </Heading>
-        <OmBarnetInformasjon pleietrengende={pleietrengende} />
+        {pleietrengende ? (
+          <OmBarnetInformasjon pleietrengende={pleietrengende} />
+        ) : (
+          <Alert variant="info" size="small">
+            Ingen opplysninger om barnet.
+          </Alert>
+        )}
       </VStack>
       {(!readOnly || rettVedDød !== null) && (
         <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" paddingBlock="space-16 space-0">

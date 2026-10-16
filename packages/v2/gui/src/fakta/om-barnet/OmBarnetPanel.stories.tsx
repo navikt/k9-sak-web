@@ -153,6 +153,18 @@ export const BarnUtenOpplysninger: Story = {
   },
 };
 
+export const ManglerOpplysningerOmBarnet: Story = {
+  args: {
+    pleietrengende: null,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Om barnet' })).toBeInTheDocument();
+    await expect(canvas.getByText('Ingen opplysninger om barnet.')).toBeInTheDocument();
+    await expect(canvas.getByRole('heading', { name: 'Rett til pleiepenger ved barnets død' })).toBeInTheDocument();
+    await expect(canvas.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
+  },
+};
+
 export const LagretVurdering: Story = {
   args: { rettVedDød: lagretVurdering },
   play: async ({ canvas, args, step }) => {

@@ -27,6 +27,7 @@ class OmBarnetFaktaPanelDef extends FaktaPanelDef {
       return (
         <OmBarnetFaktaIndex
           behandlingUuid={props.behandling.uuid}
+          behandlingVersjon={props.behandling.versjon}
           readOnly={props.readOnly}
           submittable={props.submittable}
           harAksjonspunkt={!!omBarnetAksjonspunkt?.definisjon.kode}
