@@ -1,4 +1,4 @@
-import { vilkarType as k9_kodeverk_vilkår_VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
@@ -15,11 +15,7 @@ import { OmsorgenForProsessStegInitPanel } from './OmsorgenForProsessStegInitPan
 import { SøknadsfristProsessStegInitPanel } from './SøknadsfristProsessStegInitPanel';
 
 // Relevante vilkår for inngangsvilkår-panelet
-const relevanteVilkårkoder = [
-  k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
-  k9_kodeverk_vilkår_VilkårType.ALDERSVILKÅR,
-  k9_kodeverk_vilkår_VilkårType.OMSORGEN_FOR,
-];
+const relevanteVilkårkoder = [VilkårType.SØKNADSFRIST, VilkårType.ALDERSVILKÅR, VilkårType.OMSORGEN_FOR];
 
 const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
 

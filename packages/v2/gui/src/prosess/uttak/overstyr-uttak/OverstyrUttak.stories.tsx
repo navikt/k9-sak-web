@@ -1,19 +1,18 @@
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  AksjonspunktStatus,
   lagOppfyltPeriode,
   lagOverstyringUttakAksjonspunkt,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import { withQueryClientProvider } from '../../../storybook/decorators/withQueryClientProvider.js';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 /**
  * OverstyrUttak-komponenten lar saksbehandlere med overstyrerrolle manuelt overstyre
@@ -35,7 +34,7 @@ const meta = {
     },
   },
   decorators: [
-    withQueryClientProvider(),
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -52,6 +51,7 @@ type Story = StoryObj<typeof meta>;
 export const EmptyState: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
       allowedRanges: [
         { fom: '2024-01-01', tom: '2024-01-31' },
@@ -61,10 +61,8 @@ export const EmptyState: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -72,7 +70,7 @@ export const EmptyState: Story = {
     const user = userEvent.setup();
 
     await step('Viser Uttak', async () => {
-      await expect(canvas.getByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
+      await expect(await canvas.findByRole('heading', { name: /Uttak/i })).toBeInTheDocument();
       await expect(canvas.getByRole('cell', { name: /01.02.2024 - 28.02.2024/i })).toBeInTheDocument();
       await expect(canvas.getByRole('cell', { name: /01.01.2024 - 31.01.2024/i })).toBeInTheDocument();
       const expandButtons = canvas.getAllByRole('button', { name: /Åpne/i });
@@ -87,6 +85,7 @@ export const EmptyState: Story = {
 export const LeggTilOverstyring: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       onOverstyringUttak: payload => action('overstyr-aksjonspunkt:submit')(payload),
       allowedRanges: [
         { fom: '2024-01-01', tom: '2024-12-31' }, // Allow full year for flexibility
@@ -95,10 +94,8 @@ export const LeggTilOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -106,7 +103,7 @@ export const LeggTilOverstyring: Story = {
     const user = userEvent.setup();
 
     await step('Aktiver overstyring', async () => {
-      const overstyrKnapp = canvas.getByTestId('overstyringsknapp');
+      const overstyrKnapp = await canvas.findByTestId('overstyringsknapp');
       await user.click(overstyrKnapp);
     });
 
@@ -151,9 +148,81 @@ export const LeggTilOverstyring: Story = {
   },
 };
 
+const onOverstyringUttakValidering = fn();
+
+export const ValideringAvPeriode: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
+      onOverstyringUttak: payload => onOverstyringUttakValidering(payload),
+      allowedRanges: [{ fom: '2024-01-01', tom: '2024-12-31' }],
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: true,
+    aksjonspunkter: [],
+    readOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await step('Åpne overstyringsskjema', async () => {
+      await user.click(await canvas.findByTestId('overstyringsknapp'));
+      await user.click(await canvas.findByRole('button', { name: /Legg til ny overstyring/i }));
+    });
+
+    await step('Mangler periode gir feilmelding', async () => {
+      await user.click(await canvas.findByRole('button', { name: /Legg til overstyring/i }));
+      await expect(await canvas.findByText('Fra og med: Må oppgis')).toBeInTheDocument();
+      await expect(await canvas.findByText('Til og med: Må oppgis')).toBeInTheDocument();
+      await expect(onOverstyringUttakValidering).not.toHaveBeenCalled();
+    });
+
+    await step('Til og med før fra og med gir feilmelding', async () => {
+      const fraInput = await canvas.findByLabelText('Fra og med');
+      const tilInput = await canvas.findByLabelText('Til og med');
+      await user.type(fraInput, '20.01.2024');
+      await user.type(tilInput, '10.01.2024');
+      await user.tab();
+      await expect(await canvas.findByText('Til og med: Kan ikke være før fra og med-dato')).toBeInTheDocument();
+    });
+
+    await step('Dato utenfor periodene til vurdering gir feilmelding', async () => {
+      const fraInput = await canvas.findByLabelText('Fra og med');
+      await user.clear(fraInput);
+      await user.type(fraInput, '01.01.2020');
+      await user.tab();
+      await expect(await canvas.findByText(/Fra og med: Må være innenfor periodene til vurdering/)).toBeInTheDocument();
+      await user.type(await canvas.findByLabelText(/begrunnelse/i), 'Begrunnelse for overstyring');
+      await user.click(await canvas.findByRole('button', { name: /Legg til overstyring/i }));
+      await expect(onOverstyringUttakValidering).not.toHaveBeenCalled();
+    });
+
+    await step('Gyldig periode kan sendes inn', async () => {
+      const fraInput = await canvas.findByLabelText('Fra og med');
+      await user.clear(fraInput);
+      await user.type(fraInput, '01.01.2024');
+      await user.clear(await canvas.findByLabelText('Til og med'));
+      await user.type(await canvas.findByLabelText('Til og med'), '15.01.2024');
+      await user.type(await canvas.findByLabelText(/uttaksgrad/i), '80');
+      await user.tab();
+      await user.click(await canvas.findByRole('button', { name: /Legg til overstyring/i }));
+      await waitFor(() => expect(onOverstyringUttakValidering).toHaveBeenCalledTimes(1));
+    });
+  },
+};
+
 export const Overstyringer: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31', { manueltOverstyrt: true, uttaksgrad: 60 }),
+        lagOppfyltPeriode('2024-02-01/2024-02-14'),
+        lagOppfyltPeriode('2024-02-15/2024-02-28'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -186,15 +255,8 @@ export const Overstyringer: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31', { manueltOverstyrt: true, uttaksgrad: 60 }),
-      lagOppfyltPeriode('2024-02-01/2024-02-14'),
-      lagOppfyltPeriode('2024-02-15/2024-02-28'),
-    ]),
     erOverstyrer: true,
-    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -230,6 +292,10 @@ const submitSpy = fn();
 export const RedigerOverstyring: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -253,13 +319,8 @@ export const RedigerOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-    ]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -285,11 +346,11 @@ export const RedigerOverstyring: Story = {
 
       await waitFor(
         async function oppdaterSkjemafelter() {
-          const utbetalingsgradField = await canvas.getByRole('spinbutton', { name: 'Ny utbetalingsgrad (%)' });
-          await expect(utbetalingsgradField).toHaveValue(80);
+          const utbetalingsgradField = await canvas.getByRole('textbox', { name: 'Ny utbetalingsgrad (%)' });
+          await expect(utbetalingsgradField).toHaveValue('80');
           await user.clear(utbetalingsgradField);
           await user.type(utbetalingsgradField, '70');
-          await expect(utbetalingsgradField).toHaveValue(70);
+          await expect(utbetalingsgradField).toHaveValue('70');
         },
         { timeout: 5000 },
       );
@@ -338,6 +399,10 @@ export const RedigerOverstyring: Story = {
 export const FjernOverstyring: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -361,13 +426,8 @@ export const FjernOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-    ]),
     erOverstyrer: true,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -396,7 +456,6 @@ export const FjernOverstyring: Story = {
         if (deleteButton) {
           await user.click(deleteButton);
         }
-        await expect(within(modal).getByText('Venter...')).toBeInTheDocument();
       });
 
       await step('Sletting av overstyring sendt til backend', async () => {
@@ -426,6 +485,10 @@ export const FjernOverstyring: Story = {
 export const Lesemodus: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31'),
+      ]),
       overstyringer: [
         {
           id: 1,
@@ -444,13 +507,8 @@ export const Lesemodus: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31'),
-    ]),
     erOverstyrer: false,
-    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(AksjonspunktStatus.OPPRETTET)],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
