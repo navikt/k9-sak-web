@@ -14,9 +14,9 @@ import {
   DatePicker,
   VStack,
 } from '@navikt/ds-react';
-import { k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak';
-import { useOverlappendeSakUtils } from './utils/useOverlappendeSakUtils';
+import { EgneOverlappendeSakerValg as PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/EgneOverlappendeSakerValg.js';
+import { type VurderOverlappendeSakFormData } from './VurderOverlappendeSak.js';
+import { useOverlappendeSakUtils } from './utils/useOverlappendeSakUtils.js';
 import styles from './VurderOverlappendeSak.module.css';
 
 interface Props {
@@ -69,7 +69,7 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({ index, readOnly, fields, rep
                   size="small"
                   as="span"
                   weight="semibold"
-                  className={erEndretAutomatisk ? styles['uttaksPeriodeEndret'] : ''}
+                  className={erEndretAutomatisk ? styles.uttaksPeriodeEndret : ''}
                 >
                   {fom.format('DD.MM.YYYY') || ''} - {tom.format('DD.MM.YYYY') || ''}
                 </BodyShort>
@@ -117,7 +117,7 @@ const VurderOverlappendePeriodeForm: FC<Props> = ({ index, readOnly, fields, rep
               label={`Sett uttaksgrad for perioden (i prosent)`}
               inputMode="numeric"
               size="small"
-              className={styles['uttaksgradField']}
+              className={styles.uttaksgradField}
               readOnly={readOnly}
               {...register(`perioder.${index}.søkersUttaksgrad`)}
               error={errors.perioder?.[index]?.søkersUttaksgrad?.message}

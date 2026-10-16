@@ -1,13 +1,14 @@
 import type { FC } from 'react';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
-import type { UttakArbeidType as UttakArbeidsforholdType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
 import type { Utbetalingsgrader } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/Utbetalingsgrader.js';
 import type { UttaksperiodeInfo } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UttaksperiodeInfo.js';
 import { beregnDagerTimer } from '@k9-sak-web/gui/utils/formatters.js';
-import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
-import { useUttakContext } from '../context/UttakContext';
-import { utledArbeidsgiverNavn } from '../utils/aktivitetVisning';
+import { utledArbeidstypeVisningsnavn, utledArbeidsgiverNavn } from '../utils/aktivitetVisning.js';
 import styles from './uttakDetaljer.module.css';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import { uttakArbeidsgivereQueryOptions } from '../api/uttakQueryOptions.js';
 
 interface ownProps {
   utbetalingsgrader: Utbetalingsgrader[];
@@ -24,7 +25,9 @@ const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
 };
 
 const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søkersTapteArbeidstid }) => {
-  const { arbeidsgivere } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { behandling } = useUttakContext();
+  const arbeidsgivere = useSuspenseQuery(uttakArbeidsgivereQueryOptions(uttakApi, behandling.uuid)).data;
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
 
   return (
@@ -42,9 +45,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søke
               : beregnFravær(beregnetNormalArbeidstid, beregnetFaktiskArbeidstid);
 
           const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
-          const arbeidstype = arbeidsforhold?.type
-            ? arbeidstypeTilVisning[arbeidsforhold?.type as UttakArbeidsforholdType]
-            : undefined;
+          const arbeidstype = utledArbeidstypeVisningsnavn(arbeidsforhold?.type);
           const arbeidsgiverNavn = utledArbeidsgiverNavn(arbeidsgiverIdentifikator, arbeidsgivere);
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 

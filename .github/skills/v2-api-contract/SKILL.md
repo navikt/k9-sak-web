@@ -72,6 +72,8 @@ export { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9s
 
 For each DTO type used in the API, create a re-export file, e.g. `packages/v2/backend/src/k9sak/kontrakt/person/PersonopplysningDto.ts`. See `references/templates.md` for the patterns (single type, const enum). Check if a re-export already exists before creating a duplicate.
 
+Use `export type` for type-only symbols. When a generated symbol has both a const and a type with the same name, use a single `export { ... }` to re-export both under the same alias; do not add a separate `export type` or a `Type`-suffixed alias.
+
 ### Step 5: Create BackendApiType
 
 `packages/v2/gui/src/fakta/om-pleietrengende/api/OmPleietrengendeBackendApiType.ts`:
@@ -118,6 +120,21 @@ Rules:
 - `readonly backend = 'k9sak'` is a literal type and is used as the last element in `queryKey`, so the same feature against different backends gets separate cache entries
 - Every SDK call is awaited; `.data` is returned for GET endpoints
 - Parameters match the `query`/`body` shape of the SDK Options type
+- When a 404 is an expected response, handle it in the client and return `null` (add `| null` to the return type in the BackendApiType). Rethrow all other errors. Do not use `throwOnError: ignore404Errors` in the queryOptions:
+
+```typescript
+try {
+  return (await sdkFunction({ query: { behandlingUuid } })).data;
+} catch (error) {
+  const apiError = ExtendedApiError.findInError(error);
+  if (apiError?.isNotFound) {
+    return null;
+  }
+  throw error;
+}
+```
+
+`ExtendedApiError` is imported from `@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js`.
 
 ### Step 7: Create QueryOptions (if requested)
 

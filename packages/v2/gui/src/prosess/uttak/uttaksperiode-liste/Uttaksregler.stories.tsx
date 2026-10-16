@@ -1,15 +1,15 @@
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
   lagAvsluttetBehandling,
   lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 /**
  * Viser infobannerne for de to uttaksreglene som gjelder fra en gitt dato:
@@ -27,6 +27,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -41,20 +42,22 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const BeggeReglene: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak(
+        [
+          lagOppfyltPeriode('2026-10-01/2026-10-15'),
+          lagOppfyltPeriode('2026-11-01/2026-11-15'),
+          lagOppfyltPeriode('2027-01-01/2027-01-15'),
+        ],
+        { virkningsdatoUttakNyeRegler: '2026-11-01' },
+      ),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [
-        lagOppfyltPeriode('2026-10-01/2026-10-15'),
-        lagOppfyltPeriode('2026-11-01/2026-11-15'),
-        lagOppfyltPeriode('2027-01-01/2027-01-15'),
-      ],
-      { virkningsdatoUttakNyeRegler: '2026-11-01' },
-    ),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -62,7 +65,7 @@ export const BeggeReglene: Story = {
     const user = userEvent.setup();
 
     await step('Viser banner for endringsdato', async () => {
-      await expect(canvas.getByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
+      await expect(await canvas.findByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger' })).toBeInTheDocument();
     });
 
@@ -94,13 +97,11 @@ const perioderOverSkjæringsdato = [
 ];
 
 export const DialogInnhold: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement }) => {
@@ -123,13 +124,11 @@ export const DialogInnhold: Story = {
 };
 
 export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-11T12:00:00' }),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement }) => {
@@ -140,13 +139,11 @@ export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
 };
 
 export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-12T00:00:00' }),
-    uttak: lagUttak(perioderOverSkjæringsdato),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement }) => {
@@ -156,13 +153,11 @@ export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
 };
 
 export const IngenPerioderEtterSkjæringsdato: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [withFakeUttakBackend({ uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]) })],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement }) => {

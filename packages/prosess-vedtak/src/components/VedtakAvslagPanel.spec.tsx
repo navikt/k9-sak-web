@@ -1,5 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   k9_kodeverk_behandling_BehandlingResultatType as BehandlingResultatType,
@@ -17,7 +17,7 @@ const midlertidigAlene = fagsakYtelsesType.OMSORGSPENGER_MA;
 describe('<VedtakAvslagPanel>', () => {
   const vilkarUtenSoknadsfrist = [
     {
-      vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+      vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET,
       lovReferanse: '§ 22-13, 2. ledd',
       relevanteInnvilgetMerknader: [],
       perioder: [

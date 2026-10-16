@@ -1,10 +1,8 @@
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/combined/kontrakt/arbeidsgiver/ArbeidsgiverOversiktDto.js';
-import { arbeidstypeTilVisning } from '../constants/Arbeidstype';
+import { arbeidstypeTilVisning } from '../constants/Arbeidstype.js';
 
-type UttakArbeidType = keyof typeof arbeidstypeTilVisning;
-
-const erKjentArbeidstype = (type: string): type is UttakArbeidType =>
-  Object.prototype.hasOwnProperty.call(arbeidstypeTilVisning, type);
+// Backend-typen er string, så oppslaget må tåle ukjente verdier
+const arbeidstypeVisningsnavn: Partial<Record<string, string>> = arbeidstypeTilVisning;
 
 const formatArbeidsgiverNavn = (navn?: string, identifikator?: string): string | undefined => {
   if (navn && identifikator) {
@@ -44,17 +42,9 @@ export const utledAktivitetVisningsnavn = (
     return arbeidsgiverNavn;
   }
 
-  if (type && erKjentArbeidstype(type)) {
-    return arbeidstypeTilVisning[type];
-  }
-
-  return 'Mangler navn';
+  return utledArbeidstypeVisningsnavn(type) ?? 'Mangler navn';
 };
 
 export const utledArbeidstypeVisningsnavn = (type: string | null | undefined): string | undefined => {
-  if (type && erKjentArbeidstype(type)) {
-    return arbeidstypeTilVisning[type];
-  }
-
-  return undefined;
+  return type && Object.hasOwn(arbeidstypeVisningsnavn, type) ? arbeidstypeVisningsnavn[type] : undefined;
 };
