@@ -44,6 +44,8 @@ const omsorgsperioder = [
 ];
 
 export class FakeOmsorgenForBackendApi implements OmsorgenForApi {
+  readonly backend = 'k9sak';
+
   async getOmsorgsperioder(behandlingUuid: string) {
     ignoreUnusedDeclared(behandlingUuid);
     return {

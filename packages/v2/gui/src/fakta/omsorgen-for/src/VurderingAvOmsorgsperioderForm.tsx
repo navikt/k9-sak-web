@@ -14,7 +14,7 @@ import { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { PeriodpickerList } from '../../../shared/periodPickerList/PeriodpickerList';
 import Relasjon from './types/Relasjon';
-import type { VurderingSubmitValues } from './types/VurderingSubmitValues';
+import type { VurderingSubmitValues } from './types/VurderingSubmitValues.js';
 import getPeriodDifference from './util/getPeriodDifference.js';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
 

@@ -17,7 +17,7 @@ import {
   finnVurdertePerioder,
   skalVisesIRedigeringsmodus,
 } from './util/utils';
-import VurderingAvOmsorgsperioderForm from './VurderingAvOmsorgsperioderForm';
+import VurderingAvOmsorgsperioderForm from './VurderingAvOmsorgsperioderForm.js';
 
 interface OmsorgsperiodeoversiktProps {
   omsorgsperiodeoversikt: OmsorgenForOversiktDto;
@@ -25,6 +25,8 @@ interface OmsorgsperiodeoversiktProps {
   readOnly: boolean;
   onFinished: (vurdering: VurderingSubmitValues[], fosterbarnForOmsorgspenger?: NorskIdentDto[]) => Promise<void>;
 }
+
+const hentPeriodenøkkel = ({ periode }: OmsorgenForDto) => (periode ? `${periode.fom}/${periode.tom}` : null);
 
 const Omsorgsperiodeoversikt = ({
   omsorgsperiodeoversikt,
@@ -34,9 +36,14 @@ const Omsorgsperiodeoversikt = ({
 }: OmsorgsperiodeoversiktProps): JSX.Element => {
   const perioderTilVurdering = finnPerioderTilVurdering(omsorgsperiodeoversikt.omsorgsperioder);
 
-  const [valgtPeriode, setValgtPeriode] = useState<OmsorgenForDto | null>(
-    () => finnRedigerbarePerioder(omsorgsperiodeoversikt.omsorgsperioder)[0] ?? null,
-  );
+  const [valgtPeriodenøkkel, setValgtPeriodenøkkel] = useState<string | null>(() => {
+    const førstePeriode = finnRedigerbarePerioder(omsorgsperiodeoversikt.omsorgsperioder)[0];
+    return førstePeriode ? hentPeriodenøkkel(førstePeriode) : null;
+  });
+  const valgtPeriode =
+    omsorgsperiodeoversikt.omsorgsperioder?.find(
+      periode => valgtPeriodenøkkel !== null && hentPeriodenøkkel(periode) === valgtPeriodenøkkel,
+    ) ?? null;
   const [erRedigeringsmodus, setErRedigeringsmodus] = useState(false);
   const fosterbarnFormMethods = useForm<FosterbarnFormState>({
     defaultValues: { fosterbarn: [] },
@@ -57,10 +64,11 @@ const Omsorgsperiodeoversikt = ({
       fosterbarnForOmsorgspenger = [...unikeFosterbarn].map(fnr => ({ fnr }));
     }
     await onFinished(vurdering, fosterbarnForOmsorgspenger);
+    setErRedigeringsmodus(false);
   };
 
   const velgPeriode = (periode: OmsorgenForDto | null) => {
-    setValgtPeriode(periode);
+    setValgtPeriodenøkkel(periode ? hentPeriodenøkkel(periode) : null);
     setErRedigeringsmodus(false);
   };
 

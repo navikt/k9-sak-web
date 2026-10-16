@@ -5,7 +5,7 @@ import Vurderingsnavigasjon, {
 } from '@k9-sak-web/gui/shared/vurderingsperiode-navigasjon/Vurderingsnavigasjon.js';
 import { Period } from '@k9-sak-web/gui/utils/Period.js';
 import { type JSX } from 'react';
-import { hentResultatFraPeriode } from './util/utils';
+import { hentResultatFraPeriode } from './util/utils.js';
 
 interface OmsorgsperiodeNavigasjonselement extends Vurderingselement {
   omsorgsperiode: OmsorgenForDto;

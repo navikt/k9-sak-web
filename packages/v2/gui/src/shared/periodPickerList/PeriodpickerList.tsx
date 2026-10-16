@@ -64,10 +64,13 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
           <HStack key={field.id} gap="space-16" paddingBlock="space-2" align="end">
             <Datovelger
               name={`${name}.${index}.fom` as FieldPath<PeriodListFormValues>}
-              label={index === 0 ? 'Fra' : ''}
+              label="Fra"
+              hideLabel={index > 0}
               validate={[
                 required,
                 hasValidDate,
+                ...(fromDate ? [dateAfterOrEqual(fromDate)] : []),
+                ...(toDate ? [dateBeforeOrEqual(toDate)] : []),
                 fomVerdi => {
                   const tomVerdi = getValues(`${name}.${index}.tom` as FieldPath<PeriodListFormValues>);
                   return tomVerdi && fomVerdi ? dateBeforeOrEqual(String(tomVerdi))(fomVerdi) : null;
@@ -81,10 +84,13 @@ export const PeriodpickerList = ({ name, legend, readOnly, fromDate, toDate }: P
             />
             <Datovelger
               name={`${name}.${index}.tom` as FieldPath<PeriodListFormValues>}
-              label={index === 0 ? 'Til' : ''}
+              label="Til"
+              hideLabel={index > 0}
               validate={[
                 required,
                 hasValidDate,
+                ...(fromDate ? [dateAfterOrEqual(fromDate)] : []),
+                ...(toDate ? [dateBeforeOrEqual(toDate)] : []),
                 tomVerdi => {
                   const fomVerdi = getValues(`${name}.${index}.fom` as FieldPath<PeriodListFormValues>);
                   return tomVerdi && fomVerdi ? dateAfterOrEqual(String(fomVerdi))(tomVerdi) : null;
