@@ -1,14 +1,14 @@
-import { Table } from '@navikt/ds-react';
-import styles from './avregningTable.module.css';
-import { createColumns, type RangeOfMonths } from './avregningHelpers';
+import { FagOmrådeKode } from '@k9-sak-web/backend/combined/kodeverk/økonomi/oppdrag/FagOmrådeKode.js';
 import {
   RadId as avregningCodes,
   RadId,
   type RadId as AvregningRadId,
 } from '@k9-sak-web/backend/combined/kodeverk/økonomi/oppdrag/RadId.js';
-import { FagOmrådeKode } from '@k9-sak-web/backend/k9sak/kodeverk/økonomi/oppdrag/FagOmrådeKode.js';
 import type { DetaljertSimuleringResultatDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/DetaljertSimuleringResultatDto.js';
 import type { SimuleringResultatPerFagområdeDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringResultatPerFagområdeDto.js';
+import { Table } from '@navikt/ds-react';
+import { createColumns, type RangeOfMonths } from './avregningHelpers';
+import styles from './avregningTable.module.css';
 
 /** Fagområdenavn brukt i etiketter for simulering */
 const FAGOMRÅDE_NAVN: Partial<Record<FagOmrådeKode, string>> = {
@@ -31,6 +31,7 @@ const FAGOMRÅDE_NAVN: Partial<Record<FagOmrådeKode, string>> = {
   [FagOmrådeKode.PLEIEPENGER_V1_ARBEIDSGIVER]: 'Omsorg, opplæring, og pleiepenger',
   [FagOmrådeKode.FRISINN]: 'FRISINN',
   [FagOmrådeKode.UNG]: 'Ungdomsprogramytelse',
+  [FagOmrådeKode.AKTIVUNG]: 'Aktivitetspenger',
 };
 
 /** Suffiks per feltnavn (differanse har unntak for OOPREF og FRISINN) */

@@ -1,15 +1,15 @@
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
+  lagAvsluttetBehandling,
   lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
-import withFeatureToggles from '@k9-sak-web/gui/storybook/decorators/withFeatureToggles.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 /**
  * Viser infobannerne for de to uttaksreglene som gjelder fra en gitt dato:
@@ -27,6 +27,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -41,20 +42,22 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const BeggeReglene: Story = {
-  decorators: [withFakeUttakBackend(), withFeatureToggles({ NORMALARBEIDSTID_UTTAK: true })],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak(
+        [
+          lagOppfyltPeriode('2026-10-01/2026-10-15'),
+          lagOppfyltPeriode('2026-11-01/2026-11-15'),
+          lagOppfyltPeriode('2027-01-01/2027-01-15'),
+        ],
+        { virkningsdatoUttakNyeRegler: '2026-11-01' },
+      ),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak(
-      [
-        lagOppfyltPeriode('2026-10-01/2026-10-15'),
-        lagOppfyltPeriode('2026-11-01/2026-11-15'),
-        lagOppfyltPeriode('2027-01-01/2027-01-15'),
-      ],
-      { virkningsdatoUttakNyeRegler: '2026-11-01' },
-    ),
     erOverstyrer: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -62,7 +65,7 @@ export const BeggeReglene: Story = {
     const user = userEvent.setup();
 
     await step('Viser banner for endringsdato', async () => {
-      await expect(canvas.getByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
+      await expect(await canvas.findByText(/Endringer fra 01\.11\.2026:/)).toBeInTheDocument();
       await expect(canvas.getByRole('button', { name: 'Rediger' })).toBeInTheDocument();
     });
 
@@ -85,5 +88,80 @@ export const BeggeReglene: Story = {
       await expect(screen.getByRole('heading', { name: 'Endringer i uttak' })).toBeInTheDocument();
       await expect(screen.getByText('Normalarbeidstid låses på skjæringstidspunktet')).toBeInTheDocument();
     });
+  },
+};
+
+const perioderOverSkjæringsdato = [
+  lagOppfyltPeriode('2026-10-01/2026-10-15'),
+  lagOppfyltPeriode('2027-01-01/2027-01-15'),
+];
+
+export const DialogInnhold: Story = {
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await user.click(canvas.getByRole('button', { name: 'Les mer om endring' }));
+    const dialog = screen.getByRole('dialog');
+    const innhold = within(dialog);
+
+    await expect(innhold.getByText('Januar 2027')).toBeInTheDocument();
+    await expect(innhold.getByText(/alltid ser hen til arbeidstiden på skjæringstidspunktet/)).toBeInTheDocument();
+    await expect(innhold.getByText(/gjennom søknad eller punsj/)).toBeInTheDocument();
+    await expect(innhold.getByText(/Alle saker som ikke har fått aksjonspunkt/)).toBeInTheDocument();
+    await expect(innhold.getByText('November 2025')).toBeInTheDocument();
+    await expect(innhold.getByText('Mars 2025')).toBeInTheDocument();
+    await expect(innhold.getByText('Oktober 2024')).toBeInTheDocument();
+    await expect(innhold.getByText(/kan få utslag i gradering mot inntektstap/)).toBeInTheDocument();
+  },
+};
+
+export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
+  args: {
+    behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-11T12:00:00' }),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    readOnly: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByText(/Endringer fra 01\.01\.2027:/)).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: 'Les mer om endring' })).not.toBeInTheDocument();
+  },
+};
+
+export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
+  decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
+  args: {
+    behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-12T00:00:00' }),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    readOnly: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText(/Endringer fra 01\.01\.2027:/)).toBeInTheDocument();
+  },
+};
+
+export const IngenPerioderEtterSkjæringsdato: Story = {
+  decorators: [withFakeUttakBackend({ uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]) })],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: false,
+    aksjonspunkter: [],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByText(/Endringer fra 01\.01\.2027:/)).not.toBeInTheDocument();
   },
 };

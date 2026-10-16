@@ -18,3 +18,7 @@
 When fixing a bug or implementing a feature, change only what is necessary.
 Do not rename variables, restructure working code, or refactor beyond the task at hand.
 Keep diffs small and focused so they are easy to review.
+
+## ignore404Errors
+
+`throwOnError: ignore404Errors` is a workaround. 404 should be handled in the BackendClient instead (see the `v2-api-contract` skill). When you come across `ignore404Errors`, in your own work or in a review, flag it for the developer so they can decide whether to move the 404 handling to the client. Do not change it without asking.

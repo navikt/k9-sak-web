@@ -28,8 +28,8 @@ describe('utledAktivTab', () => {
     );
   });
 
-  it('returnerer BESLUTTER når LOKALKONTOR_BESLUTTER_VILKÅR er OPPRETTET', () => {
-    expect(utledAktivTab({ lokalkontorBeslutterAP: lagAp(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR) })).toBe(
+  it('returnerer BESLUTTER når NAV_KONTOR_BESLUTTER_VILKÅR er OPPRETTET', () => {
+    expect(utledAktivTab({ lokalkontorBeslutterAP: lagAp(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR) })).toBe(
       OpphørTab.BESLUTTER,
     );
   });
@@ -38,7 +38,7 @@ describe('utledAktivTab', () => {
     expect(
       utledAktivTab({
         lokalkontorForeslårVilkårAP: lagAp(
-          AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+          AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
           AksjonspunktStatus.UTFØRT,
         ),
       }),

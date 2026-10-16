@@ -126,7 +126,7 @@ export const Beslutter = ({
         return;
       }
       const payload = {
-        '@type': AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+        '@type': AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
         // begrunnelse: data.aksjonspunktGodkjenning.map(apGodkjenning => apGodkjenning.besluttersBegrunnelse).join('\n'),
         aksjonspunktGodkjenningDtos: data.aksjonspunktGodkjenning.map(apGodkjenning => {
           const arsaker: VurderÅrsak[] = [];

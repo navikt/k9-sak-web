@@ -1,4 +1,5 @@
 import { behandlingResultatType as BehandlingDtoBehandlingResultatType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import { fagsakYtelsesType as UngFagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingType.js';
 import {
@@ -95,6 +96,19 @@ export const sortBehandlinger = (behandlinger: Behandling[]): Behandling[] =>
   });
 
 export const erUngdomsytelse = (sakstype: string) => sakstype === UngFagsakYtelsesType.UNGDOMSYTELSE;
+
+const erUngdomsytelseEllerAktivitetspenger = (sakstype: string) =>
+  erUngdomsytelse(sakstype) || sakstype === UngFagsakYtelsesType.AKTIVITETSPENGER;
+
+export const erAutomatiskBehandlet = (behandling: Behandling) => {
+  if (behandling.status !== BehandlingStatus.AVSLUTTET || behandling.ansvarligSaksbehandler) {
+    return false;
+  }
+  if (erUngdomsytelseEllerAktivitetspenger(behandling.sakstype)) {
+    return !Object.values(behandling.behandlingAnsvarlige ?? {}).some(ansvarlig => ansvarlig.ansvarligSaksbehandler);
+  }
+  return true;
+};
 
 export const erFørstegangsbehandlingIUngdomsytelsen = (sakstype: string, behandlingType: string) =>
   erUngdomsytelse(sakstype) && behandlingType === BehandlingDtoType.FØRSTEGANGSSØKNAD;

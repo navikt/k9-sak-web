@@ -1,10 +1,11 @@
 import { OppgaveÅrsak } from '@k9-sak-web/backend/k9sak/kontrakt/oppgave/OppgaveÅrsak.js';
-import { Alert, BodyShort, Label, Link, VStack } from '@navikt/ds-react';
+import { BodyShort, InfoCard, Label, Link, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import type { K9StatusBackendApi } from '../K9StatusBackendApi';
 import { getGosysUrl } from '@k9-sak-web/lib/paths/paths.js';
 import styles from './gosysstripe.module.css';
+import { ExclamationmarkTriangleIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 
 interface GosysstripeProps {
   saksnummer: string;
@@ -34,9 +35,11 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
 
   if (error) {
     return (
-      <Alert size="small" variant="error" className={styles.ingenAvrunding}>
-        Får ikke hentet Gosys-oppgaver
-      </Alert>
+      <InfoCard size="small" data-color="warning" className={styles.ingenAvrunding}>
+        <InfoCard.Message className={styles.ingenAvrunding} icon={<ExclamationmarkTriangleIcon fontSize="1.5rem" />}>
+          Får ikke hentet Gosys-oppgaver
+        </InfoCard.Message>
+      </InfoCard>
     );
   }
 
@@ -50,26 +53,31 @@ const Gosysstripe: React.FC<GosysstripeProps> = ({ saksnummer, api }) => {
     return null;
   }
   return (
-    <Alert size="small" variant="info" className={styles.ingenAvrunding}>
-      <VStack gap="space-6">
-        <div>
-          <BodyShort size="small">
-            Det ligger åpne Gosys-oppgaver på søker.{' '}
-            <Link href={getGosysUrl()} target="_blank" rel="noopener noreferrer" className="ml-0.5">
-              Gå til Gosys
-            </Link>
-          </BodyShort>
-          <BodyShort size="small">
-            {visibleOppgavetyper.map((oppgavetype, index, arr) => (
-              <span key={oppgavetype}>
-                <Label size="small">{oppgaveÅrsakNavn[oppgavetype]}</Label>
-                {index < arr.length - 1 ? ', ' : '.'}
-              </span>
-            ))}
-          </BodyShort>
-        </div>
-      </VStack>
-    </Alert>
+    <InfoCard data-color="info" size="small" className={styles.ingenAvrunding}>
+      <InfoCard.Message
+        className={styles.ingenAvrunding}
+        icon={<InformationSquareFillIcon aria-hidden fontSize="1.5rem" className="mt-[3px]" />}
+      >
+        <VStack gap="space-6">
+          <div>
+            <BodyShort size="small">
+              Det ligger åpne Gosys-oppgaver på søker.{' '}
+              <Link href={getGosysUrl()} target="_blank" rel="noopener noreferrer" className="ml-0.5">
+                Gå til Gosys
+              </Link>
+            </BodyShort>
+            <BodyShort size="small">
+              {visibleOppgavetyper.map((oppgavetype, index, arr) => (
+                <span key={oppgavetype}>
+                  <Label size="small">{oppgaveÅrsakNavn[oppgavetype]}</Label>
+                  {index < arr.length - 1 ? ', ' : '.'}
+                </span>
+              ))}
+            </BodyShort>
+          </div>
+        </VStack>
+      </InfoCard.Message>
+    </InfoCard>
   );
 };
 

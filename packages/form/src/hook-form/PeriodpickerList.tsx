@@ -31,6 +31,7 @@ interface PeriodpickerListProps {
   fromDatepickerProps: DatepickerProps;
   toDatepickerProps: DatepickerProps;
   renderContentAfterElement?: (index: number, numberOfItems: number, fieldArrayMethods) => JSX.Element | null;
+  renderContentBelowElement?: (index: number) => JSX.Element | null;
   renderBeforeFieldArray?: (fieldArrayMethods) => JSX.Element;
   renderAfterFieldArray?: (fieldArrayMethods) => JSX.Element;
   afterOnChange?: () => Promise<void>;
@@ -46,6 +47,7 @@ const PeriodpickerList = ({
   renderBeforeFieldArray,
   renderAfterFieldArray,
   renderContentAfterElement,
+  renderContentBelowElement,
   afterOnChange,
   disabled,
 }: PeriodpickerListProps): JSX.Element => {
@@ -62,7 +64,7 @@ const PeriodpickerList = ({
       {renderBeforeFieldArray && renderBeforeFieldArray(fieldArrayMethods)}
       <Fieldset disabled={disabled} legend={legend}>
         {fields.map((item, index) => {
-          const errorMessage = errors[name] && errors[name][index]?.period.message;
+          const errorMessage = errors?.[name]?.[index]?.period?.message;
           const defaultValue =
             defaultValues && defaultValues[index]
               ? new Period(defaultValues[index].fom, defaultValues[index].tom)
@@ -112,6 +114,7 @@ const PeriodpickerList = ({
                 {renderContentAfterElement && renderContentAfterElement(index, fields.length, fieldArrayMethods)}
               </div>
               {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+              {renderContentBelowElement && renderContentBelowElement(index)}
             </Box>
           );
         })}

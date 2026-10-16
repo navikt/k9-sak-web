@@ -1,6 +1,6 @@
 import { addDays, formatISO, isAfter, isBefore, isSameDay, startOfDay, subDays } from 'date-fns';
 import { useFormContext, type FieldArrayWithId, type UseFieldArrayReplace } from 'react-hook-form';
-import type { VurderOverlappendeSakFormData } from '../VurderOverlappendeSak';
+import type { VurderOverlappendeSakFormData } from '../VurderOverlappendeSak.js';
 
 export const useOverlappendeSakUtils = (
   fields: FieldArrayWithId<VurderOverlappendeSakFormData, 'perioder', 'id'>[],

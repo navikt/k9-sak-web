@@ -41,7 +41,7 @@ const fakeInnloggetBruker = {
 
 const fakeLovligeBehandlingsoperasjoner = {
   uuid: 'fake-behandling-uuid',
-  behandlingTilGodkjenningVedLokalkontor: false,
+  behandlingTilGodkjenningVedNavKontor: false,
 } satisfies BehandlingOperasjonerDto;
 
 const fakeOpphørVilkår = {
@@ -383,7 +383,7 @@ const fakeInnloggetBrukerSomKanBeslutte = {
 
 const fakeLovligeBehandlingsoperasjonerTilGodkjenning = {
   uuid: 'fake-behandling-uuid',
-  behandlingTilGodkjenningVedLokalkontor: true,
+  behandlingTilGodkjenningVedNavKontor: true,
 } satisfies BehandlingOperasjonerDto;
 
 const fakeTotrinnskontrollContext: TotrinnskontrollSkjermlenkeContextDto[] = [
@@ -401,7 +401,7 @@ const fakeBeslutterArgsBase = {
   innloggetBruker: fakeInnloggetBrukerSomKanBeslutte,
   lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjonerTilGodkjenning,
   totrinnskontrollSkjermlenkeContext: fakeTotrinnskontrollContext,
-  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR)],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR)],
 };
 
 export const BeslutterGodkjennerAlle: Story = {
@@ -473,7 +473,7 @@ export const SaksbehandlerSerBeslutterFanen: Story = {
     innloggetBruker: fakeInnloggetBruker,
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjonerTilGodkjenning,
     totrinnskontrollSkjermlenkeContext: fakeTotrinnskontrollContext,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR)],
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step }) => {
@@ -545,7 +545,7 @@ export const ÅrsakOgVarselAvslå: Story = {
 export const LokalkontorForeslårVilkår: Story = {
   args: {
     ...fakeArgsBase,
-    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR)],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR)],
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {

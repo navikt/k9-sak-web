@@ -54,10 +54,10 @@ const samleInngangsvilkårData = (
   vurderAktivitetsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR),
   vurderAktivitetsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.AKTIVITETSVILKÅR),
   lokalkontorForeslårVilkårAp: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
   ),
   lokalkontorBeslutterAp: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
   ),
   bostedAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
   bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
@@ -89,11 +89,8 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokke
   ) {
     return <CustomCheckmarkIcon />;
   }
-  if (
-    vilkår.perioder
-      .filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT)
-      .every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)
-  ) {
+  const relevantePerioder = vilkår.perioder.filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT);
+  if (relevantePerioder.length > 0 && relevantePerioder.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
     return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
   }
   return undefined;
@@ -182,7 +179,7 @@ export const AktivitetspengerInngangsvilkår = ({
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
-    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
+    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
 
   const inngangsvilkårdata = useMemo(() => samleInngangsvilkårData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
   const erAlderBlokkert = harUløstTidligereSteg(inngangsvilkårdata.søknadsfristAp);

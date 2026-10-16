@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
-import { pleiepengerbarn_uttak_kontrakter_Årsak as Årsak } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Årsak.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
+import { isPeriodCoveredByPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
@@ -16,9 +17,12 @@ export const finnGraderingForUttak = (
   erGradertMotInntekt: boolean;
   erGradertMotTilsyn: boolean;
 } => {
-  const erGradertMotInntekt = inntektsgraderinger?.perioder?.some(p => {
-    return p.periode.fom === uttak.periode.fom && p.periode.tom === uttak.periode.tom;
-  });
+  // Siden vi må splitte ved årsskifte 2026-2027 for å legge infoboks om låsing av normalarbeidstid
+  // så må vi sjekke om uttaksperioden dekkes av perioden med inntektsgradering
+  // i stedet for å gjøre en direkte sammenligning på uttakperiode.fom === inntektsgradering.periode.fom og uttakperiode.tom === inntektsgradering.periode.tom
+  const erGradertMotInntekt = inntektsgraderinger?.perioder?.some(p =>
+    isPeriodCoveredByPeriod(uttak.periode, p.periode),
+  );
 
   const erGradertMotTilsyn =
     !erGradertMotInntekt && (uttak.årsaker ?? []).some(årsak => årsak === Årsak.GRADERT_MOT_TILSYN);

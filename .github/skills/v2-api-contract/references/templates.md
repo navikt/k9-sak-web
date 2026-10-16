@@ -35,6 +35,9 @@ export type { <namespace_TypeName> as <TypeName> } from '@k9-sak-web/backend/<ba
 ```
 
 ### For enums (const + type):
+
+When the generated const and type share a name, this single line re-exports both under the same alias. Do not add a separate `export type` or a `Type`-suffixed alias. Reserve `export type` for type-only symbols such as DTOs.
+
 ```typescript
 export { <namespace_EnumName> as <EnumName> } from '@k9-sak-web/backend/<backend>/generated/types.js';
 ```
@@ -188,4 +191,3 @@ async save(behandlingUuid: string, behandlingVersjon: number, dto: SaveDto) {
   });
 }
 ```
-

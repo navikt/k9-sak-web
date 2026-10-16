@@ -7,8 +7,12 @@
  */
 
 declare const vilk_rsliste: string;
+declare const item: string;
+declare const itemText: string;
 
 declare const __default_export__: {
 	"vilkårsliste": typeof vilk_rsliste;
+	item: typeof item;
+	itemText: typeof itemText;
 };
 export default __default_export__;
