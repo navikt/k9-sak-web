@@ -1,3 +1,5 @@
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
+
 export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
 const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no', 'aktivitetspenger.intern.dev.nav.no'];
@@ -9,9 +11,15 @@ export const getPathToK9Los = (): string | null => {
   const devUrl = 'https://k9-los-web.intern.dev.nav.no';
   const prodUrl = 'https://k9-los-web.intern.nav.no';
   if (devHosts.includes(host)) {
+    if (isAktivitetspenger()) {
+      return `${devUrl}/akt`;
+    }
     return devUrl;
   }
   if (prodHosts.includes(host)) {
+    if (isAktivitetspenger()) {
+      return `${prodUrl}/akt`;
+    }
     return prodUrl;
   }
   return null;
