@@ -2357,7 +2357,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": "npm:3.1.20260817083631"
-    "@navikt/k9-sak-typescript-client": "npm:3.0.20261012114548"
+    "@navikt/k9-sak-typescript-client": "npm:3.0.20261013120225"
     "@navikt/k9-tilbake-typescript-client": "npm:1.1.20260923103844"
     "@navikt/ung-sak-typescript-client": "npm:2.0.20261014084820"
     "@navikt/ung-tilbake-typescript-client": "npm:3.0.20260923084419"
@@ -3609,10 +3609,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:3.0.20261012114548":
-  version: 3.0.20261012114548
-  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20261012114548::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20261012114548%2F6124b57f5f51b60bcfbe1c63270e8905770b0f8e"
-  checksum: 10/de3dc5e0c6c0fdaf4d7fd29b5f2784f820f7c81ca3d4e85dd62d15c5e1b530b1d38aa27441b697b7e9558b1ab66122c77c1683fa22a06efa75cb5022947e45f5
+"@navikt/k9-sak-typescript-client@npm:3.0.20261013120225":
+  version: 3.0.20261013120225
+  resolution: "@navikt/k9-sak-typescript-client@npm:3.0.20261013120225::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F3.0.20261013120225%2F33432333bea096ab000f8319bad2d7e537bde940"
+  checksum: 10/b6741e02ed2bb562fcd5b2c78b1b812c8eb6c95582d519229009f4d69fae747151904ea913b459e27aa240a8cccd60e489d77fc7d9e5c377926ba0e0441fa2fb
   languageName: node
   linkType: hard
 
@@ -10903,7 +10903,7 @@ __metadata:
     http-server: "npm:^14.1.1"
     i18n-iso-countries: "npm:7.14.0"
     knip: "npm:6.41.0"
-    lefthook: "npm:2.2.1"
+    lefthook: "npm:2.2.2"
     loose-ts-check: "npm:2.0.0"
     msw: "npm:2.15.0"
     msw-storybook-addon: "npm:2.0.7"
@@ -10992,91 +10992,101 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lefthook-darwin-arm64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-darwin-arm64@npm:2.2.1"
+"lefthook-android-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-android-arm64@npm:2.2.2"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-darwin-arm64@npm:2.2.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-darwin-x64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-darwin-x64@npm:2.2.1"
+"lefthook-darwin-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-darwin-x64@npm:2.2.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-freebsd-arm64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-freebsd-arm64@npm:2.2.1"
+"lefthook-freebsd-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-freebsd-arm64@npm:2.2.2"
   conditions: os=freebsd & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-freebsd-x64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-freebsd-x64@npm:2.2.1"
+"lefthook-freebsd-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-freebsd-x64@npm:2.2.2"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-linux-arm64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-linux-arm64@npm:2.2.1"
+"lefthook-linux-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-linux-arm64@npm:2.2.2"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-linux-x64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-linux-x64@npm:2.2.1"
+"lefthook-linux-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-linux-x64@npm:2.2.2"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-openbsd-arm64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-openbsd-arm64@npm:2.2.1"
+"lefthook-openbsd-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-openbsd-arm64@npm:2.2.2"
   conditions: os=openbsd & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-openbsd-x64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-openbsd-x64@npm:2.2.1"
+"lefthook-openbsd-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-openbsd-x64@npm:2.2.2"
   conditions: os=openbsd & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-windows-arm64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-windows-arm64@npm:2.2.1"
+"lefthook-windows-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-windows-arm64@npm:2.2.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-windows-x64@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook-windows-x64@npm:2.2.1"
+"lefthook-windows-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook-windows-x64@npm:2.2.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook@npm:2.2.1":
-  version: 2.2.1
-  resolution: "lefthook@npm:2.2.1"
+"lefthook@npm:2.2.2":
+  version: 2.2.2
+  resolution: "lefthook@npm:2.2.2"
   dependencies:
-    lefthook-darwin-arm64: "npm:2.2.1"
-    lefthook-darwin-x64: "npm:2.2.1"
-    lefthook-freebsd-arm64: "npm:2.2.1"
-    lefthook-freebsd-x64: "npm:2.2.1"
-    lefthook-linux-arm64: "npm:2.2.1"
-    lefthook-linux-x64: "npm:2.2.1"
-    lefthook-openbsd-arm64: "npm:2.2.1"
-    lefthook-openbsd-x64: "npm:2.2.1"
-    lefthook-windows-arm64: "npm:2.2.1"
-    lefthook-windows-x64: "npm:2.2.1"
+    lefthook-android-arm64: "npm:2.2.2"
+    lefthook-darwin-arm64: "npm:2.2.2"
+    lefthook-darwin-x64: "npm:2.2.2"
+    lefthook-freebsd-arm64: "npm:2.2.2"
+    lefthook-freebsd-x64: "npm:2.2.2"
+    lefthook-linux-arm64: "npm:2.2.2"
+    lefthook-linux-x64: "npm:2.2.2"
+    lefthook-openbsd-arm64: "npm:2.2.2"
+    lefthook-openbsd-x64: "npm:2.2.2"
+    lefthook-windows-arm64: "npm:2.2.2"
+    lefthook-windows-x64: "npm:2.2.2"
   dependenciesMeta:
+    lefthook-android-arm64:
+      optional: true
     lefthook-darwin-arm64:
       optional: true
     lefthook-darwin-x64:
@@ -11099,7 +11109,7 @@ __metadata:
       optional: true
   bin:
     lefthook: bin/index.js
-  checksum: 10/8839863587f12d2140b5508faa2a320a92a4752d84e8dd5478b09df59b79f6bdde32d065bdb6091afd228d3fef6fe431d9a957f9c5e014c3762d0fe9bdd881fa
+  checksum: 10/af80e1d776d035d80e2c09d0d81f976063712a35c4d8833c9895b99538e55ea8f11958237093c935b65491bc1a4f39dbbb84cc31192bbb063b1d7feb9fb618fe
   languageName: node
   linkType: hard
 
