@@ -3,7 +3,6 @@ import { HStack, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, required } from '@navikt/ft-form-validators';
 import type { Control, FieldValues } from 'react-hook-form';
-import { useWatch } from 'react-hook-form';
 import Datovelger from '../../../shared/datovelger/Datovelger.js';
 
 const dagensDato = new Date();
@@ -17,8 +16,10 @@ export const getDateRangeFromVilkår = (
     .map(p => p.periode.tom)
     .filter(Boolean)
     .sort();
-  if (!foms[0] || !toms[toms.length - 1]) return undefined;
-  return { fromDate: new Date(foms[0]), toDate: new Date(toms[toms.length - 1]!) };
+  const førsteFom = foms[0];
+  const sisteTom = toms[toms.length - 1];
+  if (!førsteFom || !sisteTom) return undefined;
+  return { fromDate: new Date(førsteFom), toDate: new Date(sisteTom) };
 };
 
 interface Props<TForm extends FieldValues> {
@@ -26,6 +27,7 @@ interface Props<TForm extends FieldValues> {
   selectedId: string;
   isFormLocked: boolean;
   opphøreEllerAvslå: string;
+  avslagFom: string;
   dateRange: { fromDate: Date; toDate: Date } | undefined;
 }
 
@@ -34,11 +36,9 @@ export const OpphørAvslagValg = <TForm extends FieldValues>({
   selectedId,
   isFormLocked,
   opphøreEllerAvslå,
+  avslagFom,
   dateRange,
 }: Props<TForm>) => {
-  const avslagFom = useWatch({ control, name: `perioder.${selectedId}.avslagFom` as never }) as unknown as
-    string | undefined;
-
   return (
     <>
       <RhfRadioGroup
@@ -80,7 +80,7 @@ export const OpphørAvslagValg = <TForm extends FieldValues>({
             name={`perioder.${selectedId}.avslagTom` as never}
             label="Til og med"
             readOnly={isFormLocked}
-            validate={[required, dateAfterOrEqual(avslagFom ?? '')]}
+            validate={[required, dateAfterOrEqual(avslagFom)]}
             fromDate={dateRange?.fromDate}
             toDate={dateRange?.toDate}
             defaultMonth={dagensDato}

@@ -36,7 +36,7 @@ const kildeLabels: Record<BostedsavklaringKildeType, string> = {
 interface BostedPeriodForm extends OpphørVarselPeriodForm {
   avslagFom: string;
   avslagTom: string;
-  kilde: string;
+  kilde: BostedsavklaringKildeType | '';
   kildeFritekst: string;
   opphøreEllerAvslå: string;
   opphørsdato: string;
@@ -47,6 +47,18 @@ interface BostedPeriodForm extends OpphørVarselPeriodForm {
 interface BostedFormData {
   perioder: Record<string, BostedPeriodForm>;
 }
+
+const tilOpphøreEllerAvslå = (avklaringtype?: Avklaringtype): string => {
+  if (avklaringtype === Avklaringtype.OPPHØR) return 'opphøre';
+  if (avklaringtype === Avklaringtype.AVSLAG) return 'avslå';
+  return '';
+};
+
+const tilJaEllerNei = (verdi?: boolean | null): string => {
+  if (verdi === true) return 'ja';
+  if (verdi === false) return 'nei';
+  return '';
+};
 
 const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): BostedFormData => ({
   perioder: Object.fromEntries(
@@ -59,16 +71,10 @@ const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): BostedFo
         fritekstTilVarsel: p.avklaring?.fritekstTilVarsel ?? '',
         kilde: p.avklaring?.kilde ?? '',
         kildeFritekst: p.avklaring?.kildeFritekst ?? '',
-        opphøreEllerAvslå:
-          p.avklaring?.avklaringtype === Avklaringtype.OPPHØR
-            ? 'opphøre'
-            : p.avklaring?.avklaringtype === Avklaringtype.AVSLAG
-              ? 'avslå'
-              : '',
+        opphøreEllerAvslå: tilOpphøreEllerAvslå(p.avklaring?.avklaringtype),
         opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
         årsak: p.avklaring?.ikkeOppfyltÅrsak ?? undefined,
-        skalSendeVarselOmOpphør:
-          p.avklaring?.skalSendeVarsel === true ? 'ja' : p.avklaring?.skalSendeVarsel === false ? 'nei' : '',
+        skalSendeVarselOmOpphør: tilJaEllerNei(p.avklaring?.skalSendeVarsel),
       },
     ]),
   ),
@@ -77,6 +83,7 @@ const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; sele
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for opphør');
   if (!selectedPeriod.årsak) throw new Error('Årsak for valgt periode er ikke satt');
+  if (!selectedPeriod.kilde) throw new Error('Kilde for valgt periode er ikke satt');
   const isOpphør = selectedPeriod.opphøreEllerAvslå === 'opphøre';
   const skalSendeVarsel = selectedPeriod.skalSendeVarselOmOpphør === 'ja';
   const avklaring = {
@@ -90,7 +97,7 @@ const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; sele
       fraflyttingsÅrsak: selectedPeriod.årsak,
       begrunnelseIkkeVarsel: !skalSendeVarsel ? selectedPeriod.begrunnelseForIkkeVarsle : undefined,
       fritekstTilVarsel: skalSendeVarsel ? selectedPeriod.fritekstTilVarsel : undefined,
-      kilde: selectedPeriod.kilde as BostedsavklaringKildeType,
+      kilde: selectedPeriod.kilde,
       kildeFritekst:
         selectedPeriod.kilde === BostedsavklaringKildeType.ANNET ? selectedPeriod.kildeFritekst : undefined,
     },
@@ -136,14 +143,15 @@ export const BostedÅrsakOgVarsel = ({
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<BostedFormData | null>(null);
   const formHook = useForm<BostedFormData>({ defaultValues: buildInitialValues(bostedGrunnlag) });
-  const watchValue = (name: string) => String(formHook.watch(name as never) ?? '');
   const selectedPeriod = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
   const valgtPeriodeErReadOnly =
     !!selectedPeriod && (!selectedPeriod.avklaring || selectedPeriod.avklaring.kanRedigeres !== true);
-  const opphøreEllerAvslå = watchValue(`perioder.${selectedId}.opphøreEllerAvslå`);
-  const valgtKilde = watchValue(`perioder.${selectedId}.kilde`);
-  const skalSendeForhåndsvarsel = watchValue(`perioder.${selectedId}.skalSendeVarselOmOpphør`);
-  const valgtÅrsak = watchValue(`perioder.${selectedId}.årsak`);
+  const formPerioder = formHook.watch('perioder');
+  const valgtFormPeriode = formPerioder[selectedId];
+  const opphøreEllerAvslå = valgtFormPeriode?.opphøreEllerAvslå ?? '';
+  const valgtKilde = valgtFormPeriode?.kilde ?? '';
+  const skalSendeForhåndsvarsel = valgtFormPeriode?.skalSendeVarselOmOpphør ?? '';
+  const valgtÅrsak = valgtFormPeriode?.årsak;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: BostedFormData) => {
@@ -220,6 +228,7 @@ export const BostedÅrsakOgVarsel = ({
                   selectedId={selectedId}
                   isFormLocked={isFormLocked}
                   opphøreEllerAvslå={opphøreEllerAvslå}
+                  avslagFom={valgtFormPeriode?.avslagFom ?? ''}
                   dateRange={getDateRangeFromVilkår(bostedVilkår.perioder)}
                 />
                 <RhfSelect

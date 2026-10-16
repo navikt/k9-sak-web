@@ -287,6 +287,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                   selectedId={selectedId}
                   isFormLocked={isFormLocked}
                   opphøreEllerAvslå={opphøreEllerAvslå}
+                  avslagFom={valgtFormPeriode?.avslagFom ?? ''}
                   dateRange={getDateRangeFromVilkår(andreLivsoppholdytelserVilkår.perioder)}
                 />
                 <RhfSelect
