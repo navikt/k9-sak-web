@@ -13,6 +13,7 @@ const Datovelger = ({
   fromDate,
   toDate,
   size,
+  onChange: onValueChange,
   validate,
   disabledDays,
   showErrorMessage = true,
@@ -26,6 +27,7 @@ const Datovelger = ({
   fromDate?: Date;
   toDate?: Date;
   size?: 'small' | 'medium';
+  onChange?: (value: string) => void;
   validate?: ((value: string) => string | null | undefined)[];
   disabledDays?: DatePickerProps['disabled'];
   showErrorMessage?: boolean;
@@ -46,6 +48,7 @@ const Datovelger = ({
   const onChange = (newValue: string) => {
     field.onChange(newValue);
     void formMethods.trigger(name);
+    onValueChange?.(newValue);
   };
   const error = fieldState.error?.message as string | undefined;
   return (
