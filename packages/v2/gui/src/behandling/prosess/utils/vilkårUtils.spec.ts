@@ -1,6 +1,6 @@
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { describe, expect, test } from 'vitest';
-import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import {
   AksjonspunktDefinisjon,
   finnPanelStatus,
@@ -353,7 +353,7 @@ describe('finnPanelStatus', () => {
           },
           { vurderesIBehandlingen: true, vilkarStatus: status, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
