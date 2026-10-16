@@ -13,7 +13,10 @@ export type UngNavAnsattTilgang = {
   kanBehandleKode6: boolean;
   kanBehandleKode7: boolean;
   kanBehandleKodeEgenAnsatt: boolean;
+  /** Beslutter for totrinnskontroll ved fatte vedtak. For aktivitetspenger gjelder dette del 2. */
   kanBeslutte: boolean;
+  /** Beslutter av vilkår ved Nav-kontor (aktivitetspenger del 1). Alltid false for andre ytelser. */
+  kanBeslutteVedNavKontor: boolean;
   kanOverstyre: boolean;
   kanSaksbehandle: boolean;
   kanVeilede: boolean;
@@ -42,9 +45,8 @@ export function useNavAnsattForYtelse(
     kanBehandleKode6: data.kanBehandleKode6 ?? false,
     kanBehandleKode7: data.kanBehandleKode7 ?? false,
     kanBehandleKodeEgenAnsatt: data.kanBehandleKodeEgenAnsatt ?? false,
-    kanBeslutte: erAktivitetspenger
-      ? ((avpDel1?.kanBeslutte || avpDel2?.kanBeslutte) ?? false)
-      : (ungTilgang?.kanBeslutte ?? false),
+    kanBeslutte: erAktivitetspenger ? (avpDel2?.kanBeslutte ?? false) : (ungTilgang?.kanBeslutte ?? false),
+    kanBeslutteVedNavKontor: erAktivitetspenger ? (avpDel1?.kanBeslutte ?? false) : false,
     kanOverstyre: erAktivitetspenger
       ? ((avpDel1?.kanOverstyre || avpDel2?.kanOverstyre) ?? false)
       : (ungTilgang?.kanOverstyre ?? false),

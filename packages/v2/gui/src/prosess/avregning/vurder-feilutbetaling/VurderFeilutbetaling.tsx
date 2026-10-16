@@ -13,7 +13,7 @@ import type { AksjonspunktDto as UngSakAksjonspunktDto } from '@k9-sak-web/backe
 import { useContext, useEffect } from 'react';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext';
 import ArrowBox from '../../../shared/arrowBox/ArrowBox';
-import { isUngWeb } from '../../../utils/urlUtils';
+import { isUngdomsprogramytelsen } from '../../../utils/urlUtils';
 import { useAvregningBackendClient } from '../AvregningBackendClientContext.js';
 import { useAvregningFormState } from '../AvregningContext.js';
 
@@ -192,7 +192,7 @@ export const VurderFeilutbetaling = ({
               </>
               <Radio value={OPPRETT_TILBAKE_KREVING_IKKE_SEND_VARSEL}>Opprett tilbakekreving, ikke send varsel</Radio>
               <>
-                {!isUngWeb() && (
+                {!isUngdomsprogramytelsen() && (
                   <Radio value={TilbakekrevingVidereBehandling.IGNORER_TILBAKEKREVING}>
                     Avvent samordning, ingen tilbakekreving
                   </Radio>

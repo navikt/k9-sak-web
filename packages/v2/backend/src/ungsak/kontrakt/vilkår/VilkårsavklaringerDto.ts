@@ -1,0 +1,5 @@
+export type {
+  ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_VilkårsavklaringDto as VilkårsavklaringDto,
+  ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_VilkårsavklaringerDto as VilkårsavklaringerDto,
+  ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_VilkårsavklaringVurderingerDto as VilkårsavklaringVurderingerDto,
+} from '@k9-sak-web/backend/ungsak/generated/types.js';

@@ -19,6 +19,8 @@ export interface AndreLivsoppholdytelserFormData {
       muligAvkortingPeriode?: MuligAvkortingPeriode;
       redigerMaksdato: boolean;
       begrunnelseKortereMaksdato?: string;
+      ytelseNavn: string;
+      harFritekstbrev: boolean;
     }
   >;
 }
@@ -49,6 +51,8 @@ export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): AndreLivso
         redigerMaksdato: p.avkortetPeriodeInfo ? true : false,
         begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
         muligAvkortingPeriode: p.muligAvkortingPeriode,
+        ytelseNavn: '',
+        harFritekstbrev: false,
       },
     ]),
   ),

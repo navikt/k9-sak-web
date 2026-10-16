@@ -6,7 +6,7 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { BehovForBistandFormData } from './behovForBistandFormData.js';
 
 const avslagsårsakLabels: Record<string, string> = {
-  [BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK]: 'Søker har ikke oppfølgingsvedtak etter Nav-loven §14a.',
+  [BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK]: 'Søker har ikke behov for bistand fra Nav',
   fritekst: 'Fritekst',
 };
 
