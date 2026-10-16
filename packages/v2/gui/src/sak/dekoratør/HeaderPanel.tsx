@@ -3,7 +3,7 @@ import { ExternalLinkIcon, MenuGridIcon } from '@navikt/aksel-icons';
 import { Dropdown, InternalHeader, Spacer, Theme } from '@navikt/ds-react';
 import Endringslogg from '@navikt/endringslogg';
 import { useLocation } from 'react-router';
-import { isUngWeb } from '../../utils/urlUtils';
+import { isUngdomsprogramytelsen } from '../../utils/urlUtils';
 import styles from './headerPanel.module.css';
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
@@ -52,7 +52,7 @@ export const HeaderPanel = ({
   const location = useLocation();
 
   const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn && showEndringslogg;
-  const skalBrukeLos = !isUngWeb();
+  const skalBrukeLos = !isUngdomsprogramytelsen();
   const pathToPunsj = getPathToK9Punsj?.();
   return (
     <div>

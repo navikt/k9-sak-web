@@ -7,7 +7,7 @@ import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
-import { isUngWeb } from '../../utils/urlUtils';
+import { isUngdomsprogramytelsen } from '../../utils/urlUtils';
 import RelatertFagsak from './relatert-fagsak/RelatertFagsak';
 import TagContainer from './TagContainer';
 import type { FagsakPerson } from './types/FagsakPerson';
@@ -63,7 +63,7 @@ const VisittkortPanel = ({
           name={fagsakPerson.navn}
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
-          showPersonAge={isUngWeb()}
+          showPersonAge={isUngdomsprogramytelsen()}
           age={fagsakPerson.alder}
         />
       </div>
@@ -76,7 +76,7 @@ const VisittkortPanel = ({
           name={fagsakPerson.navn}
           fodselsnummer={fagsakPerson.personnummer}
           gender={fagsakPerson.erKvinne ? Gender.female : Gender.male}
-          showPersonAge={isUngWeb()}
+          showPersonAge={isUngdomsprogramytelsen()}
           age={fagsakPerson.alder}
           renderLabelContent={() => (
             <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />
@@ -129,7 +129,7 @@ const VisittkortPanel = ({
                 : () => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />
             }
             renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
-            showPersonAge={isUngWeb()}
+            showPersonAge={isUngdomsprogramytelsen()}
             age={fagsakPerson.alder}
           />
           <div>

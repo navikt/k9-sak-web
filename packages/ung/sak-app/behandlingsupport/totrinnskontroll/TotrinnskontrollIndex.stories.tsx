@@ -2,6 +2,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType as ungFagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import {
   AksjonspunktGodkjenningDtos,
   TotrinnskontrollApi,
@@ -132,6 +133,33 @@ export const Default: Story = {
       name: 'Ungdomsytelse er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
     });
     await expect(dlg).toBeVisible();
+  },
+};
+
+const navAnsattKunBeslutterDel1 = {
+  ...navAnsatt,
+  aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: true, kanOverstyre: false },
+  aktivitetspengerDel2SaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: false, kanOverstyre: false },
+};
+
+const withNavAnsattKunBeslutterDel1: Decorator = Story => {
+  const queryClient = useQueryClient();
+  queryClient.setQueryData(innloggetAnsattUngV2QueryOptions.queryKey, navAnsattKunBeslutterDel1);
+  return <Story />;
+};
+
+export const AktivitetspengerUtenBeslutterrolleDel2: Story = {
+  decorators: [withNavAnsattKunBeslutterDel1],
+  args: {
+    fagsak: { ...fagsak, sakstype: ungFagsakYtelsesType.AKTIVITETSPENGER } as Fagsak,
+    alleBehandlinger: alleBehandlinger as unknown as BehandlingAppKontekst[],
+    behandlingId: alleBehandlinger[0].id,
+    api,
+    urlEtterpå: '#',
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole('button', { name: 'Godkjenn vedtaket' })).toBeVisible();
+    await expect(canvas.queryByText('Kontroller endrede opplysninger og faglige vurderinger')).not.toBeInTheDocument();
   },
 };
 

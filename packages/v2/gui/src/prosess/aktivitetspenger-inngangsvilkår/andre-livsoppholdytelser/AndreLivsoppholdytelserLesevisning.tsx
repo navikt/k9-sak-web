@@ -36,7 +36,7 @@ export const AndreLivsoppholdytelserLesevisning = ({ begrunnelseLabel, vurdering
     {vurdering.andreLivsoppholdytelser === 'ikkeOppfylt' && vurdering.avslagsårsak && (
       <VStack gap="space-8">
         <Label size="small" as="p">
-          Avslagsårsak
+          Hvilken ytelse mottar bruker?
         </Label>
         <BodyShort size="small">{avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
       </VStack>

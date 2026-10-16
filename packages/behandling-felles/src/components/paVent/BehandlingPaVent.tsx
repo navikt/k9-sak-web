@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
+import { isUngdomsprogramytelsen } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
@@ -37,7 +37,7 @@ const BehandlingPaVent = ({
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
       }).then(() => {
-        if (isUngWeb()) {
+        if (isUngdomsprogramytelsen()) {
           goToSearch();
         }
         goToLos();
