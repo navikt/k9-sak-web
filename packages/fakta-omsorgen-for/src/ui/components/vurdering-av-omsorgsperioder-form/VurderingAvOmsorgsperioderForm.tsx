@@ -77,7 +77,7 @@ const VurderingAvOmsorgsperioderForm = ({
     const { begrunnelse, perioder, harSøkerOmsorgenForIPeriode } = formState;
 
     let vurdertePerioder;
-    const fosterbarnForOmsorgspenger = erOMP ? fosterbarn : undefined;
+    const fosterbarnForOmsorgspenger = erOMP ? fosterbarn.map(fnr => ({ fnr })) : undefined;
     if (harSøkerOmsorgenForIPeriode === RadioOptions.DELER) {
       vurdertePerioder = perioder.map(({ period }) => ({
         periode: period,
@@ -287,3 +287,6 @@ const VurderingAvOmsorgsperioderForm = ({
 };
 
 export default VurderingAvOmsorgsperioderForm;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_OMSORGEN_FOR_V2'];
