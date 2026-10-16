@@ -4,8 +4,9 @@ import {
   finnTidligsteStartDatoFraPerioderTilVurdering,
   finnSisteSluttDatoFraPerioderTilVurdering,
   formaterOverstyringAktiviteter,
-} from './overstyringUtils';
-import { k9_kodeverk_uttak_UttakArbeidType as UttakArbeidType } from '@k9-sak-web/backend/k9sak/generated/types.js';
+} from './overstyringUtils.js';
+import type { OverstyrUttakArbeidsforholdDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrUttakArbeidsforholdDto.js';
+import { UttakArbeidType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
 
 describe('overstyringUtils - periodeintervall', () => {
   const perioder = ['2024-01-01/2024-01-10', '2024-02-01/2024-02-05'];
@@ -33,14 +34,14 @@ describe('overstyringUtils - periodeintervall', () => {
 
 describe('overstyringUtils - formaterOverstyringAktiviteter', () => {
   it('initialiserer utbetalingsgrader til 0 og kopierer identifikatorer', async () => {
-    const aktiviteter: any[] = [
+    const aktiviteter: OverstyrUttakArbeidsforholdDto[] = [
       { type: UttakArbeidType.ANNET, orgnr: '123', arbeidsforholdId: 'arb1' },
       { type: UttakArbeidType.KUN_YTELSE },
     ];
     const resultat = formaterOverstyringAktiviteter(aktiviteter);
     await expect(resultat).toHaveLength(2);
-    await expect(resultat[0]!.utbetalingsgrad).toBe(0);
-    await expect(resultat[0]!.arbeidsforhold.orgnr).toBe('123');
-    await expect(resultat[1]!.arbeidsforhold.type).toBe(UttakArbeidType.KUN_YTELSE);
+    await expect(resultat[0]?.utbetalingsgrad).toBe(0);
+    await expect(resultat[0]?.arbeidsforhold.orgnr).toBe('123');
+    await expect(resultat[1]?.arbeidsforhold.type).toBe(UttakArbeidType.KUN_YTELSE);
   });
 });

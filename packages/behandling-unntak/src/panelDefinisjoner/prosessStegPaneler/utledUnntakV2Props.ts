@@ -2,7 +2,7 @@ import {
   behandlingResultatType,
   type BehandlingResultatType,
 } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 
 // Nøkkelen backend bruker i behandlingsresultat.vilkårResultat for K9-vilkåret.
@@ -47,7 +47,7 @@ export const utledUnntakV2Props = (
     periode === undefined
       ? undefined
       : (vilkar ?? [])
-          .filter(v => v.vilkarType?.kode === vilkarType.K9_VILKÅRET)
+          .filter(v => v.vilkarType?.kode === VilkårType.K9_VILKÅRET)
           .flatMap(v => v.perioder ?? [])
           .find(p => p.periode?.fom === periode.fom && p.periode?.tom === periode.tom)?.begrunnelse;
 

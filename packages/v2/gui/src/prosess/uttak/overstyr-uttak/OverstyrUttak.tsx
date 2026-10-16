@@ -1,51 +1,49 @@
-import {
-  k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDefinisjon,
-  type k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { OverstyringAksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/OverstyringAksjonspunktDto.js';
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
 import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, HelpText, HStack, Loader, Modal, Table } from '@navikt/ds-react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
+import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { finnAksjonspunkt } from '../../../utils/aksjonspunktUtils.js';
 import { useState, type FC } from 'react';
-import { useUttakContext } from '../context/UttakContext';
-import type { OverstyringUttakHandling } from '../types/OverstyringUttakTypes';
-import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils';
-import AktivitetRad from './AktivitetRad';
-import OverstyringUttakForm from './OverstyringUttakForm';
-import styles from './overstyrUttakForm.module.css';
-
-export enum OverstyrUttakHandling {
-  SLETT = 'SLETT',
-  BEKREFT = 'BEKREFT',
-  LAGRE = 'LAGRE',
-}
+import { useUttakContext } from '../context/UttakContext.js';
+import { OverstyrUttakHandling, type OverstyringUttakHandling } from '../types/OverstyringUttakTypes.js';
+import { erOverstyringInnenforPerioderTilVurdering } from '../utils/overstyringUtils.js';
+import AktivitetRad from './AktivitetRad.js';
+import OverstyringUttakForm from './OverstyringUttakForm.js';
+import styles from './overstyrUttak.module.css';
+import { uttakOverstyringerQueryOptions, uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 interface OverstyrUttakProps {
   overstyringAktiv: boolean;
 }
 
 const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
-  const { behandling, uttakApi, harAksjonspunkt, perioderTilVurdering, erOverstyrer, hentUttak } = useUttakContext();
+  const { behandling, aksjonspunkter, erOverstyrer } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak, refetch: hentUttak } = useSuspenseQuery(
+    uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  );
+  const perioderTilVurdering = uttak?.perioderTilVurdering ?? [];
+  const harOverstyringAksjonspunkt =
+    finnAksjonspunkt(aksjonspunkter, AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) !== undefined;
   const hentBehandling = useRefetchBehandling();
-  const [bekreftSlettId, setBekreftSlettId] = useState<number | false>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [visOverstyringSkjema, setVisOverstyringSkjema] = useState<boolean>(false);
-  const [redigerOverstyring, setRedigerOverstyring] = useState<number | boolean>(false);
+  const [bekreftSlettId, setBekreftSlettId] = useState<number>();
+  // 'ny' viser skjema for ny overstyring, et tall viser skjema for å endre overstyring med den indeksen
+  const [overstyringSkjema, setOverstyringSkjema] = useState<'ny' | number>();
   const leseModus = !erOverstyrer || !overstyringAktiv;
 
-  const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery({
-    queryKey: ['overstyrte', behandling.uuid],
-    throwOnError: ignore404Errors,
-    queryFn: () => uttakApi.hentOverstyringUttak(behandling.uuid),
-  });
+  const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery(
+    uttakOverstyringerQueryOptions(uttakApi, behandling.uuid),
+  );
 
-  const { mutate: handleOverstyring } = useMutation({
+  const { mutate: handleOverstyring, isPending: loading } = useMutation({
     mutationFn: async ({ action, values }: OverstyringUttakHandling) => {
       const overstyrteAksjonspunktDto: DTOWithDiscriminatorType<
-        k9_sak_kontrakt_aksjonspunkt_OverstyringAksjonspunktDto,
+        OverstyringAksjonspunktDto,
         typeof aksjonspunktCodes.OVERSTYRING_AV_UTTAK
       > = {
         '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK,
@@ -74,37 +72,22 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
         overstyrteAksjonspunktDtoer: [overstyrteAksjonspunktDto],
       });
     },
-    onMutate: () => setLoading(true),
     onSuccess: async () => {
-      void hentUttak();
-      void hentBehandling();
+      await Promise.all([hentUttak(), hentBehandling()]);
+      setBekreftSlettId(undefined);
+      setOverstyringSkjema(undefined);
       window.scroll(0, 0);
     },
     onError: error => {
-      setLoading(false);
       throw new Error(`Feil ved overstyring av uttak: ${error.message}`);
     },
   });
 
-  const handleSlett = async (id: number): Promise<void> => {
-    setLoading(true);
+  const handleSlett = (id: number) =>
     handleOverstyring({
       action: OverstyrUttakHandling.SLETT,
       values: { id, begrunnelse: '', periode: { fom: '', tom: '' } },
     });
-  };
-
-  const handleAvbrytOverstyringForm = () => {
-    setVisOverstyringSkjema(false);
-    setRedigerOverstyring(false);
-  };
-
-  const handleRediger = (index: number) => {
-    setRedigerOverstyring(index);
-    setVisOverstyringSkjema(true);
-  };
-
-  const bekreftSletting = (id: number) => setBekreftSlettId(id);
 
   const harNoeÅVise =
     (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0) || (erOverstyrer && overstyringAktiv);
@@ -136,7 +119,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   if (harNoeÅVise) {
     return (
       <div>
-        {harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
+        {harOverstyringAksjonspunkt && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad
@@ -150,7 +133,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
         {lasterOverstyrte && <Loader size="large" title="Venter..." />}
         {!lasterOverstyrte && overstyrte?.overstyringer && (
           <>
-            {overstyringAktiv && overstyrte?.overstyringer.length === 0 && !visOverstyringSkjema && (
+            {overstyringAktiv && overstyrte?.overstyringer.length === 0 && overstyringSkjema === undefined && (
               <>Det er ingen overstyrte aktiviteter i denne saken</>
             )}
             {overstyrte?.overstyringer.length > 0 && (
@@ -166,9 +149,9 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
                         key={overstyring.id}
                         overstyring={overstyring}
                         index={index}
-                        handleRediger={handleRediger}
-                        visOverstyringSkjema={visOverstyringSkjema}
-                        handleSlett={bekreftSletting}
+                        handleRediger={setOverstyringSkjema}
+                        visOverstyringSkjema={overstyringSkjema !== undefined}
+                        handleSlett={setBekreftSlettId}
                         loading={loading}
                         erTilVurdering={erOverstyringInnenforPerioderTilVurdering(
                           overstyring,
@@ -186,47 +169,45 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
         )}
         {erOverstyrer && overstyringAktiv && (
           <>
-            {bekreftSlettId && (
-              <Modal
-                open={!!bekreftSlettId}
-                onClose={() => setBekreftSlettId(false)}
-                width="small"
-                header={{
-                  heading: 'Er du sikker på at du vil slette en overstyring?',
-                  size: 'small',
-                  closeButton: false,
-                }}
-              >
-                {loading && (
-                  <HStack padding="space-20" justify="center">
-                    <Loader size="large" title="Venter..." />
-                  </HStack>
-                )}
-                {!loading && (
-                  <Modal.Footer>
-                    <Button
-                      data-color="danger"
-                      size="small"
-                      variant="primary"
-                      onClick={() => handleSlett(bekreftSlettId)}
-                      loading={loading}
-                    >
-                      Slett
-                    </Button>
-                    <Button size="small" variant="primary" onClick={() => setBekreftSlettId(false)} loading={loading}>
-                      Avbryt
-                    </Button>
-                  </Modal.Footer>
-                )}
-              </Modal>
-            )}
-            {!visOverstyringSkjema && (
+            <Modal
+              open={bekreftSlettId !== undefined}
+              onClose={() => setBekreftSlettId(undefined)}
+              width="small"
+              header={{
+                heading: 'Er du sikker på at du vil slette en overstyring?',
+                size: 'small',
+                closeButton: false,
+              }}
+            >
+              {loading && (
+                <HStack padding="space-20" justify="center">
+                  <Loader size="large" title="Venter..." />
+                </HStack>
+              )}
+              {!loading && (
+                <Modal.Footer>
+                  <Button
+                    data-color="danger"
+                    size="small"
+                    variant="primary"
+                    onClick={() => bekreftSlettId !== undefined && handleSlett(bekreftSlettId)}
+                    loading={loading}
+                  >
+                    Slett
+                  </Button>
+                  <Button size="small" variant="primary" onClick={() => setBekreftSlettId(undefined)} loading={loading}>
+                    Avbryt
+                  </Button>
+                </Modal.Footer>
+              )}
+            </Modal>
+            {overstyringSkjema === undefined && (
               <div className={styles.leggTilOverstyringKnapp}>
                 <Button
                   variant="secondary"
                   size="small"
                   disabled={loading}
-                  onClick={() => setVisOverstyringSkjema(true)}
+                  onClick={() => setOverstyringSkjema('ny')}
                   icon={<PlusCircleIcon fontSize="1.25rem" />}
                   loading={loading}
                 >
@@ -235,7 +216,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
               </div>
             )}
 
-            {!visOverstyringSkjema && harAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK) && (
+            {overstyringSkjema === undefined && harOverstyringAksjonspunkt && (
               <div className={styles.overstyrUttakFormFooter}>
                 <Button
                   variant="primary"
@@ -248,28 +229,15 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
                 </Button>
               </div>
             )}
-            {visOverstyringSkjema && redigerOverstyring === false && (
+            {overstyringSkjema !== undefined && (
               <OverstyringUttakForm
-                api={uttakApi}
-                behandling={behandling}
-                handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
+                key={overstyringSkjema}
+                overstyring={
+                  typeof overstyringSkjema === 'number' ? overstyrte?.overstyringer[overstyringSkjema] : undefined
+                }
+                lagre={values => handleOverstyring({ action: OverstyrUttakHandling.LAGRE, values })}
+                avbryt={() => setOverstyringSkjema(undefined)}
                 loading={loading}
-                setLoading={setLoading}
-                perioderTilVurdering={perioderTilVurdering}
-                handleOverstyring={handleOverstyring}
-              />
-            )}
-            {visOverstyringSkjema && typeof redigerOverstyring === 'number' && (
-              <OverstyringUttakForm
-                api={uttakApi}
-                behandling={behandling}
-                handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
-                overstyring={overstyrte?.overstyringer[redigerOverstyring]}
-                loading={loading}
-                setLoading={setLoading}
-                perioderTilVurdering={perioderTilVurdering}
-                handleOverstyring={handleOverstyring}
-                arbeidsgivereFromParent={arbeidsgivere}
               />
             )}
           </>

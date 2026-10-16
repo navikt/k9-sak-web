@@ -1,6 +1,6 @@
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import type { FomTom } from './dateUtils.js';
-import { DDMMYYYY_DATE_FORMAT } from './formats.js';
-import { initializeDate } from './initializeDate.js';
 
 export const sortPeriodsChronological = (period1: FomTom, period2: FomTom): number => {
   const p1start = initializeDate(period1.fom);

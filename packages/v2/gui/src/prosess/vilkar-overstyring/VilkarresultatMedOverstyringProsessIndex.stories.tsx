@@ -1,25 +1,23 @@
-import {
-  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
-  k9_kodeverk_vilkår_VilkårUtfallMerknad as merknad,
-  k9_kodeverk_behandling_FagsakYtelseType as sakstype,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType as sakstype } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingStatus as behandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { VilkårUtfallMerknad as merknad } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/VilkårUtfallMerknad.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { action } from 'storybook/actions';
 import { expect } from 'storybook/test';
-import { asyncAction } from '../../storybook/asyncAction';
+import { asyncAction } from '../../storybook/asyncAction.js';
 import VilkarresultatMedOverstyringProsessIndex, {
   type VilkarresultatMedOverstyringProsessIndexProps,
-} from './VilkarresultatMedOverstyringProsessIndex';
+} from './VilkarresultatMedOverstyringProsessIndex.js';
 
 const vilkarOpptjening = [
   {
-    vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+    vilkarType: VilkårType.OPPTJENINGSVILKÅRET,
     overstyrbar: true,
     relevanteInnvilgetMerknader: [
       { innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B' },
@@ -48,7 +46,7 @@ const vilkarOpptjening = [
 
 const vilkarMedlemskap = [
   {
-    vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+    vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET,
     overstyrbar: true,
     relevanteInnvilgetMerknader: [],
     perioder: [
@@ -199,7 +197,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
     overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
     vilkar: [
       {
-        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+        vilkarType: VilkårType.OPPTJENINGSVILKÅRET,
         overstyrbar: true,
         relevanteInnvilgetMerknader: [
           { merknad: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B' },
