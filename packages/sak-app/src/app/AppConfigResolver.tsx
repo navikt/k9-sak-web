@@ -17,6 +17,8 @@ import { NyInntektApiContext } from '@k9-sak-web/gui/fakta/ny-inntekt/api/NyInnt
 import SykdomOgOpplæringBackendClient from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClient.js';
 import { SykdomOgOpplæringBackendClientContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClientContext.js';
 import { K9SakOmPleietrengendeBackendClient } from '@k9-sak-web/gui/fakta/om-pleietrengende/api/K9SakOmPleietrengendeBackendClient.js';
+import { K9SakOmBarnetBackendClient } from '@k9-sak-web/gui/fakta/om-barnet/api/K9SakOmBarnetBackendClient.js';
+import { OmBarnetApiContext } from '@k9-sak-web/gui/fakta/om-barnet/api/OmBarnetApiContext.js';
 import { OmPleietrengendeApiContext } from '@k9-sak-web/gui/fakta/om-pleietrengende/api/OmPleietrengendeApiContext.js';
 import { K9SakUtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9SakUtenlandsoppholdBackendClient.js';
 import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
@@ -108,11 +110,13 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                     <ArbeidOgInntektApiContext value={new K9ArbeidOgInntektBackendClient()}>
                                       <DelingAvDagerApiContext value={new K9DelingAvDagerBackendClient()}>
                                         <OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>
-                                          <FeilutbetalingFaktaApiContext
-                                            value={new K9FeilutbetalingFaktaBackendClient()}
-                                          >
-                                            {harFeilet || erFerdig ? children : <LoadingPanel />}
-                                          </FeilutbetalingFaktaApiContext>
+                                          <OmBarnetApiContext value={new K9SakOmBarnetBackendClient()}>
+                                            <FeilutbetalingFaktaApiContext
+                                              value={new K9FeilutbetalingFaktaBackendClient()}
+                                            >
+                                              {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                            </FeilutbetalingFaktaApiContext>
+                                          </OmBarnetApiContext>
                                         </OmPleietrengendeApiContext>
                                       </DelingAvDagerApiContext>
                                     </ArbeidOgInntektApiContext>
