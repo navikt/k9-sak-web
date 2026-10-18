@@ -1,5 +1,6 @@
 import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
+import type { AndreLivsoppholdsytelserVurderingerResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
@@ -69,6 +70,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
 
   async hentPerioderSomKanAvkortes(): Promise<AvkortingsperioderResponse> {
     return { resultat: [] };
+  }
+
+  async hentAndreLivsoppholdsytelserVurderinger(): Promise<AndreLivsoppholdsytelserVurderingerResponse> {
+    return { vurderinger: [] };
   }
 
   async hentTotrinnskontrollSkjermlenkeContext(): ReturnType<

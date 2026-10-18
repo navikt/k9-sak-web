@@ -6,9 +6,10 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { AndreLivsoppholdsytelserVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useQueryClient } from '@tanstack/react-query';
-import type { ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { FakeAktivitetspengerApi } from '../../../storybook/mocks/FakeAktivitetspengerApi';
 import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
@@ -33,9 +34,28 @@ const avkortingsperioder = {
   ],
 };
 
+const lagVurdering = (
+  vurdering: Pick<AndreLivsoppholdsytelserVurderingDto, 'periode' | 'erVilkårOppfylt'> &
+    Partial<AndreLivsoppholdsytelserVurderingDto>,
+): AndreLivsoppholdsytelserVurderingDto => ({
+  erManuellVurdering: true,
+  vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  vurdertAv: 'Z123456',
+  vurdertTidspunkt: '2024-01-15T10:00:00',
+  ...vurdering,
+});
+
 class FakeAktivitetspengerApiMedAvkortingsperiode extends FakeAktivitetspengerApi {
+  constructor(private readonly vurderinger: AndreLivsoppholdsytelserVurderingDto[] = []) {
+    super();
+  }
+
   override async hentPerioderSomKanAvkortes() {
     return avkortingsperioder;
+  }
+
+  override async hentAndreLivsoppholdsytelserVurderinger() {
+    return { vurderinger: this.vurderinger };
   }
 }
 
@@ -70,6 +90,13 @@ class FakeAktivitetspengerApiSomHuskerAksjonspunkt extends FakeAktivitetspengerA
 }
 
 const apiSomHusker = new FakeAktivitetspengerApiSomHuskerAksjonspunkt();
+const apiSomHuskerMedOppfyltVurdering = new FakeAktivitetspengerApiSomHuskerAksjonspunkt([
+  lagVurdering({
+    periode: { fom: '2024-01-01', tom: '2024-12-31' },
+    erVilkårOppfylt: true,
+    begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+  }),
+]);
 
 const meta = {
   title: 'gui/prosess/aktivitetspenger-inngangsvilkår/AndreLivsoppholdytelser',
@@ -84,7 +111,9 @@ const meta = {
   decorators: [
     (Story, { args }) => (
       <MedForhåndshentetAvkorting api={args.api} behandling={args.behandling}>
-        <Story />
+        <Suspense fallback="Laster...">
+          <Story />
+        </Suspense>
       </MedForhåndshentetAvkorting>
     ),
   ],
@@ -94,6 +123,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const periode = { fom: '2024-01-01', tom: '2024-12-31' };
+
+const apiMedOppfyltVurdering = new FakeAktivitetspengerApiMedAvkortingsperiode([
+  lagVurdering({ periode, erVilkårOppfylt: true, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }),
+]);
 
 export const IkkeVurdert: Story = {
   args: {
@@ -111,6 +144,7 @@ export const IkkeVurdert: Story = {
 
 export const Oppfylt: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -125,6 +159,7 @@ export const Oppfylt: Story = {
 
 export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -150,6 +185,15 @@ export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
 
 export const IkkeOppfylt: Story = {
   args: {
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode([
+      lagVurdering({
+        periode,
+        erVilkårOppfylt: false,
+        begrunnelse: 'Søker mottar dagpenger.',
+        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+        ytelseNavn: 'Dagpenger',
+      }),
+    ]),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -172,6 +216,7 @@ export const IkkeOppfylt: Story = {
 export const ReadOnly: Story = {
   args: {
     readOnly: true,
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -186,6 +231,13 @@ export const ReadOnly: Story = {
 
 export const FlerePerioder: Story = {
   args: {
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode([
+      lagVurdering({
+        periode: { fom: '2024-01-01', tom: '2024-06-30' },
+        erVilkårOppfylt: true,
+        begrunnelse: 'Ingen andre ytelser.',
+      }),
+    ]),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -207,6 +259,7 @@ export const FlerePerioder: Story = {
 
 export const MedKunVilkårUtenAksjonspunkt: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserAp: undefined,
     lokalkontorForeslårVilkårAp: undefined,
     andreLivsoppholdytelserVilkår: {
@@ -232,6 +285,19 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
 export const AlleredeAvkortet: Story = {
   args: {
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode([
+      lagVurdering({
+        periode: { fom: '2024-01-01', tom: '2024-06-30' },
+        erVilkårOppfylt: true,
+        begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+      }),
+      lagVurdering({
+        periode: { fom: '2024-07-01', tom: '2024-12-31' },
+        erVilkårOppfylt: false,
+        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
+        begrunnelse: 'Perioden er avkortet etter avtale med søker.',
+      }),
+    ]),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -274,7 +340,7 @@ export const AlleredeAvkortet: Story = {
 
 export const RedigererMaksdato: Story = {
   args: {
-    api: apiSomHusker,
+    api: apiSomHuskerMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -290,7 +356,7 @@ export const RedigererMaksdato: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
+    apiSomHuskerMedOppfyltVurdering.sisteBekreftedeAksjonspunkt = undefined;
 
     await step('maksdato er låst før avkorting er slått på', async () => {
       await userEvent.click(await canvas.findByLabelText('Rediger vurdering'));
@@ -317,7 +383,7 @@ export const RedigererMaksdato: Story = {
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
 
       await waitFor(async () => {
-        await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual({
+        await expect(apiSomHuskerMedOppfyltVurdering.sisteBekreftedeAksjonspunkt).toEqual({
           '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
           begrunnelse: 'Aksjonspunkt 5142 VURDER_ANDRE_LIVSOPPHOLDSYTELSER bekreftet',
           vurdertePerioder: [
@@ -344,6 +410,7 @@ export const RedigererMaksdato: Story = {
 
 export const MaksdatoMåVæreKortere: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -372,6 +439,7 @@ export const MaksdatoMåVæreKortere: Story = {
 
 export const LesevisningViserTekst: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -397,6 +465,7 @@ export const LesevisningViserTekst: Story = {
 
 export const AvbrytTilbakestillerSkjema: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],

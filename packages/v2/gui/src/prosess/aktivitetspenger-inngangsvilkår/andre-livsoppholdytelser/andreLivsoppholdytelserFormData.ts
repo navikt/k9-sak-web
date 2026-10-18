@@ -1,7 +1,6 @@
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
-import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
-import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { MuligAvkortingPeriode } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/MuligAvkortingPeriode.js';
+import type { AndreLivsoppholdsytelserVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { VilkårPeriodeVisning } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
 
 export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
@@ -25,35 +24,42 @@ export interface AndreLivsoppholdytelserFormData {
   >;
 }
 
-const utfallTilVurdering = (utfall: string): Vurdering => {
-  if (utfall === Utfall.OPPFYLT) return 'oppfylt';
-  if (utfall === Utfall.IKKE_OPPFYLT) return 'ikkeOppfylt';
-  return '';
+const tilVurdering = (vurdering: AndreLivsoppholdsytelserVurderingDto | undefined): Vurdering => {
+  if (!vurdering) return '';
+  return vurdering.erVilkårOppfylt ? 'oppfylt' : 'ikkeOppfylt';
 };
 
-// Backend returnerer Avslagsårsak-koder ved lesing, men forventer AndreLivsoppholdsytelserIkkeOppfyltÅrsak ved innsending.
-const avslagKodeTilÅrsak: Record<string, AndreLivsoppholdsytelserIkkeOppfyltÅrsak> = {
-  [Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE]: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
-  [Avslagsårsak.AVKORTET]: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
-};
+const erAvkortet = (vurdering: AndreLivsoppholdsytelserVurderingDto) =>
+  vurdering.avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET;
 
-export const buildInitialValues = (vilkår: VilkårPeriodeVisning[]): AndreLivsoppholdytelserFormData => ({
+// Visningsperiodene styrer hvilke perioder skjemaet har, mens vurderingene fra backend gir verdiene.
+// En avkortet vurdering hører til visningsperioden den er slått sammen med (se byggVisningsperioder).
+export const buildInitialValues = (
+  perioder: VilkårPeriodeVisning[],
+  vurderinger: AndreLivsoppholdsytelserVurderingDto[],
+): AndreLivsoppholdytelserFormData => ({
   vurderinger: Object.fromEntries(
-    vilkår.map(p => [
-      p.periode.fom,
-      {
-        begrunnelse: p.begrunnelse ?? '',
-        andreLivsoppholdytelser: utfallTilVurdering(p.vilkarStatus),
-        avslagsårsak: p.avslagKode ? avslagKodeTilÅrsak[p.avslagKode] : undefined,
-        fritekst: p.fritekstVurderingBrev,
-        fom: p.periode.fom,
-        tom: p.periode.tom,
-        redigerMaksdato: p.avkortetPeriodeInfo ? true : false,
-        begrunnelseKortereMaksdato: p.avkortetPeriodeInfo?.begrunnelse ?? '',
-        muligAvkortingPeriode: p.muligAvkortingPeriode,
-        ytelseNavn: '',
-        harFritekstbrev: false,
-      },
-    ]),
+    perioder.map(p => {
+      const vurdering = vurderinger.find(v => v.periode.fom === p.periode.fom && !erAvkortet(v));
+      const avkortetVurdering = p.avkortetPeriodeInfo
+        ? vurderinger.find(v => v.periode.fom === p.avkortetPeriodeInfo?.periode.fom && erAvkortet(v))
+        : undefined;
+      return [
+        p.periode.fom,
+        {
+          begrunnelse: vurdering?.begrunnelse ?? '',
+          andreLivsoppholdytelser: tilVurdering(vurdering),
+          avslagsårsak: vurdering && !vurdering.erVilkårOppfylt ? vurdering.avslagsårsak : undefined,
+          fritekst: vurdering?.fritekstVurderingBrev,
+          fom: p.periode.fom,
+          tom: p.periode.tom,
+          redigerMaksdato: !!p.avkortetPeriodeInfo,
+          begrunnelseKortereMaksdato: avkortetVurdering?.begrunnelse ?? '',
+          muligAvkortingPeriode: p.muligAvkortingPeriode,
+          ytelseNavn: vurdering?.ytelseNavn ?? '',
+          harFritekstbrev: !!vurdering?.fritekstVurderingBrev,
+        },
+      ];
+    }),
   ),
 });
