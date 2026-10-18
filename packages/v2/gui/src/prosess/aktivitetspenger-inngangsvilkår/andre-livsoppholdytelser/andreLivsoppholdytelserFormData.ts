@@ -40,7 +40,7 @@ export const buildInitialValues = (
 ): AndreLivsoppholdytelserFormData => ({
   vurderinger: Object.fromEntries(
     perioder.map(p => {
-      const vurdering = vurderinger.find(v => v.periode.fom === p.periode.fom && !erAvkortet(v));
+      const vurdering = vurderinger.find(v => v.periode.fom === p.periode.fom);
       const avkortetVurdering = p.avkortetPeriodeInfo
         ? vurderinger.find(v => v.periode.fom === p.avkortetPeriodeInfo?.periode.fom && erAvkortet(v))
         : undefined;

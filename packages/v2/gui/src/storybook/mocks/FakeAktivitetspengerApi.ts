@@ -45,7 +45,7 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   }
 
   async hentVilkårsavklaringer(_behandlingUuid: string, vilkarType: VilkårType) {
-    return { avklaringer: [], vilkårType: vilkarType };
+    return { perioder: [], vilkårType: vilkarType };
   }
 
   async hentVilkårsavklaringVurderinger(_behandlingUuid: string, vilkarType: VilkårType) {
