@@ -1,4 +1,5 @@
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { Avslagsårsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avslagsårsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AndreLivsoppholdsytelserVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
@@ -70,6 +71,29 @@ describe('buildInitialValues', () => {
         begrunnelse: 'Ingen andre ytelser.',
         redigerMaksdato: true,
         begrunnelseKortereMaksdato: 'Avkortet etter avtale.',
+      }),
+    );
+  });
+
+  it('bruker vilkåret når perioden ikke vurderes i behandlingen og mangler vurdering', () => {
+    const perioder: VilkårPeriodeVisning[] = [
+      {
+        periode: { fom: '2024-01-01', tom: '2024-12-31' },
+        vilkarStatus: Utfall.IKKE_OPPFYLT,
+        vurderesIBehandlingen: false,
+        avslagKode: Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE,
+        begrunnelse: 'Vurdert i tidligere behandling.',
+        fritekstVurderingBrev: 'Fritekst fra tidligere behandling.',
+      },
+    ];
+
+    expect(buildInitialValues(perioder, []).vurderinger['2024-01-01']).toEqual(
+      expect.objectContaining({
+        andreLivsoppholdytelser: 'ikkeOppfylt',
+        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+        begrunnelse: 'Vurdert i tidligere behandling.',
+        fritekst: 'Fritekst fra tidligere behandling.',
+        harFritekstbrev: true,
       }),
     );
   });

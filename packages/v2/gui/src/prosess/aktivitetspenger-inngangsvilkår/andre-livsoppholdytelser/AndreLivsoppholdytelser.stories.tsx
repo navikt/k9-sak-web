@@ -159,7 +159,8 @@ export const Oppfylt: Story = {
 
 export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
   args: {
-    api: apiMedOppfyltVurdering,
+    // Endepunktet gir ikke vurderinger for perioder som ikke vurderes i behandlingen
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode(),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -180,6 +181,70 @@ export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.queryByRole('button', { name: /Rediger vurdering/ })).not.toBeInTheDocument();
+    await expect(await canvas.findByText('Søker har ingen andre livsoppholdytelser.')).toBeInTheDocument();
+  },
+};
+
+const apiSomHuskerMedLagretAvslag = new FakeAktivitetspengerApiSomHuskerAksjonspunkt([
+  lagVurdering({
+    periode,
+    erVilkårOppfylt: false,
+    begrunnelse: 'Søker mottar kommunal støtte.',
+    avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+    ytelseNavn: 'Kommunal støtte',
+    fritekstVurderingBrev: 'Du mottar kommunal støtte.',
+  }),
+]);
+
+export const BevarerLagretAvslagVedNyInnsending: Story = {
+  args: {
+    api: apiSomHuskerMedLagretAvslag,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        { periode, vilkarStatus: Utfall.IKKE_OPPFYLT, avslagKode: Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHuskerMedLagretAvslag.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('skjemaet er forhåndsutfylt med lagret ytelse og fritekst', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: /Rediger vurdering/ }));
+      await expect(await canvas.findByRole('textbox', { name: 'Skriv inn hvilken ytelse' })).toHaveValue(
+        'Kommunal støtte',
+      );
+      await expect(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).toBeChecked();
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' })).toHaveValue(
+        'Du mottar kommunal støtte.',
+      );
+    });
+
+    await step('ny innsending uten endringer sender de lagrede verdiene', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHuskerMedLagretAvslag.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              {
+                avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+                ytelseNavn: 'Kommunal støtte',
+                begrunnelse: 'Søker mottar kommunal støtte.',
+                erVilkårOppfylt: false,
+                periode,
+                fritekstVurderingBrev: 'Du mottar kommunal støtte.',
+              },
+            ],
+          }),
+        );
+      });
+    });
   },
 };
 
