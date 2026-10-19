@@ -179,7 +179,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
       className={styles.modiaLink}
       href={getModiaPath(fagsakPerson?.personnummer)}
     >
-      <span>Se dialog med søker i Modia</span>
+      <span>Se Modia</span>
       <img alt="Ekstern lenke" className="ml-2 mb-1" src={eksternLinkImageUrl} />
     </Link>
   );
@@ -209,7 +209,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   return (
     <>
       <div className={styles.controlsContainer}>
-        <HStack gap="space-16" align="end">
+        <HStack gap="space-16" align="end" className={styles.dokumenttypeContainer}>
           <UNSAFE_Combobox
             size="small"
             label="Dokumenttype"
