@@ -51,6 +51,8 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
 - [ ] `prosess-unntak` → `BRUK_V2_PROSESS_UNNTAK`
     V2 er ferdig implementert og i bruk i Q. Prod bruker fortsatt v1.
+- [ ] `fakta-om-barnet` → `BRUK_V2_OM_BARNET`
+    V2 (`fakta/om-barnet`) er koblet til i både pleiepenger og opplæringspenger og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert mot reelt aksjonspunkt 9202 i Q ennå.
 
 #### Under arbeid
 - fakta-omsorgen-for (Hallvard)
@@ -89,7 +91,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                             | ~Linjer | Konsumenter                        | Merknad                                                      |
 | --------------------------------- | ------- | ---------------------------------- | ------------------------------------------------------------ |
-| `fakta-om-barnet`                 | 441     | 2 (opl, psb)                       | Fokusert på pleietrengendes dødsfall, 1 aksjonspunkt         |
 | `fakta-verge`                     | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
 | `fakta-overstyr-beregning`        | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
 | `fakta-barn-oms`                  | 903     | 3 (oms, unntak, utvidet-rett)      | Visning av barn-liste, 0 API-avhengigheter                   |
