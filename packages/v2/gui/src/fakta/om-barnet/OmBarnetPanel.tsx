@@ -24,7 +24,7 @@ export const OmBarnetPanel = ({
 }: OmBarnetPanelProps) => {
   const [redigerer, setRedigerer] = useState(false);
 
-  const visVurdering = rettVedDød !== null && !(redigerer && !readOnly);
+  const visVurdering = rettVedDød !== null && (!redigerer || readOnly);
 
   const lagre = async (aksjonspunkt: BekreftRettVedDødAksjonspunkt) => {
     await bekreftRettVedDød(aksjonspunkt);
