@@ -5,7 +5,6 @@ import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.js';
-import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { DokumentfilterGruppe } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
 import { withFakeDokumenterApi } from './mock/withFakeDokumenterApi.js';
 
@@ -101,7 +100,6 @@ const meta = {
   decorators: [
     withQueryClientProvider({ queries: { throwOnError: false } }),
     withK9Kodeverkoppslag(),
-    withFeatureToggles({ DOKUMENTFILTER: true }),
     withFakeDokumenterApi(),
   ],
 } satisfies Meta<typeof DokumenterSakIndex>;

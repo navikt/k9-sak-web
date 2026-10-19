@@ -87,12 +87,12 @@ interface DokumentTypeOption {
 }
 
 /**
- * DocumentListNew
+ * DocumentList
  *
  * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
+const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
   const kv = useContext(K9KodeverkoppslagContext);
   const api = useContext(DokumenterApiContext);
   const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
@@ -347,4 +347,4 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   );
 };
 
-export default DocumentListNew;
+export default DocumentList;

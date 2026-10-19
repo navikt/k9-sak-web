@@ -1,5 +1,5 @@
 import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
-import DocumentListContainer from './components/DocumentListContainer';
+import DocumentList from './components/DocumentList';
 import type { Fagsak } from './types/Fagsak';
 
 interface OwnProps {
@@ -11,7 +11,7 @@ interface OwnProps {
 }
 
 const DokumenterSakIndex = ({ documents, behandlingId, fagsak, saksnummer, behandlingUuid }: OwnProps) => (
-  <DocumentListContainer
+  <DocumentList
     documents={documents}
     behandlingId={behandlingId}
     fagsakPerson={fagsak.person}

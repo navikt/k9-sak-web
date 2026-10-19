@@ -15,12 +15,6 @@
   border-bottom-right-radius: 0;
 }
 
-.image {
-  height: 20px;
-  margin-left: 10px;
-  width: 25px;
-}
-
 .starIcon {
   color: var(--ax-warning-500);
   height: 1.25rem;
@@ -42,11 +36,6 @@
   display: flex;
   margin-left: auto;
   white-space: nowrap;
-}
-
-.externalIcon {
-  margin-bottom: 0.25rem;
-  margin-left: 0.5rem;
 }
 
 .controlsContainer {
