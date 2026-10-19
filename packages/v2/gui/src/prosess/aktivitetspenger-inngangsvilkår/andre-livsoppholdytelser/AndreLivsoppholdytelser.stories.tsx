@@ -123,6 +123,31 @@ export const Oppfylt: Story = {
   },
 };
 
+export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
+  args: {
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        {
+          periode,
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: false,
+          begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+        },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByRole('button', { name: /Rediger vurdering/ })).not.toBeInTheDocument();
+  },
+};
+
 export const IkkeOppfylt: Story = {
   args: {
     andreLivsoppholdytelserVilkår: {
@@ -195,7 +220,7 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
     await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
       await expect(
-        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.', { exact: false }),
+        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.', { exact: false }),
       ).not.toBeInTheDocument();
     });
 
@@ -397,6 +422,67 @@ export const AvbrytTilbakestillerSkjema: Story = {
 
       await expect(await canvas.findByLabelText('Ja')).toBeChecked();
       await expect(canvas.queryByText('Avslagsårsak')).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const AnnenYtelseMedFritekst: Story = {
+  args: {
+    api: apiSomHusker,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Åpne hjelpeteksten', async () => {
+      await userEvent.click(
+        canvas.getByRole('button', { name: 'Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?' }),
+      );
+      await expect(canvas.getByText(/Aktivitetspenger kan som hovedregel ikke mottas samtidig/)).toBeInTheDocument();
+    });
+
+    await step('Velg annen ytelse', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /Vurder om søker mottar andre livsoppholdsytelser/ }),
+        'Søker mottar en ytelse som ikke står i listen.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: 'Hvilken ytelse mottar bruker?' }),
+        AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+      );
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Skriv inn hvilken ytelse' }), 'Kommunal støtte');
+    });
+
+    await step('Legg til fritekst i avslagsbrevet', async () => {
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }),
+        'Søker mottar kommunal støtte.',
+      );
+    });
+
+    await step('Kontroller innsendingen', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                ytelseNavn: 'Kommunal støtte',
+                fritekstVurderingBrev: 'Søker mottar kommunal støtte.',
+              }),
+            ],
+          }),
+        );
+      });
     });
   },
 };

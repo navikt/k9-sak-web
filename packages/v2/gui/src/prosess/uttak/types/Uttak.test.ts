@@ -28,6 +28,19 @@ describe('validerUttak', () => {
     expect(() => validerUttak(uttak)).not.toThrow();
   });
 
+  it('accepts a null uttaksplan', () => {
+    const uttak = {
+      uttaksplan: null,
+      simulertUttaksplan: {},
+    } satisfies Omit<UttaksplanMedUtsattePerioder, 'uttaksplan'> & { uttaksplan: null };
+
+    validerUttak(uttak);
+
+    expect(uttak.uttaksplan).toBeNull();
+    expectTypeOf(uttak).toExtend<Uttak>();
+    expectTypeOf(uttak.uttaksplan).toEqualTypeOf<null>();
+  });
+
   it('rejects kvoteInfo without totaltForbruktKvote', () => {
     const uttak: UttaksplanMedUtsattePerioder = {
       uttaksplan: { kvoteInfo: {} },

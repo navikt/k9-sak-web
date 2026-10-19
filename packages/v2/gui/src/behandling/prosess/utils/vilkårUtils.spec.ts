@@ -1,6 +1,6 @@
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { describe, expect, test } from 'vitest';
-import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import {
   AksjonspunktDefinisjon,
   finnPanelStatus,
@@ -316,11 +316,15 @@ describe('finnPanelStatus', () => {
     expect(finnPanelStatus(true, vilkår, [], [])).toBe(ProcessMenuStepType.default);
   });
 
-  test('returnerer default når noen perioder ikke er relevante', () => {
+  test('returnerer default når alle perioder ikke er relevante', () => {
     const vilkår = [
       {
         perioder: [
-          { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
+          {
+            vurderesIBehandlingen: true,
+            vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+            periode: periode('', ''),
+          },
           {
             vurderesIBehandlingen: true,
             vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
@@ -332,6 +336,28 @@ describe('finnPanelStatus', () => {
       },
     ];
     expect(finnPanelStatus(true, vilkår, [], [])).toBe(ProcessMenuStepType.default);
+  });
+
+  test.each([
+    { status: k9_kodeverk_vilkår_Utfall.OPPFYLT, forventet: ProcessMenuStepType.success },
+    { status: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT, forventet: ProcessMenuStepType.danger },
+    { status: k9_kodeverk_vilkår_Utfall.IKKE_VURDERT, forventet: ProcessMenuStepType.default },
+  ])('ignorerer IKKE_RELEVANT sammen med $status og returnerer $forventet', ({ status, forventet }) => {
+    const vilkår = [
+      {
+        perioder: [
+          {
+            vurderesIBehandlingen: true,
+            vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+            periode: periode('', ''),
+          },
+          { vurderesIBehandlingen: true, vilkarStatus: status, periode: periode('', '') },
+        ],
+        vilkarType: VilkårType.SØKNADSFRIST,
+        relevanteInnvilgetMerknader: [],
+      },
+    ];
+    expect(finnPanelStatus(true, vilkår, [], [])).toBe(forventet);
   });
 
   test('returnerer default når vilkårForSteg er tom', () => {

@@ -1,13 +1,13 @@
-import { Table } from '@navikt/ds-react';
-import styles from './avregningTable.module.css';
-import { createColumns, type RangeOfMonths } from './avregningHelpers';
-import { isUngWeb } from '../../../utils/urlUtils';
-import type { SimuleringResultatPerFagområdeDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringResultatPerFagområdeDto.js';
-import type { SimuleringResultatRadDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringResultatRadDto.js';
 import {
   RadId as avregningCodes,
   type RadId as AvregningRadId,
 } from '@k9-sak-web/backend/combined/kodeverk/økonomi/oppdrag/RadId.js';
+import type { SimuleringResultatPerFagområdeDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringResultatPerFagområdeDto.js';
+import type { SimuleringResultatRadDto } from '@k9-sak-web/backend/combined/kontrakt/simulering/v1/SimuleringResultatRadDto.js';
+import { Table } from '@navikt/ds-react';
+import { isUngdomsprogramytelsen } from '../../../utils/urlUtils';
+import { createColumns, type RangeOfMonths } from './avregningHelpers';
+import styles from './avregningTable.module.css';
 
 type ResultatRadId = Extract<AvregningRadId, 'resultatEtterMotregning' | 'inntrekkNesteMåned' | 'resultat'>;
 
@@ -51,7 +51,7 @@ const ResultatRader = ({
 }: ResultatRaderProps) => {
   const resultater = getResultatRadene(ingenPerioderMedAvvik, resultatPerFagområde, resultatOgMotregningRader);
   const resultaterFiltert = resultater.filter(resultat => {
-    if (isUngWeb() && resultat.feltnavn === avregningCodes.INNTREKK_NESTE_MÅNED) {
+    if (isUngdomsprogramytelsen() && resultat.feltnavn === avregningCodes.INNTREKK_NESTE_MÅNED) {
       return false;
     }
     return true;

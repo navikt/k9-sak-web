@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
-import type { KvoteInfo } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/KvoteInfo.js';
 import { withFakeUttakBackend } from '../../storybook/decorators/withFakeUttakBackend.js';
 import { lagUttak } from '../../storybook/mocks/uttak/uttakStoryMocks.js';
+import type { Uttak } from '../uttak/types/Uttak.js';
 import { AntallDagerLivetsSluttfase } from './AntallDagerLivetsSluttfase.js';
 
-const medKvoteInfo = (kvoteInfo: KvoteInfo | undefined) =>
+const medKvoteInfo = (kvoteInfo: NonNullable<NonNullable<Uttak['uttaksplan']>['kvoteInfo']> | undefined) =>
   withFakeUttakBackend({ uttak: lagUttak([], { uttaksplan: { perioder: {}, kvoteInfo } }) });
 
 const meta = {

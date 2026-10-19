@@ -3,6 +3,8 @@ export {
   aksjonspunkt_getAksjonspunkter,
   aksjonspunkt_overstyr,
   aktivitetspenger_hentBostedGrunnlag,
+  aktivitetspenger_hentVilkårsavklaringer,
+  aktivitetspenger_hentVilkårsavklaringVurderinger,
   avp_getBeregningsgrunnlag,
   avp_getSatsOgUtbetalingPerioderAktivitetspenger,
   avp_hentPerioderSomKanAvkortesAvNavKontor,

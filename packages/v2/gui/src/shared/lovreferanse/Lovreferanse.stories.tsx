@@ -58,7 +58,10 @@ export const AktivitetspengerFårRiktigLenke: Story = {
     await step('Enkeltparagraf lenkes til riktig forskrift', async () => {
       await expect(linkEls()).toHaveLength(1);
       await expect(linkEls()[0]).toHaveTextContent('5');
-      await expect(linkEls()[0]).toHaveAttribute('href', 'https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/§5');
+      await expect(linkEls()[0]).toHaveAttribute(
+        'href',
+        'https://lovdata.no/pro/#document/LF/forskrift/2026-09-27-1944/§5',
+      );
     });
   },
 };

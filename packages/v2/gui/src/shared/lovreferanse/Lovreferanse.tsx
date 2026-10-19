@@ -47,7 +47,7 @@ const berikMedLovdataLenker = (
   if (isUngdomsprogrammet) {
     grunnUrlen = 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/';
   } else if (isAktivitetspenger) {
-    grunnUrlen = 'https://lovdata.no/pro/LTII/forskrift/2026-09-27-1944/';
+    grunnUrlen = 'https://lovdata.no/pro/#document/LF/forskrift/2026-09-27-1944/';
   }
 
   const seksjonsRegex = /(\d+(-\d+)?)/;

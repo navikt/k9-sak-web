@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly buttonLink: string;
+  readonly "endreLink": string;
 };
 export = styles;
+
