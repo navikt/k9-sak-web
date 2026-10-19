@@ -576,7 +576,7 @@ export const AnnenYtelseMedFritekst: Story = {
 
     await step('Åpne hjelpeteksten', async () => {
       await userEvent.click(
-        canvas.getByRole('button', { name: 'Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?' }),
+        await canvas.findByRole('button', { name: 'Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?' }),
       );
       await expect(canvas.getByText(/Aktivitetspenger kan som hovedregel ikke mottas samtidig/)).toBeInTheDocument();
     });
