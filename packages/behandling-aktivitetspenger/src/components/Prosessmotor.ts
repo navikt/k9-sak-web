@@ -311,7 +311,8 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
   const { data: innloggetBruker } = useQuery(innloggetBrukerQueryOptions(api));
   const { data: simuleringResultat } = useQuery(simuleringResultatQueryOptions(api, behandling));
 
-  const erKlar = !vilkårQuery.isFetching && !aksjonspunkterQuery.isFetching && !!vilkår && !!aksjonspunkter;
+  const erKlar =
+    !vilkårQuery.isFetching && !aksjonspunkterQuery.isFetching && !!vilkår && !!aksjonspunkter && !!innloggetBruker;
 
   const prosessteg = useMemo(() => {
     const erOpphør = erAktivitetspengerOpphørsbehandling(behandling);
