@@ -20,7 +20,7 @@ import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { erAktivitetspengerOpphørsbehandling } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 const PROSESS_STEG_KODER = {
@@ -242,35 +242,35 @@ const byggInngangsvilkårPanel = (
   aksjonspunkter: AksjonspunktDto[],
   vilkår: VilkårMedPerioderDto[],
   innloggetBruker: InnloggetAnsattUngV2Dto | undefined,
+  erOpphør: boolean,
 ): ProcessMenuStep => {
-  const type = beregnInngangsvilkårType(aksjonspunkter, vilkår);
+  const panelKonfig = erOpphør ? PANEL_KONFIG.opphør : PANEL_KONFIG.inngangsvilkår;
+  const type = beregnInngangsvilkårType(aksjonspunkter, vilkår, erOpphør);
   const isLocked =
     type === ProcessMenuStepType.success &&
     !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
     !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
 
   return {
-    ...byggPanelUtenVilkår(true, type, PANEL_KONFIG.inngangsvilkår),
+    ...byggPanelUtenVilkår(true, type, panelKonfig),
     locked: isLocked,
   };
 };
 
-const byggOpphørPanel = (
-  aksjonspunkter: AksjonspunktDto[],
-  vilkår: VilkårMedPerioderDto[],
-  innloggetBruker: InnloggetAnsattUngV2Dto | undefined,
-): ProcessMenuStep => {
-  const type = beregnInngangsvilkårType(aksjonspunkter, vilkår, true);
-  const isLocked =
-    type === ProcessMenuStepType.success &&
-    !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
-    !innloggetBruker?.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
-
-  return {
-    ...byggPanelUtenVilkår(true, type, PANEL_KONFIG.opphør),
-    locked: isLocked,
-  };
-};
+const byggStegUtenStatus = (erOpphør: boolean): ProcessMenuStep[] =>
+  [
+    erOpphør ? PANEL_KONFIG.opphør : PANEL_KONFIG.inngangsvilkår,
+    PANEL_KONFIG.medlemskap,
+    PANEL_KONFIG.beregning,
+    PANEL_KONFIG.beregnetUtbetaling,
+    PANEL_KONFIG.simulering,
+    PANEL_KONFIG.vedtak,
+  ].map(({ id, label }) => ({
+    id,
+    label,
+    type: ProcessMenuStepType.default,
+    erVurdert: false,
+  }));
 
 export const beregnSimuleringType = (
   aksjonspunkter: AksjonspunktDto[],
@@ -292,16 +292,34 @@ interface ProsessmotorProps {
   behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat' | 'type' | 'behandlingÅrsaker'>;
 }
 
-export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
-  const { data: vilkår = [] } = useQuery(vilkårQueryOptions(api, behandling));
-  const { data: aksjonspunkter = [] } = useQuery(aksjonspunkterQueryOptions(api, behandling));
+export interface ProsessmotorResultat {
+  prosessteg: ProcessMenuStep[];
+  erKlar: boolean;
+}
+
+export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): ProsessmotorResultat => {
+  const vilkårQuery = useQuery({
+    ...vilkårQueryOptions(api, behandling),
+    placeholderData: keepPreviousData,
+  });
+  const aksjonspunkterQuery = useQuery({
+    ...aksjonspunkterQueryOptions(api, behandling),
+    placeholderData: keepPreviousData,
+  });
+  const { data: vilkår } = vilkårQuery;
+  const { data: aksjonspunkter } = aksjonspunkterQuery;
   const { data: innloggetBruker } = useQuery(innloggetBrukerQueryOptions(api));
   const { data: simuleringResultat } = useQuery(simuleringResultatQueryOptions(api, behandling));
 
-  return useMemo(() => {
-    const inngangsvilkårPanel = erAktivitetspengerOpphørsbehandling(behandling)
-      ? byggOpphørPanel(aksjonspunkter, vilkår, innloggetBruker)
-      : byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker);
+  const erKlar = !vilkårQuery.isFetching && !aksjonspunkterQuery.isFetching && !!vilkår && !!aksjonspunkter;
+
+  const prosessteg = useMemo(() => {
+    const erOpphør = erAktivitetspengerOpphørsbehandling(behandling);
+    if (!vilkår || !aksjonspunkter || !innloggetBruker) {
+      return byggStegUtenStatus(erOpphør);
+    }
+
+    const inngangsvilkårPanel = byggInngangsvilkårPanel(aksjonspunkter, vilkår, innloggetBruker, erOpphør);
     const medlemskapPanel = {
       ...byggVilkårPanel(
         inngangsvilkårPanel.erVurdert && inngangsvilkårPanel.type === ProcessMenuStepType.success,
@@ -359,4 +377,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps) => {
       vedtakPanel,
     ];
   }, [aksjonspunkter, innloggetBruker, vilkår, behandling, simuleringResultat]);
+
+  return { prosessteg, erKlar };
 };
