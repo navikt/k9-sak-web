@@ -52,7 +52,7 @@ const fraVurdering = (vurdering: AndreLivsoppholdsytelserVurderingDto): Vurderin
   harFritekstbrev: !!vurdering.fritekstVurderingBrev,
 });
 
-// Endepunktet gir bare vurderinger for perioder som vurderes i behandlingen. Øvrige perioder vises fra vilkåret.
+// Endepunktet som leverer tidligere vurderinger gir bare vurderinger for perioder som vurderes i behandlingen. Øvrige perioder vises fra vilkåret.
 const fraVilkårsperiode = (periode: VilkårPeriodeVisning): Vurderingsverdier => ({
   begrunnelse: periode.begrunnelse ?? '',
   andreLivsoppholdytelser: utfallTilVurdering(periode.vilkarStatus),
