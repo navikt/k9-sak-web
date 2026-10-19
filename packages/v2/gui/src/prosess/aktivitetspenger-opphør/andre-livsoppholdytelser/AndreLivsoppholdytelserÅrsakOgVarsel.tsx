@@ -189,7 +189,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
     vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   );
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
-  const { avklaringer } = vilkårsavklaringer;
+  const avklaringer = vilkårsavklaringer.perioder.flatMap(periode => (periode.avklaring ? [periode.avklaring] : []));
   const periodData = buildPeriodInputs(andreLivsoppholdytelserVilkår, avklaringer);
   const opphørPeriods = getOpphørPeriods({
     aksjonspunkt: vurderAndreLivsoppholdytelserFaktaAP,

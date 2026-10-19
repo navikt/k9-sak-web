@@ -38,7 +38,7 @@ export const AndreLivsoppholdytelserLesevisning = ({ begrunnelseLabel, vurdering
         <Label size="small" as="p">
           Hvilken ytelse mottar bruker?
         </Label>
-        <BodyShort size="small">{avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
+        <BodyShort size="small">{vurdering.ytelseNavn || avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
       </VStack>
     )}
     {vurdering.andreLivsoppholdytelser === 'ikkeOppfylt' && vurdering.fritekst && (

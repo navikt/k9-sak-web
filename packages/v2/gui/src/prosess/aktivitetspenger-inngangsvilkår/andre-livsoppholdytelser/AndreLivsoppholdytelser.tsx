@@ -11,7 +11,7 @@ import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.j
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { Alert, Box, Button, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -26,7 +26,10 @@ import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBes
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils';
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi';
-import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
+import {
+  andreLivsoppholdsytelserVurderingerQueryOptions,
+  perioderSomKanAvkortesQueryOptions,
+} from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
 import { buildInitialValues, type AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 import { AndreLivsoppholdytelserLesevisning } from './AndreLivsoppholdytelserLesevisning';
 import { AndreLivsoppholdytelserSkjema } from './AndreLivsoppholdytelserSkjema';
@@ -53,6 +56,9 @@ export const AndreLivsoppholdytelser = ({
   isPermanentlyReadOnly,
 }: Props) => {
   const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
+  const {
+    data: { vurderinger },
+  } = useSuspenseQuery(andreLivsoppholdsytelserVurderingerQueryOptions(api, behandling));
   const avkortingsperiodeLivsopphold = avkortingsperioder?.resultat.find(
     v => v.vilkårType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
   );
@@ -82,7 +88,7 @@ export const AndreLivsoppholdytelser = ({
   const selectedPeriode = perioder.find(period => period.id === selectedId);
   const isAndreLivsoppholdytelserApSolved = aksjonspunktErLøst(andreLivsoppholdytelserAp);
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
-    defaultValues: buildInitialValues(søknadsperioder),
+    defaultValues: buildInitialValues(søknadsperioder, vurderinger),
   });
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
@@ -248,7 +254,7 @@ export const AndreLivsoppholdytelser = ({
                 setIsFormLocked(true);
               }}
               onAvbryt={() => {
-                formHook.reset(buildInitialValues(søknadsperioder));
+                formHook.reset(buildInitialValues(søknadsperioder, vurderinger));
                 setIsFormLocked(true);
               }}
             />

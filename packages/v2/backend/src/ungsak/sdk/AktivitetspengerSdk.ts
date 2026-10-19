@@ -18,4 +18,5 @@ export {
   tilbakekrevingsvalg_hentTilbakekrevingValg,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
+  vilkår_hentAndreLivsoppholdsytelserVurderinger,
 } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
