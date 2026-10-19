@@ -12,8 +12,8 @@ import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandlin
 import type { UttakArbeidType } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/UttakArbeidType.js';
 import type { EgneOverlappendeSakerValg } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/EgneOverlappendeSakerValg.js';
 import type { UttaksperiodeInfo } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/UttaksperiodeInfo.js';
-import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import dayjs from 'dayjs';
+import type { Uttak } from '../../../prosess/uttak/types/Uttak.js';
 
 /**
  * Oppretter en mock behandling (sak) med alle påkrevde felt.
@@ -116,12 +116,9 @@ export type PeriodeInit = {
  *
  * @param perioder - Array av periodekonfigurasjoner opprettet med hjelpefunksjoner
  * @param extra - Valgfrie tilleggsfelt (f.eks. virkningsdatoUttakNyeRegler)
- * @returns Et komplett UttaksplanMedUtsattePerioder-objekt med alle påkrevde felt
+ * @returns Et komplett Uttak-objekt med alle påkrevde felt
  */
-export const lagUttak = (
-  perioder: PeriodeInit[],
-  extra: Partial<UttaksplanMedUtsattePerioder> = {},
-): UttaksplanMedUtsattePerioder => {
+export const lagUttak = (perioder: PeriodeInit[], extra: Partial<Uttak> = {}): Uttak => {
   const perioderMap: Record<string, UttaksperiodeInfo> = {};
   perioder.forEach(p => {
     // Beregn tilgjengelig uttaksprosent etter å ha trukket fra tilsynsdekning

@@ -3,7 +3,6 @@ import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrak
 import type { InntektgraderingDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/inntektgradering/InntektgraderingDto.js';
 import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
-import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import type { OverstyrbareAktiviteterForUttakRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/overstyring/OverstyrbareAktiviteterForUttakRequest.js';
 import type { OverstyrbareUttakAktiviterDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrbareUttakAktiviterDto.js';
 import type { OverstyrtUttakDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/overstyring/OverstyrtUttakDto.js';
@@ -17,7 +16,7 @@ export interface FakeUttakBackendConfig {
   inntektsgraderinger?: InntektgraderingDto;
   overstyringer?: OverstyrtUttakDto['overstyringer'];
   egneOverlappendeSaker?: EgneOverlappendeSakerDto;
-  uttak?: UttaksplanMedUtsattePerioder;
+  uttak?: Uttak;
   allowedRanges?: Array<{ fom: string; tom: string }>;
   onBekreftAksjonspunkt?: (requestBody: BekreftedeAksjonspunkterDto) => void;
   onOverstyringUttak?: (requestBody: BekreftetOgOverstyrteAksjonspunkterDto) => void;
@@ -29,7 +28,7 @@ export class FakeUttakBackendApi implements UttakBackendApiType {
   #inntektsgraderinger: InntektgraderingDto;
   #overstyringer: OverstyrtUttakDto['overstyringer'];
   #egneOverlappendeSaker: EgneOverlappendeSakerDto;
-  #uttak: UttaksplanMedUtsattePerioder;
+  #uttak: Uttak;
   #onBekreftAksjonspunkt: ((requestBody: BekreftedeAksjonspunkterDto) => void) | undefined;
   #onOverstyringUttak: ((requestBody: BekreftetOgOverstyrteAksjonspunkterDto) => void) | undefined;
   #allowedRanges: Array<{ fom: string; tom: string }> | undefined;
