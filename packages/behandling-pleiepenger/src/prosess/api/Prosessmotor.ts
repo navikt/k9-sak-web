@@ -7,11 +7,11 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjons
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsresultat/BeregningsresultatMedUtbetaltePeriodeDto.js';
 import type { SimuleringDto } from '@k9-sak-web/backend/k9sak/kontrakt/simulering/v1/SimuleringDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
-import type { UttaksplanMedUtsattePerioder } from '@k9-sak-web/backend/k9sak/tjenester/behandling/uttak/UttaksplanMedUtsattePerioder.js';
 import { finnPanelStatus, sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
 import { useUttakApi } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
 import { uttakQueryOptions } from '@k9-sak-web/gui/prosess/uttak/api/uttakQueryOptions.js';
+import type { Uttak } from '@k9-sak-web/gui/prosess/uttak/types/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -171,7 +171,7 @@ const byggInngangsvilkårFortsetterPanel = (
 // Hjelpefunksjon for å beregne uttak-status
 export const beregnUttakType = (
   aksjonspunkter: AksjonspunktDto[],
-  uttak: UttaksplanMedUtsattePerioder | null,
+  uttak: Uttak | null,
   uttakAksjonspunkter: readonly string[],
 ): ProcessMenuStepType => {
   const harApenAksjonspunkt = aksjonspunkter?.some(
