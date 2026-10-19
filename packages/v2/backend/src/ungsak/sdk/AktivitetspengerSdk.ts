@@ -12,6 +12,8 @@ export {
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,
   fagsak_hentFagsak,
+  formidling_forhåndsvisVedtaksbrev,
+  formidling_vedtaksbrevValg,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   simulering_hentSimuleringResultat,

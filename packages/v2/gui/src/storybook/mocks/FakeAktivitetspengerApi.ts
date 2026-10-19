@@ -1,9 +1,30 @@
 import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/AvkortingsperioderResponse.js';
+import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/VedtaksbrevValgResponse.js';
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
   readonly backend = 'ungsak' as const;
+
+  async vedtaksbrevValg(): Promise<VedtaksbrevValgResponse> {
+    return {
+      harBrev: true,
+      vedtaksbrevValg: [
+        {
+          dokumentMalType: {
+            kilde: 'INNVILGELSE',
+            kode: 'INNVILGELSE',
+            kodeverk: 'DOKUMENT_MAL_TYPE',
+            navn: 'Innvilgelse',
+          },
+        },
+      ],
+    };
+  }
+
+  async forhåndsvisVedtaksbrev(): Promise<Blob> {
+    return new Blob();
+  }
 
   async getAksjonspunkter() {
     return [];

@@ -4,6 +4,7 @@ import { AsyncPollingStatusStatus } from '@k9-sak-web/backend/ungsak/kontrakt/As
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { queryOptions } from '@tanstack/react-query';
+import { ignore404Errors } from '../../app/errorhandling/ignore404Errors.js';
 import { TimeoutError } from '../../app/errorhandling/legacycompat/TimeoutError.js';
 import { delay } from '../../utils/delay.js';
 import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
@@ -148,4 +149,17 @@ export const fagsakQueryOptions = (api: AktivitetspengerApi, saksnummer: string)
   queryOptions({
     queryKey: ['fagsak', saksnummer, api.backend],
     queryFn: () => api.getFagsak(saksnummer),
+  });
+
+export const vedtaksbrevValgQueryOptions = (api: AktivitetspengerApi, behandling: { id?: number; versjon: number }) =>
+  queryOptions({
+    queryKey: ['vedtaksbrevValg', behandling.id, behandling.versjon, api.backend],
+    queryFn: () => {
+      if (behandling.id === undefined) {
+        throw new Error('Behandling ID mangler');
+      }
+      return api.vedtaksbrevValg(behandling.id);
+    },
+    enabled: behandling.id !== undefined,
+    throwOnError: ignore404Errors,
   });

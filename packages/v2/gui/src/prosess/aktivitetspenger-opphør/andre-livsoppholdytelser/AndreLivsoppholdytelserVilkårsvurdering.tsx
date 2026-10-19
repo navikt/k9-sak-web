@@ -20,6 +20,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -181,7 +182,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
               <Alert variant="success" size="small">
                 Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
               </Alert>
-              <Box>
+              <HStack gap="space-8" align="start">
                 <Button
                   variant="primary"
                   data-color="accent"
@@ -192,7 +193,8 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                 >
                   Send til beslutter
                 </Button>
-              </Box>
+                <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+              </HStack>
             </VStack>
           ) : null
         }
@@ -284,7 +286,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
               {!isFormLocked && (
                 <HStack gap="space-16">
                   <Button type="submit" size="small" loading={isPending}>
-                    Send til beslutter
+                    Bekreft og fortsett
                   </Button>
                   {defaultIsLocked && (
                     <Button type="button" size="small" variant="secondary" onClick={() => setIsFormLocked(true)}>

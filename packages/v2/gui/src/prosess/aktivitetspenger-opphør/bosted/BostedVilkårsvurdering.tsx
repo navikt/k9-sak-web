@@ -24,6 +24,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -185,7 +186,7 @@ export const BostedVilkårsvurdering = ({
               <Alert variant="success" size="small">
                 Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
               </Alert>
-              <Box>
+              <HStack gap="space-8" align="start">
                 <Button
                   variant="primary"
                   data-color="accent"
@@ -196,7 +197,8 @@ export const BostedVilkårsvurdering = ({
                 >
                   Send til beslutter
                 </Button>
-              </Box>
+                <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+              </HStack>
             </VStack>
           ) : null
         }
