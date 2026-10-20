@@ -220,6 +220,7 @@ export const AktivitetspengerOpphør = ({
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                 bostedGrunnlag={bostedGrunnlag}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+                lokalkontorBeslutterAP={lokalkontorBeslutterAP}
               />
             )}
             {andreLivsoppholdytelserVilkår && isBehandlingsårsakAndreLivsoppholdytelser && (
@@ -231,6 +232,7 @@ export const AktivitetspengerOpphør = ({
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
+                lokalkontorBeslutterAP={lokalkontorBeslutterAP}
               />
             )}
           </Tabs.Panel>

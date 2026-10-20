@@ -19,7 +19,7 @@ import {
   behandlinger_hentLovligeBehandlingsoperasjoner,
   fagsak_hentFagsak,
   formidling_forhåndsvisVedtaksbrev,
-  formidling_vedtaksbrevValg,
+  formidling_vedtaksbrevValgForNavKontor,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   simulering_hentSimuleringResultat,
@@ -143,7 +143,7 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   }
 
   async vedtaksbrevValg(behandlingId: number) {
-    return (await formidling_vedtaksbrevValg({ query: { behandlingId: `${behandlingId}` } })).data;
+    return (await formidling_vedtaksbrevValgForNavKontor({ query: { behandlingId: `${behandlingId}` } })).data;
   }
 
   async forhåndsvisVedtaksbrev(behandlingId: number, dokumentMalType: DokumentMalType) {

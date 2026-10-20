@@ -113,6 +113,7 @@ interface Props {
   isPermanentlyReadOnly: boolean;
   bostedGrunnlag: BostedGrunnlagResponseDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
+  lokalkontorBeslutterAP?: AksjonspunktDto;
 }
 
 export const BostedVilkårsvurdering = ({
@@ -125,6 +126,7 @@ export const BostedVilkårsvurdering = ({
   readOnly,
   isPermanentlyReadOnly,
   bostedGrunnlag,
+  lokalkontorBeslutterAP,
 }: Props) => {
   const periods = buildPeriods(bostedVilkår);
   const formHook = useForm<FormData>({
@@ -178,7 +180,7 @@ export const BostedVilkårsvurdering = ({
         periodListLabel="Alle perioder"
         lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
-        readOnly={selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error' || readOnly}
+        readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         afterEditButton={
           erLokalkontorForeslårAPÅpent ? (
@@ -200,6 +202,8 @@ export const BostedVilkårsvurdering = ({
                 <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
               </HStack>
             </VStack>
+          ) : lokalkontorBeslutterAP ? (
+            <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
           ) : null
         }
         lockedContent={
@@ -278,6 +282,7 @@ export const BostedVilkårsvurdering = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
+                  readOnly={isFormLocked}
                 />
               )}
               {flyttetFraTrondheim === 'ja' && (erÅrsakTilOpphørAnnet || harFritekstbrev) && (

@@ -13,7 +13,7 @@ export {
   behandlinger_hentLovligeBehandlingsoperasjoner,
   fagsak_hentFagsak,
   formidling_forhåndsvisVedtaksbrev,
-  formidling_vedtaksbrevValg,
+  formidling_vedtaksbrevValgForNavKontor,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   simulering_hentSimuleringResultat,

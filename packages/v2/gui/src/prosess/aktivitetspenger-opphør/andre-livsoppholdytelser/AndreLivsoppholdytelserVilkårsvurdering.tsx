@@ -45,6 +45,7 @@ interface Props {
   onAksjonspunktBekreftet: () => void;
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
+  lokalkontorBeslutterAP?: AksjonspunktDto;
 }
 
 const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
@@ -110,6 +111,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
+  lokalkontorBeslutterAP,
 }: Props) => {
   const queryClient = useQueryClient();
   const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(
@@ -196,6 +198,8 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                 <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
               </HStack>
             </VStack>
+          ) : lokalkontorBeslutterAP ? (
+            <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
           ) : null
         }
       >
@@ -269,6 +273,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
+                  readOnly={isFormLocked}
                 />
               )}
               {harFritekstbrev && (

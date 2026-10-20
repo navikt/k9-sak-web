@@ -9,7 +9,7 @@ import type { VilkårLivsoppholdsytelserPeriodeVurderingDto } from '@k9-sak-web/
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Box, Button, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -22,6 +22,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils';
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -37,6 +38,7 @@ import { AndreLivsoppholdytelserSkjema } from './AndreLivsoppholdytelserSkjema';
 interface Props {
   andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
   andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -48,6 +50,7 @@ interface Props {
 export const AndreLivsoppholdytelser = ({
   andreLivsoppholdytelserAp,
   lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
   andreLivsoppholdytelserVilkår,
   readOnly,
   api,
@@ -167,7 +170,7 @@ export const AndreLivsoppholdytelser = ({
     </span>
   );
   const harAvslagIAndreLivsoppholdytelser = andreLivsoppholdytelserVilkår.perioder?.some(
-    p => p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
   );
   const skalViseSendTilBeslutter =
     !!harAvslagIAndreLivsoppholdytelser &&
@@ -218,7 +221,7 @@ export const AndreLivsoppholdytelser = ({
               <Alert variant="info" size="small">
                 Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
               </Alert>
-              <Box>
+              <HStack gap="space-8" align="start">
                 <Button
                   variant="primary"
                   data-color="accent"
@@ -229,8 +232,11 @@ export const AndreLivsoppholdytelser = ({
                 >
                   Send til beslutter
                 </Button>
-              </Box>
+                <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+              </HStack>
             </VStack>
+          ) : lokalkontorBeslutterAp && harAvslagIAndreLivsoppholdytelser ? (
+            <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
           ) : null
         }
         lockedContent={
