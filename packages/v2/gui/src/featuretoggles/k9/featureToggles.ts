@@ -34,7 +34,6 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_DELING_AV_DAGER: true,
   BRUK_V2_PROSESS_UNNTAK: true,
   BRUK_V2_OM_BARNET: true,
-  REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: true,
 });
 
 /**
