@@ -60,12 +60,16 @@ const getDirectionText = (document: DokumentDto): string => {
   return 'Intern';
 };
 
+const modiaDevHosts = new Set(['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no', 'aktivitetspenger.intern.dev.nav.no']);
+
+const modiaProdHosts = new Set(['k9.intern.nav.no', 'ung.intern.nav.no', 'aktivitetspenger.intern.nav.no']);
+
 const getModiaPath = (fødselsnummer?: string) => {
   const { host } = window.location;
-  if (host === 'k9.intern.dev.nav.no' || host === 'ung.intern.dev.nav.no') {
+  if (modiaDevHosts.has(host)) {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
-  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no') {
+  if (modiaProdHosts.has(host)) {
     return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   return '#';
@@ -78,6 +82,8 @@ interface OwnProps {
   saksnummer: number;
   behandlingUuid: string;
   sakstype: FagsakYtelsesType;
+  // Ung har ikke tilgang til k9-sak-kodeverket, og dokumentene har ikke dokumentgruppe
+  visDokumentgrupper?: boolean;
 }
 
 interface DokumentTypeOption {
@@ -87,15 +93,23 @@ interface DokumentTypeOption {
 }
 
 /**
- * DocumentListNew
+ * DocumentList
  *
  * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
+const DocumentList = ({
+  documents,
+  behandlingId,
+  fagsakPerson,
+  saksnummer,
+  behandlingUuid,
+  sakstype,
+  visDokumentgrupper = true,
+}: OwnProps) => {
   const kv = useContext(K9KodeverkoppslagContext);
   const api = useContext(DokumenterApiContext);
-  const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
+  const dokumentFilterGrupper = visDokumentgrupper ? kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper') : [];
 
   const dokumentTypeAlternativer: DokumentTypeOption[] = [
     { label: 'Vis kun dokumenter fra denne behandlingen', value: KUN_DENNE_BEHANDLINGEN },
@@ -179,7 +193,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
       className={styles.modiaLink}
       href={getModiaPath(fagsakPerson?.personnummer)}
     >
-      <span>Se dialog med søker i Modia</span>
+      <span>Se Modia</span>
       <img alt="Ekstern lenke" className="ml-2 mb-1" src={eksternLinkImageUrl} />
     </Link>
   );
@@ -209,7 +223,7 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   return (
     <>
       <div className={styles.controlsContainer}>
-        <HStack gap="space-16" align="end">
+        <HStack gap="space-16" align="end" className={styles.dokumenttypeContainer}>
           <UNSAFE_Combobox
             size="small"
             label="Dokumenttype"
@@ -347,4 +361,4 @@ const DocumentListNew = ({ documents, behandlingId, fagsakPerson, saksnummer, be
   );
 };
 
-export default DocumentListNew;
+export default DocumentList;

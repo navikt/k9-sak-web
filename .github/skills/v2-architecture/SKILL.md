@@ -4,7 +4,8 @@ description: >-
   Patterns and rules for writing code in packages/v2/. USE FOR: creating new
   components in v2/, using the OpenAPI-generated backend client, structuring
   API contracts, import conventions with .js suffix, and migrating old code
-  to v2.
+  to v2. For removing a toggle that switches between v1 and v2 and deleting the
+  v1 code, use the v1-cleanup skill.
 ---
 
 # v2 Architecture
@@ -59,7 +60,8 @@ Only apply these steps when replacing an existing fakta/prosess panel. Work thro
 ### Feature toggle
 
 - [ ] `BRUK_V2_<FEATURE>: false` added to `rootFeatureToggles` in `FeatureToggles.ts`
-- [ ] Toggle enabled in `qFeatureToggles` in `k9/featureToggles.ts` for Q; after validation, remove the toggle and v1 code together so v2 becomes the default in Q and prod
+- [ ] Toggle enabled in `qFeatureToggles` in `k9/featureToggles.ts` for Q; after validation, remove the toggle and v1 code together so v2 becomes the default in Q and prod (see the `v1-cleanup` skill)
+- [ ] Panel added under "Under migrering → Feature togglet" in `packages/v2/MIGRATION.md` with its toggle name
 - [ ] Ask the user whether they want a v1/v2 toggle using `VersjonsvelgerV1V2` for manual regression testing. Only add the versjonsvelger if they say yes.
 
 ### FaktaPanelDef wiring (one per behandling package)
@@ -261,7 +263,7 @@ All migrations from old packages to v2 MUST be guarded by a feature toggle so bo
 
 1. Add `BRUK_V2_MY_FEATURE: false` to `rootFeatureToggles` in [FeatureToggles.ts](../../../packages/v2/gui/src/featuretoggles/FeatureToggles.ts)
 2. In [k9/featureToggles.ts](../../../packages/v2/gui/src/featuretoggles/k9/featureToggles.ts), add it to `qFeatureToggles` with `true` to enable in Q
-3. After validating v2 in Q, remove the toggle and old v1 implementation together so v2 becomes the default in both Q and prod.
+3. After validating v2 in Q, remove the toggle and old v1 implementation together so v2 becomes the default in both Q and prod. Follow the `v1-cleanup` skill.
 
 ### Using a toggle in a FaktaPanelDef
 
@@ -288,6 +290,10 @@ type _VenterPåSletting =
 Note: Use the inline `import(...)` form so you don't need to add a top-level import just for the guard.
 
 The `FeatureToggles['BRUK_V2_MY_FEATURE']` lookup will fail with `Property 'BRUK_V2_MY_FEATURE' does not exist on type 'FeatureToggles'` the moment the key is deleted, making it impossible to merge that deletion without also cleaning up the v1 code.
+
+### Finishing the migration — removing v1
+
+When v2 is validated in Q and should become the default in prod, remove the toggle and delete all v1 code tied to it in the same PR. Follow the `v1-cleanup` skill (`.github/skills/v1-cleanup/SKILL.md`).
 
 ## Suspense boundary — required for `useSuspenseQuery`
 

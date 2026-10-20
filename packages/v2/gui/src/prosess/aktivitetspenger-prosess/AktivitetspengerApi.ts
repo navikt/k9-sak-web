@@ -16,6 +16,7 @@ import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/
 import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/VedtaksbrevValgResponse.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
+import type { AndreLivsoppholdsytelserVurderingerResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type {
   VilkårsavklaringerDto,
@@ -47,6 +48,7 @@ export interface AktivitetspengerApi {
   getInnloggetBruker(): Promise<InnloggetAnsattUngV2Dto>;
   getSatsOgUtbetalingPerioder(behandlingUuid: string): Promise<AktivitetspengerUtbetaltMånedDto[]>;
   hentPerioderSomKanAvkortes(behandlingUuid: string): Promise<AvkortingsperioderResponse>;
+  hentAndreLivsoppholdsytelserVurderinger(behandlingUuid: string): Promise<AndreLivsoppholdsytelserVurderingerResponse>;
   bekreftAksjonspunkt(
     behandlingUuid: string,
     behandlingVersjon: number,

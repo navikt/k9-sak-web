@@ -22,7 +22,6 @@ const rootFeatureToggles = {
   SINGLE_AUTHFIXER: false,
   VIS_INNLEGGELSE_FOR_PILS: false,
   VIS_GLOBAL_ERRORMODAL: false,
-  DOKUMENTFILTER: false,
   BRUK_V2_ARBEID_OG_INNTEKT: false,
   BRUK_V2_DIREKTE_OVERGANG: false,
   BRUK_V2_FEILUTBETALING: false,
@@ -31,7 +30,6 @@ const rootFeatureToggles = {
   BRUK_V2_DELING_AV_DAGER: false,
   BRUK_V2_PROSESS_UNNTAK: false,
   BRUK_V2_OM_BARNET: false,
-  REAKTIVER_AKSJONSPUNKT_NY_INNTEKT: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**

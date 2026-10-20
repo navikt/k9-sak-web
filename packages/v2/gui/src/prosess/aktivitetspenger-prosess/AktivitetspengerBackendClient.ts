@@ -26,6 +26,7 @@ import {
   tilbakekrevingsvalg_hentTilbakekrevingValg,
   totrinnskontroll_hentTotrinnskontrollSkjermlenkeContext,
   vilkår_getVilkårV3,
+  vilkår_hentAndreLivsoppholdsytelserVurderinger,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import type { AktivitetspengerApi, BehandlingStatusEllerBehandling } from './AktivitetspengerApi.js';
 
@@ -101,6 +102,10 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async hentPerioderSomKanAvkortes(behandlingUuid: string) {
     return (await avp_hentPerioderSomKanAvkortesAvNavKontor({ query: { behandlingUuid } })).data;
+  }
+
+  async hentAndreLivsoppholdsytelserVurderinger(behandlingUuid: string) {
+    return (await vilkår_hentAndreLivsoppholdsytelserVurderinger({ query: { behandlingUuid } })).data;
   }
 
   async getInnloggetBruker() {

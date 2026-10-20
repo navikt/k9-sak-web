@@ -133,6 +133,12 @@ export const perioderSomKanAvkortesQueryOptions = (api: AktivitetspengerApi, beh
     queryFn: () => api.hentPerioderSomKanAvkortes(behandling.uuid),
   });
 
+export const andreLivsoppholdsytelserVurderingerQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['andre-livsoppholdsytelser-vurderinger', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.hentAndreLivsoppholdsytelserVurderinger(behandling.uuid),
+  });
+
 export const simuleringResultatQueryOptions = (api: AktivitetspengerApi, behandling: Behandling, enabled = true) =>
   queryOptions({
     queryKey: ['simuleringResultat', behandling.uuid, behandling.versjon, enabled, api.backend],

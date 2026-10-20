@@ -371,16 +371,23 @@ export const AndreLivsoppholdytelser: Story = {
 
 const fakeVilkårsavklaringer = {
   vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
-  avklaringer: [
+  perioder: [
     {
-      avklaringtype: Avklaringtype.OPPHØR,
-      begrunnelseIkkeVarsel: 'Bruker varslet om endringen selv.',
-      fritekstTilVarsel: 'Arbeidsavklaringspenger',
-      ikkeOppfyltÅrsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
-      kilde: 'NAV',
       periode: { fom: '2026-01-29', tom: '2026-12-31' },
-      referanse: 'andre-livsoppholdsytelser-ref',
-      skalSendeVarsel: false,
+      utfall: Utfall.IKKE_OPPFYLT,
+      avklaring: {
+        avklaringtype: Avklaringtype.OPPHØR,
+        begrunnelseIkkeVarsel: 'Bruker varslet om endringen selv.',
+        fritekstTilVarsel: 'Arbeidsavklaringspenger',
+        ikkeOppfyltÅrsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+        kilde: 'NAV',
+        periode: { fom: '2026-01-29', tom: '2026-12-31' },
+        referanse: 'andre-livsoppholdsytelser-ref',
+        skalSendeVarsel: false,
+        foreslåttIBehandlingen: true,
+        vurdertAv: 'Z123456',
+        vurdertTidspunkt: '2026-01-29T10:00:00',
+      },
     },
   ],
 } satisfies VilkårsavklaringerDto;
