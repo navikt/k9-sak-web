@@ -78,6 +78,8 @@ interface OwnProps {
   saksnummer: number;
   behandlingUuid: string;
   sakstype: FagsakYtelsesType;
+  // Ung har ikke tilgang til k9-sak-kodeverket, og dokumentene har ikke dokumentgruppe
+  visDokumentgrupper?: boolean;
 }
 
 interface DokumentTypeOption {
@@ -92,10 +94,18 @@ interface DokumentTypeOption {
  * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
+const DocumentList = ({
+  documents,
+  behandlingId,
+  fagsakPerson,
+  saksnummer,
+  behandlingUuid,
+  sakstype,
+  visDokumentgrupper = true,
+}: OwnProps) => {
   const kv = useContext(K9KodeverkoppslagContext);
   const api = useContext(DokumenterApiContext);
-  const dokumentFilterGrupper = kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper');
+  const dokumentFilterGrupper = visDokumentgrupper ? kv.k9sak.alleKodeverdierForKodeverk('dokumentFilterGrupper') : [];
 
   const dokumentTypeAlternativer: DokumentTypeOption[] = [
     { label: 'Vis kun dokumenter fra denne behandlingen', value: KUN_DENNE_BEHANDLINGEN },

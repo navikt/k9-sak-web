@@ -163,3 +163,16 @@ export const FiltrerSøknaderOgEttersendelser: Story = {
   },
   render,
 };
+
+export const UtenDokumentgrupper: Story = {
+  args: { ...defaultArgs, documents: dokumenter, visDokumentgrupper: false },
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('combobox', { name: 'Dokumenttype' }));
+    await expect(canvas.getByRole('option', { name: 'Inngående dokumenter' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('option', { name: 'Inntektsmelding' })).not.toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('option', { name: 'Utgående dokumenter' }));
+    await expect(canvas.getByRole('link', { name: 'Innvilgelsesbrev' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('link', { name: 'Søknad om pleiepenger' })).not.toBeInTheDocument();
+  },
+  render,
+};
