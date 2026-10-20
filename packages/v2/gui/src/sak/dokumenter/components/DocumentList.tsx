@@ -60,12 +60,16 @@ const getDirectionText = (document: DokumentDto): string => {
   return 'Intern';
 };
 
+const modiaDevHosts = new Set(['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no', 'aktivitetspenger.intern.dev.nav.no']);
+
+const modiaProdHosts = new Set(['k9.intern.nav.no', 'ung.intern.nav.no', 'aktivitetspenger.intern.nav.no']);
+
 const getModiaPath = (fødselsnummer?: string) => {
   const { host } = window.location;
-  if (host === 'k9.intern.dev.nav.no' || host === 'ung.intern.dev.nav.no') {
+  if (modiaDevHosts.has(host)) {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
-  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no') {
+  if (modiaProdHosts.has(host)) {
     return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   return '#';
