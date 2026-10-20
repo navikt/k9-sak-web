@@ -516,7 +516,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering: Story = {
     });
 
     await step('Send vurderingen til beslutter', async () => {
-      await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
       await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
         fakeAndreLivsoppholdytelserBehandling.uuid,
         fakeAndreLivsoppholdytelserBehandling.versjon,
@@ -553,7 +553,7 @@ export const AndreLivsoppholdytelserVilkårsvurderingUtenFritekst: Story = {
     );
     await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
     await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
-    await userEvent.click(canvas.getByRole('button', { name: /send til beslutter/i }));
+    await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
     await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
       fakeAndreLivsoppholdytelserBehandling.uuid,
       fakeAndreLivsoppholdytelserBehandling.versjon,
@@ -585,7 +585,7 @@ export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
 
     await step('Skjemaet er låst etter vurdering', async () => {
       await expect(canvas.getByText('Vilkårsvurdering')).toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: /send til beslutter/i })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
     });
   },
 };

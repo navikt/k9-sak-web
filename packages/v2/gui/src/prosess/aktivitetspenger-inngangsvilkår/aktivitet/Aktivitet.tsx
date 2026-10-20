@@ -9,7 +9,7 @@ import type { VilkårAktivitetPeriodeVurderingDto } from '@k9-sak-web/backend/un
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Box, Button, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -22,6 +22,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils';
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -35,6 +36,7 @@ interface Props {
   vurderAktivitetsvilkårVilkår: VilkårMedPerioderDto;
   vurderAktivitetsvilkårAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => Promise<void>;
@@ -46,6 +48,7 @@ export const Aktivitet = ({
   vurderAktivitetsvilkårVilkår,
   vurderAktivitetsvilkårAp,
   lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
   api,
   behandling,
   onAksjonspunktBekreftet,
@@ -155,6 +158,9 @@ export const Aktivitet = ({
   );
   const lokalkontorKanSendeTilBeslutter =
     !readOnly && !!lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp);
+  const harAvslagIAktivitet = vurderAktivitetsvilkårVilkår.perioder?.some(
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
 
   if (!vurderAktivitetsvilkårVilkår) {
     return null;
@@ -200,7 +206,7 @@ export const Aktivitet = ({
               <Alert variant="success" size="small">
                 Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
               </Alert>
-              <Box>
+              <HStack gap="space-8" align="start">
                 <Button
                   variant="primary"
                   data-color="accent"
@@ -211,8 +217,11 @@ export const Aktivitet = ({
                 >
                   Send til beslutter
                 </Button>
-              </Box>
+                {harAvslagIAktivitet && <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />}
+              </HStack>
             </VStack>
+          ) : lokalkontorBeslutterAp && harAvslagIAktivitet ? (
+            <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
           ) : null
         }
         lockedContent={

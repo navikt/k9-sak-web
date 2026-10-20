@@ -353,6 +353,7 @@ export const AktivitetspengerInngangsvilkår = ({
                   vurderAktivitetsvilkårVilkår={inngangsvilkårdata.vurderAktivitetsvilkårVilkår}
                   vurderAktivitetsvilkårAp={inngangsvilkårdata.vurderAktivitetsvilkårAp}
                   lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                  lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                   api={api}
                   behandling={behandling}
                   onAksjonspunktBekreftet={onAksjonspunktBekreftet}
