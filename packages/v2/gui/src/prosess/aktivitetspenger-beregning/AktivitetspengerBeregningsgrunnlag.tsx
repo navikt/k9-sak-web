@@ -37,7 +37,10 @@ const AktivitetspengerBeregningsgrunnlag = ({ data }: Props) => {
       <VStack gap="space-36">
         <Box padding="space-16" background="info-soft" width="fit-content">
           <InlineMessage size="small" status="info">
-            Skjæringstidspunkt for beregning {formatDate(data.skjæringstidspunkt)}
+            <HStack gap="space-8" align="center">
+              Skjæringstidspunkt for beregning {formatDate(data.skjæringstidspunkt)}
+              <HelpText placement="right">Tidspunkt for endringen som utløste rett til støtte fra Nav</HelpText>
+            </HStack>
           </InlineMessage>
         </Box>
         <div>
