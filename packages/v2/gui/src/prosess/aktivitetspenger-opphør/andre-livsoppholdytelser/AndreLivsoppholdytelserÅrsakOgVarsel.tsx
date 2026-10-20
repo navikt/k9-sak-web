@@ -10,7 +10,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, HStack, InfoCard, List, ReadMore, VStack } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort, Button, HStack, InfoCard, Link, List, ReadMore, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect, RhfTextField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -295,21 +295,60 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                   name={`perioder.${selectedId}.livsoppholdytelse`}
                   label="Hvilken ytelse mottar bruker?"
                   description={
-                    <ReadMore header="Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?" size="small">
-                      <BodyShort size="small" spacing>
-                        Aktivitetspenger kan som hovedregel ikke mottas samtidig med andre ytelser som skal sikre
-                        inntekt til livsopphold. Det gjelder alle livsoppholdsytelser, både i og utenfor Nav.
-                      </BodyShort>
-                      <BodyShort size="small" spacing>
-                        Det finnes noen unntak. Bruker kan motta aktivitetspenger samtidig med:
-                      </BodyShort>
-                      <List size="small">
-                        <List.Item>økonomisk stønad (sosialtjenesteloven § 18 og § 19)</List.Item>
-                        <List.Item>sykepenger (folketrygdloven kapittel 8)</List.Item>
-                        <List.Item>
-                          stønad ved barns eller andre nærståendes sykdom (folketrygdloven kapittel 9)
-                        </List.Item>
-                      </List>
+                    <ReadMore size="small" header="Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?">
+                      <VStack gap="space-20">
+                        <BodyLong size="small">
+                          Aktivitetspenger kan som hovedregel ikke mottas samtidig med andre ytelser som skal sikre
+                          inntekt til livsopphold. Det gjelder alle livsoppholdsytelser, både i og utenfor Nav.
+                        </BodyLong>
+                        <VStack gap="space-8">
+                          <BodyShort size="small">
+                            Det finnes noen unntak. Bruker kan motta aktivitetspenger samtidig med:
+                          </BodyShort>
+                          <List size="small">
+                            <List.Item>
+                              økonomisk stønad (
+                              <Link
+                                href="https://lovdata.no/pro/#document/NL/lov/2009-12-18-131/%C2%A718"
+                                target="_blank"
+                              >
+                                sosialtjenesteloven § 18
+                              </Link>{' '}
+                              og{' '}
+                              <Link
+                                href="https://lovdata.no/pro/#document/NL/lov/2009-12-18-131/%C2%A719"
+                                target="_blank"
+                              >
+                                § 19
+                              </Link>
+                              )
+                            </List.Item>
+                            <List.Item>
+                              stønad ved barns eller andre nærståendes sykdom (
+                              <Link href="https://lovdata.no/pro/#document/NL/lov/1997-02-28-19/kap9" target="_blank">
+                                folketrygdloven kapittel 9
+                              </Link>
+                              )
+                            </List.Item>
+                            <List.Item>
+                              lån og stipend til utdanning (
+                              <Link href="https://lovdata.no/pro/#document/SF/forskrift/2020-04-15-798" target="_blank">
+                                forskrift om utdanningsstøtte
+                              </Link>
+                              )
+                            </List.Item>
+                          </List>
+                        </VStack>
+                        <BodyLong size="small">
+                          Et medlem som allerede mottar sykepenger på tidspunktet hen setter fram krav om
+                          aktivitetspenger, skal først benytte retten til sykepenger fullt ut.
+                        </BodyLong>
+                        <BodyLong size="small">
+                          Mottak av stønad ved barns og andre nærståendes sykdom vil føre til reduksjon av
+                          aktivitetspenger, se §&nbsp;14. Det samme vil skje hvis en person har tjent opp rett til
+                          sykepenger etter oppstart med aktivitetspenger.
+                        </BodyLong>
+                      </VStack>
                     </ReadMore>
                   }
                   readOnly={isFormLocked}

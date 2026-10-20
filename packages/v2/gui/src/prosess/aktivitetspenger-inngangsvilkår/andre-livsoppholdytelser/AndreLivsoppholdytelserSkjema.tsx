@@ -53,7 +53,7 @@ export const AndreLivsoppholdytelserSkjema = ({
           maxLength={begrunnelseMaxLength}
           description={
             <ReadMore size="small" header="Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?">
-              <VStack gap="space-24">
+              <VStack gap="space-20">
                 <BodyLong size="small">
                   Aktivitetspenger kan som hovedregel ikke mottas samtidig med andre ytelser som skal sikre inntekt til
                   livsopphold. Det gjelder alle livsoppholdsytelser, både i og utenfor Nav.
@@ -93,6 +93,11 @@ export const AndreLivsoppholdytelserSkjema = ({
                 <BodyLong size="small">
                   Et medlem som allerede mottar sykepenger på tidspunktet hen setter fram krav om aktivitetspenger, skal
                   først benytte retten til sykepenger fullt ut.
+                </BodyLong>
+                <BodyLong size="small">
+                  Mottak av stønad ved barns og andre nærståendes sykdom vil føre til reduksjon av aktivitetspenger, se
+                  §&nbsp;14. Det samme vil skje hvis en person har tjent opp rett til sykepenger etter oppstart med
+                  aktivitetspenger.
                 </BodyLong>
               </VStack>
             </ReadMore>
