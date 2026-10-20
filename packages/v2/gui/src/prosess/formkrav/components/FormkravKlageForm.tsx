@@ -45,7 +45,9 @@ const getKlagbareVedtak = (
     </option>,
   ];
   return klagBareVedtak.concat(
-    avsluttedeBehandlinger.map(behandling => {
+    [...avsluttedeBehandlinger]
+      .sort((a, b) => b.avsluttet!.localeCompare(a.avsluttet!))
+      .map(behandling => {
       const getVisningsnavn = () => {
         if ('visningsnavn' in behandling && formaterVisningsnavn(behandling.visningsnavn)) {
           return formaterVisningsnavn(behandling.visningsnavn);
