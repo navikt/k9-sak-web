@@ -6,6 +6,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
@@ -35,6 +36,12 @@ const createApi = (overrides?: ApiOverrides): AktivitetspengerApi =>
     getAksjonspunkter: async () => overrides?.aksjonspunkter ?? [],
     getInnloggetBruker: async () => overrides?.innloggetBruker ?? {},
     getSimuleringResultat: async () => overrides?.simuleringResultat ?? null,
+  });
+
+const createApiWithUnresolvedQueries = (): AktivitetspengerApi =>
+  Object.assign(createApi(), {
+    getVilkår: () => new Promise<Awaited<ReturnType<AktivitetspengerApi['getVilkår']>>>(() => {}),
+    getAksjonspunkter: () => new Promise<Awaited<ReturnType<AktivitetspengerApi['getAksjonspunkter']>>>(() => {}),
   });
 
 const createVilkår = (vilkarStatus: Utfall, type: ung_kodeverk_vilkår_VilkårType) => ({
@@ -72,8 +79,8 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current).toHaveLength(6);
-      expect(result.current.map(panel => panel.label)).toEqual([
+      expect(result.current.prosessteg).toHaveLength(6);
+      expect(result.current.prosessteg.map(panel => panel.label)).toEqual([
         'Inngangsvilkår',
         'Medlemskap',
         'Beregning',
@@ -81,6 +88,37 @@ describe('Prossesmotor', () => {
         'Simulering',
         'Vedtak',
       ]);
+    });
+  });
+
+  test('returnerer steg uten status mens vilkår og aksjonspunkter lastes', () => {
+    const api = createApiWithUnresolvedQueries();
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    expect(result.current.erKlar).toBe(false);
+    expect(result.current.prosessteg).toHaveLength(6);
+    expect(result.current.prosessteg.map(steg => steg.id)).toEqual([
+      prosessStegCodes.INNGANGSVILKAR,
+      prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
+      prosessStegCodes.BEREGNING,
+      prosessStegCodes.KONTROLL_AV_INNTEKT,
+      prosessStegCodes.SIMULERING,
+      prosessStegCodes.VEDTAK,
+    ]);
+    expect(result.current.prosessteg.every(steg => steg.type === ProcessMenuStepType.default)).toBe(true);
+    expect(result.current.prosessteg.every(steg => steg.locked !== true)).toBe(true);
+  });
+
+  test('er klar når vilkår og aksjonspunkter er lastet', async () => {
+    const api = createApi();
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.erKlar).toBe(true);
     });
   });
 
@@ -99,9 +137,9 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[0].type).toBe(ProcessMenuStepType.warning);
-      expect(result.current[1].type).toBe(ProcessMenuStepType.default);
-      expect(result.current[2].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.default);
     });
   });
 
@@ -115,8 +153,8 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[0].type).toBe(ProcessMenuStepType.danger);
-      expect(result.current[1].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.danger);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.default);
     });
   });
 
@@ -136,8 +174,8 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[0].type).toBe(ProcessMenuStepType.success);
-      expect((result.current[0] as { locked?: boolean }).locked).toBe(true);
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[0].locked).toBe(true);
     });
   });
 
@@ -157,7 +195,7 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[5].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.warning);
     });
   });
 
@@ -187,7 +225,7 @@ describe('Prossesmotor', () => {
     );
 
     await waitFor(() => {
-      expect(result.current[5].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.success);
     });
   });
 
@@ -210,8 +248,8 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[2].type).toBe(ProcessMenuStepType.success);
-      expect(result.current[3].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[3].type).toBe(ProcessMenuStepType.warning);
     });
   });
 
@@ -231,7 +269,7 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[5].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.default);
     });
   });
 
@@ -252,8 +290,8 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[4].type).toBe(ProcessMenuStepType.warning);
-      expect(result.current[5].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[4].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.default);
     });
   });
 
@@ -265,7 +303,7 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[4].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[4].type).toBe(ProcessMenuStepType.success);
     });
   });
 
@@ -277,7 +315,7 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
-      expect(result.current[4].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[4].type).toBe(ProcessMenuStepType.default);
     });
   });
 
@@ -299,8 +337,27 @@ describe('Prossesmotor', () => {
     );
 
     await waitFor(() => {
-      expect(result.current[0].label).toBe('Opphør');
+      expect(result.current.prosessteg[0].label).toBe('Opphør');
     });
+  });
+
+  test('viser opphør som første steg mens opphørsbehandling lastes', () => {
+    const api = createApiWithUnresolvedQueries();
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    expect(result.current.prosessteg[0].id).toBe(prosessStegCodes.OPPHØR);
   });
 
   test('setter opphørspanel til warning når VURDER_BOSTEDSVILKÅR_OPPHØR er åpent', async () => {
@@ -328,8 +385,8 @@ describe('Prossesmotor', () => {
     );
 
     await waitFor(() => {
-      expect(result.current[0].label).toBe('Opphør');
-      expect(result.current[0].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[0].label).toBe('Opphør');
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
     });
   });
 
@@ -351,7 +408,7 @@ describe('Prossesmotor', () => {
     );
 
     await waitFor(() => {
-      expect(result.current[0].label).toBe('Inngangsvilkår');
+      expect(result.current.prosessteg[0].label).toBe('Inngangsvilkår');
     });
   });
 });

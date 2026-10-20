@@ -36,6 +36,7 @@ const createMockBehandling = (overrides = {}) => ({
   versjon: 1,
   uuid: '12345',
   behandlingsresultat: { type: { kode: 'INNVILGET', kodeverk: '' } },
+  status: { kode: 'UTRED', kodeverk: '' },
   ...overrides,
 });
 
@@ -540,10 +541,11 @@ describe('beregnVedtakType', () => {
     relevanteInnvilgetMerknader: [],
   });
 
-  const lagBehandling = (kode?: string) => ({
+  const lagBehandling = (kode?: string, status = 'UTRED') => ({
     uuid: 'x',
     versjon: 1,
     behandlingsresultat: kode ? { type: { kode, kodeverk: '' } } : undefined,
+    status: { kode: status, kodeverk: '' },
   });
 
   test('returnerer default når vilkår er tom', () => {
@@ -556,15 +558,37 @@ describe('beregnVedtakType', () => {
     ).toBe(ProcessMenuStepType.default);
   });
 
-  test('returnerer warning når et vedtaks-aksjonspunkt er åpent', () => {
+  test('returnerer warning når FATTER_VEDTAK er åpent og behandling ikke er i FVED', () => {
     expect(
       beregnVedtakType(
         [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.FORESLÅ_VEDTAK)],
-        lagBehandling() as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
+        lagBehandling(undefined, 'UTRED') as any,
         vedtakAksjonspunkter,
       ),
     ).toBe(ProcessMenuStepType.warning);
+  });
+
+  test('returnerer success når behandling er i FVED med innvilget resultat og FATTER_VEDTAK er åpent', () => {
+    expect(
+      beregnVedtakType(
+        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
+        lagBehandling('INNVILGET', 'FVED') as any,
+        vedtakAksjonspunkter,
+      ),
+    ).toBe(ProcessMenuStepType.success);
+  });
+
+  test('returnerer danger når behandling er i FVED med avslagsresultat', () => {
+    expect(
+      beregnVedtakType(
+        [lagVilkår(vilkårStatus.IKKE_OPPFYLT)] as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
+        lagBehandling('AVSLÅTT', 'FVED') as any,
+        vedtakAksjonspunkter,
+      ),
+    ).toBe(ProcessMenuStepType.danger);
   });
 
   test('returnerer default når et ikke-vedtaks-aksjonspunkt er åpent', () => {

@@ -1,7 +1,9 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import { lagDokumentdata } from '@k9-sak-web/behandling-felles';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -45,7 +47,12 @@ interface Props {
   isReadOnly: boolean;
   lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
   previewCallback: (data: any, aapneINyttVindu: boolean) => Promise<any>;
-  submitCallback: (data: any, aksjonspunkt: AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (
+    aksjonspunktModels: any[],
+    aksjonspunkter: AksjonspunktDto[],
+    skalForhindreOppdaterUrl?: boolean,
+  ) => Promise<any>;
+  onVedtakAksjonspunktBekreftet: (visIverksetterVedtakModal: boolean, visFatterVedtakModal: boolean) => void;
 }
 
 export function VedtakProsessStegInitPanel(props: Props) {
@@ -117,8 +124,24 @@ export function VedtakProsessStegInitPanel(props: Props) {
     return null;
   }
 
-  const handleSubmit = async (data: any) => {
-    return props.submitCallback(data, vedtakAksjonspunkter);
+  const handleSubmit = async (data: any[]) => {
+    const fatterVedtakAksjonspunktkoder = [
+      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      aksjonspunktCodes.FATTER_VEDTAK,
+      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+    ];
+    const visIverksetterVedtakModal = data.some(
+      ap => ap.isVedtakSubmission && fatterVedtakAksjonspunktkoder.includes(ap.kode),
+    );
+    const visFatterVedtakModal = data[0].isVedtakSubmission && data[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    if (data[0].isVedtakSubmission) {
+      const dokumentdata = lagDokumentdata(data[0]);
+      if (dokumentdata) {
+        await props.lagreDokumentdata(dokumentdata);
+      }
+    }
+    await props.submitCallback(data, vedtakAksjonspunkter, visIverksetterVedtakModal || visFatterVedtakModal);
+    props.onVedtakAksjonspunktBekreftet(visIverksetterVedtakModal, visFatterVedtakModal);
   };
 
   const tilpassetBehandling = {
