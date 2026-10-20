@@ -1,5 +1,11 @@
+.dokumenttypeContainer {
+  flex: 1 1 22rem;
+  max-width: 22rem;
+  min-width: 14rem;
+}
+
 .dokumenttypeFilter {
-  width: 20rem;
+  width: 100%;
 }
 
 /* Skiller "vis kun denne behandlingen" fra dokumenttypene i nedtrekkslisten */
@@ -7,12 +13,6 @@
   border-bottom: 2px solid #3e3832;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-}
-
-.image {
-  height: 20px;
-  margin-left: 10px;
-  width: 25px;
 }
 
 .starIcon {
@@ -38,14 +38,10 @@
   white-space: nowrap;
 }
 
-.externalIcon {
-  margin-bottom: 0.25rem;
-  margin-left: 0.5rem;
-}
-
 .controlsContainer {
   align-items: baseline;
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   margin-bottom: 1.875rem;
 }
