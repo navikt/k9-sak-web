@@ -4,6 +4,7 @@ import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivit
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
+  andreLivsoppholdsytelserVurderingerQueryOptions,
   bostedGrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
   lovligeBehandlingsoperasjonerQueryOptions,
@@ -42,6 +43,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
       bostedGrunnlagQueryOptions(api, behandling),
       perioderSomKanAvkortesQueryOptions(api, behandling),
+      andreLivsoppholdsytelserVurderingerQueryOptions(api, behandling),
     ],
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
