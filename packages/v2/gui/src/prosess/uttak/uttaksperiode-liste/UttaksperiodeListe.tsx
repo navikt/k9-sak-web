@@ -1,7 +1,6 @@
 import { Fragment, useMemo, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
 import { Alert, BodyLong, Button, Table } from '@navikt/ds-react';
-import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import {
   type FagsakYtelsesType as FagsakYtelseType,
   fagsakYtelsesType as fagsakYtelseType,
@@ -16,10 +15,10 @@ import { prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
 import splitUttakByDate from '../utils/splitUttakByDate.js';
 import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
 import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter.js';
-import { PencilIcon } from '@navikt/aksel-icons';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
+import EndringsdatoInfostripe from '../vurder-dato/EndringsdatoInfostripe.js';
 
 // Datoen når låsing av normalarbeidstid trer i kraft. Behandlinger avsluttet før denne datoen får ikke låst normalarbeidstid.
 const DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT = '2026-10-12';
@@ -50,7 +49,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
   redigerVirkningsdato,
   visEndringerIUttakFunc,
 }) => {
-  const { readOnly, behandling } = useUttakContext();
+  const { behandling } = useUttakContext();
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
@@ -96,23 +95,11 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
         <Table.Row key="uttaksregelinfo-endringsdato">
           <Table.DataCell colSpan={12}>
             <div className={styles.alertRow}>
-              <Alert variant="info">
-                <div className="flex items-center justify-between gap-4">
-                  <BodyLong size="small">
-                    Endringer fra {dayjs(virkningsdatoUttakNyeRegler).format('DD.MM.YYYY')}: Etter denne datoen er det
-                    endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.
-                  </BodyLong>
-                  <Button
-                    variant="secondary"
-                    size="small"
-                    icon={<PencilIcon />}
-                    onClick={redigerVirkningsdatoFunc}
-                    disabled={behandling.status === BehandlingStatus.AVSLUTTET || readOnly || redigerVirkningsdato}
-                  >
-                    Rediger
-                  </Button>
-                </div>
-              </Alert>
+              <EndringsdatoInfostripe
+                virkningsdato={virkningsdatoUttakNyeRegler}
+                redigerVirkningsdato={redigerVirkningsdato}
+                redigerVirkningsdatoFunc={redigerVirkningsdatoFunc}
+              />
             </div>
           </Table.DataCell>
         </Table.Row>
