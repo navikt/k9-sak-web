@@ -1,3 +1,5 @@
+import type { DokumentDto } from '@k9-sak-web/backend/k9sak/kontrakt/dokument/DokumentDto.js';
+import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/Kommunikasjonsretning.js';
 import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { k9_sak_kontrakt_fagsak_FagsakDto as FagsakDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
@@ -12,23 +14,23 @@ const dokumenter = [
     dokumentId: '1',
     tittel: 'dok',
     tidspunkt: '2017-10-10T10:23:00',
-    kommunikasjonsretning: 'INN',
+    kommunikasjonsretning: Kommunikasjonsretning.INN,
   },
   {
     journalpostId: '2',
     dokumentId: '2',
     tittel: 'dok1',
     tidspunkt: '2019-10-10T10:23:00',
-    kommunikasjonsretning: 'INN',
+    kommunikasjonsretning: Kommunikasjonsretning.INN,
   },
   {
     journalpostId: '3',
     dokumentId: '3',
     tittel: 'dok2',
     tidspunkt: '2018-10-10T10:23:00',
-    kommunikasjonsretning: 'INN',
+    kommunikasjonsretning: Kommunikasjonsretning.INN,
   },
-];
+] satisfies DokumentDto[];
 
 const meta = {
   title: 'sak/sak-app/behandlingsupport/dokument/DokumentIndex',
