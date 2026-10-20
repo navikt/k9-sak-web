@@ -20,6 +20,8 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
+import { k9_kodeverk_behandling_BehandlingResultatType } from '@navikt/k9-sak-typescript-client/types';
+import { k9_kodeverk_vilkår_Utfall } from '../../../behandling/prosess/utils/vilkårUtils.ts';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
@@ -61,6 +63,10 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const visKunStartdato =
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
+  const innvilget = behandlingsresultatTypeKode === k9_kodeverk_behandling_BehandlingResultatType.INNVILGET;
+  const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']
+    ?.filter(vilkar => vilkar.utfall == k9_kodeverk_vilkår_Utfall.OPPFYLT)
+    .at(0);
   return (
     <Box
       padding="space-16"
@@ -81,6 +87,12 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
 
             {søknadsperioder?.length > 0 && (
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
+            )}
+
+            {innvilget && utvidetRett?.periode && ( //TODO Må vi sjekke på sakstype el.? Eller er det implisitt med utvidet rett?
+              <BodyShort as="span" size="small">
+                <DateLabel dateString={utvidetRett?.periode?.fom} /> - <DateLabel dateString={utvidetRett?.periode?.tom} />
+              </BodyShort>
             )}
           </HStack>
           <HStack gap="space-8" align={'center'} className="mt-1">
