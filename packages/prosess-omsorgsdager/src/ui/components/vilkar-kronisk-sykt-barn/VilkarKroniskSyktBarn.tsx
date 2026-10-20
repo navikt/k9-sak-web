@@ -1,7 +1,7 @@
 import { Alert, Button, Checkbox, Fieldset, HelpText, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
@@ -15,6 +15,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './vilkarKronisSyktBarn.module.css';
+import { KroniskSyktBarnDatoContext } from './KroniskSyktBarnDatoContext';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
@@ -50,7 +51,6 @@ const tekst = {
   feilmedlingManglerDato: 'Mangler dato.',
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
-  feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
   soknadsdato: 'Søknadsdato',
   begrunnelseFraBruker: 'Begrunnelse for risiko for økt fravær',
 };
@@ -85,6 +85,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   begrunnelseFraBruker,
   personopplysninger,
 }) => {
+  const { foreslåttFraDato, innvilgedePerioder } = useContext(KroniskSyktBarnDatoContext);
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
@@ -93,7 +94,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
       avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
+      fraDato: harAksjonspunktOgVilkarLostTidligere
+        ? formatereDato(informasjonTilLesemodus.fraDato)
+        : (foreslåttFraDato ?? 'dd.mm.åååå'),
       tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.tilDato : 'dd.mm.åååå',
       erTidsbegrenset: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.erTidsbegrenset : false,
     },
@@ -111,10 +114,23 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const åpenForRedigering = watch('åpenForRedigering');
   const erTidsbegrenset = watch('erTidsbegrenset');
   const formStateKey = `${behandlingsID}-utvidetrett-ks`;
-  const { erDatoFyltUt, erDatoGyldig, erDatoIkkeIFremtid } = valideringsFunksjoner(
-    getValues,
-    'harDokumentasjonOgFravaerRisiko',
-  );
+  const { erDatoFyltUt, erDatoGyldig } = valideringsFunksjoner(getValues, 'harDokumentasjonOgFravaerRisiko');
+
+  const erPeriodeUtenOverlapp = (dato: string) => {
+    const data = getValues();
+    //Sjekker at kravet er oppfylt, og om det er noen tidligere innvilgede perioder. Hvis ikke, ingen overlapp
+    if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko) || innvilgedePerioder.length === 0) return true;
+
+    const fom = dayjs(dato.replaceAll('.', '-'));
+    const tom = data.erTidsbegrenset ? dayjs(data.tilDato) : undefined;
+    if (!fom.isValid() || (tom && !tom.isValid())) return true;
+
+    return (
+      !innvilgedePerioder.some(
+        periode => !fom.isAfter(dayjs(periode.tom), 'day') && (!tom || !tom.isBefore(dayjs(periode.fom), 'day')),
+      ) || 'Perioden overlapper et tidligere innvilget vedtak.'
+    );
+  };
 
   const erArsakErIkkeRiskioFraFravaer = val => {
     if (tekstTilBoolean(getValues().harDokumentasjonOgFravaerRisiko)) return true;
@@ -365,9 +381,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                             errors.fraDato.type === 'erDatoFyltUt' &&
                             tekst.feilmedlingManglerFraDato) ||
                           (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
-                          (errors.fraDato &&
-                            errors.fraDato.type === 'erDatoIkkeIFremtid' &&
-                            tekst.feilmedlingerDatoIkkeIFremtid)
+                          errors.fraDato?.message
                         }
                       >
                         <DatePicker
@@ -376,7 +390,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                           valideringsFunksjoner={{
                             erDatoFyltUt,
                             erDatoGyldig,
-                            erDatoIkkeIFremtid,
+                            erPeriodeUtenOverlapp,
                           }}
                         />
                       </Fieldset>
@@ -384,7 +398,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                     {kroniskTidsbegrensetToggle && (
                       <>
                         <HStack gap="space-8" align="center">
-                          <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
+                          <Checkbox {...register('erTidsbegrenset', { deps: 'fraDato' })}>
+                            Vedtaket er tidsbegrenset
+                          </Checkbox>
                           <HelpText>
                             Her "huker du av" dersom vedtaket skal være tidsbegrenset. Når det ikke "hukes av" her, så
                             varer vedtaket ut det kalenderåret barnet fyller 18 år.
@@ -396,6 +412,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                               {...register('tilDato', {
                                 validate: { erDatoFyltUt },
                                 required: true,
+                                deps: 'fraDato',
                               })}
                               label="Til"
                               size="small"

@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import dayjs from 'dayjs';
 import { axe } from 'vitest-axe';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import { KroniskSyktBarnDatoContext } from '../../vilkar-kronisk-sykt-barn/KroniskSyktBarnDatoContext';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 import './axe-setup';
 
@@ -21,6 +24,257 @@ const personopplysninger = {
 };
 
 describe('<VilkarKroniskSyktBarn>', () => {
+  const innvilgedePerioder = [
+    { fom: '2025-12-01', tom: '2025-12-31' },
+    { fom: '2026-01-10', tom: '2026-01-20' },
+  ];
+  const lagPropsMedDato = (fraDato: string): VilkarKroniskSyktBarnProps => ({
+    behandlingsID: '123',
+    lesemodus: false,
+    aksjonspunktLost: true,
+    soknadsdato: '2025-04-06',
+    begrunnelseFraBruker: '',
+    informasjonTilLesemodus: {
+      begrunnelse: 'Barnet oppfyller vilkåret',
+      vilkarOppfylt: true,
+      avslagsårsakKode: '',
+      fraDato,
+      tilDato: '',
+      erTidsbegrenset: false,
+    },
+    losAksjonspunkt: vi.fn(),
+    vedtakFattetVilkarOppfylt: false,
+    formState: { getState: vi.fn(), setState: vi.fn(), deleteState: vi.fn() },
+    personopplysninger: {
+      ...personopplysninger,
+      pleietrengendePart: { ...personopplysninger, fodselsdato: '2015-06-15' },
+    },
+  });
+
+  const renderMedDato = (
+    props: VilkarKroniskSyktBarnProps,
+    datoer: { innvilgedePerioder: typeof innvilgedePerioder; foreslåttFraDato?: string } = {
+      innvilgedePerioder,
+      foreslåttFraDato: '2026-01-21',
+    },
+  ) =>
+    render(
+      <KroniskSyktBarnDatoContext.Provider value={datoer}>
+        <VilkarKroniskSyktBarn {...props} />
+      </KroniskSyktBarnDatoContext.Provider>,
+    );
+
+  test.each(['2026-01-21', '2028-01-01'])(
+    'tillater periode med fra-dato %s etter innvilgede perioder',
+    async fraDato => {
+      const props = lagPropsMedDato(fraDato);
+      renderMedDato(props);
+
+      await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+      expect(props.losAksjonspunkt).toHaveBeenCalledWith(true, 'Barnet oppfyller vilkåret', '', fraDato, '', false);
+    },
+  );
+
+  test.each(['2025-11-30', '2025-12-15', '2026-01-01', '2026-01-20'])(
+    'avviser overlapp for vedtak uten tidsbegrensning med fra-dato %s',
+    async fraDato => {
+      const props = lagPropsMedDato(fraDato);
+      renderMedDato(props);
+
+      await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+      expect(await screen.findByText('Perioden overlapper et tidligere innvilget vedtak.')).toBeInTheDocument();
+      expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+    },
+  );
+
+  test('tillater manuelt skrevet dato uten overlapp', async () => {
+    const props = lagPropsMedDato('2025-12-31');
+    renderMedDato(props);
+
+    const datofelt = screen.getByRole('textbox', { name: '' });
+    await userEvent.clear(datofelt);
+    await userEvent.type(datofelt, '21.01.2026');
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(props.losAksjonspunkt).toHaveBeenCalledWith(true, 'Barnet oppfyller vilkåret', '', '2026-01-21', '', false);
+  });
+
+  test('avviser manuelt skrevet dato som gir overlapp', async () => {
+    const props = lagPropsMedDato('2026-01-21');
+    renderMedDato(props);
+
+    const datofelt = screen.getByRole('textbox', { name: '' });
+    await userEvent.clear(datofelt);
+    await userEvent.type(datofelt, '15.12.2025');
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(datofelt).toHaveValue('15.12.2025');
+    expect(await screen.findByText('Perioden overlapper et tidligere innvilget vedtak.')).toBeInTheDocument();
+    expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+  });
+
+  test('sperrer ingen kalenderdatoer i innvilgede perioder', async () => {
+    const props = lagPropsMedDato('2026-01-21');
+    renderMedDato(props);
+
+    await userEvent.click(screen.getByRole('button', { name: /åpne datovelger/i }));
+
+    expect(screen.getByRole('button', { name: 'torsdag 1' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'fredag 9' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'lørdag 10' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'torsdag 15' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'tirsdag 20' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'onsdag 21' })).not.toBeDisabled();
+  });
+
+  const lagTidsbegrensedeProps = (fom: string, tom: string): VilkarKroniskSyktBarnProps => ({
+    ...lagPropsMedDato(fom),
+    informasjonTilLesemodus: {
+      begrunnelse: 'Barnet oppfyller vilkåret',
+      vilkarOppfylt: true,
+      avslagsårsakKode: '',
+      fraDato: fom,
+      tilDato: tom,
+      erTidsbegrenset: true,
+    },
+  });
+
+  test.each([
+    ['01-01', '06-01', '06-30'],
+    ['06-15', '06-01', '06-30'],
+    ['06-30', '06-01', '06-30'],
+    ['12-31', '12-31', '12-31'],
+    ['01-01', '12-31', '12-31'],
+  ])('avviser tidsbegrenset periode med fra-dato %s som overlapper %s–%s', async (fom, tidligereFom, tidligereTom) => {
+    const år = dayjs().year();
+    const props = lagTidsbegrensedeProps(`${år}-${fom}`, `${år}-12-31`);
+    renderMedDato(props, {
+      innvilgedePerioder: [{ fom: `${år}-${tidligereFom}`, tom: `${år}-${tidligereTom}` }],
+    });
+
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(await screen.findByText('Perioden overlapper et tidligere innvilget vedtak.')).toBeInTheDocument();
+    expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+  });
+
+  test('tillater en tidsbegrenset periode mellom innvilgede perioder', async () => {
+    const år = dayjs().year();
+    const props = lagTidsbegrensedeProps(`${år}-01-01`, `${år}-12-31`);
+    renderMedDato(props, {
+      innvilgedePerioder: [
+        { fom: `${år - 1}-01-01`, tom: `${år - 1}-12-31` },
+        { fom: `${år + 1}-01-01`, tom: `${år + 1}-12-31` },
+      ],
+    });
+
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(props.losAksjonspunkt).toHaveBeenCalledWith(
+      true,
+      'Barnet oppfyller vilkåret',
+      '',
+      `${år}-01-01`,
+      `${år}-12-31`,
+      true,
+    );
+  });
+
+  test('kontrollerer overlapp på nytt når til-dato endres', async () => {
+    const år = dayjs().year();
+    const props = lagTidsbegrensedeProps(`${år}-01-01`, `${år + 1}-12-31`);
+    renderMedDato(props, {
+      innvilgedePerioder: [{ fom: `${år + 1}-01-01`, tom: `${år + 1}-12-31` }],
+    });
+
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+    expect(await screen.findByText('Perioden overlapper et tidligere innvilget vedtak.')).toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Til' }), `${år}-12-31`);
+    expect(screen.queryByText('Perioden overlapper et tidligere innvilget vedtak.')).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(props.losAksjonspunkt).toHaveBeenCalledWith(
+      true,
+      'Barnet oppfyller vilkåret',
+      '',
+      `${år}-01-01`,
+      `${år}-12-31`,
+      true,
+    );
+  });
+
+  test('regner vedtak uten tidsbegrensning som en periode uten sluttdato', async () => {
+    const props = lagPropsMedDato('2033-01-01');
+    renderMedDato(props, { innvilgedePerioder: [{ fom: '2034-01-01', tom: '2034-12-31' }] });
+
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(await screen.findByText('Perioden overlapper et tidligere innvilget vedtak.')).toBeInTheDocument();
+    expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+  });
+
+  test('kontrollerer overlapp når tidsbegrensningen fjernes og gjenopprettes', async () => {
+    const år = dayjs().year();
+    const props = lagTidsbegrensedeProps(`${år}-01-01`, `${år}-12-31`);
+    renderMedDato(props, {
+      innvilgedePerioder: [{ fom: `${år + 1}-01-01`, tom: `${år + 1}-12-31` }],
+    });
+
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Vedtaket er tidsbegrenset' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(await screen.findByText('Perioden overlapper et tidligere innvilget vedtak.')).toBeInTheDocument();
+    expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Vedtaket er tidsbegrenset' }));
+    expect(screen.queryByText('Perioden overlapper et tidligere innvilget vedtak.')).not.toBeInTheDocument();
+  });
+
+  test('trenger ikke barnets fødselsdato for å kontrollere overlapp', async () => {
+    const props = lagPropsMedDato('2026-01-21');
+    props.personopplysninger = personopplysninger;
+    renderMedDato(props);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(props.losAksjonspunkt).toHaveBeenCalled();
+  });
+
+  test('foreslår dagen etter siste innvilgede periode for et nytt skjema', async () => {
+    const props = lagPropsMedDato('');
+    props.informasjonTilLesemodus = {
+      begrunnelse: '',
+      vilkarOppfylt: false,
+      avslagsårsakKode: '',
+      fraDato: '',
+      tilDato: '',
+      erTidsbegrenset: false,
+    };
+    renderMedDato(props);
+
+    await userEvent.click(screen.getByRole('radio', { name: 'Ja' }));
+
+    expect(screen.getByRole('textbox', { name: '' })).toHaveValue('21.01.2026');
+  });
+
+  test('beholder lagret dato fremfor foreslått dato', () => {
+    renderMedDato(lagPropsMedDato('2026-01-05'));
+
+    expect(screen.getByRole('textbox', { name: '' })).toHaveValue('05.01.2026');
+  });
+
+  test('begrenser ikke datoer uten tidligere innvilgede perioder', async () => {
+    const props = lagPropsMedDato('2025-12-15');
+    renderMedDato(props, { innvilgedePerioder: [], foreslåttFraDato: undefined });
+
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+    expect(props.losAksjonspunkt).toHaveBeenCalledWith(true, 'Barnet oppfyller vilkåret', '', '2025-12-15', '', false);
+  });
+
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
     const props = {
       behandlingsID: '123',
