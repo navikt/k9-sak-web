@@ -1,4 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { finnDatoerForKroniskSyktBarn } from './KroniskSyktBarnDatoContext';
 import type Vilkårresultat from '@k9-sak-web/types/src/opptjening/vilkårresultat';
@@ -27,6 +28,23 @@ const innvilgetBehandling = (
 });
 
 describe('finnDatoerForKroniskSyktBarn', () => {
+  it.each([behandlingResultatType.AVSLATT, behandlingResultatType.IKKE_FASTSATT, behandlingResultatType.OPPHOR])(
+    'ser bort fra oppfylt vilkår når behandlingsresultatet er %s',
+    kode => {
+      const behandling = innvilgetBehandling(2, [oppfyltPeriode('2025-01-01', '2025-12-31')], {
+        behandlingsresultat: {
+          type: { kode, kodeverk: 'BEHANDLING_RESULTAT_TYPE' },
+          vilkårResultat: { UTVIDETRETT: [oppfyltPeriode('2025-01-01', '2025-12-31')] },
+        },
+      });
+
+      expect(finnDatoerForKroniskSyktBarn([behandling], 1)).toEqual({
+        innvilgedePerioder: [],
+        foreslåttFraDato: undefined,
+      });
+    },
+  );
+
   it('gir ingen begrensning uten tidligere innvilgede perioder', () => {
     expect(finnDatoerForKroniskSyktBarn([], 1)).toEqual({ innvilgedePerioder: [], foreslåttFraDato: undefined });
     expect(

@@ -1,4 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { BehandlingAppKontekst } from '@k9-sak-web/types';
@@ -27,6 +28,7 @@ export const finnDatoerForKroniskSyktBarn = (
         behandling.id !== behandlingId &&
         behandling.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS &&
         behandling.status.kode === behandlingStatus.AVSLUTTET &&
+        behandling.behandlingsresultat?.type.kode === behandlingResultatType.INNVILGET &&
         !behandling.behandlingHenlagt,
     )
     .flatMap(behandling => behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT'] ?? [])
