@@ -120,12 +120,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
   const erPeriodeUtenOverlapp = (dato: string) => {
     const data = getValues();
-    //Sjekker at kravet er oppfylt, og om det er noen tidligere innvilgede perioder. Hvis ikke, ingen overlapp
-    if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko) || innvilgedePerioder.length === 0) return true;
+    if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko)) return true;
 
     const fom = dayjs(dato.replaceAll('.', '-'));
     const tom = data.erTidsbegrenset ? dayjs(data.tilDato) : undefined;
     if (!fom.isValid() || (tom && !tom.isValid())) return true;
+    if (tom?.isBefore(fom, 'day')) return 'Fra-dato kan ikke være etter til-dato.';
 
     return (
       !innvilgedePerioder.some(
