@@ -1,6 +1,6 @@
 ---
 name: skill-authoring
-description: 'How we write and organise agent skills and instructions in this repo: when to use a skill vs an instruction, scope, naming, the description, real examples instead of templates, avoiding duplication, and validating with the bundled script. USE FOR: creating, splitting, merging, renaming or reviewing a SKILL.md or *.instructions.md, deciding where a rule belongs, a skill that is hard to name or describe, duplicated rules across skills and instructions.'
+description: 'How we write and organise agent skills and instructions in this repo: when to use a skill vs an instruction, scope, naming, the description, real examples instead of templates, avoiding duplication, and validating with the bundled script. USE FOR: creating, splitting, merging, renaming or reviewing a SKILL.md or *.instructions.md, deciding where a rule belongs, documenting a design decision agreed with the designers (designbeslutning), a skill that is hard to name or describe, duplicated rules across skills and instructions.'
 ---
 
 # Skill authoring
@@ -28,12 +28,21 @@ A skill covers one task. If you cannot describe it in one sentence without "and"
 
 A long skill is fine if it covers one task. Prefer several small skills that link to each other over one skill that covers everything.
 
+## Design decisions
+
+UI design decisions made together with the designers are defined as skills named `design-<topic>`, one skill per decision. Use `.github/skills/design-alerts/SKILL.md` as the model:
+
+- State the rule first, e.g. "use `InfoCard` instead of `Alert`".
+- Show which variant to use when, preferably in a table.
+- Include a real example and the exceptions.
+- Do not repeat that design decisions apply only to new code and code you change anyway. `.github/instructions/v2.instructions.md` says this for all `design-*` skills.
+
 ## Naming
 
 - Lowercase letters, digits and hyphens, max 64 characters. `name` must equal the folder name.
 - Name the skill after what someone will look for, preferably the term used in the code: `backend-client` because the classes are called `BackendClient`.
 - Use English, except for Norwegian domain terms used as is in the code, e.g. `kodeverk`.
-- Use a prefix only when it carries meaning. `v2-` is for skills about the v1→v2 transition. `design-` groups UI design decisions, e.g. `design-alerts`.
+- Use a prefix only when it carries meaning. `v2-` is for skills about the v1→v2 transition. `design-` is for design decisions (see above).
 - Skills must be directly under `.github/skills/`. Skills in subfolders are not discovered, so group related skills with a prefix instead.
 
 ## Description
