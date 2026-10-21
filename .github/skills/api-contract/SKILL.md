@@ -1,6 +1,6 @@
 ---
-name: v2-api-contract
-description: 'Create the API contract for a v2 component: SDK re-export, BackendApiType, BackendClient, QueryOptions, API context, based on OpenAPI-generated SDK endpoints. USE FOR: creating new BackendClient classes that wrap SDK calls, defining typed API contracts, generating TanStack Query options, wiring the API context. DO NOT USE FOR: modifying existing BackendClients, general v2 architecture questions (use v2-architecture skill), or writing React components.'
+name: api-contract
+description: 'Create and use the API contract for a v2 component: SDK re-export, BackendApiType, BackendClient, QueryOptions, API context, AppConfigResolver provider and useSuspenseQuery in the component, based on OpenAPI-generated SDK endpoints. USE FOR: creating new BackendClient classes that wrap SDK calls, defining typed API contracts, generating TanStack Query options and query keys, wiring the API context, fetching data in a v2 component, handling 404 in the client. DO NOT USE FOR: modifying existing BackendClients, DTO/kodeverk re-exports (use backend-types skill), general v2 architecture questions (use v2-architecture skill), or component UI and stories (use storybook skill).'
 ---
 
 # v2 API Contract
@@ -19,13 +19,7 @@ Ask the user for:
 
 ## Backend → Client Package Mapping
 
-| Backend      | Client package                          | Import prefix                     |
-| ------------ | --------------------------------------- | --------------------------------- |
-| `ungsak`     | `@navikt/ung-sak-typescript-client`     | `@k9-sak-web/backend/ungsak/`     |
-| `k9sak`      | `@navikt/k9-sak-typescript-client`      | `@k9-sak-web/backend/k9sak/`      |
-| `k9klage`    | `@navikt/k9-klage-typescript-client`    | `@k9-sak-web/backend/k9klage/`    |
-| `k9tilbake`  | `@navikt/k9-tilbake-typescript-client`  | `@k9-sak-web/backend/k9tilbake/`  |
-| `ungtilbake` | `@navikt/ung-tilbake-typescript-client` | `@k9-sak-web/backend/ungtilbake/` |
+See the mapping table in the `backend-types` skill (`.github/skills/backend-types/SKILL.md`).
 
 ## Workflow
 
@@ -37,7 +31,7 @@ Find the generated SDK file for the chosen backend:
 node_modules/<client-package>/src/sdk.gen.ts
 ```
 
-Where `<client-package>` is the full package name from the table above (e.g., `@navikt/ung-sak-typescript-client`).
+Where `<client-package>` is the full package name from the mapping table (e.g., `@navikt/ung-sak-typescript-client`).
 
 Read the function signatures for each requested endpoint. Note:
 
@@ -52,15 +46,13 @@ In `node_modules/<client-package>/src/types.gen.ts`, find:
 - The `XxxData` type — contains `query` and/or `body` fields showing the request shape
 - The response type — the actual DTO returned
 
-Where `<client-package>` is the full package name from the table above (e.g., `@navikt/ung-sak-typescript-client`).
+Where `<client-package>` is the full package name from the mapping table (e.g., `@navikt/ung-sak-typescript-client`).
 
 Extract the DTO type names needed for the BackendApiType.
 
 ### Step 3: Create SDK Re-Export
 
-Steps 3–8 show a worked example. `references/templates.md` has the same files as generic templates with placeholders.
-
-Worked example used in steps 3–8: feature `OmPleietrengende`, backend `k9sak`, folder `fakta/om-pleietrengende/api/`, endpoint `behandlingPerson_getPersonopplysninger1` returning `PersonopplysningDto`.
+Steps 3–10 follow the real implementation in `packages/v2/gui/src/fakta/om-pleietrengende/api/`: feature `OmPleietrengende`, backend `k9sak`, endpoint `behandlingPerson_getPersonopplysninger1` returning `PersonopplysningPleietrengendeDto`. For other variants, see [Reference implementations](#reference-implementations).
 
 Create `packages/v2/backend/src/k9sak/sdk/OmPleietrengendeSdk.ts`:
 
@@ -70,20 +62,18 @@ export { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9s
 
 ### Step 4: Create Type Re-Exports
 
-For each DTO type used in the API, create a re-export file, e.g. `packages/v2/backend/src/k9sak/kontrakt/person/PersonopplysningDto.ts`. See `references/templates.md` for the patterns (single type, const enum). Check if a re-export already exists before creating a duplicate.
-
-Use `export type` for type-only symbols. When a generated symbol has both a const and a type with the same name, use a single `export { ... }` to re-export both under the same alias; do not add a separate `export type` or a `Type`-suffixed alias.
+Create a stable re-export for each DTO and kodeverk enum used in the API, e.g. `packages/v2/backend/src/k9sak/kontrakt/person/PersonopplysningPleietrengendeDto.ts`. Follow the `backend-types` skill (`.github/skills/backend-types/SKILL.md`) for location, naming and export syntax.
 
 ### Step 5: Create BackendApiType
 
 `packages/v2/gui/src/fakta/om-pleietrengende/api/OmPleietrengendeBackendApiType.ts`:
 
 ```typescript
-import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import type { PersonopplysningPleietrengendeDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningPleietrengendeDto.js';
 import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export interface OmPleietrengendeBackendApiType extends BackendTilhørighet {
-  hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningDto | null>;
+  hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningPleietrengendeDto | null>;
 }
 ```
 
@@ -101,14 +91,14 @@ The client name starts with the full backend name: `K9Sak`, `K9Klage`, `K9Tilbak
 `packages/v2/gui/src/fakta/om-pleietrengende/api/K9SakOmPleietrengendeBackendClient.ts`:
 
 ```typescript
-import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import type { PersonopplysningPleietrengendeDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningPleietrengendeDto.js';
 import { behandlingPerson_getPersonopplysninger1 } from '@k9-sak-web/backend/k9sak/sdk/OmPleietrengendeSdk.js';
 import type { OmPleietrengendeBackendApiType } from './OmPleietrengendeBackendApiType.js';
 
 export class K9SakOmPleietrengendeBackendClient implements OmPleietrengendeBackendApiType {
   readonly backend = 'k9sak';
 
-  async hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningDto | null> {
+  async hentPleietrengende(behandlingUuid: string): Promise<PersonopplysningPleietrengendeDto | null> {
     const response = await behandlingPerson_getPersonopplysninger1({ query: { behandlingUuid } });
     return response.data || null;
   }
@@ -154,9 +144,10 @@ export const omPleietrengendeQueryOptions = (api: OmPleietrengendeBackendApiType
 Rules:
 
 - Only for GET endpoints
-- `queryKey` always ends with `api.backend`
+- `queryKey` contains every parameter that identifies the data, typically `behandlingUuid`, and always ends with `api.backend`
 - Include `behandling.versjon` in the key when the data changes with the behandling version
 - For conditional queries, add an `enabled` parameter to the key and return `null` from `queryFn` when disabled
+- After a mutation that makes cached data stale, invalidate the affected query keys
 
 ### Step 8: Create the API context
 
@@ -177,8 +168,47 @@ export const useOmPleietrengendeApi = (): OmPleietrengendeBackendApiType => {
 };
 ```
 
-The production provider (`<OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>`) is added in `AppConfigResolver` (see the `v2-architecture` skill).
+### Step 9: Register the production provider
 
-### Step 9: Verify
+Add the provider in each `AppConfigResolver.tsx` where the feature is used, next to the existing nested providers:
+
+- k9: `packages/sak-app/src/app/AppConfigResolver.tsx`
+- ung: `packages/ung/sak-app/app/AppConfigResolver.tsx`
+
+```tsx
+<OmPleietrengendeApiContext value={new K9SakOmPleietrengendeBackendClient()}>{children}</OmPleietrengendeApiContext>
+```
+
+### Step 10: Use the contract in the component
+
+When the component is the only consumer of an endpoint, it fetches the data itself instead of receiving it as a prop:
+
+```typescript
+const api = useOmPleietrengendeApi();
+const { data } = useSuspenseQuery(omPleietrengendeQueryOptions(api, behandlingUuid));
+```
+
+- Prefer `useSuspenseQuery`. The caller must provide `<Suspense>` and `<ErrorBoundary>`, so loading and errors give the saksbehandler feedback
+- Use `useQuery` only when the component must render `isLoading`/`isError` itself
+- Never use the old `rest-api` / `useRestApi` hooks, call a raw URL, or import SDK functions or a BackendClient directly in a component; get the client from the API context
+
+### Step 11: Verify
 
 Run `yarn ts-check` to verify no type errors were introduced.
+
+## Reference implementations
+
+Read the closest existing implementation before writing a new one. All paths are under `packages/v2/gui/src/`.
+
+| Variant | Read |
+| --- | --- |
+| One GET, response may be empty | `fakta/om-pleietrengende/api/` |
+| Several GET and POST methods, `query` and `body` parameters | `prosess/uttak/api/K9SakUttakBackendClient.ts` and `UttakBackendApiType.ts` |
+| Expected 404 returns `null` | `hentUttak` and `hentAktuelleAktiviteter` in `prosess/uttak/api/K9SakUttakBackendClient.ts` |
+| 204 without content returns `null` | `fakta/om-barnet/api/K9SakOmBarnetBackendClient.ts` |
+| `behandlingVersjon` in the query key | `fakta/om-barnet/api/omBarnetQueryOptions.ts` |
+| Several queryOptions, conditional query with `enabled` | `prosess/uttak/api/uttakQueryOptions.ts` |
+| Invalidate the cache after a mutation | `useReaktiverAksjonspunktNyInntekt` in `fakta/ny-inntekt/api/NyInntektQueries.ts` |
+| Fake API in stories | `storybook/decorators/withFakeOmBarnetApi.tsx` |
+
+Some older API folders, such as `sak/historikk/api/`, `prosess/klagevurdering/api/` and `fakta/feilutbetaling/api/`, use older names (`*Api`, `K9…`/`Ung…`). Do not copy those names into new code.

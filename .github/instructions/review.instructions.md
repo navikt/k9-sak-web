@@ -11,22 +11,24 @@ Les relevante instruksjoner i `.github/copilot-instructions.md` og `.github/inst
 
 Kontroller alle endrede filer mot relevante skills i `.github/skills/`, også uendrede linjer i filer som PR-en endrer. Vis til skillen og regelen når du flagger et avvik. Hvis endringen innfører et mønster som strider mot en skill, flagg at enten koden eller skillen må oppdateres.
 
+## Omfang
+
+Flagg endringer som går lenger enn formålet med PR-en, for eksempel omdøpte variabler, omstrukturert kode som virket, eller refaktorering utenfor oppgaven. Se «Minimal Editing» i `.github/copilot-instructions.md`.
+
 ## Feature toggles
 
-Kontroller hvilket miljø en ny eller flyttet feature toggle aktiveres i. Nye toggles skal først settes til `true` i `qFeatureToggles`. Når funksjonaliteten skal bli standard i prod, fjerner vi som regel togglen og den gamle implementasjonen i stedet for å aktivere togglen i prod.
-
-Verdier i `k9SpecificFeatureToggles` og `ungSpecificFeatureToggles` gjelder både Q og prod. Det er sjelden riktig å legge en toggle der. Flagg endringen hvis behovet for et ytelsesspesifikt fellesoppsett ikke kommer tydelig frem.
+Kontroller nye eller flyttede feature toggles mot `feature-toggles`-skillen, særlig hvilket miljø togglen aktiveres i. Flagg avvik der begrunnelsen ikke kommer tydelig frem.
 
 ## Testing
 
-Ved endret atferd, vurder om testene dekker relevante tilstander og interaksjoner. For visningskomponenter, se etter Storybook-stories med `play`-tester som sjekker resultatet. For datagruppering og annen ren logikk, se etter Vitest-tester. Grønne CI-sjekker alene viser ikke at den endrede atferden er dekket. Flagg bare konkrete, utestede tilfeller som kan gi regresjon.
+Ved endret atferd, vurder om testene dekker relevante tilstander og interaksjoner. Hvilke testtyper vi bruker, står i `storybook`-skillen. Grønne CI-sjekker alene viser ikke at den endrede atferden er dekket. Flagg bare konkrete, utestede tilfeller som kan gi regresjon.
 
 ## V2
 
-Ved endringer i `packages/v2/`, kontroller koden mot `.github/instructions/v2.instructions.md` og delen «v2 development checklist» i `.github/skills/v2-architecture/SKILL.md`. Bruk bare sjekkpunktene som er relevante for endringen. Se etter tester for tom tilstand og ulike ytelsestyper når de gir ulik atferd.
+Ved endringer i `packages/v2/`, kontroller koden mot `.github/instructions/v2.instructions.md` og sjekklisten i `v2-architecture`-skillen. Bruk bare sjekkpunktene som er relevante for endringen.
 
-Ved nye eller endrede API-kall, kontroller at lasting og feil håndteres av relevante `Suspense`- og `ErrorBoundary`-grenser, slik at saksbehandleren ikke blir stående uten tilbakemelding. For TanStack Query må query-nøkkelen skille data fra ulike behandlinger når dataene er behandlingsspesifikke. Kontroller også at data oppdateres etter endringer som gjør cachet innhold utdatert. Flagg konkrete feil eller manglende dekning, ikke et generelt krav om tester for alle tilstander.
+Ved nye eller endrede API-kall, kontroller query-nøkler, invalidering og håndtering av lasting og feil mot `api-contract`-skillen. Flagg konkrete feil eller manglende dekning, ikke et generelt krav om tester for alle tilstander.
 
 ## Migrering
 
-Når en eksisterende komponent flyttes til v2, kontroller også relevante steg i «Migration checklist» i `.github/skills/v2-architecture/SKILL.md`. Se på hele migreringen, også filer utenfor `packages/v2/`. Kontroller at både v1- og v2-grenen fungerer mens togglen finnes, og at v1-tester ikke fjernes før tilsvarende atferd er dekket i v2. Gamle kall må beholdes så lenge v1-grenen bruker dem. Ikke krev migreringssteg for nye komponenter eller valgfrie tiltak som versjonsvelger og sammenligningsstory.
+Når en eksisterende komponent flyttes til v2, kontroller relevante steg i `v2-migration`-skillen. Se på hele migreringen, også filer utenfor `packages/v2/`. Ikke krev migreringssteg for nye komponenter eller valgfrie tiltak som versjonsvelger og sammenligningsstory.
