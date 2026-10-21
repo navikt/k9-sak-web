@@ -39,7 +39,7 @@ const { data } = useSuspenseQuery(omPleietrengendeQueryOptions(api, behandlingUu
 ```
 
 - Prefer `useSuspenseQuery`. A `<Suspense>` boundary must wrap the component, otherwise React crashes, and an `<ErrorBoundary>` must catch errors, so the saksbehandler always gets feedback on loading and errors
-- Use `useQuery` only when the component must render `isLoading`/`isError` itself
+- Use `useQuery` when the component must render `isLoading`/`isError` itself or when fetching must be conditional via `enabled`. The `enabled` guidance above applies only to `useQuery`; `useSuspenseQuery` does not support it. For conditional Suspense queries, mount the querying component conditionally or include the condition in the key and return `null` from `queryFn` without calling the backend when disabled
 - In v1 shells, the boundary goes in the behandling `*Fakta.tsx`; see the `v2-migration` skill
 
 ## Mutations
