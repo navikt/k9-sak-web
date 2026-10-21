@@ -8,10 +8,12 @@ import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import type { AsyncPollingStatus } from '@k9-sak-web/backend/ungsak/kontrakt/AsyncPollingStatus.js';
 import { type BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
+import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
 import type { FagsakDto } from '@k9-sak-web/backend/ungsak/kontrakt/fagsak/FagsakDto.js';
 import { type InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/VedtaksbrevValgResponse.js';
 import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { AndreLivsoppholdsytelserVurderingerResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
@@ -56,4 +58,6 @@ export interface AktivitetspengerApi {
   getSimuleringResultat(behandlingUuid: string): Promise<SimuleringDto>;
   getTilbakekrevingValg(behandlingUuid: string): Promise<TilbakekrevingValgDto>;
   getFagsak(saksnummer: string): Promise<FagsakDto>;
+  vedtaksbrevValg(behandlingId: number): Promise<VedtaksbrevValgResponse>;
+  forhåndsvisVedtaksbrev(behandlingId: number, dokumentMalType: DokumentMalType): Promise<Blob>;
 }
