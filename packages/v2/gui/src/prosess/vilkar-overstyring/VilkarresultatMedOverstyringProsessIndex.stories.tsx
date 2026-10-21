@@ -93,6 +93,7 @@ const defaultArgs = {
   overrideReadOnly: false,
   kanOverstyreAccess: {
     isEnabled: true,
+    employeeHasAccess: true,
   },
   erOverstyrt: false,
   toggleOverstyring: action('button-click'),
@@ -254,6 +255,7 @@ export const VisOverstyrtAksjonspunktUtenOverstyrerrolle: Story = {
     ...defaultArgs,
     kanOverstyreAccess: {
       isEnabled: false,
+      employeeHasAccess: false,
     },
     aksjonspunkter: [
       {
@@ -280,12 +282,40 @@ export const IkkeVisVarselForSaksbehandleroverstyring: Story = {
     ...defaultArgs,
     kanOverstyreAccess: {
       isEnabled: false,
+      employeeHasAccess: false,
     },
     aksjonspunkter: [
       {
         definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
         status: aksjonspunktStatus.OPPRETTET,
         aksjonspunktType: aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+        kanLoses: true,
+        begrunnelse: '',
+      },
+    ],
+    panelTittelKode: 'Opptjening',
+    overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+    vilkar: vilkarOpptjening,
+    erMedlemskapsPanel: false,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Opptjening' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
+  },
+};
+
+export const OverstyrtAksjonspunktForOverstyrerUtenRedigeringstilgang: Story = {
+  args: {
+    ...defaultArgs,
+    kanOverstyreAccess: {
+      isEnabled: false,
+      employeeHasAccess: true,
+    },
+    aksjonspunkter: [
+      {
+        definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+        status: aksjonspunktStatus.UTFØRT,
+        aksjonspunktType: aksjonspunktType.OVERSTYRING,
         kanLoses: true,
         begrunnelse: '',
       },

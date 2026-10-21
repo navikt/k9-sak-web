@@ -7,6 +7,7 @@ import {
   lagOppfyltPeriode,
   lagOverlappendeSakerAksjonspunkt,
   lagOverstyringUttakAksjonspunkt,
+  lagAvsluttetBehandling,
   lagUtredBehandling,
   lagUttak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
@@ -601,6 +602,41 @@ export const OverstyringAksjonspunktUtførtUtenOverstyrerrolle: Story = {
     await expect(canvas.getByText(/Bare en saksbehandler med overstyrerrolle kan endre den/)).toBeInTheDocument();
     await expect(canvas.queryByText(/^Overstyring av .* må vurderes\.$/)).not.toBeInTheDocument();
     await expect(canvas.queryByText('Vurder overstyring av uttaksgrad og utbetalingsgrad.')).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
+  },
+};
+
+export const UtførtOverstyringForOverstyrerPåAvsluttetBehandling: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 })]),
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Overstyring er vurdert',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
+      ],
+    }),
+  ],
+  args: {
+    behandling: lagAvsluttetBehandling(),
+    erOverstyrer: false,
+    harOverstyrerrolle: true,
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.UTFØRT)],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
     await expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
   },
 };

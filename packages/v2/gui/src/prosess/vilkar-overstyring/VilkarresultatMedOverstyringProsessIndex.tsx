@@ -58,6 +58,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
+    employeeHasAccess: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   lovReferanse?: string;
@@ -147,11 +148,11 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           toggleOverstyring={toggleOverstyring}
           skjulOverstyring={skjulOverstyring}
         />
-        {skalViseOverstyringAksjonspunktVarsel(aksjonspunkter, kanOverstyreAccess.isEnabled) && (
+        {skalViseOverstyringAksjonspunktVarsel(aksjonspunkter, kanOverstyreAccess.employeeHasAccess) && (
           <Box marginBlock="space-0 space-16">
             <OverstyringAksjonspunktVarsel
               aksjonspunkter={aksjonspunkter}
-              erOverstyrer={kanOverstyreAccess.isEnabled}
+              erOverstyrer={kanOverstyreAccess.employeeHasAccess}
               overstyrtHva="vilkåret"
             />
           </Box>

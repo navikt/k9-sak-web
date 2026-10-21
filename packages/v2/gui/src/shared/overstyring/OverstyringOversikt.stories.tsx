@@ -107,7 +107,7 @@ const VilkårMedOverstyring = ({
     ]}
     submitCallback={fn()}
     overrideReadOnly={false}
-    kanOverstyreAccess={{ isEnabled: args.erOverstyrer }}
+    kanOverstyreAccess={{ isEnabled: args.erOverstyrer, employeeHasAccess: args.erOverstyrer }}
     toggleOverstyring={fn()}
     erOverstyrt={false}
     panelTittelKode={panelTittel}

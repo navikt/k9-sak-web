@@ -7,6 +7,7 @@ export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
   aksjonspunkter: Aksjonspunkt[];
   erOverstyrer: boolean;
+  harOverstyrerrolle: boolean;
   readOnly: boolean;
   onAksjonspunktBekreftet?: () => void;
 };

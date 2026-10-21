@@ -169,6 +169,7 @@ export const PleiepengerProsessV2 = ({
                     behandling={behandling}
                     api={k9SakProsessApi}
                     erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
+                    harOverstyrerrolle={rettigheter.kanOverstyreAccess.employeeHasAccess}
                     isReadOnly={isReadOnly}
                     oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
                   />

@@ -44,7 +44,7 @@ Bruk `aksjonspunktType` for å avgjøre om noe er overstyring. Ikke bruk navn el
 2. Behandlingspakkene sender verdien videre som `rettigheter.kanOverstyreAccess` (`packages/behandling-felles/src/types/rettigheterTsType.ts`).
 3. Panelene får enten hele `kanOverstyreAccess` eller `erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}`.
 
-Fallgruve: `isEnabled === false` kan bety både «mangler rollen» og «behandlingen har feil status», f.eks. en avsluttet behandling. Varselet sier noe om rollen, så send inn `employeeHasAccess` som `erOverstyrer` når du kan (som i unntak). Uttak og vilkårspanelet bruker fortsatt `isEnabled`.
+Fallgruve: `isEnabled === false` kan bety både «mangler rollen» og «behandlingen har feil status», f.eks. en avsluttet behandling. Varselet sier noe om rollen, så bruk `employeeHasAccess` for varselet. Behold `isEnabled` for handlingsknapper som skal være deaktivert når behandlingen ikke kan redigeres.
 
 ## Slik gjør vi overstyring tydelig
 
