@@ -44,6 +44,55 @@ interface Props {
   isPermanentlyReadOnly: boolean;
 }
 
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  harAvslag: boolean | undefined;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  harAvslag,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="success" size="small">
+          Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          {harAvslag && <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />}
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter && harAvslag) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
 export const Aktivitet = ({
   vurderAktivitetsvilkårVilkår,
   vurderAktivitetsvilkårAp,
@@ -159,7 +208,7 @@ export const Aktivitet = ({
   const lokalkontorKanSendeTilBeslutter =
     !readOnly && !!lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp);
   const harAvslagIAktivitet = vurderAktivitetsvilkårVilkår.perioder?.some(
-    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+    p => p.vurderesIBehandlingen === true && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
   );
 
   if (!vurderAktivitetsvilkårVilkår) {
@@ -201,28 +250,15 @@ export const Aktivitet = ({
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
         afterEditButton={
-          lokalkontorKanSendeTilBeslutter ? (
-            <VStack gap="space-20">
-              <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
-              </Alert>
-              <HStack gap="space-8" align="start">
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-                {harAvslagIAktivitet && <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />}
-              </HStack>
-            </VStack>
-          ) : lokalkontorBeslutterAp && harAvslagIAktivitet ? (
-            <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={lokalkontorKanSendeTilBeslutter}
+            visForBeslutter={!!lokalkontorBeslutterAp}
+            harAvslag={harAvslagIAktivitet}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
         lockedContent={
           isVurderAktivitetsvilkårApSolved ? (

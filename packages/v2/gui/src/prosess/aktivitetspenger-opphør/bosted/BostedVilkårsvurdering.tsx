@@ -117,6 +117,53 @@ interface Props {
   lokalkontorBeslutterAP?: AksjonspunktDto;
 }
 
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="success" size="small">
+          Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
 export const BostedVilkårsvurdering = ({
   vurderBostedVilkårAP,
   lokalkontorForeslårVilkårAP,
@@ -184,28 +231,14 @@ export const BostedVilkårsvurdering = ({
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriod?.vurderesIBehandlingen === false}
         afterEditButton={
-          erLokalkontorForeslårAPÅpent ? (
-            <VStack gap="space-20">
-              <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
-              </Alert>
-              <HStack gap="space-8" align="start">
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-                <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
-              </HStack>
-            </VStack>
-          ) : lokalkontorBeslutterAP ? (
-            <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={erLokalkontorForeslårAPÅpent}
+            visForBeslutter={!!lokalkontorBeslutterAP}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
         lockedContent={
           isVurderBostedvilkårAPSolved ? <VurdertAv ident={vurderBostedVilkårAP?.ansvarligSaksbehandler} /> : undefined

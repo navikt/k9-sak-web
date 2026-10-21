@@ -1,8 +1,4 @@
-import {
-  type ung_kodeverk_dokument_DokumentMalType as generatedDokumentMalTypeEnumUnion,
-  ung_kodeverk_dokument_DokumentMalType as enumObj,
+export {
+  type ung_kodeverk_dokument_DokumentMalType as DokumentMalType,
+  ung_kodeverk_dokument_DokumentMalType as dokumentMalType,
 } from '../../generated/types.js';
-
-export type DokumentMalType = generatedDokumentMalTypeEnumUnion;
-
-export const dokumentMalType = enumObj;

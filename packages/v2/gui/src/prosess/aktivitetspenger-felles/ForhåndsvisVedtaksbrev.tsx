@@ -1,10 +1,10 @@
-import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, VStack } from '@navikt/ds-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vedtaksbrevValgQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { forhåndsvisVedtaksbrevMutationOptions } from './forhåndsvisVedtaksbrevMutationOptions.js';
 
 interface ForhåndsvisVedtaksbrevProps {
   api: AktivitetspengerApi;
@@ -25,20 +25,7 @@ export const ForhåndsvisVedtaksbrev = ({ api, behandling }: ForhåndsvisVedtaks
     variables,
     isError,
     error,
-  } = useMutation({
-    mutationFn: async (dokumentMalType: DokumentMalType) => {
-      if (behandling.id === undefined) {
-        throw new Error('Behandling ID mangler');
-      }
-      const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType);
-      const fileURL = window.URL.createObjectURL(response);
-      if (!window.open(fileURL, '_blank')) {
-        window.URL.revokeObjectURL(fileURL);
-        throw new Error('Nettleseren blokkerte forhåndsvisningen. Tillat popup-vinduer for denne siden og prøv igjen.');
-      }
-      return response;
-    },
-  });
+  } = useMutation(forhåndsvisVedtaksbrevMutationOptions(api, behandling));
   const vedtaksbrevValg = data?.vedtaksbrevValg?.filter(harDokumentMalType) ?? [];
 
   if (hentingFeilet) {
