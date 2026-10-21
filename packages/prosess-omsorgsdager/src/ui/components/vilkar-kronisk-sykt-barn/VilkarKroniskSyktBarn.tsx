@@ -52,6 +52,7 @@ const tekst = {
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
   feilOverlappendePeriode: 'Perioden overlapper et tidligere innvilget vedtak.',
+  feilFraDatoEtterTilDato: 'Fra-dato kan ikke være etter til-dato.',
   soknadsdato: 'Søknadsdato',
   begrunnelseFraBruker: 'Begrunnelse for risiko for økt fravær',
 };
@@ -125,7 +126,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     const fom = dayjs(dato.replaceAll('.', '-'));
     const tom = data.erTidsbegrenset ? dayjs(data.tilDato) : undefined;
     if (!fom.isValid() || (tom && !tom.isValid())) return true;
-    if (tom?.isBefore(fom, 'day')) return 'Fra-dato kan ikke være etter til-dato.';
+    if (tom?.isBefore(fom, 'day')) return tekst.feilFraDatoEtterTilDato;
 
     return (
       !innvilgedePerioder.some(
