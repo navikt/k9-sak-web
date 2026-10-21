@@ -66,7 +66,7 @@ export const ForhåndsvisVedtaksbrev = ({ api, behandling }: ForhåndsvisVedtaks
             loading={isPending && variables === valg.dokumentMalType.kilde}
             onClick={() => forhåndsvis(valg.dokumentMalType.kilde)}
           >
-            {vedtaksbrevValg.length === 1 ? 'Forhåndsvis vedtaksbrev' : `Forhåndsvis ${valg.dokumentMalType.navn}`}
+            Forhåndsvis brev
           </Button>
         ))}
       </HStack>
