@@ -89,7 +89,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
 
-            {innvilget && utvidetRett?.periode && ( //TODO Må vi sjekke på sakstype el.? Eller er det implisitt med utvidet rett?
+            {innvilget && utvidetRett?.periode && (
               <BodyShort as="span" size="small">
                 <DateLabel dateString={utvidetRett?.periode?.fom} /> - <DateLabel dateString={utvidetRett?.periode?.tom} />
               </BodyShort>
