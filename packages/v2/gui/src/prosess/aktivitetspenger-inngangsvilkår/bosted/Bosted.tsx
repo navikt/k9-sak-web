@@ -13,7 +13,7 @@ import type {
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -26,6 +26,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -38,6 +39,7 @@ import { BostedSkjema } from './BostedSkjema';
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -47,6 +49,55 @@ interface Props {
   bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  harAvslag: boolean | undefined;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  harAvslag,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="info" size="small">
+          Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter && harAvslag) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
 export const Bosted = ({
   bostedVilkår,
   readOnly,
@@ -55,6 +106,7 @@ export const Bosted = ({
   onAksjonspunktBekreftet,
   bostedAp,
   lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
   isPermanentlyReadOnly,
   bostedGrunnlag,
 }: Props) => {
@@ -160,7 +212,9 @@ export const Bosted = ({
       </Lovreferanse>
     </span>
   );
-  const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
+  const harAvslagIBosted = bostedVilkår.perioder?.some(
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
   const skalViseSendTilBeslutter =
     !!harAvslagIBosted &&
     !!lokalkontorForeslårVilkårAp &&
@@ -192,25 +246,15 @@ export const Bosted = ({
         readOnly={readOnly}
         lockedContent={isBostedApSolved ? <VurdertAv ident={bostedAp?.ansvarligSaksbehandler} /> : undefined}
         afterEditButton={
-          skalViseSendTilBeslutter ? (
-            <VStack gap="space-20">
-              <Alert variant="info" size="small">
-                Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
-              </Alert>
-              <Box>
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-              </Box>
-            </VStack>
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={skalViseSendTilBeslutter}
+            visForBeslutter={!!lokalkontorBeslutterAp}
+            harAvslag={harAvslagIBosted}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
         isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
       >

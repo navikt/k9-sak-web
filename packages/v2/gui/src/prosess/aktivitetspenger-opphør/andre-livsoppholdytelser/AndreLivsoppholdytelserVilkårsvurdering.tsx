@@ -20,6 +20,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -44,7 +45,55 @@ interface Props {
   onAksjonspunktBekreftet: () => void;
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
+  lokalkontorBeslutterAP?: AksjonspunktDto;
 }
+
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="success" size="small">
+          Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
 
 const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
   perioder: Object.fromEntries(
@@ -109,6 +158,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
+  lokalkontorBeslutterAP,
 }: Props) => {
   const queryClient = useQueryClient();
   const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(
@@ -176,25 +226,14 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
           isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserVilkårAP?.ansvarligSaksbehandler} /> : undefined
         }
         afterEditButton={
-          erLokalkontorForeslårAPÅpent ? (
-            <VStack gap="space-20">
-              <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
-              </Alert>
-              <Box>
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-              </Box>
-            </VStack>
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={erLokalkontorForeslårAPÅpent}
+            visForBeslutter={!!lokalkontorBeslutterAP}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
       >
         {(isFormLocked, setIsFormLocked) => (
@@ -267,6 +306,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
+                  readOnly={isFormLocked}
                 />
               )}
               {harFritekstbrev && (
@@ -284,7 +324,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
               {!isFormLocked && (
                 <HStack gap="space-16">
                   <Button type="submit" size="small" loading={isPending}>
-                    Send til beslutter
+                    Bekreft og fortsett
                   </Button>
                   {defaultIsLocked && (
                     <Button type="button" size="small" variant="secondary" onClick={() => setIsFormLocked(true)}>
