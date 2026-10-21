@@ -127,7 +127,13 @@ export const AvslagMedLokalkontorBeslutter: Story = {
     lokalkontorBeslutterAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR),
     vurderAktivitetsvilkårVilkår: {
       vilkarType: vilkarType.AKTIVITETSVILKÅR,
-      perioder: [{ periode: { fom: '2024-01-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_OPPFYLT }],
+      perioder: [
+        {
+          periode: { fom: '2024-01-01', tom: '2024-12-31' },
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          vurderesIBehandlingen: true,
+        },
+      ],
     },
     isPermanentlyReadOnly: false,
   },
