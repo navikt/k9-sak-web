@@ -11,31 +11,41 @@ const oppfyltPeriode = (fom: string, tom: string): Vilkårresultat => ({
   avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
 });
 
-const innvilgetBehandling = (
+const lagBehandling = (
   id: number,
   resultater: Vilkårresultat[],
-  overrides: Partial<TidligereBehandling> = {},
+  {
+    status = { kode: behandlingStatus.AVSLUTTET, kodeverk: 'BEHANDLING_STATUS' },
+    behandlingHenlagt = false,
+    sakstype = fagsakYtelsesType.OMSORGSPENGER_KS,
+    resultatType = behandlingResultatType.INNVILGET,
+    harBehandlingsresultat = true,
+  }: {
+    status?: TidligereBehandling['status'];
+    behandlingHenlagt?: boolean;
+    sakstype?: TidligereBehandling['sakstype'];
+    resultatType?: string;
+    harBehandlingsresultat?: boolean;
+  } = {},
 ): TidligereBehandling => ({
   id,
-  status: { kode: behandlingStatus.AVSLUTTET, kodeverk: 'BEHANDLING_STATUS' },
-  sakstype: fagsakYtelsesType.OMSORGSPENGER_KS,
-  behandlingHenlagt: false,
-  behandlingsresultat: {
-    type: { kode: 'INNVILGET', kodeverk: 'BEHANDLING_RESULTAT_TYPE' },
-    vilkårResultat: { UTVIDETRETT: resultater },
-  },
-  ...overrides,
+  status,
+  sakstype,
+  behandlingHenlagt,
+  behandlingsresultat: harBehandlingsresultat
+    ? {
+        type: { kode: resultatType, kodeverk: 'BEHANDLING_RESULTAT_TYPE' },
+        vilkårResultat: { UTVIDETRETT: resultater },
+      }
+    : undefined,
 });
 
 describe('finnDatoerForKroniskSyktBarn', () => {
   it.each([behandlingResultatType.AVSLATT, behandlingResultatType.IKKE_FASTSATT, behandlingResultatType.OPPHOR])(
     'ser bort fra oppfylt vilkår når behandlingsresultatet er %s',
     kode => {
-      const behandling = innvilgetBehandling(2, [oppfyltPeriode('2025-01-01', '2025-12-31')], {
-        behandlingsresultat: {
-          type: { kode, kodeverk: 'BEHANDLING_RESULTAT_TYPE' },
-          vilkårResultat: { UTVIDETRETT: [oppfyltPeriode('2025-01-01', '2025-12-31')] },
-        },
+      const behandling = lagBehandling(2, [oppfyltPeriode('2025-01-01', '2025-12-31')], {
+        resultatType: kode,
       });
 
       expect(finnDatoerForKroniskSyktBarn([behandling], 1)).toEqual({
@@ -50,9 +60,9 @@ describe('finnDatoerForKroniskSyktBarn', () => {
     expect(
       finnDatoerForKroniskSyktBarn(
         [
-          innvilgetBehandling(2, []),
-          innvilgetBehandling(3, [], { behandlingsresultat: undefined }),
-          innvilgetBehandling(4, [
+          lagBehandling(2, []),
+          lagBehandling(3, [], { harBehandlingsresultat: false }),
+          lagBehandling(4, [
             {
               ...oppfyltPeriode('2025-01-01', '2030-12-31'),
               utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
@@ -66,9 +76,9 @@ describe('finnDatoerForKroniskSyktBarn', () => {
 
   it('bruker dagen etter seneste sluttdato på tvers av behandlinger', () => {
     const behandlinger = [
-      innvilgetBehandling(2, [oppfyltPeriode('2028-01-01', '2028-12-31')]),
-      innvilgetBehandling(3, [oppfyltPeriode('2027-01-01', '2027-12-31')]),
-      innvilgetBehandling(4, [
+      lagBehandling(2, [oppfyltPeriode('2028-01-01', '2028-12-31')]),
+      lagBehandling(3, [oppfyltPeriode('2027-01-01', '2027-12-31')]),
+      lagBehandling(4, [
         {
           ...oppfyltPeriode('2029-01-01', '2030-12-31'),
           utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
@@ -88,7 +98,7 @@ describe('finnDatoerForKroniskSyktBarn', () => {
     expect(
       finnDatoerForKroniskSyktBarn(
         [
-          innvilgetBehandling(2, [
+          lagBehandling(2, [
             {
               ...oppfyltPeriode('2025-01-01', '2025-12-31'),
               utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
@@ -108,12 +118,12 @@ describe('finnDatoerForKroniskSyktBarn', () => {
     expect(
       finnDatoerForKroniskSyktBarn(
         [
-          innvilgetBehandling(1, periode),
-          innvilgetBehandling(2, periode, {
+          lagBehandling(1, periode),
+          lagBehandling(2, periode, {
             status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'BEHANDLING_STATUS' },
           }),
-          innvilgetBehandling(3, periode, { behandlingHenlagt: true }),
-          innvilgetBehandling(4, periode, { sakstype: fagsakYtelsesType.OMSORGSPENGER_AO }),
+          lagBehandling(3, periode, { behandlingHenlagt: true }),
+          lagBehandling(4, periode, { sakstype: fagsakYtelsesType.OMSORGSPENGER_AO }),
         ],
         1,
       ),
