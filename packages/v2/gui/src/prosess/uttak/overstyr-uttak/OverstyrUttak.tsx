@@ -119,7 +119,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   if (harNoeÅVise) {
     return (
       <div>
-        {harOverstyringAksjonspunkt && (
+        {harOverstyringAksjonspunkt && erOverstyrer && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad

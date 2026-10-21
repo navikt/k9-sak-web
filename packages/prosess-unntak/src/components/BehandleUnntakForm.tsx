@@ -16,8 +16,12 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { aksjonspunktStatus, type AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { aksjonspunktType, type AksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
+import OverstyringAksjonspunktVarsel from '@k9-sak-web/gui/shared/overstyring/OverstyringAksjonspunktVarsel.js';
+import { skalViseOverstyringAksjonspunktVarsel } from '@k9-sak-web/gui/shared/overstyring/overstyringsaksjonspunkt.js';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -34,7 +38,42 @@ interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   språkkode: Kodeverk;
+  aksjonspunkter?: Aksjonspunkt[];
+  erOverstyrer?: boolean;
 }
+
+const aksjonspunktTyper: ReadonlyArray<string> = Object.values(aksjonspunktType);
+const aksjonspunktStatuser: ReadonlyArray<string> = Object.values(aksjonspunktStatus);
+const erAksjonspunktType = (kode: string): kode is AksjonspunktType => aksjonspunktTyper.includes(kode);
+const erAksjonspunktStatus = (kode: string): kode is AksjonspunktStatus => aksjonspunktStatuser.includes(kode);
+const tilAksjonspunktType = (kode?: string) => (kode !== undefined && erAksjonspunktType(kode) ? kode : undefined);
+const tilAksjonspunktStatus = (kode?: string) => (kode !== undefined && erAksjonspunktStatus(kode) ? kode : undefined);
+
+const OverstyringVarsel = ({
+  aksjonspunkter,
+  erOverstyrer,
+}: {
+  aksjonspunkter: Aksjonspunkt[];
+  erOverstyrer: boolean;
+}) => {
+  const aksjonspunkterForVarsel = aksjonspunkter.map(ap => ({
+    aksjonspunktType: tilAksjonspunktType(ap.aksjonspunktType?.kode),
+    status: tilAksjonspunktStatus(ap.status?.kode),
+  }));
+  if (!skalViseOverstyringAksjonspunktVarsel(aksjonspunkterForVarsel, erOverstyrer)) {
+    return null;
+  }
+  return (
+    <>
+      <OverstyringAksjonspunktVarsel
+        aksjonspunkter={aksjonspunkterForVarsel}
+        erOverstyrer={erOverstyrer}
+        overstyrtHva="vilkårsvurderingen"
+      />
+      <VerticalSpacer twentyPx />
+    </>
+  );
+};
 
 export const BehandleUnntakForm = ({
   behandlingId,
@@ -43,6 +82,8 @@ export const BehandleUnntakForm = ({
   handleSubmit,
   readOnlySubmitButton,
   språkkode,
+  aksjonspunkter = [],
+  erOverstyrer = false,
   // alleKodeverk,
   ...formProps
 }: OwnProps & InjectedFormProps) => (
@@ -54,6 +95,7 @@ export const BehandleUnntakForm = ({
         </Heading>
       </FlexRow>
       <VerticalSpacer twentyPx />
+      <OverstyringVarsel aksjonspunkter={aksjonspunkter} erOverstyrer={erOverstyrer} />
 
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[
