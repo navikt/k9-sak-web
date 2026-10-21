@@ -1764,9 +1764,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:5.9.1":
-  version: 5.9.1
-  resolution: "@hookform/resolvers@npm:5.9.1"
+"@hookform/resolvers@npm:5.9.2":
+  version: 5.9.2
+  resolution: "@hookform/resolvers@npm:5.9.2"
   dependencies:
     "@standard-schema/utils": "npm:^0.3.0"
   peerDependencies:
@@ -1778,7 +1778,7 @@ __metadata:
     ajv-errors: ^3.0.0
     ajv-formats: ^2.1.1
     arktype: ^2.0.0
-    ata-validator: ^1.2.0
+    ata-validator: ^1.23.0
     class-transformer: ">=0.4.0"
     class-validator: ">=0.12.0"
     computed-types: ^1.0.0
@@ -1844,7 +1844,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10/b334b50a9d6d915ae52e6a636aabe1f800d41889856f1978c34528d0871332a9a59a19ef666a60b59ffd4cd515aceac84155595ecda0ba79f4357a04c002e363
+  checksum: 10/694f0385c0cc1bb141b8f400b208ac5802f8b6f4591419ca1843977b532210f3bcb3ad8853945b99d00ed92d7444898312f16967a3a51d06c23e875279dcabcc
   languageName: node
   linkType: hard
 
@@ -2970,7 +2970,7 @@ __metadata:
     "@editorjs/list": "npm:2.0.9"
     "@editorjs/paragraph": "npm:2.11.7"
     "@hookform/error-message": "npm:2.0.1"
-    "@hookform/resolvers": "npm:5.9.1"
+    "@hookform/resolvers": "npm:5.9.2"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "workspace:^"
     "@nais/apm": "npm:0.7.3"
@@ -8414,9 +8414,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:10.12.0":
-  version: 10.12.0
-  resolution: "eslint@npm:10.12.0"
+"eslint@npm:10.13.0":
+  version: 10.13.0
+  resolution: "eslint@npm:10.13.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.8.0"
     "@eslint-community/regexpp": "npm:^4.12.2"
@@ -8455,7 +8455,7 @@ __metadata:
       optional: true
   bin:
     eslint: bin/eslint.js
-  checksum: 10/1cff87e4db79d4c9b6bd0af4c2aa483d88936a16f70e73af192a2aeee5ec597ad1de5d42ba1242336c27b25be6f0e503e4ea41ca036ab134eb5f4b4c24af15b9
+  checksum: 10/04b7140a6fb4614d3cd5feb35041cd3b2b92f80d7fd015d8d320c76e015577863dc530c1bcf228eb3b58b06151e45b6452dd349a6863d21eeefa02ceaee1377f
   languageName: node
   linkType: hard
 
@@ -10887,7 +10887,7 @@ __metadata:
     cross-env: "npm:10.1.0"
     date-fns: "npm:4.4.0"
     dayjs: "npm:1.11.23"
-    eslint: "npm:10.12.0"
+    eslint: "npm:10.13.0"
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-react: "npm:7.37.5"
