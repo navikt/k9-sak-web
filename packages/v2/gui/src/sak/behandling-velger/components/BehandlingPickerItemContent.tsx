@@ -21,7 +21,7 @@ import {
   getStatusText,
 } from './behandlingVelgerUtils';
 import { k9_kodeverk_behandling_BehandlingResultatType } from '@navikt/k9-sak-typescript-client/types';
-import { k9_kodeverk_vilkår_Utfall } from '../../../behandling/prosess/utils/vilkårUtils.ts';
+import { k9_kodeverk_vilkår_Utfall } from '../../../behandling/prosess/utils/vilkårUtils';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
