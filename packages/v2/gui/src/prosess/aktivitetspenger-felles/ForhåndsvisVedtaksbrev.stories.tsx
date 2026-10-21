@@ -27,13 +27,6 @@ const innvilgelse = {
   navn: 'Innvilgelse',
 } satisfies NonNullable<NonNullable<VedtaksbrevValgResponse['vedtaksbrevValg']>[number]['dokumentMalType']>;
 
-const avslag = {
-  kilde: 'AVSLAG',
-  kode: 'AVSLAG',
-  kodeverk: 'DOKUMENT_MAL_TYPE',
-  navn: 'Avslag',
-} satisfies NonNullable<NonNullable<VedtaksbrevValgResponse['vedtaksbrevValg']>[number]['dokumentMalType']>;
-
 const apiMedVedtaksbrev = (response: VedtaksbrevValgResponse) => {
   const api = new FakeAktivitetspengerApi();
   api.vedtaksbrevValg = fn(async () => response);
@@ -44,11 +37,6 @@ const apiMedVedtaksbrev = (response: VedtaksbrevValgResponse) => {
 const apiMedEttBrev = apiMedVedtaksbrev({
   harBrev: true,
   vedtaksbrevValg: [{ dokumentMalType: innvilgelse }],
-});
-
-const apiMedFlereBrev = apiMedVedtaksbrev({
-  harBrev: true,
-  vedtaksbrevValg: [{ dokumentMalType: innvilgelse }, { dokumentMalType: avslag }],
 });
 
 const apiUtenBrev = apiMedVedtaksbrev({
@@ -93,19 +81,10 @@ export const EttBrev: Story = {
   args: { api: apiMedEttBrev, behandling },
   beforeEach: mockWindowOpen(false),
   play: async ({ canvas, args }) => {
-    const knapp = await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' });
+    const knapp = await canvas.findByRole('button', { name: 'Forhåndsvis brev' });
     await userEvent.click(knapp);
     await expect(args.api.forhåndsvisVedtaksbrev).toHaveBeenCalledWith(behandling.id, innvilgelse.kilde);
     await expect(window.open).toHaveBeenCalledWith(expect.any(String), '_blank');
-  },
-};
-
-export const FlereBrev: Story = {
-  args: { api: apiMedFlereBrev, behandling },
-  beforeEach: mockWindowOpen(false),
-  play: async ({ canvas }) => {
-    await canvas.findByRole('button', { name: 'Forhåndsvis Innvilgelse' });
-    await canvas.findByRole('button', { name: 'Forhåndsvis Avslag' });
   },
 };
 
@@ -131,7 +110,7 @@ export const PopupBlokkert: Story = {
   args: { api: apiMedEttBrev, behandling },
   beforeEach: mockWindowOpen(true),
   play: async ({ canvas }) => {
-    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis brev' }));
     await canvas.findByText(
       'Nettleseren blokkerte forhåndsvisningen. Tillat popup-vinduer for denne siden og prøv igjen.',
     );
@@ -142,7 +121,7 @@ export const ForhåndsvisningFeiler: Story = {
   args: { api: apiMedForhåndsvisningsfeil, behandling },
   beforeEach: mockWindowOpen(false),
   play: async ({ canvas }) => {
-    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis brev' }));
     await canvas.findByText('Forhåndsvisning feilet');
   },
 };
