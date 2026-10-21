@@ -51,6 +51,7 @@ const tekst = {
   feilmedlingManglerDato: 'Mangler dato.',
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
+  feilOverlappendePeriode: 'Perioden overlapper et tidligere innvilget vedtak.',
   soknadsdato: 'Søknadsdato',
   begrunnelseFraBruker: 'Begrunnelse for risiko for økt fravær',
 };
@@ -129,7 +130,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     return (
       !innvilgedePerioder.some(
         periode => !fom.isAfter(dayjs(periode.tom), 'day') && (!tom || !tom.isBefore(dayjs(periode.fom), 'day')),
-      ) || 'Perioden overlapper et tidligere innvilget vedtak.'
+      ) || tekst.feilOverlappendePeriode
     );
   };
 
