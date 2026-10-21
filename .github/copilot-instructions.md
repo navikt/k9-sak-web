@@ -15,7 +15,7 @@ Conventions and workflows are in the skills in `.github/skills/` and the file-sp
 
 ## Code
 
-- TypeScript strict mode: no `any` without justification.
+- Follow the `typescript` skill for type safety and type-checking.
 - Use named imports from `@navikt/ds-react`, never `import *`.
 - Use Aksel spacing tokens (`space-16`), never Tailwind `p-*`/`m-*`.
 
@@ -27,7 +27,7 @@ Keep diffs small and focused so they are easy to review.
 
 ## ignore404Errors
 
-`throwOnError: ignore404Errors` is a workaround. 404 should be handled in the BackendClient instead (see the `api-contract` skill). When you come across `ignore404Errors`, in your own work or in a review, flag it for the developer so they can decide whether to move the 404 handling to the client. Do not change it without asking.
+`throwOnError: ignore404Errors` is a workaround. 404 should be handled in the BackendClient instead (see the `backend-client` skill). When you come across `ignore404Errors`, in your own work or in a review, flag it for the developer so they can decide whether to move the 404 handling to the client. Do not change it without asking.
 
 ## Skills and instructions
 

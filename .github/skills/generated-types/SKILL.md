@@ -1,9 +1,9 @@
 ---
-name: backend-types
-description: 'Stable re-exports of OpenAPI-generated DTO types and kodeverk enums in packages/v2/backend/src/<backend>/. USE FOR: creating or reviewing files under kontrakt/ or kodeverk/, choosing between export and export type, finding generated types in the published typescript clients, combined types, linking an unreleased backend client. DO NOT USE FOR: BackendClient, queryOptions or API context (use api-contract), or general v2 conventions (use v2-architecture).'
+name: generated-types
+description: 'Stable re-exports of OpenAPI-generated DTO types and kodeverk enums in packages/v2/backend/src/<backend>/. USE FOR: creating or reviewing files under kontrakt/ or kodeverk/, choosing between export and export type, finding generated types in the published typescript clients, combined types, linking an unreleased backend client. DO NOT USE FOR: BackendClient or API context (use backend-client), queries (use data-fetching), or general v2 conventions (use v2-architecture).'
 ---
 
-# v2 Backend Types
+# Generated types
 
 Generated types and SDK functions come from the published client packages and are re-exported with `export *` in `packages/v2/backend/src/<backend>/generated/`. Generated names such as `k9_sak_kontrakt_uttak_UtenlandsoppholdDto` change when the OpenAPI spec changes, so GUI code never imports from `generated/types.js`. Create a stable re-export with a friendly alias in the backend package and import from that.
 

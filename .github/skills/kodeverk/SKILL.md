@@ -1,13 +1,13 @@
 ---
 name: kodeverk
-description: 'Using kodeverk in v2 code: generated kodeverk constants and type-safe lookups of names through K9KodeverkoppslagContext or UngKodeverkoppslagContext. USE FOR: showing kodeverk names, comparing domain codes, replacing alleKodeverk/kodeverk props, useKodeverkContext or KodeverkType. DO NOT USE FOR: creating re-exports of generated kodeverk enums (use backend-types) or converting legacy kodeverk objects at the v1 shell boundary (use v2-migration).'
+description: 'Using kodeverk in v2 code: generated kodeverk constants and type-safe lookups of names through K9KodeverkoppslagContext or UngKodeverkoppslagContext. USE FOR: showing kodeverk names, comparing domain codes, replacing alleKodeverk/kodeverk props, useKodeverkContext or KodeverkType. DO NOT USE FOR: creating re-exports of generated kodeverk enums (use generated-types) or converting legacy kodeverk objects at the v1 shell boundary (use v2-migration).'
 ---
 
-# v2 Kodeverk
+# Kodeverk
 
 ## Domain codes — use generated constants
 
-Never hardcode string literals for domain codes. Import the generated constant from the stable re-export (see the `backend-types` skill):
+Never hardcode string literals for domain codes. Import the generated constant from the stable re-export (see the `generated-types` skill):
 
 ```typescript
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';

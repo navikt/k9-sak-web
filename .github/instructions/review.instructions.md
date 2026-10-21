@@ -27,7 +27,7 @@ Ved endret atferd, vurder om testene dekker relevante tilstander og interaksjone
 
 Ved endringer i `packages/v2/`, kontroller koden mot `.github/instructions/v2.instructions.md` og sjekklisten i `v2-architecture`-skillen. Bruk bare sjekkpunktene som er relevante for endringen.
 
-Ved nye eller endrede API-kall, kontroller query-nøkler, invalidering og håndtering av lasting og feil mot `api-contract`-skillen. Flagg konkrete feil eller manglende dekning, ikke et generelt krav om tester for alle tilstander.
+Ved nye eller endrede API-kall, kontroller query-nøkler, invalidering og håndtering av lasting og feil mot `data-fetching`-skillen. Flagg konkrete feil eller manglende dekning, ikke et generelt krav om tester for alle tilstander.
 
 ## Migrering
 

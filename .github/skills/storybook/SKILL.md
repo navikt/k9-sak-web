@@ -1,9 +1,9 @@
 ---
 name: storybook
-description: 'Storybook stories and tests for v2 components: story placement, fake API decorators, kodeverk and feature toggle decorators, play tests vs React Testing Library vs Vitest. USE FOR: writing or reviewing *.stories.tsx, withFake<Feature>Api decorators, mocking backend data in stories, replacing RTL tests when migrating. DO NOT USE FOR: the API contract itself (use api-contract).'
+description: 'Storybook stories and tests for v2 components: story placement, fake API decorators, kodeverk and feature toggle decorators, play tests vs React Testing Library vs Vitest. USE FOR: writing or reviewing *.stories.tsx, withFake<Feature>Api decorators, mocking backend data in stories, replacing RTL tests when migrating. DO NOT USE FOR: the backend client itself (use backend-client) or queries in components (use data-fetching).'
 ---
 
-# v2 Stories and tests
+# Storybook and tests
 
 ## Where and what
 

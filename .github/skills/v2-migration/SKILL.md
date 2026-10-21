@@ -41,8 +41,8 @@ Use the inline `import(...)` so the guard needs no top-level import.
 
 ## 4. API provider and Suspense
 
-- [ ] Add the API context provider in `AppConfigResolver`, as described in the `api-contract` skill
-- [ ] Wrap the `<ErrorBoundary>` in each behandling `*Fakta.tsx` that renders the panel in `<Suspense>`. A v2 component that uses `useSuspenseQuery` crashes without it. The existing pleiepenger, opplæringspenger and pleiepenger sluttfase shells already have it:
+- [ ] Add the API context provider in `AppConfigResolver`, as described in the `backend-client` skill
+- [ ] Wrap the `<ErrorBoundary>` in each behandling `*Fakta.tsx` that renders the panel in `<Suspense>` (see the `data-fetching` skill). The existing pleiepenger, opplæringspenger and pleiepenger sluttfase shells already have it:
 
 ```tsx
 <Suspense fallback={<LoadingPanel />}>
