@@ -18,6 +18,7 @@ Conventions and workflows are in the skills in `.github/skills/` and the file-sp
 - Follow the `typescript` skill for type safety and type-checking.
 - Use named imports from `@navikt/ds-react`, never `import *`.
 - Use Aksel spacing tokens (`space-16`), never Tailwind `p-*`/`m-*`.
+- Check Aksel component names and props against the Aksel MCP (`aksel_get_doc` / `aksel_get_component_info`) before using them.
 
 ## Minimal Editing
 
@@ -31,7 +32,4 @@ Keep diffs small and focused so they are easy to review.
 
 ## Skills and instructions
 
-- Each rule and example lives in exactly one place. Prefer small, focused skills in `.github/skills/` and link to them from other skills, instructions and prompts instead of copying the content.
-- Instructions contain only rules that must always apply to the matched files, and point to skills for workflows and details.
-- When a rule changes, update the file that owns it and check that no other file repeats it.
-- `.github/instructions/governance-review.instructions.md` is maintained centrally in `navikt/sif-team` and distributed by script. Do not edit it here.
+Each rule lives in exactly one file; link to it instead of copying it. When you create or change a skill or instruction, or change a rule, follow the `skill-authoring` skill.

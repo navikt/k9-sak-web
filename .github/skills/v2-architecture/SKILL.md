@@ -23,6 +23,7 @@ Code in `packages/v2/` follows stricter TypeScript rules and different conventio
 | Kodeverk constants and name lookups | `kodeverk` |
 | Stories, decorators and tests | `storybook` |
 | Adding and reading feature toggles | `feature-toggles` |
+| UI design decisions, e.g. alerts | `design-*` |
 | Migrating a v1 panel behind a toggle | `v2-migration` |
 | Removing the toggle and v1 code | `v1-cleanup` |
 
