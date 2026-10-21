@@ -64,6 +64,7 @@ const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[
       status: getPeriodStatus(period.vilkarStatus),
       label: formatDate(period.periode.fom),
       periode: period.periode,
+      vurderesIBehandlingen: period.vurderesIBehandlingen,
     }));
 
 const buildPayload = ({
@@ -181,7 +182,7 @@ export const BostedVilkårsvurdering = ({
         lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
         readOnly={readOnly}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriod?.vurderesIBehandlingen === false}
         afterEditButton={
           erLokalkontorForeslårAPÅpent ? (
             <VStack gap="space-20">

@@ -64,7 +64,7 @@ const meta = {
   component: BehovForBistand,
   args: {
     api: fakeApiMedAvkortingsperiode,
-    behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
+    behandling: { id: 1, uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: async () => {},
     readOnly: false,
     vurderBistandsvilkårAp: undefined,
@@ -312,6 +312,52 @@ export const RedigererMaksdato: Story = {
           ],
         });
       });
+    });
+  },
+};
+
+export const MedAapentLokalkontorForeslarUtenAvslag: Story = {
+  args: {
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
+    vurderBistandsvilkårVilkår: {
+      vilkarType: vilkarType.BISTANDSVILKÅR,
+      perioder: [{ periode: avkortingsperiode, vilkarStatus: Utfall.OPPFYLT }],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser send til beslutter uten forhåndsvisning når det ikke er avslag', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const MedAapentLokalkontorForeslarMedAvslag: Story = {
+  args: {
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
+    vurderBistandsvilkårVilkår: {
+      vilkarType: vilkarType.BISTANDSVILKÅR,
+      perioder: [
+        {
+          periode: avkortingsperiode,
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          avslagKode: Avslagsårsak.AVKORTET,
+        },
+      ],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser begge knappene når lokalkontoret foreslår avslag', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
     });
   },
 };

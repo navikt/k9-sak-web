@@ -24,7 +24,7 @@ const meta = {
   component: Aktivitet,
   args: {
     api: fakeApiMedAvkortingsperiode,
-    behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
+    behandling: { id: 1, uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: async () => {},
     readOnly: false,
     vurderAktivitetsvilkårAp: undefined,
@@ -114,6 +114,29 @@ export const BytterFelterBasertPåVurdering: Story = {
     await step('viser fritekstfelt direkte når bruker velger Nei', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
       await expect(canvas.getByLabelText('Fritekst avslagsbrev')).toBeInTheDocument();
+    });
+  },
+};
+
+export const AvslagMedLokalkontorBeslutter: Story = {
+  args: {
+    vurderAktivitetsvilkårAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    lokalkontorBeslutterAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR),
+    vurderAktivitetsvilkårVilkår: {
+      vilkarType: vilkarType.AKTIVITETSVILKÅR,
+      perioder: [{ periode: { fom: '2024-01-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_OPPFYLT }],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser bare forhåndsvisning når lokalkontoret beslutter', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Send til beslutter' })).not.toBeInTheDocument();
     });
   },
 };

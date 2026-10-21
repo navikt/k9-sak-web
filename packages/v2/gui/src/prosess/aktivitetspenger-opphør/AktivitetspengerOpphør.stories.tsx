@@ -17,8 +17,8 @@ import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontr
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, within } from 'storybook/test';
-import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
+import { expect, fn, spyOn, userEvent, within } from 'storybook/test';
+import { FakeAktivitetspengerApi, fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { AktivitetspengerOpphør } from './AktivitetspengerOpphør.js';
 
@@ -144,6 +144,42 @@ const fakeArgsBase = {
   totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
   lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
   bostedGrunnlag: fakeBostedGrunnlag,
+};
+
+const fakeBehandlingMedId = { ...fakeBehandling, id: 123 };
+
+const fakeBostedVilkårMedHistoriskePerioder = {
+  vilkarType: vilkarType.BOSTEDSVILKÅR,
+  lovReferanse: 'TODO AKT lovreferanse',
+  overstyrbar: true,
+  perioder: [
+    {
+      vilkarStatus: Utfall.OPPFYLT,
+      merknad: '-',
+      merknadParametere: {},
+      periode: { fom: '2025-01-01', tom: '2025-12-31' },
+      begrunnelse: 'Historisk vurdering',
+      fritekstVurderingBrev: '',
+      vurderesIBehandlingen: false,
+    },
+    {
+      vilkarStatus: Utfall.OPPFYLT,
+      merknad: '-',
+      merknadParametere: {},
+      periode: { fom: '2026-01-01', tom: '2026-12-31' },
+      begrunnelse: 'Vurdering i behandlingen',
+      fritekstVurderingBrev: '',
+      vurderesIBehandlingen: true,
+    },
+  ],
+} satisfies VilkårMedPerioderDto;
+
+const apiMedForhåndsvisningsspion = new FakeAktivitetspengerApi();
+apiMedForhåndsvisningsspion.forhåndsvisVedtaksbrev = fn(async () => new Blob());
+
+const mockWindowOpen = () => {
+  const windowOpenSpy = spyOn(window, 'open').mockReturnValue(window);
+  return () => windowOpenSpy.mockRestore();
 };
 
 const fakeAndreLivsoppholdytelserVilkårArgsBase = {
@@ -912,5 +948,54 @@ export const LokalkontorForeslårVilkår: Story = {
     await step('Callback er kalt etter sending', async () => {
       await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
     });
+  },
+};
+
+export const LokalkontorForeslårBostedMedForhåndsvisning: Story = {
+  args: {
+    ...fakeArgsBase,
+    api: apiMedForhåndsvisningsspion,
+    behandling: fakeBehandlingMedId,
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR)],
+    onAksjonspunktBekreftet: fn(),
+  },
+  beforeEach: mockWindowOpen,
+  play: async ({ canvas, args }) => {
+    await canvas.findByRole('button', { name: /send til beslutter/i });
+    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' }));
+    await expect(args.api.forhåndsvisVedtaksbrev).toHaveBeenCalledWith(fakeBehandlingMedId.id, 'INNVILGELSE');
+  },
+};
+
+export const BeslutterKanForhåndsvise: Story = {
+  args: {
+    ...fakeBeslutterArgsBase,
+    behandling: fakeBehandlingMedId,
+    vilkår: [fakeBostedVilkårMedHistoriskePerioder],
+    onAksjonspunktBekreftet: fn(),
+  },
+  beforeEach: mockWindowOpen,
+  play: async ({ canvas }) => {
+    await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
+    await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' });
+    await expect(canvas.queryByRole('button', { name: /send til beslutter/i })).not.toBeInTheDocument();
+  },
+};
+
+export const HistoriskBostedsperiodeKanIkkeRedigeres: Story = {
+  args: {
+    ...fakeArgsBase,
+    behandling: fakeBehandlingMedId,
+    vilkår: [fakeBostedVilkårMedHistoriskePerioder],
+    aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas }) => {
+    await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
+    await userEvent.click(await canvas.findByRole('row', { name: /01\.01\.2025/i }));
+    await expect(canvas.queryByRole('button', { name: /rediger vurdering/i })).not.toBeInTheDocument();
+
+    await userEvent.click(await canvas.findByRole('row', { name: /01\.01\.2026/i }));
+    await canvas.findByRole('button', { name: /rediger vurdering/i });
   },
 };

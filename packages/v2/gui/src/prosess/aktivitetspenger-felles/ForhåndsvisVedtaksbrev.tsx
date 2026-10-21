@@ -1,10 +1,10 @@
-import { FileSearchIcon } from '@navikt/aksel-icons';
-import { Alert, Button, HStack, VStack } from '@navikt/ds-react';
 import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import { FileSearchIcon } from '@navikt/aksel-icons';
+import { Alert, Button, HStack, VStack } from '@navikt/ds-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { vedtaksbrevValgQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vedtaksbrevValgQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 
 interface ForhåndsvisVedtaksbrevProps {
   api: AktivitetspengerApi;
@@ -18,7 +18,7 @@ function harDokumentMalType<T extends { dokumentMalType?: unknown }>(
 }
 
 export const ForhåndsvisVedtaksbrev = ({ api, behandling }: ForhåndsvisVedtaksbrevProps) => {
-  const { data } = useQuery(vedtaksbrevValgQueryOptions(api, behandling));
+  const { data, isError: hentingFeilet } = useQuery(vedtaksbrevValgQueryOptions(api, behandling));
   const {
     mutate: forhåndsvis,
     isPending,
@@ -31,11 +31,23 @@ export const ForhåndsvisVedtaksbrev = ({ api, behandling }: ForhåndsvisVedtaks
         throw new Error('Behandling ID mangler');
       }
       const response = await api.forhåndsvisVedtaksbrev(behandling.id, dokumentMalType);
-      window.open(window.URL.createObjectURL(response), '_blank');
+      const fileURL = window.URL.createObjectURL(response);
+      if (!window.open(fileURL, '_blank')) {
+        window.URL.revokeObjectURL(fileURL);
+        throw new Error('Nettleseren blokkerte forhåndsvisningen. Tillat popup-vinduer for denne siden og prøv igjen.');
+      }
       return response;
     },
   });
   const vedtaksbrevValg = data?.vedtaksbrevValg?.filter(harDokumentMalType) ?? [];
+
+  if (hentingFeilet) {
+    return (
+      <Alert variant="error" size="small">
+        Kunne ikke hente vedtaksbrev for forhåndsvisning.
+      </Alert>
+    );
+  }
 
   if (!data?.harBrev || vedtaksbrevValg.length === 0) {
     return null;

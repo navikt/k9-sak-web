@@ -103,7 +103,7 @@ const meta = {
   component: AndreLivsoppholdytelser,
   args: {
     api: new FakeAktivitetspengerApiMedAvkortingsperiode(),
-    behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
+    behandling: { id: 1, uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: async () => {},
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
@@ -498,6 +498,35 @@ export const MaksdatoMåVæreKortere: Story = {
           'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
         ),
       ).toBeInTheDocument();
+    });
+  },
+};
+
+export const AvslagMedÅpentLokalkontorForeslår: Story = {
+  args: {
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        {
+          periode,
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          avslagKode: Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE,
+        },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser beslutter- og forhåndsvisningsknappene ved avslag', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
     });
   },
 };

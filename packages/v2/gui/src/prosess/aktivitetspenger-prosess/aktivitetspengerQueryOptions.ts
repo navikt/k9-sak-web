@@ -4,7 +4,6 @@ import { AsyncPollingStatusStatus } from '@k9-sak-web/backend/ungsak/kontrakt/As
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { queryOptions } from '@tanstack/react-query';
-import { ignore404Errors } from '../../app/errorhandling/ignore404Errors.js';
 import { TimeoutError } from '../../app/errorhandling/legacycompat/TimeoutError.js';
 import { delay } from '../../utils/delay.js';
 import type { AktivitetspengerApi } from './AktivitetspengerApi.js';
@@ -167,5 +166,4 @@ export const vedtaksbrevValgQueryOptions = (api: AktivitetspengerApi, behandling
       return api.vedtaksbrevValg(behandling.id);
     },
     enabled: behandling.id !== undefined,
-    throwOnError: ignore404Errors,
   });
