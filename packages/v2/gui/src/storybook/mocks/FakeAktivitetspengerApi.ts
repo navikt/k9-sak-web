@@ -56,6 +56,10 @@ export class FakeAktivitetspengerApi implements AktivitetspengerApi {
     throw new Error('Not implemented');
   }
 
+  async getKontrollerInntekt() {
+    return { kontrollperioder: [] };
+  }
+
   async getInnloggetBruker() {
     return {};
   }

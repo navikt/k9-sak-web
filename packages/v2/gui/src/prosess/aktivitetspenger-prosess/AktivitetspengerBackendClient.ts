@@ -16,6 +16,7 @@ import {
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,
+  kontroll_hentKontrollerInntekt,
   fagsak_hentFagsak,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
@@ -89,8 +90,16 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   }
 
   async getBeregningsgrunnlag(behandlingUuid: string) {
-    const { data } = await avp_getBeregningsgrunnlag({ query: { behandlingUuid } });
+    const { data, response } = await avp_getBeregningsgrunnlag({ query: { behandlingUuid } });
+    // 204 uten Content-Type gir response.body (ReadableStream) som data fra SDK-klienten
+    if (response.status === 204) {
+      return null;
+    }
     return data ?? null;
+  }
+
+  async getKontrollerInntekt(behandlingUuid: string) {
+    return (await kontroll_hentKontrollerInntekt({ query: { behandlingUuid } })).data;
   }
 
   async getSatsOgUtbetalingPerioder(behandlingUuid: string) {

@@ -104,8 +104,14 @@ export const satsOgUtbetalingPerioderQueryOptions = (
   enabled = true,
 ) =>
   queryOptions({
-    queryKey: ['satsOgUtbetalingPerioder', behandling.uuid, api.backend, enabled],
+    queryKey: ['satsOgUtbetalingPerioder', behandling.uuid, behandling.versjon, api.backend, enabled],
     queryFn: () => (enabled ? api.getSatsOgUtbetalingPerioder(behandling.uuid) : null),
+  });
+
+export const kontrollerInntektQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['aktivitetspenger-kontrollInntekt', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.getKontrollerInntekt(behandling.uuid),
   });
 
 export const totrinnskontrollSkjermlenkeContextQueryOptions = (api: AktivitetspengerApi, behandling: Behandling) =>

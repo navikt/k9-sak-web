@@ -11,6 +11,7 @@ import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
+  kontrollerInntektQueryOptions,
   innloggetBrukerQueryOptions,
   satsOgUtbetalingPerioderQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -64,8 +65,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     isLoading: kontrollInntektIsLoading,
     isError: kontrollInntektIsError,
   } = useQuery({
-    queryKey: ['aktivitetspenger-kontrollInntekt', behandling.uuid, behandling.versjon],
-    queryFn: () => aktivitetspengerBeregningApi.getKontrollerInntekt(behandling.uuid),
+    ...kontrollerInntektQueryOptions(api, behandling),
     select: sortInntekt,
     throwOnError: false,
   });
