@@ -331,7 +331,7 @@ export const MedAapentLokalkontorForeslarUtenAvslag: Story = {
 
     await step('viser send til beslutter uten forhåndsvisning når det ikke er avslag', async () => {
       await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
     });
   },
 };
@@ -357,7 +357,7 @@ export const MedAapentLokalkontorForeslarMedAvslag: Story = {
 
     await step('viser begge knappene når lokalkontoret foreslår avslag', async () => {
       await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
-      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
     });
   },
 };

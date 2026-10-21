@@ -4,7 +4,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYte
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/VedtaksbrevValgResponse.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, spyOn, userEvent } from 'storybook/test';
+import { expect, fn, spyOn, userEvent, waitFor } from 'storybook/test';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import { FakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
 import { ForhåndsvisVedtaksbrev } from './ForhåndsvisVedtaksbrev.js';
@@ -92,8 +92,7 @@ export const IngenBrev: Story = {
   args: { api: apiUtenBrev, behandling },
   beforeEach: mockWindowOpen(false),
   play: async ({ canvas, args }) => {
-    await expect(args.api.vedtaksbrevValg).toHaveBeenCalledWith(behandling.id);
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await waitFor(() => expect(args.api.vedtaksbrevValg).toHaveBeenCalledWith(behandling.id));
     await expect(canvas.queryByRole('button')).not.toBeInTheDocument();
   },
 };

@@ -526,7 +526,7 @@ export const AvslagMedÅpentLokalkontorForeslår: Story = {
 
     await step('viser beslutter- og forhåndsvisningsknappene ved avslag', async () => {
       await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
-      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
     });
   },
 };

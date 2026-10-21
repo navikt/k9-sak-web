@@ -962,7 +962,7 @@ export const LokalkontorForeslårBostedMedForhåndsvisning: Story = {
   beforeEach: mockWindowOpen,
   play: async ({ canvas, args }) => {
     await canvas.findByRole('button', { name: /send til beslutter/i });
-    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' }));
+    await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis brev' }));
     await expect(args.api.forhåndsvisVedtaksbrev).toHaveBeenCalledWith(fakeBehandlingMedId.id, 'INNVILGELSE');
   },
 };
@@ -977,7 +977,7 @@ export const BeslutterKanForhåndsvise: Story = {
   beforeEach: mockWindowOpen,
   play: async ({ canvas }) => {
     await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
-    await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' });
+    await canvas.findByRole('button', { name: 'Forhåndsvis brev' });
     await expect(canvas.queryByRole('button', { name: /send til beslutter/i })).not.toBeInTheDocument();
   },
 };

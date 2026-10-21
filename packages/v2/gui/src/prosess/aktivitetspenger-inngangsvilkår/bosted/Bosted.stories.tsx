@@ -286,7 +286,7 @@ export const AvslagMedÅpentLokalkontorForeslår: Story = {
 
     await step('viser beslutter- og forhåndsvisningsknappene ved avslag', async () => {
       await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
-      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
     });
 
     await step('forhåndsviser vedtaksbrevet med brevvalget fra fake-API-et', async () => {
@@ -298,7 +298,7 @@ export const AvslagMedÅpentLokalkontorForeslår: Story = {
       const forhåndsvisSpy = spyOn(fakeApi, 'forhåndsvisVedtaksbrev');
       const åpneVinduSpy = spyOn(window, 'open').mockReturnValue(window);
       try {
-        await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' }));
+        await userEvent.click(await canvas.findByRole('button', { name: 'Forhåndsvis brev' }));
 
         await waitFor(async () => {
           await expect(forhåndsvisSpy).toHaveBeenCalledWith(behandlingId, forventetKilde);
@@ -335,7 +335,7 @@ export const AvslagKunIUtelattPeriode: Story = {
 
     await step('viser ikke knapper når avslaget bare gjelder en utelatt periode', async () => {
       await expect(canvas.queryByRole('button', { name: 'Send til beslutter' })).not.toBeInTheDocument();
-      await expect(canvas.queryByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
     });
   },
 };
@@ -360,7 +360,7 @@ export const AvslagMedLokalkontorBeslutter: Story = {
     const canvas = within(canvasElement);
 
     await step('viser bare forhåndsvisning når lokalkontoret beslutter', async () => {
-      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Send til beslutter' })).not.toBeInTheDocument();
     });
   },

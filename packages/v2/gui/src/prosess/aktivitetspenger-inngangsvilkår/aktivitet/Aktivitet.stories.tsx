@@ -135,7 +135,7 @@ export const AvslagMedLokalkontorBeslutter: Story = {
     const canvas = within(canvasElement);
 
     await step('viser bare forhåndsvisning når lokalkontoret beslutter', async () => {
-      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Send til beslutter' })).not.toBeInTheDocument();
     });
   },
