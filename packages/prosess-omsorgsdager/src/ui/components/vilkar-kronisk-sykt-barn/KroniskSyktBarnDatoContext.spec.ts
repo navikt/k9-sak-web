@@ -66,7 +66,7 @@ describe('finnDatoerForKroniskSyktBarn', () => {
 
   it('bruker dagen etter seneste sluttdato på tvers av behandlinger', () => {
     const behandlinger = [
-      innvilgetBehandling(2, [oppfyltPeriode('2028-01-01', '2028-02-29')]),
+      innvilgetBehandling(2, [oppfyltPeriode('2028-01-01', '2028-12-31')]),
       innvilgetBehandling(3, [oppfyltPeriode('2027-01-01', '2027-12-31')]),
       innvilgetBehandling(4, [
         {
@@ -76,9 +76,9 @@ describe('finnDatoerForKroniskSyktBarn', () => {
       ]),
     ];
     expect(finnDatoerForKroniskSyktBarn(behandlinger, 1)).toEqual({
-      foreslåttFraDato: '2028-03-01',
+      foreslåttFraDato: '2029-01-01',
       innvilgedePerioder: [
-        { fom: '2028-01-01', tom: '2028-02-29' },
+        { fom: '2028-01-01', tom: '2028-12-31' },
         { fom: '2027-01-01', tom: '2027-12-31' },
       ],
     });
