@@ -387,6 +387,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                         <DatePicker
                           titel=""
                           navn="fraDato"
+                          begrensningerIKalender={{
+                            minDate: '',
+                            maxDate: '',
+                            invalidDateRanges: innvilgedePerioder.map(periode => ({
+                              from: periode.fom,
+                              to: periode.tom,
+                            })),
+                          }}
                           valideringsFunksjoner={{
                             erDatoFyltUt,
                             erDatoGyldig,

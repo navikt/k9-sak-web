@@ -115,7 +115,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
     expect(props.losAksjonspunkt).not.toHaveBeenCalled();
   });
 
-  test('sperrer ingen kalenderdatoer i innvilgede perioder', async () => {
+  test('sperrer bare kalenderdatoer i innvilgede perioder', async () => {
     const props = lagPropsMedDato('2026-01-21');
     renderMedDato(props);
 
@@ -123,9 +123,9 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
     expect(screen.getByRole('button', { name: 'torsdag 1' })).not.toBeDisabled();
     expect(screen.getByRole('button', { name: 'fredag 9' })).not.toBeDisabled();
-    expect(screen.getByRole('button', { name: 'lørdag 10' })).not.toBeDisabled();
-    expect(screen.getByRole('button', { name: 'torsdag 15' })).not.toBeDisabled();
-    expect(screen.getByRole('button', { name: 'tirsdag 20' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'lørdag 10' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'torsdag 15' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'tirsdag 20' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'onsdag 21' })).not.toBeDisabled();
   });
 
