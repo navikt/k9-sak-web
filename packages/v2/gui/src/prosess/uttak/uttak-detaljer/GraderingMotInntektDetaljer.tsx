@@ -21,7 +21,9 @@ interface ownProps {
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ inntektsgradering }) => {
   const uttakApi = useUttakApi();
   const { behandling } = useUttakContext();
-  const arbeidsgivere = useSuspenseQuery(uttakArbeidsgivereQueryOptions(uttakApi, behandling.uuid)).data;
+  const arbeidsgivere = useSuspenseQuery(
+    uttakArbeidsgivereQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  ).data;
 
   const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
 
