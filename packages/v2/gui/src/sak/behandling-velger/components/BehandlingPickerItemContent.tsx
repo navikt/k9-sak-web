@@ -22,6 +22,7 @@ import {
 } from './behandlingVelgerUtils';
 import { k9_kodeverk_behandling_BehandlingResultatType } from '@navikt/k9-sak-typescript-client/types';
 import { k9_kodeverk_vilkår_Utfall } from '../../../behandling/prosess/utils/vilkårUtils';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
@@ -46,6 +47,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   index,
   behandling,
 }) => {
+  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = React.useContext(FeatureTogglesContext);
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const behandlingsresultatTypeNavn = behandling.behandlingsresultat
     ? kodeverkNavnFraKode(
@@ -64,9 +66,9 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
   const innvilget = behandlingsresultatTypeKode === k9_kodeverk_behandling_BehandlingResultatType.INNVILGET;
-  const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']
-    ?.filter(vilkar => vilkar.utfall == k9_kodeverk_vilkår_Utfall.OPPFYLT)
-    .at(0);
+  const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']?.find(
+    vilkar => vilkar.utfall == k9_kodeverk_vilkår_Utfall.OPPFYLT,
+  );
   return (
     <Box
       padding="space-16"
@@ -89,7 +91,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
 
-            {innvilget && utvidetRett?.periode && (
+            {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && innvilget && utvidetRett?.periode && (
               <BodyShort as="span" size="small">
                 <DateLabel dateString={utvidetRett?.periode?.fom} /> - <DateLabel dateString={utvidetRett?.periode?.tom} />
               </BodyShort>

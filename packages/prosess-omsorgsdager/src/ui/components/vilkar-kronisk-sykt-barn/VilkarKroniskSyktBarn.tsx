@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import dayjs from 'dayjs';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
@@ -87,7 +88,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   begrunnelseFraBruker,
   personopplysninger,
 }) => {
-  const { foreslåttFraDato, innvilgedePerioder } = useContext(KroniskSyktBarnDatoContext);
+  const kroniskSyktBarnDatoer = useContext(KroniskSyktBarnDatoContext);
+  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = useContext(FeatureTogglesContext);
+  const foreslåttFraDato = STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
+    ? kroniskSyktBarnDatoer.foreslåttFraDato
+    : undefined;
+  const innvilgedePerioder = kroniskSyktBarnDatoer.innvilgedePerioder;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
@@ -121,6 +127,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
   const erPeriodeUtenOverlapp = (dato: string) => {
     const data = getValues();
+    if (!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK) return true;
     if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko)) return true;
 
     const fom = dayjs(dato.replaceAll('.', '-'));
@@ -390,14 +397,18 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                         <DatePicker
                           titel=""
                           navn="fraDato"
-                          begrensningerIKalender={{
-                            minDate: '',
-                            maxDate: '',
-                            invalidDateRanges: innvilgedePerioder.map(periode => ({
-                              from: periode.fom,
-                              to: periode.tom,
-                            })),
-                          }}
+                          begrensningerIKalender={
+                            STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
+                              ? {
+                                  minDate: '',
+                                  maxDate: '',
+                                  invalidDateRanges: innvilgedePerioder.map(periode => ({
+                                    from: periode.fom,
+                                    to: periode.tom,
+                                  })),
+                                }
+                              : undefined
+                          }
                           valideringsFunksjoner={{
                             erDatoFyltUt,
                             erDatoGyldig,

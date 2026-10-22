@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import dayjs from 'dayjs';
 import { axe } from 'vitest-axe';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import { KroniskSyktBarnDatoContext } from '../../vilkar-kronisk-sykt-barn/KroniskSyktBarnDatoContext';
@@ -58,9 +60,11 @@ describe('<VilkarKroniskSyktBarn>', () => {
     },
   ) =>
     render(
-      <KroniskSyktBarnDatoContext.Provider value={datoer}>
-        <VilkarKroniskSyktBarn {...props} />
-      </KroniskSyktBarnDatoContext.Provider>,
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
+        <KroniskSyktBarnDatoContext.Provider value={datoer}>
+          <VilkarKroniskSyktBarn {...props} />
+        </KroniskSyktBarnDatoContext.Provider>
+      </FeatureTogglesContext.Provider>,
     );
 
   test.each(['2027-01-01', '2028-01-01'])(
