@@ -10,6 +10,8 @@ import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePer
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { useUttakContext } from './context/UttakContext.js';
 import { finnAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
+import OverstyringAksjonspunktVarsel from '../../shared/overstyring/OverstyringAksjonspunktVarsel.js';
+import { skalViseOverstyringAksjonspunktVarsel } from '../../shared/overstyring/overstyringsaksjonspunkt.js';
 import { harEtUløstAksjonspunktIUttak } from './utils/aksjonspunkter.js';
 import OverstyrUttak from './overstyr-uttak/OverstyrUttak.js';
 import UttaksperiodeListe from './uttaksperiode-liste/UttaksperiodeListe.js';
@@ -17,7 +19,7 @@ import VurderDato from './vurder-dato/VurderDato.js';
 import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak.js';
 
 const UttakInnhold = (): JSX.Element => {
-  const { erOverstyrer, aksjonspunkter, behandling } = useUttakContext();
+  const { erOverstyrer, harOverstyrerrolle, aksjonspunkter, behandling, readOnly } = useUttakContext();
   const [redigerVirkningsdato, setRedigervirkningsdato] = useState(false);
   const aksjonspunktForOverstyringAvUttak = finnAksjonspunkt(
     aksjonspunkter,
@@ -33,6 +35,7 @@ const UttakInnhold = (): JSX.Element => {
     AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
   );
   const harUløstAksjonspunktIUttak = harEtUløstAksjonspunktIUttak(aksjonspunkter, behandling.sakstype);
+  const overstyringsaksjonspunkter = aksjonspunktForOverstyringAvUttak ? [aksjonspunktForOverstyringAvUttak] : [];
 
   const [overstyringAktiv, setOverstyringAktiv] = useState<boolean>(aksjonspunktForOverstyringAvUttak !== undefined);
   const [visEndringerIUttak, setVisEndringerIUttak] = useState(false);
@@ -66,6 +69,16 @@ const UttakInnhold = (): JSX.Element => {
         </Button>
       </HStack>
       <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
+      {skalViseOverstyringAksjonspunktVarsel(overstyringsaksjonspunkter, harOverstyrerrolle, readOnly) && (
+        <ContentMaxWidth>
+          <OverstyringAksjonspunktVarsel
+            aksjonspunkter={overstyringsaksjonspunkter}
+            erOverstyrer={harOverstyrerrolle}
+            isReadOnly={readOnly}
+            overstyrtHva="uttaksgrad og utbetalingsgrad"
+          />
+        </ContentMaxWidth>
+      )}
       {aksjonspunktVentAnnenPSBSak && <Infostripe />}
       {harUløstAksjonspunktIUttak && overstyringAktiv && (
         <ContentMaxWidth>

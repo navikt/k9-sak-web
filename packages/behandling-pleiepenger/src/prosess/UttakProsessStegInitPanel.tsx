@@ -13,6 +13,7 @@ interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
   erOverstyrer: boolean;
+  harOverstyrerrolle: boolean;
   isReadOnly: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
@@ -45,6 +46,7 @@ export function UttakProsessStegInitPanel(props: Props) {
       behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       erOverstyrer={props.erOverstyrer}
+      harOverstyrerrolle={props.harOverstyrerrolle}
       readOnly={props.isReadOnly}
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
     />

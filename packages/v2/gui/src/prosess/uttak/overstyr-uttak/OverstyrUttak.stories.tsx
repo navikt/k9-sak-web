@@ -5,7 +5,9 @@ import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Ko
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
   lagOppfyltPeriode,
+  lagOverlappendeSakerAksjonspunkt,
   lagOverstyringUttakAksjonspunkt,
+  lagAvsluttetBehandling,
   lagUtredBehandling,
   lagUttak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
@@ -283,6 +285,7 @@ export const Overstyringer: Story = {
           'Aksjonspunkt for overstyring av uttaks-/utbetalingsgrad har blitt opprettet i denne, eller en tidligere, behandling og må løses av en saksbehandler med overstyrerrolle.',
         ),
       );
+      await expect(canvas.queryByText(/Du har ikke overstyrerrolle/)).not.toBeInTheDocument();
     });
   },
 };
@@ -514,10 +517,9 @@ export const Lesemodus: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
-    await step('Varsel om overstyring vises', async () => {
-      waitFor(async function sjekkVarselOmOverstyring() {
-        await expect(canvas.getByRole('heading', { name: 'Vurder overstyring av uttaksgrad og utbetalingsgrad' }));
-      });
+    await step('Varsel om at overstyrerrolle kreves vises', async () => {
+      await expect(await canvas.findByText(/^Overstyring av .* må vurderes\.$/)).toBeInTheDocument();
+      await expect(canvas.getByText(/Bare en saksbehandler med overstyrerrolle kan vurdere den/)).toBeInTheDocument();
     });
 
     await step('Tabell med overstyringer vises', async () => {
@@ -537,5 +539,104 @@ export const Lesemodus: Story = {
       await expect(buttons.filter(btn => btn.textContent?.toLowerCase().includes('rediger')).length).toBe(0);
       await expect(buttons.filter(btn => btn.textContent?.toLowerCase().includes('slett')).length).toBe(0);
     });
+  },
+};
+
+/*
+ * Saksbehandler uten overstyrerrolle skal få varsel selv om det finnes andre uløste aksjonspunkter i uttak
+ * og ingen overstyrte perioder å vise.
+ */
+export const UtenOverstyrerrolleMedAnnetÅpentAksjonspunkt: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31')]),
+      overstyringer: [],
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: false,
+    aksjonspunkter: [
+      lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET),
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.OPPRETTET),
+    ],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByText(/^Overstyring av .* må vurderes\.$/)).toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
+  },
+};
+
+export const OverstyringAksjonspunktUtførtUtenOverstyrerrolle: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 })]),
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Overstyring er vurdert',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
+      ],
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: false,
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.UTFØRT)],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+    await expect(canvas.getByText(/^Overstyring av .* er utført\.$/)).toBeInTheDocument();
+    await expect(canvas.getByText(/Bare en saksbehandler med overstyrerrolle kan endre den/)).toBeInTheDocument();
+    await expect(canvas.queryByText(/^Overstyring av .* må vurderes\.$/)).not.toBeInTheDocument();
+    await expect(canvas.queryByText('Vurder overstyring av uttaksgrad og utbetalingsgrad.')).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
+  },
+};
+
+export const UtførtOverstyringForOverstyrerPåAvsluttetBehandling: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15', { manueltOverstyrt: true, uttaksgrad: 80 })]),
+      overstyringer: [
+        {
+          id: 1,
+          periode: { fom: '2024-01-01', tom: '2024-01-15' },
+          søkersUttaksgrad: 80,
+          begrunnelse: 'Overstyring er vurdert',
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', orgnr: '123456789' },
+              utbetalingsgrad: 80,
+            },
+          ],
+        },
+      ],
+    }),
+  ],
+  args: {
+    behandling: lagAvsluttetBehandling(),
+    erOverstyrer: false,
+    harOverstyrerrolle: true,
+    aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.UTFØRT)],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByRole('heading', { name: 'Overstyrte perioder' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /Legg til ny overstyring/i })).not.toBeInTheDocument();
   },
 };
