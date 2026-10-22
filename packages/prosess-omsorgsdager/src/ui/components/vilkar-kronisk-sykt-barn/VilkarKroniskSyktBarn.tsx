@@ -394,7 +394,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                           (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
                           (errors.fraDato &&
                             errors.fraDato.type === 'erDatoIkkeIFremtid' &&
-                            tekst.feilmedlingerDatoIkkeIFremtid)
+                            tekst.feilmedlingerDatoIkkeIFremtid) ||
+                          errors.fraDato?.message
                         }
                       >
                         <DatePicker
