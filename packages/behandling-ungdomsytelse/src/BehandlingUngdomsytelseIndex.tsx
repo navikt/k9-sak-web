@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
-import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
 import {
@@ -21,10 +21,7 @@ const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.VILKAR },
   { key: UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
-  /*
-  Simulering er ikke klart
-  */
-  //   { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
+  { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT },
 ];
 
