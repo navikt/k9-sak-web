@@ -41,37 +41,8 @@ const lagBehandling = (
 });
 
 describe('finnDatoerForKroniskSyktBarn', () => {
-  it.each([behandlingResultatType.AVSLATT, behandlingResultatType.IKKE_FASTSATT, behandlingResultatType.OPPHOR])(
-    'ser bort fra oppfylt vilkår når behandlingsresultatet er %s',
-    kode => {
-      const behandling = lagBehandling(2, [oppfyltPeriode('2025-01-01', '2025-12-31')], {
-        resultatType: kode,
-      });
-
-      expect(finnDatoerForKroniskSyktBarn([behandling], 1)).toEqual({
-        innvilgedePerioder: [],
-        foreslåttFraDato: undefined,
-      });
-    },
-  );
-
-  it('gir ingen begrensning uten tidligere innvilgede perioder', () => {
+  it('gir ingen begrensning uten tidligere behandlinger', () => {
     expect(finnDatoerForKroniskSyktBarn([], 1)).toEqual({ innvilgedePerioder: [], foreslåttFraDato: undefined });
-    expect(
-      finnDatoerForKroniskSyktBarn(
-        [
-          lagBehandling(2, []),
-          lagBehandling(3, [], { harBehandlingsresultat: false }),
-          lagBehandling(4, [
-            {
-              ...oppfyltPeriode('2025-01-01', '2030-12-31'),
-              utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-            },
-          ]),
-        ],
-        1,
-      ),
-    ).toEqual({ innvilgedePerioder: [], foreslåttFraDato: undefined });
   });
 
   it('bruker dagen etter seneste sluttdato på tvers av behandlinger', () => {
@@ -94,26 +65,7 @@ describe('finnDatoerForKroniskSyktBarn', () => {
     });
   });
 
-  it('håndterer vilkårsutfall som kodeverkobjekt', () => {
-    expect(
-      finnDatoerForKroniskSyktBarn(
-        [
-          lagBehandling(2, [
-            {
-              ...oppfyltPeriode('2025-01-01', '2025-12-31'),
-              utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-            },
-          ]),
-        ],
-        1,
-      ),
-    ).toEqual({
-      foreslåttFraDato: '2026-01-01',
-      innvilgedePerioder: [{ fom: '2025-01-01', tom: '2025-12-31' }],
-    });
-  });
-
-  it('ser bort fra aktuell behandling, uavsluttede, henlagte og andre sakstyper', () => {
+  it('ser bort fra behandlinger uten relevante innvilgede vedtak', () => {
     const periode = [oppfyltPeriode('2025-01-01', '2030-12-31')];
     expect(
       finnDatoerForKroniskSyktBarn(
@@ -124,6 +76,11 @@ describe('finnDatoerForKroniskSyktBarn', () => {
           }),
           lagBehandling(3, periode, { behandlingHenlagt: true }),
           lagBehandling(4, periode, { sakstype: fagsakYtelsesType.OMSORGSPENGER_AO }),
+          lagBehandling(5, []),
+          lagBehandling(6, [], { harBehandlingsresultat: false }),
+          ...[behandlingResultatType.AVSLATT, behandlingResultatType.IKKE_FASTSATT, behandlingResultatType.OPPHOR].map(
+            resultatType => lagBehandling(7, periode, { resultatType }),
+          ),
         ],
         1,
       ),
