@@ -37,7 +37,9 @@ const UttakRad = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakP
   const { behandling } = useUttakContext();
   const erPleiepengerNærstående = behandling.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
   const uttakApi = useUttakApi();
-  const inntektsgraderinger = useSuspenseQuery(uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid)).data;
+  const inntektsgraderinger = useSuspenseQuery(
+    uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  ).data;
   const {
     periode,
     uttaksgrad,

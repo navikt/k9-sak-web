@@ -15,9 +15,13 @@ Define each GET query as a named `queryOptions()` export in the feature's `api/`
 import { queryOptions } from '@tanstack/react-query';
 import type { OmPleietrengendeBackendApiType } from './OmPleietrengendeBackendApiType.js';
 
-export const omPleietrengendeQueryOptions = (api: OmPleietrengendeBackendApiType, behandlingUuid: string) =>
+export const omPleietrengendeQueryOptions = (
+  api: OmPleietrengendeBackendApiType,
+  behandlingUuid: string,
+  behandlingVersjon: number,
+) =>
   queryOptions({
-    queryKey: ['omPleietrengende', behandlingUuid, api.backend],
+    queryKey: ['omPleietrengende', behandlingUuid, behandlingVersjon, api.backend],
     queryFn: () => api.hentPleietrengende(behandlingUuid),
   });
 ```
@@ -25,7 +29,7 @@ export const omPleietrengendeQueryOptions = (api: OmPleietrengendeBackendApiType
 ### Query keys
 
 - Include every parameter that identifies the data, typically `behandlingUuid`, so data from different behandlinger is never mixed
-- Include `behandlingVersjon` when the data changes with the behandling version
+- Always include `behandlingVersjon` in the query key for data tied to a behandling and its version. This also applies when the backend endpoint only accepts `behandlingUuid`; the version is still needed to keep cached data from an older treatment version out of the current UI.
 - End with `api.backend`, so the same feature against different backends gets separate cache entries
 - For a conditional query, take an `enabled` parameter, put it in the key and pass it to `queryOptions`
 
@@ -35,7 +39,9 @@ When the component is the only consumer of an endpoint, it fetches the data itse
 
 ```typescript
 const api = useOmPleietrengendeApi();
-const { data } = useSuspenseQuery(omPleietrengendeQueryOptions(api, behandlingUuid));
+const { data } = useSuspenseQuery(
+  omPleietrengendeQueryOptions(api, behandling.uuid, behandling.versjon),
+);
 ```
 
 - Prefer `useSuspenseQuery`. A `<Suspense>` boundary must wrap the component, otherwise React crashes, and an `<ErrorBoundary>` must catch errors, so the saksbehandler always gets feedback on loading and errors

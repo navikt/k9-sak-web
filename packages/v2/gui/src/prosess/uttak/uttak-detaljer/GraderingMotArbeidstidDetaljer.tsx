@@ -27,7 +27,9 @@ const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
 const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({ utbetalingsgrader, søkersTapteArbeidstid }) => {
   const uttakApi = useUttakApi();
   const { behandling } = useUttakContext();
-  const arbeidsgivere = useSuspenseQuery(uttakArbeidsgivereQueryOptions(uttakApi, behandling.uuid)).data;
+  const arbeidsgivere = useSuspenseQuery(
+    uttakArbeidsgivereQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  ).data;
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
 
   return (
