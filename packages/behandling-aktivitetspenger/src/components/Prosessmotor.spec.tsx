@@ -818,6 +818,75 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('ikke-relevant vilkår gir verken avslag eller stopper senere steg', async () => {
+    const api = createApi({
+      vilkår: [
+        createVilkår(Utfall.IKKE_RELEVANT, ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR),
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+      ],
+      beregningsgrunnlag: beregningsgrunnlagMedData,
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('ignorerer ikke-relevante perioder når øvrige perioder er oppfylt', async () => {
+    const bistand = {
+      vilkarType: ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR,
+      perioder: [
+        {
+          vilkarStatus: Utfall.IKKE_RELEVANT,
+          vurderesIBehandlingen: true,
+          periode: { fom: '2024-01-01', tom: '2024-01-31' },
+        },
+        {
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: true,
+          periode: { fom: '2024-02-01', tom: '2024-02-29' },
+        },
+      ],
+    };
+    const api = createApi({ vilkår: [bistand] });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[0].usePartialStatus).toBe(false);
+    });
+  });
+
+  test('medlemskap med bare ikke-relevante perioder er grått uten å stoppe senere steg', async () => {
+    const api = createApi({
+      vilkår: [
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+        createVilkår(Utfall.IKKE_RELEVANT, ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+      ],
+      beregningsgrunnlag: beregningsgrunnlagMedData,
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
   test('tolker tomme svar fra SDK-klienten som manglende data', async () => {
     const api = createApi({
       beregningsgrunnlag: {} as Awaited<ReturnType<AktivitetspengerApi['getBeregningsgrunnlag']>>,

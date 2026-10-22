@@ -135,9 +135,30 @@ interface ProcessMenuStep {
 
 type VilkårPeriode = NonNullable<VilkårMedPerioderDto['perioder']>[number];
 
+// Vises som «Ingen perioder å vurdere» i panelene, og skal verken gi avslag eller stoppe senere steg
+const erIkkeRelevant = (vilkår: VilkårMedPerioderDto): boolean => {
+  const perioder: VilkårPeriode[] = vilkår.perioder ?? [];
+  return perioder.length > 0 && perioder.every(periode => periode.vilkarStatus === Utfall.IKKE_RELEVANT);
+};
+
+const erDelvisVurdert = (vilkår: VilkårMedPerioderDto[]): boolean =>
+  sjekkDelvisVilkårStatus(
+    vilkår.map(
+      v =>
+        ({
+          ...v,
+          perioder: (v.perioder as VilkårPeriode[] | undefined)?.filter(
+            periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT,
+          ),
+        }) as VilkårMedPerioderDto,
+    ),
+  );
+
 const finnStatus = (vilkår: VilkårMedPerioderDto[], aksjonspunkter: AksjonspunktDto[]): Utfall => {
   if (vilkår.length > 0) {
-    const allePerioder = vilkår.flatMap((v): VilkårPeriode[] => v.perioder ?? []);
+    const allePerioder = vilkår
+      .flatMap((v): VilkårPeriode[] => v.perioder ?? [])
+      .filter(periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT);
     const perioderIBehandlingen = allePerioder.filter(periode => periode.vurderesIBehandlingen);
     // Avvik fra gammel rigg: vurderes ingen perioder i denne behandlingen (f.eks. revurdering),
     // brukes utfallet fra tidligere behandling i stedet for å vise vilkåret som ikke vurdert
@@ -185,7 +206,7 @@ interface InngangsvilkårDelpanel {
 // Ett delpanel per inngangsvilkår, som i gammel rigg
 const byggInngangsvilkårDelpaneler = (vilkår: VilkårMedPerioderDto[]): InngangsvilkårDelpanel[] =>
   PANEL_KONFIG.inngangsvilkår.vilkår.flatMap(vilkårType => {
-    const vilkårForType = vilkår.filter(v => v.vilkarType === vilkårType);
+    const vilkårForType = vilkår.filter(v => v.vilkarType === vilkårType && !erIkkeRelevant(v));
     if (vilkårForType.length === 0) {
       return [];
     }
@@ -319,8 +340,8 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
         ? finnSamletStatus(inngangsvilkårDelpaneler.map(delpanel => delpanel.status))
         : finnStatus([], relevanteInngangsvilkårAksjonspunkter);
 
-    const relevanteMedlemskapVilkår = alleVilkår.filter(v =>
-      PANEL_KONFIG.medlemskap.vilkår.some(vilkårType => vilkårType === v.vilkarType),
+    const relevanteMedlemskapVilkår = alleVilkår.filter(
+      v => PANEL_KONFIG.medlemskap.vilkår.some(vilkårType => vilkårType === v.vilkarType) && !erIkkeRelevant(v),
     );
     const relevanteMedlemskapAksjonspunkter = alleAksjonspunkter.filter(ap =>
       PANEL_KONFIG.medlemskap.aksjonspunkter.some(definisjon => definisjon === ap.definisjon),
@@ -355,8 +376,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
         label: erOpphør ? PANEL_KONFIG.opphør.label : PANEL_KONFIG.inngangsvilkår.label,
         status: inngangsvilkårStatus,
         aksjonspunkter: relevanteInngangsvilkårAksjonspunkter,
-        usePartialStatus:
-          !erOpphør && inngangsvilkårDelpaneler.some(delpanel => sjekkDelvisVilkårStatus(delpanel.vilkår)),
+        usePartialStatus: !erOpphør && inngangsvilkårDelpaneler.some(delpanel => erDelvisVurdert(delpanel.vilkår)),
         erInngangsvilkår: !erOpphør,
         inngangsvilkårDelpaneler,
       },
@@ -367,7 +387,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
           ? finnStatus(relevanteMedlemskapVilkår, relevanteMedlemskapAksjonspunkter)
           : Utfall.IKKE_VURDERT,
         aksjonspunkter: relevanteMedlemskapAksjonspunkter,
-        usePartialStatus: sjekkDelvisVilkårStatus(relevanteMedlemskapVilkår),
+        usePartialStatus: erDelvisVurdert(relevanteMedlemskapVilkår),
         stopperSenereSteg: medlemskapVurderesIBehandlingen,
       },
       {
