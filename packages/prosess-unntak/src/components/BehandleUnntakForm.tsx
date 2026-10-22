@@ -52,15 +52,17 @@ const tilAksjonspunktStatus = (kode?: string) => (kode !== undefined && erAksjon
 const OverstyringVarsel = ({
   aksjonspunkter,
   erOverstyrer,
+  readOnly,
 }: {
   aksjonspunkter: Aksjonspunkt[];
   erOverstyrer: boolean;
+  readOnly: boolean;
 }) => {
   const aksjonspunkterForVarsel = aksjonspunkter.map(ap => ({
     aksjonspunktType: tilAksjonspunktType(ap.aksjonspunktType?.kode),
     status: tilAksjonspunktStatus(ap.status?.kode),
   }));
-  if (!skalViseOverstyringAksjonspunktVarsel(aksjonspunkterForVarsel, erOverstyrer)) {
+  if (!skalViseOverstyringAksjonspunktVarsel(aksjonspunkterForVarsel, erOverstyrer, readOnly)) {
     return null;
   }
   return (
@@ -68,6 +70,7 @@ const OverstyringVarsel = ({
       <OverstyringAksjonspunktVarsel
         aksjonspunkter={aksjonspunkterForVarsel}
         erOverstyrer={erOverstyrer}
+        isReadOnly={readOnly}
         overstyrtHva="vilkårsvurderingen"
       />
       <VerticalSpacer twentyPx />
@@ -95,7 +98,7 @@ export const BehandleUnntakForm = ({
         </Heading>
       </FlexRow>
       <VerticalSpacer twentyPx />
-      <OverstyringVarsel aksjonspunkter={aksjonspunkter} erOverstyrer={erOverstyrer} />
+      <OverstyringVarsel aksjonspunkter={aksjonspunkter} erOverstyrer={erOverstyrer} readOnly={readOnly} />
 
       <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[

@@ -15,6 +15,7 @@ const meta = {
   args: {
     overstyrtHva: 'uttaksgrad og utbetalingsgrad',
     erOverstyrer: false,
+    isReadOnly: false,
   },
 } satisfies Meta<typeof OverstyringAksjonspunktVarsel>;
 

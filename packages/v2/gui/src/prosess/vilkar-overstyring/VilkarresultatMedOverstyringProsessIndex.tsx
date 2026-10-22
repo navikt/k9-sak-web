@@ -148,11 +148,16 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           toggleOverstyring={toggleOverstyring}
           skjulOverstyring={skjulOverstyring}
         />
-        {skalViseOverstyringAksjonspunktVarsel(aksjonspunkter, kanOverstyreAccess.employeeHasAccess) && (
+        {skalViseOverstyringAksjonspunktVarsel(
+          aksjonspunkter,
+          kanOverstyreAccess.employeeHasAccess,
+          overrideReadOnly,
+        ) && (
           <Box marginBlock="space-0 space-16">
             <OverstyringAksjonspunktVarsel
               aksjonspunkter={aksjonspunkter}
               erOverstyrer={kanOverstyreAccess.employeeHasAccess}
+              isReadOnly={overrideReadOnly}
               overstyrtHva="vilkåret"
             />
           </Box>

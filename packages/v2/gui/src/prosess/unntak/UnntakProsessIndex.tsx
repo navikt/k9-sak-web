@@ -89,6 +89,7 @@ const UnntakForm = ({
         <OverstyringAksjonspunktVarsel
           aksjonspunkter={aksjonspunkter}
           erOverstyrer={erOverstyrer}
+          isReadOnly={isReadOnly}
           overstyrtHva="vilkårsvurderingen"
         />
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>Vurder vilkår</AksjonspunktHelpText>
@@ -146,6 +147,7 @@ export const UnntakProsessIndex = ({
   periode,
   aksjonspunkter = [],
   erOverstyrer = false,
+  isReadOnly,
   ...props
 }: UnntakProsessIndexProps) => {
   if (!erGyldigPeriode(periode)) {
@@ -157,6 +159,7 @@ export const UnntakProsessIndex = ({
         <OverstyringAksjonspunktVarsel
           aksjonspunkter={aksjonspunkter}
           erOverstyrer={erOverstyrer}
+          isReadOnly={isReadOnly}
           overstyrtHva="vilkårsvurderingen"
         />
         <Alert variant="warning" size="small">
@@ -173,6 +176,7 @@ export const UnntakProsessIndex = ({
       periode={periode}
       aksjonspunkter={aksjonspunkter}
       erOverstyrer={erOverstyrer}
+      isReadOnly={isReadOnly}
       {...props}
     />
   );

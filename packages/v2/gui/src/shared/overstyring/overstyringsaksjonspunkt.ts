@@ -22,8 +22,9 @@ export const finnOverstyringsaksjonspunktStatus = (
   return undefined;
 };
 
-/** Varselet vises bare for saksbehandlere uten overstyrerrolle, og bare når det finnes et åpent eller utført overstyringsaksjonspunkt. */
+/** Varselet vises bare for saksbehandlere uten overstyrerrolle i skrivbar tilstand, med et åpent eller utført overstyringsaksjonspunkt. */
 export const skalViseOverstyringAksjonspunktVarsel = (
   aksjonspunkter: ReadonlyArray<AksjonspunktDto>,
   erOverstyrer: boolean,
-): boolean => !erOverstyrer && finnOverstyringsaksjonspunktStatus(aksjonspunkter) !== undefined;
+  isReadOnly: boolean,
+): boolean => !isReadOnly && !erOverstyrer && finnOverstyringsaksjonspunktStatus(aksjonspunkter) !== undefined;

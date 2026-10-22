@@ -19,7 +19,7 @@ import VurderDato from './vurder-dato/VurderDato.js';
 import VurderOverlappendeSak from './vurder-overlappende-sak/VurderOverlappendeSak.js';
 
 const UttakInnhold = (): JSX.Element => {
-  const { erOverstyrer, harOverstyrerrolle, aksjonspunkter, behandling } = useUttakContext();
+  const { erOverstyrer, harOverstyrerrolle, aksjonspunkter, behandling, readOnly } = useUttakContext();
   const [redigerVirkningsdato, setRedigervirkningsdato] = useState(false);
   const aksjonspunktForOverstyringAvUttak = finnAksjonspunkt(
     aksjonspunkter,
@@ -69,11 +69,12 @@ const UttakInnhold = (): JSX.Element => {
         </Button>
       </HStack>
       <EndringerIUttakDrawer open={visEndringerIUttak} onClose={() => setVisEndringerIUttak(false)} />
-      {skalViseOverstyringAksjonspunktVarsel(overstyringsaksjonspunkter, harOverstyrerrolle) && (
+      {skalViseOverstyringAksjonspunktVarsel(overstyringsaksjonspunkter, harOverstyrerrolle, readOnly) && (
         <ContentMaxWidth>
           <OverstyringAksjonspunktVarsel
             aksjonspunkter={overstyringsaksjonspunkter}
             erOverstyrer={harOverstyrerrolle}
+            isReadOnly={readOnly}
             overstyrtHva="uttaksgrad og utbetalingsgrad"
           />
         </ContentMaxWidth>

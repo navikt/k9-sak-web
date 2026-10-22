@@ -42,14 +42,24 @@ describe('finnOverstyringsaksjonspunktStatus', () => {
 
 describe('skalViseOverstyringAksjonspunktVarsel', () => {
   it('viser varsel for saksbehandler uten overstyrerrolle', () => {
-    expect(skalViseOverstyringAksjonspunktVarsel([lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)], false)).toBe(true);
+    expect(skalViseOverstyringAksjonspunktVarsel([lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)], false, false)).toBe(
+      true,
+    );
   });
 
   it('viser ikke varsel for overstyrer', () => {
-    expect(skalViseOverstyringAksjonspunktVarsel([lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)], true)).toBe(false);
+    expect(skalViseOverstyringAksjonspunktVarsel([lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)], true, false)).toBe(
+      false,
+    );
+  });
+
+  it('viser ikke varsel i readonly', () => {
+    expect(skalViseOverstyringAksjonspunktVarsel([lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)], false, true)).toBe(
+      false,
+    );
   });
 
   it('viser ikke varsel uten overstyringsaksjonspunkt', () => {
-    expect(skalViseOverstyringAksjonspunktVarsel([], false)).toBe(false);
+    expect(skalViseOverstyringAksjonspunktVarsel([], false, false)).toBe(false);
   });
 });
