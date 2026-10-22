@@ -23,6 +23,7 @@ import {
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
 import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
@@ -66,6 +67,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
   const innvilget = behandlingsresultatTypeKode === BehandlingResultatType.INNVILGET;
+  const erKroniskSyktBarn = behandling.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS;
   const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']?.find(
     vilkar => vilkar.utfall == vilkårStatus.OPPFYLT,
   );
@@ -91,7 +93,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
 
-            {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && innvilget && utvidetRett?.periode && (
+            {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && erKroniskSyktBarn && innvilget && utvidetRett?.periode && (
               <BodyShort as="span" size="small">
                 <DateLabel dateString={utvidetRett?.periode?.fom} /> - <DateLabel dateString={utvidetRett?.periode?.tom} />
               </BodyShort>
