@@ -50,7 +50,7 @@ export const AktivitetspengerMedLovreferanse: Story = {
 
     await step('Viser lovreferansen som en lenke i labelen', async () => {
       const link = canvas.getByRole('link', {
-        name: '§ 14 Reduksjon av ytelsen på grunn av inntekt',
+        name: 'jf. § 14 Reduksjon av ytelsen på grunn av inntekt.',
       });
       await expect(link).toHaveAttribute('href', 'https://lovdata.no/pro/#document/LF/forskrift/2026-09-27-1944/§14');
       await expect(
