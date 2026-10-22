@@ -43,7 +43,9 @@ interface UttakProps {
 const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
   const uttakApi = useUttakApi();
   const { behandling } = useUttakContext();
-  const inntektsgraderinger = useSuspenseQuery(uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid)).data;
+  const inntektsgraderinger = useSuspenseQuery(
+    uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  ).data;
   const { periode, uttaksgrad, inngangsvilkår: vilkår, endringsstatus, manueltOverstyrt } = uttak;
 
   const sykdomOgOpplæringVilkår = Object.fromEntries(

@@ -112,7 +112,9 @@ const UttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Ele
   const { behandling } = useUttakContext();
   const fagsakYtelseType = behandling.sakstype;
   const uttakApi = useUttakApi();
-  const inntektsgraderinger = useSuspenseQuery(uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid)).data;
+  const inntektsgraderinger = useSuspenseQuery(
+    uttakInntektsgraderingerQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
+  ).data;
   const {
     utbetalingsgrader,
     graderingMotTilsyn,
