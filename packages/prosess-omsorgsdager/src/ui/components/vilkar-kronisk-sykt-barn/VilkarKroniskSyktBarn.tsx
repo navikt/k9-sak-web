@@ -52,6 +52,7 @@ const tekst = {
   feilmedlingManglerDato: 'Mangler dato.',
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
+  feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
   feilOverlappendePeriode: 'Perioden overlapper et tidligere innvilget vedtak.',
   feilFraDatoEtterTilDato: 'Fra-dato kan ikke være etter til-dato.',
   soknadsdato: 'Søknadsdato',
@@ -120,7 +121,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const åpenForRedigering = watch('åpenForRedigering');
   const erTidsbegrenset = watch('erTidsbegrenset');
   const formStateKey = `${behandlingsID}-utvidetrett-ks`;
-  const { erDatoFyltUt, erDatoGyldig } = valideringsFunksjoner(
+  const { erDatoFyltUt, erDatoGyldig, erDatoIkkeIFremtid } = valideringsFunksjoner(
     getValues,
     'harDokumentasjonOgFravaerRisiko',
   );
@@ -391,6 +392,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                             errors.fraDato.type === 'erDatoFyltUt' &&
                             tekst.feilmedlingManglerFraDato) ||
                           (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
+                          (errors.fraDato &&
+                            errors.fraDato.type === 'erDatoIkkeIFremtid' &&
+                            tekst.feilmedlingerDatoIkkeIFremtid) ||
                           errors.fraDato?.message
                         }
                       >
@@ -412,6 +416,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                           valideringsFunksjoner={{
                             erDatoFyltUt,
                             erDatoGyldig,
+                            ...(!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && { erDatoIkkeIFremtid }),
                             erPeriodeUtenOverlapp,
                           }}
                         />
