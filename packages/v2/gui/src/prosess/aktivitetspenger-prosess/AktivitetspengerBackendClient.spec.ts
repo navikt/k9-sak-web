@@ -1,15 +1,20 @@
 import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/ungsak/kontrakt/aktivitetspenger/BeregningsgrunnlagDto.js';
-import { avp_getBeregningsgrunnlag } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
+import {
+  avp_getBeregningsgrunnlag,
+  simulering_hentSimuleringResultat,
+} from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AktivitetspengerBackendClient } from './AktivitetspengerBackendClient.js';
 
 vi.mock('@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js', () => ({
   avp_getBeregningsgrunnlag: vi.fn(),
+  simulering_hentSimuleringResultat: vi.fn(),
 }));
 
 const request = new Request('http://localhost/ung/sak/api/aktivitetspenger/beregningsgrunnlag');
 
 type BeregningsgrunnlagSvar = Awaited<ReturnType<typeof avp_getBeregningsgrunnlag>>;
+type SimuleringSvar = Awaited<ReturnType<typeof simulering_hentSimuleringResultat>>;
 
 describe('AktivitetspengerBackendClient', () => {
   describe('getBeregningsgrunnlag', () => {
@@ -67,6 +72,52 @@ describe('AktivitetspengerBackendClient', () => {
       const resultat = await new AktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
 
       expect(resultat).toBeNull();
+    });
+
+    describe('getSimuleringResultat', () => {
+      beforeEach(() => {
+        vi.mocked(simulering_hentSimuleringResultat).mockReset();
+      });
+
+      it('returnerer simuleringsresultat ved 200', async () => {
+        const simulering = { resultat: 'simulering' };
+        vi.mocked(simulering_hentSimuleringResultat).mockResolvedValue({
+          data: simulering,
+          request,
+          response: new Response(JSON.stringify(simulering), { status: 200 }),
+        } as unknown as SimuleringSvar);
+
+        const resultat = await new AktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
+
+        expect(resultat).toEqual(simulering);
+        expect(simulering_hentSimuleringResultat).toHaveBeenCalledWith({
+          query: { behandlingUuid: 'behandling-uuid' },
+        });
+      });
+
+      it('returnerer null ved 204 når generert klient gir ReadableStream som data', async () => {
+        vi.mocked(simulering_hentSimuleringResultat).mockResolvedValue({
+          data: new ReadableStream(),
+          request,
+          response: new Response(null, { status: 204 }),
+        } as unknown as SimuleringSvar);
+
+        const resultat = await new AktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
+
+        expect(resultat).toBeNull();
+      });
+
+      it('returnerer null ved 204 når generert klient gir tomt objekt som data', async () => {
+        vi.mocked(simulering_hentSimuleringResultat).mockResolvedValue({
+          data: {},
+          request,
+          response: new Response(null, { status: 204 }),
+        } as unknown as SimuleringSvar);
+
+        const resultat = await new AktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
+
+        expect(resultat).toBeNull();
+      });
     });
   });
 });

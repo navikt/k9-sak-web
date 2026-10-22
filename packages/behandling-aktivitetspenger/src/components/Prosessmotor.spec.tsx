@@ -680,6 +680,20 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('vedtak blir default når behandlingsresultatet mangler', async () => {
+    const api = createApi({ vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)] });
+    const behandling = createBehandling({ behandlingsresultat: undefined });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.erKlar).toBe(true);
+    });
+    expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.default);
+  });
+
   test('viser opphør som default når det ikke finnes relevante aksjonspunkter', async () => {
     const api = createApi();
     const behandling = createBehandling({
@@ -836,6 +850,34 @@ describe('Prossesmotor', () => {
       expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
       expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.success);
       expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('viser delvis status fra tidligere behandling når ingen perioder vurderes i behandlingen', async () => {
+    const bistand = {
+      vilkarType: ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR,
+      perioder: [
+        {
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: false,
+          periode: { fom: '2024-01-01', tom: '2024-01-31' },
+        },
+        {
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          vurderesIBehandlingen: false,
+          periode: { fom: '2024-02-01', tom: '2024-02-29' },
+        },
+      ],
+    };
+    const api = createApi({ vilkår: [bistand] });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[0].usePartialStatus).toBe(true);
     });
   });
 

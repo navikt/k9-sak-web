@@ -55,7 +55,7 @@ export interface AktivitetspengerApi {
     bekreftedeAksjonspunktDtoer: BekreftetAksjonspunktDto[],
   ): Promise<void>;
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollSkjermlenkeContextDto[]>;
-  getSimuleringResultat(behandlingUuid: string): Promise<SimuleringDto>;
+  getSimuleringResultat(behandlingUuid: string): Promise<SimuleringDto | null>;
   getTilbakekrevingValg(behandlingUuid: string): Promise<TilbakekrevingValgDto>;
   getFagsak(saksnummer: string): Promise<FagsakDto>;
 }

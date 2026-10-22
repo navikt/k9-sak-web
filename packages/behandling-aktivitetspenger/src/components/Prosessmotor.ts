@@ -7,7 +7,6 @@ import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårT
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
-import { sjekkDelvisVilkårStatus } from '@k9-sak-web/gui/behandling/prosess/utils/vilkårUtils.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
@@ -141,30 +140,26 @@ const erIkkeRelevant = (vilkår: VilkårMedPerioderDto): boolean => {
   return perioder.length > 0 && perioder.every(periode => periode.vilkarStatus === Utfall.IKKE_RELEVANT);
 };
 
-const erDelvisVurdert = (vilkår: VilkårMedPerioderDto[]): boolean =>
-  sjekkDelvisVilkårStatus(
-    vilkår.map(
-      v =>
-        ({
-          ...v,
-          perioder: (v.perioder as VilkårPeriode[] | undefined)?.filter(
-            periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT,
-          ),
-        }) as VilkårMedPerioderDto,
-    ),
-  );
+// Perioder som avgjør både status og delvisstatus for et vilkårspanel
+const finnPerioderSomTeller = (vilkår: VilkårMedPerioderDto[]): VilkårPeriode[] => {
+  const relevantePerioder = vilkår
+    .flatMap((v): VilkårPeriode[] => v.perioder ?? [])
+    .filter(periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT);
+  const perioderIBehandlingen = relevantePerioder.filter(periode => periode.vurderesIBehandlingen);
+  // Avvik fra gammel rigg: vurderes ingen perioder i denne behandlingen (f.eks. revurdering),
+  // brukes utfallet fra tidligere behandling i stedet for å vise vilkåret som ikke vurdert
+  return perioderIBehandlingen.length > 0 ? perioderIBehandlingen : relevantePerioder;
+};
+
+// Samme regel som sjekkDelvisVilkårStatus, men på perioder fra finnPerioderSomTeller
+const erDelvisVurdert = (vilkår: VilkårMedPerioderDto[]): boolean => {
+  const statuser = new Set(finnPerioderSomTeller(vilkår).map(periode => periode.vilkarStatus));
+  return statuser.size > 1 && (statuser.has(Utfall.OPPFYLT) || statuser.has(Utfall.IKKE_OPPFYLT));
+};
 
 const finnStatus = (vilkår: VilkårMedPerioderDto[], aksjonspunkter: AksjonspunktDto[]): Utfall => {
   if (vilkår.length > 0) {
-    const allePerioder = vilkår
-      .flatMap((v): VilkårPeriode[] => v.perioder ?? [])
-      .filter(periode => periode.vilkarStatus !== Utfall.IKKE_RELEVANT);
-    const perioderIBehandlingen = allePerioder.filter(periode => periode.vurderesIBehandlingen);
-    // Avvik fra gammel rigg: vurderes ingen perioder i denne behandlingen (f.eks. revurdering),
-    // brukes utfallet fra tidligere behandling i stedet for å vise vilkåret som ikke vurdert
-    const vilkårStatus = (perioderIBehandlingen.length > 0 ? perioderIBehandlingen : allePerioder).map(
-      periode => periode.vilkarStatus,
-    );
+    const vilkårStatus = finnPerioderSomTeller(vilkår).map(periode => periode.vilkarStatus);
 
     if (vilkårStatus.length === 0 || vilkårStatus.some(status => status === Utfall.IKKE_VURDERT)) {
       return Utfall.IKKE_VURDERT;
@@ -248,9 +243,10 @@ const finnStatusForVedtak = (
   }
 
   const behandlingsresultatType = behandling.behandlingsresultat?.type;
-  return typeof behandlingsresultatType === 'string' && isAvslag(behandlingsresultatType)
-    ? Utfall.IKKE_OPPFYLT
-    : Utfall.OPPFYLT;
+  if (typeof behandlingsresultatType !== 'string') {
+    return Utfall.IKKE_VURDERT;
+  }
+  return isAvslag(behandlingsresultatType) ? Utfall.IKKE_OPPFYLT : Utfall.OPPFYLT;
 };
 
 export const beregnSimuleringType = (

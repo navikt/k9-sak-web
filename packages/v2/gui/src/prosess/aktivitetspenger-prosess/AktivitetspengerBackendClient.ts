@@ -141,7 +141,12 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
   }
 
   async getSimuleringResultat(behandlingUuid: string) {
-    return (await simulering_hentSimuleringResultat({ query: { behandlingUuid } })).data;
+    const { data, response } = await simulering_hentSimuleringResultat({ query: { behandlingUuid } });
+    // 204 uten Content-Type gir response.body (ReadableStream) som data fra SDK-klienten
+    if (response.status === 204) {
+      return null;
+    }
+    return data ?? null;
   }
 
   async getTilbakekrevingValg(behandlingUuid: string) {
