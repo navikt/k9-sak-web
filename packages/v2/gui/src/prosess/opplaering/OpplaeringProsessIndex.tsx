@@ -5,7 +5,7 @@ import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vilk�
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import VilkarresultatMedOverstyringProsessIndex from '../vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 
-const opplaeringsvilkar = {
+export const opplaeringsvilkar = {
   INSTITUSJON: {
     vilkarType: VilkårType.GODKJENT_OPPLÆRINGSINSTITUSJON,
     aksjonspunktKoder: [AksjonspunktDefinisjon.VURDER_INSTITUSJON],
