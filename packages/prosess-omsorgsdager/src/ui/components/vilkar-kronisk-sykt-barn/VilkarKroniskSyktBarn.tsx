@@ -55,6 +55,7 @@ const tekst = {
   feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
   feilOverlappendePeriode: 'Perioden overlapper et tidligere innvilget vedtak.',
   feilFraDatoEtterTilDato: 'Fra-dato kan ikke være etter til-dato.',
+  feilFraDatoEtter18År: 'Fra-dato kan ikke være etter året barnet fyller 18 år.',
   soknadsdato: 'Søknadsdato',
   begrunnelseFraBruker: 'Begrunnelse for risiko for økt fravær',
 };
@@ -95,6 +96,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     ? kroniskSyktBarnDatoer.foreslåttFraDato
     : undefined;
   const innvilgedePerioder = kroniskSyktBarnDatoer.innvilgedePerioder;
+  const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
+  const åretBarnetFyller18 = fødselsdato ? dayjs(fødselsdato).year() + 18 : undefined;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
@@ -134,6 +137,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     const fom = dayjs(dato);
     const tom = data.erTidsbegrenset ? dayjs(data.tilDato) : undefined;
     if (!fom.isValid() || (tom && !tom.isValid())) return true;
+    if (åretBarnetFyller18 && fom.year() > åretBarnetFyller18) return tekst.feilFraDatoEtter18År;
     if (tom?.isBefore(fom, 'day')) return tekst.feilFraDatoEtterTilDato;
 
     return (
@@ -190,15 +194,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
    * `false` hvis fødselsdato mangler eller barnet er yngre enn 18 år i inneværende år.
    */
   const getErBarnetFyller18IÅr = (): boolean => {
-    const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
-
-    if (!fødselsdato) {
+    if (!åretBarnetFyller18) {
       return false;
     }
 
-    const født = dayjs(fødselsdato);
     const inneværendeÅr = dayjs().year();
-    const åretBarnetFyller18 = født.year() + 18;
 
     return åretBarnetFyller18 <= inneværendeÅr;
   };
@@ -405,7 +405,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                             STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
                               ? {
                                   minDate: '',
-                                  maxDate: '',
+                                  maxDate: åretBarnetFyller18 ? `${åretBarnetFyller18}-12-31` : '',
                                   invalidDateRanges: innvilgedePerioder.map(periode => ({
                                     from: periode.fom,
                                     to: periode.tom,
