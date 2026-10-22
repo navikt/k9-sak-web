@@ -131,7 +131,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     if (!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK) return true;
     if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko)) return true;
 
-    const fom = dayjs(dato.replaceAll('.', '-'));
+    const fom = dayjs(dato);
     const tom = data.erTidsbegrenset ? dayjs(data.tilDato) : undefined;
     if (!fom.isValid() || (tom && !tom.isValid())) return true;
     if (tom?.isBefore(fom, 'day')) return tekst.feilFraDatoEtterTilDato;
