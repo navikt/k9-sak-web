@@ -20,9 +20,9 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
-import { k9_kodeverk_behandling_BehandlingResultatType } from '@navikt/k9-sak-typescript-client/types';
-import { k9_kodeverk_vilkår_Utfall } from '../../../behandling/prosess/utils/vilkårUtils';
 import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
@@ -65,9 +65,9 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const visKunStartdato =
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
-  const innvilget = behandlingsresultatTypeKode === k9_kodeverk_behandling_BehandlingResultatType.INNVILGET;
+  const innvilget = behandlingsresultatTypeKode === BehandlingResultatType.INNVILGET;
   const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']?.find(
-    vilkar => vilkar.utfall == k9_kodeverk_vilkår_Utfall.OPPFYLT,
+    vilkar => vilkar.utfall == vilkårStatus.OPPFYLT,
   );
   return (
     <Box
