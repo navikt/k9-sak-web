@@ -4,6 +4,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { ForutgåendeMedlemskap } from '@k9-sak-web/gui/prosess/aktivitetspenger-forutgående-medlemskap/ForutgåendeMedlemskap.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
@@ -24,6 +25,7 @@ interface Props {
 
 export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
   const [{ data: aksjonspunkter = [] }, { data: perioder }, { data: innloggetBruker }] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(api, behandling),
@@ -46,6 +48,10 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
 
   if (!erValgt) {
     return null;
+  }
+
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAP);

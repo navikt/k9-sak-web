@@ -342,10 +342,6 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
     const relevanteMedlemskapAksjonspunkter = alleAksjonspunkter.filter(ap =>
       PANEL_KONFIG.medlemskap.aksjonspunkter.some(definisjon => definisjon === ap.definisjon),
     );
-    // Samme regel som medlemskapspanelet bruker for å vise «ikke behandlet»
-    const medlemskapVurderesIBehandlingen =
-      relevanteMedlemskapAksjonspunkter.length > 0 ||
-      relevanteMedlemskapVilkår.some(v => (v.perioder ?? []).some(periode => periode.vurderesIBehandlingen));
     const relevanteBeregnetUtbetalingAksjonspunkter = alleAksjonspunkter.filter(ap =>
       PANEL_KONFIG.beregnetUtbetaling.aksjonspunkter.some(definisjon => definisjon === ap.definisjon),
     );
@@ -362,7 +358,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
       status: Utfall;
       aksjonspunkter: AksjonspunktDto[];
       usePartialStatus: boolean;
-      // Paneler som ikke vurderes i behandlingen skal ikke stoppe senere steg
+      // Paneler uten vilkår eller aksjonspunkter å vurdere skal ikke stoppe senere steg
       stopperSenereSteg?: boolean;
       erInngangsvilkår?: boolean;
       inngangsvilkårDelpaneler?: { vilkårType: string; status: Utfall }[];
@@ -373,18 +369,17 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
         status: inngangsvilkårStatus,
         aksjonspunkter: relevanteInngangsvilkårAksjonspunkter,
         usePartialStatus: !erOpphør && inngangsvilkårDelpaneler.some(delpanel => erDelvisVurdert(delpanel.vilkår)),
+        stopperSenereSteg: inngangsvilkårDelpaneler.length > 0 || relevanteInngangsvilkårAksjonspunkter.length > 0,
         erInngangsvilkår: !erOpphør,
         inngangsvilkårDelpaneler,
       },
       {
         id: PANEL_KONFIG.medlemskap.id,
         label: PANEL_KONFIG.medlemskap.label,
-        status: medlemskapVurderesIBehandlingen
-          ? finnStatus(relevanteMedlemskapVilkår, relevanteMedlemskapAksjonspunkter)
-          : Utfall.IKKE_VURDERT,
+        status: finnStatus(relevanteMedlemskapVilkår, relevanteMedlemskapAksjonspunkter),
         aksjonspunkter: relevanteMedlemskapAksjonspunkter,
         usePartialStatus: erDelvisVurdert(relevanteMedlemskapVilkår),
-        stopperSenereSteg: medlemskapVurderesIBehandlingen,
+        stopperSenereSteg: relevanteMedlemskapVilkår.length > 0 || relevanteMedlemskapAksjonspunkter.length > 0,
       },
       {
         id: PANEL_KONFIG.beregning.id,

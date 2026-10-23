@@ -535,7 +535,7 @@ describe('Prossesmotor', () => {
     });
   });
 
-  test('bruker utfall fra tidligere behandling når ingen perioder vurderes i behandlingen', async () => {
+  test('viser utfall fra tidligere behandling for inngangsvilkår og medlemskap når ingen perioder vurderes i behandlingen', async () => {
     const tidligereVurdert = (vilkarType: ung_kodeverk_vilkår_VilkårType) => ({
       vilkarType,
       perioder: [
@@ -561,9 +561,34 @@ describe('Prossesmotor', () => {
 
     await waitFor(() => {
       expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
-      // Medlemskap vurderes ikke i behandlingen, men skal ikke stoppe senere steg
-      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.success);
       expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('kombinerer tidligere utfall og utfall i behandlingen per inngangsvilkår', async () => {
+    const api = createApi({
+      vilkår: [
+        {
+          vilkarType: ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+          perioder: [
+            {
+              vilkarStatus: Utfall.OPPFYLT,
+              vurderesIBehandlingen: false,
+              periode: { fom: '2024-01-01', tom: '2024-12-31' },
+            },
+          ],
+        },
+        createVilkår(Utfall.IKKE_OPPFYLT, ung_kodeverk_vilkår_VilkårType.BOSTEDSVILKÅR),
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.danger);
     });
   });
 
@@ -694,8 +719,8 @@ describe('Prossesmotor', () => {
     expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.default);
   });
 
-  test('viser opphør som default når det ikke finnes relevante aksjonspunkter', async () => {
-    const api = createApi();
+  test('viser opphør som default uten å stoppe senere steg når det ikke finnes relevante aksjonspunkter', async () => {
+    const api = createApi({ beregningsgrunnlag: beregningsgrunnlagMedData });
     const behandling = createBehandling({
       type: BehandlingType.REVURDERING,
       behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
@@ -707,6 +732,7 @@ describe('Prossesmotor', () => {
 
     await waitFor(() => {
       expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
     });
   });
 
