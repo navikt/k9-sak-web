@@ -221,6 +221,13 @@ const finnSamletStatus = (statuser: Utfall[]): Utfall => {
   return Utfall.IKKE_VURDERT;
 };
 
+// Søknadsfrist alene skal ikke stoppe senere steg når alle andre inngangsvilkår er oppfylt
+const søknadsfristUnntaketGjelder = (delpaneler: Pick<InngangsvilkårDelpanel, 'vilkårType' | 'status'>[]): boolean =>
+  delpaneler.some(delpanel => delpanel.vilkårType === vilkarType.SØKNADSFRIST) &&
+  delpaneler
+    .filter(delpanel => delpanel.vilkårType !== vilkarType.SØKNADSFRIST)
+    .every(delpanel => delpanel.status === Utfall.OPPFYLT);
+
 const finnStatusForVedtak = (
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
@@ -419,28 +426,20 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
     let forrigeEndeligStatus: Utfall | undefined;
 
     return paneler.map((panel, index) => {
-      const hoppOverStopp = panel.id === PANEL_KONFIG.simulering.id || panel.id === PANEL_KONFIG.vedtak.id;
-      if (index > 0 && !hoppOverStopp) {
+      const påvirkesIkkeAvStopp = panel.id === PANEL_KONFIG.simulering.id || panel.id === PANEL_KONFIG.vedtak.id;
+      if (index > 0 && !påvirkesIkkeAvStopp) {
         const forrigePanel = paneler[index - 1];
-        const harSøknadsfrist =
-          forrigePanel.erInngangsvilkår &&
-          forrigePanel.inngangsvilkårDelpaneler?.some(delpanel => delpanel.vilkårType === vilkarType.SØKNADSFRIST);
-        const alleAndreVilkårOppfylt = harSøknadsfrist
-          ? forrigePanel.inngangsvilkårDelpaneler
-              ?.filter(delpanel => delpanel.vilkårType !== vilkarType.SØKNADSFRIST)
-              .every(delpanel => delpanel.status === Utfall.OPPFYLT)
-          : false;
+        const forrigeErAvslåttEllerIkkeVurdert =
+          forrigeEndeligStatus === Utfall.IKKE_OPPFYLT || forrigeEndeligStatus === Utfall.IKKE_VURDERT;
+        const unntakForSøknadsfrist =
+          !!forrigePanel.erInngangsvilkår && søknadsfristUnntaketGjelder(forrigePanel.inngangsvilkårDelpaneler ?? []);
 
-        if (
-          (forrigeEndeligStatus === Utfall.IKKE_OPPFYLT || forrigeEndeligStatus === Utfall.IKKE_VURDERT) &&
-          !alleAndreVilkårOppfylt &&
-          forrigePanel.stopperSenereSteg !== false
-        ) {
+        if (forrigeErAvslåttEllerIkkeVurdert && forrigePanel.stopperSenereSteg !== false && !unntakForSøknadsfrist) {
           stanset = true;
         }
       }
 
-      const endeligStatus = stanset && !hoppOverStopp ? Utfall.IKKE_VURDERT : panel.status;
+      const endeligStatus = stanset && !påvirkesIkkeAvStopp ? Utfall.IKKE_VURDERT : panel.status;
       const type = finnProsessmenyType(endeligStatus, harÅpentAksjonspunkt(panel.aksjonspunkter));
       const result: ProcessMenuStep = {
         id: panel.id,
