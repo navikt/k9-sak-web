@@ -13,6 +13,8 @@ export {
   behandlinger_hentLovligeBehandlingsoperasjoner,
   kontroll_hentKontrollerInntekt,
   fagsak_hentFagsak,
+  formidling_forhåndsvisVedtaksbrev,
+  formidling_vedtaksbrevValgForNavKontor,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   simulering_hentSimuleringResultat,

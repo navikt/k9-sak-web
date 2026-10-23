@@ -7,19 +7,19 @@ description: >-
   USE FOR: finishing a v2 migration, "skru på v2 i prod", "fjern toggle",
   "slett legacy/v1-kode", cleaning up FaktaPanelDef/ProsessStegPanelDef
   branches, VersjonsvelgerV1V2, getEndepunkter, unused props, old packages,
-  mocks and types. DO NOT USE FOR: adding a toggle or migrating a panel to v2
-  (use v2-architecture skill).
+  mocks and types. DO NOT USE FOR: adding a toggle (use feature-toggles skill)
+  or migrating a panel to v2 (use v2-migration skill).
 ---
 
 # v1 cleanup
 
-Use this when v2 is validated in Q and should become the default in prod. Enabling the toggle in prod is allowed, but we prefer to remove the toggle and the v1 code in the same PR instead. If v1 has to come back, revert that PR rather than keeping v1 behind a toggle.
+Use this when v2 is validated in Q and should become the default in prod; see the rollout rule in the `feature-toggles` skill. If v1 has to come back, revert that PR rather than keeping v1 behind a toggle.
 
 This applies to any toggle that switches between a v1 and a v2 implementation. Most are named `BRUK_V2_<FEATURE>`, but some are not (e.g. `BRUK_OMSORGEN_FOR_V2`, `DOKUMENTFILTER`).
 
 Once the toggle is gone, nothing should render v1 anymore. Everything that only v1 used is dead code and must be deleted in the same PR: components, packages, props, endpoints, types, mocks, tests and stories. Do not keep v1 code "just in case"; it stays available in git history. Keep a file or export only when a search shows a consumer outside the v1 branch.
 
-How the toggle and the compile-time deletion guards are added is described under "Feature Toggles" in the `v2-architecture` skill (`.github/skills/v2-architecture/SKILL.md`).
+Where toggles are defined is described in the `feature-toggles` skill. How the compile-time deletion guards are added is described in the `v2-migration` skill.
 
 ## Required input
 
@@ -37,8 +37,7 @@ List what you found before deleting, so the user can check the scope.
 
 ### Toggle definitions
 
-- [ ] Remove the key from `rootFeatureToggles` and `baseQFeatureToggles` in `packages/v2/gui/src/featuretoggles/FeatureToggles.ts`
-- [ ] Remove it from `qFeatureToggles`, `prodFeatureToggles` and `k9SpecificFeatureToggles` / `ungSpecificFeatureToggles` in `k9/featureToggles.ts` and `ung/featureToggles.ts`
+- [ ] Remove the key from every toggle definition listed in the `feature-toggles` skill
 - [ ] Run `yarn ts-check`. Every compile-time deletion guard and every remaining `featureToggles?.<TOGGLE>` use now points to code that must be cleaned up
 
 ### PanelDef wiring (every behandling package)
@@ -82,7 +81,8 @@ When v1 is gone, props that only v1 read are dead too. Remove them all the way u
 
 ### v1 code
 
-- [ ] Delete the old v1 package (e.g. `packages/fakta-<feature>/`) or the old v1 files. Before deleting a v1 test, confirm that a v2 story or test covers the same behaviour; if not, add it to v2 first
+- [ ] Before deleting a v1 test, confirm that a v2 story or test covers the same behaviour (see the `storybook` skill); if not, add it to v2 first
+- [ ] Delete the old v1 package (e.g. `packages/fakta-<feature>/`) or the old v1 files
 - [ ] Remove the package from `dependencies` in every `package.json` that referenced it, then run `yarn install` so `yarn.lock` is updated
 - [ ] Remove deleted files from `loosely-type-checked-files.json` by running the script `yarn ts-check:update-ignored`
 - [ ] Remove v1-only mock data (`packages/mocks/`) and v1-only types and their exports (`packages/types/`), after searching for other consumers

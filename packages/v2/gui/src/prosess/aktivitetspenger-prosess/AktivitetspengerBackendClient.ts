@@ -1,4 +1,5 @@
 import { isObject } from '@k9-sak-web/backend/typecheck/isObject.js';
+import type { DokumentMalType } from '@k9-sak-web/backend/ungsak/kodeverk/dokument/DokumentMalType.js';
 import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BekreftetOgOverstyrteAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetOgOverstyrteAksjonspunkterDto.js';
@@ -18,6 +19,8 @@ import {
   behandlinger_hentLovligeBehandlingsoperasjoner,
   kontroll_hentKontrollerInntekt,
   fagsak_hentFagsak,
+  formidling_forhåndsvisVedtaksbrev,
+  formidling_vedtaksbrevValgForNavKontor,
   forutgåendeMedlemskap_medlemskap,
   navAnsatt_innloggetBrukerV2,
   simulering_hentSimuleringResultat,
@@ -151,5 +154,17 @@ export class AktivitetspengerBackendClient implements AktivitetspengerApi {
 
   async getTilbakekrevingValg(behandlingUuid: string) {
     return (await tilbakekrevingsvalg_hentTilbakekrevingValg({ query: { behandlingUuid } })).data;
+  }
+
+  async vedtaksbrevValg(behandlingId: number) {
+    return (await formidling_vedtaksbrevValgForNavKontor({ query: { behandlingId: `${behandlingId}` } })).data;
+  }
+
+  async forhåndsvisVedtaksbrev(behandlingId: number, dokumentMalType: DokumentMalType) {
+    return (
+      await formidling_forhåndsvisVedtaksbrev({
+        body: { behandlingId, dokumentMalType, htmlVersjon: false },
+      })
+    ).data;
   }
 }

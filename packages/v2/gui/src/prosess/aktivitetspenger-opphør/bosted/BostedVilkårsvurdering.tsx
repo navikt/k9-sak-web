@@ -24,6 +24,7 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -63,6 +64,7 @@ const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[
       status: getPeriodStatus(period.vilkarStatus),
       label: formatDate(period.periode.fom),
       periode: period.periode,
+      vurderesIBehandlingen: period.vurderesIBehandlingen,
     }));
 
 const buildPayload = ({
@@ -112,7 +114,55 @@ interface Props {
   isPermanentlyReadOnly: boolean;
   bostedGrunnlag: BostedGrunnlagResponseDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
+  lokalkontorBeslutterAP?: AksjonspunktDto;
 }
+
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="success" size="small">
+          Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
 
 export const BostedVilkårsvurdering = ({
   vurderBostedVilkårAP,
@@ -124,6 +174,7 @@ export const BostedVilkårsvurdering = ({
   readOnly,
   isPermanentlyReadOnly,
   bostedGrunnlag,
+  lokalkontorBeslutterAP,
 }: Props) => {
   const periods = buildPeriods(bostedVilkår);
   const formHook = useForm<FormData>({
@@ -177,28 +228,17 @@ export const BostedVilkårsvurdering = ({
         periodListLabel="Alle perioder"
         lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
-        readOnly={selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error' || readOnly}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        readOnly={readOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriod?.vurderesIBehandlingen === false}
         afterEditButton={
-          erLokalkontorForeslårAPÅpent ? (
-            <VStack gap="space-20">
-              <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
-              </Alert>
-              <Box>
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-              </Box>
-            </VStack>
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={erLokalkontorForeslårAPÅpent}
+            visForBeslutter={!!lokalkontorBeslutterAP}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
         lockedContent={
           isVurderBostedvilkårAPSolved ? <VurdertAv ident={vurderBostedVilkårAP?.ansvarligSaksbehandler} /> : undefined

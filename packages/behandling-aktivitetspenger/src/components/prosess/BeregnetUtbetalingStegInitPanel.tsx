@@ -155,7 +155,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
             />
           </Tabs.List>
           <Tabs.Panel value="utbetaling">
-            <DagsatsOgUtbetaling satser={satser} />
+            <DagsatsOgUtbetaling satser={satser} isAktivitetspenger />
           </Tabs.Panel>
           <Box maxWidth="860px">
             <Tabs.Panel value="inntekt">
@@ -164,12 +164,13 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
                 inntektKontrollperioder={inntekt?.kontrollperioder ?? []}
                 isReadOnly={isReadOnly}
                 arbeidsgivere={arbeidsgivere}
+                isAktivitetspenger
               />
             </Tabs.Panel>
           </Box>
         </Tabs>
       ) : (
-        <DagsatsOgUtbetaling satser={satser} />
+        <DagsatsOgUtbetaling satser={satser} isAktivitetspenger />
       )}
     </VStack>
   );

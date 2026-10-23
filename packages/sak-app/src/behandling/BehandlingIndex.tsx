@@ -18,6 +18,10 @@ import {
 
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import {
+  finnDatoerForKroniskSyktBarn,
+  KroniskSyktBarnDatoContext,
+} from '@k9-sak-web/prosess-omsorgsdager/src/ui/components/vilkar-kronisk-sykt-barn/KroniskSyktBarnDatoContext';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { AvregningFormProvider } from '@k9-sak-web/gui/prosess/avregning/AvregningContext.js';
 import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
@@ -270,12 +274,16 @@ const BehandlingIndex = ({
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary>
-            <BehandlingUtvidetRettIndex
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              valgtFaktaSteg={query.fakta}
-              key={behandling.id}
-              {...defaultProps}
-            />
+            <KroniskSyktBarnDatoContext.Provider
+              value={finnDatoerForKroniskSyktBarn(alleBehandlinger, behandling.id)}
+            >
+              <BehandlingUtvidetRettIndex
+                oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+                valgtFaktaSteg={query.fakta}
+                key={behandling.id}
+                {...defaultProps}
+              />
+            </KroniskSyktBarnDatoContext.Provider>
           </ErrorBoundary>
         </Suspense>
       );

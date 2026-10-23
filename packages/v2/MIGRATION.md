@@ -3,7 +3,7 @@
 Dette dokumentet viser hva som er ferdig migrert, hva som pågår og hva som gjenstår.
 Alle panelene tilknyttet tilbakekreving og beregning har store implementasjoner delt med foreldrepenger og lever i [fellesrepo med FP](https://github.com/navikt/ft-frontend-saksbehandling/tree/main/packages). Men felleskoden trenger nok ikke vi røre i førsteomgang.
 
-Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskilden i `.github/skills/v2-architecture/SKILL.md` for fremgangsmåte.
+Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskillen i `.github/skills/v2-migration/SKILL.md` for fremgangsmåte.
 
 ---
 
