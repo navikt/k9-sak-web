@@ -34,6 +34,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_PROSESS_UNNTAK: true,
   BRUK_V2_PROSESS_OPPLAERING: true,
   BRUK_V2_OM_BARNET: true,
+  STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: true,
 });
 
 /**

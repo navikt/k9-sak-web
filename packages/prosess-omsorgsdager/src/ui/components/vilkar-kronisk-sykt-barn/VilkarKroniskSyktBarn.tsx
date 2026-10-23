@@ -1,8 +1,9 @@
 import { Alert, Button, Checkbox, Fieldset, HelpText, HStack, RadioGroup, Select, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
@@ -15,6 +16,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './vilkarKronisSyktBarn.module.css';
+import { KroniskSyktBarnDatoContext } from './KroniskSyktBarnDatoContext';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
@@ -51,6 +53,9 @@ const tekst = {
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
   feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
+  feilOverlappendePeriode: 'Perioden overlapper et tidligere innvilget vedtak.',
+  feilFraDatoEtterTilDato: 'Fra-dato kan ikke være etter til-dato.',
+  feilFraDatoEtter18År: 'Fra-dato kan ikke være etter året barnet fyller 18 år.',
   soknadsdato: 'Søknadsdato',
   begrunnelseFraBruker: 'Begrunnelse for risiko for økt fravær',
 };
@@ -85,6 +90,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   begrunnelseFraBruker,
   personopplysninger,
 }) => {
+  const kroniskSyktBarnDatoer = useContext(KroniskSyktBarnDatoContext);
+  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = useContext(FeatureTogglesContext);
+  const foreslåttFraDato = STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
+    ? kroniskSyktBarnDatoer.foreslåttFraDato
+    : undefined;
+  const innvilgedePerioder = kroniskSyktBarnDatoer.innvilgedePerioder;
+  const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
+  const åretBarnetFyller18 = fødselsdato ? dayjs(fødselsdato).year() + 18 : undefined;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
@@ -93,7 +106,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
       avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : (foreslåttFraDato ?? 'dd.mm.åååå'),
       tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.tilDato : 'dd.mm.åååå',
       erTidsbegrenset: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.erTidsbegrenset : false,
     },
@@ -115,6 +128,24 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     getValues,
     'harDokumentasjonOgFravaerRisiko',
   );
+
+  const erPeriodeUtenOverlapp = (dato: string) => {
+    const data = getValues();
+    if (!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK) return true;
+    if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko)) return true;
+
+    const fom = dayjs(dato);
+    const tom = data.erTidsbegrenset ? dayjs(data.tilDato) : undefined;
+    if (!fom.isValid() || (tom && !tom.isValid())) return true;
+    if (åretBarnetFyller18 && fom.year() > åretBarnetFyller18) return tekst.feilFraDatoEtter18År;
+    if (tom?.isBefore(fom, 'day')) return tekst.feilFraDatoEtterTilDato;
+
+    return (
+      !innvilgedePerioder.some(
+        periode => !fom.isAfter(dayjs(periode.tom), 'day') && (!tom || !tom.isBefore(dayjs(periode.fom), 'day')),
+      ) || tekst.feilOverlappendePeriode
+    );
+  };
 
   const erArsakErIkkeRiskioFraFravaer = val => {
     if (tekstTilBoolean(getValues().harDokumentasjonOgFravaerRisiko)) return true;
@@ -163,15 +194,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
    * `false` hvis fødselsdato mangler eller barnet er yngre enn 18 år i inneværende år.
    */
   const getErBarnetFyller18IÅr = (): boolean => {
-    const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
-
-    if (!fødselsdato) {
+    if (!åretBarnetFyller18) {
       return false;
     }
 
-    const født = dayjs(fødselsdato);
     const inneværendeÅr = dayjs().year();
-    const åretBarnetFyller18 = født.year() + 18;
 
     return åretBarnetFyller18 <= inneværendeÅr;
   };
@@ -367,16 +394,30 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                           (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
                           (errors.fraDato &&
                             errors.fraDato.type === 'erDatoIkkeIFremtid' &&
-                            tekst.feilmedlingerDatoIkkeIFremtid)
+                            tekst.feilmedlingerDatoIkkeIFremtid) ||
+                          errors.fraDato?.message
                         }
                       >
                         <DatePicker
                           titel=""
                           navn="fraDato"
+                          begrensningerIKalender={
+                            STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
+                              ? {
+                                  minDate: '',
+                                  maxDate: åretBarnetFyller18 ? `${åretBarnetFyller18}-12-31` : '',
+                                  invalidDateRanges: innvilgedePerioder.map(periode => ({
+                                    from: periode.fom,
+                                    to: periode.tom,
+                                  })),
+                                }
+                              : undefined
+                          }
                           valideringsFunksjoner={{
                             erDatoFyltUt,
                             erDatoGyldig,
-                            erDatoIkkeIFremtid,
+                            ...(!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && { erDatoIkkeIFremtid }),
+                            erPeriodeUtenOverlapp,
                           }}
                         />
                       </Fieldset>
@@ -384,7 +425,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                     {kroniskTidsbegrensetToggle && (
                       <>
                         <HStack gap="space-8" align="center">
-                          <Checkbox {...register('erTidsbegrenset')}>Vedtaket er tidsbegrenset</Checkbox>
+                          <Checkbox {...register('erTidsbegrenset', { deps: 'fraDato' })}>Vedtaket er tidsbegrenset</Checkbox>
                           <HelpText>
                             Her "huker du av" dersom vedtaket skal være tidsbegrenset. Når det ikke "hukes av" her, så
                             varer vedtaket ut det kalenderåret barnet fyller 18 år.
@@ -396,6 +437,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                               {...register('tilDato', {
                                 validate: { erDatoFyltUt },
                                 required: true,
+                                deps: 'fraDato',
                               })}
                               label="Til"
                               size="small"

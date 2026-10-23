@@ -17,6 +17,7 @@ import tseslint from 'typescript-eslint';
 // ^- Rapporterer ein del feil, så virker ikkje å ha vore aktivert før.
 
 const OFF = 0;
+const WARN = 1;
 const ERROR = 2;
 
 const config = tseslint.config(
@@ -137,9 +138,10 @@ const config = tseslint.config(
     },
   },
   {
-    files: ['packages/v2/**.*.ts', 'packages/v2/**.*.tsx'],
+    files: ['packages/v2/**/*.ts', 'packages/v2/**/*.tsx'],
     rules: {
-      '@typescript-eslint/no-explicit-any': ERROR,
+      // Advarsel til eksisterende any i v2 er fjernet. Skal deretter bli ERROR.
+      '@typescript-eslint/no-explicit-any': WARN,
     },
   },
   {

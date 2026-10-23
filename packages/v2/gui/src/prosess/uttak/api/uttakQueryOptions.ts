@@ -1,11 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 import type { UttakBackendApiType } from './UttakBackendApiType.js';
 
-export const uttakQueryOptions = (
-  api: UttakBackendApiType,
-  behandlingUuid: string,
-  behandlingVersjon: number | undefined,
-) =>
+export const uttakQueryOptions = (api: UttakBackendApiType, behandlingUuid: string, behandlingVersjon: number) =>
   queryOptions({
     queryKey: ['uttak', behandlingUuid, behandlingVersjon, api.backend],
     queryFn: () => api.hentUttak(behandlingUuid),
@@ -14,9 +10,13 @@ export const uttakQueryOptions = (
   });
 
 // refetchOnMount og refetchOnWindowFocus er av, ellers gjentas kallet flere ganger, for eksempel ved bytte av prosesssteg
-export const uttakArbeidsgivereQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
+export const uttakArbeidsgivereQueryOptions = (
+  api: UttakBackendApiType,
+  behandlingUuid: string,
+  behandlingVersjon: number,
+) =>
   queryOptions({
-    queryKey: ['uttak-arbeidsgivere', behandlingUuid, api.backend],
+    queryKey: ['uttak-arbeidsgivere', behandlingUuid, behandlingVersjon, api.backend],
     queryFn: async () => {
       const arbeidsgivere = await api.getArbeidsgivere(behandlingUuid);
       return arbeidsgivere.arbeidsgivere ?? {};
@@ -24,9 +24,13 @@ export const uttakArbeidsgivereQueryOptions = (api: UttakBackendApiType, behandl
     refetchOnMount: false,
   });
 
-export const uttakInntektsgraderingerQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
+export const uttakInntektsgraderingerQueryOptions = (
+  api: UttakBackendApiType,
+  behandlingUuid: string,
+  behandlingVersjon: number,
+) =>
   queryOptions({
-    queryKey: ['uttak-inntektsgraderinger', behandlingUuid, api.backend],
+    queryKey: ['uttak-inntektsgraderinger', behandlingUuid, behandlingVersjon, api.backend],
     queryFn: () => api.hentInntektsgraderinger(behandlingUuid),
     refetchOnMount: false,
   });
