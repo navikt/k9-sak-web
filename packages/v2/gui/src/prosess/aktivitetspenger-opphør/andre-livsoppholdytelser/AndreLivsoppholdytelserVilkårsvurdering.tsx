@@ -267,6 +267,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
+                  readOnly={isFormLocked}
                 />
               )}
               {harFritekstbrev && (

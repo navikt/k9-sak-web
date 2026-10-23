@@ -507,6 +507,43 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('viser ikke delvis status på gult steg', async () => {
+    const bistandsvilkår = {
+      vilkarType: ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR,
+      perioder: [
+        {
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: true,
+          periode: { fom: '2024-01-01', tom: '2024-01-31' },
+        },
+        {
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          vurderesIBehandlingen: true,
+          periode: { fom: '2024-02-01', tom: '2024-02-29' },
+        },
+      ],
+    };
+    const api = createApi({
+      vilkår: [bistandsvilkår],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+          status: aksjonspunktStatus.OPPRETTET,
+          kanLoses: true,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[0].usePartialStatus).toBe(false);
+    });
+  });
+
   test('ignorerer perioder som ikke vurderes i behandlingen', async () => {
     const søknadsfrist = {
       vilkarType: ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
@@ -563,6 +600,44 @@ describe('Prossesmotor', () => {
       expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
       expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.success);
       expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('setter inngangsvilkår til danger når aktivitetsvilkåret er avslått', async () => {
+    const api = createApi({
+      vilkår: [
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+        createVilkår(Utfall.IKKE_OPPFYLT, ung_kodeverk_vilkår_VilkårType.AKTIVITETSVILKÅR),
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.danger);
+    });
+  });
+
+  test('setter inngangsvilkår til warning når VURDER_AKTIVITETSVILKÅR er åpent', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.IKKE_VURDERT, ung_kodeverk_vilkår_VilkårType.AKTIVITETSVILKÅR)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
+          status: aksjonspunktStatus.OPPRETTET,
+          kanLoses: true,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
     });
   });
 
@@ -702,6 +777,35 @@ describe('Prossesmotor', () => {
 
     await waitFor(() => {
       expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.danger);
+    });
+  });
+
+  test('vedtak blir danger uten delvis status når behandlingsresultatet er opphør', async () => {
+    const bosted = {
+      vilkarType: ung_kodeverk_vilkår_VilkårType.BOSTEDSVILKÅR,
+      perioder: [
+        {
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: false,
+          periode: { fom: '2026-01-01', tom: '2026-06-30' },
+        },
+        {
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          vurderesIBehandlingen: true,
+          periode: { fom: '2026-07-01', tom: '2026-12-31' },
+        },
+      ],
+    };
+    const api = createApi({ vilkår: [bosted] });
+    const behandling = createBehandling({ behandlingsresultat: { type: BehandlingResultatType.OPPHØR } });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.danger);
+      expect(result.current.prosessteg[5].usePartialStatus).toBe(false);
     });
   });
 

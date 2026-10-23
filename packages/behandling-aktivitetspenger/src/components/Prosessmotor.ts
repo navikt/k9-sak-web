@@ -1,4 +1,4 @@
-import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { VilkårMedPerioderDto } from '@k9-sak-web/backend/combined/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
@@ -42,6 +42,7 @@ const PANEL_KONFIG = {
       AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
       AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
       AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+      AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR,
     ],
     id: PROSESS_STEG_KODER.INNGANGSVILKAR,
     label: 'Inngangsvilkår',
@@ -51,6 +52,7 @@ const PANEL_KONFIG = {
       vilkarType.BOSTEDSVILKÅR,
       vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       vilkarType.ALDERSVILKÅR,
+      vilkarType.AKTIVITETSVILKÅR,
     ],
   },
   vedtak: {
@@ -246,7 +248,7 @@ const finnStatusForVedtak = (
   if (typeof behandlingsresultatType !== 'string') {
     return Utfall.IKKE_VURDERT;
   }
-  return isAvslag(behandlingsresultatType) ? Utfall.IKKE_OPPFYLT : Utfall.OPPFYLT;
+  return isAvslag(behandlingsresultatType) || isOpphor(behandlingsresultatType) ? Utfall.IKKE_OPPFYLT : Utfall.OPPFYLT;
 };
 
 export const beregnSimuleringType = (
@@ -444,8 +446,7 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
         id: panel.id,
         label: panel.label,
         type,
-        usePartialStatus:
-          (type === ProcessMenuStepType.success || type === ProcessMenuStepType.warning) && panel.usePartialStatus,
+        usePartialStatus: type === ProcessMenuStepType.success && panel.usePartialStatus,
       };
       if (index === 0) {
         result.locked =

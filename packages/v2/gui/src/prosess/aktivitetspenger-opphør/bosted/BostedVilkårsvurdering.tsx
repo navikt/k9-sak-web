@@ -276,6 +276,7 @@ export const BostedVilkårsvurdering = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
+                  readOnly={isFormLocked}
                 />
               )}
               {flyttetFraTrondheim === 'ja' && (erÅrsakTilOpphørAnnet || harFritekstbrev) && (

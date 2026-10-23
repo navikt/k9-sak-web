@@ -1,6 +1,5 @@
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerOpphør } from '@k9-sak-web/gui/prosess/aktivitetspenger-opphør/AktivitetspengerOpphør.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
@@ -25,7 +24,6 @@ interface Props {
 
 export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
-  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
   const [
     { data: aksjonspunkter = [] },
     { data: innloggetBruker },
@@ -48,10 +46,7 @@ export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: P
     return null;
   }
 
-  if (!erTilBehandlingEllerBehandlet) {
-    return <ProsessStegIkkeBehandlet />;
-  }
-
+  // Vurderingene vises alltid, også når steget er grått fordi det mangler relevante aksjonspunkter
   return (
     <AktivitetspengerOpphør
       aksjonspunkter={aksjonspunkter}
