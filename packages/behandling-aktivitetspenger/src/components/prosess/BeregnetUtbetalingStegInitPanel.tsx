@@ -6,11 +6,13 @@ import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kon
 import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegHentingFeilet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegHentingFeilet.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
+  kontrollerInntektQueryOptions,
   innloggetBrukerQueryOptions,
   satsOgUtbetalingPerioderQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -48,6 +50,13 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
 
+  // Samme query som Prosessmotor bruker for status. Leser bare cachen for å skille hentefeil fra manglende data.
+  const satserQuery = useQuery({
+    ...satsOgUtbetalingPerioderQueryOptions(api, behandling),
+    enabled: false,
+    throwOnError: false,
+  });
+
   const aktivitetspengerBeregningApi = useMemo(() => new AktivitetspengerBeregningBackendClient(), []);
 
   const { data: satser } = useSuspenseQuery({
@@ -64,8 +73,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     isLoading: kontrollInntektIsLoading,
     isError: kontrollInntektIsError,
   } = useQuery({
-    queryKey: ['aktivitetspenger-kontrollInntekt', behandling.uuid, behandling.versjon],
-    queryFn: () => aktivitetspengerBeregningApi.getKontrollerInntekt(behandling.uuid),
+    ...kontrollerInntektQueryOptions(api, behandling),
     select: sortInntekt,
     throwOnError: false,
   });
@@ -110,7 +118,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
   }
 
   if (!erTilBehandlingEllerBehandlet) {
-    return <ProsessStegIkkeBehandlet />;
+    return satserQuery.isError || kontrollInntektIsError ? <ProsessStegHentingFeilet /> : <ProsessStegIkkeBehandlet />;
   }
 
   if (!satser) {

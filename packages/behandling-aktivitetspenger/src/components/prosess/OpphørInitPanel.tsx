@@ -46,6 +46,7 @@ export const OpphørInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: P
     return null;
   }
 
+  // Vurderingene vises alltid, også når steget er grått fordi det mangler relevante aksjonspunkter
   return (
     <AktivitetspengerOpphør
       aksjonspunkter={aksjonspunkter}
