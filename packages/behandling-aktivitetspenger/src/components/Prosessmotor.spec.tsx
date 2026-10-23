@@ -6,9 +6,9 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { ung_kodeverk_vilkår_VilkårType } from '@navikt/ung-sak-typescript-client/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -341,6 +341,7 @@ describe('Prossesmotor', () => {
     });
 
     await waitFor(() => {
+      expect(result.current.erKlar).toBe(true);
       expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.default);
     });
   });
@@ -419,19 +420,36 @@ describe('Prossesmotor', () => {
   });
 
   test('setter beregnet utbetaling til default når inntektskontroll feiler og satser mangler', async () => {
-    const api = Object.assign(createApi(), {
-      getKontrollerInntekt: async () => {
-        throw new Error('Feil ved henting av inntektskontroll');
+    const api = Object.assign(
+      createApi({
+        vilkår: [
+          createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+          createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+        ],
+        beregningsgrunnlag: beregningsgrunnlagMedData,
+      }),
+      {
+        getKontrollerInntekt: async () => {
+          throw new Error('Feil ved henting av inntektskontroll');
+        },
       },
-    });
+    );
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
       wrapper: createWrapper(queryClient),
     });
 
     await waitFor(() => {
-      expect(result.current.prosessteg[3].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.erKlar).toBe(true);
     });
+    expect(
+      queryClient
+        .getQueryCache()
+        .getAll()
+        .find(query => query.queryKey[0] === 'aktivitetspenger-kontrollInntekt')?.state.status,
+    ).toBe('error');
+    expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+    expect(result.current.prosessteg[3].type).toBe(ProcessMenuStepType.default);
   });
 
   test('stans etter åpent aksjonspunkt i inngangsvilkår stanser medlemskap', async () => {
