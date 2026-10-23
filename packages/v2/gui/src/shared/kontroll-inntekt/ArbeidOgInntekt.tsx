@@ -62,6 +62,7 @@ export interface ArbeidOgInntektProps {
   inntektKontrollperioder: Array<KontrollerInntektPeriodeDto>;
   isReadOnly: boolean;
   arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
+  isAktivitetspenger?: boolean;
 }
 
 export const ArbeidOgInntekt = ({
@@ -69,6 +70,7 @@ export const ArbeidOgInntekt = ({
   inntektKontrollperioder,
   isReadOnly,
   arbeidsgivere,
+  isAktivitetspenger,
 }: ArbeidOgInntektProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formMethods = useForm<Formvalues>({
@@ -154,6 +156,7 @@ export const ArbeidOgInntekt = ({
                         fieldIndex={index}
                         inntektKontrollPeriode={inntektKontrollPeriode}
                         arbeidsgivere={arbeidsgivere}
+                        isAktivitetspenger={isAktivitetspenger}
                       />
                     ) : (
                       <Bleed marginBlock="space-16 space-0">
