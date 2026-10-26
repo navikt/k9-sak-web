@@ -5,6 +5,7 @@ import { BodyLong, Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useEffect, useId, useRef, useState } from 'react';
 import { LabelledContent } from '../../../shared/labelled-content/LabelledContent.js';
+import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import styles from './EndringsdatoInfostripe.module.css';
 
@@ -24,7 +25,8 @@ const EndringsdatoInfostripe = ({
   const innholdId = useId();
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_DATO_NY_REGEL_UTTAK);
   const formatertVirkningsdato = dayjs(virkningsdato).format('DD.MM.YYYY');
-  const kanVisesAksjonspunkt = aksjonspunkt !== undefined && !redigerVirkningsdato;
+  const kanVisesAksjonspunkt =
+    aksjonspunkt !== undefined && !isAksjonspunktOpen(aksjonspunkt.status) && !redigerVirkningsdato;
   const erÅpen = kanVisesAksjonspunkt && visAksjonspunkt;
   const kanRedigere = !readOnly && behandling.status !== BehandlingStatus.AVSLUTTET;
   const infostripeRef = useRef<HTMLDivElement>(null);

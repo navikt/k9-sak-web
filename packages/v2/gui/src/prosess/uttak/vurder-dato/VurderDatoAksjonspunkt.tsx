@@ -7,6 +7,7 @@ import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-va
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useUttakApi } from '../api/UttakApiContext.js';
+import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDatoAksjonspunkt.module.css';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -91,7 +92,7 @@ const VurderDatoAksjonspunkt = ({ lukkRedigering }: Props) => {
               Bekreft og fortsett
             </Button>
 
-            {virkningsdatoUttakNyeRegler && (
+            {virkningsdatoUttakNyeRegler && !isAksjonspunktOpen(aksjonspunkt?.status) && (
               <Button variant="secondary" type="button" size="small" onClick={() => lukkRedigering()}>
                 Avbryt
               </Button>
