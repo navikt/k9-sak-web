@@ -9,9 +9,9 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/aksel-icons": "8.19.2",
-    "@navikt/ds-css": "8.19.2",
-    "@navikt/ds-react": "8.19.2",
+    "@navikt/aksel-icons": "8.20.0",
+    "@navikt/ds-css": "8.20.0",
+    "@navikt/ds-react": "8.20.0",
     "@navikt/ft-form-hooks": "13.1.0",
     "@navikt/ft-form-validators": "7.0.3",
     "@navikt/ft-kodeverk": "3.0.0",
@@ -25,7 +25,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-hook-form": "7.90.0",
-    "react-intl": "12.1.4"
+    "react-intl": "12.1.5"
   },
   "devDependencies": {
     "@types/react": "19.2.18",
