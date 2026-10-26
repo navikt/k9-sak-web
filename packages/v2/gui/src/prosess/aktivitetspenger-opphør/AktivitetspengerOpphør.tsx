@@ -8,7 +8,6 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { Box, Heading, Tabs, VStack } from '@navikt/ds-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -106,7 +105,6 @@ interface Props {
   vilkår: VilkårMedPerioderDto[];
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   lovligeBehandlingsoperasjoner: BehandlingOperasjonerDto;
-  bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
 export const AktivitetspengerOpphør = ({
@@ -118,7 +116,6 @@ export const AktivitetspengerOpphør = ({
   vilkår,
   totrinnskontrollSkjermlenkeContext,
   lovligeBehandlingsoperasjoner,
-  bostedGrunnlag,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
@@ -188,7 +185,6 @@ export const AktivitetspengerOpphør = ({
               <BostedÅrsakOgVarsel
                 vurderBostedAP={vurderBostedFaktaAP}
                 bostedVilkår={bostedVilkår}
-                bostedGrunnlag={bostedGrunnlag}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -218,7 +214,6 @@ export const AktivitetspengerOpphør = ({
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
-                bostedGrunnlag={bostedGrunnlag}
                 lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
                 lokalkontorBeslutterAP={lokalkontorBeslutterAP}
               />

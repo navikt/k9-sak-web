@@ -2,20 +2,22 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import {
   $ManuellVurderingBostedsvilkårDto,
   $VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import {
@@ -28,6 +30,7 @@ import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/Forhånds
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '../../aktivitetspenger-prosess/types.js';
 
 interface FormData {
@@ -42,15 +45,15 @@ interface FormData {
   >;
 }
 
-const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): FormData => ({
+const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
   perioder: Object.fromEntries(
-    (bostedGrunnlag.perioder ?? []).map(p => [
-      p.fom,
+    vilkårsavklaringVurderinger.perioder.map(({ periode, utfall, avklaringOgVurdering }) => [
+      periode.fom,
       {
-        begrunnelse: p.resultat?.begrunnelse ?? '',
-        flyttetFraTrondheim: p.resultat?.erBosatt === false ? 'ja' : p.resultat?.erBosatt === true ? 'nei' : '',
-        fritekstVurderingBrev: p.resultat?.friteksttilBrev ?? '',
-        harFritekstbrev: !!p.resultat?.friteksttilBrev,
+        begrunnelse: avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
+        flyttetFraTrondheim: utfall === Utfall.IKKE_OPPFYLT ? 'ja' : utfall === Utfall.OPPFYLT ? 'nei' : '',
+        fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
+        harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
       },
     ]),
   ),
@@ -112,7 +115,6 @@ interface Props {
   onAksjonspunktBekreftet: () => void;
   readOnly: boolean;
   isPermanentlyReadOnly: boolean;
-  bostedGrunnlag: BostedGrunnlagResponseDto;
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   lokalkontorBeslutterAP?: AksjonspunktDto;
 }
@@ -173,24 +175,29 @@ export const BostedVilkårsvurdering = ({
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
-  bostedGrunnlag,
   lokalkontorBeslutterAP,
 }: Props) => {
+  const queryClient = useQueryClient();
+  const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
+  const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
   const periods = buildPeriods(bostedVilkår);
   const formHook = useForm<FormData>({
-    defaultValues: buildInitialValues(bostedGrunnlag),
+    defaultValues: buildInitialValues(vilkårsavklaringVurderinger),
   });
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
-  const selectedFakta = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
+  const valgtAvklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === selectedId)
+    ?.avklaringOgVurdering?.avklaring;
+  const uttalelse = valgtAvklaring?.uttalelse;
   const selectedPeriod = periods.find(p => p.id === selectedId);
-  const erÅrsakTilOpphørAnnet = selectedFakta?.avklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
+  const erÅrsakTilOpphørAnnet = valgtAvklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
       const payload = buildPayload({ formData, selectedId, periods, erÅrsakTilOpphørAnnet });
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
       onAksjonspunktBekreftet();
     },
   });
@@ -253,7 +260,7 @@ export const BostedVilkårsvurdering = ({
             }}
           >
             <VStack gap="space-24" maxWidth="70ch" width="100%">
-              {selectedFakta?.harUttalelse && (
+              {uttalelse?.harUttalelse && (
                 <Box borderRadius="8" padding="space-16" background="info-softA">
                   <VStack gap="space-20">
                     <VStack gap="space-8">
@@ -273,7 +280,7 @@ export const BostedVilkårsvurdering = ({
                         <BodyShort size="small" weight="semibold">
                           Tilbakemelding fra bruker om opphør xx.xx.xxxx
                         </BodyShort>
-                        <BodyLong size="small">{selectedFakta.uttalelseTekst}</BodyLong>
+                        <BodyLong size="small">{uttalelse.uttalelseTekst}</BodyLong>
                       </VStack>
                     </HStack>
                   </VStack>

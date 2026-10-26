@@ -13,9 +13,11 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
-import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
-import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
+import type {
+  VilkårsavklaringerDto,
+  VilkårsavklaringVurderingerDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, spyOn, userEvent, within } from 'storybook/test';
 import { FakeAktivitetspengerApi, fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
@@ -73,29 +75,48 @@ const fakeBostedVilkår = {
   ],
 } as unknown as VilkårMedPerioderDto;
 
-const fakeBostedGrunnlag = {
+const fakeBostedVilkårsavklaringer = {
+  vilkårType: vilkarType.BOSTEDSVILKÅR,
+  perioder: [{ periode: { fom: '2026-01-29', tom: '2027-01-28' }, utfall: Utfall.IKKE_VURDERT }],
+} satisfies VilkårsavklaringerDto;
+
+const lagFakeBostedVilkårsavklaringVurderinger = (
+  ikkeOppfyltÅrsak: BostedsvilkårIkkeOppfyltÅrsak,
+): VilkårsavklaringVurderingerDto => ({
+  vilkårType: vilkarType.BOSTEDSVILKÅR,
   perioder: [
     {
-      fom: '2026-01-29',
-      tom: '2027-01-28',
-      erBosattITrondheim: false,
-      kilde: 'BRUKER',
-      avklaring: { kanRedigeres: true },
+      periode: { fom: '2026-01-29', tom: '2027-01-28' },
+      utfall: Utfall.IKKE_VURDERT,
+      avklaringOgVurdering: {
+        avklaring: {
+          avklaringtype: Avklaringtype.OPPHØR,
+          foreslåttIBehandlingen: true,
+          ikkeOppfyltÅrsak,
+          kilde: 'BRUKER',
+          periode: { fom: '2026-01-29', tom: '2027-01-28' },
+          referanse: 'bosted-ref',
+          skalSendeVarsel: false,
+          vurdertAv: 'Z123456',
+          vurdertTidspunkt: '2026-01-29T10:00:00',
+        },
+      },
     },
   ],
-} as unknown as BostedGrunnlagResponseDto;
+});
 
-const fakeBostedGrunnlagMedAnnenÅrsak: BostedGrunnlagResponseDto = {
-  ...fakeBostedGrunnlag,
-  perioder: fakeBostedGrunnlag.perioder?.map(period => ({
-    ...period,
-    avklaring: {
-      ...period.avklaring,
-      erBosatt: period.avklaring?.erBosatt ?? false,
-      ikkeOppfyltÅrsak: BostedsvilkårIkkeOppfyltÅrsak.ANNET,
-    },
-  })),
-};
+const lagFakeBostedApi = (
+  vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto = lagFakeBostedVilkårsavklaringVurderinger(
+    BostedsvilkårIkkeOppfyltÅrsak.IKKE_BOSATTADRESSE_I_TRONDHEIM,
+  ),
+): AktivitetspengerApi =>
+  Object.assign(Object.create(fakeAktivitetspengerApi), {
+    bekreftAksjonspunkt: fn(),
+    hentVilkårsavklaringer: async () => fakeBostedVilkårsavklaringer,
+    hentVilkårsavklaringVurderinger: async () => vilkårsavklaringVurderinger,
+  });
+
+const fakeBostedApi = lagFakeBostedApi();
 
 const fakeAndreLivsoppholdytelserVilkår = {
   vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
@@ -126,24 +147,22 @@ export const DefaultStory: Story = {
   args: {
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
     innloggetBruker: fakeInnloggetBruker,
-    api: fakeAktivitetspengerApi,
+    api: fakeBostedApi,
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: fn(),
     vilkår: [fakeBostedVilkår],
     totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
     lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
-    bostedGrunnlag: fakeBostedGrunnlag,
   },
 };
 
 const fakeArgsBase = {
   innloggetBruker: fakeInnloggetBruker,
-  api: fakeAktivitetspengerApi,
+  api: fakeBostedApi,
   behandling: fakeBehandling,
   vilkår: [fakeBostedVilkår],
   totrinnskontrollSkjermlenkeContext: [] satisfies TotrinnskontrollSkjermlenkeContextDto[],
   lovligeBehandlingsoperasjoner: fakeLovligeBehandlingsoperasjoner,
-  bostedGrunnlag: fakeBostedGrunnlag,
 };
 
 const fakeBehandlingMedId = { ...fakeBehandling, id: 123 };
@@ -377,6 +396,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
 const fakeAndreLivsoppholdytelserArgsBase = {
   ...fakeArgsBase,
+  api: fakeAktivitetspengerApi,
   behandling: fakeAndreLivsoppholdytelserBehandling,
   vilkår: [fakeAndreLivsoppholdytelserVilkår],
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
@@ -630,9 +650,7 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
-    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
-      bekreftAksjonspunkt: fn(),
-    }) as AktivitetspengerApi,
+    api: lagFakeBostedApi(),
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
@@ -673,11 +691,8 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 export const VilkårsvurderingFlyttetMedFritekst: Story = {
   args: {
     ...fakeArgsBase,
-    bostedGrunnlag: fakeBostedGrunnlagMedAnnenÅrsak,
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)],
-    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
-      bekreftAksjonspunkt: fn(),
-    }) as AktivitetspengerApi,
+    api: lagFakeBostedApi(lagFakeBostedVilkårsavklaringVurderinger(BostedsvilkårIkkeOppfyltÅrsak.ANNET)),
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
