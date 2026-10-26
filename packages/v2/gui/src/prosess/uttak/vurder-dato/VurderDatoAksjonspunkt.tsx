@@ -18,10 +18,11 @@ interface FormData {
 }
 
 interface Props {
+  redigerVirkningsdato: boolean;
   lukkRedigering: () => void;
 }
 
-const VurderDatoAksjonspunkt = ({ lukkRedigering }: Props) => {
+const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props) => {
   const { readOnly, behandling, aksjonspunkter, onAksjonspunktBekreftet } = useUttakContext();
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
@@ -91,7 +92,7 @@ const VurderDatoAksjonspunkt = ({ lukkRedigering }: Props) => {
               Bekreft og fortsett
             </Button>
 
-            {virkningsdatoUttakNyeRegler && (
+            {redigerVirkningsdato && (
               <Button variant="secondary" type="button" size="small" onClick={() => lukkRedigering()}>
                 Avbryt
               </Button>

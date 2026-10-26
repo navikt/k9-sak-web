@@ -184,6 +184,52 @@ export const LøsAksjonspunkt: Story = {
   },
 };
 
+export const ÅpentAksjonspunktMedEndringsdato: Story = {
+  ...LøsAksjonspunkt,
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+        virkningsdatoUttakNyeRegler: '2024-01-15',
+      }),
+      onBekreftAksjonspunkt: payload => submitSpy(payload),
+    }),
+  ],
+  play: async context => {
+    const canvas = within(context.canvasElement);
+
+    await context.step('Viser åpent aksjonspunkt direkte selv om endringsdato er satt', async () => {
+      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('15.01.2024');
+      await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeVisible();
+      await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Avbryt' })).not.toBeInTheDocument();
+    });
+
+    await LøsAksjonspunkt.play?.(context);
+  },
+};
+
+export const ÅpentAksjonspunktMedEndringsdatoForVeileder: Story = {
+  ...ÅpentAksjonspunktMedEndringsdato,
+  args: {
+    ...ÅpentAksjonspunktMedEndringsdato.args,
+    readOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Viser kun varsel om åpent aksjonspunkt, uten skjema', async () => {
+      await expect(
+        await canvas.findByText('Vurder hvilken dato endringer i uttak skal gjelde fra'),
+      ).toBeInTheDocument();
+      await expect(canvas.getByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
+      await expect(canvas.queryByLabelText('Endringsdato')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Begrunnelse')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const RedigerVurdering: Story = {
   decorators: [
     withFakeUttakBackend({
