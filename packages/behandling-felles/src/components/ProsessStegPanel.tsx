@@ -128,6 +128,7 @@ const ProsessStegPanel = ({
                     submitCallback: bekreftAksjonspunktCallback,
                     erOverstyrer,
                     saksnummer: fagsak?.saksnummer,
+                    oppdaterProsessStegOgFaktaPanelIUrl,
                     ...delPaneler[0].getKomponentData(),
                     ...data,
                   })}

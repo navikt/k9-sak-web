@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 
@@ -13,6 +13,7 @@ import {
   utledFaktaPaneler,
 } from './faktaUtils';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDef[],
@@ -68,6 +69,7 @@ const useCallbacks = (
   lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
 ) => {
+  const settBehandling = useContext(BehandlingContext)?.settBehandling;
   const velgFaktaPanelCallback = useCallback(
     index => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
     [behandling.versjon, valgtProsessSteg],
@@ -81,8 +83,9 @@ const useCallbacks = (
       overstyringApCodes,
       lagreAksjonspunkter,
       lagreOverstyrteAksjonspunkter,
+      settBehandling,
     ),
-    [behandling.versjon],
+    [behandling.versjon, settBehandling],
   );
 
   return [velgFaktaPanelCallback, bekreftAksjonspunktCallback];

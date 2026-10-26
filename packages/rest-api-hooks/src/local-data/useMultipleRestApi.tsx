@@ -78,6 +78,8 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
     const previousTriggers = ref.current;
 
     useEffect(() => {
+      // Svar fra kall som er erstattet av nyere kall (eller unmount) skal ikke overskrive state
+      let erUtdatert = false;
       if (!options.suspendRequest) {
         setData(oldState => ({
           state: RestApiState.LOADING,
@@ -89,6 +91,7 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
 
         Promise.all(filteredEndpoints.map(e => requestApi.startRequest(e.key, e.params, options.isCachingOn)))
           .then(dataRes => {
+            if (erUtdatert) return;
             setData({
               state: RestApiState.SUCCESS,
               data: dataRes.reduce(
@@ -102,6 +105,7 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
             });
           })
           .catch(error => {
+            if (erUtdatert) return;
             setData({
               state: RestApiState.ERROR,
               data: undefined,
@@ -111,6 +115,9 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
       } else {
         setData(DEFAULT_STATE);
       }
+      return () => {
+        erUtdatert = true;
+      };
     }, [...options.updateTriggers]);
 
     return previousTriggers && notEqual(previousTriggers, options.updateTriggers)

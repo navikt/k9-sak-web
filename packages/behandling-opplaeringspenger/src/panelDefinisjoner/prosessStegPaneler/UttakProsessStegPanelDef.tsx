@@ -17,6 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
         aksjonspunkter={deepCopyProps.aksjonspunkter}
         erOverstyrer={props.erOverstyrer}
         readOnly={props.isReadOnly}
+        onAksjonspunktBekreftet={() => props.oppdaterProsessStegOgFaktaPanelIUrl?.('default', 'default')}
       />
     );
   };

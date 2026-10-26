@@ -1,7 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import {
+  Rettigheter,
+  ReduxFormStateCleaner,
+  settBehandlingFraLagring,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
@@ -60,7 +65,13 @@ const BehandlingAnkeIndex = ({
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestAnkeApi.resetCache();
     requestAnkeApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -116,6 +127,7 @@ const BehandlingAnkeIndex = ({
   if (!behandling || (hasNotFinished && data === undefined)) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = hasNotFinished && !!forrigeBehandling;
 
   return (
     <>
@@ -123,7 +135,16 @@ const BehandlingAnkeIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        refetchBehandling={() =>
+          hentBehandling({ behandlingId }, true).then(nyBehandling => {
+            settBehandlingFraLagring(setBehandling, nyBehandling);
+            return nyBehandling;
+          })
+        }
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+      >
         <AnkePaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}
           fetchedData={data}

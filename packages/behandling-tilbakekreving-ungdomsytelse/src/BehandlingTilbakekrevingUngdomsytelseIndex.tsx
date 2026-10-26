@@ -1,8 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import {
+  ReduxFormStateCleaner,
+  Rettigheter,
+  settBehandlingFraLagring,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
@@ -65,7 +70,13 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestTilbakekrevingApi.resetCache();
     requestTilbakekrevingApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -135,6 +146,7 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   if (!behandling || !tilbakekrevingKodeverk || (hasNotFinished && data === undefined)) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = hasNotFinished && !!forrigeBehandling;
 
   if (state === RestApiState.ERROR) {
     if (error != null) {
@@ -150,7 +162,16 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling(behandlingUuid, true)}>
+      <BehandlingProvider
+        refetchBehandling={() =>
+          hentBehandling(behandlingUuid, true).then(nyBehandling => {
+            settBehandlingFraLagring(setBehandling, nyBehandling);
+            return nyBehandling;
+          })
+        }
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+      >
         <TilbakekrevingPaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}
           fetchedData={data}

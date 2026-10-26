@@ -4,6 +4,13 @@ export interface BehandlingContextType {
   behandlingUuid?: string;
   behandlingVersjon?: number;
   refetchBehandling: () => Promise<any>;
+  /**
+   * Sann mens data for ny behandlingsversjon hentes og data for forrige versjon fortsatt vises.
+   * Prosessteg skal ikke velges ut fra data i denne perioden.
+   */
+  erBehandlingsdataUtdatert?: boolean;
+  /** Setter ny behandling rett etter lagring, før navigering. */
+  settBehandling?: (behandling: { versjon: number }) => void;
 }
 
 export const BehandlingContext = createContext<BehandlingContextType | undefined>(undefined);
@@ -13,14 +20,20 @@ export const BehandlingProvider = ({
   behandlingUuid,
   behandlingVersjon,
   refetchBehandling,
+  erBehandlingsdataUtdatert,
+  settBehandling,
 }: {
   children: ReactNode;
   behandlingUuid?: string;
   behandlingVersjon?: number;
   refetchBehandling: BehandlingContextType['refetchBehandling'];
+  erBehandlingsdataUtdatert?: boolean;
+  settBehandling?: BehandlingContextType['settBehandling'];
 }) => {
   return (
-    <BehandlingContext.Provider value={{ behandlingUuid, behandlingVersjon, refetchBehandling }}>
+    <BehandlingContext.Provider
+      value={{ behandlingUuid, behandlingVersjon, refetchBehandling, erBehandlingsdataUtdatert, settBehandling }}
+    >
       {children}
     </BehandlingContext.Provider>
   );

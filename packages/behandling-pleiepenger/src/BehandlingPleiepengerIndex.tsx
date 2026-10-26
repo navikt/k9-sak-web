@@ -1,8 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import {
+  ReduxFormStateCleaner,
+  Rettigheter,
+  settBehandlingFraLagring,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -96,7 +101,13 @@ const BehandlingPleiepengerIndex = ({
     },
   );
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestPleiepengerApi.resetCache();
     requestPleiepengerApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -165,6 +176,7 @@ const BehandlingPleiepengerIndex = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = harIkkeHentetBehandlingsdata && !!forrigeBehandling;
 
   return (
     <>
@@ -177,7 +189,14 @@ const BehandlingPleiepengerIndex = ({
       <BehandlingProvider
         behandlingUuid={behandling.uuid}
         behandlingVersjon={behandling.versjon}
-        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        refetchBehandling={() =>
+          hentBehandling({ behandlingId }, true).then(nyBehandling => {
+            settBehandlingFraLagring(setBehandling, nyBehandling);
+            return nyBehandling;
+          })
+        }
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
       >
         <PleiepengerPaneler
           behandling={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling : behandling}
