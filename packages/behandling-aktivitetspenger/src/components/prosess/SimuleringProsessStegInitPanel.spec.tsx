@@ -38,7 +38,7 @@ const createApi = (aksjonspunkter: Aksjonspunkter, innloggetBruker: InnloggetBru
   Object.assign(new FakeAktivitetspengerApi(), {
     getAksjonspunkter: async () => aksjonspunkter,
     getInnloggetBruker: async () => innloggetBruker,
-    getFagsak: async () => ({ saksnummer: '123', sakstype: 'AKT' }),
+    getFagsak: async () => ({ saksnummer: '123', sakstype: 'AVP' }),
     getSimuleringResultat: async () => ({
       simuleringResultat: { perioderPerMottaker: [{ mottakerType: 'BRUKER' }] },
     }),
@@ -75,7 +75,7 @@ describe('SimuleringProsessStegInitPanel', () => {
     expect(await screen.findByTestId('avregning')).toHaveTextContent('redigerbar');
     expect(avregningProps.current.behandling).toBe(behandling);
     expect(avregningProps.current.aksjonspunkter).toEqual([vurderFeilutbetaling(true)]);
-    expect(avregningProps.current.fagsak).toEqual({ saksnummer: '123', sakstype: 'AKT' });
+    expect(avregningProps.current.fagsak).toEqual({ saksnummer: '123', sakstype: 'AVP' });
     expect(avregningProps.current.simuleringResultat.simuleringResultat.perioderPerMottaker[0].mottakerType).toBe(
       'BRUKER',
     );
