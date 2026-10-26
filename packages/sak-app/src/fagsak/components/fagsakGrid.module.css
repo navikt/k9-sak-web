@@ -1,5 +1,4 @@
 .gridContainer {
-  container-type: inline-size;
   display: flex;
   flex-flow: row wrap;
   height: 100%;
@@ -10,6 +9,8 @@
 .leftColumn {
   float: left;
   width: 67%;
+  min-width: 0;
+  overflow-x: auto;
 }
 
 .rightColumn {
@@ -21,7 +22,7 @@
   margin-bottom: 16px;
 }
 
-@container (width <= 1740px) {
+@media all and (width <= 1350px) {
   .leftColumn {
     width: 100%;
   }
@@ -33,7 +34,7 @@
   }
 }
 
-@container (width > 1740px) {
+@media all and (width > 1350px) {
   .rightColumn {
     border-left: 1px solid #6a6a6a;
   }
