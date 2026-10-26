@@ -29,6 +29,10 @@ Ved endringer i `packages/v2/`, kontroller koden mot `.github/instructions/v2.in
 
 Ved nye eller endrede API-kall, kontroller query-nøkler, invalidering og håndtering av lasting og feil mot `data-fetching`-skillen. Flagg konkrete feil eller manglende dekning, ikke et generelt krav om tester for alle tilstander.
 
+## Aksjonspunkter
+
+Ved endringer i betingelser som viser eller skjuler skjemaet for et aksjonspunkt, kontroller mot `aksjonspunkt`-skillen. Flagg det som en alvorlig feil hvis et åpent aksjonspunkt ikke kan løses av en saksbehandler med skrivetilgang, eller hvis endringen mangler stories for åpent og løst aksjonspunkt, med og uten `readOnly`.
+
 ## Migrering
 
 Når en eksisterende komponent flyttes til v2, kontroller relevante steg i `v2-migration`-skillen. Se på hele migreringen, også filer utenfor `packages/v2/`. Ikke krev migreringssteg for nye komponenter eller valgfrie tiltak som versjonsvelger og sammenligningsstory.

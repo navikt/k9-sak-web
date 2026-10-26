@@ -9,6 +9,7 @@ description: 'Storybook stories and tests for v2 components: story placement, fa
 
 - Put `<Feature>.stories.tsx` next to the component, e.g. in `packages/v2/gui/src/fakta/<feature>/`.
 - Write at least one story per ytelsestype when behaviour differs, and one story for the empty state.
+- For components that solve an aksjonspunkt, cover the states listed in the `aksjonspunkt` skill.
 - For display components, test with `play` functions in stories rather than React Testing Library (RTL).
 - Keep pure logic tests, such as grouping and data transformations, in Vitest.
 - When migrating, replace an RTL test only after stories cover the same rendering states and interactions.
