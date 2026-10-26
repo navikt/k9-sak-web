@@ -91,7 +91,9 @@ const VurderDato = ({ redigerVirkningsdato, lukkRedigering }: VurderDatoProps) =
           </ReadMore>
         </VStack>
       </Alert>
-      {!readOnly && <VurderDatoAksjonspunkt lukkRedigering={lukkRedigering} />}
+      {!readOnly && (
+        <VurderDatoAksjonspunkt redigerVirkningsdato={redigerVirkningsdato} lukkRedigering={lukkRedigering} />
+      )}
     </VStack>
   );
 };
