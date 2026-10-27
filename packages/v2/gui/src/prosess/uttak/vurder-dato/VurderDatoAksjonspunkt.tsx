@@ -13,7 +13,7 @@ import styles from './VurderDatoAksjonspunkt.module.css';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
-const SENESTE_VIRKNINGSDATO = '2027-01-01';
+const SENESTE_VIRKNINGSDATO = '2026-12-31';
 
 interface FormData {
   virkningsdato: string;
