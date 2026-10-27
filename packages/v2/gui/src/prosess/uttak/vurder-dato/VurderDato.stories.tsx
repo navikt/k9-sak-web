@@ -144,7 +144,8 @@ export const Skjemavalidering: Story = {
     await step('Kalenderen tillater ikke dager etter 31.12.2026', async () => {
       await user.click(canvas.getByRole('button', { name: 'Åpne datovelger' }));
       await expect(await canvas.findByRole('button', { name: 'torsdag 31' })).toBeEnabled();
-      await expect(canvas.getByRole('button', { name: 'fredag 1' })).toBeDisabled();
+      await expect(canvas.getByRole('button', { name: 'Gå til neste måned' })).toBeDisabled();
+      await expect(canvas.queryByRole('option', { name: '2027' })).not.toBeInTheDocument();
     });
   },
 };
