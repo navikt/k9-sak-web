@@ -122,6 +122,30 @@ export const Skjemavalidering: Story = {
         await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
       });
     });
+
+    await step('Endringsdato etter 01.01.2027 gir feilmelding', async () => {
+      const dateInput = canvas.getByLabelText('Endringsdato');
+      await user.clear(dateInput);
+      await user.type(dateInput, '02.01.2027');
+      await user.tab();
+      await expect(await canvas.findByText('Dato må være før eller lik 01.01.2027')).toBeInTheDocument();
+    });
+
+    await step('Endringsdato 01.01.2027 er gyldig', async () => {
+      const dateInput = canvas.getByLabelText('Endringsdato');
+      await user.clear(dateInput);
+      await user.type(dateInput, '01.01.2027');
+      await user.tab();
+      await waitFor(async function sjekkIngenFeilmelding() {
+        await expect(canvas.queryByText('Dato må være før eller lik 01.01.2027')).not.toBeInTheDocument();
+      });
+    });
+
+    await step('Kalenderen tillater ikke dager etter 01.01.2027', async () => {
+      await user.click(canvas.getByRole('button', { name: 'Åpne datovelger' }));
+      await expect(await canvas.findByRole('button', { name: 'fredag 1' })).toBeEnabled();
+      await expect(canvas.getByRole('button', { name: 'lørdag 2' })).toBeDisabled();
+    });
   },
 };
 
