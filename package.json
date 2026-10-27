@@ -106,7 +106,7 @@
     "knip": "6.42.1",
     "lefthook": "2.2.2",
     "loose-ts-check": "2.0.0",
-    "msw": "2.15.0",
+    "msw": "3.0.3",
     "msw-storybook-addon": "2.0.7",
     "prettier": "3.9.10",
     "storybook": "10.6.3",
