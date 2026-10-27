@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly alertstripe: string;
+  readonly "alertstripe": string;
 };
 export = styles;
+

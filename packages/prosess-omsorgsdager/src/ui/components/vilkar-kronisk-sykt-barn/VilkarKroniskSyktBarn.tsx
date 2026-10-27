@@ -106,9 +106,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
       avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere
-        ? formatereDato(informasjonTilLesemodus.fraDato)
-        : (foreslåttFraDato ?? 'dd.mm.åååå'),
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : (foreslåttFraDato ?? 'dd.mm.åååå'),
       tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.tilDato : 'dd.mm.åååå',
       erTidsbegrenset: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.erTidsbegrenset : false,
     },
@@ -427,9 +425,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                     {kroniskTidsbegrensetToggle && (
                       <>
                         <HStack gap="space-8" align="center">
-                          <Checkbox {...register('erTidsbegrenset', { deps: 'fraDato' })}>
-                            Vedtaket er tidsbegrenset
-                          </Checkbox>
+                          <Checkbox {...register('erTidsbegrenset', { deps: 'fraDato' })}>Vedtaket er tidsbegrenset</Checkbox>
                           <HelpText>
                             Her "huker du av" dersom vedtaket skal være tidsbegrenset. Når det ikke "hukes av" her, så
                             varer vedtaket ut det kalenderåret barnet fyller 18 år.
