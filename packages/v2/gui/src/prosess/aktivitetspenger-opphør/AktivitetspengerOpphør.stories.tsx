@@ -88,6 +88,7 @@ const lagFakeBostedVilkårsavklaringVurderinger = (
     {
       periode: { fom: '2026-01-29', tom: '2027-01-28' },
       utfall: Utfall.IKKE_VURDERT,
+      vurderesIBehandlingen: true,
       avklaringOgVurdering: {
         avklaring: {
           avklaringtype: Avklaringtype.OPPHØR,
