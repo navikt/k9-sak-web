@@ -6,6 +6,7 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { dateBeforeOrEqual, hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDatoAksjonspunkt.module.css';
@@ -37,7 +38,7 @@ const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props)
   const formMethods = useForm<FormData>({
     defaultValues: {
       begrunnelse: aksjonspunkt?.begrunnelse ?? '',
-      virkningsdato: virkningsdatoUttakNyeRegler ?? '',
+      virkningsdato: aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status) ? '' : (virkningsdatoUttakNyeRegler ?? ''),
     },
   });
 

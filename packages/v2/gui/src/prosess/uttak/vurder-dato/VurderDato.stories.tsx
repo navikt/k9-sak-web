@@ -221,8 +221,8 @@ export const ÅpentAksjonspunktMedEndringsdato: Story = {
   play: async context => {
     const canvas = within(context.canvasElement);
 
-    await context.step('Viser åpent aksjonspunkt direkte selv om endringsdato er satt', async () => {
-      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('15.01.2024');
+    await context.step('Viser åpent aksjonspunkt direkte uten forhåndsutfylt endringsdato', async () => {
+      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('');
       await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeVisible();
       await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Avbryt' })).not.toBeInTheDocument();
