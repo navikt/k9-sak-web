@@ -61,7 +61,7 @@ const RenderFunc = () => {
     // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'test') {
       const { worker } = await import('../../mocks/browser');
-      await worker.start({ onUnhandledRequest: 'bypass' });
+      await worker.start({ onUnhandledFrame: 'bypass' });
     }
   };
 
