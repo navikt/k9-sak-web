@@ -6,13 +6,14 @@ import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { dateBeforeOrEqual, hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDatoAksjonspunkt.module.css';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
-const SENESTE_VIRKNINGSDATO = '2027-01-01';
+const SENESTE_VIRKNINGSDATO = '2026-12-31';
 
 interface FormData {
   virkningsdato: string;
@@ -37,7 +38,7 @@ const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props)
   const formMethods = useForm<FormData>({
     defaultValues: {
       begrunnelse: aksjonspunkt?.begrunnelse ?? '',
-      virkningsdato: virkningsdatoUttakNyeRegler ?? '',
+      virkningsdato: aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status) ? '' : (virkningsdatoUttakNyeRegler ?? ''),
     },
   });
 
@@ -74,8 +75,8 @@ const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props)
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
-          fromDate={new Date('1 Jan 2019')}
-          toDate={new Date(2027, 0, 1)}
+          fromDate={new Date(2019, 0, 1)}
+          toDate={new Date(2026, 11, 31)}
           validate={[required, hasValidDate, dateBeforeOrEqual(SENESTE_VIRKNINGSDATO)]}
           readOnly={readOnly}
         />

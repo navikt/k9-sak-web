@@ -123,28 +123,29 @@ export const Skjemavalidering: Story = {
       });
     });
 
-    await step('Endringsdato etter 01.01.2027 gir feilmelding', async () => {
-      const dateInput = canvas.getByLabelText('Endringsdato');
-      await user.clear(dateInput);
-      await user.type(dateInput, '02.01.2027');
-      await user.tab();
-      await expect(await canvas.findByText('Dato må være før eller lik 01.01.2027')).toBeInTheDocument();
-    });
-
-    await step('Endringsdato 01.01.2027 er gyldig', async () => {
+    await step('Endringsdato etter 31.12.2026 gir feilmelding', async () => {
       const dateInput = canvas.getByLabelText('Endringsdato');
       await user.clear(dateInput);
       await user.type(dateInput, '01.01.2027');
       await user.tab();
+      await expect(await canvas.findByText('Dato må være før eller lik 31.12.2026')).toBeInTheDocument();
+    });
+
+    await step('Endringsdato 31.12.2026 er gyldig', async () => {
+      const dateInput = canvas.getByLabelText('Endringsdato');
+      await user.clear(dateInput);
+      await user.type(dateInput, '31.12.2026');
+      await user.tab();
       await waitFor(async function sjekkIngenFeilmelding() {
-        await expect(canvas.queryByText('Dato må være før eller lik 01.01.2027')).not.toBeInTheDocument();
+        await expect(canvas.queryByText('Dato må være før eller lik 31.12.2026')).not.toBeInTheDocument();
       });
     });
 
-    await step('Kalenderen tillater ikke dager etter 01.01.2027', async () => {
+    await step('Kalenderen tillater ikke dager etter 31.12.2026', async () => {
       await user.click(canvas.getByRole('button', { name: 'Åpne datovelger' }));
-      await expect(await canvas.findByRole('button', { name: 'fredag 1' })).toBeEnabled();
-      await expect(canvas.getByRole('button', { name: 'lørdag 2' })).toBeDisabled();
+      await expect(await canvas.findByRole('button', { name: 'torsdag 31' })).toBeEnabled();
+      await expect(canvas.getByRole('button', { name: 'Gå til neste måned' })).toBeDisabled();
+      await expect(canvas.queryByRole('option', { name: '2027' })).not.toBeInTheDocument();
     });
   },
 };
@@ -221,8 +222,8 @@ export const ÅpentAksjonspunktMedEndringsdato: Story = {
   play: async context => {
     const canvas = within(context.canvasElement);
 
-    await context.step('Viser åpent aksjonspunkt direkte selv om endringsdato er satt', async () => {
-      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('15.01.2024');
+    await context.step('Viser åpent aksjonspunkt direkte uten forhåndsutfylt endringsdato', async () => {
+      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('');
       await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeVisible();
       await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Avbryt' })).not.toBeInTheDocument();
