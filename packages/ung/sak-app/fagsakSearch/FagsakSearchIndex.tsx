@@ -2,10 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -27,9 +26,7 @@ const FagsakSearchIndex = () => {
   );
 
   const navigate = useNavigate();
-  const { removeErrorMessages } = useRestApiErrorDispatcher();
   const goToFagsak = async (saksnummer: string) => {
-    removeErrorMessages();
     await navigate(pathToFagsak(saksnummer));
   };
 
@@ -46,12 +43,23 @@ const FagsakSearchIndex = () => {
         void goToFagsak(results[0].saksnummer);
       }
     },
+    // Sidan forbidden feil er handtert eksplisitt ønsker vi ikkje å kaste den vidare
+    onError: err => {
+      if (!(err instanceof ExtendedApiError && err.isForbidden)) {
+        throw err;
+      }
+    },
   });
 
-  const searchResultAccessDenied = useMemo(
-    () => (error && errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
-    [error],
-  );
+  const searchResultAccessDenied = useMemo(() => {
+    // I ung sak backend blir det levert tilbake eigendefinert ManglerTilgangException for søkFagsaker endepunktet.
+    if (error instanceof ExtendedApiError && error.isForbidden) {
+      return {
+        feilmelding: error.bodyFeilmelding ?? error.message,
+      };
+    }
+    return undefined;
+  }, [error]);
 
   const fagsakerV2 = JSON.parse(JSON.stringify(fagsaker));
   konverterKodeverkTilKode(fagsakerV2, false);

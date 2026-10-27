@@ -1,29 +1,35 @@
-import type {FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ} from './FeatureTogglesFor.js';
+import type { FeatureTogglesFor, FeatureTogglesForProd, FeatureTogglesForQ } from './FeatureTogglesFor.js';
 
 /**
  * Alle feature toggles må leggast til her, med false som verdi. Må deretter i tillegg settast til true for den/dei
  * varianter ein ønsker å ha true på.
  */
 const rootFeatureToggles = {
-  BRUK_V2_INNTEKTSMELDING: false,
   BRUK_V2_TILKJENT_YTELSE: false,
-  BRUK_V2_UTENLANDSOPPHOLD: false,
-  BRUK_V2_VILKAR_OPPTJENING: false,
+  VIS_YTELSER_PANEL: false,
   FLYTT_ALDERSVILKAR: false,
   NYE_NOKKELTALL: false,
   OVERSTYR_BEREGNING: false,
-  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: false,
   UNG_KLAGE: false,
   UNNTAKSBEHANDLING: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
-  VIS_ALLE_ASYNC_ERRORS: false,
   BRUK_V2_AVREGNING: false,
   PROSESS_MENY_V2: false,
   SKJUL_PROSESS_MENY_V2_VELGER: false,
   ENDRE_FRIST: false,
-  AKTIVITETSPENGER: false,
-  REVURDERING_FRA_STEG_V2: false,
+  DELVIS_REVURDERING_MEDISINSK_VILKAR: false,
   SINGLE_AUTHFIXER: false,
+  VIS_INNLEGGELSE_FOR_PILS: false,
+  VIS_GLOBAL_ERRORMODAL: false,
+  BRUK_V2_ARBEID_OG_INNTEKT: false,
+  BRUK_V2_DIREKTE_OVERGANG: false,
+  BRUK_V2_FEILUTBETALING: false,
+  FORENKLE_OMS_VEDTAK_STATUS: false,
+  BRUK_OMSORGEN_FOR_V2: false,
+  BRUK_V2_DELING_AV_DAGER: false,
+  BRUK_V2_PROSESS_UNNTAK: false,
+  BRUK_V2_OM_BARNET: false,
+  STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
 /**
@@ -35,7 +41,6 @@ const baseQFeatureToggles = {
   isFor: 'Q',
   BRUK_V2_TILKJENT_YTELSE: true,
   UNNTAKSBEHANDLING: true,
-  VIS_ALLE_ASYNC_ERRORS: true,
   SINGLE_AUTHFIXER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
 

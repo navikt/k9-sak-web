@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnSeksjon from './BarnSeksjon';

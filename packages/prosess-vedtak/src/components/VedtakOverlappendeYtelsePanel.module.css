@@ -26,6 +26,14 @@
   padding: 0;
 }
 
+.accordion :global(.aksel-accordion__header:before) {
+  background-color: transparent;
+}
+
+.accordion :global(.aksel-accordion__header:after) {
+  background-color: transparent;
+}
+
 .accordion :global(.aksel-accordion__header:not(:focus-visible)) {
   box-shadow: none;
 }

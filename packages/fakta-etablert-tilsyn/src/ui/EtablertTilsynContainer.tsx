@@ -43,11 +43,14 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   );
 };
 
-const getDefaultActiveTab = ({ harAksjonspunktForBeredskap, harAksjonspunktForNattevåk }: ContainerContract) => {
-  if (harAksjonspunktForBeredskap) {
+const getDefaultActiveTab = ({
+  harUløstAksjonspunktForBeredskap,
+  harUløstAksjonspunktForNattevåk,
+}: ContainerContract) => {
+  if (harUløstAksjonspunktForBeredskap) {
     return tabs[1];
   }
-  if (harAksjonspunktForNattevåk) {
+  if (harUløstAksjonspunktForNattevåk) {
     return tabs[2];
   }
   return tabs[0];
@@ -87,18 +90,24 @@ const transformSykdomResponse = (response: SykdomResponse) => {
 };
 
 const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
-  const { endpoints, httpErrorHandler, harAksjonspunktForBeredskap, harAksjonspunktForNattevåk } = data;
-
+  const { endpoints, harUløstAksjonspunktForBeredskap, harUløstAksjonspunktForNattevåk } = data;
+  // Forespørslene viser en lokal feilmelding når de feiler, så feilene logges bare til konsollen.
+  // Feil som håndteres lokalt, rapporteres derfor ikke globalt.
+  // I noen tilfeller skjer dette fordi kall blir gjort før registerdata er innhentet.
+  // Ideelt sett bør vi skrive om slik at disse feilene ikke skjer, og deretter justere feilrapportering her.
+  const errorInfoLogger = (error: Error) => {
+    console.info(`http request in EtablertTilsynContainer failed: ${error}`);
+  };
   const getTilsyn = (signal: AbortSignal) =>
-    get<TilsynResponse>(endpoints.tilsyn, httpErrorHandler, {
+    get<TilsynResponse>(endpoints.tilsyn, errorInfoLogger, {
       signal: signal,
     });
   const getSykdom = (signal: AbortSignal) =>
-    get<SykdomResponse>(endpoints.sykdom, httpErrorHandler, {
+    get<SykdomResponse>(endpoints.sykdom, errorInfoLogger, {
       signal: signal,
     });
   const getInnleggelser = (signal: AbortSignal) =>
-    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, httpErrorHandler, {
+    get<InnleggelsesperiodeResponse>(endpoints.sykdomInnleggelse, errorInfoLogger, {
       signal: signal,
     });
 
@@ -110,6 +119,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['innleggelsesperioder', endpoints.sykdomInnleggelse],
     queryFn: ({ signal }) =>
       getInnleggelser(signal).then(response => response.perioder.map(v => new Period(v.fom, v.tom))),
+    throwOnError: false,
   });
 
   const {
@@ -120,6 +130,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['etablertTilsyn', endpoints.tilsyn],
     queryFn: ({ signal }) => getTilsyn(signal),
     select: transformEtablertTilsynResponse,
+    throwOnError: false,
   });
 
   const {
@@ -130,6 +141,7 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
     queryKey: ['sykdomsperioderIkkeOppfylt', endpoints.sykdom],
     queryFn: ({ signal }) => getSykdom(signal),
     select: transformSykdomResponse,
+    throwOnError: false,
   });
 
   const { etablertTilsyn = [], smurtEtablertTilsynPerioder = [], beredskap, nattevåk } = tilsyn || {};
@@ -183,7 +195,8 @@ const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
                   <TabItem
                     label={tabName}
                     showWarningIcon={
-                      (index === 1 && harAksjonspunktForBeredskap) || (index === 2 && harAksjonspunktForNattevåk)
+                      (index === 1 && harUløstAksjonspunktForBeredskap) ||
+                      (index === 2 && harUløstAksjonspunktForNattevåk)
                     }
                   />
                 }

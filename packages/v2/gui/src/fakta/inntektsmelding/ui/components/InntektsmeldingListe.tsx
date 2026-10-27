@@ -1,4 +1,3 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, VStack } from '@navikt/ds-react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
@@ -6,6 +5,7 @@ import type { InntektsmeldingRequestPayload, TilstandMedUiState } from '../../ty
 import { sorterSkjæringstidspunkt } from '../../util/utils';
 import InntektsmeldingRad from './InntektsmeldingRad';
 import InntektsmeldingVurdering from './InntektsmeldingVurdering';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 interface InntektsmeldingListeProps {
   tilstander: TilstandMedUiState[];

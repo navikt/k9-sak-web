@@ -1,15 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
 
 import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
-  const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
-    httpErrorHandlerFn(status, addErrorMessage, locationHeader);
-
   const beredskapAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.BEREDSKAP);
   const beredskapAksjonspunktkode = beredskapAksjonspunkt?.definisjon.kode;
   const løsBeredskapAksjonspunkt = beredskapsperioder =>
@@ -22,13 +17,13 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
 
   const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
-  const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
+  const harLøstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
+  const harLøstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
 
   return (
     <EtablertTilsynContainer
       data={{
-        httpErrorHandler: httpErrorHandlerCaller,
-        readOnly: readOnly || !harAksjonspunkt,
+        readOnly,
         endpoints: findEndpointsFromRels(behandling.links, [
           { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
           { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
@@ -36,8 +31,10 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
         ]),
         lagreBeredskapvurdering: løsBeredskapAksjonspunkt,
         lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
-        harAksjonspunktForBeredskap: harUløstAksjonspunktForBeredskap,
-        harAksjonspunktForNattevåk: harUløstAksjonspunktForNattevåk,
+        harUløstAksjonspunktForBeredskap,
+        harUløstAksjonspunktForNattevåk,
+        harLøstAksjonspunktForBeredskap,
+        harLøstAksjonspunktForNattevåk,
       }}
     />
   );

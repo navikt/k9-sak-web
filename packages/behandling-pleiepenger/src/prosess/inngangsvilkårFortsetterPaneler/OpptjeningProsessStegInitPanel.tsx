@@ -6,7 +6,7 @@ import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import OpptjeningVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndexV2.js';
+import OpptjeningVilkarProsessIndex from '@k9-sak-web/gui/prosess/vilkar-opptjening/OpptjeningVilkarProsessIndex.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -47,20 +47,24 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
 
   const skalVisePanel = vilkårForSteg.length > 0;
 
-  const erAlleVilkårVurdert = vilkårForSteg.every(vilkar =>
-    vilkar.perioder?.every(periode => periode.vilkarStatus !== 'IKKE_VURDERT'),
-  );
-
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
+  const relevanteVurderingsAksjonspunkter = props.aksjonspunkter?.filter(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_OPPTJENINGSVILKÅRET,
   );
 
-  const isAksjonspunktOpen = relevanteAksjonspunkter.some(
+  const relevanteOverstyringsAksjonspunkter = props.aksjonspunkter?.filter(
+    ap => ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET,
+  );
+
+  const isAksjonspunktOpen = relevanteVurderingsAksjonspunkter.some(
     ap => ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
   );
 
-  const handleSubmit = async (data: any) => {
-    return props.submitCallback(data, relevanteAksjonspunkter);
+  const handleSubmitVurdering = async (data: any) => {
+    return props.submitCallback(data, relevanteVurderingsAksjonspunkter);
+  };
+
+  const handleSubmitOverstyring = async (data: any) => {
+    return props.submitCallback(data, relevanteOverstyringsAksjonspunkter);
   };
 
   // Ikke vis panelet hvis det ikke finnes relevante vilkår
@@ -72,17 +76,19 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
     kode => kode === AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET,
   );
 
-  if (erAlleVilkårVurdert) {
+  const skalViseOverstyringspanel = relevanteVurderingsAksjonspunkter.length === 0;
+
+  if (skalViseOverstyringspanel) {
     return (
       <VilkarresultatMedOverstyringProsessIndex
-        aksjonspunkter={[]}
+        aksjonspunkter={relevanteOverstyringsAksjonspunkter}
         behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
         panelTittelKode="Opptjening"
         vilkar={vilkårForSteg}
         erOverstyrt={erOverstyrt}
         overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_OPPTJENINGSVILKÅRET}
         erMedlemskapsPanel={false}
-        submitCallback={handleSubmit}
+        submitCallback={handleSubmitOverstyring}
         overrideReadOnly={props.overrideReadOnly}
         kanOverstyreAccess={props.kanOverstyreAccess}
         toggleOverstyring={props.toggleOverstyring}
@@ -93,11 +99,11 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   }
   if (opptjeningV2) {
     return (
-      <OpptjeningVilkarProsessIndexV2
-        submitCallback={handleSubmit}
+      <OpptjeningVilkarProsessIndex
+        submitCallback={handleSubmitVurdering}
         isReadOnly={props.isReadOnly}
         behandling={props.behandling}
-        aksjonspunkter={relevanteAksjonspunkter}
+        aksjonspunkter={relevanteVurderingsAksjonspunkter}
         opptjening={opptjeningV2}
         visAllePerioder={props.visAllePerioder}
         vilkar={vilkårForSteg}

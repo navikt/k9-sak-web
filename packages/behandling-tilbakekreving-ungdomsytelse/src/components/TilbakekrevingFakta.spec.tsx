@@ -6,13 +6,16 @@ import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurd
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { prodFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/featureToggles.js';
+import FeilutbetalingFaktaIndexV2 from '@k9-sak-web/gui/fakta/feilutbetaling/FeilutbetalingFaktaIndex.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
+import FeilutbetalingFaktaPanelDef from '../panelDefinisjoner/faktaPaneler/FeilutbetalingFaktaPanelDef';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
+import { GlobalUnhandledErrorCatcher } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 
 describe('<TilbakekrevingFakta>', () => {
   const fagsak = {
@@ -109,7 +112,7 @@ describe('<TilbakekrevingFakta>', () => {
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     renderWithIntlAndReduxForm(
-      <RestApiErrorProvider>
+      <GlobalUnhandledErrorCatcher>
         <TilbakekrevingFakta
           data={{
             aksjonspunkter,
@@ -125,8 +128,9 @@ describe('<TilbakekrevingFakta>', () => {
           oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           hasFetchError={false}
           setBehandling={vi.fn()}
+          featureToggles={prodFeatureToggles}
         />
-      </RestApiErrorProvider>,
+      </GlobalUnhandledErrorCatcher>,
     );
 
     expect(screen.getByRole('button', { name: /Feilutbetaling/i })).toBeInTheDocument();
@@ -136,7 +140,7 @@ describe('<TilbakekrevingFakta>', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
-      <RestApiErrorProvider>
+      <GlobalUnhandledErrorCatcher>
         <TilbakekrevingFakta
           data={{
             aksjonspunkter,
@@ -152,8 +156,9 @@ describe('<TilbakekrevingFakta>', () => {
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           hasFetchError={false}
           setBehandling={vi.fn()}
+          featureToggles={prodFeatureToggles}
         />
-      </RestApiErrorProvider>,
+      </GlobalUnhandledErrorCatcher>,
     );
 
     await act(async () => {
@@ -166,5 +171,24 @@ describe('<TilbakekrevingFakta>', () => {
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('feilutbetaling');
+  });
+
+  it('skal velge v2 og hoppe over legacy årsak-endepunkt når featuren er aktivert', () => {
+    const panelDef = new FeilutbetalingFaktaPanelDef();
+
+    expect(panelDef.getEndepunkter(prodFeatureToggles)).toEqual([
+      TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK,
+    ]);
+    expect(panelDef.getEndepunkter({ ...prodFeatureToggles, BRUK_V2_FEILUTBETALING: true })).toEqual([]);
+    expect(
+      panelDef.getKomponent({
+        behandling,
+        fagsakYtelseTypeKode: fagsak.sakstype,
+        readOnly: false,
+        harApneAksjonspunkter: true,
+        submitCallback: vi.fn(),
+        featureToggles: { ...prodFeatureToggles, BRUK_V2_FEILUTBETALING: true },
+      }).type,
+    ).toBe(FeilutbetalingFaktaIndexV2);
   });
 });

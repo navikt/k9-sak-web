@@ -52,6 +52,12 @@ export const BehandleKlageFormKa = ({
       setIsSubmitting(false);
     }
   };
+  const handleSaveKlage = async (params: SaveKlageParams) => {
+    const isValid = await formMethods.trigger('klageVurdering');
+    if (isValid) {
+      return saveKlage(params);
+    }
+  };
   const formValues = formMethods.watch();
   const { hentKodeverkForKode } = useKodeverkContext();
   const medholdReasons = hentKodeverkForKode(KodeverkType.KLAGE_MEDHOLD_ARSAK) || [];
@@ -90,7 +96,7 @@ export const BehandleKlageFormKa = ({
             formValues.fritekstTilBrev.length > 2 && (
               <TempSaveAndPreviewKlageLink
                 formValues={formValues}
-                saveKlage={saveKlage}
+                saveKlage={handleSaveKlage}
                 readOnly={isReadOnly}
                 aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NK}
                 previewCallback={previewCallback}
@@ -103,7 +109,7 @@ export const BehandleKlageFormKa = ({
               </Button>
               <TempsaveKlageButton
                 formValues={formValues}
-                saveKlage={saveKlage}
+                saveKlage={handleSaveKlage}
                 readOnly={isReadOnly}
                 aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NK}
                 isSubmitting={isSubmitting}

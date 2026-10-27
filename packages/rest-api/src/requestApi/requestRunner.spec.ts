@@ -31,16 +31,17 @@ class NotificationHelper {
   }
 }
 
-const httpClientGeneralMock = {
-  get: () => undefined,
-  post: () => undefined,
-  put: () => undefined,
-  getBlob: () => undefined,
-  postBlob: () => undefined,
-  postAndOpenBlob: () => undefined,
-  getAsync: () => undefined,
-  postAsync: () => undefined,
-  putAsync: () => undefined,
+import HttpClientApi from '../HttpClientApiTsType';
+
+const httpClientGeneralMock: HttpClientApi = {
+  get: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  post: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  put: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  getBlob: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  postBlob: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  getAsync: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  postAsync: () => Promise.reject(new Error('Ikkje implementert i mock')),
+  putAsync: () => Promise.reject(new Error('Ikkje implementert i mock')),
 };
 
 describe('RequestRunner', () => {
@@ -100,7 +101,7 @@ describe('RequestRunner', () => {
         ...response,
         data: {
           status: AsyncPollingStatus.PENDING,
-          message: 'Polling continues',
+          message: 'Polling reached the maximum wait time',
           pollIntervalMillis: 0,
         },
       },
@@ -116,7 +117,7 @@ describe('RequestRunner', () => {
             location: 'http://polling.url',
           },
         }),
-      get: () => Promise.resolve(allGetResults.shift()),
+      get: () => Promise.resolve(allGetResults.shift()!),
     };
 
     const params = {
@@ -125,7 +126,7 @@ describe('RequestRunner', () => {
 
     const config = {
       ...defaultConfig,
-      maxPollingLimit: 1, // Vil nå taket etter første førsøk
+      maxPollingLimit: 2,
     };
 
     const process = new RequestRunner(httpClientMock, httpClientMock.getAsync, 'behandling', config);
@@ -133,14 +134,16 @@ describe('RequestRunner', () => {
     process.setNotificationEmitter(notificationHelper.mapper.getNotificationEmitter());
 
     await expect(process.start(params)).rejects.toMatchObject({
-      message: 'Maximum polling attempts exceeded',
+      message: 'Polling reached the maximum wait time',
     });
 
     expect(notificationHelper.requestStartedCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.statusRequestStartedCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.statusRequestFinishedCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.updatePollingMessageCallback.mock.calls.length).toBe(1);
-    expect(notificationHelper.updatePollingMessageCallback.mock.calls[0][0]).toBe('Polling continues');
+    expect(notificationHelper.statusRequestStartedCallback.mock.calls.length).toBe(2);
+    expect(notificationHelper.statusRequestFinishedCallback.mock.calls.length).toBe(2);
+    expect(notificationHelper.updatePollingMessageCallback.mock.calls.length).toBe(2);
+    expect(notificationHelper.updatePollingMessageCallback.mock.calls[1][0]).toBe(
+      'Polling reached the maximum wait time',
+    );
   });
 
   it('skal utføre long-polling request som en så avbryter manuelt', async () => {

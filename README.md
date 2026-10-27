@@ -77,10 +77,10 @@ måten får vi gjort en gradvis overgang til bedre kontrollert typescript.
 Mer info om dette i [v2/README](./packages/v2/README.md)
 
 ## Bygg og utrulling
-Ved merge av **PR til master** branch blir koden bygd inn i et Docker image og rulla ut til testmiljø på https://k9.dev.intern.nav.no.
+Ved merge av **PR til master** branch blir koden bygd inn i et Docker image og rulla ut til testmiljø på https://k9.intern.dev.nav.no.
 Etter godkjenning i pipeline blir samme Docker image rulla ut i produksjon på https://k9.intern.nav.no/.
 
-Vi har også støtte for å rulle ut mer eksperimentelle endringer for test til https://k9-next1.dev.intern.nav.no. Dette
+Vi har også støtte for å rulle ut mer eksperimentelle endringer for test til https://k9-next1.intern.dev.nav.no. Dette
 skjer automatisk ved merge av **PR til dev-next1** branch. Denne utrulling lever i 10 dager. Hvis det går lenger tid mellom
 hver nye utrulling her stenges servicen ned inntil det skjer en ny utrulling.
 

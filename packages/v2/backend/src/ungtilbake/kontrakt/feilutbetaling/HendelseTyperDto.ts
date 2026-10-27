@@ -1,0 +1,5 @@
+export type {
+  sif_tilbakekreving_feilutbetalingårsak_dto_HendelseTypeMedUndertypeDto as HendelseTypeMedUndertypeDto,
+  sif_tilbakekreving_feilutbetalingårsak_dto_HendelseTypeMedUndertyperDto as HendelseTypeMedUndertyperDto,
+  sif_tilbakekreving_feilutbetalingårsak_dto_HendelseTyperPrYtelseTypeDto as HendelseTyperPrYtelseTypeDto,
+} from '@k9-sak-web/backend/ungtilbake/generated/types.js';

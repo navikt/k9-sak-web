@@ -13,12 +13,18 @@ app.use(
     contentSecurityPolicy: {
       useDefaults: false,
       directives: {
-        'default-src': ["'self'"],
-        'img-src': ["'self'", 'data:'],
+        'default-src': ["'self'", 'https://cdn.nav.no'],
+        'img-src': ["'self'", 'data:', 'https://cdn.nav.no'],
         'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
-        'style-src': ["'self'", "'unsafe-inline'"],
-        'script-src': ["'self'", "'unsafe-inline'"],
-        'connect-src': ["'self'", 'https://sentry.gc.nav.no'],
+        'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
+        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
+        'connect-src': [
+          "'self'",
+          'https://reops-event-proxy.ekstern.dev.nav.no',
+          'https://cdn.nav.no',
+          'https://telemetry.nav.no',
+          'https://telemetry.ekstern.dev.nav.no',
+        ],
       },
     },
     referrerPolicy: { policy: 'origin' },
@@ -63,17 +69,17 @@ app.get('{*path}', (_req, res) => {
 // --- Start ---
 const server = app.listen(config.port, () => log.info(`Listening on port ${config.port}`));
 
-process.on("SIGTERM", () => {
-  log.info("SIGTERM received.")
+process.on('SIGTERM', () => {
+  log.info('SIGTERM received.');
   setTimeout(() => {
-    log.info("SIGTERM stopping server.")
+    log.info('SIGTERM stopping server.');
     server.close(error => {
-      if(error != null) {
-        log.warn("SIGTERM received on non-open server.", {error})
+      if (error != null) {
+        log.warn('SIGTERM received on non-open server.', { error });
       } else {
-        log.info("SIGTERM stopped server.")
+        log.info('SIGTERM stopped server.');
       }
-      process.exit(0)
-    })
-  }, 2_000) // Vent 2 sekund før stopp starte, så kubernetes load balancer får tid til å rute nye requests til andre pods
-})
+      process.exit(0);
+    });
+  }, 2_000); // Vent 2 sekund før stopp starte, så kubernetes load balancer får tid til å rute nye requests til andre pods
+});

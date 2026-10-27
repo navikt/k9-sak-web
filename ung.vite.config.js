@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
@@ -30,6 +29,27 @@ const createProxy = (target, pathRewrite) => ({
     });
   },
 });
+
+function nodeSourcemapsPlugin({ exclude } = {}) {
+  return {
+    name: 'node-sourcemaps',
+    async transform(code, id) {
+      const cleanId = id.replace(/^\0/, '').split('?')[0].split('#')[0];
+      if (!/(^|[\\/])node_modules([\\/]|$)/.test(cleanId)) return null;
+      if (exclude?.test(cleanId)) return null;
+      if (!/\.[cm]?[jt]sx?$/.test(cleanId)) return null;
+      const match = code.match(/\/\/[#@] sourceMappingURL=(\S+)/m);
+      if (!match || match[1].startsWith('data:')) return null;
+      try {
+        const mapPath = path.resolve(path.dirname(cleanId), match[1]);
+        const map = JSON.parse(await fs.readFile(mapPath, 'utf-8'));
+        return { code, map };
+      } catch {
+        return null;
+      }
+    },
+  };
+}
 
 function excludeMsw() {
   return {
@@ -74,7 +94,7 @@ export default ({ mode }) => {
         '/ung/tilbake': createProxy(process.env.APP_URL_UNG_TILBAKE || 'http://localhost:8903'),
       },
     },
-    base: '/ung/web',
+    base: process.env.VITE_CDN_BASE_URL ?? '/ung/web',
     publicDir: './public',
     resolve: {
       dedupe: ['react', 'react-dom'],
@@ -94,23 +114,16 @@ export default ({ mode }) => {
         // Endre namn på bygd entrypoint html frå ung.html til index.html
         name: "rename-html-entry",
         closeBundle: async () => {
-          const buildDir = path.join(__dirname, "dist/ung/web")
+          const buildDir = path.join(import.meta.dirname, "dist/ung/web")
           const oldPath = path.join(buildDir, "ung.html")
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
         }
       },
-      sentryVitePlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        disable: !process.env.SENTRY_AUTH_TOKEN,
-        org: 'nav',
-        project: 'ung-sak-web',
-        url: 'https://sentry.gc.nav.no',
-        release: {
-          name: process.env.VITE_SENTRY_RELEASE,
-        },
-      }),
     ],
+    esbuild: {
+      charset: 'utf8',
+    },
     build: {
       // Relative to the root
       outDir: './dist/ung/web',
@@ -120,6 +133,10 @@ export default ({ mode }) => {
         external: [
           "mockServiceWorker.js"
         ],
+        plugins: [nodeSourcemapsPlugin()],
+        output: {
+          sourcemapBaseUrl: process.env.VITE_CDN_BASE_URL,
+        },
       },
     },
   });

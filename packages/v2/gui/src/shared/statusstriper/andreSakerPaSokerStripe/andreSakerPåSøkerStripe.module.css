@@ -1,7 +1,13 @@
-.fagsakLenke {
-  margin-left: 0.5rem;
+.sakerGrid {
+  gap: 0.25rem 1rem;
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
 }
 
-.fagsakLenkeContainer {
-  display: flex;
+.historisk {
+  font-style: italic;
+}
+
+.ingenAvrunding {
+  border-radius: 0 !important;
 }

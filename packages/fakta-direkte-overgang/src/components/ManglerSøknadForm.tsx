@@ -4,10 +4,15 @@ import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-com
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, Textarea } from '@navikt/ds-react';
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import styles from './ManglerSøknadForm.module.css';
+
+// Kompileringsfeil her betyr at BRUK_V2_DIREKTE_OVERGANG er fjernet fra FeatureToggles.
+// Slett hele packages/fakta-direkte-overgang og fjern v1-grenen i FaktaPanelDef når migreringen er ferdig.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_DIREKTE_OVERGANG'];
 
 interface Props {
   submitCallback: (SubmitCallback) => void;
@@ -27,12 +32,7 @@ export type ManglerSøknadDto = {
 /**
  * ManglerSøknadForm
  */
-const ManglerSøknadForm = ({
-  submitCallback,
-  readOnly,
-  submittable,
-  aksjonspunkter,
-}: Props) => {
+const ManglerSøknadForm = ({ submitCallback, readOnly, submittable, aksjonspunkter }: Props) => {
   const intl = useIntl();
   const validationSchema = Yup.object().shape({
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'ManglerSøknadForm.BegrunnelseErPåkrevd' })),

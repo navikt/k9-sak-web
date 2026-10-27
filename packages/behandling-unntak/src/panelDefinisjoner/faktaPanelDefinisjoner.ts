@@ -2,7 +2,7 @@ import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanel
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
 import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
-import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
+import DelingAvDagerFaktaPanelDef from './faktaPaneler/DelingAvDagerFaktaPanelDef';
 import BarnFaktaPanelDef from './faktaPaneler/BarnFaktaPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 
@@ -11,7 +11,7 @@ const faktaPanelDefinisjoner = [
   new VergeFaktaPanelDef(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),
-  new UttakFaktaPanelDef(),
+  new DelingAvDagerFaktaPanelDef(),
   new BarnFaktaPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
 ];

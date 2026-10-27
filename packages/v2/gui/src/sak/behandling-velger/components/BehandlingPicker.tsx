@@ -1,9 +1,7 @@
 import { behandlingType as k9KlageBehandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import {
-  k9_kodeverk_behandling_BehandlingStatus as BehandlingDtoStatus,
-  k9_kodeverk_behandling_BehandlingType as BehandlingDtoType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { BehandlingStatus as BehandlingDtoStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingVisningsnavn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { formaterVisningsnavn } from '@k9-sak-web/gui/utils/formaterVisningsnavn.js';
@@ -23,6 +21,7 @@ import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
 import {
+  erAutomatiskBehandlet,
   filterPerioderForBarnetillegg,
   filterPerioderForKontrollAvInntekt,
   sortBehandlinger,
@@ -44,9 +43,6 @@ const getBehandlingNavn = (behandlingType: string, kodeverkNavnFraKode: Kodeverk
   }
 };
 
-const erAutomatiskBehandlet = (behandling: Behandling) =>
-  !behandling.ansvarligSaksbehandler && behandling.status === BehandlingDtoStatus.AVSLUTTET;
-
 /**
  * Henter søknadsperioder for valgt behandling.
  * For "Kontroll av inntekt" behandlinger filtreres kun perioder med KONTROLL_AV_INNTEKT som årsak.
@@ -56,10 +52,10 @@ const getSøknadsperioderForValgtBehandling = (
   valgtBehandling?: Behandling,
 ) => {
   const dataForValgtBehandling = søknadsperioder.find(periode => periode.data?.id === valgtBehandling?.id)?.data;
-  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.KONTROLL_AV_INNTEKT) {
+  if (valgtBehandling?.visningsnavn === BehandlingVisningsnavn.KONTROLL_AV_INNTEKT) {
     return filterPerioderForKontrollAvInntekt(dataForValgtBehandling);
   }
-  if (valgtBehandling?.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG) {
+  if (valgtBehandling?.visningsnavn === BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG) {
     return filterPerioderForBarnetillegg(dataForValgtBehandling);
   }
   return dataForValgtBehandling?.perioder ?? [];

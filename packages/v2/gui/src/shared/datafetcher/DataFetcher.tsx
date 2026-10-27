@@ -20,6 +20,7 @@ const DataFetcher = <T,>({ url, contentRenderer }: DataFetcherProps<T>) => {
     },
     refetchOnWindowFocus: false,
     retry: 3,
+    throwOnError: false,
   });
 
   return <>{contentRenderer(data, isLoading, isError)}</>;

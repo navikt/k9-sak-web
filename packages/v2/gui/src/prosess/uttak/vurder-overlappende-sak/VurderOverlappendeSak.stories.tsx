@@ -1,3 +1,4 @@
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 /**
  * VurderOverlappendeSak komponent stories.
  *
@@ -14,16 +15,15 @@
  * - Skrivebeskyttet modus for fullførte vurderinger
  */
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  AksjonspunktStatus,
   lagAvsluttetBehandling,
   lagOppfyltPeriode,
   lagOverlappendePeriode,
   lagOverlappendeSakerAksjonspunkt,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import {
   beregnSplittDatoer,
@@ -35,7 +35,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
 import { action } from 'storybook/actions';
 import { expect, fireEvent, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 dayjs.locale('nb');
 
@@ -62,6 +62,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -83,6 +84,7 @@ const submitSpy = fn();
 export const Aksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
@@ -94,11 +96,8 @@ export const Aksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -131,6 +130,7 @@ export const Aksjonspunkt: Story = {
 export const LøsAksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
@@ -145,11 +145,8 @@ export const LøsAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvas, step }) => {
@@ -160,12 +157,12 @@ export const LøsAksjonspunkt: Story = {
       const gruppeToNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)} Splitt periode`;
 
       const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
-      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
 
-      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
       await user.type(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), '40');
 
-      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      const gruppeTo = within(await canvas.findByRole('radiogroup', { name: gruppeToNavn }));
+      await user.click(await gruppeTo.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
       const felt2 = (await canvas.findAllByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }))[1];
       if (felt2) {
         await user.type(felt2, '60');
@@ -207,6 +204,7 @@ export const LøsAksjonspunkt: Story = {
 export const LøsAksjonspunktMedSplitt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE']),
@@ -221,11 +219,8 @@ export const LøsAksjonspunktMedSplitt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -236,11 +231,12 @@ export const LøsAksjonspunktMedSplitt: Story = {
       const gruppeEnNavn = `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom1)} - ${tilVisningsDato(tom1)} Splitt periode`;
       const gruppeEn = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
 
-      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad' }));
+      await user.click(await gruppeEn.findByRole('radio', { name: 'Tilpass uttaksgrad', hidden: true }));
       await fireEvent.change(await canvas.findByRole('textbox', { name: 'Sett uttaksgrad for perioden (i prosent)' }), {
         target: { value: '40' },
       });
-      await user.click(await gruppeEn.findByRole('button', { name: 'Splitt periode' }));
+      const gruppeEnOppdatert = within(await canvas.findByRole('radiogroup', { name: gruppeEnNavn }));
+      await user.click(await gruppeEnOppdatert.findByRole('button', { name: 'Splitt periode' }));
       await expect(canvas.findByRole('grid', { name: `${fom1.format('MMMM YYYY')}` })).resolves.toBeInTheDocument();
     });
 
@@ -295,6 +291,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
 export const LøstAksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
@@ -315,13 +312,10 @@ export const LøstAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
 };
@@ -329,6 +323,7 @@ export const LøstAksjonspunkt: Story = {
 export const LøstAksjonspunktKanRedigeres: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
@@ -353,16 +348,13 @@ export const LøstAksjonspunktKanRedigeres: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, {
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse: 'Dette er en grundig begrunnelse',
         erAktivt: true, // Må være true for å kunne redigeres
       }),
     ],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -396,17 +388,17 @@ export const LøstAksjonspunktKanRedigeres: Story = {
           'i',
         ),
       });
-      const gruppeTo = await canvas.findByRole('radiogroup', {
+
+      const begrunnelseFelt = await canvas.findByLabelText('Begrunnelse');
+
+      await user.click(within(gruppeEn).getByRole('radio', { name: 'Vanlig uttak i perioden' }));
+      const gruppeToOppdatert = await canvas.findByRole('radiogroup', {
         name: new RegExp(
           `Vurder uttak i denne saken for perioden ${tilVisningsDato(fom2)} - ${tilVisningsDato(tom2)}`,
           'i',
         ),
       });
-
-      const begrunnelseFelt = await canvas.findByLabelText('Begrunnelse');
-
-      await user.click(within(gruppeEn).getByRole('radio', { name: 'Vanlig uttak i perioden' }));
-      await user.click(within(gruppeTo).getByRole('radio', { name: 'Ingen uttak i perioden' }));
+      await user.click(within(gruppeToOppdatert).getByRole('radio', { name: 'Ingen uttak i perioden' }));
 
       await user.clear(begrunnelseFelt);
       await user.type(begrunnelseFelt, 'Dette er en modifisert begrunnelse');
@@ -455,6 +447,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 export const LøstAksjonspunktAvsluttetSak: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
       egneOverlappendeSaker: {
         perioderMedOverlapp: [
           lagOverlappendePeriode(tilIsoDato(fom1), tilIsoDato(tom1), ['ABCDE'], {
@@ -475,13 +468,10 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
   ],
   args: {
     behandling: lagAvsluttetBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-31'), lagOppfyltPeriode('2024-02-01/2024-02-28')]),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagOverlappendeSakerAksjonspunkt(AksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
+      lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {

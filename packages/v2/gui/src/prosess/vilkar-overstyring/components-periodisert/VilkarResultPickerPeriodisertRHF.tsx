@@ -6,9 +6,10 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { type KodeverkMedUndertype, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Alert, BodyShort, Box, Radio, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
+import { RhfRadioGroup, RhfSelect } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
 import type { FunctionComponent, ReactElement } from 'react';
@@ -172,16 +173,14 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT) && (
             <Box marginBlock={'space-8 space-0'}>
               <VStack gap="space-16">
-                <RhfDatepicker
-                  control={control}
+                <Datovelger
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
                   label="Fra dato"
                   readOnly={readOnly}
                   validate={[required, hasValidDate]}
                   disabledDays={ugyldigeFomDatoer()}
                 />
-                <RhfDatepicker
-                  control={control}
+                <Datovelger
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
                   label="Til dato"
                   disabledDays={ugyldigeTomDatoer()}
@@ -225,8 +224,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 validate={[required]}
               />
               {erMedlemskapsPanel && (
-                <RhfDatepicker
-                  control={control}
+                <Datovelger
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
                   label="Dato"
                   readOnly={readOnly}

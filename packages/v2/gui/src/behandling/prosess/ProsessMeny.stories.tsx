@@ -1,7 +1,11 @@
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
+import { useContext, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
+import { useNavigate } from 'react-router';
+import { expect, userEvent, within } from 'storybook/test';
 import { ProsessMeny } from './ProsessMeny.js';
+import { ProsessPanelContext } from './ProsessPanelContext.js';
 import type { ProsessPanelProps } from './types/panelTypes.js';
 
 // Mock messages for Storybook
@@ -390,5 +394,201 @@ export const AlleStatustyper: Story = {
           'Demonstrerer alle fire statustyper: default, warning, success og danger. Props-basert tilnærming lar paneler beregne sin egen status reaktivt basert på data.',
       },
     },
+  },
+};
+
+/**
+ * Enkelt testpanel som viser om det er valgt via ProsessPanelContext.
+ * Speiler hvordan ekte InitPanel-komponenter bruker konteksten.
+ */
+function TestPanel({ id, label }: { id: string; label: string }) {
+  const context = useContext(ProsessPanelContext);
+  return <p data-testid={`panel-${id}`}>{`${label}: ${context?.erValgt(id) ? 'aktiv' : 'inaktiv'}`}</p>;
+}
+
+// Overstyrer initiell URL i URL-synk-testene ved å navigere i den eksisterende routeren
+// fra .storybook/preview.tsx (unngår å neste en ny MemoryRouter i den globale).
+// Venter med å montere children til URL-en er satt, for å unngå kappløp med ProsessMenys egen effekt.
+function SettInitiellUrl({ path, children }: { path: string; children: React.ReactNode }) {
+  const navigate = useNavigate();
+  const [urlErSatt, setUrlErSatt] = useState(false);
+  useEffect(() => {
+    void navigate(path, { replace: true });
+    setUrlErSatt(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return urlErSatt ? <>{children}</> : null;
+}
+
+const medUrl =
+  (path: string): Decorator =>
+  Story => (
+    <SettInitiellUrl path={path}>
+      <Story />
+    </SettInitiellUrl>
+  );
+
+/**
+ * Ved `punkt=default` skal panelet med aksjonspunkt (warning) velges automatisk,
+ * ikke bare det første panelet i listen.
+ */
+export const VelgerAksjonspunktPanelFremforFørstePanel: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.warning },
+    ],
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=default')],
+  render: args => (
+    <ProsessMeny steg={args.steg}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+  },
+};
+
+/**
+ * Ved `punkt=default` og ingen paneler med aksjonspunkt skal det første panelet velges.
+ */
+export const VelgerFørstePanelNårIngenHarAksjonspunkt: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.default },
+    ],
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=default')],
+  render: args => (
+    <ProsessMeny steg={args.steg}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent('aktiv');
+    await expect(canvas.getByTestId('panel-b')).toHaveTextContent('inaktiv');
+  },
+};
+
+/**
+ * Ved `punkt=default` og alle paneler ferdigbehandlet (success/danger) skal siste panel velges.
+ */
+export const VelgerSistePanelårAlleErFerdigbehandlet: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.success },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.danger },
+    ],
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=default')],
+  render: args => (
+    <ProsessMeny steg={args.steg}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+  },
+};
+
+/**
+ * Et eksplisitt valgt panel skal ikke bli overstyrt av et panel med aksjonspunkt.
+ */
+export const RespektererEksplisittValgtPanel: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.warning },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.default },
+    ],
+    children: <></>,
+  },
+  render: args => (
+    <ProsessMeny steg={args.steg}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Bruker velger eksplisitt panel B, selv om A har et åpent aksjonspunkt
+    await userEvent.click(canvas.getByRole('button', { name: 'B' }));
+
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+  },
+};
+
+/**
+ * Så lenge prosessmotor-data ikke er ferdig hentet (erKlar=false) skal ingen panel velges automatisk.
+ */
+export const HopperOverSynkroniseringårDataIkkeErKlar: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.default },
+    ],
+    erKlar: false,
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=default')],
+  render: args => (
+    <ProsessMeny steg={args.steg} erKlar={args.erKlar}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent('inaktiv');
+    await expect(canvas.getByTestId('panel-b')).toHaveTextContent('inaktiv');
+  },
+};
+
+/**
+ * Klikk på et menyelement skal bytte aktivt panel.
+ */
+export const ByttesPanelVedKlikkIMenyen: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.default },
+    ],
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=default')],
+  render: args => (
+    <ProsessMeny steg={args.steg}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent('aktiv');
+
+    await userEvent.click(canvas.getByRole('button', { name: 'B' }));
+
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
   },
 };

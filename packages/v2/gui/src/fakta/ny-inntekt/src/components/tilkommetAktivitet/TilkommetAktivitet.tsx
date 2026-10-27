@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
 import { ErrorBoundary } from '@navikt/ft-ui-komponenter';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@navikt/ft-utils';
+import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
 
 import type {
   TilkommetAktivitetFieldValues,
@@ -15,7 +14,6 @@ import type {
   TilkommetAktivitetValues,
   TilkommetInntektsforholdFieldValues,
 } from '../../types/FordelBeregningsgrunnlagPanelValues.js';
-import { FaktaFordelBeregningAvklaringsbehovCode } from '../../types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
 import type {
   VurderNyttInntektsforholdAP,
   VurderNyttInntektsforholTransformedValues,
@@ -32,9 +30,12 @@ import type { Beregningsgrunnlag } from '../../types/Beregningsgrunnlag.js';
 import type { Inntektsforhold, VurderInntektsforholdPeriode } from '../../types/BeregningsgrunnlagFordeling.js';
 import type { BeregningsgrunnlagTilBekreftelse } from '../../types/BeregningsgrunnlagTilBekreftelse.js';
 import styles from './tilkommetAktivitet.module.css';
+import { aksjonspunktErUtført, harAksjonspunkt } from '../../../../../utils/aksjonspunktUtils.js';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 dayjs.extend(isBetween);
-const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
+const { VURDER_NYTT_INNTKTSFRHLD } = AvklaringsbehovDefinisjon;
 export const FORM_NAME = 'VURDER_TILKOMMET_AKTIVITET_FORM';
 
 const findAvklaringsbehov = (avklaringsbehov?: BeregningAvklaringsbehov[]): BeregningAvklaringsbehov => {
@@ -102,9 +103,7 @@ const buildInitialValues = (
   vilkarperioder: Vilkårperiode[],
 ): TilkommetAktivitetFormValues => ({
   [FORM_NAME]: beregningsgrunnlagListe
-    .filter(bg =>
-      bg.avklaringsbehov.some(v => v.definisjon === FaktaFordelBeregningAvklaringsbehovCode.VURDER_NYTT_INNTKTSFRHLD),
-    )
+    .filter(bg => bg.avklaringsbehov.some(v => v.definisjon === VURDER_NYTT_INNTKTSFRHLD))
     .map(bg => buildFieldInitialValues(bg, vilkarperioder)),
 });
 
@@ -189,6 +188,7 @@ const transformValues = (
 };
 
 type Props = {
+  aksjonspunkter: AksjonspunktDto[];
   aktivtBeregningsgrunnlagIndeks: number;
   formData?: TilkommetAktivitetFormValues;
   setFormData: (data: TilkommetAktivitetFormValues) => void;
@@ -201,6 +201,7 @@ type Props = {
 };
 
 export const TilkommetAktivitet = ({
+  aksjonspunkter,
   aktivtBeregningsgrunnlagIndeks,
   formData,
   setFormData,
@@ -211,6 +212,7 @@ export const TilkommetAktivitet = ({
   vilkarperioder,
   arbeidsgiverOpplysningerPerId,
 }: Props) => {
+  const [redigerer, setRedigerer] = useState(false);
   const formMethods = useForm<TilkommetAktivitetFormValues>({
     defaultValues: formData?.['VURDER_TILKOMMET_AKTIVITET_FORM']
       ? formData
@@ -221,6 +223,7 @@ export const TilkommetAktivitet = ({
     formState: { dirtyFields, isSubmitted, errors },
     trigger,
     control,
+    reset,
   } = formMethods;
 
   useEffect(() => {
@@ -234,9 +237,13 @@ export const TilkommetAktivitet = ({
     control,
   });
 
-  const gjeldendeBeregningsgrunnlag = beregningsgrunnlagListe[aktivtBeregningsgrunnlagIndeks];
-  const ap = findAvklaringsbehov(gjeldendeBeregningsgrunnlag?.avklaringsbehov);
-  const erAksjonspunktÅpent = ap ? isAksjonspunktOpen(ap.status) : false;
+  const harAksjonspunktVurderNyttInntektsforhold = harAksjonspunkt(
+    aksjonspunkter,
+    aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD,
+  );
+
+  const erUtført = aksjonspunktErUtført(aksjonspunkter, aksjonspunktkodeDefinisjonType.VURDER_NYTT_INNTKTSFORHOLD);
+  const låstTilLesevisning = erUtført && !redigerer;
 
   return (
     <ErrorBoundary errorMessage="Noe gikk galt ved visning av tilkommet aktivitet">
@@ -246,6 +253,7 @@ export const TilkommetAktivitet = ({
           onSubmit={async values => {
             if (Object.keys(errors).length === 0) {
               await submitCallback(transformValues(values, beregningsgrunnlagListe, vilkarperioder));
+              setRedigerer(false);
             }
           }}
           setDataOnUnmount={setFormData}
@@ -270,13 +278,27 @@ export const TilkommetAktivitet = ({
                   formFieldIndex={formFieldIndex}
                   readOnly={
                     readOnly ||
+                    låstTilLesevisning ||
+                    !harAksjonspunktVurderNyttInntektsforhold ||
                     !vurderesIBehandlingen(
                       vilkarperioder,
                       beregningsgrunnlagListe[beregningsgrunnlagIndeks]?.vilkårsperiodeFom,
                     )
                   }
                   submittable={submittable}
-                  erAksjonspunktÅpent={erAksjonspunktÅpent}
+                  redigeringsstatus={
+                    erUtført && !readOnly
+                      ? {
+                          redigerer,
+                          onRediger: () => setRedigerer(true),
+                          onAvbryt: () => {
+                            reset(buildInitialValues(beregningsgrunnlagListe, vilkarperioder));
+                            setRedigerer(false);
+                          },
+                        }
+                      : undefined
+                  }
+                  erAksjonspunktÅpent={harAksjonspunktVurderNyttInntektsforhold && !låstTilLesevisning}
                   arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 />
               </div>

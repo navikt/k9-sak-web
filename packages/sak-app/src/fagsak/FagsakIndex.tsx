@@ -8,6 +8,7 @@ import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { SaksbehandlernavnContext } from '@k9-sak-web/gui/shared/SaksbehandlernavnContext/SaksbehandlernavnContext.js';
 import AndreSakerPåSøkerStripe from '@k9-sak-web/gui/shared/statusstriper/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe.js';
+import Gosysstripe from '@k9-sak-web/gui/shared/statusstriper/gosysstripe/Gosysstripe.js';
 import K9StatusBackendClient from '@k9-sak-web/gui/shared/statusstriper/K9StatusBackendClient.js';
 import Punsjstripe from '@k9-sak-web/gui/shared/statusstriper/punsjstripe/Punsjstripe.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -43,6 +44,7 @@ import { FagsakProfileIndex } from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -190,6 +192,7 @@ const FagsakIndex = () => {
       const data = await k9StatusBackendClient.getMerknader(behandling?.uuid);
       return data ?? null;
     },
+    throwOnError: ignore404Errors, // Denne feiler med 404 for klage/tilbake behandlinger
     enabled: !!behandling?.uuid,
   });
 
@@ -308,6 +311,8 @@ const FagsakIndex = () => {
                       />
 
                       <AndreSakerPåSøkerStripe api={k9StatusBackendClient} saksnummer={fagsak.saksnummer} />
+
+                      <Gosysstripe api={k9StatusBackendClient} saksnummer={fagsak.saksnummer} />
                     </>
                   )}
                 </div>

@@ -1,5 +1,4 @@
 .vurderDatoContainer {
-  margin-top: 1rem;
   max-width: 44rem;
 }
 
@@ -13,6 +12,11 @@
   --aksel-legacy__a-spacing-3: 0;
 
   box-shadow: none !important;
+}
+
+.alertAccordion :global(.aksel-accordion__header):before,
+.alertAccordion :global(.aksel-accordion__header):after {
+  display: none;
 }
 
 .alertAccordion :global(.aksel-accordion__content) {

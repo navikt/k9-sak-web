@@ -1,3 +1,4 @@
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { describe, expect, test } from 'vitest';
 import {
@@ -5,9 +6,8 @@ import {
   finnPanelStatus,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_kodeverk_vilkår_Utfall,
-  k9_kodeverk_vilkår_VilkårType,
   sjekkDelvisVilkårStatus,
-} from './vilkårUtils';
+} from './vilkårUtils.js';
 
 const periode = (fom: string, tom: string) => ({ fom, tom });
 
@@ -23,7 +23,7 @@ describe('sjekkDelvisVilkårStatus', () => {
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -45,7 +45,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -67,7 +67,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -85,7 +85,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -103,7 +103,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -125,7 +125,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -144,7 +144,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -158,7 +158,7 @@ describe('sjekkDelvisVilkårStatus', () => {
         perioder: [
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -171,7 +171,7 @@ describe('sjekkDelvisVilkårStatus', () => {
         perioder: [
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
       {
@@ -182,7 +182,7 @@ describe('sjekkDelvisVilkårStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.ALDERSVILKÅR,
+        vilkarType: VilkårType.ALDERSVILKÅR,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -197,7 +197,7 @@ describe('finnPanelStatus', () => {
         perioder: [
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -228,7 +228,7 @@ describe('finnPanelStatus', () => {
         perioder: [
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -249,7 +249,7 @@ describe('finnPanelStatus', () => {
         perioder: [
           { vurderesIBehandlingen: true, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -269,7 +269,7 @@ describe('finnPanelStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -291,7 +291,7 @@ describe('finnPanelStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -309,11 +309,55 @@ describe('finnPanelStatus', () => {
             periode: periode('', ''),
           },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
     expect(finnPanelStatus(true, vilkår, [], [])).toBe(ProcessMenuStepType.default);
+  });
+
+  test('returnerer default når alle perioder ikke er relevante', () => {
+    const vilkår = [
+      {
+        perioder: [
+          {
+            vurderesIBehandlingen: true,
+            vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+            periode: periode('', ''),
+          },
+          {
+            vurderesIBehandlingen: true,
+            vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+            periode: periode('', ''),
+          },
+        ],
+        vilkarType: VilkårType.SØKNADSFRIST,
+        relevanteInnvilgetMerknader: [],
+      },
+    ];
+    expect(finnPanelStatus(true, vilkår, [], [])).toBe(ProcessMenuStepType.default);
+  });
+
+  test.each([
+    { status: k9_kodeverk_vilkår_Utfall.OPPFYLT, forventet: ProcessMenuStepType.success },
+    { status: k9_kodeverk_vilkår_Utfall.IKKE_OPPFYLT, forventet: ProcessMenuStepType.danger },
+    { status: k9_kodeverk_vilkår_Utfall.IKKE_VURDERT, forventet: ProcessMenuStepType.default },
+  ])('ignorerer IKKE_RELEVANT sammen med $status og returnerer $forventet', ({ status, forventet }) => {
+    const vilkår = [
+      {
+        perioder: [
+          {
+            vurderesIBehandlingen: true,
+            vilkarStatus: k9_kodeverk_vilkår_Utfall.IKKE_RELEVANT,
+            periode: periode('', ''),
+          },
+          { vurderesIBehandlingen: true, vilkarStatus: status, periode: periode('', '') },
+        ],
+        vilkarType: VilkårType.SØKNADSFRIST,
+        relevanteInnvilgetMerknader: [],
+      },
+    ];
+    expect(finnPanelStatus(true, vilkår, [], [])).toBe(forventet);
   });
 
   test('returnerer default når vilkårForSteg er tom', () => {
@@ -326,7 +370,7 @@ describe('finnPanelStatus', () => {
         perioder: [
           { vurderesIBehandlingen: false, vilkarStatus: k9_kodeverk_vilkår_Utfall.OPPFYLT, periode: periode('', '') },
         ],
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];
@@ -337,7 +381,7 @@ describe('finnPanelStatus', () => {
     const vilkår = [
       {
         perioder: undefined,
-        vilkarType: k9_kodeverk_vilkår_VilkårType.SØKNADSFRIST,
+        vilkarType: VilkårType.SØKNADSFRIST,
         relevanteInnvilgetMerknader: [],
       },
     ];

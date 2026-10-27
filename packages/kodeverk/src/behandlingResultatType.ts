@@ -42,7 +42,7 @@ export const isInnvilget = behandlingResultatTypeKode =>
 export const isDelvisInnvilget = behandlingResultatTypeKode =>
   behandlingResultatTypeKode === behandlingResultatType.DELVIS_INNVILGET;
 
-export const isAvslag = behandlingResultatTypeKode =>
+export const isAvslag = (behandlingResultatTypeKode: string) =>
   behandlingResultatTypeKode === behandlingResultatType.AVSLATT ||
   behandlingResultatTypeKode === behandlingResultatType.KLAGE_AVVIST ||
   behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET;

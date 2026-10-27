@@ -1,10 +1,13 @@
-import { Fragment, useEffect, useState, type FC } from 'react';
-import { format } from 'date-fns';
-import type { ObjectSchema } from 'yup';
-import * as yup from 'yup';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useQuery } from '@tanstack/react-query';
+import { EgneOverlappendeSakerValg as PeriodeMedOverlappValg } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/EgneOverlappendeSakerValg.js';
+import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/EgneOverlappendeSakerDto.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import type { VurderSøskensakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/VurderSøskensakerDto.js';
+import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
+import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import {
   Alert,
   BodyShort,
@@ -19,19 +22,17 @@ import {
   Textarea,
   VStack,
 } from '@navikt/ds-react';
-import {
-  k9_kodeverk_uttak_EgneOverlappendeSakerValg as PeriodeMedOverlappValg,
-  type k9_sak_kontrakt_uttak_søskensaker_EgneOverlappendeSakerDto as EgneOverlappendeSakerDto,
-  type k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto,
-  type k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { RhfForm } from '@navikt/ft-form-hooks';
-import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
-import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
-import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt';
-import { useUttakContext } from '../context/UttakContext';
-import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { Fragment, useEffect, useState, type FC } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import type { ObjectSchema } from 'yup';
+import * as yup from 'yup';
+import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt.js';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm.js';
 import styles from './VurderOverlappendeSak.module.css';
 
 export type PeriodeMedOverlappValgType = keyof typeof PeriodeMedOverlappValg;
@@ -50,13 +51,12 @@ export interface VurderOverlappendeSakFormData {
 const gyldigAksjonspunktType = '9292' as const;
 
 const VurderOverlappendeSak: FC = () => {
-  const {
-    behandling,
-    aksjonspunktVurderOverlappendeSaker: aksjonspunkt,
-    uttakApi,
-    readOnly,
-    oppdaterBehandling,
-  } = useUttakContext();
+  const { behandling, aksjonspunkter, readOnly, onAksjonspunktBekreftet } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const aksjonspunkt = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
+  );
+  const oppdaterBehandling = useRefetchBehandling();
 
   const { status, uuid, id, versjon } = behandling;
   const [rediger, setRediger] = useState<boolean>(aksjonspunkt ? skalAksjonspunktUtredes(aksjonspunkt, status) : false);
@@ -75,6 +75,7 @@ const VurderOverlappendeSak: FC = () => {
     queryFn: async () => {
       return await uttakApi.getEgneOverlappendeSaker(uuid);
     },
+    throwOnError: false,
   });
 
   const vurderOverlappendeSakFormSchema: ObjectSchema<VurderOverlappendeSakFormData> = yup.object({
@@ -151,10 +152,7 @@ const VurderOverlappendeSak: FC = () => {
   const submit = async (data: VurderOverlappendeSakFormData) => {
     if (aksjonspunkt?.definisjon != null && aksjonspunkt.definisjon === gyldigAksjonspunktType) {
       setLoading(true);
-      const bekreftetAksjonspunkt: DTOWithDiscriminatorType<
-        k9_sak_kontrakt_uttak_søskensaker_VurderSøskensakerDto,
-        typeof gyldigAksjonspunktType
-      > = {
+      const bekreftetAksjonspunkt: DTOWithDiscriminatorType<VurderSøskensakerDto, typeof gyldigAksjonspunktType> = {
         '@type': aksjonspunkt.definisjon,
         begrunnelse: data.begrunnelse,
         perioder: data.perioder.map(periode => ({
@@ -168,14 +166,18 @@ const VurderOverlappendeSak: FC = () => {
             periode.valg === PeriodeMedOverlappValg.INGEN_UTTAK_I_PERIODEN ? 0 : periode.søkersUttaksgrad,
         })),
       };
-      const requestBody: k9_sak_kontrakt_aksjonspunkt_BekreftedeAksjonspunkterDto = {
+      const requestBody: BekreftedeAksjonspunkterDto = {
         behandlingId: `${id}`,
         behandlingVersjon: versjon,
         bekreftedeAksjonspunktDtoer: [bekreftetAksjonspunkt],
       };
-      await uttakApi.bekreftAksjonspunkt(requestBody);
-      setLoading(false);
-      oppdaterBehandling();
+      try {
+        await uttakApi.bekreftAksjonspunkt(requestBody);
+        await oppdaterBehandling();
+        onAksjonspunktBekreftet?.();
+      } finally {
+        setLoading(false);
+      }
     } else {
       throw new Error(
         `aksjonspunkt.definisjon har ugyldig verdi (er ${aksjonspunkt?.definisjon}, må være ${gyldigAksjonspunktType}). Vurdering kan ikke bekreftes.`,
@@ -198,19 +200,19 @@ const VurderOverlappendeSak: FC = () => {
   if (!behandling) return null;
 
   return (
-    <VStack gap="space-16" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
+    <VStack gap="space-16" className={`${styles.vurderOverlappendeSak}`} flexGrow={'1'}>
       {!readOnly && (
         <Alert variant={'warning'}>
           <Heading spacing size="xsmall" level="3">
             Søker har overlappende perioder med en annen sak
           </Heading>
-          <div className={styles['vurderOverlappendeSakApListe']}>
+          <div className={styles.vurderOverlappendeSakAPListe}>
             <Box marginBlock="space-12" asChild>
               <List data-aksel-migrated-v8 size="small" as="ol">
                 <List.Item>Reserver den tilhørende saken</List.Item>
                 <List.Item>
                   Vurder om du må justere uttaket i en eller begge saker, for å unngå dobbelutbetaling. Vurder ut fra:
-                  <div className={`asdf ${styles['noOverlappendeMargin']}`}>
+                  <div className={`asdf ${styles.noOverlappendeMargin}`}>
                     <Box marginBlock="space-12" asChild>
                       <List data-aksel-migrated-v8 size="small">
                         <List.Item>Opplysninger fra bruker, vet vi hva han eller hun vil?</List.Item>
@@ -236,7 +238,7 @@ const VurderOverlappendeSak: FC = () => {
           </div>
         </Alert>
       )}
-      <Box className={`${styles['apContainer']} ${readOnly || !rediger ? styles['apReadOnly'] : styles['apActive']}`}>
+      <Box className={`${styles.apContainer} ${readOnly || !rediger ? styles.apReadOnly : styles.apActive}`}>
         <RhfForm formMethods={formMethods} onSubmit={submit}>
           <VStack gap="space-20">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
@@ -328,7 +330,7 @@ const VurderOverlappendeSak: FC = () => {
                         </Alert>
 
                         <HStack gap="space-16">
-                          <Button type="submit" size="small" disabled={readOnly} loading={loading}>
+                          <Button type="submit" size="small" disabled={readOnly || loading} loading={loading}>
                             Bekreft og fortsett
                           </Button>
                           {rediger && (

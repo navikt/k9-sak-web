@@ -1,8 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 import { screen } from '@testing-library/react';
 import dayjs from 'dayjs';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnVisning from './BarnVisning';
@@ -17,7 +16,6 @@ it('<BarnVisning>', () => {
       personIdent: '150915',
       fødselsdato: fødselsdato,
       dødsdato: undefined,
-      harSammeBosted: true,
       barnType: BarnType.VANLIG,
     },
     rammevedtak: {

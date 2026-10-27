@@ -13,13 +13,14 @@ const ContainerContext = React.createContext<ContainerContract>({
     dataTilVurdering: '',
     status: '',
     nyeDokumenter: '',
+    perioderMedVilkar: undefined,
   },
   behandlingUuid: '',
   readOnly: false,
   onFinished: () => {
     throw new Error('Function not implemented.');
   },
-  httpErrorHandler: () => {
+  errorNotifier: () => {
     throw new Error('Function not implemented.');
   },
   visFortsettknapp: false,

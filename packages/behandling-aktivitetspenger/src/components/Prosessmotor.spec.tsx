@@ -1,0 +1,414 @@
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import type { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { ung_kodeverk_vilkår_VilkårType } from '@navikt/ung-sak-typescript-client/types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { renderHook, waitFor } from '@testing-library/react';
+import type { PropsWithChildren } from 'react';
+import { beforeEach, describe, expect, test } from 'vitest';
+import { useProsessmotor } from './Prosessmotor';
+
+const createWrapper = (queryClient: QueryClient) => {
+  return ({ children }: PropsWithChildren) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
+
+type ApiOverrides = {
+  vilkår?: Awaited<ReturnType<AktivitetspengerApi['getVilkår']>>;
+  aksjonspunkter?: Awaited<ReturnType<AktivitetspengerApi['getAksjonspunkter']>>;
+  innloggetBruker?: Awaited<ReturnType<AktivitetspengerApi['getInnloggetBruker']>>;
+  simuleringResultat?: Awaited<ReturnType<AktivitetspengerApi['getSimuleringResultat']>>;
+};
+
+const createApi = (overrides?: ApiOverrides): AktivitetspengerApi =>
+  Object.assign(new FakeAktivitetspengerApi(), {
+    getVilkår: async () => overrides?.vilkår ?? [],
+    getAksjonspunkter: async () => overrides?.aksjonspunkter ?? [],
+    getInnloggetBruker: async () => overrides?.innloggetBruker ?? {},
+    getSimuleringResultat: async () => overrides?.simuleringResultat ?? null,
+  });
+
+const createApiWithUnresolvedQueries = (): AktivitetspengerApi =>
+  Object.assign(createApi(), {
+    getVilkår: () => new Promise<Awaited<ReturnType<AktivitetspengerApi['getVilkår']>>>(() => {}),
+    getAksjonspunkter: () => new Promise<Awaited<ReturnType<AktivitetspengerApi['getAksjonspunkter']>>>(() => {}),
+  });
+
+const createVilkår = (vilkarStatus: Utfall, type: ung_kodeverk_vilkår_VilkårType) => ({
+  vilkarType: type,
+  perioder: [{ vilkarStatus, vurderesIBehandlingen: true, periode: { fom: '2024-01-01', tom: '2024-01-31' } }],
+});
+
+const createBehandling = (overrides = {}) => ({
+  uuid: 'behandling-uuid',
+  versjon: 1,
+  type: BehandlingType.FØRSTEGANGSSØKNAD,
+  behandlingÅrsaker: [],
+  behandlingsresultat: { type: BehandlingResultatType.INNVILGET },
+  status: BehandlingStatus.OPPRETTET,
+  ...overrides,
+});
+
+describe('Prossesmotor', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: { retry: false },
+      },
+    });
+  });
+
+  test('returnerer seks paneler i forventet rekkefølge', async () => {
+    const api = createApi();
+    const behandling = createBehandling();
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg).toHaveLength(6);
+      expect(result.current.prosessteg.map(panel => panel.label)).toEqual([
+        'Inngangsvilkår',
+        'Medlemskap',
+        'Beregning',
+        'Beregnet utbetaling',
+        'Simulering',
+        'Vedtak',
+      ]);
+    });
+  });
+
+  test('returnerer steg uten status mens vilkår og aksjonspunkter lastes', () => {
+    const api = createApiWithUnresolvedQueries();
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    expect(result.current.erKlar).toBe(false);
+    expect(result.current.prosessteg).toHaveLength(6);
+    expect(result.current.prosessteg.map(steg => steg.id)).toEqual([
+      prosessStegCodes.INNGANGSVILKAR,
+      prosessStegCodes.FORUTGAENDE_MEDLEMSKAP,
+      prosessStegCodes.BEREGNING,
+      prosessStegCodes.KONTROLL_AV_INNTEKT,
+      prosessStegCodes.SIMULERING,
+      prosessStegCodes.VEDTAK,
+    ]);
+    expect(result.current.prosessteg.every(steg => steg.type === ProcessMenuStepType.default)).toBe(true);
+    expect(result.current.prosessteg.every(steg => steg.locked !== true)).toBe(true);
+  });
+
+  test('er klar når vilkår og aksjonspunkter er lastet', async () => {
+    const api = createApi();
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.erKlar).toBe(true);
+    });
+  });
+
+  test('setter inngangsvilkår til warning når det finnes åpent aksjonspunkt', async () => {
+    const api = createApi({
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.default);
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('setter inngangsvilkår til danger ved avslått enkelperiode', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.IKKE_OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.danger);
+      expect(result.current.prosessteg[1].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('setter locked=true når inngangsvilkår er success og bruker mangler tilgang', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      innloggetBruker: {
+        aktivitetspengerDel1SaksbehandlerTilgang: {
+          kanBeslutte: false,
+          kanSaksbehandle: false,
+        },
+      },
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[0].locked).toBe(true);
+    });
+  });
+
+  test('setter vedtak til warning når vedtak-aksjonspunkt er åpent og øvrige vilkår er vurdert', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
+  test('setter vedtak til success når behandling er FATTER_VEDTAK og resultat er innvilget', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            status: BehandlingStatus.FATTER_VEDTAK,
+            behandlingsresultat: { type: BehandlingResultatType.INNVILGET },
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('setter beregnet utbetaling til warning når panelet har åpent aksjonspunkt', async () => {
+    const api = createApi({
+      vilkår: [
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.FORUTGÅENDE_MEDLEMSKAPSVILKÅRET),
+      ],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.KONTROLLER_INNTEKT,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[2].type).toBe(ProcessMenuStepType.success);
+      expect(result.current.prosessteg[3].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
+  test('setter vedtak til default når ikke-vedtak-aksjonspunkt er åpent', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('setter simulering til warning og vedtak til default når VURDER_FEILUTBETALING er åpent', async () => {
+    const api = createApi({
+      vilkår: [createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST)],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+      simuleringResultat: {} as SimuleringDto,
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[4].type).toBe(ProcessMenuStepType.warning);
+      expect(result.current.prosessteg[5].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('setter simulering til success når simuleringsresultat finnes og ingen aksjonspunkt er åpent', async () => {
+    const api = createApi({ simuleringResultat: {} as SimuleringDto });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[4].type).toBe(ProcessMenuStepType.success);
+    });
+  });
+
+  test('setter simulering til default når simuleringsresultat mangler', async () => {
+    const api = createApi();
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling: createBehandling() }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[4].type).toBe(ProcessMenuStepType.default);
+    });
+  });
+
+  test('viser opphørspanel som første panel ved revurdering med endret bosted', async () => {
+    const api = createApi();
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].label).toBe('Opphør');
+    });
+  });
+
+  test('viser opphør som første steg mens opphørsbehandling lastes', () => {
+    const api = createApiWithUnresolvedQueries();
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    expect(result.current.prosessteg[0].id).toBe(prosessStegCodes.OPPHØR);
+  });
+
+  test('setter opphørspanel til warning når VURDER_BOSTEDSVILKÅR_OPPHØR er åpent', async () => {
+    const api = createApi({
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+          status: aksjonspunktStatus.OPPRETTET,
+        },
+      ],
+    });
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].label).toBe('Opphør');
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
+  test('viser inngangsvilkårpanel ved revurdering uten endret bosted-årsak', async () => {
+    const api = createApi();
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.RE_ANNET }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].label).toBe('Inngangsvilkår');
+    });
+  });
+});

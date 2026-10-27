@@ -9,7 +9,8 @@ import {
   formatDate,
   formatPeriod,
 } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Heading, Label, Table, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Heading, HStack, Label, Table, Tag, VStack } from '@navikt/ds-react';
+import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import { BeregningsDetaljer } from './BeregningsDetaljer';
 import styles from './dagsatsOgUtbetaling.module.css';
 import { formatMonthYear, formatSats } from './dagsatsUtils';
@@ -54,9 +55,14 @@ export const sortSatser = (data: GetSatsOgUtbetalingPerioderResponse) =>
 interface DagsatsOgUtbetalingProps {
   satser: GetSatsOgUtbetalingPerioderResponse;
   ungdomsprogramInformasjon?: UngdomsprogramInformasjonDto;
+  isAktivitetspenger?: boolean;
 }
 
-export const DagsatsOgUtbetaling = ({ satser, ungdomsprogramInformasjon }: DagsatsOgUtbetalingProps) => {
+export const DagsatsOgUtbetaling = ({
+  satser,
+  ungdomsprogramInformasjon,
+  isAktivitetspenger,
+}: DagsatsOgUtbetalingProps) => {
   if (!satser) {
     return <Alert variant="error">Noe gikk galt, vennligst prøv igjen senere</Alert>;
   }
@@ -115,9 +121,26 @@ export const DagsatsOgUtbetaling = ({ satser, ungdomsprogramInformasjon }: Dagsa
             </div>
           )}
           <div>
-            <Heading level="2" size="xsmall">
-              Beregning av dagsats og utbetaling
-            </Heading>
+            <HStack gap="space-8" align="baseline">
+              <Heading level="2" size="xsmall">
+                Beregning av dagsats og utbetaling
+              </Heading>
+              {isAktivitetspenger && (
+                <BodyShort size="small">
+                  <Lovreferanse isAktivitetspenger includeFullTextInLink>
+                    § 11
+                  </Lovreferanse>
+                  ,{' '}
+                  <Lovreferanse isAktivitetspenger includeFullTextInLink>
+                    § 12
+                  </Lovreferanse>{' '}
+                  og{' '}
+                  <Lovreferanse isAktivitetspenger includeFullTextInLink>
+                    § 14
+                  </Lovreferanse>
+                </BodyShort>
+              )}
+            </HStack>
             {satser.length === 0 && (
               <Box marginBlock="space-12 space-0" maxWidth="43.5rem">
                 <Alert variant="info" size="small">

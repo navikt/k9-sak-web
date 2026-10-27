@@ -227,6 +227,13 @@ export class K9SakKodeverkoppslag extends GeneriskKodeverkoppslag<EO> implements
     return this.finnObjektFraKilde('vurderingsÅrsaker', kode, undefinedIfNotFound);
   }
 
+  dokumentFilterGrupper<U extends OrUndefined = undefined>(
+    kode: Kilde<EO, 'dokumentFilterGrupper'>,
+    undefinedIfNotFound?: U,
+  ) {
+    return this.finnObjektFraKilde('dokumentFilterGrupper', kode, undefinedIfNotFound);
+  }
+
   årsakerTilVurdering<U extends OrUndefined = undefined>(
     kode: Kilde<EO, 'årsakerTilVurdering'>,
     undefinedIfNotFound?: U,

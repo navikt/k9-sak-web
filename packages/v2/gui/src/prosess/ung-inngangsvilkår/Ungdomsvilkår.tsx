@@ -18,7 +18,7 @@ const VilkårHeadingSection = ({ lovreferanse }: { lovreferanse?: string }) => (
     {lovreferanse && (
       <Box>
         <Detail className={styles.lovreferanse}>
-          <Lovreferanse isUng>{lovreferanse}</Lovreferanse>
+          <Lovreferanse isUngdomsprogrammet>{lovreferanse}</Lovreferanse>
         </Detail>
       </Box>
     )}

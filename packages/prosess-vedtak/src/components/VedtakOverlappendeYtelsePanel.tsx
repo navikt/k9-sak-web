@@ -17,13 +17,16 @@ import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
-
+  readOnly: boolean;
+  aksjonspunktetErUtfort: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
 
 const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
   overlappendeYtelser,
+  readOnly,
+  aksjonspunktetErUtfort,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
@@ -44,21 +47,19 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
   /**
    * Set opp radene som brukes i Tidslinjen
    */
-  const usorterteRader = overlappendeYtelser.map(
-    (rad, radIndex): TidslinjeRad<Periodeinfo> => ({
-      id: `rad-${radIndex}`,
-      perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
-        fom: periode.fom,
-        tom: periode.tom,
-        id: `rad-${radIndex}-periode-${periodeIndex}`,
-        hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(rad.kilde)}`,
-        periodeinfo: {
-          kilde: rad.kilde,
-          ytelseType: rad.ytelseType,
-        },
-      })),
-    }),
-  );
+  const usorterteRader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<Periodeinfo> => ({
+    id: `rad-${radIndex}`,
+    perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
+      fom: periode.fom,
+      tom: periode.tom,
+      id: `rad-${radIndex}-periode-${periodeIndex}`,
+      hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(rad.kilde)}`,
+      periodeinfo: {
+        kilde: rad.kilde,
+        ytelseType: rad.ytelseType,
+      },
+    })),
+  }));
 
   /**
    * Sorter radene slik at raden som har en periode med den tidligste datoen sorteres øverst
@@ -129,14 +130,18 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
         <CheckboxGroup
           legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
           hideLegend
-          error={submitCount > 0 && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
+          error={
+            submitCount > 0 && !aksjonspunktetErUtfort && !harVurdertOverlappendeYtelse
+              ? 'Du må bekrefte for å gå videre'
+              : ''
+          }
         >
           <Checkbox
-            checked={harVurdertOverlappendeYtelse}
+            checked={aksjonspunktetErUtfort || harVurdertOverlappendeYtelse}
             onChange={() => setHarVurdertOverlappendeYtelse(!harVurdertOverlappendeYtelse)}
             size="small"
-            error={submitCount > 0 && !harVurdertOverlappendeYtelse}
             value="harVurdertOverlappendeYtelse"
+            disabled={readOnly || aksjonspunktetErUtfort}
           >
             Jeg bekrefter å ha sjekket og fulgt opp overlappende ytelser
           </Checkbox>
@@ -147,7 +152,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props> = ({
           <Accordion.Item>
             <Accordion.Header>
               <Heading size="xsmall" level="3">
-                Hvilke ytelser går det automatisk melding?
+                Hvilke ytelser går det automatisk melding om?
               </Heading>
             </Accordion.Header>
             <Accordion.Content>

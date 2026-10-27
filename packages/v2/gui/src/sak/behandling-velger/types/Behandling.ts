@@ -1,9 +1,10 @@
-import type { k9_sak_kontrakt_behandling_BehandlingDto as BehandlingDto } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import type { ung_sak_kontrakt_behandling_BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
+import type { BehandlingDto as UngBehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 
 export type Behandling = {
   ansvarligSaksbehandler: BehandlingDto['ansvarligSaksbehandler'];
   avsluttet: BehandlingDto['avsluttet'];
+  behandlingAnsvarlige?: UngBehandlingDto['behandlingAnsvarlige'];
   behandlingsresultat: BehandlingDto['behandlingsresultat'];
   behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | UngBehandlingDto['behandlingÅrsaker'];
   id: number;

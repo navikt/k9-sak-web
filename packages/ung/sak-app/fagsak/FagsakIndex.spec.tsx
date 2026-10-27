@@ -4,13 +4,32 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 import type useTrackRouteParam from '../app/useTrackRouteParam.js';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi.js';
+import { innloggetAnsattUngV2QueryOptions } from '../data/useNavAnsattForYtelse.js';
 import FagsakIndex from './FagsakIndex';
+
+const navAnsattV2 = {
+  brukernavn: 'Test',
+  navn: 'Test',
+  kanBehandleKode6: false,
+  kanBehandleKode7: false,
+  kanBehandleKodeEgenAnsatt: false,
+  erUngdomsprogramveileder: false,
+  kanVeiledeAktivitetspenger: false,
+  kanVeiledeUngdomsprogramytelse: false,
+  kanDrifte: false,
+  skalViseDetaljerteFeilmeldinger: false,
+  ungdomsprogramytelseSaksbehandlerTilgang: { kanSaksbehandle: true, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+  aktivitetspengerDel2SaksbehandlerTilgang: { kanSaksbehandle: false, kanBeslutte: false, kanOverstyre: false },
+};
 
 vi.mock('react-router', async () => {
   const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
@@ -144,14 +163,21 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(UngSakApiKeys.BEHANDLINGER_TILBAKE, []);
     requestApi.mock(UngSakApiKeys.HENT_SAKSBEHANDLERE, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, []);
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
 
     renderWithIntlAndReactQueryClient(
-      <MemoryRouter>
-        <FagsakIndex />
-      </MemoryRouter>,
+      <QueryClientProvider
+        client={(() => {
+          const qc = createQueryClient({ queries: { retry: false } });
+          qc.setQueryData(innloggetAnsattUngV2QueryOptions.queryKey, navAnsattV2);
+          return qc;
+        })()}
+      >
+        <MemoryRouter>
+          <FagsakIndex />
+        </MemoryRouter>
+      </QueryClientProvider>,
     );
 
     expect(

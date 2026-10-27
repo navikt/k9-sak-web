@@ -12,7 +12,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
     steps:
       - name: Hente kode
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup + Install
         uses: ./.github/actions/setup-install
@@ -24,6 +24,6 @@ jobs:
 
       - name: Serve Storybook and run tests
         run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server .static_storybook --port 9001 --silent" \
-            "npx wait-on http://127.0.0.1:9001/iframe.html && yarn test-storybook"
+          yarn concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "yarn http-server .static_storybook --port 9001 --silent" \
+            "yarn wait-on --timeout 60000 tcp:127.0.0.1:9001 && yarn test-storybook"

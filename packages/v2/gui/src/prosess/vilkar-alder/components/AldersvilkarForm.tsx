@@ -95,7 +95,13 @@ const AldersvilkarForm = ({
         </RhfRadioGroup>
       </Box>
       <Box marginBlock={'space-16 space-0'}>
-        <Button size="small" variant="primary" type="submit" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+        <Button
+          size="small"
+          variant="primary"
+          type="submit"
+          loading={formMethods.formState.isSubmitting}
+          disabled={formMethods.formState.isSubmitting}
+        >
           Bekreft og fortsett
         </Button>
       </Box>

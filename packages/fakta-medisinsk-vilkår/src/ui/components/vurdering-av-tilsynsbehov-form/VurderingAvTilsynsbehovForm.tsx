@@ -230,6 +230,7 @@ const VurderingAvTilsynsbehovForm = ({
                     const label = option ? option.label : filter;
                     return (
                       <button
+                        key={filter}
                         onClick={() => updateDokumentFilter(filter)}
                         className={styles.fjernFilterKnapp}
                         type="button"

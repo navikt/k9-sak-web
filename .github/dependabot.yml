@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: daily
     cooldown:
-      default-days: 7
+      default-days: 3
     open-pull-requests-limit: 30
     registries:
       - npm-github
@@ -22,32 +22,36 @@ updates:
           - 'patch'
           - 'minor'
         exclude-patterns:
-          - 'react*'
+          - 'react'
+          - 'react-dom'
           - '@types/react'
-          - '@navikt*'
-          - 'eslint-plugin-vitest' # version 0.5.4 requires eslint version 9
+          - '@navikt/ft-*'
       react:
         patterns:
           - 'react'
           - 'react-dom'
           - '@types/react'
-      designsystem:
-        patterns:
-          - '@navikt/aksel-icons'
-          - '@navikt/ds-*'
       ft-frontend:
         patterns:
           - '@navikt/ft-*'
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   - package-ecosystem: npm
     directory: '/server'
     schedule:
       interval: daily
     cooldown:
-      default-days: 7
+      default-days: 3
     registries:
       - npm-github
     groups:
+      security-server:
+        applies-to: security-updates
+        patterns:
+          - "*"
       server-patch-and-minor:
         patterns:
           - '*'
@@ -59,6 +63,7 @@ updates:
           - '*'
         update-types:
           - 'major'
+
 
   - package-ecosystem: github-actions
     directory: '/'

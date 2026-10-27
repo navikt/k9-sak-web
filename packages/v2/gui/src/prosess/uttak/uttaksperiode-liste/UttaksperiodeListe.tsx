@@ -1,21 +1,37 @@
-import { Fragment, useState, type FC } from 'react';
+import { Fragment, useMemo, useState, type FC, type ReactNode } from 'react';
 import dayjs from 'dayjs';
-import { Alert, BodyShort, Button, Label, Table, Loader, HStack } from '@navikt/ds-react';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Alert, BodyLong, Button, Table } from '@navikt/ds-react';
 import {
-  type k9_kodeverk_behandling_FagsakYtelseType as FagsakYtelseType,
-  k9_kodeverk_behandling_FagsakYtelseType as fagsakYtelseType,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
-import UttakRad from './UttakRad';
-import UttakRadOpplæringspenger from './UttakRadOpplæringspenger';
+  type FagsakYtelsesType as FagsakYtelseType,
+  fagsakYtelsesType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import UttakRad from './UttakRad.js';
+import UttakRadOpplæringspenger from './UttakRadOpplæringspenger.js';
 import styles from './uttaksperiodeListe.module.css';
-import { useUttakContext } from '../context/UttakContext';
-import { prettifyPeriod } from '../utils/periodUtils';
-import splitUttakByDate from '../utils/splitUttakByDate';
+import hentPerioderFraUttak from '../utils/hentPerioderFraUttak.js';
+import lagUttaksperiodeliste from '../utils/uttaksperioder.js';
+import { useUttakContext } from '../context/UttakContext.js';
+import { prettifyPeriod } from '@k9-sak-web/lib/dateUtils/periodUtils.js';
+import splitUttakByDate from '../utils/splitUttakByDate.js';
+import type { UttaksperiodeBeriket } from '../types/UttaksperiodeBeriket.js';
+import { NORMALARBEIDSTID_LÅST_DATO } from '../konstanter.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
+import EndringsdatoInfostripe from '../vurder-dato/EndringsdatoInfostripe.js';
+
+// Datoen når låsing av normalarbeidstid trer i kraft. Behandlinger avsluttet før denne datoen får ikke låst normalarbeidstid.
+const DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT = '2026-10-12';
 
 interface UttaksperiodeListeProps {
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
+  visEndringerIUttakFunc: () => void;
+}
+
+interface UttaksregelInfo {
+  dato: string;
+  rad: ReactNode;
 }
 
 const tableHeaders = (sakstype: FagsakYtelseType | undefined) => {
@@ -28,18 +44,18 @@ const tableHeaders = (sakstype: FagsakYtelseType | undefined) => {
   return ['Uke', 'Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 };
 
-const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoFunc, redigerVirkningsdato }) => {
-  const {
-    fagsakYtelseType: ytelseType,
-    virkningsdatoUttakNyeRegler,
-    erSakstype,
-    uttaksperiodeListe,
-    lasterUttak,
-    readOnly,
-  } = useUttakContext();
+const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({
+  redigerVirkningsdatoFunc,
+  redigerVirkningsdato,
+  visEndringerIUttakFunc,
+}) => {
+  const { behandling } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
+  const uttaksperiodeListe = useMemo(() => lagUttaksperiodeliste(hentPerioderFraUttak(uttak ?? undefined)), [uttak]);
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
-  const { before, afterOrCovering } = splitUttakByDate([...uttaksperiodeListe], virkningsdatoUttakNyeRegler);
-  const headers = tableHeaders(ytelseType);
+  const headers = tableHeaders(behandling.sakstype);
 
   const velgPeriode = (index: number) => {
     if (valgtPeriodeIndex === index) {
@@ -49,13 +65,100 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
     }
   };
 
-  return (
-    <div className={styles['tableContainer']}>
-      {lasterUttak && (
-        <HStack justify="center">
-          <Loader variant="inverted" size="2xlarge" title="Laster uttaksperioder..." />
-        </HStack>
+  const renderPeriodeRad = (uttak: UttaksperiodeBeriket, index: number) => (
+    <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}`}>
+      {uttak.harOppholdTilNestePeriode && (
+        <Table.Row>
+          <td colSpan={12}>
+            <div className={styles.oppholdRow} />
+          </td>
+        </Table.Row>
       )}
+      {behandling.sakstype === fagsakYtelseType.OPPLÆRINGSPENGER ? (
+        <UttakRadOpplæringspenger
+          uttak={uttak}
+          erValgt={valgtPeriodeIndex === index}
+          velgPeriode={() => velgPeriode(index)}
+        />
+      ) : (
+        <UttakRad uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
+      )}
+    </Fragment>
+  );
+
+  const uttaksregelInfo: UttaksregelInfo[] = [];
+
+  if (virkningsdatoUttakNyeRegler) {
+    uttaksregelInfo.push({
+      dato: virkningsdatoUttakNyeRegler,
+      rad: (
+        <Table.Row key="uttaksregelinfo-endringsdato">
+          <Table.DataCell colSpan={12}>
+            <div className={styles.alertRow}>
+              <EndringsdatoInfostripe
+                virkningsdato={virkningsdatoUttakNyeRegler}
+                redigerVirkningsdato={redigerVirkningsdato}
+                redigerVirkningsdatoFunc={redigerVirkningsdatoFunc}
+              />
+            </div>
+          </Table.DataCell>
+        </Table.Row>
+      ),
+    });
+  }
+
+  const { afterOrCovering: perioderEtterLåstNormalarbeidstid } = splitUttakByDate(
+    [...uttaksperiodeListe],
+    NORMALARBEIDSTID_LÅST_DATO,
+  );
+  const behandlingBleAvsluttetEtterRegleneTrådteIKraft =
+    behandling.avsluttet != null &&
+    dayjs(behandling.avsluttet).isSameOrAfter(dayjs(DATO_LÅSING_AV_NORMALARBEIDSTID_TRER_I_KRAFT), 'day');
+  const visNormalarbeidstidInfo =
+    perioderEtterLåstNormalarbeidstid.length > 0 &&
+    (!behandling.avsluttet || behandlingBleAvsluttetEtterRegleneTrådteIKraft);
+
+  if (visNormalarbeidstidInfo) {
+    uttaksregelInfo.push({
+      dato: NORMALARBEIDSTID_LÅST_DATO,
+      rad: (
+        <Table.Row key="uttaksregelinfo-normalarbeidstid-låst">
+          <Table.DataCell colSpan={12}>
+            <div className={styles.alertRow}>
+              <Alert variant="info">
+                <div className="flex items-center justify-between gap-4">
+                  <BodyLong size="small">
+                    Endringer fra {dayjs(NORMALARBEIDSTID_LÅST_DATO).format('DD.MM.YYYY')}: Fra denne datoen låses
+                    normalarbeidstid på skjæringstidspunktet for arbeidsforhold, frilans og selvstendig næringsdrivende.
+                  </BodyLong>
+                  <Button variant="tertiary" size="small" onClick={visEndringerIUttakFunc}>
+                    Les mer om endring
+                  </Button>
+                </div>
+              </Alert>
+            </div>
+          </Table.DataCell>
+        </Table.Row>
+      ),
+    });
+  }
+
+  // uttaksperiodeListe er sortert nyeste først, så regel-radene må splittes ut i synkende dato-rekkefølge
+  // for at hver regel skal havne før perioden den gjelder fra.
+  const uttaksregelInfoSynkende = uttaksregelInfo.toSorted((a, b) => (a.dato < b.dato ? 1 : -1));
+
+  let resterendePerioder: UttaksperiodeBeriket[] = [...uttaksperiodeListe];
+  let periodeIndeks = 0;
+  const segmenter = uttaksregelInfoSynkende.map(uttaksregelInfo => {
+    const { afterOrCovering, before } = splitUttakByDate(resterendePerioder, uttaksregelInfo.dato);
+    resterendePerioder = before;
+    const rader = afterOrCovering.map(uttak => renderPeriodeRad(uttak, periodeIndeks++));
+    return [...rader, uttaksregelInfo.rad];
+  });
+  const sisteSegment = resterendePerioder.map(uttak => renderPeriodeRad(uttak, periodeIndeks++));
+
+  return (
+    <div className={styles.tableContainer}>
       <Table size="small">
         <Table.Header>
           <Table.Row>
@@ -63,7 +166,7 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
               <Table.HeaderCell
                 scope="col"
                 key={header}
-                className={styles['headerColumn']}
+                className={styles.headerColumn}
                 colSpan={headers.length - 1 === index ? 2 : 1}
               >
                 {header}
@@ -72,78 +175,8 @@ const UttaksperiodeListe: FC<UttaksperiodeListeProps> = ({ redigerVirkningsdatoF
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {afterOrCovering.map((uttak, index) => (
-            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}`}>
-              {uttak.harOppholdTilNestePeriode && (
-                <Table.Row>
-                  <td colSpan={12}>
-                    <div className={styles['oppholdRow']} />
-                  </td>
-                </Table.Row>
-              )}
-              {erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ? (
-                <UttakRadOpplæringspenger
-                  uttak={uttak}
-                  erValgt={valgtPeriodeIndex === index}
-                  velgPeriode={() => velgPeriode(index)}
-                />
-              ) : (
-                <UttakRad uttak={uttak} erValgt={valgtPeriodeIndex === index} velgPeriode={() => velgPeriode(index)} />
-              )}
-            </Fragment>
-          ))}
-          {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
-            <Table.Row>
-              <Table.DataCell colSpan={12}>
-                <div className={styles['alertRow']}>
-                  <Alert variant="info">
-                    <div className="flex">
-                      <Label size="small">
-                        Endringsdato: {dayjs(virkningsdatoUttakNyeRegler).format('DD.MM.YYYY')}
-                      </Label>
-                      <Button
-                        variant="secondary"
-                        size="small"
-                        className={styles['redigerDato']}
-                        onClick={redigerVirkningsdatoFunc}
-                        disabled={status === behandlingStatus.AVSLUTTET || readOnly}
-                      >
-                        Rediger
-                      </Button>
-                    </div>
-                    <BodyShort>
-                      Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse
-                      og ny arbeidsaktivitet.
-                    </BodyShort>
-                  </Alert>
-                </div>
-              </Table.DataCell>
-            </Table.Row>
-          )}
-          {before.map((uttak, index) => (
-            <Fragment key={`${prettifyPeriod(uttak.periode.fom, uttak.periode.tom)}`}>
-              {uttak.harOppholdTilNestePeriode && (
-                <Table.Row>
-                  <td colSpan={12}>
-                    <div className={styles['oppholdRow']} />
-                  </td>
-                </Table.Row>
-              )}
-              {erSakstype(fagsakYtelseType.OPPLÆRINGSPENGER) ? (
-                <UttakRadOpplæringspenger
-                  uttak={uttak}
-                  erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
-                  velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
-                />
-              ) : (
-                <UttakRad
-                  uttak={uttak}
-                  erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
-                  velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
-                />
-              )}
-            </Fragment>
-          ))}
+          {segmenter}
+          {sisteSegment}
         </Table.Body>
       </Table>
     </div>

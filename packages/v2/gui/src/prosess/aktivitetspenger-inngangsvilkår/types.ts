@@ -11,6 +11,7 @@ export const InngangsvilkårTab = {
   BOSATT_I_TRONDHEIM: 'bosatt_i_trondheim',
   ANDRE_LIVSOPPHOLDYTELSER: 'andre_livsoppholdytelser',
   BEHOV_FOR_BISTAND: 'behov_for_bistand',
+  AKTIVITET: 'aktivitet',
   BESLUTTER: 'beslutter',
 } as const;
 

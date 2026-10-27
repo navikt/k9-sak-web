@@ -27,9 +27,9 @@ const DagerSokerHarRettPa = ({
 }: DagerSokerHarRettPaProps) => {
   const location = useLocation();
   const { search, pathname } = location;
-  const faktapanelUttak = {
+  const faktapanelDelingAvDager = {
     ...parseQueryString(search),
-    fakta: faktaPanelCodes.UTTAK,
+    fakta: faktaPanelCodes.DELING_AV_DAGER,
   };
 
   const detaljer = [
@@ -46,7 +46,7 @@ const DagerSokerHarRettPa = ({
                 id="Nøkkeltall.Rammemelding"
                 values={{
                   a: (...lenketekst) => (
-                    <Link href={`/k9/web${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Link>
+                    <Link href={`/k9/web${pathname}${formatQueryString(faktapanelDelingAvDager)}`}>{lenketekst}</Link>
                   ),
                 }}
               />

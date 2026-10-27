@@ -18,6 +18,8 @@ class Omsorgsperiode {
 
   vurdertTidspunkt?: string;
 
+  skalTvingesTilManuellVurdering?: boolean;
+
   constructor({
     periode,
     resultatEtterAutomatikk,
@@ -27,6 +29,7 @@ class Omsorgsperiode {
     relasjon,
     vurdertAv,
     vurdertTidspunkt,
+    skalTvingesTilManuellVurdering,
   }: Partial<Omsorgsperiode>) {
     this.periode = new Period(periode.fom, periode.tom);
     this.resultatEtterAutomatikk = resultatEtterAutomatikk;
@@ -36,6 +39,7 @@ class Omsorgsperiode {
     this.relasjon = relasjon ? relasjon[0].toUpperCase() + relasjon.slice(1).toLowerCase() : '';
     this.vurdertAv = vurdertAv;
     this.vurdertTidspunkt = vurdertTidspunkt;
+    this.skalTvingesTilManuellVurdering = skalTvingesTilManuellVurdering;
   }
 
   erOppfylt(): boolean {
@@ -71,6 +75,10 @@ class Omsorgsperiode {
     );
   }
 
+  skalVisesIRedigeringsmodus(): boolean {
+    return this.manglerVurdering() || !!this.skalTvingesTilManuellVurdering;
+  }
+
   hentResultat(): Vurderingsresultat {
     if (this.resultat === Vurderingsresultat.IKKE_VURDERT) {
       return this.resultatEtterAutomatikk;
@@ -83,3 +91,6 @@ class Omsorgsperiode {
 }
 
 export default Omsorgsperiode;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_OMSORGEN_FOR_V2'];

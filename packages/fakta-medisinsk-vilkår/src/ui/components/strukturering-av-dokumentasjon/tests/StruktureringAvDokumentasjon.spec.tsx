@@ -8,7 +8,7 @@ const dokumentoversiktMock = {
   dokumenter: [],
 };
 
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 
 const contextWrapper = ui =>
   render(
@@ -16,7 +16,7 @@ const contextWrapper = ui =>
       value={
         {
           endpoints: { dokumentoversikt: dokumentoversiktEndpoint },
-          httpErrorHandler: httpErrorHandlerMock,
+          errorNotifier: errorNotifierMock,
           readOnly: false,
         } as any
       }

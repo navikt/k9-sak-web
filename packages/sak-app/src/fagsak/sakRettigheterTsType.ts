@@ -8,6 +8,8 @@ export type ÅrsakOgPerioder = Readonly<{
 export type DelvisRevurderingÅrsak = Readonly<{
   årsak: Kodeverk;
   vilkårType: Kodeverk;
+  periodeType?: 'STP' | 'PERIODE';
+  valgbarePerioder?: Periode[];
 }>;
 
 type BehandlingOppretting = Readonly<{

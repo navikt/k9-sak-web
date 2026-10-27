@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { behandlingQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
-import { delay } from '@k9-sak-web/gui/utils/delay.js';
-import { ung_sak_kontrakt_AsyncPollingStatus_Status } from '@navikt/ung-sak-typescript-client/types';
+import {
+  behandlingQueryOptions,
+  ventTilBehandlingErKlar,
+} from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { useQueryClient } from '@tanstack/react-query';
-
-const MAX_POLL_ATTEMPTS = 150;
 
 interface Behandling {
   uuid: string;
@@ -38,32 +37,26 @@ export const usePollBehandlingStatus = (
 
     setIsPolling(true);
     try {
-      let attempts = 0;
-      while (attempts < MAX_POLL_ATTEMPTS) {
+      const { uuid, versjon } = behandlingRef.current;
+      let ferdigBehandling;
+      try {
+        ferdigBehandling = await ventTilBehandlingErKlar(api, uuid, controller.signal);
+      } catch (error) {
         if (controller.signal.aborted) return;
-
-        const status = await api.hentBehandlingMidlertidigStatus(behandlingRef.current.uuid, controller.signal);
-        if (status?.status !== ung_sak_kontrakt_AsyncPollingStatus_Status.PENDING) break;
-
-        attempts++;
-        await delay(status.pollIntervalMillis ?? 500, controller.signal).catch(() => {});
+        throw error;
       }
-
       if (controller.signal.aborted) return;
 
-      if (attempts >= MAX_POLL_ATTEMPTS) {
-        throw new Error(
-          `Polling av behandling ${behandlingRef.current.uuid} nådde maks antall forsøk uten at behandlingen ble klar.`,
-        );
-      }
-
-      const nyBehandling = await queryClient.fetchQuery(
-        behandlingQueryOptions(api, {
-          uuid: behandlingRef.current.uuid,
-          versjon: behandlingRef.current.versjon,
-        }),
-      );
+      // Hentes utenom queryFn så status ikke polles på nytt uten vårt AbortSignal
+      const nyBehandling = ferdigBehandling ?? (await api.getBehandling(uuid));
       if (!controller.signal.aborted && nyBehandling) {
+        // Gammel nøkkel oppdateres så ny versjon når fram via useQuery og useOppdateringAvBehandlingsversjon
+        queryClient.setQueryData(behandlingQueryOptions(api, { uuid, versjon }).queryKey, nyBehandling);
+        // Forhåndsutfyller cache for ny versjon så behandling ikke er undefined i mellomtiden
+        queryClient.setQueryData(
+          behandlingQueryOptions(api, { uuid: nyBehandling.uuid, versjon: nyBehandling.versjon }).queryKey,
+          nyBehandling,
+        );
         setBehandling(nyBehandling);
       }
     } finally {

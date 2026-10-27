@@ -6,7 +6,7 @@ type MakeFakeApiErrorArgs = Readonly<{
   status: number;
   url?: string;
   method?: 'GET' | 'POST';
-  error?: string | object;
+  body?: string | object;
 }>;
 
 type MakeFakeExtendedApiErrorArgs = MakeFakeApiErrorArgs &
@@ -18,14 +18,14 @@ export const makeFakeExtendedApiError = ({
   status,
   url = '/fake/url',
   method = 'GET',
-  error = '',
+  body = '',
   navCallid = 'CallId_00000000_11111111',
 }: MakeFakeExtendedApiErrorArgs): ExtendedApiError => {
   const req: Request = new Request(url, {
     method,
   });
   const resp = new Response(null, { status });
-  return new ExtendedApiError(req, resp, error, navCallid);
+  return new ExtendedApiError(req, resp, body, navCallid);
 };
 
 type MakeFakeK9SakValidationErrorArgs = Pick<MakeFakeExtendedApiErrorArgs, 'url' | 'method' | 'navCallid'> &

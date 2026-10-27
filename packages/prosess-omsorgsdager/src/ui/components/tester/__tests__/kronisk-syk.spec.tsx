@@ -1,7 +1,11 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import { KroniskSyktBarnDatoContext } from '../../vilkar-kronisk-sykt-barn/KroniskSyktBarnDatoContext';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 import './axe-setup';
 
@@ -21,6 +25,87 @@ const personopplysninger = {
 };
 
 describe('<VilkarKroniskSyktBarn>', () => {
+  const innvilgedePerioder = [
+    { fom: '2025-12-01', tom: '2025-12-31' },
+    { fom: '2026-01-10', tom: '2026-12-31' },
+  ];
+  const overlappFeil = 'Perioden overlapper et tidligere innvilget vedtak.';
+  const bekreft = () => userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+  const lagPropsMedDato = (fraDato: string, tilDato = ''): VilkarKroniskSyktBarnProps => ({
+    behandlingsID: '123',
+    lesemodus: false,
+    aksjonspunktLost: true,
+    soknadsdato: '2025-04-06',
+    begrunnelseFraBruker: '',
+    informasjonTilLesemodus: {
+      begrunnelse: 'Barnet oppfyller vilkåret',
+      vilkarOppfylt: true,
+      avslagsårsakKode: '',
+      fraDato,
+      tilDato,
+      erTidsbegrenset: tilDato !== '',
+    },
+    losAksjonspunkt: vi.fn(),
+    vedtakFattetVilkarOppfylt: false,
+    formState: { getState: vi.fn(), setState: vi.fn(), deleteState: vi.fn() },
+    personopplysninger,
+  });
+
+  const renderMedDato = (
+    props: VilkarKroniskSyktBarnProps,
+    datoer: { innvilgedePerioder: typeof innvilgedePerioder; foreslåttFraDato?: string } = {
+      innvilgedePerioder,
+      foreslåttFraDato: '2027-01-01',
+    },
+  ) =>
+    render(
+      <FeatureTogglesContext.Provider value={qFeatureToggles}>
+        <KroniskSyktBarnDatoContext.Provider value={datoer}>
+          <VilkarKroniskSyktBarn {...props} />
+        </KroniskSyktBarnDatoContext.Provider>
+      </FeatureTogglesContext.Provider>,
+    );
+
+  test('avviser manuelt skrevet dato som gir overlapp', async () => {
+    const props = lagPropsMedDato('2027-01-01');
+    renderMedDato(props);
+
+    const datofelt = screen.getByRole('textbox', { name: '' });
+    await userEvent.clear(datofelt);
+    await userEvent.type(datofelt, '01.01.2026');
+
+    expect(datofelt).toHaveValue('01.01.2026');
+    await bekreft();
+    expect(await screen.findByText(overlappFeil)).toBeInTheDocument();
+    expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+  });
+
+  test('sperrer kalenderdatoer i innvilgede perioder', async () => {
+    const props = lagPropsMedDato('2026-01-21');
+    renderMedDato(props);
+
+    await userEvent.click(screen.getByRole('button', { name: /åpne datovelger/i }));
+
+    expect(screen.getByRole('button', { name: 'lørdag 10' })).toBeDisabled();
+  });
+
+  test('foreslår dagen etter siste innvilgede periode for et nytt skjema', async () => {
+    const props = lagPropsMedDato('');
+    props.informasjonTilLesemodus = {
+      begrunnelse: '',
+      vilkarOppfylt: false,
+      avslagsårsakKode: '',
+      fraDato: '',
+      tilDato: '',
+      erTidsbegrenset: false,
+    };
+    renderMedDato(props);
+    await userEvent.click(screen.getByRole('radio', { name: 'Ja' }));
+
+    expect(screen.getByRole('textbox', { name: '' })).toHaveValue('01.01.2027');
+  });
+
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
     const props = {
       behandlingsID: '123',

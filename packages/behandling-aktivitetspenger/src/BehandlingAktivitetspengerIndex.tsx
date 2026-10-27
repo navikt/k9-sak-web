@@ -1,17 +1,17 @@
 import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { AktivitetspengerBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerBackendClient.js';
 import {
   aksjonspunkterQueryOptions,
   behandlingQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Behandling } from '@k9-sak-web/types';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
 import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
-import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import {
   UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
@@ -29,6 +29,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
   behandlingVersjon: number;
   behandlingUuid: string;
+  fagsak: Fagsak;
 }
 
 const ungSakProsessApi = new AktivitetspengerBackendClient();
@@ -41,20 +42,21 @@ const BehandlingAktivitetspengerIndex = ({
   setRequestPendingMessage,
   behandlingVersjon,
   behandlingUuid,
+  fagsak,
 }: OwnProps) => {
   const setBehandling = useCallback(nyBehandling => {
     requestUngdomsytelseApi.resetCache();
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
   }, []);
 
-  const { data: behandling, refetch: refetchBehandling } = useSuspenseQuery(
+  const { data: behandling, refetch: refetchBehandling } = useQuery(
     behandlingQueryOptions(ungSakProsessApi, { uuid: behandlingUuid, versjon: behandlingVersjon }),
   );
-  const { data: aksjonspunkter } = useSuspenseQuery(aksjonspunkterQueryOptions(ungSakProsessApi, behandling));
+  const { data: aksjonspunkter } = useQuery(aksjonspunkterQueryOptions(ungSakProsessApi, behandling));
 
   useSetBehandlingVedEndring(behandling, setBehandling);
 
-  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const { legacyErrorNotifier } = useGlobalUnhandledErrors();
 
   const { startRequest: nyBehandlendeEnhet } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
@@ -82,12 +84,12 @@ const BehandlingAktivitetspengerIndex = ({
     });
 
     requestUngdomsytelseApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestUngdomsytelseApi.setAddErrorMessageHandler(addErrorMessage);
+    requestUngdomsytelseApi.setErrorNotifier(legacyErrorNotifier);
 
     return () => {
       behandlingEventHandler.clear();
     };
-  }, []);
+  }, [legacyErrorNotifier]);
 
   if (!behandling) {
     return <LoadingPanel />;
@@ -99,6 +101,7 @@ const BehandlingAktivitetspengerIndex = ({
       <AktivitetspengerProsess
         api={ungSakProsessApi}
         behandling={behandling}
+        saksnummer={fagsak.saksnummer}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}

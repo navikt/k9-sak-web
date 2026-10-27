@@ -1,0 +1,55 @@
+import { queryOptions } from '@tanstack/react-query';
+import type { UttakBackendApiType } from './UttakBackendApiType.js';
+
+export const uttakQueryOptions = (api: UttakBackendApiType, behandlingUuid: string, behandlingVersjon: number) =>
+  queryOptions({
+    queryKey: ['uttak', behandlingUuid, behandlingVersjon, api.backend],
+    queryFn: () => api.hentUttak(behandlingUuid),
+    // Behandlingsversjon er i nøkkelen, så data trenger ikke hentes på nytt ved hver mount
+    staleTime: Infinity,
+  });
+
+// refetchOnMount og refetchOnWindowFocus er av, ellers gjentas kallet flere ganger, for eksempel ved bytte av prosesssteg
+export const uttakArbeidsgivereQueryOptions = (
+  api: UttakBackendApiType,
+  behandlingUuid: string,
+  behandlingVersjon: number,
+) =>
+  queryOptions({
+    queryKey: ['uttak-arbeidsgivere', behandlingUuid, behandlingVersjon, api.backend],
+    queryFn: async () => {
+      const arbeidsgivere = await api.getArbeidsgivere(behandlingUuid);
+      return arbeidsgivere.arbeidsgivere ?? {};
+    },
+    refetchOnMount: false,
+  });
+
+export const uttakInntektsgraderingerQueryOptions = (
+  api: UttakBackendApiType,
+  behandlingUuid: string,
+  behandlingVersjon: number,
+) =>
+  queryOptions({
+    queryKey: ['uttak-inntektsgraderinger', behandlingUuid, behandlingVersjon, api.backend],
+    queryFn: () => api.hentInntektsgraderinger(behandlingUuid),
+    refetchOnMount: false,
+  });
+
+export const uttakOverstyringerQueryOptions = (api: UttakBackendApiType, behandlingUuid: string) =>
+  queryOptions({
+    queryKey: ['uttak-overstyringer', behandlingUuid, api.backend],
+    queryFn: () => api.hentOverstyringUttak(behandlingUuid),
+  });
+
+export const uttakAktuelleAktiviteterQueryOptions = (
+  api: UttakBackendApiType,
+  behandlingUuid: string,
+  fom: string,
+  tom: string,
+  enabled: boolean,
+) =>
+  queryOptions({
+    queryKey: ['uttak-aktuelle-aktiviteter', behandlingUuid, fom, tom, enabled, api.backend],
+    queryFn: () => api.hentAktuelleAktiviteter(behandlingUuid, fom, tom),
+    enabled,
+  });

@@ -6,12 +6,12 @@ import { VedtakAksjonspunktPanel } from './VedtakAksjonspunktPanel';
 
 describe('<VedtakAksjonspunktPanel>', () => {
   it('skal rendre komponent korrekt', () => {
-    const aksjonspunktKoder = [];
+    const aksjonspunkter = [];
     renderWithIntl(
       <VedtakAksjonspunktPanel
         behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
         readOnly={false}
-        aksjonspunktKoder={aksjonspunktKoder}
+        aksjonspunkter={aksjonspunkter}
         overlappendeYtelser={[]}
         viseFlereSjekkbokserForBrev={false}
         harVurdertOverlappendeYtelse={false}

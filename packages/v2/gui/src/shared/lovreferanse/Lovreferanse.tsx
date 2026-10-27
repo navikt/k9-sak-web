@@ -2,6 +2,11 @@ import { Link } from '@navikt/ds-react';
 import { Fragment } from 'react';
 type LovreferanseProps = {
   /**
+   * Om lovreferansen er for Aktivitetspenger.
+   * Dette brukes for å bestemme hvilken lovdatalenke som skal brukes.
+   * Hvis ikke satt, vil den bruke lovdatalenken for vanlig lovreferanse. */
+  isAktivitetspenger?: boolean;
+  /**
    * Lovreferanseteksten.
    *
    * Denne teksten antas å være på formatet "§ 9-1", "§§ 9-2 og 9-3", "§ 8", "§ 9-3 jamfør 8-9" osv. */
@@ -10,7 +15,8 @@ type LovreferanseProps = {
    * Om lovreferansen er for Ungdomsprogrammet.
    * Dette brukes for å bestemme hvilken lovdatalenke som skal brukes.
    * Hvis ikke satt, vil den bruke lovdatalenken for vanlig lovreferanse. */
-  isUng?: boolean;
+  isUngdomsprogrammet?: boolean;
+  includeFullTextInLink?: boolean;
 };
 
 /**
@@ -21,14 +27,28 @@ type LovreferanseProps = {
  * <Lovreferanse>§§ 9-1 og 9-2 jf. 22-21</Lovreferanse>
  * ```
  * */
-export const Lovreferanse = ({ children, isUng }: LovreferanseProps) => {
-  return <span>{berikMedLovdataLenker(children, isUng)}</span>;
+export const Lovreferanse = ({
+  children,
+  isUngdomsprogrammet,
+  isAktivitetspenger,
+  includeFullTextInLink,
+}: LovreferanseProps) => {
+  return <span>{berikMedLovdataLenker(children, isUngdomsprogrammet, isAktivitetspenger, includeFullTextInLink)}</span>;
 };
 
-const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
-  const grunnUrlen = isUng
-    ? 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/'
-    : 'https://lovdata.no/pro/NL/lov/1997-02-28-19/';
+const berikMedLovdataLenker = (
+  lovreferanse: string,
+  isUngdomsprogrammet?: boolean,
+  isAktivitetspenger?: boolean,
+  includeFullTextInLink = false,
+) => {
+  const k9LovdataBaseUrl = 'https://lovdata.no/pro/NL/lov/1997-02-28-19/';
+  let grunnUrlen = k9LovdataBaseUrl;
+  if (isUngdomsprogrammet) {
+    grunnUrlen = 'https://lovdata.no/pro/LTI/forskrift/2025-06-20-1182/';
+  } else if (isAktivitetspenger) {
+    grunnUrlen = 'https://lovdata.no/pro/#document/LF/forskrift/2026-09-27-1944/';
+  }
 
   const seksjonsRegex = /(\d+(-\d+)?)/;
 
@@ -38,21 +58,46 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
     return lovreferanse;
   }
 
+  if (includeFullTextInLink) {
+    const paragrafnummer = lovreferanse.match(/(?:§{1,2}\s*|kapittel\s+)(\d+(?:-\d+)?)/i)?.[1];
+    if (!paragrafnummer) {
+      return lovreferanse;
+    }
+
+    const link =
+      paragrafnummer.includes('-') || isUngdomsprogrammet || isAktivitetspenger
+        ? `${grunnUrlen}§${paragrafnummer}`
+        : `${grunnUrlen}§${paragrafnummer}-1`;
+
+    return (
+      <Link href={link} title="Les mer på Lovdata.no" target="_blank">
+        {lovreferanse}
+      </Link>
+    );
+  }
+
   return lovreferanse
     .replace(/,\s*/g, ', ')
     .replace(/\s+/g, ' ')
     .split(' ')
-    .map((del, index) => {
+    .map((del, index, parts) => {
       const kapittelOgKanskjeParagraf = del.match(seksjonsRegex)?.[0];
 
       if (!kapittelOgKanskjeParagraf) {
+        // "Kapittel"-ordet håndteres av neste token
+        if (/^Kapittel$/i.test(del) && index + 1 < parts.length && parts[index + 1]?.match(seksjonsRegex)) {
+          return null;
+        }
         return <span key={index}>{del} </span>;
       }
 
       const link =
-        kapittelOgKanskjeParagraf.includes('-') || isUng
+        kapittelOgKanskjeParagraf.includes('-') || isUngdomsprogrammet || isAktivitetspenger
           ? `${grunnUrlen}§${kapittelOgKanskjeParagraf}`
           : `${grunnUrlen}§${kapittelOgKanskjeParagraf}-1`;
+
+      const prevToken = index > 0 ? parts[index - 1] : '';
+      const isKapittel = /^Kapittel$/i.test(prevToken ?? '');
 
       const prefix = del.includes('§§') ? '§§ ' : del.includes('§') ? '§ ' : '';
       const suffix = del.endsWith(',') ? ', ' : ' ';
@@ -61,7 +106,7 @@ const berikMedLovdataLenker = (lovreferanse: string, isUng?: boolean) => {
         <Fragment key={index}>
           {prefix}
           <Link href={link} title="Les mer på Lovdata.no" target="_blank">
-            {kapittelOgKanskjeParagraf}
+            {isKapittel ? `${prevToken} ${kapittelOgKanskjeParagraf}` : kapittelOgKanskjeParagraf}
           </Link>
           {suffix}
         </Fragment>

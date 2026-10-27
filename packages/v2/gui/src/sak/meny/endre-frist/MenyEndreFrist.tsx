@@ -1,7 +1,8 @@
 import type { ung_sak_kontrakt_etterlysning_Etterlysning } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Alert, Box, Button, Heading, Modal, Select, VStack } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
@@ -133,8 +134,7 @@ export const MenyEndreFrist = ({
                 </option>
               ))}
             </Select>
-            <RhfDatepicker
-              control={formMethods.control}
+            <Datovelger
               name="fristDato"
               label="Ny fristdato"
               validate={[required, hasValidDate, validateDateInRange]}
@@ -156,7 +156,12 @@ export const MenyEndreFrist = ({
           </Box>
         </Modal.Body>
         <Modal.Footer>
-          <Button size="small" type="submit" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+          <Button
+            size="small"
+            type="submit"
+            loading={formMethods.formState.isSubmitting}
+            disabled={formMethods.formState.isSubmitting}
+          >
             Utsett frist
           </Button>
           <Button size="small" variant="secondary" type="button" onClick={lukkModal}>

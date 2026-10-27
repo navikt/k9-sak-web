@@ -1,0 +1,63 @@
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { BodyShort, Label, VStack } from '@navikt/ds-react';
+import type { ReactNode } from 'react';
+import { LabelledContent } from '../../../shared/labelled-content/LabelledContent';
+import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
+
+const avslagsårsakLabels: Record<string, string> = {
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER]: 'Arbeidsavklaringspenger (AAP)',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_TILTAKSPENGER]: 'Tiltakspenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_KVALIFISERINGSSTØNAD]: 'Kvalifiseringsstønad (KVP)',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_DAGPENGER]: 'Dagpenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_FORELDREPENGER]: 'Foreldrepenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_SVANGERSKAPSPENGER]: 'Svangerskapspenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_UFØRETRYGD]: 'Uføretrygd',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_INTRODUKSJONSSTØNAD]: 'Introduksjonsstønad',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_BARNEPENSJON]: 'Barnepensjon',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE]: 'Annen ytelse',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET]: 'Avkortet',
+};
+
+interface Props {
+  begrunnelseLabel: ReactNode;
+  vurdering: AndreLivsoppholdytelserFormData['vurderinger'][string];
+}
+
+export const AndreLivsoppholdytelserLesevisning = ({ begrunnelseLabel, vurdering }: Props) => (
+  <VStack gap="space-24" maxWidth="70ch" width="100%">
+    <LabelledContent label={begrunnelseLabel} indentContent content={vurdering.begrunnelse} />
+    <VStack gap="space-8">
+      <Label size="small" as="p">
+        Er søker uten andre livsoppholdsytelser?
+      </Label>
+      <BodyShort size="small">{vurdering.andreLivsoppholdytelser === 'oppfylt' ? 'Ja' : 'Nei'}</BodyShort>
+    </VStack>
+    {vurdering.andreLivsoppholdytelser === 'ikkeOppfylt' && vurdering.avslagsårsak && (
+      <VStack gap="space-8">
+        <Label size="small" as="p">
+          Hvilken ytelse mottar bruker?
+        </Label>
+        <BodyShort size="small">{vurdering.ytelseNavn || avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
+      </VStack>
+    )}
+    {vurdering.andreLivsoppholdytelser === 'ikkeOppfylt' && vurdering.fritekst && (
+      <LabelledContent label="Fritekst avslagsbrev" indentContent content={vurdering.fritekst} />
+    )}
+    {vurdering.andreLivsoppholdytelser === 'oppfylt' && (
+      <VStack gap="space-8">
+        <Label size="small" as="p">
+          Uten andre livsoppholdsytelser:
+        </Label>
+        <BodyShort size="small">{`${formatDate(vurdering.fom)} – ${formatDate(vurdering.tom)}`}</BodyShort>
+      </VStack>
+    )}
+    {vurdering.andreLivsoppholdytelser === 'oppfylt' && vurdering.redigerMaksdato && (
+      <LabelledContent
+        label="Begrunn kortere periode enn 260 dager"
+        indentContent
+        content={vurdering.begrunnelseKortereMaksdato}
+      />
+    )}
+  </VStack>
+);

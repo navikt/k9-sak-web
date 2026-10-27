@@ -1,6 +1,24 @@
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
+import ErrorBoundary from '@k9-sak-web/gui/app/errorhandling/boundary/ErrorBoundary.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
+import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
+import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
+import { K9HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/K9HistorikkBackendClient.js';
+import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
+import { MessagesIndex } from '@k9-sak-web/gui/sak/meldinger/MessagesIndex.js';
+import { K9KlageMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/api/K9KlageMeldingerBackendClient.js';
 import K9SakMeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/api/K9SakMeldingerBackendClient.js';
-import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
+import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
+import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
+import { NotatBackendClientContext } from '@k9-sak-web/gui/sak/notat/NotatBackendClientContext.js';
+import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
+import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9KlageTotrinnskontrollBackendClient.js';
+import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9SakTotrinnskontrollBackendClient.js';
+import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
+import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
+import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -8,7 +26,6 @@ import {
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
@@ -30,26 +47,9 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
-import { HistorikkIndex } from '@k9-sak-web/gui/sak/historikk/HistorikkIndex.js';
 import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { K9HistorikkBackendClient } from '@k9-sak-web/gui/sak/historikk/api/K9HistorikkBackendClient.js';
-import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.js';
-import { HistorikkBackendApiContext } from '@k9-sak-web/gui/sak/historikk/api/HistorikkBackendApiContext.js';
-import type { TotrinnskontrollApi } from '@k9-sak-web/gui/sak/totrinnskontroll/api/TotrinnskontrollApi.js';
-import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
-import { K9TilbakeTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9TilbakeTotrinnskontrollBackendClient.js';
-import { K9KlageTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9KlageTotrinnskontrollBackendClient.js';
-import { K9SakTotrinnskontrollBackendClient } from '@k9-sak-web/gui/sak/totrinnskontroll/api/k9/K9SakTotrinnskontrollBackendClient.js';
-import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
-import ErrorBoundary from '@k9-sak-web/gui/app/feilmeldinger/ErrorBoundary.js';
-import { MessagesErrorAlert } from '@k9-sak-web/gui/sak/meldinger/MessagesErrorAlert.js';
-import { LoadingPanelSuspense } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanelSuspense.js';
-import { TilbakeMessagesIndex } from '@k9-sak-web/gui/sak/meldinger/tilbake/TilbakeMessagesIndex.js';
-import { K9TilbakeMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/tilbake/api/K9TilbakeMeldingerBackendClient.js';
-import { MessagesIndex } from '@k9-sak-web/gui/sak/meldinger/MessagesIndex.js';
-import { K9KlageMeldingerBackendClient } from '@k9-sak-web/gui/sak/meldinger/api/K9KlageMeldingerBackendClient.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -76,7 +76,7 @@ export const hentValgbarePaneler = (
 
 interface GetSvgProps {
   tooltip: string;
-  antallUlesteNotater: number;
+  antallUlesteNotater: string;
   isActive: boolean;
 }
 
@@ -126,7 +126,7 @@ const TABS = {
   [SupportTabs.NOTATER]: {
     getSvg: ({ antallUlesteNotater, isActive }: GetSvgProps) => (
       <div className={styles.pencilSvgContainer}>
-        {antallUlesteNotater > 0 && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
+        {antallUlesteNotater !== '' && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
         {isActive ? (
           <PencilWritingFillIcon title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
         ) : (
@@ -168,36 +168,46 @@ const BehandlingSupportIndex = ({
   navAnsatt,
   featureToggles,
 }: OwnProps) => {
-  const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
+  const [antallUlesteNotater, setAntallUlesteNotater] = useState<string>('');
 
   const kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const historikkBackendClient = new K9HistorikkBackendClient(kodeverkoppslag);
-  const notatBackendClient = new NotatBackendClient('k9Sak');
+  const notatBackendClient = useContext(NotatBackendClientContext);
 
-  const notaterQueryKey = ['notater', fagsak?.saksnummer];
-  const { data: notater } = useQuery({
+  const notaterQueryKey = ['notater', notatBackendClient?.backend, fagsak?.saksnummer];
+  const { data: notater, isError: notaterFetchFailed } = useQuery({
     queryKey: notaterQueryKey,
-    queryFn: () => notatBackendClient.getNotater(fagsak.saksnummer),
-    enabled: !!fagsak,
+    queryFn: () => notatBackendClient!.getNotater(fagsak.saksnummer),
+    enabled: !!fagsak && !!notatBackendClient,
     refetchOnWindowFocus: false,
+    throwOnError: false,
   });
 
-  const lagTabs = (tilgjengeligeTabs: string[], valgtIndex?: number) =>
-    Object.keys(TABS)
-      .filter(key => tilgjengeligeTabs.includes(key))
-      .map((key, index) => ({
-        getSvg: TABS[key].getSvg,
-        tooltip: TABS[key].tooltipTextCode,
-        isActive: index === valgtIndex,
-        antallUlesteNotater,
-        tabKey: TABS[key].tabKey,
-      }));
+  const lagTabs = useCallback(
+    (tilgjengeligeTabs: string[], valgtIndex?: number) =>
+      Object.keys(TABS)
+        .filter(key => tilgjengeligeTabs.includes(key))
+        .map((key, index) => ({
+          getSvg: TABS[key].getSvg,
+          tooltip: TABS[key].tooltipTextCode,
+          isActive: index === valgtIndex,
+          antallUlesteNotater,
+          tabKey: TABS[key].tabKey,
+        })),
+    [antallUlesteNotater],
+  );
 
   useEffect(() => {
-    const ulesteNotater = (notater || []).filter(notat => !notat.skjult);
-    setAntallUlesteNotater(ulesteNotater?.length);
-  }, [notater]);
+    if (notaterFetchFailed) {
+      setAntallUlesteNotater('?');
+    } else if (notater != null) {
+      const antall = notater.filter(notat => !notat.skjult).length;
+      setAntallUlesteNotater(antall > 0 ? '' + antall : '');
+    } else {
+      setAntallUlesteNotater('');
+    }
+  }, [notater, notaterFetchFailed]);
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
@@ -225,15 +235,12 @@ const BehandlingSupportIndex = ({
       const getSupportPanelLocation = getSupportPanelLocationCreator(location);
       await navigate(getSupportPanelLocation(supportPanel));
     },
-    [location, synligeSupportPaneler],
+    [location, synligeSupportPaneler, navigate],
   );
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
-  const tabs = useMemo(
-    () => lagTabs(synligeSupportPaneler, valgtIndex),
-    [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
-  );
+  const tabs = useMemo(() => lagTabs(synligeSupportPaneler, valgtIndex), [synligeSupportPaneler, valgtIndex, lagTabs]);
 
   const behandlingTypeKode = behandling?.type.kode;
   const erTilbakekreving =

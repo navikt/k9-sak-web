@@ -3,6 +3,7 @@ import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 import { ChildEyesFillIcon, ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Box, Tabs, VStack } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import classnames from 'classnames';
 import React, { useMemo, type JSX } from 'react';
 
@@ -90,8 +91,7 @@ const MedisinskVilkår = (): JSX.Element => {
   });
 
   const { isLoading, hasError, activeStep, markedStep, sykdomsstegStatus, nyeDokumenterSomIkkeErVurdert } = state;
-  const { endpoints, httpErrorHandler, visFortsettknapp, fagsakYtelseType, readOnly } =
-    React.useContext(ContainerContext);
+  const { endpoints, errorNotifier, visFortsettknapp, fagsakYtelseType, readOnly } = React.useContext(ContainerContext);
 
   const dokumentStegForSakstype = stegForSakstype(fagsakYtelseType).find(stepObj => stepObj.id === StepId.Dokument);
 
@@ -110,11 +110,12 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const hentDiagnosekoder = () =>
     httpUtils
-      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
+      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, errorNotifier)
       .then((response: DiagnosekodeResponse) => response);
 
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery({
     queryKey: ['diagnosekodeResponse'],
+    throwOnError: ignore404Errors,
     queryFn: hentDiagnosekoder,
     enabled: !erFagsakOLPEllerPLS(fagsakYtelseType),
     placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: '' },
@@ -127,7 +128,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const hentSykdomsstegStatus = async () => {
     try {
-      const status = await httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
+      const status = await httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, errorNotifier, {
         signal: controller.signal,
       });
       const nesteSteg = finnNesteStegFn(status);
@@ -150,7 +151,7 @@ const MedisinskVilkår = (): JSX.Element => {
     new Promise((resolve, reject) => {
       if (status.nyttDokumentHarIkkekontrollertEksisterendeVurderinger) {
         httpUtils
-          .get<NyeDokumenterResponse>(endpoints.nyeDokumenter, httpErrorHandler, {
+          .get<NyeDokumenterResponse>(endpoints.nyeDokumenter, errorNotifier, {
             signal: controller.signal,
           })
           .then(

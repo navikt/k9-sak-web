@@ -4,8 +4,14 @@ import { type FeilDtoUnion, feilTypeUnion, isFeilDtoUnion } from './FeilDtoUnion
 export abstract class SharedFeilDtoError extends ExtendedApiError {
   #feilDto: FeilDtoUnion | undefined | null;
 
-  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
-    super(req, resp, error, navCallid);
+  constructor(
+    req: Request,
+    resp: Response | undefined,
+    body: string | object,
+    navCallid: string | null,
+    options?: ErrorOptions,
+  ) {
+    super(req, resp, body, navCallid, options);
     this.name = SharedFeilDtoError.name;
   }
 
@@ -29,7 +35,7 @@ export abstract class SharedFeilDtoError extends ExtendedApiError {
   }
 
   public get erBehandlingEndretFeil(): boolean {
-    return this.errorData?.type === feilTypeUnion.MANGLER_TILGANG_FEIL;
+    return this.errorData?.type === feilTypeUnion.BEHANDLING_ENDRET_FEIL;
   }
 
   public get erGenerellFeil(): boolean {

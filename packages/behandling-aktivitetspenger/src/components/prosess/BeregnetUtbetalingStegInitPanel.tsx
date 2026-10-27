@@ -4,6 +4,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.js';
 import type { KontrollerInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektDto.js';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
@@ -21,7 +22,7 @@ import { Alert, Box, Heading, Loader, Tabs, VStack } from '@navikt/ds-react';
 import { useMutation, useQuery, useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 
-const PANEL_ID = prosessStegCodes.BEREGNET_UTBETALING;
+const PANEL_ID = prosessStegCodes.KONTROLL_AV_INNTEKT;
 
 const sortInntekt = (data: KontrollerInntektDto): KontrollerInntektDto => {
   const { kontrollperioder } = data;
@@ -66,10 +67,12 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     queryKey: ['aktivitetspenger-kontrollInntekt', behandling.uuid, behandling.versjon],
     queryFn: () => aktivitetspengerBeregningApi.getKontrollerInntekt(behandling.uuid),
     select: sortInntekt,
+    throwOnError: false,
   });
 
   const { data: arbeidsgivere } = useQuery({
     queryKey: ['aktivitetspenger-arbeidsgivere', behandling.uuid],
+    throwOnError: ignore404Errors,
     queryFn: () => aktivitetspengerBeregningApi.getArbeidsgiverOpplysninger(behandling.uuid),
   });
 
@@ -92,12 +95,13 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
   });
 
   const isReadOnly = useMemo(() => {
-    return (
-      (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
-        !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
-      behandling.status === BehandlingStatus.AVSLUTTET
-    );
-  }, [innloggetBruker, behandling]);
+    const tilgang = innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang;
+    const manglerTilgang = !tilgang?.kanBeslutte && !tilgang?.kanSaksbehandle;
+    const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
+    const aksjonspunktErIkkeLøsbart = aksjonspunkt == undefined || aksjonspunkt.kanLoses === false;
+
+    return manglerTilgang || behandlingErAvsluttet || aksjonspunktErIkkeLøsbart;
+  }, [innloggetBruker, behandling, aksjonspunkt]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
@@ -143,7 +147,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
             />
           </Tabs.List>
           <Tabs.Panel value="utbetaling">
-            <DagsatsOgUtbetaling satser={satser} />
+            <DagsatsOgUtbetaling satser={satser} isAktivitetspenger />
           </Tabs.Panel>
           <Box maxWidth="860px">
             <Tabs.Panel value="inntekt">
@@ -152,12 +156,13 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
                 inntektKontrollperioder={inntekt?.kontrollperioder ?? []}
                 isReadOnly={isReadOnly}
                 arbeidsgivere={arbeidsgivere}
+                isAktivitetspenger
               />
             </Tabs.Panel>
           </Box>
         </Tabs>
       ) : (
-        <DagsatsOgUtbetaling satser={satser} />
+        <DagsatsOgUtbetaling satser={satser} isAktivitetspenger />
       )}
     </VStack>
   );

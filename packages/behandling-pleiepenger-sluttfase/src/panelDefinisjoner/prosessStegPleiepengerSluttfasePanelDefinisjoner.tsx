@@ -6,11 +6,9 @@ import MedisinskVilkarProsessStegPanelDef from './prosessStegPaneler/MedisinskVi
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
 import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtelseProsessStegPanelDef';
 import UttakProsessStegPanelDef from './prosessStegPaneler/UttakProsessStegPanelDef';
-import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
 
 const prosessStegPanelDefinisjoner = [
-  new VarselProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
   new MedisinskVilkarProsessStegPanelDef(),
   new InngangsvilkarFortsProsessStegPanelDef(),

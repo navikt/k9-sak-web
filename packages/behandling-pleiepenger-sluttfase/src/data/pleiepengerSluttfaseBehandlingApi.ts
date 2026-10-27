@@ -53,7 +53,6 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   OM_PLEIETRENGENDE = 'OM_PLEIETRENGENDE',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
-  UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -94,7 +93,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('overstyr-input-beregning', PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('om-pleietrengende', PleiepengerSluttfaseBehandlingApiKeys.OM_PLEIETRENGENDE)
-  .withRel('utenlandsopphold', PleiepengerSluttfaseBehandlingApiKeys.UTENLANDSOPPHOLD)
 
   .withRel(
     'behandling-perioder-årsak-med-vilkår',

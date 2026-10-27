@@ -4,8 +4,11 @@ import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivit
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
+  andreLivsoppholdsytelserVurderingerQueryOptions,
+  bostedGrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
   lovligeBehandlingsoperasjonerQueryOptions,
+  perioderSomKanAvkortesQueryOptions,
   totrinnskontrollSkjermlenkeContextQueryOptions,
   vilkårQueryOptions,
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -19,7 +22,7 @@ const PANEL_ID = prosessStegCodes.INNGANGSVILKAR;
 interface Props {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
+  onAksjonspunktBekreftet: () => Promise<void>;
 }
 
 export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
@@ -30,6 +33,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
     { data: vilkår },
     { data: totrinnskontrollSkjermlenkeContext },
     { data: lovligeBehandlingsoperasjoner },
+    { data: bostedGrunnlag },
   ] = useSuspenseQueries({
     queries: [
       aksjonspunkterQueryOptions(api, behandling),
@@ -37,6 +41,9 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       vilkårQueryOptions(api, behandling),
       totrinnskontrollSkjermlenkeContextQueryOptions(api, behandling),
       lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
+      bostedGrunnlagQueryOptions(api, behandling),
+      perioderSomKanAvkortesQueryOptions(api, behandling),
+      andreLivsoppholdsytelserVurderingerQueryOptions(api, behandling),
     ],
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
@@ -55,6 +62,7 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       onAksjonspunktBekreftet={onAksjonspunktBekreftet}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
       lovligeBehandlingsoperasjoner={lovligeBehandlingsoperasjoner}
+      bostedGrunnlag={bostedGrunnlag}
     />
   );
 };

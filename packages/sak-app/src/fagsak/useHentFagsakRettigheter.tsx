@@ -66,6 +66,7 @@ const useHentFagsakRettigheter = (
         behandlingTypeKanOpprettes: sakRettigheterK9Sak.behandlingTypeKanOpprettes
           .concat(sakRettigheterTilbake?.behandlingTypeKanOpprettes || [])
           .concat(sakRettigheterKlage?.behandlingTypeKanOpprettes || []),
+        delvisRevurderingsårsaker: sakRettigheterK9Sak.delvisRevurderingsårsaker,
       };
     }
     return sakRettigheterK9Sak;

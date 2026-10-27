@@ -1,4 +1,5 @@
 import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanelDef';
+import ArbeidOgInntektFaktaPanelDef from './faktaPaneler/ArbeidOgInntektFaktaPanelDef';
 import BeregningFaktaPanelDef from './faktaPaneler/BeregningFaktaPanelDef';
 import DirekteOvergangFaktaPanelDef from './faktaPaneler/DirekteOvergangFaktaPanelDef';
 import EtablertTilsynFaktaPanelDef from './faktaPaneler/EtablertTilsynFaktaPanelDef';
@@ -15,10 +16,12 @@ import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFakt
 import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
 import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
+import YtelserFaktaPanelDef from './faktaPaneler/YtelserFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),
   new ArbeidsforholdFaktaPanelDef(),
+  new ArbeidOgInntektFaktaPanelDef(),
   new DirekteOvergangFaktaPanelDef(),
   new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
@@ -31,6 +34,7 @@ const faktaPanelDefinisjoner = [
   new NyInntektPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
+  new YtelserFaktaPanelDef(),
   new UtenlandsoppholdFaktaPanelDef(),
   new SoknadsperioderFaktaPanelDef(),
   new VergeFaktaPanelDef(),

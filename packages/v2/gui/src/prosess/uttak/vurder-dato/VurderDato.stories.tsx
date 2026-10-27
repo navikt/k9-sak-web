@@ -1,17 +1,17 @@
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
-  AksjonspunktStatus,
   lagOppfyltPeriode,
   lagUtredBehandling,
   lagUttak,
   lagVurderDatoNyRegelAksjonspunkt,
-  relevanteAksjonspunkterAlle,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { action } from 'storybook/actions';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from '../Uttak';
+import Uttak from '../Uttak.js';
 
 /**
  * VurderDato-komponenten håndterer vurdering av virkningsdato for nye uttaksregler.
@@ -30,6 +30,7 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
       <BehandlingProvider refetchBehandling={fn()}>
         <Story />
@@ -44,14 +45,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ÅpentAksjonspunkt: Story = {
-  decorators: [withFakeUttakBackend({ onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload) })],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
+      onBekreftAksjonspunkt: payload => action('aksjonspunkt:submit')(payload),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -59,7 +62,9 @@ export const ÅpentAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Viser advarsel', async () => {
-      await expect(canvas.getByText('Vurder hvilken dato endringer i uttak skal gjelde fra')).toBeInTheDocument();
+      await expect(
+        await canvas.findByText('Vurder hvilken dato endringer i uttak skal gjelde fra'),
+      ).toBeInTheDocument();
     });
 
     await step('Viser informasjon om endringene i uttak', async () => {
@@ -86,20 +91,21 @@ export const ÅpentAksjonspunkt: Story = {
 };
 
 export const Skjemavalidering: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
-    const begrunnelseField = canvas.getByLabelText('Begrunnelse');
+    const begrunnelseField = await canvas.findByLabelText('Begrunnelse');
 
     await step('For kort begrunnelse', async () => {
       await user.clear(begrunnelseField);
@@ -124,6 +130,7 @@ const submitSpy = fn();
 export const LøsAksjonspunkt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
       onBekreftAksjonspunkt: payload => {
         submitSpy(payload);
         action('aksjonspunkt:submit')(payload);
@@ -132,11 +139,8 @@ export const LøsAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')]),
     erOverstyrer: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -144,14 +148,14 @@ export const LøsAksjonspunkt: Story = {
     const user = userEvent.setup();
 
     await step('Velg dato', async () => {
-      const dateInput = canvas.getByLabelText('Endringsdato');
+      const dateInput = await canvas.findByLabelText('Endringsdato');
       await user.clear(dateInput);
       await user.type(dateInput, '20.01.2024');
       await expect(dateInput).toHaveValue('20.01.2024');
     });
 
     await step('Fyll inn begrunnelse', async () => {
-      const begrunnelseField = canvas.getByLabelText('Begrunnelse') as HTMLTextAreaElement;
+      const begrunnelseField = canvas.getByLabelText<HTMLTextAreaElement>('Begrunnelse');
       await user.clear(begrunnelseField);
       await user.type(
         begrunnelseField,
@@ -180,9 +184,58 @@ export const LøsAksjonspunkt: Story = {
   },
 };
 
+export const ÅpentAksjonspunktMedEndringsdato: Story = {
+  ...LøsAksjonspunkt,
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+        virkningsdatoUttakNyeRegler: '2024-01-15',
+      }),
+      onBekreftAksjonspunkt: payload => submitSpy(payload),
+    }),
+  ],
+  play: async context => {
+    const canvas = within(context.canvasElement);
+
+    await context.step('Viser åpent aksjonspunkt direkte selv om endringsdato er satt', async () => {
+      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('15.01.2024');
+      await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeVisible();
+      await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Avbryt' })).not.toBeInTheDocument();
+    });
+
+    await LøsAksjonspunkt.play?.(context);
+  },
+};
+
+export const ÅpentAksjonspunktMedEndringsdatoForVeileder: Story = {
+  ...ÅpentAksjonspunktMedEndringsdato,
+  args: {
+    ...ÅpentAksjonspunktMedEndringsdato.args,
+    readOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Viser kun varsel om åpent aksjonspunkt, uten skjema', async () => {
+      await expect(
+        await canvas.findByText('Vurder hvilken dato endringer i uttak skal gjelde fra'),
+      ).toBeInTheDocument();
+      await expect(canvas.getByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
+      await expect(canvas.queryByLabelText('Endringsdato')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Begrunnelse')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const RedigerVurdering: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+        virkningsdatoUttakNyeRegler: '2024-01-15',
+      }),
       onBekreftAksjonspunkt: payload => {
         submitSpy(payload);
         action('aksjonspunkt:submit')(payload);
@@ -191,39 +244,38 @@ export const RedigerVurdering: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
-      virkningsdatoUttakNyeRegler: '2024-01-15',
-    }),
     erOverstyrer: false,
     aksjonspunkter: [
-      lagVurderDatoNyRegelAksjonspunkt(AksjonspunktStatus.UTFØRT, {
+      lagVurderDatoNyRegelAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse:
           'Endringene i uttaksreglene skal gjelde fra 15. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
       }),
     ],
-    hentBehandling: fn(),
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const user = userEvent.setup();
 
-    await step('Viser advarsel for endringsdato', async () => {
-      await expect(
-        canvas.getByRole('row', {
-          name: 'Informasjon Endringsdato: 15.01.2024 Rediger Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse og ny arbeidsaktivitet.',
-        }),
-      );
-      await expect(canvas.getByRole('button', { name: 'Rediger' }));
+    await step('Viser infostripe for endringsdato', async () => {
+      await expect(await canvas.findByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Vis aksjonspunkt' })).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    await step('Viser lesevisning av vurderingen', async () => {
+      await user.click(canvas.getByRole('button', { name: 'Vis aksjonspunkt' }));
+      await expect(canvas.getByRole('button', { name: 'Skjul aksjonspunkt' })).toHaveAttribute('aria-expanded', 'true');
+      await expect(canvas.getByText('15.01.2024')).toBeInTheDocument();
+      await expect(canvas.getByText(/skal gjelde fra 15\. januar 2024/)).toBeInTheDocument();
     });
 
     await step('Rediger endringsdato', async () => {
-      await user.click(canvas.getByRole('button', { name: 'Rediger' }));
+      await user.click(canvas.getByRole('button', { name: 'Rediger vurdering' }));
+      await expect(canvas.queryByRole('button', { name: /aksjonspunkt/ })).not.toBeInTheDocument();
       const dateInput = canvas.getByLabelText('Endringsdato');
       await user.clear(dateInput);
       await user.type(dateInput, '20.01.2024');
-      const begrunnelseField = canvas.getByLabelText('Begrunnelse') as HTMLTextAreaElement;
+      const begrunnelseField = canvas.getByLabelText<HTMLTextAreaElement>('Begrunnelse');
       await user.clear(begrunnelseField);
       await user.type(
         begrunnelseField,
@@ -250,7 +302,53 @@ export const RedigerVurdering: Story = {
       });
     });
 
-    // Avbryter etter innsendt endring for å tilbakestille visningen i Storybook
-    await user.click(canvas.getByRole('button', { name: 'Avbryt' }));
+    await step('Avbryt går tilbake til lesevisningen', async () => {
+      await user.click(canvas.getByRole('button', { name: 'Avbryt' }));
+      await expect(canvas.queryByLabelText('Endringsdato')).not.toBeInTheDocument();
+      await expect(canvas.getByRole('button', { name: 'Skjul aksjonspunkt' })).toHaveAttribute('aria-expanded', 'true');
+      await expect(canvas.getByRole('button', { name: 'Rediger vurdering' })).toBeInTheDocument();
+    });
+  },
+};
+
+export const LesevisningForBeslutter: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+        virkningsdatoUttakNyeRegler: '2024-01-15',
+      }),
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    erOverstyrer: false,
+    aksjonspunkter: [
+      lagVurderDatoNyRegelAksjonspunkt(aksjonspunktStatus.UTFØRT, {
+        begrunnelse:
+          'Endringene i uttaksreglene skal gjelde fra 15. januar 2024 da dette er datoen for når de nye reglene trådte i kraft.',
+      }),
+    ],
+    readOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const user = userEvent.setup();
+
+    await step('Skjuler aksjonspunktet som standard', async () => {
+      await expect(await canvas.findByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
+      await expect(canvas.queryByText('Begrunnelse')).not.toBeInTheDocument();
+    });
+
+    await step('Viser vurderingen uten mulighet for å redigere', async () => {
+      await user.click(canvas.getByRole('button', { name: 'Vis aksjonspunkt' }));
+      await expect(canvas.getByText('Begrunnelse')).toBeInTheDocument();
+      await expect(canvas.getByText(/skal gjelde fra 15\. januar 2024/)).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Rediger vurdering' })).not.toBeInTheDocument();
+    });
+
+    await step('Skjuler vurderingen igjen', async () => {
+      await user.click(canvas.getByRole('button', { name: 'Skjul aksjonspunkt' }));
+      await expect(canvas.queryByText('Begrunnelse')).not.toBeInTheDocument();
+    });
   },
 };

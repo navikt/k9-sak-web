@@ -1,5 +1,6 @@
 import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
+import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { UngVedtak, type UngVedtakProps } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
@@ -8,6 +9,7 @@ import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 export interface UngVedtakIndexProps {
   aksjonspunkter: UngVedtakProps['aksjonspunkter'];
+  totrinnAksjonspunkter?: UngVedtakProps['totrinnAksjonspunkter'];
   behandling: UngVedtakBehandlingDto;
   vedtakBekreftelseCallback: UngVedtakProps['vedtakBekreftelseCallback'];
   vilkar: UngVedtakVilkårDto[];
@@ -17,6 +19,7 @@ export interface UngVedtakIndexProps {
 
 export const UngVedtakIndex = ({
   aksjonspunkter,
+  totrinnAksjonspunkter,
   behandling,
   vedtakBekreftelseCallback,
   vilkar,
@@ -30,6 +33,7 @@ export const UngVedtakIndex = ({
     refetch: refetchVedtaksbrevValg,
   } = useQuery({
     queryKey: ['vedtaksbrevValg', behandling.id, api.backend],
+    throwOnError: ignore404Errors,
     queryFn: async () => {
       const response = await api.vedtaksbrevValg(behandling.id!);
       return response;
@@ -44,6 +48,7 @@ export const UngVedtakIndex = ({
       {!isLoading && (
         <UngVedtak
           aksjonspunkter={aksjonspunkter}
+          totrinnAksjonspunkter={totrinnAksjonspunkter}
           api={api}
           behandling={behandling}
           vedtakBekreftelseCallback={vedtakBekreftelseCallback}

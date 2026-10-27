@@ -11,6 +11,10 @@ runs:
     - shell: bash
       run: |
         corepack enable
-        yarn config set npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
-        yarn config set npmScopes.navikt.npmAlwaysAuth true
-        yarn config set npmScopes.navikt.npmAuthToken ${{ inputs.npmAuthToken }}
+        # --home skriver til $HOME/.yarnrc.yml, ikke den sporede repo-filen, slik at token aldri havner i en diff og dermed ikke bør bli committet ved uhell.
+        yarn config set --home npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
+        yarn config set --home npmScopes.navikt.npmAlwaysAuth true
+        yarn config set --home npmScopes.navikt.npmAuthToken "${{ inputs.npmAuthToken }}"
+        yarn config set --home npmScopes.nais.npmRegistryServer "https://npm.pkg.github.com"
+        yarn config set --home npmScopes.nais.npmAlwaysAuth true
+        yarn config set --home npmScopes.nais.npmAuthToken "${{ inputs.npmAuthToken }}"

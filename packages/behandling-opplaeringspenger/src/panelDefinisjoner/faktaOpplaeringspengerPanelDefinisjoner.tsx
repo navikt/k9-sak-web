@@ -15,6 +15,7 @@ import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPan
 import SykdomOgOpplæringPanelDef from './faktaPaneler/SykdomOgOpplæringPanelDef';
 import VergeFaktaPanelDef from './faktaPaneler/VergeFaktaPanelDef';
 import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
+import YtelserFaktaPanelDef from './faktaPaneler/YtelserFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),
@@ -31,6 +32,7 @@ const faktaPanelDefinisjoner = [
   new NyInntektPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
+  new YtelserFaktaPanelDef(),
   new SoknadsperioderFaktaPanelDef(),
   new VergeFaktaPanelDef(),
   new UtenlandsoppholdFaktaPanelDef(),

@@ -7,8 +7,13 @@ import {
 } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
+type ForeldelseFormData = {
+  perioder: ForeldelsesresultatActivity[];
+  erEndret: boolean;
+};
+
 const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
-  const [formData, setFormData] = useState<ForeldelsesresultatActivity[] | undefined>(undefined);
+  const [formData, setFormData] = useState<ForeldelseFormData | undefined>(undefined);
   const {
     behandling,
     perioderForeldelse,

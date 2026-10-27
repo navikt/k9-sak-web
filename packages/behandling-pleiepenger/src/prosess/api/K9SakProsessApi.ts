@@ -1,5 +1,5 @@
+import type { BeregningsgrunnlagDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/BeregningsgrunnlagDto.js';
 import {
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto,
   k9_oppdrag_kontrakt_simulering_v1_SimuleringDto,
   type k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
@@ -14,16 +14,12 @@ import {
   type k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto,
   k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto,
-  k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 
 export interface K9SakProsessApi {
   getAksjonspunkter(behandlingUuid: string): Promise<k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]>;
   getVilkår(behandlingUuid: string): Promise<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[]>;
   getFagsak(saksnummer: string): Promise<k9_sak_kontrakt_fagsak_FagsakDto>;
-  getUttaksplan(
-    behandlingUuid: string,
-  ): Promise<k9_sak_web_app_tjenester_behandling_uttak_UttaksplanMedUtsattePerioder>;
   getBeregningsresultatMedUtbetaling(
     behandlingUuid: string,
   ): Promise<k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto>;
@@ -32,9 +28,7 @@ export interface K9SakProsessApi {
   getBeregningreferanserTilVurdering(
     behandlingUuid: string,
   ): Promise<k9_sak_kontrakt_beregningsgrunnlag_BeregningsgrunnlagKoblingDto[]>;
-  getAlleBeregningsgrunnlag(
-    behandlingUuid: string,
-  ): Promise<folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_BeregningsgrunnlagDto[]>;
+  getAlleBeregningsgrunnlag(behandlingUuid: string): Promise<BeregningsgrunnlagDto[]>;
   getBehandling(behandlingUuid: string): Promise<k9_sak_kontrakt_behandling_BehandlingDto>;
   getSimuleringResultat(behandlingUuid: string): Promise<k9_oppdrag_kontrakt_simulering_v1_SimuleringDto>;
   getTilbakekrevingValg(behandlingUuid: string): Promise<k9_sak_kontrakt_økonomi_tilbakekreving_TilbakekrevingValgDto>;

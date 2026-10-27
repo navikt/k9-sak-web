@@ -1,7 +1,18 @@
-.image {
-  height: 20px;
-  margin-left: 10px;
-  width: 25px;
+.dokumenttypeContainer {
+  flex: 1 1 22rem;
+  max-width: 22rem;
+  min-width: 14rem;
+}
+
+.dokumenttypeFilter {
+  width: 100%;
+}
+
+/* Skiller "vis kun denne behandlingen" fra dokumenttypene i nedtrekkslisten */
+.dokumenttypeFilter :global(.aksel-combobox__list-item:first-child) {
+  border-bottom: 2px solid #3e3832;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .starIcon {
@@ -24,16 +35,13 @@
   align-items: center;
   display: flex;
   margin-left: auto;
-}
-
-.externalIcon {
-  margin-bottom: 0.25rem;
-  margin-left: 0.5rem;
+  white-space: nowrap;
 }
 
 .controlsContainer {
   align-items: baseline;
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   margin-bottom: 1.875rem;
 }

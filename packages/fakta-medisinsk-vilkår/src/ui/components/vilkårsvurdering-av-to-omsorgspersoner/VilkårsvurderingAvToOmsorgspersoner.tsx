@@ -27,7 +27,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   hentSykdomsstegStatus,
   sykdomsstegStatus,
 }: VilkårsvurderingAvToOmsorgspersonerProps): JSX.Element => {
-  const { endpoints, onFinished, httpErrorHandler, readOnly } = React.useContext(ContainerContext);
+  const { endpoints, onFinished, errorNotifier, readOnly } = React.useContext(ContainerContext);
   const refetchBehandlingVedSykdomsendring = useRefetchBehandlingVedSykdomsendring();
   const controller = useMemo(() => new AbortController(), []);
 
@@ -53,7 +53,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
-    httpUtils.get<Vurderingsoversikt>(endpoints.vurderingsoversiktBehovForToOmsorgspersoner, httpErrorHandler, {
+    httpUtils.get<Vurderingsoversikt>(endpoints.vurderingsoversiktBehovForToOmsorgspersoner, errorNotifier, {
       signal: controller.signal,
     });
 

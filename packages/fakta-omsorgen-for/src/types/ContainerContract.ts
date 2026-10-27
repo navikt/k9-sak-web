@@ -8,6 +8,9 @@ export interface ContainerContract {
   };
   readOnly: boolean;
   onFinished: (vurdering, fosterbarnForOmsorgspenger) => void;
-  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
+  errorNotifier: (error: Error) => void;
   sakstype?: FagsakYtelsesType;
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting =
+  import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_OMSORGEN_FOR_V2'];

@@ -3,9 +3,9 @@ import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.
 import { Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import NetworkErrorPage from '../../app/feilmeldinger/NetworkErrorPage.js';
 import { addLegacySerializerOption } from '../../utils/axios/axiosUtils.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
+import { AppError } from '../../app/errorhandling/AppError.js';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;
@@ -33,6 +33,7 @@ export const VurderNyoppstartetIndex = ({
     data: nyoppstartetData,
     isFetching,
     isError,
+    error,
   } = useQuery<NyoppstartetData>({
     queryKey: ['nyoppstartet', behandlingUUID],
     queryFn: () =>
@@ -42,6 +43,7 @@ export const VurderNyoppstartetIndex = ({
           addLegacySerializerOption({ params: { behandlingUuid: behandlingUUID } }),
         )
         .then(({ data }) => data),
+    throwOnError: false,
   });
 
   const formDefaultValues = {
@@ -54,7 +56,11 @@ export const VurderNyoppstartetIndex = ({
     return <Loader />;
   }
   if (isError) {
-    return <NetworkErrorPage />;
+    if (error != null) {
+      throw error;
+    } else {
+      throw new AppError({ message: 'isError var true, men error var undefined' });
+    }
   }
   return (
     <VurderNyoppstartet

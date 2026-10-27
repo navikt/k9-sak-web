@@ -20,7 +20,7 @@ const vurderingsoversiktMock = {
   links: [],
 } as any;
 
-const httpErrorHandlerMock = () => null;
+const errorNotifierMock = () => null;
 const contextWrapper = (ui, contextValues?: Partial<ContainerContract>) =>
   render(
     <BehandlingProvider refetchBehandling={vi.fn()}>
@@ -28,7 +28,7 @@ const contextWrapper = (ui, contextValues?: Partial<ContainerContract>) =>
         <ContainerContext.Provider
           value={
             {
-              httpErrorHandler: httpErrorHandlerMock,
+              errorNotifier: errorNotifierMock,
               endpoints: { status: statusEndpointMock },
               ...contextValues,
             } as any

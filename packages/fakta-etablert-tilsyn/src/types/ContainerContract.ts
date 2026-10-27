@@ -5,11 +5,12 @@ interface ContainerContract {
     sykdom: string;
     sykdomInnleggelse: string;
   };
-  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   lagreBeredskapvurdering: (data: any) => void;
   lagreNattevåkvurdering: (data: any) => void;
-  harAksjonspunktForBeredskap: boolean;
-  harAksjonspunktForNattevåk: boolean;
+  harUløstAksjonspunktForBeredskap: boolean;
+  harUløstAksjonspunktForNattevåk: boolean;
+  harLøstAksjonspunktForBeredskap: boolean;
+  harLøstAksjonspunktForNattevåk: boolean;
 }
 
 export default ContainerContract;

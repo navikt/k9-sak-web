@@ -1,0 +1,23 @@
+.headerAapen {
+  border-bottom: none;
+}
+
+.ikon {
+  flex-shrink: 0;
+}
+
+.tekst {
+  flex: 1;
+}
+
+.visKnapp {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Innholdet skal ha samme bakgrunn som headeren og starte på linje med teksten (padding + ikon + gap) */
+.innhold {
+  background-color: var(--ax-bg-moderate);
+  padding-block: var(--ax-space-16) var(--ax-space-20);
+  padding-inline-start: calc(var(--ax-space-20) + var(--ax-space-24) + var(--ax-space-8));
+}

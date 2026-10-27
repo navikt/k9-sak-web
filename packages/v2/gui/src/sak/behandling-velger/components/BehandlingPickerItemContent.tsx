@@ -1,7 +1,10 @@
-import { k9_kodeverk_behandling_BehandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { ung_sak_kontrakt_behandling_BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { behandlingType as BehandlingDtoType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { BehandlingVisningsnavn } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingVisningsnavn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { finnKodeverkTypeForBehandlingType } from '@k9-sak-web/gui/utils/behandlingUtils.js';
+import {
+  erAktivitetspengerOpphørsbehandling,
+  finnKodeverkTypeForBehandlingType,
+} from '@k9-sak-web/gui/utils/behandlingUtils.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CalendarIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Heading, HStack } from '@navikt/ds-react';
@@ -17,6 +20,10 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
@@ -41,6 +48,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   index,
   behandling,
 }) => {
+  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = React.useContext(FeatureTogglesContext);
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const behandlingsresultatTypeNavn = behandling.behandlingsresultat
     ? kodeverkNavnFraKode(
@@ -54,10 +62,15 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const erUnntaksløype = behandling.type === BehandlingDtoType.UNNTAKSBEHANDLING;
   const opprettet = behandling.opprettet;
   const avsluttet = behandling.avsluttet;
-  const erEndringAvBarnetillegg =
-    behandling.visningsnavn === ung_sak_kontrakt_behandling_BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
+  const erEndringAvBarnetillegg = behandling.visningsnavn === BehandlingVisningsnavn.ENDRING_AV_BARNETILLEGG;
   const visKunStartdato =
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
+  const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
+  const innvilget = behandlingsresultatTypeKode === BehandlingResultatType.INNVILGET;
+  const erKroniskSyktBarn = behandling.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS;
+  const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']?.find(
+    vilkar => vilkar.utfall == vilkårStatus.OPPFYLT,
+  );
   return (
     <Box
       padding="space-16"
@@ -79,13 +92,25 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             {søknadsperioder?.length > 0 && (
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
+
+            {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && erKroniskSyktBarn && innvilget && utvidetRett?.periode && (
+              <BodyShort as="span" size="small">
+                <DateLabel dateString={utvidetRett?.periode?.fom} /> -{' '}
+                <DateLabel dateString={utvidetRett?.periode?.tom} />
+              </BodyShort>
+            )}
           </HStack>
           <HStack gap="space-8" align={'center'} className="mt-1">
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">
               Resultat
               {`: `}
-              {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
+              {getStatusText(
+                behandlingsresultatTypeKode,
+                behandlingsresultatTypeNavn,
+                erFerdigstilt,
+                erAktivitetspengerOpphør,
+              )}
               {avsluttet && (
                 <BodyShort as="span" size="small">
                   {` `}

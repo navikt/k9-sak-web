@@ -172,7 +172,7 @@ export const OpptjeningVilkarAksjonspunktPanel = ({
         isAksjonspunktOpen={skalKunneEndreOpptjening}
         isDirty={formMethods.formState.isDirty}
         readOnly={readOnly || !field?.vurderesIBehandlingen}
-        originalErVilkarOk={field?.kode === 'OPPFYLT'}
+        originalErVilkarOk={field?.kode !== undefined ? erVilkarOk(field.kode) : undefined}
         aksjonspunktErLøst={aksjonspunktErLøst}
         lovReferanse={lovReferanse}
         behandlingId={behandlingId}

@@ -5,12 +5,12 @@ import { Accordion, Label, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 
 import { required } from '@navikt/ft-form-validators';
+import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AvklaringsbehovDefinisjon.js';
 
 import type {
   TilkommetAktivitetFormValues,
   TilkommetAktivitetValues,
 } from '../../types/FordelBeregningsgrunnlagPanelValues.js';
-import { FaktaFordelBeregningAvklaringsbehovCode } from '../../types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
 import { SubmitButton } from '../felles/SubmitButton.js';
 import { VurdertIForrigeBehandlingIcon } from '../felles/VurdertIForrigeBehandlingIcon.js';
 import { TidligereVurderteAktiviteterPanel } from './TidligereVurderteAktiviteterPanel.js';
@@ -77,7 +77,7 @@ export const TilkommetAktivitetAccordion = ({
 
   const tidligereVurderte = sammenslåttePerioder.filter(p => erVurdertTidligere(p, beregningsgrunnlag));
   const avklaringsbehovTilkommetAktivitet = beregningsgrunnlag?.avklaringsbehov.find(
-    v => v.definisjon === FaktaFordelBeregningAvklaringsbehovCode.VURDER_NYTT_INNTKTSFRHLD,
+    v => v.definisjon === AvklaringsbehovDefinisjon.VURDER_NYTT_INNTKTSFRHLD,
   );
 
   const showPanel = (fom: string) => {

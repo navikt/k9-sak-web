@@ -1,11 +1,16 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button } from '@navikt/ds-react';
-import { RhfDatepicker, RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
+import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useUttakContext } from '../context/UttakContext';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDatoAksjonspunkt.module.css';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
 
 interface FormData {
   virkningsdato: string;
@@ -13,18 +18,25 @@ interface FormData {
 }
 
 interface Props {
-  initialValues?: {
-    virkningsdato: string;
-    begrunnelse: string;
-  };
+  redigerVirkningsdato: boolean;
+  lukkRedigering: () => void;
 }
 
-const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
-  const { readOnly, behandling, uttakApi, oppdaterBehandling, setRedigervirkningsdato, virkningsdatoUttakNyeRegler } =
-    useUttakContext();
+const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props) => {
+  const { readOnly, behandling, aksjonspunkter, onAksjonspunktBekreftet } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
+  const aksjonspunkt = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+  );
+  const oppdaterBehandling = useRefetchBehandling();
 
   const formMethods = useForm<FormData>({
-    defaultValues: initialValues,
+    defaultValues: {
+      begrunnelse: aksjonspunkt?.begrunnelse ?? '',
+      virkningsdato: virkningsdatoUttakNyeRegler ?? '',
+    },
   });
 
   const mutation = useMutation({
@@ -43,8 +55,9 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
       };
       return uttakApi.bekreftAksjonspunkt(payload);
     },
-    onSuccess: () => {
-      oppdaterBehandling();
+    onSuccess: async () => {
+      await oppdaterBehandling();
+      onAksjonspunktBekreftet?.();
     },
   });
 
@@ -54,9 +67,8 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
-      <div className={styles['vurderDatoAksjonspunktContainer']}>
-        <RhfDatepicker
-          control={formMethods.control}
+      <div className={styles.vurderDatoAksjonspunktContainer}>
+        <Datovelger
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
@@ -75,13 +87,13 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
           readOnly={readOnly}
         />
         {!readOnly && (
-          <div className={styles['knapper']}>
-            <Button size="small" type="submit" className={styles['bekreft']}>
+          <div className={styles.knapper}>
+            <Button size="small" type="submit" className={styles.bekreft}>
               Bekreft og fortsett
             </Button>
 
-            {virkningsdatoUttakNyeRegler && (
-              <Button variant="secondary" type="button" size="small" onClick={() => setRedigervirkningsdato(false)}>
+            {redigerVirkningsdato && (
+              <Button variant="secondary" type="button" size="small" onClick={() => lukkRedigering()}>
                 Avbryt
               </Button>
             )}

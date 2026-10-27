@@ -63,6 +63,12 @@ export const BehandleKlageFormNfp = ({
       setIsSubmitting(false);
     }
   };
+  const handleSaveKlage = async (params: SaveKlageParams) => {
+    const isValid = await formMethods.trigger('klageVurdering');
+    if (isValid) {
+      return saveKlage(params);
+    }
+  };
   const formValues = formMethods.watch();
   const { hentKodeverkForKode } = useKodeverkContext();
   const medholdReasons = hentKodeverkForKode(KodeverkType.KLAGE_MEDHOLD_ARSAK) || [];
@@ -115,7 +121,7 @@ export const BehandleKlageFormNfp = ({
             formValues.fritekstTilBrev.length > 2 && (
               <TempSaveAndPreviewKlageLink
                 formValues={formValues}
-                saveKlage={saveKlage}
+                saveKlage={handleSaveKlage}
                 readOnly={isReadOnly}
                 aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
                 previewCallback={previewCallback}
@@ -128,7 +134,7 @@ export const BehandleKlageFormNfp = ({
               </Button>
               <TempsaveKlageButton
                 formValues={formValues}
-                saveKlage={saveKlage}
+                saveKlage={handleSaveKlage}
                 readOnly={isReadOnly}
                 aksjonspunktCode={AksjonspunktCodes.BEHANDLE_KLAGE_NFP}
                 isSubmitting={isSubmitting}

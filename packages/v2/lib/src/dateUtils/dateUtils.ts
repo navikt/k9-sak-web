@@ -91,6 +91,18 @@ export const findUncoveredDays = (opprinneligPeriode: FomTom, perioder: FomTom[]
   return uncoveredDays;
 };
 
+export const isPeriodCoveredByPeriod = (periodeSomKanskjeDekkes: FomTom, dekkePeriode: FomTom): boolean => {
+  const dekkePeriodeFom = initializeDate(dekkePeriode.fom);
+  const dekkePeriodeTom = initializeDate(dekkePeriode.tom);
+  const periodeSomKanskjeDekkesFom = initializeDate(periodeSomKanskjeDekkes.fom);
+  const periodeSomKanskjeDekkesTom = initializeDate(periodeSomKanskjeDekkes.tom);
+
+  return (
+    dekkePeriodeFom.isSameOrBefore(periodeSomKanskjeDekkesFom) &&
+    dekkePeriodeTom.isSameOrAfter(periodeSomKanskjeDekkesTom)
+  );
+};
+
 /**
  * Combines consecutive and overlapping periods into a minimal set of non-overlapping periods.
  * Can handle both single dates (as strings) and periods (as objects with fom and tom).

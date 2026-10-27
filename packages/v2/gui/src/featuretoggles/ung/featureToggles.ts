@@ -6,7 +6,6 @@ import { initProdFeatureToggles, initQFeatureToggles } from '../FeatureToggles.j
  * NB: Toggles satt her skal ikkje vere satt i baseQFeatureToggles i ../FeatureToggles.ts. Det blir då kompileringsfeil.
  */
 const ungSpecificFeatureToggles = {
-  BRUK_V2_VILKAR_OPPTJENING: true,
   NYE_NOKKELTALL: true,
   UNG_KLAGE: true,
 } as const;
@@ -20,7 +19,7 @@ const ungSpecificFeatureToggles = {
  */
 export const qFeatureToggles = initQFeatureToggles(ungSpecificFeatureToggles)({
   ENDRE_FRIST: true,
-  AKTIVITETSPENGER: true,
+  BRUK_V2_FEILUTBETALING: true,
   // Legg til featuretoggles for ung Q her
 });
 

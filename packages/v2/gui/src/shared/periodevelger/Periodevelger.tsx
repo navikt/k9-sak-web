@@ -1,8 +1,8 @@
-import { useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
-import Datovelger from '../datovelger/Datovelger';
 import { ErrorMessage, HStack, VStack } from '@navikt/ds-react';
+import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
+import Datovelger from '../datovelger/Datovelger';
 
 interface PeriodevelgerProps {
   minDate?: Date;
@@ -80,7 +80,7 @@ const Periodevelger = ({
         <Datovelger
           name={fromField.name}
           label={fromLabel}
-          disabled={readOnly}
+          readOnly={readOnly}
           size={size}
           validate={[
             ...(fromField.validate || []),
@@ -98,15 +98,13 @@ const Periodevelger = ({
         <Datovelger
           name={toField.name}
           label={toLabel}
-          disabled={readOnly}
+          readOnly={readOnly}
           size={size}
           validate={[
             ...(toField.validate || []),
             (value: string) => {
               if (!value || !fraVerdi) return undefined;
-              return dayjs(value).isSameOrBefore(dayjs(fraVerdi), 'day')
-                ? `Kan ikke være før "${fromLabel}"`
-                : undefined;
+              return dayjs(value).isBefore(dayjs(fraVerdi), 'day') ? `Kan ikke være før "${fromLabel}"` : undefined;
             },
             value => maxDateValidator(value, maxDate),
             value => minDateValidator(value, minDate),

@@ -8,8 +8,6 @@ import { initProdFeatureToggles, initQFeatureToggles, type YtelseSpesifikkeFeatu
 const k9SpecificFeatureToggles = {
   FLYTT_ALDERSVILKAR: true,
   UTVIDET_VARSELFELT: true,
-  SAKSBEHANDLERINITIERT_INNTEKTSMELDING: true,
-  BRUK_V2_INNTEKTSMELDING: true,
 } as const satisfies YtelseSpesifikkeFeatureToggles;
 
 /**
@@ -22,11 +20,20 @@ const k9SpecificFeatureToggles = {
 export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   NYE_NOKKELTALL: true,
   OVERSTYR_BEREGNING: true,
-  BRUK_V2_UTENLANDSOPPHOLD: true,
-  BRUK_V2_VILKAR_OPPTJENING: true,
+  BRUK_V2_ARBEID_OG_INNTEKT: true,
+  BRUK_V2_DIREKTE_OVERGANG: true,
+  VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
+  BRUK_V2_FEILUTBETALING: true,
   PROSESS_MENY_V2: true,
-  REVURDERING_FRA_STEG_V2: true,
+  DELVIS_REVURDERING_MEDISINSK_VILKAR: true,
+  VIS_INNLEGGELSE_FOR_PILS: true,
+  FORENKLE_OMS_VEDTAK_STATUS: true,
+  BRUK_OMSORGEN_FOR_V2: true,
+  BRUK_V2_DELING_AV_DAGER: true,
+  BRUK_V2_PROSESS_UNNTAK: true,
+  BRUK_V2_OM_BARNET: true,
+  STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: true,
 });
 
 /**

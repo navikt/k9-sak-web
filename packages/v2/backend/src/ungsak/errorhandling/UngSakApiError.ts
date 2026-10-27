@@ -1,8 +1,14 @@
 import { SharedFeilDtoError } from '../../shared/errorhandling/SharedFeilDtoError.js';
 
 export class UngSakApiError extends SharedFeilDtoError {
-  constructor(req: Request, resp: Response, error: string | object, navCallid: string | null) {
-    super(req, resp, error, navCallid);
+  constructor(
+    req: Request,
+    resp: Response | undefined,
+    error: string | object,
+    navCallid: string | null,
+    options?: ErrorOptions,
+  ) {
+    super(req, resp, error, navCallid, options);
     this.name = UngSakApiError.name;
   }
 }

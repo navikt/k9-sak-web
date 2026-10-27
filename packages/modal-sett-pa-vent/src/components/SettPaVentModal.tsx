@@ -11,8 +11,8 @@ import {
   maxLength,
   required,
 } from '@fpsak-frontend/utils';
-import { isUngWeb } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { isUngdomsprogramytelsen } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
@@ -186,7 +186,7 @@ export const SettPaVentModal = ({
     } else if (showAvbryt) {
       ariaCheck();
     } else {
-      if (isUngWeb()) {
+      if (isUngdomsprogramytelsen()) {
         goToSearch();
       }
       goToLos();

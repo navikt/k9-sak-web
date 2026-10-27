@@ -14,12 +14,15 @@ import { BeregnetUtbetalingStegInitPanel } from './prosess/BeregnetUtbetalingSte
 import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegInitPanel';
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
+import { OpphørInitPanel } from './prosess/OpphørInitPanel';
+import { SimuleringProsessStegInitPanel } from './prosess/SimuleringProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
-import { useProsessmotor } from './Prossesmotor';
+import { useProsessmotor } from './Prosessmotor';
 
 interface OwnProps {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
+  saksnummer: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
@@ -29,6 +32,7 @@ interface OwnProps {
 export const AktivitetspengerProsess = ({
   api,
   behandling,
+  saksnummer,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
@@ -36,7 +40,6 @@ export const AktivitetspengerProsess = ({
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
   const { pollTilBehandlingErKlar, isPolling } = usePollBehandlingStatus(api, behandling, setBehandling);
-
   const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
@@ -50,7 +53,7 @@ export const AktivitetspengerProsess = ({
     [vedtakFormState, setVedtakFormState],
   );
 
-  const prosessteg = useProsessmotor({ api, behandling });
+  const { prosessteg, erKlar } = useProsessmotor({ api, behandling });
 
   const lukkModalOgGåTilSøk = useCallback(() => {
     toggleIverksetterVedtakModal(false);
@@ -85,7 +88,7 @@ export const AktivitetspengerProsess = ({
         lukkModal={lukkModalOgGåTilSøk}
         tekstkode="Behandlingen er sendt til godkjenning."
       />
-      <ProsessMeny steg={prosessteg}>
+      <ProsessMeny steg={prosessteg} erKlar={erKlar}>
         <Bleed marginInline="space-20">
           <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
             {prosessteg.map(steg => {
@@ -113,6 +116,16 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
+              if (steg.id === prosessStegCodes.OPPHØR) {
+                return (
+                  <OpphørInitPanel
+                    key={steg.id}
+                    api={api}
+                    behandling={behandling}
+                    onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  />
+                );
+              }
               if (steg.id === prosessStegCodes.FORUTGAENDE_MEDLEMSKAP) {
                 return (
                   <ForutgåendeMedlemskapInitPanel
@@ -123,7 +136,7 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-              if (steg.id === prosessStegCodes.BEREGNET_UTBETALING) {
+              if (steg.id === prosessStegCodes.KONTROLL_AV_INNTEKT) {
                 return (
                   <BeregnetUtbetalingStegInitPanel
                     key={steg.id}
@@ -133,7 +146,16 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-
+              if (steg.id === prosessStegCodes.SIMULERING) {
+                return (
+                  <SimuleringProsessStegInitPanel
+                    key={steg.id}
+                    api={api}
+                    behandling={behandling}
+                    saksnummer={saksnummer}
+                  />
+                );
+              }
               return null;
             })}
           </Box>

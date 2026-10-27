@@ -20,7 +20,6 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto as AksjonspunktDto,
-  folketrygdloven_kalkulus_response_v1_beregningsgrunnlag_gui_frisinn_AvslagsårsakPrPeriodeDto as AvslagsårsakPrPeriodeDto,
   k9_sak_kontrakt_behandling_BehandlingÅrsakDto as BehandlingÅrsakDto,
   k9_sak_kontrakt_vedtak_DokumentMedUstrukturerteDataDto as DokumentMedUstrukturerteDataDto,
   k9_sak_kontrakt_ytelser_OverlappendeYtelseDto as OverlappendeYtelseDto,
@@ -30,6 +29,7 @@ import {
   k9_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto,
   k9_sak_kontrakt_behandling_BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { AvslagsårsakPrPeriodeDto } from '@k9-sak-web/backend/k9sak/kontrakt/beregningsgrunnlag/AvslagsårsakPrPeriodeDto.js';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -60,6 +60,8 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import styles from './vedtakForm.module.css';
+import { aksjonspunktErUtført } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 
 const isVedtakSubmission = true;
 
@@ -129,9 +131,17 @@ export const VedtakForm: React.FC<Props> = ({
   const { kodeverkNavnFraKode, behandlingType } = useKodeverkContext();
   const intl = useIntl();
 
+  const harVurdertOverlappendeYtelserFørVedtak = aksjonspunktErUtført(
+    aksjonspunkter,
+    AksjonspunktDefinisjon.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+  );
+
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
-  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
+  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(
+    harVurdertOverlappendeYtelserFørVedtak,
+  );
+
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
@@ -495,7 +505,7 @@ export const VedtakForm: React.FC<Props> = ({
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus}
-              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
+              aksjonspunkter={aksjonspunkter}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               viseFlereSjekkbokserForBrev={

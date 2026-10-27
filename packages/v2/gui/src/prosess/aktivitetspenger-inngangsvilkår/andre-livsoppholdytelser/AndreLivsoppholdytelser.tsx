@@ -1,0 +1,308 @@
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { VilkårLivsoppholdsytelserPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VilkårLivsoppholdsytelserPeriodeVurderingDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { Alert, Box, Button, HStack, VStack } from '@navikt/ds-react';
+import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
+import {
+  getPeriodStatus,
+  VilkårSplittPanel,
+  type VilkårSplittPanelPeriod,
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
+import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils';
+import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi';
+import {
+  andreLivsoppholdsytelserVurderingerQueryOptions,
+  perioderSomKanAvkortesQueryOptions,
+} from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
+import { buildInitialValues, type AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
+import { AndreLivsoppholdytelserLesevisning } from './AndreLivsoppholdytelserLesevisning';
+import { AndreLivsoppholdytelserSkjema } from './AndreLivsoppholdytelserSkjema';
+
+interface Props {
+  andreLivsoppholdytelserAp: AksjonspunktDto | undefined;
+  lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
+  andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
+  readOnly: boolean;
+  behandling: BehandlingDto;
+  api: AktivitetspengerApi;
+  onAksjonspunktBekreftet: () => Promise<void>;
+  isPermanentlyReadOnly: boolean;
+}
+
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  harAvslag: boolean | undefined;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  harAvslag,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="info" size="small">
+          Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter && harAvslag) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
+export const AndreLivsoppholdytelser = ({
+  andreLivsoppholdytelserAp,
+  lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
+  andreLivsoppholdytelserVilkår,
+  readOnly,
+  api,
+  behandling,
+  onAksjonspunktBekreftet,
+  isPermanentlyReadOnly,
+}: Props) => {
+  const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
+  const {
+    data: { vurderinger },
+  } = useSuspenseQuery(andreLivsoppholdsytelserVurderingerQueryOptions(api, behandling));
+  const avkortingsperiodeLivsopphold = avkortingsperioder?.resultat.find(
+    v => v.vilkårType === vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  );
+  const søknadsperioder = byggVisningsperioder(
+    andreLivsoppholdytelserVilkår,
+    avkortingsperiodeLivsopphold?.perioder ?? [],
+  );
+
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+    id: periode.periode.fom,
+    status: getPeriodStatus(periode.vilkarStatus),
+    label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
+    periode: periode.periode,
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
+  }));
+  const [selectedId, setSelectedId] = useState(
+    () =>
+      søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
+      perioder[0]?.id ??
+      '',
+  );
+  useEffect(() => {
+    if (!perioder.some(period => period.id === selectedId)) {
+      setSelectedId('');
+    }
+  }, [perioder, selectedId]);
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
+  const isAndreLivsoppholdytelserApSolved = aksjonspunktErLøst(andreLivsoppholdytelserAp);
+  const formHook = useForm<AndreLivsoppholdytelserFormData>({
+    defaultValues: buildInitialValues(søknadsperioder, vurderinger),
+  });
+
+  const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
+    mutationFn: async (data: AndreLivsoppholdytelserFormData) => {
+      const vurdering = data.vurderinger[selectedId];
+      if (!vurdering) {
+        throw new Error('Kunne ikke finne vurdering for valgt periode');
+      }
+      const muligAvkorting = vurdering.muligAvkortingPeriode;
+      const andreLivsoppholdytelserErOppfylt = vurdering.andreLivsoppholdytelser === 'oppfylt';
+      const redigerMaksdatoAktiv =
+        andreLivsoppholdytelserErOppfylt &&
+        vurdering.redigerMaksdato &&
+        muligAvkorting !== undefined &&
+        vurdering.tom !== muligAvkorting.tom;
+      const begrunnelseInnvilget = vurdering.begrunnelse ?? '';
+      const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
+      const vurdertePerioder: VilkårLivsoppholdsytelserPeriodeVurderingDto[] = [
+        {
+          avslagsårsak: !andreLivsoppholdytelserErOppfylt ? vurdering.avslagsårsak : undefined,
+          ytelseNavn:
+            !andreLivsoppholdytelserErOppfylt &&
+            vurdering.avslagsårsak === AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE
+              ? vurdering.ytelseNavn
+              : undefined,
+          begrunnelse: begrunnelseInnvilget,
+          erVilkårOppfylt: andreLivsoppholdytelserErOppfylt,
+          periode: {
+            fom: vurdering.fom,
+            tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
+          },
+          fritekstVurderingBrev:
+            !andreLivsoppholdytelserErOppfylt && vurdering.harFritekstbrev ? vurdering.fritekst : undefined,
+        },
+      ];
+      if (redigerMaksdatoAktiv && muligAvkorting) {
+        vurdertePerioder.push({
+          avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
+          begrunnelse: begrunnelseAvkortet,
+          erVilkårOppfylt: false,
+          periode: {
+            fom: dayjs(vurdering.tom).add(1, 'day').format(ISO_DATE_FORMAT),
+            tom: muligAvkorting.tom,
+          },
+          fritekstVurderingBrev: undefined,
+        });
+      }
+
+      const payload = {
+        '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+        begrunnelse: `Aksjonspunkt ${aksjonspunktCodes.VURDER_ANDRE_LIVSOPPHOLDSYTELSER} VURDER_ANDRE_LIVSOPPHOLDSYTELSER bekreftet`, // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
+        vurdertePerioder,
+      };
+
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    },
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
+    },
+  });
+
+  const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
+    mutationFn: async () => sendTilBeslutter(api, behandling),
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
+    },
+  });
+
+  const vurdering = formHook.watch(`vurderinger.${selectedId}`);
+  const begrunnelseLabel = (
+    <span>
+      Vurder om søker mottar andre livsoppholdsytelser, jf.{' '}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        § 4 Forholdet til andre ytelser
+      </Lovreferanse>
+    </span>
+  );
+  const harAvslagIAndreLivsoppholdytelser = andreLivsoppholdytelserVilkår.perioder?.some(
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
+  const skalViseSendTilBeslutter =
+    !!harAvslagIAndreLivsoppholdytelser &&
+    !!lokalkontorForeslårVilkårAp &&
+    aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) &&
+    !readOnly;
+
+  if (!andreLivsoppholdytelserVilkår) {
+    return null;
+  }
+  if (
+    !andreLivsoppholdytelserAp &&
+    !andreLivsoppholdytelserVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)
+  ) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  if (andreLivsoppholdytelserVilkår.perioder?.every(p => p.vilkarStatus === Utfall.IKKE_RELEVANT)) {
+    return (
+      <Box width="fit-content">
+        <Alert variant="info" size="small">
+          Ingen perioder å vurdere.
+        </Alert>
+      </Box>
+    );
+  }
+
+  return (
+    <VStack gap="space-20">
+      {!isAndreLivsoppholdytelserApSolved && (
+        <Alert variant="warning" size="small">
+          Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.
+        </Alert>
+      )}
+      <VilkårSplittPanel
+        isAktivitetspenger
+        periods={perioder}
+        selectedItemId={selectedId}
+        onItemSelect={setSelectedId}
+        detailHeading="Vurdering av andre livsoppholdsytelser"
+        lovreferanse="§ 4"
+        defaultIsLocked={isAndreLivsoppholdytelserApSolved}
+        readOnly={readOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
+        afterEditButton={
+          <SendTilBeslutter
+            kanSendeTilBeslutter={skalViseSendTilBeslutter}
+            visForBeslutter={!!lokalkontorBeslutterAp}
+            harAvslag={harAvslagIAndreLivsoppholdytelser}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
+        }
+        lockedContent={
+          isAndreLivsoppholdytelserApSolved ? (
+            <VurdertAv ident={andreLivsoppholdytelserAp?.ansvarligSaksbehandler} />
+          ) : undefined
+        }
+      >
+        {(isFormLocked, setIsFormLocked, isDefaultLocked) =>
+          isFormLocked && vurdering ? (
+            <AndreLivsoppholdytelserLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
+          ) : (
+            <AndreLivsoppholdytelserSkjema
+              formHook={formHook}
+              selectedId={selectedId}
+              begrunnelseLabel={begrunnelseLabel}
+              isPending={isPending}
+              visAvbryt={isDefaultLocked}
+              onSubmit={async data => {
+                await bekreftAksjonspunktMutation(data);
+                setIsFormLocked(true);
+              }}
+              onAvbryt={() => {
+                formHook.reset(buildInitialValues(søknadsperioder, vurderinger));
+                setIsFormLocked(true);
+              }}
+            />
+          )
+        }
+      </VilkårSplittPanel>
+    </VStack>
+  );
+};

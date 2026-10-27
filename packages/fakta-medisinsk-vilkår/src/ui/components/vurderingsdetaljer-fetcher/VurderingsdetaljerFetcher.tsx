@@ -10,7 +10,7 @@ interface VurderingsdetaljerFetcherProps {
 }
 
 const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerFetcherProps): JSX.Element => {
-  const { httpErrorHandler } = React.useContext(ContainerContext);
+  const { errorNotifier } = React.useContext(ContainerContext);
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [vurdering, setVurdering] = React.useState<Vurdering | null>(null);
@@ -23,7 +23,7 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
     setIsLoading(true);
     setHentVurderingHarFeilet(false);
     httpUtils
-      .get(url, httpErrorHandler, { signal: controller.signal })
+      .get(url, errorNotifier, { signal: controller.signal })
       .then((vurderingResponse: Vurdering) => {
         const fetchedVurdering = new Vurdering(vurderingResponse);
         if (isMounted) {
@@ -40,7 +40,7 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
       isMounted = false;
       controller.abort();
     };
-  }, [httpErrorHandler, url]);
+  }, [errorNotifier, url]);
 
   if (isLoading) {
     return <Loader size="large" />;

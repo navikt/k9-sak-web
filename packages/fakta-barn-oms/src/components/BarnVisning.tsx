@@ -20,7 +20,7 @@ const BarnVisning = ({ barnet, index }: BarnInputProps) => (
         <FormattedMessage id="FaktaRammevedtak.BarnVisningNummer" values={{ nummer: index + 1 }} />
       </h4>
       <span className={styles.italic}>
-        {barnet.personIdent} ({beregnAntallÅr(barnet.barnRelevantIBehandling.fødselsdato)} år)
+        {barnet.personIdent} ({beregnAntallÅr(barnet.barnRelevantIBehandling?.fødselsdato)} år)
       </span>
     </div>
 

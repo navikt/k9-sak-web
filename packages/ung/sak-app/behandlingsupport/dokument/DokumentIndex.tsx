@@ -68,6 +68,7 @@ export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsak, saksnum
       fagsak={kodeverkKonvertertFagsak}
       saksnummer={saksnummer}
       behandlingUuid={behandlingUuid}
+      visDokumentgrupper={false}
     />
   );
 };

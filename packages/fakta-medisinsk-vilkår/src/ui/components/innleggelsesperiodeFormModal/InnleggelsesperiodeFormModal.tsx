@@ -1,18 +1,23 @@
-import { PeriodpickerListRHF } from '@fpsak-frontend/form';
+import { PeriodpickerListRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
 import { Personopplysninger } from '@k9-sak-web/types';
-import { Alert, Box, Button, Label, Modal } from '@navikt/ds-react';
+import { Alert, BodyShort, Box, Button, Label, Modal } from '@navikt/ds-react';
+import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
 import dayjs from 'dayjs';
 import React, { useRef, type JSX } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
+import { InnleggelsesperiodeBegrensning } from '../../../types/InnleggelsesperiodeBegrensning';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
+import { byggEndringer, erRadNyEllerEndret, InnleggelsesperiodeEndringRad } from './innleggelsesperiodeEndringer';
 import styles from './innleggelsesperiodeFormModal.module.css';
 
 export enum FieldName {
   INNLEGGELSESPERIODER = 'innleggelsesperioder',
+  SLETTEDE_PERIODER = 'slettedePerioder',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,7 +32,42 @@ interface InnleggelsesperiodeFormModal {
   isLoading: boolean;
   endringerPåvirkerAndreBehandlinger: (innleggelsesperioder: Period[]) => Promise<InnleggelsesperiodeDryRunResponse>;
   pleietrengendePart: Personopplysninger['pleietrengendePart'];
+  innleggelsesperiodeBegrensning?: InnleggelsesperiodeBegrensning | null;
+  fagsakYtelseType?: FagsakYtelsesType;
 }
+
+const begrunnelseValidators = {
+  required,
+  maxLength: maxLength(4000),
+  hasValidText,
+};
+
+const BegrunnelseForRad = ({ index, disabled }: { index: number; disabled: boolean }): JSX.Element | null => {
+  const [periode, opprinneligPeriode] = useWatch({
+    name: [
+      `${FieldName.INNLEGGELSESPERIODER}[${index}].period`,
+      `${FieldName.INNLEGGELSESPERIODER}[${index}].opprinneligPeriode`,
+    ],
+  });
+
+  if (!erRadNyEllerEndret(periode, opprinneligPeriode)) {
+    return null;
+  }
+
+  return (
+    <Box marginBlock="space-16 space-0">
+      <TextAreaRHF
+        id={`innleggelsesperiode-begrunnelse-${index}`}
+        name={`${FieldName.INNLEGGELSESPERIODER}.${index}.begrunnelse`}
+        label={
+          opprinneligPeriode ? 'Begrunn endring av perioden' : 'Beskriv hvor opplysningene om innleggelse kommer fra'
+        }
+        disabled={disabled}
+        validators={begrunnelseValidators}
+      />
+    </Box>
+  );
+};
 
 const InnleggelsesperiodeFormModal = ({
   defaultValues,
@@ -36,12 +76,19 @@ const InnleggelsesperiodeFormModal = ({
   isLoading,
   endringerPåvirkerAndreBehandlinger,
   pleietrengendePart,
+  innleggelsesperiodeBegrensning,
+  fagsakYtelseType,
 }: InnleggelsesperiodeFormModal): JSX.Element => {
+  const skalViseBegrunnelsefelt = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
+
   const formMethods = useForm({
     defaultValues: {
       [FieldName.INNLEGGELSESPERIODER]: defaultValues[FieldName.INNLEGGELSESPERIODER].map(innleggelsesPeriode => ({
         period: innleggelsesPeriode,
+        begrunnelse: '',
+        opprinneligPeriode: innleggelsesPeriode.fom ? innleggelsesPeriode : null,
       })),
+      [FieldName.SLETTEDE_PERIODER]: [] as InnleggelsesperiodeEndringRad[],
     },
   });
   const modalRef = useRef<HTMLDialogElement>(undefined);
@@ -51,10 +98,33 @@ const InnleggelsesperiodeFormModal = ({
     getValues,
   } = formMethods;
 
+  const slettedeFieldArray = useFieldArray({ control: formMethods.control, name: FieldName.SLETTEDE_PERIODER });
+
   const [showWarningMessage, setShowWarningMessage] = React.useState(false);
 
+  const datobegrensning = innleggelsesperiodeBegrensning
+    ? {
+        limitations: {
+          minDate: innleggelsesperiodeBegrensning.søknadsperiode.fom,
+          maxDate: innleggelsesperiodeBegrensning.søknadsperiode.tom,
+          invalidDateRanges: innleggelsesperiodeBegrensning.hullIPeriode,
+        },
+      }
+    : {};
+
+  const slettRad = (index: number, fieldArrayMethods: { remove: (i: number) => void }) => {
+    const opprinnelig = getValues(`${FieldName.INNLEGGELSESPERIODER}.${index}.opprinneligPeriode`);
+    if (skalViseBegrunnelsefelt && opprinnelig) {
+      slettedeFieldArray.append({ period: opprinnelig, opprinneligPeriode: opprinnelig, begrunnelse: '' });
+    }
+    fieldArrayMethods.remove(index);
+  };
+
   const handleSubmit = formState => {
-    onSubmit(formState);
+    const endringer = skalViseBegrunnelsefelt
+      ? byggEndringer(formState[FieldName.INNLEGGELSESPERIODER], formState[FieldName.SLETTEDE_PERIODER])
+      : [];
+    onSubmit({ ...formState, endringer: endringer.length ? endringer : undefined });
     setModalIsOpen(false);
     setShowWarningMessage(false);
   };
@@ -91,10 +161,12 @@ const InnleggelsesperiodeFormModal = ({
                 fromDatepickerProps={{
                   hideLabel: true,
                   label: 'Fra',
+                  ...datobegrensning,
                 }}
                 toDatepickerProps={{
                   hideLabel: true,
                   label: 'Til',
+                  ...datobegrensning,
                 }}
                 afterOnChange={async () => {
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
@@ -152,13 +224,36 @@ const InnleggelsesperiodeFormModal = ({
                     }
                     return null;
                   },
+                  innenforSøknadsperiode: (periodValue: Period) => {
+                    if (!innleggelsesperiodeBegrensning?.sammenhengendePerioder?.length) return null;
+                    const { fom, tom } = periodValue;
+                    if (!fom || !tom) return null;
+                    const erEksisterendePeriode = defaultValues[FieldName.INNLEGGELSESPERIODER].some(
+                      eksisterende => eksisterende.fom === fom && eksisterende.tom === tom,
+                    );
+                    if (erEksisterendePeriode) return null;
+                    const period = new Period(fom, tom);
+                    const erInnenfor = innleggelsesperiodeBegrensning.sammenhengendePerioder.some(sp =>
+                      sp.covers(period),
+                    );
+                    if (!erInnenfor) {
+                      return 'Innleggelsesperioden må være innenfor søknadsperioden';
+                    }
+                    return null;
+                  },
                 }}
                 renderBeforeFieldArray={fieldArrayMethods => (
                   <>
                     <Box marginBlock="space-0 space-16">
                       <AddButton
                         label="Legg til innleggelsesperiode"
-                        onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
+                        onClick={() =>
+                          fieldArrayMethods.append({
+                            period: new Period('', ''),
+                            begrunnelse: '',
+                            opprinneligPeriode: null,
+                          })
+                        }
                         id="leggTilInnleggelsesperiodeKnapp"
                       />
                     </Box>
@@ -175,9 +270,31 @@ const InnleggelsesperiodeFormModal = ({
                   </>
                 )}
                 renderContentAfterElement={(index, numberOfItems, fieldArrayMethods) => (
-                  <DeleteButton onClick={() => fieldArrayMethods.remove(index)} />
+                  <DeleteButton onClick={() => slettRad(index, fieldArrayMethods)} />
                 )}
+                renderContentBelowElement={index =>
+                  skalViseBegrunnelsefelt ? <BegrunnelseForRad index={index} disabled={isLoading} /> : null
+                }
               />
+              {skalViseBegrunnelsefelt && slettedeFieldArray.fields.length > 0 && (
+                <Box marginBlock="space-24 space-0">
+                  <Label size="small">Slettede innleggelsesperioder</Label>
+                  {slettedeFieldArray.fields.map((item, index) => (
+                    <div key={item.id} className={styles.innleggelsesperiodeFormModal__slettetRad}>
+                      <BodyShort size="small">
+                        {`${dayjs(item.period.fom).format('DD.MM.YYYY')} – ${dayjs(item.period.tom).format('DD.MM.YYYY')}`}
+                      </BodyShort>
+                      <TextAreaRHF
+                        id={`innleggelsesperiode-sletting-begrunnelse-${index}`}
+                        name={`${FieldName.SLETTEDE_PERIODER}.${index}.begrunnelse`}
+                        label="Begrunn sletting av perioden"
+                        disabled={isLoading}
+                        validators={begrunnelseValidators}
+                      />
+                    </div>
+                  ))}
+                </Box>
+              )}
               {showWarningMessage && (
                 <Box marginBlock="space-24 space-0">
                   <Alert size="small" variant="warning">

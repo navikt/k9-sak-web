@@ -1,9 +1,12 @@
 import type { Path } from 'react-router';
 
-export const isUngWeb = () => window.location.pathname.includes('/ung/web');
+export const isUngdomsprogramytelsen = () => {
+  const url = window.location.href;
+  return url.includes(':9005') || url.includes('ung.intern');
+};
 export const isAktivitetspenger = () => {
   const url = window.location.href;
-  return url.includes(':9010') || url.includes('aktivitetspenger');
+  return url.includes(':9010') || url.includes('aktivitetspenger.intern');
 };
 
 type QueryParams = {

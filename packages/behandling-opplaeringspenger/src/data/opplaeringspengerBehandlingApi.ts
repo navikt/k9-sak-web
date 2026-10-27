@@ -52,7 +52,6 @@ export enum OpplaeringspengerBehandlingApiKeys {
   INNTEKT_OG_YTELSER = 'INNTEKT_OG_YTELSER',
   OVERSTYR_INPUT_BEREGNING = 'OVERSTYR_INPUT_BEREGNING',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
-  UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
   INSTITUSJON = 'INSTITUSJON',
@@ -100,7 +99,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('inntekt', OpplaeringspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', OpplaeringspengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', OpplaeringspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
-  .withRel('utenlandsopphold', OpplaeringspengerBehandlingApiKeys.UTENLANDSOPPHOLD)
   .withRel('opplæring-dokument-liste', OpplaeringspengerBehandlingApiKeys.OPPLAERING_DOKUMENTER)
   .withRel(
     'behandling-perioder-årsak-med-vilkår',

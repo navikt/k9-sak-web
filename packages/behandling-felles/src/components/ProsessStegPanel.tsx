@@ -9,13 +9,13 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
 import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import MargMarkering from './MargMarkering';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -33,7 +33,6 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
   lagreOverstyringUttak?: (params: any) => void;
   erOverstyrer?: boolean;
-  hentBehandling?: (params?: any, keepData?: boolean) => Promise<Behandling>;
 }
 
 const ProsessStegPanel = ({
@@ -48,7 +47,6 @@ const ProsessStegPanel = ({
   lagreOverstyrteAksjonspunkter,
   useMultipleRestApi,
   featureToggles,
-  hentBehandling,
   erOverstyrer = false,
 }: OwnProps) => {
   const erHenlagtOgVedtakStegValgt =
@@ -128,8 +126,8 @@ const ProsessStegPanel = ({
                     formData,
                     setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
-                    hentBehandling,
                     erOverstyrer,
+                    saksnummer: fagsak?.saksnummer,
                     ...delPaneler[0].getKomponentData(),
                     ...data,
                   })}
@@ -147,6 +145,7 @@ const ProsessStegPanel = ({
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               useMultipleRestApi={useMultipleRestApi}
               featureToggles={featureToggles}
+              saksnummer={fagsak?.saksnummer}
             />
           )}
         </MargMarkering>

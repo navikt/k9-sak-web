@@ -1,0 +1,300 @@
+import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type {
+  BostedGrunnlagResponseDto,
+  VilkårBostedPeriodeVurderingDto,
+} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { Alert, BodyShort, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
+import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
+import {
+  getPeriodStatus,
+  VilkårSplittPanel,
+  type VilkårSplittPanelPeriod,
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
+import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
+import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
+import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi';
+import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
+import { buildInitialValues, type BostedFormData } from './bostedFormData.js';
+import { BostedLesevisning } from './BostedLesevisning';
+import { BostedSkjema } from './BostedSkjema';
+
+interface Props {
+  bostedAp: AksjonspunktDto | undefined;
+  lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
+  bostedVilkår: VilkårMedPerioderDto;
+  readOnly: boolean;
+  behandling: BehandlingDto;
+  api: AktivitetspengerApi;
+  onAksjonspunktBekreftet: () => Promise<void>;
+  isPermanentlyReadOnly: boolean;
+  bostedGrunnlag: BostedGrunnlagResponseDto;
+}
+
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  harAvslag: boolean | undefined;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  harAvslag,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="info" size="small">
+          Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter && harAvslag) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
+export const Bosted = ({
+  bostedVilkår,
+  readOnly,
+  api,
+  behandling,
+  onAksjonspunktBekreftet,
+  bostedAp,
+  lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
+  isPermanentlyReadOnly,
+  bostedGrunnlag,
+}: Props) => {
+  const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
+  const avkortingsperiodeBosted = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BOSTEDSVILKÅR);
+  const søknadsperioder = byggVisningsperioder(bostedVilkår, avkortingsperiodeBosted?.perioder ?? []);
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+    id: periode.periode.fom,
+    status: getPeriodStatus(periode.vilkarStatus),
+    label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
+    periode: {
+      fom: periode.periode.fom,
+      tom: periode.periode.tom,
+    },
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
+  }));
+  const formHook = useForm<BostedFormData>({
+    defaultValues: buildInitialValues(søknadsperioder),
+  });
+
+  const [selectedId, setSelectedId] = useState(
+    () =>
+      søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
+      perioder[0]?.id ??
+      '',
+  );
+  useEffect(() => {
+    if (!perioder.some(period => period.id === selectedId)) {
+      setSelectedId('');
+    }
+  }, [perioder, selectedId]);
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
+
+  const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
+    mutationFn: async ({ data, selectedId }: { data: BostedFormData; selectedId: string }) => {
+      const periode = perioder.find(period => period.id === selectedId);
+      const vurdering = data.vurderinger[selectedId];
+      if (!periode || !vurdering) {
+        throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
+      }
+      const muligAvkorting = vurdering.muligAvkortingPeriode;
+      const redigerMaksdatoAktiv =
+        vurdering.bosatt === 'oppfylt' &&
+        vurdering.redigerMaksdato &&
+        muligAvkorting !== undefined &&
+        vurdering.tom !== muligAvkorting.tom;
+      const begrunnelseInnvilget = vurdering.begrunnelse ?? '';
+      const begrunnelseAvkortet = vurdering.begrunnelseKortereMaksdato ?? '';
+      const vurdertePerioder: VilkårBostedPeriodeVurderingDto[] = [
+        {
+          avslagsårsak: vurdering.bosatt !== 'oppfylt' ? vurdering.avslagsårsak : undefined,
+          begrunnelse: begrunnelseInnvilget,
+          erVilkårOppfylt: vurdering.bosatt === 'oppfylt',
+          periode: {
+            fom: vurdering.fom,
+            tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
+          },
+          fritekstVurderingBrev:
+            vurdering.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering.fritekst : undefined,
+        },
+      ];
+      if (redigerMaksdatoAktiv && muligAvkorting) {
+        vurdertePerioder.push({
+          avslagsårsak: BostedsvilkårIkkeOppfyltÅrsak.AVKORTET,
+          begrunnelse: begrunnelseAvkortet,
+          erVilkårOppfylt: false,
+          periode: {
+            fom: dayjs(vurdering.tom).add(1, 'day').format(ISO_DATE_FORMAT),
+            tom: muligAvkorting.tom,
+          },
+          fritekstVurderingBrev: undefined,
+        });
+      }
+
+      const payload = {
+        '@type': AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR,
+        begrunnelse: `Aksjonspunkt ${aksjonspunktCodes.VURDER_BOSTEDVILKÅR} VURDER_BOSTEDVILKÅR bekreftet`, // begrunnelsesfeltet er påkrevd i kontrakten men brukes ikke i backend. Det er begrunnelsen som ligger lagret på periodenivå i vurdertePerioder som faktisk brukes.
+        vurdertePerioder,
+      };
+
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    },
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
+    },
+  });
+
+  const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
+    mutationFn: async () => sendTilBeslutter(api, behandling),
+    onSuccess: async () => {
+      await onAksjonspunktBekreftet();
+    },
+  });
+
+  const isBostedApSolved = aksjonspunktErLøst(bostedAp);
+  const selectedBostedGrunnlagPeriode = bostedGrunnlag.perioder.find(p => p.fom === selectedId);
+  const vurdering = formHook.watch(`vurderinger.${selectedId}`);
+  const begrunnelseLabel = (
+    <span>
+      Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        §2 Geografisk virkeområde
+      </Lovreferanse>
+    </span>
+  );
+  const harAvslagIBosted = bostedVilkår.perioder?.some(
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
+  const skalViseSendTilBeslutter =
+    !!harAvslagIBosted &&
+    !!lokalkontorForeslårVilkårAp &&
+    aksjonspunktErÅpent(lokalkontorForeslårVilkårAp) &&
+    !readOnly;
+
+  if (!bostedVilkår) {
+    return null;
+  }
+  if (!bostedAp && !bostedVilkår.perioder?.some(p => p.vilkarStatus !== Utfall.IKKE_VURDERT)) {
+    return <ProsessStegIkkeBehandlet />;
+  }
+
+  return (
+    <VStack gap="space-20">
+      {!isBostedApSolved && (
+        <Alert variant="warning" size="small">
+          Vurder om søker er bosatt i Trondheim kommune på virkningstidspunktet.
+        </Alert>
+      )}
+      <VilkårSplittPanel
+        isAktivitetspenger
+        periods={perioder}
+        selectedItemId={selectedId}
+        onItemSelect={setSelectedId}
+        detailHeading="Vurdering av bosatt i Trondheim kommune"
+        lovreferanse="§ 2"
+        defaultIsLocked={isBostedApSolved}
+        readOnly={readOnly}
+        lockedContent={isBostedApSolved ? <VurdertAv ident={bostedAp?.ansvarligSaksbehandler} /> : undefined}
+        afterEditButton={
+          <SendTilBeslutter
+            kanSendeTilBeslutter={skalViseSendTilBeslutter}
+            visForBeslutter={!!lokalkontorBeslutterAp}
+            harAvslag={harAvslagIBosted}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
+        }
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
+      >
+        {(isFormLocked, setIsFormLocked, isDefaultLocked) => (
+          <VStack gap="space-24">
+            <VStack gap="space-8">
+              <Label size="small" as="p">
+                Bor søker i Trondheim kommune?
+              </Label>
+              {selectedBostedGrunnlagPeriode && (
+                <HStack gap="space-8" align="center">
+                  <BodyShort size="small">{selectedBostedGrunnlagPeriode.erBosattITrondheim ? 'Ja' : 'Nei'}</BodyShort>
+                  <Tag variant="outline" size="small" data-color={!isFormLocked ? 'info' : undefined}>
+                    {selectedBostedGrunnlagPeriode.kilde === Kilde.SØKNAD ? 'Fra søknad' : 'Saksbehandler'}
+                  </Tag>
+                </HStack>
+              )}
+            </VStack>
+            {isFormLocked && vurdering ? (
+              <BostedLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
+            ) : (
+              <BostedSkjema
+                formHook={formHook}
+                selectedId={selectedId}
+                begrunnelseLabel={begrunnelseLabel}
+                isPending={isPending}
+                visAvbryt={isDefaultLocked}
+                onSubmit={async data => {
+                  await bekreftAksjonspunktMutation({ data, selectedId });
+                  setIsFormLocked(true);
+                }}
+                onAvbryt={() => {
+                  formHook.reset(buildInitialValues(søknadsperioder));
+                  setIsFormLocked(true);
+                }}
+              />
+            )}
+          </VStack>
+        )}
+      </VilkårSplittPanel>
+    </VStack>
+  );
+};
