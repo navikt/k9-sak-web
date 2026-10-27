@@ -10,7 +10,7 @@ describe('<BehandlingPicker>', () => {
     it('skal være automatisk når avsluttet og uten ansvarlig saksbehandler', () => {
       expect(erAutomatiskBehandlet(lagBehandling({ sakstype: 'PSB' }))).toBe(true);
       expect(erAutomatiskBehandlet(lagBehandling({ sakstype: 'UNG' }))).toBe(true);
-      expect(erAutomatiskBehandlet(lagBehandling({ sakstype: 'AKT' }))).toBe(true);
+      expect(erAutomatiskBehandlet(lagBehandling({ sakstype: 'AVP' }))).toBe(true);
     });
 
     it('skal ikke være automatisk når behandlingen ikke er avsluttet', () => {
@@ -21,7 +21,7 @@ describe('<BehandlingPicker>', () => {
       expect(erAutomatiskBehandlet(lagBehandling({ sakstype: 'PSB', ansvarligSaksbehandler: 'Z123' }))).toBe(false);
     });
 
-    it.each(['UNG', 'AKT'] as const)(
+    it.each(['UNG', 'AVP'] as const)(
       'skal ikke være automatisk for %s når behandlingAnsvarlige har ansvarlig saksbehandler',
       sakstype => {
         const behandling = lagBehandling({
