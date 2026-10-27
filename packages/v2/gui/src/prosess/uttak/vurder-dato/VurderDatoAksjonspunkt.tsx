@@ -75,8 +75,8 @@ const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props)
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
-          fromDate={new Date('1.1.2019')}
-          toDate={new Date('31.12.2027')}
+          fromDate={new Date(2019, 0, 1)}
+          toDate={new Date(2026, 11, 31)}
           validate={[required, hasValidDate, dateBeforeOrEqual(SENESTE_VIRKNINGSDATO)]}
           readOnly={readOnly}
         />
