@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -12,7 +13,7 @@ import {
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -59,16 +60,27 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
   ),
 });
 
-const buildPeriods = (vilkår: VilkårMedPerioderDto): VilkårSplittPanelPeriod[] =>
+const buildPeriods = (
+  vilkår: VilkårMedPerioderDto,
+  vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto,
+): VilkårSplittPanelPeriod[] =>
   (vilkår.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
-    .map(period => ({
-      id: period.periode.fom,
-      status: getPeriodStatus(period.vilkarStatus),
-      label: formatDate(period.periode.fom),
-      periode: period.periode,
-      vurderesIBehandlingen: period.vurderesIBehandlingen,
-    }));
+    .map(period => {
+      const erAvslag =
+        vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)?.avklaringOgVurdering
+          ?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+      return {
+        id: period.periode.fom,
+        status: getPeriodStatus(period.vilkarStatus),
+        label:
+          erAvslag && period.periode.tom
+            ? formatPeriod(period.periode.fom, period.periode.tom)
+            : formatDate(period.periode.fom),
+        periode: period.periode,
+        vurderesIBehandlingen: period.vurderesIBehandlingen,
+      };
+    });
 
 const buildPayload = ({
   formData,
@@ -180,7 +192,7 @@ export const BostedVilkårsvurdering = ({
   const queryClient = useQueryClient();
   const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
-  const periods = buildPeriods(bostedVilkår);
+  const periods = buildPeriods(bostedVilkår, vilkårsavklaringVurderinger);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkårsavklaringVurderinger),
   });
@@ -314,7 +326,9 @@ export const BostedVilkårsvurdering = ({
                 readOnly={isFormLocked}
               >
                 <Radio value="ja">
-                  Ja, fra og med {selectedPeriod?.periode?.fom ? formatDate(selectedPeriod?.periode?.fom) : ''}
+                  {valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG
+                    ? `Ja, fra ${selectedPeriod?.label ?? ''}`
+                    : `Ja, fra og med ${selectedPeriod?.periode?.fom ? formatDate(selectedPeriod.periode.fom) : ''}`}
                 </Radio>
                 <Radio value="nei">Nei, bruker bor fortsatt i Trondheim kommune</Radio>
               </RhfRadioGroup>
