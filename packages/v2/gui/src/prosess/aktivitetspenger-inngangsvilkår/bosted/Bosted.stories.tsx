@@ -33,8 +33,21 @@ class FakeAktivitetspengerApiMedAvkortingsperiode extends FakeAktivitetspengerAp
   }
 }
 
+class FakeAktivitetspengerApiSomHuskerAksjonspunkt extends FakeAktivitetspengerApiMedAvkortingsperiode {
+  sisteBekreftedeAksjonspunkt: unknown;
+
+  override async bekreftAksjonspunkt(...args: unknown[]): Promise<undefined> {
+    const [, , bekreftedeAksjonspunkter] = args;
+    this.sisteBekreftedeAksjonspunkt = Array.isArray(bekreftedeAksjonspunkter)
+      ? bekreftedeAksjonspunkter[0]
+      : undefined;
+    return undefined;
+  }
+}
+
 const behandlingId = 1;
 const fakeApi = new FakeAktivitetspengerApiMedAvkortingsperiode();
+const apiSomHuskerAksjonspunkt = new FakeAktivitetspengerApiSomHuskerAksjonspunkt();
 
 const meta = {
   title: 'gui/prosess/aktivitetspenger-inngangsvilkår/Bosted',
@@ -362,6 +375,57 @@ export const AvslagMedLokalkontorBeslutter: Story = {
     await step('viser bare forhåndsvisning når lokalkontoret beslutter', async () => {
       await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Send til beslutter' })).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const ByttTilOppfyltFjernerFritekst: Story = {
+  args: {
+    api: apiSomHuskerAksjonspunkt,
+    bostedVilkår: {
+      vilkarType: vilkarType.BOSTEDSVILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHuskerAksjonspunkt.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Fyll inn begrunnelse for vurderingen', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /Vurder om søker er bosatt/ }),
+        'Søker er bosatt i kommunen.',
+      );
+    });
+
+    await step('Velg ikke oppfylt og legg til fritekst i avslagsbrevet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.click(canvas.getByRole('radio', { name: 'Annen årsak' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }), 'Tidligere fritekst.');
+    });
+
+    await step('Bytt til oppfylt og skjul fritekstfeltet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHuskerAksjonspunkt.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                avslagsårsak: undefined,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
+          }),
+        );
+      });
     });
   },
 };
