@@ -117,3 +117,24 @@
     top: 0;
   }
 }
+
+.gradert {
+  background: var(--ax-bg-success-moderate)
+    repeating-linear-gradient(
+      45deg,
+      var(--ax-bg-default),
+      var(--ax-bg-default) 20%,
+      transparent 20%,
+      transparent 50%,
+      var(--ax-bg-default) 50%
+    );
+  background-size: 12px 12px;
+}
+
+.gradert:global(.aksel-timeline__period--selected) {
+  background-color: var(--ax-bg-success-strong);
+}
+
+.gradert:global(.aksel-timeline__period--selected):hover {
+  transform: translateY(-1px);
+}
