@@ -11,6 +11,7 @@ export {
   behandlinger_hentBehandlingData1,
   behandlinger_hentBehandlingMidlertidigStatus1,
   behandlinger_hentLovligeBehandlingsoperasjoner,
+  kontroll_hentKontrollerInntekt,
   fagsak_hentFagsak,
   formidling_forhåndsvisVedtaksbrev,
   formidling_vedtaksbrevValgForNavKontor,

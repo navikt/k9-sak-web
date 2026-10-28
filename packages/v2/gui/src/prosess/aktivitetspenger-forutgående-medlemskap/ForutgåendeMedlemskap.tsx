@@ -167,7 +167,11 @@ export const ForutgåendeMedlemskap = ({
     </span>
   );
 
-  if (!aksjonspunkt && !sortertePerioder.some(r => r.vurderesIBehandlingen)) {
+  // Perioder fra tidligere behandlinger vises skrivebeskyttet selv om ingen perioder vurderes i denne behandlingen
+  const harPerioderÅVise = sortertePerioder.some(
+    periodeInfo => periodeInfo.vurderesIBehandlingen || periodeInfo.utfall !== Utfall.IKKE_VURDERT,
+  );
+  if (!aksjonspunkt && !harPerioderÅVise) {
     return <ProsessStegIkkeBehandlet />;
   }
 

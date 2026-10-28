@@ -2,6 +2,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingStatus.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegHentingFeilet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegHentingFeilet.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
@@ -13,7 +14,7 @@ import {
 } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { AvregningProsessIndex } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQueries } from '@tanstack/react-query';
+import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 
 const PANEL_ID = prosessStegCodes.SIMULERING;
@@ -27,6 +28,12 @@ interface Props {
 export const SimuleringProsessStegInitPanel = ({ api, behandling, saksnummer }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+  // Samme query som Prosessmotor bruker for status. Leser bare cachen for å skille hentefeil fra manglende data.
+  const prosessmotorQuery = useQuery({
+    ...simuleringResultatQueryOptions(api, behandling),
+    enabled: false,
+    throwOnError: false,
+  });
   const [
     { data: aksjonspunkter = [] },
     { data: innloggetBruker },
@@ -64,7 +71,7 @@ export const SimuleringProsessStegInitPanel = ({ api, behandling, saksnummer }: 
   }
 
   if (!erTilBehandlingEllerBehandlet) {
-    return <ProsessStegIkkeBehandlet />;
+    return prosessmotorQuery.isError ? <ProsessStegHentingFeilet /> : <ProsessStegIkkeBehandlet />;
   }
 
   return (
