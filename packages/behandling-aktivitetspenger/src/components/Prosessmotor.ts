@@ -6,7 +6,6 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import { SimuleringDto } from '@k9-sak-web/backend/ungsak/kontrakt/simulering/v1/SimuleringDto.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
@@ -178,8 +177,9 @@ const finnStatus = (vilkår: VilkårMedPerioderDto[], aksjonspunkter: Aksjonspun
   return Utfall.IKKE_VURDERT;
 };
 
-const harÅpentAksjonspunkt = (relevanteAksjonspunkter: AksjonspunktDto[]): boolean =>
-  relevanteAksjonspunkter.some(ap => ap.status === AksjonspunktStatus.OPPRETTET && ap.kanLoses === true);
+// På vent kan ingen aksjonspunkter løses, men steget venter fortsatt på saksbehandling
+const harÅpentAksjonspunkt = (relevanteAksjonspunkter: AksjonspunktDto[], erPåVent: boolean): boolean =>
+  relevanteAksjonspunkter.some(ap => ap.status === AksjonspunktStatus.OPPRETTET && (ap.kanLoses === true || erPåVent));
 
 const finnProsessmenyType = (status: Utfall, harÅpentAp: boolean): ProcessMenuStepType => {
   if (harÅpentAp) {
@@ -258,21 +258,12 @@ const finnStatusForVedtak = (
   return isAvslag(behandlingsresultatType) || isOpphor(behandlingsresultatType) ? Utfall.IKKE_OPPFYLT : Utfall.OPPFYLT;
 };
 
-export const beregnSimuleringType = (
-  aksjonspunkter: AksjonspunktDto[],
-  simuleringResultat: SimuleringDto | null | undefined,
-  simuleringAksjonspunkter: readonly string[],
-): ProcessMenuStepType => {
-  const relevanteAksjonspunkter = aksjonspunkter.filter(ap =>
-    simuleringAksjonspunkter.some(definisjon => definisjon === ap.definisjon),
-  );
-  const status = harData(simuleringResultat) ? Utfall.OPPFYLT : Utfall.IKKE_VURDERT;
-  return finnProsessmenyType(status, harÅpentAksjonspunkt(relevanteAksjonspunkter));
-};
-
 interface ProsessmotorProps {
   api: AktivitetspengerApi;
-  behandling: Pick<BehandlingDto, 'uuid' | 'versjon' | 'status' | 'behandlingsresultat' | 'type' | 'behandlingÅrsaker'>;
+  behandling: Pick<
+    BehandlingDto,
+    'uuid' | 'versjon' | 'status' | 'behandlingsresultat' | 'type' | 'behandlingÅrsaker' | 'behandlingPåVent'
+  >;
 }
 
 export interface ProsessmotorResultat {
@@ -440,7 +431,10 @@ export const useProsessmotor = ({ api, behandling }: ProsessmotorProps): Prosess
       }
 
       const endeligStatus = stanset && !påvirkesIkkeAvStopp ? Utfall.IKKE_VURDERT : panel.status;
-      const type = finnProsessmenyType(endeligStatus, harÅpentAksjonspunkt(panel.aksjonspunkter));
+      const type = finnProsessmenyType(
+        endeligStatus,
+        harÅpentAksjonspunkt(panel.aksjonspunkter, !!behandling.behandlingPåVent),
+      );
       const result: ProcessMenuStep = {
         id: panel.id,
         label: panel.label,

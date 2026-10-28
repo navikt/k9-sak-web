@@ -767,6 +767,62 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('åpent aksjonspunkt uten kanLoses gir warning når behandlingen er på vent', async () => {
+    const api = createApi({
+      vilkår: [
+        createVilkår(Utfall.OPPFYLT, ung_kodeverk_vilkår_VilkårType.SØKNADSFRIST),
+        createVilkår(Utfall.IKKE_VURDERT, ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR),
+      ],
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+          status: aksjonspunktStatus.OPPRETTET,
+          kanLoses: false,
+        },
+      ],
+    });
+
+    const { result } = renderHook(
+      () => useProsessmotor({ api, behandling: createBehandling({ behandlingPåVent: true }) }),
+      { wrapper: createWrapper(queryClient) },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
+  test('opphør som venter på uttalelse er warning', async () => {
+    const api = createApi({
+      aksjonspunkter: [
+        {
+          definisjon: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+          status: aksjonspunktStatus.UTFØRT,
+          kanLoses: false,
+        },
+        {
+          definisjon: AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_BOSTEDUTTALELSE,
+          status: aksjonspunktStatus.OPPRETTET,
+          kanLoses: false,
+        },
+      ],
+    });
+    const behandling = createBehandling({
+      type: BehandlingType.REVURDERING,
+      behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BOSTED }],
+      behandlingPåVent: true,
+    });
+
+    const { result } = renderHook(() => useProsessmotor({ api, behandling }), {
+      wrapper: createWrapper(queryClient),
+    });
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].id).toBe(prosessStegCodes.OPPHØR);
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
   test('simulering og vedtak påvirkes ikke av stopp etter avslag', async () => {
     const api = createApi({
       vilkår: [createVilkår(Utfall.IKKE_OPPFYLT, ung_kodeverk_vilkår_VilkårType.BISTANDSVILKÅR)],

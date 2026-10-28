@@ -75,18 +75,18 @@ Query-funksjonene ligger i [aktivitetspengerQueryOptions.ts](../v2/gui/src/prose
 
 Hvert steg får først en status (`Utfall`). `finnProsessmenyType` gjør den om til farge:
 
-| Betingelse                                                         | Farge | `ProcessMenuStepType` |
-| ------------------------------------------------------------------ | ----- | --------------------- |
-| Et relevant aksjonspunkt er `OPPRETTET` og har `kanLoses === true` | Gul   | `warning`             |
-| Status er `OPPFYLT`                                                | Grønn | `success`             |
-| Status er `IKKE_OPPFYLT`                                           | Rød   | `danger`              |
-| Alt annet                                                          | Grå   | `default`             |
+| Betingelse                                                                                        | Farge | `ProcessMenuStepType` |
+| ------------------------------------------------------------------------------------------------- | ----- | --------------------- |
+| Et relevant aksjonspunkt er `OPPRETTET` og har `kanLoses === true`, eller behandlingen er på vent | Gul   | `warning`             |
+| Status er `OPPFYLT`                                                                               | Grønn | `success`             |
+| Status er `IKKE_OPPFYLT`                                                                          | Rød   | `danger`              |
+| Alt annet                                                                                         | Grå   | `default`             |
 
 Gul vinner over alt annet, også når steget er stoppet etter et avslag.
 
 Et aksjonspunkt regnes som åpent på to måter:
 
-- For gul må aksjonspunktet både være `OPPRETTET` og ha `kanLoses`. Saksbehandler kan altså gjøre noe i steget nå.
+- For gul må aksjonspunktet både være `OPPRETTET` og ha `kanLoses`. Saksbehandler kan altså gjøre noe i steget nå. Unntaket er når behandlingen er på vent (`behandlingPåVent`). Da kan ingen aksjonspunkter løses, så gul krever bare `OPPRETTET`. Ellers ville stegene som venter, blitt grå og vist «ikke behandlet».
 - For status holder det at aksjonspunktet er `OPPRETTET`. Et aksjonspunkt som venter eller ikke kan løses ennå, betyr fortsatt at steget ikke er ferdig.
 
 ### Felles statusregel
