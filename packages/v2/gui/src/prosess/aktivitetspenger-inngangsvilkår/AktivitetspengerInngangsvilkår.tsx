@@ -127,9 +127,6 @@ const utledAktivTab = (data: InngangsvilkårData, erFørstegangsbehandling: bool
   }
 
   // Når alle vilkår er ferdigbehandlet, vis det siste løste vilkåret. Ettersom behandlingstypen "Kontroll av inntekt" ikke har aksjonspunkt må vi også sjekke vilkårsperiodene.
-  if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT) {
-    return InngangsvilkårTab.BESLUTTER;
-  }
   if (
     !erFørstegangsbehandling &&
     data.vurderAktivitetsvilkårAp &&
@@ -364,19 +361,20 @@ export const AktivitetspengerInngangsvilkår = ({
                 />
               )}
           </Tabs.Panel>
-          {inngangsvilkårdata.lokalkontorBeslutterAp && (
-            <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
-              <Beslutter
-                lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
-                api={api}
-                behandling={behandling}
-                onTabChange={setAktivTab}
-                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-                kanBeslutte={kanBeslutte}
-              />
-            </Tabs.Panel>
-          )}
+          {inngangsvilkårdata.lokalkontorBeslutterAp &&
+            aksjonspunktErÅpent(inngangsvilkårdata.lokalkontorBeslutterAp) && (
+              <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
+                <Beslutter
+                  lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
+                  api={api}
+                  behandling={behandling}
+                  onTabChange={setAktivTab}
+                  onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+                  kanBeslutte={kanBeslutte}
+                />
+              </Tabs.Panel>
+            )}
         </Box>
       </Tabs>
     </VStack>
