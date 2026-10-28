@@ -202,6 +202,7 @@ export const BostedVilkårsvurdering = ({
   const uttalelse = valgtAvklaring?.uttalelse;
   const selectedPeriod = periods.find(p => p.id === selectedId);
   const erÅrsakTilOpphørAnnet = valgtAvklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
+  const erAvslag = valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -326,7 +327,7 @@ export const BostedVilkårsvurdering = ({
                 readOnly={isFormLocked}
               >
                 <Radio value="ja">
-                  {valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG
+                  {erAvslag
                     ? `Ja, fra ${selectedPeriod?.label ?? ''}`
                     : `Ja, fra og med ${selectedPeriod?.periode?.fom ? formatDate(selectedPeriod.periode.fom) : ''}`}
                 </Radio>
@@ -344,8 +345,8 @@ export const BostedVilkårsvurdering = ({
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}
-                  label="Fritekst opphørsbrev"
-                  description="Forklar hvorfor vilkåret er opphørt. Teksten vises i vedtaksbrevet."
+                  label={erAvslag ? 'Fritekst avslagsbrev' : 'Fritekst opphørsbrev'}
+                  description={`Forklar hvorfor vilkåret er ${erAvslag ? 'avslått' : 'opphørt'}. Teksten vises i vedtaksbrevet.`}
                   readOnly={isFormLocked}
                   validate={[
                     required,
