@@ -309,7 +309,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   readOnly={isFormLocked}
                 />
               )}
-              {harFritekstbrev && (
+              {andreLivsoppholdytelser === 'ja' && harFritekstbrev && (
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}
