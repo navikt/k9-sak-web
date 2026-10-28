@@ -141,6 +141,7 @@ const BehandlingFrisinnIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <FrisinnPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}

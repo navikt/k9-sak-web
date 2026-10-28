@@ -15,6 +15,11 @@ export interface BehandlingContextType {
    * ignorerer svar som ikke er en behandling.
    */
   settBehandling: (svar: unknown) => void;
+  /**
+   * For komponenter som bekrefter aksjonspunkt selv via generert klient. Venter til ny behandling er klar, setter den
+   * og navigerer til steget med åpent aksjonspunkt.
+   */
+  onAksjonspunktBekreftet: () => Promise<void>;
 }
 
 export const BehandlingContext = createContext<BehandlingContextType | undefined>(undefined);
@@ -34,6 +39,7 @@ export const BehandlingProvider = ({
   refetchBehandling,
   erBehandlingsdataUtdatert,
   settBehandling,
+  oppdaterProsessStegOgFaktaPanelIUrl,
 }: {
   children: ReactNode;
   behandlingUuid?: string;
@@ -41,6 +47,7 @@ export const BehandlingProvider = ({
   refetchBehandling: BehandlingContextType['refetchBehandling'];
   erBehandlingsdataUtdatert?: boolean;
   settBehandling: (behandling: BehandlingDto) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }) => {
   const settBehandlingFraSvar = useCallback(
     (svar: unknown) => {
@@ -54,6 +61,10 @@ export const BehandlingProvider = ({
   const refetchOgSettBehandling = async () => {
     settBehandlingFraSvar(await refetchBehandling());
   };
+  const onAksjonspunktBekreftet = async () => {
+    await refetchOgSettBehandling();
+    oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+  };
   return (
     <BehandlingContext.Provider
       value={{
@@ -62,6 +73,7 @@ export const BehandlingProvider = ({
         refetchBehandling: refetchOgSettBehandling,
         erBehandlingsdataUtdatert,
         settBehandling: settBehandlingFraSvar,
+        onAksjonspunktBekreftet,
       }}
     >
       {children}

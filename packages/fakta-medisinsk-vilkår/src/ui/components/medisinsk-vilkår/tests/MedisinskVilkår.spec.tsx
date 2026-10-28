@@ -23,7 +23,11 @@ const vurderingsoversiktMock = {
 const errorNotifierMock = () => null;
 const contextWrapper = (ui, contextValues?: Partial<ContainerContract>) =>
   render(
-    <BehandlingProvider refetchBehandling={vi.fn()} settBehandling={vi.fn()}>
+    <BehandlingProvider
+      refetchBehandling={vi.fn()}
+      settBehandling={vi.fn()}
+      oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+    >
       <QueryClientProvider client={queryClient}>
         <ContainerContext.Provider
           value={

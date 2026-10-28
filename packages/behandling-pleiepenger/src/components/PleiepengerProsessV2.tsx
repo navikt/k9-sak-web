@@ -174,7 +174,6 @@ export const PleiepengerProsessV2 = ({
                     api={k9SakProsessApi}
                     erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
                     isReadOnly={isReadOnly}
-                    oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
                   />
                 );
               }

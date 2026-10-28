@@ -16,7 +16,11 @@ const intlErrorHandler = error => {
 };
 
 const TestBehandlingProvider = ({ children }) => (
-  <BehandlingProvider refetchBehandling={() => Promise.resolve()} settBehandling={vi.fn()}>
+  <BehandlingProvider
+    refetchBehandling={() => Promise.resolve()}
+    settBehandling={vi.fn()}
+    oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+  >
     {children}
   </BehandlingProvider>
 );

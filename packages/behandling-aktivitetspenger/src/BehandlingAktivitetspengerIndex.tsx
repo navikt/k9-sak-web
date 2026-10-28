@@ -96,7 +96,11 @@ const BehandlingAktivitetspengerIndex = ({
   }
 
   return (
-    <BehandlingProvider refetchBehandling={() => refetchBehandling()} settBehandling={setBehandling}>
+    <BehandlingProvider
+      refetchBehandling={() => refetchBehandling()}
+      settBehandling={setBehandling}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+    >
       <BehandlingPåVent behandling={behandling} aksjonspunkter={aksjonspunkter ?? []} settPaVent={settPaVent} />
       <AktivitetspengerProsess
         api={ungSakProsessApi}

@@ -155,6 +155,7 @@ const BehandlingUtvidetRettIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <UtvidetRettPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}

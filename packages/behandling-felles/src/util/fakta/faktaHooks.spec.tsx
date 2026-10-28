@@ -17,7 +17,11 @@ import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 const medBehandlingProvider = ({ children }) => (
-  <BehandlingProvider refetchBehandling={() => Promise.resolve()} settBehandling={vi.fn()}>
+  <BehandlingProvider
+    refetchBehandling={() => Promise.resolve()}
+    settBehandling={vi.fn()}
+    oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+  >
     {children}
   </BehandlingProvider>
 );

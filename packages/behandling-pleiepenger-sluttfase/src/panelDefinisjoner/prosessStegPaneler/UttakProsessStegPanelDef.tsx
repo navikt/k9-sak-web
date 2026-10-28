@@ -14,7 +14,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    const { erOverstyrer, isReadOnly, oppdaterProsessStegOgFaktaPanelIUrl } = props;
+    const { erOverstyrer, isReadOnly } = props;
     const { behandling, aksjonspunkter } = deepCopyProps;
     // Felles Suspense slik at kvoteinfo og uttak vises samtidig fra samme uttak-query
     return (
@@ -26,7 +26,6 @@ class PanelDef extends ProsessStegPanelDef {
             aksjonspunkter={aksjonspunkter}
             erOverstyrer={erOverstyrer}
             readOnly={isReadOnly}
-            onAksjonspunktBekreftet={() => oppdaterProsessStegOgFaktaPanelIUrl?.('default', 'default')}
           />
         </ErrorBoundary>
       </LoadingPanelSuspense>

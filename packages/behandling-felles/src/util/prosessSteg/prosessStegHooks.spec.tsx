@@ -17,7 +17,11 @@ import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtlede
 import prosessStegHooks from './prosessStegHooks';
 
 const medBehandlingProvider = ({ children }) => (
-  <BehandlingProvider refetchBehandling={() => Promise.resolve()} settBehandling={vi.fn()}>
+  <BehandlingProvider
+    refetchBehandling={() => Promise.resolve()}
+    settBehandling={vi.fn()}
+    oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+  >
     {children}
   </BehandlingProvider>
 );
@@ -192,6 +196,7 @@ describe('<prosessStegHooks>', () => {
           <BehandlingProvider
             refetchBehandling={() => Promise.resolve()}
             settBehandling={vi.fn()}
+            oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
             erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
           >
             {children}

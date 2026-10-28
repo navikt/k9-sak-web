@@ -152,6 +152,7 @@ const BehandlingKlageUngdomsytelseIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <KlagePaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}

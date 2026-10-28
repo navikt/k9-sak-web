@@ -162,6 +162,7 @@ const BehandlingTilbakekrevingIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <TilbakekrevingPaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}

@@ -187,6 +187,7 @@ const BehandlingPleiepengerIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <PleiepengerPaneler
           behandling={harIkkeHentetBehandlingsdata && forrigeBehandling ? forrigeBehandling : behandling}

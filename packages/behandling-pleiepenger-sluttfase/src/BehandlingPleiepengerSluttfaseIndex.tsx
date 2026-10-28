@@ -199,6 +199,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <RawIntlProvider value={intl}>
           <PleiepengerSluttfasePaneler

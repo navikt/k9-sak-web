@@ -146,6 +146,7 @@ const BehandlingUngdomsytelseIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <UngdomsytelsePaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}

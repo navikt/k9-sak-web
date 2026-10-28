@@ -134,6 +134,7 @@ const BehandlingAnkeIndex = ({
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <AnkePaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}
