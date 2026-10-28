@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 
-import {
-  Rettigheter,
-  ReduxFormStateCleaner,
-  settBehandlingFraLagring,
-  useSetBehandlingVedEndring,
-} from '@k9-sak-web/behandling-felles';
+import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   Behandling,
   Fagsak,
@@ -152,12 +147,7 @@ const BehandlingKlageIndex = ({
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
       <BehandlingProvider
-        refetchBehandling={() =>
-          hentBehandling({ behandlingId }, true).then(nyBehandling => {
-            settBehandlingFraLagring(setBehandling, nyBehandling);
-            return nyBehandling;
-          })
-        }
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
       >

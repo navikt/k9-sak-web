@@ -5,7 +5,6 @@ import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import settBehandlingFraLagring from '../settBehandlingFraLagring';
 import type { BehandlingContextType } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 export const DEFAULT_FAKTA_KODE = 'default';
@@ -59,8 +58,8 @@ export const getBekreftAksjonspunktCallback =
     oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
     overstyringApCodes: string[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+    settBehandling: BehandlingContextType['settBehandling'],
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
-    settBehandling?: BehandlingContextType['settBehandling'],
   ) =>
   aksjonspunkter => {
     const model = aksjonspunkter.map(ap => ({
@@ -76,7 +75,7 @@ export const getBekreftAksjonspunktCallback =
     };
 
     const etterLagring = (lagringsresultat: unknown) => {
-      settBehandlingFraLagring(settBehandling, lagringsresultat);
+      settBehandling(lagringsresultat);
       oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE);
     };
 

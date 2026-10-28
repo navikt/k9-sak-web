@@ -20,7 +20,6 @@ export { default as prosessStegHooks } from './src/util/prosessSteg/prosessStegH
 export { ProsessStegDef, ProsessStegPanelDef } from './src/util/prosessSteg/ProsessStegDef';
 export { default as ProsessStegOverstyringPanelDef } from './src/util/prosessSteg/ProsessStegOverstyringPanelDef';
 export { default as useSetBehandlingVedEndring } from './src/util/useSetBehandlingVedEndring';
-export { default as settBehandlingFraLagring } from './src/util/settBehandlingFraLagring';
 
 export type { default as Rettigheter } from './src/types/rettigheterTsType';
 export type { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';

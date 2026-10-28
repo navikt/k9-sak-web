@@ -2,12 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import {
-  ReduxFormStateCleaner,
-  Rettigheter,
-  settBehandlingFraLagring,
-  useSetBehandlingVedEndring,
-} from '@k9-sak-web/behandling-felles';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
@@ -163,12 +158,7 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
       <BehandlingProvider
-        refetchBehandling={() =>
-          hentBehandling(behandlingUuid, true).then(nyBehandling => {
-            settBehandlingFraLagring(setBehandling, nyBehandling);
-            return nyBehandling;
-          })
-        }
+        refetchBehandling={() => hentBehandling(behandlingUuid, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
       >

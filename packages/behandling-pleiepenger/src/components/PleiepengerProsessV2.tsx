@@ -1,10 +1,10 @@
-import { type Dispatch, type ReactNode, type SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
+import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useMemo, useState } from 'react';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
@@ -70,7 +70,7 @@ export const PleiepengerProsessV2 = ({
   lagreDokumentdata,
   hentFritekstbrevHtmlCallback,
 }: PleiepengerProsessV2Props) => {
-  const erBehandlingsdataUtdatert = useContext(BehandlingContext)?.erBehandlingsdataUtdatert ?? false;
+  const { erBehandlingsdataUtdatert = false } = useBehandlingContext();
   const previewCallback = getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling);
 
   const previewFptilbakeCallback = getForhandsvisFptilbakeCallback(

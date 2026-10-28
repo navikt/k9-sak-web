@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import {
-  ReduxFormStateCleaner,
-  Rettigheter,
-  settBehandlingFraLagring,
-  useSetBehandlingVedEndring,
-} from '@k9-sak-web/behandling-felles';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -143,12 +138,7 @@ const BehandlingFrisinnIndex = ({
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
       <BehandlingProvider
-        refetchBehandling={() =>
-          hentBehandling({ behandlingId }, true).then(nyBehandling => {
-            settBehandlingFraLagring(setBehandling, nyBehandling);
-            return nyBehandling;
-          })
-        }
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
         erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
         settBehandling={setBehandling}
       >

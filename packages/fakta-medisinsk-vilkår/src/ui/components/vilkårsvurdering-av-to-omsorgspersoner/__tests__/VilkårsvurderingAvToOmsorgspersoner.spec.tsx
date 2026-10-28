@@ -36,7 +36,7 @@ const onFinishedMock = {
 
 const contextWrapper = ui =>
   render(
-    <BehandlingProvider refetchBehandling={vi.fn()}>
+    <BehandlingProvider refetchBehandling={vi.fn()} settBehandling={vi.fn()}>
       <ContainerContext.Provider
         value={
           {

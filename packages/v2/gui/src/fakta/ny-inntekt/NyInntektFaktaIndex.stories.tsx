@@ -89,6 +89,7 @@ const meta = {
       <BehandlingProvider
         behandlingUuid="00000000-0000-0000-0000-000000000000"
         refetchBehandling={async () => undefined}
+        settBehandling={() => undefined}
       >
         <NyInntektApiContext
           value={{

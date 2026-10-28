@@ -1,9 +1,8 @@
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { settBehandlingFraLagring } from '@k9-sak-web/behandling-felles';
-import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 
 interface UseBekreftAksjonspunktParams {
   fagsak: Fagsak;
@@ -31,7 +30,7 @@ export const useBekreftAksjonspunkt = ({
   lagreOverstyrteAksjonspunkter,
   oppdaterProsessStegOgFaktaPanelIUrl,
 }: UseBekreftAksjonspunktParams) => {
-  const settBehandling = useContext(BehandlingContext)?.settBehandling;
+  const { settBehandling } = useBehandlingContext();
   return useCallback(
     async (aksjonspunktModels: any[], aksjonspunkter: AksjonspunktDto[] = [], skaForhindreOppdaterUrl?: boolean) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
@@ -77,7 +76,7 @@ export const useBekreftAksjonspunkt = ({
               },
               true,
             );
-      settBehandlingFraLagring(settBehandling, lagringsresultat);
+      settBehandling(lagringsresultat);
       if (!skaForhindreOppdaterUrl) {
         oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }

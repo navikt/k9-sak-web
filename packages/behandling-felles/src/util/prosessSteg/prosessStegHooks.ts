@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
@@ -15,7 +15,7 @@ import {
   utledProsessStegPaneler,
 } from './prosessStegUtils';
 import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.ts';
-import { BehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
@@ -29,7 +29,7 @@ const useProsessStegPaneler = (
   valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string },
 ): [ProsessStegUtledet[], ProsessStegUtledet | undefined, ProsessStegMenyRad[]] => {
-  const erBehandlingsdataUtdatert = useContext(BehandlingContext)?.erBehandlingsdataUtdatert ?? false;
+  const { erBehandlingsdataUtdatert = false } = useBehandlingContext();
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = {
     ...panelData,
@@ -168,7 +168,7 @@ const useBekreftAksjonspunkt = (
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   valgtPanel?: ProsessStegUtledet,
 ): LegacyBekreftAksjonspunktCallback => {
-  const settBehandling = useContext(BehandlingContext)?.settBehandling;
+  const { settBehandling } = useBehandlingContext();
   return useCallback(
     aksjonspunktModels =>
       getBekreftAksjonspunktCallback(
@@ -177,8 +177,8 @@ const useBekreftAksjonspunkt = (
         behandling,
         valgtPanel ? valgtPanel.getAksjonspunkter() : [],
         lagreAksjonspunkter,
-        lagreOverstyrteAksjonspunkter,
         settBehandling,
+        lagreOverstyrteAksjonspunkter,
       )(aksjonspunktModels),
     [behandling.versjon, valgtPanel, settBehandling],
   );

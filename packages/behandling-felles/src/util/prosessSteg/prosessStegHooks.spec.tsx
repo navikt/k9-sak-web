@@ -16,6 +16,12 @@ import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
 
+const medBehandlingProvider = ({ children }) => (
+  <BehandlingProvider refetchBehandling={() => Promise.resolve()} settBehandling={vi.fn()}>
+    {children}
+  </BehandlingProvider>
+);
+
 describe('<prosessStegHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
@@ -110,19 +116,21 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'default';
 
     // ACT
-    const { result } = renderHook(() =>
-      prosessStegHooks.useProsessStegPaneler(
-        [new OpplysningspliktProsessStegPanelDef()],
-        ekstraPanelData,
-        fagsak,
-        rettigheter,
-        behandling as Behandling,
-        aksjonspunkter,
-        vilkar,
-        hasFetchError,
-        valgtProsessSteg,
-        apentFaktaPanelInfo,
-      ),
+    const { result } = renderHook(
+      () =>
+        prosessStegHooks.useProsessStegPaneler(
+          [new OpplysningspliktProsessStegPanelDef()],
+          ekstraPanelData,
+          fagsak,
+          rettigheter,
+          behandling as Behandling,
+          aksjonspunkter,
+          vilkar,
+          hasFetchError,
+          valgtProsessSteg,
+          apentFaktaPanelInfo,
+        ),
+      { wrapper: medBehandlingProvider },
     );
 
     const prosessStegPaneler = result.current[0];
@@ -183,6 +191,7 @@ describe('<prosessStegHooks>', () => {
         wrapper: ({ children }) => (
           <BehandlingProvider
             refetchBehandling={() => Promise.resolve()}
+            settBehandling={vi.fn()}
             erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
           >
             {children}
@@ -235,7 +244,7 @@ describe('<prosessStegHooks>', () => {
           valgtProsessSteg,
           undefined,
         ),
-      { initialProps: { valgtProsessSteg: prosessStegCodes.UTTAK } },
+      { initialProps: { valgtProsessSteg: prosessStegCodes.UTTAK }, wrapper: medBehandlingProvider },
     );
     expect(result.current[1]?.getUrlKode()).toEqual(prosessStegCodes.UTTAK);
 
@@ -347,15 +356,17 @@ describe('<prosessStegHooks>', () => {
 
     const lagringSideEffectsCallback = () => () => {};
 
-    const { result } = renderHook(() =>
-      prosessStegHooks.useBekreftAksjonspunkt(
-        fagsak,
-        behandling as Behandling,
-        lagringSideEffectsCallback,
-        lagreAksjonspunkter,
-        undefined,
-        utledetPanel,
-      ),
+    const { result } = renderHook(
+      () =>
+        prosessStegHooks.useBekreftAksjonspunkt(
+          fagsak,
+          behandling as Behandling,
+          lagringSideEffectsCallback,
+          lagreAksjonspunkter,
+          undefined,
+          utledetPanel,
+        ),
+      { wrapper: medBehandlingProvider },
     );
 
     const bekreftAksjonspunkt = result.current;

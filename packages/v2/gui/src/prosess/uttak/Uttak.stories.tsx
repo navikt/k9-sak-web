@@ -35,7 +35,7 @@ const meta = {
   decorators: [
     withK9Kodeverkoppslag(),
     Story => (
-      <BehandlingProvider refetchBehandling={fn()}>
+      <BehandlingProvider refetchBehandling={fn()} settBehandling={fn()}>
         <Story />
       </BehandlingProvider>
     ),

@@ -7,7 +7,6 @@ import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
-import settBehandlingFraLagring from '../settBehandlingFraLagring';
 import type { BehandlingContextType } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import readOnlyUtils from '../readOnlyUtils';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -134,8 +133,8 @@ export const getBekreftAksjonspunktCallback =
     behandling: Behandling,
     aksjonspunkter: Aksjonspunkt[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+    settBehandling: BehandlingContextType['settBehandling'],
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
-    settBehandling?: BehandlingContextType['settBehandling'],
   ): LegacyBekreftAksjonspunktCallback =>
   async (aksjonspunktModels: LegacyBekreftAksjonspunktModell[]) => {
     const models = aksjonspunktModels.map(ap => ({
@@ -152,7 +151,7 @@ export const getBekreftAksjonspunktCallback =
 
     const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
     const etterLagring = (lagringsresultat: unknown) => {
-      settBehandlingFraLagring(settBehandling, lagringsresultat);
+      settBehandling(lagringsresultat);
       return etterLagringCallback?.();
     };
 

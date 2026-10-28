@@ -205,6 +205,7 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
+      vi.fn(),
     );
 
     const aksjonspunkter = [
@@ -250,7 +251,6 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       [],
       lagreAksjonspunkter,
-      undefined,
       settBehandling,
     );
 
@@ -272,6 +272,7 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
+      vi.fn(),
       lagreOverstyrteAksjonspunkter,
     );
 
@@ -318,6 +319,7 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
+      vi.fn(),
       lagreOverstyrteAksjonspunkter,
     );
 
