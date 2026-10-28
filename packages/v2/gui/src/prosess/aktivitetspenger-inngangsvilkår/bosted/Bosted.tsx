@@ -165,7 +165,9 @@ export const Bosted = ({
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
           fritekstVurderingBrev:
-            vurdering.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering.fritekst : undefined,
+            vurdering.bosatt === 'ikkeOppfylt' && vurdering.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET
+              ? vurdering.fritekst
+              : undefined,
         },
       ];
       if (redigerMaksdatoAktiv && muligAvkorting) {

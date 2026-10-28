@@ -155,7 +155,10 @@ export const BehovForBistand = ({
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
           fritekstVurderingBrev:
-            vurdering.avslagsårsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering.fritekst : undefined,
+            vurdering.behovForBistand === 'ikkeOppfylt' &&
+            vurdering.avslagsårsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET
+              ? vurdering.fritekst
+              : undefined,
         },
       ];
       if (redigerMaksdatoAktiv && muligAvkorting) {

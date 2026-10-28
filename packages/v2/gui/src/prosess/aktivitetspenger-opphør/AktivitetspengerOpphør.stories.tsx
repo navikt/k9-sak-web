@@ -17,7 +17,7 @@ import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontr
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, spyOn, userEvent, within } from 'storybook/test';
+import { expect, fn, spyOn, userEvent, waitFor, within } from 'storybook/test';
 import { FakeAktivitetspengerApi, fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { AktivitetspengerOpphør } from './AktivitetspengerOpphør.js';
@@ -604,6 +604,56 @@ export const AndreLivsoppholdytelserVilkårsvurderingUtenFritekst: Story = {
         }),
       ],
     );
+  },
+};
+
+export const AndreLivsoppholdytelserVilkårsvurderingByttTilNeiFjernerFritekst: Story = {
+  ...AndreLivsoppholdytelserVilkårsvurdering,
+  play: async ({ canvas, step, args }) => {
+    await step('Åpne Vilkårsvurdering-fanen', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Vilkårsvurdering' }));
+    });
+
+    await step('Fyll inn vurderingens begrunnelse', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker mottar annen livoppholdsytelse/i }),
+        'Bruker mottar arbeidsavklaringspenger.',
+      );
+    });
+
+    await step('Velg at bruker mottar annen livsoppholdsytelse', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med/i }));
+    });
+
+    await step('Legg til fritekst i opphørsbrevet', async () => {
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }), 'Tidligere fritekst.');
+    });
+
+    await step('Bytt til nei og skjul fritekstfeltet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+      await waitFor(async () => {
+        await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+          fakeAndreLivsoppholdytelserBehandling.uuid,
+          fakeAndreLivsoppholdytelserBehandling.versjon,
+          [
+            expect.objectContaining({
+              vurdertePerioder: [
+                expect.objectContaining({
+                  erVilkårOppfylt: true,
+                  fritekstVurderingBrev: undefined,
+                }),
+              ],
+            }),
+          ],
+        );
+      });
+    });
   },
 };
 
