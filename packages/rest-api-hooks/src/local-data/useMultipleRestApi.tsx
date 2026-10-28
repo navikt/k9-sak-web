@@ -78,7 +78,9 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
     const previousTriggers = ref.current;
 
     useEffect(() => {
-      // Svar fra kall som er erstattet av nyere kall (eller unmount) skal ikke overskrive state
+      // Hver kjøring av effekten har sitt eget flagg. Cleanup kjører før effekten kjøres på nytt (updateTriggers
+      // endret, f.eks. nytt prosessteg valgt) og ved unmount. Da skal ikke svar fra denne kjøringen overskrive state,
+      // ellers kan et tregt svar for et forrige valg (f.eks. en 500-feil) overskrive data som allerede er hentet.
       let erUtdatert = false;
       if (!options.suspendRequest) {
         setData(oldState => ({

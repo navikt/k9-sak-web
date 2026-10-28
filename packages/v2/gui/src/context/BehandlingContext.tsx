@@ -14,7 +14,7 @@ export interface BehandlingContextType {
    * Setter ny behandling i Index rett etter lagring, før navigering. Tar imot svaret fra lagringen direkte og
    * ignorerer svar som ikke er en behandling.
    */
-  settBehandling: (svar: unknown) => void;
+  settBehandlingHvisGyldig: (svar: unknown) => void;
   /**
    * For komponenter som bekrefter aksjonspunkt selv via generert klient. Venter til ny behandling er klar, setter den
    * og navigerer til steget med åpent aksjonspunkt.
@@ -49,7 +49,9 @@ export const BehandlingProvider = ({
   settBehandling: (behandling: BehandlingDto) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }) => {
-  const settBehandlingFraSvar = useCallback(
+  // Setter behandling kun hvis svaret er en gyldig BehandlingDto.
+  // Responsen når vi poller etter løsing av aksjonspunkt er noe annet enn behandling frem til behandlingen er klar igjen
+  const settBehandlingHvisGyldig = useCallback(
     (svar: unknown) => {
       if (erBehandlingDto(svar)) {
         settBehandling(svar);
@@ -59,7 +61,7 @@ export const BehandlingProvider = ({
   );
   // Ny behandling settes før kalleren av refetchBehandling går videre (f.eks. navigerer til punkt=default)
   const refetchOgSettBehandling = async () => {
-    settBehandlingFraSvar(await refetchBehandling());
+    settBehandlingHvisGyldig(await refetchBehandling());
   };
   const onAksjonspunktBekreftet = async () => {
     await refetchOgSettBehandling();
@@ -72,7 +74,7 @@ export const BehandlingProvider = ({
         behandlingVersjon,
         refetchBehandling: refetchOgSettBehandling,
         erBehandlingsdataUtdatert,
-        settBehandling: settBehandlingFraSvar,
+        settBehandlingHvisGyldig,
         onAksjonspunktBekreftet,
       }}
     >

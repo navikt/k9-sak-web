@@ -133,7 +133,7 @@ export const getBekreftAksjonspunktCallback =
     behandling: Behandling,
     aksjonspunkter: Aksjonspunkt[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
-    settBehandling: BehandlingContextType['settBehandling'],
+    settBehandlingHvisGyldig: BehandlingContextType['settBehandlingHvisGyldig'],
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   ): LegacyBekreftAksjonspunktCallback =>
   async (aksjonspunktModels: LegacyBekreftAksjonspunktModell[]) => {
@@ -151,7 +151,7 @@ export const getBekreftAksjonspunktCallback =
 
     const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
     const etterLagring = (lagringsresultat: unknown) => {
-      settBehandling(lagringsresultat);
+      settBehandlingHvisGyldig(lagringsresultat);
       return etterLagringCallback?.();
     };
 

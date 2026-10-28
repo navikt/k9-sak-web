@@ -30,7 +30,7 @@ export const useBekreftAksjonspunkt = ({
   lagreOverstyrteAksjonspunkter,
   oppdaterProsessStegOgFaktaPanelIUrl,
 }: UseBekreftAksjonspunktParams) => {
-  const { settBehandling } = useBehandlingContext();
+  const { settBehandlingHvisGyldig } = useBehandlingContext();
   return useCallback(
     async (aksjonspunktModels: any[], aksjonspunkter: AksjonspunktDto[] = [], skaForhindreOppdaterUrl?: boolean) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
@@ -76,7 +76,7 @@ export const useBekreftAksjonspunkt = ({
               },
               true,
             );
-      settBehandling(lagringsresultat);
+      settBehandlingHvisGyldig(lagringsresultat);
       if (!skaForhindreOppdaterUrl) {
         oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
@@ -89,7 +89,7 @@ export const useBekreftAksjonspunkt = ({
       lagreAksjonspunkter,
       lagreOverstyrteAksjonspunkter,
       oppdaterProsessStegOgFaktaPanelIUrl,
-      settBehandling,
+      settBehandlingHvisGyldig,
     ],
   );
 };

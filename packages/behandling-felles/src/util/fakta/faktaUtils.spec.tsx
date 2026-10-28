@@ -242,7 +242,7 @@ describe('<faktaUtils>', () => {
     const rekkefølge: string[] = [];
     const nyBehandling = { ...behandling, versjon: behandling.versjon + 1 };
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn(() => rekkefølge.push('navigering'));
-    const settBehandling = vi.fn(() => rekkefølge.push('settBehandling'));
+    const settBehandlingHvisGyldig = vi.fn(() => rekkefølge.push('settBehandlingHvisGyldig'));
     const lagreAksjonspunkter = vi.fn().mockResolvedValue(nyBehandling);
 
     const callback = getBekreftAksjonspunktCallback(
@@ -251,13 +251,13 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       [],
       lagreAksjonspunkter,
-      settBehandling,
+      settBehandlingHvisGyldig,
     );
 
     await callback([{ kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD }]);
 
-    expect(settBehandling).toHaveBeenCalledWith(nyBehandling);
-    expect(rekkefølge).toEqual(['settBehandling', 'navigering']);
+    expect(settBehandlingHvisGyldig).toHaveBeenCalledWith(nyBehandling);
+    expect(rekkefølge).toEqual(['settBehandlingHvisGyldig', 'navigering']);
   });
 
   it('skal lagre overstyrt aksjonspunkt', async () => {

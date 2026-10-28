@@ -69,7 +69,7 @@ const useCallbacks = (
   lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
 ) => {
-  const { settBehandling } = useBehandlingContext();
+  const { settBehandlingHvisGyldig } = useBehandlingContext();
   const velgFaktaPanelCallback = useCallback(
     index => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
     [behandling.versjon, valgtProsessSteg],
@@ -82,10 +82,10 @@ const useCallbacks = (
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
-      settBehandling,
+      settBehandlingHvisGyldig,
       lagreOverstyrteAksjonspunkter,
     ),
-    [behandling.versjon, settBehandling],
+    [behandling.versjon, settBehandlingHvisGyldig],
   );
 
   return [velgFaktaPanelCallback, bekreftAksjonspunktCallback];

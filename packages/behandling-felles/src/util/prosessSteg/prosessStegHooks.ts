@@ -168,7 +168,7 @@ const useBekreftAksjonspunkt = (
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   valgtPanel?: ProsessStegUtledet,
 ): LegacyBekreftAksjonspunktCallback => {
-  const { settBehandling } = useBehandlingContext();
+  const { settBehandlingHvisGyldig } = useBehandlingContext();
   return useCallback(
     aksjonspunktModels =>
       getBekreftAksjonspunktCallback(
@@ -177,10 +177,10 @@ const useBekreftAksjonspunkt = (
         behandling,
         valgtPanel ? valgtPanel.getAksjonspunkter() : [],
         lagreAksjonspunkter,
-        settBehandling,
+        settBehandlingHvisGyldig,
         lagreOverstyrteAksjonspunkter,
       )(aksjonspunktModels),
-    [behandling.versjon, valgtPanel, settBehandling],
+    [behandling.versjon, valgtPanel, settBehandlingHvisGyldig],
   );
 };
 

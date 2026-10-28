@@ -58,7 +58,7 @@ export const getBekreftAksjonspunktCallback =
     oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
     overstyringApCodes: string[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
-    settBehandling: BehandlingContextType['settBehandling'],
+    settBehandlingHvisGyldig: BehandlingContextType['settBehandlingHvisGyldig'],
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   ) =>
   aksjonspunkter => {
@@ -75,7 +75,7 @@ export const getBekreftAksjonspunktCallback =
     };
 
     const etterLagring = (lagringsresultat: unknown) => {
-      settBehandling(lagringsresultat);
+      settBehandlingHvisGyldig(lagringsresultat);
       oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE);
     };
 
