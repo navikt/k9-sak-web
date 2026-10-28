@@ -8,7 +8,8 @@ import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import { Theme } from '@navikt/ds-react/Theme';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react-vite';
-import { initialize, mswLoader } from 'msw-storybook-addon';
+import { setupWorker } from 'msw/browser';
+import { mswLoader } from 'msw-storybook-addon/csf3';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
@@ -28,12 +29,16 @@ configureK9SakClient(mockAuthFixer as any);
 configureK9KlageClient(mockAuthFixer as any);
 configureK9TilbakeClient(mockAuthFixer as any);
 
-initialize({
-  onUnhandledRequest: 'bypass',
-  quiet: true,
-  serviceWorker: {
-    url: VITE_LOCAL_STORYBOOK ? '/mockServiceWorker.js' : '/k9-sak-web/mockServiceWorker.js',
-  },
+const loadMsw = mswLoader(async () => {
+  const worker = setupWorker();
+  await worker.start({
+    onUnhandledFrame: 'bypass',
+    quiet: true,
+    serviceWorker: {
+      url: VITE_LOCAL_STORYBOOK ? '/mockServiceWorker.js' : '/k9-sak-web/mockServiceWorker.js',
+    },
+  });
+  return worker;
 });
 
 const preview: Preview = {
@@ -76,7 +81,7 @@ const preview: Preview = {
 
   loaders: [
     async context => {
-      await mswLoader(context);
+      await loadMsw(context);
       await waitForActivatedServiceWorker();
     },
   ],

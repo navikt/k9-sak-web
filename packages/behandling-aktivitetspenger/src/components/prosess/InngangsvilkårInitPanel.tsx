@@ -1,5 +1,6 @@
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivitetspenger-inngangsvilkår/AktivitetspengerInngangsvilkår.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
@@ -27,6 +28,7 @@ interface Props {
 
 export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
   const [
     { data: aksjonspunkter = [] },
     { data: innloggetBruker },
@@ -50,6 +52,10 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
 
   if (!erValgt) {
     return null;
+  }
+
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   return (

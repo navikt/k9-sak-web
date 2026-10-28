@@ -231,7 +231,7 @@ export const AktivitetspengerOpphør = ({
               />
             )}
           </Tabs.Panel>
-          {lokalkontorBeslutterAP && (
+          {visBeslutterTab && lokalkontorBeslutterAP && (
             <Tabs.Panel value={OpphørTab.BESLUTTER}>
               <BeslutterOpphør
                 lokalkontorBeslutterAP={lokalkontorBeslutterAP}
