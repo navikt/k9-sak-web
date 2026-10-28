@@ -10,6 +10,7 @@ on:
 
 env:
   TAG_LATEST_PROD: latest_prod_ung
+  TAG_LATEST_PROD_AKTIVITETSPENGER: latest_prod_aktivitetspenger
 jobs:
   build-docker-image:
     name: Build Docker image
@@ -36,7 +37,7 @@ jobs:
           VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/ung-sak-web/"
 
       - name: Last opp assets til CDN
-        uses: nais/deploy/actions/cdn-upload/v2@d003bddf74ce5b96fa3056ae60bd4b9b3bbc89ef # v3
+        uses: nais/deploy/actions/cdn-upload/v2@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
         with:
           source: dist/ung/web/
           destination: ung-sak-web/
@@ -71,9 +72,11 @@ jobs:
         run: |
           dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD }}...${{ github.sha }}"
           echo "Forskjell mellom denne build og prod: <${dynamic_url}>" >> $GITHUB_STEP_SUMMARY
+          dynamic_url_aktivitetspenger="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD_AKTIVITETSPENGER }}...${{ github.sha }}"
+          echo "Forskjell mellom denne build og prod (aktivitetspenger): <${dynamic_url_aktivitetspenger}>" >> $GITHUB_STEP_SUMMARY
 
-  deploy-dev:
-    name: Deploy to dev
+  deploy-dev-ungdomsprogramytelsen:
+    name: Deploy ungdomsprogramytelsen to dev
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -84,15 +87,115 @@ jobs:
     needs: [build-docker-image]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: nais/deploy/actions/deploy@d003bddf74ce5b96fa3056ae60bd4b9b3bbc89ef # v3
+      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
           VARS: deploy/ung/dev-gcp-vars.yaml
           VAR: image=${{ needs.build-docker-image.outputs.image }}
 
-  deploy-prod:
-    name: Deploy to prod
+  deploy-dev-aktivitetspenger:
+    name: Deploy aktivitetspenger to dev
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CLUSTER: dev-gcp
+    environment: test
+    needs: [build-docker-image]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/dev-gcp-aktivitetspenger-vars.yaml
+          VAR: image=${{ needs.build-docker-image.outputs.image }}
+
+  deploy-prod-aktivitetspenger:
+    name: Deploy aktivitetspenger to prod
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      CLUSTER: prod-gcp
+    environment: prod
+    if: ${{ false }}
+    needs: [build-docker-image, deploy-dev-aktivitetspenger]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Ta med litt historie og tags for å finne latest_prod_aktivitetspenger commit hash
+          fetch-tags: true
+          fetch-depth: 100
+      - name: tag deployment image tag
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          TAG: prod_${{ needs.build-docker-image.outputs.tag }}
+        with:
+          script: |
+            try {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{ env.TAG }}',
+                sha: context.sha
+              })
+            } catch (err) {
+              if(err.status === 422) { // tag already exists
+                console.info('Tag for deployment ${{ env.TAG }} already existed. Will leave it as is');
+              } else {
+                throw err;
+              }
+            }
+      - name: Print static git diff url
+        shell: bash
+        run: |
+          # disable exit on error temporarily in case latest_prod_aktivitetspenger tag does not exist
+          set +e
+          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD_AKTIVITETSPENGER }})"
+          # re-enable exit on error
+          set -e
+          if [ -n "${latest_prod_sha}" ]; then
+            static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
+            echo "Endringer prodsatt i denne utrulling (aktivitetspenger): <${static_url}>" >> $GITHUB_STEP_SUMMARY
+          fi
+      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VARS: deploy/ung/prod-gcp-aktivitetspenger-vars.yaml
+          VAR: image=${{ needs.build-docker-image.outputs.image }}
+      - name: tag deployment done
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            try {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'tags/${{ env.TAG_LATEST_PROD_AKTIVITETSPENGER }}',
+                sha: context.sha,
+                force: true
+              })
+            } catch (err) {
+              if(err.status === 422) { // tag did not exist, try creating it
+                console.info('Tag for ${{ env.TAG_LATEST_PROD_AKTIVITETSPENGER }} did not exist. Will try creating it');
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD_AKTIVITETSPENGER }}',
+                  sha: context.sha
+                })
+              } else {
+                throw err;
+              }
+            }
+
+  deploy-prod-ungdomsprogramytelsen:
+    name: Deploy ungdomsprogramytelsen to prod
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -101,7 +204,7 @@ jobs:
       CLUSTER: prod-gcp
     environment: prod
     if: github.ref_name == 'master'
-    needs: [build-docker-image, deploy-dev]
+    needs: [build-docker-image, deploy-dev-ungdomsprogramytelsen]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -140,7 +243,7 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@d003bddf74ce5b96fa3056ae60bd4b9b3bbc89ef # v3
+      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml

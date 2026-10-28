@@ -1,6 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { Alert, BodyLong, Label, ReadMore, VStack } from '@navikt/ds-react';
 import { useEffect } from 'react';
+import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDato.module.css';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt.js';
@@ -30,7 +31,7 @@ interface VurderDatoProps {
 }
 
 const VurderDato = ({ redigerVirkningsdato, lukkRedigering }: VurderDatoProps) => {
-  const { aksjonspunkter } = useUttakContext();
+  const { aksjonspunkter, readOnly } = useUttakContext();
   const uttakApi = useUttakApi();
   const { behandling } = useUttakContext();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
@@ -49,8 +50,12 @@ const VurderDato = ({ redigerVirkningsdato, lukkRedigering }: VurderDatoProps) =
     return false;
   }
 
-  // Endringsdato er allerede satt - vis kun etter at «Rediger aksjonspunkt» er trykket i uttaksperiodetabellen
-  if (virkningsdatoUttakNyeRegler && !redigerVirkningsdato) {
+  // Løst aksjonspunkt med endringsdato vises i infostripen i uttakstabellen til «Rediger vurdering» er trykket
+  if (
+    !isAksjonspunktOpen(aksjonspunktVurderDatoNyRegelUttak.status) &&
+    virkningsdatoUttakNyeRegler &&
+    !redigerVirkningsdato
+  ) {
     return false;
   }
 
@@ -86,7 +91,9 @@ const VurderDato = ({ redigerVirkningsdato, lukkRedigering }: VurderDatoProps) =
           </ReadMore>
         </VStack>
       </Alert>
-      <VurderDatoAksjonspunkt lukkRedigering={lukkRedigering} />
+      {!readOnly && (
+        <VurderDatoAksjonspunkt redigerVirkningsdato={redigerVirkningsdato} lukkRedigering={lukkRedigering} />
+      )}
     </VStack>
   );
 };

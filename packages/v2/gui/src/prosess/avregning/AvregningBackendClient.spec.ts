@@ -21,10 +21,10 @@ describe('hentForhåndsvisningVarselbrev', () => {
   });
 
   test('ung-klienten godtar aktivitetspenger', async () => {
-    await new UngAvregningBackendClient().hentForhåndsvisningVarselbrev('uuid', 'AKT', 'tekst');
+    await new UngAvregningBackendClient().hentForhåndsvisningVarselbrev('uuid', 'AVP', 'tekst');
 
     expect(ungHentVarselbrev).toHaveBeenCalledWith({
-      body: { ytelsesbehandlingUuid: 'uuid', fagsakYtelseType: 'AKT', varseltekst: 'tekst' },
+      body: { ytelsesbehandlingUuid: 'uuid', fagsakYtelseType: 'AVP', varseltekst: 'tekst' },
     });
   });
 
@@ -43,7 +43,7 @@ describe('hentForhåndsvisningVarselbrev', () => {
   });
 
   test('k9-klienten avviser ytelsestype som k9-tilbake ikke støtter', async () => {
-    await expect(new K9AvregningBackendClient().hentForhåndsvisningVarselbrev('uuid', 'AKT')).rejects.toThrow(
+    await expect(new K9AvregningBackendClient().hentForhåndsvisningVarselbrev('uuid', 'AVP')).rejects.toThrow(
       'Ugyldig fagsak ytelse type',
     );
     expect(k9HentVarselbrev).not.toHaveBeenCalled();

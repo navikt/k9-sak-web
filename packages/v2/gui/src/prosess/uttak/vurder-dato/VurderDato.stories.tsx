@@ -122,6 +122,31 @@ export const Skjemavalidering: Story = {
         await expect(canvas.getAllByText(/Feltet må fylles ut/i).length).toBeGreaterThan(0);
       });
     });
+
+    await step('Endringsdato etter 31.12.2026 gir feilmelding', async () => {
+      const dateInput = canvas.getByLabelText('Endringsdato');
+      await user.clear(dateInput);
+      await user.type(dateInput, '01.01.2027');
+      await user.tab();
+      await expect(await canvas.findByText('Dato må være før eller lik 31.12.2026')).toBeInTheDocument();
+    });
+
+    await step('Endringsdato 31.12.2026 er gyldig', async () => {
+      const dateInput = canvas.getByLabelText('Endringsdato');
+      await user.clear(dateInput);
+      await user.type(dateInput, '31.12.2026');
+      await user.tab();
+      await waitFor(async function sjekkIngenFeilmelding() {
+        await expect(canvas.queryByText('Dato må være før eller lik 31.12.2026')).not.toBeInTheDocument();
+      });
+    });
+
+    await step('Kalenderen tillater ikke dager etter 31.12.2026', async () => {
+      await user.click(canvas.getByRole('button', { name: 'Åpne datovelger' }));
+      await expect(await canvas.findByRole('button', { name: 'torsdag 31' })).toBeEnabled();
+      await expect(canvas.getByRole('button', { name: 'Gå til neste måned' })).toBeDisabled();
+      await expect(canvas.queryByRole('option', { name: '2027' })).not.toBeInTheDocument();
+    });
   },
 };
 
@@ -180,6 +205,52 @@ export const LøsAksjonspunkt: Story = {
           ],
         });
       });
+    });
+  },
+};
+
+export const ÅpentAksjonspunktMedEndringsdato: Story = {
+  ...LøsAksjonspunkt,
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([lagOppfyltPeriode('2024-01-01/2024-01-15'), lagOppfyltPeriode('2024-01-16/2024-01-31')], {
+        virkningsdatoUttakNyeRegler: '2024-01-15',
+      }),
+      onBekreftAksjonspunkt: payload => submitSpy(payload),
+    }),
+  ],
+  play: async context => {
+    const canvas = within(context.canvasElement);
+
+    await context.step('Viser åpent aksjonspunkt direkte uten forhåndsutfylt endringsdato', async () => {
+      await expect(await canvas.findByLabelText('Endringsdato')).toHaveValue('');
+      await expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeVisible();
+      await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Avbryt' })).not.toBeInTheDocument();
+    });
+
+    await LøsAksjonspunkt.play?.(context);
+  },
+};
+
+export const ÅpentAksjonspunktMedEndringsdatoForVeileder: Story = {
+  ...ÅpentAksjonspunktMedEndringsdato,
+  args: {
+    ...ÅpentAksjonspunktMedEndringsdato.args,
+    readOnly: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Viser kun varsel om åpent aksjonspunkt, uten skjema', async () => {
+      await expect(
+        await canvas.findByText('Vurder hvilken dato endringer i uttak skal gjelde fra'),
+      ).toBeInTheDocument();
+      await expect(canvas.getByText(/Endringer fra 15\.01\.2024:/)).toBeInTheDocument();
+      await expect(canvas.queryByLabelText('Endringsdato')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Begrunnelse')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Vis aksjonspunkt' })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
     });
   },
 };
