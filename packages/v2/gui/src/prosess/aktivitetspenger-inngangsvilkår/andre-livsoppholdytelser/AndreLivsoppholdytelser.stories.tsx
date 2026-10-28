@@ -649,3 +649,56 @@ export const AnnenYtelseMedFritekst: Story = {
     });
   },
 };
+
+const apiForByttTilOppfyltFjernerFritekst = new FakeAktivitetspengerApiSomHuskerAksjonspunkt();
+
+export const ByttTilOppfyltFjernerFritekst: Story = {
+  args: {
+    api: apiForByttTilOppfyltFjernerFritekst,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiForByttTilOppfyltFjernerFritekst.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Fyll inn begrunnelse for vurderingen', async () => {
+      await userEvent.type(
+        await canvas.findByRole('textbox', { name: /Vurder om søker mottar andre livsoppholdsytelser/ }),
+        'Søker mottar ingen andre livsoppholdsytelser.',
+      );
+    });
+
+    await step('Velg ikke oppfylt og legg til fritekst i avslagsbrevet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }), 'Tidligere fritekst.');
+    });
+
+    await step('Bytt til oppfylt og skjul fritekstfeltet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiForByttTilOppfyltFjernerFritekst.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                avslagsårsak: undefined,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
+          }),
+        );
+      });
+    });
+  },
+};
