@@ -1,11 +1,12 @@
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegHentingFeilet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegHentingFeilet.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerBeregning } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregning.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { beregningsgrunnlagQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 
 const PANEL_ID = prosessStegCodes.BEREGNING;
@@ -18,6 +19,12 @@ interface Props {
 export const BeregningProsessStegInitPanel = ({ api, behandling }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
   const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
+  // Samme query som Prosessmotor bruker for status. Leser bare cachen for å skille hentefeil fra manglende data.
+  const prosessmotorQuery = useQuery({
+    ...beregningsgrunnlagQueryOptions(api, behandling),
+    enabled: false,
+    throwOnError: false,
+  });
 
   const { data: beregningsgrunnlag } = useSuspenseQuery(
     beregningsgrunnlagQueryOptions(api, behandling, erTilBehandlingEllerBehandlet),
@@ -30,7 +37,7 @@ export const BeregningProsessStegInitPanel = ({ api, behandling }: Props) => {
   }
 
   if (!erTilBehandlingEllerBehandlet) {
-    return <ProsessStegIkkeBehandlet />;
+    return prosessmotorQuery.isError ? <ProsessStegHentingFeilet /> : <ProsessStegIkkeBehandlet />;
   }
 
   if (!beregningsgrunnlag) {

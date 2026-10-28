@@ -4,6 +4,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import type { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { simuleringResultatQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { FakeAktivitetspengerApi } from '@k9-sak-web/gui/storybook/mocks/FakeAktivitetspengerApi.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
@@ -56,10 +57,12 @@ describe('SimuleringProsessStegInitPanel', () => {
     avregningProps.current = undefined;
   });
 
-  const renderPanel = (api: AktivitetspengerApi, behandling: BehandlingDto) =>
+  const renderPanel = (api: AktivitetspengerApi, behandling: BehandlingDto, erTilBehandlingEllerBehandlet = true) =>
     render(
       <QueryClientProvider client={queryClient}>
-        <ProsessPanelContext.Provider value={{ erValgt: () => true, erTilBehandlingEllerBehandlet: () => true }}>
+        <ProsessPanelContext.Provider
+          value={{ erValgt: () => true, erTilBehandlingEllerBehandlet: () => erTilBehandlingEllerBehandlet }}
+        >
           <Suspense fallback="laster">
             <SimuleringProsessStegInitPanel api={api} behandling={behandling} saksnummer="123" />
           </Suspense>
@@ -125,5 +128,30 @@ describe('SimuleringProsessStegInitPanel', () => {
     renderPanel(createApi([vurderFeilutbetaling(true)], {}), createBehandling(BehandlingStatus.UTREDES));
 
     expect(await screen.findByTestId('avregning')).toHaveTextContent('readonly');
+  });
+
+  test('viser hentefeil når simuleringen ikke ble hentet', async () => {
+    const getSimuleringResultat = vi.fn().mockRejectedValue(new Error('Feil ved henting'));
+    const api = Object.assign(createApi([vurderFeilutbetaling(true)], del2Saksbehandler), {
+      getSimuleringResultat,
+    });
+    const behandling = createBehandling(BehandlingStatus.UTREDES);
+    await queryClient.fetchQuery(simuleringResultatQueryOptions(api, behandling)).catch(() => undefined);
+
+    renderPanel(api, behandling, false);
+
+    expect(await screen.findByText('Vi fikk ikke hentet opplysningene til dette steget.')).toBeVisible();
+  });
+
+  test('viser at steget ikke er behandlet når simuleringen ikke har hentefeil', async () => {
+    const api = Object.assign(createApi([vurderFeilutbetaling(true)], del2Saksbehandler), {
+      getSimuleringResultat: vi.fn().mockResolvedValue(null),
+    });
+    const behandling = createBehandling(BehandlingStatus.UTREDES);
+    await queryClient.fetchQuery(simuleringResultatQueryOptions(api, behandling));
+
+    renderPanel(api, behandling, false);
+
+    expect(await screen.findByText(/Dette steget er ikke behandlet/)).toBeVisible();
   });
 });

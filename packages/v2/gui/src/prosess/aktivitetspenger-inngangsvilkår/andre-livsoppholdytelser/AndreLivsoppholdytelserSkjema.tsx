@@ -163,7 +163,7 @@ export const AndreLivsoppholdytelserSkjema = ({
           />
         )}
 
-        {harFritekstbrev && (
+        {andreLivsoppholdytelser === 'ikkeOppfylt' && harFritekstbrev && (
           <RhfTextarea
             key={`${selectedId}-fritekst`}
             control={formHook.control}

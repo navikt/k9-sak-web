@@ -84,7 +84,7 @@ export const BostedSkjema = ({
             </>
           </RhfRadioGroup>
         )}
-        {avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET && (
+        {bosatt === 'ikkeOppfylt' && avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET && (
           <RhfTextarea
             key={`${selectedId}-fritekst`}
             control={formHook.control}

@@ -128,6 +128,18 @@ export const AutomatiskVurdert: Story = {
   },
 };
 
+export const VurdertITidligereBehandling: Story = {
+  args: {
+    aksjonspunkt: undefined,
+    perioder: [lagPeriodeInfo(periode1, Utfall.OPPFYLT, 'Sverige', 'SWE', forutgåendePeriode1)],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByText('Dette steget er ikke behandlet')).not.toBeInTheDocument();
+    await expect(canvas.getByText(/Forutgående medlemskap er godkjent/)).toBeInTheDocument();
+  },
+};
+
 export const ReadOnly: Story = {
   args: {
     readOnly: true,
