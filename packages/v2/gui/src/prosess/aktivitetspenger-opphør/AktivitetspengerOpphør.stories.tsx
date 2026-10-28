@@ -812,6 +812,23 @@ export const BeslutterGodkjennerAlle: Story = {
   },
 };
 
+export const MedUtførtBeslutterAksjonspunkt: Story = {
+  args: {
+    ...fakeBeslutterArgsBase,
+    aksjonspunkter: [
+      lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR, AksjonspunktStatus.UTFØRT),
+      lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR, AksjonspunktStatus.UTFØRT),
+    ],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.queryByRole('tab', { name: 'Beslutter' })).not.toBeInTheDocument();
+    await expect(canvas.getAllByRole('tabpanel', { hidden: true })).toHaveLength(2);
+    await expect(canvas.getByRole('tab', { name: 'Vilkårsvurdering' })).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('tabpanel', { name: 'Vilkårsvurdering' })).toBeVisible();
+  },
+};
+
 export const BeslutterSenderTilbake: Story = {
   args: {
     ...fakeBeslutterArgsBase,
