@@ -23,6 +23,7 @@ declare const detailsPeriode: string;
 declare const tilkjentYtelseTag: string;
 declare const showDataContainer: string;
 declare const fadeinContainer: string;
+declare const gradert: string;
 
 export {
 	timelineContainer,
@@ -37,7 +38,8 @@ export {
 	detailsPeriode,
 	tilkjentYtelseTag,
 	showDataContainer,
-	fadeinContainer
+	fadeinContainer,
+	gradert
 };
 
 declare const __default_export__: {
@@ -58,5 +60,6 @@ declare const __default_export__: {
 	tilkjentYtelseTag: typeof tilkjentYtelseTag;
 	showDataContainer: typeof showDataContainer;
 	fadeinContainer: typeof fadeinContainer;
+	gradert: typeof gradert;
 };
 export default __default_export__;
