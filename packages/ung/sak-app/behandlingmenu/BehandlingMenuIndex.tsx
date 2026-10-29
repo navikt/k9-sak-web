@@ -2,7 +2,6 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -282,10 +281,7 @@ export const BehandlingMenuIndex = ({
             lukkModal={lukkModal}
           />
         )),
-        new MenyData(
-          !sakRettigheter.sakSkalTilInfotrygd && fagsak.sakstype !== fagsakYtelsesType.AKTIVITETSPENGER,
-          'Opprett ny behandling',
-        ).medModal(lukkModal => (
+        new MenyData(!sakRettigheter.sakSkalTilInfotrygd, 'Opprett ny behandling').medModal(lukkModal => (
           <MenyNyBehandlingIndexV2
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}
