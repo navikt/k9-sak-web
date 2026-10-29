@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { pathToFagsak } from '../app/paths';
 import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
@@ -37,7 +39,11 @@ const FagsakSearchIndex = () => {
     isSuccess,
     error,
   } = useMutation({
-    mutationFn: ({ searchString }: { searchString?: string }) => api.fagsakSøk(searchString ?? ''),
+    mutationFn: async ({ searchString }: { searchString?: string }) => {
+      const sakstype = isAktivitetspenger() ? fagsakYtelsesType.AKTIVITETSPENGER : fagsakYtelsesType.UNGDOMSYTELSE;
+      const resultat = await api.fagsakSøk(searchString ?? '');
+      return resultat.filter(fagsak => fagsak.sakstype === sakstype);
+    },
     onSuccess: results => {
       if (results.length === 1) {
         void goToFagsak(results[0].saksnummer);
