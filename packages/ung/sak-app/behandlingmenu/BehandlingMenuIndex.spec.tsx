@@ -67,6 +67,13 @@ const alleBehandlinger = [
 
 const menyEndreFristApi = new FakeMenyEndreFristApi();
 
+const { isProdMock } = vi.hoisted(() => ({ isProdMock: vi.fn(() => false) }));
+
+vi.mock('@k9-sak-web/lib/paths/paths.js', async importOriginal => ({
+  ...(await importOriginal<typeof import('@k9-sak-web/lib/paths/paths.js')>()),
+  isProd: isProdMock,
+}));
+
 vi.mock('react-router', async () => {
   const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
@@ -93,6 +100,7 @@ describe('BehandlingMenuIndex', () => {
   afterEach(() => {
     queryClient.clear();
     requestApi.clearAllMockData();
+    isProdMock.mockReturnValue(false);
   });
 
   const renderMeny = (fagsakForTest: Omit<typeof fagsak, 'sakstype'> & { sakstype: string }) => {
@@ -180,7 +188,8 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
   });
 
-  it('skal ikke vise opprett ny behandling for aktivitetspenger', async () => {
+  it('skal ikke vise opprett ny behandling for aktivitetspenger i prod', async () => {
+    isProdMock.mockReturnValue(true);
     renderMeny({ ...fagsak, sakstype: ungFagsakYtelsesType.AKTIVITETSPENGER });
 
     const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
@@ -190,5 +199,17 @@ describe('BehandlingMenuIndex', () => {
 
     expect(screen.getByRole('menuitem', { name: 'Sett behandlingen på vent' })).toBeInTheDocument();
     expect(screen.queryByRole('menuitem', { name: 'Opprett ny behandling' })).not.toBeInTheDocument();
+  });
+
+  it('skal vise opprett ny behandling for aktivitetspenger utenfor prod', async () => {
+    isProdMock.mockReturnValue(false);
+    renderMeny({ ...fagsak, sakstype: ungFagsakYtelsesType.AKTIVITETSPENGER });
+
+    const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
+    await act(async () => {
+      await userEvent.click(knapp);
+    });
+
+    expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
   });
 });
