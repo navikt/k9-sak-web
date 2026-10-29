@@ -121,7 +121,7 @@ jobs:
       id-token: write
     env:
       CLUSTER: prod-gcp
-    environment: prod
+    environment: prod-aktivitetspenger
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev-aktivitetspenger]
     steps:
@@ -202,7 +202,7 @@ jobs:
       id-token: write
     env:
       CLUSTER: prod-gcp
-    environment: prod
+    environment: prod-ungdomsprogramytelsen
     if: github.ref_name == 'master'
     needs: [build-docker-image, deploy-dev-ungdomsprogramytelsen]
     steps:
