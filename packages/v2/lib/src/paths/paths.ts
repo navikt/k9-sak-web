@@ -68,7 +68,7 @@ export const isQ = (): boolean => window.location.hostname.toLowerCase().endsWit
 
 export const isProd = () => {
   const { host } = window.location;
-  return host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no';
+  return isKnownHost(prodHosts, host);
 };
 
 export const getPathToAinntekt = (pathname: string) => {

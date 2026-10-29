@@ -17,6 +17,7 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
@@ -222,6 +223,13 @@ export const BehandlingMenuIndex = ({
     );
   }
 
+  const skalKunneOppretteNyBehandling = () => {
+    if (fagsak.sakstype === fagsakYtelsesType.AKTIVITETSPENGER && isProd()) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <MenySakIndexV2
       data={[
@@ -283,7 +291,7 @@ export const BehandlingMenuIndex = ({
           />
         )),
         new MenyData(
-          !sakRettigheter.sakSkalTilInfotrygd && fagsak.sakstype !== fagsakYtelsesType.AKTIVITETSPENGER,
+          !sakRettigheter.sakSkalTilInfotrygd && skalKunneOppretteNyBehandling(),
           'Opprett ny behandling',
         ).medModal(lukkModal => (
           <MenyNyBehandlingIndexV2
