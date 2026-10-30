@@ -231,6 +231,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                     })}
                     label="Til"
                     size="small"
+                    value={watch('tilDato')}
                     onChange={e => setValue('tilDato', e.target.value)}
                   >
                     {utledTilgjengeligeÅr(dayjs().toString(), 1, 5).map(år => (

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
@@ -96,7 +96,13 @@ const BehandlingOpplaeringspengerIndex = ({
     },
   );
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestOpplaeringspengerApi.resetCache();
     requestOpplaeringspengerApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -165,6 +171,7 @@ const BehandlingOpplaeringspengerIndex = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = harIkkeHentetBehandlingsdata && !!forrigeBehandling;
 
   return (
     <>
@@ -177,6 +184,9 @@ const BehandlingOpplaeringspengerIndex = ({
         behandlingUuid={behandling.uuid}
         behandlingVersjon={behandling.versjon}
         refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       >
         <OpplaeringspengerPaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}

@@ -281,7 +281,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
         {(isFormLocked, setIsFormLocked) => (
           <>
             <RhfForm formMethods={formHook} onSubmit={data => handleSubmit(data, setIsFormLocked)}>
-              <VStack gap="space-24" maxWidth="70ch" width="100%">
+              <VStack gap="space-24" maxWidth="78ch" width="100%">
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}

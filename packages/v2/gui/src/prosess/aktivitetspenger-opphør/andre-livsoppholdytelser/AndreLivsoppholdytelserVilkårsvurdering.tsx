@@ -1,12 +1,13 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatDate, formatPeriod, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -113,12 +114,18 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
 const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): VilkårSplittPanelPeriod[] =>
   (vilkårsavklaringVurderinger.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
-    .map(period => ({
-      id: `${period.periode.fom}_${period.periode.tom ?? 'åpen_periode'}`,
-      status: getPeriodStatus(period.utfall),
-      label: formatDate(period.periode.fom),
-      periode: period.periode,
-    }));
+    .map(period => {
+      const erAvslag = period.avklaringOgVurdering?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+      return {
+        id: `${period.periode.fom}_${period.periode.tom ?? 'åpen_periode'}`,
+        status: getPeriodStatus(period.utfall),
+        label:
+          erAvslag && period.periode.tom
+            ? formatPeriod(period.periode.fom, period.periode.tom)
+            : formatDate(period.periode.fom),
+        periode: period.periode,
+      };
+    });
 
 const buildPayload = ({
   formData,
@@ -185,6 +192,8 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
       vurdering.periode?.fom === selectedPeriod?.periode?.fom &&
       vurdering.periode?.tom === selectedPeriod?.periode?.tom,
   );
+  const erAvslag =
+    selectedVilkårsavklaringVurdering?.avklaringOgVurdering?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -297,7 +306,9 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                 readOnly={isFormLocked}
               >
                 <Radio value="ja">
-                  Ja, fra og med {selectedPeriod?.periode?.fom ? formatDate(selectedPeriod?.periode?.fom) : ''}
+                  {erAvslag
+                    ? `Ja, fra ${selectedPeriod?.label ?? ''}`
+                    : `Ja, fra og med ${selectedPeriod?.periode?.fom ? formatDate(selectedPeriod.periode.fom) : ''}`}
                 </Radio>
                 <Radio value="nei">Nei</Radio>
               </RhfRadioGroup>
@@ -309,12 +320,12 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   readOnly={isFormLocked}
                 />
               )}
-              {harFritekstbrev && (
+              {andreLivsoppholdytelser === 'ja' && harFritekstbrev && (
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}
-                  label="Fritekst opphørsbrev"
-                  description="Forklar hvorfor vilkåret er opphørt. Teksten vises i vedtaksbrevet."
+                  label={erAvslag ? 'Fritekst avslagsbrev' : 'Fritekst opphørsbrev'}
+                  description={`Forklar hvorfor vilkåret er ${erAvslag ? 'avslått' : 'opphørt'}. Teksten vises i vedtaksbrevet.`}
                   readOnly={isFormLocked}
                   validate={[required, minLength(3), maxLength(4000)]} // TODO
                   resize

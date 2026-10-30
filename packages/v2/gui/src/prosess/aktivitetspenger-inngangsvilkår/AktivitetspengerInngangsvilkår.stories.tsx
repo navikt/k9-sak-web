@@ -8,6 +8,7 @@ import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandli
 import type { InnloggetAnsattUngV2Dto } from '@k9-sak-web/backend/ungsak/kontrakt/nav-ansatt/InnloggetAnsattUngV2Dto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, within } from 'storybook/test';
 import { fakeAktivitetspengerApi } from '../../storybook/mocks/FakeAktivitetspengerApi';
 import { AktivitetspengerInngangsvilkår } from './AktivitetspengerInngangsvilkår';
 
@@ -111,6 +112,28 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
         ],
       },
     ] satisfies TotrinnskontrollSkjermlenkeContextDto[],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('tab', { name: 'Beslutter' })).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('tabpanel', { name: 'Beslutter' })).toBeVisible();
+  },
+};
+
+export const MedUtførtLokalkontorBeslutterVilkår: Story = {
+  args: {
+    ...MedÅpentLokalkontorBeslutterVilkår.args,
+    aksjonspunkter: [
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
+      lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR, AksjonspunktStatus.UTFØRT),
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByRole('tab', { name: 'Beslutter' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('tabpanel', { name: 'Beslutter', hidden: true })).not.toBeInTheDocument();
+    await expect(canvas.getByRole('tab', { name: 'Behov for bistand' })).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('tabpanel', { name: 'Behov for bistand' })).toBeVisible();
   },
 };
 

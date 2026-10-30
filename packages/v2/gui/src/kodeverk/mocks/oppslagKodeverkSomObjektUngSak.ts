@@ -41,10 +41,10 @@ export const oppslagKodeverkSomObjektUngSak = {
       kilde: 'AAP',
     },
     {
-      kode: 'AKT',
+      kode: 'AVP',
       kodeverk: 'FAGSAK_YTELSE',
       navn: 'Aktivitetspenger',
-      kilde: 'AKT',
+      kilde: 'AVP',
     },
     {
       kode: 'DAG',

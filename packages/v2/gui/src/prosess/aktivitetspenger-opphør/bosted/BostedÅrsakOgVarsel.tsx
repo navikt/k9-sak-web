@@ -1,20 +1,23 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
+import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import {
   BostedsavklaringKildeType,
   BostedsvilkårIkkeOppfyltÅrsak,
@@ -23,7 +26,7 @@ import {
 import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
 import { OpphørKilde } from '../formfields/OpphørKilde.js';
-import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
+import { getOpphørPeriods, type OpphørPeriodStatus } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
 
@@ -60,21 +63,36 @@ const tilJaEllerNei = (verdi?: boolean | null): string => {
   return '';
 };
 
-const buildInitialValues = (bostedGrunnlag: BostedGrunnlagResponseDto): BostedFormData => ({
+const erBostedsavklaringKilde = (verdi: string): verdi is BostedsavklaringKildeType =>
+  Object.values<string>(BostedsavklaringKildeType).includes(verdi);
+
+const erBostedsvilkårIkkeOppfyltÅrsak = (verdi: string): verdi is BostedsvilkårIkkeOppfyltÅrsak =>
+  Object.values<string>(BostedsvilkårIkkeOppfyltÅrsak).includes(verdi);
+
+const tilPeriodeStatus = (utfall: Utfall): OpphørPeriodStatus => {
+  if (utfall === Utfall.OPPFYLT) return 'success';
+  if (utfall === Utfall.IKKE_OPPFYLT) return 'error';
+  return 'warning';
+};
+
+const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): BostedFormData => ({
   perioder: Object.fromEntries(
-    (bostedGrunnlag.perioder ?? []).map(p => [
-      p.fom,
+    vilkårsavklaringer.perioder.map(({ periode, avklaring }) => [
+      periode.fom,
       {
-        avslagFom: p.avklaring?.foreslåttPeriode?.fom ?? '',
-        avslagTom: p.avklaring?.foreslåttPeriode?.tom ?? '',
-        begrunnelseForIkkeVarsle: p.avklaring?.begrunnelseIkkeVarsel ?? '',
-        fritekstTilVarsel: p.avklaring?.fritekstTilVarsel ?? '',
-        kilde: p.avklaring?.kilde ?? '',
-        kildeFritekst: p.avklaring?.kildeFritekst ?? '',
-        opphøreEllerAvslå: tilOpphøreEllerAvslå(p.avklaring?.avklaringtype),
-        opphørsdato: p.avklaring?.foreslåttPeriode?.fom ?? '',
-        årsak: p.avklaring?.ikkeOppfyltÅrsak ?? undefined,
-        skalSendeVarselOmOpphør: tilJaEllerNei(p.avklaring?.skalSendeVarsel),
+        avslagFom: avklaring?.periode.fom ?? '',
+        avslagTom: avklaring?.periode.tom ?? '',
+        begrunnelseForIkkeVarsle: avklaring?.begrunnelseIkkeVarsel ?? '',
+        fritekstTilVarsel: avklaring?.fritekstTilVarsel ?? '',
+        kilde: avklaring && erBostedsavklaringKilde(avklaring.kilde) ? avklaring.kilde : '',
+        kildeFritekst: avklaring?.kildeFritekst ?? '',
+        opphøreEllerAvslå: tilOpphøreEllerAvslå(avklaring?.avklaringtype),
+        opphørsdato: avklaring?.periode.fom ?? '',
+        årsak:
+          avklaring && erBostedsvilkårIkkeOppfyltÅrsak(avklaring.ikkeOppfyltÅrsak)
+            ? avklaring.ikkeOppfyltÅrsak
+            : undefined,
+        skalSendeVarselOmOpphør: tilJaEllerNei(avklaring?.skalSendeVarsel),
       },
     ]),
   ),
@@ -113,7 +131,6 @@ const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; sele
 interface Props {
   vurderBostedAP?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
-  bostedGrunnlag: BostedGrunnlagResponseDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -124,28 +141,30 @@ interface Props {
 export const BostedÅrsakOgVarsel = ({
   vurderBostedAP,
   bostedVilkår,
-  bostedGrunnlag,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
 }: Props) => {
+  const queryClient = useQueryClient();
+  const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
+  const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const periods = getOpphørPeriods({
     aksjonspunkt: vurderBostedAP,
-    perioder: (bostedGrunnlag.perioder ?? []).map(periode => ({
+    perioder: vilkårsavklaringer.perioder.map(({ periode, utfall }) => ({
       fom: periode.fom,
       tom: periode.tom,
-      status: periode.resultat ? (periode.resultat.erBosatt ? 'success' : 'error') : 'warning',
+      status: tilPeriodeStatus(utfall),
     })),
   });
   const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<BostedFormData | null>(null);
-  const formHook = useForm<BostedFormData>({ defaultValues: buildInitialValues(bostedGrunnlag) });
-  const selectedPeriod = bostedGrunnlag.perioder?.find(p => p.fom === selectedId);
+  const formHook = useForm<BostedFormData>({ defaultValues: buildInitialValues(vilkårsavklaringer) });
+  const selectedPeriod = vilkårsavklaringer.perioder.find(p => p.periode.fom === selectedId);
   const valgtPeriodeErReadOnly =
-    !!selectedPeriod && (!selectedPeriod.avklaring || selectedPeriod.avklaring.kanRedigeres !== true);
+    !!selectedPeriod && (!selectedPeriod.avklaring || !selectedPeriod.avklaring.foreslåttIBehandlingen);
   const formPerioder = formHook.watch('perioder');
   const valgtFormPeriode = formPerioder[selectedId];
   const opphøreEllerAvslå = valgtFormPeriode?.opphøreEllerAvslå ?? '';
@@ -157,7 +176,10 @@ export const BostedÅrsakOgVarsel = ({
     mutationFn: async (formData: BostedFormData) => {
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload({ formData, selectedId })]);
     },
-    onSuccess: onAksjonspunktBekreftet,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: vilkårsavklaringerOptions.queryKey });
+      onAksjonspunktBekreftet();
+    },
   });
   const relevanteBostedsvilkårIkkeOppfyltÅrsaker = Object.values(BostedsvilkårIkkeOppfyltÅrsak).filter(
     årsak =>
@@ -210,7 +232,7 @@ export const BostedÅrsakOgVarsel = ({
           ) : undefined
         }
         beforeDetailContent={
-          valgtPeriodeErReadOnly && selectedPeriod?.resultat?.erBosatt ? (
+          valgtPeriodeErReadOnly && selectedPeriod?.utfall === Utfall.OPPFYLT ? (
             <InfoCard data-color="info" size="small">
               <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
                 Alle vilkår er innvilget i perioden.
