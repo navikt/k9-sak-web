@@ -16,10 +16,10 @@ const LOS_PROD_URL = 'https://k9-los-web.intern.nav.no';
 const losUrlForHost: Record<Hosts, string> = {
   'k9.intern.dev.nav.no': LOS_DEV_URL,
   'ung.intern.dev.nav.no': LOS_DEV_URL,
-  'aktivitetspenger.intern.dev.nav.no': `${LOS_DEV_URL}/akt`,
+  'aktivitetspenger.intern.dev.nav.no': `${LOS_DEV_URL}/avp`,
   'k9.intern.nav.no': LOS_PROD_URL,
   'ung.intern.nav.no': LOS_PROD_URL,
-  'aktivitetspenger.intern.nav.no': `${LOS_PROD_URL}/akt`,
+  'aktivitetspenger.intern.nav.no': `${LOS_PROD_URL}/avp`,
 };
 
 export const getPathToK9Los = (): string | null => {
