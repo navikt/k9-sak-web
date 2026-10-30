@@ -14,10 +14,18 @@ import FagsakSearchIndex from './FagsakSearchIndex';
 import { FakeUngSakBackendClient } from './mocks/FakeUngSakBackendClient';
 import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 
-const { mockNavigate, mockFagsakSøk } = vi.hoisted(() => ({
+const { mockNavigate, mockFagsakSøk, mockIsAktivitetspenger } = vi.hoisted(() => ({
   mockNavigate: vi.fn(),
   mockFagsakSøk: vi.fn(),
+  mockIsAktivitetspenger: vi.fn(() => false),
 }));
+
+vi.mock('@k9-sak-web/gui/utils/urlUtils.js', async () => {
+  const actual = await vi.importActual<typeof import('@k9-sak-web/gui/utils/urlUtils.js')>(
+    '@k9-sak-web/gui/utils/urlUtils.js',
+  );
+  return { ...actual, isAktivitetspenger: mockIsAktivitetspenger };
+});
 
 vi.mock('react-router', async () => {
   const actual = await vi.importActual<typeof import('react-router')>('react-router');
@@ -42,6 +50,12 @@ const fagsak2 = {
   status: ung_kodeverk_behandling_FagsakStatus.OPPRETTET,
   opprettet: '2017-02-13',
 };
+const aktivitetspengerFagsak = {
+  saksnummer: '34567',
+  sakstype: ung_kodeverk_behandling_FagsakYtelseType.AKTIVITETSPENGER,
+  status: ung_kodeverk_behandling_FagsakStatus.OPPRETTET,
+  opprettet: '2017-02-13',
+};
 
 const renderComponent = (fakeClient = new FakeUngSakBackendClient()) => {
   mockFagsakSøk.mockImplementation((searchString: string) => fakeClient.fagsakSøk(searchString));
@@ -60,6 +74,7 @@ describe('<FagsakSearchIndex>', () => {
     requestApi.clearAllMockData();
     requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverkV2);
     mockNavigate.mockReset();
+    mockIsAktivitetspenger.mockReturnValue(false);
   });
 
   it('viser søkeskjema uten resultater ved oppstart', () => {
@@ -97,5 +112,40 @@ describe('<FagsakSearchIndex>', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
     expect(await screen.findByText('Søket ga ingen treff')).toBeInTheDocument();
+  });
+
+  it('viser bare ungdomsytelsesaker i ungdomsytelse-appen', async () => {
+    renderComponent(new FakeUngSakBackendClient({ fagsaker: [fagsak1, fagsak2, aktivitetspengerFagsak] }));
+
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+
+    expect(await screen.findByRole('table')).toBeInTheDocument();
+    expect(screen.getByRole('cell', { name: '12345' })).toBeInTheDocument();
+    expect(screen.getByRole('cell', { name: '23456' })).toBeInTheDocument();
+    expect(screen.queryByRole('cell', { name: '34567' })).not.toBeInTheDocument();
+  });
+
+  it('viser bare aktivitetspengesaker i aktivitetspenger-appen og navigerer ved ett treff', async () => {
+    mockIsAktivitetspenger.mockReturnValue(true);
+    renderComponent(new FakeUngSakBackendClient({ fagsaker: [fagsak1, aktivitetspengerFagsak] }));
+
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '34567');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+
+    await vi.waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.stringContaining('34567'));
+    });
+  });
+
+  it('viser ingen-treff-melding når ingen saker har riktig sakstype', async () => {
+    mockIsAktivitetspenger.mockReturnValue(true);
+    renderComponent(new FakeUngSakBackendClient({ fagsaker: [fagsak1] }));
+
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
+
+    expect(await screen.findByText('Søket ga ingen treff')).toBeInTheDocument();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 });
