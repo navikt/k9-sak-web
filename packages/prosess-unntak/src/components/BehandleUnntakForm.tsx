@@ -22,7 +22,7 @@ import OverstyringAksjonspunktVarsel from '@k9-sak-web/gui/shared/overstyring/Ov
 import { skalViseOverstyringAksjonspunktVarsel } from '@k9-sak-web/gui/shared/overstyring/overstyringsaksjonspunkt.js';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
-import { Heading } from '@navikt/ds-react';
+import { Box, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -108,9 +108,9 @@ export const BehandleUnntakForm = ({
           />,
         ]}
       </AksjonspunktHelpText>
-      <VerticalSpacer twentyPx />
-
-      <FritekstTextField språkkode={språkkode} readOnly={readOnly} />
+      <Box marginBlock="space-20 space-0">
+        <FritekstTextField språkkode={språkkode} readOnly={readOnly} />
+      </Box>
 
       <VerticalSpacer twentyPx />
 

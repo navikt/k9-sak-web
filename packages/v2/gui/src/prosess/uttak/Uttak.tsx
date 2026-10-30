@@ -9,7 +9,7 @@ import UttakInnhold from './UttakInnhold.js';
 
 interface UttakProps {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
-  erOverstyrer?: boolean;
+  kanOverstyreNå?: boolean;
   harOverstyrerrolle?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
@@ -18,7 +18,7 @@ interface UttakProps {
 
 const Uttak = ({
   behandling,
-  erOverstyrer = false,
+  kanOverstyreNå = false,
   harOverstyrerrolle,
   aksjonspunkter,
   readOnly,
@@ -35,8 +35,8 @@ const Uttak = ({
       value={{
         behandling,
         aksjonspunkter,
-        erOverstyrer,
-        harOverstyrerrolle: harOverstyrerrolle ?? erOverstyrer,
+        kanOverstyreNå,
+        harOverstyrerrolle: harOverstyrerrolle ?? kanOverstyreNå,
         readOnly,
         onAksjonspunktBekreftet,
       }}

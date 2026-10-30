@@ -63,7 +63,7 @@ export const EmptyState: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: true,
+    kanOverstyreNå: true,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -96,7 +96,7 @@ export const LeggTilOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: true,
+    kanOverstyreNå: true,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -162,7 +162,7 @@ export const ValideringAvPeriode: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: true,
+    kanOverstyreNå: true,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -257,7 +257,7 @@ export const Overstyringer: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: true,
+    kanOverstyreNå: true,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
     readOnly: false,
   },
@@ -322,7 +322,7 @@ export const RedigerOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: true,
+    kanOverstyreNå: true,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -429,7 +429,7 @@ export const FjernOverstyring: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: true,
+    kanOverstyreNå: true,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -510,7 +510,7 @@ export const Lesemodus: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
     readOnly: false,
   },
@@ -555,7 +555,7 @@ export const UtenOverstyrerrolleMedAnnetÅpentAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [
       lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.OPPRETTET),
       lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.OPPRETTET),
@@ -591,7 +591,7 @@ export const OverstyringAksjonspunktUtførtUtenOverstyrerrolle: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.UTFØRT)],
     readOnly: false,
   },
@@ -628,7 +628,7 @@ export const UtførtOverstyringForOverstyrerPåAvsluttetBehandling: Story = {
   ],
   args: {
     behandling: lagAvsluttetBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     harOverstyrerrolle: true,
     aksjonspunkter: [lagOverstyringUttakAksjonspunkt(aksjonspunktStatus.UTFØRT)],
     readOnly: false,

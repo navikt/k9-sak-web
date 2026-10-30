@@ -96,7 +96,7 @@ export const UttakBasis: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: true,
   },
@@ -224,7 +224,7 @@ export const UttakMedUlikeStatuser: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -266,7 +266,7 @@ export const UttakGradertMotInntekt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -314,7 +314,7 @@ export const UttakGradertMotInntektOverÅrsskifte: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -428,7 +428,7 @@ export const UttakGradertMedUlikeAktivitetstyper: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -456,7 +456,7 @@ export const UttakGradertMotTilsyn: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -510,7 +510,7 @@ export const UttakLesemodus: Story = {
   ],
   args: {
     behandling: lagAvsluttetBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: true,
   },
@@ -610,7 +610,7 @@ export const UttakMedOpphold: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: true,
   },
@@ -633,7 +633,7 @@ export const UttakPleiepengerNærstående: Story = {
   ],
   args: {
     behandling: lagUtredBehandling({ sakstype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE }),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: true,
   },

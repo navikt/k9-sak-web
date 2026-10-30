@@ -56,7 +56,7 @@ export const BeggeReglene: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -100,7 +100,7 @@ export const DialogInnhold: Story = {
   decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },
@@ -127,7 +127,7 @@ export const AvsluttetFørCutoffViserIkkeNormalarbeidstidInfo: Story = {
   decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-11T12:00:00' }),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: true,
   },
@@ -142,7 +142,7 @@ export const AvsluttetEtterCutoffViserNormalarbeidstidInfo: Story = {
   decorators: [withFakeUttakBackend({ uttak: lagUttak(perioderOverSkjæringsdato) })],
   args: {
     behandling: lagAvsluttetBehandling({ avsluttet: '2026-10-12T00:00:00' }),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: true,
   },
@@ -156,7 +156,7 @@ export const IngenPerioderEtterSkjæringsdato: Story = {
   decorators: [withFakeUttakBackend({ uttak: lagUttak([lagOppfyltPeriode('2026-10-01/2026-10-15')]) })],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
     readOnly: false,
   },

@@ -192,7 +192,7 @@ export const UttakÅpent: Story = {
   render: args => (
     <Uttak
       behandling={lagUtredBehandling()}
-      erOverstyrer={args.erOverstyrer}
+      kanOverstyreNå={args.erOverstyrer}
       aksjonspunkter={[lagOverstyringUttakAksjonspunkt(args.status)]}
       readOnly={false}
     />
