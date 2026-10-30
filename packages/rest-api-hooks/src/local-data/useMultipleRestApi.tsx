@@ -78,6 +78,10 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
     const previousTriggers = ref.current;
 
     useEffect(() => {
+      // Hver kjøring av effekten har sitt eget flagg. Cleanup kjører før effekten kjøres på nytt (updateTriggers
+      // endret, f.eks. nytt prosessteg valgt) og ved unmount. Da skal ikke svar fra denne kjøringen overskrive state,
+      // ellers kan et tregt svar for et forrige valg (f.eks. en 500-feil) overskrive data som allerede er hentet.
+      let erUtdatert = false;
       if (!options.suspendRequest) {
         setData(oldState => ({
           state: RestApiState.LOADING,
@@ -89,6 +93,7 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
 
         Promise.all(filteredEndpoints.map(e => requestApi.startRequest(e.key, e.params, options.isCachingOn)))
           .then(dataRes => {
+            if (erUtdatert) return;
             setData({
               state: RestApiState.SUCCESS,
               data: dataRes.reduce(
@@ -102,6 +107,7 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
             });
           })
           .catch(error => {
+            if (erUtdatert) return;
             setData({
               state: RestApiState.ERROR,
               data: undefined,
@@ -111,6 +117,9 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
       } else {
         setData(DEFAULT_STATE);
       }
+      return () => {
+        erUtdatert = true;
+      };
     }, [...options.updateTriggers]);
 
     return previousTriggers && notEqual(previousTriggers, options.updateTriggers)
