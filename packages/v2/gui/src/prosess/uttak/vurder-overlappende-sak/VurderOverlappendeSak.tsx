@@ -5,7 +5,6 @@ import type { EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/kontrak
 import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
 import type { VurderSøskensakerDto } from '@k9-sak-web/backend/k9sak/kontrakt/uttak/søskensaker/VurderSøskensakerDto.js';
 import type { DTOWithDiscriminatorType } from '@k9-sak-web/backend/shared/typeutils.js';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import { formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import {
@@ -30,6 +29,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import type { ObjectSchema } from 'yup';
 import * as yup from 'yup';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '../../../utils/aksjonspunkt.js';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import { useUttakContext } from '../context/UttakContext.js';
 import VurderOverlappendePeriodeForm from './VurderOverlappendePeriodeForm.js';
@@ -51,12 +51,12 @@ export interface VurderOverlappendeSakFormData {
 const gyldigAksjonspunktType = '9292' as const;
 
 const VurderOverlappendeSak: FC = () => {
-  const { behandling, aksjonspunkter, readOnly, onAksjonspunktBekreftet } = useUttakContext();
+  const { behandling, aksjonspunkter, readOnly } = useUttakContext();
   const uttakApi = useUttakApi();
   const aksjonspunkt = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_OVERLAPPENDE_SØSKENSAKER,
   );
-  const oppdaterBehandling = useRefetchBehandling();
+  const { onAksjonspunktBekreftet } = useBehandlingContext();
 
   const { status, uuid, id, versjon } = behandling;
   const [rediger, setRediger] = useState<boolean>(aksjonspunkt ? skalAksjonspunktUtredes(aksjonspunkt, status) : false);
@@ -173,8 +173,7 @@ const VurderOverlappendeSak: FC = () => {
       };
       try {
         await uttakApi.bekreftAksjonspunkt(requestBody);
-        await oppdaterBehandling();
-        onAksjonspunktBekreftet?.();
+        await onAksjonspunktBekreftet();
       } finally {
         setLoading(false);
       }

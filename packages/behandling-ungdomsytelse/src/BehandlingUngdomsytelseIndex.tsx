@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
@@ -68,7 +68,13 @@ const BehandlingUngdomsytelseIndex = ({
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestUngdomsytelseApi.resetCache();
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -128,6 +134,7 @@ const BehandlingUngdomsytelseIndex = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = harIkkeHentetBehandlingsdata && !!forrigeBehandling;
 
   return (
     <>
@@ -135,7 +142,12 @@ const BehandlingUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      >
         <UngdomsytelsePaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}
