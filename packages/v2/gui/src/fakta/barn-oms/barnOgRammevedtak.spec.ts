@@ -197,12 +197,27 @@ describe('finnUidentifiserteRammevedtak', () => {
     );
   });
 
-  it('gir utolkbar tekst bare for uidentifiserte rammevedtak med innhold', () => {
-    expect(utolkbarTekst({ type: 'UidentifisertRammevedtak', fritekst: '@9-6 2 L' })).toBe('@9-6 2 L');
-    expect(utolkbarTekst({ type: 'UidentifisertRammevedtak', fritekst: '' })).toBeUndefined();
-    expect(utolkbarTekst({ type: 'UidentifisertRammevedtak', fritekst: '  ' })).toBeUndefined();
-    expect(utolkbarTekst({ type: 'UidentifisertRammevedtak' })).toBeUndefined();
-    expect(utolkbarTekst({ type: 'UtvidetRett' })).toBeUndefined();
+  it.each([
+    { type: 'UidentifisertRammevedtak' },
+    { type: 'UtvidetRett' },
+    { type: 'AleneOmOmsorgen' },
+    { type: 'Fosterbarn' },
+  ] satisfies RammevedtakDto[])('bevarer fritekst med innhold for $type', rv => {
+    const medTekst = { ...rv, fritekst: ' @9-6 2 L ' };
+    expect(utolkbarTekst(medTekst)).toBe(' @9-6 2 L ');
+  });
+
+  it.each([
+    { type: 'UidentifisertRammevedtak' },
+    { type: 'UtvidetRett' },
+    { type: 'AleneOmOmsorgen' },
+    { type: 'Fosterbarn' },
+  ] satisfies RammevedtakDto[])('utelater manglende og tom fritekst for $type', rv => {
+    expect(utolkbarTekst(rv)).toBeUndefined();
+    for (const fritekst of ['', '  ']) {
+      const utenTekst = { ...rv, fritekst };
+      expect(utolkbarTekst(utenTekst)).toBeUndefined();
+    }
   });
 });
 

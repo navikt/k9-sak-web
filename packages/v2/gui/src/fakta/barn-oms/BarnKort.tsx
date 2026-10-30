@@ -1,6 +1,6 @@
 import { BarnType } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/BarnDto.js';
 import { formatereLukketPeriode } from '@k9-sak-web/gui/utils/formatters.js';
-import { BodyShort, Box, Heading, HGrid, HStack, Label, VStack } from '@navikt/ds-react';
+import { BodyShort, Box, Heading, HStack, Table, VStack } from '@navikt/ds-react';
 import {
   beregnAlder,
   formaterDatoEllerStrek,
@@ -81,31 +81,38 @@ export const BarnKort = ({ barnMedRammevedtak: { barn, rammevedtak }, nummer }: 
           </div>
         )}
         {rammevedtak && (
-          <HGrid columns="repeat(3, max-content)" gap="space-0 space-16">
-            <Label size="small" as="p">
-              Rammevedtak
-            </Label>
-            <Label size="small" as="p">
-              Gyldig fra og med
-            </Label>
-            <Label size="small" as="p">
-              Gyldig til og med
-            </Label>
-            {tilRader(rammevedtak).map(({ etikett, periode, skjulTom }, index) => (
-              <Rad key={`${etikett}-${index}`} etikett={etikett} periode={periode} skjulTom={skjulTom} />
-            ))}
-          </HGrid>
+          <Table size="small" aria-label={`Rammevedtak for barn #${nummer}`}>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell scope="col" textSize="small">
+                  Rammevedtak
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col" textSize="small">
+                  Gyldig fra og med
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col" textSize="small">
+                  Gyldig til og med
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {tilRader(rammevedtak).map(({ etikett, periode, skjulTom }, index) => (
+                <Rad key={`${etikett}-${index}`} etikett={etikett} periode={periode} skjulTom={skjulTom} />
+              ))}
+            </Table.Body>
+          </Table>
         )}
       </VStack>
     </Box>
   );
 };
 
-// Fragment med tre celler, slik at hver rad holder kolonnene på linje også når til og med-datoen er skjult
 const Rad = ({ etikett, periode, skjulTom }: Rammevedtaksrad) => (
-  <>
-    <BodyShort size="small">{etikett}</BodyShort>
-    <BodyShort size="small">{formaterDatoEllerStrek(periode.fom)}</BodyShort>
-    <BodyShort size="small">{skjulTom ? '' : formaterDatoEllerStrek(periode.tom)}</BodyShort>
-  </>
+  <Table.Row>
+    <Table.HeaderCell scope="row" textSize="small">
+      {etikett}
+    </Table.HeaderCell>
+    <Table.DataCell textSize="small">{formaterDatoEllerStrek(periode.fom)}</Table.DataCell>
+    <Table.DataCell textSize="small">{skjulTom ? '' : formaterDatoEllerStrek(periode.tom)}</Table.DataCell>
+  </Table.Row>
 );

@@ -3,7 +3,7 @@ import { BarnType, type BarnDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsor
 import type { RammevedtakDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/RammevedtakDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
-import { expect } from 'storybook/test';
+import { expect, within } from 'storybook/test';
 import { BarnOmsFakta } from './BarnOmsFakta.js';
 
 const fødselsdatoForAlder = (alder: number) => dayjs().subtract(alder, 'years').format('YYYY-MM-DD');
@@ -76,6 +76,14 @@ export const Omsorgspenger: Story = {
     await expect(canvas.getByText('Barnet har samme bosted med søker i følgende perioder:')).toBeInTheDocument();
     await expect(canvas.getByText('01.01.2021 - 30.06.2021')).toBeInTheDocument();
     await expect(canvas.getAllByText('Utvidet rett')).toHaveLength(2);
+    const tabell = within(canvas.getByRole('table', { name: 'Rammevedtak for barn #1' }));
+    await expect(tabell.getAllByRole('columnheader').map(celle => celle.textContent)).toEqual([
+      'Rammevedtak',
+      'Gyldig fra og med',
+      'Gyldig til og med',
+    ]);
+    await expect(tabell.getAllByRole('row')).toHaveLength(3);
+    await expect(tabell.getAllByRole('rowheader', { name: 'Utvidet rett' })).toHaveLength(2);
     await expect(canvas.getByText('Barnet bor i utlandet')).toBeInTheDocument();
     await expect(canvas.getByText('Barnet har delt bosted med søker i følgende perioder:')).toBeInTheDocument();
     await expect(canvas.getByText('Barnet døde den 03.03.2023')).toBeInTheDocument();
@@ -130,12 +138,15 @@ export const AleneOmOmsorgen: Story = {
     ).toBeInTheDocument();
     await expect(canvas.queryByText('31.12.9999')).not.toBeInTheDocument();
     // Til og med-cellen for aleneomsorg er tom, og delt bosted holder seg på egen rad
-    const aleneomsorgFom = canvas.getByText('Alene om omsorgen').nextElementSibling;
-    await expect(aleneomsorgFom).toHaveTextContent('01.01.2021');
-    await expect(aleneomsorgFom?.nextElementSibling).toHaveTextContent(/^$/);
-    const deltBostedFom = canvas.getByText('Delt bosted').nextElementSibling;
-    await expect(deltBostedFom).toHaveTextContent('01.01.2022');
-    await expect(deltBostedFom?.nextElementSibling).toHaveTextContent('31.12.2022');
+    const tabell = within(canvas.getByRole('table', { name: 'Rammevedtak for barn #1' }));
+    const aleneomsorg = within(tabell.getByRole('row', { name: 'Alene om omsorgen 01.01.2021' }));
+    await expect(aleneomsorg.getByRole('rowheader')).toHaveTextContent('Alene om omsorgen');
+    await expect(aleneomsorg.getAllByRole('cell')).toHaveLength(2);
+    await expect(aleneomsorg.getAllByRole('cell')[0]).toHaveTextContent('01.01.2021');
+    await expect(aleneomsorg.getAllByRole('cell')[1]).toHaveTextContent(/^$/);
+    const deltBosted = within(tabell.getByRole('row', { name: 'Delt bosted 01.01.2022 31.12.2022' }));
+    await expect(deltBosted.getAllByRole('cell')[0]).toHaveTextContent('01.01.2022');
+    await expect(deltBosted.getAllByRole('cell')[1]).toHaveTextContent('31.12.2022');
   },
 };
 
@@ -168,17 +179,23 @@ export const ManglendeOgUgyldigFødselsdato: Story = {
   },
 };
 
-export const UidentifiserteRammevedtak: Story = {
-  args: {
-    rammevedtak: [
-      { type: 'UidentifisertRammevedtak', fritekst: '18410162721 @9-6,20 D' },
-      { type: 'UidentifisertRammevedtak', fritekst: '' },
-      { type: 'UtvidetRett', gyldigFraOgMed: '2020-01-01', gyldigTilOgMed: '2028-12-31' },
-      { type: 'UtvidetRett', gyldigFraOgMed: '2021-01-01', gyldigTilOgMed: '2028-12-31' },
-      { type: 'AleneOmOmsorgen', gyldigFraOgMed: '2020-01-01' },
-      { type: 'Fosterbarn', gyldigFraOgMed: '2020-01-01' },
-    ],
+// Infotrygd kan sende fritekst også for typer der feltet mangler i den genererte kontrakten.
+const uidentifiserteRammevedtak: (RammevedtakDto & { fritekst?: string })[] = [
+  { type: 'UidentifisertRammevedtak', fritekst: '18410162721 @9-6,20 D' },
+  { type: 'UidentifisertRammevedtak', fritekst: '' },
+  {
+    type: 'UtvidetRett',
+    gyldigFraOgMed: '2020-01-01',
+    gyldigTilOgMed: '2028-12-31',
+    fritekst: '@9-6 2 L UTV.OMSD*20/',
   },
+  { type: 'UtvidetRett', gyldigFraOgMed: '2021-01-01', gyldigTilOgMed: '2028-12-31' },
+  { type: 'AleneOmOmsorgen', gyldigFraOgMed: '2020-01-01', fritekst: '@9-6 2 L AL.OMSD*10/' },
+  { type: 'Fosterbarn', gyldigFraOgMed: '2020-01-01', fritekst: '@9-6 2 L FOST/' },
+];
+
+export const UidentifiserteRammevedtak: Story = {
+  args: { rammevedtak: uidentifiserteRammevedtak },
   play: async ({ canvas }) => {
     await expect(
       canvas.getByText('Det finnes 2 automatisk utolkbare rammevedtak fra Infotrygd. Vennligst korriger i Infotrygd.'),
@@ -199,8 +216,11 @@ export const UidentifiserteRammevedtak: Story = {
       ),
     ).toBeInTheDocument();
     const listepunkter = canvas.getAllByRole('listitem');
-    await expect(listepunkter).toHaveLength(1);
+    await expect(listepunkter).toHaveLength(4);
     await expect(listepunkter[0]).toHaveTextContent('Utolkbar tekst: "18410162721 @9-6,20 D"');
+    await expect(listepunkter[1]).toHaveTextContent('Utolkbar tekst: "@9-6 2 L UTV.OMSD*20/"');
+    await expect(listepunkter[2]).toHaveTextContent('Utolkbar tekst: "@9-6 2 L AL.OMSD*10/"');
+    await expect(listepunkter[3]).toHaveTextContent('Utolkbar tekst: "@9-6 2 L FOST/"');
   },
 };
 

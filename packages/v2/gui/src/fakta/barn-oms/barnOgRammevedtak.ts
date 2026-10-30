@@ -129,7 +129,7 @@ export const finnUidentifiserteRammevedtak = (rammevedtak: RammevedtakDto[]): Ui
 ];
 
 export const utolkbarTekst = (rv: RammevedtakDto): string | undefined =>
-  rv.type === 'UidentifisertRammevedtak' && rv.fritekst?.trim() ? rv.fritekst : undefined;
+  'fritekst' in rv && typeof rv.fritekst === 'string' && rv.fritekst.trim() ? rv.fritekst : undefined;
 
 export const finnMidlertidigAleneomsorg = (rammevedtak: RammevedtakDto[]) =>
   rammevedtak.find(rv => rv.type === 'MidlertidigAleneOmOmsorgen');
