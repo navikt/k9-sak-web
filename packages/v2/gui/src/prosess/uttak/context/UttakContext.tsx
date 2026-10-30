@@ -8,7 +8,6 @@ export type UttakContextType = {
   aksjonspunkter: Aksjonspunkt[];
   erOverstyrer: boolean;
   readOnly: boolean;
-  onAksjonspunktBekreftet?: () => void;
 };
 
 export interface UttakProviderProps {

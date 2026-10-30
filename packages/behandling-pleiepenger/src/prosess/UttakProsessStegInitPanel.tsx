@@ -14,7 +14,6 @@ interface Props {
   api: K9SakProsessApi;
   erOverstyrer: boolean;
   isReadOnly: boolean;
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
 export function UttakProsessStegInitPanel(props: Props) {
@@ -36,17 +35,12 @@ export function UttakProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeBehandlet />;
   }
 
-  const onAksjonspunktBekreftet = () => {
-    props.oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-  };
-
   return (
     <Uttak
       behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
       erOverstyrer={props.erOverstyrer}
       readOnly={props.isReadOnly}
-      onAksjonspunktBekreftet={onAksjonspunktBekreftet}
     />
   );
 }

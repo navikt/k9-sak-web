@@ -87,7 +87,9 @@ export const AksjonspunktArbeidOgInntekt = ({
                 label={
                   isAktivitetspenger ? (
                     <HStack gap="space-4" align="center">
-                      <Label size="small" as="span">Vurder hvilken inntekt som skal gi reduksjon i perioden,</Label>
+                      <Label size="small" as="span">
+                        Vurder hvilken inntekt som skal gi reduksjon i perioden,
+                      </Label>
                       <Lovreferanse isAktivitetspenger includeFullTextInLink>
                         jf. § 14 Reduksjon av ytelsen på grunn av inntekt.
                       </Lovreferanse>

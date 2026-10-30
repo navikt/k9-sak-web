@@ -12,16 +12,9 @@ interface UttakProps {
   erOverstyrer?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
-  onAksjonspunktBekreftet?: () => void;
 }
 
-const Uttak = ({
-  behandling,
-  erOverstyrer = false,
-  aksjonspunkter,
-  readOnly,
-  onAksjonspunktBekreftet,
-}: UttakProps): JSX.Element => {
+const Uttak = ({ behandling, erOverstyrer = false, aksjonspunkter, readOnly }: UttakProps): JSX.Element => {
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   if (!uttak) {
@@ -29,7 +22,7 @@ const Uttak = ({
   }
 
   return (
-    <UttakProvider value={{ behandling, aksjonspunkter, erOverstyrer, readOnly, onAksjonspunktBekreftet }}>
+    <UttakProvider value={{ behandling, aksjonspunkter, erOverstyrer, readOnly }}>
       <UttakInnhold />
     </UttakProvider>
   );
