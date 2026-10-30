@@ -4,13 +4,9 @@ import type { KlagebehandlingDto } from '@k9-sak-web/backend/combined/kontrakt/k
 import type { MellomlagringDto } from '@k9-sak-web/backend/combined/kontrakt/mellomlagring/MellomlagringDto.js';
 import type { Dokumentdata } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { ung_sak_kontrakt_klage_KlageHjemmelDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export interface KlageVurderingApi {
-  /**
-   * Brukast i queryKey i useQuery kall for å sikre at query blir oppfriska viss backend blir endra.
-   */
-  readonly backend: 'ung' | 'k9klage';
-
+export interface KlageVurderingApi extends BackendTilhørighet<'ungsak' | 'k9klage'> {
   forhåndsvisKlageVedtaksbrev(
     behandling: BehandlingDto,
     fagsak?: FagsakDto,

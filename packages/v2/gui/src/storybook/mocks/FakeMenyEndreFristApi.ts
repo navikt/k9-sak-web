@@ -4,8 +4,11 @@ import type {
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import type { MenyEndreFristApi } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristApi.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeMenyEndreFristApi implements MenyEndreFristApi {
+  readonly backend = backendNavn.ungsak;
+
   #etterlysninger: ung_sak_kontrakt_etterlysning_Etterlysning[];
 
   constructor(etterlysninger: ung_sak_kontrakt_etterlysning_Etterlysning[] = []) {

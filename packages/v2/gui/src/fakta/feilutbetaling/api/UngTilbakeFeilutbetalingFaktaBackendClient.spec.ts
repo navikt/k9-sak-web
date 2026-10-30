@@ -5,14 +5,14 @@ import {
 import type { BehandlingFeilutbetalingFaktaDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
 import type { HendelseTyperPrYtelseTypeDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
 import { describe, expect, it, vi } from 'vitest';
-import { UngFeilutbetalingFaktaBackendClient } from './UngFeilutbetalingFaktaBackendClient.js';
+import { UngTilbakeFeilutbetalingFaktaBackendClient } from './UngTilbakeFeilutbetalingFaktaBackendClient.js';
 
 vi.mock('@k9-sak-web/backend/ungtilbake/api/feilutbetaling.js', () => ({
   behandlingfakta_hentFeilutbetalingFakta: vi.fn(),
   kodeverk_hentAlleFeilutbetalingÅrsaker: vi.fn(),
 }));
 
-describe('UngFeilutbetalingFaktaBackendClient', () => {
+describe('UngTilbakeFeilutbetalingFaktaBackendClient', () => {
   it('returnerer fakta som er kompatible med den felles visningsmodellen', async () => {
     const fakta: BehandlingFeilutbetalingFaktaDto = {
       behandlingFakta: {
@@ -35,7 +35,7 @@ describe('UngFeilutbetalingFaktaBackendClient', () => {
     };
     vi.mocked(behandlingfakta_hentFeilutbetalingFakta).mockResolvedValue({ data: fakta } as never);
 
-    const result = await new UngFeilutbetalingFaktaBackendClient().hentFeilutbetalingFakta('behandling-uuid');
+    const result = await new UngTilbakeFeilutbetalingFaktaBackendClient().hentFeilutbetalingFakta('behandling-uuid');
 
     expect(result).toEqual(fakta);
     expect(behandlingfakta_hentFeilutbetalingFakta).toHaveBeenCalledWith({
@@ -57,7 +57,7 @@ describe('UngFeilutbetalingFaktaBackendClient', () => {
     ];
     vi.mocked(kodeverk_hentAlleFeilutbetalingÅrsaker).mockResolvedValue({ data: årsaker } as never);
 
-    const result = await new UngFeilutbetalingFaktaBackendClient().hentFeilutbetalingÅrsaker();
+    const result = await new UngTilbakeFeilutbetalingFaktaBackendClient().hentFeilutbetalingÅrsaker();
 
     expect(result).toEqual([
       {

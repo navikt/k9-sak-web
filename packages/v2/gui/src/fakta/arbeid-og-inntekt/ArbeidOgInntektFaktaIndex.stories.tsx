@@ -5,10 +5,11 @@ import { Suspense } from 'react';
 import { ArbeidOgInntektApiContext } from './api/ArbeidOgInntektApiContext.js';
 import ArbeidOgInntektFaktaIndex from './ArbeidOgInntektFaktaIndex.js';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const withFakeApi = (data: ArbeidOgInntektResponse[]): Decorator => {
   return Story => (
-    <ArbeidOgInntektApiContext value={{ hentArbeidOgInntekt: async () => data }}>
+    <ArbeidOgInntektApiContext value={{ backend: backendNavn.k9sak, hentArbeidOgInntekt: async () => data }}>
       <Suspense>
         <Story />
       </Suspense>

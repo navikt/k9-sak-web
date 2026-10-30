@@ -4,11 +4,11 @@ import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/
 import type { BestillBrevDto } from '@k9-sak-web/backend/combined/kontrakt/dokument/BestillBrevDto.js';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export type LagForhåndsvisningRequest = Omit<ForhåndsvisDto, 'avsenderApplikasjon'>;
 
-export interface MessagesApi extends TredjepartsmottakerBackendApi {
-  backend: 'k9sak' | 'k9klage';
+export interface MessagesApi extends TredjepartsmottakerBackendApi, BackendTilhørighet<'k9sak' | 'k9klage'> {
   hentInnholdBrevmal(
     fagsakYtelsestype: FagsakYtelseType,
     eksternReferanse: string,

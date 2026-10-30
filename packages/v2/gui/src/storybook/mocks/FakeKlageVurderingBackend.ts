@@ -7,10 +7,11 @@ import type {
 import { action } from 'storybook/actions';
 import type { KlageVurderingApi } from '../../prosess/klagevurdering/api/KlageVurderingApi.js';
 import { fakePdf } from './fakePdf.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeKlageVurderingBackend implements KlageVurderingApi {
   #klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto;
-  readonly backend = 'ung';
+  readonly backend = backendNavn.ungsak;
 
   constructor(klageVurdering: ung_sak_kontrakt_klage_KlagebehandlingDto) {
     this.#klageVurdering = klageVurdering;

@@ -8,7 +8,7 @@ import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Erro
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegHentingFeilet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegHentingFeilet.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
-import { AktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js';
+import { UngSakAktivitetspengerBeregningBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-beregning/UngSakAktivitetspengerBeregningBackendClient.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
@@ -57,7 +57,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     throwOnError: false,
   });
 
-  const aktivitetspengerBeregningApi = useMemo(() => new AktivitetspengerBeregningBackendClient(), []);
+  const aktivitetspengerBeregningApi = useMemo(() => new UngSakAktivitetspengerBeregningBackendClient(), []);
 
   const { data: satser } = useSuspenseQuery({
     ...satsOgUtbetalingPerioderQueryOptions(api, behandling, erTilBehandlingEllerBehandlet),

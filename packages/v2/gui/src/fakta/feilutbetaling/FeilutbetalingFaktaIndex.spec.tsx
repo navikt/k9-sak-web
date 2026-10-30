@@ -15,6 +15,7 @@ import { K9KodeverkoppslagContext } from '../../kodeverk/oppslag/K9Kodeverkoppsl
 import { UngKodeverkoppslagContext } from '../../kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { fakeK9Kodeverkoppslag } from '../../kodeverk/mocks/fakeK9Kodeverkoppslag.js';
 import { fakeUngKodeverkoppslag } from '../../kodeverk/mocks/fakeUngKodeverkoppslag.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const faktaMedÅrsak = (
   hendelseType = 'PSB_ANNET_TYPE',
@@ -58,7 +59,7 @@ const createApi = (
 const createSubmitCallback = () => vi.fn<LegacyBekreftAksjonspunktCallback>().mockResolvedValue(undefined);
 
 const renderComponent = ({
-  backend = 'k9tilbake',
+  backend = backendNavn.k9tilbake,
   fakta = faktaMedÅrsak(),
   årsaker = gyldigeÅrsaker,
   submitCallback = createSubmitCallback(),
@@ -85,7 +86,7 @@ const renderComponent = ({
   render(
     <QueryClientProvider client={queryClient}>
       <FeilutbetalingFaktaApiContext value={createApi(fakta, årsaker, backend)}>
-        {backend === 'k9tilbake' ? (
+        {backend === backendNavn.k9tilbake ? (
           <K9KodeverkoppslagContext value={fakeK9Kodeverkoppslag()}>{panel}</K9KodeverkoppslagContext>
         ) : (
           <UngKodeverkoppslagContext value={fakeUngKodeverkoppslag()}>{panel}</UngKodeverkoppslagContext>

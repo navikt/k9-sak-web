@@ -3,9 +3,10 @@ import type { AvkortingsperioderResponse } from '@k9-sak-web/backend/ungsak/kont
 import type { VedtaksbrevValgResponse } from '@k9-sak-web/backend/ungsak/kontrakt/formidling/VedtaksbrevValgResponse.js';
 import type { AndreLivsoppholdsytelserVurderingerResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { AktivitetspengerApi } from '../../prosess/aktivitetspenger-prosess/AktivitetspengerApi';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeAktivitetspengerApi implements AktivitetspengerApi {
-  readonly backend = 'ungsak' as const;
+  readonly backend = backendNavn.ungsak;
 
   async vedtaksbrevValg(): Promise<VedtaksbrevValgResponse> {
     return {

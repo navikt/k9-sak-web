@@ -4,9 +4,10 @@ import type { BestillBrevDto } from '@k9-sak-web/backend/k9klage/kontrakt/dokume
 import { brev_bestillDokument } from '@k9-sak-web/backend/k9klage/generated/sdk.js';
 import { avsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import { BaseMeldingerBackendClient } from './BaseMeldingerBackendClient.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class K9KlageMeldingerBackendClient extends BaseMeldingerBackendClient implements MessagesApi {
-  readonly backend = 'k9klage';
+  readonly backend = backendNavn.k9klage;
 
   constructor(formidlingClient: FormidlingClient) {
     super(avsenderApplikasjon.K9KLAGE, formidlingClient);

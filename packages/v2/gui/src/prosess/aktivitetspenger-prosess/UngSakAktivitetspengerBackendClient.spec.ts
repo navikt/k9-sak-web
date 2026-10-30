@@ -4,7 +4,7 @@ import {
   simulering_hentSimuleringResultat,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AktivitetspengerBackendClient } from './AktivitetspengerBackendClient.js';
+import { UngSakAktivitetspengerBackendClient } from './UngSakAktivitetspengerBackendClient.js';
 
 vi.mock('@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js', () => ({
   avp_getBeregningsgrunnlag: vi.fn(),
@@ -16,7 +16,7 @@ const request = new Request('http://localhost/ung/sak/api/aktivitetspenger/bereg
 type BeregningsgrunnlagSvar = Awaited<ReturnType<typeof avp_getBeregningsgrunnlag>>;
 type SimuleringSvar = Awaited<ReturnType<typeof simulering_hentSimuleringResultat>>;
 
-describe('AktivitetspengerBackendClient', () => {
+describe('UngSakAktivitetspengerBackendClient', () => {
   describe('getBeregningsgrunnlag', () => {
     beforeEach(() => {
       vi.mocked(avp_getBeregningsgrunnlag).mockReset();
@@ -30,7 +30,7 @@ describe('AktivitetspengerBackendClient', () => {
         response: new Response(JSON.stringify(beregningsgrunnlag), { status: 200 }),
       } as BeregningsgrunnlagSvar);
 
-      const resultat = await new AktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
+      const resultat = await new UngSakAktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
 
       expect(resultat).toEqual(beregningsgrunnlag);
       expect(avp_getBeregningsgrunnlag).toHaveBeenCalledWith({ query: { behandlingUuid: 'behandling-uuid' } });
@@ -45,7 +45,7 @@ describe('AktivitetspengerBackendClient', () => {
         response,
       } as unknown as BeregningsgrunnlagSvar);
 
-      const resultat = await new AktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
+      const resultat = await new UngSakAktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
 
       expect(resultat).toBeNull();
     });
@@ -57,7 +57,7 @@ describe('AktivitetspengerBackendClient', () => {
         response: new Response(null, { status: 204 }),
       } as unknown as BeregningsgrunnlagSvar);
 
-      const resultat = await new AktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
+      const resultat = await new UngSakAktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
 
       expect(resultat).toBeNull();
     });
@@ -69,7 +69,7 @@ describe('AktivitetspengerBackendClient', () => {
         response: new Response(null, { status: 200 }),
       } as unknown as BeregningsgrunnlagSvar);
 
-      const resultat = await new AktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
+      const resultat = await new UngSakAktivitetspengerBackendClient().getBeregningsgrunnlag('behandling-uuid');
 
       expect(resultat).toBeNull();
     });
@@ -87,7 +87,7 @@ describe('AktivitetspengerBackendClient', () => {
           response: new Response(JSON.stringify(simulering), { status: 200 }),
         } as unknown as SimuleringSvar);
 
-        const resultat = await new AktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
+        const resultat = await new UngSakAktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
 
         expect(resultat).toEqual(simulering);
         expect(simulering_hentSimuleringResultat).toHaveBeenCalledWith({
@@ -102,7 +102,7 @@ describe('AktivitetspengerBackendClient', () => {
           response: new Response(null, { status: 204 }),
         } as unknown as SimuleringSvar);
 
-        const resultat = await new AktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
+        const resultat = await new UngSakAktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
 
         expect(resultat).toBeNull();
       });
@@ -114,7 +114,7 @@ describe('AktivitetspengerBackendClient', () => {
           response: new Response(null, { status: 204 }),
         } as unknown as SimuleringSvar);
 
-        const resultat = await new AktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
+        const resultat = await new UngSakAktivitetspengerBackendClient().getSimuleringResultat('behandling-uuid');
 
         expect(resultat).toBeNull();
       });

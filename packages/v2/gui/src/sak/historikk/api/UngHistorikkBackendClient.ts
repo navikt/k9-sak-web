@@ -8,11 +8,12 @@ import { UngHistorikkInnslagBeriker } from './UngHistorikkInnslagBeriker.js';
 import type { UngKodeverkoppslag } from '../../../kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { historikk_hentAlleInnslag as ungsak_historikk_hentAlleInnslag } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
 import { historikk_hentAlleInnslagV2 as ungtilbake_historikk_hentAlleInnslag } from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class UngHistorikkBackendClient implements HistorikkBackendApi {
   #beriker: UngHistorikkInnslagBeriker;
 
-  readonly backend = 'ung';
+  readonly backend = sammenstiltBackendNavn.ung;
 
   constructor(kodeverkoppslag: UngKodeverkoppslag) {
     this.#beriker = new UngHistorikkInnslagBeriker(kodeverkoppslag);

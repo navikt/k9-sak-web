@@ -8,8 +8,11 @@ import { Vurdering } from '@k9-sak-web/backend/k9sak/kodeverk/kompletthet/Vurder
 import type { EtterspørInntektsmeldingRequest } from '@k9-sak-web/backend/k9sak/tjenester/behandling/inntektsmelding/EtterspørInntektsmeldingRequest.js';
 import type { SettBehandlingPaVentDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/SettBehandlingPaVentDto.js';
 import type { InntektsmeldingApi } from './InntektsmeldingApi.ts';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export class K9InntektsmeldingBackendClient implements InntektsmeldingApi {
+export class K9SakInntektsmeldingBackendClient implements InntektsmeldingApi {
+  readonly backend = backendNavn.k9sak;
+
   async hentKompletthetsoversikt(behandlingUuid: string): Promise<KompletthetsVurdering> {
     const response = await kompletthet_utledStatusForKompletthet({
       query: { behandlingUuid },

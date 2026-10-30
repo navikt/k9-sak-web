@@ -10,8 +10,9 @@ import type {
   OpprettLangvarigSykdomsVurderingData,
   OpprettLangvarigSykdomsVurderingResponse,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export interface SykdomOgOpplæringApi {
+export interface SykdomOgOpplæringApi extends BackendTilhørighet {
   getVilkår(behandlingUuid: string): Promise<GetVilkårV3Response>;
   opprettSykdomsvurdering(
     payload: OpprettLangvarigSykdomsVurderingData['body'],
