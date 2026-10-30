@@ -128,7 +128,7 @@ describe('koblBarnOgRammevedtak', () => {
 
   it('kobler samme kortnøkkel til flere barn', () => {
     const resultat = koblBarnOgRammevedtak(
-      [{ personIdent: '15091511111' }, { personIdent: '15091522222' }],
+      [{ personIdent: '15091512345' }, { personIdent: '15091599999' }],
       [{ type: 'UtvidetRett', utvidetRettFor: '150915' }],
     );
 
