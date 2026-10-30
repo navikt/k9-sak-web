@@ -126,7 +126,7 @@ export const Beslutter = ({
         return;
       }
       const payload = {
-        '@type': AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+        '@type': AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
         // begrunnelse: data.aksjonspunktGodkjenning.map(apGodkjenning => apGodkjenning.besluttersBegrunnelse).join('\n'),
         aksjonspunktGodkjenningDtos: data.aksjonspunktGodkjenning.map(apGodkjenning => {
           const arsaker: VurderÅrsak[] = [];
@@ -166,7 +166,7 @@ export const Beslutter = ({
         <VStack gap="space-20">
           {!isAksjonspunktSolved && kanBeslutte && (
             <Alert variant="warning" size="small">
-              Kontroller faglige vurderinger for inngangsvilkår.
+              Kontroller vurderinger for inngangsvilkår.
             </Alert>
           )}
           <VStack gap="space-16" marginInline="space-16">

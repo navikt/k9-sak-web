@@ -1,0 +1,5 @@
+name: aktivitetspenger-sak-web
+ingress: "https://aktivitetspenger.intern.dev.nav.no"
+replicas:
+  min: 1
+  max: 2

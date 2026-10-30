@@ -1,8 +1,8 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
@@ -62,6 +62,30 @@ const beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto = {
     },
   ],
   skalHindreTilbaketrekk: false,
+};
+
+const beregningsresultatMedGradertPeriode: BeregningsresultatMedUtbetaltePeriodeDto = {
+  ...beregningsresultat,
+  perioder: [
+    {
+      andeler: [
+        {
+          aktivitetStatus: aktivitetStatusType.AT,
+          inntektskategori: inntektskategorier.ARBEIDSTAKER,
+          arbeidsgiverOrgnr: '123456789',
+          eksternArbeidsforholdId: '',
+          refusjon: 800,
+          tilSoker: 200,
+          utbetalingsgrad: 80,
+        },
+      ],
+      dagsats: 1000,
+      fom: '2021-03-12',
+      tom: '2021-03-19',
+      totalUtbetalingsgradFraUttak: 0.8,
+    },
+    ...(beregningsresultat.perioder?.slice(1) ?? []),
+  ],
 };
 
 const behandling = {
@@ -129,6 +153,19 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
       await expect(canvas.getByRole('radio', { name: 'Ikke tilbakekrev fra søker' })).toBeInTheDocument();
       await expect(canvas.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
     });
+  },
+  render: props => <TilkjentYtelseProsessIndex {...props} />,
+};
+
+export const VisPeriodeUnder100ProsentUtbetalingsgrad: Story = {
+  args: {
+    behandling,
+    isReadOnly: false,
+    readOnlySubmitButton: true,
+    beregningsresultat: beregningsresultatMedGradertPeriode,
+    aksjonspunkter: [],
+    submitCallback: asyncAction('button-click'),
+    personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
   render: props => <TilkjentYtelseProsessIndex {...props} />,
 };

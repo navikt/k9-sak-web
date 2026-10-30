@@ -5,7 +5,6 @@ import { expect, userEvent } from 'storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
 import { withQueryClientProvider } from '../../storybook/decorators/withQueryClientProvider.js';
 import withK9Kodeverkoppslag from '../../storybook/decorators/withK9Kodeverkoppslag.js';
-import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import { DokumentfilterGruppe } from '@k9-sak-web/backend/k9sak/kodeverk/dokument/DokumentfilterGruppe.js';
 import { withFakeDokumenterApi } from './mock/withFakeDokumenterApi.js';
 
@@ -101,7 +100,6 @@ const meta = {
   decorators: [
     withQueryClientProvider({ queries: { throwOnError: false } }),
     withK9Kodeverkoppslag(),
-    withFeatureToggles({ DOKUMENTFILTER: true }),
     withFakeDokumenterApi(),
   ],
 } satisfies Meta<typeof DokumenterSakIndex>;
@@ -162,6 +160,19 @@ export const FiltrerSøknaderOgEttersendelser: Story = {
     await expect(canvas.getByRole('link', { name: 'Ettersendelse til pleiepengersøknad' })).toBeInTheDocument();
     await expect(canvas.getByRole('link', { name: 'Manuell registrering (punsj)' })).toBeInTheDocument();
     await expect(canvas.queryByRole('link', { name: 'Inntektsmelding' })).not.toBeInTheDocument();
+  },
+  render,
+};
+
+export const UtenDokumentgrupper: Story = {
+  args: { ...defaultArgs, documents: dokumenter, visDokumentgrupper: false },
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('combobox', { name: 'Dokumenttype' }));
+    await expect(canvas.getByRole('option', { name: 'Inngående dokumenter' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('option', { name: 'Inntektsmelding' })).not.toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('option', { name: 'Utgående dokumenter' }));
+    await expect(canvas.getByRole('link', { name: 'Innvilgelsesbrev' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('link', { name: 'Søknad om pleiepenger' })).not.toBeInTheDocument();
   },
   render,
 };

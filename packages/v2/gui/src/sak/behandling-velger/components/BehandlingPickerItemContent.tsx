@@ -20,6 +20,10 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
+import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
+import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 const getUnntaksløypeText = () => <span className={styles.smallerUndertittel}>(unntaksløype)</span>;
@@ -44,6 +48,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   index,
   behandling,
 }) => {
+  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = React.useContext(FeatureTogglesContext);
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const behandlingsresultatTypeNavn = behandling.behandlingsresultat
     ? kodeverkNavnFraKode(
@@ -61,6 +66,11 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   const visKunStartdato =
     erFørstegangsbehandlingIUngdomsytelsen(behandling.sakstype, behandling.type) || erEndringAvBarnetillegg;
   const erAktivitetspengerOpphør = erAktivitetspengerOpphørsbehandling(behandling);
+  const innvilget = behandlingsresultatTypeKode === BehandlingResultatType.INNVILGET;
+  const erKroniskSyktBarn = behandling.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS;
+  const utvidetRett = behandling.behandlingsresultat?.vilkårResultat?.['UTVIDETRETT']?.find(
+    vilkar => vilkar.utfall == vilkårStatus.OPPFYLT,
+  );
   return (
     <Box
       padding="space-16"
@@ -81,6 +91,13 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
 
             {søknadsperioder?.length > 0 && (
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
+            )}
+
+            {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && erKroniskSyktBarn && innvilget && utvidetRett?.periode && (
+              <BodyShort as="span" size="small">
+                <DateLabel dateString={utvidetRett?.periode?.fom} /> -{' '}
+                <DateLabel dateString={utvidetRett?.periode?.tom} />
+              </BodyShort>
             )}
           </HStack>
           <HStack gap="space-8" align={'center'} className="mt-1">

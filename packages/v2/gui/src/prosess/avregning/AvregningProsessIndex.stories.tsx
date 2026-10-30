@@ -1,10 +1,10 @@
-import { userEvent } from 'storybook/test';
-import { AvregningProsessIndex } from './AvregningProsessIndex';
-import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './AvregningMocks';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent } from 'storybook/test';
 import { FakeBehandlingAvregningBackendApi } from '../../storybook/mocks/FakeBehandlingAvregningBackendApi';
-import { AvregningFormProvider } from './AvregningContext';
 import { AvregningBackendClientContext } from './AvregningBackendClientContext';
+import { AvregningFormProvider } from './AvregningContext';
+import { sjekkHøyEtterbetalingMock, vurderFeilutbetalingMock } from './AvregningMocks';
+import { AvregningProsessIndex } from './AvregningProsessIndex';
 
 const fakeAvregningBackendClient = new FakeBehandlingAvregningBackendApi();
 
@@ -47,6 +47,17 @@ export const FyllAksjonspunktVurderFeilutbetaling8084: Story = {
 };
 
 export const AksjonspunktHøyEtterbetaling8086 = () => <AvregningProsessIndex {...sjekkHøyEtterbetalingMock} />;
+
+export const VurderFeilutbetalingReadOnly: Story = {
+  args: { ...vurderFeilutbetalingMock, isReadOnly: true },
+
+  play: async ({ canvas }) => {
+    const bekreftKnapp = canvas.getByRole('button', { name: 'Bekreft og fortsett' });
+    await expect(bekreftKnapp).toBeDisabled();
+    await userEvent.click(bekreftKnapp);
+    await expect(fakeAvregningBackendClient.bekreftAksjonspunktVurderFeilutbetaling).not.toHaveBeenCalled();
+  },
+};
 
 export const FyllAksjonspunktHøyEtterbetaling8086: Story = {
   args: { ...sjekkHøyEtterbetalingMock },

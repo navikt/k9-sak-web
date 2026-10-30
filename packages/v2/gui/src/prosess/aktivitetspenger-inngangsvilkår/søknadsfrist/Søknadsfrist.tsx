@@ -20,13 +20,13 @@ const getVilkårUtfall = (vilkårStatus: Utfall) => {
 };
 
 export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
-  const periods: VilkårSplittPanelPeriod[] = (søknadsfristVilkår?.perioder ?? []).map(p => ({
+  const perioder: VilkårSplittPanelPeriod[] = (søknadsfristVilkår?.perioder ?? []).map(p => ({
     id: p.periode.fom,
     status: getPeriodStatus(p.vilkarStatus),
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(perioder[0]?.id ?? '');
 
   if (!søknadsfristVilkår) {
     return null;
@@ -35,11 +35,11 @@ export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
 
   return (
     <VilkårSplittPanel
-      periods={periods}
+      periods={perioder}
       selectedItemId={selectedId}
       onItemSelect={setSelectedId}
       detailHeading="Vurdering av søknadsfrist"
-      lovreferanse={søknadsfristVilkår.lovReferanse}
+      lovreferanse="§ 22-13 tredje ledd"
     >
       <VStack gap="space-24">
         <VStack gap="space-8">

@@ -1,12 +1,13 @@
-import { BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
+import { BrukKontrollertInntektValg as KontrollerInntektPeriodeDtoValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
 import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
-import { Bleed, BodyLong, Box, Button, Heading, HStack, Radio, VStack } from '@navikt/ds-react';
+import { Bleed, BodyLong, Box, Button, Heading, HStack, Label, Radio, VStack } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea, RhfTextField } from '@navikt/ft-form-hooks';
 import { maxLength, maxValueFormatted, minLength, required } from '@navikt/ft-form-validators';
 import { parseCurrencyInput } from '@navikt/ft-utils';
 import { useFormContext } from 'react-hook-form';
+import { Lovreferanse } from '../lovreferanse/Lovreferanse';
 import PeriodLabel from '../periodLabel/PeriodLabel';
 import styles from './aksjonspunktArbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
@@ -19,6 +20,7 @@ interface AksjonspunktArbeidOgInntektProps {
   fieldIndex: number;
   inntektKontrollPeriode: KontrollerInntektPeriodeDto;
   arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
+  isAktivitetspenger?: boolean;
 }
 
 export const AksjonspunktArbeidOgInntekt = ({
@@ -29,6 +31,7 @@ export const AksjonspunktArbeidOgInntekt = ({
   fieldIndex,
   inntektKontrollPeriode,
   arbeidsgivere,
+  isAktivitetspenger,
 }: AksjonspunktArbeidOgInntektProps) => {
   const formMethods = useFormContext();
   const valg = formMethods.watch(`perioder.${fieldIndex}.valg`);
@@ -37,7 +40,7 @@ export const AksjonspunktArbeidOgInntekt = ({
       ? [
           {
             value: KontrollerInntektPeriodeDtoValg.BRUK_BRUKERS_INNTEKT,
-            label: 'Rapportert inntekt fra deltaker',
+            label: isAktivitetspenger ? 'Rapportert inntekt fra bruker' : 'Rapportert inntekt fra deltaker',
           },
         ]
       : []),
@@ -57,15 +60,23 @@ export const AksjonspunktArbeidOgInntekt = ({
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="space-32">
-          <DetaljerOmInntekt inntektKontrollPeriode={inntektKontrollPeriode} arbeidsgivere={arbeidsgivere} />
+          <DetaljerOmInntekt
+            inntektKontrollPeriode={inntektKontrollPeriode}
+            arbeidsgivere={arbeidsgivere}
+            isAktivitetspenger={isAktivitetspenger}
+          />
           {/** TODO: Bytt til token var(--ax-bg-info-moderate-hover) når tilgjengelig (neste versjon av Aksel) */}
           <Box borderRadius="4" padding="space-16" style={{ background: '#D7E6F0' }}>
             <HStack gap="space-8" wrap={false}>
-              <PersonFillIcon title="Deltaker" fontSize="1.5rem" className={styles.personIcon} />
+              <PersonFillIcon
+                title={isAktivitetspenger ? 'Bruker' : 'Deltaker'}
+                fontSize="1.5rem"
+                className={styles.personIcon}
+              />
 
               <VStack gap="space-8">
                 <Heading size="xsmall" as="h3">
-                  Beskrivelse fra deltaker for avvik i perioden{' '}
+                  Beskrivelse fra {isAktivitetspenger ? 'bruker' : 'deltaker'} for avvik i perioden{' '}
                   {periode?.fom && periode.tom && (
                     <PeriodLabel dateStringFom={periode?.fom} dateStringTom={periode?.tom} />
                   )}
@@ -77,11 +88,24 @@ export const AksjonspunktArbeidOgInntekt = ({
             </HStack>
           </Box>
           <VStack gap="space-24">
-            <Box maxWidth="70ch">
+            <Box maxWidth="82ch">
               <RhfTextarea
                 control={formMethods.control}
                 name={`perioder.${fieldIndex}.begrunnelse`}
-                label="Vurder hvilken inntekt som skal gi reduksjon i perioden"
+                label={
+                  isAktivitetspenger ? (
+                    <HStack gap="space-4" align="center">
+                      <Label size="small" as="span">
+                        Vurder hvilken inntekt som skal gi reduksjon i perioden,
+                      </Label>
+                      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+                        jf. § 14 Reduksjon av ytelsen på grunn av inntekt.
+                      </Lovreferanse>
+                    </HStack>
+                  ) : (
+                    'Vurder hvilken inntekt som skal gi reduksjon i perioden'
+                  )
+                }
                 validate={[required, minLength(3), maxLength(1500)]}
                 maxLength={1500}
                 readOnly={isReadOnly}

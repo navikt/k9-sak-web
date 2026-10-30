@@ -3,7 +3,7 @@ import { AvklaringsbehovDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/be
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 
 import { useState } from 'react';
-import { useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
+import { useKanReaktivereAksjonspunktNyInntekt, useReaktiverAksjonspunktNyInntekt } from './api/NyInntektQueries.js';
 import { harAksjonspunkt } from '../../utils/aksjonspunktUtils.js';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { TilkommetAktivitet } from './src/components/tilkommetAktivitet/TilkommetAktivitet.js';
@@ -59,6 +59,7 @@ export const NyInntektFaktaIndex = ({
 }: NyInntektFaktaIndexProps) => {
   const bgMedAvklaringsbehov = beregningsgrunnlagListe.filter(bg => kreverManuellBehandlingFn(bg));
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
+  const { data: backendTillaterReaktivering } = useKanReaktivereAksjonspunktNyInntekt(!readOnly);
   const { mutate: reaktiverAksjonspunkt, isPending: reaktivererAksjonspunkt } = useReaktiverAksjonspunktNyInntekt();
 
   if (bgMedAvklaringsbehov.length === 0) {
@@ -71,9 +72,7 @@ export const NyInntektFaktaIndex = ({
   );
 
   const kanReaktivereVurderNyInntekt =
-    !readOnly &&
-    !harAksjonspunktVurderNyInntekt &&
-    bgMedAvklaringsbehov.some(bg => vurderesIBehandlingen(beregningsgrunnlagVilkår.perioder, bg.vilkårsperiodeFom));
+    !readOnly && !harAksjonspunktVurderNyInntekt && backendTillaterReaktivering === true;
 
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
 

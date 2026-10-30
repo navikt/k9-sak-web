@@ -38,6 +38,7 @@ const behandlinger = [
     uuid: '1',
     sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
     behandlingÅrsaker: [],
+    behandlingAnsvarlige: {},
   },
   {
     ansvarligSaksbehandler: 'saksbeh',
@@ -56,6 +57,7 @@ const behandlinger = [
     uuid: '1',
     sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
     behandlingÅrsaker: [],
+    behandlingAnsvarlige: {},
   },
 ];
 
@@ -130,6 +132,7 @@ const lagBehandling = (behandling: Partial<Behandling> & Pick<Behandling, 'id' |
   uuid: `uuid-${behandling.id}`,
   sakstype: BehandlingDtoSakstype.PLEIEPENGER_SYKT_BARN,
   behandlingÅrsaker: [],
+  behandlingAnsvarlige: {},
   ...behandling,
 });
 

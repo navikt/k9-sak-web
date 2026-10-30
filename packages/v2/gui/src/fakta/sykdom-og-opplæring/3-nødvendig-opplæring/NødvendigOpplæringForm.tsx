@@ -414,7 +414,13 @@ const NødvendigOpplæringForm = ({
           )}
           {!readOnly && (
             <div className="flex gap-4">
-              <Button variant="primary" type="submit" size="small" loading={formMethods.formState.isSubmitting} disabled={formMethods.formState.isSubmitting}>
+              <Button
+                variant="primary"
+                type="submit"
+                size="small"
+                loading={formMethods.formState.isSubmitting}
+                disabled={formMethods.formState.isSubmitting}
+              >
                 Bekreft og fortsett
               </Button>
               {redigerer && (

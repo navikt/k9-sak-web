@@ -1,8 +1,1 @@
-import {
-  type k9_kodeverk_vilkår_VilkårType as generatedVilkarTypeEnumUnion,
-  k9_kodeverk_vilkår_VilkårType as enumObj,
-} from '../../generated/types.js';
-
-export type VilkårType = generatedVilkarTypeEnumUnion;
-
-export const vilkarType = enumObj;
+export { k9_kodeverk_vilkår_VilkårType as VilkårType } from '../../generated/types.js';

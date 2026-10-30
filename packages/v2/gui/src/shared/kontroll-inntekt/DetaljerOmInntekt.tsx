@@ -69,9 +69,14 @@ const formaterInntekt = (inntekt: number | undefined) => {
 interface DetaljerOmInntektProps {
   inntektKontrollPeriode: KontrollerInntektPeriodeDto | undefined;
   arbeidsgivere: ArbeidsgiverOversiktDto | undefined;
+  isAktivitetspenger?: boolean;
 }
 
-export const DetaljerOmInntekt = ({ inntektKontrollPeriode, arbeidsgivere }: DetaljerOmInntektProps) => {
+export const DetaljerOmInntekt = ({
+  inntektKontrollPeriode,
+  arbeidsgivere,
+  isAktivitetspenger,
+}: DetaljerOmInntektProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const location = useLocation();
   const { rapporterteInntekter } = inntektKontrollPeriode || {};
@@ -109,14 +114,14 @@ export const DetaljerOmInntekt = ({ inntektKontrollPeriode, arbeidsgivere }: Det
       </Bleed>
       <HGrid gap="space-36" columns={2}>
         <Inntekt
-          title="Inntekt rapportert av deltaker"
+          title={`Inntekt rapportert av ${isAktivitetspenger ? 'bruker' : 'deltaker'}`}
           details={[
             {
               label: 'Samlet arbeidsinntekt',
               value: formaterInntekt(rapporterteInntekter?.bruker?.arbeidsinntekt),
             },
           ]}
-          sumLabel="Sum inntekt fra deltaker"
+          sumLabel={`Sum inntekt fra ${isAktivitetspenger ? 'bruker' : 'deltaker'}`}
           sumValue={formaterInntekt(rapporterteInntekter?.bruker?.arbeidsinntekt)}
         />
         <Inntekt

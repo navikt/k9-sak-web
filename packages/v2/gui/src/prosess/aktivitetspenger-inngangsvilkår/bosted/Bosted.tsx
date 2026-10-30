@@ -11,21 +11,22 @@ import type {
   VilkårBostedPeriodeVurderingDto,
 } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, BodyShort, Box, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -38,6 +39,7 @@ import { BostedSkjema } from './BostedSkjema';
 interface Props {
   bostedAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
   bostedVilkår: VilkårMedPerioderDto;
   readOnly: boolean;
   behandling: BehandlingDto;
@@ -47,6 +49,55 @@ interface Props {
   bostedGrunnlag: BostedGrunnlagResponseDto;
 }
 
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  harAvslag: boolean | undefined;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  harAvslag,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="info" size="small">
+          Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter && harAvslag) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
 export const Bosted = ({
   bostedVilkår,
   readOnly,
@@ -55,13 +106,14 @@ export const Bosted = ({
   onAksjonspunktBekreftet,
   bostedAp,
   lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
   isPermanentlyReadOnly,
   bostedGrunnlag,
 }: Props) => {
   const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
   const avkortingsperiodeBosted = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BOSTEDSVILKÅR);
   const søknadsperioder = byggVisningsperioder(bostedVilkår, avkortingsperiodeBosted?.perioder ?? []);
-  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
     label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
@@ -69,6 +121,7 @@ export const Bosted = ({
       fom: periode.periode.fom,
       tom: periode.periode.tom,
     },
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
   }));
   const formHook = useForm<BostedFormData>({
     defaultValues: buildInitialValues(søknadsperioder),
@@ -77,20 +130,21 @@ export const Bosted = ({
   const [selectedId, setSelectedId] = useState(
     () =>
       søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
+      perioder[0]?.id ??
       '',
   );
   useEffect(() => {
-    if (!periods.some(period => period.id === selectedId)) {
+    if (!perioder.some(period => period.id === selectedId)) {
       setSelectedId('');
     }
-  }, [periods, selectedId]);
+  }, [perioder, selectedId]);
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (data: BostedFormData) => {
+    mutationFn: async ({ data, selectedId }: { data: BostedFormData; selectedId: string }) => {
+      const periode = perioder.find(period => period.id === selectedId);
       const vurdering = data.vurderinger[selectedId];
-      const selectedItem = periods.find(period => period.id === selectedId);
-      if (!selectedItem || !vurdering) {
+      if (!periode || !vurdering) {
         throw new Error('Kunne ikke finne valgt periode for bostedsvilkår');
       }
       const muligAvkorting = vurdering.muligAvkortingPeriode;
@@ -111,7 +165,9 @@ export const Bosted = ({
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
           fritekstVurderingBrev:
-            vurdering.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET ? vurdering.fritekst : undefined,
+            vurdering.bosatt === 'ikkeOppfylt' && vurdering.avslagsårsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET
+              ? vurdering.fritekst
+              : undefined,
         },
       ];
       if (redigerMaksdatoAktiv && muligAvkorting) {
@@ -153,10 +209,14 @@ export const Bosted = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker er bosatt i Trondheim kommune, jf.{' '}
-      {bostedVilkår.lovReferanse && <Lovreferanse isUng>{bostedVilkår.lovReferanse}</Lovreferanse>}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        §2 Geografisk virkeområde
+      </Lovreferanse>
     </span>
   );
-  const harAvslagIBosted = bostedVilkår.perioder?.some(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT);
+  const harAvslagIBosted = bostedVilkår.perioder?.some(
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
   const skalViseSendTilBeslutter =
     !!harAvslagIBosted &&
     !!lokalkontorForeslårVilkårAp &&
@@ -174,40 +234,31 @@ export const Bosted = ({
     <VStack gap="space-20">
       {!isBostedApSolved && (
         <Alert variant="warning" size="small">
-          Vurder om søker er bosatt i Trondheim kommune på søknadstidspunktet.
+          Vurder om søker er bosatt i Trondheim kommune på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel
-        periods={periods}
+        isAktivitetspenger
+        periods={perioder}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av bosatt i Trondheim kommune"
-        lovreferanse={bostedVilkår.lovReferanse}
+        lovreferanse="§ 2"
         defaultIsLocked={isBostedApSolved}
         readOnly={readOnly}
         lockedContent={isBostedApSolved ? <VurdertAv ident={bostedAp?.ansvarligSaksbehandler} /> : undefined}
         afterEditButton={
-          skalViseSendTilBeslutter ? (
-            <VStack gap="space-20">
-              <Alert variant="info" size="small">
-                Behandlingen vil gå videre til avslag. Øvrige inngangsvilkår vil ikke bli behandlet.
-              </Alert>
-              <Box>
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-              </Box>
-            </VStack>
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={skalViseSendTilBeslutter}
+            visForBeslutter={!!lokalkontorBeslutterAp}
+            harAvslag={harAvslagIBosted}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
       >
         {(isFormLocked, setIsFormLocked, isDefaultLocked) => (
           <VStack gap="space-24">
@@ -234,7 +285,7 @@ export const Bosted = ({
                 isPending={isPending}
                 visAvbryt={isDefaultLocked}
                 onSubmit={async data => {
-                  await bekreftAksjonspunktMutation(data);
+                  await bekreftAksjonspunktMutation({ data, selectedId });
                   setIsFormLocked(true);
                 }}
                 onAvbryt={() => {

@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent } from 'storybook/test';
-import { useState } from 'react';
+import { RocketIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, VStack } from '@navikt/ds-react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AxiosError, AxiosHeaders, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
-import { ErrorBoundary } from '../boundary/ErrorBoundary.js';
-import { ErrorAlert } from './ErrorAlert.js';
-import { retryAction } from './ErrorFixAction.js';
+import { useState } from 'react';
 import { action } from 'storybook/actions';
+import { expect, userEvent } from 'storybook/test';
 import { makeFakeExtendedApiError } from '../../../storybook/mocks/fakeExtendedApiError.js';
 import { AppError } from '../AppError.js';
-import { TimeoutError } from '../legacycompat/TimeoutError.js';
+import { ErrorBoundary } from '../boundary/ErrorBoundary.js';
 import { BlobResponseAxiosError } from '../legacycompat/BlobResponseAxiosError.js';
+import { TimeoutError } from '../legacycompat/TimeoutError.js';
+import { ErrorAlert } from './ErrorAlert.js';
+import { retryAction } from './ErrorFixAction.js';
 import { resolveErrorViewProps } from './resolveErrorViewProps.js';
-import { RocketIcon } from '@navikt/aksel-icons';
 
 /**
  * Komponent som kastar ein feil når `shouldThrow` er true.
@@ -147,6 +147,27 @@ export const Forbidden: Story = {
 };
 export const NotFound: Story = {
   args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 404 })),
+};
+export const PollingHalted: Story = {
+  args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 418, body: { status: 'HALTED' } })),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Bakgrunnsprosess feilet')).toBeInTheDocument();
+  },
+};
+export const PollingDelayed: Story = {
+  args: resolveErrorViewProps(
+    makeFakeExtendedApiError({ status: 418, body: { status: 'DELAYED', eta: '2026-05-14T10:00:00' } }),
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Venter fortsatt på svar')).toBeInTheDocument();
+    await expect(canvas.getByText(/prøv igjen etter 14.05.2026 kl. 10:00/)).toBeInTheDocument();
+  },
+};
+export const PollingDelayedUtenEta: Story = {
+  args: resolveErrorViewProps(makeFakeExtendedApiError({ status: 418, body: { status: 'DELAYED' } })),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText(/prøv igjen litt senere/)).toBeInTheDocument();
+  },
 };
 
 /** Viser at reset-funksjonaliteten fungerer */

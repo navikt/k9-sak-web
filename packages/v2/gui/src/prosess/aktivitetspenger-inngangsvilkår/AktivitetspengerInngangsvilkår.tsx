@@ -1,3 +1,4 @@
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
@@ -54,10 +55,10 @@ const samleInngangsvilkårData = (
   vurderAktivitetsvilkårAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR),
   vurderAktivitetsvilkårVilkår: vilkår.find(v => v.vilkarType === vilkarType.AKTIVITETSVILKÅR),
   lokalkontorForeslårVilkårAp: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
   ),
   lokalkontorBeslutterAp: aksjonspunkter.find(
-    ap => ap.definisjon === AksjonspunktDefinisjon.LOKALKONTOR_BESLUTTER_VILKÅR,
+    ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR,
   ),
   bostedAp: aksjonspunkter.find(ap => ap.definisjon === AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
   bostedVilkår: vilkår.find(v => v.vilkarType === vilkarType.BOSTEDSVILKÅR),
@@ -89,11 +90,8 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto, erBlokke
   ) {
     return <CustomCheckmarkIcon />;
   }
-  if (
-    vilkår.perioder
-      .filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT)
-      .every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)
-  ) {
+  const relevantePerioder = vilkår.perioder.filter(p => p.vilkarStatus !== Utfall.IKKE_RELEVANT);
+  if (relevantePerioder.length > 0 && relevantePerioder.every(p => p.vilkarStatus === Utfall.IKKE_OPPFYLT)) {
     return <XMarkOctagonFillIcon fontSize={24} color="var(--ax-bg-danger-strong)" />;
   }
   return undefined;
@@ -110,7 +108,7 @@ const vilkårErFerdigbehandlet = (vilkår?: VilkårMedPerioderDto) => {
 const stegErFerdigbehandlet = (aksjonspunkt?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) =>
   aksjonspunkt?.status === AksjonspunktStatus.UTFØRT || vilkårErFerdigbehandlet(vilkår);
 
-const utledAktivTab = (data: InngangsvilkårData) => {
+const utledAktivTab = (data: InngangsvilkårData, erFørstegangsbehandling: boolean) => {
   // Prioriter åpne aksjonspunkter som krever handling
   if (data.bostedAp?.status === AksjonspunktStatus.OPPRETTET) {
     return InngangsvilkårTab.BOSATT_I_TRONDHEIM;
@@ -129,10 +127,11 @@ const utledAktivTab = (data: InngangsvilkårData) => {
   }
 
   // Når alle vilkår er ferdigbehandlet, vis det siste løste vilkåret. Ettersom behandlingstypen "Kontroll av inntekt" ikke har aksjonspunkt må vi også sjekke vilkårsperiodene.
-  if (data.lokalkontorBeslutterAp?.status === AksjonspunktStatus.UTFØRT) {
-    return InngangsvilkårTab.BESLUTTER;
-  }
-  if (stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)) {
+  if (
+    !erFørstegangsbehandling &&
+    data.vurderAktivitetsvilkårAp &&
+    stegErFerdigbehandlet(data.vurderAktivitetsvilkårAp, data.vurderAktivitetsvilkårVilkår)
+  ) {
     return InngangsvilkårTab.AKTIVITET;
   }
   if (stegErFerdigbehandlet(data.vurderBistandsvilkårAp, data.vurderBistandsvilkårVilkår)) {
@@ -182,7 +181,7 @@ export const AktivitetspengerInngangsvilkår = ({
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
-    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedLokalkontor;
+    !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
 
   const inngangsvilkårdata = useMemo(() => samleInngangsvilkårData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
   const erAlderBlokkert = harUløstTidligereSteg(inngangsvilkårdata.søknadsfristAp);
@@ -204,14 +203,18 @@ export const AktivitetspengerInngangsvilkår = ({
   );
 
   const harVilkårsperioderIAktivitetsvilkåret =
-    inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder?.length &&
+    !!inngangsvilkårdata.vurderAktivitetsvilkårVilkår?.perioder &&
     inngangsvilkårdata.vurderAktivitetsvilkårVilkår.perioder.length > 0;
 
-  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(utledAktivTab(inngangsvilkårdata));
+  const erFørstegangsbehandling = behandling.type === BehandlingType.FØRSTEGANGSSØKNAD;
+
+  const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(
+    utledAktivTab(inngangsvilkårdata, erFørstegangsbehandling),
+  );
 
   useEffect(() => {
-    setAktivTab(utledAktivTab(inngangsvilkårdata));
-  }, [inngangsvilkårdata]);
+    setAktivTab(utledAktivTab(inngangsvilkårdata, erFørstegangsbehandling));
+  }, [inngangsvilkårdata, erFørstegangsbehandling]);
 
   return (
     <VStack gap="space-20">
@@ -292,6 +295,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 bostedVilkår={inngangsvilkårdata.bostedVilkår}
                 bostedAp={inngangsvilkårdata.bostedAp}
                 lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                 readOnly={!kanSaksbehandle}
                 api={api}
                 behandling={behandling}
@@ -307,6 +311,7 @@ export const AktivitetspengerInngangsvilkår = ({
               <AndreLivsoppholdytelser
                 andreLivsoppholdytelserAp={inngangsvilkårdata.andreLivsoppholdytelserAp}
                 lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                 andreLivsoppholdytelserVilkår={inngangsvilkårdata.andreLivsoppholdytelserVilkår}
                 readOnly={!kanSaksbehandle}
                 api={api}
@@ -325,6 +330,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 vurderBistandsvilkårVilkår={inngangsvilkårdata.vurderBistandsvilkårVilkår}
                 vurderBistandsvilkårAp={inngangsvilkårdata.vurderBistandsvilkårAp}
                 lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -344,6 +350,7 @@ export const AktivitetspengerInngangsvilkår = ({
                   vurderAktivitetsvilkårVilkår={inngangsvilkårdata.vurderAktivitetsvilkårVilkår}
                   vurderAktivitetsvilkårAp={inngangsvilkårdata.vurderAktivitetsvilkårAp}
                   lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
+                  lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                   api={api}
                   behandling={behandling}
                   onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -354,19 +361,20 @@ export const AktivitetspengerInngangsvilkår = ({
                 />
               )}
           </Tabs.Panel>
-          {inngangsvilkårdata.lokalkontorBeslutterAp && (
-            <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
-              <Beslutter
-                lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
-                api={api}
-                behandling={behandling}
-                onTabChange={setAktivTab}
-                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-                kanBeslutte={kanBeslutte}
-              />
-            </Tabs.Panel>
-          )}
+          {inngangsvilkårdata.lokalkontorBeslutterAp &&
+            aksjonspunktErÅpent(inngangsvilkårdata.lokalkontorBeslutterAp) && (
+              <Tabs.Panel value={InngangsvilkårTab.BESLUTTER}>
+                <Beslutter
+                  lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
+                  api={api}
+                  behandling={behandling}
+                  onTabChange={setAktivTab}
+                  onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                  totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+                  kanBeslutte={kanBeslutte}
+                />
+              </Tabs.Panel>
+            )}
         </Box>
       </Tabs>
     </VStack>

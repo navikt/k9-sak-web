@@ -1,11 +1,10 @@
-import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
+import type { PersonopplysningPleietrengendeDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningPleietrengendeDto.js';
 import { withFakeOmPleietrengendeApi } from '@k9-sak-web/gui/storybook/decorators/withFakeOmPleietrengendeApi.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import OmPleietrengendeFaktaIndex from './OmPleietrengendeFaktaIndex.js';
 
-const pleietrengendeMock: PersonopplysningDto = {
-  aktoerId: '1234567890123',
+const pleietrengendeMock: PersonopplysningPleietrengendeDto = {
   fnr: '12345678910',
   navn: 'Ola Nordmann',
 };

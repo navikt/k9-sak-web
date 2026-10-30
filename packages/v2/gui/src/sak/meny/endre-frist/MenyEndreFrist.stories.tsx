@@ -76,9 +76,36 @@ export const EnOppgave: Story = {
   play: async ({ canvas, step }) => {
     const body = within(canvas.getByRole('dialog'));
 
+    await step('Viser deltaker-tekster', async () => {
+      await expect(body.getByRole('heading', { name: 'Utsett frist på oppgave til deltaker' })).toBeInTheDocument();
+      await expect(
+        body.getByText('Begrunnelsen er kun synlig i historikken, og vil ikke sendes til deltaker.'),
+      ).toBeInTheDocument();
+    });
+
     await step('Oppgave er forhåndsvalgt og read-only', async () => {
       const oppgavevalg = body.getAllByRole('option');
       await expect(oppgavevalg).toHaveLength(1);
+    });
+  },
+};
+
+export const Aktivitetspenger: Story = {
+  args: {
+    etterlysninger: mockEtterlysninger,
+    lukkModal: fn(),
+    endreFrister: fn(),
+    isLoading: false,
+    isAktivitetspenger: true,
+  },
+  play: async ({ canvas, step }) => {
+    const body = within(canvas.getByRole('dialog'));
+
+    await step('Viser bruker-tekster', async () => {
+      await expect(body.getByRole('heading', { name: 'Utsett frist på oppgave til bruker' })).toBeInTheDocument();
+      await expect(
+        body.getByText('Begrunnelsen er kun synlig i historikken, og vil ikke sendes til bruker.'),
+      ).toBeInTheDocument();
     });
   },
 };

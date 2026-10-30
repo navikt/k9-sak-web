@@ -1,9 +1,11 @@
 import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { AktivitetspengerInngangsvilkår } from '@k9-sak-web/gui/prosess/aktivitetspenger-inngangsvilkår/AktivitetspengerInngangsvilkår.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
 import {
   aksjonspunkterQueryOptions,
+  andreLivsoppholdsytelserVurderingerQueryOptions,
   bostedGrunnlagQueryOptions,
   innloggetBrukerQueryOptions,
   lovligeBehandlingsoperasjonerQueryOptions,
@@ -26,6 +28,7 @@ interface Props {
 
 export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekreftet }: Props) => {
   const prosessPanelContext = useContext(ProsessPanelContext);
+  const erTilBehandlingEllerBehandlet = !!prosessPanelContext?.erTilBehandlingEllerBehandlet(PANEL_ID);
   const [
     { data: aksjonspunkter = [] },
     { data: innloggetBruker },
@@ -42,12 +45,17 @@ export const InngangsvilkårInitPanel = ({ api, behandling, onAksjonspunktBekref
       lovligeBehandlingsoperasjonerQueryOptions(api, behandling),
       bostedGrunnlagQueryOptions(api, behandling),
       perioderSomKanAvkortesQueryOptions(api, behandling),
+      andreLivsoppholdsytelserVurderingerQueryOptions(api, behandling),
     ],
   });
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
   if (!erValgt) {
     return null;
+  }
+
+  if (!erTilBehandlingEllerBehandlet) {
+    return <ProsessStegIkkeBehandlet />;
   }
 
   return (

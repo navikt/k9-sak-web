@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
-import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
 import {
@@ -21,10 +21,7 @@ const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.VILKAR },
   { key: UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
-  /*
-  Simulering er ikke klart
-  */
-  //   { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
+  { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: UngdomsytelseBehandlingApiKeys.KONTROLLER_INNTEKT },
 ];
 
@@ -71,7 +68,13 @@ const BehandlingUngdomsytelseIndex = ({
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestUngdomsytelseApi.resetCache();
     requestUngdomsytelseApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -131,6 +134,7 @@ const BehandlingUngdomsytelseIndex = ({
   if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = harIkkeHentetBehandlingsdata && !!forrigeBehandling;
 
   return (
     <>
@@ -138,7 +142,12 @@ const BehandlingUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      >
         <UngdomsytelsePaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
           fetchedData={data}

@@ -2,6 +2,7 @@ import { TopErrorPanel } from '@k9-sak-web/gui/app/errorhandling/ui/TopErrorPane
 import { HeaderPanel } from '@k9-sak-web/gui/sak/dekoratør/HeaderPanel.js';
 import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { AAREG_URL } from '@k9-sak-web/konstanter';
+import { getPathToK9Los } from '@k9-sak-web/lib/paths/paths.js';
 import { captureMessage } from '@nais/apm';
 import { useInnloggetBrukerNavn } from '../../data/useNavAnsattForYtelse.js';
 
@@ -56,6 +57,7 @@ const Dekorator = ({ queryStrings, pathname }: OwnProps) => {
         ytelse={ytelse}
         headerTitleHref="/ung/web"
         showEndringslogg={false}
+        getPathToLos={getPathToK9Los}
       />
       <TopErrorPanel aktivFagsakId={fagsakFraUrl} />
     </>

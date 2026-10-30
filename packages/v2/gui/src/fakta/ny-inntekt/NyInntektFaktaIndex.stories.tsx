@@ -90,9 +90,15 @@ const meta = {
       <BehandlingProvider
         behandlingUuid="00000000-0000-0000-0000-000000000000"
         refetchBehandling={async () => undefined}
+        settBehandling={() => undefined}
+        oppdaterProsessStegOgFaktaPanelIUrl={() => undefined}
       >
         <NyInntektApiContext
-          value={{ backend: backendNavn.k9sak, reaktiverAksjonspunktNyInntekt: async () => undefined }}
+          value={{
+            backend: backendNavn.k9sak,
+            kanReaktivereAksjonspunkt: async () => true,
+            reaktiverAksjonspunkt: async () => undefined,
+          }}
         >
           <Story />
         </NyInntektApiContext>
@@ -537,7 +543,12 @@ export const TilkommetAktivitetMedForlengelse: Story = {
 export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
   args: {
     readOnly: false,
-    aksjonspunkter: [],
+    aksjonspunkter: [
+      {
+        definisjon: AksjonspunktDefinisjon.VURDER_NYTT_INNTEKTSFORHOLD,
+        status: aksjonspunktStatus.UTFØRT,
+      },
+    ],
     beregningsgrunnlagListe: bgTilkommetInntektsforholdMedForlengelseLukketAP,
     beregningsgrunnlagVilkår: lagVilkår([
       {
@@ -549,13 +560,26 @@ export const TilkommetAktivitetMedForlengelseLukketAP: Story = {
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal vise aktiver aksjonspunkt når lukket AP vurderes i behandlingen', async () => {
-      await expect(canvas.getByRole('button', { name: 'Aktiver aksjonspunkt' })).toBeInTheDocument();
+    await step('skal vise redigeringsknapp for ferdigbehandlet aksjonspunkt', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Rediger' })).toBeInTheDocument();
     });
   },
 };
 
 export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: Story = {
+  decorators: [
+    (Story: ComponentType) => (
+      <NyInntektApiContext
+        value={{
+          backend: 'k9sak',
+          kanReaktivereAksjonspunkt: async () => false,
+          reaktiverAksjonspunkt: async () => undefined,
+        }}
+      >
+        <Story />
+      </NyInntektApiContext>
+    ),
+  ],
   args: {
     readOnly: false,
     aksjonspunkter: [],
@@ -570,7 +594,8 @@ export const TilkommetAktivitetMedForlengelseLukketAPVurderesIkkeIBehandlingen: 
     ]),
   },
   play: async ({ canvas, step }) => {
-    await step('skal ikke vise aktiver aksjonspunkt når perioden ikke vurderes i behandlingen', async () => {
+    await step('skal ikke vise aktiver aksjonspunkt når backend ikke tillater reaktivering', async () => {
+      await expect(await canvas.findByText('Perioder med ny aktivitet')).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: 'Aktiver aksjonspunkt' })).not.toBeInTheDocument();
     });
   },

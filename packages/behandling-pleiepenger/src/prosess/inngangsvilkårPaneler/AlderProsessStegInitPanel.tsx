@@ -15,6 +15,7 @@ interface Props {
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
+    employeeHasAccess: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   visPeriodisering: boolean;

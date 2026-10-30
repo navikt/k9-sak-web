@@ -6,8 +6,17 @@ import { LabelledContent } from '../../../shared/labelled-content/LabelledConten
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 
 const avslagsårsakLabels: Record<string, string> = {
-  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE]: 'Søker har annen livsoppholdytelse',
-  fritekst: 'Fritekst',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER]: 'Arbeidsavklaringspenger (AAP)',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_TILTAKSPENGER]: 'Tiltakspenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_KVALIFISERINGSSTØNAD]: 'Kvalifiseringsstønad (KVP)',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_DAGPENGER]: 'Dagpenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_FORELDREPENGER]: 'Foreldrepenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_SVANGERSKAPSPENGER]: 'Svangerskapspenger',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_UFØRETRYGD]: 'Uføretrygd',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_INTRODUKSJONSSTØNAD]: 'Introduksjonsstønad',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_BARNEPENSJON]: 'Barnepensjon',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE]: 'Annen ytelse',
+  [AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET]: 'Avkortet',
 };
 
 interface Props {
@@ -27,9 +36,9 @@ export const AndreLivsoppholdytelserLesevisning = ({ begrunnelseLabel, vurdering
     {vurdering.andreLivsoppholdytelser === 'ikkeOppfylt' && vurdering.avslagsårsak && (
       <VStack gap="space-8">
         <Label size="small" as="p">
-          Avslagsårsak
+          Hvilken ytelse mottar bruker?
         </Label>
-        <BodyShort size="small">{avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
+        <BodyShort size="small">{vurdering.ytelseNavn || avslagsårsakLabels[vurdering.avslagsårsak]}</BodyShort>
       </VStack>
     )}
     {vurdering.andreLivsoppholdytelser === 'ikkeOppfylt' && vurdering.fritekst && (

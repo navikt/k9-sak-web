@@ -11,9 +11,20 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { renderHook } from '@testing-library/react';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
+
+const medBehandlingProvider = ({ children }) => (
+  <BehandlingProvider
+    refetchBehandling={() => Promise.resolve()}
+    settBehandling={vi.fn()}
+    oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+  >
+    {children}
+  </BehandlingProvider>
+);
 
 describe('<prosessStegHooks>', () => {
   const fagsak = {
@@ -109,19 +120,21 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'default';
 
     // ACT
-    const { result } = renderHook(() =>
-      prosessStegHooks.useProsessStegPaneler(
-        [new OpplysningspliktProsessStegPanelDef()],
-        ekstraPanelData,
-        fagsak,
-        rettigheter,
-        behandling as Behandling,
-        aksjonspunkter,
-        vilkar,
-        hasFetchError,
-        valgtProsessSteg,
-        apentFaktaPanelInfo,
-      ),
+    const { result } = renderHook(
+      () =>
+        prosessStegHooks.useProsessStegPaneler(
+          [new OpplysningspliktProsessStegPanelDef()],
+          ekstraPanelData,
+          fagsak,
+          rettigheter,
+          behandling as Behandling,
+          aksjonspunkter,
+          vilkar,
+          hasFetchError,
+          valgtProsessSteg,
+          apentFaktaPanelInfo,
+        ),
+      { wrapper: medBehandlingProvider },
     );
 
     const prosessStegPaneler = result.current[0];
@@ -141,6 +154,107 @@ describe('<prosessStegHooks>', () => {
         usePartialStatus: false,
       },
     ]);
+  });
+
+  it('skal ikke velge prosess-steg på nytt mens behandlingsdata er utdatert', () => {
+    class UttakPanelDef extends ProsessStegPanelDef {
+      getKomponent = props => <div {...props} />;
+
+      getOverstyrVisningAvKomponent = () => true;
+    }
+    class UttakProsessStegDef extends ProsessStegDef {
+      getUrlKode = () => prosessStegCodes.UTTAK;
+
+      getTekstKode = () => 'Behandlingspunkt.Uttak';
+
+      getPanelDefinisjoner = () => [new UttakPanelDef()];
+    }
+    const rettigheter = {
+      writeAccess: { isEnabled: true, employeeHasAccess: true },
+      kanOverstyreAccess: { isEnabled: false, employeeHasAccess: false },
+    };
+    const definisjoner = [new OpplysningspliktProsessStegPanelDef(), new UttakProsessStegDef()];
+
+    let erBehandlingsdataUtdatert = false;
+    const { result, rerender } = renderHook(
+      ({ versjon, valgtProsessSteg }) =>
+        prosessStegHooks.useProsessStegPaneler(
+          definisjoner,
+          {},
+          fagsak,
+          rettigheter,
+          { ...behandling, versjon } as Behandling,
+          aksjonspunkter,
+          vilkar,
+          false,
+          valgtProsessSteg,
+          undefined,
+        ),
+      {
+        initialProps: { versjon: 2, valgtProsessSteg: prosessStegCodes.UTTAK },
+        wrapper: ({ children }) => (
+          <BehandlingProvider
+            refetchBehandling={() => Promise.resolve()}
+            settBehandling={vi.fn()}
+            oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+            erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+          >
+            {children}
+          </BehandlingProvider>
+        ),
+      },
+    );
+    const uttakPanel = result.current[1];
+    expect(uttakPanel?.getUrlKode()).toEqual(prosessStegCodes.UTTAK);
+
+    erBehandlingsdataUtdatert = true;
+    rerender({ versjon: 2, valgtProsessSteg: 'default' });
+    expect(result.current[1]).toBe(uttakPanel);
+
+    erBehandlingsdataUtdatert = false;
+    rerender({ versjon: 3, valgtProsessSteg: 'default' });
+    expect(result.current[1]?.getUrlKode()).toEqual(prosessStegCodes.OPPLYSNINGSPLIKT);
+  });
+
+  it('skal velge prosess-steg på nytt når URL endres og behandlingsdata er oppdatert', () => {
+    class UttakPanelDef extends ProsessStegPanelDef {
+      getKomponent = props => <div {...props} />;
+
+      getOverstyrVisningAvKomponent = () => true;
+    }
+    class UttakProsessStegDef extends ProsessStegDef {
+      getUrlKode = () => prosessStegCodes.UTTAK;
+
+      getTekstKode = () => 'Behandlingspunkt.Uttak';
+
+      getPanelDefinisjoner = () => [new UttakPanelDef()];
+    }
+    const rettigheter = {
+      writeAccess: { isEnabled: true, employeeHasAccess: true },
+      kanOverstyreAccess: { isEnabled: false, employeeHasAccess: false },
+    };
+    const definisjoner = [new OpplysningspliktProsessStegPanelDef(), new UttakProsessStegDef()];
+
+    const { result, rerender } = renderHook(
+      ({ valgtProsessSteg }) =>
+        prosessStegHooks.useProsessStegPaneler(
+          definisjoner,
+          {},
+          fagsak,
+          rettigheter,
+          behandling as Behandling,
+          aksjonspunkter,
+          vilkar,
+          false,
+          valgtProsessSteg,
+          undefined,
+        ),
+      { initialProps: { valgtProsessSteg: prosessStegCodes.UTTAK }, wrapper: medBehandlingProvider },
+    );
+    expect(result.current[1]?.getUrlKode()).toEqual(prosessStegCodes.UTTAK);
+
+    rerender({ valgtProsessSteg: 'default' });
+    expect(result.current[1]?.getUrlKode()).toEqual(prosessStegCodes.OPPLYSNINGSPLIKT);
   });
 
   it('skal velge første prosess-steg', () => {
@@ -247,15 +361,17 @@ describe('<prosessStegHooks>', () => {
 
     const lagringSideEffectsCallback = () => () => {};
 
-    const { result } = renderHook(() =>
-      prosessStegHooks.useBekreftAksjonspunkt(
-        fagsak,
-        behandling as Behandling,
-        lagringSideEffectsCallback,
-        lagreAksjonspunkter,
-        undefined,
-        utledetPanel,
-      ),
+    const { result } = renderHook(
+      () =>
+        prosessStegHooks.useBekreftAksjonspunkt(
+          fagsak,
+          behandling as Behandling,
+          lagringSideEffectsCallback,
+          lagreAksjonspunkter,
+          undefined,
+          utledetPanel,
+        ),
+      { wrapper: medBehandlingProvider },
     );
 
     const bekreftAksjonspunkt = result.current;

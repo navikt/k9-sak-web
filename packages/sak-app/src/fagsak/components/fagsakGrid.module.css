@@ -9,6 +9,7 @@
 .leftColumn {
   float: left;
   width: 67%;
+  min-width: 0;
 }
 
 .rightColumn {
@@ -28,17 +29,12 @@
   .rightColumn {
     margin-left: 0;
     width: 100%;
+    border-top: 1px solid #6a6a6a;
   }
 }
 
-@media all and (width >= 1350px) {
+@media all and (width > 1350px) {
   .rightColumn {
     border-left: 1px solid #6a6a6a;
-  }
-}
-
-@media all and (width <= 1350px) {
-  .rightColumn {
-    border-top: 1px solid #6a6a6a;
   }
 }

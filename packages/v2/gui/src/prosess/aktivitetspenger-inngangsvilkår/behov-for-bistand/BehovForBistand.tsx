@@ -7,21 +7,22 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårBistandPeriodeVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bistand/VilkårBistandPeriodeVurderingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Box, Button, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, HStack, VStack } from '@navikt/ds-react';
 import { ISO_DATE_FORMAT } from '@navikt/ft-utils';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
-import { Lovreferanse } from '../../../shared/lovreferanse/Lovreferanse';
 import {
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
+import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter';
 import { aksjonspunktErLøst, aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils';
 import { byggVisningsperioder } from '../../aktivitetspenger-felles/utils/visningsperioder.js';
@@ -35,6 +36,7 @@ interface Props {
   vurderBistandsvilkårVilkår: VilkårMedPerioderDto;
   vurderBistandsvilkårAp: AksjonspunktDto | undefined;
   lokalkontorForeslårVilkårAp: AksjonspunktDto | undefined;
+  lokalkontorBeslutterAp?: AksjonspunktDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => Promise<void>;
@@ -42,10 +44,60 @@ interface Props {
   isPermanentlyReadOnly: boolean;
 }
 
+interface SendTilBeslutterProps {
+  kanSendeTilBeslutter: boolean;
+  visForBeslutter: boolean;
+  harAvslag: boolean | undefined;
+  isSendingTilBeslutter: boolean;
+  onSendTilBeslutter: () => void;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+}
+
+const SendTilBeslutter = ({
+  kanSendeTilBeslutter,
+  visForBeslutter,
+  harAvslag,
+  isSendingTilBeslutter,
+  onSendTilBeslutter,
+  api,
+  behandling,
+}: SendTilBeslutterProps) => {
+  if (kanSendeTilBeslutter) {
+    return (
+      <VStack gap="space-20">
+        <Alert variant="success" size="small">
+          Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
+        </Alert>
+        <HStack gap="space-8" align="start">
+          <Button
+            variant="primary"
+            data-color="accent"
+            size="small"
+            type="button"
+            loading={isSendingTilBeslutter}
+            onClick={onSendTilBeslutter}
+          >
+            Send til beslutter
+          </Button>
+          {harAvslag && <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />}
+        </HStack>
+      </VStack>
+    );
+  }
+
+  if (visForBeslutter && harAvslag) {
+    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
+  }
+
+  return null;
+};
+
 export const BehovForBistand = ({
   vurderBistandsvilkårVilkår,
   vurderBistandsvilkårAp,
   lokalkontorForeslårVilkårAp,
+  lokalkontorBeslutterAp,
   api,
   behandling,
   onAksjonspunktBekreftet,
@@ -55,23 +107,25 @@ export const BehovForBistand = ({
   const { data: avkortingsperioder } = useQuery(perioderSomKanAvkortesQueryOptions(api, behandling));
   const avkortingsperiodeBistand = avkortingsperioder?.resultat.find(v => v.vilkårType === vilkarType.BISTANDSVILKÅR);
   const søknadsperioder = byggVisningsperioder(vurderBistandsvilkårVilkår, avkortingsperiodeBistand?.perioder ?? []);
-  const periods: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
+  const perioder: VilkårSplittPanelPeriod[] = søknadsperioder.map(periode => ({
     id: periode.periode.fom,
     status: getPeriodStatus(periode.vilkarStatus),
     label: `${formatDate(periode.periode.fom)}${periode.visTom ? ` - ${formatDate(periode.periode.tom)}` : ''}`,
     periode: periode.periode,
+    vurderesIBehandlingen: periode.vurderesIBehandlingen,
   }));
   const [selectedId, setSelectedId] = useState(
     () =>
       søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      periods[0]?.id ??
+      perioder[0]?.id ??
       '',
   );
+  const selectedPeriode = perioder.find(period => period.id === selectedId);
   useEffect(() => {
-    if (!periods.some(period => period.id === selectedId)) {
+    if (!perioder.some(period => period.id === selectedId)) {
       setSelectedId('');
     }
-  }, [periods, selectedId]);
+  }, [perioder, selectedId]);
   const formHook = useForm<BehovForBistandFormData>({
     defaultValues: buildInitialValues(søknadsperioder),
   });
@@ -93,16 +147,18 @@ export const BehovForBistand = ({
       const vurdertePerioder: VilkårBistandPeriodeVurderingDto[] = [
         {
           avslagsårsak:
-            vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak
-              ? BistandsvilkårIkkeOppfyltÅrsak.IKKE_14A_VEDTAK
-              : undefined,
+            vurdering.behovForBistand === 'ikkeOppfylt' && vurdering.avslagsårsak ? vurdering.avslagsårsak : undefined,
           begrunnelse: begrunnelseInnvilget,
           erVilkårOppfylt: vurdering.behovForBistand === 'oppfylt',
           periode: {
             fom: vurdering.fom,
             tom: redigerMaksdatoAktiv ? vurdering.tom : (muligAvkorting?.tom ?? vurdering.tom),
           },
-          fritekstVurderingBrev: vurdering.avslagsårsak === 'fritekst' ? vurdering.fritekst : undefined,
+          fritekstVurderingBrev:
+            vurdering.behovForBistand === 'ikkeOppfylt' &&
+            vurdering.avslagsårsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET
+              ? vurdering.fritekst
+              : undefined,
         },
       ];
       if (redigerMaksdatoAktiv && muligAvkorting) {
@@ -143,13 +199,16 @@ export const BehovForBistand = ({
   const begrunnelseLabel = (
     <span>
       Vurder om søker har behov for bistand, jf.{' '}
-      {vurderBistandsvilkårVilkår.lovReferanse && (
-        <Lovreferanse isUng>{vurderBistandsvilkårVilkår.lovReferanse}</Lovreferanse>
-      )}
+      <Lovreferanse isAktivitetspenger includeFullTextInLink>
+        § 6 Behov for bistand
+      </Lovreferanse>
     </span>
   );
   const lokalkontorKanSendeTilBeslutter =
     !readOnly && !!lokalkontorForeslårVilkårAp && aksjonspunktErÅpent(lokalkontorForeslårVilkårAp);
+  const harAvslagIBehovForBistand = vurderBistandsvilkårVilkår.perioder?.some(
+    p => p.vurderesIBehandlingen !== false && p.vilkarStatus === Utfall.IKKE_OPPFYLT,
+  );
 
   if (!vurderBistandsvilkårVilkår) {
     return null;
@@ -176,38 +235,29 @@ export const BehovForBistand = ({
     <VStack gap="space-20">
       {!isVurderBistandsvilkårApSolved && (
         <Alert variant="warning" size="small">
-          Vurder behov for bistand på søknadstidspunktet.
+          Vurder behov for bistand på virkningstidspunktet.
         </Alert>
       )}
       <VilkårSplittPanel
-        periods={periods}
+        isAktivitetspenger
+        periods={perioder}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av behov for bistand"
-        lovreferanse={vurderBistandsvilkårVilkår.lovReferanse}
+        lovreferanse="§ 6"
         defaultIsLocked={isVurderBistandsvilkårApSolved || lokalkontorKanSendeTilBeslutter}
         readOnly={readOnly}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriode?.vurderesIBehandlingen === false}
         afterEditButton={
-          lokalkontorKanSendeTilBeslutter ? (
-            <VStack gap="space-20">
-              <Alert variant="success" size="small">
-                Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
-              </Alert>
-              <Box>
-                <Button
-                  variant="primary"
-                  data-color="accent"
-                  size="small"
-                  type="button"
-                  loading={isSendingTilBeslutter}
-                  onClick={() => void sendTilBeslutterMutation()}
-                >
-                  Send til beslutter
-                </Button>
-              </Box>
-            </VStack>
-          ) : null
+          <SendTilBeslutter
+            kanSendeTilBeslutter={lokalkontorKanSendeTilBeslutter}
+            visForBeslutter={!!lokalkontorBeslutterAp}
+            harAvslag={harAvslagIBehovForBistand}
+            isSendingTilBeslutter={isSendingTilBeslutter}
+            onSendTilBeslutter={() => void sendTilBeslutterMutation()}
+            api={api}
+            behandling={behandling}
+          />
         }
         lockedContent={
           isVurderBistandsvilkårApSolved ? (

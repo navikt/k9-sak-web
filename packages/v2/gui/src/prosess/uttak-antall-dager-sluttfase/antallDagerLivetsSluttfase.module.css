@@ -1,0 +1,18 @@
+.antallDagerLivetsSluttfaseContainer {
+  background-color: #cce1f3;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sistePleiedagBoks {
+  background-color: var(--ax-accent-300);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}

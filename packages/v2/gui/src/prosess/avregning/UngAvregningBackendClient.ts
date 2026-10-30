@@ -1,12 +1,13 @@
-import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
-import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
-import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
-import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
-import type { FagsakYtelseType as FagsakYtelseTypeUngTilbake } from '@k9-sak-web/backend/ungtilbake/kodeverk/behandling/FagsakYtelseType.js';
-import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
-import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import type { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
+import type { TilbakekrevingVidereBehandling } from '@k9-sak-web/backend/combined/kodeverk/økonomi/tilbakekreving/TilbakekrevingVidereBehandling.js';
+import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
+import { aksjonspunkt_bekreft } from '@k9-sak-web/backend/ungsak/generated/sdk.js';
+import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftedeAksjonspunkterDto.js';
+import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
+import { FagsakYtelseType as FagsakYtelseTypeUngTilbake } from '@k9-sak-web/backend/ungtilbake/kodeverk/behandling/FagsakYtelseType.js';
 import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
+import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 
 export class UngAvregningBackendClient implements BehandlingAvregningBackendApiType {
   readonly backend = sammenstiltBackendNavn.ung;
@@ -38,11 +39,14 @@ export class UngAvregningBackendClient implements BehandlingAvregningBackendApiT
     fagsakYtelseType: FagsakYtelseType,
     varseltekst?: string,
   ): Promise<Blob> {
+    if (!isValueOfConstObject(fagsakYtelseType, FagsakYtelseTypeUngTilbake)) {
+      throw new Error(`Utviklerfeil: Ugyldig fagsak ytelse type for ung-tilbake: ${fagsakYtelseType}`);
+    }
     return (
       await dokument_hentForhåndsvisningVarselbrev({
         body: {
           ytelsesbehandlingUuid: behandlingUuid,
-          fagsakYtelseType: fagsakYtelseType as FagsakYtelseTypeUngTilbake,
+          fagsakYtelseType,
           varseltekst,
         },
       })

@@ -12,7 +12,7 @@ export interface BehovForBistandFormData {
     {
       begrunnelse: string;
       behovForBistand: Vurdering;
-      avslagsårsak?: BistandsvilkårIkkeOppfyltÅrsak | 'fritekst';
+      avslagsårsak?: BistandsvilkårIkkeOppfyltÅrsak;
       fritekst?: string;
       fom: string;
       tom: string;

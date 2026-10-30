@@ -1,25 +1,24 @@
-import {
-  k9_kodeverk_behandling_BehandlingStatus as behandlingStatus,
-  k9_kodeverk_vilkår_VilkårUtfallMerknad as merknad,
-  k9_kodeverk_behandling_FagsakYtelseType as sakstype,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType as sakstype } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingStatus as behandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
+import { VilkårUtfallMerknad as merknad } from '@k9-sak-web/backend/k9sak/kodeverk/vilkår/VilkårUtfallMerknad.js';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { action } from 'storybook/actions';
 import { expect } from 'storybook/test';
-import { asyncAction } from '../../storybook/asyncAction';
+import { asyncAction } from '../../storybook/asyncAction.js';
 import VilkarresultatMedOverstyringProsessIndex, {
   type VilkarresultatMedOverstyringProsessIndexProps,
-} from './VilkarresultatMedOverstyringProsessIndex';
+} from './VilkarresultatMedOverstyringProsessIndex.js';
 
 const vilkarOpptjening = [
   {
-    vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+    vilkarType: VilkårType.OPPTJENINGSVILKÅRET,
     overstyrbar: true,
     relevanteInnvilgetMerknader: [
       { innvilgetType: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B' },
@@ -48,7 +47,7 @@ const vilkarOpptjening = [
 
 const vilkarMedlemskap = [
   {
-    vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+    vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET,
     overstyrbar: true,
     relevanteInnvilgetMerknader: [],
     perioder: [
@@ -94,6 +93,7 @@ const defaultArgs = {
   overrideReadOnly: false,
   kanOverstyreAccess: {
     isEnabled: true,
+    employeeHasAccess: true,
   },
   erOverstyrt: false,
   toggleOverstyring: action('button-click'),
@@ -163,6 +163,7 @@ export const VisOverstyrtAksjonspunktSomErBekreftet: Story = {
       {
         definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
         status: aksjonspunktStatus.UTFØRT,
+        aksjonspunktType: aksjonspunktType.OVERSTYRING,
         kanLoses: false,
         begrunnelse: 'Dette er en begrunnelse',
       },
@@ -171,6 +172,10 @@ export const VisOverstyrtAksjonspunktSomErBekreftet: Story = {
     overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
     vilkar: vilkarOpptjening,
     erMedlemskapsPanel: false,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Opptjening' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
   },
   render: (args: VilkarresultatMedOverstyringProsessIndexProps) => {
     const [erOverstyrt, toggleOverstyring] = React.useState(false);
@@ -191,6 +196,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
       {
         definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
         status: aksjonspunktStatus.OPPRETTET,
+        aksjonspunktType: aksjonspunktType.OVERSTYRING,
         kanLoses: true,
         begrunnelse: '',
       },
@@ -199,7 +205,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
     overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
     vilkar: [
       {
-        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
+        vilkarType: VilkårType.OPPTJENINGSVILKÅRET,
         overstyrbar: true,
         relevanteInnvilgetMerknader: [
           { merknad: merknad.VM_7847_B, navn: 'Midlertidig inaktiv jf folketrygdloven § 8-47 B' },
@@ -223,6 +229,9 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
     visAllePerioder: false,
   },
   play: async ({ canvas, step }) => {
+    await step('Ikke vis varsel til overstyrer', async () => {
+      await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
+    });
     await step('Vis skjema ved overstyring', async () => {
       await expect(canvas.getByText('Manuell overstyring av automatisk vurdering')).toBeInTheDocument();
       await expect(canvas.getByTestId('overstyringform')).toBeInTheDocument();
@@ -238,5 +247,86 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       />
     );
+  },
+};
+
+export const VisOverstyrtAksjonspunktUtenOverstyrerrolle: Story = {
+  args: {
+    ...defaultArgs,
+    kanOverstyreAccess: {
+      isEnabled: false,
+      employeeHasAccess: false,
+    },
+    aksjonspunkter: [
+      {
+        definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+        status: aksjonspunktStatus.OPPRETTET,
+        aksjonspunktType: aksjonspunktType.OVERSTYRING,
+        kanLoses: true,
+        begrunnelse: '',
+      },
+    ],
+    panelTittelKode: 'Opptjening',
+    overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+    vilkar: vilkarOpptjening,
+    erMedlemskapsPanel: false,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText(/^Overstyring av .* må vurderes\.$/)).toBeInTheDocument();
+    await expect(canvas.getByText(/Bare en saksbehandler med overstyrerrolle kan vurdere den/)).toBeInTheDocument();
+  },
+};
+
+export const IkkeVisVarselForSaksbehandleroverstyring: Story = {
+  args: {
+    ...defaultArgs,
+    kanOverstyreAccess: {
+      isEnabled: false,
+      employeeHasAccess: false,
+    },
+    aksjonspunkter: [
+      {
+        definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+        status: aksjonspunktStatus.OPPRETTET,
+        aksjonspunktType: aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+        kanLoses: true,
+        begrunnelse: '',
+      },
+    ],
+    panelTittelKode: 'Opptjening',
+    overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+    vilkar: vilkarOpptjening,
+    erMedlemskapsPanel: false,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Opptjening' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
+  },
+};
+
+export const OverstyrtAksjonspunktForOverstyrerUtenRedigeringstilgang: Story = {
+  args: {
+    ...defaultArgs,
+    kanOverstyreAccess: {
+      isEnabled: false,
+      employeeHasAccess: true,
+    },
+    aksjonspunkter: [
+      {
+        definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+        status: aksjonspunktStatus.UTFØRT,
+        aksjonspunktType: aksjonspunktType.OVERSTYRING,
+        kanLoses: true,
+        begrunnelse: '',
+      },
+    ],
+    panelTittelKode: 'Opptjening',
+    overstyringApKode: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+    vilkar: vilkarOpptjening,
+    erMedlemskapsPanel: false,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Opptjening' })).toBeInTheDocument();
+    await expect(canvas.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
   },
 };

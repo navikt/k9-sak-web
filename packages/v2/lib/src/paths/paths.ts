@@ -1,18 +1,31 @@
 export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no';
 
-const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no'];
-const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no'];
+const devHosts = ['k9.intern.dev.nav.no', 'ung.intern.dev.nav.no', 'aktivitetspenger.intern.dev.nav.no'] as const;
+const prodHosts = ['k9.intern.nav.no', 'ung.intern.nav.no', 'aktivitetspenger.intern.nav.no'] as const;
 const localHosts = ['localhost', '127.0.0.1', '[::1]', '::1'];
+
+type Hosts = (typeof devHosts)[number] | (typeof prodHosts)[number];
+
+const isKnownHost = <T extends string>(liste: readonly T[], verdi: string): verdi is T =>
+  liste.some(element => element === verdi);
+
+const LOS_DEV_URL = 'https://k9-los-web.intern.dev.nav.no';
+const LOS_PROD_URL = 'https://k9-los-web.intern.nav.no';
+
+// Record krever at alle kjente hosts har en LOS-url, så nye hosts må legges til her
+const losUrlForHost: Record<Hosts, string> = {
+  'k9.intern.dev.nav.no': LOS_DEV_URL,
+  'ung.intern.dev.nav.no': LOS_DEV_URL,
+  'aktivitetspenger.intern.dev.nav.no': `${LOS_DEV_URL}/avp`,
+  'k9.intern.nav.no': LOS_PROD_URL,
+  'ung.intern.nav.no': LOS_PROD_URL,
+  'aktivitetspenger.intern.nav.no': `${LOS_PROD_URL}/avp`,
+};
 
 export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
-  const devUrl = 'https://k9-los-web.intern.dev.nav.no';
-  const prodUrl = 'https://k9-los-web.intern.nav.no';
-  if (devHosts.includes(host)) {
-    return devUrl;
-  }
-  if (prodHosts.includes(host)) {
-    return prodUrl;
+  if (isKnownHost(devHosts, host) || isKnownHost(prodHosts, host)) {
+    return losUrlForHost[host];
   }
   return null;
 };
@@ -21,10 +34,10 @@ export const getGosysUrl = (): string => {
   const { host } = window.location;
   const devUrl = 'https://gosys-q2.dev.intern.nav.no/gosys/oppgavebehandling/oppgaver/mine';
   const prodUrl = 'https://gosys.intern.nav.no/gosys/oppgavebehandling/oppgaver/mine';
-  if (devHosts.includes(host)) {
+  if (isKnownHost(devHosts, host)) {
     return devUrl;
   }
-  if (prodHosts.includes(host)) {
+  if (isKnownHost(prodHosts, host)) {
     return prodUrl;
   }
   return prodUrl;
@@ -55,7 +68,7 @@ export const isQ = (): boolean => window.location.hostname.toLowerCase().endsWit
 
 export const isProd = () => {
   const { host } = window.location;
-  return host === 'k9.intern.nav.no' || host === 'ung.intern.nav.no';
+  return isKnownHost(prodHosts, host);
 };
 
 export const getPathToAinntekt = (pathname: string) => {

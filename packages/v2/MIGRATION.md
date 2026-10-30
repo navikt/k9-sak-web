@@ -3,7 +3,7 @@
 Dette dokumentet viser hva som er ferdig migrert, hva som pågår og hva som gjenstår.
 Alle panelene tilknyttet tilbakekreving og beregning har store implementasjoner delt med foreldrepenger og lever i [fellesrepo med FP](https://github.com/navikt/ft-frontend-saksbehandling/tree/main/packages). Men felleskoden trenger nok ikke vi røre i førsteomgang.
 
-Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskilden i `.github/skills/v2-architecture/SKILL.md` for fremgangsmåte.
+Se [v2-arkitekturmønsteret](./../v2/README.md) og migreringsskillen i `.github/skills/v2-migration/SKILL.md` for fremgangsmåte.
 
 ---
 
@@ -34,6 +34,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `prosess/ung-vedtak`
 - [x] `fakta/utenlandsopphold`
 - [x] `fakta/om-pleietrengende`
+- [x] `prosess/uttak-antall-dager-sluttfase`
 
 ---
 
@@ -48,10 +49,14 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
     I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 - [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
+- [ ] `prosess-unntak` → `BRUK_V2_PROSESS_UNNTAK`
+    V2 er ferdig implementert og i bruk i Q. Prod bruker fortsatt v1.
+- [ ] `fakta-om-barnet` → `BRUK_V2_OM_BARNET`
+    V2 (`fakta/om-barnet`) er koblet til i både pleiepenger og opplæringspenger og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert mot reelt aksjonspunkt 9202 i Q ennå.
+- [ ] `fakta-omsorgen-for` → `BRUK_OMSORGEN_FOR_V2`
 
 #### Under arbeid
-- fakta-omsorgen-for (Hallvard)
-- fakta-uttak (Vebjørn)
+
 ---
 
 ### Trenger avklaringer
@@ -75,8 +80,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `prosess-uttak-antall-dager-sluttfase` | 189     | 1 (psb-sluttfase)                                      | Viser kun kvoteinfo; tyngre logikk ligger i v2 `Uttak`         |
-| `prosess-unntak`                       | 387     | 1 (behandling-unntak)                                  | Enkel vilkårsskjema                                            |
 | `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
 | `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
 | `prosess-fortsatt-medlemskap`          | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
@@ -88,7 +91,6 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                             | ~Linjer | Konsumenter                        | Merknad                                                      |
 | --------------------------------- | ------- | ---------------------------------- | ------------------------------------------------------------ |
-| `fakta-om-barnet`                 | 441     | 2 (opl, psb)                       | Fokusert på pleietrengendes dødsfall, 1 aksjonspunkt         |
 | `fakta-verge`                     | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
 | `fakta-overstyr-beregning`        | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
 | `fakta-barn-oms`                  | 903     | 3 (oms, unntak, utvidet-rett)      | Visning av barn-liste, 0 API-avhengigheter                   |

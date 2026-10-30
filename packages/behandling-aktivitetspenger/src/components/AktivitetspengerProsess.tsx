@@ -5,10 +5,8 @@ import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { aksjonspunkterQueryOptions } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Bleed, Box } from '@navikt/ds-react';
-import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
 import { usePollBehandlingStatus } from '../hooks/usePollBehandlingStatus';
@@ -17,12 +15,14 @@ import { BeregningProsessStegInitPanel } from './prosess/BeregningProsessStegIni
 import { ForutgåendeMedlemskapInitPanel } from './prosess/ForutgåendeMedlemskapInitPanel';
 import { InngangsvilkårInitPanel } from './prosess/InngangsvilkårInitPanel';
 import { OpphørInitPanel } from './prosess/OpphørInitPanel';
+import { SimuleringProsessStegInitPanel } from './prosess/SimuleringProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from './prosess/VedtakProsessStegInitPanel';
 import { useProsessmotor } from './Prosessmotor';
 
 interface OwnProps {
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
+  saksnummer: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
@@ -32,6 +32,7 @@ interface OwnProps {
 export const AktivitetspengerProsess = ({
   api,
   behandling,
+  saksnummer,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
@@ -52,8 +53,7 @@ export const AktivitetspengerProsess = ({
     [vedtakFormState, setVedtakFormState],
   );
 
-  const prosessteg = useProsessmotor({ api, behandling });
-  const { isPending: aksjonspunkterIkkeLastet } = useQuery(aksjonspunkterQueryOptions(api, behandling));
+  const { prosessteg, erKlar } = useProsessmotor({ api, behandling });
 
   const lukkModalOgGåTilSøk = useCallback(() => {
     toggleIverksetterVedtakModal(false);
@@ -88,7 +88,7 @@ export const AktivitetspengerProsess = ({
         lukkModal={lukkModalOgGåTilSøk}
         tekstkode="Behandlingen er sendt til godkjenning."
       />
-      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterIkkeLastet}>
+      <ProsessMeny steg={prosessteg} erKlar={erKlar}>
         <Bleed marginInline="space-20">
           <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
             {prosessteg.map(steg => {
@@ -146,7 +146,16 @@ export const AktivitetspengerProsess = ({
                   />
                 );
               }
-
+              if (steg.id === prosessStegCodes.SIMULERING) {
+                return (
+                  <SimuleringProsessStegInitPanel
+                    key={steg.id}
+                    api={api}
+                    behandling={behandling}
+                    saksnummer={saksnummer}
+                  />
+                );
+              }
               return null;
             })}
           </Box>

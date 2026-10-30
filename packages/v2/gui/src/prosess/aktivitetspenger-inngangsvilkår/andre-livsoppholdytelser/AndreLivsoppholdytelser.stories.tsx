@@ -6,9 +6,10 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { AndreLivsoppholdsytelserVurderingDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useQueryClient } from '@tanstack/react-query';
-import type { ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { FakeAktivitetspengerApi } from '../../../storybook/mocks/FakeAktivitetspengerApi';
 import { perioderSomKanAvkortesQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions';
@@ -33,9 +34,28 @@ const avkortingsperioder = {
   ],
 };
 
+const lagVurdering = (
+  vurdering: Pick<AndreLivsoppholdsytelserVurderingDto, 'periode' | 'erVilkårOppfylt'> &
+    Partial<AndreLivsoppholdsytelserVurderingDto>,
+): AndreLivsoppholdsytelserVurderingDto => ({
+  erManuellVurdering: true,
+  vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  vurdertAv: 'Z123456',
+  vurdertTidspunkt: '2024-01-15T10:00:00',
+  ...vurdering,
+});
+
 class FakeAktivitetspengerApiMedAvkortingsperiode extends FakeAktivitetspengerApi {
+  constructor(private readonly vurderinger: AndreLivsoppholdsytelserVurderingDto[] = []) {
+    super();
+  }
+
   override async hentPerioderSomKanAvkortes() {
     return avkortingsperioder;
+  }
+
+  override async hentAndreLivsoppholdsytelserVurderinger() {
+    return { vurderinger: this.vurderinger };
   }
 }
 
@@ -70,13 +90,20 @@ class FakeAktivitetspengerApiSomHuskerAksjonspunkt extends FakeAktivitetspengerA
 }
 
 const apiSomHusker = new FakeAktivitetspengerApiSomHuskerAksjonspunkt();
+const apiSomHuskerMedOppfyltVurdering = new FakeAktivitetspengerApiSomHuskerAksjonspunkt([
+  lagVurdering({
+    periode: { fom: '2024-01-01', tom: '2024-12-31' },
+    erVilkårOppfylt: true,
+    begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+  }),
+]);
 
 const meta = {
   title: 'gui/prosess/aktivitetspenger-inngangsvilkår/AndreLivsoppholdytelser',
   component: AndreLivsoppholdytelser,
   args: {
     api: new FakeAktivitetspengerApiMedAvkortingsperiode(),
-    behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
+    behandling: { id: 1, uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: async () => {},
     lokalkontorForeslårVilkårAp: undefined,
     readOnly: false,
@@ -84,7 +111,9 @@ const meta = {
   decorators: [
     (Story, { args }) => (
       <MedForhåndshentetAvkorting api={args.api} behandling={args.behandling}>
-        <Story />
+        <Suspense fallback="Laster...">
+          <Story />
+        </Suspense>
       </MedForhåndshentetAvkorting>
     ),
   ],
@@ -94,6 +123,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const periode = { fom: '2024-01-01', tom: '2024-12-31' };
+
+const apiMedOppfyltVurdering = new FakeAktivitetspengerApiMedAvkortingsperiode([
+  lagVurdering({ periode, erVilkårOppfylt: true, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }),
+]);
 
 export const IkkeVurdert: Story = {
   args: {
@@ -111,6 +144,7 @@ export const IkkeVurdert: Story = {
 
 export const Oppfylt: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -123,8 +157,108 @@ export const Oppfylt: Story = {
   },
 };
 
+export const PeriodeSomIkkeVurderesKanIkkeRedigeres: Story = {
+  args: {
+    // Endepunktet gir ikke vurderinger for perioder som ikke vurderes i behandlingen
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode(),
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        {
+          periode,
+          vilkarStatus: Utfall.OPPFYLT,
+          vurderesIBehandlingen: false,
+          begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+        },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByRole('button', { name: /Rediger vurdering/ })).not.toBeInTheDocument();
+    await expect(await canvas.findByText('Søker har ingen andre livsoppholdytelser.')).toBeInTheDocument();
+  },
+};
+
+const apiSomHuskerMedLagretAvslag = new FakeAktivitetspengerApiSomHuskerAksjonspunkt([
+  lagVurdering({
+    periode,
+    erVilkårOppfylt: false,
+    begrunnelse: 'Søker mottar kommunal støtte.',
+    avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+    ytelseNavn: 'Kommunal støtte',
+    fritekstVurderingBrev: 'Du mottar kommunal støtte.',
+  }),
+]);
+
+export const BevarerLagretAvslagVedNyInnsending: Story = {
+  args: {
+    api: apiSomHuskerMedLagretAvslag,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        { periode, vilkarStatus: Utfall.IKKE_OPPFYLT, avslagKode: Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHuskerMedLagretAvslag.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('skjemaet er forhåndsutfylt med lagret ytelse og fritekst', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: /Rediger vurdering/ }));
+      await expect(await canvas.findByRole('textbox', { name: 'Skriv inn hvilken ytelse' })).toHaveValue(
+        'Kommunal støtte',
+      );
+      await expect(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).toBeChecked();
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' })).toHaveValue(
+        'Du mottar kommunal støtte.',
+      );
+    });
+
+    await step('ny innsending uten endringer sender de lagrede verdiene', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHuskerMedLagretAvslag.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              {
+                avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+                ytelseNavn: 'Kommunal støtte',
+                begrunnelse: 'Søker mottar kommunal støtte.',
+                erVilkårOppfylt: false,
+                periode,
+                fritekstVurderingBrev: 'Du mottar kommunal støtte.',
+              },
+            ],
+          }),
+        );
+      });
+    });
+  },
+};
+
 export const IkkeOppfylt: Story = {
   args: {
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode([
+      lagVurdering({
+        periode,
+        erVilkårOppfylt: false,
+        begrunnelse: 'Søker mottar dagpenger.',
+        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+        ytelseNavn: 'Dagpenger',
+      }),
+    ]),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -147,6 +281,7 @@ export const IkkeOppfylt: Story = {
 export const ReadOnly: Story = {
   args: {
     readOnly: true,
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -161,6 +296,13 @@ export const ReadOnly: Story = {
 
 export const FlerePerioder: Story = {
   args: {
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode([
+      lagVurdering({
+        periode: { fom: '2024-01-01', tom: '2024-06-30' },
+        erVilkårOppfylt: true,
+        begrunnelse: 'Ingen andre ytelser.',
+      }),
+    ]),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -182,6 +324,7 @@ export const FlerePerioder: Story = {
 
 export const MedKunVilkårUtenAksjonspunkt: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserAp: undefined,
     lokalkontorForeslårVilkårAp: undefined,
     andreLivsoppholdytelserVilkår: {
@@ -195,7 +338,7 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
     await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
       await expect(
-        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på søknadstidspunktet.', { exact: false }),
+        canvas.queryByText('Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.', { exact: false }),
       ).not.toBeInTheDocument();
     });
 
@@ -207,6 +350,19 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
 export const AlleredeAvkortet: Story = {
   args: {
+    api: new FakeAktivitetspengerApiMedAvkortingsperiode([
+      lagVurdering({
+        periode: { fom: '2024-01-01', tom: '2024-06-30' },
+        erVilkårOppfylt: true,
+        begrunnelse: 'Søker har ingen andre livsoppholdytelser.',
+      }),
+      lagVurdering({
+        periode: { fom: '2024-07-01', tom: '2024-12-31' },
+        erVilkårOppfylt: false,
+        avslagsårsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET,
+        begrunnelse: 'Perioden er avkortet etter avtale med søker.',
+      }),
+    ]),
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -249,7 +405,7 @@ export const AlleredeAvkortet: Story = {
 
 export const RedigererMaksdato: Story = {
   args: {
-    api: apiSomHusker,
+    api: apiSomHuskerMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [
@@ -265,7 +421,7 @@ export const RedigererMaksdato: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
+    apiSomHuskerMedOppfyltVurdering.sisteBekreftedeAksjonspunkt = undefined;
 
     await step('maksdato er låst før avkorting er slått på', async () => {
       await userEvent.click(await canvas.findByLabelText('Rediger vurdering'));
@@ -292,7 +448,7 @@ export const RedigererMaksdato: Story = {
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
 
       await waitFor(async () => {
-        await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual({
+        await expect(apiSomHuskerMedOppfyltVurdering.sisteBekreftedeAksjonspunkt).toEqual({
           '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
           begrunnelse: 'Aksjonspunkt 5142 VURDER_ANDRE_LIVSOPPHOLDSYTELSER bekreftet',
           vurdertePerioder: [
@@ -319,6 +475,7 @@ export const RedigererMaksdato: Story = {
 
 export const MaksdatoMåVæreKortere: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -345,8 +502,38 @@ export const MaksdatoMåVæreKortere: Story = {
   },
 };
 
+export const AvslagMedÅpentLokalkontorForeslår: Story = {
+  args: {
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [
+        {
+          periode,
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          avslagKode: Avslagsårsak.SØKER_HAR_ANNEN_LIVSOPPHOLDSYTELSE,
+        },
+      ],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(
+      AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER,
+      AksjonspunktStatus.UTFØRT,
+    ),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser beslutter- og forhåndsvisningsknappene ved avslag', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    });
+  },
+};
+
 export const LesevisningViserTekst: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -372,6 +559,7 @@ export const LesevisningViserTekst: Story = {
 
 export const AvbrytTilbakestillerSkjema: Story = {
   args: {
+    api: apiMedOppfyltVurdering,
     andreLivsoppholdytelserVilkår: {
       vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
       perioder: [{ periode, vilkarStatus: Utfall.OPPFYLT, begrunnelse: 'Søker har ingen andre livsoppholdytelser.' }],
@@ -397,6 +585,120 @@ export const AvbrytTilbakestillerSkjema: Story = {
 
       await expect(await canvas.findByLabelText('Ja')).toBeChecked();
       await expect(canvas.queryByText('Avslagsårsak')).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const AnnenYtelseMedFritekst: Story = {
+  args: {
+    api: apiSomHusker,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Åpne hjelpeteksten', async () => {
+      await userEvent.click(
+        await canvas.findByRole('button', { name: 'Hvilke ytelser kan bruker motta samtidig som aktivitetspenger?' }),
+      );
+      await expect(canvas.getByText(/Aktivitetspenger kan som hovedregel ikke mottas samtidig/)).toBeInTheDocument();
+    });
+
+    await step('Velg annen ytelse', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /Vurder om søker mottar andre livsoppholdsytelser/ }),
+        'Søker mottar en ytelse som ikke står i listen.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: 'Hvilken ytelse mottar bruker?' }),
+        AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE,
+      );
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Skriv inn hvilken ytelse' }), 'Kommunal støtte');
+    });
+
+    await step('Legg til fritekst i avslagsbrevet', async () => {
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }),
+        'Søker mottar kommunal støtte.',
+      );
+    });
+
+    await step('Kontroller innsendingen', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                ytelseNavn: 'Kommunal støtte',
+                fritekstVurderingBrev: 'Søker mottar kommunal støtte.',
+              }),
+            ],
+          }),
+        );
+      });
+    });
+  },
+};
+
+const apiForByttTilOppfyltFjernerFritekst = new FakeAktivitetspengerApiSomHuskerAksjonspunkt();
+
+export const ByttTilOppfyltFjernerFritekst: Story = {
+  args: {
+    api: apiForByttTilOppfyltFjernerFritekst,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiForByttTilOppfyltFjernerFritekst.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Fyll inn begrunnelse for vurderingen', async () => {
+      await userEvent.type(
+        await canvas.findByRole('textbox', { name: /Vurder om søker mottar andre livsoppholdsytelser/ }),
+        'Søker mottar ingen andre livsoppholdsytelser.',
+      );
+    });
+
+    await step('Velg ikke oppfylt og legg til fritekst i avslagsbrevet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }), 'Tidligere fritekst.');
+    });
+
+    await step('Bytt til oppfylt og skjul fritekstfeltet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiForByttTilOppfyltFjernerFritekst.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                avslagsårsak: undefined,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
+          }),
+        );
+      });
     });
   },
 };

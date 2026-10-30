@@ -1,13 +1,19 @@
-import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
-import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { dateBeforeOrEqual, hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useUttakContext } from '../context/UttakContext';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
+import { useUttakApi } from '../api/UttakApiContext.js';
+import { useUttakContext } from '../context/UttakContext.js';
 import styles from './VurderDatoAksjonspunkt.module.css';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { uttakQueryOptions } from '../api/uttakQueryOptions.js';
+
+const SENESTE_VIRKNINGSDATO = '2026-12-31';
 
 interface FormData {
   virkningsdato: string;
@@ -15,25 +21,25 @@ interface FormData {
 }
 
 interface Props {
-  initialValues?: {
-    virkningsdato: string;
-    begrunnelse: string;
-  };
+  redigerVirkningsdato: boolean;
+  lukkRedigering: () => void;
 }
 
-const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
-  const {
-    readOnly,
-    behandling,
-    uttakApi,
-    setRedigervirkningsdato,
-    virkningsdatoUttakNyeRegler,
-    onAksjonspunktBekreftet,
-  } = useUttakContext();
-  const oppdaterBehandling = useRefetchBehandling();
+const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props) => {
+  const { readOnly, behandling, aksjonspunkter } = useUttakContext();
+  const uttakApi = useUttakApi();
+  const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
+  const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
+  const aksjonspunkt = aksjonspunkter.find(
+    ap => ap.definisjon === AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
+  );
+  const { onAksjonspunktBekreftet } = useBehandlingContext();
 
   const formMethods = useForm<FormData>({
-    defaultValues: initialValues,
+    defaultValues: {
+      begrunnelse: aksjonspunkt?.begrunnelse ?? '',
+      virkningsdato: aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status) ? '' : (virkningsdatoUttakNyeRegler ?? ''),
+    },
   });
 
   const mutation = useMutation({
@@ -53,8 +59,7 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
       return uttakApi.bekreftAksjonspunkt(payload);
     },
     onSuccess: async () => {
-      await oppdaterBehandling();
-      onAksjonspunktBekreftet?.();
+      await onAksjonspunktBekreftet();
     },
   });
 
@@ -64,14 +69,14 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
 
   return (
     <RhfForm formMethods={formMethods} onSubmit={onSubmit}>
-      <div className={styles['vurderDatoAksjonspunktContainer']}>
+      <div className={styles.vurderDatoAksjonspunktContainer}>
         <Datovelger
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
-          fromDate={new Date('1 Jan 2019')}
-          toDate={new Date('31 Dec 2025')}
-          validate={[required, hasValidDate]}
+          fromDate={new Date(2019, 0, 1)}
+          toDate={new Date(2026, 11, 31)}
+          validate={[required, hasValidDate, dateBeforeOrEqual(SENESTE_VIRKNINGSDATO)]}
           readOnly={readOnly}
         />
         <RhfTextarea
@@ -84,13 +89,13 @@ const VurderDatoAksjonspunkt = ({ initialValues }: Props) => {
           readOnly={readOnly}
         />
         {!readOnly && (
-          <div className={styles['knapper']}>
-            <Button size="small" type="submit" className={styles['bekreft']}>
+          <div className={styles.knapper}>
+            <Button size="small" type="submit" className={styles.bekreft}>
               Bekreft og fortsett
             </Button>
 
-            {virkningsdatoUttakNyeRegler && (
-              <Button variant="secondary" type="button" size="small" onClick={() => setRedigervirkningsdato(false)}>
+            {redigerVirkningsdato && (
+              <Button variant="secondary" type="button" size="small" onClick={() => lukkRedigering()}>
                 Avbryt
               </Button>
             )}

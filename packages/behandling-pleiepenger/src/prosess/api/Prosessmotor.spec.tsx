@@ -1,9 +1,14 @@
 import { aksjonspunktStatus, AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 import { FakeK9SakProsessApi } from '@k9-sak-web/gui/storybook/mocks/FakeK9SakProsessApi.js';
+import {
+  FakeUttakBackendApi,
+  type FakeUttakBackendConfig,
+} from '@k9-sak-web/gui/storybook/mocks/FakeUttakBackendApi.js';
+import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiContext.js';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
@@ -18,15 +23,20 @@ import {
 } from './Prosessmotor';
 
 const createWrapper =
-  (queryClient: QueryClient) =>
+  (queryClient: QueryClient, uttak?: FakeUttakBackendConfig['uttak']) =>
   ({ children }: { children: React.ReactNode }) =>
-    React.createElement(QueryClientProvider, { client: queryClient }, children);
+    React.createElement(
+      QueryClientProvider,
+      { client: queryClient },
+      React.createElement(UttakApiContext, { value: new FakeUttakBackendApi({ uttak }) }, children),
+    );
 
 const createMockBehandling = (overrides = {}) => ({
   id: 1,
   versjon: 1,
   uuid: '12345',
   behandlingsresultat: { type: { kode: 'INNVILGET', kodeverk: '' } },
+  status: { kode: 'UTRED', kodeverk: '' },
   ...overrides,
 });
 
@@ -62,21 +72,21 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.ALDERSVILKÅR,
+          vilkarType: VilkårType.ALDERSVILKÅR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.OMSORGEN_FOR,
+          vilkarType: VilkårType.OMSORGEN_FOR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
@@ -99,7 +109,7 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
@@ -120,7 +130,7 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
             { vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
@@ -142,16 +152,16 @@ describe('useProsessmotor', () => {
   });
 
   test('tilkjent ytelse er default og simulering er success når uttak er avslått', async () => {
-    const api = new FakeK9SakProsessApi({
-      uttak: {
-        uttaksplan: {
-          perioder: {
-            '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
-            '2024-02-01/2024-02-28': { utfall: vilkårStatus.IKKE_OPPFYLT },
-          },
+    const uttak = {
+      uttaksplan: {
+        perioder: {
+          '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
+          '2024-02-01/2024-02-28': { utfall: vilkårStatus.IKKE_OPPFYLT },
         },
-        simulertUttaksplan: {},
       },
+      simulertUttaksplan: {},
+    };
+    const api = new FakeK9SakProsessApi({
       simuleringResultat: {
         simuleringResultat: { periode: { fom: '', tom: '' } },
         simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
@@ -160,7 +170,7 @@ describe('useProsessmotor', () => {
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(queryClient, uttak),
     });
 
     await waitFor(() => {
@@ -177,20 +187,20 @@ describe('useProsessmotor', () => {
   });
 
   test('setter simulering til warning når uttak er avslått og simulering har åpent aksjonspunkt', async () => {
-    const api = new FakeK9SakProsessApi({
-      uttak: {
-        uttaksplan: {
-          perioder: {
-            '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
-          },
+    const uttak = {
+      uttaksplan: {
+        perioder: {
+          '2024-01-01/2024-01-31': { utfall: vilkårStatus.IKKE_OPPFYLT },
         },
-        simulertUttaksplan: {},
       },
+      simulertUttaksplan: {},
+    };
+    const api = new FakeK9SakProsessApi({
       aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FEILUTBETALING)],
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(queryClient, uttak),
     });
 
     await waitFor(() => {
@@ -203,35 +213,35 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.ALDERSVILKÅR,
+          vilkarType: VilkårType.ALDERSVILKÅR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.OMSORGEN_FOR,
+          vilkarType: VilkårType.OMSORGEN_FOR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+          vilkarType: VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
           ],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
+          vilkarType: VilkårType.MEDLEMSKAPSVILKÅRET,
           perioder: [
             { vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
             { vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' }, vurderesIBehandlingen: true },
@@ -270,14 +280,6 @@ describe('useProsessmotor', () => {
           },
         ],
       },
-      uttak: {
-        uttaksplan: {
-          perioder: {
-            '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT },
-          },
-        },
-        simulertUttaksplan: {},
-      },
       simuleringResultat: {
         simuleringResultat: { periode: { fom: '', tom: '' } },
         simuleringResultatUtenInntrekk: { periode: { fom: '', tom: '' } },
@@ -286,7 +288,10 @@ describe('useProsessmotor', () => {
     });
 
     const { result } = renderHook(() => useProsessmotor({ api, behandling: createMockBehandling() }), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(queryClient, {
+        uttaksplan: { perioder: { '2024-01-01/2024-01-31': { utfall: vilkårStatus.OPPFYLT } } },
+        simulertUttaksplan: {},
+      }),
     });
 
     await waitFor(() => {
@@ -301,12 +306,12 @@ describe('useProsessmotor', () => {
     const api = new FakeK9SakProsessApi({
       vilkår: [
         {
-          vilkarType: vilkarType.SØKNADSFRIST,
+          vilkarType: VilkårType.SØKNADSFRIST,
           perioder: [{ vilkarStatus: vilkårStatus.OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
         {
-          vilkarType: vilkarType.ALDERSVILKÅR,
+          vilkarType: VilkårType.ALDERSVILKÅR,
           perioder: [{ vilkarStatus: vilkårStatus.IKKE_OPPFYLT, periode: { fom: '', tom: '' } }],
           relevanteInnvilgetMerknader: [],
         },
@@ -531,15 +536,16 @@ describe('beregnVedtakType', () => {
   const vedtakAksjonspunkter = [AksjonspunktDefinisjon.FORESLÅ_VEDTAK, AksjonspunktDefinisjon.FATTER_VEDTAK];
 
   const lagVilkår = (status: string) => ({
-    vilkarType: vilkarType.SØKNADSFRIST,
+    vilkarType: VilkårType.SØKNADSFRIST,
     perioder: [{ vilkarStatus: status, periode: { fom: '', tom: '' } }],
     relevanteInnvilgetMerknader: [],
   });
 
-  const lagBehandling = (kode?: string) => ({
+  const lagBehandling = (kode?: string, status = 'UTRED') => ({
     uuid: 'x',
     versjon: 1,
     behandlingsresultat: kode ? { type: { kode, kodeverk: '' } } : undefined,
+    status: { kode: status, kodeverk: '' },
   });
 
   test('returnerer default når vilkår er tom', () => {
@@ -552,15 +558,37 @@ describe('beregnVedtakType', () => {
     ).toBe(ProcessMenuStepType.default);
   });
 
-  test('returnerer warning når et vedtaks-aksjonspunkt er åpent', () => {
+  test('returnerer warning når FATTER_VEDTAK er åpent og behandling ikke er i FVED', () => {
     expect(
       beregnVedtakType(
         [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.FORESLÅ_VEDTAK)],
-        lagBehandling() as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
+        lagBehandling(undefined, 'UTRED') as any,
         vedtakAksjonspunkter,
       ),
     ).toBe(ProcessMenuStepType.warning);
+  });
+
+  test('returnerer success når behandling er i FVED med innvilget resultat og FATTER_VEDTAK er åpent', () => {
+    expect(
+      beregnVedtakType(
+        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
+        lagBehandling('INNVILGET', 'FVED') as any,
+        vedtakAksjonspunkter,
+      ),
+    ).toBe(ProcessMenuStepType.success);
+  });
+
+  test('returnerer danger når behandling er i FVED med avslagsresultat', () => {
+    expect(
+      beregnVedtakType(
+        [lagVilkår(vilkårStatus.IKKE_OPPFYLT)] as any,
+        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
+        lagBehandling('AVSLÅTT', 'FVED') as any,
+        vedtakAksjonspunkter,
+      ),
+    ).toBe(ProcessMenuStepType.danger);
   });
 
   test('returnerer default når et ikke-vedtaks-aksjonspunkt er åpent', () => {

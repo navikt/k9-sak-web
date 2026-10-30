@@ -64,7 +64,7 @@ const meta = {
   component: BehovForBistand,
   args: {
     api: fakeApiMedAvkortingsperiode,
-    behandling: { uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
+    behandling: { id: 1, uuid: 'fake-uuid', versjon: 1 } as unknown as BehandlingDto,
     onAksjonspunktBekreftet: async () => {},
     readOnly: false,
     vurderBistandsvilkårAp: undefined,
@@ -123,7 +123,7 @@ export const MedUtførtBistandsvilkår: Story = {
 export const MedÅpentLokalkontorForeslår: Story = {
   args: {
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
-    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.LOKALKONTOR_FORESLÅR_VILKÅR),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
     isPermanentlyReadOnly: false,
   },
 };
@@ -156,7 +156,7 @@ export const MedKunVilkårUtenAksjonspunkt: Story = {
 
     await step('viser ikke advarsel når aksjonspunkt mangler', async () => {
       await expect(
-        canvas.queryByText('Vurder behov for bistand på søknadstidspunktet.', { exact: false }),
+        canvas.queryByText('Vurder behov for bistand på virkningstidspunktet.', { exact: false }),
       ).not.toBeInTheDocument();
     });
 
@@ -315,6 +315,52 @@ export const RedigererMaksdato: Story = {
     });
   },
 };
+
+export const MedAapentLokalkontorForeslarUtenAvslag: Story = {
+  args: {
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
+    vurderBistandsvilkårVilkår: {
+      vilkarType: vilkarType.BISTANDSVILKÅR,
+      perioder: [{ periode: avkortingsperiode, vilkarStatus: Utfall.OPPFYLT }],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser send til beslutter uten forhåndsvisning når det ikke er avslag', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const MedAapentLokalkontorForeslarMedAvslag: Story = {
+  args: {
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),
+    lokalkontorForeslårVilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR),
+    vurderBistandsvilkårVilkår: {
+      vilkarType: vilkarType.BISTANDSVILKÅR,
+      perioder: [
+        {
+          periode: avkortingsperiode,
+          vilkarStatus: Utfall.IKKE_OPPFYLT,
+          avslagKode: Avslagsårsak.AVKORTET,
+        },
+      ],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser begge knappene når lokalkontoret foreslår avslag', async () => {
+      await expect(await canvas.findByRole('button', { name: 'Send til beslutter' })).toBeInTheDocument();
+      await expect(await canvas.findByRole('button', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    });
+  },
+};
 export const LesevisningViserTekst: Story = {
   args: {
     vurderBistandsvilkårVilkår: {
@@ -338,6 +384,7 @@ export const LesevisningViserTekst: Story = {
     });
   },
 };
+
 export const MaksdatoMåVæreKortere: Story = {
   args: {
     vurderBistandsvilkårVilkår: {
@@ -361,6 +408,53 @@ export const MaksdatoMåVæreKortere: Story = {
           'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
         ),
       ).toBeInTheDocument();
+    });
+  },
+};
+
+export const ByttTilOppfyltFjernerFritekst: Story = {
+  args: {
+    api: apiSomHusker,
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Fyll inn begrunnelse for vurderingen', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /Vurder om søker har behov for bistand/ }),
+        'Søker har behov for bistand.',
+      );
+    });
+
+    await step('Velg ikke oppfylt og legg til fritekst i avslagsbrevet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.click(canvas.getByRole('radio', { name: 'Fritekst' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }), 'Tidligere fritekst.');
+    });
+
+    await step('Bytt til oppfylt og skjul fritekstfeltet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                avslagsårsak: undefined,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
+          }),
+        );
+      });
     });
   },
 };

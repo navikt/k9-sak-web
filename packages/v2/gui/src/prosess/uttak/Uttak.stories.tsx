@@ -1,10 +1,12 @@
+import { Endringsstatus } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Endringsstatus.js';
+import { Årsak } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Årsak.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+import withK9Kodeverkoppslag from '@k9-sak-web/gui/storybook/decorators/withK9Kodeverkoppslag.js';
 import { withFakeUttakBackend } from '@k9-sak-web/gui/storybook/decorators/withFakeUttakBackend.js';
 import {
   defaultArbeidsgivere,
   arbeidsgivereWithTilkommet,
-  Endringsstatus,
-  FagsakYtelseType,
   inntektsgraderingFlereArbeidsgivere,
   lagInntektgraderingPeriodeDto,
   lagAvsluttetBehandling,
@@ -14,12 +16,11 @@ import {
   lagTilsynsgraderingPeriode,
   lagUtredBehandling,
   lagUttak,
-  relevanteAksjonspunkterAlle,
-  Årsak,
 } from '@k9-sak-web/gui/storybook/mocks/uttak/uttakStoryMocks.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import Uttak from './Uttak';
+import Uttak from './Uttak.js';
+import uttakStyles from './uttaksperiode-liste/uttak.module.css';
 
 const meta = {
   title: 'gui/prosess/Uttak',
@@ -32,8 +33,9 @@ const meta = {
     },
   },
   decorators: [
+    withK9Kodeverkoppslag(),
     Story => (
-      <BehandlingProvider refetchBehandling={fn()}>
+      <BehandlingProvider refetchBehandling={fn()} settBehandling={fn()} oppdaterProsessStegOgFaktaPanelIUrl={fn()}>
         <Story />
       </BehandlingProvider>
     ),
@@ -50,50 +52,52 @@ type Story = StoryObj<typeof meta>;
  * Viser perioder og kan åpne/lukke periodedetaljer
  */
 export const UttakBasis: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', {
+          søkersTapteArbeidstid: 100,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT0S',
+              utbetalingsgrad: 100,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31', {
+          søkersTapteArbeidstid: 100,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT0S',
+              utbetalingsgrad: 100,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagOppfyltPeriode('2024-02-01/2024-02-14', {
+          søkersTapteArbeidstid: 100,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT0S',
+              utbetalingsgrad: 100,
+              tilkommet: false,
+            },
+          ],
+        }),
+      ]),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', {
-        søkersTapteArbeidstid: 100,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT0S',
-            utbetalingsgrad: 100,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31', {
-        søkersTapteArbeidstid: 100,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT0S',
-            utbetalingsgrad: 100,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagOppfyltPeriode('2024-02-01/2024-02-14', {
-        søkersTapteArbeidstid: 100,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT0S',
-            utbetalingsgrad: 100,
-            tilkommet: false,
-          },
-        ],
-      }),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {
@@ -102,7 +106,7 @@ export const UttakBasis: Story = {
 
     await step('Viser perioder', async () => {
       // Sjekk at periodedatoer er synlige
-      await expect(canvas.getByText(/01\.01\.2024/)).toBeInTheDocument();
+      await expect(await canvas.findByText(/01\.01\.2024/)).toBeInTheDocument();
       await expect(canvas.getByText(/15\.01\.2024/)).toBeInTheDocument();
       await expect(canvas.getByText(/16\.01\.2024/)).toBeInTheDocument();
       await expect(canvas.getByText(/31\.01\.2024/)).toBeInTheDocument();
@@ -155,6 +159,45 @@ export const UttakBasis: Story = {
 export const UttakMedUlikeStatuser: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15', {
+          årsaker: [Årsak.FULL_DEKNING],
+        }),
+        lagOppfyltPeriode('2024-01-16/2024-01-31', {
+          uttaksgrad: 60,
+          søkersTapteArbeidstid: 60,
+          årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT3H',
+              utbetalingsgrad: 60,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagIkkeOppfyltPeriode('2024-02-01/2024-02-14', [Årsak.FOR_LAV_TAPT_ARBEIDSTID, Årsak.AVKORTET_MOT_INNTEKT], {
+          uttaksgrad: 0,
+          søkersTapteArbeidstid: 15,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT6H22M',
+              utbetalingsgrad: 0,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagIkkeOppfyltPeriode('2024-02-15/2024-02-28', [
+          Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT,
+          Årsak.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
+        ]),
+        lagInntektsgraderingPeriode('2024-03-01/2024-03-15', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
+        lagTilsynsgraderingPeriode('2024-03-16/2024-03-31', 30, 0),
+        lagIkkeOppfyltPeriode('2024-04-01/2024-04-14', [Årsak.INGEN_TAPT_INNTEKT_PGA_FP]),
+      ]),
       inntektsgraderinger: {
         perioder: [
           {
@@ -181,48 +224,8 @@ export const UttakMedUlikeStatuser: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15', {
-        årsaker: [Årsak.FULL_DEKNING],
-      }),
-      lagOppfyltPeriode('2024-01-16/2024-01-31', {
-        uttaksgrad: 60,
-        søkersTapteArbeidstid: 60,
-        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT3H',
-            utbetalingsgrad: 60,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagIkkeOppfyltPeriode('2024-02-01/2024-02-14', [Årsak.FOR_LAV_TAPT_ARBEIDSTID, Årsak.AVKORTET_MOT_INNTEKT], {
-        uttaksgrad: 0,
-        søkersTapteArbeidstid: 15,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT6H22M',
-            utbetalingsgrad: 0,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagIkkeOppfyltPeriode('2024-02-15/2024-02-28', [
-        Årsak.INNGANGSVILKÅR_IKKE_OPPFYLT,
-        Årsak.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
-      ]),
-      lagInntektsgraderingPeriode('2024-03-01/2024-03-15', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
-      lagTilsynsgraderingPeriode('2024-03-16/2024-03-31', 30, 0),
-      lagIkkeOppfyltPeriode('2024-04-01/2024-04-14', [Årsak.INGEN_TAPT_INNTEKT_PGA_FP]),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -243,29 +246,28 @@ export const UttakMedUlikeStatuser: Story = {
 export const UttakGradertMotInntekt: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        // Periode med én arbeidsgiver, 70% uttak (30% arbeid)
+        lagInntektsgraderingPeriode('2024-01-01/2024-01-15', 70, [{ orgnr: '123456789', utbetalingsgrad: 70 }]),
+        // Periode med to arbeidsgivere, 50% uttak (50% arbeid fordelt mellom arbeidsgivere)
+        lagInntektsgraderingPeriode('2024-01-16/2024-01-31', 50, [
+          { orgnr: '123456789', utbetalingsgrad: 25 },
+          { orgnr: '987654321', utbetalingsgrad: 25 },
+        ]),
+        // Periode med ny arbeidsgiver (tilkommet), 40% uttak
+        lagInntektsgraderingPeriode('2024-02-01/2024-02-14', 40, [
+          { orgnr: '123456789', utbetalingsgrad: 20 },
+          { orgnr: '555666777', utbetalingsgrad: 20, tilkommet: true },
+        ]),
+      ]),
       arbeidsgivere: arbeidsgivereWithTilkommet,
       inntektsgraderinger: inntektsgraderingFlereArbeidsgivere,
     }),
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      // Periode med én arbeidsgiver, 70% uttak (30% arbeid)
-      lagInntektsgraderingPeriode('2024-01-01/2024-01-15', 70, [{ orgnr: '123456789', utbetalingsgrad: 70 }]),
-      // Periode med to arbeidsgivere, 50% uttak (50% arbeid fordelt mellom arbeidsgivere)
-      lagInntektsgraderingPeriode('2024-01-16/2024-01-31', 50, [
-        { orgnr: '123456789', utbetalingsgrad: 25 },
-        { orgnr: '987654321', utbetalingsgrad: 25 },
-      ]),
-      // Periode med ny arbeidsgiver (tilkommet), 40% uttak
-      lagInntektsgraderingPeriode('2024-02-01/2024-02-14', 40, [
-        { orgnr: '123456789', utbetalingsgrad: 20 },
-        { orgnr: '555666777', utbetalingsgrad: 20, tilkommet: true },
-      ]),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -280,6 +282,60 @@ export const UttakGradertMotInntekt: Story = {
   },
 };
 
+export const UttakGradertMotInntektOverÅrsskifte: Story = {
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([
+        lagInntektsgraderingPeriode('2026-12-28/2027-01-03', 60, [{ orgnr: '123456789', utbetalingsgrad: 60 }]),
+      ]),
+      inntektsgraderinger: {
+        perioder: [
+          {
+            periode: { fom: '2026-12-28', tom: '2027-01-03' },
+            beregningsgrunnlag: 500000,
+            løpendeInntekt: 200000,
+            bortfaltInntekt: 300000,
+            reduksjonsProsent: 40,
+            graderingsProsent: 60,
+            inntektsforhold: [
+              {
+                arbeidsgiverIdentifikator: '123456789',
+                arbeidstidprosent: 40,
+                bruttoInntekt: 500000,
+                løpendeInntekt: 200000,
+                erNytt: false,
+                type: 'AT',
+              },
+            ],
+          },
+        ],
+      },
+    }),
+  ],
+  args: {
+    behandling: lagUtredBehandling(),
+    kanOverstyreNå: false,
+    aksjonspunkter: [],
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const innvilgetMotInntektClass = uttakStyles.uttakIndikatorInnvilgetDelvisInntekt;
+
+    const periode2026 = await canvas.findByRole('row', { name: /28\.12\.2026 - 31\.12\.2026/ });
+    const periode2027 = canvas.getByRole('row', { name: /01\.01\.2027 - 03\.01\.2027/ });
+
+    const rader = canvas.getAllByRole('row');
+    const infoboks = canvas.getByRole('row', { name: /Endringer fra 01\.01\.2027:/ });
+    await expect(rader.indexOf(periode2027)).toBeLessThan(rader.indexOf(infoboks));
+    await expect(rader.indexOf(infoboks)).toBeLessThan(rader.indexOf(periode2026));
+    await expect(periode2026).toHaveTextContent(/^53/);
+    await expect(periode2027).toHaveTextContent(/^53/);
+    await expect(periode2026.querySelector(`.${innvilgetMotInntektClass}`)).toBeInTheDocument();
+    await expect(periode2027.querySelector(`.${innvilgetMotInntektClass}`)).toBeInTheDocument();
+  },
+};
+
 /**
  * UttakGradertMedUlikeAktivitetstyper
  *
@@ -288,6 +344,43 @@ export const UttakGradertMotInntekt: Story = {
 export const UttakGradertMedUlikeAktivitetstyper: Story = {
   decorators: [
     withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-03-01/2024-03-15', {
+          uttaksgrad: 58,
+          søkersTapteArbeidstid: 52,
+          årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'AT', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT0S',
+              utbetalingsgrad: 100,
+              tilkommet: false,
+            },
+            {
+              arbeidsforhold: { type: 'SN' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT7H30M',
+              utbetalingsgrad: 0,
+              tilkommet: false,
+            },
+            {
+              arbeidsforhold: { type: 'IKKE_YRKESAKTIV', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT8H',
+              faktiskArbeidstid: 'PT0S',
+              utbetalingsgrad: 100,
+              tilkommet: false,
+            },
+            {
+              arbeidsforhold: { type: 'FL' },
+              normalArbeidstid: 'PT5H',
+              faktiskArbeidstid: 'PT2H30M',
+              utbetalingsgrad: 50,
+              tilkommet: false,
+            },
+          ],
+        }),
+      ]),
       arbeidsgivere: defaultArbeidsgivere,
       inntektsgraderinger: {
         perioder: [
@@ -335,46 +428,8 @@ export const UttakGradertMedUlikeAktivitetstyper: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-03-01/2024-03-15', {
-        uttaksgrad: 58,
-        søkersTapteArbeidstid: 52,
-        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'AT', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT0S',
-            utbetalingsgrad: 100,
-            tilkommet: false,
-          },
-          {
-            arbeidsforhold: { type: 'SN' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT7H30M',
-            utbetalingsgrad: 0,
-            tilkommet: false,
-          },
-          {
-            arbeidsforhold: { type: 'IKKE_YRKESAKTIV', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT8H',
-            faktiskArbeidstid: 'PT0S',
-            utbetalingsgrad: 100,
-            tilkommet: false,
-          },
-          {
-            arbeidsforhold: { type: 'FL' },
-            normalArbeidstid: 'PT5H',
-            faktiskArbeidstid: 'PT2H30M',
-            utbetalingsgrad: 50,
-            tilkommet: false,
-          },
-        ],
-      }),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
 };
@@ -385,22 +440,24 @@ export const UttakGradertMedUlikeAktivitetstyper: Story = {
  * Viser perioder med gradering mot tilsyn
  */
 export const UttakGradertMotTilsyn: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([
+        // Periode med 30% etablert tilsyn, 70% tilgjengelig for søker
+        lagTilsynsgraderingPeriode('2024-01-01/2024-01-15', 30, 0),
+        // Periode med 20% etablert tilsyn og 20% andre søkeres tilsyn, 60% tilgjengelig
+        lagTilsynsgraderingPeriode('2024-01-16/2024-01-31', 20, 20),
+        // Periode med 50% etablert tilsyn, 50% tilgjengelig
+        lagTilsynsgraderingPeriode('2024-02-01/2024-02-14', 50, 0),
+        // Periode med høy tilsynsdekning, kun 25% tilgjengelig
+        lagTilsynsgraderingPeriode('2024-02-15/2024-02-28', 40, 35),
+      ]),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      // Periode med 30% etablert tilsyn, 70% tilgjengelig for søker
-      lagTilsynsgraderingPeriode('2024-01-01/2024-01-15', 30, 0),
-      // Periode med 20% etablert tilsyn og 20% andre søkeres tilsyn, 60% tilgjengelig
-      lagTilsynsgraderingPeriode('2024-01-16/2024-01-31', 20, 20),
-      // Periode med 50% etablert tilsyn, 50% tilgjengelig
-      lagTilsynsgraderingPeriode('2024-02-01/2024-02-14', 50, 0),
-      // Periode med høy tilsynsdekning, kun 25% tilgjengelig
-      lagTilsynsgraderingPeriode('2024-02-15/2024-02-28', 40, 35),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: false,
   },
   play: async ({ canvasElement, step }) => {
@@ -424,35 +481,37 @@ export const UttakGradertMotTilsyn: Story = {
  *
  */
 export const UttakLesemodus: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15'),
+        lagOppfyltPeriode('2024-01-16/2024-01-31', {
+          uttaksgrad: 80,
+          søkersTapteArbeidstid: 80, // Må matche uttaksgrad
+          årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+        }),
+        lagOppfyltPeriode('2024-02-01/2024-02-14', {
+          uttaksgrad: 60,
+          søkersTapteArbeidstid: 80, // 80% tapt arbeidstid, men kun 60% tilgjengelig pga tilsyn
+          årsaker: [Årsak.GRADERT_MOT_TILSYN],
+          etablertTilsyn: 40, // 40% etablert tilsyn reduserer tilgjengelig uttak
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M', // 7.5 timer normal arbeidsdag
+              faktiskArbeidstid: 'PT1H30M', // 1.5 timer faktisk arbeid (20% arbeid = 80% fravær)
+              utbetalingsgrad: 60, // Utbetalingsgrad begrenset av tilsyn, ikke arbeidstid
+              tilkommet: false,
+            },
+          ],
+        }),
+      ]),
+    }),
+  ],
   args: {
     behandling: lagAvsluttetBehandling(),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15'),
-      lagOppfyltPeriode('2024-01-16/2024-01-31', {
-        uttaksgrad: 80,
-        søkersTapteArbeidstid: 80, // Må matche uttaksgrad
-        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
-      }),
-      lagOppfyltPeriode('2024-02-01/2024-02-14', {
-        uttaksgrad: 60,
-        søkersTapteArbeidstid: 80, // 80% tapt arbeidstid, men kun 60% tilgjengelig pga tilsyn
-        årsaker: [Årsak.GRADERT_MOT_TILSYN],
-        etablertTilsyn: 40, // 40% etablert tilsyn reduserer tilgjengelig uttak
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M', // 7.5 timer normal arbeidsdag
-            faktiskArbeidstid: 'PT1H30M', // 1.5 timer faktisk arbeid (20% arbeid = 80% fravær)
-            utbetalingsgrad: 60, // Utbetalingsgrad begrenset av tilsyn, ikke arbeidstid
-            tilkommet: false,
-          },
-        ],
-      }),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {
@@ -460,7 +519,7 @@ export const UttakLesemodus: Story = {
 
     await step('Viser riktige perioder', async () => {
       await expect(
-        canvas.getByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 60 % Ny denne behandlingen' }),
+        await canvas.findByRole('row', { name: '5 - 7 01.02.2024 - 14.02.2024 100% Søker 60 % Ny denne behandlingen' }),
       );
       await expect(
         canvas.getByRole('row', { name: '3 - 5 16.01.2024 - 31.01.2024 100% Søker 80 % Ny denne behandlingen' }),
@@ -478,79 +537,81 @@ export const UttakLesemodus: Story = {
  * Et opphold mellom uke 10 og uke 11 (mandag 09.03 er en ukedag i gapet).
  */
 export const UttakMedOpphold: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([
+        lagIkkeOppfyltPeriode('2026-02-24/2026-02-24', [Årsak.FOR_LAV_TAPT_ARBEIDSTID], {
+          uttaksgrad: 0,
+          endringsstatus: Endringsstatus.ENDRET,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT7H30M',
+              utbetalingsgrad: 0,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagOppfyltPeriode('2026-02-25/2026-02-25', {
+          uttaksgrad: 27,
+          søkersTapteArbeidstid: 27,
+          årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+          endringsstatus: Endringsstatus.ENDRET,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT5H28M',
+              utbetalingsgrad: 27,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagOppfyltPeriode('2026-02-26/2026-02-27', {
+          uttaksgrad: 20,
+          søkersTapteArbeidstid: 20,
+          årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+          endringsstatus: Endringsstatus.UENDRET,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT6H',
+              utbetalingsgrad: 20,
+              tilkommet: false,
+            },
+          ],
+        }),
+        lagOppfyltPeriode('2026-03-02/2026-03-06', {
+          uttaksgrad: 20,
+          søkersTapteArbeidstid: 20,
+          årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
+          endringsstatus: Endringsstatus.NY,
+          utbetalingsgrader: [
+            {
+              arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
+              normalArbeidstid: 'PT7H30M',
+              faktiskArbeidstid: 'PT6H',
+              utbetalingsgrad: 20,
+              tilkommet: false,
+            },
+          ],
+        }),
+        // Gap mellom 06.03 og 10.03: 07.03 lørdag, 08.03 søndag, 09.03 mandag (ukedag) → opphold
+        lagOppfyltPeriode('2026-03-10/2026-03-10', {
+          uttaksgrad: 100,
+          søkersTapteArbeidstid: 100,
+          årsaker: [Årsak.FULL_DEKNING],
+          endringsstatus: Endringsstatus.NY,
+        }),
+      ]),
+    }),
+  ],
   args: {
     behandling: lagUtredBehandling(),
-    uttak: lagUttak([
-      lagIkkeOppfyltPeriode('2026-02-24/2026-02-24', [Årsak.FOR_LAV_TAPT_ARBEIDSTID], {
-        uttaksgrad: 0,
-        endringsstatus: Endringsstatus.ENDRET,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT7H30M',
-            utbetalingsgrad: 0,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagOppfyltPeriode('2026-02-25/2026-02-25', {
-        uttaksgrad: 27,
-        søkersTapteArbeidstid: 27,
-        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
-        endringsstatus: Endringsstatus.ENDRET,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT5H28M',
-            utbetalingsgrad: 27,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagOppfyltPeriode('2026-02-26/2026-02-27', {
-        uttaksgrad: 20,
-        søkersTapteArbeidstid: 20,
-        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
-        endringsstatus: Endringsstatus.UENDRET,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT6H',
-            utbetalingsgrad: 20,
-            tilkommet: false,
-          },
-        ],
-      }),
-      lagOppfyltPeriode('2026-03-02/2026-03-06', {
-        uttaksgrad: 20,
-        søkersTapteArbeidstid: 20,
-        årsaker: [Årsak.AVKORTET_MOT_INNTEKT],
-        endringsstatus: Endringsstatus.NY,
-        utbetalingsgrader: [
-          {
-            arbeidsforhold: { type: 'ARBEIDSTAKER', organisasjonsnummer: '123456789' },
-            normalArbeidstid: 'PT7H30M',
-            faktiskArbeidstid: 'PT6H',
-            utbetalingsgrad: 20,
-            tilkommet: false,
-          },
-        ],
-      }),
-      // Gap mellom 06.03 og 10.03: 07.03 lørdag, 08.03 søndag, 09.03 mandag (ukedag) → opphold
-      lagOppfyltPeriode('2026-03-10/2026-03-10', {
-        uttaksgrad: 100,
-        søkersTapteArbeidstid: 100,
-        årsaker: [Årsak.FULL_DEKNING],
-        endringsstatus: Endringsstatus.NY,
-      }),
-    ]),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
 };
@@ -562,16 +623,18 @@ export const UttakMedOpphold: Story = {
  * pleiepenger i livets sluttfase.
  */
 export const UttakPleiepengerNærstående: Story = {
-  decorators: [withFakeUttakBackend()],
+  decorators: [
+    withFakeUttakBackend({
+      uttak: lagUttak([
+        lagOppfyltPeriode('2024-01-01/2024-01-15'),
+        lagIkkeOppfyltPeriode('2024-01-16/2024-01-31', [Årsak.UTENOM_PLEIEBEHOV]),
+      ]),
+    }),
+  ],
   args: {
-    behandling: lagUtredBehandling({ sakstype: FagsakYtelseType.PLEIEPENGER_NÆRSTÅENDE }),
-    uttak: lagUttak([
-      lagOppfyltPeriode('2024-01-01/2024-01-15'),
-      lagIkkeOppfyltPeriode('2024-01-16/2024-01-31', [Årsak.UTENOM_PLEIEBEHOV]),
-    ]),
-    erOverstyrer: false,
+    behandling: lagUtredBehandling({ sakstype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE }),
+    kanOverstyreNå: false,
     aksjonspunkter: [],
-    relevanteAksjonspunkter: relevanteAksjonspunkterAlle,
     readOnly: true,
   },
   play: async ({ canvasElement, step }) => {
@@ -579,7 +642,7 @@ export const UttakPleiepengerNærstående: Story = {
     const user = userEvent.setup();
 
     await step('Viser årsak for innleggelse på pleiepenger i livets sluttfase', async () => {
-      const knapper = canvas.getAllByRole('button', { name: 'Åpne' });
+      const knapper = await canvas.findAllByRole('button', { name: 'Åpne' });
       for (const knapp of knapper) {
         await user.click(knapp);
       }

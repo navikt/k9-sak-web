@@ -1,5 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
-import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 class LangvarigSykdomPanelDef extends ProsessStegPanelDef {
@@ -15,7 +15,7 @@ class LangvarigSykdomPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_LANGVARIG_SYK];
 
-  getVilkarKoder = () => [vilkarType.LANGVARIG_SYKDOM];
+  getVilkarKoder = () => [VilkårType.LANGVARIG_SYKDOM];
 
   getData = ({
     overstyrteAksjonspunktKoder,
