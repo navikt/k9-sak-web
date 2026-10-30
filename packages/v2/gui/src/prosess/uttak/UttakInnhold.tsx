@@ -75,7 +75,7 @@ const UttakInnhold = (): JSX.Element => {
             aksjonspunkter={overstyringsaksjonspunkter}
             erOverstyrer={harOverstyrerrolle}
             isReadOnly={readOnly}
-            overstyrtHva="uttaksgrad og utbetalingsgrad"
+            område="uttak"
           />
         </ContentMaxWidth>
       )}

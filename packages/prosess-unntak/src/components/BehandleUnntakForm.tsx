@@ -71,7 +71,7 @@ const OverstyringVarsel = ({
         aksjonspunkter={aksjonspunkterForVarsel}
         erOverstyrer={erOverstyrer}
         isReadOnly={readOnly}
-        overstyrtHva="vilkårsvurderingen"
+        område="unntak"
       />
       <VerticalSpacer twentyPx />
     </>

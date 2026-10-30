@@ -90,7 +90,7 @@ const UnntakForm = ({
           aksjonspunkter={aksjonspunkter}
           erOverstyrer={erOverstyrer}
           isReadOnly={isReadOnly}
-          overstyrtHva="vilkårsvurderingen"
+          område="unntak"
         />
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>Vurder vilkår</AksjonspunktHelpText>
         <ContentMaxWidth>
@@ -160,7 +160,7 @@ export const UnntakProsessIndex = ({
           aksjonspunkter={aksjonspunkter}
           erOverstyrer={erOverstyrer}
           isReadOnly={isReadOnly}
-          overstyrtHva="vilkårsvurderingen"
+          område="unntak"
         />
         <Alert variant="warning" size="small">
           Fant ikke én entydig og gyldig periode for vilkåret. Aksjonspunktet kan ikke løses.

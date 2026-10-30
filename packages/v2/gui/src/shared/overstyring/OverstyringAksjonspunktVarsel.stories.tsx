@@ -13,7 +13,7 @@ const meta = {
   title: 'gui/shared/overstyring/OverstyringAksjonspunktVarsel',
   component: OverstyringAksjonspunktVarsel,
   args: {
-    overstyrtHva: 'uttaksgrad og utbetalingsgrad',
+    område: 'uttak',
     erOverstyrer: false,
     isReadOnly: false,
   },
@@ -29,7 +29,7 @@ export const UløstAksjonspunkt: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText(/^Overstyring av .* må vurderes\.$/)).toBeInTheDocument();
+    await expect(canvas.getByText('Overstyring av uttaksgrad og utbetalingsgrad må vurderes.')).toBeInTheDocument();
     await expect(canvas.getByText(/Bare en saksbehandler med overstyrerrolle kan vurdere den/)).toBeInTheDocument();
   },
 };
@@ -40,7 +40,29 @@ export const UtførtAksjonspunkt: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText(/^Overstyring av .* er utført\.$/)).toBeInTheDocument();
+    await expect(canvas.getByText('Overstyring av uttaksgrad og utbetalingsgrad er utført.')).toBeInTheDocument();
     await expect(canvas.getByText(/Bare en saksbehandler med overstyrerrolle kan endre den/)).toBeInTheDocument();
+  },
+};
+
+export const Vilkår: Story = {
+  args: {
+    område: 'vilkår',
+    aksjonspunkter: [lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('Overstyring av vilkåret må vurderes.')).toBeInTheDocument();
+  },
+};
+
+export const Unntak: Story = {
+  args: {
+    område: 'unntak',
+    aksjonspunkter: [lagAksjonspunkt(aksjonspunktStatus.OPPRETTET)],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('Overstyring av vilkårsvurderingen må vurderes.')).toBeInTheDocument();
   },
 };

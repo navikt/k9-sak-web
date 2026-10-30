@@ -7,13 +7,18 @@ import {
   skalViseOverstyringAksjonspunktVarsel,
 } from './overstyringsaksjonspunkt.js';
 
+const overstyrtHvaTekst = {
+  vilkår: 'vilkåret',
+  unntak: 'vilkårsvurderingen',
+  uttak: 'uttaksgrad og utbetalingsgrad',
+};
+
 interface OverstyringAksjonspunktVarselProps {
   /** Aksjonspunktene som hører til panelet. Varselet vises bare når ett av dem har aksjonspunktType OVST. */
   aksjonspunkter: ReadonlyArray<AksjonspunktDto>;
   erOverstyrer: boolean;
   isReadOnly: boolean;
-  /** Hva som er overstyrt, f.eks. "uttaksgrad og utbetalingsgrad". */
-  overstyrtHva: string;
+  område: keyof typeof overstyrtHvaTekst;
 }
 
 /**
@@ -24,12 +29,13 @@ const OverstyringAksjonspunktVarsel = ({
   aksjonspunkter,
   erOverstyrer,
   isReadOnly,
-  overstyrtHva,
+  område,
 }: OverstyringAksjonspunktVarselProps): JSX.Element | null => {
   if (!skalViseOverstyringAksjonspunktVarsel(aksjonspunkter, erOverstyrer, isReadOnly)) {
     return null;
   }
   const status = finnOverstyringsaksjonspunktStatus(aksjonspunkter);
+  const overstyrtHva = overstyrtHvaTekst[område];
 
   if (status === 'UTFØRT') {
     return (

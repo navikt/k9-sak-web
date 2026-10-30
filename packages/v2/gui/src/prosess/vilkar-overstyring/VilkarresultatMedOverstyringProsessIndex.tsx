@@ -158,7 +158,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
               aksjonspunkter={aksjonspunkter}
               erOverstyrer={kanOverstyreAccess.employeeHasAccess}
               isReadOnly={overrideReadOnly}
-              overstyrtHva="vilkåret"
+              område="vilkår"
             />
           </Box>
         )}
