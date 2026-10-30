@@ -9,10 +9,10 @@ describe('paths', () => {
   it.each([
     ['k9.intern.dev.nav.no', 'https://k9-los-web.intern.dev.nav.no'],
     ['ung.intern.dev.nav.no', 'https://k9-los-web.intern.dev.nav.no'],
-    ['aktivitetspenger.intern.dev.nav.no', 'https://k9-los-web.intern.dev.nav.no/akt'],
+    ['aktivitetspenger.intern.dev.nav.no', 'https://k9-los-web.intern.dev.nav.no/avp'],
     ['k9.intern.nav.no', 'https://k9-los-web.intern.nav.no'],
     ['ung.intern.nav.no', 'https://k9-los-web.intern.nav.no'],
-    ['aktivitetspenger.intern.nav.no', 'https://k9-los-web.intern.nav.no/akt'],
+    ['aktivitetspenger.intern.nav.no', 'https://k9-los-web.intern.nav.no/avp'],
   ])('returns the correct LOS URL for %s', (host, expectedUrl) => {
     vi.stubGlobal('location', new URL(`https://${host}/ung/web`));
 
