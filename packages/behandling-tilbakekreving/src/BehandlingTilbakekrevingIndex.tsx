@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -66,7 +66,13 @@ const BehandlingTilbakekrevingIndex = ({
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestTilbakekrevingApi.resetCache();
     requestTilbakekrevingApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -136,6 +142,7 @@ const BehandlingTilbakekrevingIndex = ({
   if (!behandling || !tilbakekrevingKodeverk || (hasNotFinished && data === undefined)) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = hasNotFinished && !!forrigeBehandling;
 
   if (state === RestApiState.ERROR) {
     if (error != null) {
@@ -151,7 +158,12 @@ const BehandlingTilbakekrevingIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      >
         <TilbakekrevingPaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}
           fetchedData={data}

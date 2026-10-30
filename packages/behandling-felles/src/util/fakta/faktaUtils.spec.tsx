@@ -205,6 +205,7 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
+      vi.fn(),
     );
 
     const aksjonspunkter = [
@@ -237,6 +238,28 @@ describe('<faktaUtils>', () => {
     expect(opppdaterKall[0][0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 
+  it('skal sette ny behandling før navigering etter lagring', async () => {
+    const rekkefølge: string[] = [];
+    const nyBehandling = { ...behandling, versjon: behandling.versjon + 1 };
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn(() => rekkefølge.push('navigering'));
+    const settBehandlingHvisGyldig = vi.fn(() => rekkefølge.push('settBehandlingHvisGyldig'));
+    const lagreAksjonspunkter = vi.fn().mockResolvedValue(nyBehandling);
+
+    const callback = getBekreftAksjonspunktCallback(
+      fagsak,
+      behandling as Behandling,
+      oppdaterProsessStegOgFaktaPanelIUrl,
+      [],
+      lagreAksjonspunkter,
+      settBehandlingHvisGyldig,
+    );
+
+    await callback([{ kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD }]);
+
+    expect(settBehandlingHvisGyldig).toHaveBeenCalledWith(nyBehandling);
+    expect(rekkefølge).toEqual(['settBehandlingHvisGyldig', 'navigering']);
+  });
+
   it('skal lagre overstyrt aksjonspunkt', async () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const lagreAksjonspunkter = vi.fn();
@@ -249,6 +272,7 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
+      vi.fn(),
       lagreOverstyrteAksjonspunkter,
     );
 
@@ -295,6 +319,7 @@ describe('<faktaUtils>', () => {
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
+      vi.fn(),
       lagreOverstyrteAksjonspunkter,
     );
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
@@ -78,7 +78,13 @@ const BehandlingKlageUngdomsytelseIndex = ({
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
 
+  const sisteSatteBehandling = useRef<Behandling>(undefined);
   const setBehandling = useCallback(nyBehandling => {
+    // Samme behandling settes både rett etter lagring og via useSetBehandlingVedEndring
+    if (sisteSatteBehandling.current === nyBehandling) {
+      return;
+    }
+    sisteSatteBehandling.current = nyBehandling;
     requestKlageApi.resetCache();
     requestKlageApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
@@ -134,6 +140,7 @@ const BehandlingKlageUngdomsytelseIndex = ({
   if (!behandling || (hasNotFinished && data === undefined)) {
     return <LoadingPanel />;
   }
+  const erBehandlingsdataUtdatert = hasNotFinished && !!forrigeBehandling;
 
   return (
     <>
@@ -141,7 +148,12 @@ const BehandlingKlageUngdomsytelseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={hasNotFinished ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <BehandlingProvider refetchBehandling={() => hentBehandling({ behandlingId }, true)}>
+      <BehandlingProvider
+        refetchBehandling={() => hentBehandling({ behandlingId }, true)}
+        erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        settBehandling={setBehandling}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      >
         <KlagePaneler
           behandling={hasNotFinished ? forrigeBehandling : behandling}
           fetchedData={data}

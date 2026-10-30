@@ -4,6 +4,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
@@ -69,6 +70,7 @@ export const PleiepengerProsessV2 = ({
   lagreDokumentdata,
   hentFritekstbrevHtmlCallback,
 }: PleiepengerProsessV2Props) => {
+  const { erBehandlingsdataUtdatert = false } = useBehandlingContext();
   const previewCallback = getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling);
 
   const previewFptilbakeCallback = getForhandsvisFptilbakeCallback(
@@ -125,7 +127,9 @@ export const PleiepengerProsessV2 = ({
         tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
 
-      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterLaster}>
+      {/* Behandlingen som sendes inn er forrige versjon mens nye data hentes, så aksjonspunktene for den er
+          allerede i cache. Derfor må også erBehandlingsdataUtdatert sjekkes. */}
+      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterLaster && !erBehandlingsdataUtdatert}>
         <Bleed marginInline="space-24">
           <Box padding="space-16" className={styles.prosessmenyWrapper}>
             {prosessteg.map(steg => {
@@ -170,7 +174,6 @@ export const PleiepengerProsessV2 = ({
                     api={k9SakProsessApi}
                     erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
                     isReadOnly={isReadOnly}
-                    oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
                   />
                 );
               }

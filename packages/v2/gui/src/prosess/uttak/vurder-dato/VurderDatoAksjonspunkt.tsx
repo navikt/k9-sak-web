@@ -1,11 +1,11 @@
 import { AksjonspunktDefinisjon as AksjonspunktDtoDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { useRefetchBehandling } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import Datovelger from '@k9-sak-web/gui/shared/datovelger/Datovelger.js';
 import { Button } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
 import { dateBeforeOrEqual, hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { isAksjonspunktOpen } from '../../../utils/aksjonspunktUtils.js';
 import { useUttakApi } from '../api/UttakApiContext.js';
 import { useUttakContext } from '../context/UttakContext.js';
@@ -26,14 +26,14 @@ interface Props {
 }
 
 const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props) => {
-  const { readOnly, behandling, aksjonspunkter, onAksjonspunktBekreftet } = useUttakContext();
+  const { readOnly, behandling, aksjonspunkter } = useUttakContext();
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   const virkningsdatoUttakNyeRegler = uttak?.virkningsdatoUttakNyeRegler;
   const aksjonspunkt = aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDtoDefinisjon.VURDER_DATO_NY_REGEL_UTTAK,
   );
-  const oppdaterBehandling = useRefetchBehandling();
+  const { onAksjonspunktBekreftet } = useBehandlingContext();
 
   const formMethods = useForm<FormData>({
     defaultValues: {
@@ -59,8 +59,7 @@ const VurderDatoAksjonspunkt = ({ redigerVirkningsdato, lukkRedigering }: Props)
       return uttakApi.bekreftAksjonspunkt(payload);
     },
     onSuccess: async () => {
-      await oppdaterBehandling();
-      onAksjonspunktBekreftet?.();
+      await onAksjonspunktBekreftet();
     },
   });
 
