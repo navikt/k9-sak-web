@@ -2,7 +2,7 @@ import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { useContext, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { expect, userEvent, within } from 'storybook/test';
 import { ProsessMeny } from './ProsessMeny.js';
 import { ProsessPanelContext } from './ProsessPanelContext.js';
@@ -411,12 +411,19 @@ function TestPanel({ id, label }: { id: string; label: string }) {
 // Venter med å montere children til URL-en er satt, for å unngå kappløp med ProsessMenys egen effekt.
 function SettInitiellUrl({ path, children }: { path: string; children: React.ReactNode }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [urlErSatt, setUrlErSatt] = useState(false);
+  const [pathname, query = ''] = path.split('?');
+  const search = query ? `?${query}` : '';
   useEffect(() => {
     void navigate(path, { replace: true });
-    setUrlErSatt(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (location.pathname === pathname && location.search === search) {
+      setUrlErSatt(true);
+    }
+  }, [location.pathname, location.search, pathname, search]);
   return urlErSatt ? <>{children}</> : null;
 }
 
@@ -450,8 +457,8 @@ export const VelgerAksjonspunktPanelFremforFørstePanel: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
-    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
   },
 };
 
@@ -476,8 +483,8 @@ export const VelgerFørstePanelNårIngenHarAksjonspunkt: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent('aktiv');
-    await expect(canvas.getByTestId('panel-b')).toHaveTextContent('inaktiv');
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-b')).toHaveTextContent(/: inaktiv$/);
   },
 };
 
@@ -502,8 +509,8 @@ export const VelgerSistePanelårAlleErFerdigbehandlet: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
-    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
   },
 };
 
@@ -531,8 +538,8 @@ export const RespektererEksplisittValgtPanel: Story = {
     // Bruker velger eksplisitt panel B, selv om A har et åpent aksjonspunkt
     await userEvent.click(canvas.getByRole('button', { name: 'B' }));
 
-    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
-    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
   },
 };
 
@@ -546,11 +553,12 @@ export const HopperOverSynkroniseringårDataIkkeErKlar: Story = {
       { id: 'b', label: 'B', type: ProcessMenuStepType.default },
     ],
     erKlar: false,
+    defaultPanelId: 'b',
     children: <></>,
   },
   decorators: [medUrl('/?punkt=default')],
   render: args => (
-    <ProsessMeny steg={args.steg} erKlar={args.erKlar}>
+    <ProsessMeny steg={args.steg} erKlar={args.erKlar} defaultPanelId={args.defaultPanelId}>
       {args.steg.map(steg => (
         <TestPanel key={steg.id} id={steg.id} label={steg.label} />
       ))}
@@ -558,8 +566,8 @@ export const HopperOverSynkroniseringårDataIkkeErKlar: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent('inaktiv');
-    await expect(canvas.getByTestId('panel-b')).toHaveTextContent('inaktiv');
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
+    await expect(canvas.getByTestId('panel-b')).toHaveTextContent(/: inaktiv$/);
   },
 };
 
@@ -584,11 +592,118 @@ export const ByttesPanelVedKlikkIMenyen: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent('aktiv');
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent(/: aktiv$/);
 
     await userEvent.click(canvas.getByRole('button', { name: 'B' }));
 
-    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent('aktiv');
-    await expect(canvas.getByTestId('panel-a')).toHaveTextContent('inaktiv');
+    await expect(await canvas.findByTestId('panel-b')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
+  },
+};
+
+export const ForetrukketPanelVelgesForDefaultUrl: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.warning },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.default },
+      { id: 'vedtak', label: 'Vedtak', type: ProcessMenuStepType.default },
+    ],
+    defaultPanelId: 'vedtak',
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=default')],
+  render: args => (
+    <ProsessMeny steg={args.steg} defaultPanelId={args.defaultPanelId}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-vedtak')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
+    await expect(canvas.getByTestId('panel-b')).toHaveTextContent(/: inaktiv$/);
+  },
+};
+
+export const ForetrukketPanelVelgesUtenPunkt: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'b', label: 'B', type: ProcessMenuStepType.warning },
+      { id: 'vedtak', label: 'Vedtak', type: ProcessMenuStepType.default },
+    ],
+    defaultPanelId: 'vedtak',
+    children: <></>,
+  },
+  decorators: [medUrl('/')],
+  render: args => (
+    <ProsessMeny steg={args.steg} defaultPanelId={args.defaultPanelId}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-vedtak')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
+    await expect(canvas.getByTestId('panel-b')).toHaveTextContent(/: inaktiv$/);
+  },
+};
+
+export const ForetrukketPanelVelgesForUgyldigPunkt: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'vedtak', label: 'Vedtak', type: ProcessMenuStepType.default },
+    ],
+    defaultPanelId: 'vedtak',
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=ukjent')],
+  render: args => (
+    <ProsessMeny steg={args.steg} defaultPanelId={args.defaultPanelId}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-vedtak')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-a')).toHaveTextContent(/: inaktiv$/);
+  },
+};
+
+export const BeholderEksplisittPanelOgTillaterKlikk: Story = {
+  args: {
+    steg: [
+      { id: 'a', label: 'A', type: ProcessMenuStepType.default },
+      { id: 'vedtak', label: 'Vedtak', type: ProcessMenuStepType.default },
+    ],
+    defaultPanelId: 'vedtak',
+    children: <></>,
+  },
+  decorators: [medUrl('/?punkt=a')],
+  render: args => (
+    <ProsessMeny steg={args.steg} defaultPanelId={args.defaultPanelId}>
+      {args.steg.map(steg => (
+        <TestPanel key={steg.id} id={steg.id} label={steg.label} />
+      ))}
+    </ProsessMeny>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-vedtak')).toHaveTextContent(/: inaktiv$/);
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Vedtak' }));
+    await expect(await canvas.findByTestId('panel-vedtak')).toHaveTextContent(/: aktiv$/);
+
+    await userEvent.click(canvas.getByRole('button', { name: 'A' }));
+    await expect(await canvas.findByTestId('panel-a')).toHaveTextContent(/: aktiv$/);
+    await expect(canvas.getByTestId('panel-vedtak')).toHaveTextContent(/: inaktiv$/);
   },
 };

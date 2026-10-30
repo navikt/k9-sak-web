@@ -129,7 +129,11 @@ export const PleiepengerProsessV2 = ({
 
       {/* Behandlingen som sendes inn er forrige versjon mens nye data hentes, så aksjonspunktene for den er
           allerede i cache. Derfor må også erBehandlingsdataUtdatert sjekkes. */}
-      <ProsessMeny steg={prosessteg} erKlar={!aksjonspunkterLaster && !erBehandlingsdataUtdatert}>
+      <ProsessMeny
+        steg={prosessteg}
+        erKlar={!aksjonspunkterLaster && !erBehandlingsdataUtdatert}
+        defaultPanelId={behandlingenErAvsluttet ? prosessStegCodes.VEDTAK : undefined}
+      >
         <Bleed marginInline="space-24">
           <Box padding="space-16" className={styles.prosessmenyWrapper}>
             {prosessteg.map(steg => {
