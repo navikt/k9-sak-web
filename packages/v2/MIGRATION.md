@@ -41,36 +41,42 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 ### Under migrering
 
 #### Feature togglet
+
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
 - [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG`
 - [ ] `fakta-feilutbetaling` → `BRUK_V2_FEILUTBETALING`
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
-    I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
+      I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
 - [ ] `fakta-barn-og-overfoeringsdager` (Deling av dager) → `BRUK_V2_DELING_AV_DAGER`
 - [ ] `prosess-unntak` → `BRUK_V2_PROSESS_UNNTAK`
-    V2 er ferdig implementert og i bruk i Q. Prod bruker fortsatt v1.
+      V2 er ferdig implementert og i bruk i Q. Prod bruker fortsatt v1.
 - [ ] `fakta-om-barnet` → `BRUK_V2_OM_BARNET`
-    V2 (`fakta/om-barnet`) er koblet til i både pleiepenger og opplæringspenger og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert mot reelt aksjonspunkt 9202 i Q ennå.
+      V2 (`fakta/om-barnet`) er koblet til i både pleiepenger og opplæringspenger og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert mot reelt aksjonspunkt 9202 i Q ennå.
+- [ ] `fakta-barn-oms` → `BRUK_V2_BARN_OMS`
+      V2 (`fakta/barn-oms`) er koblet til i omsorgspenger, unntak og utvidet rett og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert i Q ennå.
 
 #### Under arbeid
+
 - fakta-omsorgen-for (Hallvard)
 
 ---
 
 ### Trenger avklaringer
+
 - fakta-medisinsk-vilkår
-    Kjernefunksjonalitet med masse kode og logikk. 
-    Design ønsker å flytte denne til prosesspanel, og samtidig gjøre omfattende endringer i flyt.
-    Virker sannsynlig at en komplett omskrivning vil være beste løsning for panelet i den sammenheng.
+  Kjernefunksjonalitet med masse kode og logikk.
+  Design ønsker å flytte denne til prosesspanel, og samtidig gjøre omfattende endringer i flyt.
+  Virker sannsynlig at en komplett omskrivning vil være beste løsning for panelet i den sammenheng.
 - prosess-vedtak
-    Her er det snakk om å gjøre omfattende endringer i backend også, for det er mye forretningslogikk i frontend.
-    Tror vi ønsker å flytte mye logikk til backend
+  Her er det snakk om å gjøre omfattende endringer i backend også, for det er mye forretningslogikk i frontend.
+  Tror vi ønsker å flytte mye logikk til backend
 
 ### Skal IKKE migreres
-- fakta-inntekt-og-ytelser 
-    Erstattes av arbeid og inntekt. fakta-inntekt-og-ytelser kan slettes når arbeid og inntekt er togglet på i prod.
+
+- fakta-inntekt-og-ytelser
+  Erstattes av arbeid og inntekt. fakta-inntekt-og-ytelser kan slettes når arbeid og inntekt er togglet på i prod.
 
 ### Ikke migrert eller ikke vurdert
 
@@ -78,34 +84,33 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 ### Tier 1 — Svært enkelt
 
-| Panel                                  | ~Linjer | Konsumenter                                            | Merknad                                                        |
-| -------------------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `fakta-beregning`                      | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
-| `fakta-fordeling`                      | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
-| `prosess-fortsatt-medlemskap`          | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
-| `prosess-inngangsvilkar`               | 132     | 7 (oms, opl, psb, psb-sluttfase, ung, unntak, utvidet) | Felles inngangsvilkår med ytelsesspesifikke varianter          |
-| `prosess-opplaering`                   | 19      | 1 (opl)                                                | Ytelsesspesifikk vilkårsvurdering                              |
-| `prosess-beregningsgrunnlag`           | 331     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningsgrunnlag   |
+| Panel                         | ~Linjer | Konsumenter                                            | Merknad                                                        |
+| ----------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
+| `fakta-beregning`             | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
+| `fakta-fordeling`             | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
+| `prosess-fortsatt-medlemskap` | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
+| `prosess-inngangsvilkar`      | 132     | 7 (oms, opl, psb, psb-sluttfase, ung, unntak, utvidet) | Felles inngangsvilkår med ytelsesspesifikke varianter          |
+| `prosess-opplaering`          | 19      | 1 (opl)                                                | Ytelsesspesifikk vilkårsvurdering                              |
+| `prosess-beregningsgrunnlag`  | 331     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningsgrunnlag   |
 
 ### Tier 2 — Enkelt/middels
 
-| Panel                             | ~Linjer | Konsumenter                        | Merknad                                                      |
-| --------------------------------- | ------- | ---------------------------------- | ------------------------------------------------------------ |
-| `fakta-verge`                     | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
-| `fakta-overstyr-beregning`        | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
-| `fakta-barn-oms`                  | 903     | 3 (oms, unntak, utvidet-rett)      | Visning av barn-liste, 0 API-avhengigheter                   |
-| `prosess-anke-merknader`          | 363     | 1 (behandling-anke)                | Gammel JSX, enkel, 0 API — migrer alle 3 anke-paneler samlet |
-| `prosess-anke-resultat`           | 620     | 1 (behandling-anke)                | Gammel JSX, vedtak-lignende resultatform                     |
-| `prosess-anke`                    | 772     | 1 (behandling-anke)                | Gammel JSX, 0 API-avhengigheter                              |
+| Panel                      | ~Linjer | Konsumenter                        | Merknad                                                      |
+| -------------------------- | ------- | ---------------------------------- | ------------------------------------------------------------ |
+| `fakta-verge`              | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
+| `fakta-overstyr-beregning` | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
+| `prosess-anke-merknader`   | 363     | 1 (behandling-anke)                | Gammel JSX, enkel, 0 API — migrer alle 3 anke-paneler samlet |
+| `prosess-anke-resultat`    | 620     | 1 (behandling-anke)                | Gammel JSX, vedtak-lignende resultatform                     |
+| `prosess-anke`             | 772     | 1 (behandling-anke)                | Gammel JSX, 0 API-avhengigheter                              |
 
 ### Tier 3 — Middels
 
-| Panel                             | ~Linjer | Konsumenter           | Merknad                                                 |
-| --------------------------------- | ------- | --------------------- | ------------------------------------------------------- |
-| `fakta-soknadsperioder`           | 727     | 5                     | Periodeoversikt koblet til vilkår, 1 API                |
-| `prosess-avregning` (Simulering)  | 1007    | 6                     | Simuleringsvisning + tilbakekrevingsvalg-skjema         |
-| `fakta-opplysninger-fra-soknaden` | 1268    | 1 (frisinn)           | Frisinn-spesifikk, overstyringsskjema, 1 API            |
-| `prosess-vedtak-tilbakekreving`   | 1498    | 2 (tilbakekreving ×2) | Vedtak med fritekstforhåndsvisning, 1 API               |
+| Panel                             | ~Linjer | Konsumenter           | Merknad                                         |
+| --------------------------------- | ------- | --------------------- | ----------------------------------------------- |
+| `fakta-soknadsperioder`           | 727     | 5                     | Periodeoversikt koblet til vilkår, 1 API        |
+| `prosess-avregning` (Simulering)  | 1007    | 6                     | Simuleringsvisning + tilbakekrevingsvalg-skjema |
+| `fakta-opplysninger-fra-soknaden` | 1268    | 1 (frisinn)           | Frisinn-spesifikk, overstyringsskjema, 1 API    |
+| `prosess-vedtak-tilbakekreving`   | 1498    | 2 (tilbakekreving ×2) | Vedtak med fritekstforhåndsvisning, 1 API       |
 
 ### Tier 4 — Krevende
 

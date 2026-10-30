@@ -29,6 +29,7 @@ const rootFeatureToggles = {
   BRUK_V2_DELING_AV_DAGER: false,
   BRUK_V2_PROSESS_UNNTAK: false,
   BRUK_V2_OM_BARNET: false,
+  BRUK_V2_BARN_OMS: false,
   STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 

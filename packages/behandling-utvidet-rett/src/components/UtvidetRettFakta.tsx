@@ -103,6 +103,7 @@ const UtvidetRettFakta = ({
               alleKodeverk,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvUtvidetRettPaneler, hasFetchError),
+              featureToggles,
             })}
           </ErrorBoundary>
         )}
