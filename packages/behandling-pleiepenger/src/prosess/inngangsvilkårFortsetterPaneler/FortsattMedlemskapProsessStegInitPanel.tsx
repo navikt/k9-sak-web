@@ -21,6 +21,7 @@ interface Props {
   vilkår: Array<k9_sak_kontrakt_vilkår_VilkårMedPerioderDto>;
   behandling: Behandling;
   visAllePerioder: boolean;
+  overstyrteAksjonspunktKoder: string[];
 }
 
 /**
@@ -48,6 +49,10 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     ap => ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
   );
 
+  const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(
+    AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET,
+  );
+
   const handleSubmit = async (data: any) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
   };
@@ -65,9 +70,9 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
       aksjonspunkter={relevanteAksjonspunkter}
       behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
       vilkar={vilkårForSteg}
-      erOverstyrt={false}
-      overstyringApKode=""
-      erMedlemskapsPanel={false}
+      erOverstyrt={erOverstyrt}
+      overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET}
+      erMedlemskapsPanel={true}
       visPeriodisering={false}
       visAllePerioder={props.visAllePerioder}
       panelTittelKode="Medlemskap"
