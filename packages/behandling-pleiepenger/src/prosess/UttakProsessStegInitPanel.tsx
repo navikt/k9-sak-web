@@ -15,7 +15,6 @@ interface Props {
   kanOverstyreNå: boolean;
   harOverstyrerrolle: boolean;
   isReadOnly: boolean;
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
 export function UttakProsessStegInitPanel(props: Props) {
@@ -37,10 +36,6 @@ export function UttakProsessStegInitPanel(props: Props) {
     return <ProsessStegIkkeBehandlet />;
   }
 
-  const onAksjonspunktBekreftet = () => {
-    props.oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-  };
-
   return (
     <Uttak
       behandling={behandlingV2}
@@ -48,7 +43,6 @@ export function UttakProsessStegInitPanel(props: Props) {
       kanOverstyreNå={props.kanOverstyreNå}
       harOverstyrerrolle={props.harOverstyrerrolle}
       readOnly={props.isReadOnly}
-      onAksjonspunktBekreftet={onAksjonspunktBekreftet}
     />
   );
 }

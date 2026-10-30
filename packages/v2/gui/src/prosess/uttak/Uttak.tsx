@@ -13,7 +13,6 @@ interface UttakProps {
   harOverstyrerrolle?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
-  onAksjonspunktBekreftet?: () => void;
 }
 
 const Uttak = ({
@@ -22,7 +21,6 @@ const Uttak = ({
   harOverstyrerrolle,
   aksjonspunkter,
   readOnly,
-  onAksjonspunktBekreftet,
 }: UttakProps): JSX.Element => {
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
@@ -38,7 +36,6 @@ const Uttak = ({
         kanOverstyreNå,
         harOverstyrerrolle: harOverstyrerrolle ?? kanOverstyreNå,
         readOnly,
-        onAksjonspunktBekreftet,
       }}
     >
       <UttakInnhold />

@@ -384,6 +384,7 @@ export const LesevisningViserTekst: Story = {
     });
   },
 };
+
 export const MaksdatoMåVæreKortere: Story = {
   args: {
     vurderBistandsvilkårVilkår: {
@@ -407,6 +408,53 @@ export const MaksdatoMåVæreKortere: Story = {
           'Velg en tidligere dato, eller fjern avhukingen hvis du vil bruke senest mulig "til og med" dato.',
         ),
       ).toBeInTheDocument();
+    });
+  },
+};
+
+export const ByttTilOppfyltFjernerFritekst: Story = {
+  args: {
+    api: apiSomHusker,
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    apiSomHusker.sisteBekreftedeAksjonspunkt = undefined;
+
+    await step('Fyll inn begrunnelse for vurderingen', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /Vurder om søker har behov for bistand/ }),
+        'Søker har behov for bistand.',
+      );
+    });
+
+    await step('Velg ikke oppfylt og legg til fritekst i avslagsbrevet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await userEvent.click(canvas.getByRole('radio', { name: 'Fritekst' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst avslagsbrev' }), 'Tidligere fritekst.');
+    });
+
+    await step('Bytt til oppfylt og skjul fritekstfeltet', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst avslagsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(async () => {
+        await expect(apiSomHusker.sisteBekreftedeAksjonspunkt).toEqual(
+          expect.objectContaining({
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                avslagsårsak: undefined,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
+          }),
+        );
+      });
     });
   },
 };

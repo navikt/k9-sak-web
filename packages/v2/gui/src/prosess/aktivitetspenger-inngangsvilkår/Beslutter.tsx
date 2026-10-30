@@ -166,7 +166,7 @@ export const Beslutter = ({
         <VStack gap="space-20">
           {!isAksjonspunktSolved && kanBeslutte && (
             <Alert variant="warning" size="small">
-              Kontroller faglige vurderinger for inngangsvilkår.
+              Kontroller vurderinger for inngangsvilkår.
             </Alert>
           )}
           <VStack gap="space-16" marginInline="space-16">

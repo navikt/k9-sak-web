@@ -73,7 +73,7 @@ export const OpprettFørstegangsbehandling: Story = {
       behandlingArsakType: undefined,
       behandlingUuid: 'uuid-123',
       eksternUuid: 'uuid-lukket',
-      fagsakYtelseType: 'AKT',
+      fagsakYtelseType: 'AVP',
     });
   },
 };
@@ -97,7 +97,7 @@ export const OpprettRevurdering: Story = {
       behandlingArsakType: 'ENDRET-BOSTED',
       behandlingUuid: 'uuid-123',
       eksternUuid: 'uuid-lukket',
-      fagsakYtelseType: 'AKT',
+      fagsakYtelseType: 'AVP',
     });
   },
 };
@@ -117,7 +117,7 @@ export const OpprettTilbakekreving: Story = {
       behandlingArsakType: undefined,
       behandlingUuid: 'uuid-123',
       eksternUuid: 'uuid-lukket',
-      fagsakYtelseType: 'AKT',
+      fagsakYtelseType: 'AVP',
     });
   },
 };
@@ -141,7 +141,7 @@ export const OpprettTilbakekrevingRevurdering: Story = {
       behandlingArsakType: tilbakekrevingBehandlingÅrsakType.RE_KLAGE_KA,
       behandlingUuid: 'uuid-123',
       eksternUuid: 'uuid-lukket',
-      fagsakYtelseType: 'AKT',
+      fagsakYtelseType: 'AVP',
     });
   },
 };

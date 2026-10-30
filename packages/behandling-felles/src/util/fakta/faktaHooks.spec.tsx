@@ -14,6 +14,17 @@ import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import faktaHooks from './faktaHooks';
 import { DEFAULT_FAKTA_KODE } from './faktaUtils';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
+
+const medBehandlingProvider = ({ children }) => (
+  <BehandlingProvider
+    refetchBehandling={() => Promise.resolve()}
+    settBehandling={vi.fn()}
+    oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+  >
+    {children}
+  </BehandlingProvider>
+);
 
 describe('<faktaHooks>', () => {
   const fagsak = {
@@ -132,16 +143,18 @@ describe('<faktaHooks>', () => {
     const overstyringApCodes = [];
     const valgtProsessSteg = 'default';
 
-    const { result } = renderHook(() =>
-      faktaHooks.useCallbacks(
-        [panelUtledet],
-        fagsak,
-        behandling as Behandling,
-        oppdaterProsessStegOgFaktaPanelIUrl,
-        valgtProsessSteg,
-        overstyringApCodes,
-        lagreAksjonspunkter,
-      ),
+    const { result } = renderHook(
+      () =>
+        faktaHooks.useCallbacks(
+          [panelUtledet],
+          fagsak,
+          behandling as Behandling,
+          oppdaterProsessStegOgFaktaPanelIUrl,
+          valgtProsessSteg,
+          overstyringApCodes,
+          lagreAksjonspunkter,
+        ),
+      { wrapper: medBehandlingProvider },
     );
     const velgFaktaPanelCallback = result.current[0];
     const bekreftAksjonspunktCallback = result.current[1];

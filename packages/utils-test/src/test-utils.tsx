@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { reducer, reduxForm } from 'redux-form';
 import defaultMessages from '@k9-sak-web/behandling-felles/src/i18n/globalMessages.json';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { createQueryClient } from '@k9-sak-web/gui/shared/query/queryClient.js';
 const intlErrorHandler = error => {
   if (error.code === 'MISSING_TRANSLATION') {
@@ -14,10 +15,20 @@ const intlErrorHandler = error => {
   console.warn(error);
 };
 
+const TestBehandlingProvider = ({ children }) => (
+  <BehandlingProvider
+    refetchBehandling={() => Promise.resolve()}
+    settBehandling={vi.fn()}
+    oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+  >
+    {children}
+  </BehandlingProvider>
+);
+
 export function renderWithIntl(ui: ReactElement<any>, { locale, messages, ...renderOptions }: any = {}) {
   const Wrapper = ({ children }) => (
     <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={intlErrorHandler}>
-      {children}
+      <TestBehandlingProvider>{children}</TestBehandlingProvider>
     </IntlProvider>
   );
 
@@ -32,7 +43,9 @@ export function renderWithIntlAndReduxForm(
   const Wrapper = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
       <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={intlErrorHandler}>
-        <MockForm initialValues={initialValues}>{children}</MockForm>
+        <TestBehandlingProvider>
+          <MockForm initialValues={initialValues}>{children}</MockForm>
+        </TestBehandlingProvider>
       </IntlProvider>
     </Provider>
   );

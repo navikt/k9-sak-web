@@ -5,6 +5,7 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Timeline, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
+import type { ComponentProps } from 'react';
 import { useState } from 'react';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
@@ -14,6 +15,7 @@ import styles from './tilkjentYtelse.module.css';
 import TimeLineControl from './timeline/TimeLineControl';
 
 export type PeriodeMedId = BeregningsresultatPeriodeDto & { id: number };
+type TimelinePeriodeStatus = ComponentProps<typeof Timeline.Period>['status'];
 
 const parseDateString = (dateString: string) => initializeDate(dateString, ISO_DATE_FORMAT).toDate();
 
@@ -64,16 +66,21 @@ const prepareTimelineData = (
   index: number,
   getKodeverknavn: (kode: string, kodeverkType: KodeverkType) => string,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-) => ({
-  ...periode,
-  className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
-  group: 1,
-  id: index,
-  start: parseDateString(periode.fom),
-  end: initializeDate(periode.tom).add(1, 'day').toDate(),
-  title: createTooltipContent(periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
-  content: '',
-});
+) => {
+  const status: TimelinePeriodeStatus = erTotalUtbetalingsgradOver100(periode) ? 'success' : undefined;
+
+  return {
+    ...periode,
+    className: !erTotalUtbetalingsgradOver100(periode) ? styles.gradert : '',
+    status,
+    group: 1,
+    id: index,
+    start: parseDateString(periode.fom),
+    end: initializeDate(periode.tom).add(1, 'day').toDate(),
+    title: createTooltipContent(periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+    content: '',
+  };
+};
 
 const finnRolle = (personopplysninger: PersonopplysningDto): string =>
   personopplysninger.navn ? personopplysninger.navn : 'Søker';
@@ -182,6 +189,7 @@ export const TilkjentYtelse = ({
                   className={periode.className}
                   onSelectPeriod={() => selectHandler(periode.id)}
                   isActive={valgtPeriode?.id === periode.id}
+                  status={periode.status}
                 />
               ))}
             </Timeline.Row>
