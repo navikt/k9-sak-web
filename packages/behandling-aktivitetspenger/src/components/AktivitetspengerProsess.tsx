@@ -5,7 +5,7 @@ import { FatterVedtakStatusModal, IverksetterVedtakStatusModal, prosessStegHooks
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { ProsessMeny } from '@k9-sak-web/gui/behandling/prosess/ProsessMeny.js';
 import { AktivitetspengerApi } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegCodes.js';
 import { Bleed, Box } from '@navikt/ds-react';
 import { useCallback, useMemo, useState } from 'react';
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
@@ -88,7 +88,11 @@ export const AktivitetspengerProsess = ({
         lukkModal={lukkModalOgGåTilSøk}
         tekstkode="Behandlingen er sendt til godkjenning."
       />
-      <ProsessMeny steg={prosessteg} erKlar={erKlar}>
+      <ProsessMeny
+        steg={prosessteg}
+        erKlar={erKlar}
+        defaultPanelId={behandling.status === behandlingStatus.AVSLUTTET ? prosessStegCodes.VEDTAK : undefined}
+      >
         <Bleed marginInline="space-20">
           <Box borderColor="neutral-subtle" borderWidth="1 0 0 0" padding="space-24" marginBlock="space-16">
             {prosessteg.map(steg => {
