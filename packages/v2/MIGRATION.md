@@ -53,9 +53,9 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
     V2 er ferdig implementert og i bruk i Q. Prod bruker fortsatt v1.
 - [ ] `fakta-om-barnet` → `BRUK_V2_OM_BARNET`
     V2 (`fakta/om-barnet`) er koblet til i både pleiepenger og opplæringspenger og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert mot reelt aksjonspunkt 9202 i Q ennå.
+- [ ] `fakta-omsorgen-for` → `BRUK_OMSORGEN_FOR_V2`
 
 #### Under arbeid
-- fakta-omsorgen-for (Hallvard)
 
 ---
 

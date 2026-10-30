@@ -124,7 +124,7 @@ export const ArbeidOgInntekt = ({
                 <Label size="small">Periode</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert av deltaker</Label>
+                <Label size="small">Rapportert av {isAktivitetspenger ? 'bruker' : 'deltaker'}</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
                 <Label size="small">Rapportert i A-ordningen</Label>
@@ -164,6 +164,7 @@ export const ArbeidOgInntekt = ({
                           <DetaljerOmInntekt
                             inntektKontrollPeriode={inntektKontrollPeriode}
                             arbeidsgivere={arbeidsgivere}
+                            isAktivitetspenger={isAktivitetspenger}
                           />
                         </Box>
                       </Bleed>
