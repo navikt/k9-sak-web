@@ -1,10 +1,22 @@
 import {
   type GetSatsOgUtbetalingPerioderResponse,
   type GetUngdomsprogramInformasjonResponse,
+  type ung_sak_kontrakt_arbeidsforhold_ArbeidsgiverOversiktDto as ArbeidsgiverOversiktDto,
   type ung_sak_kontrakt_kontroll_KontrollerInntektDto as KontrollerInntektDto,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
 
+interface FakeUngBeregningBackendApiOverrides {
+  kontrollerInntekt?: KontrollerInntektDto;
+  arbeidsgivere?: ArbeidsgiverOversiktDto;
+}
+
 export class FakeUngBeregningBackendApi {
+  readonly #overrides: FakeUngBeregningBackendApiOverrides;
+
+  constructor(overrides: FakeUngBeregningBackendApiOverrides = {}) {
+    this.#overrides = overrides;
+  }
+
   async getSatsOgUtbetalingPerioder(): Promise<GetSatsOgUtbetalingPerioderResponse> {
     return [
       {
@@ -109,6 +121,9 @@ export class FakeUngBeregningBackendApi {
   }
 
   async getKontrollerInntekt(): Promise<KontrollerInntektDto> {
+    if (this.#overrides.kontrollerInntekt) {
+      return this.#overrides.kontrollerInntekt;
+    }
     return {
       kontrollperioder: [
         {
@@ -132,9 +147,7 @@ export class FakeUngBeregningBackendApi {
     };
   }
 
-  async getArbeidsgiverOpplysninger() {
-    return {
-      arbeidsgivere: {},
-    };
+  async getArbeidsgiverOpplysninger(): Promise<ArbeidsgiverOversiktDto> {
+    return this.#overrides.arbeidsgivere ?? { arbeidsgivere: {} };
   }
 }
