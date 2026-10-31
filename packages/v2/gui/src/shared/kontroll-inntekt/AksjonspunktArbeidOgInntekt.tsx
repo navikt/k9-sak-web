@@ -57,6 +57,7 @@ export const AksjonspunktArbeidOgInntekt = ({
         padding="space-24"
         borderWidth={isReadOnly ? undefined : '0 0 0 4'}
         borderRadius="0 4 4 0"
+        borderColor="warning"
         style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
       >
         <VStack gap="space-32">
