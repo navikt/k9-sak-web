@@ -74,6 +74,7 @@ describe('<FagsakSearchIndex>', () => {
     requestApi.clearAllMockData();
     requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverkV2);
     mockNavigate.mockReset();
+    mockFagsakSøk.mockReset();
     mockIsAktivitetspenger.mockReturnValue(false);
   });
 
@@ -124,6 +125,10 @@ describe('<FagsakSearchIndex>', () => {
     expect(screen.getByRole('cell', { name: '12345' })).toBeInTheDocument();
     expect(screen.getByRole('cell', { name: '23456' })).toBeInTheDocument();
     expect(screen.queryByRole('cell', { name: '34567' })).not.toBeInTheDocument();
+    expect(mockFagsakSøk).toHaveBeenCalledExactlyOnceWith(
+      '12345',
+      ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
+    );
   });
 
   it('viser bare aktivitetspengesaker i aktivitetspenger-appen og navigerer ved ett treff', async () => {
@@ -136,6 +141,10 @@ describe('<FagsakSearchIndex>', () => {
     await vi.waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(expect.stringContaining('34567'));
     });
+    expect(mockFagsakSøk).toHaveBeenCalledExactlyOnceWith(
+      '34567',
+      ung_kodeverk_behandling_FagsakYtelseType.AKTIVITETSPENGER,
+    );
   });
 
   it('viser ingen-treff-melding når ingen saker har riktig sakstype', async () => {
