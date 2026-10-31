@@ -72,7 +72,7 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
       vilkar={vilkårForSteg}
       erOverstyrt={erOverstyrt}
       overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_MEDLEMSKAPSVILKÅRET}
-      erMedlemskapsPanel={true}
+      erMedlemskapsPanel={false}
       visPeriodisering={false}
       visAllePerioder={props.visAllePerioder}
       panelTittelKode="Medlemskap"
