@@ -53,7 +53,7 @@ export const ÅpentAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     readOnly: false,
   },
@@ -98,7 +98,7 @@ export const Skjemavalidering: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     readOnly: false,
   },
@@ -164,7 +164,7 @@ export const LøsAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagVurderDatoNyRegelAksjonspunkt()],
     readOnly: false,
   },
@@ -269,7 +269,7 @@ export const RedigerVurdering: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [
       lagVurderDatoNyRegelAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse:
@@ -346,7 +346,7 @@ export const LesevisningForBeslutter: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [
       lagVurderDatoNyRegelAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse:
