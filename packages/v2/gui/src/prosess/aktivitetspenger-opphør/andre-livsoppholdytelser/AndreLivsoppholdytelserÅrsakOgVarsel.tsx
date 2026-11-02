@@ -160,7 +160,7 @@ const ikkeOppfyltÅrsaker = Object.values(AndreLivsoppholdsytelserIkkeOppfyltÅr
   )
   .map(årsak => ({
     value: årsak,
-    label: formatSnakeCaseLabel(årsak),
+    label: formatSnakeCaseLabel(årsak.replace(/^MOTTAR_/, '')),
   }));
 
 interface Props {
