@@ -20,6 +20,7 @@ import { action } from 'storybook/actions';
 import { expect, userEvent } from 'storybook/test';
 import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const navAnsatt = {
   brukernavn: 'Test',
@@ -97,7 +98,7 @@ const dummyData: TotrinnskontrollData = {
   },
 };
 const api: TotrinnskontrollApi = {
-  backend: 'k9sak',
+  backend: backendNavn.k9sak,
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData> {
     ignoreUnusedDeclared(behandlingUuid);
     return Promise.resolve(dummyData);

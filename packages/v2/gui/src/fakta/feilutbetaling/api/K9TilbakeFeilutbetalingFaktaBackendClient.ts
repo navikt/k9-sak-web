@@ -7,9 +7,10 @@ import type {
   FeilutbetalingFaktaViewModel,
   FeilutbetalingÅrsakerPerYtelseViewModel,
 } from './FeilutbetalingFaktaViewModel.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export class K9FeilutbetalingFaktaBackendClient implements FeilutbetalingFaktaApi {
-  readonly backend = 'k9tilbake' as const;
+export class K9TilbakeFeilutbetalingFaktaBackendClient implements FeilutbetalingFaktaApi {
+  readonly backend = backendNavn.k9tilbake;
 
   async hentFeilutbetalingFakta(behandlingUuid: string): Promise<FeilutbetalingFaktaViewModel> {
     const response = await behandlingfakta_hentFeilutbetalingFakta({

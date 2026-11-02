@@ -5,9 +5,9 @@ import type {
   ung_sak_kontrakt_formidling_vedtaksbrev_VedtaksbrevValgRequest,
   VedtaksbrevValgResponse,
 } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export type UngVedtakBackendApiType = {
-  readonly backend: 'ungsak';
+export interface UngVedtakBackendApiType extends BackendTilhørighet {
   forhåndsvisVedtaksbrev(
     behandlingId: number,
     dokumentMalType: ung_kodeverk_dokument_DokumentMalType,
@@ -20,4 +20,4 @@ export type UngVedtakBackendApiType = {
     behandlingId: string,
     dokumentMalType: ung_kodeverk_dokument_DokumentMalType,
   ): Promise<ung_sak_kontrakt_formidling_vedtaksbrev_editor_VedtaksbrevEditorResponse>;
-};
+}

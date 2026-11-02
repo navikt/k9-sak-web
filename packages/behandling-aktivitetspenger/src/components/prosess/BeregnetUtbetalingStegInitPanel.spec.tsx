@@ -9,8 +9,8 @@ import { Suspense } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { BeregnetUtbetalingStegInitPanel } from './BeregnetUtbetalingStegInitPanel';
 
-vi.mock('@k9-sak-web/gui/prosess/aktivitetspenger-beregning/AktivitetspengerBeregningBackendClient.js', () => ({
-  AktivitetspengerBeregningBackendClient: class {
+vi.mock('@k9-sak-web/gui/prosess/aktivitetspenger-beregning/UngSakAktivitetspengerBeregningBackendClient.js', () => ({
+  UngSakAktivitetspengerBeregningBackendClient: class {
     getArbeidsgiverOpplysninger = vi.fn().mockResolvedValue({});
   },
 }));

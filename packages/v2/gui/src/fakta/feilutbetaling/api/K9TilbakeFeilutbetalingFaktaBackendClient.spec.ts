@@ -5,14 +5,14 @@ import {
 import type { BehandlingFeilutbetalingFaktaDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/BehandlingFeilutbetalingFaktaDto.js';
 import type { HendelseTyperPrYtelseTypeDto } from '@k9-sak-web/backend/k9tilbake/kontrakt/feilutbetaling/HendelseTyperDto.js';
 import { describe, expect, it, vi } from 'vitest';
-import { K9FeilutbetalingFaktaBackendClient } from './K9FeilutbetalingFaktaBackendClient.js';
+import { K9TilbakeFeilutbetalingFaktaBackendClient } from './K9TilbakeFeilutbetalingFaktaBackendClient.js';
 
 vi.mock('@k9-sak-web/backend/k9tilbake/api/feilutbetaling.js', () => ({
   behandlingfakta_hentFeilutbetalingFakta: vi.fn(),
   kodeverk_hentAlleFeilutbetalingÅrsaker: vi.fn(),
 }));
 
-describe('K9FeilutbetalingFaktaBackendClient', () => {
+describe('K9TilbakeFeilutbetalingFaktaBackendClient', () => {
   it('bevarer manglende valgfrie faktafelt', async () => {
     const fakta: BehandlingFeilutbetalingFaktaDto = {
       behandlingFakta: {
@@ -21,7 +21,7 @@ describe('K9FeilutbetalingFaktaBackendClient', () => {
     };
     vi.mocked(behandlingfakta_hentFeilutbetalingFakta).mockResolvedValue({ data: fakta } as never);
 
-    const result = await new K9FeilutbetalingFaktaBackendClient().hentFeilutbetalingFakta('behandling-uuid');
+    const result = await new K9TilbakeFeilutbetalingFaktaBackendClient().hentFeilutbetalingFakta('behandling-uuid');
 
     expect(result).toEqual({ behandlingFakta: { perioder: [{}] } });
     expect(behandlingfakta_hentFeilutbetalingFakta).toHaveBeenCalledWith({
@@ -43,7 +43,7 @@ describe('K9FeilutbetalingFaktaBackendClient', () => {
     ];
     vi.mocked(kodeverk_hentAlleFeilutbetalingÅrsaker).mockResolvedValue({ data: årsaker } as never);
 
-    const result = await new K9FeilutbetalingFaktaBackendClient().hentFeilutbetalingÅrsaker();
+    const result = await new K9TilbakeFeilutbetalingFaktaBackendClient().hentFeilutbetalingÅrsaker();
 
     expect(result).toEqual([
       {

@@ -30,11 +30,12 @@ import {
   vilkår_hentAndreLivsoppholdsytelserVurderinger,
 } from '@k9-sak-web/backend/ungsak/sdk/AktivitetspengerSdk.js';
 import type { AktivitetspengerApi, BehandlingStatusEllerBehandling } from './AktivitetspengerApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const erBehandlingDto = (data: unknown): data is BehandlingDto => isObject(data) && 'uuid' in data && 'versjon' in data;
 
-export class AktivitetspengerBackendClient implements AktivitetspengerApi {
-  readonly backend = 'ungsak';
+export class UngSakAktivitetspengerBackendClient implements AktivitetspengerApi {
+  readonly backend = backendNavn.ungsak;
 
   async getAksjonspunkter(behandlingId: string) {
     return (await aksjonspunkt_getAksjonspunkter({ query: { behandlingId } })).data;

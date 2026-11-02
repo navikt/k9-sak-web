@@ -15,6 +15,7 @@ import {
 } from '@k9-sak-web/backend/ungtilbake/generated/sdk.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/ungtilbake/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class UngTilbakeTotrinnskontrollData implements TotrinnskontrollData {
   #kodeverkoppslag: UngTilbakeKodeverkoppslag;
@@ -65,7 +66,7 @@ export class UngTilbakeTotrinnskontrollData implements TotrinnskontrollData {
 }
 
 export class UngTilbakeTotrinnskontrollBackendClient implements TotrinnskontrollApi {
-  readonly backend = 'ungtilbake';
+  readonly backend = backendNavn.ungtilbake;
   #kodeverkoppslag: UngTilbakeKodeverkoppslag;
 
   constructor(kodeverkoppslag: UngTilbakeKodeverkoppslag) {

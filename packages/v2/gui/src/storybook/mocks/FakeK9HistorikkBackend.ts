@@ -9,6 +9,7 @@ import { K9HistorikkInnslagBeriker } from '../../sak/historikk/api/K9HistorikkIn
 import type { K9Kodeverkoppslag } from '../../kodeverk/oppslag/useK9Kodeverkoppslag.js';
 import type { k9_klage_kontrakt_historikk_v2_HistorikkinnslagDtoV2 as KlageHistorikkinnslagDtoV2 } from '@k9-sak-web/backend/k9klage/generated/types.js';
 import type { foreldrepenger_tilbakekreving_historikk_HistorikkinnslagDto as TilbakeHistorikkinnslagDto } from '@k9-sak-web/backend/k9tilbake/generated/types.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 // Kopi av respons frå k9-sak backend i dev
 const fakeK9SakResponse: HentAlleInnslagV2Response = [
@@ -373,7 +374,7 @@ const fakeK9TilbakeResponse: TilbakeHistorikkinnslagDto[] = [
 export class FakeK9HistorikkBackend implements HistorikkBackendApi {
   #beriker: K9HistorikkInnslagBeriker;
 
-  readonly backend = 'k9';
+  readonly backend = sammenstiltBackendNavn.k9;
 
   constructor(kodeverkoppslag: K9Kodeverkoppslag) {
     this.#beriker = new K9HistorikkInnslagBeriker(kodeverkoppslag);

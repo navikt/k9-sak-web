@@ -19,6 +19,7 @@ import type { BostedGrunnlagResponseDto } from '@k9-sak-web/backend/ungsak/kontr
 import type { ForutgåendeMedlemskapResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/medlemskap/ForutgåendeMedlemskapResponse.js';
 import type { AndreLivsoppholdsytelserVurderingerResponse } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/vurdering/AndreLivsoppholdsytelserVurderingerResponse.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import type {
   VilkårsavklaringerDto,
   VilkårsavklaringVurderingerDto,
@@ -27,8 +28,7 @@ import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 
 export type BehandlingStatusEllerBehandling = { status: AsyncPollingStatus } | { behandling: BehandlingDto };
 
-export interface AktivitetspengerApi {
-  readonly backend: 'ungsak';
+export interface AktivitetspengerApi extends BackendTilhørighet {
   getAksjonspunkter(behandlingId: string): Promise<AksjonspunktDto[]>;
   lagreAksjonspunktOverstyr(props: BekreftetOgOverstyrteAksjonspunkterDto): Promise<unknown>;
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
