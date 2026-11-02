@@ -1,3 +1,4 @@
+import { FagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import { fagsak_søkFagsaker, navAnsatt_getSaksbehandlere } from '@navikt/ung-sak-typescript-client/sdk';
 import {
   ung_sak_kontrakt_fagsak_FagsakDto,
@@ -7,8 +8,11 @@ import type { UngSakBackendApi } from './UngSakBackendApi.js';
 
 export class UngSakBackendClient implements UngSakBackendApi {
   readonly backend = 'ungsak';
-  async fagsakSøk(searchString: string): Promise<Array<ung_sak_kontrakt_fagsak_FagsakDto>> {
-    return (await fagsak_søkFagsaker({ body: { searchString } })).data;
+  async fagsakSøk(
+    searchString: string,
+    ytelseType: FagsakYtelsesType,
+  ): Promise<Array<ung_sak_kontrakt_fagsak_FagsakDto>> {
+    return (await fagsak_søkFagsaker({ body: { searchString, ytelseType } })).data;
   }
 
   async hentSaksbehandlere(behandlingUuid: string): Promise<ung_sak_kontrakt_saksbehandler_SaksbehandlerDto> {
