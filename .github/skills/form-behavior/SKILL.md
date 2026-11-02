@@ -40,7 +40,7 @@ Do not copy: `packages/v2/gui/src/fakta/direkte-overgang/ManglerSøknadForm.tsx`
 Build `defaultValues` from the saved data in one function, with empty values (`''`, `undefined`, `[]`) for fields that have no saved value.
 
 - On Avbryt, call `reset()` without arguments before leaving edit mode; it restores `defaultValues`. Reference: `handleCancel` in `packages/v2/gui/src/fakta/om-barnet/RettVedDødForm.tsx`, tested in the story step «Avbryt tilbakestiller skjemaet uten å sende inn» in `OmBarnetPanel.stories.tsx`.
-- When the saved data changes, call `reset` with the new `defaultValues`; `useForm` reads `defaultValues` only on the first render. Reference: the `useEffect` with `reset` in `packages/v2/gui/src/fakta/sykdom-og-opplæring/1-institusjon/components/InstitusjonForm.tsx`.
+- When the saved data changes, call `reset` with the new `defaultValues`; `useForm` reads `defaultValues` only on the first render. The effect must depend on the saved values, not just the vurdering's identifier. The `useEffect` with `reset` in `packages/v2/gui/src/fakta/sykdom-og-opplæring/1-institusjon/components/InstitusjonForm.tsx` demonstrates resetting when `journalpostId` changes, but does not handle updated saved values for the same journalpost.
 
 Map the saved values to the same type as the field values, see `references/radio-groups.md` in the `form-validation` skill.
 
