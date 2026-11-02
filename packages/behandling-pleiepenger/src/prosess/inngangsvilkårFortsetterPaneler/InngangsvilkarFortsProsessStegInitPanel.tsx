@@ -113,6 +113,7 @@ export const InngangsvilkarFortsProsessStegInitPanel = ({
             vilkår={vilkårForSteg}
             behandling={behandling}
             visAllePerioder={visAllePerioder}
+            overstyrteAksjonspunktKoder={overstyrteAksjonspunktKoder}
           />
         </VStack>
       </HGrid>

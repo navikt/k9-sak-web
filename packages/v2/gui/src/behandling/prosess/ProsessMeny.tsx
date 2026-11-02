@@ -38,6 +38,7 @@ interface ProsessMenyProps {
   steg: ProsessSteg[];
   /** Om prosessmotor-data (f.eks. aksjonspunkter) er ferdig hentet. Når false hoppes URL-synkroniseringen over. */
   erKlar?: boolean;
+  defaultPanelId?: string;
 }
 
 /**
@@ -61,7 +62,7 @@ interface ProsessMenyProps {
  * </ProsessMeny>
  * ```
  */
-export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }: ProsessMenyProps) => {
+export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true, defaultPanelId }: ProsessMenyProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [valgtPanelId, setValgtPanelId] = useState<string | null>(null);
   const sisteAktivtValgtePanelIdRef = useRef<string | null>(null);
@@ -79,7 +80,8 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }:
    *
    * Kjøres når `urlPanelId` eller `prosessmotorSteg` endrer seg. Prioritetsrekkefølge:
    *
-   * 1. `punkt=default` — nullstiller brukervalg og navigerer til "beste" panel:
+   * 1. `punkt=default` — nullstiller brukervalg og navigerer til `defaultPanelId` hvis den finnes,
+   *    ellers til "beste" panel:
    *    - Siste panel hvis alle er ferdigbehandlet (danger/success)
    *    - Første panel med aksjonspunkt (warning), ellers første panel
    *
@@ -88,9 +90,9 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }:
    *    - URL har endret seg (f.eks. nettlesernavigasjon) → nullstill brukervalg
    *      og fall igjennom til steg 3 for å respektere den nye URL-en
    *
-   * 3. URL peker på et gyldig panel-ID → sett det som aktivt panel
+   * 3. URL peker på et gyldig panel-ID → sett det som aktivt panel, uavhengig av `defaultPanelId`
    *
-   * 4. Ingen URL-valg → naviger automatisk til første panel med aksjonspunkt
+   * 4. Ingen gyldig URL-valg → naviger til `defaultPanelId` hvis den finnes, ellers første panel med aksjonspunkt
    *
    * `sisteAktivtValgtePanelIdRef` er en ref (ikke state) fordi den ikke påvirker
    * render-output direkte. Mutasjon av den skal ikke utløse en ekstra render-syklus.
@@ -103,6 +105,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }:
     }
 
     const gyldigePanelIds = prosessmotorSteg.map(s => s.id);
+    const foretrukketPanel = defaultPanelId ? prosessmotorSteg.find(steg => steg.id === defaultPanelId) : undefined;
     // Ekskluder aktivt panel — ved stale data kan det fremdeles vises som warning selv om det akkurat ble løst
     const panelMedAksjonspunkt = prosessmotorSteg.find(
       steg => steg.type === ProcessMenuStepType.warning && steg.id !== valgtPanelIdRef.current,
@@ -111,6 +114,16 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }:
     // Steg 1: punkt=default
     if (urlPanelId === 'default') {
       sisteAktivtValgtePanelIdRef.current = null;
+      if (foretrukketPanel) {
+        setValgtPanelId(foretrukketPanel.id);
+        setSearchParams(forrige => {
+          const neste = new URLSearchParams(forrige);
+          neste.set('punkt', foretrukketPanel.id);
+          return neste;
+        });
+        return;
+      }
+
       const allePanelerErFerdigbehandlet = prosessmotorSteg.every(
         steg => steg.type === ProcessMenuStepType.danger || steg.type === ProcessMenuStepType.success,
       );
@@ -151,6 +164,16 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }:
       return;
     }
 
+    if (foretrukketPanel) {
+      setValgtPanelId(foretrukketPanel.id);
+      setSearchParams(forrige => {
+        const neste = new URLSearchParams(forrige);
+        neste.set('punkt', foretrukketPanel.id);
+        return neste;
+      });
+      return;
+    }
+
     // Steg 4: auto-naviger til aksjonspunkt
     if (panelMedAksjonspunkt) {
       setValgtPanelId(panelMedAksjonspunkt.id);
@@ -160,7 +183,7 @@ export const ProsessMeny = ({ children, steg: prosessmotorSteg, erKlar = true }:
         return neste;
       });
     }
-  }, [urlPanelId, prosessmotorSteg, setSearchParams, erKlar]);
+  }, [urlPanelId, prosessmotorSteg, setSearchParams, erKlar, defaultPanelId]);
 
   // Konverter panelregistreringer til ProcessMenu steps-format
   const steg = useMemo(() => {
