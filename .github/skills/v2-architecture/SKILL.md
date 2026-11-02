@@ -22,7 +22,8 @@ Code in `packages/v2/` follows stricter TypeScript rules and different conventio
 | queryOptions, query keys, mutations, `useSuspenseQuery` | `data-fetching` |
 | Kodeverk constants and name lookups | `kodeverk` |
 | Showing and solving an aksjonspunkt: form vs read-only view | `aksjonspunkt` |
-| Validating form fields per field type | `form-validation` |
+| Validating form fields, per field type and across fields | `form-validation` |
+| What a form validates and submits when fields are hidden or changed | `form-behavior` |
 | Stories, decorators and tests | `storybook` |
 | Adding and reading feature toggles | `feature-toggles` |
 | UI design decisions, e.g. alerts | `design-*` |
