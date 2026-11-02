@@ -44,12 +44,12 @@ Build `defaultValues` from the saved data in one function, with empty values (`'
 
 Map the saved values to the same type as the field values, see `references/radio-groups.md` in the `form-validation` skill.
 
-For hidden fields, keep the default `shouldUnregister: false`, so the value stays in the form, and build the payload in `onSubmit` from the fields that are shown. Reference: `handleSubmit` in `packages/v2/gui/src/fakta/sykdom-og-opplæring/1-institusjon/components/InstitusjonForm.tsx` sends `begrunnelse` only when it is shown. Do not use `shouldUnregister: true`; it discards the input when a field is hidden.
+For hidden fields, build the payload in `onSubmit` from the fields that are shown. Reference: `handleSubmit` in `packages/v2/gui/src/fakta/sykdom-og-opplæring/1-institusjon/components/InstitusjonForm.tsx` sends `begrunnelse` only when it is shown.
 
 ## Pitfalls
 
 - react-hook-form does not validate unmounted fields, but keeps their value and sends it unless the payload leaves it out.
-- `shouldUnregister` applies to the whole form. On a single `Rhf*` field it has no effect; the components do not pass it on.
+- Do not use `shouldUnregister: true` in `useForm`; it discards the input when a field is hidden. On a single `Rhf*` field `shouldUnregister` has no effect; the components do not pass it on.
 - `RhfSelect` shows an empty select when its value is not an option, but keeps the value in the form. `hideValueOnDisable` only hides the value.
 
 ## Tests

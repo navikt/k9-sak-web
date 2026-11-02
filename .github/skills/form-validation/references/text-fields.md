@@ -30,14 +30,14 @@ The frontend can require a field that the backend accepts empty, e.g. a begrunne
 
 Read the schema of the DTO that is actually sent, not the DTO the value is read from. For an aksjonspunkt, this is the DTO for that aksjonspunkt, e.g. `begrunnelse` in `$k9_sak_kontrakt_søknad_AvklarTilleggsopplysningerDto` is not in `required` and has `maxLength: 4000`.
 
-Search for the DTO in `node_modules/<client-package>/src/schemas.gen.ts`. The schemas are re-exported from `@k9-sak-web/backend/<backend>/generated/schemas.js`.
+Search for the DTO in `node_modules/<client-package>/src/schemas.gen.ts`. Re-export the schema from the DTO file under `kontrakt/` as `$<Alias>` (see the `generated-types` skill) and import from that.
 
-Reference implementation: `packages/v2/gui/src/sak/meldinger/FritekstInput.tsx`.
+Reference implementation: `packages/v2/gui/src/prosess/aktivitetspenger-inngangsvilkår/aktivitet/AktivitetSkjema.tsx`.
 
 ```typescript
-import { $k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated/schemas.js';
+import { $VurderAktivitetDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.js';
 
-const tittelMaxLength = $FritekstbrevinnholdDto.properties.overskrift.maxLength;
+const begrunnelseMaxLength = $VurderAktivitetDto.properties.begrunnelse.maxLength;
 ```
 
 With `@navikt/ft-form-validators`, pass the same constant to `maxLength(...)` and to the `maxLength` prop of the field.
@@ -46,7 +46,7 @@ If a string field in the schema has no `maxLength`, do not pick a limit in the f
 
 `maxLength` and `minLength` in `@navikt/ft-form-validators` count the trimmed text, while the backend checks the value that is sent. Trim the value before sending it if leading or trailing whitespace can make it exceed the limit.
 
-Do not copy: `packages/v2/gui/src/fakta/ny-inntekt/src/components/felles/FaktaBegrunnelseTextField.tsx` hardcodes `maxLength(1500)` instead of reading the limit from the schema.
+Do not copy: `packages/v2/gui/src/fakta/ny-inntekt/src/components/felles/FaktaBegrunnelseTextField.tsx` hardcodes `maxLength(1500)` instead of reading the limit from the schema, and `packages/v2/gui/src/sak/meldinger/FritekstInput.tsx` imports the schema directly from `generated/schemas.js` instead of a stable re-export.
 
 ## Validators
 

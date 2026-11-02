@@ -1,12 +1,12 @@
 # Choice field validation
 
-Applies to `RhfSelect`, `Select`, `UNSAFE_Combobox`, `RhfCheckbox` and `RhfCheckboxGroup`. Radio groups are in [radio-groups.md](radio-groups.md), and fields that depend on the choice are in [SKILL.md](../SKILL.md).
+Applies to `RhfSelect`, `Select`, `UNSAFE_Combobox`, `RhfCheckbox` and `RhfCheckboxGroup`. Radio groups are in [radio-groups.md](radio-groups.md), and fields shown or hidden by the choice are in the `form-behavior` skill.
 
 ## Checklist
 
 | Topic | Rule |
 | --- | --- |
-| Required | Required when the field it maps to is in the `required` list of the DTO, or when the saksbehandler must choose. Start without a value so `required` can fail. |
+| Required | Required when the field it maps to is in the `required` list of the DTO, or when the saksbehandler must choose. Default values are in the `form-behavior` skill. |
 | Options | Build the options from kodeverk or backend data, and use the value the backend expects. See the `kodeverk` skill. |
 | Error message | Name what is missing: `Velg årsak`, `Velg minst én periode`. |
 
@@ -44,5 +44,4 @@ Reference implementations:
 ## Tests
 
 - No choice gives the required error
-- A saved choice is selected when the form opens
 - A checkbox that must be checked gives an error when unchecked

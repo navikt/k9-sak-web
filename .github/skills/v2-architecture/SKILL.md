@@ -37,6 +37,7 @@ Use for new v2 components and for the v2 part of a migration. Apply only the ite
 - [ ] Code follows `.github/instructions/v2.instructions.md`
 - [ ] Backend types are imported from stable re-exports (`generated-types`)
 - [ ] An open aksjonspunkt can be solved, and stories cover open and solved, with and without `readOnly` (`aksjonspunkt`)
+- [ ] Forms follow `form-behavior` and `form-validation`
 - [ ] Backend calls go through a BackendClient from the API context (`backend-client`)
 - [ ] A component that is the only consumer of an endpoint fetches its own data, with correct query keys (`data-fetching`)
 - [ ] Kodeverk uses generated constants and the kodeverkoppslag context, with no `alleKodeverk`/`kodeverk` prop (`kodeverk`)
