@@ -41,7 +41,7 @@ const FagsakSearchIndex = () => {
   } = useMutation({
     mutationFn: async ({ searchString }: { searchString?: string }) => {
       const sakstype = isAktivitetspenger() ? fagsakYtelsesType.AKTIVITETSPENGER : fagsakYtelsesType.UNGDOMSYTELSE;
-      const resultat = await api.fagsakSøk(searchString ?? '');
+      const resultat = await api.fagsakSøk(searchString ?? '', sakstype);
       return resultat.filter(fagsak => fagsak.sakstype === sakstype);
     },
     onSuccess: results => {
