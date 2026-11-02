@@ -48,7 +48,7 @@ For hidden fields, build the payload in `onSubmit` from the fields that are show
 
 ## Pitfalls
 
-- react-hook-form does not validate unmounted fields, but keeps their value and sends it unless the payload leaves it out.
+- With react-hook-form's built-in validation, unmounted fields are not validated, but their values are retained and submitted unless the payload leaves them out. With a resolver, the schema still receives retained values; make it skip validation of hidden fields using the same condition that controls their visibility.
 - Do not use `shouldUnregister: true` in `useForm`; it discards the input when a field is hidden. On a single `Rhf*` field `shouldUnregister` has no effect; the components do not pass it on.
 - `RhfSelect` shows an empty select when its value is not an option, but keeps the value in the form. `hideValueOnDisable` only hides the value.
 
