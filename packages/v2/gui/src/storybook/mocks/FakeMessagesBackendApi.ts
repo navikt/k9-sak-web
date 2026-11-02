@@ -12,6 +12,7 @@ import { fakePdf } from './fakePdf.js';
 import type { LagForhåndsvisningRequest, MessagesApi } from '../../sak/meldinger/api/MessagesApi.js';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeMessagesBackendApi implements MessagesApi {
   public static readonly dummyMalinnhold = [
@@ -117,7 +118,7 @@ export class FakeMessagesBackendApi implements MessagesApi {
     this.resetSisteFakeDokumentBestilling();
   }
 
-  readonly backend = 'k9sak';
+  readonly backend = backendNavn.k9sak;
 
   async hentInnholdBrevmal(
     sakstype: FagsakYtelsesType,

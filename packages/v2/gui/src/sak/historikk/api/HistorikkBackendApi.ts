@@ -4,6 +4,7 @@ import type {
 } from '@k9-sak-web/backend/combined/kontrakt/historikk/HistorikkinnslagDto.js';
 import type { SkjermlenkeType } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/SkjermlenkeType.js';
 import type { DokumentLink } from '@k9-sak-web/backend/combined/behandling/historikk/DokumentLink.js';
+import type { BackendTilhørighet, SammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 // Denne fila beriker genererte historikk dto typer slik at dei fungerer betre i frontend (unngår masse kodeverk oppslag der).
 // Lager "berikede" type der skjermlenke og aktør fra server får lagt til navn fra kodeverkoppslag.
@@ -44,8 +45,7 @@ export interface HentetHistorikk {
   readonly feilet: ReadonlyArray<FeiletHistorikkKall>;
 }
 
-export interface HistorikkBackendApi {
-  readonly backend: 'k9' | 'ung';
+export interface HistorikkBackendApi extends BackendTilhørighet<SammenstiltBackendNavn> {
   hentAlleInnslag(saksnummer: string): Promise<HentetHistorikk>;
 }
 

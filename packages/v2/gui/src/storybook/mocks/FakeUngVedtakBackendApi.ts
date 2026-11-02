@@ -7,9 +7,10 @@ import type {
 
 import { fakePdf } from './fakePdf.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeUngVedtakBackendApi {
-  readonly backend = 'ungsak';
+  readonly backend = backendNavn.ungsak;
   async forhåndsvisVedtaksbrev(): Promise<ForhåndsvisVedtaksbrevResponse> {
     return fakePdf();
   }

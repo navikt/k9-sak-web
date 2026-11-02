@@ -1,7 +1,7 @@
 import { useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
-import { AktivitetspengerBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/AktivitetspengerBackendClient.js';
+import { UngSakAktivitetspengerBackendClient } from '@k9-sak-web/gui/prosess/aktivitetspenger-prosess/UngSakAktivitetspengerBackendClient.js';
 import {
   aksjonspunkterQueryOptions,
   behandlingQueryOptions,
@@ -32,7 +32,7 @@ interface OwnProps {
   fagsak: Fagsak;
 }
 
-const ungSakProsessApi = new AktivitetspengerBackendClient();
+const ungSakProsessApi = new UngSakAktivitetspengerBackendClient();
 
 const BehandlingAktivitetspengerIndex = ({
   behandlingEventHandler,
