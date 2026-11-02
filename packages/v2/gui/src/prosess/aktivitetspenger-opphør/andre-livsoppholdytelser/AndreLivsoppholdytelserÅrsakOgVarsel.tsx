@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import { formatSnakeCaseLabel } from '../../../utils/formatters.js';
+import { andreLivsoppholdsytelserIkkeOppfyltÅrsaker } from '../../aktivitetspenger-felles/andreLivsoppholdsytelserIkkeOppfyltÅrsaker.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
@@ -151,17 +151,6 @@ const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytel
     avklaringer,
   };
 };
-
-const ikkeOppfyltÅrsaker = Object.values(AndreLivsoppholdsytelserIkkeOppfyltÅrsak)
-  .filter(
-    årsak =>
-      årsak !== AndreLivsoppholdsytelserIkkeOppfyltÅrsak.AVKORTET &&
-      årsak !== AndreLivsoppholdsytelserIkkeOppfyltÅrsak.UDEFINERT,
-  )
-  .map(årsak => ({
-    value: årsak,
-    label: formatSnakeCaseLabel(årsak.replace(/^MOTTAR_/, '')),
-  }));
 
 interface Props {
   vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
@@ -353,7 +342,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                   }
                   readOnly={isFormLocked}
                   validate={[required]}
-                  selectValues={ikkeOppfyltÅrsaker.map(option => (
+                  selectValues={andreLivsoppholdsytelserIkkeOppfyltÅrsaker.map(option => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
