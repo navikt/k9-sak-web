@@ -42,7 +42,7 @@ Validate only what is not allowed. When overlap is checked, revalidate the other
 | `PeriodpickerList` | `@k9-sak-web/gui/shared/periodPickerList/PeriodpickerList.js` | List of periods that must not overlap. Validates required, valid date, `fromDate`/`toDate`, fom ≤ tom and overlap, and revalidates all fields on change after the first submit |
 | `checkForOverlap(index, periode, allePerioder)` | `@k9-sak-web/lib/dateUtils/dateUtils.js` | `true` if the period overlaps another in the list. Periods sharing a day overlap; consecutive days do not. Ignores periods with an empty fom or tom |
 
-When overlap is allowed, or a period may start on the day another ends, write the check yourself. `packages/v2/gui/src/fakta/sykdom-og-opplæring/3-nødvendig-opplæring/components/DelvisOpplæring.tsx` shows a hand-written list that uses `checkForOverlap` and revalidates the other periods.
+When overlap is allowed, or a period may start on the day another ends, write the check yourself. Read current period values with `watch` or `getValues` and revalidate the other periods when one changes. Do not copy the overlap validators in `packages/v2/gui/src/fakta/sykdom-og-opplæring/3-nødvendig-opplæring/components/DelvisOpplæring.tsx`: they compare against `useFieldArray().fields` snapshots instead of the current dates.
 
 ## Validators
 
