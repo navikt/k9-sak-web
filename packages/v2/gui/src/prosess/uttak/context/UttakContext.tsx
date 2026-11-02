@@ -6,7 +6,8 @@ import { createContext, useContext, type ReactElement, type ReactNode } from 're
 export type UttakContextType = {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
   aksjonspunkter: Aksjonspunkt[];
-  erOverstyrer: boolean;
+  kanOverstyreNå: boolean;
+  harOverstyrerrolle: boolean;
   readOnly: boolean;
 };
 

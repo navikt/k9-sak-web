@@ -9,12 +9,19 @@ import UttakInnhold from './UttakInnhold.js';
 
 interface UttakProps {
   behandling: Pick<Behandling, 'uuid' | 'id' | 'versjon' | 'status' | 'sakstype' | 'avsluttet'>;
-  erOverstyrer?: boolean;
+  kanOverstyreNå?: boolean;
+  harOverstyrerrolle?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
 }
 
-const Uttak = ({ behandling, erOverstyrer = false, aksjonspunkter, readOnly }: UttakProps): JSX.Element => {
+const Uttak = ({
+  behandling,
+  kanOverstyreNå = false,
+  harOverstyrerrolle,
+  aksjonspunkter,
+  readOnly,
+}: UttakProps): JSX.Element => {
   const uttakApi = useUttakApi();
   const { data: uttak } = useSuspenseQuery(uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon));
   if (!uttak) {
@@ -22,7 +29,15 @@ const Uttak = ({ behandling, erOverstyrer = false, aksjonspunkter, readOnly }: U
   }
 
   return (
-    <UttakProvider value={{ behandling, aksjonspunkter, erOverstyrer, readOnly }}>
+    <UttakProvider
+      value={{
+        behandling,
+        aksjonspunkter,
+        kanOverstyreNå,
+        harOverstyrerrolle: harOverstyrerrolle ?? kanOverstyreNå,
+        readOnly,
+      }}
+    >
       <UttakInnhold />
     </UttakProvider>
   );

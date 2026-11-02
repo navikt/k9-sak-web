@@ -18,6 +18,7 @@ interface Props {
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
+    employeeHasAccess: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   vilkår: k9_sak_kontrakt_vilkår_VilkårMedPerioderDto[];

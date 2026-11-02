@@ -274,9 +274,7 @@ const BehandlingIndex = ({
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary>
-            <KroniskSyktBarnDatoContext.Provider
-              value={finnDatoerForKroniskSyktBarn(alleBehandlinger, behandling.id)}
-            >
+            <KroniskSyktBarnDatoContext.Provider value={finnDatoerForKroniskSyktBarn(alleBehandlinger, behandling.id)}>
               <BehandlingUtvidetRettIndex
                 oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
                 valgtFaktaSteg={query.fakta}

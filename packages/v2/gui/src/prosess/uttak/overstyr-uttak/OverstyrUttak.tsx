@@ -22,7 +22,7 @@ interface OverstyrUttakProps {
 }
 
 const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
-  const { behandling, aksjonspunkter, erOverstyrer } = useUttakContext();
+  const { behandling, aksjonspunkter, kanOverstyreNå } = useUttakContext();
   const uttakApi = useUttakApi();
   const { data: uttak, refetch: hentUttak } = useSuspenseQuery(
     uttakQueryOptions(uttakApi, behandling.uuid, behandling.versjon),
@@ -34,7 +34,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   const [bekreftSlettId, setBekreftSlettId] = useState<number>();
   // 'ny' viser skjema for ny overstyring, et tall viser skjema for å endre overstyring med den indeksen
   const [overstyringSkjema, setOverstyringSkjema] = useState<'ny' | number>();
-  const leseModus = !erOverstyrer || !overstyringAktiv;
+  const leseModus = !kanOverstyreNå || !overstyringAktiv;
 
   const { data: overstyrte, isLoading: lasterOverstyrte } = useQuery(
     uttakOverstyringerQueryOptions(uttakApi, behandling.uuid),
@@ -90,7 +90,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
     });
 
   const harNoeÅVise =
-    (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0) || (erOverstyrer && overstyringAktiv);
+    (overstyrte?.overstyringer && overstyrte?.overstyringer?.length > 0) || (kanOverstyreNå && overstyringAktiv);
 
   const arbeidsgivere = overstyrte?.arbeidsgiverOversikt?.arbeidsgivere;
 
@@ -119,7 +119,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
   if (harNoeÅVise) {
     return (
       <div>
-        {harOverstyringAksjonspunkt && (
+        {harOverstyringAksjonspunkt && kanOverstyreNå && (
           <Alert variant="warning">
             <Heading spacing size="xsmall" level="3">
               Vurder overstyring av uttaksgrad og utbetalingsgrad
@@ -167,7 +167,7 @@ const OverstyrUttak: FC<OverstyrUttakProps> = ({ overstyringAktiv }) => {
             )}
           </>
         )}
-        {erOverstyrer && overstyringAktiv && (
+        {kanOverstyreNå && overstyringAktiv && (
           <>
             <Modal
               open={bekreftSlettId !== undefined}

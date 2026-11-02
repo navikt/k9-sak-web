@@ -5,12 +5,15 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { UnntakProsessIndex as UnntakProsessIndexV2 } from '@k9-sak-web/gui/prosess/unntak/UnntakProsessIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { utledUnntakV2Props } from './utledUnntakV2Props';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     if (props.featureToggles?.BRUK_V2_PROSESS_UNNTAK) {
       const { periode, begrunnelse, behandlingResultatType } = utledUnntakV2Props(props.vilkar, props.behandling);
+      const aksjonspunkter = JSON.parse(JSON.stringify(props.aksjonspunkter ?? []));
+      konverterKodeverkTilKode(aksjonspunkter, false);
       return (
         <UnntakProsessIndexV2
           periode={periode}
@@ -19,6 +22,8 @@ class PanelDef extends ProsessStegPanelDef {
           isReadOnly={props.isReadOnly}
           readOnlySubmitButton={props.readOnlySubmitButton}
           submitCallback={props.submitCallback}
+          aksjonspunkter={aksjonspunkter}
+          erOverstyrer={!!props.erOverstyrer}
         />
       );
     }
@@ -29,8 +34,9 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ vilkar }) => ({
+  getData = ({ vilkar, kanOverstyreAccess }) => ({
     vilkar,
+    erOverstyrer: kanOverstyreAccess?.employeeHasAccess ?? false,
   });
 }
 

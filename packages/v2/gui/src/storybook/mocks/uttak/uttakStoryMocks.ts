@@ -1,5 +1,6 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { aksjonspunktStatus, type AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { AnnenPart } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/AnnenPart.js';
 import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingStatus.js';
 import { Endringsstatus } from '@k9-sak-web/backend/k9sak/kodeverk/uttak/Endringsstatus.js';
@@ -361,7 +362,11 @@ export const lagLøstAksjonspunkt = (
 export const lagOverstyringUttakAksjonspunkt = (
   status: AksjonspunktStatus = aksjonspunktStatus.OPPRETTET,
   overrides: Partial<Aksjonspunkt> = {},
-): Aksjonspunkt => lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK, status, overrides);
+): Aksjonspunkt =>
+  lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK, status, {
+    aksjonspunktType: aksjonspunktType.OVERSTYRING,
+    ...overrides,
+  });
 
 /**
  * Oppretter et aksjonspunkt for vurdering av overlappende søskensaker.

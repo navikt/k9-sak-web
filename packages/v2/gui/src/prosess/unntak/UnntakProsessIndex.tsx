@@ -1,3 +1,4 @@
+import type { AksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import {
   behandlingResultatType,
@@ -7,6 +8,7 @@ import type { Periode } from '@k9-sak-web/backend/k9sak/kontrakt/Periode.js';
 import type { Overstyringk9VilkåretDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/Overstyringk9VilkåretDto.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
+import OverstyringAksjonspunktVarsel from '@k9-sak-web/gui/shared/overstyring/OverstyringAksjonspunktVarsel.js';
 import { Alert, Box, Button, Heading, Radio, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
@@ -40,6 +42,8 @@ interface UnntakFormProps {
   isReadOnly: boolean;
   readOnlySubmitButton: boolean;
   submitCallback: (data: UnntakSubmitModel[]) => Promise<void>;
+  aksjonspunkter: ReadonlyArray<AksjonspunktDto>;
+  erOverstyrer: boolean;
 }
 
 const UnntakForm = ({
@@ -49,6 +53,8 @@ const UnntakForm = ({
   isReadOnly,
   readOnlySubmitButton,
   submitCallback,
+  aksjonspunkter,
+  erOverstyrer,
 }: UnntakFormProps) => {
   const formMethods = useForm<FormValues>({
     defaultValues: {
@@ -80,6 +86,12 @@ const UnntakForm = ({
         <Heading size="small" level="2">
           Vurder vilkår
         </Heading>
+        <OverstyringAksjonspunktVarsel
+          aksjonspunkter={aksjonspunkter}
+          erOverstyrer={erOverstyrer}
+          isReadOnly={isReadOnly}
+          område="unntak"
+        />
         <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>Vurder vilkår</AksjonspunktHelpText>
         <ContentMaxWidth>
           <RhfTextarea
@@ -127,15 +139,29 @@ interface UnntakProsessIndexProps {
   isReadOnly: boolean;
   readOnlySubmitButton: boolean;
   submitCallback: (data: UnntakSubmitModel[]) => Promise<void>;
+  aksjonspunkter?: ReadonlyArray<AksjonspunktDto>;
+  erOverstyrer?: boolean;
 }
 
-export const UnntakProsessIndex = ({ periode, ...props }: UnntakProsessIndexProps) => {
+export const UnntakProsessIndex = ({
+  periode,
+  aksjonspunkter = [],
+  erOverstyrer = false,
+  isReadOnly,
+  ...props
+}: UnntakProsessIndexProps) => {
   if (!erGyldigPeriode(periode)) {
     return (
       <VStack gap="space-16">
         <Heading size="small" level="2">
           Vurder vilkår
         </Heading>
+        <OverstyringAksjonspunktVarsel
+          aksjonspunkter={aksjonspunkter}
+          erOverstyrer={erOverstyrer}
+          isReadOnly={isReadOnly}
+          område="unntak"
+        />
         <Alert variant="warning" size="small">
           Fant ikke én entydig og gyldig periode for vilkåret. Aksjonspunktet kan ikke løses.
         </Alert>
@@ -144,5 +170,14 @@ export const UnntakProsessIndex = ({ periode, ...props }: UnntakProsessIndexProp
   }
   // Nøkkel på lagrede verdier gir nytt skjema med nye startverdier når behandlingen er oppdatert.
   const skjemaNøkkel = JSON.stringify([periode.fom, periode.tom, props.begrunnelse, props.behandlingResultatType]);
-  return <UnntakForm key={skjemaNøkkel} periode={periode} {...props} />;
+  return (
+    <UnntakForm
+      key={skjemaNøkkel}
+      periode={periode}
+      aksjonspunkter={aksjonspunkter}
+      erOverstyrer={erOverstyrer}
+      isReadOnly={isReadOnly}
+      {...props}
+    />
+  );
 };

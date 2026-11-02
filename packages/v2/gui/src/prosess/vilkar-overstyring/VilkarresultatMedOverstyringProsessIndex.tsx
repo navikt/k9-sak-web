@@ -9,9 +9,12 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
 import { dateStringSorter } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Box } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState, type SetStateAction } from 'react';
 import AksjonspunktIkon from '../../shared/aksjonspunkt-ikon/AksjonspunktIkon';
+import OverstyringAksjonspunktVarsel from '../../shared/overstyring/OverstyringAksjonspunktVarsel.js';
+import { skalViseOverstyringAksjonspunktVarsel } from '../../shared/overstyring/overstyringsaksjonspunkt.js';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringHeader from './components-periodisert/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
@@ -55,6 +58,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
+    employeeHasAccess: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   lovReferanse?: string;
@@ -144,6 +148,20 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           toggleOverstyring={toggleOverstyring}
           skjulOverstyring={skjulOverstyring}
         />
+        {skalViseOverstyringAksjonspunktVarsel(
+          aksjonspunkter,
+          kanOverstyreAccess.employeeHasAccess,
+          overrideReadOnly,
+        ) && (
+          <Box marginBlock="space-0 space-16">
+            <OverstyringAksjonspunktVarsel
+              aksjonspunkter={aksjonspunkter}
+              erOverstyrer={kanOverstyreAccess.employeeHasAccess}
+              isReadOnly={overrideReadOnly}
+              område="vilkår"
+            />
+          </Box>
+        )}
         <VilkarresultatMedOverstyringFormPeriodisert
           key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}
           behandlingType={behandling.type}

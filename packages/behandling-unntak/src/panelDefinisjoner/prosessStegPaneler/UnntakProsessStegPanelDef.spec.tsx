@@ -16,6 +16,8 @@ interface PropsOpsjoner {
   isReadOnly?: boolean;
   readOnlySubmitButton?: boolean;
   submitCallback?: () => Promise<void>;
+  aksjonspunkter?: object[];
+  erOverstyrer?: boolean;
 }
 
 const lagProps = ({
@@ -26,6 +28,8 @@ const lagProps = ({
   isReadOnly = false,
   readOnlySubmitButton = false,
   submitCallback = vi.fn().mockResolvedValue(undefined),
+  aksjonspunkter = [],
+  erOverstyrer = false,
 }: PropsOpsjoner = {}) => ({
   featureToggles,
   behandling: {
@@ -38,7 +42,8 @@ const lagProps = ({
     },
   },
   alleKodeverk: {},
-  aksjonspunkter: [],
+  aksjonspunkter,
+  erOverstyrer,
   vilkar: [{ vilkarType: { kode: 'FP_VK_0' }, perioder: [{ periode: perioder[0], begrunnelse }] }],
   isReadOnly,
   readOnlySubmitButton,
@@ -296,6 +301,49 @@ describe('UnntakProsessStegPanelDef med BRUK_V2_PROSESS_UNNTAK på', () => {
 
       rerenderPanel(lagProps({ begrunnelse: 'Tilbake' }));
       expect(notat()).toHaveValue('Tilbake');
+    });
+  });
+});
+
+describe('UnntakProsessStegPanelDef varsel om overstyrerrolle', () => {
+  const lagAksjonspunkt = (aksjonspunktType: string, status: string) => ({
+    definisjon: { kode: '6016', kodeverk: 'AKSJONSPUNKT_DEF' },
+    aksjonspunktType: { kode: aksjonspunktType, kodeverk: 'AKSJONSPUNKT_TYPE' },
+    status: { kode: status, kodeverk: 'AKSJONSPUNKT_STATUS' },
+  });
+
+  const hentData = (employeeHasAccess: boolean) => {
+    const [panelDef] = new UnntakProsessStegPanelDef().getPanelDefinisjoner();
+    if (panelDef === undefined) {
+      throw new Error('Forventet et panel');
+    }
+    return panelDef.getData({ vilkar: [], kanOverstyreAccess: { isEnabled: false, employeeHasAccess } });
+  };
+
+  it('henter overstyrerrollen fra employeeHasAccess', () => {
+    expect(hentData(true).erOverstyrer).toBe(true);
+    expect(hentData(false).erOverstyrer).toBe(false);
+  });
+
+  describe.each([
+    { versjon: 'V1', featureToggles: { BRUK_V2_PROSESS_UNNTAK: false } },
+    { versjon: 'V2', featureToggles: { BRUK_V2_PROSESS_UNNTAK: true } },
+  ])('$versjon', ({ featureToggles }) => {
+    it('viser varsel under overskriften for saksbehandler uten overstyrerrolle når aksjonspunktet er overstyring', () => {
+      renderPanel(lagProps({ featureToggles, aksjonspunkter: [lagAksjonspunkt('OVST', 'OPPR')], erOverstyrer: false }));
+      const overskrift = screen.getByRole('heading', { name: /Vurder vilkår/i });
+      const varsel = screen.getByText(/^Overstyring av .* må vurderes\.$/);
+      expect(overskrift.compareDocumentPosition(varsel) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it('viser ikke varsel for overstyrer', () => {
+      renderPanel(lagProps({ featureToggles, aksjonspunkter: [lagAksjonspunkt('OVST', 'OPPR')], erOverstyrer: true }));
+      expect(screen.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
+    });
+
+    it('viser ikke varsel når aksjonspunktet ikke er overstyring', () => {
+      renderPanel(lagProps({ featureToggles, aksjonspunkter: [lagAksjonspunkt('MANU', 'OPPR')], erOverstyrer: false }));
+      expect(screen.queryByText(/overstyrerrolle/)).not.toBeInTheDocument();
     });
   });
 });

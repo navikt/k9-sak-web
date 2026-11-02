@@ -172,7 +172,8 @@ export const PleiepengerProsessV2 = ({
                     key={steg.id}
                     behandling={behandling}
                     api={k9SakProsessApi}
-                    erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
+                    kanOverstyreNå={rettigheter.kanOverstyreAccess.isEnabled}
+                    harOverstyrerrolle={rettigheter.kanOverstyreAccess.employeeHasAccess}
                     isReadOnly={isReadOnly}
                   />
                 );

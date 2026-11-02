@@ -27,6 +27,7 @@ const UnntakProsessIndex = ({
   readOnlySubmitButton,
   aksjonspunkter,
   vilkar,
+  erOverstyrer,
 }) => {
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.K9_VILKÅRET;
@@ -45,6 +46,7 @@ const UnntakProsessIndex = ({
         alleKodeverk={alleKodeverk}
         vilkårsresultat={vilkårsresultat}
         vilkar={vilkar}
+        erOverstyrer={erOverstyrer}
       />
     </RawIntlProvider>
   );
@@ -59,6 +61,7 @@ UnntakProsessIndex.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  erOverstyrer: PropTypes.bool,
 };
 
 export default UnntakProsessIndex;
