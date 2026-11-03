@@ -4,20 +4,21 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { isDev, isQ } from '@k9-sak-web/lib/paths/paths.js';
 
+import { configureUngSakClient } from '@k9-sak-web/backend/ungsak/configureUngSakClient.js';
+import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
+import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
+import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
+import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
+import { initApm } from '@k9-sak-web/gui/app/errorhandling/apm.js';
+import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
+import { RestApiProviderLayout } from '@k9-sak-web/sak-app/src/app/RestApiProviderLayout.js';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import AppIndex from './app/AppIndex';
-import { configureUngSakClient } from '@k9-sak-web/backend/ungsak/configureUngSakClient.js';
-import { RootLayout } from '@k9-sak-web/gui/app/root/RootLayout.js';
-import { AuthRedirectDoneWindow, authRedirectDoneWindowPath } from '@k9-sak-web/gui/app/auth/AuthRedirectDoneWindow.js';
-import { RestApiProviderLayout } from '@k9-sak-web/sak-app/src/app/RestApiProviderLayout.js';
-import { AuthFixer } from '@k9-sak-web/gui/app/auth/AuthFixer.js';
-import { sequentialAuthFixerSetup } from '@k9-sak-web/gui/app/auth/WaitsForOthersAuthFixer.js';
-import { configureUngTilbakeClient } from '@k9-sak-web/backend/ungtilbake/configureUngTilbakeClient.js';
-import { resolveUngFeatureToggles } from '@k9-sak-web/gui/featuretoggles/ung/resolveUngFeatureToggles.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { initApm } from '@k9-sak-web/gui/app/errorhandling/apm.js';
 
-initApm({ app: 'ung-sak-web' });
+initApm({ app: isAktivitetspenger() ? 'aktivitetspenger-sak-web' : 'ung-sak-web' });
 
 const featureToggles = resolveUngFeatureToggles({ useQVersion: isDev() || isQ() });
 
