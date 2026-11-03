@@ -17,7 +17,7 @@ const InteractiveListElement = ({ content, active, onClick }: InteractiveListEle
 
   return (
     <li className={cls}>
-      <button className={styles.button} type="button" onClick={onClick}>
+      <button className={styles.button} type="button" onClick={onClick} aria-current={active ? 'true' : undefined}>
         <span className={styles.contentContainer}>
           {content}
           <span className={styles.chevron}>
