@@ -1,5 +1,5 @@
 import { Box, Heading, Label } from '@navikt/ds-react';
-import { InteractiveList } from '@navikt/ft-plattform-komponenter';
+import { InteractiveList } from '@k9-sak-web/gui/shared/interactiveList/InteractiveList.js';
 import React, { useEffect, type JSX } from 'react';
 import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';
