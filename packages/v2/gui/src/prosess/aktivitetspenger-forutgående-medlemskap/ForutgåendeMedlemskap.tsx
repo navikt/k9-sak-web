@@ -19,8 +19,8 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { SaksbehandlernavnContext } from '../../shared/SaksbehandlernavnContext/SaksbehandlernavnContext';
 import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
-import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
-import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { getPeriodStatus, sortPeriods, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 const begrunnelseMaxLength = $BekreftErMedlemVurderingDto.properties.begrunnelse.maxLength;
@@ -37,6 +37,14 @@ interface Props {
 }
 
 export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
+
+export const getDefaultSelectedMedlemskapPeriodId = (
+  periods: VilkårSplittPanelPeriod[],
+  isAksjonspunktSolved: boolean,
+): string =>
+  (!isAksjonspunktSolved ? periods.find(period => period.vurderesIBehandlingen)?.id : undefined) ??
+  sortPeriods(periods)[0]?.id ??
+  '';
 
 interface FormData {
   vurderinger: Record<string, Vurdering>;
@@ -84,11 +92,12 @@ export const ForutgåendeMedlemskap = ({
       status: getPeriodStatus(periodeInfo.utfall ?? Utfall.IKKE_VURDERT),
       label: `${formatDate(periodeInfo.periode.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode.tom)}` : ''}`,
       periode: periodeInfo.periode,
+      vurderesIBehandlingen: periodeInfo.vurderesIBehandlingen,
     };
   });
 
-  const [selectedItemId, setSelectedItemId] = useState(
-    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ?? periods[0]?.id ?? '',
+  const [selectedItemId, setSelectedItemId] = useState(() =>
+    getDefaultSelectedMedlemskapPeriodId(periods, isAksjonspunktSolved),
   );
 
   useEffect(() => {

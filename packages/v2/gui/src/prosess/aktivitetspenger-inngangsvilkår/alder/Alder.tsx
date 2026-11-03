@@ -5,10 +5,11 @@ import { CogIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, Tag, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import {
+  getDefaultSelectedPeriodId,
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 interface Props {
   alderVilkår: VilkårMedPerioderDto;
 }
@@ -25,7 +26,7 @@ export const Alder = ({ alderVilkår }: Props) => {
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(perioder[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(perioder));
 
   const selectedVilkårPeriode = alderVilkår.perioder?.find(p => p.periode.fom === selectedId);
 
