@@ -1251,12 +1251,10 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@types/react": "npm:19.2.18"
-    prop-types: "npm:15.8.1"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
     react-redux: "npm:9.3.1"
@@ -1299,27 +1297,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/prop-types@npm:1.0.0, @fpsak-frontend/prop-types@workspace:packages/prop-types":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prop-types@workspace:packages/prop-types"
-  dependencies:
-    prop-types: "npm:15.8.1"
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/prosess-anke-merknader@npm:1.0.0, @fpsak-frontend/prosess-anke-merknader@workspace:packages/prosess-anke-merknader":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-anke-merknader@workspace:packages/prosess-anke-merknader"
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
-    prop-types: "npm:15.8.1"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
     react-redux: "npm:9.3.1"
@@ -1335,12 +1323,10 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
-    prop-types: "npm:15.8.1"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
     react-redux: "npm:9.3.1"
@@ -1356,14 +1342,12 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
     moment: "npm:2.31.0"
-    prop-types: "npm:15.8.1"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
     react-redux: "npm:9.3.1"
@@ -1380,14 +1364,12 @@ __metadata:
     "@fpsak-frontend/assets": "npm:1.0.0"
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@types/react": "npm:19.2.18"
     classnames: "npm:2.5.1"
     moment: "npm:2.31.0"
-    prop-types: "npm:15.8.1"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
     react-redux: "npm:9.3.1"
@@ -3041,14 +3023,12 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "npm:1.0.0"
     "@fpsak-frontend/kodeverk": "npm:1.0.0"
-    "@fpsak-frontend/prop-types": "npm:1.0.0"
     "@fpsak-frontend/shared-components": "npm:1.0.0"
     "@fpsak-frontend/utils": "npm:1.0.0"
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/prosess-felles": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
     "@types/react": "npm:19.2.18"
-    prop-types: "npm:15.8.1"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
     react-redux: "npm:9.3.1"
@@ -5616,13 +5596,6 @@ __metadata:
   version: 3.0.6
   resolution: "@types/object-hash@npm:3.0.6"
   checksum: 10/2c7979d4e540af817b99c09fb4c2fed1c0b0e14342df474d8dcde4165a82c440b038341fd66fe998d9f86acdd5cccc65ba8092315e39e7c2114f945fa70aaa56
-  languageName: node
-  linkType: hard
-
-"@types/prop-types@npm:15.7.15":
-  version: 15.7.15
-  resolution: "@types/prop-types@npm:15.7.15"
-  checksum: 10/31aa2f59b28f24da6fb4f1d70807dae2aedfce090ec63eaf9ea01727a9533ef6eaf017de5bff99fbccad7d1c9e644f52c6c2ba30869465dd22b1a7221c29f356
   languageName: node
   linkType: hard
 
@@ -10901,7 +10874,6 @@ __metadata:
     "@types/lodash": "npm:4.17.25"
     "@types/node": "npm:25.9.5"
     "@types/object-hash": "npm:3.0.6"
-    "@types/prop-types": "npm:15.7.15"
     "@types/react": "npm:19.2.18"
     "@types/redux-form": "npm:8.3.11"
     "@vitejs/plugin-react": "npm:6.1.2"
@@ -12877,7 +12849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.6.1, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.1, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

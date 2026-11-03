@@ -1,6 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -20,11 +19,5 @@ const CollapseButton = ({ toggleDetails, showDetails, mottakerIndex }) => (
     <FormattedMessage id={buttonText(showDetails)} />
   </Button>
 );
-
-CollapseButton.propTypes = {
-  toggleDetails: PropTypes.func.isRequired,
-  showDetails: PropTypes.bool.isRequired,
-  mottakerIndex: PropTypes.number.isRequired,
-};
 
 export default CollapseButton;
