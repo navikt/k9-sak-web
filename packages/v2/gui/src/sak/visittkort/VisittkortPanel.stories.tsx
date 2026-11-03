@@ -1,6 +1,12 @@
 import { k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { EndringsmeldingPsbTilgangDto } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent } from 'storybook/test';
+import { useQueryClient } from '@tanstack/react-query';
+import { type ComponentProps, type PropsWithChildren, useEffect } from 'react';
+import { expect, userEvent, within } from 'storybook/test';
+import { withFakeEndringsmeldingPsbTilgangApi } from '../../storybook/decorators/withFakeEndringsmeldingPsbTilgangApi.js';
+import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
 import VisittkortPanel from './VisittkortPanel';
 import type { Personopplysninger } from './types/Personopplysninger';
 import diskresjonskodeType from './types/diskresjonskodeType';
@@ -200,5 +206,110 @@ export const HarRelatertFagsakFlereSøkere: StoryObj<typeof VisittkortPanel> = {
   play: async ({ canvas }) => {
     await expect(canvas.getByLabelText('Velg relatert søker')).toBeInTheDocument();
     await expect(canvas.getByText('Åpne sak')).toBeInTheDocument();
+  },
+};
+
+const endringsmeldingPsbArgs = {
+  ...Default.args,
+  fagsak: { saksnummer: '5YD0i', sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+};
+
+const åpnePopup = async (canvas: ReturnType<typeof within>) => {
+  const buttons = canvas.getAllByRole('button');
+  if (buttons[1]) {
+    await userEvent.click(buttons[1]);
+  }
+};
+
+const tilgangsvalg = [
+  'kanBruke',
+  'harIngenSak',
+  'søknadsperioderUtenforTillattEndringsperiode',
+  'harMerEnnEnSak',
+  'harIngenPerioder',
+  'barnManglerIdentitetsnummer',
+  'harArbeidstidSomSelvstendigNæringsdrivende',
+  'enArbeidsgiverToAnsettelserSammeUkeMedOpphold',
+  'harFlereAnsettelsesforholdHosUkjentArbeidsgiver',
+  'ukjentÅrsak',
+  'feil',
+];
+
+const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | Error => {
+  if (tilgang === 'feil') {
+    return new Error('Innsyn-api svarte ikke');
+  }
+  if (tilgang === 'kanBruke') {
+    return { kanBruke: true, årsaker: [] };
+  }
+  return { kanBruke: false, årsaker: [tilgang] };
+};
+
+// Storyen beholder samme QueryClient når kontrollen endres, så cachen må tømmes for å hente nytt svar
+const NullstillQueryCache = ({ nøkkel, children }: PropsWithChildren<{ nøkkel: string }>) => {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    void queryClient.resetQueries();
+  }, [queryClient, nøkkel]);
+  return children;
+};
+
+export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel> & { tilgang: string }> = {
+  name: 'EndringsmeldingPSB',
+  args: { ...endringsmeldingPsbArgs, tilgang: 'kanBruke' },
+  argTypes: {
+    tilgang: {
+      name: 'Tilgang til endringsmelding',
+      control: 'select',
+      options: tilgangsvalg,
+      labels: { kanBruke: 'Har tilgang', ukjentÅrsak: 'Ukjent årsak', feil: 'Feil fra innsyn-api' },
+    },
+  },
+  decorators: [
+    withFeatureToggles({ VIS_ENDRINGSMELDING_PSB_TILGANG: true }),
+    (Story, context) => (
+      <NullstillQueryCache nøkkel={context.args.tilgang}>
+        {withFakeEndringsmeldingPsbTilgangApi(svarForTilgang(context.args.tilgang))(Story, context)}
+      </NullstillQueryCache>
+    ),
+  ],
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Har tilgang')).toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: feil fra innsyn-api',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'feil' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbUkjentÅrsak: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: ukjent årsak',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'ukjentÅrsak' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Søkeren oppfyller ikke vilkårene')).toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbAnnenYtelse: StoryObj<typeof VisittkortPanel> = {
+  name: 'EndringsmeldingPSB: annen ytelse',
+  args: {
+    ...endringsmeldingPsbArgs,
+    fagsak: { saksnummer: '5YD0i', sakstype: fagsakYtelsesType.OMSORGSPENGER },
+  },
+  decorators: [withFeatureToggles({ VIS_ENDRINGSMELDING_PSB_TILGANG: true })],
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(canvas.getByText('Bostedsadresse')).toBeInTheDocument();
+    await expect(canvas.queryByText('Endringsmelding')).not.toBeInTheDocument();
   },
 };
