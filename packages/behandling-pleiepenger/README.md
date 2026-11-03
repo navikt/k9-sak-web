@@ -4,7 +4,7 @@
 
 Reglene følger den gamle prosessriggen i `behandling-felles` (`ProsessStegUtledet`, `prosessStegHooks`) og paneldefinisjonene i [src/panelDefinisjoner/prosessStegPaneler](src/panelDefinisjoner/prosessStegPaneler). Der den nye motoren gjør noe annet, står det i [Avvik fra gammel rigg](#avvik-fra-gammel-rigg).
 
-Den nye menyen brukes når feature togglen `PROSESS_MENY_V2` er på. Da velger [useProsessMenyToggle.tsx](../v2/gui/src/behandling/prosess/hooks/useProsessMenyToggle.tsx) mellom ny og gammel meny.
+Den nye menyen brukes når feature togglen `PROSESS_MENY_V2` er på. Da velger [useProsessMenyToggle.tsx](../v2/gui/src/behandling/prosess/hooks/useProsessMenyToggle.tsx) mellom ny og gammel meny. Når `SKJUL_PROSESS_MENY_V2_VELGER` også er på, brukes alltid den nye menyen, og velgeren vises ikke. I Q er begge togglene på. I prod er `PROSESS_MENY_V2` av.
 
 ## Slik henger det sammen
 
