@@ -19,7 +19,7 @@ export interface VilkårSplittPanelPeriod {
   label: string;
   periode?: {
     fom: string;
-    tom: string;
+    tom?: string;
   };
   vurderesIBehandlingen?: boolean;
 }

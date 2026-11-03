@@ -38,6 +38,14 @@ interface Props {
 
 export type Vurdering = 'oppfylt' | 'ikkeOppfylt' | '';
 
+export const getDefaultSelectedMedlemskapPeriodId = (
+  periods: VilkårSplittPanelPeriod[],
+  isAksjonspunktSolved: boolean,
+): string =>
+  (!isAksjonspunktSolved ? periods.find(period => period.vurderesIBehandlingen)?.id : undefined) ??
+  sortPeriods(periods)[0]?.id ??
+  '';
+
 interface FormData {
   vurderinger: Record<string, Vurdering>;
   begrunnelser: Record<string, string>;
@@ -84,14 +92,12 @@ export const ForutgåendeMedlemskap = ({
       status: getPeriodStatus(periodeInfo.utfall ?? Utfall.IKKE_VURDERT),
       label: `${formatDate(periodeInfo.periode.fom)}${visTom ? ` - ${formatDate(periodeInfo.periode.tom)}` : ''}`,
       periode: periodeInfo.periode,
+      vurderesIBehandlingen: periodeInfo.vurderesIBehandlingen,
     };
   });
 
-  const [selectedItemId, setSelectedItemId] = useState(
-    () =>
-      sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ??
-      sortPeriods(periods)[0]?.id ??
-      '',
+  const [selectedItemId, setSelectedItemId] = useState(() =>
+    getDefaultSelectedMedlemskapPeriodId(periods, isAksjonspunktSolved),
   );
 
   useEffect(() => {
