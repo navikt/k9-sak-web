@@ -23,7 +23,8 @@ const periodeInneholderFlereVirkedager = (periode: Periode): boolean => {
   if (periode.tom === TIDENES_ENDE) {
     return true;
   }
-  return calcDays(periode.fom, periode.tom, true) > 1;
+  const days = calcDays(periode.fom, periode.tom, true);
+  return days !== undefined && days > 1;
 };
 
 const lagPerioderFraFields = (fields: TilkommetAktivitetValues[]): Periode[] =>
