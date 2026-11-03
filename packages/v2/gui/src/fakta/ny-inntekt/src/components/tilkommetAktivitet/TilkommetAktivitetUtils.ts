@@ -102,7 +102,13 @@ const harIngenRelevantEndring = (
   return true;
 };
 
-const periodeInneholderVirkedager = (dag1: string, dag2: string): boolean => calcDays(dag1, dag2, true) > 2;
+const periodeInneholderVirkedager = (dag1: string, dag2: string): boolean => {
+  const days = calcDays(dag1, dag2, true);
+  if (days === undefined || !dayjs(dag1).isValid() || !dayjs(dag2).isValid()) {
+    throw new Error('Kan ikke beregne virkedager for en ugyldig periode');
+  }
+  return days > 2;
+};
 
 const erVirkedagMellomPeriodene = (
   inntektsforholdPeriode: VurderInntektsforholdPeriode,
