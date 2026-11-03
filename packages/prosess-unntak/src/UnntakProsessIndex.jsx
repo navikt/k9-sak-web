@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 // import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import messages from '../i18n/nb_NO.json';
 import BehandleUnntak from './components/BehandleUnntakForm';
-import unntakBehandlingPropType from './propTypes/unntakBehandlingPropType';
 
 const cache = createIntlCache();
 
@@ -50,18 +48,6 @@ const UnntakProsessIndex = ({
       />
     </RawIntlProvider>
   );
-};
-
-UnntakProsessIndex.propTypes = {
-  behandling: unntakBehandlingPropType.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  erOverstyrer: PropTypes.bool,
 };
 
 export default UnntakProsessIndex;

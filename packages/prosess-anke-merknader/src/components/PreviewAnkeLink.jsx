@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
@@ -54,14 +53,6 @@ const PreviewAnkeLink = ({
       <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
     </Link>
   );
-};
-
-PreviewAnkeLink.propTypes = {
-  previewCallback: PropTypes.func.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
-  fritekstTilBrev: PropTypes.string,
-  ankeVurdering: PropTypes.string,
-  readOnly: PropTypes.bool,
 };
 
 export default PreviewAnkeLink;
