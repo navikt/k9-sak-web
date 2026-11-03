@@ -24,6 +24,13 @@ export interface VilkårSplittPanelPeriod {
   vurderesIBehandlingen?: boolean;
 }
 
+// Forutsetter ISO-datoer i fom; manglende datoer legges sist og beholder innbyrdes rekkefølge.
+export const sortPeriods = (periods: VilkårSplittPanelPeriod[]): VilkårSplittPanelPeriod[] =>
+  [...periods].sort((a, b) => (b.periode?.fom ?? '').localeCompare(a.periode?.fom ?? ''));
+
+export const getDefaultSelectedPeriodId = (periods: VilkårSplittPanelPeriod[]): string =>
+  periods.find(period => period.status === 'warning')?.id ?? sortPeriods(periods)[0]?.id ?? '';
+
 interface VilkårSplittPanelProps {
   periods: VilkårSplittPanelPeriod[];
   selectedItemId: string;
@@ -92,7 +99,7 @@ export const VilkårSplittPanel = ({
   beforeDetailContent,
   hideLockedBackground = false,
 }: VilkårSplittPanelProps) => {
-  const sortertePerioder = [...periods].sort((a, b) => (b.periode?.fom ?? b.id).localeCompare(a.periode?.fom ?? a.id));
+  const sortertePerioder = sortPeriods(periods);
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
   // En periode som allerede har en vurdering (f.eks. fra tidligere behandling) skal starte i lesevisning,

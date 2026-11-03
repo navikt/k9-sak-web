@@ -16,6 +16,7 @@ import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-q
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import {
+  getDefaultSelectedPeriodId,
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
@@ -175,7 +176,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
   );
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
   const periods = buildPeriods(vilkårsavklaringVurderinger);
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));
   const formHook = useForm<FormData>({ defaultValues: buildInitialValues(vilkårsavklaringVurderinger) });
   const andreLivsoppholdytelser = useWatch({
     control: formHook.control,

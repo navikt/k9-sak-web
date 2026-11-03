@@ -17,10 +17,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../../behandling/prosess/ProsessStegIkkeBehandlet';
 import {
+  getDefaultSelectedPeriodId,
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv';
 import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter';
@@ -126,12 +127,7 @@ export const AndreLivsoppholdytelser = ({
     periode: periode.periode,
     vurderesIBehandlingen: periode.vurderesIBehandlingen,
   }));
-  const [selectedId, setSelectedId] = useState(
-    () =>
-      søknadsperioder.find(periode => periode.vilkarStatus === Utfall.IKKE_VURDERT)?.periode.fom ??
-      perioder[0]?.id ??
-      '',
-  );
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(perioder));
   useEffect(() => {
     if (!perioder.some(period => period.id === selectedId)) {
       setSelectedId('');

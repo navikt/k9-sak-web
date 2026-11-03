@@ -19,8 +19,8 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { ProsessStegIkkeBehandlet } from '../../behandling/prosess/ProsessStegIkkeBehandlet';
 import { SaksbehandlernavnContext } from '../../shared/SaksbehandlernavnContext/SaksbehandlernavnContext';
 import { LabelledContent } from '../../shared/labelled-content/LabelledContent';
-import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
-import { getPeriodStatus, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel';
+import type { VilkårSplittPanelPeriod } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { getPeriodStatus, sortPeriods, VilkårSplittPanel } from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi';
 
 const begrunnelseMaxLength = $BekreftErMedlemVurderingDto.properties.begrunnelse.maxLength;
@@ -88,7 +88,10 @@ export const ForutgåendeMedlemskap = ({
   });
 
   const [selectedItemId, setSelectedItemId] = useState(
-    () => sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ?? periods[0]?.id ?? '',
+    () =>
+      sortertePerioder.find(periodeInfo => periodeInfo.vurderesIBehandlingen)?.periode.fom ??
+      sortPeriods(periods)[0]?.id ??
+      '',
   );
 
   useEffect(() => {
