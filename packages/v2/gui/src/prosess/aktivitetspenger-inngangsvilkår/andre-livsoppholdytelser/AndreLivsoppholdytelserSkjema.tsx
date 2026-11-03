@@ -10,6 +10,7 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { dateBefore } from '../../../utils/validation/validators.js';
+import { andreLivsoppholdsytelserIkkeOppfyltÅrsaker } from '../../aktivitetspenger-felles/andreLivsoppholdsytelserIkkeOppfyltÅrsaker.js';
 import type { AndreLivsoppholdytelserFormData } from './andreLivsoppholdytelserFormData.js';
 
 const begrunnelseMaxLength = $VurderAndreLivsoppholdsytelserDto.properties.begrunnelse.maxLength;
@@ -120,26 +121,11 @@ export const AndreLivsoppholdytelserSkjema = ({
             name={`vurderinger.${selectedId}.avslagsårsak`}
             label="Hvilken ytelse mottar bruker?"
             validate={[required]}
-            selectValues={[
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ARBEIDSAVKLARINGSPENGER}>
-                Arbeidsavklaringspenger (AAP)
-              </option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_TILTAKSPENGER}>Tiltakspenger</option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_KVALIFISERINGSSTØNAD}>
-                Kvalifiseringsstønad (KVP)
-              </option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_DAGPENGER}>Dagpenger</option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_FORELDREPENGER}>Foreldrepenger</option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_SVANGERSKAPSPENGER}>
-                Svangerskapspenger
-              </option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_UFØRETRYGD}>Uføretrygd</option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_INTRODUKSJONSSTØNAD}>
-                Introduksjonsstønad
-              </option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_BARNEPENSJON}>Barnepensjon</option>,
-              <option value={AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_ANNEN_YTELSE}>Annen ytelse</option>,
-            ]}
+            selectValues={andreLivsoppholdsytelserIkkeOppfyltÅrsaker.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           />
         )}
 
