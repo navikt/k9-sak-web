@@ -2,6 +2,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/beha
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { describe, expect, it } from 'vitest';
+import { getDefaultSelectedPeriodId, sortPeriods } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { getOpphørPeriods, type OpphørPeriodInput } from './OpphørPerioder.js';
 
 const lagAksjonspunkt = (status: AksjonspunktStatus, toTrinnsBehandlingGodkjent?: boolean): AksjonspunktDto => ({
@@ -30,6 +31,7 @@ describe('getOpphørPeriods', () => {
         id: '2027-01-01',
         status: 'warning',
         label: '01.01.2027',
+        periode: { fom: '2027-01-01', tom: undefined },
       },
       {
         id: '2026-01-01',
@@ -71,5 +73,33 @@ describe('getOpphørPeriods', () => {
     });
 
     expect(result[0]?.id).toBe('avklaring-1');
+  });
+
+  it('sorterer og velger en åpen nyere suksessperiode før en eldre lukket periode', () => {
+    const perioderMedÅpenPeriode: OpphørPeriodInput[] = [
+      { id: 'åpen-referanse', fom: '2027-01-01', status: 'success' },
+      { id: 'lukket-referanse', fom: '2026-01-01', tom: '2026-12-31', status: 'success' },
+    ];
+
+    const sortertePerioder = sortPeriods(getOpphørPeriods({ perioder: perioderMedÅpenPeriode }));
+    const sortertePerioderMedReversertInput = sortPeriods(
+      getOpphørPeriods({ perioder: [...perioderMedÅpenPeriode].reverse() }),
+    );
+
+    expect(sortertePerioder.map(period => period.id)).toEqual(['åpen-referanse', 'lukket-referanse']);
+    expect(sortertePerioderMedReversertInput.map(period => period.id)).toEqual(['åpen-referanse', 'lukket-referanse']);
+    expect(sortertePerioder[0]?.periode).toEqual({ fom: '2027-01-01', tom: undefined });
+    expect(getDefaultSelectedPeriodId(sortertePerioder)).toBe('åpen-referanse');
+  });
+
+  it('prioriterer Ikke satt som default foran åpne perioder med success', () => {
+    const sortertePerioder = sortPeriods(
+      getOpphørPeriods({
+        aksjonspunkt: lagAksjonspunkt(AksjonspunktStatus.OPPRETTET),
+        perioder: [{ id: 'åpen-referanse', fom: '2027-01-01', status: 'success' }],
+      }),
+    );
+
+    expect(getDefaultSelectedPeriodId(sortertePerioder)).toBe('ikke-satt');
   });
 });

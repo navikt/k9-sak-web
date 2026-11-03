@@ -1,0 +1,23 @@
+.autocompleteSuggestion__substring {
+  font-weight: bold;
+}
+
+.autocompleteSuggestion__inner {
+  display: block;
+  overflow: hidden;
+  padding: 2px 6px 0 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.autocompleteSuggestion--active {
+  background-color: var(--ax-bg-accent-moderate);
+  color: var(--ax-text-neutral);
+}
+
+@media (width <= 800px) {
+  .autocompleteSuggestion__inner {
+    padding: 2px 6px 0 12px;
+  }
+}

@@ -2,7 +2,7 @@ import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
 import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon, PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Tag, Tooltip } from '@navikt/ds-react';
-import { InteractiveList } from '@navikt/ft-plattform-komponenter';
+import { InteractiveList } from '@k9-sak-web/gui/shared/interactiveList/InteractiveList.js';
 import React, { useEffect, type JSX } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';

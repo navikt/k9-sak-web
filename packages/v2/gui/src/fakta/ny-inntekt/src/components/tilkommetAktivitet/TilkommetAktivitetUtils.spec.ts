@@ -15,6 +15,22 @@ const lagInntektsperiode = (fom: string, tom: string, andeler?: Inntektsforhold[
 });
 
 describe('<TilkommetAktivitetUtils>', () => {
+  it.each([
+    ['ugyldig dato', '2023-04-06'],
+    ['2023-04-05', 'ugyldig dato'],
+    ['', '2023-04-06'],
+    ['2023-04-05', ''],
+    ['2023-04-05', '9999-12-31'],
+  ])('skal avvise ugyldige periodedatoer (%s, %s)', (forrigeTom, nesteFom) => {
+    const inntektsforhold = lagInntektsforhold('AT', '123');
+    const perioder = [
+      lagInntektsperiode('2023-04-03', forrigeTom, [inntektsforhold]),
+      lagInntektsperiode(nesteFom, '2023-04-07', [inntektsforhold]),
+    ];
+
+    expect(() => slaaSammenPerioder(perioder, [])).toThrow('Kan ikke beregne virkedager for en ugyldig periode');
+  });
+
   it('skal slå sammen to perioder som går vegg i vegg', () => {
     const inntektsforhold = lagInntektsforhold('AT', '123');
     const perioder = [

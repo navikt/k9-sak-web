@@ -13,7 +13,6 @@
     "@fpsak-frontend/prosess-avregning": "1.0.0",
     "@fpsak-frontend/prosess-tilkjent-ytelse": "1.0.0",
     "@fpsak-frontend/prosess-vedtak": "1.0.0",
-    "@fpsak-frontend/prosess-vilkar-opptjening-oms": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "1.0.0",

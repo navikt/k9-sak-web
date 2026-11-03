@@ -21,17 +21,12 @@ export const getOpphørPeriods = ({ aksjonspunkt, perioder }: GetOpphørPeriodsP
   const erSendtTilbakeFraBeslutter = aksjonspunkt?.toTrinnsBehandlingGodkjent === false;
   const mappedPeriods: VilkårSplittPanelPeriod[] = perioder
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.fom.localeCompare(firstPeriod.fom))
-    .map(periode => {
-      const mappedPeriod: VilkårSplittPanelPeriod = {
-        id: periode.id ?? periode.fom,
-        status: periode.status,
-        label: periode.tom ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}` : formatDate(periode.fom),
-      };
-      if (periode.tom) {
-        mappedPeriod.periode = { fom: periode.fom, tom: periode.tom };
-      }
-      return mappedPeriod;
-    });
+    .map(periode => ({
+      id: periode.id ?? periode.fom,
+      status: periode.status,
+      label: periode.tom ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}` : formatDate(periode.fom),
+      periode: { fom: periode.fom, tom: periode.tom },
+    }));
 
   return [
     ...(isAksjonspunktOpen && !erSendtTilbakeFraBeslutter
