@@ -57,7 +57,6 @@
     "@navikt/endringslogg": "2.0.1",
     "@navikt/ft-plattform-komponenter": "13.1.1",
     "@navikt/ft-utils": "7.0.0",
-    "@popperjs/core": "2.11.8",
     "axios": "1.21.0",
     "date-fns": "4.4.0",
     "dayjs": "1.11.23",

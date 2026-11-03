@@ -21,7 +21,6 @@
     "@navikt/ds-react": "8.21.0",
     "@navikt/ft-form-hooks": "13.1.2",
     "@navikt/ft-form-validators": "7.0.4",
-    "@navikt/ft-kodeverk": "3.0.0",
     "@navikt/ft-prosess-tilbakekreving-foreldelse": "11.1.2",
     "@navikt/ft-types": "7.1.1",
     "@navikt/ft-ui-komponenter": "9.1.2",
