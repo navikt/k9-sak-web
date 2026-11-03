@@ -95,7 +95,6 @@
   "packages/fakta-arbeidsforhold/src/components/arbeidsforholdTabell/PersonArbeidsforholdTable.tsx",
   "packages/fakta-arbeidsforhold/src/util/BehandlingFormFieldCleaner.tsx",
   "packages/fakta-barn-og-overfoeringsdager/src/components/OverforingerFaktaForm.spec.tsx",
-  "packages/fakta-barn-og-overfoeringsdager/src/components/OverforingerFaktaForm.tsx",
   "packages/fakta-barn-og-overfoeringsdager/src/components/OverføringsdagerPanel.tsx",
   "packages/fakta-barn-og-overfoeringsdager/src/components/Seksjon.spec.tsx",
   "packages/fakta-barn-oms/src/components/BarnInformasjonVisning.spec.tsx",

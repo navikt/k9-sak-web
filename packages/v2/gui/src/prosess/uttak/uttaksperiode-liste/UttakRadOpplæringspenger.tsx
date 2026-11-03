@@ -1,5 +1,4 @@
 import type { JSX } from 'react';
-import { Collapse } from 'react-collapse';
 import {
   CheckmarkCircleFillIcon,
   ChevronDownIcon,
@@ -134,15 +133,13 @@ const UttakRadOpplæringspenger = ({ uttak, erValgt, velgPeriode, withBorderTop 
       </Table.Row>
       <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
         <td colSpan={8}>
-          <Collapse isOpened={erValgt}>
-            <div className={styles.expanded}>
-              {alleVilkårErOppfylt ? (
-                <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt || false} />
-              ) : (
-                <Vilkårsliste vilkår={vilkår ?? {}} />
-              )}
-            </div>
-          </Collapse>
+          <div className={styles.expanded}>
+            {alleVilkårErOppfylt ? (
+              <UttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt || false} />
+            ) : (
+              <Vilkårsliste vilkår={vilkår ?? {}} />
+            )}
+          </div>
         </td>
       </tr>
     </>
