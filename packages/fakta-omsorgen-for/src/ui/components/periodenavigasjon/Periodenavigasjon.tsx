@@ -1,6 +1,6 @@
 import { Period } from '@fpsak-frontend/utils';
 import { Box, Heading } from '@navikt/ds-react';
-import { InteractiveList } from '@navikt/ft-plattform-komponenter';
+import { InteractiveList } from '@k9-sak-web/gui/shared/interactiveList/InteractiveList.js';
 import React, { type JSX, useEffect } from 'react';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import { sortPeriodsByFomDate } from '../../../util/periodUtils';

@@ -14,6 +14,7 @@ export { default as TextFieldFormik } from './src/TextFieldFormik';
 export { default as TextAreaFormik } from './src/TextAreaFormik';
 export { default as PeriodpickerField } from './src/PeriodpickerField';
 export { default as AutocompleteField } from './src/AutocompleteField';
+export { Autocomplete } from './src/autocomplete/Autocomplete';
 export { default as CheckboxGroupFormik } from './src/CheckboxGroupFormik';
 export { default as FormState } from './src/FormState';
 export { default as Label } from './src/Label';
