@@ -2,8 +2,8 @@ import { Collapse, Expand, FilterFilled } from '@navikt/ds-icons';
 import { Button, Checkbox, Label, VStack } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useState, type JSX } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
 import { Dokumenttype, dokumentLabel } from '../../../types/Dokument';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 import styles from './dokumentfilter.module.css';
 
 interface ChevronWithTextProps {
@@ -42,6 +42,7 @@ const Dokumentfilter = ({
   alleRelevanteDokumentTyper,
 }: DokumentfilterProps): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useOutsideClick<HTMLDivElement>(() => setOpen(false), open);
   const chevronDirection = open ? 'opp' : 'ned';
   const listeErFiltrert = filters.length < 4;
   return (
@@ -51,7 +52,7 @@ const Dokumentfilter = ({
         <FilterFilled className={listeErFiltrert ? '' : styles.chevronDropdown__hidden} />
       </span>
       {open && (
-        <OutsideClickHandler onOutsideClick={() => setOpen(false)}>
+        <div ref={dropdownRef}>
           <div className={classNames(styles.chevronDropdown__dropdown, className)}>
             <span className={classNames(styles.chevronDropdown)}>
               <ChevronWithText chevronDirection={chevronDirection} onClick={() => setOpen(!open)} text={text} />
@@ -71,7 +72,7 @@ const Dokumentfilter = ({
               </VStack>
             </span>
           </div>
-        </OutsideClickHandler>
+        </div>
       )}
     </div>
   );

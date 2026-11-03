@@ -2,7 +2,7 @@ import { Collapse, Expand, FilterFilled } from '@navikt/ds-icons';
 import { Checkbox, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useState, type JSX } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 import styles from './vurderingDokumentfilter.module.css';
 import vurderingDokumentfilterOptions from './vurderingDokumentfilterOptions';
 
@@ -28,6 +28,7 @@ const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextPro
 
 const VurderingDokumentfilter = ({ text, filters, onFilterChange }: VurderingDokumentfilterProps): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useOutsideClick<HTMLDivElement>(() => setOpen(false), open);
   const chevronDirection = open ? 'opp' : 'ned';
   const filterListe = vurderingDokumentfilterOptions;
   const listeErFiltrert = filters.length > 0;
@@ -38,7 +39,7 @@ const VurderingDokumentfilter = ({ text, filters, onFilterChange }: VurderingDok
         <FilterFilled className={listeErFiltrert ? '' : styles.chevronDropdown__hidden} />
       </span>
       {open && (
-        <OutsideClickHandler onOutsideClick={() => setOpen(false)}>
+        <div ref={dropdownRef}>
           <div className={styles.chevronDropdown__dropdown}>
             <span className={classNames(styles.chevronDropdown)}>
               <ChevronWithText chevronDirection={chevronDirection} onClick={() => setOpen(!open)} text={text} />
@@ -56,7 +57,7 @@ const VurderingDokumentfilter = ({ text, filters, onFilterChange }: VurderingDok
               </div>
             </span>
           </div>
-        </OutsideClickHandler>
+        </div>
       )}
     </div>
   );

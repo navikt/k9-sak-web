@@ -7,7 +7,6 @@ import {
 import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { HelpText, Label } from '@navikt/ds-react';
-import isEmpty from 'just-is-empty';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -35,7 +34,7 @@ export const OverforingerFaktaForm = ({
   behandlingId,
   behandlingVersjon,
 }: OverforingerFaktaFormProps & InjectedFormProps) => {
-  if (isEmpty(formValues)) {
+  if (!formValues || Object.keys(formValues).length === 0) {
     return null;
   }
 
