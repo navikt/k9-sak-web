@@ -90,7 +90,7 @@
 }
 
 .collapseRow {
-  visibility: collapse;
+  display: none;
 }
 
 .expandedRow {
