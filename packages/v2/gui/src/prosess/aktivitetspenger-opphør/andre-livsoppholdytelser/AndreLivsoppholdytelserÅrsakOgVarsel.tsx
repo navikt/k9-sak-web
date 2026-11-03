@@ -16,7 +16,7 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { getDefaultSelectedPeriodId, VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { andreLivsoppholdsytelserIkkeOppfyltÅrsaker } from '../../aktivitetspenger-felles/andreLivsoppholdsytelserIkkeOppfyltÅrsaker.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
@@ -184,7 +184,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
     aksjonspunkt: vurderAndreLivsoppholdytelserFaktaAP,
     perioder: periodData,
   });
-  const [selectedId, setSelectedId] = useState(opphørPeriods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(opphørPeriods));
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<AndreLivsoppholdytelserFormData | null>(null);
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
