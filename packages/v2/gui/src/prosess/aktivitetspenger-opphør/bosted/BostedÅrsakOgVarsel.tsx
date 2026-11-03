@@ -14,7 +14,7 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { getDefaultSelectedPeriodId, VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -158,7 +158,7 @@ export const BostedÅrsakOgVarsel = ({
       status: tilPeriodeStatus(utfall),
     })),
   });
-  const [selectedId, setSelectedId] = useState(periods[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmitData, setPendingSubmitData] = useState<BostedFormData | null>(null);
   const formHook = useForm<BostedFormData>({ defaultValues: buildInitialValues(vilkårsavklaringer) });
