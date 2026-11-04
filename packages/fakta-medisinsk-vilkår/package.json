@@ -16,7 +16,7 @@
     "@navikt/ft-form-validators": "7.0.4",
     "@navikt/ft-plattform-komponenter": "13.1.1",
     "@navikt/ft-utils": "7.0.0",
-    "@tanstack/react-query": "5.105.0",
+    "@tanstack/react-query": "5.105.1",
     "axios": "1.21.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.23",

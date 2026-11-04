@@ -1519,7 +1519,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": "npm:5.105.0"
+    "@tanstack/react-query": "npm:5.105.1"
     "@types/react": "npm:19.2.18"
     react: "npm:19.3.1"
     react-intl: "npm:12.1.6"
@@ -1805,7 +1805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@humanfs/node@npm:^0.16.6":
+"@humanfs/node@npm:^0.16.8":
   version: 0.16.8
   resolution: "@humanfs/node@npm:0.16.8"
   dependencies:
@@ -2787,7 +2787,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:5.105.0"
+    "@tanstack/react-query": "npm:5.105.1"
     "@types/react": "npm:19.2.18"
     moment: "npm:2.31.0"
     react: "npm:19.3.1"
@@ -2827,7 +2827,7 @@ __metadata:
     "@navikt/ft-form-validators": "npm:7.0.4"
     "@navikt/ft-plattform-komponenter": "npm:13.1.1"
     "@navikt/ft-utils": "npm:7.0.0"
-    "@tanstack/react-query": "npm:5.105.0"
+    "@tanstack/react-query": "npm:5.105.1"
     "@types/react": "npm:19.2.18"
     axios: "npm:1.21.0"
     classnames: "npm:2.5.1"
@@ -2905,7 +2905,7 @@ __metadata:
     "@navikt/ft-types": "npm:7.1.1"
     "@navikt/ft-ui-komponenter": "npm:9.1.2"
     "@navikt/ft-utils": "npm:7.0.0"
-    "@tanstack/react-query": "npm:5.105.0"
+    "@tanstack/react-query": "npm:5.105.1"
     "@types/css-tree": "npm:2.3.11"
     "@types/object-hash": "npm:3.0.6"
     "@types/react": "npm:19.2.18"
@@ -3114,7 +3114,7 @@ __metadata:
     "@navikt/ft-types": "npm:7.1.1"
     "@navikt/ft-ui-komponenter": "npm:9.1.2"
     "@navikt/ft-utils": "npm:7.0.0"
-    "@tanstack/react-query": "npm:5.105.0"
+    "@tanstack/react-query": "npm:5.105.1"
     "@types/react": "npm:19.2.18"
     axios: "npm:1.21.0"
     dayjs: "npm:1.11.23"
@@ -3159,7 +3159,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:13.1.1"
     "@navikt/ft-ui-komponenter": "npm:9.1.2"
     "@navikt/ft-utils": "npm:7.0.0"
-    "@tanstack/react-query": "npm:5.105.0"
+    "@tanstack/react-query": "npm:5.105.1"
     "@types/react": "npm:19.2.18"
     axios: "npm:1.21.0"
     dayjs: "npm:1.11.23"
@@ -5262,9 +5262,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:5.105.0":
-  version: 5.105.0
-  resolution: "@tanstack/eslint-plugin-query@npm:5.105.0"
+"@tanstack/eslint-plugin-query@npm:5.105.1":
+  version: 5.105.1
+  resolution: "@tanstack/eslint-plugin-query@npm:5.105.1"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.71.0"
   peerDependencies:
@@ -5273,29 +5273,29 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/0a3eb03bda644171aac4954fdf32e4bde4f040ea4c0a167c380d5bf8d86263988fa378dc980d2e1b050d2d262d22648c70a55058fd132f796b5cbaf3fd2d8339
+  checksum: 10/a714e33231c54b381ba8452a0da760b6e63826e33696885efc347ef3c8ea764ca196697a687e06e6e9d76171b639300d25cb7c2d4af975fcd516981cdbddd62f
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.105.0":
-  version: 5.105.0
-  resolution: "@tanstack/query-core@npm:5.105.0"
-  checksum: 10/1a52f339f4e05cae0667b41e091fa6ec4c12b159a95cf54fde9d39204aff461e214a9f59513fdbb4b715ba9cbed60b31012d058ac8d22cd88b59247be6e890fc
+"@tanstack/query-core@npm:5.105.1":
+  version: 5.105.1
+  resolution: "@tanstack/query-core@npm:5.105.1"
+  checksum: 10/19a2695d20eee78ae7163558497a01b9161094c6fa315bbcf4f677a83e79bb5bce5888b6300368a7d2ffb95eca72ade94349b315e5014c667c0921078ef0fcdd
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:5.105.0":
-  version: 5.105.0
-  resolution: "@tanstack/react-query@npm:5.105.0"
+"@tanstack/react-query@npm:5.105.1":
+  version: 5.105.1
+  resolution: "@tanstack/react-query@npm:5.105.1"
   dependencies:
-    "@tanstack/query-core": "npm:5.105.0"
+    "@tanstack/query-core": "npm:5.105.1"
   peerDependencies:
     "@types/react": ^18 || ^19
     react: ^18 || ^19
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/a7655514d0778fd3e58fe27f9d5b0aaac1d399336f3cbfaf98de99c0b240368395501e95dc1b5d89e0980f40a3754fdac7a216b92d2d8b520199e91a697fff1b
+  checksum: 10/0e8f7367cf5237e2f0e3ccb8584d59edf1dd8dcac0ddd05d3e404da18408cfb71d783f1bf7b3696b1c5bbbdf8ad3bfb2fc75ae057e8b42f3ac8afaf7cb500d95
   languageName: node
   linkType: hard
 
@@ -8428,9 +8428,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:10.13.0":
-  version: 10.13.0
-  resolution: "eslint@npm:10.13.0"
+"eslint@npm:10.14.0":
+  version: 10.14.0
+  resolution: "eslint@npm:10.14.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.8.0"
     "@eslint-community/regexpp": "npm:^4.12.2"
@@ -8438,7 +8438,7 @@ __metadata:
     "@eslint/config-helpers": "npm:^0.7.0"
     "@eslint/core": "npm:^1.2.1"
     "@eslint/plugin-kit": "npm:^0.7.3"
-    "@humanfs/node": "npm:^0.16.6"
+    "@humanfs/node": "npm:^0.16.8"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@humanwhocodes/retry": "npm:^0.4.2"
     "@types/estree": "npm:^1.0.6"
@@ -8459,7 +8459,7 @@ __metadata:
     imurmurhash: "npm:^0.1.4"
     is-glob: "npm:^4.0.0"
     json-stable-stringify-without-jsonify: "npm:^1.0.1"
-    minimatch: "npm:^10.2.5"
+    minimatch: "npm:^10.2.6"
     natural-compare: "npm:^1.4.0"
     optionator: "npm:^0.9.3"
   peerDependencies:
@@ -8469,7 +8469,7 @@ __metadata:
       optional: true
   bin:
     eslint: bin/eslint.js
-  checksum: 10/04b7140a6fb4614d3cd5feb35041cd3b2b92f80d7fd015d8d320c76e015577863dc530c1bcf228eb3b58b06151e45b6452dd349a6863d21eeefa02ceaee1377f
+  checksum: 10/66743528bfef3961deb3141fc6893e1f137f2ed2602ee36482107cdd49b1a14a1c3da9bb9824fd3530003a23f041b6854f28c20306e99d9b7222a825998e8ed9
   languageName: node
   linkType: hard
 
@@ -9224,10 +9224,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:17.13.0":
-  version: 17.13.0
-  resolution: "globals@npm:17.13.0"
-  checksum: 10/f723714cfb07bcf3163d44661d63b2a6076d93fd2f3724622b22084c62bcbbdb3ea3c601ec39635f1430d5cdf60bbf6fd7e458f12b5381ed422ed355c699537b
+"globals@npm:17.14.0":
+  version: 17.14.0
+  resolution: "globals@npm:17.14.0"
+  checksum: 10/3d889e226ee8f4401abc568cd853d017b6407b24744c28b3d8260c65200174082bb77eeefecf4d2b40ab48e9484a2b163b1372c8addf782f49ecd546faf27ceb
   languageName: node
   linkType: hard
 
@@ -10866,7 +10866,7 @@ __metadata:
     "@storybook/react-vite": "npm:10.6.5"
     "@storybook/test-runner": "npm:0.26.0"
     "@tailwindcss/vite": "npm:4.3.3"
-    "@tanstack/eslint-plugin-query": "npm:5.105.0"
+    "@tanstack/eslint-plugin-query": "npm:5.105.1"
     "@testing-library/dom": "npm:10.4.2"
     "@testing-library/jest-dom": "npm:7.0.1"
     "@testing-library/react": "npm:16.3.3"
@@ -10884,18 +10884,18 @@ __metadata:
     cross-env: "npm:10.1.0"
     date-fns: "npm:4.4.0"
     dayjs: "npm:1.11.23"
-    eslint: "npm:10.13.0"
+    eslint: "npm:10.14.0"
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-react: "npm:7.37.5"
     eslint-plugin-react-hooks: "npm:7.1.1"
     eslint-plugin-storybook: "npm:10.6.5"
-    globals: "npm:17.13.0"
+    globals: "npm:17.14.0"
     happy-dom: "npm:21.0.4"
     history: "npm:5.3.0"
     http-server: "npm:^14.1.1"
     i18n-iso-countries: "npm:7.14.0"
-    knip: "npm:6.44.0"
+    knip: "npm:6.44.1"
     lefthook: "npm:2.2.2"
     loose-ts-check: "npm:2.0.0"
     msw: "npm:3.0.3"
@@ -10946,9 +10946,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:6.44.0":
-  version: 6.44.0
-  resolution: "knip@npm:6.44.0"
+"knip@npm:6.44.1":
+  version: 6.44.1
+  resolution: "knip@npm:6.44.1"
   dependencies:
     formatly: "npm:^0.11.4"
     get-tsconfig: "npm:4.14.3"
@@ -10965,7 +10965,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/cac81789a953a1b3cf5e3e0ec2dc71f524c68fcb73dbb6d23f8e9392b9366e885f209a64d8159748a83f0e38e6213bef7f8ee5fe5c16f553cedb5bd9c908bea3
+  checksum: 10/5b2202a3ad9f9f58ad4531ed965c514109b233c07837490f79d6e3b37d3b215ed8b14e04f365652c72aceee53f5de8860fe6e121f39c7ecb2a5d6fe9cbdd00b3
   languageName: node
   linkType: hard
 
@@ -11641,7 +11641,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.2.2, minimatch@npm:^10.2.4, minimatch@npm:^10.2.5":
+"minimatch@npm:^10.2.2, minimatch@npm:^10.2.4, minimatch@npm:^10.2.6":
   version: 10.2.6
   resolution: "minimatch@npm:10.2.6"
   dependencies:
