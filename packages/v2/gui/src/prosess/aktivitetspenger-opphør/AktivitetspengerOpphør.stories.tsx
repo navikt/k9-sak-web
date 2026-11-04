@@ -1254,3 +1254,132 @@ export const BistandPreutfylt: Story = {
     });
   },
 };
+
+const lagFakeBistandVilkårsavklaringVurderinger = (
+  ikkeOppfyltÅrsak: BistandsvilkårIkkeOppfyltÅrsak,
+): VilkårsavklaringVurderingerDto => ({
+  vilkårType: vilkarType.BISTANDSVILKÅR,
+  perioder: [
+    {
+      periode: { fom: '2026-01-29', tom: '2027-01-28' },
+      utfall: Utfall.IKKE_VURDERT,
+      vurderesIBehandlingen: true,
+      avklaringOgVurdering: {
+        avklaring: {
+          avklaringtype: Avklaringtype.OPPHØR,
+          foreslåttIBehandlingen: true,
+          ikkeOppfyltÅrsak,
+          kilde: 'BRUKER',
+          periode: { fom: '2026-01-29', tom: '2027-01-28' },
+          referanse: 'bistand-ref',
+          skalSendeVarsel: false,
+          vurdertAv: 'Z123456',
+          vurdertTidspunkt: '2026-01-29T10:00:00',
+        },
+      },
+    },
+  ],
+});
+
+const lagFakeBistandVilkårsvurderingArgs = (ikkeOppfyltÅrsak: BistandsvilkårIkkeOppfyltÅrsak) => ({
+  ...fakeBistandArgsBase,
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR)],
+  api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+    bekreftAksjonspunkt: fn(),
+    hentVilkårsavklaringVurderinger: async () => lagFakeBistandVilkårsavklaringVurderinger(ikkeOppfyltÅrsak),
+  }) as AktivitetspengerApi,
+  onAksjonspunktBekreftet: fn(),
+});
+
+export const BistandVilkårsvurderingOpphørMedFritekst: Story = {
+  args: lagFakeBistandVilkårsvurderingArgs(BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_ARBEID),
+  play: async ({ canvas, step, args }) => {
+    await step('Vilkårsvurdering-fanen er valgt og viser bistand', async () => {
+      await expect(await canvas.findByText('Vurdering av ikke lenger behov for bistand')).toBeInTheDocument();
+    });
+
+    await step('Fyll inn begrunnelse og velg opphør', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker ikke lenger har behov for bistand/i }),
+        'Bruker har kommet i fast arbeid.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i }));
+    });
+
+    await step('Fritekst vises først når avkrysningsboksen er valgt', async () => {
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev'));
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }),
+        'Du har kommet i arbeid og har ikke lenger behov for bistand.',
+      );
+    });
+
+    await step('Bekreft og fortsett', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+    });
+
+    await step('Payload sendes til riktig aksjonspunkt med fritekst', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeBistandBehandling.uuid,
+        fakeBistandBehandling.versjon,
+        [
+          {
+            '@type': AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR,
+            begrunnelse: 'Bruker har kommet i fast arbeid.',
+            vurdertePerioder: [
+              {
+                begrunnelse: 'Bruker har kommet i fast arbeid.',
+                erVilkårOppfylt: false,
+                periode: { fom: '2026-01-29', tom: '2027-01-28' },
+                fritekstVurderingBrev: 'Du har kommet i arbeid og har ikke lenger behov for bistand.',
+              },
+            ],
+          },
+        ],
+      );
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+export const BistandVilkårsvurderingIkkeOpphør: Story = {
+  args: lagFakeBistandVilkårsvurderingArgs(BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING),
+  play: async ({ canvas, step, args }) => {
+    await step('Fyll inn begrunnelse og velg nei', async () => {
+      await userEvent.type(
+        await canvas.findByRole('textbox', { name: /vurder om bruker ikke lenger har behov for bistand/i }),
+        'Bruker har fortsatt behov for bistand.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await expect(canvas.queryByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+    });
+
+    await step('Vilkåret sendes som oppfylt uten fritekst', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeBistandBehandling.uuid,
+        fakeBistandBehandling.versjon,
+        [
+          expect.objectContaining({
+            vurdertePerioder: [expect.objectContaining({ erVilkårOppfylt: true, fritekstVurderingBrev: undefined })],
+          }),
+        ],
+      );
+    });
+  },
+};
+
+export const BistandVilkårsvurderingAnnenÅrsakKreverFritekst: Story = {
+  args: lagFakeBistandVilkårsvurderingArgs(BistandsvilkårIkkeOppfyltÅrsak.ANNET),
+  play: async ({ canvas, step }) => {
+    await step('Velg opphør', async () => {
+      await userEvent.click(await canvas.findByRole('radio', { name: /ja, fra og med/i }));
+    });
+
+    await step('Fritekst til opphørsbrev vises uten avkrysningsboks', async () => {
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toBeInTheDocument();
+      await expect(canvas.queryByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).not.toBeInTheDocument();
+    });
+  },
+};

@@ -36,6 +36,12 @@ describe('utledAktivTab', () => {
     );
   });
 
+  it('returnerer VILKÅRSVURDERING når VURDER_BISTANDSVILKÅR_OPPHØR er OPPRETTET', () => {
+    expect(utledAktivTab({ vurderBistandVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR) })).toBe(
+      OpphørTab.VILKÅRSVURDERING,
+    );
+  });
+
   it('returnerer BESLUTTER når NAV_KONTOR_BESLUTTER_VILKÅR er OPPRETTET', () => {
     expect(utledAktivTab({ lokalkontorBeslutterAP: lagAp(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR) })).toBe(
       OpphørTab.BESLUTTER,

@@ -18,6 +18,7 @@ import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/Aktivitets
 import { AndreLivsoppholdytelserVilkårsvurdering } from './andre-livsoppholdytelser/AndreLivsoppholdytelserVilkårsvurdering.js';
 import { AndreLivsoppholdytelserÅrsakOgVarsel } from './andre-livsoppholdytelser/AndreLivsoppholdytelserÅrsakOgVarsel.js';
 import { BeslutterOpphør } from './beslutter/BeslutterOpphør.js';
+import { BistandVilkårsvurdering } from './bistand/BistandVilkårsvurdering.js';
 import { BistandÅrsakOgVarsel } from './bistand/BistandÅrsakOgVarsel.js';
 import { BostedVilkårsvurdering } from './bosted/BostedVilkårsvurdering.js';
 import { BostedÅrsakOgVarsel } from './bosted/BostedÅrsakOgVarsel.js';
@@ -105,6 +106,9 @@ export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.VILKÅRSVURDERING;
   }
+  if (data.vurderBistandVilkårAP?.status === AksjonspunktStatus.OPPRETTET) {
+    return OpphørTab.VILKÅRSVURDERING;
+  }
   if (data.lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET) {
     return OpphørTab.BESLUTTER;
   }
@@ -165,9 +169,13 @@ export const AktivitetspengerOpphør = ({
     vurderAndreLivsoppholdytelserVilkårAP,
     bistandVilkår,
     vurderBistandFaktaAP,
+    vurderBistandVilkårAP,
   } = opphørData;
   const vilkårsvurderingAPForTab =
-    lokalkontorForeslårVilkårAP ?? vurderBostedVilkårAP ?? vurderAndreLivsoppholdytelserVilkårAP;
+    lokalkontorForeslårVilkårAP ??
+    vurderBostedVilkårAP ??
+    vurderAndreLivsoppholdytelserVilkårAP ??
+    vurderBistandVilkårAP;
   const harBeslutterAP = !!lokalkontorBeslutterAP;
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
@@ -265,6 +273,19 @@ export const AktivitetspengerOpphør = ({
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
+                lokalkontorBeslutterAP={lokalkontorBeslutterAP}
+              />
+            )}
+            {bistandVilkår && isBehandlingsårsakBistand && (
+              <BistandVilkårsvurdering
+                vurderBistandVilkårAP={vurderBistandVilkårAP}
+                bistandVilkår={bistandVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
                 lokalkontorBeslutterAP={lokalkontorBeslutterAP}
               />
             )}
