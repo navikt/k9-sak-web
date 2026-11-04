@@ -5,6 +5,7 @@ import { BehandlingStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling
 import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
+import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
@@ -1080,5 +1081,176 @@ export const HistoriskBostedsperiodeKanIkkeRedigeres: Story = {
 
     await userEvent.click(await canvas.findByRole('row', { name: /01\.01\.2026/i }));
     await canvas.findByRole('button', { name: /rediger vurdering/i });
+  },
+};
+
+const fakeBistandBehandling = {
+  ...fakeBehandling,
+  behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_BISTANDSBEHOV }],
+} as BehandlingDto;
+
+const fakeBistandVilkår = {
+  vilkarType: vilkarType.BISTANDSVILKÅR,
+  lovReferanse: 'TODO AKT lovreferanse',
+  overstyrbar: true,
+  perioder: [
+    {
+      vilkarStatus: Utfall.IKKE_VURDERT,
+      merknad: '-',
+      merknadParametere: {},
+      periode: { fom: '2026-01-29', tom: '2027-01-28' },
+      begrunnelse: '',
+      fritekstVurderingBrev: '',
+      vurderesIBehandlingen: true,
+    },
+  ],
+} satisfies VilkårMedPerioderDto;
+
+const fakeBistandArgsBase = {
+  ...fakeArgsBase,
+  behandling: fakeBistandBehandling,
+  vilkår: [fakeBistandVilkår],
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND)],
+  onAksjonspunktBekreftet: fn(),
+};
+
+export const Bistand: Story = {
+  args: {
+    ...fakeBistandArgsBase,
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      bekreftAksjonspunkt: fn(),
+    }) as AktivitetspengerApi,
+  },
+  play: async ({ canvas, canvasElement, step, args }) => {
+    await step('Skjemaet viser overskrift og lovreferanse', async () => {
+      await expect(canvas.getByText('Ikke lenger behov for bistand')).toBeInTheDocument();
+      await expect(canvas.getByRole('link', { name: '6' })).toHaveAttribute('href', expect.stringContaining('§6'));
+    });
+
+    await step('Velg perioden som skal vurderes', async () => {
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
+    });
+
+    await step('Velg opphør fra en dato', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Opphøre fra en dato' }));
+      const opphørsdato = canvas.getByRole('textbox', { name: /opphøre fra og med/i });
+      await userEvent.clear(opphørsdato);
+      await userEvent.type(opphørsdato, '01.05.2026');
+    });
+
+    await step('Velg årsak og kilde', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /velg årsak/i }),
+        BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_ARBEID,
+      );
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i }),
+        'BRUKER',
+      );
+    });
+
+    await step('Velg å sende varsel og bekreft forhåndsvarsel', async () => {
+      await userEvent.click(within(findVarselRadiogroup(canvas)).getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.queryByRole('textbox', { name: /tekst i forhåndsvarsel/i })).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+      const modal = await within(canvasElement.ownerDocument.body).findByRole('dialog', {
+        name: /send forhåndsvarsel/i,
+      });
+      await userEvent.click(within(modal).getByRole('button', { name: /send forhåndsvarsel/i }));
+    });
+
+    await step('Payload sendes til riktig aksjonspunkt', async () => {
+      await waitFor(() =>
+        expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+          fakeBistandBehandling.uuid,
+          fakeBistandBehandling.versjon,
+          [
+            {
+              '@type': AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND,
+              begrunnelse: 'Løser aksjonspunkt VURDER_FAKTA_OM_BISTAND',
+              avklaringer: [
+                {
+                  periode: { fom: '2026-05-01', tom: undefined },
+                  avklaring: expect.objectContaining({
+                    ikkeOppfyltÅrsak: BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_ARBEID,
+                    kilde: 'BRUKER',
+                    skalIkkeSendeVarsel: false,
+                    fritekstTilVarsel: undefined,
+                  }),
+                },
+              ],
+            },
+          ],
+        ),
+      );
+    });
+  },
+};
+
+export const BistandAnnenÅrsakKreverTekstIForhåndsvarsel: Story = {
+  args: fakeBistandArgsBase,
+  play: async ({ canvas, step }) => {
+    await step('Velg perioden som skal vurderes', async () => {
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
+    });
+
+    await step('Annen årsak og varsel viser tekstfelt for forhåndsvarsel', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /velg årsak/i }),
+        BistandsvilkårIkkeOppfyltÅrsak.ANNET,
+      );
+      await userEvent.click(within(findVarselRadiogroup(canvas)).getByRole('radio', { name: 'Ja' }));
+      await expect(canvas.getByRole('textbox', { name: /tekst i forhåndsvarsel/i })).toBeInTheDocument();
+    });
+  },
+};
+
+const fakeBistandVilkårsavklaringer = {
+  vilkårType: vilkarType.BISTANDSVILKÅR,
+  perioder: [
+    {
+      periode: { fom: '2026-01-29', tom: '2026-12-31' },
+      utfall: Utfall.IKKE_OPPFYLT,
+      avklaring: {
+        avklaringtype: Avklaringtype.OPPHØR,
+        begrunnelseIkkeVarsel: 'Bruker har selv meldt fra.',
+        ikkeOppfyltÅrsak: BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING,
+        kilde: 'ANNET',
+        kildeFritekst: 'Melding fra skolen',
+        periode: { fom: '2026-01-29', tom: '2026-12-31' },
+        referanse: 'bistand-ref',
+        skalSendeVarsel: false,
+        foreslåttIBehandlingen: true,
+        vurdertAv: 'Z123456',
+        vurdertTidspunkt: '2026-01-29T10:00:00',
+      },
+    },
+  ],
+} satisfies VilkårsavklaringerDto;
+
+export const BistandPreutfylt: Story = {
+  args: {
+    ...fakeBistandArgsBase,
+    behandling: { ...fakeBistandBehandling, uuid: 'fake-bistand-preutfylt-behandling' },
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      hentVilkårsavklaringer: fn(async () => fakeBistandVilkårsavklaringer),
+    }) as AktivitetspengerApi,
+  },
+  play: async ({ canvas, step }) => {
+    await step('Velg perioden fra avklaringen', async () => {
+      await userEvent.click(await canvas.findByRole('row', { name: /29\.01\.2026 - 31\.12\.2026/i }));
+    });
+
+    await step('Feltene er forhåndsutfylt', async () => {
+      await expect(canvas.getByRole('radio', { name: 'Opphøre fra en dato' })).toBeChecked();
+      await expect(canvas.getByRole('combobox', { name: /velg årsak/i })).toHaveValue(
+        BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING,
+      );
+      await expect(canvas.getByRole('combobox', { name: /hvor har du fått opplysningene fra/i })).toHaveValue('ANNET');
+      await expect(canvas.getByRole('radio', { name: 'Nei' })).toBeChecked();
+      await expect(
+        canvas.getByRole('textbox', { name: /begrunnelse for hvorfor det ikke er behov for varsel/i }),
+      ).toHaveValue('Bruker har selv meldt fra.');
+    });
   },
 };

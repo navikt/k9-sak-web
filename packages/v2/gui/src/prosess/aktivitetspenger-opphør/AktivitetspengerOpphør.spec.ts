@@ -1,8 +1,10 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { describe, expect, it } from 'vitest';
-import { utledAktivTab } from './AktivitetspengerOpphør.js';
+import { utledAktivTab, utledGjeldendeVilkår } from './AktivitetspengerOpphør.js';
 import { OpphørTab } from './types.js';
 
 const lagAp = (
@@ -18,6 +20,12 @@ const lagAp = (
 describe('utledAktivTab', () => {
   it('returnerer ÅRSAK_OG_VARSEL når VURDER_FAKTA_OM_BOSTED er OPPRETTET', () => {
     expect(utledAktivTab({ vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED) })).toBe(
+      OpphørTab.ÅRSAK_OG_VARSEL,
+    );
+  });
+
+  it('returnerer ÅRSAK_OG_VARSEL når VURDER_FAKTA_OM_BISTAND er OPPRETTET', () => {
+    expect(utledAktivTab({ vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND) })).toBe(
       OpphørTab.ÅRSAK_OG_VARSEL,
     );
   });
@@ -65,5 +73,70 @@ describe('utledAktivTab', () => {
         vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
       }),
     ).toBe(OpphørTab.VILKÅRSVURDERING);
+  });
+});
+
+const lagVilkår = (type: VilkårMedPerioderDto['vilkarType']): VilkårMedPerioderDto => ({
+  vilkarType: type,
+  lovReferanse: '',
+  overstyrbar: false,
+  perioder: [],
+});
+
+describe('utledGjeldendeVilkår', () => {
+  const bostedVilkår = lagVilkår(vilkarType.BOSTEDSVILKÅR);
+  const bistandVilkår = lagVilkår(vilkarType.BISTANDSVILKÅR);
+  const andreLivsoppholdytelserVilkår = lagVilkår(vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR);
+  const alleVilkår = { bostedVilkår, bistandVilkår, andreLivsoppholdytelserVilkår };
+
+  it('returnerer bostedsvilkåret når VURDER_FAKTA_OM_BOSTED finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+      }),
+    ).toBe(bostedVilkår);
+  });
+
+  it('returnerer bistandsvilkåret når VURDER_FAKTA_OM_BISTAND finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
+      }),
+    ).toBe(bistandVilkår);
+  });
+
+  it('returnerer vilkåret for andre livsoppholdsytelser når VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderAndreLivsoppholdytelserFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER),
+      }),
+    ).toBe(andreLivsoppholdytelserVilkår);
+  });
+
+  it('prioriterer bosted over bistand når begge fakta-aksjonspunktene finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED, AksjonspunktStatus.UTFØRT),
+        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
+      }),
+    ).toBe(bostedVilkår);
+  });
+
+  it('prioriterer bistand over andre livsoppholdsytelser når begge fakta-aksjonspunktene finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
+        vurderAndreLivsoppholdytelserFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER),
+      }),
+    ).toBe(bistandVilkår);
+  });
+
+  it('faller tilbake til vilkåret for andre livsoppholdsytelser når ingen fakta-aksjonspunkter finnes', () => {
+    expect(utledGjeldendeVilkår(alleVilkår)).toBe(andreLivsoppholdytelserVilkår);
   });
 });
