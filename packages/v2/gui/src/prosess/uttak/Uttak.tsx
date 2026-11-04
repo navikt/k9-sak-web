@@ -13,6 +13,7 @@ interface UttakProps {
   harOverstyrerrolle?: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
+  onAksjonspunktBekreftet?: () => void;
 }
 
 const Uttak = ({

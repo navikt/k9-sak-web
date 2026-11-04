@@ -33,11 +33,7 @@ const vurderingsoversiktMock = {
 
 const contextWrapper = ui =>
   render(
-    <BehandlingProvider
-      refetchBehandling={vi.fn()}
-      settBehandling={vi.fn()}
-      oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
-    >
+    <BehandlingProvider refetchBehandling={vi.fn()}>
       <ContainerContext.Provider
         value={
           {

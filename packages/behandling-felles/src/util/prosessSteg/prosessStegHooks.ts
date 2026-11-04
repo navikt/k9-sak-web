@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
@@ -15,7 +15,6 @@ import {
   utledProsessStegPaneler,
 } from './prosessStegUtils';
 import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.ts';
-import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
@@ -29,7 +28,6 @@ const useProsessStegPaneler = (
   valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string },
 ): [ProsessStegUtledet[], ProsessStegUtledet | undefined, ProsessStegMenyRad[]] => {
-  const { erBehandlingsdataUtdatert = false } = useBehandlingContext();
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = {
     ...panelData,
@@ -104,30 +102,10 @@ const useProsessStegPaneler = (
     });
   }, [behandling.versjon, harSkriverettigheter, overstyrteAksjonspunktKoder]);
 
-  const sisteValg = useRef<{ panel: ProsessStegUtledet | undefined }>(undefined);
-
-  const valgtPanel = useMemo(() => {
-    // Mens data for ny behandlingsversjon hentes, vises data fra forrige versjon. Valg av steg utsettes til nye
-    // data er på plass, slik at f.eks. 'default' ikke utledes fra utdaterte aksjonspunkter.
-    if (erBehandlingsdataUtdatert && sisteValg.current) {
-      return sisteValg.current.panel;
-    }
-    const panel = finnValgtPanel(
-      prosessStegPaneler,
-      behandling.behandlingHenlagt,
-      valgtProsessSteg,
-      apentFaktaPanelInfo,
-    );
-    sisteValg.current = { panel };
-    return panel;
-  }, [
-    behandling.versjon,
-    harSkriverettigheter,
-    valgtProsessSteg,
-    overstyrteAksjonspunktKoder,
-    apentFaktaPanelInfo,
-    erBehandlingsdataUtdatert,
-  ]);
+  const valgtPanel = useMemo(
+    () => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
+    [behandling.versjon, harSkriverettigheter, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
+  );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
   const formaterteProsessStegPaneler = useMemo(
@@ -167,9 +145,8 @@ const useBekreftAksjonspunkt = (
   lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   valgtPanel?: ProsessStegUtledet,
-): LegacyBekreftAksjonspunktCallback => {
-  const { settBehandlingHvisGyldig } = useBehandlingContext();
-  return useCallback(
+): LegacyBekreftAksjonspunktCallback =>
+  useCallback(
     aksjonspunktModels =>
       getBekreftAksjonspunktCallback(
         lagringSideEffectsCallback,
@@ -177,12 +154,10 @@ const useBekreftAksjonspunkt = (
         behandling,
         valgtPanel ? valgtPanel.getAksjonspunkter() : [],
         lagreAksjonspunkter,
-        settBehandlingHvisGyldig,
         lagreOverstyrteAksjonspunkter,
       )(aksjonspunktModels),
-    [behandling.versjon, valgtPanel, settBehandlingHvisGyldig],
+    [behandling.versjon, valgtPanel],
   );
-};
 
 const useOppdateringAvBehandlingsversjon = (
   behandlingVersjon: number,

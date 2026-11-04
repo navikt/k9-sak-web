@@ -5,7 +5,6 @@ import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import type { BehandlingContextType } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 export const DEFAULT_FAKTA_KODE = 'default';
 export const DEFAULT_PROSESS_STEG_KODE = 'default';
@@ -58,7 +57,6 @@ export const getBekreftAksjonspunktCallback =
     oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
     overstyringApCodes: string[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
-    settBehandlingHvisGyldig: BehandlingContextType['settBehandlingHvisGyldig'],
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   ) =>
   aksjonspunkter => {
@@ -74,11 +72,6 @@ export const getBekreftAksjonspunktCallback =
       behandlingUuid: behandling.uuid,
     };
 
-    const etterLagring = (lagringsresultat: unknown) => {
-      settBehandlingHvisGyldig(lagringsresultat);
-      oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE);
-    };
-
     if (model && model.some(({ kode }) => overstyringApCodes.includes(kode))) {
       return lagreOverstyrteAksjonspunkter(
         {
@@ -87,7 +80,7 @@ export const getBekreftAksjonspunktCallback =
           bekreftedeAksjonspunktDtoer: model.filter(({ kode }) => !overstyringApCodes.includes(kode)),
         },
         true,
-      ).then(etterLagring);
+      ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
     }
 
     return lagreAksjonspunkter(
@@ -96,5 +89,5 @@ export const getBekreftAksjonspunktCallback =
         bekreftedeAksjonspunktDtoer: model,
       },
       true,
-    ).then(etterLagring);
+    ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
   };

@@ -13,7 +13,6 @@ import {
   utledFaktaPaneler,
 } from './faktaUtils';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
-import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDef[],
@@ -69,7 +68,6 @@ const useCallbacks = (
   lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
   lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
 ) => {
-  const { settBehandlingHvisGyldig } = useBehandlingContext();
   const velgFaktaPanelCallback = useCallback(
     index => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].getUrlKode()),
     [behandling.versjon, valgtProsessSteg],
@@ -82,10 +80,9 @@ const useCallbacks = (
       oppdaterProsessStegOgFaktaPanelIUrl,
       overstyringApCodes,
       lagreAksjonspunkter,
-      settBehandlingHvisGyldig,
       lagreOverstyrteAksjonspunkter,
     ),
-    [behandling.versjon, settBehandlingHvisGyldig],
+    [behandling.versjon],
   );
 
   return [velgFaktaPanelCallback, bekreftAksjonspunktCallback];
