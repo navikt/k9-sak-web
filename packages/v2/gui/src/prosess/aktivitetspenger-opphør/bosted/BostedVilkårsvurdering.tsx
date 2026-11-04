@@ -1,10 +1,10 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import {
   $ManuellVurderingBostedsvilkårDto,
@@ -68,9 +68,9 @@ const buildPeriods = (
   (vilkår.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
     .map(period => {
-      const erAvslag =
-        vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)?.avklaringOgVurdering
-          ?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+      const avklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)
+        ?.avklaringOgVurdering?.avklaring;
+      const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
         id: period.periode.fom,
         status: getPeriodStatus(period.vilkarStatus),
@@ -80,6 +80,7 @@ const buildPeriods = (
             : formatDate(period.periode.fom),
         periode: period.periode,
         vurderesIBehandlingen: period.vurderesIBehandlingen,
+        foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
 
@@ -247,6 +248,7 @@ export const BostedVilkårsvurdering = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
+        periodColumnHeader="Dato/periode"
         lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
         readOnly={readOnly}

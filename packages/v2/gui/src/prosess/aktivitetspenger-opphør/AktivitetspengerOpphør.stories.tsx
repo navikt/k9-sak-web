@@ -136,6 +136,15 @@ const fakeAndreLivsoppholdytelserVilkår = {
   ],
 } as unknown as VilkårMedPerioderDto;
 
+const fakeAndreLivsoppholdytelserVilkårsavklaringer = {
+  vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+  perioder: [{ periode: { fom: '2026-01-29', tom: '2027-01-28' }, utfall: Utfall.IKKE_VURDERT }],
+} satisfies VilkårsavklaringerDto;
+
+const fakeAndreLivsoppholdytelserApi: AktivitetspengerApi = Object.assign(Object.create(fakeAktivitetspengerApi), {
+  hentVilkårsavklaringer: async () => fakeAndreLivsoppholdytelserVilkårsavklaringer,
+});
+
 const meta = {
   title: 'gui/prosess/aktivitetspenger-opphør/AktivitetspengerOpphør',
   component: AktivitetspengerOpphør,
@@ -397,7 +406,7 @@ export const ÅrsakOgVarselKildeAnnetKreverFritekst: Story = {
 
 const fakeAndreLivsoppholdytelserArgsBase = {
   ...fakeArgsBase,
-  api: fakeAktivitetspengerApi,
+  api: fakeAndreLivsoppholdytelserApi,
   behandling: fakeAndreLivsoppholdytelserBehandling,
   vilkår: [fakeAndreLivsoppholdytelserVilkår],
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
@@ -408,7 +417,7 @@ export const AndreLivsoppholdytelser: Story = {
   args: fakeAndreLivsoppholdytelserArgsBase,
   play: async ({ canvas, step }) => {
     await step('Velg perioden som skal vurderes', async () => {
-      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026/i }));
     });
 
     await step('Skjemaet viser feltet for livsoppholdytelse', async () => {
@@ -460,7 +469,11 @@ export const AndreLivsoppholdytelserPreutfylt: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('Velg perioden fra avklaringen', async () => {
-      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 31\.12\.2026/i }));
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026/i }));
+    });
+
+    await step('Vurderte perioder starter i lesevisning og kan redigeres', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: /rediger vurdering/i }));
     });
 
     await step('Perioden og feltene er forhåndsutfylt', async () => {
@@ -483,13 +496,13 @@ export const AndreLivsoppholdytelserPreutfylt: Story = {
 export const AndreLivsoppholdytelserMedForhåndsvarsel: Story = {
   args: {
     ...fakeAndreLivsoppholdytelserArgsBase,
-    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+    api: Object.assign(Object.create(fakeAndreLivsoppholdytelserApi), {
       bekreftAksjonspunkt: fn(),
     }) as AktivitetspengerApi,
   },
   play: async ({ canvas, canvasElement, step, args }) => {
     await step('Velg perioden som skal vurderes', async () => {
-      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
+      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026/i }));
     });
 
     await step('Velg opphør fra en dato', async () => {

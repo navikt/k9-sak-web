@@ -14,7 +14,11 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { getDefaultSelectedPeriodId, VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import {
+  getDefaultSelectedPeriodId,
+  getPeriodStatus,
+  VilkårSplittPanel,
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -23,10 +27,10 @@ import {
   BostedsvilkårIkkeOppfyltÅrsak,
   opphørsårsakLabels,
 } from '../../aktivitetspenger-prosess/types.js';
-import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
+import { getDateRangeFromVilkår, OpphørAvslagValg } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
 import { OpphørKilde } from '../formfields/OpphørKilde.js';
-import { getOpphørPeriods, type OpphørPeriodStatus } from '../formfields/OpphørPerioder.js';
+import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
 
@@ -68,12 +72,6 @@ const erBostedsavklaringKilde = (verdi: string): verdi is BostedsavklaringKildeT
 
 const erBostedsvilkårIkkeOppfyltÅrsak = (verdi: string): verdi is BostedsvilkårIkkeOppfyltÅrsak =>
   Object.values<string>(BostedsvilkårIkkeOppfyltÅrsak).includes(verdi);
-
-const tilPeriodeStatus = (utfall: Utfall): OpphørPeriodStatus => {
-  if (utfall === Utfall.OPPFYLT) return 'success';
-  if (utfall === Utfall.IKKE_OPPFYLT) return 'error';
-  return 'warning';
-};
 
 const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): BostedFormData => ({
   perioder: Object.fromEntries(
@@ -152,10 +150,12 @@ export const BostedÅrsakOgVarsel = ({
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const periods = getOpphørPeriods({
     aksjonspunkt: vurderBostedAP,
-    perioder: vilkårsavklaringer.perioder.map(({ periode, utfall }) => ({
+    perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
-      status: tilPeriodeStatus(utfall),
+      status: getPeriodStatus(utfall),
+      foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
+      avklaringtype: avklaring?.avklaringtype,
     })),
   });
   const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));

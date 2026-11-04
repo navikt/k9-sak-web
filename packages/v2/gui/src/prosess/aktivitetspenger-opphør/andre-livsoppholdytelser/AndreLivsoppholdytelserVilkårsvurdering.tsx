@@ -125,6 +125,7 @@ const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderinger
             ? formatPeriod(period.periode.fom, period.periode.tom)
             : formatDate(period.periode.fom),
         periode: period.periode,
+        foreslåttIBehandlingen: period.avklaringOgVurdering?.avklaring?.foreslåttIBehandlingen,
       };
     });
 
@@ -228,6 +229,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av andre livsoppholdsytelser"
         periodListLabel="Alle perioder"
+        periodColumnHeader="Dato/periode"
         lovreferanse="§ 4"
         defaultIsLocked={isSolved || erLokalkontorForeslårAPÅpent}
         readOnly={readOnly || selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error'}
