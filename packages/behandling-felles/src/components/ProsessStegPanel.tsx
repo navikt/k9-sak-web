@@ -10,6 +10,7 @@ import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/s
 
 import { FagsakYtelseType } from '@k9-sak-web/backend/combined/kodeverk/behandling/FagsakYtelseType.js';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
+import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
@@ -49,6 +50,7 @@ const ProsessStegPanel = ({
   featureToggles,
   erOverstyrer = false,
 }: OwnProps) => {
+  const { erBehandlingsdataUtdatert = false } = useBehandlingContext();
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
 
@@ -61,6 +63,7 @@ const ProsessStegPanel = ({
     : [];
 
   const suspendRequest = !!(
+    erBehandlingsdataUtdatert ||
     panelKeys.length === 0 ||
     erHenlagtOgVedtakStegValgt ||
     !valgtProsessSteg ||
@@ -95,6 +98,9 @@ const ProsessStegPanel = ({
   }
   if (!valgtProsessSteg) {
     return null;
+  }
+  if (erBehandlingsdataUtdatert) {
+    return <LoadingPanel />;
   }
   if (!valgtProsessSteg.getErStegBehandlet() && valgtProsessSteg.getUrlKode()) {
     return <ProsessStegIkkeBehandletPanel />;

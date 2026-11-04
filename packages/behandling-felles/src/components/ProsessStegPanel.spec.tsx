@@ -5,11 +5,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import RequestApiMock from '@k9-sak-web/rest-api/src/requestApi/RequestApiMock';
+import getUseMultipleRestApi from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import { BehandlingProvider } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
@@ -23,8 +27,9 @@ describe('<ProsessStegPanel>', () => {
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
-  const behandling = {
+  const behandling: Behandling = {
     id: 1,
+    uuid: 'b3104714-63ce-4f20-a96a-73756d2500e4',
     versjon: 1,
     status: {
       kode: behandlingStatus.BEHANDLING_UTREDES,
@@ -37,6 +42,15 @@ describe('<ProsessStegPanel>', () => {
     behandlingPåVent: false,
     behandlingHenlagt: false,
     links: [],
+    opprettet: '2026-01-01',
+    gjeldendeVedtak: false,
+    språkkode: 'NB',
+    behandlendeEnhetId: '1234',
+    behandlendeEnhetNavn: 'Testenhet',
+    behandlingKoet: false,
+    toTrinnsBehandling: false,
+    behandlingÅrsaker: [],
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   };
 
   const aksjonspunkter = [
@@ -85,6 +99,80 @@ describe('<ProsessStegPanel>', () => {
     }
     return new StegPanelDef();
   };
+
+  it.each([false, true])(
+    'skal vente med vedtakskall mens behandlingsdata er utdatert (har tidligere paneldata: %s)',
+    async harTidligerePaneldata => {
+      class VedtakPanelDef extends ProsessStegPanelDef {
+        getKomponent = () => <div>Vedtaksdata</div>;
+
+        getEndepunkter = () => ['INFORMASJONSBEHOV_VEDTAKSBREV'];
+
+        getOverstyrtStatus = () => vilkarUtfallType.OPPFYLT;
+      }
+      class UttakPanelDef extends ProsessStegPanelDef {
+        getKomponent = () => <div>Uttaksdata</div>;
+
+        getEndepunkter = () => ['UTTAK'];
+
+        getOverstyrtStatus = () => vilkarUtfallType.OPPFYLT;
+      }
+      const utledSteg = (urlKode: string, panelDef: ProsessStegPanelDef) => {
+        const stegDef = lagStegDef(urlKode, [panelDef]);
+        return new ProsessStegUtledet(stegDef, [
+          new ProsessStegPanelUtledet(
+            stegDef,
+            panelDef,
+            isReadOnlyCheck,
+            [],
+            [],
+            {},
+            toggleOverstyring,
+            kanOverstyreAccess,
+            [],
+          ),
+        ]);
+      };
+      const vedtakSteg = utledSteg(prosessStegCodes.VEDTAK, new VedtakPanelDef());
+      const uttakSteg = utledSteg(prosessStegCodes.UTTAK, new UttakPanelDef());
+      const requestApi = new RequestApiMock();
+      requestApi.mock('INFORMASJONSBEHOV_VEDTAKSBREV', { payload: {} });
+      requestApi.mock('UTTAK', { payload: {} });
+      const startRequest = vi.spyOn(requestApi, 'startRequest');
+      const useMultipleRestApi = getUseMultipleRestApi(requestApi);
+      const panel = (erBehandlingsdataUtdatert: boolean, valgtSteg: ProsessStegUtledet) => (
+        <BehandlingProvider
+          refetchBehandling={() => Promise.resolve()}
+          settBehandling={vi.fn()}
+          oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+          erBehandlingsdataUtdatert={erBehandlingsdataUtdatert}
+        >
+          <ProsessStegPanel
+            valgtProsessSteg={valgtSteg}
+            fagsak={fagsak}
+            behandling={behandling}
+            alleKodeverk={{}}
+            lagringSideeffekterCallback={vi.fn()}
+            lagreAksjonspunkter={vi.fn()}
+            useMultipleRestApi={useMultipleRestApi}
+          />
+        </BehandlingProvider>
+      );
+
+      const { rerender } = renderWithIntl(panel(!harTidligerePaneldata, vedtakSteg));
+      if (harTidligerePaneldata) {
+        await screen.findByText('Vedtaksdata');
+        startRequest.mockClear();
+        rerender(panel(true, vedtakSteg));
+      }
+      expect(startRequest).not.toHaveBeenCalled();
+      expect(screen.queryByText('Vedtaksdata')).not.toBeInTheDocument();
+
+      rerender(panel(false, uttakSteg));
+      await waitFor(() => expect(screen.getByText('Uttaksdata')).toBeInTheDocument());
+      expect(startRequest).toHaveBeenCalledExactlyOnceWith('UTTAK', undefined, true);
+    },
+  );
 
   it('skal vise panel for henlagt behandling når valgt panel er vedtakspanelet og behandling er henlagt', () => {
     const vedtakPanelDef = lagPanelDef(
