@@ -1,3 +1,4 @@
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
 import { HStack, Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
@@ -26,13 +27,17 @@ interface Props {
 
 const EndringsmeldingPsbTilgang = ({ saksnummer }: Props) => {
   const api = useEndringsmeldingPsbTilgangApi();
-  const { data, isPending, isError } = useQuery(endringsmeldingPsbTilgangQueryOptions(api, saksnummer));
+  const { data, isPending, isError, error } = useQuery(endringsmeldingPsbTilgangQueryOptions(api, saksnummer));
 
   if (isPending) {
     return <Loader size="xsmall" title="Henter tilgang til endringsmelding" />;
   }
-  // Feil skal aldri vises som ja eller nei
-  if (isError) {
+  // 403: innsyn-api nektet tilgang til søkeren eller pleietrengende. Årsaken vises ikke.
+  if (isError && ExtendedApiError.findInError(error)?.isForbidden) {
+    return <>Du har ikke tilgang til å se svaret</>;
+  }
+  // Feil og tomt svar (204) skal aldri vises som ja eller nei
+  if (isError || data === null) {
     return <>Kunne ikke hente svar</>;
   }
   if (data.kanBruke) {

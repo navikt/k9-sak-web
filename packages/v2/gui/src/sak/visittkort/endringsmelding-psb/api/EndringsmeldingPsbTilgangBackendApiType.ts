@@ -2,5 +2,5 @@ import type { EndringsmeldingPsbTilgangDto } from '@k9-sak-web/backend/k9sak/kon
 import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export interface EndringsmeldingPsbTilgangBackendApiType extends BackendTilhørighet {
-  hentEndringsmeldingPsbTilgang(saksnummer: string): Promise<EndringsmeldingPsbTilgangDto>;
+  hentEndringsmeldingPsbTilgang(saksnummer: string): Promise<EndringsmeldingPsbTilgangDto | null>;
 }

@@ -7,6 +7,7 @@ import { type ComponentProps, type PropsWithChildren, useEffect } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
 import { withFakeEndringsmeldingPsbTilgangApi } from '../../storybook/decorators/withFakeEndringsmeldingPsbTilgangApi.js';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
+import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import VisittkortPanel from './VisittkortPanel';
 import type { Personopplysninger } from './types/Personopplysninger';
 import diskresjonskodeType from './types/diskresjonskodeType';
@@ -232,12 +233,16 @@ const tilgangsvalg = [
   'enArbeidsgiverToAnsettelserSammeUkeMedOpphold',
   'harFlereAnsettelsesforholdHosUkjentArbeidsgiver',
   'ukjentÅrsak',
+  'ikkeTilgang',
   'feil',
 ];
 
 const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | Error => {
   if (tilgang === 'feil') {
     return new Error('Innsyn-api svarte ikke');
+  }
+  if (tilgang === 'ikkeTilgang') {
+    return makeFakeExtendedApiError({ status: 403 });
   }
   if (tilgang === 'kanBruke') {
     return { kanBruke: true, årsaker: [] };
@@ -262,7 +267,12 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
       name: 'Tilgang til endringsmelding',
       control: 'select',
       options: tilgangsvalg,
-      labels: { kanBruke: 'Har tilgang', ukjentÅrsak: 'Ukjent årsak', feil: 'Feil fra innsyn-api' },
+      labels: {
+        kanBruke: 'Har tilgang',
+        ukjentÅrsak: 'Ukjent årsak',
+        ikkeTilgang: 'Saksbehandler mangler tilgang',
+        feil: 'Feil fra innsyn-api',
+      },
     },
   },
   decorators: [
@@ -287,6 +297,17 @@ export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Kunne ikke hente svar')).toBeInTheDocument();
     await expect(canvas.queryByText('Har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbIkkeTilgang: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: ikke tilgang',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'ikkeTilgang' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Du har ikke tilgang til å se svaret')).toBeInTheDocument();
+    await expect(canvas.queryByText('Kunne ikke hente svar')).not.toBeInTheDocument();
   },
 };
 
