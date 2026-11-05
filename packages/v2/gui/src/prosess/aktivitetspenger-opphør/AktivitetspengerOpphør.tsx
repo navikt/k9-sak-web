@@ -181,6 +181,11 @@ export const AktivitetspengerOpphør = ({
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
   const [aktivTab, setAktivTab] = useState<OpphørTab>(utledAktivTab(opphørData));
   const gjeldendeVilkår = utledGjeldendeVilkår(opphørData);
+  const vilkårForBehandlingsårsak =
+    (isBehandlingsårsakBosted ? bostedVilkår : undefined) ??
+    (isBehandlingsårsakAndreLivsoppholdytelser ? andreLivsoppholdytelserVilkår : undefined) ??
+    (isBehandlingsårsakBistand ? bistandVilkår : undefined);
+  const vurdertVilkårsperiodeFom = vilkårForBehandlingsårsak?.perioder?.find(p => p.vurderesIBehandlingen)?.periode.fom;
 
   useEffect(() => {
     setAktivTab(utledAktivTab(opphørData));
@@ -300,6 +305,7 @@ export const AktivitetspengerOpphør = ({
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
                 kanBeslutte={kanBeslutte}
+                vilkårsperiodeFom={vurdertVilkårsperiodeFom}
               />
             </Tabs.Panel>
           )}

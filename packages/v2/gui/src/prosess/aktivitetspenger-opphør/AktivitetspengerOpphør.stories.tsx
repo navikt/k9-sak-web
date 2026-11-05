@@ -859,6 +859,10 @@ export const BeslutterGodkjennerAlle: Story = {
     onAksjonspunktBekreftet: fn(),
   },
   play: async ({ canvas, step, args }) => {
+    await step('Viser fom-dato for vilkårsperioden som vurderes', async () => {
+      await expect(canvas.getByText('29.01.2026')).toBeInTheDocument();
+    });
+
     await step('Godkjenn Årsak og varsel', async () => {
       const godkjentRadioer = canvas.getAllByRole('radio', { name: 'Godkjent' });
       await userEvent.click(godkjentRadioer[0]!);
