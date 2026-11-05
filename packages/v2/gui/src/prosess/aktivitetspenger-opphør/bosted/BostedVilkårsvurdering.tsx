@@ -13,7 +13,7 @@ import {
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatDate, formatPeriod, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -292,7 +292,9 @@ export const BostedVilkårsvurdering = ({
                       <PersonFillIcon title="Bruker" fontSize="1.5rem" />
                       <VStack gap="space-6" marginBlock="space-2 space-0">
                         <BodyShort size="small" weight="semibold">
-                          Tilbakemelding fra bruker om opphør xx.xx.xxxx
+                          Tilbakemelding fra bruker om opphør
+                          {uttalelse.mottattTidspunkt &&
+                            ` ${formatDate(uttalelse.mottattTidspunkt)} kl. ${timeFormat(uttalelse.mottattTidspunkt)}`}
                         </BodyShort>
                         <BodyLong size="small">{uttalelse.uttalelseTekst}</BodyLong>
                       </VStack>
