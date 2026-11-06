@@ -1676,6 +1676,7 @@ export const AktivitetVilkårsvurderingOpphør: Story = {
   play: async ({ canvas, step, args }) => {
     await step('Vilkårsvurdering-fanen er valgt og viser aktivitet med tilbakemelding fra bruker', async () => {
       await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
+      await expect(canvas.getByText('Har du en tilbakemelding?')).toBeInTheDocument();
       await expect(canvas.getByText('Svar på forhåndsvarsel')).toBeInTheDocument();
       await expect(canvas.getByText('Jeg har vært syk og har derfor ikke møtt opp.')).toBeInTheDocument();
     });
