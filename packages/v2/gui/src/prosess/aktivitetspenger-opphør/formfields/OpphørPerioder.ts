@@ -4,6 +4,8 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import type { VilkårSplittPanelPeriod } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 
+export const IKKE_SATT_PERIODE_ID = 'ikke-satt';
+
 export type OpphørPeriodStatus = VilkårSplittPanelPeriod['status'];
 export interface OpphørPeriodInput {
   id?: string;
@@ -37,7 +39,7 @@ export const getOpphørPeriods = ({ aksjonspunkt, perioder }: GetOpphørPeriodsP
 
   return [
     ...(isAksjonspunktOpen && !erSendtTilbakeFraBeslutter
-      ? [{ id: 'ikke-satt', status: 'warning' as const, label: 'Ikke satt' }]
+      ? [{ id: IKKE_SATT_PERIODE_ID, status: 'warning' as const, label: 'Ikke satt' }]
       : []),
     ...mappedPeriods,
   ];

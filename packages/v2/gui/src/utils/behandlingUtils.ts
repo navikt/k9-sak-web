@@ -20,6 +20,7 @@ export const erAktivitetspengerOpphørsbehandling = (behandling: {
       BehandlingÅrsakType.ENDRET_BOSTED,
       BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE,
       BehandlingÅrsakType.ENDRET_BISTANDSBEHOV,
+      BehandlingÅrsakType.ENDRET_AKTIVITET,
     ];
     return !!behandling.behandlingÅrsaker?.some(årsak => opphørsårsaker.some(å => å === årsak.behandlingArsakType));
   }
