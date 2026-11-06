@@ -1,13 +1,13 @@
 import { k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { EndringsmeldingPsbTilgangDto } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangDto.js';
+import { EndringsmeldingPsbTilgangStatus } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangStatus.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useQueryClient } from '@tanstack/react-query';
 import { type ComponentProps, type PropsWithChildren, useEffect } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
 import { withFakeEndringsmeldingPsbTilgangApi } from '../../storybook/decorators/withFakeEndringsmeldingPsbTilgangApi.js';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
-import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import VisittkortPanel from './VisittkortPanel';
 import type { Personopplysninger } from './types/Personopplysninger';
 import diskresjonskodeType from './types/diskresjonskodeType';
@@ -223,36 +223,24 @@ const åpnePopup = async (canvas: ReturnType<typeof within>) => {
   }
 };
 
-const tilgangsvalg = [
-  'kanBruke',
-  'harIngenSak',
-  'søknadsperioderUtenforTillattEndringsperiode',
-  'harMerEnnEnSak',
-  'harIngenPerioder',
-  'barnManglerIdentitetsnummer',
-  'harArbeidstidSomSelvstendigNæringsdrivende',
-  'enArbeidsgiverToAnsettelserSammeUkeMedOpphold',
-  'harFlereAnsettelsesforholdHosUkjentArbeidsgiver',
-  'ukjentÅrsak',
-  'ikkeTilgang',
-  'feil',
-  'tomtSvar',
-];
+const tilgangsvalg = ['kanBruke', 'kanIkkeBruke', 'ikkeTilgang', 'feil', 'tomtSvar'];
 
 const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | null | Error => {
-  if (tilgang === 'feil') {
-    return new Error('Innsyn-api svarte ikke');
+  switch (tilgang) {
+    case 'feil':
+      return new Error('Innsyn-api svarte ikke');
+    case 'tomtSvar':
+      return null;
+    case 'ikkeTilgang':
+      return {
+        status: EndringsmeldingPsbTilgangStatus.MANGLER_TILGANG_TIL_PERSON,
+        tekst: 'Uvisst, du har ikke tilgang til å se svaret',
+      };
+    case 'kanIkkeBruke':
+      return { status: EndringsmeldingPsbTilgangStatus.KAN_IKKE_BRUKE, tekst: 'Nei, søkeren har mer enn én sak' };
+    default:
+      return { status: EndringsmeldingPsbTilgangStatus.KAN_BRUKE, tekst: 'Ja, har tilgang' };
   }
-  if (tilgang === 'tomtSvar') {
-    return null;
-  }
-  if (tilgang === 'ikkeTilgang') {
-    return makeFakeExtendedApiError({ status: 403 });
-  }
-  if (tilgang === 'kanBruke') {
-    return { kanBruke: true, årsaker: [] };
-  }
-  return { kanBruke: false, årsaker: [tilgang] };
 };
 
 // Storyen beholder samme QueryClient når kontrollen endres, så cachen må tømmes for å hente nytt svar
@@ -274,7 +262,7 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
       options: tilgangsvalg,
       labels: {
         kanBruke: 'Har tilgang',
-        ukjentÅrsak: 'Ukjent årsak',
+        kanIkkeBruke: 'Har ikke tilgang',
         ikkeTilgang: 'Saksbehandler mangler tilgang',
         feil: 'Feil fra innsyn-api',
         tomtSvar: 'Tomt svar (204)',
@@ -292,6 +280,16 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Ja, har tilgang')).toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbKanIkkeBruke: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: kan ikke bruke',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'kanIkkeBruke' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Nei, søkeren har mer enn én sak')).toBeInTheDocument();
   },
 };
 
