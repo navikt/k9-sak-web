@@ -12,9 +12,8 @@ import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate, formatPeriod, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
-import { PersonFillIcon } from '@navikt/aksel-icons';
-import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
+import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
+import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -30,6 +29,7 @@ import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
 import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { SendTilBeslutter } from '../SendTilBeslutter.js';
 
@@ -232,34 +232,7 @@ export const BistandVilkårsvurdering = ({
             }}
           >
             <VStack gap="space-24" maxWidth="70ch" width="100%">
-              {uttalelse?.harUttalelse && (
-                <Box borderRadius="8" padding="space-16" background="info-softA">
-                  <VStack gap="space-20">
-                    <VStack gap="space-8">
-                      <HStack justify="space-between">
-                        <BodyShort size="small" weight="semibold">
-                          Stemmer opplysningene om opphør?
-                        </BodyShort>
-                        <Tag variant="outline" data-color="info" size="small">
-                          Fra bruker
-                        </Tag>
-                      </HStack>
-                      <BodyShort size="small">Nei</BodyShort>
-                    </VStack>
-                    <HStack gap="space-4">
-                      <PersonFillIcon title="Bruker" fontSize="1.5rem" />
-                      <VStack gap="space-6" marginBlock="space-2 space-0">
-                        <BodyShort size="small" weight="semibold">
-                          Tilbakemelding fra bruker om opphør
-                          {uttalelse.mottattTidspunkt &&
-                            ` ${formatDate(uttalelse.mottattTidspunkt)} kl. ${timeFormat(uttalelse.mottattTidspunkt)}`}
-                        </BodyShort>
-                        <BodyLong size="small">{uttalelse.uttalelseTekst}</BodyLong>
-                      </VStack>
-                    </HStack>
-                  </VStack>
-                </Box>
-              )}
+              <OpphørUttalelse uttalelse={uttalelse} />
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
