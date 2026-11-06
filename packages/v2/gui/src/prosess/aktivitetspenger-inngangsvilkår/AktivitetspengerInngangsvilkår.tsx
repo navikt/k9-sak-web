@@ -209,7 +209,6 @@ export const AktivitetspengerInngangsvilkår = ({
   const erFørstegangsbehandling = behandling.type === BehandlingType.FØRSTEGANGSSØKNAD;
 
   // Startdatoen som vises i besluttervurderingen, er den tidligste blant periodene som vurderes i denne behandlingen.
-  // Blir undefined hvis ingen av vilkårene nedenfor har en slik periode.
   const vurdertVilkårsperiodeFom = [
     inngangsvilkårdata.bostedVilkår,
     inngangsvilkårdata.andreLivsoppholdytelserVilkår,
