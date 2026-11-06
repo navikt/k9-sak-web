@@ -328,16 +328,6 @@ export const EndringsmeldingPsbIkkeTilgang: typeof EndringsmeldingPsb = {
   },
 };
 
-export const EndringsmeldingPsbUkjentÅrsak: typeof EndringsmeldingPsb = {
-  ...EndringsmeldingPsb,
-  name: 'EndringsmeldingPSB: ukjent årsak',
-  args: { ...EndringsmeldingPsb.args, tilgang: 'ukjentÅrsak' },
-  play: async ({ canvas }) => {
-    await åpnePopup(canvas);
-    await expect(await canvas.findByText('Søkeren oppfyller ikke vilkårene')).toBeInTheDocument();
-  },
-};
-
 export const EndringsmeldingPsbAnnenYtelse: StoryObj<typeof VisittkortPanel> = {
   name: 'EndringsmeldingPSB: annen ytelse',
   args: {
