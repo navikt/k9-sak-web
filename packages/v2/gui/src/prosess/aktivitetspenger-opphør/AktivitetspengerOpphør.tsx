@@ -20,6 +20,7 @@ import { AndreLivsoppholdytelserÅrsakOgVarsel } from './andre-livsoppholdytelse
 import { BeslutterOpphør } from './beslutter/BeslutterOpphør.js';
 import { BistandVilkårsvurdering } from './bistand/BistandVilkårsvurdering.js';
 import { BistandÅrsakOgVarsel } from './bistand/BistandÅrsakOgVarsel.js';
+import { AktivitetVilkårsvurdering } from './aktivitet/AktivitetVilkårsvurdering.js';
 import { AktivitetÅrsakOgVarsel } from './aktivitet/AktivitetÅrsakOgVarsel.js';
 import { BostedVilkårsvurdering } from './bosted/BostedVilkårsvurdering.js';
 import { BostedÅrsakOgVarsel } from './bosted/BostedÅrsakOgVarsel.js';
@@ -324,6 +325,19 @@ export const AktivitetspengerOpphør = ({
               <BistandVilkårsvurdering
                 vurderBistandVilkårAP={vurderBistandVilkårAP}
                 bistandVilkår={bistandVilkår}
+                api={api}
+                behandling={behandling}
+                onAksjonspunktBekreftet={onAksjonspunktBekreftet}
+                readOnly={!kanSaksbehandle}
+                isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+                lokalkontorBeslutterAP={lokalkontorBeslutterAP}
+              />
+            )}
+            {aktivitetVilkår && isBehandlingsårsakAktivitet && (
+              <AktivitetVilkårsvurdering
+                vurderAktivitetVilkårAP={vurderAktivitetVilkårAP}
+                aktivitetVilkår={aktivitetVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
