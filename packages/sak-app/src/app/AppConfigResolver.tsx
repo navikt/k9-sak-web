@@ -42,6 +42,8 @@ import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiConte
 import { K9SakUttakBackendClient } from '@k9-sak-web/gui/prosess/uttak/api/K9SakUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
+import { EndringsmeldingPsbTilgangApiContext } from '@k9-sak-web/gui/sak/visittkort/endringsmelding-psb/api/EndringsmeldingPsbTilgangApiContext.js';
+import { K9SakEndringsmeldingPsbTilgangBackendClient } from '@k9-sak-web/gui/sak/visittkort/endringsmelding-psb/api/K9SakEndringsmeldingPsbTilgangBackendClient.js';
 import { DokumenterApiContext } from '@k9-sak-web/gui/sak/dokumenter/api/DokumenterApiContext.js';
 import { K9SakDokumenterBackendClient } from '@k9-sak-web/gui/sak/dokumenter/api/K9SakDokumenterBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
@@ -117,7 +119,11 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                               value={new K9TilbakeFeilutbetalingFaktaBackendClient()}
                                             >
                                               <OmsorgenForApiContext value={new K9SakOmsorgenForBackendClient()}>
-                                                {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                <EndringsmeldingPsbTilgangApiContext
+                                                  value={new K9SakEndringsmeldingPsbTilgangBackendClient()}
+                                                >
+                                                  {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                </EndringsmeldingPsbTilgangApiContext>
                                               </OmsorgenForApiContext>
                                             </FeilutbetalingFaktaApiContext>
                                           </OmBarnetApiContext>

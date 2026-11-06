@@ -3,10 +3,14 @@ import {
   type k9_sak_kontrakt_infotrygd_DirekteOvergangDto as DirekteOvergangDto,
   type k9_sak_kontrakt_fagsak_RelatertSakDto as RelatertSakDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { prettifyDateString } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
+import { useContext } from 'react';
+import type { Fagsak } from '../Fagsak.js';
 import { isUngdomsprogramytelsen } from '../../utils/urlUtils';
 import RelatertFagsak from './relatert-fagsak/RelatertFagsak';
 import TagContainer from './TagContainer';
@@ -40,6 +44,9 @@ export interface VisittkortPanelProps {
   erIkkeDigitalBruker?: boolean;
   /** Indikerer om saken har merknad om utenlandssak fra LOS. */
   erUtenlandssak?: boolean;
+  /** Brukes til å vise om søkeren kan bruke endringsmeldingen for pleiepenger. */
+  saksnummer?: string;
+  sakstype?: Fagsak['sakstype'];
 }
 
 const VisittkortPanel = ({
@@ -55,7 +62,11 @@ const VisittkortPanel = ({
   ungdomsytelseDeltakerStatus,
   erIkkeDigitalBruker,
   erUtenlandssak,
+  saksnummer,
+  sakstype,
 }: VisittkortPanelProps) => {
+  const featureToggles = useContext(FeatureTogglesContext);
+
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
       <div className={styles.container}>
@@ -105,6 +116,10 @@ const VisittkortPanel = ({
       : null;
   const erDirekteOvergangFraInfotrygd =
     direkteOvergangFraInfotrygd && direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
+  const endringsmeldingPsbSaksnummer =
+    featureToggles.VIS_ENDRINGSMELDING_PSB_TILGANG && sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN
+      ? saksnummer
+      : undefined;
 
   const beregnAlderPåBarn = (fødselsdato: string) => {
     const iDag = dateToday();
@@ -126,7 +141,13 @@ const VisittkortPanel = ({
             renderMenuContent={
               hideVisittkortDetaljerPopup
                 ? undefined
-                : () => <VisittkortDetaljerPopup personopplysninger={søker} språkkode={språkkode} />
+                : () => (
+                    <VisittkortDetaljerPopup
+                      personopplysninger={søker}
+                      språkkode={språkkode}
+                      endringsmeldingPsbSaksnummer={endringsmeldingPsbSaksnummer}
+                    />
+                  )
             }
             renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
             showPersonAge={isUngdomsprogramytelsen()}
