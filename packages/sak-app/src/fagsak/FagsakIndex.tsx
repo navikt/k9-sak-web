@@ -300,7 +300,8 @@ const FagsakIndex = () => {
                     erPbSak={fagsak.erPbSak}
                     erHastesak={erHastesak}
                     erUtenlandssak={erUtenlandssak}
-                    fagsak={fagsak}
+                    saksnummer={fagsak.saksnummer}
+                    sakstype={fagsak.sakstype}
                   />
 
                   {behandling && (

@@ -45,7 +45,8 @@ export interface VisittkortPanelProps {
   /** Indikerer om saken har merknad om utenlandssak fra LOS. */
   erUtenlandssak?: boolean;
   /** Brukes til å vise om søkeren kan bruke endringsmeldingen for pleiepenger. */
-  fagsak?: Pick<Fagsak, 'saksnummer' | 'sakstype'>;
+  saksnummer?: string;
+  sakstype?: Fagsak['sakstype'];
 }
 
 const VisittkortPanel = ({
@@ -61,7 +62,8 @@ const VisittkortPanel = ({
   ungdomsytelseDeltakerStatus,
   erIkkeDigitalBruker,
   erUtenlandssak,
-  fagsak,
+  saksnummer,
+  sakstype,
 }: VisittkortPanelProps) => {
   const featureToggles = useContext(FeatureTogglesContext);
 
@@ -115,8 +117,8 @@ const VisittkortPanel = ({
   const erDirekteOvergangFraInfotrygd =
     direkteOvergangFraInfotrygd && direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
   const endringsmeldingPsbSaksnummer =
-    featureToggles.VIS_ENDRINGSMELDING_PSB_TILGANG && fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN
-      ? fagsak.saksnummer
+    featureToggles.VIS_ENDRINGSMELDING_PSB_TILGANG && sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN
+      ? saksnummer
       : undefined;
 
   const beregnAlderPåBarn = (fødselsdato: string) => {

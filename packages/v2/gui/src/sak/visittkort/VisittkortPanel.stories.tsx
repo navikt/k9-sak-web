@@ -212,7 +212,8 @@ export const HarRelatertFagsakFlereSøkere: StoryObj<typeof VisittkortPanel> = {
 
 const endringsmeldingPsbArgs = {
   ...Default.args,
-  fagsak: { saksnummer: '5YD0i', sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN },
+  saksnummer: '5YD0i',
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
 };
 
 const åpnePopup = async (canvas: ReturnType<typeof within>) => {
@@ -325,7 +326,7 @@ export const EndringsmeldingPsbAnnenYtelse: StoryObj<typeof VisittkortPanel> = {
   name: 'EndringsmeldingPSB: annen ytelse',
   args: {
     ...endringsmeldingPsbArgs,
-    fagsak: { saksnummer: '5YD0i', sakstype: fagsakYtelsesType.OMSORGSPENGER },
+    sakstype: fagsakYtelsesType.OMSORGSPENGER,
   },
   decorators: [withFeatureToggles({ VIS_ENDRINGSMELDING_PSB_TILGANG: true })],
   play: async ({ canvas }) => {
