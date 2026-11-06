@@ -1,10 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
-import type { EndringsmeldingPsbTilgangBackendApiType } from './EndringsmeldingPsbTilgangBackendApiType.js';
+import type { EndringsmeldingPsbTilgangApi } from './EndringsmeldingPsbTilgangApi.js';
 
-export const endringsmeldingPsbTilgangQueryOptions = (
-  api: EndringsmeldingPsbTilgangBackendApiType,
-  saksnummer: string,
-) =>
+export const endringsmeldingPsbTilgangQueryOptions = (api: EndringsmeldingPsbTilgangApi, saksnummer: string) =>
   queryOptions({
     queryKey: ['endringsmeldingPsbTilgang', saksnummer, api.backend],
     queryFn: () => api.hentEndringsmeldingPsbTilgang(saksnummer),

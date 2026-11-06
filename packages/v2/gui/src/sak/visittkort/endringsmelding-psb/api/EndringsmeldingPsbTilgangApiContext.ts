@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-import type { EndringsmeldingPsbTilgangBackendApiType } from './EndringsmeldingPsbTilgangBackendApiType.js';
+import type { EndringsmeldingPsbTilgangApi } from './EndringsmeldingPsbTilgangApi.js';
 
-export const EndringsmeldingPsbTilgangApiContext = createContext<EndringsmeldingPsbTilgangBackendApiType | null>(null);
+export const EndringsmeldingPsbTilgangApiContext = createContext<EndringsmeldingPsbTilgangApi | null>(null);
 
-export const useEndringsmeldingPsbTilgangApi = (): EndringsmeldingPsbTilgangBackendApiType => {
+export const useEndringsmeldingPsbTilgangApi = (): EndringsmeldingPsbTilgangApi => {
   const context = useContext(EndringsmeldingPsbTilgangApiContext);
   if (!context) {
     throw new Error('useEndringsmeldingPsbTilgangApi må brukes innenfor en EndringsmeldingPsbTilgangApiContext');
