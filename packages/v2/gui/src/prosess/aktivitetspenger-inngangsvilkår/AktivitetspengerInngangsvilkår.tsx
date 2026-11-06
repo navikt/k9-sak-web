@@ -208,6 +208,15 @@ export const AktivitetspengerInngangsvilkår = ({
 
   const erFørstegangsbehandling = behandling.type === BehandlingType.FØRSTEGANGSSØKNAD;
 
+  const vurdertVilkårsperiodeFom = [
+    inngangsvilkårdata.bostedVilkår,
+    inngangsvilkårdata.andreLivsoppholdytelserVilkår,
+    inngangsvilkårdata.vurderBistandsvilkårVilkår,
+    inngangsvilkårdata.vurderAktivitetsvilkårVilkår,
+  ]
+    .flatMap(v => v?.perioder ?? [])
+    .find(p => p.vurderesIBehandlingen)?.periode.fom;
+
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(
     utledAktivTab(inngangsvilkårdata, erFørstegangsbehandling),
   );
@@ -372,6 +381,7 @@ export const AktivitetspengerInngangsvilkår = ({
                   onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
                   kanBeslutte={kanBeslutte}
+                  vilkårsperiodeFom={vurdertVilkårsperiodeFom}
                 />
               </Tabs.Panel>
             )}

@@ -80,7 +80,12 @@ const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): AndreL
   ),
 });
 
-const buildPayload = ({ formData, selectedId }: { formData: AndreLivsoppholdytelserFormData; selectedId: string }) => {
+interface SubmitArgs {
+  formData: AndreLivsoppholdytelserFormData;
+  selectedId: string;
+}
+
+const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for andre livsoppholdsytelser');
   const isOpphør = selectedPeriod.opphøreEllerAvslå === 'opphøre';
@@ -152,7 +157,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   });
   const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(opphørPeriods));
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
-  const [pendingSubmitData, setPendingSubmitData] = useState<AndreLivsoppholdytelserFormData | null>(null);
+  const [pendingSubmit, setPendingSubmit] = useState<SubmitArgs | null>(null);
   const formHook = useForm<AndreLivsoppholdytelserFormData>({
     defaultValues: buildInitialValues(vilkårsavklaringer),
   });
@@ -169,8 +174,8 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
     valgtOpphørPeriode?.status === 'success' && !valgtVilkårsavklaringPeriode?.avklaring;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (formData: AndreLivsoppholdytelserFormData) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload({ formData, selectedId })]);
+    mutationFn: async (submitArgs: SubmitArgs) => {
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vilkårsavklaringerOptions.queryKey });
@@ -183,22 +188,23 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
     setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>,
   ) => {
     const skalSendeForhåndsvarsel = skalSendeVarselOmOpphør === 'ja';
+    const submitArgs = { formData: data, selectedId };
     if (skalSendeForhåndsvarsel) {
-      setPendingSubmitData(data);
+      setPendingSubmit(submitArgs);
       setVisBekreftSubmitModal(true);
       return;
     }
-    await bekreftAksjonspunktMutation(data);
+    await bekreftAksjonspunktMutation(submitArgs);
     setIsFormLocked(true);
   };
 
   const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
-    if (!pendingSubmitData) {
+    if (!pendingSubmit) {
       return;
     }
-    await bekreftAksjonspunktMutation(pendingSubmitData);
+    await bekreftAksjonspunktMutation(pendingSubmit);
     setVisBekreftSubmitModal(false);
-    setPendingSubmitData(null);
+    setPendingSubmit(null);
     setIsFormLocked(true);
   };
 
@@ -360,7 +366,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                 onConfirm={() => void bekreftOgSendForhåndsvarsel(setIsFormLocked)}
                 onCancel={() => {
                   setVisBekreftSubmitModal(false);
-                  setPendingSubmitData(null);
+                  setPendingSubmit(null);
                 }}
               />
             )}

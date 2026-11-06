@@ -95,7 +95,12 @@ const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): Bosted
     ]),
   ),
 });
-const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; selectedId: string }) => {
+interface SubmitArgs {
+  formData: BostedFormData;
+  selectedId: string;
+}
+
+const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for opphør');
   if (!selectedPeriod.årsak) throw new Error('Årsak for valgt periode er ikke satt');
@@ -160,7 +165,7 @@ export const BostedÅrsakOgVarsel = ({
   });
   const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
-  const [pendingSubmitData, setPendingSubmitData] = useState<BostedFormData | null>(null);
+  const [pendingSubmit, setPendingSubmit] = useState<SubmitArgs | null>(null);
   const formHook = useForm<BostedFormData>({ defaultValues: buildInitialValues(vilkårsavklaringer) });
   const selectedPeriod = vilkårsavklaringer.perioder.find(p => p.periode.fom === selectedId);
   const valgtPeriodeErReadOnly =
@@ -173,8 +178,8 @@ export const BostedÅrsakOgVarsel = ({
   const valgtÅrsak = valgtFormPeriode?.årsak;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (formData: BostedFormData) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload({ formData, selectedId })]);
+    mutationFn: async (submitArgs: SubmitArgs) => {
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vilkårsavklaringerOptions.queryKey });
@@ -188,22 +193,23 @@ export const BostedÅrsakOgVarsel = ({
       årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
   );
   const handleSubmit = async (data: BostedFormData, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
+    const submitArgs = { formData: data, selectedId };
     if (skalSendeForhåndsvarsel === 'ja') {
-      setPendingSubmitData(data);
+      setPendingSubmit(submitArgs);
       setVisBekreftSubmitModal(true);
       return;
     }
-    await bekreftAksjonspunktMutation(data);
+    await bekreftAksjonspunktMutation(submitArgs);
     setIsFormLocked(true);
   };
 
   const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
-    if (!pendingSubmitData) {
+    if (!pendingSubmit) {
       return;
     }
-    await bekreftAksjonspunktMutation(pendingSubmitData);
+    await bekreftAksjonspunktMutation(pendingSubmit);
     setVisBekreftSubmitModal(false);
-    setPendingSubmitData(null);
+    setPendingSubmit(null);
     setIsFormLocked(true);
   };
 
@@ -301,7 +307,7 @@ export const BostedÅrsakOgVarsel = ({
                 onConfirm={() => void bekreftOgSendForhåndsvarsel(setIsFormLocked)}
                 onCancel={() => {
                   setVisBekreftSubmitModal(false);
-                  setPendingSubmitData(null);
+                  setPendingSubmit(null);
                 }}
               />
             )}
