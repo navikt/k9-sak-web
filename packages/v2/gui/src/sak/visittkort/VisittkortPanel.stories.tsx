@@ -291,7 +291,7 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
   ],
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
-    await expect(await canvas.findByText('Har tilgang')).toBeInTheDocument();
+    await expect(await canvas.findByText('Ja, har tilgang')).toBeInTheDocument();
   },
 };
 
@@ -301,8 +301,8 @@ export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
   args: { ...EndringsmeldingPsb.args, tilgang: 'feil' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
-    await expect(await canvas.findByText('Kunne ikke hente svar')).toBeInTheDocument();
-    await expect(canvas.queryByText('Har tilgang')).not.toBeInTheDocument();
+    await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
   },
 };
 
@@ -312,8 +312,8 @@ export const EndringsmeldingPsbTomtSvar: typeof EndringsmeldingPsb = {
   args: { ...EndringsmeldingPsb.args, tilgang: 'tomtSvar' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
-    await expect(await canvas.findByText('Kunne ikke hente svar')).toBeInTheDocument();
-    await expect(canvas.queryByText('Har tilgang')).not.toBeInTheDocument();
+    await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
   },
 };
 
@@ -323,8 +323,8 @@ export const EndringsmeldingPsbIkkeTilgang: typeof EndringsmeldingPsb = {
   args: { ...EndringsmeldingPsb.args, tilgang: 'ikkeTilgang' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
-    await expect(await canvas.findByText('Du har ikke tilgang til å se svaret')).toBeInTheDocument();
-    await expect(canvas.queryByText('Kunne ikke hente svar')).not.toBeInTheDocument();
+    await expect(await canvas.findByText('Uvisst, du har ikke tilgang til å se svaret')).toBeInTheDocument();
+    await expect(canvas.queryByText('Uvisst, kunne ikke hente svar')).not.toBeInTheDocument();
   },
 };
 

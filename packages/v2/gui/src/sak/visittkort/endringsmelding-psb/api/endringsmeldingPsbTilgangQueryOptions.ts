@@ -10,7 +10,7 @@ export const endringsmeldingPsbTilgangQueryOptions = (
     queryFn: () => api.hentEndringsmeldingPsbTilgang(saksnummer),
     // Svaret endres sjelden, og kallet går via innsyn-api og aareg. Unngår nytt kall hver gang popupen åpnes.
     staleTime: 5 * 60 * 1000,
-    // Feil vises som «Kunne ikke hente svar» i popupen, ikke i nærmeste ErrorBoundary.
+    // Feil vises som «Uvisst, kunne ikke hente svar» i popupen, ikke i nærmeste ErrorBoundary.
     throwOnError: false,
     retry: false,
   });

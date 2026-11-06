@@ -106,10 +106,11 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode, endringsmeldi
               {adresser[adresseType.POSTADRESSE_UTLAND] || '-'}
             </Label>
           </HStack>
+
           {endringsmeldingPsbSaksnummer && (
-            <HStack gap="space-8">
+            <HStack gap="space-8" marginBlock="space-12 space-0">
               <div className={styles.labels}>
-                <BodyShort size="small">Endringsmelding</BodyShort>
+                <BodyShort size="small">Kan sende endringsmelding:</BodyShort>
               </div>
               <Label size="small" as="div" style={{ maxWidth: '20rem' }}>
                 <EndringsmeldingPsbTilgang saksnummer={endringsmeldingPsbSaksnummer} />

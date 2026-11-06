@@ -7,17 +7,17 @@ import { endringsmeldingPsbTilgangQueryOptions } from './api/endringsmeldingPsbT
 
 // Koder fra IngenTilgangÅrsak i k9-sak-innsyn-api. k9-sak sender dem videre som string.
 const årsakTekster: Partial<Record<string, string>> = {
-  harIngenSak: 'Søkeren har ingen sak',
-  søknadsperioderUtenforTillattEndringsperiode: 'Søknadsperiodene er utenfor perioden som kan endres',
-  harMerEnnEnSak: 'Søkeren har mer enn én sak',
-  harIngenPerioder: 'Søkeren har ingen søknadsperioder',
-  barnManglerIdentitetsnummer: 'Barnet mangler identitetsnummer',
-  harArbeidstidSomSelvstendigNæringsdrivende: 'Søkeren har arbeidstid som selvstendig næringsdrivende',
-  enArbeidsgiverToAnsettelserSammeUkeMedOpphold: 'To ansettelser hos samme arbeidsgiver i samme uke, med opphold',
-  harFlereAnsettelsesforholdHosUkjentArbeidsgiver: 'Flere ansettelsesforhold hos ukjent arbeidsgiver',
+  harIngenSak: 'Nei, søkeren har ingen sak',
+  søknadsperioderUtenforTillattEndringsperiode: 'Nei, søknadsperiodene er utenfor perioden som kan endres',
+  harMerEnnEnSak: 'Nei, søkeren har mer enn én sak',
+  harIngenPerioder: 'Nei, søkeren har ingen søknadsperioder',
+  barnManglerIdentitetsnummer: 'Nei, barnet mangler identitetsnummer',
+  harArbeidstidSomSelvstendigNæringsdrivende: 'Nei, søkeren har arbeidstid som selvstendig næringsdrivende',
+  enArbeidsgiverToAnsettelserSammeUkeMedOpphold: 'Nei, to ansettelser hos samme arbeidsgiver i samme uke, med opphold',
+  harFlereAnsettelsesforholdHosUkjentArbeidsgiver: 'Nei, flere ansettelsesforhold hos ukjent arbeidsgiver',
 };
 
-const ukjentÅrsakTekst = 'Søkeren oppfyller ikke vilkårene';
+const ukjentÅrsakTekst = 'Nei, søkeren oppfyller ikke vilkårene';
 
 const tekstForÅrsak = (kode: string | undefined): string => (kode && årsakTekster[kode]) || ukjentÅrsakTekst;
 
@@ -34,11 +34,11 @@ const EndringsmeldingPsbTilgang = ({ saksnummer }: Props) => {
   }
   // 403: innsyn-api nektet tilgang til søkeren eller pleietrengende. Årsaken vises ikke.
   if (isError && ExtendedApiError.findInError(error)?.isForbidden) {
-    return <>Du har ikke tilgang til å se svaret</>;
+    return <>Uvisst, du har ikke tilgang til å se svaret</>;
   }
   // Feil og tomt svar (204) skal aldri vises som ja eller nei
   if (isError || data === null) {
-    return <>Kunne ikke hente svar</>;
+    return <>Uvisst, kunne ikke hente svar</>;
   }
   if (data.kanBruke) {
     return (
@@ -46,7 +46,7 @@ const EndringsmeldingPsbTilgang = ({ saksnummer }: Props) => {
         <span>
           <CheckmarkCircleFillIcon color="var(--ax-bg-success-strong)" fontSize="1.25rem" aria-hidden="true" />
         </span>
-        Har tilgang
+        Ja, har tilgang
       </HStack>
     );
   }
