@@ -1607,3 +1607,210 @@ export const AktivitetPreutfylt: Story = {
     });
   },
 };
+
+const lagFakeAktivitetVilkårsavklaringVurderinger = (
+  ikkeOppfyltÅrsak: AktivitetsvilkåretIkkeOppfyltÅrsak,
+  utfall: Utfall = Utfall.IKKE_VURDERT,
+): VilkårsavklaringVurderingerDto => ({
+  vilkårType: vilkarType.AKTIVITETSVILKÅR,
+  perioder: [
+    {
+      periode: { fom: '2026-01-29', tom: '2027-01-28' },
+      utfall,
+      vurderesIBehandlingen: true,
+      avklaringOgVurdering: {
+        avklaring: {
+          avklaringtype: Avklaringtype.OPPHØR,
+          foreslåttIBehandlingen: true,
+          ikkeOppfyltÅrsak,
+          kilde: 'BRUKER',
+          periode: { fom: '2026-01-29', tom: '2027-01-28' },
+          referanse: 'aktivitet-ref',
+          skalSendeVarsel: true,
+          vurdertAv: 'Z123456',
+          vurdertTidspunkt: '2026-01-29T10:00:00',
+          uttalelse: {
+            harUttalelse: true,
+            mottattTidspunkt: '2026-02-10T09:30:00',
+            uttalelseTekst: 'Jeg har vært syk og har derfor ikke møtt opp.',
+          },
+        },
+        vurdering:
+          utfall === Utfall.IKKE_VURDERT
+            ? undefined
+            : {
+                begrunnelse: 'Bruker har ikke møtt til avtalte aktiviteter.',
+                fritekstVurderingBrev: 'Du har ikke deltatt i aktivitetene du har avtalt med Nav.',
+                erManuellVurdering: true,
+                erVilkårOppfylt: utfall === Utfall.OPPFYLT,
+                vurdertAv: 'Z123456',
+                vurdertTidspunkt: '2026-02-12T10:00:00',
+              },
+      },
+    },
+  ],
+});
+
+const lagFakeAktivitetVilkårsvurderingArgs = (
+  ikkeOppfyltÅrsak: AktivitetsvilkåretIkkeOppfyltÅrsak,
+  {
+    status = AksjonspunktStatus.OPPRETTET,
+    utfall = Utfall.IKKE_VURDERT,
+    kanSaksbehandle = true,
+  }: { status?: AksjonspunktDto['status']; utfall?: Utfall; kanSaksbehandle?: boolean } = {},
+) => ({
+  ...fakeAktivitetArgsBase,
+  innloggetBruker: {
+    aktivitetspengerDel1SaksbehandlerTilgang: { kanSaksbehandle, kanBeslutte: false },
+  } satisfies InnloggetAnsattUngV2Dto,
+  aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR, status)],
+  api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+    bekreftAksjonspunkt: fn(),
+    hentVilkårsavklaringVurderinger: async () => lagFakeAktivitetVilkårsavklaringVurderinger(ikkeOppfyltÅrsak, utfall),
+  }) as AktivitetspengerApi,
+  onAksjonspunktBekreftet: fn(),
+});
+
+export const AktivitetVilkårsvurderingOpphør: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET),
+  play: async ({ canvas, step, args }) => {
+    await step('Vilkårsvurdering-fanen er valgt og viser aktivitet med tilbakemelding fra bruker', async () => {
+      await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
+      await expect(canvas.getByText('Svar på forhåndsvarsel')).toBeInTheDocument();
+      await expect(canvas.getByText('Jeg har vært syk og har derfor ikke møtt opp.')).toBeInTheDocument();
+    });
+
+    await step('Fyll inn begrunnelse og velg opphør', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker ikke lenger er i aktivitet/i }),
+        'Bruker har ikke møtt til avtalte aktiviteter.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i }));
+    });
+
+    await step('Fritekst til opphørsbrev vises uten avkrysningsboks når årsaken er annet', async () => {
+      await expect(canvas.queryByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).not.toBeInTheDocument();
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' }),
+        'Du har ikke deltatt i aktivitetene du har avtalt med Nav.',
+      );
+    });
+
+    await step('Bekreft og fortsett', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+    });
+
+    await step('Payload sendes til riktig aksjonspunkt med fritekst', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeAktivitetBehandling.uuid,
+        fakeAktivitetBehandling.versjon,
+        [
+          {
+            '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
+            begrunnelse: 'Bruker har ikke møtt til avtalte aktiviteter.',
+            vurdertePerioder: [
+              {
+                begrunnelse: 'Bruker har ikke møtt til avtalte aktiviteter.',
+                erVilkårOppfylt: false,
+                periode: { fom: '2026-01-29', tom: '2027-01-28' },
+                fritekstVurderingBrev: 'Du har ikke deltatt i aktivitetene du har avtalt med Nav.',
+              },
+            ],
+          },
+        ],
+      );
+      await expect(args.onAksjonspunktBekreftet).toHaveBeenCalled();
+    });
+  },
+};
+
+export const AktivitetVilkårsvurderingIkkeOpphør: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.AVKORTET),
+  play: async ({ canvas, step, args }) => {
+    await step('Avkrysningsboks for fritekst vises ved opphør når årsaken ikke er annet', async () => {
+      await userEvent.click(await canvas.findByRole('radio', { name: /ja, fra og med/i }));
+      await expect(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).toBeInTheDocument();
+      await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+    });
+
+    await step('Fyll inn begrunnelse og velg nei', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker ikke lenger er i aktivitet/i }),
+        'Bruker er fortsatt i aktivitet.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await expect(canvas.queryByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+    });
+
+    await step('Vilkåret sendes som oppfylt uten fritekst', async () => {
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeAktivitetBehandling.uuid,
+        fakeAktivitetBehandling.versjon,
+        [
+          expect.objectContaining({
+            '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
+            vurdertePerioder: [expect.objectContaining({ erVilkårOppfylt: true, fritekstVurderingBrev: undefined })],
+          }),
+        ],
+      );
+    });
+  },
+};
+
+export const AktivitetVilkårsvurderingÅpentForVeileder: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET, { kanSaksbehandle: false }),
+  play: async ({ canvas, step }) => {
+    await step('Varselet vises, men aksjonspunktet kan ikke løses', async () => {
+      await expect(await canvas.findByText('Vurder om bruker ikke lenger er i aktivitet.')).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const AktivitetVilkårsvurderingRedigerVurdering: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET, {
+    status: AksjonspunktStatus.UTFØRT,
+    utfall: Utfall.IKKE_OPPFYLT,
+  }),
+  play: async ({ canvas, step }) => {
+    await step('Vurderingen vises i lesevisning', async () => {
+      await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
+      await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    });
+
+    await step('Rediger vurdering åpner forhåndsutfylt skjema', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /rediger vurdering/i }));
+      await expect(canvas.getByRole('textbox', { name: /vurder om bruker ikke lenger er i aktivitet/i })).toHaveValue(
+        'Bruker har ikke møtt til avtalte aktiviteter.',
+      );
+      await expect(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i })).toBeChecked();
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toHaveValue(
+        'Du har ikke deltatt i aktivitetene du har avtalt med Nav.',
+      );
+      await expect(canvas.getByRole('button', { name: /bekreft og fortsett/i })).toBeInTheDocument();
+    });
+
+    await step('Avbryt går tilbake til lesevisning', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Avbryt' }));
+      await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const AktivitetVilkårsvurderingLesevisning: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET, {
+    status: AksjonspunktStatus.UTFØRT,
+    utfall: Utfall.IKKE_OPPFYLT,
+    kanSaksbehandle: false,
+  }),
+  play: async ({ canvas, step }) => {
+    await step('Vurderingen vises uten mulighet til å redigere', async () => {
+      await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
+      await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /rediger vurdering/i })).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    });
+  },
+};
