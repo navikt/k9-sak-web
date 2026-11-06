@@ -7,11 +7,11 @@ export class K9SakEndringsmeldingPsbTilgangBackendClient implements Endringsmeld
   readonly backend = backendNavn.k9sak;
 
   async hentEndringsmeldingPsbTilgang(saksnummer: string): Promise<EndringsmeldingPsbTilgangDto | null> {
-    const { data, response } = await fagsak_hentEndringsmeldingPsbTilgang({ query: { saksnummer } });
+    const { data, response } = await fagsak_hentEndringsmeldingPsbTilgang({ query: { saksnummer: { saksnummer } } });
     // 204 uten innhold betyr ukjent saksnummer. Generert klient gir da tomt objekt som data.
     if (response.status === 204) {
       return null;
     }
-    return data;
+    return data ?? null;
   }
 }
