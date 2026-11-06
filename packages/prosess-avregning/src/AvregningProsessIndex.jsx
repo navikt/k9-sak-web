@@ -1,13 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
 import AvregningPanel from './components/AvregningPanel';
-import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
-import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
-import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
-import avregningSimuleringResultatPropType from './propTypes/avregningSimuleringResultatPropType';
 
 const cache = createIntlCache();
 
@@ -52,19 +47,5 @@ const AvregningProsessIndex = ({
     />
   </RawIntlProvider>
 );
-
-AvregningProsessIndex.propTypes = {
-  fagsak: avregningFagsakPropType.isRequired,
-  behandling: avregningBehandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(avregningAksjonspunkterPropType).isRequired,
-  simuleringResultat: avregningSimuleringResultatPropType,
-  tilbakekrevingvalg: PropTypes.shape(),
-  submitCallback: PropTypes.func.isRequired,
-  previewFptilbakeCallback: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  featureToggles: PropTypes.shape(),
-};
 
 export default AvregningProsessIndex;

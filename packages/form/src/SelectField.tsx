@@ -19,11 +19,9 @@ interface SelectFieldProps {
   onChange?: (elmt: ReactNode, value: any) => void;
 }
 
-/* eslint-disable-next-line react/prop-types */
 const renderReadOnly =
   () =>
   ({ input, selectValues, disabled, hideValueOnDisable, ...otherProps }) => {
-    /* eslint-disable-next-line react/prop-types */
     const option = selectValues.map(sv => sv.props).find(o => o.value === input.value);
     let value = option ? option.children : undefined;
     // For å få nokolunde samme oppførsel som "opprinneleg komponent" på readonly komponenten når disabled og hideValueOnDisable

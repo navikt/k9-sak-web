@@ -210,19 +210,19 @@ export const BeholderVerdierVedPeriodebytte: Story = {
     const canvas = within(canvasElement);
     const begrunnelse = canvas.getByRole('textbox', { name: /Vurder om søker er bosatt/ });
 
-    await step('skriver begrunnelse i første periode', async () => {
-      await userEvent.type(begrunnelse, 'Begrunnelse for første periode');
+    await step('skriver begrunnelse i nyeste periode', async () => {
+      await userEvent.type(begrunnelse, 'Begrunnelse for nyeste periode');
     });
 
     await step('bytter periode og viser egne verdier', async () => {
-      await userEvent.click(canvas.getByText('01.07.2024'));
+      await userEvent.click(canvas.getByRole('row', { name: /01\.01\.2024/ }));
       await expect(canvas.getByRole('textbox', { name: /Vurder om søker er bosatt/ })).toHaveValue('');
     });
 
-    await step('beholder verdiene ved retur til første periode', async () => {
-      await userEvent.click(canvas.getByText('01.01.2024'));
+    await step('beholder verdiene ved retur til nyeste periode', async () => {
+      await userEvent.click(canvas.getByRole('row', { name: /01\.07\.2024/ }));
       await expect(canvas.getByRole('textbox', { name: /Vurder om søker er bosatt/ })).toHaveValue(
-        'Begrunnelse for første periode',
+        'Begrunnelse for nyeste periode',
       );
     });
   },

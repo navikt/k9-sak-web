@@ -6,6 +6,8 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { $TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollAksjonspunkterDto.js';
 import type { TotrinnskontrollSkjermlenkeContextDto } from '@k9-sak-web/backend/ungsak/kontrakt/vedtak/TotrinnskontrollSkjermlenkeContextDto.js';
+import { formatDate } from '@k9-sak-web/gui/utils/formatters.js';
+import { CalendarIcon } from '@navikt/aksel-icons';
 import {
   Alert,
   BodyShort,
@@ -14,6 +16,7 @@ import {
   Detail,
   ErrorMessage,
   Fieldset,
+  Heading,
   HStack,
   Link,
   Radio,
@@ -99,6 +102,7 @@ interface Props {
   onAksjonspunktBekreftet: () => Promise<void>;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   kanBeslutte: boolean;
+  vilkårsperiodeFom?: string;
 }
 
 export const Beslutter = ({
@@ -109,6 +113,7 @@ export const Beslutter = ({
   onAksjonspunktBekreftet,
   totrinnskontrollSkjermlenkeContext,
   kanBeslutte,
+  vilkårsperiodeFom,
 }: Props) => {
   const formHook = useForm<FormValues>({
     defaultValues: buildDefaultValues(totrinnskontrollSkjermlenkeContext),
@@ -169,117 +174,141 @@ export const Beslutter = ({
               Kontroller vurderinger for inngangsvilkår.
             </Alert>
           )}
-          <VStack gap="space-16" marginInline="space-16">
-            <RhfForm formMethods={formHook} onSubmit={onSubmit}>
-              {kanBeslutte && (
-                <VStack gap="space-28">
-                  {fields.map((field, index) => {
-                    const item = aksjonspunktGodkjenning?.[index];
-                    const visAvslagsårsakKryssbokser = item?.totrinnskontrollGodkjent === false;
-                    const visBegrunnelseTekstfelt = item?.totrinnskontrollGodkjent === false;
-
-                    const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
-                    const checkboxValidationError = error?.message;
-                    const reValidate = () => trigger(`aksjonspunktGodkjenning.${index}`);
-
-                    const tab = skjermlenkeTypeToTab[item?.skjermlenkeType ?? ''];
-                    const formaterSkjermlenkeType = (skjermlenkeType?: string) => {
-                      switch (skjermlenkeType) {
-                        case SkjermlenkeType.BOSTEDSVILKÅR:
-                          return 'Bosatt i Trondheim kommune';
-                        case SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
-                          return 'Andre livsoppholdsytelser';
-                        case SkjermlenkeType.BISTANDSVILKÅR:
-                          return 'Behov for bistand';
-                        case SkjermlenkeType.SOEKNADSFRIST:
-                          return 'Søknadsfrist';
-                        default:
-                          return skjermlenkeType;
-                      }
-                    };
-                    return (
-                      <Box key={field.id}>
-                        <button type="button" onClick={() => tab && onTabChange(tab)} className={styles.buttonLink}>
-                          <Link as={BodyShort} weight="semibold" size="small">
-                            {formaterSkjermlenkeType(item?.skjermlenkeType)}
-                          </Link>
-                        </button>
-                        <Fieldset legend="" hideLegend>
-                          <RhfRadioGroup
-                            control={control}
-                            name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
-                            legend="Vurder om vilkåret er godkjent"
-                            hideLegend
-                          >
-                            <HStack gap="space-16">
-                              <Radio value={true}>Godkjent</Radio>
-                              <Radio value={false}>Vurder på nytt</Radio>
-                            </HStack>
-                          </RhfRadioGroup>
-                          {visBegrunnelseTekstfelt && (
-                            <ArrowBox alignOffset={110}>
-                              {visAvslagsårsakKryssbokser && (
-                                <VStack gap="space-8">
-                                  <Detail>Årsak</Detail>
-                                  <Fieldset legend="" hideLegend>
-                                    <HStack gap="space-80">
-                                      <div>
-                                        <RhfCheckbox
-                                          control={control}
-                                          name={`aksjonspunktGodkjenning.${index}.feilFakta`}
-                                          label="Feil fakta"
-                                          onChange={reValidate}
-                                        />
-                                        <RhfCheckbox
-                                          control={control}
-                                          name={`aksjonspunktGodkjenning.${index}.feilRegel`}
-                                          label="Feil regelforståelse"
-                                          onChange={reValidate}
-                                        />
-                                      </div>
-                                      <div>
-                                        <RhfCheckbox
-                                          control={control}
-                                          name={`aksjonspunktGodkjenning.${index}.feilLov`}
-                                          label="Feil lovanvendelse"
-                                          onChange={reValidate}
-                                        />
-                                        <RhfCheckbox
-                                          control={control}
-                                          name={`aksjonspunktGodkjenning.${index}.annet`}
-                                          label="Annet"
-                                          onChange={reValidate}
-                                        />
-                                      </div>
-                                    </HStack>
-                                    {checkboxValidationError && <ErrorMessage>{checkboxValidationError}</ErrorMessage>}
-                                  </Fieldset>
-                                </VStack>
-                              )}
-                              <Box marginBlock="space-16 space-0" maxWidth="70ch" width="100%">
-                                <RhfTextarea
-                                  control={control}
-                                  name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
-                                  label="Begrunnelse"
-                                  validate={[required, minLength(3), maxLength(besluttersBegrunnelseMaxLength)]}
-                                  maxLength={besluttersBegrunnelseMaxLength}
-                                />
-                              </Box>
-                            </ArrowBox>
-                          )}
-                        </Fieldset>
-                      </Box>
-                    );
-                  })}
-                  <Box>
-                    <Button variant="primary" size="small" type="submit" loading={isPending}>
-                      Bekreft
-                    </Button>
-                  </Box>
-                </VStack>
+          <Box
+            borderColor="neutral-subtle"
+            borderRadius="8"
+            borderWidth="1"
+            background="accent-soft"
+            padding="space-20"
+          >
+            <Heading size="small" level="2">
+              Besluttervurdering
+            </Heading>
+            <VStack gap="space-12" marginBlock="space-8 space-0">
+              {vilkårsperiodeFom && (
+                <>
+                  <HStack gap="space-8" align="center">
+                    <CalendarIcon fontSize="1.5rem" aria-hidden />
+                    <BodyShort size="small" weight="semibold">
+                      {formatDate(vilkårsperiodeFom)}
+                    </BodyShort>
+                  </HStack>
+                  <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
+                </>
               )}
-            </RhfForm>
-          </VStack>
+              <RhfForm formMethods={formHook} onSubmit={onSubmit}>
+                {kanBeslutte && (
+                  <VStack gap="space-28">
+                    {fields.map((field, index) => {
+                      const item = aksjonspunktGodkjenning?.[index];
+                      const visAvslagsårsakKryssbokser = item?.totrinnskontrollGodkjent === false;
+                      const visBegrunnelseTekstfelt = item?.totrinnskontrollGodkjent === false;
+
+                      const { error } = getFieldState(`aksjonspunktGodkjenning.${index}`);
+                      const checkboxValidationError = error?.message;
+                      const reValidate = () => trigger(`aksjonspunktGodkjenning.${index}`);
+
+                      const tab = skjermlenkeTypeToTab[item?.skjermlenkeType ?? ''];
+                      const formaterSkjermlenkeType = (skjermlenkeType?: string) => {
+                        switch (skjermlenkeType) {
+                          case SkjermlenkeType.BOSTEDSVILKÅR:
+                            return 'Bosatt i Trondheim kommune';
+                          case SkjermlenkeType.VURDER_ANDRE_LIVSOPPHOLDSYTELSER:
+                            return 'Andre livsoppholdsytelser';
+                          case SkjermlenkeType.BISTANDSVILKÅR:
+                            return 'Behov for bistand';
+                          case SkjermlenkeType.SOEKNADSFRIST:
+                            return 'Søknadsfrist';
+                          default:
+                            return skjermlenkeType;
+                        }
+                      };
+                      return (
+                        <Box key={field.id}>
+                          <button type="button" onClick={() => tab && onTabChange(tab)} className={styles.buttonLink}>
+                            <Link as={BodyShort} weight="semibold" size="small">
+                              {formaterSkjermlenkeType(item?.skjermlenkeType)}
+                            </Link>
+                          </button>
+                          <Fieldset legend="" hideLegend>
+                            <RhfRadioGroup
+                              control={control}
+                              name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
+                              legend="Vurder om vilkåret er godkjent"
+                              hideLegend
+                            >
+                              <HStack gap="space-16">
+                                <Radio value={true}>Godkjent</Radio>
+                                <Radio value={false}>Vurder på nytt</Radio>
+                              </HStack>
+                            </RhfRadioGroup>
+                            {visBegrunnelseTekstfelt && (
+                              <ArrowBox alignOffset={110}>
+                                {visAvslagsårsakKryssbokser && (
+                                  <VStack gap="space-8">
+                                    <Detail>Årsak</Detail>
+                                    <Fieldset legend="" hideLegend>
+                                      <HStack gap="space-80">
+                                        <div>
+                                          <RhfCheckbox
+                                            control={control}
+                                            name={`aksjonspunktGodkjenning.${index}.feilFakta`}
+                                            label="Feil fakta"
+                                            onChange={reValidate}
+                                          />
+                                          <RhfCheckbox
+                                            control={control}
+                                            name={`aksjonspunktGodkjenning.${index}.feilRegel`}
+                                            label="Feil regelforståelse"
+                                            onChange={reValidate}
+                                          />
+                                        </div>
+                                        <div>
+                                          <RhfCheckbox
+                                            control={control}
+                                            name={`aksjonspunktGodkjenning.${index}.feilLov`}
+                                            label="Feil lovanvendelse"
+                                            onChange={reValidate}
+                                          />
+                                          <RhfCheckbox
+                                            control={control}
+                                            name={`aksjonspunktGodkjenning.${index}.annet`}
+                                            label="Annet"
+                                            onChange={reValidate}
+                                          />
+                                        </div>
+                                      </HStack>
+                                      {checkboxValidationError && (
+                                        <ErrorMessage>{checkboxValidationError}</ErrorMessage>
+                                      )}
+                                    </Fieldset>
+                                  </VStack>
+                                )}
+                                <Box marginBlock="space-16 space-0" maxWidth="70ch" width="100%">
+                                  <RhfTextarea
+                                    control={control}
+                                    name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
+                                    label="Begrunnelse"
+                                    validate={[required, minLength(3), maxLength(besluttersBegrunnelseMaxLength)]}
+                                    maxLength={besluttersBegrunnelseMaxLength}
+                                  />
+                                </Box>
+                              </ArrowBox>
+                            )}
+                          </Fieldset>
+                        </Box>
+                      );
+                    })}
+                    <Box>
+                      <Button variant="primary" size="small" type="submit" loading={isPending}>
+                        Bekreft
+                      </Button>
+                    </Box>
+                  </VStack>
+                )}
+              </RhfForm>
+            </VStack>
+          </Box>
         </VStack>
       )}
     </>

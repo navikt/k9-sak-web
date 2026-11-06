@@ -16,14 +16,12 @@ import { k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon as Aksjonspu
 import KontrollerEtterbetalingAlert from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingAlert';
 import KontrollerEtterbetalingIndex from '@k9-sak-web/gui/prosess/avregning/kontroller-etterbetaling/KontrollerEtterbetalingIndex';
 import { BodyShort, Button, Detail, HGrid, Heading, Label, Link, VStack } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearFields, formPropTypes } from 'redux-form';
+import { clearFields } from 'redux-form';
 import { createSelector } from 'reselect';
-import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
@@ -294,14 +292,6 @@ export class AvregningPanel extends Component {
     );
   }
 }
-
-AvregningPanel.propTypes = {
-  isApOpen: PropTypes.bool.isRequired,
-  simuleringResultat: avregningSimuleringResultatPropType,
-  previewCallback: PropTypes.func.isRequired,
-  hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
-  ...formPropTypes,
-};
 
 const AvregningPanelWithIntl = props => {
   const intl = useIntl();

@@ -1,12 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandleMerknaderForm from './components/BehandleMerknaderForm';
 import messages from '../i18n/nb_NO.json';
-import ankeMerknaderBehandlingPropType from './propTypes/ankeMerknaderBehandlingPropType';
-import ankeMerknaderAksjonspunkterPropType from './propTypes/ankeMerknaderAksjonspunkterPropType';
-import ankeVurderingPropType from './propTypes/ankeVurderingPropType';
 
 const cache = createIntlCache();
 
@@ -44,17 +40,5 @@ const AnkeMerknaderProsessIndex = ({
     />
   </RawIntlProvider>
 );
-
-AnkeMerknaderProsessIndex.propTypes = {
-  behandling: ankeMerknaderBehandlingPropType.isRequired,
-  ankeVurdering: ankeVurderingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(ankeMerknaderAksjonspunkterPropType).isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-};
 
 export default AnkeMerknaderProsessIndex;
