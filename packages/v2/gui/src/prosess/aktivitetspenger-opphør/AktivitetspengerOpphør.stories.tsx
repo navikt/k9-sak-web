@@ -1145,7 +1145,7 @@ export const Bistand: Story = {
     });
 
     await step('Velg perioden som skal vurderes', async () => {
-      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
+      await userEvent.click(await canvas.findByRole('row', { name: /29\.01\.2026/i }));
     });
 
     await step('Velg opphør fra en dato', async () => {
@@ -1208,7 +1208,7 @@ export const BistandAnnenÅrsakKreverTekstIForhåndsvarsel: Story = {
   args: fakeBistandArgsBase,
   play: async ({ canvas, step }) => {
     await step('Velg perioden som skal vurderes', async () => {
-      await userEvent.click(canvas.getByRole('row', { name: /29\.01\.2026 - 28\.01\.2027/i }));
+      await userEvent.click(await canvas.findByRole('row', { name: /29\.01\.2026/i }));
     });
 
     await step('Annen årsak og varsel viser tekstfelt for forhåndsvarsel', async () => {
@@ -1255,7 +1255,7 @@ export const BistandPreutfylt: Story = {
   },
   play: async ({ canvas, step }) => {
     await step('Velg perioden fra avklaringen', async () => {
-      await userEvent.click(await canvas.findByRole('row', { name: /29\.01\.2026 - 31\.12\.2026/i }));
+      await userEvent.click(await canvas.findByRole('row', { name: /29\.01\.2026/i }));
     });
 
     await step('Feltene er forhåndsutfylt', async () => {
