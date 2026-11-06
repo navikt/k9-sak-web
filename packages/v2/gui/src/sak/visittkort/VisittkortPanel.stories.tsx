@@ -236,11 +236,15 @@ const tilgangsvalg = [
   'ukjentÅrsak',
   'ikkeTilgang',
   'feil',
+  'tomtSvar',
 ];
 
-const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | Error => {
+const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | null | Error => {
   if (tilgang === 'feil') {
     return new Error('Innsyn-api svarte ikke');
+  }
+  if (tilgang === 'tomtSvar') {
+    return null;
   }
   if (tilgang === 'ikkeTilgang') {
     return makeFakeExtendedApiError({ status: 403 });
@@ -273,6 +277,7 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
         ukjentÅrsak: 'Ukjent årsak',
         ikkeTilgang: 'Saksbehandler mangler tilgang',
         feil: 'Feil fra innsyn-api',
+        tomtSvar: 'Tomt svar (204)',
       },
     },
   },
@@ -294,6 +299,17 @@ export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
   ...EndringsmeldingPsb,
   name: 'EndringsmeldingPSB: feil fra innsyn-api',
   args: { ...EndringsmeldingPsb.args, tilgang: 'feil' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbTomtSvar: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: tomt svar',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'tomtSvar' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Kunne ikke hente svar')).toBeInTheDocument();
