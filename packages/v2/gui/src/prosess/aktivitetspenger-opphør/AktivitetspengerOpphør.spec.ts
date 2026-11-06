@@ -42,6 +42,20 @@ describe('utledAktivTab', () => {
     );
   });
 
+  it('returnerer ÅRSAK_OG_VARSEL når VURDER_FAKTA_OM_AKTIVITET er OPPRETTET', () => {
+    expect(utledAktivTab({ vurderAktivitetFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET) })).toBe(
+      OpphørTab.ÅRSAK_OG_VARSEL,
+    );
+  });
+
+  it('returnerer VILKÅRSVURDERING når VURDER_AKTIVITETSVILKÅR_OPPHØR er OPPRETTET', () => {
+    expect(
+      utledAktivTab({
+        vurderAktivitetVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR),
+      }),
+    ).toBe(OpphørTab.VILKÅRSVURDERING);
+  });
+
   it('returnerer BESLUTTER når NAV_KONTOR_BESLUTTER_VILKÅR er OPPRETTET', () => {
     expect(utledAktivTab({ lokalkontorBeslutterAP: lagAp(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR) })).toBe(
       OpphørTab.BESLUTTER,
@@ -92,8 +106,9 @@ const lagVilkår = (type: VilkårMedPerioderDto['vilkarType']): VilkårMedPeriod
 describe('utledGjeldendeVilkår', () => {
   const bostedVilkår = lagVilkår(vilkarType.BOSTEDSVILKÅR);
   const bistandVilkår = lagVilkår(vilkarType.BISTANDSVILKÅR);
+  const aktivitetVilkår = lagVilkår(vilkarType.AKTIVITETSVILKÅR);
   const andreLivsoppholdytelserVilkår = lagVilkår(vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR);
-  const alleVilkår = { bostedVilkår, bistandVilkår, andreLivsoppholdytelserVilkår };
+  const alleVilkår = { bostedVilkår, bistandVilkår, aktivitetVilkår, andreLivsoppholdytelserVilkår };
 
   it('returnerer bostedsvilkåret når VURDER_FAKTA_OM_BOSTED finnes', () => {
     expect(
@@ -111,6 +126,15 @@ describe('utledGjeldendeVilkår', () => {
         vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
       }),
     ).toBe(bistandVilkår);
+  });
+
+  it('returnerer aktivitetsvilkåret når VURDER_FAKTA_OM_AKTIVITET finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderAktivitetFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET),
+      }),
+    ).toBe(aktivitetVilkår);
   });
 
   it('returnerer vilkåret for andre livsoppholdsytelser når VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER finnes', () => {
@@ -138,6 +162,16 @@ describe('utledGjeldendeVilkår', () => {
         ...alleVilkår,
         vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
         vurderAndreLivsoppholdytelserFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER),
+      }),
+    ).toBe(bistandVilkår);
+  });
+
+  it('prioriterer bistand over aktivitet når begge fakta-aksjonspunktene finnes', () => {
+    expect(
+      utledGjeldendeVilkår({
+        ...alleVilkår,
+        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
+        vurderAktivitetFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET),
       }),
     ).toBe(bistandVilkår);
   });
