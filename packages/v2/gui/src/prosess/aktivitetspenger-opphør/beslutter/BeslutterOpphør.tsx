@@ -194,7 +194,7 @@ export const BeslutterOpphør = ({
             <Heading size="small" level="2">
               Besluttervurdering
             </Heading>
-            <VStack gap="space-16" marginBlock="space-8 space-0">
+            <VStack gap="space-12" marginBlock="space-8 space-0">
               {vilkårsperiodeFom && (
                 <>
                   <HStack gap="space-8" align="center">

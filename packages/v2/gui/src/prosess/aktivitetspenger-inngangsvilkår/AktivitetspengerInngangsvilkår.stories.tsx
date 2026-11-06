@@ -99,6 +99,7 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     } satisfies InnloggetAnsattUngV2Dto,
     api: fakeAktivitetspengerApi,
     behandling: fakeBehandling,
+    vilkår: [{ ...fakeBostedVilkår, perioder: [{ ...fakeBostedVilkårPeriode, vurderesIBehandlingen: true }] }],
     onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [
       {
@@ -117,6 +118,7 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('tab', { name: 'Beslutter' })).toHaveAttribute('aria-selected', 'true');
     await expect(canvas.getByRole('tabpanel', { name: 'Beslutter' })).toBeVisible();
+    await expect(canvas.getByText('01.01.2024')).toBeInTheDocument();
   },
 };
 
