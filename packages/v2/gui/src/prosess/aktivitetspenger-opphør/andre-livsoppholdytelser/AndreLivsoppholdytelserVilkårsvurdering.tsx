@@ -4,6 +4,7 @@ import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avkla
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { $VurderingAvAndreLivsoppholdsytelserEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VurderingAvAndreLivsoppholdsytelserEtterAvklaringDto.js';
@@ -35,75 +36,67 @@ const begrunnelseMaxLength = $VurderingAvAndreLivsoppholdsytelserEtterAvklaringD
 const fritekstVurderingBrevMaxLength =
   $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
 
-interface PeriodForm {
-  begrunnelse: string;
-  andreLivsoppholdytelser: 'ja' | 'nei' | '';
-  fritekstVurderingBrev: string;
-  harFritekstbrev: boolean;
-}
-
 interface FormData {
-  perioder: Record<string, PeriodForm>;
+  perioder: Record<
+    string,
+    {
+      begrunnelse: string;
+      andreLivsoppholdytelser: 'ja' | 'nei' | '';
+      fritekstVurderingBrev: string;
+      harFritekstbrev: boolean;
+    }
+  >;
 }
 
-interface Props {
-  vurderAndreLivsoppholdytelserVilkårAP?: AksjonspunktDto;
-  lokalkontorForeslårVilkårAP?: AksjonspunktDto;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
-  readOnly: boolean;
-  isPermanentlyReadOnly: boolean;
-  lokalkontorBeslutterAP?: AksjonspunktDto;
-}
+const tilJaEllerNei = (utfall: Utfall): 'ja' | 'nei' | '' => {
+  if (utfall === Utfall.IKKE_OPPFYLT) return 'ja';
+  if (utfall === Utfall.OPPFYLT) return 'nei';
+  return '';
+};
 
 const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
   perioder: Object.fromEntries(
-    (vilkårsavklaringVurderinger.perioder ?? []).map(period => [
-      `${period.periode.fom}_${period.periode.tom ?? 'åpen_periode'}`,
+    vilkårsavklaringVurderinger.perioder.map(({ periode, utfall, avklaringOgVurdering }) => [
+      periode.fom,
       {
-        begrunnelse: period.avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
-        andreLivsoppholdytelser:
-          period.utfall === Utfall.OPPFYLT ? 'nei' : period.utfall === Utfall.IKKE_OPPFYLT ? 'ja' : '',
-        fritekstVurderingBrev: period.avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
-        harFritekstbrev: !!period.avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
+        begrunnelse: avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
+        andreLivsoppholdytelser: tilJaEllerNei(utfall),
+        fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
+        harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
       },
     ]),
   ),
 });
 
 const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): VilkårSplittPanelPeriod[] =>
-  (vilkårsavklaringVurderinger.perioder ?? [])
+  vilkårsavklaringVurderinger.perioder
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
-    .map(period => {
-      const erAvslag = period.avklaringOgVurdering?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+    .map(({ periode, utfall, vurderesIBehandlingen, avklaringOgVurdering }) => {
+      const avklaring = avklaringOgVurdering?.avklaring;
+      const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
-        id: `${period.periode.fom}_${period.periode.tom ?? 'åpen_periode'}`,
-        status: getPeriodStatus(period.utfall),
-        label:
-          erAvslag && period.periode.tom
-            ? formatPeriod(period.periode.fom, period.periode.tom)
-            : formatDate(period.periode.fom),
-        periode: period.periode,
-        foreslåttIBehandlingen: period.avklaringOgVurdering?.avklaring?.foreslåttIBehandlingen,
+        id: periode.fom,
+        status: getPeriodStatus(utfall),
+        label: erAvslag && periode.tom ? formatPeriod(periode.fom, periode.tom) : formatDate(periode.fom),
+        periode,
+        vurderesIBehandlingen,
+        foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
 
-const buildPayload = ({
-  formData,
-  selectedId,
-  periods,
-}: {
+interface SubmitArgs {
   formData: FormData;
   selectedId: string;
   periods: VilkårSplittPanelPeriod[];
-}) => {
+}
+
+const buildPayload = ({ formData, selectedId, periods }: SubmitArgs): BekreftetAksjonspunktDto => {
   const selectedFormPeriod = formData.perioder[selectedId];
   if (!selectedFormPeriod) {
     throw new Error('Kunne ikke finne valgt periode for andre livsoppholdsytelser');
   }
+  const valgtPeriode = periods.find(period => period.id === selectedId);
   const erVilkårOppfylt = selectedFormPeriod.andreLivsoppholdytelser === 'nei';
-  const selectedPeriod = periods.find(p => p.id === selectedId);
   return {
     '@type': AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR,
     begrunnelse: selectedFormPeriod.begrunnelse,
@@ -111,13 +104,27 @@ const buildPayload = ({
       {
         begrunnelse: selectedFormPeriod.begrunnelse,
         erVilkårOppfylt,
-        periode: { fom: selectedPeriod?.periode?.fom ?? '', tom: selectedPeriod?.periode?.tom },
+        periode: {
+          fom: valgtPeriode?.periode?.fom ?? '',
+          tom: valgtPeriode?.periode?.tom,
+        },
         fritekstVurderingBrev:
           !erVilkårOppfylt && selectedFormPeriod.harFritekstbrev ? selectedFormPeriod.fritekstVurderingBrev : undefined,
       },
     ],
   };
 };
+
+interface Props {
+  vurderAndreLivsoppholdytelserVilkårAP?: AksjonspunktDto;
+  api: AktivitetspengerApi;
+  behandling: BehandlingDto;
+  onAksjonspunktBekreftet: () => void;
+  readOnly: boolean;
+  isPermanentlyReadOnly: boolean;
+  lokalkontorForeslårVilkårAP?: AksjonspunktDto;
+  lokalkontorBeslutterAP?: AksjonspunktDto;
+}
 
 export const AndreLivsoppholdytelserVilkårsvurdering = ({
   vurderAndreLivsoppholdytelserVilkårAP,
@@ -137,31 +144,19 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
   );
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
   const periods = buildPeriods(vilkårsavklaringVurderinger);
-  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));
-  const formHook = useForm<FormData>({ defaultValues: buildInitialValues(vilkårsavklaringVurderinger) });
-  const andreLivsoppholdytelser = useWatch({
-    control: formHook.control,
-    name: `perioder.${selectedId}.andreLivsoppholdytelser`,
+  const formHook = useForm<FormData>({
+    defaultValues: buildInitialValues(vilkårsavklaringVurderinger),
   });
-  const harFritekstbrev = useWatch({ control: formHook.control, name: `perioder.${selectedId}.harFritekstbrev` });
-  const isSolved = vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.UTFØRT;
-  const erLokalkontorForeslårAPÅpent =
-    !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
-  const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
-  const selectedPeriod = periods.find(period => period.id === selectedId);
-  const selectedVilkårsavklaringVurdering = vilkårsavklaringVurderinger.perioder.find(
-    vurdering =>
-      vurdering.periode?.fom === selectedPeriod?.periode?.fom &&
-      vurdering.periode?.tom === selectedPeriod?.periode?.tom,
-  );
-  const erAvslag =
-    selectedVilkårsavklaringVurdering?.avklaringOgVurdering?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));
+  const valgtAvklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === selectedId)
+    ?.avklaringOgVurdering?.avklaring;
+  const uttalelse = valgtAvklaring?.uttalelse;
+  const selectedPeriod = periods.find(p => p.id === selectedId);
+  const erAvslag = valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (formData: FormData) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
-        buildPayload({ formData, selectedId, periods }),
-      ]);
+    mutationFn: async (submitArgs: SubmitArgs) => {
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
@@ -173,7 +168,16 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     mutationFn: async () => sendTilBeslutter(api, behandling),
     onSuccess: onAksjonspunktBekreftet,
   });
-  const uttalelse = selectedVilkårsavklaringVurdering?.avklaringOgVurdering?.avklaring.uttalelse;
+
+  const isSolved = vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.UTFØRT;
+  const erLokalkontorForeslårAPÅpent =
+    !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
+  const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
+  const andreLivsoppholdytelser = useWatch({
+    control: formHook.control,
+    name: `perioder.${selectedId}.andreLivsoppholdytelser`,
+  });
+  const harFritekstbrev = useWatch({ control: formHook.control, name: `perioder.${selectedId}.harFritekstbrev` });
 
   return (
     <VStack gap="space-20">
@@ -195,12 +199,9 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse="§ 4"
-        defaultIsLocked={isSolved || erLokalkontorForeslårAPÅpent}
-        readOnly={readOnly || selectedPeriod?.status === 'success' || selectedPeriod?.status === 'error'}
-        isPermanentlyReadOnly={isPermanentlyReadOnly}
-        lockedContent={
-          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserVilkårAP?.ansvarligSaksbehandler} /> : undefined
-        }
+        defaultIsLocked={defaultIsLocked}
+        readOnly={readOnly}
+        isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriod?.vurderesIBehandlingen === false}
         afterEditButton={
           <SendTilBeslutter
             kanSendeTilBeslutter={erLokalkontorForeslårAPÅpent}
@@ -211,12 +212,15 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
             behandling={behandling}
           />
         }
+        lockedContent={
+          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserVilkårAP?.ansvarligSaksbehandler} /> : undefined
+        }
       >
         {(isFormLocked, setIsFormLocked) => (
           <RhfForm
             formMethods={formHook}
             onSubmit={async data => {
-              await bekreftAksjonspunktMutation(data);
+              await bekreftAksjonspunktMutation({ formData: data, selectedId, periods });
               setIsFormLocked(true);
             }}
           >

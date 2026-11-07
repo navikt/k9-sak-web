@@ -205,6 +205,14 @@ const fakeBostedVilkårMedHistoriskePerioder = {
   ],
 } satisfies VilkårMedPerioderDto;
 
+const fakeBostedApiMedHistoriskePerioder = lagFakeBostedApi({
+  vilkårType: vilkarType.BOSTEDSVILKÅR,
+  perioder: [
+    { periode: { fom: '2025-01-01', tom: '2025-12-31' }, utfall: Utfall.OPPFYLT, vurderesIBehandlingen: false },
+    { periode: { fom: '2026-01-01', tom: '2026-12-31' }, utfall: Utfall.OPPFYLT, vurderesIBehandlingen: true },
+  ],
+});
+
 const apiMedForhåndsvisningsspion = new FakeAktivitetspengerApi();
 apiMedForhåndsvisningsspion.forhåndsvisVedtaksbrev = fn(async () => new Blob());
 
@@ -220,8 +228,14 @@ const fakeAndreLivsoppholdytelserVilkårArgsBase = {
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER)],
   api: Object.assign(Object.create(fakeAktivitetspengerApi), {
     bekreftAksjonspunkt: fn(),
-    hentVilkårsavklaringVurderinger: fn(async () => ({
-      perioder: [{ periode: { fom: '2026-01-29', tom: '2027-01-28' }, utfall: Utfall.IKKE_VURDERT }],
+    hentVilkårsavklaringVurderinger: fn(async (): Promise<VilkårsavklaringVurderingerDto> => ({
+      perioder: [
+        {
+          periode: { fom: '2026-01-29', tom: '2027-01-28' },
+          utfall: Utfall.IKKE_VURDERT,
+          vurderesIBehandlingen: true,
+        },
+      ],
       vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
     })),
   }) as AktivitetspengerApi,
@@ -712,6 +726,68 @@ export const AndreLivsoppholdytelserVilkårsvurderingLåst: Story = {
   },
 };
 
+export const AndreLivsoppholdytelserVilkårsvurderingRedigerVurdering: Story = {
+  args: {
+    ...fakeAndreLivsoppholdytelserVilkårArgsBase,
+    aksjonspunkter: [
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR, AksjonspunktStatus.UTFØRT),
+    ],
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      bekreftAksjonspunkt: fn(),
+      hentVilkårsavklaringVurderinger: async () =>
+        ({
+          vilkårType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+          perioder: [
+            {
+              periode: { fom: '2026-01-29', tom: '2027-01-28' },
+              utfall: Utfall.IKKE_OPPFYLT,
+              vurderesIBehandlingen: true,
+              avklaringOgVurdering: {
+                avklaring: {
+                  avklaringtype: Avklaringtype.OPPHØR,
+                  foreslåttIBehandlingen: true,
+                  ikkeOppfyltÅrsak: AndreLivsoppholdsytelserIkkeOppfyltÅrsak.MOTTAR_DAGPENGER,
+                  kilde: 'BRUKER',
+                  periode: { fom: '2026-01-29', tom: '2027-01-28' },
+                  referanse: 'andre-livsopphold-ref',
+                  skalSendeVarsel: false,
+                  vurdertAv: 'Z123456',
+                  vurdertTidspunkt: '2026-01-29T10:00:00',
+                },
+                vurdering: {
+                  begrunnelse: 'Bruker mottar dagpenger.',
+                  fritekstVurderingBrev: 'Du mottar dagpenger.',
+                  erManuellVurdering: true,
+                  erVilkårOppfylt: false,
+                  vurdertAv: 'Z123456',
+                  vurdertTidspunkt: '2026-02-12T10:00:00',
+                },
+              },
+            },
+          ],
+        }) satisfies VilkårsavklaringVurderingerDto,
+    }) as AktivitetspengerApi,
+  },
+  play: async ({ canvas, step }) => {
+    await step('Vurderingen vises i lesevisning', async () => {
+      await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
+      await expect(await canvas.findByText('Vurdering av andre livsoppholdsytelser')).toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    });
+
+    await step('Rediger vurdering åpner forhåndsutfylt skjema', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /rediger vurdering/i }));
+      await expect(
+        canvas.getByRole('textbox', { name: /vurder om bruker mottar annen livoppholdsytelse/i }),
+      ).toHaveValue('Bruker mottar dagpenger.');
+      await expect(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i })).toBeChecked();
+      await expect(canvas.getByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).toBeChecked();
+      await expect(canvas.getByRole('textbox', { name: 'Fritekst opphørsbrev' })).toHaveValue('Du mottar dagpenger.');
+      await expect(canvas.getByRole('button', { name: /bekreft og fortsett/i })).toBeInTheDocument();
+    });
+  },
+};
+
 export const VilkårsvurderingFyllUtOgSend: Story = {
   args: {
     ...fakeArgsBase,
@@ -1073,6 +1149,7 @@ export const BeslutterKanForhåndsvise: Story = {
   args: {
     ...fakeBeslutterArgsBase,
     behandling: fakeBehandlingMedId,
+    api: fakeBostedApiMedHistoriskePerioder,
     vilkår: [fakeBostedVilkårMedHistoriskePerioder],
     onAksjonspunktBekreftet: fn(),
   },
@@ -1088,6 +1165,7 @@ export const HistoriskBostedsperiodeKanIkkeRedigeres: Story = {
   args: {
     ...fakeArgsBase,
     behandling: fakeBehandlingMedId,
+    api: fakeBostedApiMedHistoriskePerioder,
     vilkår: [fakeBostedVilkårMedHistoriskePerioder],
     aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)],
     onAksjonspunktBekreftet: fn(),

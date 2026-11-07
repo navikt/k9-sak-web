@@ -8,7 +8,6 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import { $VurderingAvBostedsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/VurderingAvBostedsvilkårEtterAvklaringDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
@@ -64,25 +63,18 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
   ),
 });
 
-const buildPeriods = (
-  vilkår: VilkårMedPerioderDto,
-  vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto,
-): VilkårSplittPanelPeriod[] =>
-  (vilkår.perioder ?? [])
+const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): VilkårSplittPanelPeriod[] =>
+  vilkårsavklaringVurderinger.perioder
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
-    .map(period => {
-      const avklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)
-        ?.avklaringOgVurdering?.avklaring;
+    .map(({ periode, utfall, vurderesIBehandlingen, avklaringOgVurdering }) => {
+      const avklaring = avklaringOgVurdering?.avklaring;
       const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
-        id: period.periode.fom,
-        status: getPeriodStatus(period.vilkarStatus),
-        label:
-          erAvslag && period.periode.tom
-            ? formatPeriod(period.periode.fom, period.periode.tom)
-            : formatDate(period.periode.fom),
-        periode: period.periode,
-        vurderesIBehandlingen: period.vurderesIBehandlingen,
+        id: periode.fom,
+        status: getPeriodStatus(utfall),
+        label: erAvslag && periode.tom ? formatPeriod(periode.fom, periode.tom) : formatDate(periode.fom),
+        periode,
+        vurderesIBehandlingen,
         foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
@@ -126,7 +118,6 @@ const buildPayload = ({
 
 interface Props {
   vurderBostedVilkårAP?: AksjonspunktDto;
-  bostedVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -139,7 +130,6 @@ interface Props {
 export const BostedVilkårsvurdering = ({
   vurderBostedVilkårAP,
   lokalkontorForeslårVilkårAP,
-  bostedVilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
@@ -150,7 +140,7 @@ export const BostedVilkårsvurdering = ({
   const queryClient = useQueryClient();
   const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
-  const periods = buildPeriods(bostedVilkår, vilkårsavklaringVurderinger);
+  const periods = buildPeriods(vilkårsavklaringVurderinger);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkårsavklaringVurderinger),
   });

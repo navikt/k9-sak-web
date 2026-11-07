@@ -299,7 +299,6 @@ export const AktivitetspengerOpphør = ({
             {bostedVilkår && isBehandlingsårsakBosted && (
               <BostedVilkårsvurdering
                 vurderBostedVilkårAP={vurderBostedVilkårAP}
-                bostedVilkår={bostedVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -324,7 +323,6 @@ export const AktivitetspengerOpphør = ({
             {bistandVilkår && isBehandlingsårsakBistand && (
               <BistandVilkårsvurdering
                 vurderBistandVilkårAP={vurderBistandVilkårAP}
-                bistandVilkår={bistandVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -337,7 +335,6 @@ export const AktivitetspengerOpphør = ({
             {aktivitetVilkår && isBehandlingsårsakAktivitet && (
               <AktivitetVilkårsvurdering
                 vurderAktivitetVilkårAP={vurderAktivitetVilkårAP}
-                aktivitetVilkår={aktivitetVilkår}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}

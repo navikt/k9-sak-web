@@ -6,7 +6,6 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import {
   $VurderingAvVilkårPeriodeEtterAvklaringDto,
@@ -31,8 +30,8 @@ import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
 import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
 import { SendTilBeslutter } from '../SendTilBeslutter.js';
 
 // TODO: Hent fra skjemaet til DTO-en for VURDER_AKTIVITETSVILKÅR_OPPHØR når den finnes. Begrunnelsen sendes også
@@ -81,25 +80,18 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
   ),
 });
 
-const buildPeriods = (
-  vilkår: VilkårMedPerioderDto,
-  vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto,
-): VilkårSplittPanelPeriod[] =>
-  (vilkår.perioder ?? [])
+const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): VilkårSplittPanelPeriod[] =>
+  vilkårsavklaringVurderinger.perioder
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
-    .map(period => {
-      const avklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)
-        ?.avklaringOgVurdering?.avklaring;
+    .map(({ periode, utfall, vurderesIBehandlingen, avklaringOgVurdering }) => {
+      const avklaring = avklaringOgVurdering?.avklaring;
       const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
-        id: period.periode.fom,
-        status: getPeriodStatus(period.vilkarStatus),
-        label:
-          erAvslag && period.periode.tom
-            ? formatPeriod(period.periode.fom, period.periode.tom)
-            : formatDate(period.periode.fom),
-        periode: period.periode,
-        vurderesIBehandlingen: period.vurderesIBehandlingen,
+        id: periode.fom,
+        status: getPeriodStatus(utfall),
+        label: erAvslag && periode.tom ? formatPeriod(periode.fom, periode.tom) : formatDate(periode.fom),
+        periode,
+        vurderesIBehandlingen,
         foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
@@ -145,7 +137,6 @@ const buildPayload = ({
 
 interface Props {
   vurderAktivitetVilkårAP?: AksjonspunktDto;
-  aktivitetVilkår: VilkårMedPerioderDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -158,7 +149,6 @@ interface Props {
 export const AktivitetVilkårsvurdering = ({
   vurderAktivitetVilkårAP,
   lokalkontorForeslårVilkårAP,
-  aktivitetVilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
@@ -169,7 +159,7 @@ export const AktivitetVilkårsvurdering = ({
   const queryClient = useQueryClient();
   const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkarType.AKTIVITETSVILKÅR);
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
-  const periods = buildPeriods(aktivitetVilkår, vilkårsavklaringVurderinger);
+  const periods = buildPeriods(vilkårsavklaringVurderinger);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkårsavklaringVurderinger),
   });
