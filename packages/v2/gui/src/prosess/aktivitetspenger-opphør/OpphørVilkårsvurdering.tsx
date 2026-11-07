@@ -1,49 +1,69 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { AktivitetsvilkåretIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AktivitetsvilkåretIkkeOppfyltÅrsak.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
-import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VurderingAvAktivitetsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VurderingAvAktivitetsvilkårEtterAvklaringDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Button, HStack, InfoCard, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import {
   getDefaultSelectedPeriodId,
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
-import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
-import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
-import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
-import { SendTilBeslutter } from '../SendTilBeslutter.js';
+} from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vilkårsavklaringVurderingerQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { OpphørUttalelse } from './formfields/OpphørUttalelse.js';
+import { SendTilBeslutter } from './SendTilBeslutter.js';
 
-// TODO: Hent fra skjemaet til DTO-en for VURDER_AKTIVITETSVILKÅR_OPPHØR når den finnes. Begrunnelsen sendes også
-// på toppnivå i payloaden, der de andre *EtterAvklaringDto-ene har maks 4000 tegn.
-const begrunnelseMaxLength = 4000;
 const fritekstVurderingBrevMaxLength =
   $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
+
+type OpphørAksjonspunktKode =
+  | typeof AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR
+  | typeof AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR
+  | typeof AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR
+  | typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
+
+type VurderingEtterAvklaring = VurderingAvAktivitetsvilkårEtterAvklaringDto & {
+  '@type': OpphørAksjonspunktKode;
+};
+
+export interface OpphørVilkårsvurderingOppsett {
+  vilkårType: VilkårType;
+  aksjonspunktKode: OpphørAksjonspunktKode;
+  årsakSomKreverFritekstIBrev?: string;
+  begrunnelseMaxLength: number;
+  tekster: {
+    varsel: string;
+    overskrift: string;
+    lovreferanse: string;
+    begrunnelseLedetekst: ReactNode;
+    spørsmål: string;
+    nei: string;
+  };
+}
 
 interface FormData {
   perioder: Record<
     string,
     {
       begrunnelse: string;
-      ikkeIAktivitet: 'ja' | 'nei' | '';
+      skalOpphøre: 'ja' | 'nei' | '';
       fritekstVurderingBrev: string;
       harFritekstbrev: boolean;
     }
@@ -62,7 +82,7 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
       periode.fom,
       {
         begrunnelse: avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
-        ikkeIAktivitet: tilJaEllerNei(utfall),
+        skalOpphøre: tilJaEllerNei(utfall),
         fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
         harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
       },
@@ -90,25 +110,25 @@ interface SubmitArgs {
   formData: FormData;
   selectedId: string;
   periods: VilkårSplittPanelPeriod[];
-  erÅrsakTilOpphørAnnet: boolean;
+  kreverFritekstIBrev: boolean;
+  aksjonspunktKode: OpphørAksjonspunktKode;
 }
 
 const buildPayload = ({
   formData,
   selectedId,
   periods,
-  erÅrsakTilOpphørAnnet,
-}: SubmitArgs): VurderingAvAktivitetsvilkårEtterAvklaringDto & {
-  '@type': typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
-} => {
+  kreverFritekstIBrev,
+  aksjonspunktKode,
+}: SubmitArgs): VurderingEtterAvklaring => {
   const selectedFormPeriod = formData.perioder[selectedId];
   if (!selectedFormPeriod) {
-    throw new Error('Kunne ikke finne valgt periode for aktivitet');
+    throw new Error('Kunne ikke finne valgt periode for opphør');
   }
   const valgtPeriode = periods.find(period => period.id === selectedId);
-  const erVilkårOppfylt = selectedFormPeriod.ikkeIAktivitet === 'nei';
+  const erVilkårOppfylt = selectedFormPeriod.skalOpphøre === 'nei';
   return {
-    '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
+    '@type': aksjonspunktKode,
     begrunnelse: selectedFormPeriod.begrunnelse,
     vurdertePerioder: [
       {
@@ -119,7 +139,7 @@ const buildPayload = ({
           tom: valgtPeriode?.periode?.tom,
         },
         fritekstVurderingBrev:
-          !erVilkårOppfylt && (erÅrsakTilOpphørAnnet || selectedFormPeriod.harFritekstbrev)
+          !erVilkårOppfylt && (kreverFritekstIBrev || selectedFormPeriod.harFritekstbrev)
             ? selectedFormPeriod.fritekstVurderingBrev
             : undefined,
       },
@@ -128,7 +148,8 @@ const buildPayload = ({
 };
 
 interface Props {
-  vurderAktivitetVilkårAP?: AksjonspunktDto;
+  oppsett: OpphørVilkårsvurderingOppsett;
+  vurderVilkårAP?: AksjonspunktDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -138,8 +159,9 @@ interface Props {
   lokalkontorBeslutterAP?: AksjonspunktDto;
 }
 
-export const AktivitetVilkårsvurdering = ({
-  vurderAktivitetVilkårAP,
+export const OpphørVilkårsvurdering = ({
+  oppsett,
+  vurderVilkårAP,
   lokalkontorForeslårVilkårAP,
   api,
   behandling,
@@ -148,8 +170,9 @@ export const AktivitetVilkårsvurdering = ({
   isPermanentlyReadOnly,
   lokalkontorBeslutterAP,
 }: Props) => {
+  const { vilkårType, aksjonspunktKode, årsakSomKreverFritekstIBrev, begrunnelseMaxLength, tekster } = oppsett;
   const queryClient = useQueryClient();
-  const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkarType.AKTIVITETSVILKÅR);
+  const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkårType);
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
   const periods = buildPeriods(vilkårsavklaringVurderinger);
   const formHook = useForm<FormData>({
@@ -160,7 +183,8 @@ export const AktivitetVilkårsvurdering = ({
     ?.avklaringOgVurdering?.avklaring;
   const uttalelse = valgtAvklaring?.uttalelse;
   const selectedPeriod = periods.find(p => p.id === selectedId);
-  const erÅrsakTilOpphørAnnet = valgtAvklaring?.ikkeOppfyltÅrsak === AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET;
+  const kreverFritekstIBrev =
+    årsakSomKreverFritekstIBrev !== undefined && valgtAvklaring?.ikkeOppfyltÅrsak === årsakSomKreverFritekstIBrev;
   const erAvslag = valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
@@ -178,24 +202,21 @@ export const AktivitetVilkårsvurdering = ({
     onSuccess: onAksjonspunktBekreftet,
   });
 
-  const isSolved = vurderAktivitetVilkårAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderVilkårAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
   const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
-  const ikkeIAktivitet = useWatch({
-    control: formHook.control,
-    name: `perioder.${selectedId}.ikkeIAktivitet`,
-  });
+  const skalOpphøre = useWatch({ control: formHook.control, name: `perioder.${selectedId}.skalOpphøre` });
   const harFritekstbrev = useWatch({ control: formHook.control, name: `perioder.${selectedId}.harFritekstbrev` });
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderAktivitetVilkårAP && (
+      {!isSolved && vurderVilkårAP && (
         <InfoCard data-color="warning" size="small">
           <InfoCard.Message
             icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
           >
-            Vurder om bruker ikke lenger er i aktivitet.
+            {tekster.varsel}
           </InfoCard.Message>
         </InfoCard>
       )}
@@ -204,10 +225,10 @@ export const AktivitetVilkårsvurdering = ({
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Vurdering av ikke i aktivitet"
+        detailHeading={tekster.overskrift}
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
-        lovreferanse="§ 8"
+        lovreferanse={tekster.lovreferanse}
         defaultIsLocked={defaultIsLocked}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriod?.vurderesIBehandlingen === false}
@@ -221,13 +242,19 @@ export const AktivitetVilkårsvurdering = ({
             behandling={behandling}
           />
         }
-        lockedContent={isSolved ? <VurdertAv ident={vurderAktivitetVilkårAP?.ansvarligSaksbehandler} /> : undefined}
+        lockedContent={isSolved ? <VurdertAv ident={vurderVilkårAP?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked, setIsFormLocked) => (
           <RhfForm
             formMethods={formHook}
             onSubmit={async data => {
-              await bekreftAksjonspunktMutation({ formData: data, selectedId, periods, erÅrsakTilOpphørAnnet });
+              await bekreftAksjonspunktMutation({
+                formData: data,
+                selectedId,
+                periods,
+                kreverFritekstIBrev,
+                aksjonspunktKode,
+              });
               setIsFormLocked(true);
             }}
           >
@@ -236,14 +263,7 @@ export const AktivitetVilkårsvurdering = ({
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
-                label={
-                  <span>
-                    Vurder om bruker ikke lenger er i aktivitet, jf.{' '}
-                    <Lovreferanse includeFullTextInLink isAktivitetspenger>
-                      § 8 Medlemmets medvirknings- og aktivitetsplikt og konsekvenser av fravær
-                    </Lovreferanse>
-                  </span>
-                }
+                label={<span>{tekster.begrunnelseLedetekst}</span>}
                 readOnly={isFormLocked}
                 validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                 resize
@@ -251,8 +271,8 @@ export const AktivitetVilkårsvurdering = ({
               />
               <RhfRadioGroup
                 control={formHook.control}
-                legend="Skal ytelsen opphøre fordi bruker ikke er i aktivitet?"
-                name={`perioder.${selectedId}.ikkeIAktivitet`}
+                legend={tekster.spørsmål}
+                name={`perioder.${selectedId}.skalOpphøre`}
                 validate={[required]}
                 readOnly={isFormLocked}
               >
@@ -261,9 +281,9 @@ export const AktivitetVilkårsvurdering = ({
                     ? `Ja, fra ${selectedPeriod?.label ?? ''}`
                     : `Ja, fra og med ${selectedPeriod?.periode?.fom ? formatDate(selectedPeriod.periode.fom) : ''}`}
                 </Radio>
-                <Radio value="nei">Nei</Radio>
+                <Radio value="nei">{tekster.nei}</Radio>
               </RhfRadioGroup>
-              {ikkeIAktivitet === 'ja' && !erÅrsakTilOpphørAnnet && (
+              {skalOpphøre === 'ja' && !kreverFritekstIBrev && (
                 <RhfCheckbox
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
@@ -271,7 +291,7 @@ export const AktivitetVilkårsvurdering = ({
                   readOnly={isFormLocked}
                 />
               )}
-              {ikkeIAktivitet === 'ja' && (erÅrsakTilOpphørAnnet || harFritekstbrev) && (
+              {skalOpphøre === 'ja' && (kreverFritekstIBrev || harFritekstbrev) && (
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}

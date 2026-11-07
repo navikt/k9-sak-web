@@ -15,15 +15,16 @@ import { CustomCheckmarkIcon } from '../../shared/icons/CustomCheckmarkIcon.js';
 import { CustomErrorIcon } from '../../shared/icons/CustomErrorIcon.js';
 import { CustomWarningIcon } from '../../shared/icons/CustomWarningIcon.js';
 import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { AndreLivsoppholdytelserVilkårsvurdering } from './andre-livsoppholdytelser/AndreLivsoppholdytelserVilkårsvurdering.js';
+import { andreLivsoppholdytelserVilkårsvurderingOppsett } from './andre-livsoppholdytelser/andreLivsoppholdytelserVilkårsvurderingOppsett.js';
 import { AndreLivsoppholdytelserÅrsakOgVarsel } from './andre-livsoppholdytelser/AndreLivsoppholdytelserÅrsakOgVarsel.js';
 import { BeslutterOpphør } from './beslutter/BeslutterOpphør.js';
-import { BistandVilkårsvurdering } from './bistand/BistandVilkårsvurdering.js';
+import { bistandVilkårsvurderingOppsett } from './bistand/bistandVilkårsvurderingOppsett.js';
 import { BistandÅrsakOgVarsel } from './bistand/BistandÅrsakOgVarsel.js';
-import { AktivitetVilkårsvurdering } from './aktivitet/AktivitetVilkårsvurdering.js';
+import { aktivitetVilkårsvurderingOppsett } from './aktivitet/aktivitetVilkårsvurderingOppsett.js';
 import { AktivitetÅrsakOgVarsel } from './aktivitet/AktivitetÅrsakOgVarsel.js';
-import { BostedVilkårsvurdering } from './bosted/BostedVilkårsvurdering.js';
+import { bostedVilkårsvurderingOppsett } from './bosted/bostedVilkårsvurderingOppsett.js';
 import { BostedÅrsakOgVarsel } from './bosted/BostedÅrsakOgVarsel.js';
+import { OpphørVilkårsvurdering } from './OpphørVilkårsvurdering.js';
 import { OpphørTab } from './types.js';
 
 interface OpphørData {
@@ -297,8 +298,9 @@ export const AktivitetspengerOpphør = ({
           </Tabs.Panel>
           <Tabs.Panel value={OpphørTab.VILKÅRSVURDERING}>
             {bostedVilkår && isBehandlingsårsakBosted && (
-              <BostedVilkårsvurdering
-                vurderBostedVilkårAP={vurderBostedVilkårAP}
+              <OpphørVilkårsvurdering
+                oppsett={bostedVilkårsvurderingOppsett}
+                vurderVilkårAP={vurderBostedVilkårAP}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -309,20 +311,22 @@ export const AktivitetspengerOpphør = ({
               />
             )}
             {andreLivsoppholdytelserVilkår && isBehandlingsårsakAndreLivsoppholdytelser && (
-              <AndreLivsoppholdytelserVilkårsvurdering
-                vurderAndreLivsoppholdytelserVilkårAP={vurderAndreLivsoppholdytelserVilkårAP}
-                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
+              <OpphørVilkårsvurdering
+                oppsett={andreLivsoppholdytelserVilkårsvurderingOppsett}
+                vurderVilkårAP={vurderAndreLivsoppholdytelserVilkårAP}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 readOnly={!kanSaksbehandle}
                 isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
+                lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
                 lokalkontorBeslutterAP={lokalkontorBeslutterAP}
               />
             )}
             {bistandVilkår && isBehandlingsårsakBistand && (
-              <BistandVilkårsvurdering
-                vurderBistandVilkårAP={vurderBistandVilkårAP}
+              <OpphørVilkårsvurdering
+                oppsett={bistandVilkårsvurderingOppsett}
+                vurderVilkårAP={vurderBistandVilkårAP}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -333,8 +337,9 @@ export const AktivitetspengerOpphør = ({
               />
             )}
             {aktivitetVilkår && isBehandlingsårsakAktivitet && (
-              <AktivitetVilkårsvurdering
-                vurderAktivitetVilkårAP={vurderAktivitetVilkårAP}
+              <OpphørVilkårsvurdering
+                oppsett={aktivitetVilkårsvurderingOppsett}
+                vurderVilkårAP={vurderAktivitetVilkårAP}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
