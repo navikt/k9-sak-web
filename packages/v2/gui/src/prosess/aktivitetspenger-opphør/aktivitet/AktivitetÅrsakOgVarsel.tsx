@@ -8,8 +8,8 @@ import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjon
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import { InformationSquareIcon } from '@navikt/aksel-icons';
-import { Alert, Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -220,9 +220,13 @@ export const AktivitetÅrsakOgVarsel = ({
   return (
     <VStack gap="space-20">
       {!isSolved && vurderAktivitetFaktaAP && (
-        <Alert variant="warning" size="small">
-          Vurder årsak til opphør og om bruker skal varsles.
-        </Alert>
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder årsak til opphør og om bruker skal varsles.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
@@ -239,7 +243,7 @@ export const AktivitetÅrsakOgVarsel = ({
         beforeDetailContent={
           erValgtPeriodeInnvilgetUtenAvklaring ? (
             <InfoCard data-color="info" size="small">
-              <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+              <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden color="var(--ax-text-info-decoration)" />}>
                 Alle vilkår er innvilget i perioden.
               </InfoCard.Message>
             </InfoCard>
