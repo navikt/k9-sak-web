@@ -33,7 +33,9 @@ import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
 import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { SendTilBeslutter } from '../SendTilBeslutter.js';
 
-const begrunnelseMaxLength = $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.begrunnelse.maxLength;
+// TODO: Hent fra skjemaet til DTO-en for VURDER_AKTIVITETSVILKÅR_OPPHØR når den finnes. Begrunnelsen sendes også
+// på toppnivå i payloaden, der de andre *EtterAvklaringDto-ene har maks 4000 tegn.
+const begrunnelseMaxLength = 4000;
 const fritekstVurderingBrevMaxLength =
   $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
 
@@ -200,7 +202,9 @@ export const AktivitetVilkårsvurdering = ({
     <VStack gap="space-20">
       {!isSolved && vurderAktivitetVilkårAP && (
         <InfoCard data-color="warning" size="small">
-          <InfoCard.Message icon={<ExclamationmarkTriangleFillIcon aria-hidden />}>
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
             Vurder om bruker ikke lenger er i aktivitet.
           </InfoCard.Message>
         </InfoCard>

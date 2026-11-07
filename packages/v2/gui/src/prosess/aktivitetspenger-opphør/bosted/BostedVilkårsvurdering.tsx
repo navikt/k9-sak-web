@@ -1,20 +1,20 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import {
-  $ManuellVurderingBostedsvilkårDto,
-  $VilkårBostedPeriodeVurderingDto,
-} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
+import { $VurderingAvBostedsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/VurderingAvBostedsvilkårEtterAvklaringDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
+import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -33,7 +33,10 @@ import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/Aktivit
 import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
 import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { SendTilBeslutter } from '../SendTilBeslutter.js';
-import { BostedsvilkårIkkeOppfyltÅrsak } from '../../aktivitetspenger-prosess/types.js';
+
+const begrunnelseMaxLength = $VurderingAvBostedsvilkårEtterAvklaringDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength =
+  $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
 
 interface FormData {
   perioder: Record<
@@ -185,14 +188,18 @@ export const BostedVilkårsvurdering = ({
     control: formHook.control,
     name: `perioder.${selectedId}.flyttetFraTrondheim`,
   });
-  const harFritekstbrev = formHook.watch(`perioder.${selectedId}.harFritekstbrev`);
+  const harFritekstbrev = useWatch({ control: formHook.control, name: `perioder.${selectedId}.harFritekstbrev` });
 
   return (
     <VStack gap="space-20">
       {!isVurderBostedvilkårAPSolved && vurderBostedVilkårAP && (
-        <Alert variant="warning" size="small">
-          Vurder om søker ikke lenger er bosatt i Trondheim kommune.
-        </Alert>
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder om søker ikke lenger er bosatt i Trondheim kommune.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
@@ -242,13 +249,9 @@ export const BostedVilkårsvurdering = ({
                   </span>
                 }
                 readOnly={isFormLocked}
-                validate={[
-                  required,
-                  minLength(3),
-                  maxLength($ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength),
-                ]}
+                validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                 resize
-                maxLength={$ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength}
+                maxLength={begrunnelseMaxLength}
               />
               <RhfRadioGroup
                 control={formHook.control}
@@ -279,13 +282,9 @@ export const BostedVilkårsvurdering = ({
                   label={erAvslag ? 'Fritekst avslagsbrev' : 'Fritekst opphørsbrev'}
                   description={`Forklar hvorfor vilkåret er ${erAvslag ? 'avslått' : 'opphørt'}. Teksten vises i vedtaksbrevet.`}
                   readOnly={isFormLocked}
-                  validate={[
-                    required,
-                    minLength(3),
-                    maxLength($VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength),
-                  ]}
+                  validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
                   resize
-                  maxLength={$VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength}
+                  maxLength={fritekstVurderingBrevMaxLength}
                 />
               )}
               {!isFormLocked && (

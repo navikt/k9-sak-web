@@ -1,14 +1,17 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
+import { $VurderingAvAndreLivsoppholdsytelserEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/livsopphold/VurderingAvAndreLivsoppholdsytelserEtterAvklaringDto.js';
+import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -27,6 +30,10 @@ import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/Aktivit
 import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
 import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { SendTilBeslutter } from '../SendTilBeslutter.js';
+
+const begrunnelseMaxLength = $VurderingAvAndreLivsoppholdsytelserEtterAvklaringDto.properties.begrunnelse.maxLength;
+const fritekstVurderingBrevMaxLength =
+  $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
 
 interface PeriodForm {
   begrunnelse: string;
@@ -136,7 +143,7 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
     control: formHook.control,
     name: `perioder.${selectedId}.andreLivsoppholdytelser`,
   });
-  const harFritekstbrev = formHook.watch(`perioder.${selectedId}.harFritekstbrev`);
+  const harFritekstbrev = useWatch({ control: formHook.control, name: `perioder.${selectedId}.harFritekstbrev` });
   const isSolved = vurderAndreLivsoppholdytelserVilkårAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
@@ -171,9 +178,13 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
   return (
     <VStack gap="space-20">
       {!isSolved && vurderAndreLivsoppholdytelserVilkårAP && (
-        <Alert variant="warning" size="small">
-          Vurder om søker mottar andre livsoppholdsytelser.
-        </Alert>
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder om søker mottar andre livsoppholdsytelser.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
@@ -223,9 +234,9 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   </span>
                 }
                 readOnly={isFormLocked}
-                validate={[required, minLength(3), maxLength(4000)]}
+                validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                 resize
-                maxLength={4000}
+                maxLength={begrunnelseMaxLength}
               />
               <RhfRadioGroup
                 control={formHook.control}
@@ -256,9 +267,9 @@ export const AndreLivsoppholdytelserVilkårsvurdering = ({
                   label={erAvslag ? 'Fritekst avslagsbrev' : 'Fritekst opphørsbrev'}
                   description={`Forklar hvorfor vilkåret er ${erAvslag ? 'avslått' : 'opphørt'}. Teksten vises i vedtaksbrevet.`}
                   readOnly={isFormLocked}
-                  validate={[required, minLength(3), maxLength(4000)]} // TODO
+                  validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
                   resize
-                  maxLength={4000} // TODO
+                  maxLength={fritekstVurderingBrevMaxLength}
                 />
               )}
               {!isFormLocked && (

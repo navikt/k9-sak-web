@@ -13,7 +13,8 @@ import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak
 import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -76,9 +77,9 @@ const buildPeriods = (
   (vilkår.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
     .map(period => {
-      const erAvslag =
-        vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)?.avklaringOgVurdering
-          ?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+      const avklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)
+        ?.avklaringOgVurdering?.avklaring;
+      const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
         id: period.periode.fom,
         status: getPeriodStatus(period.vilkarStatus),
@@ -88,6 +89,7 @@ const buildPeriods = (
             : formatDate(period.periode.fom),
         periode: period.periode,
         vurderesIBehandlingen: period.vurderesIBehandlingen,
+        foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
 
@@ -196,9 +198,13 @@ export const BistandVilkårsvurdering = ({
   return (
     <VStack gap="space-20">
       {!isSolved && vurderBistandVilkårAP && (
-        <Alert variant="warning" size="small">
-          Vurder om bruker ikke lenger har behov for bistand.
-        </Alert>
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder om bruker ikke lenger har behov for bistand.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger

@@ -40,7 +40,7 @@ const OverstyringAksjonspunktVarsel = ({
   if (status === 'UTFØRT') {
     return (
       <InfoCard data-color="info" size="small">
-        <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden />}>
+        <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden color="var(--ax-text-info-decoration)" />}>
           <strong>{`Overstyring av ${overstyrtHva} er utført.`}</strong> Den er gjort i denne eller en tidligere
           behandling. Bare en saksbehandler med overstyrerrolle kan endre den. Du har ikke overstyrerrolle.
         </InfoCard.Message>
@@ -50,7 +50,9 @@ const OverstyringAksjonspunktVarsel = ({
 
   return (
     <InfoCard data-color="warning" size="small">
-      <InfoCard.Message icon={<ExclamationmarkTriangleFillIcon aria-hidden />}>
+      <InfoCard.Message
+        icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+      >
         <strong>{`Overstyring av ${overstyrtHva} må vurderes.`}</strong> Bare en saksbehandler med overstyrerrolle kan
         vurdere den. Du har ikke overstyrerrolle.
       </InfoCard.Message>
