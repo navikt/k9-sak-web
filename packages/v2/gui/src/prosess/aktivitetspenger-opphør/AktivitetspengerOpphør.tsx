@@ -27,18 +27,30 @@ interface Opphørsvilkår {
 }
 
 interface OpphørData {
+  /** Bare opphørsvilkårene som gjelder behandlingsårsakene. */
   opphørsvilkår: Opphørsvilkår[];
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   lokalkontorBeslutterAP?: AksjonspunktDto;
 }
 
-export const samleOpphørData = (aksjonspunkter: AksjonspunktDto[], vilkår: VilkårMedPerioderDto[]): OpphørData => ({
-  opphørsvilkår: opphørsvilkår.map(oppsett => ({
-    oppsett,
-    vilkår: vilkår.find(v => v.vilkarType === oppsett.vilkårsvurdering.vilkårType),
-    vurderFaktaAP: aksjonspunkter.find(ap => ap.definisjon === oppsett.faktaAksjonspunktKode),
-    vurderVilkårAP: aksjonspunkter.find(ap => ap.definisjon === oppsett.vilkårsvurdering.aksjonspunktKode),
-  })),
+const erOpphørForBehandlingsårsak = (
+  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | undefined,
+  type: BehandlingÅrsakType,
+): boolean => behandlingÅrsaker?.some(årsak => årsak.behandlingArsakType === type) ?? false;
+
+export const samleOpphørData = (
+  aksjonspunkter: AksjonspunktDto[],
+  vilkår: VilkårMedPerioderDto[],
+  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | undefined,
+): OpphørData => ({
+  opphørsvilkår: opphørsvilkår
+    .filter(oppsett => erOpphørForBehandlingsårsak(behandlingÅrsaker, oppsett.behandlingÅrsak))
+    .map(oppsett => ({
+      oppsett,
+      vilkår: vilkår.find(v => v.vilkarType === oppsett.vilkårsvurdering.vilkårType),
+      vurderFaktaAP: aksjonspunkter.find(ap => ap.definisjon === oppsett.faktaAksjonspunktKode),
+      vurderVilkårAP: aksjonspunkter.find(ap => ap.definisjon === oppsett.vilkårsvurdering.aksjonspunktKode),
+    })),
   lokalkontorForeslårVilkårAP: aksjonspunkter.find(
     ap => ap.definisjon === AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
   ),
@@ -64,22 +76,8 @@ const tabIcon = (ap?: AksjonspunktDto, vilkår?: VilkårMedPerioderDto) => {
   return undefined;
 };
 
-const erOpphørForBehandlingsårsak = (
-  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | undefined,
-  type: BehandlingÅrsakType,
-): boolean => behandlingÅrsaker?.some(årsak => årsak.behandlingArsakType === type) ?? false;
-
-const finnOpphørsvilkårForBehandlingen = (
-  data: OpphørData,
-  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | undefined,
-): Opphørsvilkår[] =>
-  data.opphørsvilkår.filter(({ oppsett }) => erOpphørForBehandlingsårsak(behandlingÅrsaker, oppsett.behandlingÅrsak));
-
-export const utledVilkårForBehandlingsårsak = (
-  data: OpphørData,
-  behandlingÅrsaker: BehandlingDto['behandlingÅrsaker'] | undefined,
-): VilkårMedPerioderDto | undefined =>
-  finnOpphørsvilkårForBehandlingen(data, behandlingÅrsaker).find(({ vilkår }) => vilkår)?.vilkår;
+export const utledVilkårForBehandlingsårsak = (data: OpphørData): VilkårMedPerioderDto | undefined =>
+  data.opphørsvilkår.find(({ vilkår }) => vilkår)?.vilkår;
 
 export const utledAktivTab = (data: OpphørData): OpphørTab => {
   if (data.opphørsvilkår.some(({ vurderFaktaAP }) => vurderFaktaAP?.status === AksjonspunktStatus.OPPRETTET)) {
@@ -123,9 +121,15 @@ export const AktivitetspengerOpphør = ({
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
     !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
 
-  const opphørData = useMemo(() => samleOpphørData(aksjonspunkter, vilkår), [aksjonspunkter, vilkår]);
-  const { lokalkontorForeslårVilkårAP, lokalkontorBeslutterAP } = opphørData;
-  const opphørsvilkårForBehandlingen = finnOpphørsvilkårForBehandlingen(opphørData, behandling.behandlingÅrsaker);
+  const opphørData = useMemo(
+    () => samleOpphørData(aksjonspunkter, vilkår, behandling.behandlingÅrsaker),
+    [aksjonspunkter, vilkår, behandling.behandlingÅrsaker],
+  );
+  const {
+    opphørsvilkår: opphørsvilkårForBehandlingen,
+    lokalkontorForeslårVilkårAP,
+    lokalkontorBeslutterAP,
+  } = opphørData;
   const faktaAPForTab = opphørsvilkårForBehandlingen.find(({ vurderFaktaAP }) => vurderFaktaAP)?.vurderFaktaAP;
   const vilkårsvurderingAPForTab =
     lokalkontorForeslårVilkårAP ??
@@ -134,7 +138,7 @@ export const AktivitetspengerOpphør = ({
   const visBeslutterTab = lokalkontorBeslutterAP?.status === AksjonspunktStatus.OPPRETTET;
   const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
   const [aktivTab, setAktivTab] = useState<OpphørTab>(utledAktivTab(opphørData));
-  const vilkårForBehandlingsårsak = utledVilkårForBehandlingsårsak(opphørData, behandling.behandlingÅrsaker);
+  const vilkårForBehandlingsårsak = utledVilkårForBehandlingsårsak(opphørData);
   const vurdertVilkårsperiodeFom = vilkårForBehandlingsårsak?.perioder?.find(p => p.vurderesIBehandlingen)?.periode.fom;
 
   useEffect(() => {
