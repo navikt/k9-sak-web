@@ -1,5 +1,5 @@
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkårStatus as Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
@@ -165,7 +165,7 @@ interface Steg {
 
 const finnRelevanteAksjonspunkter = (
   aksjonspunkter: AksjonspunktDto[],
-  definisjoner: readonly string[],
+  definisjoner: readonly AksjonspunktDefinisjon[],
 ): AksjonspunktDto[] => aksjonspunkter.filter(ap => !!ap.definisjon && definisjoner.includes(ap.definisjon));
 
 // Samme regel som finnStatus i ProsessStegUtledet i gammel rigg
@@ -216,7 +216,7 @@ const finnProsessmenyType = (status: StegStatus, harÅpentAksjonspunkt: boolean)
 
 // Delpaneler for vilkår vises bare når behandlingen har vilkåret, som i gammel rigg
 const byggVilkårDelpanel = (
-  konfig: { id: string; vilkår: readonly string[]; aksjonspunkter: readonly string[] },
+  konfig: { id: string; vilkår: readonly VilkårType[]; aksjonspunkter: readonly AksjonspunktDefinisjon[] },
   alleVilkår: VilkårMedPerioderDto[],
   alleAksjonspunkter: AksjonspunktDto[],
 ): Delpanel | undefined => {
@@ -232,7 +232,11 @@ const byggVilkårSteg = (
   konfig: {
     id: string;
     label: string;
-    delpaneler: readonly { id: string; vilkår: readonly string[]; aksjonspunkter: readonly string[] }[];
+    delpaneler: readonly {
+      id: string;
+      vilkår: readonly VilkårType[];
+      aksjonspunkter: readonly AksjonspunktDefinisjon[];
+    }[];
   },
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
@@ -244,7 +248,7 @@ const byggVilkårSteg = (
 };
 
 const byggStegMedOverstyrtStatus = (
-  konfig: { id: string; label: string; aksjonspunkter: readonly string[] },
+  konfig: { id: string; label: string; aksjonspunkter: readonly AksjonspunktDefinisjon[] },
   status: StegStatus,
   aksjonspunkter: AksjonspunktDto[],
   påvirkesIkkeAvStopp = false,
@@ -338,7 +342,7 @@ const finnVedtakStatus = (
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
   behandling: Pick<Behandling, 'behandlingsresultat'>,
-  vedtakAksjonspunkter: readonly string[],
+  vedtakAksjonspunkter: readonly AksjonspunktDefinisjon[],
 ): StegStatus => {
   if (vilkår.length === 0) {
     return Utfall.IKKE_VURDERT;
@@ -364,7 +368,7 @@ export const beregnVedtakType = (
   vilkår: VilkårMedPerioderDto[],
   aksjonspunkter: AksjonspunktDto[],
   behandling: Pick<Behandling, 'behandlingsresultat'>,
-  vedtakAksjonspunkter: readonly string[],
+  vedtakAksjonspunkter: readonly AksjonspunktDefinisjon[],
 ): ProcessMenuStepType =>
   finnProsessmenyType(
     finnVedtakStatus(vilkår, aksjonspunkter, behandling, vedtakAksjonspunkter),
