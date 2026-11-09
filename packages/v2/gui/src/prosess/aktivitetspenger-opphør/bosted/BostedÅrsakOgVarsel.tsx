@@ -14,7 +14,11 @@ import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { getDefaultSelectedPeriodId, VilkårSplittPanel } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import {
+  getDefaultSelectedPeriodId,
+  getPeriodStatus,
+  VilkårSplittPanel,
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
@@ -23,10 +27,10 @@ import {
   BostedsvilkårIkkeOppfyltÅrsak,
   opphørsårsakLabels,
 } from '../../aktivitetspenger-prosess/types.js';
-import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
+import { getDateRangeFromVilkår, OpphørAvslagValg } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
 import { OpphørKilde } from '../formfields/OpphørKilde.js';
-import { getOpphørPeriods, type OpphørPeriodStatus } from '../formfields/OpphørPerioder.js';
+import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
 
@@ -69,12 +73,6 @@ const erBostedsavklaringKilde = (verdi: string): verdi is BostedsavklaringKildeT
 const erBostedsvilkårIkkeOppfyltÅrsak = (verdi: string): verdi is BostedsvilkårIkkeOppfyltÅrsak =>
   Object.values<string>(BostedsvilkårIkkeOppfyltÅrsak).includes(verdi);
 
-const tilPeriodeStatus = (utfall: Utfall): OpphørPeriodStatus => {
-  if (utfall === Utfall.OPPFYLT) return 'success';
-  if (utfall === Utfall.IKKE_OPPFYLT) return 'error';
-  return 'warning';
-};
-
 const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): BostedFormData => ({
   perioder: Object.fromEntries(
     vilkårsavklaringer.perioder.map(({ periode, avklaring }) => [
@@ -97,7 +95,12 @@ const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): Bosted
     ]),
   ),
 });
-const buildPayload = ({ formData, selectedId }: { formData: BostedFormData; selectedId: string }) => {
+interface SubmitArgs {
+  formData: BostedFormData;
+  selectedId: string;
+}
+
+const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   const selectedPeriod = formData.perioder[selectedId];
   if (!selectedPeriod) throw new Error('Kunne ikke finne valgt periode for opphør');
   if (!selectedPeriod.årsak) throw new Error('Årsak for valgt periode er ikke satt');
@@ -152,15 +155,17 @@ export const BostedÅrsakOgVarsel = ({
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const periods = getOpphørPeriods({
     aksjonspunkt: vurderBostedAP,
-    perioder: vilkårsavklaringer.perioder.map(({ periode, utfall }) => ({
+    perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
-      status: tilPeriodeStatus(utfall),
+      status: getPeriodStatus(utfall),
+      foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
+      avklaringtype: avklaring?.avklaringtype,
     })),
   });
   const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(periods));
   const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
-  const [pendingSubmitData, setPendingSubmitData] = useState<BostedFormData | null>(null);
+  const [pendingSubmit, setPendingSubmit] = useState<SubmitArgs | null>(null);
   const formHook = useForm<BostedFormData>({ defaultValues: buildInitialValues(vilkårsavklaringer) });
   const selectedPeriod = vilkårsavklaringer.perioder.find(p => p.periode.fom === selectedId);
   const valgtPeriodeErReadOnly =
@@ -173,8 +178,8 @@ export const BostedÅrsakOgVarsel = ({
   const valgtÅrsak = valgtFormPeriode?.årsak;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (formData: BostedFormData) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload({ formData, selectedId })]);
+    mutationFn: async (submitArgs: SubmitArgs) => {
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vilkårsavklaringerOptions.queryKey });
@@ -188,22 +193,23 @@ export const BostedÅrsakOgVarsel = ({
       årsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET,
   );
   const handleSubmit = async (data: BostedFormData, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
+    const submitArgs = { formData: data, selectedId };
     if (skalSendeForhåndsvarsel === 'ja') {
-      setPendingSubmitData(data);
+      setPendingSubmit(submitArgs);
       setVisBekreftSubmitModal(true);
       return;
     }
-    await bekreftAksjonspunktMutation(data);
+    await bekreftAksjonspunktMutation(submitArgs);
     setIsFormLocked(true);
   };
 
   const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
-    if (!pendingSubmitData) {
+    if (!pendingSubmit) {
       return;
     }
-    await bekreftAksjonspunktMutation(pendingSubmitData);
+    await bekreftAksjonspunktMutation(pendingSubmit);
     setVisBekreftSubmitModal(false);
-    setPendingSubmitData(null);
+    setPendingSubmit(null);
     setIsFormLocked(true);
   };
 
@@ -301,7 +307,7 @@ export const BostedÅrsakOgVarsel = ({
                 onConfirm={() => void bekreftOgSendForhåndsvarsel(setIsFormLocked)}
                 onCancel={() => {
                   setVisBekreftSubmitModal(false);
-                  setPendingSubmitData(null);
+                  setPendingSubmit(null);
                 }}
               />
             )}

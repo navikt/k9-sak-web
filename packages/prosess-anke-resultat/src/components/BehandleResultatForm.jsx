@@ -11,11 +11,9 @@ import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgj
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, Heading } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
@@ -37,10 +35,6 @@ const ResultatEnkel = ({ ankevurderingresultat: { begrunnelse } }) => (
   </div>
 );
 
-ResultatEnkel.propTypes = {
-  ankevurderingresultat: PropTypes.shape(),
-};
-
 const ResultatOpphev = ({ ankevurderingresultat: { begrunnelse } }) => (
   <div>
     <Detail>
@@ -53,10 +47,6 @@ const ResultatOpphev = ({ ankevurderingresultat: { begrunnelse } }) => (
     <Detail>{begrunnelse}</Detail>
   </div>
 );
-
-ResultatOpphev.propTypes = {
-  ankevurderingresultat: PropTypes.shape(),
-};
 
 const ResultatAvvise = ({
   ankevurderingresultat: {
@@ -118,10 +108,6 @@ const ResultatAvvise = ({
   </>
 );
 
-ResultatAvvise.propTypes = {
-  ankevurderingresultat: PropTypes.shape(),
-};
-
 const hentspråkkode = ankeOmgjoerArsak => {
   switch (ankeOmgjoerArsak) {
     case ankeVurderingOmgjoer.ANKE_TIL_UGUNST:
@@ -155,10 +141,6 @@ const ResultatOmgjores = ({
   </>
 );
 
-ResultatOmgjores.propTypes = {
-  ankevurderingresultat: PropTypes.shape(),
-};
-
 const AnkeResultat = ({ ankevurderingresultat } = {}) => {
   if (!ankevurderingresultat) {
     return null;
@@ -178,10 +160,6 @@ const AnkeResultat = ({ ankevurderingresultat } = {}) => {
   }
 };
 
-AnkeResultat.propTypes = {
-  ankevurderingresultat: PropTypes.shape(),
-};
-
 const AnkeResultatForm = ({
   handleSubmit,
   previewCallback,
@@ -195,65 +173,52 @@ const AnkeResultatForm = ({
 }) => {
   const intl = useIntl();
   return (
-  <form onSubmit={handleSubmit}>
-    <FadingPanel>
-      <Heading size="small" level="2">
-        <FormattedMessage id="Ankebehandling.Resultat.Title" />
-      </Heading>
-      <VerticalSpacer fourPx />
-      <Detail>
-        <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
-      </Detail>
-      <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
-      <VerticalSpacer sixteenPx />
-      <ProsessStegSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-        hasEmptyRequiredFields={false}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-        text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
-      />
-      <span>&nbsp;</span>
-      <ProsessStegSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-        hasEmptyRequiredFields={false}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-        text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
-      />
-      <span>&nbsp;</span>
-      <PreviewAnkeLink
-        previewCallback={previewCallback}
-        fritekstTilBrev={formValues.fritekstTilBrev}
-        ankeVurdering={formValues.ankeVurdering}
-        aksjonspunktCode={aksjonspunktCode}
-      />
-    </FadingPanel>
-  </form>
+    <form onSubmit={handleSubmit}>
+      <FadingPanel>
+        <Heading size="small" level="2">
+          <FormattedMessage id="Ankebehandling.Resultat.Title" />
+        </Heading>
+        <VerticalSpacer fourPx />
+        <Detail>
+          <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
+        </Detail>
+        <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
+        <VerticalSpacer sixteenPx />
+        <ProsessStegSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+          hasEmptyRequiredFields={false}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
+        />
+        <span>&nbsp;</span>
+        <ProsessStegSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+          hasEmptyRequiredFields={false}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
+        />
+        <span>&nbsp;</span>
+        <PreviewAnkeLink
+          previewCallback={previewCallback}
+          fritekstTilBrev={formValues.fritekstTilBrev}
+          ankeVurdering={formValues.ankeVurdering}
+          aksjonspunktCode={aksjonspunktCode}
+        />
+      </FadingPanel>
+    </form>
   );
-};
-
-AnkeResultatForm.propTypes = {
-  previewCallback: PropTypes.func.isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
-  formValues: PropTypes.shape(),
-  readOnly: PropTypes.bool,
-  readOnlySubmitButton: PropTypes.bool,
-  ankevurderingresultat: PropTypes.shape(),
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  ...formPropTypes,
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd

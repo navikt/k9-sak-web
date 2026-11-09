@@ -1,12 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
 import RegistrereVergeInfoPanel from './components/RegistrereVergeInfoPanel';
-import vergeAksjonspunkterPropType from './propTypes/vergeAksjonspunkterPropType';
-import vergeBehandlingPropType from './propTypes/vergeBehandlingPropType';
-import vergeVergePropType from './propTypes/vergeVergePropType';
 
 const cache = createIntlCache();
 
@@ -44,17 +40,5 @@ const VergeFaktaIndex = ({
     />
   </RawIntlProvider>
 );
-
-VergeFaktaIndex.propTypes = {
-  behandling: vergeBehandlingPropType.isRequired,
-  verge: vergeVergePropType,
-  aksjonspunkter: PropTypes.arrayOf(vergeAksjonspunkterPropType).isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  harApneAksjonspunkter: PropTypes.bool.isRequired,
-  submittable: PropTypes.bool.isRequired,
-};
 
 export default VergeFaktaIndex;

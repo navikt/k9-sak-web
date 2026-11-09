@@ -16,8 +16,6 @@ Kjent erstatning og få filer. Hver linje kan bli en egen liten PR.
     Ingen kode dispatcher funksjoner. Alle `bindActionCreators` binder vanlige redux-form-handlinger (`change`, `clearFields`, `initialize`, `untouch`). Testoppsettet i `utils-test` og `UnntakProsessStegPanelDef.spec.tsx` lager store uten thunk. Fjern `applyMiddleware(thunk)`.
 - [ ] `date-fns-tz` (1 fil: `shared-components/src/DateLabel.tsx`)
     v2 har allerede en identisk [DateLabel](packages/v2/gui/src/shared/dateLabel/DateLabel.tsx) som bruker `dayjs` med `utc` og `timezone`. v1-versjonen brukes bare i `OpptjeningFaktaForm.tsx` og `PersonArbeidsforholdTable.tsx`. Bytt til v2-versjonen og slett v1-versjonen med test. Da forsvinner også to av filene som bruker `date-fns`.
-- [ ] `prop-types` og workspace-pakken `@fpsak-frontend/prop-types` (40 JSX-filer i `prosess-avregning`, `prosess-anke`, `prosess-anke-resultat`, `prosess-anke-merknader`, `fakta-verge` og `prosess-unntak`)
-    Vi bruker React 19.3, som ignorerer `propTypes` helt. De 21 `.propTypes = …`-tilordningene og `propTypes/`-mappene gjør altså ingenting. Slett dem. Dette avhenger ikke av at pakkene migreres.
 - [ ] `@navikt/ds-icons` (14 filer)
     Pakken har peer-avhengighet på React 17 eller 18, og vi bruker 19. `v2/gui`, `prosess-vedtak` og `prosess-aarskvantum-oms` importerer den uten å ha den i `package.json`. Disse ikonene finnes i `@navikt/aksel-icons`:
 

@@ -19,11 +19,9 @@ interface SelectFieldProps {
   className?: string;
 }
 
-/* eslint-disable-next-line react/prop-types */
 const renderReadOnly =
   () =>
   ({ field, selectValues, ...otherProps }) => {
-    /* eslint-disable-next-line react/prop-types */
     const option = selectValues.map(sv => sv.props).find(o => o.value === field.value);
     const value = option ? option.children : undefined;
     return <ReadOnlyField input={{ value }} {...otherProps} />;

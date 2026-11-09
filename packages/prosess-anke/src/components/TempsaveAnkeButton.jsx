@@ -1,5 +1,4 @@
 import { Button } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -43,14 +42,6 @@ const TempsaveAnkeButton = ({ formValues, saveAnke, spinner = false, aksjonspunk
       )}
     </div>
   );
-};
-
-TempsaveAnkeButton.propTypes = {
-  aksjonspunktCode: PropTypes.string.isRequired,
-  formValues: PropTypes.shape().isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  spinner: PropTypes.bool,
-  readOnly: PropTypes.bool,
 };
 
 export default TempsaveAnkeButton;

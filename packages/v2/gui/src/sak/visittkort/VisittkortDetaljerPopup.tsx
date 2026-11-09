@@ -5,6 +5,7 @@ import { BodyShort, HStack, Label, Tag, Tooltip, VStack } from '@navikt/ds-react
 import { useMemo } from 'react';
 import getAddresses, { type Adresser } from '../../utils/getAddresses';
 import { getLanguageFromspråkkode } from '../../utils/språkUtils';
+import EndringsmeldingPsbTilgang from './endringsmelding-psb/EndringsmeldingPsbTilgang.js';
 import type { Personopplysninger } from './types/Personopplysninger';
 import styles from './visittkortDetaljerPopup.module.css';
 
@@ -24,9 +25,11 @@ const findPersonStatus = (personopplysning: Personopplysninger): string => {
 interface OwnProps {
   personopplysninger: Personopplysninger;
   språkkode?: string;
+  /** Settes når popupen skal vise om søkeren kan bruke endringsmeldingen. */
+  endringsmeldingPsbSaksnummer?: string;
 }
 
-const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) => {
+const VisittkortDetaljerPopup = ({ personopplysninger, språkkode, endringsmeldingPsbSaksnummer }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser ?? []), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);
@@ -103,6 +106,17 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode }: OwnProps) =
               {adresser[adresseType.POSTADRESSE_UTLAND] || '-'}
             </Label>
           </HStack>
+
+          {endringsmeldingPsbSaksnummer && (
+            <HStack gap="space-8" marginBlock="space-12 space-0">
+              <div className={styles.labels}>
+                <BodyShort size="small">Kan sende endringsmelding:</BodyShort>
+              </div>
+              <Label size="small" as="div" style={{ maxWidth: '20rem' }}>
+                <EndringsmeldingPsbTilgang saksnummer={endringsmeldingPsbSaksnummer} />
+              </Label>
+            </HStack>
+          )}
         </VStack>
       </VStack>
     </div>

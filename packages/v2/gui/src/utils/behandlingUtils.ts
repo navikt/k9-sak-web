@@ -16,7 +16,11 @@ export const erAktivitetspengerOpphørsbehandling = (behandling: {
   behandlingÅrsaker?: BehandlingDto['behandlingÅrsaker'];
 }): boolean => {
   if (behandling.type === BehandlingType.REVURDERING) {
-    const opphørsårsaker = [BehandlingÅrsakType.ENDRET_BOSTED, BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE];
+    const opphørsårsaker = [
+      BehandlingÅrsakType.ENDRET_BOSTED,
+      BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE,
+      BehandlingÅrsakType.ENDRET_BISTANDSBEHOV,
+    ];
     return !!behandling.behandlingÅrsaker?.some(årsak => opphørsårsaker.some(å => å === årsak.behandlingArsakType));
   }
   return false;
