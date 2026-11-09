@@ -9,7 +9,7 @@ import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avkla
 import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
-import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import { type VilkårType, vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import type { BehandlingOperasjonerDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingOperasjonerDto.js';
@@ -1890,6 +1890,59 @@ export const AktivitetVilkårsvurderingLesevisning: Story = {
       await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /rediger vurdering/i })).not.toBeInTheDocument();
       await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    });
+  },
+};
+
+const tomVilkårsavklaringVurderinger = (type: VilkårType): VilkårsavklaringVurderingerDto => ({
+  vilkårType: type,
+  perioder: [],
+});
+
+export const KunVilkåretForBehandlingsårsakenVises: Story = {
+  args: {
+    ...fakeBistandArgsBase,
+    vilkår: [fakeBostedVilkår, fakeBistandVilkår, fakeAndreLivsoppholdytelserVilkår],
+    aksjonspunkter: [
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND, AksjonspunktStatus.UTFØRT),
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR),
+      lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR),
+    ],
+    api: Object.assign(Object.create(fakeAktivitetspengerApi), {
+      hentVilkårsavklaringer: fn(async (_behandlingUuid: string, type: VilkårType) =>
+        type === vilkarType.BISTANDSVILKÅR
+          ? fakeBistandInnvilgetVilkårsavklaringer
+          : { vilkårType: type, perioder: [] },
+      ),
+      hentVilkårsavklaringVurderinger: fn(async (_behandlingUuid: string, type: VilkårType) =>
+        type === vilkarType.BISTANDSVILKÅR
+          ? lagFakeBistandVilkårsavklaringVurderinger(BistandsvilkårIkkeOppfyltÅrsak.ANNET)
+          : tomVilkårsavklaringVurderinger(type),
+      ),
+    }) as AktivitetspengerApi,
+  },
+  play: async ({ canvas, step, args }) => {
+    await step('Årsak og varsel viser bare bistand', async () => {
+      await userEvent.click(await canvas.findByRole('tab', { name: 'Årsak og varsel' }));
+      await expect(await canvas.findByText('Ikke lenger behov for bistand')).toBeInTheDocument();
+      await expect(canvas.queryByText('Ikke lenger bosatt i Trondheim kommune')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Mottar annen livsoppholdytelse')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Ikke i aktivitet')).not.toBeInTheDocument();
+    });
+
+    await step('Vilkårsvurdering viser bare bistand', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Vilkårsvurdering' }));
+      await expect(await canvas.findByText('Vurdering av ikke lenger behov for bistand')).toBeInTheDocument();
+      await expect(canvas.queryByText('Vurdering av ikke lenger bosatt i Trondheim kommune')).not.toBeInTheDocument();
+      await expect(canvas.queryByText('Vurdering av andre livsoppholdsytelser')).not.toBeInTheDocument();
+    });
+
+    await step('Det hentes bare data for bistandsvilkåret', async () => {
+      for (const type of [vilkarType.BOSTEDSVILKÅR, vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR]) {
+        await expect(args.api.hentVilkårsavklaringer).not.toHaveBeenCalledWith(expect.anything(), type);
+        await expect(args.api.hentVilkårsavklaringVurderinger).not.toHaveBeenCalledWith(expect.anything(), type);
+      }
     });
   },
 };
