@@ -40,9 +40,6 @@ const EndringsmeldingPsbTilgang = ({ saksnummer }: Props) => {
       );
     case EndringsmeldingPsbTilgangStatus.MANGLER_TILGANG_TIL_PERSON:
       return <>{data.tekst}</>;
-    default:
-      // Tomt svar (204 gir {}) skal aldri vises som ja eller nei
-      return <>Uvisst, kunne ikke hente svar</>;
   }
 };
 
