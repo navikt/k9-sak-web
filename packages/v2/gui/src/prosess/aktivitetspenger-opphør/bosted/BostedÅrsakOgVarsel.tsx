@@ -5,9 +5,6 @@ import { BostedsavklaringKildeType } from '@k9-sak-web/backend/ungsak/kodeverk/v
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 import { Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
@@ -22,7 +19,6 @@ import {
   VilkårSplittPanel,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { opphørsårsakLabels } from '../../aktivitetspenger-prosess/types.js';
 import { getDateRangeFromVilkår, OpphørAvslagValg } from '../formfields/OpphørAvslagValg.js';
@@ -31,6 +27,7 @@ import { OpphørKilde } from '../formfields/OpphørKilde.js';
 import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+import type { OpphørÅrsakOgVarselProps } from '../types.js';
 
 const kildeLabels: Record<BostedsavklaringKildeType, string> = {
   [BostedsavklaringKildeType.BRUKER]: 'Bruker',
@@ -129,30 +126,20 @@ const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   };
 };
 
-interface Props {
-  vurderBostedAP?: AksjonspunktDto;
-  bostedVilkår: VilkårMedPerioderDto;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
-  readOnly: boolean;
-  isPermanentlyReadOnly: boolean;
-}
-
 export const BostedÅrsakOgVarsel = ({
-  vurderBostedAP,
-  bostedVilkår,
+  vurderFaktaAP,
+  vilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
-}: Props) => {
+}: OpphørÅrsakOgVarselProps) => {
   const queryClient = useQueryClient();
   const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const periods = getOpphørPeriods({
-    aksjonspunkt: vurderBostedAP,
+    aksjonspunkt: vurderFaktaAP,
     perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
@@ -213,7 +200,7 @@ export const BostedÅrsakOgVarsel = ({
 
   return (
     <VStack gap="space-20">
-      {vurderBostedAP && vurderBostedAP.status !== AksjonspunktStatus.UTFØRT && (
+      {vurderFaktaAP && vurderFaktaAP.status !== AksjonspunktStatus.UTFØRT && (
         <InfoCard data-color="warning" size="small">
           <InfoCard.Message
             icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
@@ -231,12 +218,12 @@ export const BostedÅrsakOgVarsel = ({
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse="§ 2"
-        defaultIsLocked={vurderBostedAP?.status === AksjonspunktStatus.UTFØRT}
+        defaultIsLocked={vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT}
         readOnly={readOnly || valgtPeriodeErReadOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={
-          vurderBostedAP?.status === AksjonspunktStatus.UTFØRT ? (
-            <VurdertAv ident={vurderBostedAP.ansvarligSaksbehandler} />
+          vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT ? (
+            <VurdertAv ident={vurderFaktaAP.ansvarligSaksbehandler} />
           ) : undefined
         }
         beforeDetailContent={
@@ -259,7 +246,7 @@ export const BostedÅrsakOgVarsel = ({
                   isFormLocked={isFormLocked}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
-                  dateRange={getDateRangeFromVilkår(bostedVilkår.perioder)}
+                  dateRange={getDateRangeFromVilkår(vilkår.perioder)}
                 />
                 <RhfSelect
                   control={formHook.control}

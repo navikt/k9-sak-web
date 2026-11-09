@@ -4,9 +4,6 @@ import { AndreLivsoppholdsytelserAvklaringKildeType } from '@k9-sak-web/backend/
 import { AndreLivsoppholdsytelserIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AndreLivsoppholdsytelserIkkeOppfyltÅrsak.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
 import { BodyLong, BodyShort, Button, HStack, InfoCard, Link, List, ReadMore, VStack } from '@navikt/ds-react';
@@ -22,7 +19,6 @@ import {
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
 import { andreLivsoppholdsytelserIkkeOppfyltÅrsaker } from '../../aktivitetspenger-felles/andreLivsoppholdsytelserIkkeOppfyltÅrsaker.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { OpphørAvslagValg, getDateRangeFromVilkår } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
@@ -30,6 +26,7 @@ import { OpphørKilde } from '../formfields/OpphørKilde.js';
 import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+import type { OpphørÅrsakOgVarselProps } from '../types.js';
 
 const kildeLabels: Record<AndreLivsoppholdsytelserAvklaringKildeType, string> = {
   [AndreLivsoppholdsytelserAvklaringKildeType.BRUKER]: 'Bruker',
@@ -119,25 +116,15 @@ const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   };
 };
 
-interface Props {
-  vurderAndreLivsoppholdytelserFaktaAP?: AksjonspunktDto;
-  andreLivsoppholdytelserVilkår: VilkårMedPerioderDto;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
-  readOnly: boolean;
-  isPermanentlyReadOnly: boolean;
-}
-
 export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
-  vurderAndreLivsoppholdytelserFaktaAP,
-  andreLivsoppholdytelserVilkår,
+  vurderFaktaAP,
+  vilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
-}: Props) => {
+}: OpphørÅrsakOgVarselProps) => {
   const queryClient = useQueryClient();
   const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(
     api,
@@ -146,7 +133,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   );
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const opphørPeriods = getOpphørPeriods({
-    aksjonspunkt: vurderAndreLivsoppholdytelserFaktaAP,
+    aksjonspunkt: vurderFaktaAP,
     perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
@@ -169,7 +156,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
   const valgtKilde = valgtFormPeriode?.kilde ?? '';
   const skalSendeVarselOmOpphør = valgtFormPeriode?.skalSendeVarselOmOpphør ?? '';
   const valgtYtelse = valgtFormPeriode?.livsoppholdytelse ?? '';
-  const isSolved = vurderAndreLivsoppholdytelserFaktaAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT;
   const erValgtPeriodeInnvilgetUtenAvklaring =
     valgtOpphørPeriode?.status === 'success' && !valgtVilkårsavklaringPeriode?.avklaring;
 
@@ -210,7 +197,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderAndreLivsoppholdytelserFaktaAP && (
+      {!isSolved && vurderFaktaAP && (
         <InfoCard data-color="warning" size="small">
           <InfoCard.Message
             icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
@@ -240,9 +227,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
             </InfoCard>
           ) : undefined
         }
-        lockedContent={
-          isSolved ? <VurdertAv ident={vurderAndreLivsoppholdytelserFaktaAP?.ansvarligSaksbehandler} /> : undefined
-        }
+        lockedContent={isSolved ? <VurdertAv ident={vurderFaktaAP?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked, setIsFormLocked) => (
           <>
@@ -254,7 +239,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                   isFormLocked={isFormLocked}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
-                  dateRange={getDateRangeFromVilkår(andreLivsoppholdytelserVilkår.perioder)}
+                  dateRange={getDateRangeFromVilkår(vilkår.perioder)}
                 />
                 <RhfSelect
                   control={formHook.control}
