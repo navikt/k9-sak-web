@@ -38,7 +38,7 @@
     "@navikt/ft-types": "8.0.1",
     "@navikt/ft-ui-komponenter": "10.0.2",
     "@navikt/ft-utils": "8.0.1",
-    "@tanstack/react-query": "5.106.1",
+    "@tanstack/react-query": "5.107.1",
     "@types/css-tree": "2.3.11",
     "@types/object-hash": "3.0.6",
     "axios": "1.21.0",
