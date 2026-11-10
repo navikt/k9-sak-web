@@ -6,12 +6,10 @@ import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
+import type { VurderingAvAktivitetsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VurderingAvAktivitetsvilkårEtterAvklaringDto.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import {
-  $VurderingAvVilkårPeriodeEtterAvklaringDto,
-  type VurderingAvVilkårPeriodeEtterAvklaringDto,
-} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
+import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
@@ -38,14 +36,6 @@ import { SendTilBeslutter } from '../SendTilBeslutter.js';
 const begrunnelseMaxLength = $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.begrunnelse.maxLength;
 const fritekstVurderingBrevMaxLength =
   $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
-
-// TODO: Erstatt med generert DTO når backend har lagt til VURDER_AKTIVITETSVILKÅR_OPPHØR i BekreftetAksjonspunktDto.
-// Formen er antatt lik de andre *EtterAvklaringDto-ene for opphør (bosted, bistand, andre livsoppholdsytelser).
-interface VurderingAvAktivitetsvilkårEtterAvklaring {
-  '@type': typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
-  begrunnelse: string;
-  vurdertePerioder: VurderingAvVilkårPeriodeEtterAvklaringDto[];
-}
 
 interface FormData {
   perioder: Record<
@@ -114,7 +104,9 @@ const buildPayload = ({
   selectedId,
   periods,
   erÅrsakTilOpphørAnnet,
-}: SubmitArgs): VurderingAvAktivitetsvilkårEtterAvklaring => {
+}: SubmitArgs): VurderingAvAktivitetsvilkårEtterAvklaringDto & {
+  '@type': typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
+} => {
   const selectedFormPeriod = formData.perioder[selectedId];
   if (!selectedFormPeriod) {
     throw new Error('Kunne ikke finne valgt periode for aktivitet');
@@ -181,10 +173,7 @@ export const AktivitetVilkårsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (submitArgs: SubmitArgs) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
-        // @ts-expect-error -- BekreftetAksjonspunktDto mangler DTO for VURDER_AKTIVITETSVILKÅR_OPPHØR. Fjern når backend-klienten har den.
-        buildPayload(submitArgs),
-      ]);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
