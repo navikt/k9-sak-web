@@ -1,10 +1,10 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
 import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
 import {
   $ManuellVurderingBostedsvilkårDto,
@@ -13,7 +13,7 @@ import {
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
+import { formatDate, formatPeriod, timeFormat } from '@k9-sak-web/gui/utils/formatters.js';
 import { PersonFillIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, BodyShort, Box, Button, HStack, Radio, Tag, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
@@ -28,11 +28,11 @@ import {
   type VilkårSplittPanelPeriod,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import { ForhåndsvisVedtaksbrev } from '../../aktivitetspenger-felles/ForhåndsvisVedtaksbrev.js';
 import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
 import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
 import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { SendTilBeslutter } from '../SendTilBeslutter.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '../../aktivitetspenger-prosess/types.js';
 
 interface FormData {
@@ -68,9 +68,9 @@ const buildPeriods = (
   (vilkår.perioder ?? [])
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
     .map(period => {
-      const erAvslag =
-        vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)?.avklaringOgVurdering
-          ?.avklaring?.avklaringtype === Avklaringtype.AVSLAG;
+      const avklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)
+        ?.avklaringOgVurdering?.avklaring;
+      const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
         id: period.periode.fom,
         status: getPeriodStatus(period.vilkarStatus),
@@ -80,6 +80,7 @@ const buildPeriods = (
             : formatDate(period.periode.fom),
         periode: period.periode,
         vurderesIBehandlingen: period.vurderesIBehandlingen,
+        foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
 
@@ -131,53 +132,6 @@ interface Props {
   lokalkontorForeslårVilkårAP?: AksjonspunktDto;
   lokalkontorBeslutterAP?: AksjonspunktDto;
 }
-
-interface SendTilBeslutterProps {
-  kanSendeTilBeslutter: boolean;
-  visForBeslutter: boolean;
-  isSendingTilBeslutter: boolean;
-  onSendTilBeslutter: () => void;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-}
-
-const SendTilBeslutter = ({
-  kanSendeTilBeslutter,
-  visForBeslutter,
-  isSendingTilBeslutter,
-  onSendTilBeslutter,
-  api,
-  behandling,
-}: SendTilBeslutterProps) => {
-  if (kanSendeTilBeslutter) {
-    return (
-      <VStack gap="space-20">
-        <Alert variant="success" size="small">
-          Alle inngangsvilkår for Nav-kontor er ferdig vurdert.
-        </Alert>
-        <HStack gap="space-8" align="start">
-          <Button
-            variant="primary"
-            data-color="accent"
-            size="small"
-            type="button"
-            loading={isSendingTilBeslutter}
-            onClick={onSendTilBeslutter}
-          >
-            Send til beslutter
-          </Button>
-          <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />
-        </HStack>
-      </VStack>
-    );
-  }
-
-  if (visForBeslutter) {
-    return <ForhåndsvisVedtaksbrev api={api} behandling={behandling} />;
-  }
-
-  return null;
-};
 
 export const BostedVilkårsvurdering = ({
   vurderBostedVilkårAP,
@@ -247,6 +201,7 @@ export const BostedVilkårsvurdering = ({
         onItemSelect={setSelectedId}
         detailHeading="Vurdering av ikke lenger bosatt i Trondheim kommune"
         periodListLabel="Alle perioder"
+        periodColumnHeader="Dato/periode"
         lovreferanse="§ 2"
         defaultIsLocked={defaultIsLocked}
         readOnly={readOnly}
@@ -254,7 +209,7 @@ export const BostedVilkårsvurdering = ({
         afterEditButton={
           <SendTilBeslutter
             kanSendeTilBeslutter={erLokalkontorForeslårAPÅpent}
-            visForBeslutter={!!lokalkontorBeslutterAP}
+            erSendtTilBeslutter={!!lokalkontorBeslutterAP}
             isSendingTilBeslutter={isSendingTilBeslutter}
             onSendTilBeslutter={() => void sendTilBeslutterMutation()}
             api={api}
@@ -292,7 +247,9 @@ export const BostedVilkårsvurdering = ({
                       <PersonFillIcon title="Bruker" fontSize="1.5rem" />
                       <VStack gap="space-6" marginBlock="space-2 space-0">
                         <BodyShort size="small" weight="semibold">
-                          Tilbakemelding fra bruker om opphør xx.xx.xxxx
+                          Tilbakemelding fra bruker om opphør
+                          {uttalelse.mottattTidspunkt &&
+                            ` ${formatDate(uttalelse.mottattTidspunkt)} kl. ${timeFormat(uttalelse.mottattTidspunkt)}`}
                         </BodyShort>
                         <BodyLong size="small">{uttalelse.uttalelseTekst}</BodyLong>
                       </VStack>
