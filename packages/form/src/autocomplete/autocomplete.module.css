@@ -1,0 +1,34 @@
+.autocomplete {
+  flex: 1;
+  position: relative;
+}
+
+.autocomplete ul {
+  background-color: var(--ax-bg-default);
+  border: 1px solid #068936;
+  border-radius: 8px;
+  margin: 0;
+  padding: 6px 0;
+  width: calc(100% - 64px);
+  z-index: 1;
+}
+
+.autocomplete ul li {
+  clear: both;
+  color: var(--ax-text-neutral);
+  cursor: pointer;
+  display: block;
+  font-size: initial;
+  line-height: 2rem;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.autocomplete__suggestions {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.autocomplete__suggestions--hidden {
+  display: none;
+}

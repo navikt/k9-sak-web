@@ -1,7 +1,7 @@
 import { Label } from '@navikt/ds-react';
 import React from 'react';
 import { Field, WrappedFieldInputProps } from 'redux-form';
-import { Autocomplete as NAPAutocomplete } from '@navikt/ft-plattform-komponenter';
+import { Autocomplete as NAPAutocomplete } from './autocomplete/Autocomplete';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './autocompleteField.module.css';
 

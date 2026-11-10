@@ -24,7 +24,7 @@ class PanelDef extends ProsessStegPanelDef {
           <Uttak
             behandling={behandling}
             aksjonspunkter={aksjonspunkter}
-            erOverstyrer={erOverstyrer}
+            kanOverstyreNå={erOverstyrer}
             readOnly={isReadOnly}
           />
         </ErrorBoundary>

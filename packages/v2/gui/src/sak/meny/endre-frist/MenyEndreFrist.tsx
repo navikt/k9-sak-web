@@ -15,6 +15,7 @@ interface MenyEndreFristProps {
   isLoading: boolean;
   submitError?: string;
   nyFrist?: string;
+  isAktivitetspenger?: boolean;
 }
 
 interface FormValues {
@@ -31,6 +32,7 @@ export const MenyEndreFrist = ({
   isLoading,
   submitError,
   nyFrist,
+  isAktivitetspenger,
 }: MenyEndreFristProps) => {
   const formMethods = useForm<FormValues>({
     defaultValues: {
@@ -64,7 +66,7 @@ export const MenyEndreFrist = ({
     return endreFrister(formValues);
   };
 
-  const modalHeading = 'Utsett frist på oppgave til deltaker';
+  const modalHeading = `Utsett frist på oppgave til ${isAktivitetspenger ? 'bruker' : 'deltaker'}`;
 
   if (showSuccess || isLoading) {
     return (
@@ -146,7 +148,9 @@ export const MenyEndreFrist = ({
               name="begrunnelse"
               label="Begrunnelse"
               validate={[required]}
-              description="Begrunnelsen er kun synlig i historikken, og vil ikke sendes til deltaker."
+              description={`Begrunnelsen er kun synlig i historikken, og vil ikke sendes til ${
+                isAktivitetspenger ? 'bruker' : 'deltaker'
+              }.`}
             />
           </VStack>
           <Box marginBlock="space-16 space-0">

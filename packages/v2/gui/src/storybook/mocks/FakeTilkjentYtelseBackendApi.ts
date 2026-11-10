@@ -2,8 +2,11 @@ import type { TilkjentYtelseApi } from '../../prosess/tilkjent-ytelse/api/Tilkje
 import type { FeriepengerPrÅr } from '../../prosess/tilkjent-ytelse/components/feriepenger/FeriepengerPanel.js';
 import { ignoreUnusedDeclared } from './ignoreUnusedDeclared.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../../prosess/tilkjent-ytelse/types/arbeidsgiverOpplysningerType.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeTilkjentYtelseBackendApi implements TilkjentYtelseApi {
+  readonly backend = backendNavn.k9sak;
+
   #feriepengerPrÅr: FeriepengerPrÅr;
 
   constructor(feriepengerPrÅr: FeriepengerPrÅr) {

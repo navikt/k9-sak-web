@@ -99,7 +99,7 @@ export const DagsatsOgUtbetaling = ({
                       </Table.DataCell>
                       <Table.DataCell>
                         <BodyShort size="small">
-                          {grunnrettData.satsType && formatSats(grunnrettData.satsType)}
+                          {grunnrettData.satsType && formatSats(grunnrettData.satsType, isAktivitetspenger)}
                         </BodyShort>
                       </Table.DataCell>
                       <DataCellWithValue value={grunnrettData.grunnbeløp} formatter={formatCurrencyWithKr} />
@@ -229,7 +229,9 @@ export const DagsatsOgUtbetaling = ({
                                         <BodyShort size="small">{fom && tom && formatPeriod(fom, tom)}</BodyShort>
                                       </Table.DataCell>
                                       <Table.DataCell>
-                                        <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
+                                        <BodyShort size="small">
+                                          {satsType && formatSats(satsType, isAktivitetspenger)}
+                                        </BodyShort>
                                       </Table.DataCell>
                                       <DataCellWithValue value={grunnbeløp} formatter={formatCurrencyWithKr} />
                                       <DataCellWithValue
@@ -279,7 +281,7 @@ export const DagsatsOgUtbetaling = ({
                               <Label size="small">{formatMonthYear(måned)}</Label>
                             </Table.HeaderCell>
                             <Table.DataCell>
-                              <BodyShort size="small">{satsType && formatSats(satsType)}</BodyShort>
+                              <BodyShort size="small">{satsType && formatSats(satsType, isAktivitetspenger)}</BodyShort>
                             </Table.DataCell>
                             <DataCellWithValue value={grunnbeløp} formatter={formatCurrencyWithKr} />
                             <DataCellWithValue value={dagsats} formatter={formatCurrencyWithoutKr} suffix=" kr" />

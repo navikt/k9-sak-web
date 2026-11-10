@@ -20,6 +20,7 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 const agOpplysninger = {
   874652202: {
@@ -94,7 +95,7 @@ const meta = {
       >
         <NyInntektApiContext
           value={{
-            backend: 'k9sak',
+            backend: backendNavn.k9sak,
             kanReaktivereAksjonspunkt: async () => true,
             reaktiverAksjonspunkt: async () => undefined,
           }}

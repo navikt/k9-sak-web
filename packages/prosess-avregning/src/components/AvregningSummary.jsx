@@ -2,7 +2,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
@@ -75,14 +74,5 @@ const AvregningSummary = ({
     </div>
   </>
 );
-
-AvregningSummary.propTypes = {
-  fom: PropTypes.string.isRequired,
-  tom: PropTypes.string.isRequired,
-  feilutbetaling: PropTypes.number.isRequired,
-  etterbetaling: PropTypes.number.isRequired,
-  inntrekk: PropTypes.number,
-  ingenPerioderMedAvvik: PropTypes.bool.isRequired,
-};
 
 export default AvregningSummary;

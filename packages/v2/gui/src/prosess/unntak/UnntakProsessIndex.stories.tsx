@@ -2,6 +2,8 @@ import {
   behandlingResultatType,
   type BehandlingResultatType,
 } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
@@ -211,5 +213,16 @@ export const ManglerPeriode: Story = {
     ).toBeInTheDocument();
     await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
     await expect(args.submitCallback).not.toHaveBeenCalled();
+  },
+};
+
+export const UtenOverstyrerrolle: Story = {
+  args: {
+    aksjonspunkter: [{ aksjonspunktType: aksjonspunktType.OVERSTYRING, status: aksjonspunktStatus.OPPRETTET }],
+    erOverstyrer: false,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText(/^Overstyring av .* må vurderes\.$/)).toBeInTheDocument();
+    await expect(canvas.getByText('Overstyring av vilkårsvurderingen må vurderes.')).toBeInTheDocument();
   },
 };

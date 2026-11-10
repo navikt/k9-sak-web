@@ -10,9 +10,10 @@ import type { MellomlagringDto } from '@k9-sak-web/backend/k9klage/kontrakt/mell
 import { k9_formidling_kontrakt_kodeverk_AvsenderApplikasjon } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import type { FagsakDto as K9FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import type { KlageVurderingApi } from './KlageVurderingApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export default class K9KlageVurderingBackendClient implements KlageVurderingApi {
-  readonly backend = 'k9klage';
+  readonly backend = backendNavn.k9klage;
 
   #formidling: FormidlingClient;
 

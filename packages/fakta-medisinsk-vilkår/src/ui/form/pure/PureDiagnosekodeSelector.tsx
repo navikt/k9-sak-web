@@ -1,5 +1,5 @@
 import { BodyShort, ErrorMessage, Label } from '@navikt/ds-react';
-import { Autocomplete } from '@navikt/ft-plattform-komponenter';
+import { Autocomplete } from '@fpsak-frontend/form';
 import * as React from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
 import DeleteButton from '../../components/delete-button/DeleteButton';

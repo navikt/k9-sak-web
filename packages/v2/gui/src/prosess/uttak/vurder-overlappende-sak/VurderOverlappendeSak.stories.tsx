@@ -96,7 +96,7 @@ export const Aksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
     readOnly: false,
   },
@@ -145,7 +145,7 @@ export const LøsAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
     readOnly: false,
   },
@@ -219,7 +219,7 @@ export const LøsAksjonspunktMedSplitt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [lagOverlappendeSakerAksjonspunkt()],
     readOnly: false,
   },
@@ -312,7 +312,7 @@ export const LøstAksjonspunkt: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],
@@ -348,7 +348,7 @@ export const LøstAksjonspunktKanRedigeres: Story = {
   ],
   args: {
     behandling: lagUtredBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, {
         begrunnelse: 'Dette er en grundig begrunnelse',
@@ -468,7 +468,7 @@ export const LøstAksjonspunktAvsluttetSak: Story = {
   ],
   args: {
     behandling: lagAvsluttetBehandling(),
-    erOverstyrer: false,
+    kanOverstyreNå: false,
     aksjonspunkter: [
       lagOverlappendeSakerAksjonspunkt(aksjonspunktStatus.UTFØRT, { begrunnelse: 'Dette er en grundig begrunnelse' }),
     ],

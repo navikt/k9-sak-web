@@ -12,7 +12,8 @@ const PANEL_ID = 'uttak';
 interface Props {
   behandling: Behandling;
   api: K9SakProsessApi;
-  erOverstyrer: boolean;
+  kanOverstyreNå: boolean;
+  harOverstyrerrolle: boolean;
   isReadOnly: boolean;
 }
 
@@ -39,7 +40,8 @@ export function UttakProsessStegInitPanel(props: Props) {
     <Uttak
       behandling={behandlingV2}
       aksjonspunkter={aksjonspunkter}
-      erOverstyrer={props.erOverstyrer}
+      kanOverstyreNå={props.kanOverstyreNå}
+      harOverstyrerrolle={props.harOverstyrerrolle}
       readOnly={props.isReadOnly}
     />
   );

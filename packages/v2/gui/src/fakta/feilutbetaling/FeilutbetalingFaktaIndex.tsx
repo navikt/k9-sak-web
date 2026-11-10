@@ -1,5 +1,6 @@
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.js';
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
@@ -75,7 +76,8 @@ const FeilutbetalingFaktaIndex = ({
   const { data: alleÅrsaker } = useSuspenseQuery(feilutbetalingÅrsakerQueryOptions(api));
   const k9Kodeverkoppslag = useContext(K9KodeverkoppslagContext);
   const ungKodeverkoppslag = useContext(UngKodeverkoppslagContext);
-  const kodeverkoppslag = api.backend === 'k9tilbake' ? k9Kodeverkoppslag.k9tilbake : ungKodeverkoppslag.ungTilbake;
+  const kodeverkoppslag =
+    api.backend === backendNavn.k9tilbake ? k9Kodeverkoppslag.k9tilbake : ungKodeverkoppslag.ungTilbake;
   const { hentHendelseTypeNavn, hentHendelseUnderTypeNavn, hentVidereBehandlingNavn } = useMemo(
     () => ({
       hentHendelseTypeNavn: (kode?: string): string =>

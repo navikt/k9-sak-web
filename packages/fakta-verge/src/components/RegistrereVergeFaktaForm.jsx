@@ -1,5 +1,4 @@
 import { HGrid } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 
 import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -81,21 +80,6 @@ const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper = [], alleMerknad
     </div>
   </FaktaGruppe>
 );
-
-RegistrereVergeFaktaForm.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  vergetyper: PropTypes.arrayOf(
-    PropTypes.shape({
-      kode: PropTypes.string,
-      name: PropTypes.string,
-    }),
-  ),
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
-  valgtVergeType: PropTypes.string,
-};
 
 RegistrereVergeFaktaForm.buildInitialValues = verge => ({
   navn: verge.navn,

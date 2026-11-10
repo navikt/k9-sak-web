@@ -47,6 +47,7 @@ Check the generated exports before choosing the syntax:
 
 - **Const and type with the same name** (kodeverk enums): use exactly one `export { GeneratedName as Alias }`. It re-exports both the value and the type. Never use `export type` for that symbol, never split it into separate exports, and never add a `Type`-suffixed alias.
 - **Type-only symbols** (DTOs): use `export type { GeneratedName as Alias }`.
+- **JSON schemas** (`$...Dto` from `generated/schemas.js`, used e.g. for `maxLength`): re-export as a value from the same `kontrakt/` file with `export { $GeneratedName as $Alias } from '@k9-sak-web/backend/<backend>/generated/schemas.js'`. Reference: `packages/v2/backend/src/ungsak/kontrakt/vilkår/aktivitet/VilkårAktivitetPeriodeVurderingDto.ts`.
 - Write one export declaration per symbol, on one line.
 
 ```typescript

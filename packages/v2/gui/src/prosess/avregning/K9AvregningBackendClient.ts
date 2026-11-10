@@ -6,9 +6,12 @@ import type { BekreftedeAksjonspunkterDto } from '@k9-sak-web/backend/k9sak/kont
 import { dokument_hentForhåndsvisningVarselbrev } from '@k9-sak-web/backend/k9tilbake/generated/sdk.js';
 import { FagsakYtelseType as FagsakYtelseTypeK9Tilbake } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/FagsakYtelseType.js';
 import { isValueOfConstObject } from '@k9-sak-web/backend/typecheck/isValueOfConstObject.js';
+import { sammenstiltBackendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import type { BehandlingAvregningBackendApiType } from './AvregningBackendApiType.js';
 
 export class K9AvregningBackendClient implements BehandlingAvregningBackendApiType {
+  readonly backend = sammenstiltBackendNavn.k9;
+
   async bekreftAksjonspunktSjekkHøyEtterbetaling(
     behandlingId: number,
     behandlingVersjon: number,

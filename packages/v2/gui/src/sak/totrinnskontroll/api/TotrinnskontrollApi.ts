@@ -3,6 +3,7 @@ import type { TotrinnskontrollAksjonspunkterDto } from '@k9-sak-web/backend/comb
 import type { SkjermlenkeObjekt } from '@k9-sak-web/backend/combined/behandling/historikk/SkjermlenkeObjekt.js';
 import type { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import type { FatterVedtakAksjonspunktDto } from '@k9-sak-web/backend/combined/kontrakt/vedtak/FatterVedtakAksjonspunktDto.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export interface TotrinnskontrollDataPrSkjermlenke {
   readonly skjermlenke: SkjermlenkeObjekt;
@@ -23,8 +24,7 @@ export interface TotrinnskontrollData {
 
 export type AksjonspunktGodkjenningDtos = Required<FatterVedtakAksjonspunktDto['aksjonspunktGodkjenningDtos']>;
 
-export interface TotrinnskontrollApi {
-  readonly backend: 'k9klage' | 'k9sak' | 'k9tilbake' | 'ungsak' | 'ungtilbake';
+export interface TotrinnskontrollApi extends BackendTilhørighet {
   hentTotrinnskontrollSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnskontrollvurderingSkjermlenkeContext(behandlingUuid: string): Promise<TotrinnskontrollData>;
   hentTotrinnsKlageVurdering?(behandlingUuid: string): Promise<KlagebehandlingDto>;

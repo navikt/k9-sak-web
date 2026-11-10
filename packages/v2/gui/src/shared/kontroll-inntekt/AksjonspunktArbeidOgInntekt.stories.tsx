@@ -21,7 +21,7 @@ const meta = {
   title: 'gui/shared/kontroll-inntekt/AksjonspunktArbeidOgInntekt',
   component: AksjonspunktArbeidOgInntekt,
   args: {
-    harBrukerrapportertInntekt: false,
+    harBrukerrapportertInntekt: true,
     isSubmitting: false,
     isReadOnly: false,
     periode,
@@ -57,5 +57,32 @@ export const AktivitetspengerMedLovreferanse: Story = {
         canvas.getByLabelText(/Vurder hvilken inntekt som skal gi reduksjon i perioden/),
       ).toBeInTheDocument();
     });
+
+    await step('Bruker bruker-tekst for Aktivitetspenger', async () => {
+      await expect(canvas.getByRole('radio', { name: 'Rapportert inntekt fra bruker' })).toBeInTheDocument();
+      await expect(canvas.getByTitle('Bruker')).toBeInTheDocument();
+      await expect(
+        canvas.getByRole('heading', { name: /Beskrivelse fra bruker for avvik i perioden/ }),
+      ).toBeInTheDocument();
+      await expect(canvas.getByText('Inntekt rapportert av bruker')).toBeInTheDocument();
+      await expect(canvas.getByText('Sum inntekt fra bruker')).toBeInTheDocument();
+    });
+  },
+};
+
+export const Ungdomsytelse: Story = {
+  args: {
+    isAktivitetspenger: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByRole('radio', { name: 'Rapportert inntekt fra deltaker' })).toBeInTheDocument();
+    await expect(canvas.getByTitle('Deltaker')).toBeInTheDocument();
+    await expect(
+      canvas.getByRole('heading', { name: /Beskrivelse fra deltaker for avvik i perioden/ }),
+    ).toBeInTheDocument();
+    await expect(canvas.getByText('Inntekt rapportert av deltaker')).toBeInTheDocument();
+    await expect(canvas.getByText('Sum inntekt fra deltaker')).toBeInTheDocument();
   },
 };

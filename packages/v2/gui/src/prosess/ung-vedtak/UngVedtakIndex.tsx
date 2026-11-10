@@ -2,7 +2,7 @@ import { Box, Heading } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import { UngVedtak, type UngVedtakProps } from './UngVedtak';
-import UngVedtakBackendClient from './UngVedtakBackendClient';
+import UngSakVedtakBackendClient from './UngSakVedtakBackendClient';
 import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
 import type { UngVedtakTekster } from './UngVedtakTekster';
 import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
@@ -26,7 +26,7 @@ export const UngVedtakIndex = ({
   isReadOnly,
   tekster,
 }: UngVedtakIndexProps) => {
-  const api = new UngVedtakBackendClient();
+  const api = new UngSakVedtakBackendClient();
   const {
     data: vedtaksbrevValgResponse,
     isLoading,

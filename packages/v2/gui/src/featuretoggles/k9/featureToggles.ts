@@ -26,6 +26,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_AVREGNING: true,
   BRUK_V2_FEILUTBETALING: true,
   PROSESS_MENY_V2: true,
+  SKJUL_PROSESS_MENY_V2_VELGER: true,
   DELVIS_REVURDERING_MEDISINSK_VILKAR: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
   FORENKLE_OMS_VEDTAK_STATUS: true,

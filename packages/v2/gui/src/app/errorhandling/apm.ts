@@ -1,5 +1,5 @@
-import { init, type InitOptions } from '@nais/apm';
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { init, type InitOptions } from '@nais/apm';
 import { AxiosError } from 'axios';
 
 // Sidan vi legger til preserveOriginalError i initApm skal feilhendelser rapportert ha originalError satt.
@@ -90,7 +90,7 @@ const beforeSend: NonNullable<InitOptions['beforeSend']> = item => {
 };
 
 /** Nais app namn for frontend appane våre */
-export type ApmApp = 'k9-sak-web' | 'ung-sak-web';
+export type ApmApp = 'k9-sak-web' | 'ung-sak-web' | 'aktivitetspenger-sak-web';
 
 interface InitApmOptions {
   app: ApmApp;

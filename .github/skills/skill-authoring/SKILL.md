@@ -28,6 +28,8 @@ A skill covers one task. If you cannot describe it in one sentence without "and"
 
 A long skill is fine if it covers one task. Prefer several small skills that link to each other over one skill that covers everything.
 
+Use one skill with `references/` files instead of separate skills when the parts are always used together and one description can still name the words people search for. Keep the shared rules in `SKILL.md` and link to one reference file per part. Example: `form-validation` has the rules across fields in `SKILL.md` and one file per field type in `references/`.
+
 ## Design decisions
 
 UI design decisions made together with the designers are defined as skills named `design-<topic>`, one skill per decision. Use `.github/skills/design-alerts/SKILL.md` as the model:

@@ -1,6 +1,7 @@
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
+import { isAktivitetspenger } from '@k9-sak-web/gui/utils/urlUtils.js';
 import { use, useState } from 'react';
 import { MenyEndreFrist } from './MenyEndreFrist.js';
 import { MenyEndreFristApiContext } from './MenyEndreFristApiContext.js';
@@ -58,6 +59,7 @@ export const MenyEndreFristIndex = ({
       isLoading={isLoading || mutation.isPending}
       submitError={mutation.isError ? (mutation.error as Error).message : undefined}
       nyFrist={nyFrist}
+      isAktivitetspenger={isAktivitetspenger()}
     />
   );
 };

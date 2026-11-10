@@ -4,9 +4,10 @@ import { avsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/Avs
 import { brev_bestillDokument } from '@k9-sak-web/backend/k9sak/generated/sdk.js';
 import type { MessagesApi } from './MessagesApi.js';
 import { BaseMeldingerBackendClient } from './BaseMeldingerBackendClient.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export default class K9SakMeldingerBackendClient extends BaseMeldingerBackendClient implements MessagesApi {
-  readonly backend = 'k9sak';
+  readonly backend = backendNavn.k9sak;
 
   constructor(formidlingClient: FormidlingClient) {
     super(avsenderApplikasjon.K9SAK, formidlingClient);

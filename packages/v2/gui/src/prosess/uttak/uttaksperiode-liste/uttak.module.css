@@ -85,16 +85,12 @@
   width: 6.5rem;
 }
 
-:global .ReactCollapse--collapse {
-  transition: height 500ms;
-}
-
 .borderTop {
   border-top: 1px solid rgb(187 187 187);
 }
 
 .collapseRow {
-  visibility: collapse;
+  display: none;
 }
 
 .expandedRow {

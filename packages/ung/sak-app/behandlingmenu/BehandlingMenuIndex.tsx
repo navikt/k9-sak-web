@@ -2,6 +2,7 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ung_kodeverk_varsel_EtterlysningStatus } from '@k9-sak-web/backend/ungsak/generated/types.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ignore404Errors } from '@k9-sak-web/gui/app/errorhandling/ignore404Errors.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -16,6 +17,7 @@ import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/Meny
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
@@ -221,6 +223,13 @@ export const BehandlingMenuIndex = ({
     );
   }
 
+  const skalKunneOppretteNyBehandling = () => {
+    if (fagsak.sakstype === fagsakYtelsesType.AKTIVITETSPENGER && isProd()) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <MenySakIndexV2
       data={[
@@ -281,7 +290,10 @@ export const BehandlingMenuIndex = ({
             lukkModal={lukkModal}
           />
         )),
-        new MenyData(!sakRettigheter.sakSkalTilInfotrygd, 'Opprett ny behandling').medModal(lukkModal => (
+        new MenyData(
+          !sakRettigheter.sakSkalTilInfotrygd && skalKunneOppretteNyBehandling(),
+          'Opprett ny behandling',
+        ).medModal(lukkModal => (
           <MenyNyBehandlingIndexV2
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}

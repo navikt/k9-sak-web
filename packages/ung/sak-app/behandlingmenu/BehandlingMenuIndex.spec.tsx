@@ -6,6 +6,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType as ungFagsakYtelsesType } from '@k9-sak-web/backend/ungsak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { MenyEndreFristApiContext } from '@k9-sak-web/gui/sak/meny/endre-frist/MenyEndreFristApiContext.js';
@@ -66,6 +67,13 @@ const alleBehandlinger = [
 
 const menyEndreFristApi = new FakeMenyEndreFristApi();
 
+const { isProdMock } = vi.hoisted(() => ({ isProdMock: vi.fn(() => false) }));
+
+vi.mock('@k9-sak-web/lib/paths/paths.js', async importOriginal => ({
+  ...(await importOriginal<typeof import('@k9-sak-web/lib/paths/paths.js')>()),
+  isProd: isProdMock,
+}));
+
 vi.mock('react-router', async () => {
   const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
@@ -92,9 +100,10 @@ describe('BehandlingMenuIndex', () => {
   afterEach(() => {
     queryClient.clear();
     requestApi.clearAllMockData();
+    isProdMock.mockReturnValue(false);
   });
 
-  it('skal vise meny der alle menyhandlinger er synlige', async () => {
+  const renderMeny = (fagsakForTest: Omit<typeof fagsak, 'sakstype'> & { sakstype: string }) => {
     queryClient.setQueryData(innloggetAnsattUngV2QueryOptions.queryKey, navAnsattV2);
     requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, []);
@@ -129,7 +138,7 @@ describe('BehandlingMenuIndex', () => {
         <QueryClientProvider client={queryClient}>
           <MenyEndreFristApiContext value={menyEndreFristApi}>
             <BehandlingMenuIndex
-              fagsak={fagsak as Fagsak}
+              fagsak={fagsakForTest as Fagsak}
               // @ts-expect-error: Skal endres til behandlingPåVent når det er gjort i ung-sak
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
@@ -148,6 +157,10 @@ describe('BehandlingMenuIndex', () => {
         </QueryClientProvider>
       </MemoryRouter>,
     );
+  };
+
+  it('skal vise meny der alle menyhandlinger er synlige', async () => {
+    renderMeny(fagsak);
 
     const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
     expect(await knapp).not.toBeNull();
@@ -172,6 +185,31 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.getByRole('menuitem', { name: 'Henlegg behandlingen og avslutt' })).toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
     // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
+    expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
+  });
+
+  it('skal ikke vise opprett ny behandling for aktivitetspenger i prod', async () => {
+    isProdMock.mockReturnValue(true);
+    renderMeny({ ...fagsak, sakstype: ungFagsakYtelsesType.AKTIVITETSPENGER });
+
+    const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
+    await act(async () => {
+      await userEvent.click(knapp);
+    });
+
+    expect(screen.getByRole('menuitem', { name: 'Sett behandlingen på vent' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Opprett ny behandling' })).not.toBeInTheDocument();
+  });
+
+  it('skal vise opprett ny behandling for aktivitetspenger utenfor prod', async () => {
+    isProdMock.mockReturnValue(false);
+    renderMeny({ ...fagsak, sakstype: ungFagsakYtelsesType.AKTIVITETSPENGER });
+
+    const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
+    await act(async () => {
+      await userEvent.click(knapp);
+    });
+
     expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
   });
 });

@@ -95,7 +95,8 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
 
             {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && erKroniskSyktBarn && innvilget && utvidetRett?.periode && (
               <BodyShort as="span" size="small">
-                <DateLabel dateString={utvidetRett?.periode?.fom} /> - <DateLabel dateString={utvidetRett?.periode?.tom} />
+                <DateLabel dateString={utvidetRett?.periode?.fom} /> -{' '}
+                <DateLabel dateString={utvidetRett?.periode?.tom} />
               </BodyShort>
             )}
           </HStack>

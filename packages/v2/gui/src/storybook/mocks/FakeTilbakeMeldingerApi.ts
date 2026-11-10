@@ -6,9 +6,10 @@ import type {
 import { action } from 'storybook/actions';
 import { delay } from '../../utils/delay.js';
 import { fakePdf } from './fakePdf.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 export class FakeTilbakeMeldingerApi implements TilbakeMeldingerApi {
-  readonly backend = 'k9tilbake' as const;
+  readonly backend = backendNavn.k9tilbake;
 
   // State for storybook testing
   public fakeDelayMillis = 800;

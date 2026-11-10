@@ -1,8 +1,6 @@
 import { Heading, HGrid } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
 import {
@@ -97,18 +95,6 @@ const AnkeMerknader = ({
     </FadingPanel>
   </form>
 );
-
-AnkeMerknader.propTypes = {
-  previewCallback: PropTypes.func.isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
-  formValues: PropTypes.shape(),
-  readOnly: PropTypes.bool,
-  readOnlySubmitButton: PropTypes.bool,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  ...formPropTypes,
-};
 
 const ankeMerknaderFormName = 'ankeMerknaderForm';
 

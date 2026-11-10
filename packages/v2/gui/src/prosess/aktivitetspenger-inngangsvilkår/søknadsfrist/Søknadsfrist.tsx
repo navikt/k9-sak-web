@@ -5,10 +5,11 @@ import { CogIcon } from '@navikt/aksel-icons';
 import { BodyShort, HStack, Label, VStack } from '@navikt/ds-react';
 import { useState } from 'react';
 import {
+  getDefaultSelectedPeriodId,
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel';
+} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 
 interface Props {
   søknadsfristVilkår: VilkårMedPerioderDto;
@@ -26,7 +27,7 @@ export const Søknadsfrist = ({ søknadsfristVilkår }: Props) => {
     label: `${formatDate(p.periode.fom)}`,
     periode: p.periode,
   }));
-  const [selectedId, setSelectedId] = useState(perioder[0]?.id ?? '');
+  const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(perioder));
 
   if (!søknadsfristVilkår) {
     return null;

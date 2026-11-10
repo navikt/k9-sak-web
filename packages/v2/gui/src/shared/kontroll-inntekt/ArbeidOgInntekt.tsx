@@ -1,5 +1,6 @@
 import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/ungsak/kontrakt/arbeidsforhold/ArbeidsgiverOversiktDto.js';
 import { BrukKontrollertInntektValg } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/BrukKontrollertInntektValg.js';
+import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.js';
 import type { KontrollerInntektPeriodeDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/KontrollerInntektPeriodeDto.js';
 import { PeriodeStatus } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/PeriodeStatus.js';
 import type { RapportertInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/RapportertInntektDto.js';
@@ -14,7 +15,6 @@ import PeriodLabel from '../periodLabel/PeriodLabel';
 import { AksjonspunktArbeidOgInntekt } from './AksjonspunktArbeidOgInntekt';
 import styles from './arbeidOgInntekt.module.css';
 import { DetaljerOmInntekt } from './DetaljerOmInntekt';
-import type { FastsettInntektDto } from '@k9-sak-web/backend/ungsak/kontrakt/kontroll/FastsettInntektDto.js';
 
 const formaterInntekt = (inntekt: RapportertInntektDto) => {
   if (!inntekt || (inntekt.arbeidsinntekt === undefined && inntekt.ytelse === undefined)) {
@@ -124,7 +124,7 @@ export const ArbeidOgInntekt = ({
                 <Label size="small">Periode</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
-                <Label size="small">Rapportert av deltaker</Label>
+                <Label size="small">Rapportert av {isAktivitetspenger ? 'bruker' : 'deltaker'}</Label>
               </Table.HeaderCell>
               <Table.HeaderCell scope="col" align="right">
                 <Label size="small">Rapportert i A-ordningen</Label>
@@ -160,10 +160,15 @@ export const ArbeidOgInntekt = ({
                       />
                     ) : (
                       <Bleed marginBlock="space-16 space-0">
-                        <Box marginInline="space-8 space-0" padding="space-24">
+                        <Box
+                          marginInline="space-8 space-0"
+                          padding="space-24"
+                          style={{ background: '#F5F6F7' }} // TODO: Bytt til token var(--ax-bg-neutral-soft) når tilgjengelig (neste versjon av Aksel)
+                        >
                           <DetaljerOmInntekt
                             inntektKontrollPeriode={inntektKontrollPeriode}
                             arbeidsgivere={arbeidsgivere}
+                            isAktivitetspenger={isAktivitetspenger}
                           />
                         </Box>
                       </Bleed>

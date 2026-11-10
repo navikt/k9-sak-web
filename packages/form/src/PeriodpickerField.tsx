@@ -49,7 +49,6 @@ const formatError = (intl: IntlShape, otherProps: any, names: string[]) => {
 
 const hasValue = (value: string) => value !== undefined && value !== null && value !== '';
 
-// eslint-disable-next-line react/prop-types
 const renderReadOnly =
   () =>
   ({ names, renderIfMissingDateOnReadOnly, ...otherProps }: Partial<PeriodpickerFieldProps>) => {
@@ -71,15 +70,9 @@ const renderReadOnly =
     return null;
   };
 
-const renderPeriodpicker = (hideLabel?: boolean) =>
-  ({
-    label,
-    names,
-    ...otherProps
-  }: {
-    label: LabelType;
-    names: string[];
-  }) => {
+const renderPeriodpicker =
+  (hideLabel?: boolean) =>
+  ({ label, names, ...otherProps }: { label: LabelType; names: string[] }) => {
     const intl = useIntl();
     const fieldProps = {
       id: `${names[0]}-${names[1]}`,

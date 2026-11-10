@@ -19,10 +19,31 @@ export interface VilkårSplittPanelPeriod {
   label: string;
   periode?: {
     fom: string;
-    tom: string;
+    tom?: string;
   };
   vurderesIBehandlingen?: boolean;
+  foreslåttIBehandlingen?: boolean;
 }
+
+// Forutsetter ISO-datoer i fom. Perioder uten dato (f.eks. «Ikke satt») er ikke satt ennå og legges øverst,
+// og beholder innbyrdes rekkefølge.
+export const sortPeriods = (periods: VilkårSplittPanelPeriod[]): VilkårSplittPanelPeriod[] =>
+  [...periods].sort((a, b) => {
+    const aFom = a.periode?.fom;
+    const bFom = b.periode?.fom;
+    if (!aFom || !bFom) return Number(!!aFom) - Number(!!bFom);
+    return bFom.localeCompare(aFom);
+  });
+
+export const getDefaultSelectedPeriodId = (periods: VilkårSplittPanelPeriod[]): string => {
+  const sortertePerioder = sortPeriods(periods);
+  return (
+    sortertePerioder.find(period => period.status === 'warning')?.id ??
+    sortertePerioder.find(period => period.foreslåttIBehandlingen)?.id ??
+    (sortertePerioder.find(period => period.periode) ?? sortertePerioder[0])?.id ??
+    ''
+  );
+};
 
 interface VilkårSplittPanelProps {
   periods: VilkårSplittPanelPeriod[];
@@ -92,7 +113,7 @@ export const VilkårSplittPanel = ({
   beforeDetailContent,
   hideLockedBackground = false,
 }: VilkårSplittPanelProps) => {
-  const sortertePerioder = [...periods].sort((a, b) => (b.periode?.fom ?? b.id).localeCompare(a.periode?.fom ?? a.id));
+  const sortertePerioder = sortPeriods(periods);
   const selectedItem = periods.find(period => period.id === selectedItemId);
   const isRenderProp = typeof children === 'function';
   // En periode som allerede har en vurdering (f.eks. fra tidligere behandling) skal starte i lesevisning,
