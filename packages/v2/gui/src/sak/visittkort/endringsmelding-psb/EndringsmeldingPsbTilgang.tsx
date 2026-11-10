@@ -46,10 +46,7 @@ const EndringsmeldingPsbTilgang = ({ saksnummer }: Props) => {
 
 const EndringsmeldingPsbTilgangInnhold = ({ saksnummer, enabled }: Props & { enabled: boolean }) => {
   const api = useEndringsmeldingPsbTilgangApi();
-  const { data, isPending, isError } = useQuery({
-    ...endringsmeldingPsbTilgangQueryOptions(api, saksnummer),
-    enabled,
-  });
+  const { data, isPending, isError } = useQuery(endringsmeldingPsbTilgangQueryOptions(api, saksnummer, enabled));
 
   if (isPending) {
     return <Loader size="xsmall" title="Henter tilgang til endringsmelding" />;

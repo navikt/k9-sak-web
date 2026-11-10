@@ -291,6 +291,39 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
   },
 };
 
+export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: feil fra k9-sak',
+  args: { ...EndringsmeldingPsb.args, svar: 'Feil fra k9-sak' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbTomtSvar: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: tomt svar',
+  args: { ...EndringsmeldingPsb.args, svar: 'Tomt svar (204)' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbManglerTilgangTilPerson: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: mangler tilgang til person',
+  args: { ...EndringsmeldingPsb.args, svar: 'Mangler tilgang til person' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Uvisst, du har ikke tilgang til å se svaret')).toBeInTheDocument();
+    await expect(canvas.queryByText('Uvisst, kunne ikke hente svar')).not.toBeInTheDocument();
+  },
+};
+
 export const EndringsmeldingPsbAnnenYtelse: StoryObj<typeof VisittkortPanel> = {
   name: 'EndringsmeldingPSB: annen ytelse',
   args: {
