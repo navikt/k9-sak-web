@@ -27,7 +27,6 @@ export default {
       },
     ],
     'declaration-block-no-duplicate-properties': true,
-    'declaration-block-single-line-max-declarations': 1,
     'declaration-empty-line-before': [
       'always',
       {
