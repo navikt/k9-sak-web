@@ -8,6 +8,8 @@ import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { ArbeidOgInntektApiContext } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/ArbeidOgInntektApiContext.js';
 import { K9SakArbeidOgInntektBackendClient } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/K9SakArbeidOgInntektBackendClient.js';
+import { BarnOmsApiContext } from '@k9-sak-web/gui/fakta/barn-oms/api/BarnOmsApiContext.js';
+import { K9SakBarnOmsBackendClient } from '@k9-sak-web/gui/fakta/barn-oms/api/K9SakBarnOmsBackendClient.js';
 import { DelingAvDagerApiContext } from '@k9-sak-web/gui/fakta/deling-av-dager/api/DelingAvDagerApiContext.js';
 import { K9SakDelingAvDagerBackendClient } from '@k9-sak-web/gui/fakta/deling-av-dager/api/K9SakDelingAvDagerBackendClient.js';
 import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
@@ -42,6 +44,8 @@ import { UttakApiContext } from '@k9-sak-web/gui/prosess/uttak/api/UttakApiConte
 import { K9SakUttakBackendClient } from '@k9-sak-web/gui/prosess/uttak/api/K9SakUttakBackendClient.js';
 import K9KlageVedtakKlageBackendClient from '@k9-sak-web/gui/prosess/vedtak-klage/api/K9KlageVedtakKlageBackendClient.js';
 import { VedtakKlageApiContext } from '@k9-sak-web/gui/prosess/vedtak-klage/api/VedtakKlageApiContext.js';
+import { EndringsmeldingPsbTilgangApiContext } from '@k9-sak-web/gui/sak/visittkort/endringsmelding-psb/api/EndringsmeldingPsbTilgangApiContext.js';
+import { K9SakEndringsmeldingPsbTilgangBackendClient } from '@k9-sak-web/gui/sak/visittkort/endringsmelding-psb/api/K9SakEndringsmeldingPsbTilgangBackendClient.js';
 import { DokumenterApiContext } from '@k9-sak-web/gui/sak/dokumenter/api/DokumenterApiContext.js';
 import { K9SakDokumenterBackendClient } from '@k9-sak-web/gui/sak/dokumenter/api/K9SakDokumenterBackendClient.js';
 import NotatBackendClient from '@k9-sak-web/gui/sak/notat/NotatBackendClient.js';
@@ -117,7 +121,13 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                               value={new K9TilbakeFeilutbetalingFaktaBackendClient()}
                                             >
                                               <OmsorgenForApiContext value={new K9SakOmsorgenForBackendClient()}>
-                                                {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                <EndringsmeldingPsbTilgangApiContext
+                                                  value={new K9SakEndringsmeldingPsbTilgangBackendClient()}
+                                                >
+                                                  <BarnOmsApiContext value={new K9SakBarnOmsBackendClient()}>
+                                                    {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                  </BarnOmsApiContext>
+                                                </EndringsmeldingPsbTilgangApiContext>
                                               </OmsorgenForApiContext>
                                             </FeilutbetalingFaktaApiContext>
                                           </OmBarnetApiContext>

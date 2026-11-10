@@ -1,5 +1,5 @@
 import { InformationSquareIcon } from '@navikt/aksel-icons';
-import { InfoCard, List, Radio } from '@navikt/ds-react';
+import { BodyShort, InfoCard, List, Radio } from '@navikt/ds-react';
 import { RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import type { Control, FieldValues, Path } from 'react-hook-form';
@@ -66,13 +66,16 @@ export const OpphørVarsel = <TForm extends FieldValues>({
       {!isFormLocked && skalSendeForhåndsvarsel === 'ja' && (
         <InfoCard data-color="info" size="small">
           <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
-            Bruker vil få ett varsel om opphør på min side
+            <BodyShort size="small" weight="semibold">
+              Bruker vil få ett varsel om opphør på min side
+            </BodyShort>
             <List size="small">
               <List.Item>
-                Når du går videre sendes det ett forhåndsvarsel til bruker med dato og årsak for opphør.
+                Når du går videre sendes det ett forhåndsvarsel til bruker med dato for opphør, årsak og hvor
+                opplysningene kommer fra.
               </List.Item>
               <List.Item>
-                Saken settes på vent til bruker svarer på forhåndsvarsel eller det har gått 14 dager.
+                Saken settes på vent til bruker svarer på forhåndsvarselet eller det har gått 14 dager.
               </List.Item>
             </List>
           </InfoCard.Message>

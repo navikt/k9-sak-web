@@ -25,3 +25,8 @@ const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: 
   return <BarnFakta barn={barn} rammevedtak={rammevedtak} fagsaksType={fagsaksType} />;
 };
 export default UtvidetRettBarnFakta;
+
+// Kompileringsfeil her betyr at BRUK_V2_BARN_OMS er fjernet fra FeatureToggles.
+// Slett denne fila og fjern v1-grenen i BarnFaktaPanelDef når migreringen er ferdig.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _VenterPåSletting = import('@k9-sak-web/gui/featuretoggles/FeatureToggles.js').FeatureToggles['BRUK_V2_BARN_OMS'];

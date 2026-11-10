@@ -208,6 +208,17 @@ export const AktivitetspengerInngangsvilkår = ({
 
   const erFørstegangsbehandling = behandling.type === BehandlingType.FØRSTEGANGSSØKNAD;
 
+  // Startdatoen som vises i besluttervurderingen, er den tidligste blant periodene som vurderes i denne behandlingen.
+  const vurdertVilkårsperiodeFom = [
+    inngangsvilkårdata.bostedVilkår,
+    inngangsvilkårdata.andreLivsoppholdytelserVilkår,
+    inngangsvilkårdata.vurderBistandsvilkårVilkår,
+    inngangsvilkårdata.vurderAktivitetsvilkårVilkår,
+  ]
+    .flatMap(v => v?.perioder ?? [])
+    .toSorted((a, b) => a.periode.fom.localeCompare(b.periode.fom))
+    .find(p => p.vurderesIBehandlingen)?.periode.fom;
+
   const [aktivTab, setAktivTab] = useState<InngangsvilkårTab>(
     utledAktivTab(inngangsvilkårdata, erFørstegangsbehandling),
   );
@@ -372,6 +383,7 @@ export const AktivitetspengerInngangsvilkår = ({
                   onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
                   kanBeslutte={kanBeslutte}
+                  vilkårsperiodeFom={vurdertVilkårsperiodeFom}
                 />
               </Tabs.Panel>
             )}
