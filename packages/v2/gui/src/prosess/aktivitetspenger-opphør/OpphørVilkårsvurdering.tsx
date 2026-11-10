@@ -4,8 +4,8 @@ import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avkla
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VurderingAvAktivitetsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VurderingAvAktivitetsvilkårEtterAvklaringDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
 import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
@@ -39,9 +39,7 @@ type OpphørAksjonspunktKode =
   | typeof AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR
   | typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
 
-type VurderingEtterAvklaring = VurderingAvAktivitetsvilkårEtterAvklaringDto & {
-  '@type': OpphørAksjonspunktKode;
-};
+type VurderingEtterAvklaring = Extract<BekreftetAksjonspunktDto, { '@type': OpphørAksjonspunktKode }>;
 
 export interface OpphørVilkårsvurderingOppsett {
   vilkårType: VilkårType;
