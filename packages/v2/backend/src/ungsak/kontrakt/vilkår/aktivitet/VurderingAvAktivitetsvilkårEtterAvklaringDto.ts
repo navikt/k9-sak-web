@@ -1,1 +1,2 @@
 export type { ung_sak_kontrakt_aktivitetspenger_vilkår_aktivitet_VurderingAvAktivitetsvilkårEtterAvklaringDto as VurderingAvAktivitetsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/generated/types.js';
+export { $ung_sak_kontrakt_aktivitetspenger_vilkår_aktivitet_VurderingAvAktivitetsvilkårEtterAvklaringDto as $VurderingAvAktivitetsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/generated/schemas.js';
