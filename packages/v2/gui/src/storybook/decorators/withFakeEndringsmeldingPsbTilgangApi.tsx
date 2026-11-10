@@ -3,7 +3,7 @@ import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import type { Decorator } from '@storybook/react-vite';
 import { EndringsmeldingPsbTilgangApiContext } from '../../sak/visittkort/endringsmelding-psb/api/EndringsmeldingPsbTilgangApiContext.js';
 
-// Send inn en Error for å simulere at kallet feiler, eller null for tomt svar (204)
+// Send inn en Error for å simulere feil fra k9-sak, eller null for tomt svar (204)
 export const withFakeEndringsmeldingPsbTilgangApi =
   (svar: EndringsmeldingPsbTilgangDto | null | Error): Decorator =>
   Story => (
