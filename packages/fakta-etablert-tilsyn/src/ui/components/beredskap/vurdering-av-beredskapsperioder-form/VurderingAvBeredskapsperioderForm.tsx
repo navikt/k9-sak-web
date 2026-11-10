@@ -54,13 +54,8 @@ const VurderingAvBeredskapsperioderForm = ({
   onCancelClick,
   beskrivelser,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  const {
-    lagreBeredskapvurdering,
-    readOnly,
-    harUløstAksjonspunktForBeredskap = false,
-    harLøstAksjonspunktForBeredskap = false,
-  } = React.useContext(ContainerContext) || {};
-  const disabled = readOnly || (!harUløstAksjonspunktForBeredskap && !harLøstAksjonspunktForBeredskap);
+  const { lagreBeredskapvurdering, readOnly, kanRedigereBeredskap = false } = React.useContext(ContainerContext) || {};
+  const disabled = readOnly || !kanRedigereBeredskap;
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForBeredeskap = () => {
     if (beredskapsperiode.resultat === Vurderingsresultat.OPPFYLT) {
@@ -123,7 +118,10 @@ const VurderingAvBeredskapsperioderForm = ({
     }
 
     const kombinertePerioder = perioderMedEllerUtenBeredskap.concat(perioderUtenBeredskap);
-    lagreBeredskapvurdering?.({ vurderinger: kombinertePerioder });
+    lagreBeredskapvurdering?.({
+      periode: { fom: beredskapsperiode.periode.fom, tom: beredskapsperiode.periode.tom },
+      vurderinger: kombinertePerioder,
+    });
   };
 
   const valgtePerioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
