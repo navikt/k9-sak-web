@@ -8,6 +8,8 @@ import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { ArbeidOgInntektApiContext } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/ArbeidOgInntektApiContext.js';
 import { K9SakArbeidOgInntektBackendClient } from '@k9-sak-web/gui/fakta/arbeid-og-inntekt/api/K9SakArbeidOgInntektBackendClient.js';
+import { BarnOmsApiContext } from '@k9-sak-web/gui/fakta/barn-oms/api/BarnOmsApiContext.js';
+import { K9SakBarnOmsBackendClient } from '@k9-sak-web/gui/fakta/barn-oms/api/K9SakBarnOmsBackendClient.js';
 import { DelingAvDagerApiContext } from '@k9-sak-web/gui/fakta/deling-av-dager/api/DelingAvDagerApiContext.js';
 import { K9SakDelingAvDagerBackendClient } from '@k9-sak-web/gui/fakta/deling-av-dager/api/K9SakDelingAvDagerBackendClient.js';
 import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
@@ -122,7 +124,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                                 <EndringsmeldingPsbTilgangApiContext
                                                   value={new K9SakEndringsmeldingPsbTilgangBackendClient()}
                                                 >
-                                                  {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                  <BarnOmsApiContext value={new K9SakBarnOmsBackendClient()}>
+                                                    {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                  </BarnOmsApiContext>
                                                 </EndringsmeldingPsbTilgangApiContext>
                                               </OmsorgenForApiContext>
                                             </FeilutbetalingFaktaApiContext>
