@@ -101,9 +101,8 @@ export const lagLagreHtmlDokumentdataRequest = ({
 });
 
 export const validerManueltRedigertBrev = (html: string): boolean => {
-  const innholdet = document.createElement('div');
-  innholdet.innerHTML = html;
-  const tekst = innholdet.textContent || innholdet.innerText || '';
+  // DOMParser gir et inert dokument: hendelsesattributter og skript kjøres ikke, og bilder lastes ikke.
+  const tekst = new DOMParser().parseFromString(html, 'text/html').body.textContent ?? '';
   const malInnholdStrenger = ['Fyll inn overskrift', 'Fyll inn brevtekst'];
   const regex = new RegExp(malInnholdStrenger.join('|'), 'gi');
   return !regex.test(tekst);
