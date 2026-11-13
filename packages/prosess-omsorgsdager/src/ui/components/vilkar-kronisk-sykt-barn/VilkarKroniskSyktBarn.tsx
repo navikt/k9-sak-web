@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
@@ -206,6 +207,13 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   };
 
   const kroniskTidsbegrensetToggle = !getErBarnetFyller18IÅr();
+
+  const hentMuligeTilDatoer = (): string[] => {
+    if (isProd()) return hentTidsbegrensetÅrstallListe();
+    const tidligereÅr = Array.from({ length: 3 }, (_, index) => `${dayjs().year() - 3 + index}-12-31`);
+
+    return [...tidligereÅr, ...hentTidsbegrensetÅrstallListe()];
+  };
 
   /**
    * Genererer en liste med årssluttdatoer for tidsbegrensede perioder basert på barnets alder.
@@ -446,7 +454,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                               label="Til"
                               size="small"
                             >
-                              {hentTidsbegrensetÅrstallListe().map(årstall => (
+                              {hentMuligeTilDatoer().map(årstall => (
                                 <option key={årstall} value={årstall}>
                                   {dayjs(årstall).format('DD.MM.YYYY')}
                                 </option>
