@@ -40,7 +40,8 @@ app.use(
 );
 
 // Strengere script-src uten 'unsafe-inline' kjøres i Report-Only ved siden av policyen over.
-// Brudd vises i nettleserkonsollen. Når den er ren i alle hovedflyter, kan 'unsafe-inline' fjernes over.
+// Brudd vises i nettleserkonsollen og rapporteres til Nais APM via Faro. Når det ikke kommer brudd i hovedflytene,
+// kan 'unsafe-inline' fjernes over.
 app.use(
   helmet.contentSecurityPolicy({
     useDefaults: false,
