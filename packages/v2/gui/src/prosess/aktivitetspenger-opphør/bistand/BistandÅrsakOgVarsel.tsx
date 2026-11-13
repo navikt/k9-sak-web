@@ -266,7 +266,7 @@ export const BistandÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
                   dateRange={getDateRangeFromVilkår(vilkår.perioder)}
@@ -286,7 +286,7 @@ export const BistandÅrsakOgVarsel = ({
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={Object.values(BistandsavklaringKildeType).map(kilde => ({
                     value: kilde,
@@ -297,7 +297,7 @@ export const BistandÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeVarselOmOpphør}
                   skalViseForhåndsvarselTekst={valgtÅrsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger har behov for bistand."

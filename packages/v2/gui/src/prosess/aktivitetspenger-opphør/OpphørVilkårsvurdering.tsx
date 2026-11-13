@@ -262,7 +262,7 @@ export const OpphørVilkårsvurdering = ({
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
                 label={<span>{tekster.begrunnelseLedetekst}</span>}
-                readOnly={isFormLocked}
+                readOnly={isFormLocked || isPending}
                 validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                 resize
                 maxLength={begrunnelseMaxLength}
@@ -272,7 +272,7 @@ export const OpphørVilkårsvurdering = ({
                 legend={tekster.spørsmål}
                 name={`perioder.${selectedId}.skalOpphøre`}
                 validate={[required]}
-                readOnly={isFormLocked}
+                readOnly={isFormLocked || isPending}
               >
                 <Radio value="ja">
                   {erAvslag
@@ -286,7 +286,7 @@ export const OpphørVilkårsvurdering = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                 />
               )}
               {skalOpphøre === 'ja' && (kreverFritekstIBrev || harFritekstbrev) && (
@@ -295,7 +295,7 @@ export const OpphørVilkårsvurdering = ({
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}
                   label={erAvslag ? 'Fritekst avslagsbrev' : 'Fritekst opphørsbrev'}
                   description={`Forklar hvorfor vilkåret er ${erAvslag ? 'avslått' : 'opphørt'}. Teksten vises i vedtaksbrevet.`}
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                   validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
                   resize
                   maxLength={fritekstVurderingBrevMaxLength}
