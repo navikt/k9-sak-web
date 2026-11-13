@@ -236,7 +236,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
                   dateRange={getDateRangeFromVilkår(vilkår.perioder)}
@@ -302,7 +302,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                       </VStack>
                     </ReadMore>
                   }
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                   validate={[required]}
                   selectValues={andreLivsoppholdsytelserIkkeOppfyltÅrsaker.map(option => (
                     <option key={option.value} value={option.value}>
@@ -315,14 +315,14 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                     control={formHook.control}
                     name={`perioder.${selectedId}.annenLivsoppholdytelse`}
                     label="Skriv inn hvilken ytelse"
-                    readOnly={isFormLocked}
+                    readOnly={isFormLocked || isPending}
                     validate={[required]}
                   />
                 )}
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={Object.values(AndreLivsoppholdsytelserAvklaringKildeType).map(kilde => ({
                     value: kilde,
@@ -333,7 +333,7 @@ export const AndreLivsoppholdytelserÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeVarselOmOpphør}
                   skalViseForhåndsvarselTekst={false}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør fordi bruker mottar andre livsoppholdsytelser."

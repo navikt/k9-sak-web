@@ -243,7 +243,7 @@ export const BostedÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
                   dateRange={getDateRangeFromVilkår(vilkår.perioder)}
@@ -252,7 +252,7 @@ export const BostedÅrsakOgVarsel = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
                   label="Velg årsak"
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                   validate={[required]}
                   selectValues={relevanteBostedsvilkårIkkeOppfyltÅrsaker.map(årsak => (
                     <option key={årsak} value={årsak}>
@@ -263,7 +263,7 @@ export const BostedÅrsakOgVarsel = ({
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={Object.values(BostedsavklaringKildeType).map(kilde => ({
                     value: kilde,
@@ -274,7 +274,7 @@ export const BostedÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeForhåndsvarsel}
                   skalViseForhåndsvarselTekst={valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim kommune."

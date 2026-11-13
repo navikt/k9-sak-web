@@ -245,7 +245,7 @@ export const AktivitetÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
                   dateRange={getDateRangeFromVilkår(vilkår.perioder)}
@@ -254,7 +254,7 @@ export const AktivitetÅrsakOgVarsel = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
                   label="Velg årsak"
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                   validate={[required]}
                   selectValues={aktivitetOpphørsårsaker.map(årsak => (
                     <option key={årsak.value} value={årsak.value}>
@@ -265,7 +265,7 @@ export const AktivitetÅrsakOgVarsel = ({
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={kildeOptions}
                   kildeAnnetValue={AktivitetsavklaringKildeType.ANNET}
@@ -273,7 +273,7 @@ export const AktivitetÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeVarselOmOpphør}
                   skalViseForhåndsvarselTekst={valgtÅrsak === AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke er i aktivitet."
