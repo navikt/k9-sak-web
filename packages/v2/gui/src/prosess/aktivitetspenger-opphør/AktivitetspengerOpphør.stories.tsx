@@ -1894,6 +1894,39 @@ export const AktivitetVilkårsvurderingLesevisning: Story = {
   },
 };
 
+export const AktivitetVilkårsvurderingPåVent: Story = {
+  args: {
+    ...lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET),
+    behandling: { ...fakeAktivitetBehandling, behandlingPåVent: true },
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
+    await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /rediger vurdering/i })).not.toBeInTheDocument();
+  },
+};
+
+export const AktivitetVilkårsvurderingUtførtPåVent: Story = {
+  args: {
+    ...lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET, {
+      status: AksjonspunktStatus.UTFØRT,
+      utfall: Utfall.IKKE_OPPFYLT,
+    }),
+    behandling: { ...fakeAktivitetBehandling, behandlingPåVent: true },
+  },
+  play: async ({ canvas }) => {
+    await userEvent.click(await canvas.findByRole('tab', { name: 'Vilkårsvurdering' }));
+    await expect(await canvas.findByText('Bruker har ikke møtt til avtalte aktiviteter.')).toBeInTheDocument();
+    await expect(canvas.getByText('Du har ikke deltatt i aktivitetene du har avtalt med Nav.')).toBeInTheDocument();
+    await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: /rediger vurdering/i })).not.toBeInTheDocument();
+  },
+};
+
 const tomVilkårsavklaringVurderinger = (type: VilkårType): VilkårsavklaringVurderingerDto => ({
   vilkårType: type,
   perioder: [],
