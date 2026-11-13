@@ -1,6 +1,7 @@
 import { k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { EndringsmeldingPsbTilgangDto } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangDto.js';
+import { EndringsmeldingPsbTilgangStatus } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangDto.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useQueryClient } from '@tanstack/react-query';
 import { type ComponentProps, type PropsWithChildren, useEffect } from 'react';
@@ -235,9 +236,21 @@ const tilgangsvalg = [
   'harFlereAnsettelsesforholdHosUkjentArbeidsgiver',
   'ukjentÅrsak',
   'ikkeTilgang',
+  'manglerTilgangTilPerson',
   'feil',
   'tomtSvar',
 ];
+
+const årsakTekster: Partial<Record<string, string>> = {
+  harIngenSak: 'Nei, søkeren har ingen sak',
+  søknadsperioderUtenforTillattEndringsperiode: 'Nei, søknadsperiodene er utenfor perioden som kan endres',
+  harMerEnnEnSak: 'Nei, søkeren har mer enn én sak',
+  harIngenPerioder: 'Nei, søkeren har ingen søknadsperioder',
+  barnManglerIdentitetsnummer: 'Nei, barnet mangler identitetsnummer',
+  harArbeidstidSomSelvstendigNæringsdrivende: 'Nei, søkeren har arbeidstid som selvstendig næringsdrivende',
+  enArbeidsgiverToAnsettelserSammeUkeMedOpphold: 'Nei, to ansettelser hos samme arbeidsgiver i samme uke, med opphold',
+  harFlereAnsettelsesforholdHosUkjentArbeidsgiver: 'Nei, flere ansettelsesforhold hos ukjent arbeidsgiver',
+};
 
 const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | null | Error => {
   if (tilgang === 'feil') {
@@ -250,9 +263,18 @@ const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | null | 
     return makeFakeExtendedApiError({ status: 403 });
   }
   if (tilgang === 'kanBruke') {
-    return { kanBruke: true, årsaker: [] };
+    return { status: EndringsmeldingPsbTilgangStatus.KAN_BRUKE, tekst: 'Ja, har tilgang' };
   }
-  return { kanBruke: false, årsaker: [tilgang] };
+  if (tilgang === 'manglerTilgangTilPerson') {
+    return {
+      status: EndringsmeldingPsbTilgangStatus.MANGLER_TILGANG_TIL_PERSON,
+      tekst: 'Uvisst, du har ikke tilgang til å se svaret',
+    };
+  }
+  return {
+    status: EndringsmeldingPsbTilgangStatus.KAN_IKKE_BRUKE,
+    tekst: årsakTekster[tilgang] ?? 'Nei, søkeren oppfyller ikke vilkårene',
+  };
 };
 
 // Storyen beholder samme QueryClient når kontrollen endres, så cachen må tømmes for å hente nytt svar
@@ -302,6 +324,28 @@ export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
+    await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbKanIkkeBruke: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: kan ikke bruke',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'harIngenSak' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Nei, søkeren har ingen sak')).toBeInTheDocument();
+    await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
+  },
+};
+
+export const EndringsmeldingPsbManglerTilgangTilPerson: typeof EndringsmeldingPsb = {
+  ...EndringsmeldingPsb,
+  name: 'EndringsmeldingPSB: mangler tilgang til person',
+  args: { ...EndringsmeldingPsb.args, tilgang: 'manglerTilgangTilPerson' },
+  play: async ({ canvas }) => {
+    await åpnePopup(canvas);
+    await expect(await canvas.findByText('Uvisst, du har ikke tilgang til å se svaret')).toBeInTheDocument();
     await expect(canvas.queryByText('Ja, har tilgang')).not.toBeInTheDocument();
   },
 };

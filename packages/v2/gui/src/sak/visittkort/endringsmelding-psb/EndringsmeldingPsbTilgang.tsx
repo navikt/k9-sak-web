@@ -1,25 +1,10 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/errorhandling/ExtendedApiError.js';
+import { EndringsmeldingPsbTilgangStatus } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangDto.js';
 import { HStack, Loader } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { useEndringsmeldingPsbTilgangApi } from './api/EndringsmeldingPsbTilgangApiContext.js';
 import { endringsmeldingPsbTilgangQueryOptions } from './api/endringsmeldingPsbTilgangQueryOptions.js';
-
-// Koder fra IngenTilgangÅrsak i k9-sak-innsyn-api. k9-sak sender dem videre som string.
-const årsakTekster: Partial<Record<string, string>> = {
-  harIngenSak: 'Nei, søkeren har ingen sak',
-  søknadsperioderUtenforTillattEndringsperiode: 'Nei, søknadsperiodene er utenfor perioden som kan endres',
-  harMerEnnEnSak: 'Nei, søkeren har mer enn én sak',
-  harIngenPerioder: 'Nei, søkeren har ingen søknadsperioder',
-  barnManglerIdentitetsnummer: 'Nei, barnet mangler identitetsnummer',
-  harArbeidstidSomSelvstendigNæringsdrivende: 'Nei, søkeren har arbeidstid som selvstendig næringsdrivende',
-  enArbeidsgiverToAnsettelserSammeUkeMedOpphold: 'Nei, to ansettelser hos samme arbeidsgiver i samme uke, med opphold',
-  harFlereAnsettelsesforholdHosUkjentArbeidsgiver: 'Nei, flere ansettelsesforhold hos ukjent arbeidsgiver',
-};
-
-const ukjentÅrsakTekst = 'Nei, søkeren oppfyller ikke vilkårene';
-
-const tekstForÅrsak = (kode: string | undefined): string => (kode && årsakTekster[kode]) || ukjentÅrsakTekst;
 
 interface Props {
   saksnummer: string;
@@ -40,23 +25,25 @@ const EndringsmeldingPsbTilgang = ({ saksnummer }: Props) => {
   if (isError || data === null) {
     return <>Uvisst, kunne ikke hente svar</>;
   }
-  if (data.kanBruke) {
+  if (data.status === EndringsmeldingPsbTilgangStatus.MANGLER_TILGANG_TIL_PERSON) {
+    return <>{data.tekst}</>;
+  }
+  if (data.status === EndringsmeldingPsbTilgangStatus.KAN_BRUKE) {
     return (
       <HStack gap="space-4" wrap={false} align="start">
         <span>
           <CheckmarkCircleFillIcon color="var(--ax-bg-success-strong)" fontSize="1.25rem" aria-hidden="true" />
         </span>
-        Ja, har tilgang
+        {data.tekst}
       </HStack>
     );
   }
-  // Første årsak er hovedårsaken
   return (
     <HStack gap="space-4" wrap={false} align="start">
       <span>
         <XMarkOctagonFillIcon color="var(--ax-bg-danger-strong)" fontSize="1.25rem" aria-hidden="true" />
       </span>
-      {tekstForÅrsak(data.årsaker[0])}
+      {data.tekst}
     </HStack>
   );
 };
