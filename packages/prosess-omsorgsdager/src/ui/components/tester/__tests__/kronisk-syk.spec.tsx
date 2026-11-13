@@ -3,11 +3,17 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
+import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import { KroniskSyktBarnDatoContext } from '../../vilkar-kronisk-sykt-barn/KroniskSyktBarnDatoContext';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 import './axe-setup';
+
+vi.mock(import('@k9-sak-web/lib/paths/paths.js'), async importOriginal => ({
+  ...(await importOriginal()),
+  isProd: vi.fn(() => true),
+}));
 
 const personopplysninger = {
   navBrukerKjonn: { kode: 'K', kodeverk: 'KJONN' },
@@ -66,6 +72,38 @@ describe('<VilkarKroniskSyktBarn>', () => {
         </KroniskSyktBarnDatoContext.Provider>
       </FeatureTogglesContext.Provider>,
     );
+
+  test.each(
+    [
+      { miljø: 'dev/Q', prod: false, antallTidligereÅr: 3 },
+      { miljø: 'prod', prod: true, antallTidligereÅr: 0 },
+    ].flatMap(miljø =>
+      [undefined, 10, 17].map(alder => ({
+        ...miljø,
+        alder,
+      })),
+    ),
+  )('viser riktige årstall i $miljø når barnets alder er $alder', ({ prod, antallTidligereÅr, alder }) => {
+    vi.mocked(isProd).mockReturnValue(prod);
+    const inneværendeÅr = new Date().getFullYear();
+    const props = lagPropsMedDato(`${inneværendeÅr}-01-01`, `${inneværendeÅr}-12-31`);
+    if (alder !== undefined) {
+      props.personopplysninger = {
+        ...personopplysninger,
+        pleietrengendePart: { ...personopplysninger, fodselsdato: `${inneværendeÅr - alder}-01-01` },
+      };
+    }
+
+    renderMedDato(props, { innvilgedePerioder: [] });
+
+    const sisteÅr = alder === undefined ? inneværendeÅr + 17 : inneværendeÅr - alder + 17;
+    expect(screen.getAllByRole('option').map(option => option.getAttribute('value'))).toEqual(
+      Array.from(
+        { length: sisteÅr - inneværendeÅr + antallTidligereÅr + 1 },
+        (_, index) => `${inneværendeÅr - antallTidligereÅr + index}-12-31`,
+      ),
+    );
+  });
 
   test('avviser manuelt skrevet dato som gir overlapp', async () => {
     const props = lagPropsMedDato('2027-01-01');
