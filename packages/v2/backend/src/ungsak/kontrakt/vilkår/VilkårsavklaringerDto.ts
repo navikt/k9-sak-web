@@ -1,4 +1,5 @@
 export type {
+  ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_UttalelseDto as UttalelseDto,
   ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_VilkårsavklaringDto as VilkårsavklaringDto,
   ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_VilkårsavklaringerResponse as VilkårsavklaringerDto,
   ung_sak_kontrakt_aktivitetspenger_vilkår_avklaring_VilkårsavklaringVurderingerResponse as VilkårsavklaringVurderingerDto,
