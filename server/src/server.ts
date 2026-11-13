@@ -7,25 +7,27 @@ import setupProxy from './reverse-proxy.js';
 
 const app = express();
 
+const cspDirectives = {
+  'default-src': ["'self'", 'https://cdn.nav.no'],
+  'img-src': ["'self'", 'data:', 'https://cdn.nav.no'],
+  'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
+  'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
+  'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
+  'connect-src': [
+    "'self'",
+    'https://reops-event-proxy.ekstern.dev.nav.no',
+    'https://cdn.nav.no',
+    'https://telemetry.nav.no',
+    'https://telemetry.ekstern.dev.nav.no',
+  ],
+};
+
 // --- Security headers ---
 app.use(
   helmet({
     contentSecurityPolicy: {
       useDefaults: false,
-      directives: {
-        'default-src': ["'self'", 'https://cdn.nav.no'],
-        'img-src': ["'self'", 'data:', 'https://cdn.nav.no'],
-        'font-src': ["'self'", 'https://cdn.nav.no', 'data:'],
-        'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
-        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.nav.no'],
-        'connect-src': [
-          "'self'",
-          'https://reops-event-proxy.ekstern.dev.nav.no',
-          'https://cdn.nav.no',
-          'https://telemetry.nav.no',
-          'https://telemetry.ekstern.dev.nav.no',
-        ],
-      },
+      directives: cspDirectives,
     },
     referrerPolicy: { policy: 'origin' },
     // Ikke send Cross-Origin-Opener-Policy-header (nettleserstandard = unsafe-none).
@@ -34,6 +36,16 @@ app.use(
     // ved retur, som permanent nullifiserer window.opener og bryter postMessage-basert
     // auth-flyt.
     crossOriginOpenerPolicy: false,
+  }),
+);
+
+// Strengere script-src uten 'unsafe-inline' kjøres i Report-Only ved siden av policyen over.
+// Brudd vises i nettleserkonsollen. Når den er ren i alle hovedflyter, kan 'unsafe-inline' fjernes over.
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: false,
+    reportOnly: true,
+    directives: { ...cspDirectives, 'script-src': ["'self'", 'https://cdn.nav.no'] },
   }),
 );
 
