@@ -1,14 +1,13 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
+import { BostedsavklaringKildeType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsavklaringKildeType.js';
+import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import { InformationSquareIcon } from '@navikt/aksel-icons';
-import { Alert, Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -20,19 +19,15 @@ import {
   VilkårSplittPanel,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
-import {
-  BostedsavklaringKildeType,
-  BostedsvilkårIkkeOppfyltÅrsak,
-  opphørsårsakLabels,
-} from '../../aktivitetspenger-prosess/types.js';
+import { opphørsårsakLabels } from '../../aktivitetspenger-prosess/types.js';
 import { getDateRangeFromVilkår, OpphørAvslagValg } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
 import { OpphørKilde } from '../formfields/OpphørKilde.js';
 import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+import type { OpphørÅrsakOgVarselProps } from '../types.js';
 
 const kildeLabels: Record<BostedsavklaringKildeType, string> = {
   [BostedsavklaringKildeType.BRUKER]: 'Bruker',
@@ -131,30 +126,20 @@ const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   };
 };
 
-interface Props {
-  vurderBostedAP?: AksjonspunktDto;
-  bostedVilkår: VilkårMedPerioderDto;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
-  readOnly: boolean;
-  isPermanentlyReadOnly: boolean;
-}
-
 export const BostedÅrsakOgVarsel = ({
-  vurderBostedAP,
-  bostedVilkår,
+  vurderFaktaAP,
+  vilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
-}: Props) => {
+}: OpphørÅrsakOgVarselProps) => {
   const queryClient = useQueryClient();
   const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const periods = getOpphørPeriods({
-    aksjonspunkt: vurderBostedAP,
+    aksjonspunkt: vurderFaktaAP,
     perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
@@ -215,10 +200,14 @@ export const BostedÅrsakOgVarsel = ({
 
   return (
     <VStack gap="space-20">
-      {vurderBostedAP && vurderBostedAP.status !== AksjonspunktStatus.UTFØRT && (
-        <Alert variant="warning" size="small">
-          Vurder årsak til opphør og om bruker skal varsles.
-        </Alert>
+      {vurderFaktaAP && vurderFaktaAP.status !== AksjonspunktStatus.UTFØRT && (
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder årsak til opphør og om bruker skal varsles.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
@@ -229,18 +218,18 @@ export const BostedÅrsakOgVarsel = ({
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
         lovreferanse="§ 2"
-        defaultIsLocked={vurderBostedAP?.status === AksjonspunktStatus.UTFØRT}
+        defaultIsLocked={vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT}
         readOnly={readOnly || valgtPeriodeErReadOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly}
         lockedContent={
-          vurderBostedAP?.status === AksjonspunktStatus.UTFØRT ? (
-            <VurdertAv ident={vurderBostedAP.ansvarligSaksbehandler} />
+          vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT ? (
+            <VurdertAv ident={vurderFaktaAP.ansvarligSaksbehandler} />
           ) : undefined
         }
         beforeDetailContent={
           valgtPeriodeErReadOnly && selectedPeriod?.utfall === Utfall.OPPFYLT ? (
             <InfoCard data-color="info" size="small">
-              <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+              <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden color="var(--ax-text-info-decoration)" />}>
                 Alle vilkår er innvilget i perioden.
               </InfoCard.Message>
             </InfoCard>
@@ -254,16 +243,16 @@ export const BostedÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
-                  dateRange={getDateRangeFromVilkår(bostedVilkår.perioder)}
+                  dateRange={getDateRangeFromVilkår(vilkår.perioder)}
                 />
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
                   label="Velg årsak"
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                   validate={[required]}
                   selectValues={relevanteBostedsvilkårIkkeOppfyltÅrsaker.map(årsak => (
                     <option key={årsak} value={årsak}>
@@ -274,7 +263,7 @@ export const BostedÅrsakOgVarsel = ({
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={Object.values(BostedsavklaringKildeType).map(kilde => ({
                     value: kilde,
@@ -285,7 +274,7 @@ export const BostedÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeForhåndsvarsel}
                   skalViseForhåndsvarselTekst={valgtÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger er bosatt i Trondheim kommune."

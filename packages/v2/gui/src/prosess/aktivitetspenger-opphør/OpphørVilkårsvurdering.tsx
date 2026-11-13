@@ -1,51 +1,78 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
-import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Avklaringtype.js';
+import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avklaringtype.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
-import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
+import type { VilkårType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BekreftetAksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/BekreftetAksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import {
-  $ManuellVurderingBostedsvilkårDto,
-  $VilkårBostedPeriodeVurderingDto,
-} from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/bosted/BostedGrunnlagResponseDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringVurderingerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
 import { formatDate, formatPeriod } from '@k9-sak-web/gui/utils/formatters.js';
-import { Alert, Button, HStack, Radio, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, Radio, VStack } from '@navikt/ds-react';
 import { RhfCheckbox, RhfForm, RhfRadioGroup, RhfTextarea } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import {
   getDefaultSelectedPeriodId,
   getPeriodStatus,
   VilkårSplittPanel,
   type VilkårSplittPanelPeriod,
-} from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
-import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import { sendTilBeslutter } from '../../aktivitetspenger-felles/utils/sendTilBeslutter.js';
-import { aksjonspunktErÅpent } from '../../aktivitetspenger-felles/utils/utils.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
-import { OpphørUttalelse } from '../formfields/OpphørUttalelse.js';
-import { vilkårsavklaringVurderingerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
-import { SendTilBeslutter } from '../SendTilBeslutter.js';
-import { BostedsvilkårIkkeOppfyltÅrsak } from '../../aktivitetspenger-prosess/types.js';
+} from '../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
+import { VurdertAv } from '../../shared/vurdert-av/VurdertAv.js';
+import { sendTilBeslutter } from '../aktivitetspenger-felles/utils/sendTilBeslutter.js';
+import { aksjonspunktErÅpent } from '../aktivitetspenger-felles/utils/utils.js';
+import type { AktivitetspengerApi } from '../aktivitetspenger-prosess/AktivitetspengerApi.js';
+import { vilkårsavklaringVurderingerQueryOptions } from '../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
+import { OpphørUttalelse } from './formfields/OpphørUttalelse.js';
+import { SendTilBeslutter } from './SendTilBeslutter.js';
+
+const fritekstVurderingBrevMaxLength =
+  $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.fritekstVurderingBrev.maxLength;
+
+type OpphørAksjonspunktKode =
+  | typeof AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR
+  | typeof AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR
+  | typeof AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR
+  | typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
+
+type VurderingEtterAvklaring = Extract<BekreftetAksjonspunktDto, { '@type': OpphørAksjonspunktKode }>;
+
+export interface OpphørVilkårsvurderingOppsett {
+  vilkårType: VilkårType;
+  aksjonspunktKode: OpphørAksjonspunktKode;
+  årsakSomKreverFritekstIBrev?: string;
+  begrunnelseMaxLength: number;
+  tekster: {
+    varsel: string;
+    overskrift: string;
+    lovreferanse: string;
+    begrunnelseLedetekst: ReactNode;
+    spørsmål: string;
+    nei: string;
+  };
+}
 
 interface FormData {
   perioder: Record<
     string,
     {
       begrunnelse: string;
-      flyttetFraTrondheim: string;
+      skalOpphøre: 'ja' | 'nei' | '';
       fritekstVurderingBrev: string;
       harFritekstbrev: boolean;
     }
   >;
 }
+
+const tilJaEllerNei = (utfall: Utfall): 'ja' | 'nei' | '' => {
+  if (utfall === Utfall.IKKE_OPPFYLT) return 'ja';
+  if (utfall === Utfall.OPPFYLT) return 'nei';
+  return '';
+};
 
 const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): FormData => ({
   perioder: Object.fromEntries(
@@ -53,7 +80,7 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
       periode.fom,
       {
         begrunnelse: avklaringOgVurdering?.vurdering?.begrunnelse ?? '',
-        flyttetFraTrondheim: utfall === Utfall.IKKE_OPPFYLT ? 'ja' : utfall === Utfall.OPPFYLT ? 'nei' : '',
+        skalOpphøre: tilJaEllerNei(utfall),
         fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
         harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
       },
@@ -61,59 +88,56 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
   ),
 });
 
-const buildPeriods = (
-  vilkår: VilkårMedPerioderDto,
-  vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto,
-): VilkårSplittPanelPeriod[] =>
-  (vilkår.perioder ?? [])
+const buildPeriods = (vilkårsavklaringVurderinger: VilkårsavklaringVurderingerDto): VilkårSplittPanelPeriod[] =>
+  vilkårsavklaringVurderinger.perioder
     .toSorted((firstPeriod, secondPeriod) => secondPeriod.periode.fom.localeCompare(firstPeriod.periode.fom))
-    .map(period => {
-      const avklaring = vilkårsavklaringVurderinger.perioder.find(p => p.periode.fom === period.periode.fom)
-        ?.avklaringOgVurdering?.avklaring;
+    .map(({ periode, utfall, vurderesIBehandlingen, avklaringOgVurdering }) => {
+      const avklaring = avklaringOgVurdering?.avklaring;
       const erAvslag = avklaring?.avklaringtype === Avklaringtype.AVSLAG;
       return {
-        id: period.periode.fom,
-        status: getPeriodStatus(period.vilkarStatus),
-        label:
-          erAvslag && period.periode.tom
-            ? formatPeriod(period.periode.fom, period.periode.tom)
-            : formatDate(period.periode.fom),
-        periode: period.periode,
-        vurderesIBehandlingen: period.vurderesIBehandlingen,
+        id: periode.fom,
+        status: getPeriodStatus(utfall),
+        label: erAvslag && periode.tom ? formatPeriod(periode.fom, periode.tom) : formatDate(periode.fom),
+        periode,
+        vurderesIBehandlingen,
         foreslåttIBehandlingen: avklaring?.foreslåttIBehandlingen,
       };
     });
+
+interface SubmitArgs {
+  formData: FormData;
+  selectedId: string;
+  periods: VilkårSplittPanelPeriod[];
+  kreverFritekstIBrev: boolean;
+  aksjonspunktKode: OpphørAksjonspunktKode;
+}
 
 const buildPayload = ({
   formData,
   selectedId,
   periods,
-  erÅrsakTilOpphørAnnet,
-}: {
-  formData: FormData;
-  selectedId: string;
-  periods: VilkårSplittPanelPeriod[];
-  erÅrsakTilOpphørAnnet: boolean;
-}): BekreftetAksjonspunktDto => {
+  kreverFritekstIBrev,
+  aksjonspunktKode,
+}: SubmitArgs): VurderingEtterAvklaring => {
   const selectedFormPeriod = formData.perioder[selectedId];
   if (!selectedFormPeriod) {
     throw new Error('Kunne ikke finne valgt periode for opphør');
   }
   const valgtPeriode = periods.find(period => period.id === selectedId);
+  const erVilkårOppfylt = selectedFormPeriod.skalOpphøre === 'nei';
   return {
-    '@type': AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR,
+    '@type': aksjonspunktKode,
     begrunnelse: selectedFormPeriod.begrunnelse,
     vurdertePerioder: [
       {
         begrunnelse: selectedFormPeriod.begrunnelse,
-        erVilkårOppfylt: selectedFormPeriod.flyttetFraTrondheim === 'nei',
+        erVilkårOppfylt,
         periode: {
           fom: valgtPeriode?.periode?.fom ?? '',
           tom: valgtPeriode?.periode?.tom,
         },
         fritekstVurderingBrev:
-          selectedFormPeriod.flyttetFraTrondheim === 'ja' &&
-          (erÅrsakTilOpphørAnnet || selectedFormPeriod.harFritekstbrev)
+          !erVilkårOppfylt && (kreverFritekstIBrev || selectedFormPeriod.harFritekstbrev)
             ? selectedFormPeriod.fritekstVurderingBrev
             : undefined,
       },
@@ -122,8 +146,8 @@ const buildPayload = ({
 };
 
 interface Props {
-  vurderBostedVilkårAP?: AksjonspunktDto;
-  bostedVilkår: VilkårMedPerioderDto;
+  oppsett: OpphørVilkårsvurderingOppsett;
+  vurderVilkårAP?: AksjonspunktDto;
   api: AktivitetspengerApi;
   behandling: BehandlingDto;
   onAksjonspunktBekreftet: () => void;
@@ -133,10 +157,10 @@ interface Props {
   lokalkontorBeslutterAP?: AksjonspunktDto;
 }
 
-export const BostedVilkårsvurdering = ({
-  vurderBostedVilkårAP,
+export const OpphørVilkårsvurdering = ({
+  oppsett,
+  vurderVilkårAP,
   lokalkontorForeslårVilkårAP,
-  bostedVilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
@@ -144,10 +168,11 @@ export const BostedVilkårsvurdering = ({
   isPermanentlyReadOnly,
   lokalkontorBeslutterAP,
 }: Props) => {
+  const { vilkårType, aksjonspunktKode, årsakSomKreverFritekstIBrev, begrunnelseMaxLength, tekster } = oppsett;
   const queryClient = useQueryClient();
-  const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkarType.BOSTEDSVILKÅR);
+  const vurderingerQueryOptions = vilkårsavklaringVurderingerQueryOptions(api, behandling, vilkårType);
   const { data: vilkårsavklaringVurderinger } = useSuspenseQuery(vurderingerQueryOptions);
-  const periods = buildPeriods(bostedVilkår, vilkårsavklaringVurderinger);
+  const periods = buildPeriods(vilkårsavklaringVurderinger);
   const formHook = useForm<FormData>({
     defaultValues: buildInitialValues(vilkårsavklaringVurderinger),
   });
@@ -156,13 +181,13 @@ export const BostedVilkårsvurdering = ({
     ?.avklaringOgVurdering?.avklaring;
   const uttalelse = valgtAvklaring?.uttalelse;
   const selectedPeriod = periods.find(p => p.id === selectedId);
-  const erÅrsakTilOpphørAnnet = valgtAvklaring?.ikkeOppfyltÅrsak === BostedsvilkårIkkeOppfyltÅrsak.ANNET;
+  const kreverFritekstIBrev =
+    årsakSomKreverFritekstIBrev !== undefined && valgtAvklaring?.ikkeOppfyltÅrsak === årsakSomKreverFritekstIBrev;
   const erAvslag = valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG;
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
-    mutationFn: async (formData: FormData) => {
-      const payload = buildPayload({ formData, selectedId, periods, erÅrsakTilOpphørAnnet });
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [payload]);
+    mutationFn: async (submitArgs: SubmitArgs) => {
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
@@ -172,37 +197,36 @@ export const BostedVilkårsvurdering = ({
 
   const { mutateAsync: sendTilBeslutterMutation, isPending: isSendingTilBeslutter } = useMutation({
     mutationFn: async () => sendTilBeslutter(api, behandling),
-    onSuccess: () => {
-      onAksjonspunktBekreftet();
-    },
+    onSuccess: onAksjonspunktBekreftet,
   });
 
-  const isVurderBostedvilkårAPSolved = vurderBostedVilkårAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderVilkårAP?.status === AksjonspunktStatus.UTFØRT;
   const erLokalkontorForeslårAPÅpent =
     !readOnly && !!lokalkontorForeslårVilkårAP && aksjonspunktErÅpent(lokalkontorForeslårVilkårAP);
-  const defaultIsLocked = isVurderBostedvilkårAPSolved || erLokalkontorForeslårAPÅpent;
-  const flyttetFraTrondheim = useWatch({
-    control: formHook.control,
-    name: `perioder.${selectedId}.flyttetFraTrondheim`,
-  });
-  const harFritekstbrev = formHook.watch(`perioder.${selectedId}.harFritekstbrev`);
+  const defaultIsLocked = isSolved || erLokalkontorForeslårAPÅpent;
+  const skalOpphøre = useWatch({ control: formHook.control, name: `perioder.${selectedId}.skalOpphøre` });
+  const harFritekstbrev = useWatch({ control: formHook.control, name: `perioder.${selectedId}.harFritekstbrev` });
 
   return (
     <VStack gap="space-20">
-      {!isVurderBostedvilkårAPSolved && vurderBostedVilkårAP && (
-        <Alert variant="warning" size="small">
-          Vurder om søker ikke lenger er bosatt i Trondheim kommune.
-        </Alert>
+      {!isSolved && vurderVilkårAP && (
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            {tekster.varsel}
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
         periods={periods}
         selectedItemId={selectedId}
         onItemSelect={setSelectedId}
-        detailHeading="Vurdering av ikke lenger bosatt i Trondheim kommune"
+        detailHeading={tekster.overskrift}
         periodListLabel="Alle perioder"
         periodColumnHeader="Dato/periode"
-        lovreferanse="§ 2"
+        lovreferanse={tekster.lovreferanse}
         defaultIsLocked={defaultIsLocked}
         readOnly={readOnly}
         isPermanentlyReadOnly={isPermanentlyReadOnly || selectedPeriod?.vurderesIBehandlingen === false}
@@ -216,15 +240,19 @@ export const BostedVilkårsvurdering = ({
             behandling={behandling}
           />
         }
-        lockedContent={
-          isVurderBostedvilkårAPSolved ? <VurdertAv ident={vurderBostedVilkårAP?.ansvarligSaksbehandler} /> : undefined
-        }
+        lockedContent={isSolved ? <VurdertAv ident={vurderVilkårAP?.ansvarligSaksbehandler} /> : undefined}
       >
-        {(isFormLocked: boolean, setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => (
+        {(isFormLocked, setIsFormLocked) => (
           <RhfForm
             formMethods={formHook}
             onSubmit={async data => {
-              await bekreftAksjonspunktMutation(data);
+              await bekreftAksjonspunktMutation({
+                formData: data,
+                selectedId,
+                periods,
+                kreverFritekstIBrev,
+                aksjonspunktKode,
+              });
               setIsFormLocked(true);
             }}
           >
@@ -233,59 +261,44 @@ export const BostedVilkårsvurdering = ({
               <RhfTextarea
                 control={formHook.control}
                 name={`perioder.${selectedId}.begrunnelse`}
-                label={
-                  <span>
-                    Vurder om bruker har flyttet fra Trondheim kommune, jmf{' '}
-                    <Lovreferanse includeFullTextInLink isAktivitetspenger>
-                      §2 Geografisk virkeområde
-                    </Lovreferanse>
-                  </span>
-                }
-                readOnly={isFormLocked}
-                validate={[
-                  required,
-                  minLength(3),
-                  maxLength($ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength),
-                ]}
+                label={<span>{tekster.begrunnelseLedetekst}</span>}
+                readOnly={isFormLocked || isPending}
+                validate={[required, minLength(3), maxLength(begrunnelseMaxLength)]}
                 resize
-                maxLength={$ManuellVurderingBostedsvilkårDto.properties.begrunnelse.maxLength}
+                maxLength={begrunnelseMaxLength}
               />
               <RhfRadioGroup
                 control={formHook.control}
-                legend="Har bruker flyttet fra Trondheim kommune?"
-                name={`perioder.${selectedId}.flyttetFraTrondheim`}
+                legend={tekster.spørsmål}
+                name={`perioder.${selectedId}.skalOpphøre`}
                 validate={[required]}
-                readOnly={isFormLocked}
+                readOnly={isFormLocked || isPending}
               >
                 <Radio value="ja">
                   {erAvslag
                     ? `Ja, fra ${selectedPeriod?.label ?? ''}`
                     : `Ja, fra og med ${selectedPeriod?.periode?.fom ? formatDate(selectedPeriod.periode.fom) : ''}`}
                 </Radio>
-                <Radio value="nei">Nei, bruker bor fortsatt i Trondheim kommune</Radio>
+                <Radio value="nei">{tekster.nei}</Radio>
               </RhfRadioGroup>
-              {flyttetFraTrondheim === 'ja' && !erÅrsakTilOpphørAnnet && (
+              {skalOpphøre === 'ja' && !kreverFritekstIBrev && (
                 <RhfCheckbox
                   control={formHook.control}
                   name={`perioder.${selectedId}.harFritekstbrev`}
                   label="Legg til fritekstbeskrivelse i avslagsbrev"
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                 />
               )}
-              {flyttetFraTrondheim === 'ja' && (erÅrsakTilOpphørAnnet || harFritekstbrev) && (
+              {skalOpphøre === 'ja' && (kreverFritekstIBrev || harFritekstbrev) && (
                 <RhfTextarea
                   control={formHook.control}
                   name={`perioder.${selectedId}.fritekstVurderingBrev`}
                   label={erAvslag ? 'Fritekst avslagsbrev' : 'Fritekst opphørsbrev'}
                   description={`Forklar hvorfor vilkåret er ${erAvslag ? 'avslått' : 'opphørt'}. Teksten vises i vedtaksbrevet.`}
-                  readOnly={isFormLocked}
-                  validate={[
-                    required,
-                    minLength(3),
-                    maxLength($VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength),
-                  ]}
+                  readOnly={isFormLocked || isPending}
+                  validate={[required, minLength(3), maxLength(fritekstVurderingBrevMaxLength)]}
                   resize
-                  maxLength={$VilkårBostedPeriodeVurderingDto.properties.fritekstVurderingBrev.maxLength}
+                  maxLength={fritekstVurderingBrevMaxLength}
                 />
               )}
               {!isFormLocked && (

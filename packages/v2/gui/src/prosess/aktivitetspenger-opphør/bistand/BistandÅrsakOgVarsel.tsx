@@ -4,12 +4,9 @@ import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avkla
 import { BistandsavklaringKildeType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsavklaringKildeType.js';
 import { BistandsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BistandsvilkårIkkeOppfyltÅrsak.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import { InformationSquareIcon } from '@navikt/aksel-icons';
-import { Alert, Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -21,7 +18,6 @@ import {
   VilkårSplittPanel,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { getDateRangeFromVilkår, OpphørAvslagValg } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
@@ -29,6 +25,7 @@ import { OpphørKilde } from '../formfields/OpphørKilde.js';
 import { getOpphørPeriods, IKKE_SATT_PERIODE_ID } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+import type { OpphørÅrsakOgVarselProps } from '../types.js';
 
 const kildeLabels: Record<BistandsavklaringKildeType, string> = {
   [BistandsavklaringKildeType.BRUKER]: 'Bruker selv',
@@ -156,30 +153,20 @@ const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   };
 };
 
-interface Props {
-  vurderBistandFaktaAP?: AksjonspunktDto;
-  bistandVilkår: VilkårMedPerioderDto;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
-  readOnly: boolean;
-  isPermanentlyReadOnly: boolean;
-}
-
 export const BistandÅrsakOgVarsel = ({
-  vurderBistandFaktaAP,
-  bistandVilkår,
+  vurderFaktaAP,
+  vilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
-}: Props) => {
+}: OpphørÅrsakOgVarselProps) => {
   const queryClient = useQueryClient();
   const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(api, behandling, vilkarType.BISTANDSVILKÅR);
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const opphørPeriods = getOpphørPeriods({
-    aksjonspunkt: vurderBistandFaktaAP,
+    aksjonspunkt: vurderFaktaAP,
     perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
@@ -200,7 +187,7 @@ export const BistandÅrsakOgVarsel = ({
   const valgtKilde = valgtFormPeriode?.kilde ?? '';
   const skalSendeVarselOmOpphør = valgtFormPeriode?.skalSendeVarselOmOpphør ?? '';
   const valgtÅrsak = valgtFormPeriode?.årsak ?? '';
-  const isSolved = vurderBistandFaktaAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT;
   const erValgtPeriodeInnvilgetUtenAvklaring =
     valgtOpphørPeriode?.status === 'success' && !valgtVilkårsavklaringPeriode?.avklaring;
 
@@ -240,10 +227,14 @@ export const BistandÅrsakOgVarsel = ({
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderBistandFaktaAP && (
-        <Alert variant="warning" size="small">
-          Vurder årsak til opphør og om bruker skal varsles.
-        </Alert>
+      {!isSolved && vurderFaktaAP && (
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder årsak til opphør og om bruker skal varsles.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
@@ -260,13 +251,13 @@ export const BistandÅrsakOgVarsel = ({
         beforeDetailContent={
           erValgtPeriodeInnvilgetUtenAvklaring ? (
             <InfoCard data-color="info" size="small">
-              <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+              <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden color="var(--ax-text-info-decoration)" />}>
                 Alle vilkår er innvilget i perioden.
               </InfoCard.Message>
             </InfoCard>
           ) : undefined
         }
-        lockedContent={isSolved ? <VurdertAv ident={vurderBistandFaktaAP?.ansvarligSaksbehandler} /> : undefined}
+        lockedContent={isSolved ? <VurdertAv ident={vurderFaktaAP?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked, setIsFormLocked) => (
           <>
@@ -275,10 +266,10 @@ export const BistandÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
-                  dateRange={getDateRangeFromVilkår(bistandVilkår.perioder)}
+                  dateRange={getDateRangeFromVilkår(vilkår.perioder)}
                 />
                 <RhfSelect
                   control={formHook.control}
@@ -295,7 +286,7 @@ export const BistandÅrsakOgVarsel = ({
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={Object.values(BistandsavklaringKildeType).map(kilde => ({
                     value: kilde,
@@ -306,7 +297,7 @@ export const BistandÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeVarselOmOpphør}
                   skalViseForhåndsvarselTekst={valgtÅrsak === BistandsvilkårIkkeOppfyltÅrsak.ANNET}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke lenger har behov for bistand."
