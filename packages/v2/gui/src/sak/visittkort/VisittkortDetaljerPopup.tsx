@@ -108,7 +108,7 @@ const VisittkortDetaljerPopup = ({ personopplysninger, språkkode, endringsmeldi
           </HStack>
 
           {endringsmeldingPsbSaksnummer && (
-            <HStack gap="space-8" marginBlock="space-12 space-0">
+            <HStack gap="space-8" marginBlock="space-12 space-0" wrap={false}>
               <div className={styles.labels}>
                 <BodyShort size="small">Kan sende endringsmelding:</BodyShort>
               </div>

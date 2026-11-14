@@ -1,13 +1,13 @@
 import { k9_kodeverk_person_NavBrukerKjønn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { EndringsmeldingPsbTilgangDto } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangDto.js';
+import { EndringsmeldingPsbTilgangStatus } from '@k9-sak-web/backend/k9sak/kontrakt/endringsmeldingpsb/EndringsmeldingPsbTilgangStatus.js';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useQueryClient } from '@tanstack/react-query';
 import { type ComponentProps, type PropsWithChildren, useEffect } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
 import { withFakeEndringsmeldingPsbTilgangApi } from '../../storybook/decorators/withFakeEndringsmeldingPsbTilgangApi.js';
 import withFeatureToggles from '../../storybook/decorators/withFeatureToggles.js';
-import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import VisittkortPanel from './VisittkortPanel';
 import type { Personopplysninger } from './types/Personopplysninger';
 import diskresjonskodeType from './types/diskresjonskodeType';
@@ -223,51 +223,40 @@ const åpnePopup = async (canvas: ReturnType<typeof within>) => {
   }
 };
 
-const tilgangsvalg = [
-  'kanBruke',
-  'harIngenSak',
-  'søknadsperioderUtenforTillattEndringsperiode',
-  'harMerEnnEnSak',
-  'harIngenPerioder',
-  'barnManglerIdentitetsnummer',
-  'harArbeidstidSomSelvstendigNæringsdrivende',
-  'enArbeidsgiverToAnsettelserSammeUkeMedOpphold',
-  'harFlereAnsettelsesforholdHosUkjentArbeidsgiver',
-  'ukjentÅrsak',
-  'ikkeTilgang',
-  'feil',
-  'tomtSvar',
-];
+const { KAN_BRUKE, KAN_IKKE_BRUKE, MANGLER_TILGANG_TIL_PERSON } = EndringsmeldingPsbTilgangStatus;
 
-const årsakTekster: Partial<Record<string, string>> = {
-  harIngenSak: 'Nei, søkeren har ingen sak',
-  søknadsperioderUtenforTillattEndringsperiode: 'Nei, søknadsperiodene er utenfor perioden som kan endres',
-  harMerEnnEnSak: 'Nei, søkeren har mer enn én sak',
-  harIngenPerioder: 'Nei, søkeren har ingen søknadsperioder',
-  barnManglerIdentitetsnummer: 'Nei, barnet mangler identitetsnummer',
-  harArbeidstidSomSelvstendigNæringsdrivende: 'Nei, søkeren har arbeidstid som selvstendig næringsdrivende',
-  enArbeidsgiverToAnsettelserSammeUkeMedOpphold: 'Nei, to ansettelser hos samme arbeidsgiver i samme uke, med opphold',
-  harFlereAnsettelsesforholdHosUkjentArbeidsgiver: 'Nei, flere ansettelsesforhold hos ukjent arbeidsgiver',
-};
+// Avslagstekstene speiler IngenTilgangÅrsak.saksbehandlerTekst i k9-sak-innsyn-api
+const svarvarianter = {
+  'Ja, har tilgang': { status: KAN_BRUKE, tekst: 'Ja, har tilgang' },
+  'Nei, ingen sak': { status: KAN_IKKE_BRUKE, tekst: 'Nei, søkeren har ingen sak' },
+  'Nei, utenfor endringsperioden': {
+    status: KAN_IKKE_BRUKE,
+    tekst: 'Nei, søknadsperiodene er utenfor perioden som kan endres',
+  },
+  'Nei, mer enn én sak': { status: KAN_IKKE_BRUKE, tekst: 'Nei, søkeren har mer enn én sak' },
+  'Nei, ingen søknadsperioder': { status: KAN_IKKE_BRUKE, tekst: 'Nei, søkeren har ingen søknadsperioder' },
+  'Nei, omsorgen for er ikke vurdert': { status: KAN_IKKE_BRUKE, tekst: 'Nei, omsorgen for er ikke vurdert' },
+  'Nei, selvstendig næringsdrivende': {
+    status: KAN_IKKE_BRUKE,
+    tekst: 'Nei, søkeren har arbeidstid som selvstendig næringsdrivende',
+  },
+  'Nei, to ansettelser samme uke': {
+    status: KAN_IKKE_BRUKE,
+    tekst: 'Nei, to ansettelser hos samme arbeidsgiver i samme uke, med opphold',
+  },
+  'Nei, ukjent arbeidsgiver': {
+    status: KAN_IKKE_BRUKE,
+    tekst: 'Nei, flere ansettelsesforhold hos ukjent arbeidsgiver',
+  },
+  'Mangler tilgang til person': {
+    status: MANGLER_TILGANG_TIL_PERSON,
+    tekst: 'Uvisst, du har ikke tilgang til å se svaret',
+  },
+  'Feil fra k9-sak': new Error('k9-sak svarte med feil'),
+  'Tomt svar (204)': null,
+} satisfies Record<string, EndringsmeldingPsbTilgangDto | null | Error>;
 
-const svarForTilgang = (tilgang: string): EndringsmeldingPsbTilgangDto | null | Error => {
-  if (tilgang === 'feil') {
-    return new Error('Innsyn-api svarte ikke');
-  }
-  if (tilgang === 'tomtSvar') {
-    return null;
-  }
-  if (tilgang === 'ikkeTilgang') {
-    return makeFakeExtendedApiError({ status: 403 });
-  }
-  if (tilgang === 'kanBruke') {
-    return { status: 'KAN_BRUKE', tekst: 'Ja, har tilgang' };
-  }
-  return {
-    status: 'KAN_IKKE_BRUKE',
-    tekst: årsakTekster[tilgang] ?? 'Nei, søkeren oppfyller ikke vilkårene',
-  };
-};
+type Svarvariant = keyof typeof svarvarianter;
 
 // Storyen beholder samme QueryClient når kontrollen endres, så cachen må tømmes for å hente nytt svar
 const NullstillQueryCache = ({ nøkkel, children }: PropsWithChildren<{ nøkkel: string }>) => {
@@ -278,28 +267,21 @@ const NullstillQueryCache = ({ nøkkel, children }: PropsWithChildren<{ nøkkel:
   return children;
 };
 
-export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel> & { tilgang: string }> = {
+export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel> & { svar: Svarvariant }> = {
   name: 'EndringsmeldingPSB',
-  args: { ...endringsmeldingPsbArgs, tilgang: 'kanBruke' },
+  args: { ...endringsmeldingPsbArgs, svar: 'Ja, har tilgang' },
   argTypes: {
-    tilgang: {
-      name: 'Tilgang til endringsmelding',
+    svar: {
+      name: 'Svar fra k9-sak',
       control: 'select',
-      options: tilgangsvalg,
-      labels: {
-        kanBruke: 'Har tilgang',
-        ukjentÅrsak: 'Ukjent årsak',
-        ikkeTilgang: 'Saksbehandler mangler tilgang',
-        feil: 'Feil fra innsyn-api',
-        tomtSvar: 'Tomt svar (204)',
-      },
+      options: Object.keys(svarvarianter),
     },
   },
   decorators: [
     withFeatureToggles({ VIS_ENDRINGSMELDING_PSB_TILGANG: true }),
     (Story, context) => (
-      <NullstillQueryCache nøkkel={context.args.tilgang}>
-        {withFakeEndringsmeldingPsbTilgangApi(svarForTilgang(context.args.tilgang))(Story, context)}
+      <NullstillQueryCache nøkkel={context.args.svar}>
+        {withFakeEndringsmeldingPsbTilgangApi(svarvarianter[context.args.svar])(Story, context)}
       </NullstillQueryCache>
     ),
   ],
@@ -311,8 +293,8 @@ export const EndringsmeldingPsb: StoryObj<ComponentProps<typeof VisittkortPanel>
 
 export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
   ...EndringsmeldingPsb,
-  name: 'EndringsmeldingPSB: feil fra innsyn-api',
-  args: { ...EndringsmeldingPsb.args, tilgang: 'feil' },
+  name: 'EndringsmeldingPSB: feil fra k9-sak',
+  args: { ...EndringsmeldingPsb.args, svar: 'Feil fra k9-sak' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
@@ -323,7 +305,7 @@ export const EndringsmeldingPsbFeil: typeof EndringsmeldingPsb = {
 export const EndringsmeldingPsbTomtSvar: typeof EndringsmeldingPsb = {
   ...EndringsmeldingPsb,
   name: 'EndringsmeldingPSB: tomt svar',
-  args: { ...EndringsmeldingPsb.args, tilgang: 'tomtSvar' },
+  args: { ...EndringsmeldingPsb.args, svar: 'Tomt svar (204)' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Uvisst, kunne ikke hente svar')).toBeInTheDocument();
@@ -331,10 +313,10 @@ export const EndringsmeldingPsbTomtSvar: typeof EndringsmeldingPsb = {
   },
 };
 
-export const EndringsmeldingPsbIkkeTilgang: typeof EndringsmeldingPsb = {
+export const EndringsmeldingPsbManglerTilgangTilPerson: typeof EndringsmeldingPsb = {
   ...EndringsmeldingPsb,
-  name: 'EndringsmeldingPSB: ikke tilgang',
-  args: { ...EndringsmeldingPsb.args, tilgang: 'ikkeTilgang' },
+  name: 'EndringsmeldingPSB: mangler tilgang til person',
+  args: { ...EndringsmeldingPsb.args, svar: 'Mangler tilgang til person' },
   play: async ({ canvas }) => {
     await åpnePopup(canvas);
     await expect(await canvas.findByText('Uvisst, du har ikke tilgang til å se svaret')).toBeInTheDocument();
