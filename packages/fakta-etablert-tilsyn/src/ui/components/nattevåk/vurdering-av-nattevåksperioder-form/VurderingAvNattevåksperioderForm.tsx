@@ -53,13 +53,8 @@ const VurderingAvNattevåksperioderForm = ({
   onCancelClick,
   beskrivelser,
 }: VurderingAvNattevåksperioderFormProps): JSX.Element => {
-  const {
-    lagreNattevåkvurdering,
-    readOnly,
-    harUløstAksjonspunktForNattevåk = false,
-    harLøstAksjonspunktForNattevåk = false,
-  } = React.useContext(ContainerContext) || {};
-  const disabled = readOnly || (!harUløstAksjonspunktForNattevåk && !harLøstAksjonspunktForNattevåk);
+  const { lagreNattevåkvurdering, readOnly, kanRedigereNattevåk = false } = React.useContext(ContainerContext) || {};
+  const disabled = readOnly || !kanRedigereNattevåk;
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const defaultBehovForNattevåk = () => {
     if (nattevåksperiode.resultat === Vurderingsresultat.OPPFYLT) {
@@ -120,7 +115,10 @@ const VurderingAvNattevåksperioderForm = ({
     }
 
     const kombinertePerioder = perioderMedEllerUtenNattevåk.concat(perioderUtenNattevåk);
-    lagreNattevåkvurdering?.({ vurderinger: kombinertePerioder });
+    lagreNattevåkvurdering?.({
+      periode: { fom: nattevåksperiode.periode.fom, tom: nattevåksperiode.periode.tom },
+      vurderinger: kombinertePerioder,
+    });
   };
 
   const valgtePerioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER });

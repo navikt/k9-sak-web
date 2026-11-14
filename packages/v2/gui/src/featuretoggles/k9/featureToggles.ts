@@ -36,6 +36,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_OM_BARNET: true,
   BRUK_V2_BARN_OMS: true,
   STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: true,
+  NATTEVAAK_BEREDSKAP_OVERSTYRING: true,
   VIS_ENDRINGSMELDING_PSB_TILGANG: true,
 });
 

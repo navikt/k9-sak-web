@@ -20,6 +20,8 @@ const totrinnskontrollaksjonspunktTextCodes: Partial<Record<AksjonspunktDefinisj
     'Søker har tilkommet aktivitet i perioden. Det er vurdert om inntekt fra den nye aktiviteten skal redusere utbetaling.',
   [AksjonspunktDefinisjon.OVERSTYRING_AV_SØKNADSFRISTVILKÅRET]: 'Søknadsfristvilkåret er overstyrt.',
   [AksjonspunktDefinisjon.OVERSTYRING_AV_UTTAK]: 'Uttaksplanen har blitt overstyrt',
+  [AksjonspunktDefinisjon.OVERSTYRING_AV_NATTEVÅK]: 'Vurderingen av nattevåk er endret.',
+  [AksjonspunktDefinisjon.OVERSTYRING_AV_BEREDSKAP]: 'Vurderingen av beredskap er endret.',
   [AksjonspunktDefinisjon.AVKLAR_GYLDIG_MEDLEMSKAPSPERIODE]:
     'Det er vurdert om søker har gyldig medlemskap i perioden.',
   [AksjonspunktDefinisjon.AVKLAR_LOVLIG_OPPHOLD]: 'Det er vurdert om søker har lovlig opphold.',

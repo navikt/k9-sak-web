@@ -31,6 +31,7 @@ const rootFeatureToggles = {
   BRUK_V2_OM_BARNET: false,
   BRUK_V2_BARN_OMS: false,
   STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: false,
+  NATTEVAAK_BEREDSKAP_OVERSTYRING: false,
   VIS_ENDRINGSMELDING_PSB_TILGANG: false,
 } satisfies { [K: `${Uppercase<string>}`]: false }; // Alle toggles skal vere false i utgangspunktet
 
