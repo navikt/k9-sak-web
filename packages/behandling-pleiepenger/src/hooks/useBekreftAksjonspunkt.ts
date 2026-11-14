@@ -1,5 +1,4 @@
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { useBehandlingContext } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useCallback } from 'react';
@@ -30,7 +29,6 @@ export const useBekreftAksjonspunkt = ({
   lagreOverstyrteAksjonspunkter,
   oppdaterProsessStegOgFaktaPanelIUrl,
 }: UseBekreftAksjonspunktParams) => {
-  const { settBehandlingHvisGyldig } = useBehandlingContext();
   return useCallback(
     async (aksjonspunktModels: any[], aksjonspunkter: AksjonspunktDto[] = [], skaForhindreOppdaterUrl?: boolean) => {
       if (!aksjonspunktModels || aksjonspunktModels.length === 0) {
@@ -60,23 +58,23 @@ export const useBekreftAksjonspunkt = ({
           ap.aksjonspunktType === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
       );
 
-      const lagringsresultat =
-        lagreOverstyrteAksjonspunkter && (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter)
-          ? await lagreOverstyrteAksjonspunkter(
-              {
-                ...params,
-                overstyrteAksjonspunktDtoer: models,
-              },
-              true,
-            )
-          : await lagreAksjonspunkter(
-              {
-                ...params,
-                bekreftedeAksjonspunktDtoer: models,
-              },
-              true,
-            );
-      settBehandlingHvisGyldig(lagringsresultat);
+      if (lagreOverstyrteAksjonspunkter && (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter)) {
+        await lagreOverstyrteAksjonspunkter(
+          {
+            ...params,
+            overstyrteAksjonspunktDtoer: models,
+          },
+          true,
+        );
+      } else {
+        await lagreAksjonspunkter(
+          {
+            ...params,
+            bekreftedeAksjonspunktDtoer: models,
+          },
+          true,
+        );
+      }
       if (!skaForhindreOppdaterUrl) {
         oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
@@ -89,7 +87,6 @@ export const useBekreftAksjonspunkt = ({
       lagreAksjonspunkter,
       lagreOverstyrteAksjonspunkter,
       oppdaterProsessStegOgFaktaPanelIUrl,
-      settBehandlingHvisGyldig,
     ],
   );
 };

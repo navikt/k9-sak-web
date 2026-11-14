@@ -12,11 +12,7 @@ import { BehandlingProvider } from '../../context/BehandlingContext';
 const withStoryReload = (): Decorator => Story => {
   useEffect(() => () => window.location.reload(), []);
   return (
-    <BehandlingProvider
-      refetchBehandling={() => Promise.resolve()}
-      settBehandling={() => undefined}
-      oppdaterProsessStegOgFaktaPanelIUrl={() => undefined}
-    >
+    <BehandlingProvider refetchBehandling={() => Promise.resolve()}>
       <Story />
     </BehandlingProvider>
   );

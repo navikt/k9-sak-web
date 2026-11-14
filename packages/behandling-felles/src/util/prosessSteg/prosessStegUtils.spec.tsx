@@ -300,7 +300,6 @@ describe('<prosessStegUtils>', () => {
       behandling as Behandling,
       aksjonspunkter,
       lagreAksjonspunkter,
-      vi.fn(),
     );
 
     const aksjonspunktModeller = [
@@ -338,7 +337,6 @@ describe('<prosessStegUtils>', () => {
       behandling as Behandling,
       aksjonspunkter,
       lagreAksjonspunkter,
-      vi.fn(),
       lagreOverstyrteAksjonspunkter,
     );
 

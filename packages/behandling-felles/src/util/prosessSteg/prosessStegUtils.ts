@@ -7,7 +7,6 @@ import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
-import type { BehandlingContextType } from '@k9-sak-web/gui/context/BehandlingContext.js';
 import readOnlyUtils from '../readOnlyUtils';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
@@ -133,7 +132,6 @@ export const getBekreftAksjonspunktCallback =
     behandling: Behandling,
     aksjonspunkter: Aksjonspunkt[],
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
-    settBehandlingHvisGyldig: BehandlingContextType['settBehandlingHvisGyldig'],
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   ): LegacyBekreftAksjonspunktCallback =>
   async (aksjonspunktModels: LegacyBekreftAksjonspunktModell[]) => {
@@ -150,10 +148,6 @@ export const getBekreftAksjonspunktCallback =
     };
 
     const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
-    const etterLagring = (lagringsresultat: unknown) => {
-      settBehandlingHvisGyldig(lagringsresultat);
-      return etterLagringCallback?.();
-    };
 
     if (lagreOverstyrteAksjonspunkter) {
       const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
@@ -172,7 +166,7 @@ export const getBekreftAksjonspunktCallback =
             overstyrteAksjonspunktDtoer: models,
           },
           true,
-        ).then(etterLagring);
+        ).then(etterLagringCallback);
       }
     }
 
@@ -182,5 +176,5 @@ export const getBekreftAksjonspunktCallback =
         bekreftedeAksjonspunktDtoer: models,
       },
       true,
-    ).then(etterLagring);
+    ).then(etterLagringCallback);
   };
