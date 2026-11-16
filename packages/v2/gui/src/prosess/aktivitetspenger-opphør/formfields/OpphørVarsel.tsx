@@ -67,15 +67,15 @@ export const OpphørVarsel = <TForm extends FieldValues>({
         <InfoCard data-color="info" size="small">
           <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden color="var(--ax-text-info-decoration)" />}>
             <BodyShort size="small" weight="semibold">
-              Bruker vil få ett varsel om opphør på min side
+              Bruker vil få et forhåndsvarsel om opphør på min side
             </BodyShort>
             <List size="small">
               <List.Item>
-                Når du går videre sendes det ett forhåndsvarsel til bruker med dato for opphør, årsak og hvor
+                Når du går videre sendes det et forhåndsvarsel til bruker med dato for opphør, årsak og hvor
                 opplysningene kommer fra.
               </List.Item>
               <List.Item>
-                Saken settes på vent til bruker svarer på forhåndsvarselet eller det har gått 14 dager.
+                Saken settes på vent til bruker svarer på forhåndsvarselet, eller det har gått 14 dager.
               </List.Item>
             </List>
           </InfoCard.Message>
