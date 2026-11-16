@@ -26,7 +26,7 @@
     "@editorjs/list": "2.0.9",
     "@editorjs/paragraph": "2.11.7",
     "@hookform/error-message": "2.0.1",
-    "@hookform/resolvers": "7.0.5",
+    "@hookform/resolvers": "7.0.6",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "workspace:^",
     "@nais/apm": "0.7.3",
@@ -48,7 +48,7 @@
     "object-hash": "3.0.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "react-hook-form": "7.91.0",
+    "react-hook-form": "7.92.0",
     "react-intl": "12.1.7",
     "react-router": "8.5.1",
     "yup": "1.7.1"
