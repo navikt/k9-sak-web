@@ -34,6 +34,8 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
         harUløstAksjonspunktForNattevåk,
         harLøstAksjonspunktForBeredskap,
         harLøstAksjonspunktForNattevåk,
+        kanRedigereBeredskap: harUløstAksjonspunktForBeredskap || harLøstAksjonspunktForBeredskap,
+        kanRedigereNattevåk: harUløstAksjonspunktForNattevåk || harLøstAksjonspunktForNattevåk,
       }}
     />
   );

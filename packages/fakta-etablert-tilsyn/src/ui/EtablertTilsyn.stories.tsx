@@ -22,6 +22,8 @@ const meta = {
       harUløstAksjonspunktForNattevåk: true,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: true,
+      kanRedigereNattevåk: true,
     },
   },
   parameters: {
@@ -62,6 +64,7 @@ export const EtablertTilsyn: Story = {
       await fireEvent.submit(form!);
       await waitFor(() =>
         expect(args.data.lagreBeredskapvurdering).toHaveBeenCalledWith({
+          periode: { fom: '2021-07-11', tom: '2021-07-12' },
           vurderinger: [
             {
               begrunnelse: 'test',
@@ -98,6 +101,7 @@ export const EtablertTilsyn: Story = {
       await fireEvent.submit(form!);
       await waitFor(() =>
         expect(args.data.lagreNattevåkvurdering).toHaveBeenCalledWith({
+          periode: { fom: '2021-07-11', tom: '2021-07-12' },
           vurderinger: [
             {
               begrunnelse: 'test',
@@ -136,6 +140,8 @@ export const UtenAksjonspunkter: Story = {
       harUløstAksjonspunktForNattevåk: false,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: false,
+      kanRedigereNattevåk: false,
     },
   },
   parameters: {
@@ -187,6 +193,8 @@ export const BareNattevåkAksjonspunkt: Story = {
       harUløstAksjonspunktForNattevåk: true,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: false,
+      kanRedigereNattevåk: true,
     },
   },
   parameters: {
@@ -238,6 +246,8 @@ export const BareBeredskapAksjonspunkt: Story = {
       harUløstAksjonspunktForNattevåk: false,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: true,
+      kanRedigereNattevåk: false,
     },
   },
   parameters: {
@@ -289,6 +299,8 @@ export const BeredskapFerdigVurdert: Story = {
       harUløstAksjonspunktForNattevåk: false,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: true,
+      kanRedigereNattevåk: false,
     },
   },
   parameters: {
@@ -326,6 +338,8 @@ export const LøstAksjonspunktBeredskap: Story = {
       harUløstAksjonspunktForNattevåk: false,
       harLøstAksjonspunktForBeredskap: true,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: true,
+      kanRedigereNattevåk: false,
     },
   },
   parameters: {
@@ -375,6 +389,8 @@ export const LøstAksjonspunktNattevåk: Story = {
       harUløstAksjonspunktForNattevåk: false,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: true,
+      kanRedigereBeredskap: false,
+      kanRedigereNattevåk: true,
     },
   },
   parameters: {
@@ -413,6 +429,8 @@ export const VarseltrekantVedUløstAksjonspunkt: Story = {
       harUløstAksjonspunktForNattevåk: true,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: true,
+      kanRedigereNattevåk: true,
     },
   },
   parameters: {
@@ -456,6 +474,8 @@ export const IngenRedigeringUtenAksjonspunkt: Story = {
       harUløstAksjonspunktForNattevåk: false,
       harLøstAksjonspunktForBeredskap: false,
       harLøstAksjonspunktForNattevåk: false,
+      kanRedigereBeredskap: false,
+      kanRedigereNattevåk: false,
     },
   },
   parameters: {
@@ -480,6 +500,112 @@ export const IngenRedigeringUtenAksjonspunkt: Story = {
 
     await step('skal ikke vise fortsett-knapp for beredskap uten aksjonspunkt', async () => {
       await expect(canvas.queryByRole('button', { name: 'Fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
+const redigerbarUtenAksjonspunktData = {
+  readOnly: false,
+  endpoints: {
+    tilsyn: `${mockUrlPrepend}/mock/tilsyn-ferdig-vurdert`,
+    sykdom: `${mockUrlPrepend}/mock/sykdom`,
+    sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
+  },
+  lagreBeredskapvurdering: fn(),
+  lagreNattevåkvurdering: fn(),
+  harUløstAksjonspunktForBeredskap: false,
+  harUløstAksjonspunktForNattevåk: false,
+  harLøstAksjonspunktForBeredskap: false,
+  harLøstAksjonspunktForNattevåk: false,
+  kanRedigereBeredskap: true,
+  kanRedigereNattevåk: true,
+};
+
+// Revurdering der ordinært aksjonspunkt ikke er utledet, men saksbehandler kan redigere med overstyringsaksjonspunkt
+export const RedigerTidligereVurderingUtenAksjonspunkt: Story = {
+  args: {
+    data: redigerbarUtenAksjonspunktData,
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step, args }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal ikke vise varselikon når ingen aksjonspunkt er åpne', async () => {
+      await waitFor(async () => {
+        await expect(canvas.getByRole('tab', { name: 'Etablert tilsyn' })).toHaveAttribute('aria-selected', 'true');
+      });
+      await expect(canvas.getByRole('tab', { name: 'Beredskap' }).querySelector('svg')).toBeNull();
+      await expect(canvas.getByRole('tab', { name: 'Nattevåk' }).querySelector('svg')).toBeNull();
+    });
+
+    await step('skal kunne redigere tidligere vurdering av beredskap', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Alle perioder')).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getAllByRole('button')[0]);
+      await userEvent.click(await canvas.findByRole('button', { name: 'Rediger vurdering' }));
+      await userEvent.click(canvas.getByRole('radio', { name: 'Ja' }));
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(() =>
+        expect(args.data.lagreBeredskapvurdering).toHaveBeenCalledWith({
+          periode: { fom: '2021-06-11', tom: '2021-06-11' },
+          vurderinger: [
+            {
+              begrunnelse: 'Beredskap er vurdert og ikke oppfylt',
+              kilde: 'ANNEN_PART',
+              periode: { fom: '2021-06-11', tom: '2021-06-11' },
+              resultat: 'OPPFYLT',
+            },
+          ],
+        }),
+      );
+    });
+
+    await step('skal ikke vise fortsett-knapp uten åpent aksjonspunkt', async () => {
+      await expect(canvas.queryByRole('button', { name: 'Fortsett' })).not.toBeInTheDocument();
+    });
+
+    await step('skal kunne redigere tidligere vurdering av nattevåk', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Nattevåk' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Alle perioder')).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getAllByRole('button')[0]);
+      await expect(await canvas.findByRole('button', { name: 'Rediger vurdering' })).toBeInTheDocument();
+    });
+  },
+};
+
+export const IngenRedigeringUtenAksjonspunktILesemodus: Story = {
+  args: {
+    data: {
+      ...redigerbarUtenAksjonspunktData,
+      readOnly: true,
+    },
+  },
+  parameters: {
+    msw: {
+      handlers,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('skal ikke vise rediger-knapp i lesemodus', async () => {
+      await userEvent.click(canvas.getByRole('tab', { name: 'Beredskap' }));
+      await waitFor(async () => {
+        await expect(canvas.getByText('Alle perioder')).toBeInTheDocument();
+      });
+      await userEvent.click(canvas.getAllByRole('button')[0]);
+      await waitFor(async () => {
+        await expect(canvas.getByText('Vurdering av beredskap')).toBeInTheDocument();
+      });
+      await expect(canvas.queryByRole('button', { name: 'Rediger vurdering' })).not.toBeInTheDocument();
     });
   },
 };

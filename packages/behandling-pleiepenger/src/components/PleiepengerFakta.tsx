@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -19,7 +20,12 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
 
-const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
+const overstyringApCodes = [
+  ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+  AksjonspunktDefinisjon.OVERSTYRING_AV_NATTEVÅK,
+  AksjonspunktDefinisjon.OVERSTYRING_AV_BEREDSKAP,
+];
 
 interface OwnProps {
   data: FetchedData;

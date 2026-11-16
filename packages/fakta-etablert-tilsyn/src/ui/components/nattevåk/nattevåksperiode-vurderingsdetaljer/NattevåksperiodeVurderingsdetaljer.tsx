@@ -2,6 +2,7 @@ import { DetailView } from '@k9-sak-web/gui/shared/detailView/DetailView.js';
 import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
 import { VurdertAv } from '@k9-sak-web/gui/shared/vurdert-av/VurdertAv.js';
 import WriteAccessBoundContent from '@k9-sak-web/gui/shared/write-access-bound-content/WriteAccessBoundContent.js';
+import { PencilIcon } from '@navikt/aksel-icons';
 import { Box, Button } from '@navikt/ds-react';
 import { useContext } from 'react';
 import Beskrivelse from '../../../../types/Beskrivelse';
@@ -22,11 +23,7 @@ const NattevåksperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: NattevåksperiodeVurderingsdetaljerProps) => {
-  const {
-    readOnly = false,
-    harUløstAksjonspunktForNattevåk = false,
-    harLøstAksjonspunktForNattevåk = false,
-  } = useContext(ContainerContext) || {};
+  const { readOnly = false, kanRedigereNattevåk = false } = useContext(ContainerContext) || {};
   const { opprettetAv, opprettetTidspunkt } = nattevåksperiode;
   return (
     <DetailView
@@ -34,11 +31,17 @@ const NattevåksperiodeVurderingsdetaljer = ({
       contentAfterTitleRenderer={() => (
         <WriteAccessBoundContent
           contentRenderer={() => (
-            <Button variant="tertiary" size="xsmall" className={styles.endreLink} onClick={onEditClick}>
+            <Button
+              variant="tertiary"
+              size="small"
+              icon={<PencilIcon aria-hidden />}
+              className={styles.endreLink}
+              onClick={onEditClick}
+            >
               Rediger vurdering
             </Button>
           )}
-          readOnly={readOnly || (!harUløstAksjonspunktForNattevåk && !harLøstAksjonspunktForNattevåk)}
+          readOnly={readOnly || !kanRedigereNattevåk}
         />
       )}
     >

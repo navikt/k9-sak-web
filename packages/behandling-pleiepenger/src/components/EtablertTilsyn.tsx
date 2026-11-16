@@ -1,24 +1,19 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findAksjonspunkt, findEndpointsFromRels } from '@fpsak-frontend/utils';
-
+import { findEndpointsFromRels } from '@fpsak-frontend/utils';
 import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { use } from 'react';
+import { lagEtablertTilsynAksjonspunktData, utledEtablertTilsynAksjonspunkt } from './etablertTilsynAksjonspunkt';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
-  const beredskapAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.BEREDSKAP);
-  const beredskapAksjonspunktkode = beredskapAksjonspunkt?.definisjon.kode;
-  const løsBeredskapAksjonspunkt = beredskapsperioder =>
-    submitCallback([{ kode: beredskapAksjonspunktkode, begrunnelse: 'Beredskap er behandlet', ...beredskapsperioder }]);
+  const { NATTEVAAK_BEREDSKAP_OVERSTYRING } = use(FeatureTogglesContext);
 
-  const nattevåkAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.NATTEVÅK);
-  const nattevåkAksjonspunktkode = nattevåkAksjonspunkt?.definisjon.kode;
-  const løsNattevåkAksjonspunkt = nattevåkperioder =>
-    submitCallback([{ kode: nattevåkAksjonspunktkode, begrunnelse: 'Nattevåk er behandlet', ...nattevåkperioder }]);
+  const beredskap = utledEtablertTilsynAksjonspunkt(aksjonspunkter, 'BEREDSKAP', NATTEVAAK_BEREDSKAP_OVERSTYRING);
+  const løsBeredskapAksjonspunkt = data =>
+    submitCallback([lagEtablertTilsynAksjonspunktData(beredskap, 'Beredskap er behandlet', data)]);
 
-  const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
-  const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
-  const harLøstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
-  const harLøstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.UTFORT;
+  const nattevåk = utledEtablertTilsynAksjonspunkt(aksjonspunkter, 'NATTEVÅK', NATTEVAAK_BEREDSKAP_OVERSTYRING);
+  const løsNattevåkAksjonspunkt = data =>
+    submitCallback([lagEtablertTilsynAksjonspunktData(nattevåk, 'Nattevåk er behandlet', data)]);
 
   return (
     <EtablertTilsynContainer
@@ -31,10 +26,12 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
         ]),
         lagreBeredskapvurdering: løsBeredskapAksjonspunkt,
         lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
-        harUløstAksjonspunktForBeredskap,
-        harUløstAksjonspunktForNattevåk,
-        harLøstAksjonspunktForBeredskap,
-        harLøstAksjonspunktForNattevåk,
+        harUløstAksjonspunktForBeredskap: beredskap.harUløstAksjonspunkt,
+        harUløstAksjonspunktForNattevåk: nattevåk.harUløstAksjonspunkt,
+        harLøstAksjonspunktForBeredskap: beredskap.harLøstAksjonspunkt,
+        harLøstAksjonspunktForNattevåk: nattevåk.harLøstAksjonspunkt,
+        kanRedigereBeredskap: beredskap.kanRedigere,
+        kanRedigereNattevåk: nattevåk.kanRedigere,
       }}
     />
   );

@@ -11,6 +11,9 @@ interface ContainerContract {
   harUløstAksjonspunktForNattevåk: boolean;
   harLøstAksjonspunktForBeredskap: boolean;
   harLøstAksjonspunktForNattevåk: boolean;
+  /** Om saksbehandler kan redigere vurderinger, med ordinært aksjonspunkt eller overstyringsaksjonspunkt. */
+  kanRedigereBeredskap: boolean;
+  kanRedigereNattevåk: boolean;
 }
 
 export default ContainerContract;
