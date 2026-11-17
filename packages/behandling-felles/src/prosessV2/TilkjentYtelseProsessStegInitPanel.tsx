@@ -28,6 +28,8 @@ interface Props {
   fagsak: Fagsak;
   isReadOnly: boolean;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  // Ytelser der v2-komponenten ikke er tatt i bruk ennå, viser v1 uavhengig av BRUK_V2_TILKJENT_YTELSE
+  kunV1?: boolean;
 }
 
 export function TilkjentYtelseProsessStegInitPanel(props: Props) {
@@ -73,7 +75,7 @@ export function TilkjentYtelseProsessStegInitPanel(props: Props) {
     ap => ap.status === k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus.OPPRETTET,
   );
   const readOnlySubmitButton = !harApentAksjonspunkt;
-  if (BRUK_V2_TILKJENT_YTELSE) {
+  if (BRUK_V2_TILKJENT_YTELSE && !props.kunV1) {
     return (
       <TilkjentYtelseProsessIndexV2
         behandling={{ uuid: props.behandling.uuid }}

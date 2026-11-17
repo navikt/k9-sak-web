@@ -58,4 +58,13 @@ describe('findStatusForVedtak', () => {
 
     expect(status).toBe(vilkarUtfallType.IKKE_VURDERT);
   });
+
+  it.each([undefined, {}, { type: {} }])(
+    'gir ikke vurdert når behandlingsresultat mangler type (%o)',
+    behandlingsresultat => {
+      const status = findStatusForVedtak(lagVilkar(vilkarUtfallType.IKKE_OPPFYLT), [], [], behandlingsresultat);
+
+      expect(status).toBe(vilkarUtfallType.IKKE_VURDERT);
+    },
+  );
 });

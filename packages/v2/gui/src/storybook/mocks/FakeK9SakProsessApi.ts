@@ -13,6 +13,7 @@ import type { SøknadsfristTilstandDto } from '@k9-sak-web/backend/k9sak/kontrak
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { ÅrskvantumForbrukteDagerDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/ÅrskvantumForbrukteDagerDto.js';
 import type { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
 import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
@@ -32,6 +33,7 @@ interface FakeK9SakProsessApiOptions {
   overlappendeYtelser?: OverlappendeYtelseDto[];
   opptjening?: OpptjeningerDto;
   søknadsfristStatus?: SøknadsfristTilstandDto;
+  forbrukteDager?: ÅrskvantumForbrukteDagerDto | null;
 }
 
 export class FakeK9SakProsessApi implements K9SakProsessApi {
@@ -101,5 +103,9 @@ export class FakeK9SakProsessApi implements K9SakProsessApi {
 
   async getSøknadsfristStatus(): Promise<SøknadsfristTilstandDto> {
     return this.options.søknadsfristStatus ?? ({} as SøknadsfristTilstandDto);
+  }
+
+  async getForbrukteDager(): Promise<ÅrskvantumForbrukteDagerDto | null> {
+    return this.options.forbrukteDager ?? null;
   }
 }

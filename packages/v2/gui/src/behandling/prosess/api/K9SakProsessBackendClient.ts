@@ -1,3 +1,4 @@
+import { behandlingÅrskvantumUttak_getForbrukteDager } from '@k9-sak-web/backend/k9sak/api/behandlingÅrskvantumUttak.js';
 import {
   aksjonspunkt_getAksjonspunkter1,
   arbeidsgiver_getArbeidsgiverOpplysninger,
@@ -15,6 +16,7 @@ import {
   vilkår_getVilkårV3,
   ytelser_hentOverlappendeYtelser,
 } from '@k9-sak-web/backend/k9sak/sdk/ProsessSdk.js';
+import type { ÅrskvantumForbrukteDagerDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/ÅrskvantumForbrukteDagerDto.js';
 import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import type { K9SakProsessApi } from './K9SakProsessApi.js';
 
@@ -79,5 +81,17 @@ export class K9SakProsessBackendClient implements K9SakProsessApi {
 
   async getSøknadsfristStatus(behandlingUuid: string) {
     return (await søknadsfrist_utledStatus({ query: { behandlingUuid } })).data;
+  }
+
+  async getForbrukteDager(behandlingUuid: string): Promise<ÅrskvantumForbrukteDagerDto | null> {
+    const { data, response } = await behandlingÅrskvantumUttak_getForbrukteDager({ query: { behandlingUuid } });
+    // 204 uten innhold betyr at årskvantum ikke er fastsatt. Generert klient gir da tomt objekt som data.
+    if (response.status === 204) {
+      return null;
+    }
+    if (typeof data !== 'object' || data === null) {
+      throw new Error(`Uventet svar fra forbrukte dager (${response.status}): mangler innhold`);
+    }
+    return data;
   }
 }
