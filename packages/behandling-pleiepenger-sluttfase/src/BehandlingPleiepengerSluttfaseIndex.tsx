@@ -2,7 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePrevious } from '@fpsak-frontend/shared-components';
 import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.js';
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import {
+  globalMessages,
+  ReduxFormStateCleaner,
+  Rettigheter,
+  useSetBehandlingVedEndring,
+} from '@k9-sak-web/behandling-felles';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { useGlobalUnhandledErrors } from '@k9-sak-web/gui/app/errorhandling/GlobalUnhandledErrorCatcher.js';
 import {
@@ -47,7 +52,7 @@ const cache = createIntlCache();
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
+    messages: { ...globalMessages, ...messages },
   },
   cache,
 );
