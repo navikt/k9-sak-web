@@ -3,7 +3,6 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktDefinisjon,
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
@@ -13,31 +12,15 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
-import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
 import {
   aksjonspunkterQueryOptions,
   arbeidsgiverOpplysningerQueryOptions,
   beregningsresultatUtbetalingQueryOptions,
   personopplysningerQueryOptions,
-} from './api/k9SakQueryOptions';
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
-
-/**
- * Sjekker om beregningsresultatet kun inneholder avslåtte uttak
- */
-export const harKunAvslåtteUttak = (
-  beregningsresultatUtbetaling: k9_sak_kontrakt_beregningsresultat_BeregningsresultatMedUtbetaltePeriodeDto,
-): boolean => {
-  if (!beregningsresultatUtbetaling?.perioder) {
-    return false;
-  }
-  const { perioder } = beregningsresultatUtbetaling;
-  const alleUtfall = perioder.flatMap(({ andeler }) => [
-    ...andeler.flatMap(({ uttak }) => [...(uttak ?? []).flatMap(({ utfall }) => utfall)]),
-  ]);
-  return !alleUtfall.some(utfall => utfall === 'INNVILGET');
-};
 
 interface Props {
   api: K9SakProsessApi;

@@ -14,8 +14,8 @@ import {
   tilbakekrevingsvalg_hentTilbakekrevingValg,
   vilkår_getVilkårV3,
   ytelser_hentOverlappendeYtelser,
-} from '@k9-sak-web/backend/k9sak/generated/sdk.js';
-import { K9SakProsessApi } from './K9SakProsessApi';
+} from '@k9-sak-web/backend/k9sak/sdk/ProsessSdk.js';
+import type { K9SakProsessApi } from './K9SakProsessApi.js';
 
 export class K9SakProsessBackendClient implements K9SakProsessApi {
   async getAksjonspunkter(behandlingUuid: string) {
