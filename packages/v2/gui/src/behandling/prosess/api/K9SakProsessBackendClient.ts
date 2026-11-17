@@ -15,9 +15,12 @@ import {
   vilkår_getVilkårV3,
   ytelser_hentOverlappendeYtelser,
 } from '@k9-sak-web/backend/k9sak/sdk/ProsessSdk.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 import type { K9SakProsessApi } from './K9SakProsessApi.js';
 
 export class K9SakProsessBackendClient implements K9SakProsessApi {
+  readonly backend = backendNavn.k9sak;
+
   async getAksjonspunkter(behandlingUuid: string) {
     return (await aksjonspunkt_getAksjonspunkter1({ query: { behandlingUuid } })).data;
   }

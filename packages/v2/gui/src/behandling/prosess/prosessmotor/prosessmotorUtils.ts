@@ -1,4 +1,4 @@
-import { behandlingResultatType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingResultatType as behandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkårStatus as Utfall } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
@@ -233,7 +233,11 @@ export const finnVedtakStatus = (
   if (!behandlingsresultatType) {
     return Utfall.IKKE_VURDERT;
   }
-  return behandlingsresultatType === behandlingResultatType.AVSLÅTT ? Utfall.IKKE_OPPFYLT : Utfall.OPPFYLT;
+  return behandlingsresultatType === behandlingResultatType.AVSLÅTT ||
+    behandlingsresultatType === behandlingResultatType.KLAGE_AVVIST ||
+    behandlingsresultatType === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET
+    ? Utfall.IKKE_OPPFYLT
+    : Utfall.OPPFYLT;
 };
 
 export const beregnVedtakType = (
