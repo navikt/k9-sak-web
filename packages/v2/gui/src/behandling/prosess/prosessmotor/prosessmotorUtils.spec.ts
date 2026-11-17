@@ -1,5 +1,5 @@
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import { behandlingResultatType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingResultatType.js';
+import { BehandlingResultatType as behandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
@@ -331,22 +331,21 @@ describe('vedtaksstatus', () => {
     );
   });
 
-  test('AVSLÅTT behandlingsresultat gir status IKKE_OPPFYLT', () => {
+  test.each([
+    behandlingResultatType.AVSLÅTT,
+    behandlingResultatType.KLAGE_AVVIST,
+    behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
+  ])('%s behandlingsresultat gir status IKKE_OPPFYLT og rød vedtaksstatus', kode => {
     const status = finnVedtakStatus(
       [lagVilkår([vilkårStatus.IKKE_OPPFYLT])],
       [],
-      lagBehandling(behandlingResultatType.AVSLÅTT),
+      lagBehandling(kode),
       vedtaksAksjonspunkter,
     );
 
     expect(status).toBe(vilkårStatus.IKKE_OPPFYLT);
     expect(
-      beregnVedtakType(
-        [lagVilkår([vilkårStatus.IKKE_OPPFYLT])],
-        [],
-        lagBehandling(behandlingResultatType.AVSLÅTT),
-        vedtaksAksjonspunkter,
-      ),
+      beregnVedtakType([lagVilkår([vilkårStatus.IKKE_OPPFYLT])], [], lagBehandling(kode), vedtaksAksjonspunkter),
     ).toBe(ProcessMenuStepType.danger);
   });
 

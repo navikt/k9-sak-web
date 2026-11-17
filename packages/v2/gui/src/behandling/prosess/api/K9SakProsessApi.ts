@@ -13,8 +13,9 @@ import type { SøknadsfristTilstandDto } from '@k9-sak-web/backend/k9sak/kontrak
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { BackendTilhørighet } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
-export interface K9SakProsessApi {
+export interface K9SakProsessApi extends BackendTilhørighet {
   getAksjonspunkter(behandlingUuid: string): Promise<AksjonspunktDto[]>;
   getVilkår(behandlingUuid: string): Promise<VilkårMedPerioderDto[]>;
   getFagsak(saksnummer: string): Promise<FagsakDto>;
