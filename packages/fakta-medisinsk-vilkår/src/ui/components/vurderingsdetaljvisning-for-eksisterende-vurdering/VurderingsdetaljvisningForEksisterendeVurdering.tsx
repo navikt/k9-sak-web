@@ -62,7 +62,9 @@ const getSummaryComponent = (vurderingstype: Vurderingstype) => {
 };
 
 const erAutomatiskVurdertInnleggelsesperiode = (vurderingselement: Vurderingselement) =>
-  !(vurderingselement as ManuellVurdering).resultat && !vurderingselement?.manglerLegeerklæring;
+  (!(vurderingselement as ManuellVurdering).resultat && !vurderingselement?.manglerLegeerklæring) ||
+  (vurderingselement.erInnleggelsesperiode &&
+    !findHrefByRel(LinkRel.HENT_VURDERING, (vurderingselement as ManuellVurdering).links));
 
 const VurderingsdetaljvisningForEksisterendeVurdering = ({
   vurderingsoversikt,
