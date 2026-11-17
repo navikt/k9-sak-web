@@ -1,4 +1,5 @@
-import { Alert, Box } from '@navikt/ds-react';
+import { LabelledContent } from '@k9-sak-web/gui/shared/labelled-content/LabelledContent.js';
+import { Alert, BodyShort, Box, VStack } from '@navikt/ds-react';
 import { type JSX } from 'react';
 import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';
 import Vurderingstype from '../../../types/Vurderingstype';
@@ -30,7 +31,17 @@ const VurderingsoppsummeringForInnleggelsesperiode = ({
     <DetailViewVurdering title={`Vurdering av ${vurderingstekst}`} perioder={[vurdering.periode]}>
       <Box marginBlock="space-24 space-0">
         <Alert size="small" variant={erLivetsSluttfase ? 'warning' : 'info'}>
-          {erLivetsSluttfase ? 'Avslått som følge av innleggelse' : 'Innvilget som følge av innleggelse'}
+          <VStack gap="space-8">
+            <BodyShort size="small">
+              {erLivetsSluttfase ? 'Avslått som følge av innleggelse' : 'Innvilget som følge av innleggelse'}
+            </BodyShort>
+            {vurdering.innleggelsesbegrunnelse && (
+              <LabelledContent
+                label="Begrunnelse for innleggelsesperioden"
+                content={vurdering.innleggelsesbegrunnelse}
+              />
+            )}
+          </VStack>
         </Alert>
       </Box>
     </DetailViewVurdering>

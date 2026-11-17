@@ -13,12 +13,14 @@ interface VurderingsoppsummeringForSluttfaseProps {
   vurdering: Vurdering;
   redigerVurdering: () => void;
   erInnleggelsesperiode: boolean;
+  innleggelsesbegrunnelse?: string;
 }
 
 const VurderingsoppsummeringForSluttfase = ({
   vurdering,
   redigerVurdering,
   erInnleggelsesperiode,
+  innleggelsesbegrunnelse,
 }: VurderingsoppsummeringForSluttfaseProps): JSX.Element => {
   const gjeldendeVurdering = vurdering.versjoner[0];
   const { dokumenter, perioder, tekst, resultat } = gjeldendeVurdering;
@@ -31,7 +33,7 @@ const VurderingsoppsummeringForSluttfase = ({
       redigerVurdering={!erInnleggelsesperiode ? redigerVurdering : null}
     >
       <Box marginBlock="space-24 space-0">
-        {erInnleggelsesperiode && <AvslåttAvInnleggelsesperiodeMelding />}
+        {erInnleggelsesperiode && <AvslåttAvInnleggelsesperiodeMelding begrunnelse={innleggelsesbegrunnelse} />}
         <Box marginBlock="space-16 space-0">
           <LabelledContent
             label="Hvilke dokumenter er brukt i vurderingen om livets sluttfase?"

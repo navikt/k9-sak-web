@@ -110,6 +110,34 @@ describe('InnleggelsesperiodeFormModal', () => {
   });
 
   describe('andre ytelser', () => {
+    it('legger til ny rad som tom periode, også etter at en rad er slettet', async () => {
+      const onSubmit = renderModal(fagsakYtelsesType.PLEIEPENGER_SYKT_BARN);
+
+      await userEvent.click(screen.getAllByRole('button', { name: 'Fjern periode' })[1]);
+      await userEvent.click(screen.getByRole('button', { name: 'Legg til innleggelsesperiode' }));
+
+      const fraFelt = screen.getAllByRole('textbox', { name: 'Fra' })[1];
+      const tilFelt = screen.getAllByRole('textbox', { name: 'Til' })[1];
+      expect(fraFelt).toHaveValue('');
+      expect(tilFelt).toHaveValue('');
+
+      await userEvent.type(fraFelt, '01.03.2025');
+      await userEvent.tab();
+      await userEvent.type(tilFelt, '05.03.2025');
+      await userEvent.tab();
+      await bekreft();
+
+      await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+      expect(onSubmit.mock.calls[0][0].innleggelsesperioder).toEqual([
+        expect.objectContaining({ period: expect.objectContaining({ fom: '2025-01-01', tom: '2025-01-10' }) }),
+        {
+          period: expect.objectContaining({ fom: '2025-03-01', tom: '2025-03-05' }),
+          begrunnelse: '',
+          opprinneligPeriode: null,
+        },
+      ]);
+    });
+
     it('viser ikke begrunnelsesfelt og sender ikke endringer ved endring og sletting', async () => {
       const onSubmit = renderModal(fagsakYtelsesType.PLEIEPENGER_SYKT_BARN);
 
