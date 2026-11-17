@@ -6,9 +6,10 @@ import {
   Soknad,
   Vilkar,
   BeregningsresultatUtbetalt,
-  BehandlingPerioderårsakMedVilkår
+  BehandlingPerioderårsakMedVilkår,
 } from '@k9-sak-web/types';
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
+import type { fosterbarnDto } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/FosterbarnDto';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
@@ -20,6 +21,7 @@ interface FetchedData {
   simuleringResultat: SimuleringResultat;
   forbrukteDager: ÅrskvantumForbrukteDager;
   behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår;
+  fosterbarn?: { fosterbarn?: fosterbarnDto[] };
 }
 
 export default FetchedData;

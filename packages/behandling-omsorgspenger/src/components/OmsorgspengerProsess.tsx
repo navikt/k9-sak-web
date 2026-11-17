@@ -14,11 +14,13 @@ import {
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import type { FeatureToggles } from '@k9-sak-web/gui/featuretoggles/FeatureToggles.js';
 import { useCallback, useMemo, useState } from 'react';
+import { useProsessMenyToggle } from '@k9-sak-web/gui/behandling/prosess/hooks/useProsessMenyToggle.js';
 
 import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omsorgspengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { OmsorgspengerProsessV2 } from './OmsorgspengerProsessV2';
 
 interface OwnProps {
   data: FetchedData;
@@ -39,7 +41,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const getForhandsvisTilbakeCallback =
+export const getForhandsvisTilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
   (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
     const data = {
@@ -196,6 +198,13 @@ const OmsorgspengerProsess = ({
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
+
+  const lukkModalOgGåTilSøk = useCallback(() => {
+    toggleIverksetterVedtakModal(false);
+    toggleFatterVedtakModal(false);
+    opneSokeside();
+  }, [opneSokeside]);
+
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
@@ -222,22 +231,45 @@ const OmsorgspengerProsess = ({
     [behandling.versjon],
   );
 
+  const { useV2Menu, ToggleComponent } = useProsessMenyToggle('PROSESS_MENY_V2_OMS');
+
+  if (useV2Menu) {
+    return (
+      <OmsorgspengerProsessV2
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling}
+        rettigheter={rettigheter}
+        data={data}
+        alleKodeverk={alleKodeverk}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        visIverksetterVedtakModal={visIverksetterVedtakModal}
+        toggleIverksetterVedtakModal={toggleIverksetterVedtakModal}
+        visFatterVedtakModal={visFatterVedtakModal}
+        toggleFatterVedtakModal={toggleFatterVedtakModal}
+        lukkModalOgGåTilSøk={lukkModalOgGåTilSøk}
+        ToggleComponent={ToggleComponent}
+        lagreAksjonspunkter={lagreAksjonspunkter}
+        lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
+        forhandsvisMelding={forhandsvisMelding}
+        forhandsvisTilbakekrevingMelding={forhandsvisTilbakekrevingMelding}
+        lagreDokumentdata={lagreDokumentdata}
+        hentFritekstbrevHtmlCallback={dataTilUtledingAvFpPaneler.hentFritekstbrevHtmlCallback}
+      />
+    );
+  }
+
   return (
     <>
+      {ToggleComponent}
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
-        lukkModal={useCallback(() => {
-          toggleIverksetterVedtakModal(false);
-          opneSokeside();
-        }, [])}
+        lukkModal={lukkModalOgGåTilSøk}
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
-        lukkModal={useCallback(() => {
-          toggleFatterVedtakModal(false);
-          opneSokeside();
-        }, [])}
+        lukkModal={lukkModalOgGåTilSøk}
         tekstkode={fatterVedtakTextCode}
       />
       <ProsessStegContainer
