@@ -6,6 +6,7 @@ import type { BeregningsresultatMedUtbetaltePeriodeDto } from '@k9-sak-web/backe
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import type { FagsakDto } from '@k9-sak-web/backend/k9sak/kontrakt/fagsak/FagsakDto.js';
 import type { MedlemV2Dto } from '@k9-sak-web/backend/k9sak/kontrakt/medlem/MedlemV2Dto.js';
+import type { ÅrskvantumForbrukteDagerDto } from '@k9-sak-web/backend/k9sak/kontrakt/omsorgspenger/ÅrskvantumForbrukteDagerDto.js';
 import type { OpptjeningerDto } from '@k9-sak-web/backend/k9sak/kontrakt/opptjening/OpptjeningerDto.js';
 import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/kontrakt/person/PersonopplysningDto.js';
 import type { SimuleringDto } from '@k9-sak-web/backend/k9sak/kontrakt/simulering/v1/SimuleringDto.js';
@@ -31,4 +32,5 @@ export interface K9SakProsessApi extends BackendTilhørighet {
   getOverlappendeYtelser(behandlingUuid: string): Promise<OverlappendeYtelseDto[]>;
   getOpptjening(behandlingUuid: string): Promise<OpptjeningerDto>;
   getSøknadsfristStatus(behandlingUuid: string): Promise<SøknadsfristTilstandDto>;
+  getForbrukteDager(behandlingUuid: string): Promise<ÅrskvantumForbrukteDagerDto | null>;
 }

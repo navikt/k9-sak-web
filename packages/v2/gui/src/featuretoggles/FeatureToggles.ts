@@ -15,6 +15,7 @@ const rootFeatureToggles = {
   UTVIDET_VARSELFELT: false, // Brukt i jsx
   BRUK_V2_AVREGNING: false,
   PROSESS_MENY_V2: false,
+  PROSESS_MENY_V2_OMS: false, // Styrer v2-prosessmeny for omsorgspenger.
   SKJUL_PROSESS_MENY_V2_VELGER: false,
   ENDRE_FRIST: false,
   DELVIS_REVURDERING_MEDISINSK_VILKAR: false,
