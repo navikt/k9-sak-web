@@ -34,7 +34,7 @@ export const behandlingQueryOptions = (api: K9SakProsessApi, behandling: Behandl
 
 export const medlemskapQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
   queryOptions({
-    queryKey: ['medlemskap', behandling.uuid, behandling.versjon],
+    queryKey: ['medlemskap', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getMedlemskap(behandling.uuid),
   });
 
@@ -114,6 +114,6 @@ export const opptjeningQueryOptions = (api: K9SakProsessApi, behandling: Behandl
 
 export const forbrukteDagerQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
   queryOptions({
-    queryKey: ['forbrukteDager', behandling.uuid, behandling.versjon],
+    queryKey: ['forbrukteDager', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getForbrukteDager(behandling.uuid),
   });
