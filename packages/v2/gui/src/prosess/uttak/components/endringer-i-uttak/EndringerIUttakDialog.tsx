@@ -46,6 +46,15 @@ const EndringerIUttakDrawer = ({ open, onClose }: EndringerIUttakDrawerProps) =>
             </BodyLong>
           </VStack>
           <VStack gap="space-4">
+            <Detail>Mai 2025</Detail>
+            <BodyLong>
+              Timene en får omsorgsstønad/fosterhjemsgodtgjørelse for, regnes som en del av den vanlige arbeidstiden og
+              må oppgis i søknaden om pleiepenger. Omsorgsstønad vil derfor være med i vurderingen om arbeidsevne er
+              redusert med minst 20 %. Søknader som sendes før dette har ikke arbeidstid for omsorgsstønad, som medfører
+              at det kan være behov for å innhente denne senere.
+            </BodyLong>
+          </VStack>
+          <VStack gap="space-4">
             <Detail>Mars 2025</Detail>
             <BodyLong>
               Normalarbeidstid for ikke yrkesaktiv settes lik normalarbeidstid for arbeidsforholdet ved
