@@ -8,11 +8,14 @@ import { Behandling } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo, useState } from 'react';
-import { K9SakProsessApi } from '../api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../api/k9SakQueryOptions';
-import { AlderProsessStegInitPanel } from './AlderProsessStegInitPanel';
-import { OmsorgenForProsessStegInitPanel } from './OmsorgenForProsessStegInitPanel';
-import { SøknadsfristProsessStegInitPanel } from './SøknadsfristProsessStegInitPanel';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
+import {
+  aksjonspunkterQueryOptions,
+  vilkårQueryOptions,
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
+import { AlderProsessStegInitPanel } from '@k9-sak-web/gui/behandling/prosess/vilkårpaneler/AlderProsessStegInitPanel.js';
+import { OmsorgenForProsessStegInitPanel } from '@k9-sak-web/gui/behandling/prosess/vilkårpaneler/OmsorgenForProsessStegInitPanel.js';
+import { SøknadsfristProsessStegInitPanel } from '@k9-sak-web/gui/behandling/prosess/vilkårpaneler/SøknadsfristProsessStegInitPanel.js';
 
 // Relevante vilkår for inngangsvilkår-panelet
 const relevanteVilkårkoder = [VilkårType.SØKNADSFRIST, VilkårType.ALDERSVILKÅR, VilkårType.OMSORGEN_FOR];

@@ -8,10 +8,13 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { HGrid, Tabs, VStack } from '@navikt/ds-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo, useState } from 'react';
-import { K9SakProsessApi } from '../api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, vilkårQueryOptions } from '../api/k9SakQueryOptions';
-import { FortsattMedlemskapProsessStegInitPanel } from './FortsattMedlemskapProsessStegInitPanel';
-import { OpptjeningProsessStegInitPanel } from './OpptjeningProsessStegInitPanel';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
+import {
+  aksjonspunkterQueryOptions,
+  vilkårQueryOptions,
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
+import { FortsattMedlemskapProsessStegInitPanel } from '@k9-sak-web/gui/behandling/prosess/vilkårpaneler/FortsattMedlemskapProsessStegInitPanel.js';
+import { OpptjeningProsessStegInitPanel } from '@k9-sak-web/gui/behandling/prosess/vilkårpaneler/OpptjeningProsessStegInitPanel.js';
 
 // Relevante vilkår for inngangsvilkår-panelet
 const RELEVANTE_VILKAR_KODER = [VilkårType.MEDLEMSKAPSVILKÅRET, VilkårType.OPPTJENINGSVILKÅRET];

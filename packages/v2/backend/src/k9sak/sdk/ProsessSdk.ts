@@ -1,0 +1,17 @@
+export {
+  aksjonspunkt_getAksjonspunkter1,
+  arbeidsgiver_getArbeidsgiverOpplysninger,
+  behandlinger_hentBehandlingData1,
+  behandlingPerson_getPersonopplysninger,
+  behandlingPerson_hentMedlemskap,
+  beregningsgrunnlag_hentBeregningsgrunnlagene,
+  beregningsgrunnlag_hentNøklerTilVurdering,
+  beregningsresultat_hentBeregningsresultatMedUtbetaling,
+  fagsak_hentFagsak,
+  opptjening_getOpptjeninger,
+  simulering_hentSimuleringResultat,
+  søknadsfrist_utledStatus,
+  tilbakekrevingsvalg_hentTilbakekrevingValg,
+  vilkår_getVilkårV3,
+  ytelser_hentOverlappendeYtelser,
+} from '@k9-sak-web/backend/k9sak/generated/sdk.js';

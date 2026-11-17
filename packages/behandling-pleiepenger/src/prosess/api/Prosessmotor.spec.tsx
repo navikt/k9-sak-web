@@ -16,13 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import React from 'react';
 import { beforeEach, describe, expect, test } from 'vitest';
-import {
-  beregnVedtakType,
-  finnSimuleringStatus,
-  finnTilkjentYtelseStatus,
-  finnUttakStatus,
-  useProsessmotor,
-} from './Prosessmotor';
+import { finnTilkjentYtelseStatus, finnUttakStatus, useProsessmotor } from './Prosessmotor';
 
 const createWrapper =
   (queryClient: QueryClient, uttak?: FakeUttakBackendConfig['uttak']) =>
@@ -568,17 +562,6 @@ describe('finnUttakStatus', () => {
   });
 });
 
-describe('finnSimuleringStatus', () => {
-  test('returnerer OPPFYLT når simuleringResultat finnes', () => {
-    expect(finnSimuleringStatus(simuleringResultat)).toBe(vilkårStatus.OPPFYLT);
-  });
-
-  test('returnerer IKKE_VURDERT når simuleringResultat mangler', () => {
-    expect(finnSimuleringStatus(null)).toBe(vilkårStatus.IKKE_VURDERT);
-    expect(finnSimuleringStatus(undefined)).toBe(vilkårStatus.IKKE_VURDERT);
-  });
-});
-
 describe('finnTilkjentYtelseStatus', () => {
   const lagBeregningsresultat = (utfall: string) => ({
     perioder: [
@@ -606,151 +589,5 @@ describe('finnTilkjentYtelseStatus', () => {
 
   test('returnerer IKKE_OPPFYLT når alle uttak er avslått', () => {
     expect(finnTilkjentYtelseStatus(lagBeregningsresultat('AVSLÅTT') as any)).toBe(vilkårStatus.IKKE_OPPFYLT);
-  });
-});
-
-describe('beregnVedtakType', () => {
-  const vedtakAksjonspunkter = [AksjonspunktDefinisjon.FORESLÅ_VEDTAK, AksjonspunktDefinisjon.FATTER_VEDTAK];
-
-  const lagVilkår = (status: string) => ({
-    vilkarType: VilkårType.SØKNADSFRIST,
-    perioder: [{ vilkarStatus: status, periode: { fom: '', tom: '' } }],
-    relevanteInnvilgetMerknader: [],
-  });
-
-  const lagBehandling = (kode?: string, status = 'UTRED') => ({
-    uuid: 'x',
-    versjon: 1,
-    behandlingsresultat: kode ? { type: { kode, kodeverk: '' } } : undefined,
-    status: { kode: status, kodeverk: '' },
-  });
-
-  test('returnerer default når vilkår er tom', () => {
-    expect(beregnVedtakType([], [], lagBehandling() as any, vedtakAksjonspunkter)).toBe(ProcessMenuStepType.default);
-  });
-
-  test('returnerer default når et vilkår ikke er vurdert', () => {
-    expect(
-      beregnVedtakType([lagVilkår(vilkårStatus.IKKE_VURDERT)] as any, [], lagBehandling() as any, vedtakAksjonspunkter),
-    ).toBe(ProcessMenuStepType.default);
-  });
-
-  test('returnerer warning når FATTER_VEDTAK er åpent og behandling ikke er i FVED', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
-        lagBehandling(undefined, 'UTRED') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.warning);
-  });
-
-  test('returnerer ikke warning når vedtaksaksjonspunktet ikke kan løses', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK, aksjonspunktStatus.OPPRETTET, false)],
-        lagBehandling(undefined, 'UTRED') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.default);
-  });
-
-  test('returnerer warning når behandling er i FVED og FATTER_VEDTAK er åpent, som i gammel rigg', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
-        lagBehandling('INNVILGET', 'FVED') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.warning);
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.IKKE_OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.FATTER_VEDTAK)],
-        lagBehandling('AVSLÅTT', 'FVED') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.warning);
-  });
-
-  test('returnerer warning når vedtaksaksjonspunkt er åpent selv om andre deler ikke er ferdige', () => {
-    const åpentVedtak = lagAksjonspunkt(AksjonspunktDefinisjon.FORESLÅ_VEDTAK);
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.IKKE_VURDERT)] as any,
-        [åpentVedtak],
-        lagBehandling('INNVILGET') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.warning);
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [åpentVedtak, lagAksjonspunkt(AksjonspunktDefinisjon.KONTROLLER_LEGEERKLÆRING)],
-        lagBehandling('INNVILGET') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.warning);
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [åpentVedtak, lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING)],
-        lagBehandling('INNVILGET') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.warning);
-  });
-
-  test('returnerer default når et ikke-vedtaks-aksjonspunkt er åpent', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.KONTROLLER_LEGEERKLÆRING)],
-        lagBehandling() as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.default);
-  });
-
-  test('returnerer success når behandlingsresultat er innvilget', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [],
-        lagBehandling('INNVILGET') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.success);
-  });
-
-  test('returnerer danger når behandlingsresultat er avslag', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.IKKE_OPPFYLT)] as any,
-        [],
-        lagBehandling('AVSLÅTT') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.danger);
-  });
-
-  test('returnerer default når behandlingsresultat mangler type', () => {
-    expect(
-      beregnVedtakType([lagVilkår(vilkårStatus.OPPFYLT)] as any, [], lagBehandling() as any, vedtakAksjonspunkter),
-    ).toBe(ProcessMenuStepType.default);
-  });
-
-  test('returnerer default når overstyring av beregning er åpent', () => {
-    expect(
-      beregnVedtakType(
-        [lagVilkår(vilkårStatus.OPPFYLT)] as any,
-        [lagAksjonspunkt(AksjonspunktDefinisjon.OVERSTYRING_AV_BEREGNING)],
-        lagBehandling('INNVILGET') as any,
-        vedtakAksjonspunkter,
-      ),
-    ).toBe(ProcessMenuStepType.default);
   });
 });

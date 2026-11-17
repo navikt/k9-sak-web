@@ -1,6 +1,6 @@
-import { k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@navikt/k9-sak-typescript-client/types';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { queryOptions } from '@tanstack/react-query';
-import { K9SakProsessApi } from './K9SakProsessApi';
+import type { K9SakProsessApi } from './K9SakProsessApi.js';
 
 interface Behandling {
   uuid: string;
@@ -22,8 +22,7 @@ export const aksjonspunkterQueryOptions = (
     queryKey: ['aksjonspunkter', behandling.uuid, behandling.versjon],
     queryFn: () => api.getAksjonspunkter(behandling.uuid),
     select: aksjonspunktKoder
-      ? (data: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) =>
-          data.filter(ap => aksjonspunktKoder.some(kode => kode === ap.definisjon))
+      ? (data: AksjonspunktDto[]) => data.filter(ap => aksjonspunktKoder.some(kode => kode === ap.definisjon))
       : undefined,
   });
 

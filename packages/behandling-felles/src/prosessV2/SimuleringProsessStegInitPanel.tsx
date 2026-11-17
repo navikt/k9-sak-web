@@ -11,15 +11,14 @@ import { VersjonsvelgerV1V2 } from '@k9-sak-web/behandling-felles';
 import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
-import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
-import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
 import {
   aksjonspunkterQueryOptions,
   behandlingQueryOptions,
   fagsakQueryOptions,
   simuleringResultatQueryOptions,
   tilbakekrevingvalgQueryOptions,
-} from './api/k9SakQueryOptions';
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
@@ -34,6 +33,8 @@ interface Props {
   fagsak: Fagsak;
   previewFptilbakeCallback:
     ((mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => Promise<any>) | undefined;
+  // Data i legacy-format til v1-komponenten, hentes av ytelsens container med dens REST-hooks.
+  legacyData: { simuleringResultat: any; tilbakekrevingvalg: any } | undefined;
   submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
   isReadOnly: boolean;
   api: K9SakProsessApi;
@@ -59,20 +60,9 @@ export function SimuleringProsessStegInitPanel(props: Props) {
     ],
   });
 
-  const restApiData = restApiPleiepengerHooks.useMultipleRestApi<{
-    simuleringResultat: any;
-    tilbakekrevingvalg: any;
-  }>(
-    [
-      { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
-      { key: PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG },
-    ],
-    { keepData: true, suspendRequest: false, updateTriggers: [props.behandling.versjon] },
-  );
+  const data = props.legacyData;
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
-
-  const data = restApiData.data;
 
   if (!erValgt || !data) {
     return null;

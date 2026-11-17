@@ -12,7 +12,7 @@ import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
 import RestApiState from '../../../rest-api-hooks/src/RestApiState';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
-import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
 import {
   aksjonspunkterQueryOptions,
   arbeidsgiverOpplysningerQueryOptions,
@@ -23,7 +23,7 @@ import {
   simuleringResultatQueryOptions,
   tilbakekrevingvalgQueryOptions,
   vilkårQueryOptions,
-} from './api/k9SakQueryOptions';
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const vedtakAksjonspunktKoder = [
   AksjonspunktDefinisjon.FORESLÅ_VEDTAK,
