@@ -55,9 +55,6 @@ const getSummaryComponent = (vurderingstype: Vurderingstype) => {
   if (vurderingstype === Vurderingstype.TO_OMSORGSPERSONER) {
     return VurderingsoppsummeringForToOmsorgspersoner;
   }
-  if (vurderingstype === Vurderingstype.LIVETS_SLUTTFASE) {
-    return VurderingsoppsummeringForSluttfase;
-  }
   if (vurderingstype === Vurderingstype.LANGVARIG_SYKDOM) {
     return VurderingsoppsummeringLangvarigSykdom;
   }
@@ -65,7 +62,9 @@ const getSummaryComponent = (vurderingstype: Vurderingstype) => {
 };
 
 const erAutomatiskVurdertInnleggelsesperiode = (vurderingselement: Vurderingselement) =>
-  !(vurderingselement as ManuellVurdering).resultat && !vurderingselement?.manglerLegeerklæring;
+  (!(vurderingselement as ManuellVurdering).resultat && !vurderingselement?.manglerLegeerklæring) ||
+  (vurderingselement.erInnleggelsesperiode &&
+    !findHrefByRel(LinkRel.HENT_VURDERING, (vurderingselement as ManuellVurdering).links));
 
 const VurderingsdetaljvisningForEksisterendeVurdering = ({
   vurderingsoversikt,
@@ -143,6 +142,17 @@ const VurderingsdetaljvisningForEksisterendeVurdering = ({
               vurderingsid={vurderingselement.id}
               vurderingsversjonId={vurderingsversjon.versjon ?? ''}
               onVurderingLagret={onVurderingLagret}
+            />
+          );
+        }
+
+        if (vurderingstype === Vurderingstype.LIVETS_SLUTTFASE) {
+          return (
+            <VurderingsoppsummeringForSluttfase
+              vurdering={vurdering}
+              redigerVurdering={onEditClick}
+              erInnleggelsesperiode={vurderingselement.erInnleggelsesperiode}
+              innleggelsesbegrunnelse={manuellVurdering.innleggelsesbegrunnelse}
             />
           );
         }
