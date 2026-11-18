@@ -155,7 +155,6 @@ export const AktivitetÅrsakOgVarsel = ({
     })),
   });
   const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(opphørPeriods));
-  const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmit, setPendingSubmit] = useState<SubmitArgs | null>(null);
   const formHook = useForm<AktivitetFormData>({ defaultValues: buildInitialValues(vilkårsavklaringer) });
   const formPerioder = formHook.watch('perioder');
@@ -187,19 +186,17 @@ export const AktivitetÅrsakOgVarsel = ({
     const submitArgs = { formData: data, selectedId };
     if (skalSendeVarselOmOpphør === 'ja') {
       setPendingSubmit(submitArgs);
-      setVisBekreftSubmitModal(true);
       return;
     }
     await bekreftAksjonspunktMutation(submitArgs);
     setIsFormLocked(true);
   };
 
-  const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
-    if (!pendingSubmit) {
-      return;
-    }
-    await bekreftAksjonspunktMutation(pendingSubmit);
-    setVisBekreftSubmitModal(false);
+  const bekreftOgSendForhåndsvarsel = async (
+    submitArgs: SubmitArgs,
+    setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => {
+    await bekreftAksjonspunktMutation(submitArgs);
     setPendingSubmit(null);
     setIsFormLocked(true);
   };
@@ -287,16 +284,13 @@ export const AktivitetÅrsakOgVarsel = ({
                 )}
               </VStack>
             </RhfForm>
-            {visBekreftSubmitModal && (
+            {pendingSubmit && (
               <OpphørForhåndsvarselModal
-                open={visBekreftSubmitModal}
+                open
                 isPending={isPending}
-                onClose={() => setVisBekreftSubmitModal(false)}
-                onConfirm={() => void bekreftOgSendForhåndsvarsel(setIsFormLocked)}
-                onCancel={() => {
-                  setVisBekreftSubmitModal(false);
-                  setPendingSubmit(null);
-                }}
+                onClose={() => setPendingSubmit(null)}
+                onConfirm={() => void bekreftOgSendForhåndsvarsel(pendingSubmit, setIsFormLocked)}
+                onCancel={() => setPendingSubmit(null)}
               />
             )}
           </>
