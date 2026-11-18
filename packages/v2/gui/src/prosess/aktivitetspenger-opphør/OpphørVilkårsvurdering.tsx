@@ -39,7 +39,15 @@ type OpphørAksjonspunktKode =
   | typeof AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER_OPPHØR
   | typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
 
-type VurderingEtterAvklaring = Extract<BekreftetAksjonspunktDto, { '@type': OpphørAksjonspunktKode }>;
+type GenerertVurderingEtterAvklaring = Extract<BekreftetAksjonspunktDto, { '@type': OpphørAksjonspunktKode }>;
+
+// TODO: Fjern når backend-klienten har VURDER_AKTIVITETSVILKÅR_OPPHØR i BekreftetAksjonspunktDto.
+// Formen er antatt lik de andre *EtterAvklaringDto-ene for opphør (bosted, bistand, andre livsoppholdsytelser).
+type VurderingAvAktivitetsvilkårEtterAvklaring = Omit<GenerertVurderingEtterAvklaring, '@type'> & {
+  '@type': typeof AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR;
+};
+
+type VurderingEtterAvklaring = GenerertVurderingEtterAvklaring | VurderingAvAktivitetsvilkårEtterAvklaring;
 
 export interface OpphørVilkårsvurderingOppsett {
   vilkårType: VilkårType;
@@ -187,7 +195,10 @@ export const OpphørVilkårsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (submitArgs: SubmitArgs) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
+        // @ts-expect-error -- BekreftetAksjonspunktDto mangler DTO for VURDER_AKTIVITETSVILKÅR_OPPHØR. Fjern når backend-klienten har den.
+        buildPayload(submitArgs),
+      ]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
