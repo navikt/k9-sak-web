@@ -1903,7 +1903,7 @@ export const AktivitetVilkårsvurderingPåVent: Story = {
     await expect(await canvas.findByText('Vurdering av ikke i aktivitet')).toBeInTheDocument();
     await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
     await expect(
-      canvas.getByRole('group', { name: 'Skal ytelsen opphøre fordi bruker ikke er i aktivitet?' }),
+      canvas.getByRole('radiogroup', { name: /skal ytelsen opphøre fordi bruker ikke er i aktivitet/i }),
     ).toHaveAttribute('aria-readonly', 'true');
     await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
     await expect(canvas.queryByRole('button', { name: /rediger vurdering/i })).not.toBeInTheDocument();
@@ -1924,7 +1924,7 @@ export const AktivitetVilkårsvurderingUtførtPåVent: Story = {
     await expect(canvas.getByText('Du har ikke deltatt i aktivitetene du har avtalt med Nav.')).toBeInTheDocument();
     await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
     await expect(
-      canvas.getByRole('group', { name: 'Skal ytelsen opphøre fordi bruker ikke er i aktivitet?' }),
+      canvas.getByRole('radiogroup', { name: /skal ytelsen opphøre fordi bruker ikke er i aktivitet/i }),
     ).toHaveAttribute('aria-readonly', 'true');
     await expect(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i })).toBeChecked();
     await expect(canvas.queryByRole('button', { name: /bekreft og fortsett/i })).not.toBeInTheDocument();
