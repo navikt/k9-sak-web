@@ -2,15 +2,7 @@ import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { aksjonspunktStatus as k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
-import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { AvregningProsessIndex as AvregningProsessIndexV2 } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { VersjonsvelgerV1V2 } from '@k9-sak-web/behandling-felles';
-import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
-import { useSuspenseQueries } from '@tanstack/react-query';
-import { use, useContext } from 'react';
 import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
 import {
   aksjonspunkterQueryOptions,
@@ -19,6 +11,14 @@ import {
   simuleringResultatQueryOptions,
   tilbakekrevingvalgQueryOptions,
 } from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
+import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
+import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
+import { AvregningProsessIndex as AvregningProsessIndexV2 } from '@k9-sak-web/gui/prosess/avregning/AvregningProsessIndex.js';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { use, useContext } from 'react';
 
 const RELEVANTE_AKSJONSPUNKTER = [
   AksjonspunktDefinisjon.VURDER_FEILUTBETALING,
@@ -60,11 +60,11 @@ export function SimuleringProsessStegInitPanel(props: Props) {
     ],
   });
 
-  const data = props.legacyData;
+  const { legacyData } = props;
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);
 
-  if (!erValgt || !data) {
+  if (!erValgt || !legacyData) {
     return null;
   }
 
@@ -98,8 +98,8 @@ export function SimuleringProsessStegInitPanel(props: Props) {
             behandling={props.behandling}
             aksjonspunkter={relevanteAksjonspunkter}
             fagsak={props.fagsak}
-            simuleringResultat={data.simuleringResultat}
-            tilbakekrevingvalg={data.tilbakekrevingvalg}
+            simuleringResultat={legacyData.simuleringResultat}
+            tilbakekrevingvalg={legacyData.tilbakekrevingvalg}
             previewFptilbakeCallback={props.previewFptilbakeCallback}
             featureToggles={featureToggles}
             readOnlySubmitButton={readOnlySubmitButton}
@@ -127,8 +127,8 @@ export function SimuleringProsessStegInitPanel(props: Props) {
       behandling={props.behandling}
       aksjonspunkter={relevanteAksjonspunkter}
       fagsak={props.fagsak}
-      simuleringResultat={data.simuleringResultat}
-      tilbakekrevingvalg={data.tilbakekrevingvalg}
+      simuleringResultat={legacyData.simuleringResultat}
+      tilbakekrevingvalg={legacyData.tilbakekrevingvalg}
       previewFptilbakeCallback={props.previewFptilbakeCallback}
       featureToggles={featureToggles}
       readOnlySubmitButton={readOnlySubmitButton}
