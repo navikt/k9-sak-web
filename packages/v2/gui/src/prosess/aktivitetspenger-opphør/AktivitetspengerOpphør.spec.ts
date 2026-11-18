@@ -1,10 +1,11 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AksjonspunktStatus } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktStatus.js';
+import { BehandlingÅrsakType } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import { describe, expect, it } from 'vitest';
-import { utledAktivTab, utledGjeldendeVilkår } from './AktivitetspengerOpphør.js';
+import { samleOpphørData, utledAktivTab, utledVilkårForBehandlingsårsak } from './AktivitetspengerOpphør.js';
 import { OpphørTab } from './types.js';
 
 const lagAp = (
@@ -17,81 +18,123 @@ const lagAp = (
   erAktivt: status === AksjonspunktStatus.OPPRETTET,
 });
 
+const årsaker = (...typer: BehandlingÅrsakType[]) => typer.map(behandlingArsakType => ({ behandlingArsakType }));
+const alleOpphørsårsaker = årsaker(
+  BehandlingÅrsakType.ENDRET_BOSTED,
+  BehandlingÅrsakType.ENDRET_BISTANDSBEHOV,
+  BehandlingÅrsakType.ENDRET_AKTIVITET,
+  BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE,
+);
+
 describe('utledAktivTab', () => {
   it('returnerer ÅRSAK_OG_VARSEL når VURDER_FAKTA_OM_BOSTED er OPPRETTET', () => {
-    expect(utledAktivTab({ vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED) })).toBe(
-      OpphørTab.ÅRSAK_OG_VARSEL,
-    );
+    expect(
+      utledAktivTab(samleOpphørData([lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED)], [], alleOpphørsårsaker)),
+    ).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
   });
 
   it('returnerer ÅRSAK_OG_VARSEL når VURDER_FAKTA_OM_BISTAND er OPPRETTET', () => {
-    expect(utledAktivTab({ vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND) })).toBe(
-      OpphørTab.ÅRSAK_OG_VARSEL,
-    );
+    expect(
+      utledAktivTab(samleOpphørData([lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND)], [], alleOpphørsårsaker)),
+    ).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
   });
 
   it('returnerer VILKÅRSVURDERING når VURDER_BOSTEDSVILKÅR_OPPHØR er OPPRETTET', () => {
-    expect(utledAktivTab({ vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR) })).toBe(
-      OpphørTab.VILKÅRSVURDERING,
-    );
+    expect(
+      utledAktivTab(
+        samleOpphørData([lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR)], [], alleOpphørsårsaker),
+      ),
+    ).toBe(OpphørTab.VILKÅRSVURDERING);
   });
 
   it('returnerer VILKÅRSVURDERING når VURDER_BISTANDSVILKÅR_OPPHØR er OPPRETTET', () => {
-    expect(utledAktivTab({ vurderBistandVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR) })).toBe(
-      OpphørTab.VILKÅRSVURDERING,
-    );
+    expect(
+      utledAktivTab(
+        samleOpphørData([lagAp(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR)], [], alleOpphørsårsaker),
+      ),
+    ).toBe(OpphørTab.VILKÅRSVURDERING);
   });
 
   it('returnerer ÅRSAK_OG_VARSEL når VURDER_FAKTA_OM_AKTIVITET er OPPRETTET', () => {
-    expect(utledAktivTab({ vurderAktivitetFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET) })).toBe(
-      OpphørTab.ÅRSAK_OG_VARSEL,
-    );
+    expect(
+      utledAktivTab(samleOpphørData([lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET)], [], alleOpphørsårsaker)),
+    ).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
   });
 
   it('returnerer VILKÅRSVURDERING når VURDER_AKTIVITETSVILKÅR_OPPHØR er OPPRETTET', () => {
     expect(
-      utledAktivTab({
-        vurderAktivitetVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR),
-      }),
+      utledAktivTab(
+        samleOpphørData([lagAp(AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR)], [], alleOpphørsårsaker),
+      ),
     ).toBe(OpphørTab.VILKÅRSVURDERING);
   });
 
   it('returnerer BESLUTTER når NAV_KONTOR_BESLUTTER_VILKÅR er OPPRETTET', () => {
-    expect(utledAktivTab({ lokalkontorBeslutterAP: lagAp(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR) })).toBe(
-      OpphørTab.BESLUTTER,
-    );
+    expect(
+      utledAktivTab(
+        samleOpphørData([lagAp(AksjonspunktDefinisjon.NAV_KONTOR_BESLUTTER_VILKÅR)], [], alleOpphørsårsaker),
+      ),
+    ).toBe(OpphørTab.BESLUTTER);
   });
 
   it('returnerer VILKÅRSVURDERING når lokalkontorForeslårVilkårAP finnes, uavhengig av status', () => {
     expect(
-      utledAktivTab({
-        lokalkontorForeslårVilkårAP: lagAp(
-          AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR,
-          AksjonspunktStatus.UTFØRT,
+      utledAktivTab(
+        samleOpphørData(
+          [lagAp(AksjonspunktDefinisjon.NAV_KONTOR_FORESLÅR_VILKÅR, AksjonspunktStatus.UTFØRT)],
+          [],
+          alleOpphørsårsaker,
         ),
-      }),
+      ),
     ).toBe(OpphørTab.VILKÅRSVURDERING);
   });
 
   it('returnerer ÅRSAK_OG_VARSEL som fallback når ingen aksjonspunkter finnes', () => {
-    expect(utledAktivTab({})).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
+    expect(utledAktivTab(samleOpphørData([], [], alleOpphørsårsaker))).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
   });
 
   it('prioriterer ÅRSAK_OG_VARSEL over VILKÅRSVURDERING når begge er OPPRETTET', () => {
     expect(
-      utledAktivTab({
-        vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-        vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
-      }),
+      utledAktivTab(
+        samleOpphørData(
+          [
+            lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+            lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
+          ],
+          [],
+          alleOpphørsårsaker,
+        ),
+      ),
     ).toBe(OpphørTab.ÅRSAK_OG_VARSEL);
   });
 
   it('returnerer VILKÅRSVURDERING når VURDER_FAKTA_OM_BOSTED er UTFØRT og VURDER_BOSTEDSVILKÅR_OPPHØR er OPPRETTET', () => {
     expect(
-      utledAktivTab({
-        vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED, AksjonspunktStatus.UTFØRT),
-        vurderBostedVilkårAP: lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
-      }),
+      utledAktivTab(
+        samleOpphørData(
+          [
+            lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED, AksjonspunktStatus.UTFØRT),
+            lagAp(AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR),
+          ],
+          [],
+          alleOpphørsårsaker,
+        ),
+      ),
+    ).toBe(OpphørTab.VILKÅRSVURDERING);
+  });
+
+  it('ser bort fra aksjonspunkter for vilkår som ikke gjelder behandlingsårsaken', () => {
+    expect(
+      utledAktivTab(
+        samleOpphørData(
+          [
+            lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
+            lagAp(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR_OPPHØR),
+          ],
+          [],
+          årsaker(BehandlingÅrsakType.ENDRET_BISTANDSBEHOV),
+        ),
+      ),
     ).toBe(OpphørTab.VILKÅRSVURDERING);
   });
 });
@@ -103,80 +146,47 @@ const lagVilkår = (type: VilkårMedPerioderDto['vilkarType']): VilkårMedPeriod
   perioder: [],
 });
 
-describe('utledGjeldendeVilkår', () => {
+describe('utledVilkårForBehandlingsårsak', () => {
   const bostedVilkår = lagVilkår(vilkarType.BOSTEDSVILKÅR);
   const bistandVilkår = lagVilkår(vilkarType.BISTANDSVILKÅR);
   const aktivitetVilkår = lagVilkår(vilkarType.AKTIVITETSVILKÅR);
   const andreLivsoppholdytelserVilkår = lagVilkår(vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR);
-  const alleVilkår = { bostedVilkår, bistandVilkår, aktivitetVilkår, andreLivsoppholdytelserVilkår };
+  const alleVilkår = [bostedVilkår, bistandVilkår, aktivitetVilkår, andreLivsoppholdytelserVilkår];
 
-  it('returnerer bostedsvilkåret når VURDER_FAKTA_OM_BOSTED finnes', () => {
-    expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED),
-      }),
-    ).toBe(bostedVilkår);
+  it.each([
+    [BehandlingÅrsakType.ENDRET_BOSTED, bostedVilkår],
+    [BehandlingÅrsakType.ENDRET_BISTANDSBEHOV, bistandVilkår],
+    [BehandlingÅrsakType.ENDRET_AKTIVITET, aktivitetVilkår],
+    [BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE, andreLivsoppholdytelserVilkår],
+  ])('returnerer vilkåret for behandlingsårsak %s', (årsak, forventetVilkår) => {
+    expect(utledVilkårForBehandlingsårsak(samleOpphørData([], alleVilkår, årsaker(årsak)))).toBe(forventetVilkår);
   });
 
-  it('returnerer bistandsvilkåret når VURDER_FAKTA_OM_BISTAND finnes', () => {
+  it('følger rekkefølgen i opphørsvilkår når behandlingen har flere opphørsårsaker', () => {
     expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
-      }),
+      utledVilkårForBehandlingsårsak(
+        samleOpphørData(
+          [],
+          alleVilkår,
+          årsaker(BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE, BehandlingÅrsakType.ENDRET_BISTANDSBEHOV),
+        ),
+      ),
     ).toBe(bistandVilkår);
   });
 
-  it('returnerer aktivitetsvilkåret når VURDER_FAKTA_OM_AKTIVITET finnes', () => {
+  it('hopper over en opphørsårsak der vilkåret mangler', () => {
     expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderAktivitetFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET),
-      }),
-    ).toBe(aktivitetVilkår);
-  });
-
-  it('returnerer vilkåret for andre livsoppholdsytelser når VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER finnes', () => {
-    expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderAndreLivsoppholdytelserFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER),
-      }),
+      utledVilkårForBehandlingsårsak(
+        samleOpphørData(
+          [],
+          [andreLivsoppholdytelserVilkår],
+          årsaker(BehandlingÅrsakType.ENDRET_BISTANDSBEHOV, BehandlingÅrsakType.ENDRET_LIVSOPPHOLDSYTELSE),
+        ),
+      ),
     ).toBe(andreLivsoppholdytelserVilkår);
   });
 
-  it('prioriterer bosted over bistand når begge fakta-aksjonspunktene finnes', () => {
-    expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderBostedFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED, AksjonspunktStatus.UTFØRT),
-        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
-      }),
-    ).toBe(bostedVilkår);
-  });
-
-  it('prioriterer bistand over andre livsoppholdsytelser når begge fakta-aksjonspunktene finnes', () => {
-    expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
-        vurderAndreLivsoppholdytelserFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_ANDRE_LIVSOPPHOLDSYTELSER),
-      }),
-    ).toBe(bistandVilkår);
-  });
-
-  it('prioriterer bistand over aktivitet når begge fakta-aksjonspunktene finnes', () => {
-    expect(
-      utledGjeldendeVilkår({
-        ...alleVilkår,
-        vurderBistandFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_BISTAND),
-        vurderAktivitetFaktaAP: lagAp(AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET),
-      }),
-    ).toBe(bistandVilkår);
-  });
-
-  it('faller tilbake til vilkåret for andre livsoppholdsytelser når ingen fakta-aksjonspunkter finnes', () => {
-    expect(utledGjeldendeVilkår(alleVilkår)).toBe(andreLivsoppholdytelserVilkår);
+  it('returnerer undefined når behandlingen ikke har noen opphørsårsak', () => {
+    expect(utledVilkårForBehandlingsårsak(samleOpphørData([], alleVilkår, undefined))).toBeUndefined();
   });
 });

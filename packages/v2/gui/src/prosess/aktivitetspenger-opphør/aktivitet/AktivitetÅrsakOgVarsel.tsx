@@ -4,12 +4,9 @@ import { Avklaringtype } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Avkla
 import { AktivitetsavklaringKildeType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AktivitetsavklaringKildeType.js';
 import { AktivitetsvilkåretIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AktivitetsvilkåretIkkeOppfyltÅrsak.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/BehandlingDto.js';
-import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { VilkårsavklaringerDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VilkårsavklaringerDto.js';
-import { InformationSquareIcon } from '@navikt/aksel-icons';
-import { Alert, Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons';
+import { Button, HStack, InfoCard, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfSelect } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -21,7 +18,6 @@ import {
   VilkårSplittPanel,
 } from '../../../shared/vilkårSplittPanel/VilkårSplittPanel.js';
 import { VurdertAv } from '../../../shared/vurdert-av/VurdertAv.js';
-import type { AktivitetspengerApi } from '../../aktivitetspenger-prosess/AktivitetspengerApi.js';
 import { vilkårsavklaringerQueryOptions } from '../../aktivitetspenger-prosess/aktivitetspengerQueryOptions.js';
 import { getDateRangeFromVilkår, OpphørAvslagValg } from '../formfields/OpphørAvslagValg.js';
 import { OpphørForhåndsvarselModal } from '../formfields/OpphørForhåndsvarselModal.js';
@@ -29,6 +25,7 @@ import { OpphørKilde } from '../formfields/OpphørKilde.js';
 import { getOpphørPeriods } from '../formfields/OpphørPerioder.js';
 import { OpphørVarsel } from '../formfields/OpphørVarsel.js';
 import type { OpphørVarselPeriodForm } from '../formfields/OpphørVarselFormData.js';
+import type { OpphørÅrsakOgVarselProps } from '../types.js';
 
 const kildeOptions = [
   { value: AktivitetsavklaringKildeType.BRUKER, label: 'Bruker selv' },
@@ -135,30 +132,20 @@ const buildPayload = ({ formData, selectedId }: SubmitArgs) => {
   };
 };
 
-interface Props {
-  vurderAktivitetFaktaAP?: AksjonspunktDto;
-  aktivitetVilkår: VilkårMedPerioderDto;
-  api: AktivitetspengerApi;
-  behandling: BehandlingDto;
-  onAksjonspunktBekreftet: () => void;
-  readOnly: boolean;
-  isPermanentlyReadOnly: boolean;
-}
-
 export const AktivitetÅrsakOgVarsel = ({
-  vurderAktivitetFaktaAP,
-  aktivitetVilkår,
+  vurderFaktaAP,
+  vilkår,
   api,
   behandling,
   onAksjonspunktBekreftet,
   readOnly,
   isPermanentlyReadOnly,
-}: Props) => {
+}: OpphørÅrsakOgVarselProps) => {
   const queryClient = useQueryClient();
   const vilkårsavklaringerOptions = vilkårsavklaringerQueryOptions(api, behandling, vilkarType.AKTIVITETSVILKÅR);
   const { data: vilkårsavklaringer } = useSuspenseQuery(vilkårsavklaringerOptions);
   const opphørPeriods = getOpphørPeriods({
-    aksjonspunkt: vurderAktivitetFaktaAP,
+    aksjonspunkt: vurderFaktaAP,
     perioder: vilkårsavklaringer.perioder.map(({ periode, utfall, avklaring }) => ({
       fom: periode.fom,
       tom: periode.tom,
@@ -168,7 +155,6 @@ export const AktivitetÅrsakOgVarsel = ({
     })),
   });
   const [selectedId, setSelectedId] = useState(() => getDefaultSelectedPeriodId(opphørPeriods));
-  const [visBekreftSubmitModal, setVisBekreftSubmitModal] = useState(false);
   const [pendingSubmit, setPendingSubmit] = useState<SubmitArgs | null>(null);
   const formHook = useForm<AktivitetFormData>({ defaultValues: buildInitialValues(vilkårsavklaringer) });
   const formPerioder = formHook.watch('perioder');
@@ -179,7 +165,7 @@ export const AktivitetÅrsakOgVarsel = ({
   const valgtKilde = valgtFormPeriode?.kilde ?? '';
   const skalSendeVarselOmOpphør = valgtFormPeriode?.skalSendeVarselOmOpphør ?? '';
   const valgtÅrsak = valgtFormPeriode?.årsak ?? '';
-  const isSolved = vurderAktivitetFaktaAP?.status === AksjonspunktStatus.UTFØRT;
+  const isSolved = vurderFaktaAP?.status === AksjonspunktStatus.UTFØRT;
   const erValgtPeriodeInnvilgetUtenAvklaring =
     valgtOpphørPeriode?.status === 'success' && !valgtVilkårsavklaringPeriode?.avklaring;
 
@@ -200,29 +186,31 @@ export const AktivitetÅrsakOgVarsel = ({
     const submitArgs = { formData: data, selectedId };
     if (skalSendeVarselOmOpphør === 'ja') {
       setPendingSubmit(submitArgs);
-      setVisBekreftSubmitModal(true);
       return;
     }
     await bekreftAksjonspunktMutation(submitArgs);
     setIsFormLocked(true);
   };
 
-  const bekreftOgSendForhåndsvarsel = async (setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>) => {
-    if (!pendingSubmit) {
-      return;
-    }
-    await bekreftAksjonspunktMutation(pendingSubmit);
-    setVisBekreftSubmitModal(false);
+  const bekreftOgSendForhåndsvarsel = async (
+    submitArgs: SubmitArgs,
+    setIsFormLocked: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => {
+    await bekreftAksjonspunktMutation(submitArgs);
     setPendingSubmit(null);
     setIsFormLocked(true);
   };
 
   return (
     <VStack gap="space-20">
-      {!isSolved && vurderAktivitetFaktaAP && (
-        <Alert variant="warning" size="small">
-          Vurder årsak til opphør og om bruker skal varsles.
-        </Alert>
+      {!isSolved && vurderFaktaAP && (
+        <InfoCard data-color="warning" size="small">
+          <InfoCard.Message
+            icon={<ExclamationmarkTriangleFillIcon aria-hidden color="var(--ax-text-warning-decoration)" />}
+          >
+            Vurder årsak til opphør og om bruker skal varsles.
+          </InfoCard.Message>
+        </InfoCard>
       )}
       <VilkårSplittPanel
         isAktivitetspenger
@@ -239,13 +227,13 @@ export const AktivitetÅrsakOgVarsel = ({
         beforeDetailContent={
           erValgtPeriodeInnvilgetUtenAvklaring ? (
             <InfoCard data-color="info" size="small">
-              <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+              <InfoCard.Message icon={<InformationSquareFillIcon aria-hidden color="var(--ax-text-info-decoration)" />}>
                 Alle vilkår er innvilget i perioden.
               </InfoCard.Message>
             </InfoCard>
           ) : undefined
         }
-        lockedContent={isSolved ? <VurdertAv ident={vurderAktivitetFaktaAP?.ansvarligSaksbehandler} /> : undefined}
+        lockedContent={isSolved ? <VurdertAv ident={vurderFaktaAP?.ansvarligSaksbehandler} /> : undefined}
       >
         {(isFormLocked, setIsFormLocked) => (
           <>
@@ -254,16 +242,16 @@ export const AktivitetÅrsakOgVarsel = ({
                 <OpphørAvslagValg
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   opphøreEllerAvslå={opphøreEllerAvslå}
                   avslagFom={valgtFormPeriode?.avslagFom ?? ''}
-                  dateRange={getDateRangeFromVilkår(aktivitetVilkår.perioder)}
+                  dateRange={getDateRangeFromVilkår(vilkår.perioder)}
                 />
                 <RhfSelect
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
                   label="Velg årsak"
-                  readOnly={isFormLocked}
+                  readOnly={isFormLocked || isPending}
                   validate={[required]}
                   selectValues={aktivitetOpphørsårsaker.map(årsak => (
                     <option key={årsak.value} value={årsak.value}>
@@ -274,7 +262,7 @@ export const AktivitetÅrsakOgVarsel = ({
                 <OpphørKilde
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   valgtKilde={valgtKilde}
                   kildeOptions={kildeOptions}
                   kildeAnnetValue={AktivitetsavklaringKildeType.ANNET}
@@ -282,7 +270,7 @@ export const AktivitetÅrsakOgVarsel = ({
                 <OpphørVarsel
                   control={formHook.control}
                   selectedId={selectedId}
-                  isFormLocked={isFormLocked}
+                  isFormLocked={isFormLocked || isPending}
                   skalSendeForhåndsvarsel={skalSendeVarselOmOpphør}
                   skalViseForhåndsvarselTekst={valgtÅrsak === AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET}
                   forhåndsvarselBeskrivelse="Forklar hvorfor du har satt dato for opphør med årsak at bruker ikke er i aktivitet."
@@ -296,16 +284,13 @@ export const AktivitetÅrsakOgVarsel = ({
                 )}
               </VStack>
             </RhfForm>
-            {visBekreftSubmitModal && (
+            {pendingSubmit && (
               <OpphørForhåndsvarselModal
-                open={visBekreftSubmitModal}
+                open
                 isPending={isPending}
-                onClose={() => setVisBekreftSubmitModal(false)}
-                onConfirm={() => void bekreftOgSendForhåndsvarsel(setIsFormLocked)}
-                onCancel={() => {
-                  setVisBekreftSubmitModal(false);
-                  setPendingSubmit(null);
-                }}
+                onClose={() => setPendingSubmit(null)}
+                onConfirm={() => void bekreftOgSendForhåndsvarsel(pendingSubmit, setIsFormLocked)}
+                onCancel={() => setPendingSubmit(null)}
               />
             )}
           </>
