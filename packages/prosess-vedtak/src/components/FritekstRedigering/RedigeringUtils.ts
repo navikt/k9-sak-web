@@ -38,8 +38,23 @@ export const utledStiler = (html: string) => {
   return cssGenerate(styleAst);
 };
 
+const parseLetterDocument = (html: string) => {
+  const parser = new DOMParser();
+  const xhtml = parser.parseFromString(html, 'application/xhtml+xml');
+  // Behold gyldig XHTML urørt, også når HTML-parseren ville endret avsnittsstrukturen.
+  if (!xhtml.querySelector('parsererror')) return xhtml;
+
+  const document = parser.parseFromString(html, 'text/html');
+  const serialized = new XMLSerializer().serializeToString(document);
+  const normalized = parser.parseFromString(serialized, 'application/xhtml+xml');
+  if (normalized.querySelector('parsererror')) {
+    throw new Error('Brevet kunne ikke konverteres til XHTML.');
+  }
+  return normalized;
+};
+
 export const seksjonSomKanRedigeres = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
+  const heleBrevet = parseLetterDocument(html);
   return Array.from(heleBrevet.querySelectorAll('body > *, section > *'));
 };
 
@@ -50,7 +65,7 @@ const htmlForRedigerbartFelt = (elementer: Element[]) => {
     if (el.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
     } else if (!funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
-      prefiks.push(el.outerHTML);
+      prefiks.push(new XMLSerializer().serializeToString(el));
     }
   });
   return prefiks;
@@ -62,14 +77,24 @@ export const utledSuffiksInnhold = (seksjoner: Element[]) =>
   htmlForRedigerbartFelt(seksjoner.reverse()).reverse().join('');
 
 export const utledRedigerbartInnhold = (html: string) => {
-  // Bruker application/xhtml+xml som datatype, da backend bruker en xhtml parser som
-  // ikke støtter feks. <br> som ikke er self-closing (<br/>)
-  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
-  return heleBrevet?.querySelector('[data-editable]')?.innerHTML;
+  const heleBrevet = parseLetterDocument(html);
+  const editable = heleBrevet.querySelector('[data-editable]');
+  // Fjern bare Typsts whitespace-wrappere, ikke mellomrommene eller formateringen inni dem.
+  editable?.querySelectorAll('span').forEach(span => {
+    if (
+      span.attributes.length === 1 &&
+      span.getAttribute('style')?.trim().replace(/;$/, '').trim() === 'white-space: pre-wrap'
+    ) {
+      span.replaceWith(...Array.from(span.childNodes));
+    }
+  });
+  if (!editable) return undefined;
+  const serializer = new XMLSerializer();
+  return Array.from(editable.childNodes, node => serializer.serializeToString(node)).join('');
 };
 
 export const utledSkalInkludereKalender = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
+  const heleBrevet = parseLetterDocument(html);
   return !!heleBrevet.querySelector('[data-attachement]');
 };
 
