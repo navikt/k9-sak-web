@@ -1274,6 +1274,58 @@ describe('Prossesmotor', () => {
     });
   });
 
+  test('viser opphørspanel som første panel ved revurdering med endret aktivitet', async () => {
+    const api = createApi();
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_AKTIVITET }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].id).toBe(prosessStegCodes.OPPHØR);
+      expect(result.current.prosessteg.some(steg => steg.id === prosessStegCodes.INNGANGSVILKAR)).toBe(false);
+    });
+  });
+
+  test.each([
+    AksjonspunktDefinisjon.VURDER_FAKTA_OM_AKTIVITET,
+    AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
+    AksjonspunktDefinisjon.AUTO_SATT_PÅ_VENT_ETTERLYST_AKTIVITETUTTALELSE,
+  ])('setter opphørspanel til warning når %s er åpent ved endret aktivitet', async definisjon => {
+    const api = createApi({
+      aksjonspunkter: [{ definisjon, status: aksjonspunktStatus.OPPRETTET, kanLoses: true }],
+    });
+
+    const { result } = renderHook(
+      () =>
+        useProsessmotor({
+          api,
+          behandling: createBehandling({
+            type: BehandlingType.REVURDERING,
+            behandlingÅrsaker: [{ behandlingArsakType: BehandlingÅrsakType.ENDRET_AKTIVITET }],
+          }),
+        }),
+      {
+        wrapper: createWrapper(queryClient),
+      },
+    );
+
+    await waitFor(() => {
+      expect(result.current.prosessteg[0].id).toBe(prosessStegCodes.OPPHØR);
+      expect(result.current.prosessteg[0].type).toBe(ProcessMenuStepType.warning);
+    });
+  });
+
   test('viser inngangsvilkårpanel ved revurdering uten endret bosted-årsak', async () => {
     const api = createApi();
 

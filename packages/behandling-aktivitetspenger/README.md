@@ -39,7 +39,7 @@ Prosessmotoren returnerer alltid seks steg i denne rekkefølgen:
 | Simulering                  | `SIMULERING`                  | `SimuleringProsessStegInitPanel`              |
 | Vedtak                      | `VEDTAK`                      | `VedtakProsessStegInitPanel`                  |
 
-Opphør erstatter inngangsvilkår når behandlingen er en revurdering med årsak `ENDRET_BOSTED`, `ENDRET_LIVSOPPHOLDSYTELSE` eller `ENDRET_BISTANDSBEHOV` (`erAktivitetspengerOpphørsbehandling`).
+Opphør erstatter inngangsvilkår når behandlingen er en revurdering med årsak `ENDRET_BOSTED`, `ENDRET_LIVSOPPHOLDSYTELSE`, `ENDRET_BISTANDSBEHOV` eller `ENDRET_AKTIVITET` (`erAktivitetspengerOpphørsbehandling`).
 
 Hvilke vilkår og aksjonspunkter som hører til hvert steg, står i `PANEL_KONFIG` i [Prosessmotor.ts](src/components/Prosessmotor.ts).
 
