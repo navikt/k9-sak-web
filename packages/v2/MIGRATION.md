@@ -85,12 +85,9 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 | Panel                         | ~Linjer | Konsumenter                                            | Merknad                                                        |
 | ----------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `fakta-beregning`             | 313     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningskomponent  |
-| `fakta-fordeling`             | 180     | 4 (oms, opl, psb, psb-sluttfase)                       | Fire lokale paneldefinisjoner rundt felles fordelingskomponent |
 | `prosess-fortsatt-medlemskap` | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
 | `prosess-inngangsvilkar`      | 132     | 7 (oms, opl, psb, psb-sluttfase, ung, unntak, utvidet) | Felles inngangsvilkår med ytelsesspesifikke varianter          |
 | `prosess-opplaering`          | 19      | 1 (opl)                                                | Ytelsesspesifikk vilkårsvurdering                              |
-| `prosess-beregningsgrunnlag`  | 331     | 5 (frisinn, oms, opl, psb, psb-sluttfase)              | Fem lokale paneldefinisjoner rundt felles beregningsgrunnlag   |
 
 ### Tier 2 — Enkelt/middels
 
