@@ -28,7 +28,7 @@ export interface Dokument {
   benyttet: boolean;
   bruktTilMinstEnVurdering: boolean;
   datert: string;
-  duplikatAvId: string;
+  duplikatAvId: string | null;
   duplikater: string[];
   fremhevet: boolean;
   id: string;
