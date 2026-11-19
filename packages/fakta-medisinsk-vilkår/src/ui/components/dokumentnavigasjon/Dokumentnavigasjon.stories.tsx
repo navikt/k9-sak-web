@@ -64,7 +64,9 @@ export const Filtrering: Story = {
       await userEvent.click(canvas.getByRole('button', { name: 'Type' }));
       const ikkeKlassifisertCheckbox = await screen.findByLabelText(/ikke klassifisert/i);
       await userEvent.click(ikkeKlassifisertCheckbox);
-      await userEvent.click(canvas.getAllByRole('button', { name: 'Type' })[1]);
+      // Den opprinnelige Type-knappen skjules med CSS når filteret er åpent, så den siste er knappen i nedtrekkslisten
+      const typeKnapper = canvas.getAllByRole('button', { name: 'Type' });
+      await userEvent.click(typeKnapper[typeKnapper.length - 1]);
       await waitFor(async () => {
         await expect(canvas.queryByText(/ikke klassifisert/i)).not.toBeInTheDocument();
       });
@@ -98,6 +100,8 @@ export const UtenPaginering: Story = {
     const canvas = within(canvasElement);
     await step('Ikke vis paginering når den er slått av', async () => {
       await expect(canvas.queryByRole('navigation')).not.toBeInTheDocument();
+      await expect(canvas.getByText('01.01.2022')).toBeInTheDocument();
+      await expect(canvas.getByText('06.01.2022')).toBeInTheDocument();
     });
   },
 };
