@@ -57,6 +57,8 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `fakta-omsorgen-for` → `BRUK_OMSORGEN_FOR_V2`
 - [ ] `fakta-barn-oms` → `BRUK_V2_BARN_OMS`
       V2 (`fakta/barn-oms`) er koblet til i omsorgspenger, unntak og utvidet rett og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert i Q ennå.
+- [ ] `fakta-verge` → `BRUK_V2_VERGE`
+      Brukes av sju behandlinger. V2 (`fakta/verge/BekreftVergeFakta`) er koblet til i omsorgspenger, pleiepenger, pleiepenger sluttfase, opplæringspenger og unntak. Tilbakekreving (k9 og ung) er ikke koblet til ennå og bruker v1. Togglen er ikke slått på i Q eller prod.
 
 #### Under arbeid
 
@@ -91,13 +93,12 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 ### Tier 2 — Enkelt/middels
 
-| Panel                      | ~Linjer | Konsumenter                        | Merknad                                                      |
-| -------------------------- | ------- | ---------------------------------- | ------------------------------------------------------------ |
-| `fakta-verge`              | 507     | 4 (oms, tilbakekreving ×2, unntak) | Rett frem verge-skjema, 1 API                                |
-| `fakta-overstyr-beregning` | 622     | 3 (opl, psb, psb-sluttfase)        | Overstyringsskjema, 1 API                                    |
-| `prosess-anke-merknader`   | 363     | 1 (behandling-anke)                | Gammel JSX, enkel, 0 API — migrer alle 3 anke-paneler samlet |
-| `prosess-anke-resultat`    | 620     | 1 (behandling-anke)                | Gammel JSX, vedtak-lignende resultatform                     |
-| `prosess-anke`             | 772     | 1 (behandling-anke)                | Gammel JSX, 0 API-avhengigheter                              |
+| Panel                      | ~Linjer | Konsumenter                 | Merknad                                                      |
+| -------------------------- | ------- | --------------------------- | ------------------------------------------------------------ |
+| `fakta-overstyr-beregning` | 622     | 3 (opl, psb, psb-sluttfase) | Overstyringsskjema, 1 API                                    |
+| `prosess-anke-merknader`   | 363     | 1 (behandling-anke)         | Gammel JSX, enkel, 0 API — migrer alle 3 anke-paneler samlet |
+| `prosess-anke-resultat`    | 620     | 1 (behandling-anke)         | Gammel JSX, vedtak-lignende resultatform                     |
+| `prosess-anke`             | 772     | 1 (behandling-anke)         | Gammel JSX, 0 API-avhengigheter                              |
 
 ### Tier 3 — Middels
 
