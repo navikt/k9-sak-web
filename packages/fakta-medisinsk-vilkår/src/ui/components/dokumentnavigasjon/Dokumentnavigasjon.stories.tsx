@@ -14,7 +14,7 @@ const lagDokument = (
   benyttet: true,
   bruktTilMinstEnVurdering: false,
   datert,
-  duplikatAvId: '',
+  duplikatAvId: null,
   duplikater: [],
   fremhevet: false,
   id,
