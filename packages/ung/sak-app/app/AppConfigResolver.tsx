@@ -6,6 +6,8 @@ import { LoadingPanel } from '@k9-sak-web/gui/shared/loading-panel/LoadingPanel.
 import { globalMessages } from '@k9-sak-web/behandling-felles';
 import { FeilutbetalingFaktaApiContext } from '@k9-sak-web/gui/fakta/feilutbetaling/api/FeilutbetalingFaktaApiContext.js';
 import { UngTilbakeFeilutbetalingFaktaBackendClient } from '@k9-sak-web/gui/fakta/feilutbetaling/api/UngTilbakeFeilutbetalingFaktaBackendClient.js';
+import { UngTilbakeVergeBackendClient } from '@k9-sak-web/gui/fakta/verge/api/UngTilbakeVergeBackendClient.js';
+import { VergeApiContext } from '@k9-sak-web/gui/fakta/verge/api/VergeApiContext.js';
 import { UngKodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/UngKodeverkoppslagContext.js';
 import { useUngKodeverkoppslag } from '@k9-sak-web/gui/kodeverk/oppslag/useUngKodeverkoppslag.js';
 import { AvregningBackendClientContext } from '@k9-sak-web/gui/prosess/avregning/AvregningBackendClientContext.js';
@@ -56,7 +58,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
             <VedtakKlageApiContext value={new UngSakVedtakKlageBackendClient()}>
               <AvregningBackendClientContext value={new UngAvregningBackendClient()}>
                 <NotatBackendClientContext value={new NotatBackendClient('ungSak')}>
-                  {harFeilet || erFerdig ? children : <LoadingPanel />}
+                  <VergeApiContext value={new UngTilbakeVergeBackendClient()}>
+                    {harFeilet || erFerdig ? children : <LoadingPanel />}
+                  </VergeApiContext>
                 </NotatBackendClientContext>
               </AvregningBackendClientContext>
             </VedtakKlageApiContext>
