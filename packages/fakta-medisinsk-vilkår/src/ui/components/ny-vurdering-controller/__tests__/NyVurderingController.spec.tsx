@@ -3,12 +3,16 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import LinkRel from '../../../../constants/LinkRel';
+import type Link from '../../../../types/Link';
 import Vurderingstype from '../../../../types/Vurderingstype';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import type { Vurderingsversjon } from '../../../../types/Vurdering';
 import ContainerContext from '../../../context/ContainerContext';
 import VurderingContext from '../../../context/VurderingContext';
 import NyVurderingController from '../NyVurderingController';
+
+const erDryRun = (body: unknown): boolean =>
+  typeof body === 'object' && body !== null && 'dryRun' in body && body.dryRun === true;
 
 const noOverlapResponse = { perioderMedEndringer: [] };
 const overlapResponse = {
@@ -28,7 +32,7 @@ const vurderingsversjon: Vurderingsversjon = {
   perioder: [new Period('2024-01-01', '2024-01-31')],
   dokumenter: [],
 };
-const opprettVurderingLink = {
+const opprettVurderingLink: Link = {
   href: '/vurdering',
   rel: LinkRel.OPPRETT_VURDERING,
   type: 'POST',
@@ -80,7 +84,7 @@ describe('NyVurderingController', () => {
   beforeEach(() => {
     vi.spyOn(httpUtils, 'get').mockResolvedValue([]);
     vi.spyOn(httpUtils, 'post').mockImplementation((_url, body) =>
-      Promise.resolve(body.dryRun ? noOverlapResponse : {}),
+      Promise.resolve(erDryRun(body) ? noOverlapResponse : {}),
     );
     vi.spyOn(window, 'scroll').mockImplementation(() => {});
   });
@@ -118,7 +122,9 @@ describe('NyVurderingController', () => {
   });
 
   it('viser overlappende perioder og avbryter uten å lagre', async () => {
-    vi.mocked(httpUtils.post).mockImplementation((_url, body) => Promise.resolve(body.dryRun ? overlapResponse : {}));
+    vi.mocked(httpUtils.post).mockImplementation((_url, body) =>
+      Promise.resolve(erDryRun(body) ? overlapResponse : {}),
+    );
     const user = userEvent.setup();
     const onVurderingLagret = vi.fn();
     renderController(onVurderingLagret);
@@ -135,7 +141,9 @@ describe('NyVurderingController', () => {
   });
 
   it('lagrer vurderingen etter at overlappende perioder er bekreftet', async () => {
-    vi.mocked(httpUtils.post).mockImplementation((_url, body) => Promise.resolve(body.dryRun ? overlapResponse : {}));
+    vi.mocked(httpUtils.post).mockImplementation((_url, body) =>
+      Promise.resolve(erDryRun(body) ? overlapResponse : {}),
+    );
     const user = userEvent.setup();
     const onVurderingLagret = vi.fn();
     renderController(onVurderingLagret);
@@ -151,7 +159,7 @@ describe('NyVurderingController', () => {
 
   it('viser feilmelding når lagringskallet avvises', async () => {
     vi.mocked(httpUtils.post).mockImplementation((_url, body) =>
-      body.dryRun ? Promise.resolve(noOverlapResponse) : Promise.reject(new Error('Lagring feilet')),
+      erDryRun(body) ? Promise.resolve(noOverlapResponse) : Promise.reject(new Error('Lagring feilet')),
     );
     const user = userEvent.setup();
     const onVurderingLagret = vi.fn();

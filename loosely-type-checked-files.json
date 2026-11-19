@@ -116,7 +116,6 @@
   "packages/fakta-medisinsk-vilkår/src/types/Vurderingsoversikt.ts",
   "packages/fakta-medisinsk-vilkår/src/ui/components/confirmation-modal/ConfirmationModal.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/diagnosekodeoversikt/Diagnosekodeoversikt.tsx",
-  "packages/fakta-medisinsk-vilkår/src/ui/components/dokumentnavigasjon/Dokumentnavigasjon.spec.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/duplikat-radiobuttons/DuplikatRadiobuttons.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/duplikatliste/Duplikatliste.tsx",
   "packages/fakta-medisinsk-vilkår/src/ui/components/endre-vurdering-controller/EndreVurderingController.tsx",
