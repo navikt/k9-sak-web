@@ -13,14 +13,14 @@ import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgru
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { ComponentProps, use, useContext, useMemo } from 'react';
-import { K9SakProsessApi } from './api/K9SakProsessApi';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
 import {
   aksjonspunkterQueryOptions,
   arbeidsgiverOpplysningerQueryOptions,
   beregningreferanserTilVurderingQueryOptions,
   beregningsgrunnlagQueryOptions,
   vilkårQueryOptions,
-} from './api/k9SakQueryOptions';
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const BEREGNING_AKSJONSPUNKT_KODER = [
   AksjonspunktDefinisjon.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,

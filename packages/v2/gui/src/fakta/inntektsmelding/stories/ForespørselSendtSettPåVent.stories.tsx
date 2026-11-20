@@ -69,6 +69,6 @@ export const ViserFeilVedFristOver14Dager: Story = {
     await user.tab();
     await user.click(await root.findByRole('button', { name: 'Sett på vent' }));
 
-    await expect(root.getByText(/Maks frist er/i)).toBeInTheDocument();
+    await expect(await root.findByText(/Maks frist er/i)).toBeInTheDocument();
   },
 };

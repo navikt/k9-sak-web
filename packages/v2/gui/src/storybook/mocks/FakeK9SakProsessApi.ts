@@ -13,6 +13,8 @@ import type { SøknadsfristTilstandDto } from '@k9-sak-web/backend/k9sak/kontrak
 import type { VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import type { OverlappendeYtelseDto } from '@k9-sak-web/backend/k9sak/kontrakt/ytelser/OverlappendeYtelseDto.js';
 import type { TilbakekrevingValgDto } from '@k9-sak-web/backend/k9sak/kontrakt/økonomi/tilbakekreving/TilbakekrevingValgDto.js';
+import type { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
+import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
 
 interface FakeK9SakProsessApiOptions {
   vilkår?: VilkårMedPerioderDto[];
@@ -32,7 +34,9 @@ interface FakeK9SakProsessApiOptions {
   søknadsfristStatus?: SøknadsfristTilstandDto;
 }
 
-export class FakeK9SakProsessApi {
+export class FakeK9SakProsessApi implements K9SakProsessApi {
+  readonly backend = backendNavn.k9sak;
+
   private options: FakeK9SakProsessApiOptions;
 
   constructor(options: FakeK9SakProsessApiOptions = {}) {

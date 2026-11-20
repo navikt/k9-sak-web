@@ -9,8 +9,8 @@ import {
 } from '@navikt/k9-sak-typescript-client/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
-import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { vilkårQueryOptions } from './api/k9SakQueryOptions';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
+import { vilkårQueryOptions } from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const RELEVANTE_VILKAR_KODER = [
   k9_kodeverk_vilkår_VilkårType.MEDISINSKEVILKÅR_UNDER_18_ÅR,

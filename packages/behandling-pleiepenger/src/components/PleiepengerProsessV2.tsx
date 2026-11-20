@@ -10,22 +10,23 @@ import { prosessStegCodes } from '@k9-sak-web/gui/utils/skjermlenke/prosessStegC
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { Bleed, Box } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import { useBekreftAksjonspunkt } from '../hooks/useBekreftAksjonspunkt';
-import { K9SakProsessBackendClient } from '../prosess/api/K9SakProsessBackendClient';
-import { aksjonspunkterQueryOptions } from '../prosess/api/k9SakQueryOptions';
+import { useBekreftAksjonspunkt } from '@k9-sak-web/behandling-felles/src/prosessV2/useBekreftAksjonspunkt';
+import { K9SakProsessBackendClient } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessBackendClient.js';
+import { aksjonspunkterQueryOptions } from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 import { useProsessmotor } from '../prosess/api/Prosessmotor';
 import {
   BeregningsgrunnlagProsessStegInitPanel,
   type BeregningsgrunnlagProsessStegInitPanelProps,
-} from '../prosess/BeregningsgrunnlagProsessStegInitPanel';
+} from '@k9-sak-web/behandling-felles/src/prosessV2/BeregningsgrunnlagProsessStegInitPanel';
 import { InngangsvilkarFortsProsessStegInitPanel } from '../prosess/inngangsvilkårFortsetterPaneler/InngangsvilkarFortsProsessStegInitPanel';
 import { InngangsvilkarProsessStegInitPanel } from '../prosess/inngangsvilkårPaneler/InngangsvilkarProsessStegInitPanel';
 import { MedisinskVilkarProsessStegInitPanel } from '../prosess/MedisinskVilkarProsessStegInitPanel';
-import { SimuleringProsessStegInitPanel } from '../prosess/SimuleringProsessStegInitPanel';
-import { TilkjentYtelseProsessStegInitPanel } from '../prosess/TilkjentYtelseProsessStegInitPanel';
+import { SimuleringProsessStegInitPanel } from '@k9-sak-web/behandling-felles/src/prosessV2/SimuleringProsessStegInitPanel';
+import { TilkjentYtelseProsessStegInitPanel } from '@k9-sak-web/behandling-felles/src/prosessV2/TilkjentYtelseProsessStegInitPanel';
 import { UttakProsessStegInitPanel } from '../prosess/UttakProsessStegInitPanel';
 import { VedtakProsessStegInitPanel } from '../prosess/VedtakProsessStegInitPanel';
 import FetchedData from '../types/FetchedData';
+import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import { getForhandsvisFptilbakeCallback } from './PleiepengerProsess';
 import styles from './pleiepengerProsessV2.module.css';
 
@@ -93,6 +94,17 @@ export const PleiepengerProsessV2 = ({
   const k9SakProsessApi = useMemo(() => new K9SakProsessBackendClient(), []);
   const prosessteg = useProsessmotor({ api: k9SakProsessApi, behandling });
   const { isFetching: aksjonspunkterLaster } = useQuery(aksjonspunkterQueryOptions(k9SakProsessApi, behandling));
+
+  const legacySimuleringData = restApiPleiepengerHooks.useMultipleRestApi<{
+    simuleringResultat: any;
+    tilbakekrevingvalg: any;
+  }>(
+    [
+      { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
+      { key: PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG },
+    ],
+    { keepData: true, suspendRequest: false, updateTriggers: [behandling.versjon] },
+  );
 
   const bekreftAksjonspunktCallback = useBekreftAksjonspunkt({
     fagsak,
@@ -205,6 +217,7 @@ export const PleiepengerProsessV2 = ({
                     isReadOnly={isReadOnly}
                     submitCallback={bekreftAksjonspunktCallback}
                     previewFptilbakeCallback={previewFptilbakeCallback}
+                    legacyData={legacySimuleringData.data}
                   />
                 );
               }
