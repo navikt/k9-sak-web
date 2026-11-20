@@ -58,7 +58,7 @@ Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 - [ ] `fakta-barn-oms` → `BRUK_V2_BARN_OMS`
       V2 (`fakta/barn-oms`) er koblet til i omsorgspenger, unntak og utvidet rett og slått på i Q. Prod bruker fortsatt v1. Ikke verifisert i Q ennå.
 - [ ] `fakta-verge` → `BRUK_V2_VERGE`
-      Brukes av sju behandlinger. V2 (`fakta/verge/BekreftVergeFakta`) er koblet til i omsorgspenger, pleiepenger, pleiepenger sluttfase, opplæringspenger og unntak. Tilbakekreving (k9 og ung) er ikke koblet til ennå og bruker v1. Togglen er ikke slått på i Q eller prod.
+      Alle sju konsumenter er koblet til v2: bekreftelse (`fakta/verge/BekreftVergeFakta`) i omsorgspenger, pleiepenger, pleiepenger sluttfase, opplæringspenger og unntak, og registrering av verge (`fakta/verge/RegistrerVergeFaktaIndex`) i tilbakekreving for k9 og ung. Togglen er ikke slått på i Q eller prod, og v2 er ikke verifisert mot reelle behandlinger ennå.
 
 #### Under arbeid
 
