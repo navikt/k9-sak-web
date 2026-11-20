@@ -63,11 +63,13 @@ export const BehandleKlageFormNfp = ({
       setIsSubmitting(false);
     }
   };
-  const handleSaveKlage = async (params: SaveKlageParams) => {
-    const isValid = await formMethods.trigger('klageVurdering');
-    if (isValid) {
-      return saveKlage(params);
+  const handleSaveKlage = async (params: SaveKlageParams): Promise<boolean> => {
+    const isValid = await formMethods.trigger(['klageVurdering', 'fritekstTilBrev']);
+    if (!isValid) {
+      return false;
     }
+    await saveKlage(params);
+    return true;
   };
   const formValues = formMethods.watch();
   const { hentKodeverkForKode } = useKodeverkContext();

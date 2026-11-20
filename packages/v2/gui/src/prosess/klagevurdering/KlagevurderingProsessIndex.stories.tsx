@@ -112,6 +112,20 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
       await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst til brev' }), 'Dette er en fritekst');
       await expect(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
     });
+
+    await step('skal validere fritekst til brev ved lagre og forhåndsvis brev', async () => {
+      const fritekst = canvas.getByRole('textbox', { name: 'Fritekst til brev' });
+      await userEvent.clear(fritekst);
+      await userEvent.type(fritekst, 'Fritekst med <ugyldige> tegn');
+      await userEvent.click(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' }));
+      await expect(await canvas.findByText('Feltet inneholder ugyldige tegn: <>')).toBeInTheDocument();
+    });
+
+    await step('skal validere fritekst til brev ved lagre', async () => {
+      await userEvent.clear(canvas.getByRole('textbox', { name: 'Fritekst til brev' }));
+      await userEvent.click(canvas.getByRole('button', { name: 'Lagre' }));
+      await expect(await canvas.findByText('Feltet må fylles ut')).toBeInTheDocument();
+    });
   },
 };
 

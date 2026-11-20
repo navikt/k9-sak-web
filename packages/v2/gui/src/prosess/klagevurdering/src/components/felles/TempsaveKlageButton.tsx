@@ -5,7 +5,7 @@ import { formValuesToSaveValues } from './formValuesToSaveValues.js';
 
 interface TempsaveKlageButtonProps {
   formValues: BehandleKlageFormKaFormValues;
-  saveKlage: (params: SaveKlageParams) => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<boolean>;
   aksjonspunktCode: string;
   readOnly: boolean;
   isSubmitting: boolean;
