@@ -32,6 +32,12 @@ export const behandlingQueryOptions = (api: K9SakProsessApi, behandling: Behandl
     queryFn: () => api.getBehandling(behandling.uuid),
   });
 
+export const medlemskapQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['medlemskap', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.getMedlemskap(behandling.uuid),
+  });
+
 export const beregningsgrunnlagQueryOptions = (api: K9SakProsessApi, behandling: Behandling, enabled = true) =>
   queryOptions({
     queryKey: ['beregningsgrunnlag', behandling.uuid, behandling.versjon, enabled, api.backend],
@@ -104,4 +110,10 @@ export const opptjeningQueryOptions = (api: K9SakProsessApi, behandling: Behandl
   queryOptions({
     queryKey: ['opptjening', behandling.uuid, behandling.versjon, api.backend],
     queryFn: () => api.getOpptjening(behandling.uuid),
+  });
+
+export const forbrukteDagerQueryOptions = (api: K9SakProsessApi, behandling: Behandling) =>
+  queryOptions({
+    queryKey: ['forbrukteDager', behandling.uuid, behandling.versjon, api.backend],
+    queryFn: () => api.getForbrukteDager(behandling.uuid),
   });

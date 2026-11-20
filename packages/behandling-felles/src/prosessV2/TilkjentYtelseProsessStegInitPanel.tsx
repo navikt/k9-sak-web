@@ -4,6 +4,13 @@ import {
   k9_kodeverk_behandling_aksjonspunkt_AksjonspunktStatus,
   k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
 } from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
+import {
+  aksjonspunkterQueryOptions,
+  arbeidsgiverOpplysningerQueryOptions,
+  beregningsresultatUtbetalingQueryOptions,
+  personopplysningerQueryOptions,
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
@@ -12,13 +19,6 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { use, useContext } from 'react';
-import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
-import {
-  aksjonspunkterQueryOptions,
-  arbeidsgiverOpplysningerQueryOptions,
-  beregningsresultatUtbetalingQueryOptions,
-  personopplysningerQueryOptions,
-} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const PANEL_ID = prosessStegCodes.TILKJENT_YTELSE;
 
