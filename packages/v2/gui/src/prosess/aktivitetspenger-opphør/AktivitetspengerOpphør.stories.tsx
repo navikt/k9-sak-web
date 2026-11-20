@@ -683,6 +683,14 @@ export const AndreLivsoppholdytelserVilkårsvurderingByttTilNeiFjernerFritekst: 
     await step('Bytt til nei og skjul fritekstfeltet', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
       await expect(canvas.queryByRole('textbox', { name: 'Fritekst opphørsbrev' })).not.toBeInTheDocument();
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await expect(brukerInformertGroup).toBeInTheDocument();
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }),
+      ).not.toBeChecked();
+      await userEvent.click(within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }));
     });
 
     await step('Bekreft vurderingen uten fritekst i payloaden', async () => {
@@ -805,6 +813,14 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
 
     await step('Velg at bruker ikke bor i Trondheim', async () => {
       await userEvent.click(canvas.getByRole('radio', { name: /nei, bruker bor fortsatt/i }));
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await expect(brukerInformertGroup).toBeInTheDocument();
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }),
+      ).not.toBeChecked();
+      await userEvent.click(within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }));
     });
 
     await step('Bekreft og fortsett', async () => {
@@ -826,6 +842,17 @@ export const VilkårsvurderingFyllUtOgSend: Story = {
           ],
         }),
       ]);
+      await expect(args.api.bekreftAksjonspunkt).not.toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.arrayContaining([
+          expect.objectContaining({
+            vurdertePerioder: expect.arrayContaining([
+              expect.objectContaining({ erBrukerInformert: expect.anything() }),
+            ]),
+          }),
+        ]),
+      );
     });
   },
 };
@@ -1462,6 +1489,14 @@ export const BistandVilkårsvurderingIkkeOpphør: Story = {
       );
       await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
       await expect(canvas.queryByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).not.toBeInTheDocument();
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await expect(brukerInformertGroup).toBeInTheDocument();
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }),
+      ).not.toBeChecked();
+      await userEvent.click(within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }));
       await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
     });
 
@@ -1471,7 +1506,12 @@ export const BistandVilkårsvurderingIkkeOpphør: Story = {
         fakeBistandBehandling.versjon,
         [
           expect.objectContaining({
-            vurdertePerioder: [expect.objectContaining({ erVilkårOppfylt: true, fritekstVurderingBrev: undefined })],
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
           }),
         ],
       );
@@ -1689,6 +1729,7 @@ export const AktivitetPreutfylt: Story = {
 const lagFakeAktivitetVilkårsavklaringVurderinger = (
   ikkeOppfyltÅrsak: AktivitetsvilkåretIkkeOppfyltÅrsak,
   utfall: Utfall = Utfall.IKKE_VURDERT,
+  skalSendeVarsel = true,
 ): VilkårsavklaringVurderingerDto => ({
   vilkårType: vilkarType.AKTIVITETSVILKÅR,
   perioder: [
@@ -1704,7 +1745,7 @@ const lagFakeAktivitetVilkårsavklaringVurderinger = (
           kilde: 'BRUKER',
           periode: { fom: '2026-01-29', tom: '2027-01-28' },
           referanse: 'aktivitet-ref',
-          skalSendeVarsel: true,
+          skalSendeVarsel,
           vurdertAv: 'Z123456',
           vurdertTidspunkt: '2026-01-29T10:00:00',
           uttalelse: {
@@ -1735,7 +1776,13 @@ const lagFakeAktivitetVilkårsvurderingArgs = (
     status = AksjonspunktStatus.OPPRETTET,
     utfall = Utfall.IKKE_VURDERT,
     kanSaksbehandle = true,
-  }: { status?: AksjonspunktDto['status']; utfall?: Utfall; kanSaksbehandle?: boolean } = {},
+    skalSendeVarsel = true,
+  }: {
+    status?: AksjonspunktDto['status'];
+    utfall?: Utfall;
+    kanSaksbehandle?: boolean;
+    skalSendeVarsel?: boolean;
+  } = {},
 ) => ({
   ...fakeAktivitetArgsBase,
   innloggetBruker: {
@@ -1744,7 +1791,8 @@ const lagFakeAktivitetVilkårsvurderingArgs = (
   aksjonspunkter: [lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR, status)],
   api: Object.assign(Object.create(fakeAktivitetspengerApi), {
     bekreftAksjonspunkt: fn(),
-    hentVilkårsavklaringVurderinger: async () => lagFakeAktivitetVilkårsavklaringVurderinger(ikkeOppfyltÅrsak, utfall),
+    hentVilkårsavklaringVurderinger: async () =>
+      lagFakeAktivitetVilkårsavklaringVurderinger(ikkeOppfyltÅrsak, utfall, skalSendeVarsel),
   }) as AktivitetspengerApi,
   onAksjonspunktBekreftet: fn(),
 });
@@ -1764,7 +1812,14 @@ export const AktivitetVilkårsvurderingOpphør: Story = {
         canvas.getByRole('textbox', { name: /vurder om bruker ikke lenger er i aktivitet/i }),
         'Bruker har ikke møtt til avtalte aktiviteter.',
       );
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      await expect(
+        canvas.queryByRole('radiogroup', { name: 'Er brukeren kjent med at saken vurderes på nytt?' }),
+      ).not.toBeInTheDocument();
       await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i }));
+      await expect(
+        canvas.queryByRole('radiogroup', { name: 'Er brukeren kjent med at saken vurderes på nytt?' }),
+      ).not.toBeInTheDocument();
     });
 
     await step('Fritekst til opphørsbrev vises uten avkrysningsboks når årsaken er annet', async () => {
@@ -1804,7 +1859,9 @@ export const AktivitetVilkårsvurderingOpphør: Story = {
 };
 
 export const AktivitetVilkårsvurderingIkkeOpphør: Story = {
-  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.AVKORTET),
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.AVKORTET, {
+    skalSendeVarsel: false,
+  }),
   play: async ({ canvas, step, args }) => {
     await step('Avkrysningsboks for fritekst vises ved opphør når årsaken ikke er annet', async () => {
       await userEvent.click(await canvas.findByRole('radio', { name: /ja, fra og med/i }));
@@ -1819,6 +1876,14 @@ export const AktivitetVilkårsvurderingIkkeOpphør: Story = {
       );
       await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
       await expect(canvas.queryByLabelText('Legg til fritekstbeskrivelse i avslagsbrev')).not.toBeInTheDocument();
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await expect(brukerInformertGroup).toBeInTheDocument();
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }),
+      ).not.toBeChecked();
+      await userEvent.click(within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }));
       await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
     });
 
@@ -1829,10 +1894,95 @@ export const AktivitetVilkårsvurderingIkkeOpphør: Story = {
         [
           expect.objectContaining({
             '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
-            vurdertePerioder: [expect.objectContaining({ erVilkårOppfylt: true, fritekstVurderingBrev: undefined })],
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: true,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
           }),
         ],
       );
+    });
+  },
+};
+
+export const AktivitetVilkårsvurderingSkjultSvarBlokkererIkkeInnsending: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.AVKORTET, {
+    skalSendeVarsel: false,
+  }),
+  play: async ({ canvas, step, args }) => {
+    await step('Velg nei uten å svare på om brukeren er informert', async () => {
+      await userEvent.type(
+        canvas.getByRole('textbox', { name: /vurder om bruker ikke lenger er i aktivitet/i }),
+        'Bruker er fortsatt i aktivitet.',
+      );
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await expect(brukerInformertGroup).toBeInTheDocument();
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }),
+      ).not.toBeChecked();
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Nei (det sendes ikke vedtaksbrev)' }),
+      ).not.toBeChecked();
+    });
+
+    await step('Skjul feltet ved å velge opphør', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i }));
+      await expect(
+        canvas.queryByRole('radiogroup', { name: 'Er brukeren kjent med at saken vurderes på nytt?' }),
+      ).not.toBeInTheDocument();
+    });
+
+    await step('Innsending blokkeres ikke av det skjulte feltet, og svaret sendes ikke', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
+      await expect(args.api.bekreftAksjonspunkt).toHaveBeenCalledWith(
+        fakeAktivitetBehandling.uuid,
+        fakeAktivitetBehandling.versjon,
+        [
+          expect.objectContaining({
+            '@type': AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
+            vurdertePerioder: [
+              expect.objectContaining({
+                erVilkårOppfylt: false,
+                fritekstVurderingBrev: undefined,
+              }),
+            ],
+          }),
+        ],
+      );
+    });
+  },
+};
+
+export const AktivitetVilkårsvurderingBeholderInformertSvarEtterSkjul: Story = {
+  args: lagFakeAktivitetVilkårsvurderingArgs(AktivitetsvilkåretIkkeOppfyltÅrsak.AVKORTET, {
+    skalSendeVarsel: false,
+  }),
+  play: async ({ canvas, step }) => {
+    await step('Svar på spørsmålet ved nei uten varsel', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await userEvent.click(within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }));
+    });
+
+    await step('Skjul og vis spørsmålet igjen', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: /ja, fra og med 29\.01\.2026/i }));
+      await expect(
+        canvas.queryByRole('radiogroup', { name: 'Er brukeren kjent med at saken vurderes på nytt?' }),
+      ).not.toBeInTheDocument();
+      await userEvent.click(canvas.getByRole('radio', { name: 'Nei' }));
+      const brukerInformertGroup = canvas.getByRole('radiogroup', {
+        name: 'Er brukeren kjent med at saken vurderes på nytt?',
+      });
+      await expect(
+        within(brukerInformertGroup).getByRole('radio', { name: 'Ja (det sendes vedtaksbrev)' }),
+      ).toBeChecked();
     });
   },
 };

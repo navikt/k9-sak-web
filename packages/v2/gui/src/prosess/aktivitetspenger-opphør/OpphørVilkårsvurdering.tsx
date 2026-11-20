@@ -72,6 +72,7 @@ interface FormData {
       skalOpphøre: 'ja' | 'nei' | '';
       fritekstVurderingBrev: string;
       harFritekstbrev: boolean;
+      erBrukerInformert: 'ja' | 'nei' | '';
     }
   >;
 }
@@ -91,6 +92,7 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
         skalOpphøre: tilJaEllerNei(utfall),
         fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
         harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
+        erBrukerInformert: '',
       },
     ]),
   ),
@@ -192,7 +194,7 @@ export const OpphørVilkårsvurdering = ({
   const kreverFritekstIBrev =
     årsakSomKreverFritekstIBrev !== undefined && valgtAvklaring?.ikkeOppfyltÅrsak === årsakSomKreverFritekstIBrev;
   const erAvslag = valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG;
-
+  const harSendtVarsel = valgtAvklaring?.skalSendeVarsel === true;
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (submitArgs: SubmitArgs) => {
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
@@ -316,6 +318,20 @@ export const OpphørVilkårsvurdering = ({
                   resize
                   maxLength={fritekstVurderingBrevMaxLength}
                 />
+              )}
+              {skalOpphøre === 'nei' && harSendtVarsel === false && (
+                <RhfRadioGroup
+                  control={formHook.control}
+                  legend="Er brukeren kjent med at saken vurderes på nytt?"
+                  name={`perioder.${selectedId}.erBrukerInformert`}
+                  validate={[required]}
+                  readOnly={isFormLocked}
+                >
+                  <Radio value="ja">Ja (det sendes vedtaksbrev)</Radio>
+                  <Radio value="nei">
+                    Nei (det sendes <b>ikke</b> vedtaksbrev)
+                  </Radio>
+                </RhfRadioGroup>
               )}
               {!isFormLocked && (
                 <HStack gap="space-16">
