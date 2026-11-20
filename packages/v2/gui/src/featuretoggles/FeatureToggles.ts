@@ -43,6 +43,7 @@ const rootFeatureToggles = {
 const baseQFeatureToggles = {
   isFor: 'Q',
   BRUK_V2_TILKJENT_YTELSE: true,
+  BRUK_V2_VERGE: true,
   UNNTAKSBEHANDLING: true,
   SINGLE_AUTHFIXER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;
