@@ -26,7 +26,7 @@ const lagFakeVergeBackend = (lagret: Record<string, VergeDto | null>) => ({
     const verge = lagret[behandlingUuid];
     return verge ? { ...verge } : null;
   },
-  endre: (behandlingUuid: string, verge: VergeDto) => {
+  endre: (behandlingUuid: string, verge: VergeDto | null) => {
     lagret[behandlingUuid] = verge;
   },
   lagre: (behandlingUuid: string, aksjonspunkt: RegistrerVergeAksjonspunkt) => {
@@ -123,6 +123,7 @@ const lagretAdvokat: VergeDto = {
 const utenVerge = lagFakeVergeBackend({});
 export const ÅpentUtenVerge: Story = {
   args: { behandlingUuid: 'k9tilbake-uten-verge' },
+  beforeEach: ({ args }) => utenVerge.endre(args.behandlingUuid, null),
   decorators: [withK9Kodeverkoppslag(), withFakeVergeApi({ backend: 'k9tilbake', hentVerge: utenVerge.hentVerge })],
   render: args => <MedSimulertBehandling {...args} lagre={utenVerge.lagre} kanHentePåNytt />,
   play: async ({ canvas, args, step }) => {
@@ -315,17 +316,17 @@ export const NavneendringTilbakestillerPerioden: Story = {
   },
 };
 
-const delvisLagret = lagFakeVergeBackend({
-  'ungtilbake-delvis-lagret': {
-    vergeType: 'VOKSEN',
-    navn: 'Kari Nordmann',
-    gyldigFom: '2025-01-01',
-    gyldigTom: '2025-12-31',
-    begrunnelse: 'Fullmakt &amp; samtykke',
-  },
-});
+const delvisLagretVerge: VergeDto = {
+  vergeType: 'VOKSEN',
+  navn: 'Kari Nordmann',
+  gyldigFom: '2025-01-01',
+  gyldigTom: '2025-12-31',
+  begrunnelse: 'Fullmakt &amp; samtykke',
+};
+const delvisLagret = lagFakeVergeBackend({ 'ungtilbake-delvis-lagret': delvisLagretVerge });
 export const ÅpentMedDelvisLagretVergeUng: Story = {
   args: { behandlingUuid: 'ungtilbake-delvis-lagret' },
+  beforeEach: ({ args }) => delvisLagret.endre(args.behandlingUuid, delvisLagretVerge),
   decorators: [
     withUngKodeverkoppslag(),
     withFakeVergeApi({ backend: 'ungtilbake', hentVerge: delvisLagret.hentVerge }),
@@ -381,6 +382,7 @@ export const ÅpentMedDelvisLagretVergeUng: Story = {
 const lagringFeiler = lagFakeVergeBackend({ 'k9tilbake-lagring-feiler': lagretAdvokat });
 export const LagringFeilerOgPrøvesPåNytt: Story = {
   args: { behandlingUuid: 'k9tilbake-lagring-feiler' },
+  beforeEach: ({ args }) => lagringFeiler.endre(args.behandlingUuid, lagretAdvokat),
   decorators: [withK9Kodeverkoppslag(), withFakeVergeApi({ backend: 'k9tilbake', hentVerge: lagringFeiler.hentVerge })],
   render: args => <MedSimulertBehandling {...args} lagre={lagringFeiler.lagre} />,
   // Feilen fra submitCallback sendes videre fra skjemaet, slik at skallet kan vise den. Det gir en uhåndtert
