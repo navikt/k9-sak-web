@@ -200,7 +200,6 @@ export const OmsorgspengerProsessV2 = ({
                     fagsak={fagsak}
                     isReadOnly={isReadOnly}
                     submitCallback={bekreftAksjonspunktCallback}
-                    kunV1
                   />
                 );
               }
