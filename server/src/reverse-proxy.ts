@@ -1,8 +1,9 @@
-import type { Express, Request, Response } from 'express';
+import type { Express, NextFunction, Request, Response } from 'express';
 import proxy, { type ProxyOptions } from 'express-http-proxy';
 import type { ProxyApi } from './config.js';
 import config from './config.js';
 import log from './log.js';
+import { erInnenforPrefiks, fjernLegitimasjon, lagLoginLocation, normalisertSti } from './proxy-sikkerhet.js';
 
 // ── Token exchange hook ──
 // Currently a passthrough. To add OBO token exchange later:
@@ -33,6 +34,9 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     preserveHostHdr: api.preserveHostHeader ?? true,
 
     proxyReqOptDecorator: async (options /*, req */) => {
+      if (api.stripCredentials) {
+        fjernLegitimasjon(options.headers);
+      }
       // When OBO token exchange is enabled, uncomment the following
       // and remove cookie forwarding:
       // const oboToken = await exchangeToken(req, api);
@@ -42,7 +46,8 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     },
 
     proxyReqPathResolver: (req: Request): string => {
-      const { pathname, search } = new URL(req.originalUrl, 'http://localhost');
+      const { search } = new URL(req.originalUrl, 'http://localhost');
+      const pathname = normalisertSti(req.originalUrl);
       const resolved = api.stripPrefix ? pathname.replace(api.path, '') || '/' : pathname;
       return resolved + (search ?? '');
     },
@@ -50,7 +55,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
     userResDecorator: (_proxyRes, _proxyResData, userReq, userRes) => {
       // On 401: inject Location header so the frontend knows where to redirect for login.
       if (userRes.statusCode === 401) {
-        userRes.setHeader('Location', `${config.loginPath}?original=${userReq.originalUrl}`);
+        userRes.setHeader('Location', lagLoginLocation(config.loginPath, userReq.originalUrl));
       }
       return _proxyResData;
     },
@@ -66,7 +71,7 @@ function makeOptions(api: ProxyApi): ProxyOptions {
           cause: err.cause,
           path: err.path,
           syscall: err.syscall,
-          url: res.req.originalUrl,
+          url: normalisertSti(res.req.originalUrl),
           responseStatusCode: status,
           navCallid,
         }
@@ -82,7 +87,15 @@ function makeOptions(api: ProxyApi): ProxyOptions {
 
 export default function setupProxy(app: Express, apis: ProxyApi[]): void {
   for (const api of apis) {
-    app.use(api.path + '/{*path}', proxy(api.url, makeOptions(api)));
+    const avvisStiUtenforPrefiks = (req: Request, res: Response, next: NextFunction): void => {
+      if (erInnenforPrefiks(req.originalUrl, api.path)) {
+        next();
+        return;
+      }
+      log.warn('avviste sti utenfor prefiks', { prefiks: api.path, sti: normalisertSti(req.originalUrl) });
+      res.status(400).send();
+    };
+    app.use(api.path + '/{*path}', avvisStiUtenforPrefiks, proxy(api.url, makeOptions(api)));
     log.info('proxy setup', { fromPath: `${api.path}/*`, toPath: api.url });
   }
 }
