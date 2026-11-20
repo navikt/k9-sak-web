@@ -37,7 +37,7 @@ jobs:
           VITE_CDN_BASE_URL: "https://cdn.nav.no/k9saksbehandling/ung-sak-web/"
 
       - name: Last opp assets til CDN
-        uses: nais/deploy/actions/cdn-upload/v2@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+        uses: nais/deploy/actions/cdn-upload/v2@427e29c94d911626a023a76f402f6dcae1f840b7 # v3
         with:
           source: dist/ung/web/
           destination: ung-sak-web/
@@ -87,7 +87,7 @@ jobs:
     needs: [build-docker-image]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+      - uses: nais/deploy/actions/deploy@427e29c94d911626a023a76f402f6dcae1f840b7 # v3
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
@@ -106,7 +106,7 @@ jobs:
     needs: [build-docker-image]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+      - uses: nais/deploy/actions/deploy@427e29c94d911626a023a76f402f6dcae1f840b7 # v3
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
@@ -162,7 +162,7 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling (aktivitetspenger): <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+      - uses: nais/deploy/actions/deploy@427e29c94d911626a023a76f402f6dcae1f840b7 # v3
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
@@ -243,7 +243,7 @@ jobs:
             static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
             echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
           fi
-      - uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50 # v3
+      - uses: nais/deploy/actions/deploy@427e29c94d911626a023a76f402f6dcae1f840b7 # v3
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
