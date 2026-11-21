@@ -49,4 +49,5 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
   SKJUL_PROSESS_MENY_V2_VELGER: true,
+  VIS_ENDRINGSMELDING_PSB_TILGANG: true,
 });
