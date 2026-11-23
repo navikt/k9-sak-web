@@ -21,6 +21,7 @@ import { useForm } from 'react-hook-form';
 import type { SaveKlageParams } from '../felles/SaveKlageParams';
 import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
+import { validerTekstfelterForMellomlagring } from '../felles/validerTekstfelterForMellomlagring.js';
 import styles from './behandleKlageFormNfp.module.css';
 import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 import { KlageVurderingRadioOptionsNfp, TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
@@ -65,8 +66,13 @@ export const BehandleKlageFormNfp = ({
     }
   };
   const handleSaveKlage = async (params: SaveKlageParams): Promise<boolean> => {
-    const isValid = await formMethods.trigger(['klageVurdering', 'fritekstTilBrev']);
-    if (!isValid) {
+    const klageVurderingErGyldig = await formMethods.trigger('klageVurdering');
+    const tekstfelterErGyldige = validerTekstfelterForMellomlagring({
+      values: formMethods.getValues(),
+      setError: formMethods.setError,
+      clearErrors: formMethods.clearErrors,
+    });
+    if (!klageVurderingErGyldig || !tekstfelterErGyldige) {
       return false;
     }
     await saveKlage(params);

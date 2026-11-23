@@ -38,6 +38,7 @@ export const VisPanelForKlagevurderingMedAksjonspunktNk: Story = {
       },
     ],
     behandling: {
+      id: 1,
       opprettet: '123',
       sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
       status: ung_kodeverk_behandling_BehandlingStatus.OPPRETTET,
@@ -79,6 +80,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
       },
     ],
     behandling: {
+      id: 1,
       opprettet: '123',
       sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
       status: ung_kodeverk_behandling_BehandlingStatus.OPPRETTET,
@@ -109,8 +111,18 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
     });
 
     await step('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', async () => {
+      await userEvent.type(canvas.getByRole('textbox', { name: 'Vurdering' }), 'Dette er en vurdering');
       await userEvent.type(canvas.getByRole('textbox', { name: 'Fritekst til brev' }), 'Dette er en fritekst');
       await expect(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
+    });
+
+    await step('skal validere vurdering ved lagre og forhåndsvis brev', async () => {
+      const vurdering = canvas.getByRole('textbox', { name: 'Vurdering' });
+      await userEvent.type(vurdering, '\u200B');
+      await userEvent.click(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' }));
+      await expect(await canvas.findByText('Følgende tegn er ikke tillatt: U+200B')).toBeInTheDocument();
+      await userEvent.clear(vurdering);
+      await userEvent.type(vurdering, 'Dette er en vurdering');
     });
 
     await step('skal validere fritekst til brev ved lagre og forhåndsvis brev', async () => {
@@ -121,10 +133,16 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
       await expect(await canvas.findByText('Følgende tegn er ikke tillatt: U+200B')).toBeInTheDocument();
     });
 
-    await step('skal validere fritekst til brev ved lagre', async () => {
+    await step('skal validere tegn, men ikke påkrevde felt, ved lagre', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Lagre' }));
+      await expect(await canvas.findByText('Følgende tegn er ikke tillatt: U+200B')).toBeInTheDocument();
+      await userEvent.clear(canvas.getByRole('textbox', { name: 'Vurdering' }));
       await userEvent.clear(canvas.getByRole('textbox', { name: 'Fritekst til brev' }));
       await userEvent.click(canvas.getByRole('button', { name: 'Lagre' }));
-      await expect(await canvas.findByText('Feltet må fylles ut')).toBeInTheDocument();
+      await waitFor(async () => {
+        await expect(canvas.queryByText('Følgende tegn er ikke tillatt: U+200B')).not.toBeInTheDocument();
+      });
+      await expect(canvas.queryByText('Feltet må fylles ut')).not.toBeInTheDocument();
     });
   },
 };
@@ -133,6 +151,7 @@ export const KlagevurderingMedAksjonspunktNfpKlageMedhold: Story = {
   args: {
     ...KlagevurderingMedAksjonspunktNfpKlageOpprettholdt.args,
     behandling: {
+      id: 1,
       opprettet: '123',
       sakstype: ung_kodeverk_behandling_FagsakYtelseType.UNGDOMSYTELSE,
       status: ung_kodeverk_behandling_BehandlingStatus.OPPRETTET,
