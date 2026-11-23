@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { formatInvalidCharacters } from './validateTextCharacters.js';
 
 /*
  * Utvider Yup med egne metoder for validering
@@ -35,7 +36,7 @@ declare module 'yup' {
  */
 yup.addMethod(yup.string, 'validChars', function (validationRegex: RegExp, message?: string) {
   return this.test('invalid-characters', 'Teksten inneholder ugyldige tegn: ${invalidChars}', function (value) {
-    const invalidChars = findInvalidCharacters(value || '', validationRegex).join(', ');
+    const invalidChars = formatInvalidCharacters(findInvalidCharacters(value || '', validationRegex));
     return (
       invalidChars.length === 0 ||
       this.createError({ message: message ?? `Teksten inneholder ugyldige tegn: ${invalidChars}` })

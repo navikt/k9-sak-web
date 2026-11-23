@@ -1,3 +1,4 @@
+import { legacyInvalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import { validateTextCharacters } from '@k9-sak-web/gui/utils/validation/validateTextCharacters.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment, { Moment } from 'moment';
@@ -142,7 +143,7 @@ export const hasValidText = (text: string | undefined | null): ValidationReturnT
   if (text === undefined || text === null) {
     return null;
   }
-  const { invalidCharacters } = validateTextCharacters(text);
+  const { invalidCharacters } = validateTextCharacters(text, legacyInvalidTextRegex);
   if (invalidCharacters && invalidCharacters?.length > 0) {
     const invalidCharacterString = invalidCharacters
       .map(invalidChar => invalidChar.replace(/[\t]/, 'Tabulatortegn'))

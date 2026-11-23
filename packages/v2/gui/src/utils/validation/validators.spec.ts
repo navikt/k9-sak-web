@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dateBefore, dateIsNotWeekend } from './validators.js';
+import { dateBefore, dateIsNotWeekend, hasValidText } from './validators.js';
 
 describe('dateBefore', () => {
   const errorMessage = 'Datoen må være tidligere enn maksimaldatoen.';
@@ -28,5 +28,15 @@ describe('dateIsNotWeekend', () => {
   it('leaves empty and invalid dates to other validators', () => {
     expect(dateIsNotWeekend('')).toBeUndefined();
     expect(dateIsNotWeekend('not-a-date')).toBeUndefined();
+  });
+});
+
+describe('hasValidText', () => {
+  it('accepts letters, punctuation, symbols and whitespace', () => {
+    expect(hasValidText('Æøå é ŋ 123 <>[]{}$*`~|^\\ €§ 😀\ttab\nlinje')).toBeUndefined();
+  });
+
+  it('rejects control and format characters and lists them as code points', () => {
+    expect(hasValidText('a\u0000b\u200Bc\u0000')).toBe('Følgende tegn er ikke tillatt: U+0000 U+200B');
   });
 });

@@ -1,7 +1,7 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
+import { hasValidTextLegacy } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Button, Label, Link, Tooltip } from '@navikt/ds-react';
@@ -276,7 +276,7 @@ const VurderingAvToOmsorgspersonerForm = ({
                   </ul>
                 </>
               }
-              validators={{ required, hasValidText }}
+              validators={{ required, hasValidText: hasValidTextLegacy }}
               disabled={readOnly}
               id="begrunnelsesfelt"
             />
