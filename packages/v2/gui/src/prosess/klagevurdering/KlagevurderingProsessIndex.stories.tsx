@@ -116,9 +116,9 @@ export const KlagevurderingMedAksjonspunktNfpKlageOpprettholdt: Story = {
     await step('skal validere fritekst til brev ved lagre og forhåndsvis brev', async () => {
       const fritekst = canvas.getByRole('textbox', { name: 'Fritekst til brev' });
       await userEvent.clear(fritekst);
-      await userEvent.type(fritekst, 'Fritekst med <ugyldige> tegn');
+      await userEvent.type(fritekst, 'Fritekst med\u200Bugyldig tegn');
       await userEvent.click(canvas.getByRole('button', { name: 'Lagre og forhåndsvis brev' }));
-      await expect(await canvas.findByText('Feltet inneholder ugyldige tegn: <>')).toBeInTheDocument();
+      await expect(await canvas.findByText('Følgende tegn er ikke tillatt: U+200B')).toBeInTheDocument();
     });
 
     await step('skal validere fritekst til brev ved lagre', async () => {
