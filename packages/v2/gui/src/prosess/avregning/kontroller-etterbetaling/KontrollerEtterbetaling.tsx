@@ -4,7 +4,7 @@ import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/be
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
 import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/kontrakt/behandling/BehandlingDto.js';
 import { kanAksjonspunktRedigeres, skalAksjonspunktUtredes } from '@k9-sak-web/gui/utils/aksjonspunkt.js';
-import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
+import { legacyInvalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import '@k9-sak-web/gui/utils/validation/yupSchemas.js';
 import { Button, HStack, ReadMore, Textarea, VStack } from '@navikt/ds-react';
 import { useEffect, useState, type FC } from 'react';
@@ -38,7 +38,7 @@ const KontrollerEtterbetaling: FC<Props> = ({ behandling, aksjonspunkt, readOnly
   const kontrollerEtterbetalingFormSchema: yup.ObjectSchema<KontrollerEtterbetalingFormData> = yup.object({
     begrunnelse: yup
       .string()
-      .validChars(invalidTextRegex)
+      .validChars(legacyInvalidTextRegex)
       .min(3, 'Du må skrive minst tre tegn')
       .max(1500, 'Maks 1500 tegn tillatt.')
       .required('Begrunnelse må fylles ut')

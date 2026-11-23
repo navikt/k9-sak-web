@@ -8,7 +8,8 @@ import ArrowBox from '@k9-sak-web/gui/shared/arrowBox/ArrowBox.js';
 import ContentMaxWidth from '@k9-sak-web/gui/shared/ContentMaxWidth/ContentMaxWidth.js';
 import type { KodeverkMedUndertype, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { RhfRadioGroup, RhfSelect, RhfTextarea } from '@navikt/ft-form-hooks';
-import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { useFormContext } from 'react-hook-form';
 import { type BehandleKlageFormKaFormValues } from './BehandleKlageFormKaFormValues';
 

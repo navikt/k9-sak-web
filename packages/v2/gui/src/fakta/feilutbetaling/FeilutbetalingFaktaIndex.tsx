@@ -1,7 +1,7 @@
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import FaktaGruppe from '@k9-sak-web/gui/shared/FaktaGruppe.js';
 import { backendNavn } from '@k9-sak-web/gui/utils/BackendTilhørighet.js';
-import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
+import { hasValidTextLegacy } from '@k9-sak-web/gui/utils/validation/validators.js';
 import type { LegacyBekreftAksjonspunktCallback } from '@k9-sak-web/gui/utils/typehelp/AksjonspunktSubmitCallbackArgumentType.js';
 import { BodyShort, Button, Checkbox, Detail, HGrid, Label, Textarea, VStack } from '@navikt/ds-react';
 import { decodeHtmlEntity } from '@navikt/ft-utils';
@@ -233,7 +233,7 @@ const FeilutbetalingFaktaIndex = ({
                   required: 'Feltet må fylles ut',
                   minLength: { value: 3, message: 'Du må skrive minst 3 tegn' },
                   maxLength: { value: 1500, message: 'Du kan skrive maksimalt 1500 tegn' },
-                  validate: hasValidText,
+                  validate: hasValidTextLegacy,
                 }}
                 render={({ field, fieldState }) => (
                   <Textarea

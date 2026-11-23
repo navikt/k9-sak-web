@@ -11,7 +11,7 @@ const getBrevData = (tekst: string) => ({
 
 interface OwnProps {
   formValues: BehandleKlageFormKaFormValues;
-  saveKlage: (params: SaveKlageParams) => Promise<void>;
+  saveKlage: (params: SaveKlageParams) => Promise<boolean>;
   aksjonspunktCode: string;
   readOnly: boolean;
   previewCallback: (dokumentdata?: Dokumentdata) => Promise<void>;
@@ -30,8 +30,8 @@ export const TempSaveAndPreviewKlageLink = ({
 
     setIsFetchingPreview(true);
     try {
-      await saveKlage(formValuesToSaveValues(formValues, aksjonspunktCode));
-      if (formValues.fritekstTilBrev) {
+      const erLagret = await saveKlage(formValuesToSaveValues(formValues, aksjonspunktCode));
+      if (erLagret && formValues.fritekstTilBrev) {
         await previewCallback(getBrevData(formValues.fritekstTilBrev));
       }
     } finally {

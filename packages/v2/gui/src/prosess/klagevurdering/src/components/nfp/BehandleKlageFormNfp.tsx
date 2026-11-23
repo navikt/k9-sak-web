@@ -14,12 +14,14 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { RhfForm, RhfTextarea } from '@navikt/ft-form-hooks';
-import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SaveKlageParams } from '../felles/SaveKlageParams';
 import { TempSaveAndPreviewKlageLink } from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
+import { validerTekstfelterForMellomlagring } from '../felles/validerTekstfelterForMellomlagring.js';
 import styles from './behandleKlageFormNfp.module.css';
 import type { BehandleKlageFormNfpFormValues } from './BehandleKlageFormNfpFormValues';
 import { KlageVurderingRadioOptionsNfp, TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
@@ -63,11 +65,18 @@ export const BehandleKlageFormNfp = ({
       setIsSubmitting(false);
     }
   };
-  const handleSaveKlage = async (params: SaveKlageParams) => {
-    const isValid = await formMethods.trigger('klageVurdering');
-    if (isValid) {
-      return saveKlage(params);
+  const handleSaveKlage = async (params: SaveKlageParams): Promise<boolean> => {
+    const klageVurderingErGyldig = await formMethods.trigger('klageVurdering');
+    const tekstfelterErGyldige = validerTekstfelterForMellomlagring({
+      values: formMethods.getValues(),
+      setError: formMethods.setError,
+      clearErrors: formMethods.clearErrors,
+    });
+    if (!klageVurderingErGyldig || !tekstfelterErGyldige) {
+      return false;
     }
+    await saveKlage(params);
+    return true;
   };
   const formValues = formMethods.watch();
   const { hentKodeverkForKode } = useKodeverkContext();

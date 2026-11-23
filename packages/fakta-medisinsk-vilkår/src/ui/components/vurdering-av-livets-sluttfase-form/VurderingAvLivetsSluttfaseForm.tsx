@@ -1,7 +1,7 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { FormWithButtons } from '@k9-sak-web/gui/shared/formWithButtons/FormWithButtons.js';
-import { hasValidText } from '@k9-sak-web/gui/utils/validation/validators.js';
+import { hasValidTextLegacy } from '@k9-sak-web/gui/utils/validation/validators.js';
 import { PersonIcon } from '@navikt/aksel-icons';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Box, Label, Link, Tooltip } from '@navikt/ds-react';
@@ -276,7 +276,7 @@ const VurderingAvLivetsSluttfaseForm = ({
                   <br />
                 </>
               }
-              validators={{ required, hasValidText }}
+              validators={{ required, hasValidText: hasValidTextLegacy }}
             />
           </Box>
           <Box marginBlock="space-32 space-0">
