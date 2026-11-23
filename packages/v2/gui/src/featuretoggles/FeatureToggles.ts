@@ -29,6 +29,7 @@ const rootFeatureToggles = {
   BRUK_V2_PROSESS_UNNTAK: false,
   BRUK_V2_OM_BARNET: false,
   BRUK_V2_BARN_OMS: false,
+  BRUK_V2_VERGE: false,
   STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK: false,
   NATTEVAAK_BEREDSKAP_OVERSTYRING: false,
   VIS_ENDRINGSMELDING_PSB_TILGANG: false,
@@ -42,6 +43,7 @@ const rootFeatureToggles = {
 const baseQFeatureToggles = {
   isFor: 'Q',
   BRUK_V2_TILKJENT_YTELSE: true,
+  BRUK_V2_VERGE: true,
   UNNTAKSBEHANDLING: true,
   SINGLE_AUTHFIXER: true,
 } satisfies FeatureTogglesOverride & FeatureTogglesFor;

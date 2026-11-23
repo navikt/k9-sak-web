@@ -28,6 +28,8 @@ import K9SakSykdomOgOpplæringBackendClient from '@k9-sak-web/gui/fakta/sykdom-o
 import { SykdomOgOpplæringBackendClientContext } from '@k9-sak-web/gui/fakta/sykdom-og-opplæring/SykdomOgOpplæringBackendClientContext.js';
 import { K9SakUtenlandsoppholdBackendClient } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/K9SakUtenlandsoppholdBackendClient.js';
 import { UtenlandsoppholdApiContext } from '@k9-sak-web/gui/fakta/utenlandsopphold/api/UtenlandsoppholdApiContext.js';
+import { K9TilbakeVergeBackendClient } from '@k9-sak-web/gui/fakta/verge/api/K9TilbakeVergeBackendClient.js';
+import { VergeApiContext } from '@k9-sak-web/gui/fakta/verge/api/VergeApiContext.js';
 import { K9SakYtelserBackendClient } from '@k9-sak-web/gui/fakta/ytelser/api/K9SakYtelserBackendClient.js';
 import { YtelserApiContext } from '@k9-sak-web/gui/fakta/ytelser/api/YtelserApiContext.js';
 import { K9KodeverkoppslagContext } from '@k9-sak-web/gui/kodeverk/oppslag/K9KodeverkoppslagContext.jsx';
@@ -125,7 +127,9 @@ const AppConfigResolver = ({ children }: OwnProps) => {
                                                   value={new K9SakEndringsmeldingPsbTilgangBackendClient()}
                                                 >
                                                   <BarnOmsApiContext value={new K9SakBarnOmsBackendClient()}>
-                                                    {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                    <VergeApiContext value={new K9TilbakeVergeBackendClient()}>
+                                                      {harFeilet || erFerdig ? children : <LoadingPanel />}
+                                                    </VergeApiContext>
                                                   </BarnOmsApiContext>
                                                 </EndringsmeldingPsbTilgangApiContext>
                                               </OmsorgenForApiContext>
