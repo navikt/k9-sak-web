@@ -25,9 +25,9 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
   BRUK_V2_FEILUTBETALING: true,
-  PROSESS_MENY_V2: true,
+  PROSESS_MENY_V2_PSB: true,
   PROSESS_MENY_V2_OMS: true,
-  SKJUL_PROSESS_MENY_V2_VELGER: true,
+  SKJUL_PROSESS_MENY_V2_PSB_VELGER: true,
   DELVIS_REVURDERING_MEDISINSK_VILKAR: true,
   VIS_INNLEGGELSE_FOR_PILS: true,
   BRUK_OMSORGEN_FOR_V2: true,
@@ -48,6 +48,7 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
  */
 export const prodFeatureToggles = initProdFeatureToggles(k9SpecificFeatureToggles)({
   isFor: 'prod',
-  SKJUL_PROSESS_MENY_V2_VELGER: true,
+  SKJUL_PROSESS_MENY_V2_PSB_VELGER: true,
+  SKJUL_PROSESS_MENY_V2_OMS_VELGER: true,
   VIS_ENDRINGSMELDING_PSB_TILGANG: true,
 });
