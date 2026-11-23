@@ -9,8 +9,6 @@ import {
   arbeidsgiverOpplysningerQueryOptions,
   behandlingQueryOptions,
   beregningsgrunnlagQueryOptions,
-  forbrukteDagerQueryOptions,
-  medlemskapQueryOptions,
   overlappendeYtelserQueryOptions,
   personopplysningerQueryOptions,
   simuleringResultatQueryOptions,
@@ -20,7 +18,6 @@ import {
 import { ProsessPanelContext } from '@k9-sak-web/gui/behandling/prosess/ProsessPanelContext.js';
 import { ProsessStegIkkeBehandlet } from '@k9-sak-web/gui/behandling/prosess/ProsessStegIkkeBehandlet.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext, useMemo } from 'react';
@@ -46,7 +43,6 @@ const PANEL_ID = prosessStegCodes.VEDTAK;
 interface Props {
   api: K9SakProsessApi;
   behandling: Behandling;
-  employeeHasAccess: boolean;
   hentFritekstbrevHtmlCallback: (parameters: any) => Promise<any>;
   isReadOnly: boolean;
   lagreDokumentdata: (params?: any, keepData?: boolean | undefined) => Promise<Behandling>;
@@ -75,8 +71,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
     { data: simuleringResultat },
     { data: tilbakekrevingvalg },
     { data: overlappendeYtelser },
-    { data: medlemskap },
-    { data: forbrukteDager },
   ] = useSuspenseQueries({
     queries: [
       behandlingQueryOptions(props.api, props.behandling),
@@ -88,8 +82,6 @@ export function VedtakProsessStegInitPanel(props: Props) {
       simuleringResultatQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
       tilbakekrevingvalgQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
       overlappendeYtelserQueryOptions(props.api, props.behandling, erTilBehandlingEllerBehandlet),
-      medlemskapQueryOptions(props.api, props.behandling),
-      forbrukteDagerQueryOptions(props.api, props.behandling),
     ],
   });
 
@@ -153,31 +145,27 @@ export function VedtakProsessStegInitPanel(props: Props) {
     språkkode: behandlingV2.sprakkode?.kode ?? 'NB',
   };
 
-  // Behold kodeverkformen som det eldre VedtakProsessIndex forventer, slik v1-panelet gjorde.
-  const indexProps = {
-    isReadOnly: props.isReadOnly,
-    hentFritekstbrevHtmlCallback: props.hentFritekstbrevHtmlCallback,
-    dokumentdataHente: restApiData.data?.dokumentdataHente,
-    aksjonspunkter,
-    arbeidsgiverOpplysningerPerId: arbeidsgiverOpplysningerPerId.arbeidsgivere || {},
-    behandling: tilpassetBehandling,
-    beregningsgrunnlag,
-    vilkar: vilkår,
-    submitCallback: handleSubmit,
-    simuleringResultat,
-    tilbakekrevingvalg,
-    ytelseTypeKode: fagsakYtelsesType.OMSORGSPENGER,
-    employeeHasAccess: props.employeeHasAccess,
-    uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
-    personopplysninger,
-    medlemskap,
-    lagreDokumentdata: props.lagreDokumentdata,
-    previewCallback: props.previewCallback,
-    overlappendeYtelser,
-    tilgjengeligeVedtaksbrev: restApiData.data?.tilgjengeligeVedtaksbrev,
-  };
-  const deepCopyProps = JSON.parse(JSON.stringify(indexProps));
-  konverterKodeverkTilKode(deepCopyProps, false);
-
-  return <VedtakProsessIndex {...indexProps} {...deepCopyProps} />;
+  return (
+    <VedtakProsessIndex
+      isReadOnly={props.isReadOnly}
+      hentFritekstbrevHtmlCallback={props.hentFritekstbrevHtmlCallback}
+      dokumentdataHente={restApiData.data?.dokumentdataHente}
+      fritekstdokumenter={[]}
+      informasjonsbehovVedtaksbrev={{ informasjonsbehov: [], mangler: [] }}
+      aksjonspunkter={aksjonspunkter}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId.arbeidsgivere || {}}
+      behandling={tilpassetBehandling}
+      beregningsgrunnlag={beregningsgrunnlag}
+      vilkar={vilkår}
+      submitCallback={handleSubmit}
+      simuleringResultat={simuleringResultat}
+      tilbakekrevingvalg={tilbakekrevingvalg}
+      ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
+      personopplysninger={personopplysninger}
+      lagreDokumentdata={props.lagreDokumentdata}
+      previewCallback={props.previewCallback}
+      overlappendeYtelser={overlappendeYtelser}
+      tilgjengeligeVedtaksbrev={restApiData.data?.tilgjengeligeVedtaksbrev}
+    />
+  );
 }

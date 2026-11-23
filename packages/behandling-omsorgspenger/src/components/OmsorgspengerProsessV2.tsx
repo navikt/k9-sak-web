@@ -224,7 +224,6 @@ export const OmsorgspengerProsessV2 = ({
                     key={steg.id}
                     api={k9SakProsessApi}
                     behandling={behandling}
-                    employeeHasAccess={rettigheter.kanOverstyreAccess.isEnabled}
                     hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
                     isReadOnly={isReadOnly}
                     submitCallback={bekreftAksjonspunktCallback}

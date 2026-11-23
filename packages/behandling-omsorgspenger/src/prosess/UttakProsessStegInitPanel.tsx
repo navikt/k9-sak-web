@@ -105,21 +105,22 @@ export function UttakProsessStegInitPanel(props: Props) {
     }));
 
   const handleSubmit = (aksjonspunktModels: any[]) => props.submitCallback(aksjonspunktModels, aksjonspunkter);
-  const indexProps = {
-    fullUttaksplan: restApiData.data.fullUttaksplan,
-    // V2-spørringen leverer uttaksdataene som legacy-komponenten forventer.
-    årskvantum: forbrukteDager as ÅrskvantumForbrukteDager,
-    alleKodeverk: props.alleKodeverk,
-    isAksjonspunktOpen: aksjonspunkter.some(aksjonspunkt => isAksjonspunktOpen(aksjonspunkt.status)),
-    behandling: props.behandling,
-    submitCallback: handleSubmit,
-    aksjonspunkterForSteg,
-    arbeidsforhold: restApiData.data.arbeidsforhold,
-    // V2-DTO-en mangler det legacy-feltet erPrivatPerson; panelet bruker arbeidsgivernavnene.
-    arbeidsgiverOpplysningerPerId: (arbeidsgiverOpplysningerPerId.arbeidsgivere ||
-      {}) as unknown as ArbeidsgiverOpplysningerPerId,
-    fosterbarn: props.fosterbarn,
-  };
-
-  return <ÅrskvantumIndex {...indexProps} />;
+  return (
+    <ÅrskvantumIndex
+      fullUttaksplan={restApiData.data.fullUttaksplan}
+      // V2-spørringen leverer uttaksdataene som legacy-komponenten forventer.
+      årskvantum={forbrukteDager as ÅrskvantumForbrukteDager}
+      alleKodeverk={props.alleKodeverk}
+      isAksjonspunktOpen={aksjonspunkter.some(aksjonspunkt => isAksjonspunktOpen(aksjonspunkt.status))}
+      behandling={props.behandling}
+      submitCallback={handleSubmit}
+      aksjonspunkterForSteg={aksjonspunkterForSteg}
+      arbeidsforhold={restApiData.data.arbeidsforhold}
+      // V2-DTO-en mangler det legacy-feltet erPrivatPerson; panelet bruker arbeidsgivernavnene.
+      arbeidsgiverOpplysningerPerId={
+        (arbeidsgiverOpplysningerPerId.arbeidsgivere || {}) as unknown as ArbeidsgiverOpplysningerPerId
+      }
+      fosterbarn={props.fosterbarn}
+    />
+  );
 }
