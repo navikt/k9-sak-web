@@ -115,8 +115,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
     expect(props.losAksjonspunkt).not.toHaveBeenCalled();
   });
 
-  test('godtar fra-dato frem i tid i produksjon', async () => {
-    vi.mocked(isProd).mockReturnValue(true);
+  test('godtar fra-dato frem i tid', async () => {
     const fremtidigÅr = new Date().getFullYear() + 1;
     const props = lagPropsMedDato(`${fremtidigÅr}-01-01`);
     renderMedDato(props, { innvilgedePerioder: [] });
