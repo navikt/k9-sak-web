@@ -1,8 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
-import { qFeatureToggles } from '@k9-sak-web/gui/featuretoggles/k9/featureToggles.js';
 import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
@@ -66,11 +64,9 @@ describe('<VilkarKroniskSyktBarn>', () => {
     },
   ) =>
     render(
-      <FeatureTogglesContext.Provider value={qFeatureToggles}>
-        <KroniskSyktBarnDatoContext.Provider value={datoer}>
-          <VilkarKroniskSyktBarn {...props} />
-        </KroniskSyktBarnDatoContext.Provider>
-      </FeatureTogglesContext.Provider>,
+      <KroniskSyktBarnDatoContext.Provider value={datoer}>
+        <VilkarKroniskSyktBarn {...props} />
+      </KroniskSyktBarnDatoContext.Provider>,
     );
 
   test.each(
@@ -117,6 +113,24 @@ describe('<VilkarKroniskSyktBarn>', () => {
     await bekreft();
     expect(await screen.findByText(overlappFeil)).toBeInTheDocument();
     expect(props.losAksjonspunkt).not.toHaveBeenCalled();
+  });
+
+  test('godtar fra-dato frem i tid i produksjon', async () => {
+    vi.mocked(isProd).mockReturnValue(true);
+    const fremtidigÅr = new Date().getFullYear() + 1;
+    const props = lagPropsMedDato(`${fremtidigÅr}-01-01`);
+    renderMedDato(props, { innvilgedePerioder: [] });
+
+    await bekreft();
+
+    expect(props.losAksjonspunkt).toHaveBeenCalledWith(
+      true,
+      'Barnet oppfyller vilkåret',
+      '',
+      `${fremtidigÅr}-01-01`,
+      '',
+      false,
+    );
   });
 
   test('sperrer kalenderdatoer i innvilgede perioder', async () => {
