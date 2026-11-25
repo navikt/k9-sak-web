@@ -14,6 +14,7 @@ const config: KnipConfig = {
         'ung.vite.config.js',
         'aktivitetspenger.vite.config.js',
         'v2css.vite.config.ts',
+        'test-runner-jest.config.js',
       ],
     },
     'packages/ung/sak-app': {
