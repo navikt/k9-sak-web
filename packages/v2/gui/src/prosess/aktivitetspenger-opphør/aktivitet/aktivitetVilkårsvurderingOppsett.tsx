@@ -1,7 +1,7 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
 import { AktivitetsvilkåretIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/AktivitetsvilkåretIkkeOppfyltÅrsak.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
-import { $VurderingAvVilkårPeriodeEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/VurderingAvVilkårPeriodeEtterAvklaringDto.js';
+import { $VurderingAvAktivitetsvilkårEtterAvklaringDto } from '@k9-sak-web/backend/ungsak/kontrakt/vilkår/aktivitet/VurderingAvAktivitetsvilkårEtterAvklaringDto.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import type { OpphørVilkårsvurderingOppsett } from '../OpphørVilkårsvurdering.js';
 
@@ -9,8 +9,7 @@ export const aktivitetVilkårsvurderingOppsett: OpphørVilkårsvurderingOppsett 
   vilkårType: vilkarType.AKTIVITETSVILKÅR,
   aksjonspunktKode: AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR_OPPHØR,
   årsakSomKreverFritekstIBrev: AktivitetsvilkåretIkkeOppfyltÅrsak.ANNET,
-  // TODO: Bytt til $VurderingAvAktivitetsvilkårEtterAvklaringDto når backend-klienten har den.
-  begrunnelseMaxLength: $VurderingAvVilkårPeriodeEtterAvklaringDto.properties.begrunnelse.maxLength,
+  begrunnelseMaxLength: $VurderingAvAktivitetsvilkårEtterAvklaringDto.properties.begrunnelse.maxLength,
   tekster: {
     varsel: 'Vurder om bruker ikke lenger er i aktivitet.',
     overskrift: 'Vurdering av ikke i aktivitet',

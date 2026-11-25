@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import dayjs from 'dayjs';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import FeatureTogglesContext from '@k9-sak-web/gui/featuretoggles/FeatureTogglesContext.js';
 import { isProd } from '@k9-sak-web/lib/paths/paths.js';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
@@ -53,7 +52,6 @@ const tekst = {
   feilmedlingManglerDato: 'Mangler dato.',
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
-  feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
   feilOverlappendePeriode: 'Perioden overlapper et tidligere innvilget vedtak.',
   feilFraDatoEtterTilDato: 'Fra-dato kan ikke være etter til-dato.',
   feilFraDatoEtter18År: 'Fra-dato kan ikke være etter året barnet fyller 18 år.',
@@ -92,10 +90,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   personopplysninger,
 }) => {
   const kroniskSyktBarnDatoer = useContext(KroniskSyktBarnDatoContext);
-  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = useContext(FeatureTogglesContext);
-  const foreslåttFraDato = STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
-    ? kroniskSyktBarnDatoer.foreslåttFraDato
-    : undefined;
+  const foreslåttFraDato = kroniskSyktBarnDatoer.foreslåttFraDato;
   const innvilgedePerioder = kroniskSyktBarnDatoer.innvilgedePerioder;
   const fødselsdato = personopplysninger.pleietrengendePart?.fodselsdato;
   const åretBarnetFyller18 = fødselsdato ? dayjs(fødselsdato).year() + 18 : undefined;
@@ -127,14 +122,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const åpenForRedigering = watch('åpenForRedigering');
   const erTidsbegrenset = watch('erTidsbegrenset');
   const formStateKey = `${behandlingsID}-utvidetrett-ks`;
-  const { erDatoFyltUt, erDatoGyldig, erDatoIkkeIFremtid } = valideringsFunksjoner(
-    getValues,
-    'harDokumentasjonOgFravaerRisiko',
-  );
+  const { erDatoFyltUt, erDatoGyldig } = valideringsFunksjoner(getValues, 'harDokumentasjonOgFravaerRisiko');
 
   const erPeriodeUtenOverlapp = (dato: string) => {
     const data = getValues();
-    if (!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK) return true;
     if (!tekstTilBoolean(data.harDokumentasjonOgFravaerRisiko)) return true;
 
     const fom = dayjs(dato);
@@ -402,31 +393,23 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                             errors.fraDato.type === 'erDatoFyltUt' &&
                             tekst.feilmedlingManglerFraDato) ||
                           (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
-                          (errors.fraDato &&
-                            errors.fraDato.type === 'erDatoIkkeIFremtid' &&
-                            tekst.feilmedlingerDatoIkkeIFremtid) ||
                           errors.fraDato?.message
                         }
                       >
                         <DatePicker
                           titel=""
                           navn="fraDato"
-                          begrensningerIKalender={
-                            STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK
-                              ? {
-                                  minDate: '',
-                                  maxDate: åretBarnetFyller18 ? `${åretBarnetFyller18}-12-31` : '',
-                                  invalidDateRanges: innvilgedePerioder.map(periode => ({
-                                    from: periode.fom,
-                                    to: periode.tom,
-                                  })),
-                                }
-                              : undefined
-                          }
+                          begrensningerIKalender={{
+                            minDate: '',
+                            maxDate: åretBarnetFyller18 ? `${åretBarnetFyller18}-12-31` : '',
+                            invalidDateRanges: innvilgedePerioder.map(periode => ({
+                              from: periode.fom,
+                              to: periode.tom,
+                            })),
+                          }}
                           valideringsFunksjoner={{
                             erDatoFyltUt,
                             erDatoGyldig,
-                            ...(!STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && { erDatoIkkeIFremtid }),
                             erPeriodeUtenOverlapp,
                           }}
                         />

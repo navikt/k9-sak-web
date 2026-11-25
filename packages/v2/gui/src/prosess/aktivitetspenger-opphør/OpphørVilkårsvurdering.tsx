@@ -195,10 +195,7 @@ export const OpphørVilkårsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (submitArgs: SubmitArgs) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
-        // @ts-expect-error -- BekreftetAksjonspunktDto mangler DTO for VURDER_AKTIVITETSVILKÅR_OPPHØR. Fjern når backend-klienten har den.
-        buildPayload(submitArgs),
-      ]);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
