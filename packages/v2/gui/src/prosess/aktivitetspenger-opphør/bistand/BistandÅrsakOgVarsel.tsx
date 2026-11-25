@@ -38,7 +38,6 @@ const bistandOpphørsårsaker = [
     value: BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING,
     label: 'Har startet i utdanning som ikke er et arbeidsmarkedstiltak',
   },
-  { value: BistandsvilkårIkkeOppfyltÅrsak.ANNET, label: 'Annen årsak' },
 ] satisfies { value: BistandsvilkårIkkeOppfyltÅrsak; label: string }[];
 
 interface BistandPeriodForm extends OpphørVarselPeriodForm {
