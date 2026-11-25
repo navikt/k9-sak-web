@@ -1547,7 +1547,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": "npm:5.108.1"
+    "@tanstack/react-query": "npm:5.108.2"
     "@types/react": "npm:19.3.0"
     react: "npm:19.3.1"
     react-intl: "npm:12.2.0"
@@ -1743,9 +1743,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:7.0.7":
-  version: 7.0.7
-  resolution: "@hookform/resolvers@npm:7.0.7"
+"@hookform/resolvers@npm:7.0.8":
+  version: 7.0.8
+  resolution: "@hookform/resolvers@npm:7.0.8"
   dependencies:
     "@standard-schema/utils": "npm:^0.3.0"
   peerDependencies:
@@ -1754,7 +1754,7 @@ __metadata:
     ajv: ^8.12.0
     ajv-errors: ^3.0.0
     ajv-formats: ^2.1.1 || ^3.0.0
-    arktype: ^2.0.0
+    arktype: ^2.0.0 || ^3.0.0
     ata-validator: ^1.23.0
     class-transformer: ">=0.4.0"
     class-validator: ">=0.12.0"
@@ -1820,7 +1820,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10/2f1f26bc6661ab3f5a9a306d276301658e75f469d5d0ff8369621e48db48aa36a1ac23aca1f0aa0a152e77c6abe4331c5d6860d88007eb3f67bfe318601f9f8f
+  checksum: 10/bc5d72ab6aa86ed800fc13bd01248c28ca68e76a22250ed5306c126b7296e960b0bbb53e078a58cf1c921fb96846a3456d0a722981bf71e6ccfd7d440fa3f384
   languageName: node
   linkType: hard
 
@@ -2822,7 +2822,7 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "npm:1.0.0"
     "@k9-sak-web/types": "npm:1.0.0"
-    "@tanstack/react-query": "npm:5.108.1"
+    "@tanstack/react-query": "npm:5.108.2"
     "@types/react": "npm:19.3.0"
     moment: "npm:2.31.0"
     react: "npm:19.3.1"
@@ -2862,7 +2862,7 @@ __metadata:
     "@navikt/ft-form-validators": "npm:8.0.3"
     "@navikt/ft-plattform-komponenter": "npm:14.0.3"
     "@navikt/ft-utils": "npm:8.0.3"
-    "@tanstack/react-query": "npm:5.108.1"
+    "@tanstack/react-query": "npm:5.108.2"
     "@types/react": "npm:19.3.0"
     axios: "npm:1.21.1"
     classnames: "npm:2.5.1"
@@ -2928,7 +2928,7 @@ __metadata:
     "@editorjs/list": "npm:2.0.9"
     "@editorjs/paragraph": "npm:2.11.7"
     "@hookform/error-message": "npm:2.0.1"
-    "@hookform/resolvers": "npm:7.0.7"
+    "@hookform/resolvers": "npm:7.0.8"
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": "workspace:^"
     "@nais/apm": "npm:0.7.3"
@@ -2940,7 +2940,7 @@ __metadata:
     "@navikt/ft-types": "npm:8.0.3"
     "@navikt/ft-ui-komponenter": "npm:10.0.4"
     "@navikt/ft-utils": "npm:8.0.3"
-    "@tanstack/react-query": "npm:5.108.1"
+    "@tanstack/react-query": "npm:5.108.2"
     "@types/css-tree": "npm:2.3.11"
     "@types/object-hash": "npm:3.0.6"
     "@types/react": "npm:19.3.0"
@@ -3149,7 +3149,7 @@ __metadata:
     "@navikt/ft-types": "npm:8.0.3"
     "@navikt/ft-ui-komponenter": "npm:10.0.4"
     "@navikt/ft-utils": "npm:8.0.3"
-    "@tanstack/react-query": "npm:5.108.1"
+    "@tanstack/react-query": "npm:5.108.2"
     "@types/react": "npm:19.3.0"
     axios: "npm:1.21.1"
     dayjs: "npm:1.11.23"
@@ -3194,7 +3194,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:14.0.3"
     "@navikt/ft-ui-komponenter": "npm:10.0.4"
     "@navikt/ft-utils": "npm:8.0.3"
-    "@tanstack/react-query": "npm:5.108.1"
+    "@tanstack/react-query": "npm:5.108.2"
     "@types/react": "npm:19.3.0"
     axios: "npm:1.21.1"
     dayjs: "npm:1.11.23"
@@ -5302,9 +5302,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:5.108.1":
-  version: 5.108.1
-  resolution: "@tanstack/eslint-plugin-query@npm:5.108.1"
+"@tanstack/eslint-plugin-query@npm:5.108.2":
+  version: 5.108.2
+  resolution: "@tanstack/eslint-plugin-query@npm:5.108.2"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.71.0"
   peerDependencies:
@@ -5313,29 +5313,29 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/b72a32c4d0582f1f9b1ba8ffbcdd22783e9cb81d5c76a8f68f13e94c3a1e3cb92d54a9956f47c224fc48a740b86b073447bb897822151f994975db5987cf8739
+  checksum: 10/a07af15fdd14728c7dc087b4a2c9785e0bda9c0c71e7ee90e6b6d76105e1453e098436d0ea4a912481f0d18faf07ba73570f1291e5940d038c0d737861414cba
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.108.1":
-  version: 5.108.1
-  resolution: "@tanstack/query-core@npm:5.108.1"
-  checksum: 10/1b03c2feb6ca1f2ced5dc738927745bff4b2b230c34cb9824e88732271d61052b274bc7013aae1f32f015e11e4247a6a1feaa28445e536f3af6d947fe82b7a7b
+"@tanstack/query-core@npm:5.108.2":
+  version: 5.108.2
+  resolution: "@tanstack/query-core@npm:5.108.2"
+  checksum: 10/ddef207d67e60b780278d0ffdfcadaf95283953e6b48398f30bed210c551a90f7d256712fee8a91ccf4a2f2a014c1533aebe3a5fcdc77135b8a09a5772c26b5f
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:5.108.1":
-  version: 5.108.1
-  resolution: "@tanstack/react-query@npm:5.108.1"
+"@tanstack/react-query@npm:5.108.2":
+  version: 5.108.2
+  resolution: "@tanstack/react-query@npm:5.108.2"
   dependencies:
-    "@tanstack/query-core": "npm:5.108.1"
+    "@tanstack/query-core": "npm:5.108.2"
   peerDependencies:
     "@types/react": ^18 || ^19
     react: ^18 || ^19
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/0d0e34229a5c9e6364eaf9697eeab5ecd793bbf6cc48c1f25f03e1e0ace25bc136611425ca53d4a1c4a40077e97e5fe8c8227077c45a6263e035286c90efe148
+  checksum: 10/63bb443f6044de365e8f97b9e704570f9e6cb7ff81240f4f5fb39cfdff3f29aa8d59ecc973db0253887ad0965ad1555bf4bf9f2249ef983c73aa982538f26b11
   languageName: node
   linkType: hard
 
@@ -10846,7 +10846,7 @@ __metadata:
     "@storybook/react-vite": "npm:10.6.8"
     "@storybook/test-runner": "npm:0.26.1"
     "@tailwindcss/vite": "npm:4.3.5"
-    "@tanstack/eslint-plugin-query": "npm:5.108.1"
+    "@tanstack/eslint-plugin-query": "npm:5.108.2"
     "@testing-library/dom": "npm:10.4.2"
     "@testing-library/jest-dom": "npm:7.0.1"
     "@testing-library/react": "npm:16.3.3"

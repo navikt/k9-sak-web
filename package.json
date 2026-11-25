@@ -76,7 +76,7 @@
     "@storybook/react-vite": "10.6.8",
     "@storybook/test-runner": "0.26.1",
     "@tailwindcss/vite": "4.3.5",
-    "@tanstack/eslint-plugin-query": "5.108.1",
+    "@tanstack/eslint-plugin-query": "5.108.2",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
