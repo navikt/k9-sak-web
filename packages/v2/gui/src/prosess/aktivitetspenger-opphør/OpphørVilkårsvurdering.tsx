@@ -72,7 +72,7 @@ interface FormData {
       skalOpphøre: 'ja' | 'nei' | '';
       fritekstVurderingBrev: string;
       harFritekstbrev: boolean;
-      erBrukerInformert: 'ja' | 'nei' | '';
+      skalSendeVarsel: 'ja' | 'nei' | '';
     }
   >;
 }
@@ -92,7 +92,12 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
         skalOpphøre: tilJaEllerNei(utfall),
         fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
         harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
-        erBrukerInformert: '',
+        skalSendeVarsel:
+          avklaringOgVurdering?.vurdering?.skalSendeVarsel === true
+            ? 'ja'
+            : avklaringOgVurdering?.vurdering?.skalSendeVarsel === false
+              ? 'nei'
+              : '',
       },
     ]),
   ),
@@ -150,6 +155,7 @@ const buildPayload = ({
           !erVilkårOppfylt && (kreverFritekstIBrev || selectedFormPeriod.harFritekstbrev)
             ? selectedFormPeriod.fritekstVurderingBrev
             : undefined,
+        skalIkkeSendeVarsel: selectedFormPeriod.skalSendeVarsel === 'nei',
       },
     ],
   };
@@ -320,7 +326,7 @@ export const OpphørVilkårsvurdering = ({
                 <RhfRadioGroup
                   control={formHook.control}
                   legend="Er brukeren kjent med at saken vurderes på nytt?"
-                  name={`perioder.${selectedId}.erBrukerInformert`}
+                  name={`perioder.${selectedId}.skalSendeVarsel`}
                   validate={[required]}
                   readOnly={isFormLocked}
                 >
