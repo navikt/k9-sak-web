@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { saksnummerOrFodselsnummerPattern } from './regexes';
-import { validateTextCharacters } from './validateTextCharacters';
+import { invalidTextRegex, legacyInvalidTextRegex, saksnummerOrFodselsnummerPattern } from './regexes.js';
+import { formatInvalidCharacters, validateTextCharacters } from './validateTextCharacters.js';
 export const isEmpty = (text: string | number | dayjs.Dayjs | null | undefined) =>
   text === null || text === undefined || text.toString().trim().length === 0;
 
@@ -18,16 +18,21 @@ export const dateIsNotWeekend = (value: string | undefined) => {
   return dayjs(value).day() === 0 || dayjs(value).day() === 6 ? 'Dato kan ikke være en helgedag' : undefined;
 };
 
-export const hasValidText = (text: string) => {
+const validateText = (text: string, regex: RegExp) => {
   if (text === undefined || text === null || text === '') {
     return undefined;
   }
-  const { invalidCharacters } = validateTextCharacters(text);
-  if (invalidCharacters && invalidCharacters.length > 0) {
-    const invalidCharacterString: string = invalidCharacters
-      .map(invalidChar => invalidChar.replace(/\t/g, 'Tabulatortegn'))
-      .join('');
-    return `Følgende tegn er ikke tillatt: ${invalidCharacterString}`;
+  const { invalidCharacters } = validateTextCharacters(text, regex);
+  if (invalidCharacters) {
+    return `Følgende tegn er ikke tillatt: ${formatInvalidCharacters(invalidCharacters)}`;
   }
   return undefined;
 };
+
+export const hasValidText = (text: string) => validateText(text, invalidTextRegex);
+
+/**
+ * @deprecated Bruker legacyInvalidTextRegex fordi backend for kallstedene ennå ikke validerer etter ADR-regelen.
+ * Bytt til hasValidText når backend er oppdatert, se legacyInvalidTextRegex i regexes.ts.
+ */
+export const hasValidTextLegacy = (text: string) => validateText(text, legacyInvalidTextRegex);

@@ -20,7 +20,6 @@ import {
   getStatusIcon,
   getStatusText,
 } from './behandlingVelgerUtils';
-import FeatureTogglesContext from '../../../featuretoggles/FeatureTogglesContext.js';
 import { BehandlingResultatType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingResultatType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -48,7 +47,6 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   index,
   behandling,
 }) => {
-  const { STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK } = React.useContext(FeatureTogglesContext);
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const behandlingsresultatTypeNavn = behandling.behandlingsresultat
     ? kodeverkNavnFraKode(
@@ -93,7 +91,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder, visKunStartdato)}</BodyShort>
             )}
 
-            {STOTTE_NYE_VEDTAK_ETTER_TIDSGRENSET_VEDTAK && erKroniskSyktBarn && innvilget && utvidetRett?.periode && (
+            {erKroniskSyktBarn && innvilget && utvidetRett?.periode && (
               <BodyShort as="span" size="small">
                 <DateLabel dateString={utvidetRett?.periode?.fom} /> -{' '}
                 <DateLabel dateString={utvidetRett?.periode?.tom} />

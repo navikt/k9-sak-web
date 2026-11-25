@@ -50,12 +50,14 @@ Do not copy: `packages/v2/gui/src/fakta/ny-inntekt/src/components/felles/FaktaBe
 
 ## Validators
 
-| Validator | From | Behaviour |
-| --- | --- | --- |
-| `required` | `@navikt/ft-form-validators` | Fails for `null`, `undefined` and whitespace-only text |
-| `maxLength(n)`, `minLength(n)` | `@navikt/ft-form-validators` | Count trimmed text; empty values pass, so combine with `required` |
-| `hasValidText` | `@navikt/ft-form-validators` | Allows letters, digits, spaces, line breaks and `.'-/%§!?@_()+:;,="&`; rejects tabs |
-| `validateTextCharacters` | `@k9-sak-web/gui/utils/validation/validateTextCharacters.js` | Used for brev. Stricter than the backend in some cases and rejects `[` and `]` on purpose, see `regexes.ts` |
+| Validator | From | Behaviour                                                                                                                                                                                                  |
+| --- | --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `required` | `@navikt/ft-form-validators` | Fails for `null`, `undefined` and whitespace-only text                                                                                                                                                     |
+| `maxLength(n)`, `minLength(n)` | `@navikt/ft-form-validators` | Count trimmed text; empty values pass, so combine with `required`                                                                                                                                          |
+| `hasValidText` | `@navikt/ft-form-validators` | Not to be used for new code, does not follow ADR for fritekst. Allows letters, digits, spaces, line breaks and `.'-/%§!?@_()+:;,="&`; rejects tabs                                                         |
+| `hasValidText` | `@k9-sak-web/gui/utils/validation/validators.js` | Follows the team ADR for fritekst: allows letters, marks, digits, punctuation, symbols and whitespace; rejects control and format characters. Use it only when the backend DTO validates with the ADR rule |
+| `hasValidTextLegacy` | `@k9-sak-web/gui/utils/validation/validators.js` | Deprecated. Old, stricter rule (`legacyInvalidTextRegex`) for backends that do not follow the ADR yet. Move call sites to `hasValidText` when the backend is updated, see `regexes.ts`                     |
+| `validateTextCharacters` | `@k9-sak-web/gui/utils/validation/validateTextCharacters.js` | Takes the regex as an optional argument; defaults to `invalidTextRegex` (ADR)                                                                                                                              |
 
 ## Tests
 

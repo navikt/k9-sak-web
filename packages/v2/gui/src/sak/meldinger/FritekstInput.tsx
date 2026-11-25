@@ -5,7 +5,8 @@ import {
   $k9_sak_kontrakt_dokument_FritekstbrevinnholdDto as $FritekstbrevinnholdDto,
 } from '@k9-sak-web/backend/k9sak/generated/schemas.js';
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
-import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
+import { legacyInvalidTextRegex } from '../../utils/validation/regexes.js';
+import { formatInvalidCharacters, validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 
 export type Valid = {
   readonly input: string;
@@ -69,13 +70,12 @@ const validateTekst = (tekst: string | undefined, fritekstModus: FritekstModus):
   const fritekstMaxLength = fritekstModus === 'StørreFritekstOgTittel' ? storFritekstMaxLength : litenFritekstMaxLength;
   const len = tekst?.trim().length || 0;
   if (tekst !== undefined && len > 0 && len <= fritekstMaxLength) {
-    const charValidationResult = validateTextCharacters(tekst);
+    const charValidationResult = validateTextCharacters(tekst, legacyInvalidTextRegex);
     if (charValidationResult.ok) {
       // validation ok
       return { valid: true, input };
     }
-    const joinChars = (chars: string[] | never): string => chars.join(' ');
-    const invalids: string = joinChars(charValidationResult.invalidCharacters);
+    const invalids = formatInvalidCharacters(charValidationResult.invalidCharacters);
     return { valid: false, input, error: `Ugyldige tegn: ${invalids}` };
   }
   if (len === 0) {
