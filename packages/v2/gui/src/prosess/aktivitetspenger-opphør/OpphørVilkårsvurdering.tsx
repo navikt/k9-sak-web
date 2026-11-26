@@ -249,6 +249,11 @@ export const OpphørVilkårsvurdering = ({
           />
         }
         lockedContent={isSolved ? <VurdertAv ident={vurderVilkårAP?.ansvarligSaksbehandler} /> : undefined}
+        selectedPeriodDescription={
+          erAvslag
+            ? 'Skal du endre perioden som skal avslås, gå tilbake til «Årsak og varsel» og endre datoene.'
+            : 'Skal du opphøre fra en annen dato, gå tilbake til «Årsak og varsel» og endre datoen.'
+        }
       >
         {(isFormLocked, setIsFormLocked) => (
           <RhfForm
@@ -281,11 +286,6 @@ export const OpphørVilkårsvurdering = ({
                 name={`perioder.${selectedId}.skalOpphøre`}
                 validate={[required]}
                 readOnly={isFormLocked || isPending}
-                description={
-                  erAvslag
-                    ? 'Skal du endre perioden som skal avslås, gå tilbake til «Årsak og varsel» og endre datoene.'
-                    : 'Skal du opphøre fra en annen dato, gå tilbake til «Årsak og varsel» og endre datoen.'
-                }
               >
                 <Radio value="ja">
                   {erAvslag
