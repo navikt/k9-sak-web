@@ -3,7 +3,7 @@ import { BehandlingDto } from '@k9-sak-web/backend/ungsak/kontrakt/behandling/Be
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungtilbake/kodeverk/AksjonspunktCodes.js';
 import SettPåVentModal from '@k9-sak-web/gui/shared/settPåVentModal/SettPåVentModal.js';
 import { isAksjonspunktOpen } from '@k9-sak-web/gui/utils/aksjonspunktUtils.js';
-import { goToSearch } from '@k9-sak-web/lib/paths/paths.js';
+import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 interface SettPaVentParams {
   formData: {
@@ -39,7 +39,7 @@ export const BehandlingPåVent = ({ behandling, aksjonspunkter, settPaVent }: Be
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
         behandlingUuid: behandling.uuid,
-      }).then(() => goToSearch()),
+      }).then(() => goToLos()),
     [behandling.id, behandling.uuid, behandling.versjon, settPaVent],
   );
 
@@ -65,7 +65,7 @@ export const BehandlingPåVent = ({ behandling, aksjonspunkter, settPaVent }: Be
       erTilbakekreving={false}
       erKlage={false}
       showModal
-      navigerEtterEndreFrist={goToSearch}
+      navigerEtterEndreFrist={goToLos}
     />
   );
 };
