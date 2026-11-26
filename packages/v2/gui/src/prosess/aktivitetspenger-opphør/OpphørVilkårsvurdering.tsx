@@ -72,6 +72,7 @@ interface FormData {
       skalOpphøre: 'ja' | 'nei' | '';
       fritekstVurderingBrev: string;
       harFritekstbrev: boolean;
+      skalSendeVarsel: 'ja' | 'nei' | '';
     }
   >;
 }
@@ -91,6 +92,12 @@ const buildInitialValues = (vilkårsavklaringVurderinger: VilkårsavklaringVurde
         skalOpphøre: tilJaEllerNei(utfall),
         fritekstVurderingBrev: avklaringOgVurdering?.vurdering?.fritekstVurderingBrev ?? '',
         harFritekstbrev: !!avklaringOgVurdering?.vurdering?.fritekstVurderingBrev,
+        skalSendeVarsel:
+          avklaringOgVurdering?.vurdering?.skalSendeVarsel === true
+            ? 'ja'
+            : avklaringOgVurdering?.vurdering?.skalSendeVarsel === false
+              ? 'nei'
+              : '',
       },
     ]),
   ),
@@ -148,6 +155,7 @@ const buildPayload = ({
           !erVilkårOppfylt && (kreverFritekstIBrev || selectedFormPeriod.harFritekstbrev)
             ? selectedFormPeriod.fritekstVurderingBrev
             : undefined,
+        skalIkkeSendeVarsel: selectedFormPeriod.skalSendeVarsel === 'nei',
       },
     ],
   };
@@ -192,7 +200,7 @@ export const OpphørVilkårsvurdering = ({
   const kreverFritekstIBrev =
     årsakSomKreverFritekstIBrev !== undefined && valgtAvklaring?.ikkeOppfyltÅrsak === årsakSomKreverFritekstIBrev;
   const erAvslag = valgtAvklaring?.avklaringtype === Avklaringtype.AVSLAG;
-
+  const harSendtVarsel = valgtAvklaring?.skalSendeVarsel === true;
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (submitArgs: SubmitArgs) => {
       await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
@@ -313,6 +321,20 @@ export const OpphørVilkårsvurdering = ({
                   resize
                   maxLength={fritekstVurderingBrevMaxLength}
                 />
+              )}
+              {skalOpphøre === 'nei' && harSendtVarsel === false && (
+                <RhfRadioGroup
+                  control={formHook.control}
+                  legend="Er brukeren kjent med at saken vurderes på nytt?"
+                  name={`perioder.${selectedId}.skalSendeVarsel`}
+                  validate={[required]}
+                  readOnly={isFormLocked}
+                >
+                  <Radio value="ja">Ja (det sendes vedtaksbrev)</Radio>
+                  <Radio value="nei">
+                    Nei (det sendes <b>ikke</b> vedtaksbrev)
+                  </Radio>
+                </RhfRadioGroup>
               )}
               {!isFormLocked && (
                 <HStack gap="space-16">
