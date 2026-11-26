@@ -10,10 +10,10 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@tanstack/react-query": "5.108.1",
+    "@tanstack/react-query": "5.108.3",
     "moment": "2.31.0",
     "react": "19.3.1",
-    "react-intl": "12.2.0"
+    "react-intl": "12.2.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

@@ -38,7 +38,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-hook-form": "7.92.0",
-    "react-intl": "12.2.0"
+    "react-intl": "12.2.1"
   },
   "devDependencies": {
     "@types/react": "19.3.0",
