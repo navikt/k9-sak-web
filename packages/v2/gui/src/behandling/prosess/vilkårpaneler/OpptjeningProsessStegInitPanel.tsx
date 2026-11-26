@@ -12,7 +12,7 @@ import {
   fagsakQueryOptions,
   opptjeningQueryOptions,
 } from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
-import { hentK9BehandlingType } from './types.js';
+import { toBehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import type { ProsessBehandling } from './types.js';
 
 const RELEVANTE_VILKAR_KODER = [VilkårType.OPPTJENINGSVILKÅRET];
@@ -78,7 +78,7 @@ export function OpptjeningProsessStegInitPanel(props: Props) {
   const skalViseOverstyringspanel = relevanteVurderingsAksjonspunkter.length === 0;
 
   if (skalViseOverstyringspanel) {
-    const behandlingType = hentK9BehandlingType(props.behandling.type.kode);
+    const behandlingType = toBehandlingType(props.behandling.type.kode);
     return (
       <VilkarresultatMedOverstyringProsessIndex
         aksjonspunkter={relevanteOverstyringsAksjonspunkter}

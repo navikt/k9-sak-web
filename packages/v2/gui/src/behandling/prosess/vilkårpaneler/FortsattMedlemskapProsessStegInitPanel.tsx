@@ -4,7 +4,7 @@ import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } 
 import type { VilkårMedPerioderDto as k9_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
 import { useMemo, type Dispatch, type SetStateAction } from 'react';
-import { hentK9BehandlingType } from './types.js';
+import { toBehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import type { ProsessBehandling } from './types.js';
 
 interface Props {
@@ -59,7 +59,7 @@ export function FortsattMedlemskapProsessStegInitPanel(props: Props) {
     return null;
   }
 
-  const behandlingType = hentK9BehandlingType(props.behandling.type.kode);
+  const behandlingType = toBehandlingType(props.behandling.type.kode);
 
   return (
     <VilkarresultatMedOverstyringProsessIndex
