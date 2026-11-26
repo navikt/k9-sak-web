@@ -271,7 +271,7 @@ export const Bosted = ({
                 </HStack>
               )}
             </VStack>
-            {isFormLocked && vurdering ? (
+            {isFormLocked && vurdering?.bosatt === '' ? null : isFormLocked && vurdering ? (
               <BostedLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
             ) : (
               <BostedSkjema

@@ -262,7 +262,7 @@ export const BehovForBistand = ({
         }
       >
         {(isFormLocked, setIsFormLocked, isDefaultLocked) =>
-          isFormLocked && vurdering ? (
+          isFormLocked && vurdering?.behovForBistand === '' ? null : isFormLocked && vurdering ? (
             <BehovForBistandLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
           ) : (
             <BehovForBistandSkjema

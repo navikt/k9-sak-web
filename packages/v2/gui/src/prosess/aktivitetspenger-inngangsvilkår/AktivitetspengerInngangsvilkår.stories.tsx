@@ -122,6 +122,45 @@ export const MedÅpentLokalkontorBeslutterVilkår: Story = {
   },
 };
 
+export const MedÅpentLokalkontorBeslutterVilkårPåVent: Story = {
+  args: {
+    ...MedÅpentLokalkontorBeslutterVilkår.args,
+    behandling: { ...fakeBehandling, behandlingPåVent: true },
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: SkjermlenkeType.BOSTEDSVILKÅR,
+        totrinnskontrollAksjonspunkter: [
+          { aksjonspunktKode: '5014', totrinnskontrollGodkjent: true },
+        ],
+      },
+      {
+        skjermlenkeType: SkjermlenkeType.BISTANDSVILKÅR,
+        totrinnskontrollAksjonspunkter: [
+          {
+            aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR,
+            totrinnskontrollGodkjent: true,
+          },
+        ],
+      },
+    ] satisfies TotrinnskontrollSkjermlenkeContextDto[],
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('tab', { name: 'Beslutter' })).toHaveAttribute('aria-selected', 'true');
+    const radioer = canvas.getAllByRole('radio');
+    await expect(radioer).toHaveLength(4);
+    for (const radio of radioer) {
+      await expect(radio).toBeDisabled();
+    }
+    const godkjentRadioer = canvas.getAllByRole('radio', { name: 'Godkjent' });
+    await expect(godkjentRadioer).toHaveLength(2);
+    for (const radio of godkjentRadioer) {
+      await expect(radio).toBeChecked();
+    }
+    await expect(canvas.queryByRole('button', { name: 'Bekreft' })).not.toBeInTheDocument();
+    await expect(canvas.queryByText('Saken er sendt til beslutter.')).not.toBeInTheDocument();
+  },
+};
+
 export const MedUtførtLokalkontorBeslutterVilkår: Story = {
   args: {
     ...MedÅpentLokalkontorBeslutterVilkår.args,
@@ -147,6 +186,21 @@ export const MedÅpentBostedVilkår: Story = {
     behandling: fakeBehandling,
     onAksjonspunktBekreftet: async () => {},
     totrinnskontrollSkjermlenkeContext: [],
+  },
+};
+
+export const MedÅpentBostedVilkårPåVent: Story = {
+  args: {
+    ...MedÅpentBostedVilkår.args,
+    behandling: { ...fakeBehandling, behandlingPåVent: true },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('tab', { name: 'Bosatt i Trondheim kommune' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
   },
 };
 

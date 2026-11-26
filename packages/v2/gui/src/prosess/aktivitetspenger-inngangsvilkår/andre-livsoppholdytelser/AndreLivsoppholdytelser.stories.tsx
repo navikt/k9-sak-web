@@ -142,6 +142,32 @@ export const IkkeVurdert: Story = {
   },
 };
 
+export const ApentAksjonspunktPaaVent: Story = {
+  args: {
+    readOnly: true,
+    andreLivsoppholdytelserVilkår: {
+      vilkarType: vilkarType.ANDRE_LIVSOPPHOLDSYTELSER_VILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    andreLivsoppholdytelserAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_ANDRE_LIVSOPPHOLDSYTELSER),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser advarselen for et åpent aksjonspunkt på vent', async () => {
+      await expect(
+        canvas.getByText('Vurder om søker har andre livsoppholdsytelser på virkningstidspunktet.'),
+      ).toBeInTheDocument();
+    });
+
+    await step('viser verken vurdering eller skjema', async () => {
+      await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const Oppfylt: Story = {
   args: {
     api: apiMedOppfyltVurdering,

@@ -263,7 +263,7 @@ export const Aktivitet = ({
         }
       >
         {(isFormLocked, setIsFormLocked, isDefaultLocked) =>
-          isFormLocked && vurdering ? (
+          isFormLocked && vurdering?.erSøkerIAktivitet === '' ? null : isFormLocked && vurdering ? (
             <AktivitetLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
           ) : (
             <AktivitetSkjema

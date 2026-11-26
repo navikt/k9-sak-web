@@ -103,6 +103,30 @@ export const MedÅpentBistandsvilkår: Story = {
   },
 };
 
+export const ApentAksjonspunktPaaVent: Story = {
+  args: {
+    readOnly: true,
+    vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR),
+    vurderBistandsvilkårVilkår: {
+      vilkarType: vilkarType.BISTANDSVILKÅR,
+      perioder: [{ periode: avkortingsperiode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser advarselen for et åpent aksjonspunkt på vent', async () => {
+      await expect(canvas.getByText('Vurder behov for bistand på virkningstidspunktet.')).toBeInTheDocument();
+    });
+
+    await step('viser verken vurdering eller skjema', async () => {
+      await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const MedUtførtBistandsvilkår: Story = {
   args: {
     vurderBistandsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BISTANDSVILKÅR, AksjonspunktStatus.UTFØRT),

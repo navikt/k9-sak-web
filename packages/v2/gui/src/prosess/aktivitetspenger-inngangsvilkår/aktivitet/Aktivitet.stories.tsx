@@ -56,6 +56,30 @@ export const MedÅpentAktivitetsvilkår: Story = {
   },
 };
 
+export const ApentAksjonspunktPaaVent: Story = {
+  args: {
+    readOnly: true,
+    vurderAktivitetsvilkårAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_AKTIVITETSVILKÅR),
+    vurderAktivitetsvilkårVilkår: {
+      vilkarType: vilkarType.AKTIVITETSVILKÅR,
+      perioder: [{ periode: { fom: '2024-01-01', tom: '2024-12-31' }, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser advarselen for et åpent aksjonspunkt på vent', async () => {
+      await expect(canvas.getByText('Vurder om søker er i aktivitet på virkningstidspunktet.')).toBeInTheDocument();
+    });
+
+    await step('viser verken vurdering eller skjema', async () => {
+      await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const MedUtførtAktivitetsvilkår: Story = {
   args: {
     vurderAktivitetsvilkårAp: lagAksjonspunkt(

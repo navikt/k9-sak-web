@@ -278,7 +278,7 @@ export const AndreLivsoppholdytelser = ({
         }
       >
         {(isFormLocked, setIsFormLocked, isDefaultLocked) =>
-          isFormLocked && vurdering ? (
+          isFormLocked && vurdering?.andreLivsoppholdytelser === '' ? null : isFormLocked && vurdering ? (
             <AndreLivsoppholdytelserLesevisning begrunnelseLabel={begrunnelseLabel} vurdering={vurdering} />
           ) : (
             <AndreLivsoppholdytelserSkjema
