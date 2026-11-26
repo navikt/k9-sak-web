@@ -219,6 +219,8 @@ export const Beslutter = ({
                             return 'Behov for bistand';
                           case SkjermlenkeType.SOEKNADSFRIST:
                             return 'Søknadsfrist';
+                          case SkjermlenkeType.AKTIVITETSVILKÅR:
+                            return 'Aktivitet';
                           default:
                             return skjermlenkeType;
                         }
