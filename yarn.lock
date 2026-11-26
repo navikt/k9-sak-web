@@ -2404,7 +2404,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": "npm:14.0.3"
     "@navikt/ft-prosess-beregningsgrunnlag": "npm:15.1.4"
     "@navikt/ft-utils": "npm:8.0.3"
-    "@tanstack/react-query": "npm:5.107.1"
+    "@tanstack/react-query": "npm:5.108.1"
     "@types/react": "npm:19.3.0"
     "@types/react-dom": "npm:19.3.0"
     dayjs: "npm:1.11.23"
