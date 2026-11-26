@@ -42,7 +42,8 @@ export const ForutgåendeMedlemskapInitPanel = ({ api, behandling, onAksjonspunk
     return (
       (!innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanBeslutte &&
         !innloggetBruker.aktivitetspengerDel2SaksbehandlerTilgang?.kanSaksbehandle) ||
-      behandling.status === BehandlingStatus.AVSLUTTET
+      behandling.status === BehandlingStatus.AVSLUTTET ||
+      !!behandling.behandlingPåVent
     );
   }, [innloggetBruker, behandling]);
 

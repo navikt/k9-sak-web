@@ -108,7 +108,7 @@ export const BeregnetUtbetalingStegInitPanel = ({ api, behandling, onAksjonspunk
     const behandlingErAvsluttet = behandling.status === BehandlingStatus.AVSLUTTET;
     const aksjonspunktErIkkeLøsbart = aksjonspunkt == undefined || aksjonspunkt.kanLoses === false;
 
-    return manglerTilgang || behandlingErAvsluttet || aksjonspunktErIkkeLøsbart;
+    return manglerTilgang || behandlingErAvsluttet || !!behandling.behandlingPåVent || aksjonspunktErIkkeLøsbart;
   }, [innloggetBruker, behandling, aksjonspunkt]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);

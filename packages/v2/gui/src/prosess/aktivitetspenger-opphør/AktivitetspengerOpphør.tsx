@@ -120,6 +120,7 @@ export const AktivitetspengerOpphør = ({
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
     !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
+  const erPåVent = !!behandling.behandlingPåVent;
 
   const opphørData = useMemo(
     () => samleOpphørData(aksjonspunkter, vilkår, behandling.behandlingÅrsaker),
@@ -182,7 +183,7 @@ export const AktivitetspengerOpphør = ({
                     api={api}
                     behandling={behandling}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                    readOnly={!kanSaksbehandle}
+                    readOnly={!kanSaksbehandle || erPåVent}
                     isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                   />
                 ),
@@ -199,7 +200,7 @@ export const AktivitetspengerOpphør = ({
                     api={api}
                     behandling={behandling}
                     onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                    readOnly={!kanSaksbehandle || !!behandling.behandlingPåVent}
+                    readOnly={!kanSaksbehandle || erPåVent}
                     isPermanentlyReadOnly={behandlingErAvsluttet || harBeslutterAP}
                     lokalkontorForeslårVilkårAP={lokalkontorForeslårVilkårAP}
                     lokalkontorBeslutterAP={lokalkontorBeslutterAP}
@@ -217,6 +218,7 @@ export const AktivitetspengerOpphør = ({
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                 totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
                 kanBeslutte={kanBeslutte}
+                readOnly={erPåVent}
                 vilkårsperiodeFom={vurdertVilkårsperiodeFom}
               />
             </Tabs.Panel>
