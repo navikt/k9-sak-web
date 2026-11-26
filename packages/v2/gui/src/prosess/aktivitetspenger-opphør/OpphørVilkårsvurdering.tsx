@@ -251,8 +251,8 @@ export const OpphørVilkårsvurdering = ({
         lockedContent={isSolved ? <VurdertAv ident={vurderVilkårAP?.ansvarligSaksbehandler} /> : undefined}
         selectedPeriodDescription={
           erAvslag
-            ? 'Skal du endre perioden som skal avslås, gå tilbake til «Årsak og varsel» og endre datoene.'
-            : 'Skal du opphøre fra en annen dato, gå tilbake til «Årsak og varsel» og endre datoen.'
+            ? 'Dersom du skal avslå en annen periode, gå tilbake til “årsak og varsel” og endre datoene.'
+            : 'Dersom du skal opphøre fra en annen dato, gå tilbake til “årsak og varsel” og endre datoen.'
         }
       >
         {(isFormLocked, setIsFormLocked) => (
