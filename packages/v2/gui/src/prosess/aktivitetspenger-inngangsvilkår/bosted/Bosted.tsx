@@ -1,6 +1,5 @@
 import { aksjonspunktCodes } from '@k9-sak-web/backend/ungsak/kodeverk/AksjonspunktCodes.js';
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/ungsak/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import { Kilde } from '@k9-sak-web/backend/ungsak/kodeverk/bosatt/Kilde.js';
 import { BostedsvilkårIkkeOppfyltÅrsak } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/BostedsvilkårIkkeOppfyltÅrsak.js';
 import { Utfall } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/Utfall.js';
 import { vilkarType } from '@k9-sak-web/backend/ungsak/kodeverk/vilkår/VilkårType.js';
@@ -264,9 +263,11 @@ export const Bosted = ({
               </Label>
               {selectedBostedGrunnlagPeriode && (
                 <HStack gap="space-8" align="center">
-                  <BodyShort size="small">{selectedBostedGrunnlagPeriode.erBosattITrondheim ? 'Ja' : 'Nei'}</BodyShort>
+                  <BodyShort size="small">
+                    {selectedBostedGrunnlagPeriode.søknadOppgittErBosattITrondheim ? 'Ja' : 'Nei'}
+                  </BodyShort>
                   <Tag variant="outline" size="small" data-color={!isFormLocked ? 'info' : undefined}>
-                    {selectedBostedGrunnlagPeriode.kilde === Kilde.SØKNAD ? 'Fra søknad' : 'Saksbehandler'}
+                    Fra søknad
                   </Tag>
                 </HStack>
               )}
