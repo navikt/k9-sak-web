@@ -69,6 +69,7 @@ interface VilkårSplittPanelProps {
   beforeDetailContent?: ReactNode;
   /** Sett til true når innholdet selv styrer egen boks-styling (f.eks. flere separate bokser) i stedet for panelets automatiske blå bakgrunn i låst visning. */
   hideLockedBackground?: boolean;
+  selectedPeriodDescription?: string;
 }
 
 const StatusIcon = ({ status }: { status: VilkårSplittPanelPeriod['status'] }) => {
@@ -112,6 +113,7 @@ export const VilkårSplittPanel = ({
   periodColumnHeader = 'Virkningstidspunkt',
   beforeDetailContent,
   hideLockedBackground = false,
+  selectedPeriodDescription,
 }: VilkårSplittPanelProps) => {
   const sortertePerioder = sortPeriods(periods);
   const selectedItem = periods.find(period => period.id === selectedItemId);
@@ -198,11 +200,18 @@ export const VilkårSplittPanel = ({
         </HStack>
         <VStack gap="space-16">
           {selectedItem && (
-            <HStack gap="space-12" align="center">
+            <HStack gap="space-12" align={selectedPeriodDescription ? 'start' : 'center'}>
               <CalendarIcon fontSize="1.5rem" />
-              <BodyShort size="small" weight="semibold">
-                {selectedItem.label}
-              </BodyShort>
+              <VStack gap="space-2" marginBlock={selectedPeriodDescription ? 'space-2 space-0' : 'space-0'}>
+                <BodyShort size="small" weight="semibold">
+                  {selectedItem.label}
+                </BodyShort>
+                {selectedPeriodDescription && (
+                  <BodyShort size="small" textColor="subtle">
+                    {selectedPeriodDescription}
+                  </BodyShort>
+                )}
+              </VStack>
             </HStack>
           )}
           <Box borderWidth="1 0 0 0" borderColor="neutral-subtle" />
