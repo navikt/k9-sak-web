@@ -6,9 +6,13 @@ import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
 
+// Behold Host-header mot lokale backends (som preserveHostHdr i server/), slik at absolutte URL-er backend lager
+// (feks. location i polling-respons) peikar til dev server og ikkje direkte til backend (CORS-feil).
+const erLokal = target => /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/.test(target);
+
 const createProxy = (target, pathRewrite) => ({
   target,
-  changeOrigin: !!target,
+  changeOrigin: !erLokal(target),
   secure: false,
   ws: false,
   rewrite: p =>
