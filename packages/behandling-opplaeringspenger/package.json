@@ -25,9 +25,9 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/aksel-icons": "8.23.0",
-    "@navikt/ds-css": "8.23.0",
-    "@navikt/ds-react": "8.23.0",
+    "@navikt/aksel-icons": "8.23.1",
+    "@navikt/ds-css": "8.23.1",
+    "@navikt/ds-react": "8.23.1",
     "@navikt/ft-fakta-beregning": "16.1.4",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "18.1.4",
     "@navikt/ft-form-hooks": "14.1.4",
@@ -41,7 +41,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-hook-form": "7.92.0",
-    "react-intl": "12.2.0"
+    "react-intl": "12.2.1"
   },
   "devDependencies": {
     "@types/react": "19.3.0",
