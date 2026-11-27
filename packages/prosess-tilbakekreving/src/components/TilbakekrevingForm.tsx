@@ -236,7 +236,8 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
 
     togglePeriode();
     formChange(`${behandlingFormPrefix}.${TILBAKEKREVING_FORM_NAME}`, 'vilkarsVurdertePerioder', sortedActivities);
-    setPeriode(nyePerioder[0]);
+    setValgtPeriode(nyePerioder[0]);
+    initializeValgtPeriodeForm(nyePerioder[0]);
   };
 
   const perioderFormatertForTidslinje = formaterPerioderForTidslinje(vilkarsVurdertePerioder, dataForDetailForm);
@@ -271,7 +272,9 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
               />
               {valgtPeriode && (
                 <TilbakekrevingPeriodeForm
-                  key={valgtPeriodeFormatertForTidslinje?.id}
+                  // Skjemaet må remountes når perioden endres (f.eks. ved splitting av periode), siden callbacks og data
+                  // fanges ved mount i mapStateToPropsFactory
+                  key={`${valgtPeriode.fom}-${valgtPeriode.tom}`}
                   periode={valgtPeriode}
                   data={dataForDetailForm?.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)}
                   behandlingFormPrefix={behandlingFormPrefix}
@@ -306,7 +309,7 @@ export const TilbakekrevingFormImpl = (props: OwnProps & DispatchProps & Injecte
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
-            isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
+            isDirty={isApOpen || formProps.error ? false : undefined}
             isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}

@@ -35,6 +35,7 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 - [x] `fakta/utenlandsopphold`
 - [x] `fakta/om-pleietrengende`
 - [x] `prosess/uttak-antall-dager-sluttfase`
+- [x] `fakta/feilutbetaling`
 
 ---
 
@@ -45,7 +46,6 @@ Paneler som er fullstendig migrert – bruker v2 direkte uten feature toggle.
 Paneler der v1 og v2 eksisterer parallelt, styrt av feature toggle.
 
 - [ ] `fakta-direkte-overgang` → `BRUK_V2_DIREKTE_OVERGANG`
-- [ ] `fakta-feilutbetaling` → `BRUK_V2_FEILUTBETALING`
 - [ ] `prosess-tilkjent-ytelse` → `BRUK_V2_TILKJENT_YTELSE`
       I v1 bruker vi egen tidslinje, mens v2 bruker aksel sin. Dette måtte revertes da saksbehandlerne var misfornøyde med Aksel sin. Må avklares hva veien videre blir. Se tråd: https://nav-it.slack.com/archives/C02M0NEFHNZ/p1763718652362509
 - [ ] `prosess-avregning` → `BRUK_V2_AVREGNING`
@@ -83,11 +83,11 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 ### Tier 1 — Svært enkelt
 
-| Panel                         | ~Linjer | Konsumenter                                            | Merknad                                                        |
-| ----------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `prosess-fortsatt-medlemskap` | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
-| `prosess-inngangsvilkar`      | 132     | 7 (oms, opl, psb, psb-sluttfase, ung, unntak, utvidet) | Felles inngangsvilkår med ytelsesspesifikke varianter          |
-| `prosess-opplaering`          | 19      | 1 (opl)                                                | Ytelsesspesifikk vilkårsvurdering                              |
+| Panel                         | ~Linjer | Konsumenter                                            | Merknad                                               |
+| ----------------------------- | ------- | ------------------------------------------------------ | ----------------------------------------------------- |
+| `prosess-fortsatt-medlemskap` | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte    |
+| `prosess-inngangsvilkar`      | 132     | 7 (oms, opl, psb, psb-sluttfase, ung, unntak, utvidet) | Felles inngangsvilkår med ytelsesspesifikke varianter |
+| `prosess-opplaering`          | 19      | 1 (opl)                                                | Ytelsesspesifikk vilkårsvurdering                     |
 
 ### Tier 2 — Enkelt/middels
 

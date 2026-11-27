@@ -43,13 +43,7 @@ export const PeriodeController = (props: OwnProps) => {
   const splitPeriod = (formValues: any) => {
     setFinnesBelopMed0Verdi(false);
 
-    const {
-      periode,
-      beregnBelop: callBeregnBelop,
-      behandlingId: selectedBehandlingId,
-      behandlingUuid,
-      oppdaterSplittedePerioder,
-    } = props;
+    const { periode, beregnBelop: callBeregnBelop, behandlingUuid, oppdaterSplittedePerioder } = props;
 
     const forstePeriode = {
       belop: periode.feilutbetaling,
@@ -65,7 +59,6 @@ export const PeriodeController = (props: OwnProps) => {
     };
 
     const params = {
-      behandlingId: selectedBehandlingId,
       behandlingUuid,
       perioder: [forstePeriode, andrePeriode],
     };

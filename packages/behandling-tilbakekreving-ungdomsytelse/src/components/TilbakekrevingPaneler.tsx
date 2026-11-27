@@ -12,7 +12,6 @@ interface OwnProps {
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
-  fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -32,7 +31,6 @@ const TilbakekrevingPaneler = ({
   fagsakPerson,
   behandling,
   kodeverk,
-  fpsakKodeverk,
   rettigheter,
   valgtProsessSteg,
   valgtFaktaSteg,
@@ -72,7 +70,6 @@ const TilbakekrevingPaneler = ({
       behandling={behandling}
       rettigheter={rettigheter}
       alleKodeverk={kodeverk}
-      fpsakKodeverk={fpsakKodeverk}
       valgtFaktaSteg={valgtFaktaSteg}
       oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       hasFetchError={hasFetchError}

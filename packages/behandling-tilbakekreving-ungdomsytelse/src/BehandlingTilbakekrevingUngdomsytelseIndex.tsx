@@ -36,7 +36,6 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   harApenRevurdering: boolean;
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
   setRequestPendingMessage: (message: string) => void;
   behandlingUuid: string | undefined;
   featureToggles: FeatureToggles;
@@ -46,7 +45,6 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
   behandlingEventHandler,
   behandlingUuid,
   oppdaterBehandlingVersjon,
-  kodeverk: fpsakKodeverk,
   fagsak,
   fagsakPerson,
   rettigheter,
@@ -169,7 +167,6 @@ const BehandlingTilbakekrevingUngdomsytelseIndex = ({
           fagsak={fagsak}
           fagsakPerson={fagsakPerson}
           kodeverk={tilbakekrevingKodeverk}
-          fpsakKodeverk={fpsakKodeverk}
           rettigheter={rettigheter}
           valgtProsessSteg={valgtProsessSteg}
           valgtFaktaSteg={valgtFaktaSteg}

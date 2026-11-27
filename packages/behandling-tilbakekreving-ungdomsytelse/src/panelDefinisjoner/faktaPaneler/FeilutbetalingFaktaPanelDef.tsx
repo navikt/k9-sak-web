@@ -1,13 +1,8 @@
-import React from 'react';
-
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import FeilutbetalingFaktaIndexV2 from '@k9-sak-web/gui/fakta/feilutbetaling/FeilutbetalingFaktaIndex.js';
+import FeilutbetalingFaktaIndex from '@k9-sak-web/gui/fakta/feilutbetaling/FeilutbetalingFaktaIndex.js';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Fagsak, FeilutbetalingFakta } from '@k9-sak-web/types';
-
-import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
 
 class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FEILUTBETALING;
@@ -16,40 +11,23 @@ class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING];
 
-  getKomponent = props => {
-    if (props.featureToggles?.BRUK_V2_FEILUTBETALING) {
-      return (
-        <FeilutbetalingFaktaIndexV2
-          behandlingUuid={props.behandling.uuid}
-          behandlingVersjon={props.behandling.versjon}
-          fagsakYtelseType={props.fagsakYtelseTypeKode}
-          readOnly={props.readOnly}
-          hasOpenAksjonspunkter={props.harApneAksjonspunkter}
-          alleMerknaderFraBeslutter={props.alleMerknaderFraBeslutter}
-          submitCallback={props.submitCallback}
-        />
-      );
-    }
-    return <FeilutbetalingFaktaIndex {...props} />;
-  };
+  getKomponent = props => (
+    <FeilutbetalingFaktaIndex
+      behandlingUuid={props.behandling.uuid}
+      behandlingVersjon={props.behandling.versjon}
+      fagsakYtelseType={props.fagsakYtelseTypeKode}
+      readOnly={props.readOnly}
+      hasOpenAksjonspunkter={props.harApneAksjonspunkter}
+      alleMerknaderFraBeslutter={props.alleMerknaderFraBeslutter}
+      submitCallback={props.submitCallback}
+    />
+  );
 
-  getEndepunkter = featureToggles =>
-    featureToggles?.BRUK_V2_FEILUTBETALING ? [] : [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK];
+  getOverstyrVisningAvKomponent = ({ feilutbetalingFakta }: { feilutbetalingFakta: FeilutbetalingFakta }) =>
+    !!feilutbetalingFakta;
 
-  getOverstyrVisningAvKomponent = ({ feilutbetalingFakta }) => !!feilutbetalingFakta;
-
-  getData = ({
-    feilutbetalingFakta,
-    fagsak,
-    fpsakKodeverk,
-  }: {
-    feilutbetalingFakta: FeilutbetalingFakta;
-    fagsak: Fagsak;
-    fpsakKodeverk: any;
-  }) => ({
-    feilutbetalingFakta,
+  getData = ({ fagsak }: { fagsak: Fagsak }) => ({
     fagsakYtelseTypeKode: fagsak.sakstype,
-    fpsakKodeverk,
   });
 }
 

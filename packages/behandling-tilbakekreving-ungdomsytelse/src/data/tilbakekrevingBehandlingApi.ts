@@ -9,7 +9,6 @@ export enum TilbakekrevingBehandlingApiKeys {
   VEDTAKSBREV = 'VEDTAKSBREV',
   BEREGNINGSRESULTAT = 'BEREGNINGSRESULTAT',
   FEILUTBETALING_FAKTA = 'FEILUTBETALING_FAKTA',
-  FEILUTBETALING_AARSAK = 'FEILUTBETALING_AARSAK',
   PERIODER_FORELDELSE = 'PERIODER_FORELDELSE',
   VILKARVURDERINGSPERIODER = 'VILKARVURDERINGSPERIODER',
   VILKARVURDERING = 'VILKARVURDERING',
@@ -37,7 +36,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('vedtaksbrev', TilbakekrevingBehandlingApiKeys.VEDTAKSBREV)
   .withRel('beregningsresultat', TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT)
   .withRel('feilutbetalingFakta', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA)
-  .withRel('feilutbetalingAarsak', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK)
   .withRel('perioderForeldelse', TilbakekrevingBehandlingApiKeys.PERIODER_FORELDELSE)
   .withRel('vilkarvurderingsperioder', TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER)
   .withRel('vilkarvurdering', TilbakekrevingBehandlingApiKeys.VILKARVURDERING)

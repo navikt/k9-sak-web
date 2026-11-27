@@ -24,7 +24,6 @@ export const qFeatureToggles = initQFeatureToggles(k9SpecificFeatureToggles)({
   BRUK_V2_DIREKTE_OVERGANG: true,
   VIS_YTELSER_PANEL: true,
   BRUK_V2_AVREGNING: true,
-  BRUK_V2_FEILUTBETALING: true,
   PROSESS_MENY_V2: true,
   SKJUL_PROSESS_MENY_V2_VELGER: true,
   DELVIS_REVURDERING_MEDISINSK_VILKAR: true,

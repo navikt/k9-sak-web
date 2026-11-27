@@ -23,7 +23,6 @@ const rootFeatureToggles = {
   VIS_GLOBAL_ERRORMODAL: false,
   BRUK_V2_ARBEID_OG_INNTEKT: false,
   BRUK_V2_DIREKTE_OVERGANG: false,
-  BRUK_V2_FEILUTBETALING: false,
   BRUK_OMSORGEN_FOR_V2: false,
   BRUK_V2_DELING_AV_DAGER: false,
   BRUK_V2_PROSESS_UNNTAK: false,
