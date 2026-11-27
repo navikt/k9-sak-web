@@ -4,8 +4,11 @@ import Uttak from '@k9-sak-web/gui/prosess/uttak/Uttak.js';
 import { Behandling } from '@k9-sak-web/types';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { useContext } from 'react';
-import { K9SakProsessApi } from './api/K9SakProsessApi';
-import { aksjonspunkterQueryOptions, behandlingQueryOptions } from './api/k9SakQueryOptions';
+import { K9SakProsessApi } from '@k9-sak-web/gui/behandling/prosess/api/K9SakProsessApi.js';
+import {
+  aksjonspunkterQueryOptions,
+  behandlingQueryOptions,
+} from '@k9-sak-web/gui/behandling/prosess/api/k9SakQueryOptions.js';
 
 const PANEL_ID = 'uttak';
 

@@ -1,20 +1,18 @@
 import { AksjonspunktDefinisjon } from '@k9-sak-web/backend/combined/kodeverk/behandling/aksjonspunkt/AksjonspunktDefinisjon.js';
-import {
-  k9_kodeverk_behandling_BehandlingType,
-  k9_kodeverk_vilkår_VilkårType,
-  k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto,
-  k9_sak_kontrakt_vilkår_VilkårMedPerioderDto,
-} from '@k9-sak-web/backend/k9sak/generated/types.js';
+import { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import type { AksjonspunktDto as k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto } from '@k9-sak-web/backend/k9sak/kontrakt/aksjonspunkt/AksjonspunktDto.js';
+import type { VilkårMedPerioderDto as k9_sak_kontrakt_vilkår_VilkårMedPerioderDto } from '@k9-sak-web/backend/k9sak/kontrakt/vilkår/VilkårMedPerioderDto.js';
 import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/gui/prosess/vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.js';
-import { Behandling } from '@k9-sak-web/types';
 import { useMemo, type SetStateAction } from 'react';
+import { toBehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { ProsessBehandling } from './types.js';
 
-const RELEVANTE_VILKAR_KODER = [k9_kodeverk_vilkår_VilkårType.OMSORGEN_FOR];
+const RELEVANTE_VILKAR_KODER = [VilkårType.OMSORGEN_FOR];
 
 interface Props {
-  behandling: Behandling;
+  behandling: ProsessBehandling;
   aksjonspunkter: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[];
-  submitCallback: (data: any, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<any>;
+  submitCallback: (data: unknown, aksjonspunkt: k9_sak_kontrakt_aksjonspunkt_AksjonspunktDto[]) => Promise<unknown>;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -35,13 +33,13 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
   }, [props.vilkår]);
   const skalVisePanel = vilkårForSteg.length > 0;
 
-  const relevanteAksjonspunkter = props.aksjonspunkter?.filter(
+  const relevanteAksjonspunkter = props.aksjonspunkter.filter(
     ap => ap.definisjon === AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR,
   );
 
   const erOverstyrt = props.overstyrteAksjonspunktKoder.includes(AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR);
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: unknown) => {
     return props.submitCallback(data, relevanteAksjonspunkter);
   };
 
@@ -49,10 +47,12 @@ export const OmsorgenForProsessStegInitPanel = (props: Props) => {
     return null;
   }
 
+  const behandlingType = toBehandlingType(props.behandling.type.kode);
+
   return (
     <VilkarresultatMedOverstyringProsessIndex
       aksjonspunkter={relevanteAksjonspunkter}
-      behandling={{ type: props.behandling.type.kode as k9_kodeverk_behandling_BehandlingType }}
+      behandling={{ type: behandlingType }}
       vilkar={vilkårForSteg}
       erOverstyrt={erOverstyrt}
       overstyringApKode={AksjonspunktDefinisjon.OVERSTYRING_AV_OMSORGEN_FOR}
