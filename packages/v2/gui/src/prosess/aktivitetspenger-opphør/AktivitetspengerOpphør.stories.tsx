@@ -1245,9 +1245,11 @@ export const Bistand: Story = {
       await userEvent.type(opphørsdato, '01.05.2026');
     });
 
-    await step('Årsak er satt til annen årsak og kan ikke endres', async () => {
-      await expect(canvas.queryByRole('combobox', { name: /velg årsak/i })).not.toBeInTheDocument();
-      await expect(canvas.getByText('Annen årsak')).toBeInTheDocument();
+    await step('Velg årsak', async () => {
+      await userEvent.selectOptions(
+        canvas.getByRole('combobox', { name: /velg årsak/i }),
+        BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_ARBEID,
+      );
     });
 
     await step('Velg kilde', async () => {
@@ -1257,12 +1259,9 @@ export const Bistand: Story = {
       );
     });
 
-    await step('Velg å sende varsel, skriv tekst og bekreft forhåndsvarsel', async () => {
+    await step('Velg å sende varsel og bekreft forhåndsvarsel', async () => {
       await userEvent.click(within(findVarselRadiogroup(canvas)).getByRole('radio', { name: 'Ja' }));
-      await userEvent.type(
-        canvas.getByRole('textbox', { name: /tekst i forhåndsvarsel/i }),
-        'Bruker har ikke lenger behov for bistand.',
-      );
+      await expect(canvas.queryByRole('textbox', { name: /tekst i forhåndsvarsel/i })).not.toBeInTheDocument();
       await userEvent.click(canvas.getByRole('button', { name: /bekreft og fortsett/i }));
       const modal = await within(canvasElement.ownerDocument.body).findByRole('dialog', {
         name: /send forhåndsvarsel/i,
@@ -1283,10 +1282,10 @@ export const Bistand: Story = {
                 {
                   periode: { fom: '2026-05-01', tom: undefined },
                   avklaring: expect.objectContaining({
-                    ikkeOppfyltÅrsak: BistandsvilkårIkkeOppfyltÅrsak.ANNET,
+                    ikkeOppfyltÅrsak: BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_ARBEID,
                     kilde: 'BRUKER',
                     skalIkkeSendeVarsel: false,
-                    fritekstTilVarsel: 'Bruker har ikke lenger behov for bistand.',
+                    fritekstTilVarsel: undefined,
                   }),
                 },
               ],
@@ -1298,17 +1297,25 @@ export const Bistand: Story = {
   },
 };
 
-export const BistandAnnenÅrsakKreverTekstIForhåndsvarsel: Story = {
+export const BistandÅrsakValg: Story = {
   args: fakeBistandArgsBase,
   play: async ({ canvas, step }) => {
     await step('Velg den nye perioden som ikke er satt', async () => {
       await userEvent.click(await canvas.findByRole('row', { name: /ikke satt/i }));
     });
 
-    await step('Annen årsak er forhåndsvalgt, og varsel viser tekstfelt for forhåndsvarsel', async () => {
-      await expect(canvas.getByText('Annen årsak')).toBeInTheDocument();
+    await step('Velg mellom konkrete årsaker uten forhåndsvalgt verdi', async () => {
+      const årsak = canvas.getByRole('combobox', { name: /velg årsak/i });
+      await expect(årsak).toHaveValue('');
+      await expect(
+        within(årsak)
+          .getAllByRole('option')
+          .map(option => option.textContent),
+      ).toEqual(['Har kommet i jobb', 'Har startet i utdanning som ikke er et arbeidsmarkedstiltak']);
       await userEvent.click(within(findVarselRadiogroup(canvas)).getByRole('radio', { name: 'Ja' }));
-      await expect(canvas.getByRole('textbox', { name: /tekst i forhåndsvarsel/i })).toBeInTheDocument();
+      await userEvent.selectOptions(årsak, BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING);
+      await expect(årsak).toHaveValue(BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING);
+      await expect(canvas.queryByRole('textbox', { name: /tekst i forhåndsvarsel/i })).not.toBeInTheDocument();
     });
   },
 };

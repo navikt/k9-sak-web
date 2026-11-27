@@ -195,10 +195,7 @@ export const OpphørVilkårsvurdering = ({
 
   const { mutateAsync: bekreftAksjonspunktMutation, isPending } = useMutation({
     mutationFn: async (submitArgs: SubmitArgs) => {
-      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [
-        // @ts-expect-error -- BekreftetAksjonspunktDto mangler DTO for VURDER_AKTIVITETSVILKÅR_OPPHØR. Fjern når backend-klienten har den.
-        buildPayload(submitArgs),
-      ]);
+      await api.bekreftAksjonspunkt(behandling.uuid, behandling.versjon, [buildPayload(submitArgs)]);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: vurderingerQueryOptions.queryKey });
@@ -252,6 +249,11 @@ export const OpphørVilkårsvurdering = ({
           />
         }
         lockedContent={isSolved ? <VurdertAv ident={vurderVilkårAP?.ansvarligSaksbehandler} /> : undefined}
+        selectedPeriodDescription={
+          erAvslag
+            ? 'Dersom du skal avslå en annen periode, gå tilbake til “årsak og varsel” og endre datoene.'
+            : 'Dersom du skal opphøre fra en annen dato, gå tilbake til “årsak og varsel” og endre datoen.'
+        }
       >
         {(isFormLocked, setIsFormLocked) => (
           <RhfForm
@@ -284,11 +286,6 @@ export const OpphørVilkårsvurdering = ({
                 name={`perioder.${selectedId}.skalOpphøre`}
                 validate={[required]}
                 readOnly={isFormLocked || isPending}
-                description={
-                  erAvslag
-                    ? 'Skal du endre perioden som skal avslås, gå tilbake til «Årsak og varsel» og endre datoene.'
-                    : 'Skal du opphøre fra en annen dato, gå tilbake til «Årsak og varsel» og endre datoen.'
-                }
               >
                 <Radio value="ja">
                   {erAvslag

@@ -38,7 +38,6 @@ const bistandOpphørsårsaker = [
     value: BistandsvilkårIkkeOppfyltÅrsak.KOMMET_I_UTDANNING,
     label: 'Har startet i utdanning som ikke er et arbeidsmarkedstiltak',
   },
-  { value: BistandsvilkårIkkeOppfyltÅrsak.ANNET, label: 'Annen årsak' },
 ] satisfies { value: BistandsvilkårIkkeOppfyltÅrsak; label: string }[];
 
 interface BistandPeriodForm extends OpphørVarselPeriodForm {
@@ -84,7 +83,7 @@ const nyPeriode: BistandPeriodForm = {
   kildeFritekst: '',
   opphøreEllerAvslå: '',
   opphørsdato: '',
-  årsak: BistandsvilkårIkkeOppfyltÅrsak.ANNET,
+  årsak: '',
   skalSendeVarselOmOpphør: '',
 };
 
@@ -104,9 +103,7 @@ const buildInitialValues = (vilkårsavklaringer: VilkårsavklaringerDto): Bistan
           opphøreEllerAvslå: tilOpphøreEllerAvslå(avklaring?.avklaringtype),
           opphørsdato: avklaring?.periode.fom ?? periode.fom,
           årsak:
-            avklaring && erBistandsvilkårIkkeOppfyltÅrsak(avklaring.ikkeOppfyltÅrsak)
-              ? avklaring.ikkeOppfyltÅrsak
-              : BistandsvilkårIkkeOppfyltÅrsak.ANNET,
+            avklaring && erBistandsvilkårIkkeOppfyltÅrsak(avklaring.ikkeOppfyltÅrsak) ? avklaring.ikkeOppfyltÅrsak : '',
           skalSendeVarselOmOpphør: tilJaEllerNei(avklaring?.skalSendeVarsel),
         },
       ]),
@@ -272,7 +269,7 @@ export const BistandÅrsakOgVarsel = ({
                   control={formHook.control}
                   name={`perioder.${selectedId}.årsak`}
                   label="Velg årsak"
-                  readOnly
+                  readOnly={isFormLocked || isPending}
                   validate={[required]}
                   selectValues={bistandOpphørsårsaker.map(årsak => (
                     <option key={årsak.value} value={årsak.value}>
