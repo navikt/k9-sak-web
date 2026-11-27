@@ -17,7 +17,6 @@ interface OwnProps {
   fagsak: Fagsak;
   behandling: Behandling;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
@@ -32,7 +31,6 @@ const TilbakekrevingFakta = ({
   behandling,
   rettigheter,
   alleKodeverk,
-  fpsakKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
   hasFetchError,
@@ -51,7 +49,6 @@ const TilbakekrevingFakta = ({
     perioderForeldelse,
     beregningsresultat,
     feilutbetalingFakta,
-    fpsakKodeverk,
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
@@ -114,7 +111,6 @@ const TilbakekrevingFakta = ({
               ...faktaDataUtenCaching,
               behandling,
               alleKodeverk,
-              fpsakKodeverk,
               submitCallback: bekreftAksjonspunktCallback,
               featureToggles,
               ...valgtPanel.getKomponentData(
