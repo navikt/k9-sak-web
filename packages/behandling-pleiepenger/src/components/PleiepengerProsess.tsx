@@ -216,7 +216,7 @@ const PleiepengerProsess = ({
   );
 
   // Toggle for å bytte mellom gammel og ny meny (for sammenligning under migrering)
-  const { useV2Menu, ToggleComponent } = useProsessMenyToggle();
+  const { useV2Menu, ToggleComponent } = useProsessMenyToggle('PROSESS_MENY_V2_PSB');
 
   if (useV2Menu) {
     return (

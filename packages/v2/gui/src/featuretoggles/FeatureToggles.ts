@@ -14,8 +14,10 @@ const rootFeatureToggles = {
   UNNTAKSBEHANDLING: false,
   UTVIDET_VARSELFELT: false, // Brukt i jsx
   BRUK_V2_AVREGNING: false,
-  PROSESS_MENY_V2: false,
-  SKJUL_PROSESS_MENY_V2_VELGER: false,
+  PROSESS_MENY_V2_PSB: false, // Styrer v2-prosessmeny for pleiepenger sykt barn.
+  PROSESS_MENY_V2_OMS: false, // Styrer v2-prosessmeny for omsorgspenger.
+  SKJUL_PROSESS_MENY_V2_PSB_VELGER: false,
+  SKJUL_PROSESS_MENY_V2_OMS_VELGER: false,
   ENDRE_FRIST: false,
   DELVIS_REVURDERING_MEDISINSK_VILKAR: false,
   SINGLE_AUTHFIXER: false,

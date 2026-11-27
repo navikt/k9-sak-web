@@ -15,16 +15,25 @@ interface UseProsessMenyToggleResult {
  * Lagrer valg i localStorage for å bevare preferanse mellom sideinnlastinger.
  *
  * Logikk:
- * - Hvis PROSESS_MENY_V2 er false: Bruk alltid legacy (useV2Menu = false, ingen toggle)
- * - Hvis PROSESS_MENY_V2 er true og SKJUL_PROSESS_MENY_V2_VELGER er false: Vis toggle og la bruker velge (default v2)
- * - Hvis PROSESS_MENY_V2 er true og SKJUL_PROSESS_MENY_V2_VELGER er true: Bruk alltid v2 (useV2Menu = true, ingen toggle)
+ * - Hvis den angitte prosesmeny-toggelen er false: Bruk alltid legacy (useV2Menu = false, ingen toggle)
+ * - Hvis den angitte toggelen er true og skjul-velger-toggelen er false: Vis toggle og la bruker velge (default v2)
+ * - Hvis den angitte toggelen er true og skjul-velger-toggelen er true: Bruk alltid v2 (useV2Menu = true, ingen toggle)
  *
+ * Skjul-velger-toggelen er SKJUL_PROSESS_MENY_V2_OMS_VELGER for PROSESS_MENY_V2_OMS og SKJUL_PROSESS_MENY_V2_PSB_VELGER for PROSESS_MENY_V2_PSB.
+ *
+ * @param toggle - Feature toggelen som styrer hvilken prosessmeny som er aktiv
  * @returns {Object} - Objekt med useV2Menu state, toggleMenu funksjon og ToggleComponent
  */
-export function useProsessMenyToggle(): UseProsessMenyToggleResult {
-  const { PROSESS_MENY_V2, SKJUL_PROSESS_MENY_V2_VELGER } = use(FeatureTogglesContext);
-  const v2Enabled = PROSESS_MENY_V2;
-  const velgerEnabled = !SKJUL_PROSESS_MENY_V2_VELGER;
+export function useProsessMenyToggle(
+  toggle: 'PROSESS_MENY_V2_PSB' | 'PROSESS_MENY_V2_OMS',
+): UseProsessMenyToggleResult {
+  const featureToggles = use(FeatureTogglesContext);
+  const v2Enabled = featureToggles[toggle];
+  const skjulVelger =
+    toggle === 'PROSESS_MENY_V2_OMS'
+      ? featureToggles.SKJUL_PROSESS_MENY_V2_OMS_VELGER
+      : featureToggles.SKJUL_PROSESS_MENY_V2_PSB_VELGER;
+  const velgerEnabled = !skjulVelger;
 
   const [useV2Menu, setUseV2Menu] = useState<boolean>(() => {
     // Ikke bruk v2 meny om ikke feature toggle er true
