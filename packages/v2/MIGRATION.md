@@ -83,11 +83,7 @@ Sortert etter estimert migreringskompleksitet (enklest først).
 
 ### Tier 1 — Svært enkelt
 
-| Panel                         | ~Linjer | Konsumenter                                            | Merknad                                                        |
-| ----------------------------- | ------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `prosess-fortsatt-medlemskap` | 75      | 3 (opl, psb, psb-sluttfase)                            | Tre korte paneldefinisjoner med overstyringsstøtte             |
-| `prosess-inngangsvilkar`      | 132     | 7 (oms, opl, psb, psb-sluttfase, ung, unntak, utvidet) | Felles inngangsvilkår med ytelsesspesifikke varianter          |
-| `prosess-opplaering`          | 19      | 1 (opl)                                                | Ytelsesspesifikk vilkårsvurdering                              |
+Ferdig
 
 ### Tier 2 — Enkelt/middels
 
