@@ -102,6 +102,7 @@ interface Props {
   onAksjonspunktBekreftet: () => Promise<void>;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContextDto[];
   kanBeslutte: boolean;
+  readOnly?: boolean;
   vilkårsperiodeFom?: string;
 }
 
@@ -113,6 +114,7 @@ export const Beslutter = ({
   onAksjonspunktBekreftet,
   totrinnskontrollSkjermlenkeContext,
   kanBeslutte,
+  readOnly = false,
   vilkårsperiodeFom,
 }: Props) => {
   const formHook = useForm<FormValues>({
@@ -232,7 +234,7 @@ export const Beslutter = ({
                               {formaterSkjermlenkeType(item?.skjermlenkeType)}
                             </Link>
                           </button>
-                          <Fieldset legend="" hideLegend>
+                          <Fieldset legend="" hideLegend disabled={readOnly}>
                             <RhfRadioGroup
                               control={control}
                               name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
@@ -301,11 +303,13 @@ export const Beslutter = ({
                         </Box>
                       );
                     })}
-                    <Box>
-                      <Button variant="primary" size="small" type="submit" loading={isPending}>
-                        Bekreft
-                      </Button>
-                    </Box>
+                    {!readOnly && (
+                      <Box>
+                        <Button variant="primary" size="small" type="submit" loading={isPending}>
+                          Bekreft
+                        </Button>
+                      </Box>
+                    )}
                   </VStack>
                 )}
               </RhfForm>

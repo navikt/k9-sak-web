@@ -62,7 +62,7 @@ export const SimuleringProsessStegInitPanel = ({ api, behandling, saksnummer }: 
       behandling.status === BehandlingStatus.AVSLUTTET || behandling.status === BehandlingStatus.FATTER_VEDTAK;
     const aksjonspunktErIkkeLøsbart = aksjonspunkt == undefined || aksjonspunkt.kanLoses === false;
 
-    return manglerTilgang || behandlingErLåst || aksjonspunktErIkkeLøsbart;
+    return manglerTilgang || behandlingErLåst || !!behandling.behandlingPåVent || aksjonspunktErIkkeLøsbart;
   }, [innloggetBruker, behandling, aksjonspunkt]);
 
   const erValgt = prosessPanelContext?.erValgt(PANEL_ID);

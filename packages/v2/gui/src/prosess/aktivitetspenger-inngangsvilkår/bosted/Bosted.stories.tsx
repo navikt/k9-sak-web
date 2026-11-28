@@ -180,6 +180,32 @@ export const ReadOnly: Story = {
   },
 };
 
+export const ApentAksjonspunktPaaVent: Story = {
+  args: {
+    readOnly: true,
+    bostedVilkår: {
+      vilkarType: vilkarType.BOSTEDSVILKÅR,
+      perioder: [{ periode, vilkarStatus: Utfall.IKKE_VURDERT }],
+    },
+    bostedAp: lagAksjonspunkt(AksjonspunktDefinisjon.VURDER_BOSTEDVILKÅR),
+    isPermanentlyReadOnly: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('viser advarselen for et åpent aksjonspunkt på vent', async () => {
+      await expect(
+        canvas.getByText('Vurder om søker er bosatt i Trondheim kommune på virkningstidspunktet.'),
+      ).toBeInTheDocument();
+    });
+
+    await step('viser verken vurdering eller skjema', async () => {
+      await expect(canvas.queryByRole('radio')).not.toBeInTheDocument();
+      await expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+    });
+  },
+};
+
 export const FlerePerioder: Story = {
   args: {
     bostedVilkår: {

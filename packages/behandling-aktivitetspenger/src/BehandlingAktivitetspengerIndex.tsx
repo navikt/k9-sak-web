@@ -13,9 +13,9 @@ import { useCallback, useEffect } from 'react';
 import { AktivitetspengerProsess } from './components/AktivitetspengerProsess';
 import { BehandlingPåVent } from './components/behandlingPåVent/BehandlingPåVent';
 import {
-  UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
+  UngdomsytelseBehandlingApiKeys,
 } from './data/ungdomsytelseBehandlingApi';
 
 interface OwnProps {
@@ -78,8 +78,7 @@ const BehandlingAktivitetspengerIndex = ({
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => refetchBehandling()),
       settBehandlingPaVent: params => settBehandlingPaVent(params).then(() => refetchBehandling()),
-      taBehandlingAvVent: params =>
-        taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
+      taBehandlingAvVent: params => taBehandlingAvVent(params).then(() => refetchBehandling()),
       henleggBehandling: params => henleggBehandling(params),
     });
 

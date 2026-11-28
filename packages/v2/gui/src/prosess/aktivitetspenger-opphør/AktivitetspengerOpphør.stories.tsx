@@ -974,6 +974,38 @@ export const BeslutterGodkjennerAlle: Story = {
   },
 };
 
+export const BeslutterPåVent: Story = {
+  args: {
+    ...fakeBeslutterArgsBase,
+    behandling: { ...fakeBehandling, behandlingPåVent: true },
+    totrinnskontrollSkjermlenkeContext: [
+      {
+        skjermlenkeType: 'OPPHØR',
+        totrinnskontrollAksjonspunkter: [
+          { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_FAKTA_OM_BOSTED, totrinnskontrollGodkjent: true },
+          { aksjonspunktKode: AksjonspunktDefinisjon.VURDER_BOSTEDSVILKÅR_OPPHØR, totrinnskontrollGodkjent: true },
+        ],
+      },
+    ] satisfies TotrinnskontrollSkjermlenkeContextDto[],
+    onAksjonspunktBekreftet: fn(),
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('tab', { name: 'Beslutter' })).toHaveAttribute('aria-selected', 'true');
+    const radioer = canvas.getAllByRole('radio');
+    await expect(radioer).toHaveLength(4);
+    for (const radio of radioer) {
+      await expect(radio).toBeDisabled();
+    }
+    const godkjentRadioer = canvas.getAllByRole('radio', { name: 'Godkjent' });
+    await expect(godkjentRadioer).toHaveLength(2);
+    for (const radio of godkjentRadioer) {
+      await expect(radio).toBeChecked();
+    }
+    await expect(canvas.queryByRole('button', { name: 'Bekreft' })).not.toBeInTheDocument();
+    await expect(canvas.queryByText('Saken er sendt til beslutter.')).not.toBeInTheDocument();
+  },
+};
+
 export const MedUtførtBeslutterAksjonspunkt: Story = {
   args: {
     ...fakeBeslutterArgsBase,

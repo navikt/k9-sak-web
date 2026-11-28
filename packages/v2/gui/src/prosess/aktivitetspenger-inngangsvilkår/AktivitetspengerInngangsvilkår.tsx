@@ -179,6 +179,7 @@ export const AktivitetspengerInngangsvilkår = ({
   bostedGrunnlag,
 }: Props) => {
   const kanSaksbehandle = !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanSaksbehandle;
+  const erPåVent = !!behandling.behandlingPåVent;
   const kanBeslutte =
     !!innloggetBruker.aktivitetspengerDel1SaksbehandlerTilgang?.kanBeslutte &&
     !!lovligeBehandlingsoperasjoner.behandlingTilGodkjenningVedNavKontor;
@@ -307,7 +308,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 bostedAp={inngangsvilkårdata.bostedAp}
                 lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
                 lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
-                readOnly={!kanSaksbehandle}
+                readOnly={!kanSaksbehandle || erPåVent}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -324,7 +325,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 lokalkontorForeslårVilkårAp={inngangsvilkårdata.lokalkontorForeslårVilkårAp}
                 lokalkontorBeslutterAp={inngangsvilkårdata.lokalkontorBeslutterAp}
                 andreLivsoppholdytelserVilkår={inngangsvilkårdata.andreLivsoppholdytelserVilkår}
-                readOnly={!kanSaksbehandle}
+                readOnly={!kanSaksbehandle || erPåVent}
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
@@ -345,7 +346,7 @@ export const AktivitetspengerInngangsvilkår = ({
                 api={api}
                 behandling={behandling}
                 onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                readOnly={!kanSaksbehandle}
+                readOnly={!kanSaksbehandle || erPåVent}
                 isPermanentlyReadOnly={
                   !inngangsvilkårdata.vurderBistandsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
                 }
@@ -365,7 +366,7 @@ export const AktivitetspengerInngangsvilkår = ({
                   api={api}
                   behandling={behandling}
                   onAksjonspunktBekreftet={onAksjonspunktBekreftet}
-                  readOnly={!kanSaksbehandle}
+                  readOnly={!kanSaksbehandle || erPåVent}
                   isPermanentlyReadOnly={
                     !inngangsvilkårdata.vurderAktivitetsvilkårAp || !!inngangsvilkårdata.lokalkontorBeslutterAp
                   }
@@ -383,6 +384,7 @@ export const AktivitetspengerInngangsvilkår = ({
                   onAksjonspunktBekreftet={onAksjonspunktBekreftet}
                   totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
                   kanBeslutte={kanBeslutte}
+                  readOnly={erPåVent}
                   vilkårsperiodeFom={vurdertVilkårsperiodeFom}
                 />
               </Tabs.Panel>
